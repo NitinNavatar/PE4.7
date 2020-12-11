@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="target/classes" path="src">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.testng.TESTNG_CONTAINER"/>
+	<classpathentry kind="lib" path="jarfiles/bsh-2.0b4.jar"/>
+	<classpathentry kind="lib" path="jarfiles/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="jarfiles/commons-collections4-4.1.jar"/>
+	<classpathentry kind="lib" path="jarfiles/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="jarfiles/curvesapi-1.04.jar"/>
+	<classpathentry kind="lib" path="jarfiles/freemarker-2.3.23.jar"/>
+	<classpathentry kind="lib" path="jarfiles/jcommander.jar"/>
+	<classpathentry kind="lib" path="jarfiles/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="jarfiles/poi-3.16.jar"/>
+	<classpathentry kind="lib" path="jarfiles/poi-3.9.jar"/>
+	<classpathentry kind="lib" path="jarfiles/poi-examples-3.16.jar"/>
+	<classpathentry kind="lib" path="jarfiles/poi-excelant-3.16.jar"/>
+	<classpathentry kind="lib" path="jarfiles/poi-ooxml-3.16.jar"/>
+	<classpathentry kind="lib" path="jarfiles/poi-ooxml-schemas-3.16.jar"/>
+	<classpathentry kind="lib" path="jarfiles/poi-scratchpad-3.16.jar"/>
+	<classpathentry kind="lib" path="jarfiles/sikulixapi.jar"/>
+	<classpathentry kind="lib" path="jarfiles/snakeyaml.jar"/>
+	<classpathentry kind="lib" path="jarfiles/xmlbeans-2.6.0.jar"/>
+	<classpathentry kind="lib" path="jarfiles/selenium-server-standalone-3.141.59.jar"/>
+	<classpathentry kind="lib" path="jarfiles/testng-7.0.0.jar"/>
+	<classpathentry kind="lib" path="jarfiles/extentreports-2.41.2.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

@@ -1,0 +1,645 @@
+package com.navatar.pageObjects;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
+
+import com.navatar.generic.EnumConstants.Mode;
+import com.navatar.generic.EnumConstants.YesNo;
+import com.navatar.generic.EnumConstants.action;
+import com.navatar.generic.EnumConstants.object;
+import com.relevantcodes.extentreports.LogStatus;
+
+import static com.navatar.generic.CommonLib.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import static com.navatar.generic.AppListeners.*;
+public class SetupPageBusinessLayer extends SetupPage {
+
+	public SetupPageBusinessLayer(WebDriver driver) {
+		super(driver);
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @author Akul Bhutani
+	 * @param environment
+	 * @param mode
+	 * @param objectName
+	 * @return true/false
+	 * @description this method is used to search object on setup page by entering on textbox and click
+	 */
+	public boolean searchStandardOrCustomObject(String environment, String mode, object objectName) {
+		String index="[1]";
+		if (objectName==object.Global_Actions || objectName==object.Activity_Setting) {
+			if (objectName==object.Global_Actions) {
+				index="[2]";	
+			}
+			ThreadSleep(3000);
+			if (sendKeys(driver, getQucikSearchInSetupPage(10), objectName.toString(),objectName.toString(), action.BOOLEAN)) {
+				if (click(driver, FindElement(driver, "(//mark[text()='"+objectName.toString()+"'])"+index,objectName.toString(), 
+						action.BOOLEAN, 10), "global actions", action.BOOLEAN)) {
+					return true;
+				}
+				else {
+					log(LogStatus.ERROR, "could not click on global actions",YesNo.Yes);
+					
+				}
+			}
+			else {
+				log(LogStatus.ERROR, "quick search textbox not visible", YesNo.Yes);
+			}
+			return false;
+		}
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			if(sendKeys(driver,getQucikSearchInSetupPage(30),objectName.toString(),"quick search text box in setup page", action.SCROLLANDBOOLEAN)) {
+				appLog.info("passed value in serach text box: "+objectName);
+				return true;
+			}else {
+				appLog.error("Not able to search object in classic : "+objectName);
+			}
+		}else {
+			if (clickUsingJavaScript(driver, getObjectManager_Lighting(30), "object manager tab", action.SCROLLANDBOOLEAN)) {
+				appLog.info("clicked on object manager tab");
+				if(sendKeys(driver, getQuickSearchInObjectManager_Lighting(30), objectName.toString(), "quick search text box in lighting", action.SCROLLANDBOOLEAN)) {
+					appLog.info("passed value in quick search text box: "+ objectName);
+					return true;
+				}else {
+					appLog.error("Not able to search object in lighting : "+objectName);
+				}
+			} else {
+				appLog.error("Not able to click on object manager tab so cannot search object: "+objectName);
+			}
+	}
+		return false;
+}
+
+	/**
+	 * @author Akul Bhutani
+	 * @param environment
+	 * @param mode
+	 * @param object
+	 * @param objectfeatureName
+	 * @return true/false
+	 * @description this method is used to click on object name on setup page
+	 */
+	public boolean clickOnObjectFeature(String environment, String mode,object object,objectFeatureName objectFeatureName ) {
+		WebElement ele=null;
+		if (object==object.Global_Actions) {
+			return true;
+		}
+	
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			ele=isDisplayed(driver, FindElement(driver, "//a[text()='"+object+"']/../div/div/a[text()='"+objectFeatureName+"']", "", action.BOOLEAN,20), "visibility",20,"page layout link");
+			if(ele!=null) {
+				if(click(driver, ele, objectFeatureName+" link", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on "+object+" object feature : "+objectFeatureName);
+					return true;
+				}else {
+					appLog.error("Not able to click on "+object+" object feature: "+objectFeatureName);
+				}
+			}else {
+				appLog.error(object+" object "+objectFeatureName+" feature is not visible so cannot click on it");
+			}
+		}else {
+			ele=isDisplayed(driver, FindElement(driver, "//table[@data-aura-class='uiVirtualDataGrid--default uiVirtualDataGrid']//a[contains(text(),'"+object+"')]", "", action.BOOLEAN,20), "visibility",20,"page layout link");
+			if(ele!=null) {
+				if(click(driver, ele, object+" object link", action.SCROLLANDBOOLEAN)) {
+					appLog.info("click on object link : "+object);
+					ele=isDisplayed(driver, FindElement(driver, "//a[contains(text(),'"+objectFeatureName+"')]", "", action.BOOLEAN,20), "visibility",20,objectFeatureName+" feature link");
+					if(ele!=null) {
+						if(click(driver, ele, objectFeatureName+" object feature link", action.SCROLLANDBOOLEAN)) {
+							return true;
+						}else {
+							appLog.error("Not able to click on object "+object+" feature "+objectFeatureName);
+						}
+					}else {
+						appLog.error(object+" object feature "+objectFeatureName+" is not visible so cannot click on it");
+					}
+				}else {
+					appLog.error("Not able to click on object link : "+object+" so cannot click on it's feature: "+objectFeatureName);
+				}
+			}else {
+				appLog.error(object+" object link is not visible so cannot click on it's feature : "+objectFeatureName);
+			}
+		}
+		return false;
+		
+	}
+
+	/**
+	 * @author Azhar Alam
+	 * @param environment
+	 * @param mode
+	 * @param object
+	 * @param objectFeatureName
+	 * @param layoutName
+	 * @param sourceANDDestination
+	 * @return List<String>
+	 * @description this method is used to drag and drop fields on page layout page
+	 */
+	public List<String> DragNDrop(String environment, String mode, object obj, objectFeatureName objectFeatureName,List<String> layoutName,HashMap<String, String> sourceANDDestination) {
+		WebElement ele= null;
+		List<String> result = new ArrayList<String>();
+		boolean flag = false;
+		if(searchStandardOrCustomObject(environment, mode, obj)) {
+			if(clickOnObjectFeature(environment, mode, obj, objectFeatureName)) {
+				for(int i=0; i<layoutName.size(); i++) {
+					if (obj==object.Global_Actions) {
+						switchToFrame(driver, 10, getEditPageLayoutFrame_Lighting(20));
+						ele=isDisplayed(driver, FindElement(driver, "//a[text()='"+layoutName.get(i)+"']/../preceding-sibling::td//a[contains(@title,'Layout')]", "", action.BOOLEAN,20), "visibility",20,obj+" page layout link");
+					}
+					else {
+						if(mode.equalsIgnoreCase(Mode.Classic.toString())) {
+							ele=isDisplayed(driver, FindElement(driver, "//div[@id='LayoutList_body']//tr/th[text()='"+layoutName.get(i)+"']/../td/a[contains(@title,'Edit')]", "", action.BOOLEAN,20), "visibility",20,layoutName.get(i)+" page layout link");
+						}else {
+							ele=isDisplayed(driver, FindElement(driver, "//span[contains(text(),'"+layoutName.get(i)+"')]", "", action.BOOLEAN,20), "visibility",20,layoutName.get(i)+" page layout link");
+						}
+					}
+					if (ele != null) {
+						if (click(driver, ele, layoutName.get(i) + " layout name edit icon", action.BOOLEAN)) {
+							appLog.info("click on pagelayout " + layoutName.get(i) + " Edit Icon");
+							ThreadSleep(20000);
+							if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+								switchToFrame(driver, 20, getEditPageLayoutFrame_Lighting(20));
+							}
+							
+							Set<String> Sources = sourceANDDestination.keySet();
+							Iterator<String> itr = Sources.iterator();
+							while (itr.hasNext()) {
+								String src = itr.next();
+								String trgt=sourceANDDestination.get(src);
+								if (PageLabel.Is_Touchpoint.toString().equalsIgnoreCase(src)) {
+									
+								}else {
+									src=src.replace("_", " ");
+								}
+								
+								if (PageLabel.Is_Touchpoint.toString().equalsIgnoreCase(trgt)) {
+									
+								}else {
+									trgt=trgt.replace("_", " ");
+								}
+
+//								src=src.replace("_", " ");
+//								trgt=trgt.replace("_", " ");
+								
+								WebElement targetElement = null;
+								if(src.split("<break>")[0].contains("Related List")){
+									if(click(driver, FindElement(driver, "//div[text()='Related Lists']", "", action.SCROLLANDBOOLEAN, 30), "", action.SCROLLANDBOOLEAN)){
+										if(trgt.split("<break>")[0].equalsIgnoreCase("Above")){
+											trgt = trgt.split("<break>")[trgt.split("<break>").length-1];
+											targetElement = FindElement(driver, "//h3[text()='"+trgt+"']/../../../../../../../../preceding-sibling::div[1]", "", action.BOOLEAN,20);
+										} else {
+											trgt = trgt.split("<break>")[trgt.split("<break>").length-1];
+											targetElement = FindElement(driver, "//h3[text()='"+trgt+"']/../../../../../../../../following-sibling::div[1]", "", action.BOOLEAN,20);
+										}
+										src = src.split("<break>")[src.split("<break>").length-1];
+									} else {
+										appLog.error(src+" is not visible so cannot dragNdrop "+src);
+										result.add(src+" is not visible so cannot dragNdrop "+src);
+									}
+									flag = true;
+								} else {
+									sendKeys(driver, getquickFindSearch(10), src, src, action.BOOLEAN);
+									targetElement = FindElement(driver, "//span[@class='labelText'][text()='"+trgt+"']", "", action.BOOLEAN,20);
+								}
+								ele = isDisplayed(driver, FindElement(driver, " //span[text()='"+src+"']", "", action.BOOLEAN,20), "visibility",20,src+" field");
+								if(ele!=null) {
+									WebElement ele1 = isDisplayed(driver, targetElement, "visibility",20,trgt+" field");
+									
+									ThreadSleep(5000);
+									if(ele1!=null) {
+										if(dragNDropField(driver, ele, ele1)) {
+											ThreadSleep(5000);
+											appLog.info("Successfully dragNDrop "+src+" at "+trgt+" location");
+											if (FindElement(driver, "//span[@class='labelText'][text()='"+src+"']", "", action.BOOLEAN,20)!=null) {
+												appLog.info("successfully verified drag and drop of "+src);
+											}
+											else {
+												appLog.error("Not able to dragNDrop "+src+" at "+trgt+" location");
+												result.add("Not able to dragNDrop "+src+" at "+trgt+" location");
+											}
+											appLog.info("Successfully dragNDrop "+src+" at "+trgt+" location");
+										}else {
+											appLog.error("Not able to dragNDrop "+src+" at "+trgt+" location");
+											result.add("Not able to dragNDrop "+src+" at "+trgt+" location");
+										}
+									}else {
+										appLog.error(trgt+" location is not visible so cannot dragNDrop "+src+" at location "+trgt);
+										result.add(trgt+" location is not visible so cannot dragNDrop "+src+" at location "+trgt);
+									}
+								}else {
+									appLog.error(src+" is not visible so cannot dragNdrop "+src);
+									result.add(src+" is not visible so cannot dragNdrop "+src);
+								}
+								
+							}
+							if(click(driver, getPageLayoutSaveBtn(obj,30), "page layouts save button", action.SCROLLANDBOOLEAN)) {
+								appLog.info("clicked on save button");
+								if(flag && obj!=object.Global_Actions){
+									click(driver, FindElement(driver, "//button[text()='Yes']", "Yes Button", action.BOOLEAN, 30), "", action.SCROLLANDBOOLEAN);
+								}
+							}else {
+								appLog.error("Not able to click on Save button cannot save pagelayout dragged object or section");
+								result.add("Not able to click on Save button cannot save pagelayout dragged object or section");
+							}
+						} else {
+							appLog.error("Not able to click on " + layoutName.get(i)+ "layout edit icon so cannot dargNdrop.");
+							result.add("Not able to click on " + layoutName.get(i)+ "layout edit icon so cannot dargNdrop.");
+						}
+					} else {
+						appLog.error(layoutName.get(i) + " Layout name is not visible so cannot click on edit icon");
+						result.add(layoutName.get(i) + " Layout name is not visible so cannot click on edit icon");
+					}
+					if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						switchToDefaultContent(driver);
+					}
+				}
+			}else {
+				appLog.error("Not able to click on Object feature: "+objectFeatureName+" so cannot dragNdrop source.");
+				result.add("Not able to click on Object feature: "+objectFeatureName+" so cannot dragNdrop source.");
+			}
+		}else {
+			appLog.error("Not able to search Object: "+obj+" so cannot dragNdrop source.");
+			result.add("Not able to search Object: "+obj+" so cannot dragNdrop source.");
+		}
+		return result;
+		
+	}
+
+	
+	
+	/*******************************************************Activity Association******************************/
+	/**
+	 * @author Azhar Alam
+	 * @param userfirstname
+	 * @param userlastname
+	 * @param email
+	 * @param userLicense
+	 * @param userProfile
+	 * @return true/false
+	 * @description this method is used to create new user in pe or mna
+	 */
+	public boolean createPEUser(String userfirstname, String userlastname, String email, String userLicense,
+			String userProfile) {
+			if (click(driver, getExpandUserIcon( 30), "expand User Icon", action.SCROLLANDBOOLEAN)) {
+				appLog.info("clicked on user expand icon");
+				if (click(driver, getUsersLink(30), "User Link", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on users link");
+						switchToFrame(driver, 20, getSetUpPageIframe(20));
+					if (click(driver, getNewUserLink(20), "New User Button", action.SCROLLANDBOOLEAN)) {
+						appLog.info("clicked on new users button");
+							switchToDefaultContent(driver);
+							switchToFrame(driver, 20, getSetUpPageIframe(20));
+						if (sendKeys(driver, getUserFirstName(60), userfirstname, "User First Name",
+								action.SCROLLANDBOOLEAN)) {
+							if (sendKeys(driver, getUserLastName(60), userlastname, "User Last Name",
+									action.SCROLLANDBOOLEAN)) {
+								if (sendKeys(driver, getUserEmailId(60), email, "User Email Id",
+										action.SCROLLANDBOOLEAN)) {
+									if (selectVisibleTextFromDropDown(driver, getUserUserLicenseDropDownList(60),
+											"User License drop down list", userLicense)) {
+										appLog.info("select user license from drop downlist: " + userLicense);
+										if (selectVisibleTextFromDropDown(driver, getUserProfileDropDownList(60),
+												"User profile drop down list", userProfile)) {
+											appLog.info("select user profile from drop downlist: " + userProfile);
+											if(click(driver, getSalesforceCRMContentUserCheckBox(60), "Salesforce CRM Content User check Box",
+													action.SCROLLANDBOOLEAN)){
+													if (click(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
+															action.SCROLLANDBOOLEAN)) {
+														appLog.info("clicked on save button");
+														appLog.info("CRM User is created successfully: " + userfirstname
+																+ " " + userlastname);
+														return true;
+													} else {
+														appLog.error(
+																"Not able to click on save buttton so cannot create user: "
+																		+ userfirstname + " " + userlastname);
+													}
+												
+											}else{
+												appLog.info("Not able to click on content user checkbox");
+											}
+										} else {
+											appLog.error("Not able to select profile from drop downlist: "
+													+ userProfile + " so cannot create user: " + userfirstname + " "
+													+ userlastname);
+										}
+										
+									} else {
+										appLog.error("Not able to select user license from drop downlist: "
+												+ userLicense + " so cannot create user: " + userfirstname + " "
+												+ userlastname);
+									}
+									
+								} else {
+									appLog.error("Not able to pass email id in text box: " + email
+											+ " so cannot create user: " + userfirstname + " " + userlastname);
+								}
+								
+							} else {
+								appLog.error("Not able to pass user last name in text box: " + userlastname
+										+ " so cannot create user: " + userfirstname + " " + userlastname);
+							}
+						} else {
+							appLog.error("Not able pass user first name in text box: " + userfirstname
+									+ " so cannot create user: " + userfirstname + " " + userlastname);
+						}
+						
+					} else {
+						appLog.error("Not able to click on new user button so cannot create user: " + userfirstname
+								+ " " + userlastname);
+					}
+					
+				} else {
+					appLog.error("Not able to click on users link so cannot create user: " + userfirstname + " "
+							+ userlastname);
+				}
+				
+			} else {
+				appLog.error("Not able to click on manage user expand icon so cannot create user: " + userfirstname
+						+ " " + userlastname);
+			}
+				switchToDefaultContent(driver);
+		return false;
+	}
+	/**
+	 * @author Akul Bhutani
+	 * @param firstName
+	 * @param lastName
+	 * @return true/false
+	 * @description this method is used to add PE package to user name in arguments
+	 */
+	public boolean installedPackages(String firstName, String lastName) {
+			if(sendKeys(driver,getQucikSearchInSetupPage(30),"Installed package","quick search text box in setup page", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "passed value in serach text box installed package ", YesNo.No);
+				
+			}else {
+				log(LogStatus.INFO, "Not able to search installed package in search text box so cannot click on installed package link in lightning", YesNo.Yes);
+				return false;
+			}
+		if (click(driver, getInstalledPackageLink(30), "Installed Package link", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO,"clicked on installed package link", YesNo.No);
+				switchToFrame(driver, 30, getSetUpPageIframe(30));
+			if (click(driver, getManageLicensesLink(60), "Manage licenses link", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO,"clicked on manage licenses link", YesNo.No);
+					switchToDefaultContent(driver);
+					switchToFrame(driver, 30, getSetUpPageIframe(30));
+				if (click(driver, getAddUsersbutton(60), "Add Users link", action.BOOLEAN)) {
+					log(LogStatus.INFO,"clicked on add users button", YesNo.No);
+						switchToDefaultContent(driver);
+						switchToFrame(driver, 30, getInstalledPackageParentFrame_Lighting(20));
+					if (switchToFrame(driver, 30, getInstalledPackageFrame(20))) {
+						for (int i = 0; i < 2; i++) {
+							if (click(driver, getActiveUserTab(60), "Active Users Tab",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO,"Clicked on active user tab ", YesNo.No);
+							} else {
+								if (i == 1) {
+									switchToDefaultContent(driver);
+									log(LogStatus.INFO,"Not able to click on active user tab", YesNo.Yes);
+								}
+							}
+						}
+						WebElement ele = FindElement(driver,
+								"//img[@title='Checked']/../..//span[contains(text(),'" + lastName + ", "
+										+ firstName + "')]/../..//input",
+										"Activate User Check Box", action.BOOLEAN, 20);
+						if (ele != null) {
+							for (int i = 0; i < 2; i++) {
+								if (click(driver, ele, firstName + " " + lastName + " check box",
+										action.BOOLEAN)) {
+									ThreadSleep(2000);
+									WebElement checkBox = FindElement(driver,
+											"//img[@title='Checked']/../..//span[contains(text(),'" + lastName
+											+ ", " + firstName + "')]/../..//input",
+											"Activate User Check Box", action.BOOLEAN, 20);
+									if (isSelected(driver, checkBox,
+											firstName + " " + lastName + " check box")) {
+										log(LogStatus.INFO,"clicked on user check box: " + firstName + " " + lastName, YesNo.No);
+											switchToDefaultContent(driver);
+											switchToFrame(driver, 30, getInstalledPackageParentFrame_Lighting(20));
+										if (click(driver, getActiveUserAddButton(60), "Active User Add Button",
+												action.BOOLEAN)) {
+											log(LogStatus.INFO,"clicked on add button", YesNo.No);
+											log(LogStatus.INFO,"package is installed successfully: " + firstName + " "
+													+ lastName, YesNo.No);
+											switchToDefaultContent(driver);
+											return true;
+
+										} else {
+											switchToDefaultContent(driver);
+											log(LogStatus.INFO,"Not able to click on add button so cannot install user package: "
+													+ firstName + " " + lastName, YesNo.Yes);
+										}
+									} else {
+										if (i == 1) {
+											switchToDefaultContent(driver);
+											log(LogStatus.INFO,"username checkbox is not selected in istalled package : "
+													+ firstName + " " + lastName, YesNo.Yes);
+										}
+									}
+								} else {
+									if (i == 1) {
+										switchToDefaultContent(driver);
+										log(LogStatus.INFO,"Not able to click on user check box: " + firstName + " "
+												+ lastName, YesNo.Yes);
+									}
+								}
+							}
+						} else {
+							switchToDefaultContent(driver);
+							log(LogStatus.INFO,"create user " + firstName + " " + lastName
+									+ " is not visible so cannot istall user package: " + firstName + " "
+									+ lastName, YesNo.Yes);
+						}
+					} else {
+						switchToDefaultContent(driver);
+						log(LogStatus.INFO,"installed package frame is not loaded so cannot install user package: "
+								+ firstName + " " + lastName, YesNo.Yes);
+					}
+				} else {
+					log(LogStatus.INFO,"Not able to click on add users button so cannot install user package: "
+							+ firstName + " " + lastName, YesNo.Yes);
+						switchToDefaultContent(driver);
+				}
+			} else {
+				log(LogStatus.INFO,"Not able to click on manage licenses link so cannot install user package: "
+						+ firstName + " " + lastName, YesNo.Yes);
+					switchToDefaultContent(driver);
+			}
+		} else {
+			log(LogStatus.INFO,"Not able to click on installed packages link so cannot istall user package: "
+					+ firstName + " " + lastName, YesNo.Yes);
+		}
+			switchToDefaultContent(driver);
+		return false;
+	}
+	
+	public boolean clickOnAlreadyCreatedLayout(String layoutName) {
+		String xpath="//td//a//span[text()='"+layoutName+"']";
+		WebElement ele=FindElement(driver, xpath, layoutName, action.SCROLLANDBOOLEAN, 10);
+		ele=isDisplayed(driver, ele, "visibility", 10, layoutName);
+		if (click(driver, ele, layoutName, action.SCROLLANDBOOLEAN)) {
+			return true;
+		}
+		else {
+			log(LogStatus.ERROR, "could not click on layout "+layoutName, YesNo.Yes);
+		}
+		return false;
+	}
+	
+	/**
+	 * @author ANKIT JAISWAL
+	 * @param environment
+	 * @param mode
+	 * @param objectName
+	 * @param objectLeftSideActions
+	 * @param dataType
+	 * @param fieldLabelName
+	 * @param formulaReturnType
+	 * @param formulaText
+	 * @return true/false
+	 */
+	public boolean addCustomFieldforFormula(String environment, String mode,object objectName, String objectLeftSideActions, String dataType,String fieldLabelName,String[][] labelsWithValues,String formulaReturnType,String formulaText) {
+		WebElement ele=null;
+		if(searchStandardOrCustomObject(environment, mode, objectName)) {
+			log(LogStatus.PASS, "object searched : "+objectName.toString(), YesNo.No);
+			ThreadSleep(5000);
+			String xpath="//div[@data-aura-class='uiScroller']//a[text()='"+objectName.toString()+"']";
+			ele=FindElement(driver, xpath,objectName.toString()+" xpath", action.SCROLLANDBOOLEAN,30);
+			if(ele!=null) {
+				if(click(driver, ele, objectName.toString()+" xpath ", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.PASS, "clicked on object Name "+objectName, YesNo.No);
+					ThreadSleep(5000);
+					xpath="//div[@id='setupComponent']/div[@class='setupcontent']//ul/li/a[@data-list='"+objectLeftSideActions+"']";
+					ele=FindElement(driver, xpath,objectLeftSideActions+" xpath", action.SCROLLANDBOOLEAN,20);
+					if(click(driver, ele, objectLeftSideActions+" xpath ", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.PASS, "clicked on object side action :  "+objectLeftSideActions, YesNo.No);
+						ThreadSleep(5000);
+						if(click(driver, getCustomFieldNewButton(30),"new button", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.PASS, "clicked on new button", YesNo.No);
+							ThreadSleep(1000);
+							if(switchToFrame(driver, 30, getNewCustomFieldFrame(objectName,30))) {
+								if(click(driver, getNewCustomFieldDataTypeOrFormulaReturnType(dataType, 30),"data type radio button", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.PASS,dataType+" : data type radio button ",YesNo.No);
+									if(click(driver, getCustomFieldNextBtn(30),"next button", action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.PASS, "Clicked on Step 1 Next button", YesNo.No);
+										ThreadSleep(1000);
+										if(sendKeys(driver, getFieldLabelTextBox(30), fieldLabelName, "field label name ", action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.PASS, "passed value in field label text box : "+fieldLabelName, YesNo.No);
+
+											
+												
+												if (dataType.equalsIgnoreCase("Picklist")) {
+													xpath = "//label[text()='Enter values, with each value separated by a new line']//preceding-sibling::input[@name='picklistType']";
+													ele = FindElement(driver, xpath, "", action.BOOLEAN, 5);
+													
+													if(click(driver, ele,"Radio Button", action.SCROLLANDBOOLEAN)) {
+														log(LogStatus.PASS, "Click on radio button", YesNo.No);
+														ThreadSleep(2000);
+														
+														xpath = "//textarea[@id='ptext']";
+														ele = FindElement(driver, xpath, "", action.BOOLEAN, 5);
+														if(sendKeys(driver, ele, labelsWithValues[0][1],labelsWithValues[0][0]+" "+labelsWithValues[0][1], action.SCROLLANDBOOLEAN)) {
+															log(LogStatus.PASS, "Passed Value in "+labelsWithValues[0][0]+" "+labelsWithValues[0][1], YesNo.No);
+														}else {
+															log(LogStatus.FAIL, "Not able to pass "+labelsWithValues[0][0]+" "+labelsWithValues[0][1],YesNo.Yes);
+														}
+														
+													}else {
+														log(LogStatus.FAIL, "Not Able to Click on radio button",YesNo.Yes);
+															
+													}
+												
+												} else {
+													for (String[] labelWithValue : labelsWithValues) {
+														xpath = "//label[contains(text(),'"+labelWithValue[0]+"')]/../following-sibling::td//input";
+														ele = FindElement(driver, xpath, labelWithValue[0]+" "+labelWithValue[1], action.BOOLEAN, 5);
+														if(sendKeys(driver, ele, labelWithValue[1],labelWithValue[0]+" "+labelWithValue[1], action.SCROLLANDBOOLEAN)) {
+															log(LogStatus.PASS, "Passed Value in "+labelWithValue[0]+" "+labelWithValue[1], YesNo.No);
+														}else {
+															log(LogStatus.FAIL, "Not able to pass "+labelWithValue[0]+" "+labelWithValue[1],YesNo.Yes);
+														}
+														ThreadSleep(500);
+
+													}
+												}
+					
+												
+											
+											
+										}
+											if(click(driver, getCustomFieldNextBtn(30),"next button", action.SCROLLANDBOOLEAN)) {
+												log(LogStatus.PASS, "Clicked on Step 2 Next button", YesNo.No);
+												ThreadSleep(2000);
+//											if(sendKeys(driver, getFormulaTextBox(30), formulaText,"formula text area", action.SCROLLANDBOOLEAN)) {
+//													log(LogStatus.PASS, "Passed Value in formula Text Box "+formulaText, YesNo.No);
+													if(click(driver, getCustomFieldNextBtn(30),"next button", action.SCROLLANDBOOLEAN)) {
+														log(LogStatus.PASS, "Clicked on Step 3 Next button", YesNo.No);
+														ThreadSleep(1000);
+														if(true/*click(driver, getCustomFieldNextBtn(30),"next button", action.SCROLLANDBOOLEAN)*/) {
+															log(LogStatus.PASS, "Clicked on Step 4 Next button", YesNo.No);
+															ThreadSleep(1000);
+															if(click(driver, getCustomFieldSaveBtn(30), "save button", action.SCROLLANDBOOLEAN)) {
+																log(LogStatus.PASS, "clicked on save button", YesNo.No);
+																switchToDefaultContent(driver);
+																return true;
+																
+															}else {
+																log(LogStatus.FAIL, "Not able to click on save button so cannot create custom field "+objectName, YesNo.Yes);
+															}
+															
+														}else {
+															log(LogStatus.FAIL, "Not able to click on Step 4 next button so cannot create custom field : "+objectName,YesNo.Yes);
+														}
+														
+													}else {
+														log(LogStatus.FAIL, "Not able to click on Step 3 next button so cannot create custom field : "+objectName,YesNo.Yes);
+													}
+													
+													
+												
+//											}else {
+//												log(LogStatus.FAIL, "Not able to click on Step 2 next button so cannot create custom field : "+objectName,YesNo.Yes);
+//											}
+										}else {
+											log(LogStatus.FAIL, "Not able to enter value in field label text box : "+fieldLabelName+" so cannot create custom field", YesNo.Yes);
+										}
+									}else {
+										log(LogStatus.FAIL, "Not able to click on Step 1 next button so cannot create custom field", YesNo.Yes);
+									}
+								}else {
+									log(LogStatus.FAIL, "Not able to click on data type radio button "+dataType+" so cannot create custom field", YesNo.Yes);
+								}
+							}else {
+								log(LogStatus.FAIL, "Not able to switch in "+objectName+" new object frame so cannot add custom object", YesNo.Yes);
+							}
+						}else {
+							log(LogStatus.FAIL, "Not able to click on New button so cannot add custom field in "+objectName.toString(), YesNo.Yes);
+						}
+						
+					}else {
+						log(LogStatus.FAIL, "Not able to click on object side action "+objectLeftSideActions+" so cannot add custom object ", YesNo.Yes);
+					}
+					
+				}else {
+					log(LogStatus.FAIL, "Not able to click on object Name "+objectName+" so cannot add custom object ", YesNo.Yes);
+				}
+			}else {
+				log(LogStatus.FAIL, "Not able to found object : "+objectName.toString()+" so cannot add custom object", YesNo.Yes);
+			}
+		}else {
+			log(LogStatus.FAIL, "Not able to search object "+objectName.toString()+" so cannot add custom object", YesNo.Yes);
+		}
+		switchToDefaultContent(driver);
+		return false;
+	}
+	
+}
