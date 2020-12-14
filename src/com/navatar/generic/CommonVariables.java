@@ -3,7 +3,11 @@
  */
 package com.navatar.generic;
 
+import static com.navatar.generic.BaseLib.testCasesFilePath;
+import static com.navatar.generic.BaseLib.toggleFilePath;
 import static com.navatar.generic.EnumConstants.*;
+import com.navatar.generic.EnumConstants.excelLabel;
+import com.navatar.scripts.Toggle;
 
 
 /**
@@ -16,6 +20,18 @@ public class CommonVariables {
 	public static String URL;
 	public static String browserToLaunch;
 	
+	public static String appName;
+	public static String superAdminUserName,superAdminRegistered,adminPassword;
+	public static String AdminUserFirstName,AdminUserLastName,AdminUserEmailID;
+	public static String crmUser1FirstName,crmUser1LastName,crmUser1EmailID,crmUserProfile,crmUserLience;
+	public static String gmailUserName,gmailUserName2,gmailPassword;
+	
+	public static String ToggleIns1,ToggleIns1RecordType;
+	public static String ToggleFund1,ToggleFund1RecordType,ToggleFund1Category;
+	public static String ToggleFund2,ToggleFund2RecordType,ToggleFund2Category;
+	public static String ToggleDeal1;
+	
+	
 		
 //	/**
 //	 * 
@@ -27,10 +43,46 @@ public class CommonVariables {
 		URL = ExcelUtils.readDataFromPropertyFile("URL");
 		 browserToLaunch = ExcelUtils.readDataFromPropertyFile("Browser");
 		
-		//****************Module 1***************************//
-		/*if(obj instanceof Module1DummyClass){
+		 superAdminUserName=ExcelUtils.readDataFromPropertyFile("SuperAdminUsername");
+			superAdminRegistered=ExcelUtils.readDataFromPropertyFile("SuperAdminRegistered");
 			
-		}*/
+			AdminUserFirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_First_Name);
+			AdminUserLastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_Last_Name);
+			AdminUserEmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_Email);
+		
+			adminPassword=ExcelUtils.readDataFromPropertyFile("password");
+			gmailUserName=ExcelUtils.readDataFromPropertyFile("gmailUserName");
+			gmailUserName2=ExcelUtils.readDataFromPropertyFile("gmailUserName2");
+			gmailPassword=ExcelUtils.readDataFromPropertyFile("gmailPassword");
+			crmUser1FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User1", excelLabel.User_First_Name);
+			crmUser1LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User1", excelLabel.User_Last_Name);
+			crmUser1EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User1", excelLabel.User_Email);
+			crmUserProfile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User1", excelLabel.User_Profile);
+			crmUserLience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User1", excelLabel.User_License);
+
+			
+			//****************************************************************	Toggle Variable **********************************************************//
+
+		if(obj instanceof Toggle){
+			
+			ToggleIns1=ExcelUtils.readData(toggleFilePath,"EntityorAccount",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Institutions_Name);
+			ToggleIns1RecordType=ExcelUtils.readData(toggleFilePath,"EntityorAccount",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Record_Type);
+			
+			ToggleFund1=ExcelUtils.readData(toggleFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND1", excelLabel.Fund_Name);
+			ToggleFund1RecordType=ExcelUtils.readData(toggleFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND1", excelLabel.Fund_Type);
+			ToggleFund1Category=ExcelUtils.readData(toggleFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND1", excelLabel.Fund_InvestmentCategory);
+
+			ToggleFund2=ExcelUtils.readData(toggleFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Fund_Name);
+			ToggleFund2RecordType=ExcelUtils.readData(toggleFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Fund_Type);
+			ToggleFund2Category=ExcelUtils.readData(toggleFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Fund_InvestmentCategory);
+
+			ToggleDeal1=ExcelUtils.readData(toggleFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Fund_Name);
+			
+			
+			
+			
+			
+		}
 		 System.err.println("");
 		AppListeners.appLog.info("Done with intialization. Enjoy the show.\nTotal Time Taken: "+((System.currentTimeMillis()-StartTime)/1000)+" seconds.");
 		
