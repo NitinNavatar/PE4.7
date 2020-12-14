@@ -1,7 +1,7 @@
 package com.navatar.scripts;
 
 import static com.navatar.generic.CommonLib.*;
-import static com.navatar.generic.SmokeCommonVariables.*;
+import static com.navatar.generic.CommonVariables.*;
 
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -269,21 +269,14 @@ public class Toggle extends BaseLib {
 
 		String value="";
 		String type="";
-		String website=null;
-		String[][] EntityOrAccounts = {
-				{ Smoke_TaskINS1Name, Smoke_TaskINS1RecordType ,null}
-				, {Smoke_TaskINS2Name,Smoke_TaskINS2RecordType ,null},
-				{Smoke_TaskINS3Name,Smoke_TaskINS3RecordType ,null},
-				{Smoke_TaskINS4Name,Smoke_TaskINS4RecordType ,null},
-				{Smoke_TaskINS5Name,Smoke_TaskINS5RecordType ,Smoke_TaskINS5Website},
-		};
+		String[][] EntityOrAccounts = {{ ToggleIns1, ToggleIns1RecordType ,null}};
+		
 		for (String[] accounts : EntityOrAccounts) {
 			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
 				log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);	
 				value = accounts[0];
 				type = accounts[1];
-				website=accounts[2];
-				if (ip.createEntityOrAccount(projectName, value, type, null,website, 20)) {
+				if (ip.createEntityOrAccount(projectName, value, type, null,null, 20)) {
 					log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
 				} else {
 					sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
@@ -297,96 +290,47 @@ public class Toggle extends BaseLib {
 			}
 		}
 
-		String fname="";
-		String lname="";
-		String mailID="";
-		String ins="";
-		String title=null;
-		String[][] contactsInfo = { { Smoke_TaskContact1FName, Smoke_TaskContact1LName, Smoke_TaskINS1Name,
-			Smoke_TaskContact1RecordType,null}
-		, {Smoke_TaskContact2FName,Smoke_TaskContact2LName,Smoke_TaskINS1Name,
-			Smoke_TaskContact2RecordType,null},
-		{Smoke_TaskContact3FName,Smoke_TaskContact3LName,Smoke_TaskINS2Name,
-				Smoke_TaskContact3RecordType,null},
-		{Smoke_TaskContact4FName,Smoke_TaskContact4LName,Smoke_TaskINS2Name,
-					Smoke_TaskContact4RecordType,Smoke_TaskContact4Title},
-		};
-		int i=1;
-		String recType;
-		for (String[] contacts : contactsInfo) {
-			if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
-				log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);	
-				fname = contacts[0];
-				lname = contacts[1];
-				ins=contacts[2];
-				recType=contacts[3];
-				title=contacts[4];
-				mailID=	lp.generateRandomEmailId(gmailUserName);
-				ExcelUtils.writeData(testCasesFilePath, mailID, "Contacts", excelLabel.Variable_Name, "AATASKC"+i,excelLabel.Contact_EmailId);
+	
 
-				if (cp.createContact(projectName, fname, lname, ins, mailID,recType, null, null, CreationPage.ContactPage, title)) {
-					log(LogStatus.INFO,"successfully Created Contact : "+fname+" "+lname,YesNo.No);	
-				} else {
-					sa.assertTrue(false,"Not Able to Create Contact : "+fname+" "+lname);
-					log(LogStatus.SKIP,"Not Able to Create Contact: "+fname+" "+lname,YesNo.Yes);
-				}
-
-
-			} else {
-				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object2Tab);
-				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object2Tab,YesNo.Yes);
-			}
-			i++;
-		}
-
-		String[][] fundsOrDeals = {{Smoke_TaskFund1Name,Smoke_TaskFund1Type,Smoke_TaskFund1InvestmentCategory,Smoke_TaskFund1RecordType},
-				{Smoke_TaskFund2Name,Smoke_TaskFund2Type,Smoke_TaskFund2InvestmentCategory,Smoke_TaskFund2RecordType}};
+		String[][] fundsOrDeals = {{ToggleFund1,ToggleFund1Type,ToggleFund1Category,ToggleFund1RecordType},
+				{ToggleFund2,ToggleFund2Type,ToggleFund2Category,ToggleFund2RecordType}};
 		for (String[] funds : fundsOrDeals) {
 			if (lp.clickOnTab(projectName, TabName.Object3Tab)) {
 				log(LogStatus.INFO,"Click on Tab : "+TabName.Object3Tab,YesNo.No);	
 
-				if (ProjectName.MNA.toString().equals(projectName)) {
-
-					if (fp.createDealMNA(projectName,funds[3],funds[0], "Prospect", "Prospect",null, 15)) {
-						log(LogStatus.INFO,"Created Fund/Deal : "+funds[0],YesNo.No);	
-					} else {
-						sa.assertTrue(false,"Not Able to Create Fund/Deal  : "+funds[0]);
-						log(LogStatus.SKIP,"Not Able to Create Fund/Deal  : "+funds[0],YesNo.Yes);
-					}
-
-				} else {
 
 					if (fp.createFundPE(projectName, funds[0], funds[3], funds[1], funds[2], null, 15)) {
-						log(LogStatus.INFO,"Created Fund/Deal : "+funds[0],YesNo.No);	
+						log(LogStatus.INFO,"Created Fund : "+funds[0],YesNo.No);	
 					} else {
-						sa.assertTrue(false,"Not Able to Create Fund/Deal  : "+funds[0]);
-						log(LogStatus.SKIP,"Not Able to Create Fund/Deal  : "+funds[0],YesNo.Yes);
+						sa.assertTrue(false,"Not Able to Create Fund : "+funds[0]);
+						log(LogStatus.SKIP,"Not Able to Create Fund  : "+funds[0],YesNo.Yes);
 					}
-				}
+				
 			} else {
 				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object3Tab);
 				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object3Tab,YesNo.Yes);
 			}
 		}
-		String[][] customObjValues = {{taskCustomObj1Name,taskCustomObj1RecordType},{taskCustomObj2Name,taskCustomObj2RecordType}};
-		for (String[] val : customObjValues) {
-			if (lp.clickOnTab(projectName, TabName.TestCustomObjectTab)) {
-				log(LogStatus.INFO,"Click on Tab : "+TabName.TestCustomObjectTab,YesNo.No);	
+		
+		
+		
+			if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+				log(LogStatus.INFO,"Click on Tab : "+TabName.Object4Tab,YesNo.No);	
 
 
-				if (cop.createRecord(projectName, val[1], tabCustomObjField, val[0], false)) {
-					log(LogStatus.INFO,"successfully Created custom record : "+val[0],YesNo.No);	
-				} else {
-					sa.assertTrue(false,"Not Able to Create custom record  : "+val[0]);
-					log(LogStatus.SKIP,"Not Able to Create custom record  : "+val[0],YesNo.Yes);
-				}
-
+					if (fp.createDealMNA(projectName,ToggleDeal1,ToggleDeal1CompanyName, ToggleDeal1RecordType, ToggleDeal1Stage,null, 15)) {
+						log(LogStatus.INFO,"Created Deal : "+ToggleDeal1,YesNo.No);	
+					} else {
+						sa.assertTrue(false,"Not Able to Create Deal  : "+ToggleDeal1);
+						log(LogStatus.SKIP,"Not Able to Create Deal  : "+ToggleDeal1,YesNo.Yes);
+					}
 
 			} else {
-				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.TestCustomObjectTab);
-				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.TestCustomObjectTab,YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object4Tab);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object4Tab,YesNo.Yes);
 			}
-		}
+		
+		
 		switchToDefaultContent(driver);
 		lp.CRMlogout();
 		sa.assertAll();
