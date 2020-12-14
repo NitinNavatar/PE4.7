@@ -63,7 +63,7 @@ import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.generic.EnumConstants.object;
-import com.navatar.generic.EnumConstants.objectFeatureName;
+import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;

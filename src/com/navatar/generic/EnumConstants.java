@@ -245,7 +245,7 @@ public class EnumConstants {
 	}, Activity
 	};
 	
-	public static enum objectFeatureName{
+	public static enum ObjectFeatureName{
 		
 		pageLayouts{
 			@Override
@@ -272,9 +272,12 @@ public class EnumConstants {
 	@Override
 	public String toString() {
 			return "Fields & Relationships";
-}
-	
-	
+}		
+},FieldSets{
+	@Override
+	public String toString() {
+		return "Field Sets";
+	}
 }
 };
 

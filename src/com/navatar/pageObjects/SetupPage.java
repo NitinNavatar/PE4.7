@@ -163,6 +163,14 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, customFieldNextBtn, "Visibility", timeOut, "custom field next button");
 	}
 	
+	@FindBy(xpath="//input[@id='quickfind']")
+	private WebElement quickFindSearchBox;
+	
+	public WebElement getQuickFindSearchBox(String environment, String mode,int timeOut) {
+		return isDisplayed(driver, quickFindSearchBox, "Visibility", timeOut, "quick Find Search Box "+mode);
+	}
+	
+	
 	@FindBy(xpath = "//input[@id='MasterLabel']")
 	private WebElement fieldLabelTextBox;
 
@@ -175,6 +183,41 @@ public class SetupPage extends BasePageBusinessLayer {
 
 	public WebElement getCustomFieldSaveBtn(int timeOut) {
 		return isDisplayed(driver, customFieldSaveBtn, "Visibility", timeOut, "custom field save button");
+	}
+	
+	
+	public WebElement getObjectFeatureNewButton(ObjectFeatureName objectFeatureName, int timeOut) {
+		String xpath ="//button[@title='"+objectFeatureName+"']";
+		WebElement ele= FindElement(driver, xpath,objectFeatureName+" new button xpath", action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "visibility", timeOut,objectFeatureName+" new button xpath");
+	}
+	
+	@FindBy(xpath = "//input[@id='MasterLabel']")
+	private WebElement fieldSetLabelTextBox;
+
+	public WebElement getFieldSetLabelTextBox(int timeOut) {
+		return isDisplayed(driver, fieldSetLabelTextBox, "visibility", timeOut,"field set label name");
+	}
+	
+	@FindBy(xpath = "//textarea[@id='Description']")
+	private WebElement fieldSetWhereIsThisUsedTextArea;
+
+	public WebElement getFieldSetWhereIsThisUsedTextArea(int timeOut) {
+		return isDisplayed(driver, fieldSetWhereIsThisUsedTextArea, "Visibility", timeOut, "field Set Where Is This Used TextArea");
+	}
+	
+	@FindBy(xpath = "//td[@id='topButtonRow']//input[@title='Save']")
+	private WebElement saveButton;
+
+	public WebElement getSaveButton(int timeOut) {
+		return isDisplayed(driver, saveButton, "visibility", timeOut,"save button");
+	}
+	
+	@FindBy(xpath = "//div[@id='defaultView']/div")
+	private WebElement FieldSetdefaultViewDragAndDropTextLabel;
+
+	public WebElement getFieldSetdefaultViewDragAndDropTextLabel(int timeOut) {
+		return isDisplayed(driver, FieldSetdefaultViewDragAndDropTextLabel, "Visibility", timeOut, "default view drag and drop text label");
 	}
 	
 }
