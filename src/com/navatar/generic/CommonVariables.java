@@ -11,6 +11,7 @@ import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.scripts.Toggle;
 
 import com.navatar.generic.EnumConstants.excelLabel;
+import com.navatar.scripts.FieldSet;
 import com.navatar.scripts.TaskWatchlist;
 
 
@@ -34,16 +35,22 @@ public class CommonVariables {
 	public static String Smoke_TWContact4FName,Smoke_TWContact4LName,Smoke_TWContact4EmailID,Smoke_TaskContact4UpdatedName,Smoke_TWContact4RecordType;
 	public static String Smoke_TWContact5FName,Smoke_TWContact5LName,Smoke_TWContact5EmailID,Smoke_TWContact5RecordType;
 	
-	public static String appName,tabCustomObj,tabObj1,tabObj2,tabObj3,tabObj4,tabCustomObjField;
+	public static String appName;
 	public static String superAdminUserName,superAdminRegistered,adminPassword;
 	public static String AdminUserFirstName,AdminUserLastName,AdminUserEmailID;
 	public static String crmUser1FirstName,crmUser1LastName,crmUser1EmailID,crmUserProfile,crmUserLience;
 	public static String gmailUserName,gmailUserName2,gmailPassword;
 	
+	public static String tabCustomObj,tabCustomObjField;
+	public static String tabObj1,tabObj2,tabObj3,tabObj4;
+	
 	public static String ToggleIns1,ToggleIns1RecordType;
-	public static String ToggleFund1,ToggleFund1RecordType,ToggleFund1Category;
-	public static String ToggleFund2,ToggleFund2RecordType,ToggleFund2Category;
-	public static String ToggleDeal1;
+
+	public static String environment,mode;
+
+	public static String ToggleFund1,ToggleFund1Type,ToggleFund1Category,ToggleFund1RecordType;
+	public static String ToggleFund2,ToggleFund2Type,ToggleFund2Category,ToggleFund2RecordType;
+	public static String ToggleDeal1,ToggleDeal1CompanyName,ToggleDeal1RecordType,ToggleDeal1Stage;
 	
 	
 		
@@ -56,8 +63,8 @@ public class CommonVariables {
 		long StartTime = System.currentTimeMillis();
 		URL = ExcelUtils.readDataFromPropertyFile("URL");
 		 browserToLaunch = ExcelUtils.readDataFromPropertyFile("Browser");
-		
-	 superAdminUserName=ExcelUtils.readDataFromPropertyFile("SuperAdminUsername");
+		 appName=ExcelUtils.readDataFromPropertyFile("AppName");
+		 superAdminUserName=ExcelUtils.readDataFromPropertyFile("SuperAdminUsername");
 			superAdminRegistered=ExcelUtils.readDataFromPropertyFile("SuperAdminRegistered");
 			appName=ExcelUtils.readDataFromPropertyFile("AppName");
 			tabCustomObj=ExcelUtils.readDataFromPropertyFile("CustomTabName");
@@ -82,22 +89,35 @@ public class CommonVariables {
 			crmUserLience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User1", excelLabel.User_License);
 
 			
+			tabCustomObj=ExcelUtils.readDataFromPropertyFile("CustomTabName");
+			tabObj1=ExcelUtils.readDataFromPropertyFile("Object1");
+			tabObj2=ExcelUtils.readDataFromPropertyFile("Object2");
+			tabObj3=ExcelUtils.readDataFromPropertyFile("Object3");
+			tabObj4=ExcelUtils.readDataFromPropertyFile("Object4");
+			
 			//****************************************************************	Toggle Variable **********************************************************//
 
+			
+			
 		if(obj instanceof Toggle){
 			
 			ToggleIns1=ExcelUtils.readData(toggleFilePath,"EntityorAccount",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Institutions_Name);
 			ToggleIns1RecordType=ExcelUtils.readData(toggleFilePath,"EntityorAccount",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Record_Type);
 			
 			ToggleFund1=ExcelUtils.readData(toggleFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND1", excelLabel.Fund_Name);
-			ToggleFund1RecordType=ExcelUtils.readData(toggleFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND1", excelLabel.Fund_Type);
+			ToggleFund1Type=ExcelUtils.readData(toggleFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND1", excelLabel.Fund_Type);
 			ToggleFund1Category=ExcelUtils.readData(toggleFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND1", excelLabel.Fund_InvestmentCategory);
-
+			ToggleFund1RecordType=ExcelUtils.readData(toggleFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND1", excelLabel.Record_Type);
+			
 			ToggleFund2=ExcelUtils.readData(toggleFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Fund_Name);
-			ToggleFund2RecordType=ExcelUtils.readData(toggleFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Fund_Type);
+			ToggleFund2Type=ExcelUtils.readData(toggleFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Fund_Type);
 			ToggleFund2Category=ExcelUtils.readData(toggleFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Fund_InvestmentCategory);
-
-			ToggleDeal1=ExcelUtils.readData(toggleFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Fund_Name);
+			ToggleFund1RecordType=ExcelUtils.readData(toggleFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Record_Type);
+			
+			ToggleDeal1=ExcelUtils.readData(toggleFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Deal_Name);
+			ToggleDeal1CompanyName=ToggleIns1;
+			ToggleDeal1RecordType=ExcelUtils.readData(toggleFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Record_Type);
+			ToggleDeal1Stage=ExcelUtils.readData(toggleFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Stage);
 			
 			
 			
@@ -153,6 +173,14 @@ public class CommonVariables {
 			Smoke_TWContact5LName=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON5", excelLabel.Contact_LastName);
 			Smoke_TWContact5EmailID=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON5", excelLabel.Contact_EmailId);
 			Smoke_TWContact5RecordType=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON5", excelLabel.Record_Type);
+			Smoke_TWContact5FName=ExcelUtils.readData(testCasesFilePath,"Contacts",excelLabel.Variable_Name, "AATASKC5", excelLabel.Contact_FirstName);
+			Smoke_TWContact5LName=ExcelUtils.readData(testCasesFilePath,"Contacts",excelLabel.Variable_Name, "AATASKC5", excelLabel.Contact_LastName);
+			Smoke_TWContact5EmailID=ExcelUtils.readData(testCasesFilePath,"Contacts",excelLabel.Variable_Name, "AATASKC5", excelLabel.Contact_EmailId);
+		
+		}else if(obj instanceof FieldSet){
+			
+			
+			
 			
 		}
 		 System.err.println("");
