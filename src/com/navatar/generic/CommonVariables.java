@@ -10,6 +10,7 @@ import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.scripts.Toggle;
 
 import com.navatar.generic.EnumConstants.excelLabel;
+import com.navatar.scripts.FieldSet;
 import com.navatar.scripts.TaskWatchlist;
 
 
@@ -43,6 +44,9 @@ public class CommonVariables {
 	public static String tabObj1,tabObj2,tabObj3,tabObj4;
 	
 	public static String ToggleIns1,ToggleIns1RecordType;
+
+	public static String environment,mode;
+
 	public static String ToggleFund1,ToggleFund1Type,ToggleFund1Category,ToggleFund1RecordType;
 	public static String ToggleFund2,ToggleFund2Type,ToggleFund2Category,ToggleFund2RecordType;
 	public static String ToggleDeal1,ToggleDeal1CompanyName,ToggleDeal1RecordType,ToggleDeal1Stage;
@@ -156,6 +160,11 @@ public class CommonVariables {
 			Smoke_TWContact5LName=ExcelUtils.readData(testCasesFilePath,"Contacts",excelLabel.Variable_Name, "AATASKC5", excelLabel.Contact_LastName);
 			Smoke_TWContact5EmailID=ExcelUtils.readData(testCasesFilePath,"Contacts",excelLabel.Variable_Name, "AATASKC5", excelLabel.Contact_EmailId);
 		
+		}else if(obj instanceof FieldSet){
+			
+			
+			
+			
 		}
 		 System.err.println("");
 		AppListeners.appLog.info("Done with intialization. Enjoy the show.\nTotal Time Taken: "+((System.currentTimeMillis()-StartTime)/1000)+" seconds.");

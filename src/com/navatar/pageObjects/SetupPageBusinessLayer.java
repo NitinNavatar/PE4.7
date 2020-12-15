@@ -11,7 +11,7 @@ import com.navatar.generic.EnumConstants.object;
 import com.relevantcodes.extentreports.LogStatus;
 
 import static com.navatar.generic.CommonLib.*;
-
+import static com.navatar.generic.CommonVariables.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -88,7 +88,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 	 * @return true/false
 	 * @description this method is used to click on object name on setup page
 	 */
-	public boolean clickOnObjectFeature(String environment, String mode,object object,objectFeatureName objectFeatureName ) {
+	public boolean clickOnObjectFeature(String environment, String mode,object object,ObjectFeatureName objectFeatureName ) {
 		WebElement ele=null;
 		if (object==object.Global_Actions) {
 			return true;
@@ -143,7 +143,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 	 * @return List<String>
 	 * @description this method is used to drag and drop fields on page layout page
 	 */
-	public List<String> DragNDrop(String environment, String mode, object obj, objectFeatureName objectFeatureName,List<String> layoutName,HashMap<String, String> sourceANDDestination) {
+	public List<String> DragNDrop(String environment, String mode, object obj, ObjectFeatureName objectFeatureName,List<String> layoutName,HashMap<String, String> sourceANDDestination) {
 		WebElement ele= null;
 		List<String> result = new ArrayList<String>();
 		boolean flag = false;
@@ -640,6 +640,93 @@ public class SetupPageBusinessLayer extends SetupPage {
 		}
 		switchToDefaultContent(driver);
 		return false;
+	}
+	
+	
+	
+	/**
+	 * @author ANKIT JAISWAL
+	 * @param objectName
+	 * @param objectFeatureName
+	 * @param fieldSetLabel
+	 * @param fieldSetWhereisThisUsed
+	 * @return true/false
+	 */
+	public boolean createFieldSetComponent(object objectName,ObjectFeatureName objectFeatureName,String fieldSetLabel, String fieldSetWhereisThisUsed,String DragComponentName) {
+		boolean flag = false;
+		WebElement ele=null,sourceElement=null;
+		int count=0;
+		if(searchStandardOrCustomObject(environment,mode, objectName)) {
+			log(LogStatus.INFO, "click on Object : "+objectName, YesNo.No);
+			ThreadSleep(2000);
+			if(clickOnObjectFeature(environment,mode, objectName, objectFeatureName)) {
+				log(LogStatus.INFO, "Clicked on feature : "+objectFeatureName, YesNo.No);
+				ThreadSleep(1000);
+				if(sendKeys(driver, getQuickSearchInObjectManager_Lighting(10), fieldSetLabel, "search text box", action.BOOLEAN)) {
+					String xpath="//span[text()='"+fieldSetLabel+"']";
+					ele = isDisplayed(driver, FindElement(driver, xpath, "field set label text", action.BOOLEAN, 3), "visibility", 3, "field set label text");
+					if(ele!=null) {
+						log(LogStatus.INFO, "Field Set Label "+fieldSetLabel+" is already created ", YesNo.No);
+						return true;
+					}
+				}
+				if(click(driver, getObjectFeatureNewButton(objectFeatureName, 10), "new button", action.BOOLEAN)) {
+					log(LogStatus.INFO, "clicked on New button", YesNo.No);
+					ThreadSleep(2000);
+					if(sendKeys(driver, getFieldSetLabelTextBox(10),fieldSetLabel,"field set label text box", action.BOOLEAN)) {
+						log(LogStatus.INFO, "Entering value in field set text box : "+fieldSetLabel, YesNo.No);
+						if(sendKeys(driver, getFieldSetWhereIsThisUsedTextArea(10),fieldSetWhereisThisUsed,"where is this used text area", action.BOOLEAN)) {
+							log(LogStatus.INFO, "Entering value in where is this used text area : "+fieldSetLabel, YesNo.No);
+							if(click(driver, getSaveButton(10), "save button", action.BOOLEAN)) {
+								log(LogStatus.ERROR, "Clicked on save button and create field set label : "+fieldSetLabel+" successfully", YesNo.Yes);
+								ThreadSleep(2000);
+								if(DragComponentName!=null) {
+									String[] splitedDragComponent= DragComponentName.split("<break>");
+									for(int i=0; i<splitedDragComponent.length; i++) {
+										switchToFrame(driver, 20, getEditPageLayoutFrame_Lighting(20));
+										sourceElement =isDisplayed(driver, FindElement(driver, "//span[contains(text(),'"+splitedDragComponent[i]+"')]", "", action.BOOLEAN,10), "visibility",10,splitedDragComponent[i]+" page layout link");
+										sendKeys(driver, getQuickFindSearchBox(environment, mode, 10), splitedDragComponent[i], "Search Value : "+splitedDragComponent[i], action.BOOLEAN);
+										ThreadSleep(2000);
+										if(dragNDropOperation(driver, sourceElement, getFieldSetdefaultViewDragAndDropTextLabel(5))) {
+											log(LogStatus.INFO, "Dragged Successfully : "+splitedDragComponent[i], YesNo.No);
+											count++;
+										}else {
+											log(LogStatus.ERROR, "Not able to drag and drop field "+splitedDragComponent[i]+" in created field set component "+fieldSetLabel, YesNo.Yes);
+										}
+									}
+									if(count==splitedDragComponent.length) {
+										flag=true;
+									}
+								}else {
+									flag=true;
+								}
+								if(click(driver, getPageLayoutSaveBtn(object.Global_Actions, 10), "page layouts save button", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "Clicked on Save button", YesNo.No);
+									
+								}else {
+									log(LogStatus.ERROR, "Not able to click on Save button cannot save pagelayout dragged object or section in field set component "+fieldSetLabel, YesNo.Yes);
+									flag=false;
+								}
+							}else {
+								log(LogStatus.ERROR, "Not able to click on save button so cannot create field set label : "+fieldSetLabel, YesNo.Yes);
+							}
+						}else {
+							log(LogStatus.ERROR, "Not able to enter the value in where is this used text area : "+fieldSetLabel+" so cannot create field set component", YesNo.Yes);
+						}
+					}else {
+						log(LogStatus.ERROR, "Not able to enter the value in field set label text box : "+fieldSetLabel+" so cannot create field set component", YesNo.Yes);
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to click on new button so cannot create field set compnent : "+fieldSetLabel, YesNo.Yes);
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to click on object feature : "+objectFeatureName, YesNo.Yes);
+			}
+			
+		}else {
+			log(LogStatus.ERROR, "Not able to click on Object : "+objectName+" so cannot create field set component", YesNo.Yes);
+		}
+		return flag;
 	}
 	
 }
