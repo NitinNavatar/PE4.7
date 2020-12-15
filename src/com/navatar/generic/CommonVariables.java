@@ -58,8 +58,8 @@ public class CommonVariables {
 		long StartTime = System.currentTimeMillis();
 		URL = ExcelUtils.readDataFromPropertyFile("URL");
 		 browserToLaunch = ExcelUtils.readDataFromPropertyFile("Browser");
-		
-	 superAdminUserName=ExcelUtils.readDataFromPropertyFile("SuperAdminUsername");
+		 appName=ExcelUtils.readDataFromPropertyFile("AppName");
+		 superAdminUserName=ExcelUtils.readDataFromPropertyFile("SuperAdminUsername");
 			superAdminRegistered=ExcelUtils.readDataFromPropertyFile("SuperAdminRegistered");
 			
 			AdminUserFirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_First_Name);

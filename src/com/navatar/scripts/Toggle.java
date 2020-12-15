@@ -265,7 +265,7 @@ public class Toggle extends BaseLib {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		lp.CRMLogin("pe2.2.1_trial4545_admin@navatarplatform.com", adminPassword, appName);
 
 		String value="";
 		String type="";
@@ -318,7 +318,7 @@ public class Toggle extends BaseLib {
 				log(LogStatus.INFO,"Click on Tab : "+TabName.Object4Tab,YesNo.No);	
 
 
-					if (fp.createDealMNA(projectName,ToggleDeal1,ToggleDeal1CompanyName, ToggleDeal1RecordType, ToggleDeal1Stage,null, 15)) {
+					if (fp.createDeal(projectName,ToggleDeal1,ToggleDeal1CompanyName, ToggleDeal1RecordType, ToggleDeal1Stage,null, 15)) {
 						log(LogStatus.INFO,"Created Deal : "+ToggleDeal1,YesNo.No);	
 					} else {
 						sa.assertTrue(false,"Not Able to Create Deal  : "+ToggleDeal1);

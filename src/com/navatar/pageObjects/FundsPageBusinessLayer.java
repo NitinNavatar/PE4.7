@@ -402,4 +402,105 @@ public class FundsPageBusinessLayer extends FundsPage {
 	}
 	
 	
+	/**@author Akul Bhutani
+	 * @param projectName
+	 * @param dealType
+	 * @param dealName
+	 * @param status
+	 * @param stage
+	 * @param labelswithValues
+	 * @param timeOut
+	 * @return true/false
+	 * @description this is used to create a deal in MNA
+	 */
+	public boolean createDeal(String projectName,String dealType, String dealName,String companyName,String stage,String[][] labelswithValues,int timeOut) {
+		WebElement ele;
+		boolean flag = false;
+		String xpath="";
+		//		status="Prospect";
+		//		stage="Prospect";
+		//		dealType="Sell-side Deal";
+		ThreadSleep(2000);
+		if(click(driver, getNewButton(projectName,timeOut), "New Button", action.BOOLEAN)) {
+			appLog.info("Clicked on New Button");	
+			ThreadSleep(1000);
+			if (!dealType.equals("") || !dealType.isEmpty()) {
+				ThreadSleep(2000);
+				ele=getRadioButtonforRecordType(dealType, timeOut);
+				if (click(driver, ele, dealType, action.SCROLLANDBOOLEAN)) {
+					appLog.info(" Selected Deal type : "+dealType);	
+					ThreadSleep(1000);
+					if (click(driver, getContinueOrNextButton(projectName,timeOut), "Continue Button", action.BOOLEAN)) {
+						appLog.info("Clicked on Continue or Nxt Button");	
+						ThreadSleep(1000);
+					}else{
+						appLog.error("Not Able to Click on Continue or Nxt Button");	
+					}
+
+				}else{
+					appLog.error("Not Able to Select Deal type : "+dealType);	
+				}
+			}
+
+
+			ele = getLabelTextBox(projectName, PageName.DealPage.toString(), PageLabel.Deal_Name.toString(), timeOut);
+			if (sendKeys(driver,ele, dealName, "Deal Name", action.BOOLEAN)) {
+				appLog.info("Successfully Entered value on Deal Name TextBox : "+dealName);		
+				ThreadSleep(1000);
+				
+				if (sendKeys(driver, getCompanyName(projectName, 60), companyName, "Company Name",
+						action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(1000);
+						if (click(driver,FindElement(driver,"//div[contains(@class,'uiAutocomplete')]//a//div[@title='" + companyName+ "']","Company Name List", action.BOOLEAN, 30),
+								companyName + "   :   Company Name", action.BOOLEAN)) {
+							appLog.info(companyName + "  is present in list.");
+						} else {
+							appLog.info(companyName + "  is not present in the list.");
+							return false;
+						}
+					
+				} else {
+					appLog.error("Not able to enter Company name");
+					return false;
+				}
+				
+				if (click(driver, getDealStage(projectName, timeOut), "Deal Status : "+stage, action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(2000);
+					appLog.error("Clicked on Deal stage");
+
+					xpath="//div[@class='select-options']//li/a[@title='"+stage+"']";
+					WebElement dealStageEle = FindElement(driver,xpath, stage,action.SCROLLANDBOOLEAN, timeOut);
+					ThreadSleep(2000);
+					if (click(driver, dealStageEle, stage, action.SCROLLANDBOOLEAN)) {
+						appLog.info("Selected Deal stage : "+stage);
+					} else {
+						appLog.error("Not able to Select on Deal stage : "+stage);
+					}
+
+				} else {
+					appLog.error("Not able to Click on Deal stage : ");
+				}
+
+				if (click(driver, getSaveButton(projectName,30), "Save Button", action.SCROLLANDBOOLEAN)) {
+					appLog.error("Click on save Button");	
+					flag = true;
+				}else{
+					appLog.error("Not Able to Click on save Button");	
+				}
+
+
+
+			} else {
+				appLog.error("Not Able to Entered value on Deal Name TextBox : "+dealName);	
+			}
+		}else {
+			appLog.error("Not Able to Click on New Button");	
+		}
+
+
+		return flag;
+	}
+	
+	
+	
 }

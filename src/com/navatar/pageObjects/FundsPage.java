@@ -6,6 +6,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.navatar.generic.EnumConstants.ContactPageFieldLabelText;
 import com.navatar.generic.EnumConstants.Mode;
+import com.navatar.generic.EnumConstants.ProjectName;
 import com.navatar.generic.EnumConstants.action;
 
 import static com.navatar.generic.CommonLib.*;
@@ -213,7 +214,7 @@ public class FundsPage extends BasePageBusinessLayer {
 	}
 	
 
-	@FindBy(xpath="//span[text()='Stage']/../..//div[@class='uiMenu']//a[@class='select']")
+	@FindBy(xpath="//*[text()='Stage']/..//div//input")
 	private WebElement dealStageDropDownList;
 
 	/**
@@ -225,5 +226,21 @@ public class FundsPage extends BasePageBusinessLayer {
 		
 
 	}
+	
+	@FindBy(xpath="//span[text()='Company Name']/../following-sibling::div//input[@title='Search Entities']")
+	private WebElement firmName;
+
+	/**
+	 * @return the legalName
+	 */
+	public WebElement getCompanyName(String projectName,int timeOut) {
+		
+			return isDisplayed(driver, firmName, "Visibility", timeOut, "Company Name");
+		
+			
+		
+	
+	}
+	
 	
 }
