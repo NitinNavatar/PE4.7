@@ -283,7 +283,7 @@ public class Toggle extends BaseLib {
 				value = accounts[0];
 				type = accounts[1];
 				website=accounts[2];
-				if (ip.createEntityOrAccount(projectName, value, type, null,website, 20)) {
+				if (ip.createEntityOrAccount(projectName, value, type, null, 20)) {
 					log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
 				} else {
 					sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);

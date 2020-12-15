@@ -10,7 +10,7 @@ import java.util.List;
 
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.pageObjects.BasePageErrorMessage;
-import com.navatar.scripts.SmokeTestCases;
+//import com.navatar.scripts.SmokeTestCases;
 
 import static com.navatar.generic.BaseLib.*;
 
@@ -32,7 +32,7 @@ public class SmokeCommonVariables {
 	
 	public static String Smoke_MTINS1Name,Smoke_MTINS1RecordType;
 	public static String Smoke_MTINS2Name,Smoke_MTINS2RecordType;
-	public static String Smoke_MTINS3Name,Smoke_MTINS3RecordType;
+	public static String Smoke_MTINS3Name,CommonVariables;
 	public static String Smoke_MTINS4Name,Smoke_MTINS4RecordType;
 	public static String Smoke_MTINS5Name,Smoke_MTINS5RecordType;
 	public static String Smoke_MTINS6Name,Smoke_MTINS6RecordType,Smoke_MTINS6Status;
@@ -163,7 +163,7 @@ public class SmokeCommonVariables {
 	public SmokeCommonVariables(Object obj) {
 		// TODO Auto-generated constructor stub
 		long StartTime = System.currentTimeMillis();
-		if(obj instanceof SmokeTestCases){
+		//if(obj instanceof SmokeTestCases){
 			appName=ExcelUtils.readDataFromPropertyFile("AppName");
 			tabCustomObj=ExcelUtils.readDataFromPropertyFile("CustomTabName");
 			tabObj1=ExcelUtils.readDataFromPropertyFile("Object1");
@@ -235,7 +235,6 @@ public class SmokeCommonVariables {
 
 			// MEETING INS3..............
 			Smoke_MTINS3Name=ExcelUtils.readData(testCasesFilePath,"EntityorAccount",excelLabel.Variable_Name, "AAMTINS3", excelLabel.Institutions_Name);
-			Smoke_MTINS3RecordType=ExcelUtils.readData(testCasesFilePath,"EntityorAccount",excelLabel.Variable_Name, "AAMTINS3", excelLabel.Record_Type);
 
 			// MEETING INS4..............
 			Smoke_MTINS4Name=ExcelUtils.readData(testCasesFilePath,"EntityorAccount",excelLabel.Variable_Name, "AAMTINS4", excelLabel.Institutions_Name);
@@ -699,7 +698,7 @@ public class SmokeCommonVariables {
 				
 			AppListeners.appLog.info("Done with intialization in Smoke Test Variable. Enjoy the show.\nTotal Time Taken: "+((System.currentTimeMillis()-StartTime)/1000)+" seconds.");
 			
-		}
+		//}
 
 	}
 		

@@ -67,6 +67,7 @@ public class BaseLib extends AppListeners {
 	public static String downloadedFilePath=System.getProperty("user.dir")+"\\DownloadedFiles";
 	public static String testCasesFilePath = System.getProperty("user.dir")+"/TestCases.xlsx";
 	public static String toggleFilePath = System.getProperty("user.dir")+"/ToggleData.xlsx";
+	public static String taskWatchlistFilePath = System.getProperty("user.dir")+"/TaskWatchlist.xlsx";
 	public static WiniumDriver dDriver = null;
 	
 	@BeforeSuite

@@ -16,6 +16,11 @@ import static com.navatar.generic.CommonVariables.Smoke_TWContact4FName;
 import static com.navatar.generic.CommonVariables.Smoke_TWContact4LName;
 import static com.navatar.generic.CommonVariables.Smoke_TWContact5FName;
 import static com.navatar.generic.CommonVariables.Smoke_TWContact5LName;
+import static com.navatar.generic.CommonVariables.Smoke_TWContact1RecordType;
+import static com.navatar.generic.CommonVariables.Smoke_TWContact2RecordType;
+import static com.navatar.generic.CommonVariables.Smoke_TWContact3RecordType;
+import static com.navatar.generic.CommonVariables.Smoke_TWContact4RecordType;
+import static com.navatar.generic.CommonVariables.Smoke_TWContact5RecordType;
 import static com.navatar.generic.SmokeCommonVariables.Smoke_TaskFund1InvestmentCategory;
 import static com.navatar.generic.SmokeCommonVariables.Smoke_TaskFund1Name;
 import static com.navatar.generic.SmokeCommonVariables.Smoke_TaskFund1RecordType;
@@ -24,6 +29,11 @@ import static com.navatar.generic.SmokeCommonVariables.Smoke_TaskFund2Investment
 import static com.navatar.generic.SmokeCommonVariables.Smoke_TaskFund2Name;
 import static com.navatar.generic.SmokeCommonVariables.Smoke_TaskFund2RecordType;
 import static com.navatar.generic.SmokeCommonVariables.Smoke_TaskFund2Type;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import static com.navatar.generic.CommonVariables.Smoke_TWINS1Name;
 import static com.navatar.generic.CommonVariables.Smoke_TWINS1RecordType;
 import static com.navatar.generic.CommonVariables.Smoke_TWINS2Name;
@@ -34,25 +44,25 @@ import static com.navatar.generic.CommonVariables.Smoke_TWINS4Name;
 import static com.navatar.generic.CommonVariables.Smoke_TWINS4RecordType;
 import static com.navatar.generic.CommonVariables.Smoke_TWINS5Name;
 import static com.navatar.generic.CommonVariables.Smoke_TWINS5RecordType;
-import static com.navatar.generic.CommonVariables.Smoke_TaskINS5Website;
-import static com.navatar.generic.SmokeCommonVariables.adminPassword;
-import static com.navatar.generic.SmokeCommonVariables.appName;
-import static com.navatar.generic.SmokeCommonVariables.crmUser1EmailID;
-import static com.navatar.generic.SmokeCommonVariables.crmUser1FirstName;
-import static com.navatar.generic.SmokeCommonVariables.crmUser1LastName;
-import static com.navatar.generic.SmokeCommonVariables.crmUserLience;
-import static com.navatar.generic.SmokeCommonVariables.crmUserProfile;
-import static com.navatar.generic.SmokeCommonVariables.gmailUserName;
-import static com.navatar.generic.SmokeCommonVariables.superAdminUserName;
-import static com.navatar.generic.SmokeCommonVariables.tabCustomObj;
-import static com.navatar.generic.SmokeCommonVariables.tabCustomObjField;
-import static com.navatar.generic.SmokeCommonVariables.tabObj1;
-import static com.navatar.generic.SmokeCommonVariables.tabObj2;
-import static com.navatar.generic.SmokeCommonVariables.tabObj3;
-import static com.navatar.generic.SmokeCommonVariables.taskCustomObj1Name;
-import static com.navatar.generic.SmokeCommonVariables.taskCustomObj1RecordType;
-import static com.navatar.generic.SmokeCommonVariables.taskCustomObj2Name;
-import static com.navatar.generic.SmokeCommonVariables.taskCustomObj2RecordType;
+import static com.navatar.generic.CommonVariables.Smoke_TWINS1Status;
+import static com.navatar.generic.CommonVariables.Smoke_TWINS2Status;
+import static com.navatar.generic.CommonVariables.Smoke_TWINS3Status;
+import static com.navatar.generic.CommonVariables.Smoke_TWINS4Status;
+import static com.navatar.generic.CommonVariables.Smoke_TWINS5Status;
+import static com.navatar.generic.CommonVariables.adminPassword;
+import static com.navatar.generic.CommonVariables.appName;
+import static com.navatar.generic.CommonVariables.crmUser1EmailID;
+import static com.navatar.generic.CommonVariables.crmUser1FirstName;
+import static com.navatar.generic.CommonVariables.crmUser1LastName;
+import static com.navatar.generic.CommonVariables.crmUserLience;
+import static com.navatar.generic.CommonVariables.crmUserProfile;
+import static com.navatar.generic.CommonVariables.gmailUserName;
+import static com.navatar.generic.CommonVariables.superAdminUserName;
+import static com.navatar.generic.CommonVariables.tabCustomObjField;
+import static com.navatar.generic.CommonVariables.tabObj1;
+import static com.navatar.generic.CommonVariables.tabObj2;
+import static com.navatar.generic.CommonVariables.tabObj3;
+import static com.navatar.generic.CommonVariables.tabCustomObj;
 
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -61,10 +71,13 @@ import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.EnumConstants.CreationPage;
+import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.ProjectName;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.excelLabel;
+import com.navatar.generic.EnumConstants.object;
+import com.navatar.generic.EnumConstants.objectFeatureName;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
 import com.navatar.pageObjects.CustomObjPageBusinessLayer;
 import com.navatar.pageObjects.FundsPageBusinessLayer;
@@ -75,9 +88,9 @@ import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class TaskWatchlist extends BaseLib{
-
+	@Parameters({ "projectName"})
 	@Test
-	public void TWtc001_1CreateCRMUser(String projectName) {
+	public void TWtc001_1_CreateCRMUser(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -174,7 +187,7 @@ public class TaskWatchlist extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void TWTc001_2_Prerequisite(String projectName) {
+	public void TWtc001_2_Prerequisite(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		String[][] userAndPassword = {{superAdminUserName,adminPassword},{crmUser1EmailID,adminPassword}};
@@ -213,7 +226,7 @@ public class TaskWatchlist extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void TWTc001_3_AddListView(String projectName) {
+	public void TWtc001_3_AddListView(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
@@ -245,7 +258,7 @@ public class TaskWatchlist extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void TWTc002_1_CreatePreconditionData(String projectName) {
+	public void TWtc002_1_CreatePreconditionData(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -255,21 +268,20 @@ public class TaskWatchlist extends BaseLib{
 
 		String value="";
 		String type="";
-		String website=null;
+		String status1=null;
 		String[][] EntityOrAccounts = {
-				{ Smoke_TWINS1Name, Smoke_TWINS1RecordType ,null}
-				, {Smoke_TWINS2Name,Smoke_TWINS2RecordType ,null},
-				{Smoke_TWINS3Name,Smoke_TWINS3RecordType ,null},
-				{Smoke_TWINS4Name,Smoke_TWINS4RecordType ,null},
-				{Smoke_TWINS5Name,Smoke_TWINS5RecordType ,Smoke_TaskINS5Website},
+				{ Smoke_TWINS1Name, Smoke_TWINS1RecordType ,Smoke_TWINS1Status}
+				, {Smoke_TWINS2Name,Smoke_TWINS2RecordType ,Smoke_TWINS2Status},
+				{Smoke_TWINS3Name,Smoke_TWINS3RecordType ,Smoke_TWINS3Status},
+				{Smoke_TWINS4Name,Smoke_TWINS4RecordType ,Smoke_TWINS4Status}
 		};
-		for (String[] accounts : EntityOrAccounts) {
+		for (String[] accounts : EntityOrAccounts) {/*
 			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
 				log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);	
 				value = accounts[0];
 				type = accounts[1];
-				website=accounts[2];
-				if (ip.createEntityOrAccount(projectName, value, type, null,website, 20)) {
+				status1=accounts[2];
+				if (ip.createEntityOrAccount(projectName, value, type, new String[][] {{PageLabel.Status.toString(),status1}}, 20)) {
 					log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
 				} else {
 					sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
@@ -281,7 +293,7 @@ public class TaskWatchlist extends BaseLib{
 				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object1Tab);
 				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object1Tab,YesNo.Yes);
 			}
-		}
+		*/}
 
 		String fname="";
 		String lname="";
@@ -289,13 +301,15 @@ public class TaskWatchlist extends BaseLib{
 		String ins="";
 		String title=null;
 		String[][] contactsInfo = { { Smoke_TWContact1FName, Smoke_TWContact1LName, Smoke_TWINS1Name,
-			null,null}
+			Smoke_TWContact1RecordType,null}
 		, {Smoke_TWContact2FName,Smoke_TWContact2LName,Smoke_TWINS1Name,
-			null,null},
+			"Contact",null},
 		{Smoke_TWContact3FName,Smoke_TWContact3LName,Smoke_TWINS2Name,
-				null,null},
+				"Contact",null},
 		{Smoke_TWContact4FName,Smoke_TWContact4LName,Smoke_TWINS2Name,
-					null,null},
+					"Contact",null},
+		{Smoke_TWContact5FName,Smoke_TWContact5LName,Smoke_TWINS3Name,
+						"Contact",null}
 		};
 		int i=1;
 		String recType;
@@ -308,7 +322,7 @@ public class TaskWatchlist extends BaseLib{
 				recType=contacts[3];
 				title=contacts[4];
 				mailID=	lp.generateRandomEmailId(gmailUserName);
-				ExcelUtils.writeData(testCasesFilePath, mailID, "Contacts", excelLabel.Variable_Name, "AATASKC"+i,excelLabel.Contact_EmailId);
+				ExcelUtils.writeData(taskWatchlistFilePath, mailID, "Contacts", excelLabel.Variable_Name, "TWCON"+i,excelLabel.Contact_EmailId);
 
 				if (cp.createContact(projectName, fname, lname, ins, mailID,recType, null, null, CreationPage.ContactPage, title)) {
 					log(LogStatus.INFO,"successfully Created Contact : "+fname+" "+lname,YesNo.No);	
@@ -331,4 +345,49 @@ public class TaskWatchlist extends BaseLib{
 		sa.assertAll();
 	}
 
+	@Parameters({ "projectName"})
+	@Test
+	public void TWtc003_1_AddWatchlistField(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+	
+		String parentID=null;
+		String mode="Lightning";
+		if (home.clickOnSetUpLink()) {
+			parentID=switchOnWindow(driver);
+			if (parentID!=null) {
+			List<String> layoutName = new ArrayList<String>();
+			layoutName.add("Task Layout");
+			HashMap<String, String> sourceANDDestination = new HashMap<String, String>();
+			sourceANDDestination.put(PageLabel.Watchlist.toString(), PageLabel.Meeting_Type.toString());
+			List<String> abc = setup.DragNDrop("", mode, object.Task, objectFeatureName.pageLayouts, layoutName, sourceANDDestination);
+			ThreadSleep(10000);
+			if (!abc.isEmpty()) {
+				log(LogStatus.FAIL, "field not added/already present 1", YesNo.Yes);
+				sa.assertTrue(false, "field not added/already present 1");
+			}else{
+				log(LogStatus.INFO, "field added/already present 1", YesNo.Yes);
+			}
+			driver.close();
+			driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.FAIL, "could not find new window to switch, so cannot add field", YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch, so cannot add field");
+			}
+		}
+		else {
+			log(LogStatus.FAIL, "could not click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "could not click on setup link");
+		}
+	
+	
+	}
+	
 }

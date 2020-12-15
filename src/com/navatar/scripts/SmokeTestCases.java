@@ -1,4 +1,4 @@
-package com.navatar.scripts;
+/*package com.navatar.scripts;
 
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.SmokeCommonVariables.*;
@@ -284,7 +284,7 @@ public class SmokeTestCases extends BaseLib {
 				value = accounts[0];
 				type = accounts[1];
 				website=accounts[2];
-				if (ip.createEntityOrAccount(projectName, value, type, null,website, 20)) {
+				if (ip.createEntityOrAccount(projectName, value, type, null, 20)) {
 					log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
 				} else {
 					sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
@@ -422,7 +422,7 @@ public class SmokeTestCases extends BaseLib {
 
 				value = accounts[0];
 				type = accounts[1];
-				if (ip.createEntityOrAccount(projectName, value, type, null, null, 15)) {
+				if (ip.createEntityOrAccount(projectName, value, type, null,  15)) {
 					log(LogStatus.INFO,"Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
 				} else {
 					sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
@@ -450,7 +450,7 @@ public class SmokeTestCases extends BaseLib {
 				value = accounts[0];
 				type = accounts[1];
 				status1=accounts[2];
-				if (ip.createEntityOrAccount(projectName, value, type, new String[][] {{PageLabel.Status.toString(),status1}}, null, 15)) {
+				if (ip.createEntityOrAccount(projectName, value, type, new String[][] {{PageLabel.Status.toString(),status1}},  15)) {
 					log(LogStatus.INFO,"Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
 				} else {
 					sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
@@ -1953,13 +1953,13 @@ public class SmokeTestCases extends BaseLib {
 										sa.assertTrue(false,"could not create new record for test custom object");
 										log(LogStatus.SKIP,"could not create new record for test custom object",YesNo.Yes);
 									}
-									/*ele = cp.getHeaderTextForPage(projectName, PageName.Object2Page, cp.getNewButtonFromTask(projectName, PlusNewButton.TestCustomObjectNewButton), action.BOOLEAN, 10);
+									ele = cp.getHeaderTextForPage(projectName, PageName.Object2Page, cp.getNewButtonFromTask(projectName, PlusNewButton.TestCustomObjectNewButton), action.BOOLEAN, 10);
 										if (ele!=null) {
 											log(LogStatus.INFO,"New Test Object PopUp is opened",YesNo.No);	
 										} else {
 											sa.assertTrue(false,"New Test Object PopUp is not opened");
 											log(LogStatus.SKIP,"New Test Object PopUp is not opened",YesNo.Yes);
-										}*/
+										}
 									driver.close();
 									driver.switchTo().window(parentID);
 								} else {
@@ -3020,7 +3020,7 @@ public class SmokeTestCases extends BaseLib {
 												log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
 												flag=true;
 												ThreadSleep(2000);
-/*
+
 												ele = cp.getCreatedConfirmationMsg(projectName, 15);
 												if (ele!=null) {
 													actualValue = ele.getText().trim();
@@ -3036,12 +3036,12 @@ public class SmokeTestCases extends BaseLib {
 													sa.assertTrue(false,"Created Task Msg Ele not Found");
 													log(LogStatus.SKIP,"Created Task Msg Ele not Found",YesNo.Yes);
 
-												}*/
+												}
 
 												switchToDefaultContent(driver);
 												switchToFrame(driver, 60, tp.getFrame(PageName.TaskPage,60));
 
-												/*ele = cp.getHeaderTextForPage(projectName, PageName.TaskPage, Smoke_TaskFund2Name, action.BOOLEAN, 10);
+												ele = cp.getHeaderTextForPage(projectName, PageName.TaskPage, Smoke_TaskFund2Name, action.BOOLEAN, 10);
 												if (click(driver, ele, Smoke_TaskFund1Name, action.BOOLEAN)) {
 													ThreadSleep(5000);
 													ele = cp.getHeaderTextForPage(projectName, PageName.TaskPage, Smoke_TaskFund2Name, action.BOOLEAN, 10);
@@ -3058,7 +3058,7 @@ public class SmokeTestCases extends BaseLib {
 													log(LogStatus.ERROR, "fund/deal name is not clickable", YesNo.Yes);
 													sa.assertTrue(false,"fund/deal name is not clickable" );
 
-												}*/
+												}
 												String[][] fieldsWithValues= {{PageLabel.Subject.toString(),Smoke_TaskSTD1UpdatedSubject},
 														{PageLabel.Priority.toString(),Smoke_TaskSTD1UpdatedPriority}};
 
@@ -4572,14 +4572,14 @@ public class SmokeTestCases extends BaseLib {
 				msg1+=" about "+Smoke_TaskFund1Name+" and "+taskCustomObj1Name;
 				lp.verifyActivityAtPastStep2(projectName, PageName.Object1Page,Smoke_TaskINS3Name, Smoke_Task1LogACallSubject,msg1, date, false,"",false, "", 10);
 				
-					/*ele = tp.getElementForActivityTimeLineTask(projectName, PageName.Object1Page,ActivityType.Next, Smoke_BoardMeetingTaskSubject, SubjectElement.RedFlag, 10);
+					ele = tp.getElementForActivityTimeLineTask(projectName, PageName.Object1Page,ActivityType.Next, Smoke_BoardMeetingTaskSubject, SubjectElement.RedFlag, 10);
 				if (ele!=null) {
 					log(LogStatus.INFO, "successfully verified presence of red flag of task "+Smoke_BoardMeetingTaskSubject,YesNo.No);
 				}
 				else {
 					log(LogStatus.ERROR, "could not verify presence of red flag of task "+Smoke_BoardMeetingTaskSubject,YesNo.Yes);
 					sa.assertTrue(false, "could not verify presence of red flag of task "+Smoke_BoardMeetingTaskSubject);
-				}*/
+				}
 
 			}
 			else {
@@ -4617,14 +4617,14 @@ public class SmokeTestCases extends BaseLib {
 						msg1+=" about "+Smoke_TaskINS3Name+" and "+Smoke_TaskFund1Name;
 					lp.verifyActivityAtPastStep2(projectName, pName[i],clickOnRecord[i], Smoke_Task1LogACallSubject,msg1, date, false,"",false, "", 10);
 				
-				/*ele = tp.getElementForActivityTimeLineTask(projectName, PageName.Object1Page,ActivityType.Next, Smoke_BoardMeetingTaskSubject, SubjectElement.RedFlag, 10);
+				ele = tp.getElementForActivityTimeLineTask(projectName, PageName.Object1Page,ActivityType.Next, Smoke_BoardMeetingTaskSubject, SubjectElement.RedFlag, 10);
 				if (ele!=null) {
 					log(LogStatus.INFO, "successfully verified presence of red flag of task "+Smoke_BoardMeetingTaskSubject,YesNo.No);
 				}
 				else {
 					log(LogStatus.ERROR, "could not verify presence of red flag of task "+Smoke_BoardMeetingTaskSubject,YesNo.Yes);
 					sa.assertTrue(false, "could not verify presence of red flag of task "+Smoke_BoardMeetingTaskSubject);
-				}*/
+				}
 				}
 				
 				String parentID=null;
@@ -5093,7 +5093,7 @@ public class SmokeTestCases extends BaseLib {
 							if (click(driver, ip.getCustomTabSaveBtn(projectName, 10),"save", action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "successfully clicked on save and edited task", YesNo.No);
 								ExcelUtils.writeData(tomorrowsDate, "Task", excelLabel.Variable_Name, "AATask12", excelLabel.Due_Date);
-								/*
+								
 										String relatedAssoctaion=tp.Comment(projectName, PageLabel.Related_Associations, taskCustomObj2Name);
 										String comment = relatedAssoctaion+"\n"+TaskPagePageErrorMessage.Dots+"\n"+Smoke_Task1LogACallComment;
 
@@ -5113,7 +5113,7 @@ public class SmokeTestCases extends BaseLib {
 												log(LogStatus.ERROR, "could not verif all labels on task page", YesNo.Yes);
 												sa.assertTrue(false,"could not verif all labels on task page");
 											}
-								 */
+								 
 							}
 							else {
 								sa.assertTrue(false,"could not click cross on save, so cannot edit task");
@@ -5872,7 +5872,7 @@ public class SmokeTestCases extends BaseLib {
 												log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
 												flag=true;
 												ThreadSleep(2000);
-/*
+
 												ele = cp.getCreatedConfirmationMsg(projectName, 15);
 												if (ele!=null) {
 													actualValue = ele.getText().trim();
@@ -5888,12 +5888,12 @@ public class SmokeTestCases extends BaseLib {
 													sa.assertTrue(false,"Created Task Msg Ele not Found");
 													log(LogStatus.SKIP,"Created Task Msg Ele not Found",YesNo.Yes);
 
-												}*/
+												}
 
 												switchToDefaultContent(driver);
 												switchToFrame(driver, 60, tp.getFrame(PageName.TaskPage,60));
 
-												/*ele = cp.getHeaderTextForPage(projectName, PageName.TaskPage, Smoke_TaskFund2Name, action.BOOLEAN, 10);
+												ele = cp.getHeaderTextForPage(projectName, PageName.TaskPage, Smoke_TaskFund2Name, action.BOOLEAN, 10);
 												if (click(driver, ele, Smoke_TaskFund1Name, action.BOOLEAN)) {
 													ThreadSleep(5000);
 													ele = cp.getHeaderTextForPage(projectName, PageName.TaskPage, Smoke_TaskFund2Name, action.BOOLEAN, 10);
@@ -5910,7 +5910,7 @@ public class SmokeTestCases extends BaseLib {
 													log(LogStatus.ERROR, "fund/deal name is not clickable", YesNo.Yes);
 													sa.assertTrue(false,"fund/deal name is not clickable" );
 
-												}*/
+												}
 												String[][] fieldsWithValues= {{PageLabel.Subject.toString(),Smoke_TaskSTDLogACall1UpdatedSubject},
 														{PageLabel.Priority.toString(),Smoke_TaskSTDLogACall1UpdatedPriority}};
 
@@ -19096,4 +19096,4 @@ public class SmokeTestCases extends BaseLib {
 	
 }
 	
-	
+	*/

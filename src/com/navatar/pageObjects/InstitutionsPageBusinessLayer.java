@@ -38,7 +38,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 	 * @return true/false
 	 * @description this method is used to create single entity if pe and account if mna
 	 */
-	public boolean createEntityOrAccount(String projectName,String institutionName,String recordType, String[][] labelsWithValues,String website,int timeOut) {
+	public boolean createEntityOrAccount(String projectName,String institutionName,String recordType, String[][] labelsWithValues,int timeOut) {
 		boolean flag=false;
 		refresh(driver);
 		ThreadSleep(3000);
@@ -66,15 +66,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 				
 				if (sendKeys(driver, getLegalName(projectName,timeOut), institutionName, "leagl name text box",action.SCROLLANDBOOLEAN)) {
 					appLog.info("passed data in text box: " + institutionName);
-					if (website!=null) {
-						if (sendKeys(driver, getwebsiteTextbox(projectName,timeOut), website, "website",action.SCROLLANDBOOLEAN)) {
-							appLog.info("passed data in text box: " + website);
-						}
-						else {
-							appLog.error("could not enter website value: "+website);
-							flag=false;
-						}
-					}
+					
 					FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 					if (labelsWithValues!=null) {
 						for (String[] strings : labelsWithValues) {
