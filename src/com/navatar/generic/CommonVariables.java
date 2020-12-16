@@ -6,6 +6,7 @@ package com.navatar.generic;
 import static com.navatar.generic.BaseLib.testCasesFilePath;
 import static com.navatar.generic.BaseLib.toggleFilePath;
 import static com.navatar.generic.BaseLib.taskWatchlistFilePath;
+import static com.navatar.generic.BaseLib.fieldSetFilePath;
 import static com.navatar.generic.EnumConstants.*;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.scripts.Toggle;
@@ -51,6 +52,13 @@ public class CommonVariables {
 	public static String ToggleFund1,ToggleFund1Type,ToggleFund1Category,ToggleFund1RecordType;
 	public static String ToggleFund2,ToggleFund2Type,ToggleFund2Category,ToggleFund2RecordType;
 	public static String ToggleDeal1,ToggleDeal1CompanyName,ToggleDeal1RecordType,ToggleDeal1Stage;
+	
+	public static String FS_Object1,FS_Object2,FS_Object3,FS_FieldSetLabel1,FS_FieldSetLabel2,FS_FieldSetLabel3,
+						FS_NameSpacePrefix1,FS_NameSpacePrefix2,FS_NameSpacePrefix3,FS_FieldsName1,FS_FieldsName2,FS_FieldsName3;
+	
+	public static String FS_Ins1;
+	public static String FS_Con1_FName,FS_Con1_LastName,FS_Con1_Email,FS_Con1_Phone;
+	public static String FS_DealName1,FS_DealStage1,FS_DealSourceContact;
 	
 	
 		
@@ -179,8 +187,33 @@ public class CommonVariables {
 		
 		}else if(obj instanceof FieldSet){
 			
+			FS_Object1=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS1", excelLabel.Object_Name);
+			FS_Object2=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS2", excelLabel.Object_Name);
+			FS_Object3=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS3", excelLabel.Object_Name);
+			
+			FS_FieldSetLabel1=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS1", excelLabel.Field_Set_Label);
+			FS_FieldSetLabel2=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS2", excelLabel.Field_Set_Label);
+			FS_FieldSetLabel3=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS3", excelLabel.Field_Set_Label);
+			
+			FS_NameSpacePrefix1=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS1", excelLabel.NameSpace_PreFix);
+			FS_NameSpacePrefix2=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS2", excelLabel.NameSpace_PreFix);
+			FS_NameSpacePrefix3=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS3", excelLabel.NameSpace_PreFix);
+			
+			FS_FieldsName1=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS1", excelLabel.Fields_Name);
+			FS_FieldsName2=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS2", excelLabel.Fields_Name);
+			FS_FieldsName3=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS3", excelLabel.Fields_Name);
 			
 			
+			FS_Con1_FName=ExcelUtils.readData(fieldSetFilePath,"Contacts",excelLabel.Variable_Name, "C1", excelLabel.Contact_FirstName);
+			FS_Con1_LastName=ExcelUtils.readData(fieldSetFilePath,"Contacts",excelLabel.Variable_Name, "C1", excelLabel.Contact_LastName);
+			FS_Con1_Email=ExcelUtils.readData(fieldSetFilePath,"Contacts",excelLabel.Variable_Name, "C1", excelLabel.Contact_EmailId);
+			FS_Con1_Phone=ExcelUtils.readData(fieldSetFilePath,"Contacts",excelLabel.Variable_Name, "C1", excelLabel.Phone);
+			
+			FS_Ins1=ExcelUtils.readData(fieldSetFilePath,"Entities",excelLabel.Variable_Name, "Ins1", excelLabel.Institutions_Name);
+			
+			FS_DealName1= ExcelUtils.readData(fieldSetFilePath,"Deal",excelLabel.Variable_Name, "Deal1", excelLabel.Deal_Name);
+			FS_DealStage1=ExcelUtils.readData(fieldSetFilePath,"Deal",excelLabel.Variable_Name, "Deal1", excelLabel.Stage);
+			FS_DealSourceContact=ExcelUtils.readData(fieldSetFilePath,"Deal",excelLabel.Variable_Name, "Deal1", excelLabel.Source_Firm);
 			
 		}
 		 System.err.println("");
