@@ -275,7 +275,7 @@ public class TaskWatchlist extends BaseLib{
 				{Smoke_TWINS3Name,Smoke_TWINS3RecordType ,Smoke_TWINS3Status},
 				{Smoke_TWINS4Name,Smoke_TWINS4RecordType ,Smoke_TWINS4Status}
 		};
-		for (String[] accounts : EntityOrAccounts) {/*
+		for (String[] accounts : EntityOrAccounts) {
 			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
 				log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);	
 				value = accounts[0];
@@ -293,7 +293,7 @@ public class TaskWatchlist extends BaseLib{
 				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object1Tab);
 				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object1Tab,YesNo.Yes);
 			}
-		*/}
+		}
 
 		String fname="";
 		String lname="";
