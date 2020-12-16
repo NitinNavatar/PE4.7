@@ -377,9 +377,9 @@ public class Toggle extends BaseLib {
 						}
 
 						WebElement ele=ip.getFundNameAtToggle(projectName, PageName.Object1Page, ToggleFund1, action.BOOLEAN, 30);
-						if(mouseHoverJScript(driver, ele)){
+						if(mouseOverOperation(edriver, ele)){
 							log(LogStatus.PASS,"Able to mouse hover : "+ToggleFund1,YesNo.No);
-							String text = trim(getText(driver, ip.getFundNameAtToggle(projectName, PageName.Object1Page, ToggleFund1, action.BOOLEAN, 30), ToggleFund1, action.BOOLEAN));
+							String text = ip.getFundNameAtToggleToolTip(projectName, PageName.Object1Page, ToggleFund1, action.BOOLEAN, 30).getAttribute("title");
 							if(text.contains(ToggleFund1)){
 								appLog.info("Tool tip error message is verified for : "+ToggleFund1);
 							} else {
@@ -393,10 +393,10 @@ public class Toggle extends BaseLib {
 						
 						String lp11 ="Alexa Limited partner";
 						ele=ip.getLegalEntityAtToggle(projectName, PageName.Object1Page, lp11, action.BOOLEAN, 30);
-						if(mouseHoverJScript(driver, ele)){
+						if(mouseOverOperation(edriver, ele)){
 							ThreadSleep(3000);
 							log(LogStatus.PASS,"Able to mouse hover : "+lp11,YesNo.No);
-							if (click(driver, ip.getInlineOrLockedAtToggle(projectName, PageName.Object1Page, lp11, action.BOOLEAN, 10), "Inline Edit Icon : "+lp11, action.BOOLEAN)) {
+							if (clickUsingJavaScript(driver, ip.getInlineOrLockedAtToggle(projectName, PageName.Object1Page, lp11, action.BOOLEAN, 10), "Inline Edit Icon : "+lp11, action.BOOLEAN)) {
 								log(LogStatus.INFO,"click on inline edit icon "+lp11,YesNo.No);
 								ThreadSleep(2000);
 								

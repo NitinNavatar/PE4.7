@@ -142,7 +142,16 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 	
 	
 	public WebElement getFundNameAtToggle(String projectName,PageName pageName,String fundName,action action,int timeOut) {
-		String xpath = "//*[@data-label='Fund: ']//*[text()='"+fundName+"']/../..";
+		String xpath = "//*[@data-label='Fund: ']//*[text()='"+fundName+"']";
+		WebElement ele = FindElement(driver, xpath,fundName, action, timeOut);
+		scrollDownThroughWebelement(driver, ele, "Fund Name : "+fundName);
+		ele = isDisplayed(driver, ele, "Visibility", timeOut, "Fund Name : "+fundName);
+		return ele;
+	}
+	
+	
+	public WebElement getFundNameAtToggleToolTip(String projectName,PageName pageName,String fundName,action action,int timeOut) {
+		String xpath = "//*[@data-label='Fund: ']//*[text()='"+fundName+"']/..";
 		WebElement ele = FindElement(driver, xpath,fundName, action, timeOut);
 		scrollDownThroughWebelement(driver, ele, "Fund Name : "+fundName);
 		ele = isDisplayed(driver, ele, "Visibility", timeOut, "Fund Name : "+fundName);
@@ -150,7 +159,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 	}
 	
 	public WebElement getLegalEntityAtToggle(String projectName,PageName pageName,String entityName,action action,int timeOut) {
-		String xpath = "//*[@data-label='Legal Entity: ']//*[text()='"+entityName+"']/../..";
+		String xpath = "//*[@data-label='Legal Entity: ']//*[text()='"+entityName+"']";
 		WebElement ele = FindElement(driver, xpath,entityName, action, timeOut);
 		scrollDownThroughWebelement(driver, ele, "Fund Name : "+entityName);
 		ele = isDisplayed(driver, ele, "Visibility", timeOut, "Fund Name : "+entityName);
@@ -158,10 +167,9 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 	}
 	
 	public WebElement getInlineOrLockedAtToggle(String projectName,PageName pageName,String name,action action,int timeOut) {
-		String xpath = "//*[@title='"+name+"']/../following-sibling::span/button";
+		String xpath = "//a[text()='Fund Investments']/../../../../../..//*[@title='"+name+"']/../following-sibling::span/button";
 		WebElement ele = FindElement(driver, xpath,name, action, timeOut);
 		scrollDownThroughWebelement(driver, ele, name);
-		ele = isDisplayed(driver, ele, "Visibility", timeOut, name);
 		return ele;
 	}
 	
