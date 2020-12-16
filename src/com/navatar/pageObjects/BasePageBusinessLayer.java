@@ -541,6 +541,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	appLog.info("Element Found : "+related);	
 	}else {
 		appLog.error("Element Not Found : "+related);	
+		appLog.error("Going to check on more "+related);	
+		xpath = "//li//button[@title='More Tabs']";
+		ele = FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut);
+		click(driver, ele, "More Tab", action.BOOLEAN);
+		ThreadSleep(3000);
+		
+		xpath = "//a/span[text()='"+related+"']";
+		ele = isDisplayed(driver, FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut)
+				, "visiblity", 30, relatedTab.toString());
+		
+		
 	}
 	return ele;
 	
@@ -635,6 +646,9 @@ public String getTabName(String projectName,TabName TabName) {
 		break;
 	case Object4Tab:
 		tabName = tabObj4+"s";
+		break;
+	case SDGTab:
+		tabName = "Sortable Data Grids";
 		break;
 	case TaskTab:
 		tabName = "Tasks";

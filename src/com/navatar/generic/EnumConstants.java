@@ -39,7 +39,7 @@ public class EnumConstants {
 		}
 		, Pipeline_Name, Company_Name, Stage, Source, Source_Firm, Source_Contact, Deal_Type, Employees, Website, Email, Legal_Name, Name, Investment_Size, Log_In_Date, Our_Role, Last_Name, Last_Stage_Change_Date, Highest_Stage_Reached, Age_of_Current_Stage, Date_Stage_Changed, Changed_Stage, Age, First_Stage_Changed, Second_Stage_Changed, Office_Location_Name, State_Province, ZIP, Organization_Name, Primary, Updated_Primary, Start, Related_To, Due_Date,Investment_Likely_Amount,Total_Fundraising_Contacts,Fundraising_Contact_ID,Fundraising,Role, Other_Address,
 		Mailing_Address,Total_Commitments,Commitment_Amount,Partner_Type,Tax_Forms,Final_Commitment_Date,Company,Bank_Name,Placement_Fee,Fund_Investment_Category,Total_CoInvestment_Commitments,Total_Fund_Commitments, Institution_Type, Fund_Preferences, Industry_Preferences, Shipping_Street, Shipping_City, Shipping_State, Shipping_Zip, Shipping_Country, Mobile_Phone, Assistant, Asst_Phone, Phone,Total_Call_Amount_Received, Total_Amount_Called,Total_Amount_Received,Total_Uncalled_Amount,Total_Commitment_Due,Commitment_Called,Called_Due,Preferred_Mode_of_Contact,Percent, 
-		TotalCommitment, Priority, Project_Type, Project_Name, Task_Name, Status, Fund_InvestmentCategory,Comment, Updated_Priority, Updated_Subject, Updated_Comment, Start_Date, End_Date, Data_Type, Field_Label, Length, Decimal_Places, Options, Deal_Name, Object_Name, Field_Set_Label, NameSpace_PreFix, Fields_Name;
+		TotalCommitment, Priority, Project_Type, Project_Name, Task_Name, Status, Fund_InvestmentCategory,Comment, Updated_Priority, Updated_Subject, Updated_Comment, Start_Date, End_Date, Data_Type, Field_Label, Length, Decimal_Places, Options, Deal_Name, SDG_Name, sObjectName, SDG_Tag, Object_Name, Field_Set_Label, NameSpace_PreFix, Fields_Name;
 };
 
 	public static enum fileDistributor {
@@ -103,7 +103,7 @@ public class EnumConstants {
 		NavatarInvestorAddOns, CurrentInvesment, PotentialInvesment, RecentActivities, AllDocuments, HomeTab, 
 		FolderTemplate, FundDistributions, InvestorDistributions, MarketingInitiatives, MarketingProspects, 
 		NavatarSetup, Pipelines, FundDrawdowns, CapitalCalls, FundraisingContacts, LimitedPartne, ReportsTab, LimitedPartner,CompaniesTab, TaskRayTab,TaskRay,TestCustomObjectTab, TaskTab,
-		Other,Object1Tab,Object2Tab,Object3Tab,Object4Tab,RecycleBinTab;
+		Other,Object1Tab,Object2Tab,Object3Tab,Object4Tab,RecycleBinTab,SDGTab;
 	}
 	
 	public static enum Mode{
@@ -955,7 +955,7 @@ public class EnumConstants {
 	};
 	
 	public static enum RelatedTab{
-		Related,Details,Tasks,Meetings,Activities,Documents,Box;	  
+		Related,Details,Tasks,Meetings,Activities,Documents,Box,Investment;	  
 	};
 	
 	public static enum Header{
@@ -1065,6 +1065,43 @@ public class EnumConstants {
     
     public static enum TaskTimeLine{
     	Past,Upcoming;
+    };
+    
+    public static enum SDGCreationLabel{
+    	SDG_Name,SDG_Tag,sObjectName,Parent_Field_Name,Filter;
+    };
+    
+    public static enum ToggleButton{
+    	CoInvestments{
+            @Override
+            public String toString() {
+                return "Co-Investments";
+            }
+        }, Fund_Investments{
+            @Override
+            public String toString() {
+                return "Fund Investments";
+            }
+        };    
+    };
+    
+    public static enum ToggleButtonGroup{
+    	SDGButton{
+            @Override
+            public String toString() {
+                return "Open SDG record.";
+            }
+        }, ToggleFiltersButton{
+            @Override
+            public String toString() {
+                return "Toggle Filters.";
+            }
+        }, ReloadButton{
+            @Override
+            public String toString() {
+                return "Reload";
+            }
+        };    
     };
 
 }

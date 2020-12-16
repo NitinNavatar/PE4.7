@@ -53,6 +53,7 @@ public class CommonVariables {
 	public static String ToggleFund2,ToggleFund2Type,ToggleFund2Category,ToggleFund2RecordType;
 	public static String ToggleDeal1,ToggleDeal1CompanyName,ToggleDeal1RecordType,ToggleDeal1Stage;
 	
+
 	public static String FS_Object1,FS_Object2,FS_Object3,FS_FieldSetLabel1,FS_FieldSetLabel2,FS_FieldSetLabel3,
 						FS_NameSpacePrefix1,FS_NameSpacePrefix2,FS_NameSpacePrefix3,FS_FieldsName1,FS_FieldsName2,FS_FieldsName3;
 	
@@ -60,7 +61,10 @@ public class CommonVariables {
 	public static String FS_Con1_FName,FS_Con1_LastName,FS_Con1_Email,FS_Con1_Phone;
 	public static String FS_DealName1,FS_DealStage1,FS_DealSourceContact;
 	
+
+	public static String SDG;
 	
+	public static String Sdg1Name,Sdg1TagName,Sdg1ObjectName;
 		
 //	/**
 //	 * 
@@ -103,6 +107,8 @@ public class CommonVariables {
 			tabObj3=ExcelUtils.readDataFromPropertyFile("Object3");
 			tabObj4=ExcelUtils.readDataFromPropertyFile("Object4");
 			
+			SDG = "Sortable Data Grids";
+			
 			//****************************************************************	Toggle Variable **********************************************************//
 
 			
@@ -126,6 +132,10 @@ public class CommonVariables {
 			ToggleDeal1CompanyName=ToggleIns1;
 			ToggleDeal1RecordType=ExcelUtils.readData(toggleFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Record_Type);
 			ToggleDeal1Stage=ExcelUtils.readData(toggleFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Stage);
+			
+			Sdg1Name=ExcelUtils.readData(toggleFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.SDG_Name);
+			Sdg1TagName=ExcelUtils.readData(toggleFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.SDG_Tag);;
+			Sdg1ObjectName=ExcelUtils.readData(toggleFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.sObjectName);
 			
 			
 			

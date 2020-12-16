@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EnumConstants.Mode;
+import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.RecordType;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
@@ -120,6 +121,48 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		
 		
 		return flag;
+	}
+	
+	public WebElement toggleButton(String projectName,PageName pageName,String btnName,action action,int timeOut) {
+		String xpath = "//button[@title='"+btnName+"']";
+		WebElement ele = FindElement(driver, xpath,"Toggle Button : "+btnName, action, timeOut);
+		scrollDownThroughWebelement(driver, ele, "Toggle Button : "+btnName);
+		ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btnName);
+		return ele;
+	}
+	
+	public WebElement toggleSDGButtons(String projectName,PageName pageName,String toggleTab,ToggleButtonGroup btnName,action action,int timeOut) {
+		String btname = btnName.toString();
+		String xpath = "//*[text()='"+toggleTab+"']/../../..//following-sibling::div//button[@title='"+btname+"']";
+		WebElement ele = FindElement(driver, xpath,toggleTab+" >> "+btname, action, timeOut);
+		scrollDownThroughWebelement(driver, ele, "Toggle Button : "+btname);
+		ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btname);
+		return ele;
+	}
+	
+	
+	public WebElement getFundNameAtToggle(String projectName,PageName pageName,String fundName,action action,int timeOut) {
+		String xpath = "//*[@data-label='Fund: ']//*[text()='"+fundName+"']/../..";
+		WebElement ele = FindElement(driver, xpath,fundName, action, timeOut);
+		scrollDownThroughWebelement(driver, ele, "Fund Name : "+fundName);
+		ele = isDisplayed(driver, ele, "Visibility", timeOut, "Fund Name : "+fundName);
+		return ele;
+	}
+	
+	public WebElement getLegalEntityAtToggle(String projectName,PageName pageName,String entityName,action action,int timeOut) {
+		String xpath = "//*[@data-label='Legal Entity: ']//*[text()='"+entityName+"']/../..";
+		WebElement ele = FindElement(driver, xpath,entityName, action, timeOut);
+		scrollDownThroughWebelement(driver, ele, "Fund Name : "+entityName);
+		ele = isDisplayed(driver, ele, "Visibility", timeOut, "Fund Name : "+entityName);
+		return ele;
+	}
+	
+	public WebElement getInlineOrLockedAtToggle(String projectName,PageName pageName,String name,action action,int timeOut) {
+		String xpath = "//*[@title='"+name+"']/../following-sibling::span/button";
+		WebElement ele = FindElement(driver, xpath,name, action, timeOut);
+		scrollDownThroughWebelement(driver, ele, name);
+		ele = isDisplayed(driver, ele, "Visibility", timeOut, name);
+		return ele;
 	}
 	
 }
