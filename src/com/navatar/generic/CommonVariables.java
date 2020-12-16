@@ -52,7 +52,9 @@ public class CommonVariables {
 	public static String ToggleFund2,ToggleFund2Type,ToggleFund2Category,ToggleFund2RecordType;
 	public static String ToggleDeal1,ToggleDeal1CompanyName,ToggleDeal1RecordType,ToggleDeal1Stage;
 	
+	public static String SDG;
 	
+	public static String Sdg1Name,Sdg1TagName,Sdg1ObjectName;
 		
 //	/**
 //	 * 
@@ -95,6 +97,8 @@ public class CommonVariables {
 			tabObj3=ExcelUtils.readDataFromPropertyFile("Object3");
 			tabObj4=ExcelUtils.readDataFromPropertyFile("Object4");
 			
+			SDG = "Sortable Data Grids";
+			
 			//****************************************************************	Toggle Variable **********************************************************//
 
 			
@@ -118,6 +122,10 @@ public class CommonVariables {
 			ToggleDeal1CompanyName=ToggleIns1;
 			ToggleDeal1RecordType=ExcelUtils.readData(toggleFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Record_Type);
 			ToggleDeal1Stage=ExcelUtils.readData(toggleFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Stage);
+			
+			Sdg1Name=ExcelUtils.readData(toggleFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.SDG_Name);
+			Sdg1TagName=ExcelUtils.readData(toggleFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.SDG_Tag);;
+			Sdg1ObjectName=ExcelUtils.readData(toggleFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.sObjectName);
 			
 			
 			

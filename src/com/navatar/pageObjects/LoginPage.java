@@ -338,7 +338,7 @@ public class LoginPage extends BasePageBusinessLayer{
 		return isDisplayed(driver, FindElement(driver,xpath,appName+" App Name Xpath", action.BOOLEAN,timeOut), "visibility", timeOut,appName+" App Name xpath in Lightning");	
 	}
 	
-	@FindBy(xpath = "//button[@class='slds-button']/div/span")
+	@FindBy(xpath = "//button[@class='slds-button slds-show']/div[@class='slds-icon-waffle']")
 	private WebElement appLuncherXpath;
 
 	public WebElement getAppLuncherXpath(int timeOut) {

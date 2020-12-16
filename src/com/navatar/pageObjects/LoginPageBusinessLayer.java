@@ -9,9 +9,12 @@ import static com.navatar.generic.CommonLib.ThreadSleep;
 import static com.navatar.generic.CommonLib.click;
 import static com.navatar.generic.CommonLib.clickUsingJavaScript;
 import static com.navatar.generic.CommonLib.matchTitle;
+import static com.navatar.generic.CommonLib.scrollDownThroughWebelement;
 import static com.navatar.generic.CommonLib.sendKeys;
+import static com.navatar.generic.CommonLib.switchToDefaultContent;
 import static com.navatar.generic.CommonVariables.URL;
 import static com.navatar.generic.CommonLib.exit;
+import static com.navatar.generic.CommonLib.isDisplayed;
 
 import java.util.List;
 
@@ -19,6 +22,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.navatar.generic.EnumConstants.Mode;
+import com.navatar.generic.EnumConstants.PageName;
+import com.navatar.generic.EnumConstants.RelatedTab;
+import com.navatar.generic.EnumConstants.SDGCreationLabel;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.ExcelUtils;
 /**
@@ -215,5 +221,40 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 	}
 	return false;
 	}
+	
+	public boolean searchAndClickOnApp(String appName,int timOut) {
+		boolean flag = false;
+
+        if(click(driver, getAppLuncherXpath(30), "app luncher xpath", action.SCROLLANDBOOLEAN)) {
+            appLog.info("Clicked on App Luncher Icon");
+            ThreadSleep(3000);
+            if(sendKeys(driver, getSearchAppTextBoxInAppLuncher(30), appName, "search text box in app luncher", action.SCROLLANDBOOLEAN)) {
+                appLog.info("Enter value in search app text box : "+appName);
+                ThreadSleep(5000);
+                if(clickUsingJavaScript(driver, getAppNameLabelTextInAppLuncher(appName, 30), "app name label text in app luncher")) {
+                    appLog.info("clicked on app Name "+appName);
+                    ThreadSleep(5000);
+                    if(getAppNameXpathInLightning(appName, 60)!=null) {
+                        appLog.info(appName+" App is open successfully in lightning ");
+                        flag =  true;
+                    }else {
+                        appLog.error(appName+" App is not open after select app from app luncher");
+                    }
+                    
+                }else {
+                    appLog.error("Not able to click on app Name "+appName+" so cannot select app "+appName+" from app luncher");
+                }
+            }else {
+                appLog.error("Not able to enter app name "+appName+" in search text box so cannot select "+appName);
+            }
+        }else {
+            appLog.error("Not able to click on app luncher icon so cannot select "+appName);
+        }
+    
+        return flag;
+		
+	}
+	
+	
 	
 }
