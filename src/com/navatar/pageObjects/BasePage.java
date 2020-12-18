@@ -4656,4 +4656,16 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, pagePopUp, "Visibility", timeOut, "Page POP UP");
 	}
 	
+	@FindBy(xpath = "//li[@data-aura-class='uiMenuItem onesetupSetupMenuItem']/a[@title='Edit Page']")
+	private WebElement editPageOnSetUp;
+
+	/**
+	 * @return the userMenuSetupLink
+	 */
+	public WebElement getEditPageOnSetUp(int timeOut) {
+		WebElement ele=null;
+			ele=setupLink_Lighting;
+		return isDisplayed(driver, ele, "Visibility", timeOut, "Edit Page");
+	}
+	
 }

@@ -534,7 +534,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	if (projectName.equalsIgnoreCase(ProjectName.PE.toString()))
 		xpath="//li[@title='"+related+"']//a";
 	else
-	xpath = "//li//a[@title='"+related+"' or text()='"+related+"']";
+	xpath = "//li//*[@title='"+related+"' or text()='"+related+"']";
+	xpath = "//li//*[@title='"+related+"' or text()='"+related+"']";
 	ele = isDisplayed(driver, FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut)
 			, "visiblity", 30, relatedTab.toString());
 	if (ele!=null) {

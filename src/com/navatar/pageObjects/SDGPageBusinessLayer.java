@@ -61,7 +61,7 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 			value = labelValues[1];
 			ele = getSDGElementForCreation(projectName, label, action, timeOut);
 			if (sendKeys(driver, ele, value, label+" : "+value, action)) {
-				sa.assertTrue(false,"Able to Enter Value : "+value+" to label : "+label );
+				log(LogStatus.INFO,"Able to Enter Value : "+value+" to label : "+label,YesNo.No);
 			} else {
 				sa.assertTrue(false,"Not Able to Enter Value : "+value+" to label : "+label );
 				log(LogStatus.SKIP,"Not Able to Enter Value : "+value+" to label : "+label,YesNo.Yes);
@@ -73,21 +73,32 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 	
 	public boolean createCustomSDG(String projectName,String sdgName,String[][] labelWithValues,action action,int timeOut) {
 		boolean flag =false;
-		enterValueForSDGCreation(projectName, labelWithValues, action, timeOut);
-		if (click(driver, getSaveButton(projectName, 60), "Save Button",action.SCROLLANDBOOLEAN)) {
-			log(LogStatus.INFO,"Click on Save Button  "+sdgName,YesNo.No);
-			ThreadSleep(5000);
-			if (getSDGHeaderValueInViewMode(projectName, sdgName, timeOut)!=null) {
-				log(LogStatus.PASS,"Header verified for created  "+sdgName,YesNo.No);
-				flag=true;
+		ThreadSleep(5000);
+		refresh(driver);
+		ThreadSleep(10000);
+		if(clickUsingJavaScript(driver, getNewButton(projectName, timeOut), "new button")) {
+			appLog.info("clicked on new button");
+			enterValueForSDGCreation(projectName, labelWithValues, action, timeOut);
+			if (click(driver, getRecordPageSettingSave(60), "Save Button",action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO,"Click on Save Button  "+sdgName,YesNo.No);
+				ThreadSleep(5000);
+				if (getSDGHeaderValueInViewMode(projectName, sdgName, timeOut)!=null) {
+					log(LogStatus.PASS,"Header verified for created  "+sdgName,YesNo.No);
+					flag=true;
+				} else {
+					sa.assertTrue(false,"Header not verified for created  "+sdgName );
+					log(LogStatus.SKIP,"Header not verified for created  "+sdgName,YesNo.Yes);
+				}
 			} else {
-				sa.assertTrue(false,"Header not verified for created  "+sdgName );
-				log(LogStatus.SKIP,"Header not verified for created  "+sdgName,YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Save Button Value so cannot create  "+sdgName );
+				log(LogStatus.SKIP,"Not Able to Click on Save Button Value so cannot create  "+sdgName,YesNo.Yes);
 			}
+			
 		} else {
-			sa.assertTrue(false,"Not Able to Click on Save Button Value so cannot create  "+sdgName );
-			log(LogStatus.SKIP,"Not Able to Click on Save Button Value so cannot create  "+sdgName,YesNo.Yes);
+			appLog.error("Not able to click on New Button so cannot create sdg : " + sdgName);
+			
 		}
+	
 		
 		return flag;
 	}
