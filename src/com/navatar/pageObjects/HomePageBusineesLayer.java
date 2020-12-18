@@ -98,7 +98,23 @@ public class HomePageBusineesLayer extends HomePage {
 		return flag;
 	}
 	
-	
+	public boolean clickOnEditPageLinkOnSetUpLink() {
+		boolean flag = false;
+			if(click(driver, getSettingLink_Lighting(20), "setting icon", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "setting icon", YesNo.No);
+				
+			}else {
+				log(LogStatus.ERROR, "setting icon", YesNo.Yes);
+				return flag;
+			}
+		if(click(driver, getEditPageOnSetUp(20), "Edit Page", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Edit Page", YesNo.No);
+			flag=true;
+		}else {
+			log(LogStatus.ERROR,"Edit Page",YesNo.Yes);
+		}
+		return flag;
+	}
 	
 	
 }
