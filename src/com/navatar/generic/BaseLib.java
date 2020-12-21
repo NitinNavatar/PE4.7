@@ -169,15 +169,13 @@ public class BaseLib extends AppListeners {
 					for(int i = 0; i < toValue.split(",").length; i++){
 						to[i]=toValue.split(",")[i];
 					}
-				} else {
-				}
-				
-				try {
-					EmailLib.sendMail(from, Password, to, currentlyExecutingTC+" failed", "Dear "+userName+",\n\n"+currentlyExecutingTC+" is failed due to below reason: \n\n"+result.getThrowable().getMessage()+"\n\n\bNote: Priority and dependency of this test case is high, So will not be able to continue with the execution.", attachment);
-				} catch (MessagingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					try {
+						EmailLib.sendMail(from, Password, to, currentlyExecutingTC+" failed", "Dear "+userName+",\n\n"+currentlyExecutingTC+" is failed due to below reason: \n\n"+result.getThrowable().getMessage()+"\n\n\bNote: Priority and dependency of this test case is high, So will not be able to continue with the execution.", attachment);
+					} catch (MessagingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} 
 				CommonLib.exit("Priority and dependency of "+currentlyExecutingTC+" testcase was high so cannot continue with the execution.");
 			}
 		}

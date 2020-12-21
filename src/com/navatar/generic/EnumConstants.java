@@ -225,7 +225,7 @@ public class EnumConstants {
 					return "Accounts";
 			//	}
 			}
-		},Contact,Fund,Fundraising,Fundraising_Contact{
+		},Contact,Deal,Fund,Fundraising,Fundraising_Contact{
 			@Override
 			public String toString() {
 				return "Fundraising Contact";

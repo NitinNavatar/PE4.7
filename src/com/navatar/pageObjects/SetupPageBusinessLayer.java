@@ -673,6 +673,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 				if(click(driver, getObjectFeatureNewButton(objectFeatureName, 10), "new button", action.BOOLEAN)) {
 					log(LogStatus.INFO, "clicked on New button", YesNo.No);
 					ThreadSleep(2000);
+					switchToFrame(driver, 20, getFieldSetComponentFrame(20));
 					if(sendKeys(driver, getFieldSetLabelTextBox(10),fieldSetLabel,"field set label text box", action.BOOLEAN)) {
 						log(LogStatus.INFO, "Entering value in field set text box : "+fieldSetLabel, YesNo.No);
 						if(sendKeys(driver, getFieldSetWhereIsThisUsedTextArea(10),fieldSetWhereisThisUsed,"where is this used text area", action.BOOLEAN)) {
@@ -680,12 +681,18 @@ public class SetupPageBusinessLayer extends SetupPage {
 							if(click(driver, getSaveButton(10), "save button", action.BOOLEAN)) {
 								log(LogStatus.ERROR, "Clicked on save button and create field set label : "+fieldSetLabel+" successfully", YesNo.Yes);
 								ThreadSleep(2000);
+								switchToDefaultContent(driver);
 								if(DragComponentName!=null) {
 									String[] splitedDragComponent= DragComponentName.split("<break>");
+									switchToFrame(driver, 20, getEditPageLayoutFrame_Lighting(20));
 									for(int i=0; i<splitedDragComponent.length; i++) {
-										switchToFrame(driver, 20, getEditPageLayoutFrame_Lighting(20));
-										sourceElement =isDisplayed(driver, FindElement(driver, "//span[contains(text(),'"+splitedDragComponent[i]+"')]", "", action.BOOLEAN,10), "visibility",10,splitedDragComponent[i]+" page layout link");
 										sendKeys(driver, getQuickFindSearchBox(environment, mode, 10), splitedDragComponent[i], "Search Value : "+splitedDragComponent[i], action.BOOLEAN);
+										if(splitedDragComponent[i].equalsIgnoreCase("Highest Stage Reached")) {
+											String DragComponent=splitedDragComponent[i].split(" ")[0];
+											sourceElement =isDisplayed(driver, FindElement(driver, "//span[starts-with(text(),'"+DragComponent+"')]", "", action.BOOLEAN,10), "visibility",10,splitedDragComponent[i]+" page layout link");
+										}else {
+											sourceElement =isDisplayed(driver, FindElement(driver, "//span[starts-with(text(),'"+splitedDragComponent[i]+"')]", "", action.BOOLEAN,10), "visibility",10,splitedDragComponent[i]+" page layout link");
+										}
 										ThreadSleep(2000);
 										if(dragNDropOperation(driver, sourceElement, getFieldSetdefaultViewDragAndDropTextLabel(5))) {
 											log(LogStatus.INFO, "Dragged Successfully : "+splitedDragComponent[i], YesNo.No);
@@ -726,6 +733,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 		}else {
 			log(LogStatus.ERROR, "Not able to click on Object : "+objectName+" so cannot create field set component", YesNo.Yes);
 		}
+		switchToDefaultContent(driver);
 		return flag;
 	}
 	
