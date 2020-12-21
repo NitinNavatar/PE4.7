@@ -33,7 +33,7 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, editPageFrame, "Visibility", timeOut, "Edit Page Frame");
 	}
 	
-	@FindBy (xpath = "//*[text()='sdgConfigDataProviderTextBox']/following-sibling::div/input")
+	@FindBy (xpath = "//*[text()='SDG Config Data Provider']/following-sibling::div/input")
 	private WebElement sdgConfigDataProviderTextBox;
 
 	/**
@@ -72,6 +72,49 @@ public class EditPage extends BasePageBusinessLayer {
 	 */
 	public WebElement getEditPageBackButton(String projectName,int timeOut) {
 		return isDisplayed(driver, editPageBackButton, "Visibility", timeOut, "Edit Page Back Button");
+	}
+	
+	
+	@FindBy (xpath = "//*[text()='Search...']/..//*[@placeholder='Search...']")
+	private WebElement editPageSeachTextBox;
+
+	/**
+	 * @return the editPageSeachTextBox
+	 */
+	public WebElement getEditPageSeachTextBox(String projectName,int timeOut) {
+		return isDisplayed(driver, editPageSeachTextBox, "Visibility", timeOut, "Edit Page Search TextBox");
+	}
+	
+	@FindBy (xpath = "//*[text()='Data Provider']/following-sibling::div")
+	private WebElement elgDataProviderTextBox;
+
+	/**
+	 * @return the elgDataProviderTextBox
+	 */
+	public WebElement getElgDataProviderTextBox(String projectName,int timeOut) {
+		return isDisplayed(driver, elgDataProviderTextBox, "Visibility", timeOut, "ELG Data Provider TextBox");
+	}
+	
+	
+	@FindBy (xpath = "//*[text()='Title']/..//following-sibling::div//input[@type='text']")
+	private WebElement elgTitleTextBox;
+
+	/**
+	 * @return the elgTitleTextBox
+	 */
+	public WebElement getElgTitleTextBox(String projectName,int timeOut) {
+		return isDisplayed(driver, elgTitleTextBox, "Visibility", timeOut, "ELG Title TextBox");
+	}
+	
+	
+	@FindBy (xpath = "//*[text()='Enable Toggle']/..//preceding-sibling::input")
+	private WebElement enableToggleCheckBox;
+
+	/**
+	 * @return the enableToggleCheckBox
+	 */
+	public WebElement getEnableToggleCheckBox(String projectName,int timeOut) {
+		return isDisplayed(driver, enableToggleCheckBox, "Visibility", timeOut, "Enable Toggle CheckBox");
 	}
 	
 	

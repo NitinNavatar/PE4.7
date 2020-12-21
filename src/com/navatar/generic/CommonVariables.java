@@ -65,6 +65,8 @@ public class CommonVariables {
 	public static String SDG;
 	
 	public static String Sdg1Name,Sdg1TagName,Sdg1ObjectName;
+	
+	public static String ActiveDealToggleButton;
 		
 //	/**
 //	 * 
@@ -136,6 +138,8 @@ public class CommonVariables {
 			Sdg1Name=ExcelUtils.readData(toggleFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.SDG_Name);
 			Sdg1TagName=ExcelUtils.readData(toggleFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.SDG_Tag);;
 			Sdg1ObjectName=ExcelUtils.readData(toggleFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.sObjectName);
+			
+			ActiveDealToggleButton = ExcelUtils.readData(toggleFilePath,"ToggleBtn",excelLabel.Variable_Name, "TOGGLEBTN1", excelLabel.Toggle_Button);
 			
 			
 			
