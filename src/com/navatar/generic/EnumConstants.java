@@ -184,6 +184,9 @@ public class EnumConstants {
 		};
 	}
 	
+	public static enum Watchlist{
+		True,False;
+	}
 	public static enum profileUpdatedAlert{
 		FirmProfileUpdated,ContactProfileUpdated;
 		
