@@ -11,7 +11,7 @@ public interface EditPageErrorMessage {
 
 	public String RecordInstitutionDirectCommitmentsParentAccount="Record Institution Direct Commitments Parent Account";
 	
-	public String Dots = "--------------------------------------------------------------------------------";
+	public String EnhancedLightningGrid = "Enhanced Lightning Grid";
 
 	
 }
