@@ -148,7 +148,7 @@ public class ContactsPage extends BasePageBusinessLayer {
 		}
 		
 			//span[text()='Description']/..//following-sibling::textarea
-			xpath="//span[text()='"+finalLabelName+"']";
+			xpath="//*[text()='"+finalLabelName+"']";
 			inputXpath="/..//following-sibling::input";
 			textAreaXpath="/..//following-sibling::textarea";
 		
@@ -156,6 +156,9 @@ public class ContactsPage extends BasePageBusinessLayer {
 		if(labelName.equalsIgnoreCase(ContactPageFieldLabelText.Description.toString()) || labelName.equalsIgnoreCase(ContactPageFieldLabelText.Mailing_Street.toString()) || 
 			labelName.equalsIgnoreCase(ContactPageFieldLabelText.Other_Street.toString())) {
 			finalXpath=xpath+textAreaXpath;
+		}else if (labelName.equalsIgnoreCase(excelLabel.Phone.toString())) {
+			xpath="//*[starts-with(text(),'"+finalLabelName+"')]/..//following-sibling::input";
+			finalXpath=xpath+inputXpath;
 		}else {
 			finalXpath=xpath+inputXpath;
 		}

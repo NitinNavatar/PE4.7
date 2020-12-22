@@ -227,7 +227,7 @@ public class FundsPage extends BasePageBusinessLayer {
 
 	}
 	
-	@FindBy(xpath="//span[text()='Company Name']/../following-sibling::div//input[@title='Search Entities']")
+	@FindBy(xpath="//*[text()='Company Name']/following-sibling::div//input[contains(@placeholder,'Search Entities')]")
 	private WebElement firmName;
 
 	/**
@@ -240,6 +240,13 @@ public class FundsPage extends BasePageBusinessLayer {
 			
 		
 	
+	}
+	
+	public WebElement getSourceFirmAndSourceContactTextBox(String fieldLabelName, int timeOut) {
+		String xpath="//*[text()='"+fieldLabelName+"']/following-sibling::div//input";
+		WebElement ele = FindElement(driver, xpath, fieldLabelName+" text box ", action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "text box : "+fieldLabelName);
+		
 	}
 	
 	

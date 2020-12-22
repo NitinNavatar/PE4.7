@@ -11,6 +11,8 @@ import com.navatar.generic.EnumConstants.object;
 
 import static com.navatar.generic.CommonLib.*;
 
+import java.util.List;
+
 public class SetupPage extends BasePageBusinessLayer {
 
 	public SetupPage(WebDriver driver) {
@@ -219,5 +221,24 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getFieldSetdefaultViewDragAndDropTextLabel(int timeOut) {
 		return isDisplayed(driver, FieldSetdefaultViewDragAndDropTextLabel, "Visibility", timeOut, "default view drag and drop text label");
 	}
+	
+	public WebElement getCreatedFieldSetLabelNameText(String fieldSetName, int timeOut) {
+		String xpath="//span[contains(text(),'"+fieldSetName+"')]/..";
+		WebElement ele= FindElement(driver, xpath,fieldSetName+" label name text", action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "visibility", timeOut,fieldSetName+" label name text");
+	}
+	
+	
+	public List<WebElement> getDefaultFieldSetLabelsList(){
+		return FindElements(driver, "//div[@id='defaultView']/div//table//td[2]/div", "default field set label text");
+	}
+	
+	@FindBy(xpath = "//iframe[contains(@title,'Field Set: New Field Set')]")
+	private WebElement fieldSetComponentFrame;
+
+	public WebElement getFieldSetComponentFrame(int timeOut) {
+		return isDisplayed(driver, fieldSetComponentFrame, "Visibility", timeOut, "field set component frame");
+	}
+	
 	
 }
