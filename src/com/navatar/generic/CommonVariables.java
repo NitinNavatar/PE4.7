@@ -52,6 +52,10 @@ public class CommonVariables {
 	public static String ToggleFund1,ToggleFund1Type,ToggleFund1Category,ToggleFund1RecordType;
 	public static String ToggleFund2,ToggleFund2Type,ToggleFund2Category,ToggleFund2RecordType;
 	public static String ToggleDeal1,ToggleDeal1CompanyName,ToggleDeal1RecordType,ToggleDeal1Stage;
+	public static String ToggleOpenQA1ID,ToggleOpenQA1RequestedDate,ToggleOpenQA1Request,ToggleOpenQA1Status;
+	public static String ToggleClosedQA1ID,ToggleClosedQA1RequestedDate,ToggleClosedQA1Request,ToggleClosedQA1Status;
+	
+	
 	
 
 	public static String FS_Object1,FS_Object2,FS_Object3,FS_FieldSetLabel1,FS_FieldSetLabel2,FS_FieldSetLabel3,
@@ -141,8 +145,17 @@ public class CommonVariables {
 			
 			ActiveDealToggleButton = ExcelUtils.readData(toggleFilePath,"ToggleBtn",excelLabel.Variable_Name, "TOGGLEBTN1", excelLabel.Toggle_Button);
 			
+			// ToggleOpenQA1ID,ToggleOpenQA1RequestedDate,ToggleOpenQA1Request,ToggleOpenQA1Status;
 			
+			ToggleOpenQA1ID=ExcelUtils.readData(toggleFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Request_Tracker_ID);
+			ToggleOpenQA1RequestedDate=ExcelUtils.readData(toggleFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Date_Requested);;
+			ToggleOpenQA1Request=ExcelUtils.readData(toggleFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Request);
+			ToggleOpenQA1Status=ExcelUtils.readData(toggleFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Status);
 			
+			ToggleClosedQA1ID=ExcelUtils.readData(toggleFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Request_Tracker_ID);
+			ToggleClosedQA1RequestedDate=ExcelUtils.readData(toggleFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Date_Requested);;
+			ToggleClosedQA1Request=ExcelUtils.readData(toggleFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Request);
+			ToggleClosedQA1Status=ExcelUtils.readData(toggleFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Status);
 			
 			
 		}

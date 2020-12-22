@@ -68,6 +68,7 @@ import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
 import com.navatar.pageObjects.CustomObjPageBusinessLayer;
+import com.navatar.pageObjects.DealPageBusinessLayer;
 import com.navatar.pageObjects.EditPageBusinessLayer;
 import com.navatar.pageObjects.EditPageErrorMessage;
 import com.navatar.pageObjects.FundsPageBusinessLayer;
@@ -953,6 +954,326 @@ public class Toggle extends BaseLib {
 		sa.assertAll();
 	}
 
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void ToggleTc009_VerifyTheToggleButtonAndFunctionalityOfToggleButtonOnDealPageRecord(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.Object4Tab,YesNo.No);
+
+			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object4Tab, ToggleDeal1, 15)) {
+				log(LogStatus.INFO,"Deal found: "+ToggleDeal1, YesNo.Yes);
+				ThreadSleep(2000);
+
+				if (click(driver, ip.getRelatedTab(projectName, PageName.Object4Page, RelatedTab.QandA, 5), RelatedTab.QandA.toString(), action.BOOLEAN)) {
+					log(LogStatus.INFO,"Click on Sub Tab : "+RelatedTab.QandA,YesNo.No);
+					ThreadSleep(2000);
+
+					String toggleBtn = ToggleButton.Open_Questions.toString();
+
+					if (ip.toggleButton(projectName, PageName.Object4Page, toggleBtn, action.BOOLEAN, 30)!=null) {
+						log(LogStatus.INFO,"Toggle is present : "+toggleBtn,YesNo.No);
+						ThreadSleep(2000);
+
+						if (ip.toggleSDGButtons(projectName, PageName.Object4Page, toggleBtn,ToggleButtonGroup.SDGButton, action.BOOLEAN, 30)!=null) {
+							log(LogStatus.PASS,"At "+toggleBtn+" "+ToggleButtonGroup.SDGButton+" is present",YesNo.Yes);
+						} else {
+							sa.assertTrue(false,"At "+toggleBtn+" "+ToggleButtonGroup.SDGButton+" should be present");
+							log(LogStatus.FAIL,"At "+toggleBtn+" "+ToggleButtonGroup.SDGButton+" should be present",YesNo.Yes);
+						}
+
+						if (dp.verifyingOpenRequest(projectName, ToggleOpenQA1ID, ToggleOpenQA1RequestedDate, ToggleOpenQA1Request, ToggleOpenQA1Status, 10)) {
+							log(LogStatus.PASS,"Open Request Verified : "+ToggleOpenQA1Request,YesNo.Yes);
+						} else {
+							sa.assertTrue(false,"Open Request Not Verified : "+ToggleOpenQA1Request);
+							log(LogStatus.FAIL,"Open Request Not Verified : "+ToggleOpenQA1Request,YesNo.Yes);
+						}
+
+						String date = ToggleOpenQA1RequestedDate;
+						WebElement ele=dp.getDateAtToggle(projectName, PageName.Object4Page, date, action.BOOLEAN, 30);
+						if(mouseOverOperation(edriver, ele)){
+							log(LogStatus.PASS,"Able to mouse hover : "+date,YesNo.No);
+							String text = dp.getDateAtToggleToolTip(projectName, PageName.Object4Page, date, action.BOOLEAN, 30).getAttribute("title");
+							if(text.contains(date)){
+								appLog.info("Tool tip error message is verified for : "+date);
+							} else {
+								sa.assertTrue(false,"Tool tip error message is not verified. Expected: "+date+ "\tActual: "+text);
+								log(LogStatus.SKIP,"Tool tip error message is not verified. Expected: "+date+ "\tActual: "+text,YesNo.Yes);
+							}
+						} else {
+							log(LogStatus.SKIP,"Not Able to mouse hover : "+date,YesNo.Yes);
+							sa.assertTrue(false,"Not Able to mouse hover : "+date);
+						}
+
+						ele=dp.getDateAtToggleToolTip(projectName, PageName.Object4Page, date, action.BOOLEAN, 30);
+						if(mouseOverOperation(edriver, ele)){
+							ThreadSleep(3000);
+							log(LogStatus.PASS,"Able to mouse hover : "+date,YesNo.No);
+							if (clickUsingJavaScript(driver, ip.getInlineOrLockedAtToggle(projectName, PageName.Object4Page,ToggleButton.Open_Questions, date, action.BOOLEAN, 10), "Inline Edit Icon : "+date, action.BOOLEAN)) {
+								log(LogStatus.INFO,"click on inline edit icon "+date,YesNo.No);
+								ThreadSleep(2000);
+
+							} else {
+								log(LogStatus.SKIP,"Not Able to click on inline edit icon "+date,YesNo.Yes);
+								sa.assertTrue(false,"Not Able to click on inline edit icon "+date);
+							}
+						} else {
+							log(LogStatus.SKIP,"Not Able to mouse hover : "+date,YesNo.Yes);
+							sa.assertTrue(false,"Not Able to mouse hover : "+date);
+						}
+
+
+					} else {
+						sa.assertTrue(false,"Toggle should be present : "+toggleBtn);
+						log(LogStatus.SKIP,"Toggle should be present : "+toggleBtn,YesNo.Yes);
+					}
+
+					//  
+
+					toggleBtn = ToggleButton.Closed.toString();
+
+					if (click(driver, ip.toggleButton(projectName, PageName.Object4Page, toggleBtn, action.BOOLEAN, 30), toggleBtn, action.BOOLEAN)) {
+						log(LogStatus.INFO,"Not Able to Click on Toggle : "+toggleBtn,YesNo.No);
+						ThreadSleep(2000);
+
+						if (ip.toggleSDGButtons(projectName, PageName.Object4Page, toggleBtn,ToggleButtonGroup.SDGButton, action.BOOLEAN, 30)!=null) {
+							sa.assertTrue(false,"At "+toggleBtn+" "+ToggleButtonGroup.SDGButton+" is present");
+						} else {
+							sa.assertTrue(false,"At "+toggleBtn+" "+ToggleButtonGroup.SDGButton+" should be present");
+							log(LogStatus.FAIL,"At "+toggleBtn+" "+ToggleButtonGroup.SDGButton+" should be present",YesNo.Yes);
+						}
+
+
+						if (dp.verifyingClosedRequest(projectName, ToggleClosedQA1ID, ToggleClosedQA1RequestedDate, ToggleClosedQA1Request, 10)) {
+							log(LogStatus.PASS,"Open Request Verified : "+ToggleClosedQA1Request,YesNo.Yes);
+						} else {
+							sa.assertTrue(false,"Open Request Not Verified : "+ToggleClosedQA1Request);
+							log(LogStatus.FAIL,"Open Request Not Verified : "+ToggleClosedQA1Request,YesNo.Yes);
+						}
+
+						String date = ToggleClosedQA1RequestedDate;
+						WebElement ele=dp.getDateAtToggle(projectName, PageName.Object4Page, date, action.BOOLEAN, 30);
+						if(mouseOverOperation(edriver, ele)){
+							log(LogStatus.PASS,"Able to mouse hover : "+date,YesNo.No);
+							String text = dp.getDateAtToggleToolTip(projectName, PageName.Object4Page, date, action.BOOLEAN, 30).getAttribute("title");
+							if(text.contains(date)){
+								appLog.info("Tool tip error message is verified for : "+date);
+							} else {
+								sa.assertTrue(false,"Tool tip error message is not verified. Expected: "+date+ "\tActual: "+text);
+								log(LogStatus.SKIP,"Tool tip error message is not verified. Expected: "+date+ "\tActual: "+text,YesNo.Yes);
+							}
+						} else {
+							log(LogStatus.SKIP,"Not Able to mouse hover : "+date,YesNo.Yes);
+							sa.assertTrue(false,"Not Able to mouse hover : "+date);
+						}
+
+						ele=dp.getDateAtToggleToolTip(projectName, PageName.Object4Page, date, action.BOOLEAN, 30);
+						if(mouseOverOperation(edriver, ele)){
+							ThreadSleep(3000);
+							log(LogStatus.PASS,"Able to mouse hover : "+date,YesNo.No);
+							if (clickUsingJavaScript(driver, ip.getInlineOrLockedAtToggle(projectName, PageName.Object4Page,ToggleButton.Closed, date, action.BOOLEAN, 10), "Inline Edit Icon : "+date, action.BOOLEAN)) {
+								log(LogStatus.INFO,"click on inline edit icon "+date,YesNo.No);
+								ThreadSleep(2000);
+
+							} else {
+								log(LogStatus.SKIP,"Not Able to click on inline edit icon "+date,YesNo.Yes);
+								sa.assertTrue(false,"Not Able to click on inline edit icon "+date);
+							}
+						} else {
+							log(LogStatus.SKIP,"Not Able to mouse hover : "+date,YesNo.Yes);
+							sa.assertTrue(false,"Not Able to mouse hover : "+date);
+						}
+
+
+
+					} else {
+						sa.assertTrue(false,"Not Able to Click on Toggle : "+toggleBtn);
+						log(LogStatus.SKIP,"Not Able to Click on Toggle : "+toggleBtn,YesNo.Yes);
+					}
+
+				} else {
+					sa.assertTrue(false,"Not Able to Click on Sub Tab : "+RelatedTab.QandA);
+					log(LogStatus.SKIP,"Not Able to Click on Sub Tab : "+RelatedTab.QandA,YesNo.Yes);
+				}
+
+			}else {
+
+				log(LogStatus.ERROR,"Deal not found: "+ToggleDeal1, YesNo.Yes);
+				sa.assertTrue(false,"Deal not found: "+ToggleDeal1);
+			}
+
+
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object4Tab);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object4Tab,YesNo.Yes);
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void ToggleTc010_VerifyTheRetainAndDefaultSelectionOfToggleButton(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.Object4Tab,YesNo.No);
+
+			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object4Tab, ToggleDeal1, 15)) {
+				log(LogStatus.INFO,"click on Deal found: "+ToggleDeal1, YesNo.No);
+				ThreadSleep(2000);
+				scn.nextLine();
+				if (true/*hp.clickOnEditPageLinkOnSetUpLink()*/) {
+					log(LogStatus.INFO,"click on Edit Page SetUp Link", YesNo.No);
+					ThreadSleep(1000);
+
+					switchToDefaultContent(driver);
+					switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
+					if (click(driver, ip.getRelatedTab(projectName, PageName.Object4Page, RelatedTab.QandA, 5), RelatedTab.QandA.toString(), action.BOOLEAN)) {
+						log(LogStatus.INFO,"Click on Sub Tab : "+RelatedTab.QandA,YesNo.No);
+						ThreadSleep(2000);
+
+						String toggleBtn = ToggleButton.Open_Questions.toString();
+
+						if (click(driver, ip.toggleButton(projectName, PageName.Object4Page, toggleBtn, action.BOOLEAN, 30), toggleBtn, action.BOOLEAN)) {
+							log(LogStatus.INFO,"Click on Toggle : "+toggleBtn,YesNo.No);
+							ThreadSleep(2000);
+							switchToDefaultContent(driver);
+							String toggleValue = EditPageErrorMessage.RecordDealsQARequestsClosed;
+							if (sendKeys(driver, edit.getDefaultSDGToggleTextBox(projectName, 10),toggleValue,"Default SDG Toggle TextBox",action.BOOLEAN)) {
+								ThreadSleep(500);
+								log(LogStatus.INFO,"send value to Default SDG Toggle TextBox : "+toggleValue,YesNo.No);
+								if (click(driver, edit.getEditPageSaveButton(projectName, 10),"Edit Page Save Button", action.BOOLEAN)) {
+									log(LogStatus.INFO,"Click on Edit Page Save Button",YesNo.No);
+									ThreadSleep(2000);
+									switchToDefaultContent(driver);
+									switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
+									if (ip.toggleSDGButtons(projectName, PageName.Object4Page, toggleBtn,ToggleButtonGroup.SDGButton, action.BOOLEAN, 10)==null) {
+										log(LogStatus.PASS,"After Save "+toggleBtn+" is not selected ",YesNo.No);
+									} else {
+										sa.assertTrue(false,"After Save "+toggleBtn+" should not be selected ");
+										log(LogStatus.FAIL,"After Save "+toggleBtn+" should not be selected ",YesNo.Yes);
+									}
+
+									toggleBtn = ToggleButton.Closed.toString();
+									if (ip.toggleSDGButtons(projectName, PageName.Object4Page, toggleBtn,ToggleButtonGroup.SDGButton, action.BOOLEAN, 10)!=null) {
+										log(LogStatus.PASS,"After Save "+toggleBtn+" is selected ",YesNo.No);
+									} else {
+										sa.assertTrue(false,"After Save "+toggleBtn+" should be selected ");
+										log(LogStatus.FAIL,"After Save "+toggleBtn+" should be selected ",YesNo.Yes);
+									}
+
+								} else {
+									sa.assertTrue(false, "Not Able to Click on Edit Page Save Button");
+									log(LogStatus.FAIL,"Not Able to Click on Edit Page Save Button",YesNo.Yes);
+								}
+
+							} else {
+								sa.assertTrue(false, "Not Able to send value to Default SDG Toggle TextBox : "+toggleValue);
+								log(LogStatus.FAIL,"Not Able to send value to Default SDG Toggle TextBox : "+toggleValue,YesNo.Yes);
+							}
+
+							///////////////////////////////////////////////////////////////
+
+							switchToDefaultContent(driver);
+							toggleValue = "";
+							if (sendKeys(driver, edit.getDefaultSDGToggleTextBox(projectName, 10),toggleValue,"Default SDG Toggle TextBox",action.BOOLEAN)) {
+								ThreadSleep(200);
+								log(LogStatus.INFO,"send value to Default SDG Toggle TextBox : "+toggleValue,YesNo.No);
+								if (click(driver, edit.getEditPageSaveButton(projectName, 10),"Edit Page Save Button", action.BOOLEAN)) {
+									log(LogStatus.INFO,"Click on Edit Page Save Button",YesNo.No);;
+									ThreadSleep(5000);
+
+									if (click(driver, edit.getEditPageBackButton(projectName, 10),"Edit Page Back Button", action.BOOLEAN)) {
+										log(LogStatus.INFO,"Click on Edit Page Back Button",YesNo.No);
+										ThreadSleep(2000);
+
+										if (click(driver, ip.getRelatedTab(projectName, PageName.Object4Page, RelatedTab.QandA, 30), RelatedTab.QandA.toString(), action.BOOLEAN)) {
+											log(LogStatus.INFO,"Click on Sub Tab : "+RelatedTab.QandA,YesNo.No);
+											ThreadSleep(2000);
+
+											toggleBtn = ToggleButton.Open_Questions.toString();
+											if (ip.toggleSDGButtons(projectName, PageName.Object4Page, toggleBtn,ToggleButtonGroup.SDGButton, action.BOOLEAN, 10)!=null) {
+												log(LogStatus.PASS,"After Save "+toggleBtn+" is selected ",YesNo.No);
+											} else {
+												sa.assertTrue(false,"After Save "+toggleBtn+" should be selected ");
+												log(LogStatus.FAIL,"After Save "+toggleBtn+" should be selected ",YesNo.Yes);
+											}
+
+
+
+										} else {
+											sa.assertTrue(false,"Not Able to Click on Sub Tab : "+RelatedTab.QandA);
+											log(LogStatus.SKIP,"Not Able to Click on Sub Tab : "+RelatedTab.QandA,YesNo.Yes);
+										}
+
+
+
+
+
+									} else {
+										sa.assertTrue(false, "Not Able to Click on Edit Page Back Button");
+										log(LogStatus.SKIP,"Not Able to Click on Edit Page Back Button",YesNo.Yes);
+									}
+
+
+
+								} else {
+									sa.assertTrue(false, "Not Able to Click on Edit Page Save Button");
+									log(LogStatus.SKIP,"Not Able to Click on Edit Page Save Button",YesNo.Yes);
+								}
+
+							} else {
+								sa.assertTrue(false, "Not Able to send value to Default SDG Toggle TextBox : "+toggleValue);
+								log(LogStatus.SKIP,"Not Able to send value to Default SDG Toggle TextBox : "+toggleValue,YesNo.Yes);
+							}
+
+
+						} else {
+							sa.assertTrue(false,"Not Able to Click on Toggle : "+toggleBtn);
+							log(LogStatus.SKIP,"Not Able to Click on Toggle : "+toggleBtn,YesNo.Yes);
+						}
+
+
+					} else {
+						sa.assertTrue(false,"Not Able to Click on Sub Tab : "+RelatedTab.QandA);
+						log(LogStatus.SKIP,"Not Able to Click on Sub Tab : "+RelatedTab.QandA,YesNo.Yes);
+
+					}
+				} else {
+					log(LogStatus.ERROR,"Not Able to click on Edit Page SetUp Link", YesNo.Yes);
+					sa.assertTrue(false,"Not Able to click on Edit Page SetUp Link");
+				}
+
+			}else {
+
+				log(LogStatus.ERROR,"Deal not found: "+ToggleDeal1, YesNo.Yes);
+				sa.assertTrue(false,"Deal not found: "+ToggleDeal1);
+			}
+
+
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object4Tab);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object4Tab,YesNo.Yes);
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	
 
 }
 	
