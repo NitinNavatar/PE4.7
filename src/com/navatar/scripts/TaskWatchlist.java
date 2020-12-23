@@ -2,6 +2,8 @@ package com.navatar.scripts;
 
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
+import static com.navatar.generic.SmokeCommonVariables.Smoke_MTINS7Name;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -29,6 +31,7 @@ import com.navatar.pageObjects.FundsPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
 import com.navatar.pageObjects.InstitutionsPageBusinessLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
+import com.navatar.pageObjects.NavatarSetupPageBusinessLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.navatar.pageObjects.TaskPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
@@ -421,7 +424,7 @@ public class TaskWatchlist extends BaseLib{
 						tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
 
 					}else {
-						appLog.error("could not click on task on task page");
+						log(LogStatus.ERROR,"could not click on task on task page", YesNo.Yes);
 						sa.assertTrue(false,"could not click on task on task page" );
 					}
 				}else {
@@ -530,7 +533,7 @@ public class TaskWatchlist extends BaseLib{
 						tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
 
 					}else {
-						appLog.error("could not click on task on task page");
+						log(LogStatus.ERROR,"could not click on task on task page", YesNo.Yes);
 						sa.assertTrue(false,"could not click on task on task page" );
 					}
 				}else {
@@ -570,7 +573,7 @@ public class TaskWatchlist extends BaseLib{
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS2Name, 20)) {
 				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task_with_Multiple_Associations , 10);
-				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task_with_Multiple_Associations.toString(), action.BOOLEAN)) {
+				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.Log_a_Call_with_Multiple_Associations.toString(), action.BOOLEAN)) {
 				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task_with_Multiple_Associations , 10);
 				scrollDownThroughWebelement(driver, ip.relatedAssociations(projectName).get(0), "related associatons");
 				if (clickUsingJavaScript(driver, ip.getrelatedAssociationsdropdownButton(projectName, 10), "dropdown button for related associations")) {
@@ -639,7 +642,7 @@ public class TaskWatchlist extends BaseLib{
 						tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
 
 					}else {
-						appLog.error("could not click on task on task page");
+						log(LogStatus.ERROR,"could not click on task on task page", YesNo.Yes);
 						sa.assertTrue(false,"could not click on task on task page" );
 					}
 				}else {
@@ -663,6 +666,479 @@ public class TaskWatchlist extends BaseLib{
 		sa.assertAll();
 	}
 
+	@Parameters({ "projectName"})
+	@Test
+	public void TWtc007_AddUnderEvalContactAndVerifyImpact(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		String tabs=ip.getTabName(projectName, TabName.Object1Tab)+","+ip.getTabName(projectName, TabName.Object3Tab);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS1Name, 20)) {
+				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task_with_Multiple_Associations , 10);
+				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.Log_a_Call_with_Multiple_Associations.toString(), action.BOOLEAN)) {
+				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task_with_Multiple_Associations , 10);
+				scrollDownThroughWebelement(driver, ip.relatedAssociations(projectName).get(0), "related associatons");
+				if (clickUsingJavaScript(driver, ip.getrelatedAssociationsdropdownButton(projectName, 10), "dropdown button for related associations")) {
+					List<String> l=compareMultipleListContainsByTitle(driver, tabs, ip.listOfObjectsInRelatedAssctions(projectName));
+					if (l.isEmpty()) {
+						log(LogStatus.INFO, "successfully verified presence of all tabs "+tabs, YesNo.No);
+					}
+					else {
+						for (String a:l) {
+							log(LogStatus.ERROR,"not found "+a,  YesNo.Yes);
+							sa.assertTrue(false, "not found "+a);
+						}
+					}
+					l.clear();
+					l=compareMultipleListContainsByTitle(driver,ip.getTabName(projectName, TabName.Object2Tab).toString(), ip.listOfObjectsInRelatedAssctions(projectName));
+					if (l.isEmpty()) {
+						log(LogStatus.ERROR, "tab "+TabName.Object2Tab.toString()+" is present but should not be", YesNo.Yes);
+						sa.assertTrue(false, "tab "+TabName.Object2Tab.toString()+" is present but should not be");
+					}
+					else {
+						for (String a:l) {
+							log(LogStatus.INFO,"not found "+a+" as expected",  YesNo.Yes);
+
+						}
+					}
+					//3
+					boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact1FName+" "+Smoke_TWContact1LName, action.SCROLLANDBOOLEAN, 10);		
+					if (flag) {
+						log(LogStatus.SKIP,"Selected "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.No);
+
+					} else {
+						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name);
+						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.Yes);
+
+					}
+
+					//remove icon
+					/*if (click(driver, ip.getCrossButtonForAlreadySelectedItem(projectName, PageName.Object1Page, PageLabel.Related_Associations.toString(), true, Smoke_TaskINS1Name, action.SCROLLANDBOOLEAN, 10), "remove button", action.BOOLEAN)) {
+						log(LogStatus.SKIP,"clicked on remove icon",YesNo.No);
+
+					}
+					else {
+						log(LogStatus.ERROR, "remove Button is not clickable", YesNo.Yes);
+						sa.assertTrue(false, "remove Button is not clickable");
+					}*/
+
+					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask4Subject, "Subject", action.SCROLLANDBOOLEAN)) {
+								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
+								}
+								else {
+									log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
+									sa.assertTrue(false,"save button is not clickable so task not created" );
+								}
+					}
+					else {
+						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
+						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
+					}
+					ThreadSleep(2000);
+					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.Object3Page,ActivityType.Next, TWTask4Subject, SubjectElement.SubjectLink, 10);
+					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
+						String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTask4Subject},
+								{PageLabel.Watchlist.toString(),Watchlist.False.toString()}};
+
+						tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
+
+					}else {
+						appLog.error("could not click on task on task page");
+						sa.assertTrue(false,"could not click on task on task page" );
+					}
+				}else {
+					log(LogStatus.ERROR, "related association dropdown button is not clickable", YesNo.Yes);
+					sa.assertTrue(false,"related association dropdown button is not clickable" );
+				}
+				}else {
+					log(LogStatus.ERROR, "could not click on new task button", YesNo.Yes);
+					sa.assertTrue(false,"could not click on new task button" );
+				}
+			}else {
+				log(LogStatus.ERROR, "could not find "+Smoke_TWINS1Name, YesNo.Yes);
+				sa.assertTrue(false,"could not find "+Smoke_TWINS1Name );
+			}
+			
+		}else {
+			log(LogStatus.ERROR, "could not click on object 1 tab", YesNo.Yes);
+			sa.assertTrue(false,"could not click on object 1 tab" );
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void TWtc008_AddMultipleWatchlistContactAndVerifyImpact(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
+		String tabs=ip.getTabName(projectName, TabName.Object1Tab)+","+ip.getTabName(projectName, TabName.Object3Tab);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS2Name, 20)) {
+				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task_with_Multiple_Associations , 10);
+				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task_with_Multiple_Associations.toString(), action.BOOLEAN)) {
+				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task_with_Multiple_Associations , 10);
+				scrollDownThroughWebelement(driver, ip.relatedAssociations(projectName).get(0), "related associatons");
+				if (clickUsingJavaScript(driver, ip.getrelatedAssociationsdropdownButton(projectName, 10), "dropdown button for related associations")) {
+					List<String> l=compareMultipleListContainsByTitle(driver, tabs, ip.listOfObjectsInRelatedAssctions(projectName));
+					if (l.isEmpty()) {
+						log(LogStatus.INFO, "successfully verified presence of all tabs "+tabs, YesNo.No);
+					}
+					else {
+						for (String a:l) {
+							log(LogStatus.ERROR,"not found "+a,  YesNo.Yes);
+							sa.assertTrue(false, "not found "+a);
+						}
+					}
+					l.clear();
+					l=compareMultipleListContainsByTitle(driver,ip.getTabName(projectName, TabName.Object2Tab).toString(), ip.listOfObjectsInRelatedAssctions(projectName));
+					if (l.isEmpty()) {
+						log(LogStatus.ERROR, "tab "+TabName.Object2Tab.toString()+" is present but should not be", YesNo.Yes);
+						sa.assertTrue(false, "tab "+TabName.Object2Tab.toString()+" is present but should not be");
+					}
+					else {
+						for (String a:l) {
+							log(LogStatus.INFO,"not found "+a+" as expected",  YesNo.Yes);
+
+						}
+					}
+					//3
+					boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 10);		
+					if (flag) {
+						log(LogStatus.SKIP,"Selected "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.No);
+
+					} else {
+						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name);
+						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.Yes);
+
+					}
+					flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact1FName+" "+Smoke_TWContact1LName, action.SCROLLANDBOOLEAN, 10);		
+					if (flag) {
+						log(LogStatus.SKIP,"Selected "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.No);
+
+					} else {
+						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name);
+						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.Yes);
+
+					}
+					//remove icon
+					/*if (click(driver, ip.getCrossButtonForAlreadySelectedItem(projectName, PageName.Object1Page, PageLabel.Related_Associations.toString(), true, Smoke_TaskINS1Name, action.SCROLLANDBOOLEAN, 10), "remove button", action.BOOLEAN)) {
+						log(LogStatus.SKIP,"clicked on remove icon",YesNo.No);
+
+					}
+					else {
+						log(LogStatus.ERROR, "remove Button is not clickable", YesNo.Yes);
+						sa.assertTrue(false, "remove Button is not clickable");
+					}*/
+
+					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask5Subject, "Subject", action.SCROLLANDBOOLEAN)) {
+								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
+								}
+								else {
+									log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
+									sa.assertTrue(false,"save button is not clickable so task not created" );
+								}
+					}
+					else {
+						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
+						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
+					}
+					ThreadSleep(2000);
+					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.Object3Page,ActivityType.Next, TWTask5Subject, SubjectElement.SubjectLink, 10);
+					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
+						String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTask5Subject},
+								{PageLabel.Watchlist.toString(),Watchlist.True.toString()}};
+
+						tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
+
+					}else {
+						appLog.error("could not click on task on task page");
+						sa.assertTrue(false,"could not click on task on task page" );
+					}
+				}else {
+					log(LogStatus.ERROR, "related association dropdown button is not clickable", YesNo.Yes);
+					sa.assertTrue(false,"related association dropdown button is not clickable" );
+				}
+				}else {
+					log(LogStatus.ERROR, "could not click on new task button", YesNo.Yes);
+					sa.assertTrue(false,"could not click on new task button" );
+				}
+			}else {
+				log(LogStatus.ERROR, "could not find "+Smoke_TWINS2Name, YesNo.Yes);
+				sa.assertTrue(false,"could not find "+Smoke_TWINS2Name );
+			}
+			
+		}else {
+			log(LogStatus.ERROR, "could not click on object 1 tab", YesNo.Yes);
+			sa.assertTrue(false,"could not click on object 1 tab" );
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void TWtc009_AddMultipleWatchlistContactAndVerifyImpact(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
+		String tabs=ip.getTabName(projectName, TabName.Object1Tab)+","+ip.getTabName(projectName, TabName.Object3Tab);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS2Name, 20)) {
+				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task_with_Multiple_Associations , 10);
+				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.Log_a_Call_with_Multiple_Associations.toString(), action.BOOLEAN)) {
+				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task_with_Multiple_Associations , 10);
+				scrollDownThroughWebelement(driver, ip.relatedAssociations(projectName).get(0), "related associatons");
+				if (clickUsingJavaScript(driver, ip.getrelatedAssociationsdropdownButton(projectName, 10), "dropdown button for related associations")) {
+					List<String> l=compareMultipleListContainsByTitle(driver, tabs, ip.listOfObjectsInRelatedAssctions(projectName));
+					if (l.isEmpty()) {
+						log(LogStatus.INFO, "successfully verified presence of all tabs "+tabs, YesNo.No);
+					}
+					else {
+						for (String a:l) {
+							log(LogStatus.ERROR,"not found "+a,  YesNo.Yes);
+							sa.assertTrue(false, "not found "+a);
+						}
+					}
+					l.clear();
+					l=compareMultipleListContainsByTitle(driver,ip.getTabName(projectName, TabName.Object2Tab).toString(), ip.listOfObjectsInRelatedAssctions(projectName));
+					if (l.isEmpty()) {
+						log(LogStatus.ERROR, "tab "+TabName.Object2Tab.toString()+" is present but should not be", YesNo.Yes);
+						sa.assertTrue(false, "tab "+TabName.Object2Tab.toString()+" is present but should not be");
+					}
+					else {
+						for (String a:l) {
+							log(LogStatus.INFO,"not found "+a+" as expected",  YesNo.Yes);
+
+						}
+					}
+					//3
+					boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 10);		
+					if (flag) {
+						log(LogStatus.SKIP,"Selected "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.No);
+
+					} else {
+						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name);
+						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.Yes);
+
+					}
+					flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact1FName+" "+Smoke_TWContact1LName, action.SCROLLANDBOOLEAN, 10);		
+					if (flag) {
+						log(LogStatus.SKIP,"Selected "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.No);
+
+					} else {
+						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name);
+						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.Yes);
+
+					}
+					//remove icon
+					/*if (click(driver, ip.getCrossButtonForAlreadySelectedItem(projectName, PageName.Object1Page, PageLabel.Related_Associations.toString(), true, Smoke_TaskINS1Name, action.SCROLLANDBOOLEAN, 10), "remove button", action.BOOLEAN)) {
+						log(LogStatus.SKIP,"clicked on remove icon",YesNo.No);
+
+					}
+					else {
+						log(LogStatus.ERROR, "remove Button is not clickable", YesNo.Yes);
+						sa.assertTrue(false, "remove Button is not clickable");
+					}*/
+
+					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask6Subject, "Subject", action.SCROLLANDBOOLEAN)) {
+								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
+								}
+								else {
+									log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
+									sa.assertTrue(false,"save button is not clickable so task not created" );
+								}
+					}
+					else {
+						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
+						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
+					}
+					ThreadSleep(2000);
+					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.Object3Page,ActivityType.Next, TWTask6Subject, SubjectElement.SubjectLink, 10);
+					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
+						String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTask6Subject},
+								{PageLabel.Watchlist.toString(),Watchlist.True.toString()}};
+
+						tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
+
+					}else {
+						log(LogStatus.ERROR,"could not click on task on task page", YesNo.Yes);
+						sa.assertTrue(false,"could not click on task on task page" );
+					}
+				}else {
+					log(LogStatus.ERROR, "related association dropdown button is not clickable", YesNo.Yes);
+					sa.assertTrue(false,"related association dropdown button is not clickable" );
+				}
+				}else {
+					log(LogStatus.ERROR, "could not click on new task button", YesNo.Yes);
+					sa.assertTrue(false,"could not click on new task button" );
+				}
+			}else {
+				log(LogStatus.ERROR, "could not find "+Smoke_TWINS2Name, YesNo.Yes);
+				sa.assertTrue(false,"could not find "+Smoke_TWINS2Name );
+			}
+			
+		}else {
+			log(LogStatus.ERROR, "could not click on object 1 tab", YesNo.Yes);
+			sa.assertTrue(false,"could not click on object 1 tab" );
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void TWtc010_RemoveContactFromWatchlistContactAndVerifyImpact(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.TaskTab)) {
+			WebElement ele=tp.getTaskNameLinkInSideMMenu(projectName, TWTask5Subject, 15);
+		if (click(driver, ele, TWTask5Subject, action.BOOLEAN)) {
+			String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTask5Subject},
+					{PageLabel.Watchlist.toString(),Watchlist.True.toString()}};
+
+			tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
+			ThreadSleep(3000);
+			scrollDownThroughWebelement(driver, ip.getEditButton(environment,  mode,10), "edit");
+			if (click(driver, ip.getEditButton(environment,  mode,10), "edit", action.SCROLLANDBOOLEAN)) {
+				ele=cp.getCrossButtonForAlreadySelectedItem(projectName, PageName.Object2Page, PageLabel.Name.toString(),false, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 15);
+				if (click(driver, ele, "cross icon for contact 3", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on cross icon for "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName);
+					if  (click(driver, ip.getCustomTabSaveBtn(projectName,10), "save", action.BOOLEAN)) {
+						appLog.info("successfully clicked on save button after changing contact");
+						
+						ThreadSleep(3000);
+						ele=ip.getCustomTabSaveBtn(projectName,10);
+						if (ele!=null) {
+							appLog.error("edit mode opened after clicking on save button");
+							sa.assertTrue(false, "edit mode opened after clicking on save button");
+							click(driver, ele, "save", action.BOOLEAN);
+						}
+						if (tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10)) {
+
+							appLog.info("successfully verifid watchlist as true after chaning cntact");
+						}
+						else {
+							appLog.error("could not verify watchlist as true");
+							sa.assertTrue(false, "could not verify watchlist as true");
+						}
+					}else {
+						appLog.error("save button is not clickable so cannot verify watchlist checkbox functionality");
+						sa.assertTrue(false, "save button is not clickable so cannot verify watchlist checkbox functionality");
+					}
+				}else {
+					appLog.error("cross button is not clickable so cannot verify watchlist checkbox functionality");
+					sa.assertTrue(false, "cross button is not clickable so cannot verify watchlist checkbox functionality");
+				}
+			}else {
+				appLog.error("edit button is not clickable so cannot verify watchlist checkbox functionality");
+				sa.assertTrue(false, "edit button is not clickable so cannot verify watchlist checkbox functionality");
+			}
+		}else {
+			appLog.error("task name is not clickable so cannot verify watchlist checkbox functionality");
+			sa.assertTrue(false, "task name is not clickable so cannot verify watchlist checkbox functionality");
+		}
+		}else {
+			appLog.error("task tab is not clickable");
+			sa.assertTrue(false, "task tab is not clickable");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void TWtc011_RemoveContactFromWatchlistContactAndVerifyImpact(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.TaskTab)) {
+			WebElement ele=tp.getTaskNameLinkInSideMMenu(projectName, TWTask6Subject, 15);
+		if (click(driver, ele, TWTask6Subject, action.BOOLEAN)) {
+			String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTask6Subject},
+					{PageLabel.Watchlist.toString(),Watchlist.True.toString()}};
+
+			tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
+			ThreadSleep(3000);
+			scrollDownThroughWebelement(driver, ip.getEditButton(environment,  mode,10), "edit");
+			if (click(driver, ip.getEditButton(environment,  mode,10), "edit", action.SCROLLANDBOOLEAN)) {
+				ele=cp.getCrossButtonForAlreadySelectedItem(projectName, PageName.Object2Page, PageLabel.Name.toString(),false, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 15);
+				if (click(driver, ele, "cross icon for contact 3", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on cross icon for "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName);
+					if  (click(driver, ip.getCustomTabSaveBtn(projectName,10), "save", action.BOOLEAN)) {
+						appLog.info("successfully clicked on save button after changing contact");
+						
+						ThreadSleep(3000);
+						ele=ip.getCustomTabSaveBtn(projectName,10);
+						if (ele!=null) {
+							appLog.error("edit mode opened after clicking on save button");
+							sa.assertTrue(false, "edit mode opened after clicking on save button");
+							click(driver, ele, "save", action.BOOLEAN);
+						}
+						if (tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10)) {
+
+							appLog.info("successfully verifid watchlist as true after chaning cntact");
+						}
+						else {
+							appLog.error("could not verify watchlist as true");
+							sa.assertTrue(false, "could not verify watchlist as true");
+						}
+					}else {
+						appLog.error("save button is not clickable so cannot verify watchlist checkbox functionality");
+						sa.assertTrue(false, "save button is not clickable so cannot verify watchlist checkbox functionality");
+					}
+				}else {
+					appLog.error("cross button is not clickable so cannot verify watchlist checkbox functionality");
+					sa.assertTrue(false, "cross button is not clickable so cannot verify watchlist checkbox functionality");
+				}
+			}else {
+				appLog.error("edit button is not clickable so cannot verify watchlist checkbox functionality");
+				sa.assertTrue(false, "edit button is not clickable so cannot verify watchlist checkbox functionality");
+			}
+		}else {
+			appLog.error("task name is not clickable so cannot verify watchlist checkbox functionality");
+			sa.assertTrue(false, "task name is not clickable so cannot verify watchlist checkbox functionality");
+		}
+		}else {
+			appLog.error("task tab is not clickable");
+			sa.assertTrue(false, "task tab is not clickable");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 
 	
 }

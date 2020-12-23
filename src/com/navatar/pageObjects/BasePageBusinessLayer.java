@@ -1517,6 +1517,8 @@ public boolean clickOnShowMoreActionDownArrow(String projectName,PageName pageNa
 			log(LogStatus.INFO, "clicked on show more actions icon", YesNo.No);
 			if (pageName.equals(PageName.TaskPage)) 
 				xpath="//div[@role='menu']//li/a[@title='"+actionDropDown+"']";
+			else if(pageName.equals(PageName.Object1Page))
+				xpath="//*[@role='menu']//span[text()='"+actionDropDown+"']";
 			else
 			xpath="//div[@role='menu']//span[text()='"+actionDropDown+"']";
 			 ThreadSleep(3000);
