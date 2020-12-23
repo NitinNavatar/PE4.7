@@ -710,11 +710,11 @@ public WebElement getLabelTextBox(String projectName,String pageName,String labe
 	
 	WebElement ele=null;
 	String labelTextBox = labelFieldTextBox.replace("_", " ");
-	String xpath="//span[text()='"+labelTextBox+"']/../following-sibling::input";
+	String xpath="//*[text()='"+labelTextBox+"']/following-sibling::div/input";
 	if (pageName.equalsIgnoreCase(PageName.NewTaskPage.toString()) || pageName.equalsIgnoreCase(PageName.TaskPage.toString()))
-		xpath="//label[text()='"+labelTextBox+"']/..//input";
+		xpath="//*[text()='"+labelTextBox+"']/..//input";
 	else if(pageName.equalsIgnoreCase(PageName.FundsPage.toString()))
-		xpath="//label[text()='"+labelTextBox+"']/following-sibling::div//input";
+		xpath="//*[text()='"+labelTextBox+"']/following-sibling::div//input";
 	ele = FindElement(driver, xpath, labelTextBox, action.SCROLLANDBOOLEAN, timeOut);
 	ele =isDisplayed(driver, ele, "Visibility", timeOut, labelTextBox);	
 	return ele;
@@ -4384,7 +4384,12 @@ public void verifyActivityAtNextStep2(String projectName,PageName pageName,Strin
 
 }
 
-
+public WebElement getInlineOrLockedAtToggle(String projectName,PageName pageName,ToggleButton toggleButton,String name,action action,int timeOut) {
+	String xpath = "//a[text()='"+toggleButton.toString()+"']/../../../../../..//*[@title='"+name+"']/../following-sibling::span/button";
+	WebElement ele = FindElement(driver, xpath,name, action, timeOut);
+	scrollDownThroughWebelement(driver, ele, name);
+	return ele;
+}
 
 
 

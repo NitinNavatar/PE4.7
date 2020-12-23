@@ -51,11 +51,11 @@ public class HomePageBusineesLayer extends HomePage {
 				log(LogStatus.INFO, "setting icon", YesNo.No);
 				
 			}else {
-				log(LogStatus.ERROR, "setting icon", YesNo.Yes);
+				log(LogStatus.ERROR, "clicked on setting icon", YesNo.Yes);
 				return flag;
 			}
 		if(click(driver, getUserMenuSetupLink(20), "setup link", action.SCROLLANDBOOLEAN)) {
-			log(LogStatus.INFO, "setup link", YesNo.No);
+			log(LogStatus.INFO, "clicked on setup link", YesNo.No);
 			flag=true;
 		}else {
 			log(LogStatus.ERROR,"user setup link",YesNo.Yes);
