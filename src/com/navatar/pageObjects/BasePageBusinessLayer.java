@@ -753,6 +753,9 @@ public boolean clickOnAlreadyCreatedItem(String projectName, TabName tabName,
 	case FundsTab:
 		viewList = "All";
 		break;
+	case DealTab:
+		viewList = "All";
+		break;
 	case Object1Tab:
 		viewList = "Automation All";
 		break;

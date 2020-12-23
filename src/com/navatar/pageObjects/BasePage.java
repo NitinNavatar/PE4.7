@@ -273,8 +273,18 @@ public abstract class BasePage extends BaseLib {
 			ele=setupLink_Lighting;
 		return isDisplayed(driver, ele, "Visibility", timeOut, "Setup Link");
 	}
+	
+	
+	@FindBy(xpath="//li[@data-aura-class='uiMenuItem onesetupSetupMenuItem']/a[@title='Edit Page']")
+	private WebElement editPageLink_Lighting;
+	
+
 
 	
+	public WebElement getEditPageLink_Lighting(int timeOut) {
+		return isDisplayed(driver, editPageLink_Lighting, "Visibility", timeOut, "edit page Link");
+	}
+
 	public WebElement getUserMenuSetupLink(String mode,int timeOut) {
 		WebElement ele=null;
 		if (mode.equalsIgnoreCase(Mode.Classic.toString()))

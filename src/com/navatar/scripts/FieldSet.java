@@ -15,6 +15,7 @@ import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
+import com.navatar.pageObjects.EditPageBusinessLayer;
 import com.navatar.pageObjects.FundsPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
 import com.navatar.pageObjects.InstitutionsPageBusinessLayer;
@@ -93,7 +94,6 @@ public class FieldSet extends BaseLib {
 		sa.assertAll();
 	}
 	
-	
 	@Parameters({ "projectName"})
 	@Test
 	public void FSTc003_createFieldSet(String projectName) {
@@ -146,7 +146,6 @@ public class FieldSet extends BaseLib {
 		sa.assertAll();
 	}
 	
-	
 	@Parameters({ "projectName"})
 	@Test
 	public void FSTc004_CreatePreconditionData(String projectName) {
@@ -181,11 +180,11 @@ public class FieldSet extends BaseLib {
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);	
 			String mailID=	lp.generateRandomEmailId(gmailUserName);
 			ExcelUtils.writeData(fieldSetFilePath, mailID, "Contacts", excelLabel.Variable_Name, "C1",excelLabel.Contact_EmailId);
-			if (con.createContact(projectName, FS_Con1_FName, FS_Con1_LastName, FS_Ins1, mailID,FS_Con1_RecordType,excelLabel.Phone.toString(), FS_Con1_Phone, CreationPage.ContactPage, null)) {
-				log(LogStatus.INFO,"successfully Created Contact : "+FS_Con1_FName+" "+FS_Con1_LastName,YesNo.No);	
+			if (con.createContact(projectName, FS_Con1_FName, FS_Con1_LName, FS_Ins1, mailID,FS_Con1_RecordType,excelLabel.Phone.toString(), FS_Con1_Phone, CreationPage.ContactPage, null)) {
+				log(LogStatus.INFO,"successfully Created Contact : "+FS_Con1_FName+" "+FS_Con1_LName,YesNo.No);	
 			} else {
-				sa.assertTrue(false,"Not Able to Create Contact : "+FS_Con1_FName+" "+FS_Con1_LastName);
-				log(LogStatus.SKIP,"Not Able to Create Contact: "+FS_Con1_FName+" "+FS_Con1_LastName,YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Create Contact : "+FS_Con1_FName+" "+FS_Con1_LName);
+				log(LogStatus.SKIP,"Not Able to Create Contact: "+FS_Con1_FName+" "+FS_Con1_LName,YesNo.Yes);
 			}
 		} else {
 			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object2Tab);
@@ -210,4 +209,125 @@ public class FieldSet extends BaseLib {
 		sa.assertAll();
 	}
 
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc005_addAdvanceFieldSetLayoutOnContactAndDealPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
+			if(con.clickOnCreatedContact(projectName, FS_Con1_FName, FS_Con1_LName)) {
+				log(LogStatus.INFO,"clicked on created contact : "+FS_Con1_FName+" "+FS_Con1_LName, YesNo.No);
+				ThreadSleep(5000);
+				if(edit.clickOnEditPageLink()) {
+					if(edit.dragAndDropLayOutFromEditPage(projectName, PageName.Object2Page, RelatedTab.Details, "Navatar Fieldset")) {
+						log(LogStatus.INFO, "Field set component is added on contact page :"+FS_Con1_FName+" "+FS_Con1_LName, YesNo.No);
+					}else {
+						log(LogStatus.ERROR, "Field set component is added on contact page :"+FS_Con1_FName+" "+FS_Con1_LName, YesNo.Yes);
+						sa.assertTrue(false, "Field set component is added on contact page :"+FS_Con1_FName+" "+FS_Con1_LName);
+					}
+					
+				}else {
+					log(LogStatus.ERROR, "Not able to click on edit page so cannot add field set component on contact page : "+FS_Con1_FName+" "+FS_Con1_LName, YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on edit page so cannot add field set component on contact page : "+FS_Con1_FName+" "+FS_Con1_LName);
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to click on created contact "+FS_Con1_FName+" "+FS_Con1_LName+" so cannot drag and drop Advanced field set component", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on created contact "+FS_Con1_FName+" "+FS_Con1_LName+" so cannot drag and drop Advanced field set component");
+			}
+		} else {
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object2Tab+" so cannot drag and drop Advanced field set component",YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object2Tab+" so cannot drag and drop Advanced field set component");
+		}
+		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+			if(lp.clickOnAlreadyCreatedItem(projectName,TabName.DealTab, FS_DealName1, 30)){
+				log(LogStatus.INFO,"clicked on created Deal : "+FS_DealName1, YesNo.No);
+				ThreadSleep(5000);
+				if(edit.clickOnEditPageLink()) {
+					if(edit.dragAndDropLayOutFromEditPage(projectName, PageName.Object4Page, RelatedTab.Details, "Navatar Fieldset")) {
+						log(LogStatus.INFO, "Field set component is added on Deal page :"+FS_DealName1, YesNo.No);
+					}else {
+						log(LogStatus.ERROR, "Field set component is added on Deal page :"+FS_DealName1, YesNo.Yes);
+						sa.assertTrue(false, "Field set component is added on Deal page :"+FS_DealName1);
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to click on edit page so cannot add field set component on deal page : "+FS_DealName1, YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on edit page so cannot add field set component on deal page : "+FS_DealName1);
+				}
+			}else {
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object4Tab+" so cannot drag and drop Advanced field set component",YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object4Tab+" so cannot drag and drop Advanced field set component");
+			}
+
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object4Tab);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object4Tab,YesNo.Yes);
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc006_verifyAdvanceFieldSetLayoutOnContactAndDealPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
+			if(con.clickOnCreatedContact(projectName, FS_Con1_FName, FS_Con1_LName)) {
+				log(LogStatus.INFO,"clicked on created contact : "+FS_Con1_FName+" "+FS_Con1_LName, YesNo.No);
+				ThreadSleep(5000);
+				String[] ss = FS_FieldsName1.split("<break>");
+				String[] ss1 = {FS_Con1_FName+" "+FS_Con1_LName,FS_Ins1,FS_Con1_Email,FS_Con1_Phone};
+				for(int i=0; i<ss.length; i++) {
+					if(con.verifyFieldSetComponent(ss[0],ss[1])) {
+						log(LogStatus.PASS, ss[0]+" is verified : "+ss1[0], YesNo.No);
+					}else {
+						log(LogStatus.ERROR, ss[0]+" is not verified : "+ss1[0], YesNo.Yes);
+						sa.assertTrue(false, ss[0]+" is not verified : "+ss1[0]);
+					}
+					
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to click on created contact "+FS_Con1_FName+" "+FS_Con1_LName+" so cannot verify Advanced field set component", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on created contact "+FS_Con1_FName+" "+FS_Con1_LName+" so cannot verify Advanced field set component");
+			}
+		} else {
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object2Tab+" so cannot verify Advanced field set component",YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object2Tab+" so cannot verify Advanced field set component");
+		}
+		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+			if(lp.clickOnAlreadyCreatedItem(projectName,TabName.DealTab, FS_DealName1, 30)){
+				log(LogStatus.INFO,"clicked on created Deal : "+FS_DealName1, YesNo.No);
+				ThreadSleep(5000);
+				String[] ss = FS_FieldsName3.split("<break>");
+				String[] ss1 = {FS_DealName1,FS_Deal1Stage,FS_Deal1SourceContact,FS_Deal1SourceFirm};
+				for(int i=0; i<ss.length; i++) {
+					if(con.verifyFieldSetComponent(ss[0],ss[1])) {
+						log(LogStatus.PASS, ss[0]+" is verified : "+ss1[0], YesNo.No);
+					}else {
+						log(LogStatus.ERROR, ss[0]+" is not verified : "+ss1[0], YesNo.Yes);
+						sa.assertTrue(false, ss[0]+" is not verified : "+ss1[0]);
+					}
+				}
+			}else {
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object4Tab+" so cannot verify Advanced field set component",YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object4Tab+" so cannot verify Advanced field set component");
+			}
+
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object4Tab);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object4Tab,YesNo.Yes);
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	
 }
