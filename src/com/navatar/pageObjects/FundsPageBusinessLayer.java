@@ -16,7 +16,7 @@ import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.action;
 import com.relevantcodes.extentreports.LogStatus;
 
-public class FundsPageBusinessLayer extends FundsPage {
+public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorMessage {
 
 	public FundsPageBusinessLayer(WebDriver driver) {
 		super(driver);

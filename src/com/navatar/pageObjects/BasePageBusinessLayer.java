@@ -1520,6 +1520,8 @@ public boolean clickOnShowMoreActionDownArrow(String projectName,PageName pageNa
 			log(LogStatus.INFO, "clicked on show more actions icon", YesNo.No);
 			if (pageName.equals(PageName.TaskPage)) 
 				xpath="//div[@role='menu']//li/a[@title='"+actionDropDown+"']";
+			else if(pageName.equals(PageName.Object1Page))
+				xpath="//*[@role='menu']//span[text()='"+actionDropDown+"']";
 			else
 			xpath="//div[@role='menu']//span[text()='"+actionDropDown+"']";
 			 ThreadSleep(3000);
@@ -4385,7 +4387,12 @@ public void verifyActivityAtNextStep2(String projectName,PageName pageName,Strin
 
 }
 
-
+public WebElement getInlineOrLockedAtToggle(String projectName,PageName pageName,ToggleButton toggleButton,String name,action action,int timeOut) {
+	String xpath = "//a[text()='"+toggleButton.toString()+"']/../../../../../..//*[@title='"+name+"']/../following-sibling::span/button";
+	WebElement ele = FindElement(driver, xpath,name, action, timeOut);
+	scrollDownThroughWebelement(driver, ele, name);
+	return ele;
+}
 
 
 
