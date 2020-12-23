@@ -5,10 +5,12 @@ package com.navatar.generic;
 
 import static com.navatar.generic.BaseLib.testCasesFilePath;
 import static com.navatar.generic.BaseLib.toggleFilePath;
+import static com.navatar.generic.CommonLib.getDateAccToTimeZone;
 import static com.navatar.generic.BaseLib.taskWatchlistFilePath;
 import static com.navatar.generic.BaseLib.fieldSetFilePath;
 import static com.navatar.generic.EnumConstants.*;
 import com.navatar.generic.EnumConstants.excelLabel;
+import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.scripts.Toggle;
 
 import com.navatar.generic.EnumConstants.excelLabel;
@@ -23,7 +25,7 @@ import com.navatar.scripts.TaskWatchlist;
 public class CommonVariables {
 //	public static String abc;
 
-	public static String URL;
+	public static String URL,todaysDate;
 	public static String browserToLaunch;
 	public static String Smoke_TWINS1Name,Smoke_TWINS1RecordType,Smoke_TWINS1Status;
 	public static String Smoke_TWINS2Name,Smoke_TWINS2RecordType,Smoke_TWINS2Status;
@@ -48,7 +50,7 @@ public class CommonVariables {
 	public static String ToggleIns1,ToggleIns1RecordType;
 
 	public static String environment,mode;
-	public static String TWTask1Subject,TWTask2Subject,TWTask3Subject,TWTask4Subject,TWTask5Subject,TWTask6Subject;
+	public static String TWTask1Subject,TWTask2Subject,TWTask3Subject,TWTask4Subject,TWTask5Subject,TWTask6Subject,TWTask8Subject,TWTaskCR1Subject;
 	public static String ToggleFund1,ToggleFund1Type,ToggleFund1Category,ToggleFund1RecordType;
 	public static String ToggleFund2,ToggleFund2Type,ToggleFund2Category,ToggleFund2RecordType;
 	public static String ToggleDeal1,ToggleDeal1CompanyName,ToggleDeal1RecordType,ToggleDeal1Stage;
@@ -83,20 +85,18 @@ public class CommonVariables {
 		 browserToLaunch = ExcelUtils.readDataFromPropertyFile("Browser");
 		 appName=ExcelUtils.readDataFromPropertyFile("AppName");
 		 superAdminUserName=ExcelUtils.readDataFromPropertyFile("SuperAdminUsername");
-			superAdminRegistered=ExcelUtils.readDataFromPropertyFile("SuperAdminRegistered");
-			appName=ExcelUtils.readDataFromPropertyFile("AppName");
-			
-			
-			environment=ExcelUtils.readDataFromPropertyFile("Environment");
-			mode=ExcelUtils.readDataFromPropertyFile("Mode");
-			
-			tabCustomObj=ExcelUtils.readDataFromPropertyFile("CustomTabName");
-			tabObj1=ExcelUtils.readDataFromPropertyFile("Object1");
-			tabObj2=ExcelUtils.readDataFromPropertyFile("Object2");
-			tabObj3=ExcelUtils.readDataFromPropertyFile("Object3");
-			tabObj4=ExcelUtils.readDataFromPropertyFile("Object4");
-			tabCustomObjField=ExcelUtils.readDataFromPropertyFile("CustomTabFieldName");
-			
+		superAdminRegistered=ExcelUtils.readDataFromPropertyFile("SuperAdminRegistered");
+		appName=ExcelUtils.readDataFromPropertyFile("AppName");
+		tabCustomObj=ExcelUtils.readDataFromPropertyFile("CustomTabName");
+		tabObj1=ExcelUtils.readDataFromPropertyFile("Object1");
+		tabObj2=ExcelUtils.readDataFromPropertyFile("Object2");
+		tabObj3=ExcelUtils.readDataFromPropertyFile("Object3");
+		tabObj4=ExcelUtils.readDataFromPropertyFile("Object4");
+		tabCustomObjField=ExcelUtils.readDataFromPropertyFile("CustomTabFieldName");
+		environment=ExcelUtils.readDataFromPropertyFile("Environment");
+		mode=ExcelUtils.readDataFromPropertyFile("Mode");
+		todaysDate=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "MM/dd/YYYY");
+		
 			AdminUserFirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_First_Name);
 			AdminUserLastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_Last_Name);
 			AdminUserEmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_Email);
@@ -219,6 +219,8 @@ public class CommonVariables {
 			TWTask4Subject=ExcelUtils.readData(taskWatchlistFilePath,"Task",excelLabel.Variable_Name, "TWTask4", excelLabel.Subject);
 			TWTask5Subject=ExcelUtils.readData(taskWatchlistFilePath,"Task",excelLabel.Variable_Name, "TWTask5", excelLabel.Subject);
 			TWTask6Subject=ExcelUtils.readData(taskWatchlistFilePath,"Task",excelLabel.Variable_Name, "TWTask6", excelLabel.Subject);
+			TWTask8Subject=ExcelUtils.readData(taskWatchlistFilePath,"Task",excelLabel.Variable_Name, "TWTask7", excelLabel.Subject);
+			TWTaskCR1Subject=ExcelUtils.readData(taskWatchlistFilePath,"Task",excelLabel.Variable_Name, "TWTask8", excelLabel.Subject);
 			
 		}else if(obj instanceof FieldSet){
 			

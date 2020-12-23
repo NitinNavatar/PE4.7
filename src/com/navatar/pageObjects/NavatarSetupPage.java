@@ -81,6 +81,10 @@ public class NavatarSetupPage extends BasePageBusinessLayer {
 	@FindBy(xpath="//div[contains(@id,'RightMenuContentSection')]//input[@title='Save']")
 	private WebElement saveButtonforNavatarSetUpSideMenuTab;
 
+	public WebElement saveButtonContactTransfer(int timeOut) {
+		return isDisplayed(driver, saveButtonforNavatarSetUpSideMenuTab, "Visibility", timeOut, "save Button for Navatar SetUpn ");
+	
+	}
 	/**
 	 * @param topOrBottom TODO
 	 * @return the saveButtonforNavatarSetUpSideMenuTab
@@ -441,4 +445,17 @@ public class NavatarSetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, confirmationPopUpMsg, "Visibility", timeOut, "confirmation Pop Up Message");
 	}
 	
+	@FindBy(xpath="//select[@id='pageId:formId:ctsActivityOption']")
+	private WebElement activitySettinggsDropdown;
+	
+	public WebElement getactivitySettinggsDropdown(String environment,int timeOut) {
+		return isDisplayed(driver, activitySettinggsDropdown, "Visibility", timeOut, "activity settings dropdown");
+	}
+	
+	@FindBy(xpath="//select[@id='pageId:formId:ctsAdvancedOption']")
+	private WebElement advancedActivitySettinggsDropdown;
+	
+	public WebElement getadvancedActivitySettinggsDropdown(String environment,int timeOut) {
+		return isDisplayed(driver, advancedActivitySettinggsDropdown, "Visibility", timeOut, "advanced activity settings dropdown");
+	}
 }
