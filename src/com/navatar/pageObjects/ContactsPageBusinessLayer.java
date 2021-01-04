@@ -935,12 +935,15 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 	
 	
 	public boolean verifyFieldSetComponent(String labelName, String value) {
-		String finalLabelName = labelName.replace("_", " ");
-		String xpath="//*[@id='parentDiv' and @class='cDisplayFieldSet']//*[contains(text(),'"+finalLabelName+"')]/following-sibling::div/*/*";
+		String finalLabelName="";
+		if(labelName.contains("_")) {
+			 finalLabelName = labelName.replace("_", " ");
+		}else {
+			 finalLabelName = labelName;
+		}
+		String xpath="//*[@id='parentDiv'][@class='cDisplayFieldSet']//*[contains(text(),'"+finalLabelName+"')]/following-sibling::div/*/*";
 		
-		WebElement ele = isDisplayed(driver,
-				FindElement(driver, xpath, finalLabelName + " label text", action.SCROLLANDBOOLEAN, 5),
-				"Visibility", 5, finalLabelName + " label text");
+		WebElement ele = FindElement(driver, xpath, finalLabelName + " label text", action.SCROLLANDBOOLEAN, 5);
 		if (ele != null) {
 			String aa = ele.getText().trim();
 			appLog.info("<<<<<<<<     "+finalLabelName+ " : Lable Value is: "+aa+"      >>>>>>>>>>>");

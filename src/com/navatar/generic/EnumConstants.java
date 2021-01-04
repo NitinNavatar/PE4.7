@@ -284,6 +284,10 @@ public class EnumConstants {
 }
 };
 
+public static enum PermissionType{
+	removePermission,givePermission;
+}
+
 //*************************************************************** Pages Field Labels*********************************************//
 	public static enum InstitutionPageFieldLabelText {
 		Street,Referral_Source_Description,Legal_Name,Description,

@@ -240,5 +240,44 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, fieldSetComponentFrame, "Visibility", timeOut, "field set component frame");
 	}
 	
+	@FindBy(xpath = "//iframe[contains(@title,'Salesforce - Enterprise Edition')]")
+	private WebElement fieldAndRelationShipFrame;
+
+	public WebElement getFieldAndRelationShipFrame(int timeOut) {
+		return isDisplayed(driver, fieldAndRelationShipFrame, "Visibility", timeOut, "View Field Accessibility Frame");
+	}
 	
+	public WebElement getObjectEditOrSetFieldSecurityOrViewFieldAccessbilityBtn(String objectButtonLabelName, int timeOut) {
+		String xpath="//input[@title='"+objectButtonLabelName+"']";
+		WebElement ele= FindElement(driver, xpath,objectButtonLabelName+" button xpath", action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "visibility", timeOut,objectButtonLabelName+" button xpath");
+	}
+	
+	@FindBy(xpath = "//select[@id='zSelect']")
+	private WebElement fieldAccessbilityDropDown;
+
+	public WebElement getFieldAccessbilityDropDown(int timeOut) {
+		return isDisplayed(driver, fieldAccessbilityDropDown, "Visibility", timeOut, "field accessbility drop down");
+	}
+	
+	
+	public WebElement getfieldAccessOptionLink(String fieldLabel, String profileName, int timeOut) {
+		String xpath="//div[contains(@id,'"+fieldLabel+"') and contains(@style,'block')]//th[text()='"+profileName+"']/following-sibling::td/a";
+		WebElement ele= FindElement(driver, xpath,profileName+" link xpath", action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "visibility", timeOut,profileName+" link xpath");
+	}
+	
+	@FindBy(xpath = "//input[@id='p11']")
+	private WebElement fieldLevelSecurityVisibleCheckBox;
+
+	public WebElement getFieldLevelSecurityVisibleCheckBox(int timeOut) {
+		return isDisplayed(driver, fieldLevelSecurityVisibleCheckBox, "Visibility", timeOut, "field Level Security Visible CheckBox");
+	}
+	
+	@FindBy(xpath = "//td[@class='pbButtonb']//input[@title='Save']")
+	private WebElement viewAccessbilityDropDownSaveButton;
+
+	public WebElement getViewAccessbilityDropDownSaveButton(int timeOut) {
+		return isDisplayed(driver, viewAccessbilityDropDownSaveButton, "Visibility", timeOut, "view Accessbility DropDown Save Button");
+	}
 }

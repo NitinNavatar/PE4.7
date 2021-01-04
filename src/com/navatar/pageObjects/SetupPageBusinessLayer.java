@@ -737,4 +737,71 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return flag;
 	}
 	
+	public boolean giveAndRemoveObjectPermissionFromObjectManager(object objectName,ObjectFeatureName objectFeatureName,PermissionType permissionType, String fieldLabel, String profileName) {
+		boolean flag = false;
+		WebElement ele=null;
+		if(searchStandardOrCustomObject(environment,mode, objectName)) {
+			log(LogStatus.INFO, "click on Object : "+objectName, YesNo.No);
+			ThreadSleep(2000);
+			if(clickOnObjectFeature(environment,mode, objectName, objectFeatureName)) {
+				log(LogStatus.INFO, "Clicked on feature : "+objectFeatureName, YesNo.No);
+				ThreadSleep(1000);
+				if(sendKeys(driver, getQuickSearchInObjectManager_Lighting(10), fieldLabel, "search text box", action.BOOLEAN)) {
+					String xpath="//a[contains(@href,'/Contact/FieldsAndRelationships')]/span[text()='"+fieldLabel+"']";
+					ele = isDisplayed(driver, FindElement(driver, xpath, "field set label text", action.BOOLEAN, 3), "visibility", 3, "field set label text");
+					if(ele!=null) {
+						if(click(driver, ele, "field label text link", action.BOOLEAN)) {
+							log(LogStatus.INFO, "clicked on field label "+fieldLabel, YesNo.No);
+							switchToFrame(driver, 20, getFieldAndRelationShipFrame(20));
+							ThreadSleep(1000);
+							if(click(driver, getObjectEditOrSetFieldSecurityOrViewFieldAccessbilityBtn("View Field Accessibility", 10), "view field accessbility button xpath", action.BOOLEAN)) {
+								log(LogStatus.INFO, "clicked on view field accessbility of field label : "+fieldLabel, YesNo.No);
+								switchToFrame(driver, 20, getFieldAndRelationShipFrame(20));
+								ThreadSleep(1000);
+								if(selectVisibleTextFromDropDown(driver, getFieldAccessbilityDropDown(10), "field accessbility drop down",fieldLabel)) {
+									log(LogStatus.INFO,"select field label accessbility drop down "+fieldLabel,YesNo.No);
+									ThreadSleep(1000);
+									if(clickUsingJavaScript(driver, getfieldAccessOptionLink(fieldLabel,profileName,10),"profile link name", action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.INFO,"clicked on "+profileName+" link",YesNo.No);
+										switchToFrame(driver, 20, getFieldAndRelationShipFrame(20));
+										if(click(driver, getFieldLevelSecurityVisibleCheckBox(10), "check box", action.BOOLEAN)) {
+											log(LogStatus.INFO,"Clicked on field level security check box", YesNo.No);
+											if(click(driver, getViewAccessbilityDropDownSaveButton(10), "save button", action.BOOLEAN)) {
+												log(LogStatus.INFO,"save button",YesNo.No);
+												return true;
+												
+											}else {
+												log(LogStatus.ERROR,"Not able to click on save button field accessbility of field label "+fieldLabel+" in object "+objectName+" so cannot "+permissionType,YesNo.Yes);
+											}
+										}else {
+											log(LogStatus.ERROR,"Not able to click on visible field accessbility of field label "+fieldLabel+" in object "+objectName+" so cannot "+permissionType,YesNo.Yes);
+										}
+									}else {
+										log(LogStatus.ERROR," Not able to click on profile link from view field accessbility of field label "+fieldLabel+" in object "+objectName+" so cannot "+permissionType,YesNo.Yes);
+									}
+								}else {
+									log(LogStatus.ERROR,"Not able to select value from view field accessbility of field label "+fieldLabel+" in object "+objectName+" so cannot "+permissionType,YesNo.Yes);
+								}
+							}else {
+								log(LogStatus.ERROR,"Not able to click on view field accessbility of field label "+fieldLabel+" in object "+objectName+" so cannot "+permissionType,YesNo.Yes);
+							}
+						}else {
+							log(LogStatus.ERROR,"Not able to click on field label "+fieldLabel+" in object "+objectName+" so cannot "+permissionType,YesNo.Yes);
+						}
+					}else {
+						log(LogStatus.ERROR,"Search field label "+fieldLabel+" is not found in object "+objectName+" so cannot "+permissionType,YesNo.Yes);	
+					}
+				}else {
+					log(LogStatus.ERROR,"Not able to search field label "+fieldLabel+" in object "+objectName+" so cannot "+permissionType,YesNo.Yes);
+				}
+
+			}else {
+				log(LogStatus.FAIL, "Not able to found object : "+objectName.toString()+" so cannot "+permissionType, YesNo.Yes);
+			}
+		}else {
+			log(LogStatus.FAIL, "Not able to search object "+objectName.toString()+" so cannot "+permissionType, YesNo.Yes);
+		}
+
+		return flag;
+	}
 }

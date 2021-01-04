@@ -329,5 +329,185 @@ public class FieldSet extends BaseLib {
 		sa.assertAll();
 	}
 	
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc007_1_removeObjectPermissionFromObject(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
+		String parentWindow = null;
+		boolean flag = true;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create Field Set Component",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+			}
+			ThreadSleep(3000);
+			if(setup.giveAndRemoveObjectPermissionFromObjectManager(object.Contact,ObjectFeatureName.FieldAndRelationShip,PermissionType.removePermission,"Email","PE Standard User")) {
+				log(LogStatus.PASS,"Remove Permission from Contact Object", YesNo.No);
+				flag=true;
+			}else {
+				log(LogStatus.ERROR,"Not able to remove permission from Contact Object", YesNo.Yes);
+				sa.assertTrue(false, "Not able to remove permission from Contact Object");
+			}
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot remove permission on email object of contact object", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot remove permission on email object of contact object");
+		}
+		if(flag) {
+			if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
+				log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
+				if(con.clickOnCreatedContact(projectName, FS_Con1_FName, FS_Con1_LName)) {
+					log(LogStatus.INFO,"clicked on created contact : "+FS_Con1_FName+" "+FS_Con1_LName, YesNo.No);
+					ThreadSleep(3000);
+					if(con.verifyFieldSetComponent("Email",FS_Con1_Email)) {
+						log(LogStatus.PASS,"Email is displaying : "+FS_Con1_Email, YesNo.No);
+					}else {
+						log(LogStatus.ERROR,"Email is not displaying : "+FS_Con1_Email, YesNo.Yes);
+						sa.assertTrue(false,"Email is not displaying : "+FS_Con1_Email);
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to click on created contact "+FS_Con1_FName+" "+FS_Con1_LName+" so cannot verify field set component", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on created contact "+FS_Con1_FName+" "+FS_Con1_LName+" so cannot verify field set component");
+				}
+			} else {
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object2Tab+" so cannot verify field set component",YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object2Tab+" so cannot verify field set component");
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 	
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc007_2_verifyRemoveObjectImpactFromPEUser(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
+			if(con.clickOnCreatedContact(projectName, FS_Con1_FName, FS_Con1_LName)) {
+				log(LogStatus.INFO,"clicked on created contact : "+FS_Con1_FName+" "+FS_Con1_LName, YesNo.No);
+				ThreadSleep(3000);
+				if(!con.verifyFieldSetComponent("Email",FS_Con1_Email)) {
+					log(LogStatus.PASS, "Email object is not displaying : ", YesNo.No);
+				}else {
+					log(LogStatus.ERROR,"Email Object is displaying : "+FS_Con1_Email, YesNo.Yes);
+					sa.assertTrue(false, "Email Object is displaying : "+FS_Con1_Email);
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to click on created contact "+FS_Con1_FName+" "+FS_Con1_LName+" so cannot verify field set component", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on created contact "+FS_Con1_FName+" "+FS_Con1_LName+" so cannot verify field set component");
+			}
+		} else {
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object2Tab+" so cannot verify field set component",YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object2Tab+" so cannot verify field set component");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc008_1_giveObjectPermissionFromObject(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
+		String parentWindow = null;
+		boolean flag = true;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create Field Set Component",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+			}
+			ThreadSleep(3000);
+			if(setup.giveAndRemoveObjectPermissionFromObjectManager(object.Contact,ObjectFeatureName.FieldAndRelationShip,PermissionType.removePermission,"Email","PE Standard User")) {
+				log(LogStatus.PASS,"Remove Permission from Contact Object", YesNo.No);
+				flag=true;
+			}else {
+				log(LogStatus.ERROR,"Not able to remove permission from Contact Object", YesNo.Yes);
+				sa.assertTrue(false, "Not able to remove permission from Contact Object");
+			}
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot remove permission on email object of contact object", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot remove permission on email object of contact object");
+		}
+		if(flag) {
+			if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
+				log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
+				if(con.clickOnCreatedContact(projectName, FS_Con1_FName, FS_Con1_LName)) {
+					log(LogStatus.INFO,"clicked on created contact : "+FS_Con1_FName+" "+FS_Con1_LName, YesNo.No);
+					ThreadSleep(3000);
+					if(con.verifyFieldSetComponent("Email",FS_Con1_Email)) {
+						log(LogStatus.PASS,"Email is displaying : "+FS_Con1_Email, YesNo.No);
+					}else {
+						log(LogStatus.ERROR,"Email is not displaying : "+FS_Con1_Email, YesNo.Yes);
+						sa.assertTrue(false,"Email is not displaying : "+FS_Con1_Email);
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to click on created contact "+FS_Con1_FName+" "+FS_Con1_LName+" so cannot verify field set component", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on created contact "+FS_Con1_FName+" "+FS_Con1_LName+" so cannot verify field set component");
+				}
+			} else {
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object2Tab+" so cannot verify field set component",YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object2Tab+" so cannot verify field set component");
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc008_2_verifyGiveObjectImpactFromPEUser(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
+			if(con.clickOnCreatedContact(projectName, FS_Con1_FName, FS_Con1_LName)) {
+				log(LogStatus.INFO,"clicked on created contact : "+FS_Con1_FName+" "+FS_Con1_LName, YesNo.No);
+				ThreadSleep(3000);
+				if(con.verifyFieldSetComponent("Email",FS_Con1_Email)) {
+					log(LogStatus.PASS, "Email object is displaying : ", YesNo.No);
+				}else {
+					log(LogStatus.ERROR,"Email Object is not displaying : "+FS_Con1_Email, YesNo.Yes);
+					sa.assertTrue(false, "Email Object is not displaying : "+FS_Con1_Email);
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to click on created contact "+FS_Con1_FName+" "+FS_Con1_LName+" so cannot verify field set component", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on created contact "+FS_Con1_FName+" "+FS_Con1_LName+" so cannot verify field set component");
+			}
+		} else {
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object2Tab+" so cannot verify field set component",YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object2Tab+" so cannot verify field set component");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 }
