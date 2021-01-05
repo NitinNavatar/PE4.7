@@ -53,10 +53,10 @@ public class TaskPageBusinessLayer extends TaskPage {
 			label= fieldWithValue[0].replace("_", " ");
 			
 			if (ele!=null) {
-				if (!label.equalsIgnoreCase(PageLabel.Watchlist.toString()))
-				actualValue=ele.getText().trim();
-				else
+				if (label.equalsIgnoreCase(PageLabel.Watchlist.toString())||label.equalsIgnoreCase(PageLabel.Watch_list.toString()))
 					actualValue=ele.getAttribute("alt");
+				else
+					actualValue=ele.getText().trim();
 				if (value==null || value.equals("")){
 					flag=actualValue.equals(value);
 				} else {

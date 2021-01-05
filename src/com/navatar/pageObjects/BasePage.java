@@ -1257,7 +1257,9 @@ public abstract class BasePage extends BaseLib {
 	 @FindBy(xpath = "//iframe[@title='accessibility title']")
 	 private WebElement taskPageFrame;
 	 
-	 
+	 @FindBy(xpath="//iframe[contains(@title,'Activity Custom Field')]")
+	 private WebElement activityLayoutFrame;
+
 	 /**
 	  * @author Ankit Jaiswal
 	  * @param pageName
@@ -1294,6 +1296,8 @@ public abstract class BasePage extends BaseLib {
 		  ele=isDisplayed(driver, emailUploadPageFrame, "Visibility", timeOut, "meeting or activties Frame");
 	  }else if (pageName.toString().equalsIgnoreCase(PageName.CompactLayout.toString())){
 		  ele=isDisplayed(driver, compactLayoutFrame, "Visibility", timeOut, "meeting or activties Frame");
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.ActivityLayoutPage.toString())){
+		  ele=isDisplayed(driver, activityLayoutFrame, "Visibility", timeOut, "meeting or activties Frame");
 	  }
 	  else if (pageName.toString().equalsIgnoreCase(PageName.MeetingType.toString())){
 		  ele=isDisplayed(driver, meetingTypeFrame, "Visibility", timeOut, "meeting or activties Frame");
