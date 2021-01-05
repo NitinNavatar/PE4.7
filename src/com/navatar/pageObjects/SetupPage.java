@@ -280,4 +280,8 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getViewAccessbilityDropDownSaveButton(int timeOut) {
 		return isDisplayed(driver, viewAccessbilityDropDownSaveButton, "Visibility", timeOut, "view Accessbility DropDown Save Button");
 	}
+	
+	public List<WebElement> getDraggedObjectListInCreateFieldSet(){
+		return FindElements(driver, "//div[@id='defaultView']/div", "dragged object list in created field set");
+	}
 }

@@ -286,11 +286,11 @@ public class FieldSet extends BaseLib {
 				String[] ss = FS_FieldsName1.split("<break>");
 				String[] ss1 = {FS_Con1_FName+" "+FS_Con1_LName,FS_Ins1,FS_Con1_Email,FS_Con1_Phone};
 				for(int i=0; i<ss.length; i++) {
-					if(con.verifyFieldSetComponent(ss[0],ss[1])) {
-						log(LogStatus.PASS, ss[0]+" is verified : "+ss1[0], YesNo.No);
+					if(con.verifyFieldSetComponent(ss[i],ss1[i])) {
+						log(LogStatus.PASS, ss[i]+" is verified : "+ss1[i], YesNo.No);
 					}else {
-						log(LogStatus.ERROR, ss[0]+" is not verified : "+ss1[0], YesNo.Yes);
-						sa.assertTrue(false, ss[0]+" is not verified : "+ss1[0]);
+						log(LogStatus.ERROR, ss[i]+" is not verified : "+ss1[i], YesNo.Yes);
+						sa.assertTrue(false, ss[i]+" is not verified : "+ss1[i]);
 					}
 					
 				}
@@ -309,11 +309,11 @@ public class FieldSet extends BaseLib {
 				String[] ss = FS_FieldsName3.split("<break>");
 				String[] ss1 = {FS_DealName1,FS_Deal1Stage,FS_Deal1SourceContact,FS_Deal1SourceFirm};
 				for(int i=0; i<ss.length; i++) {
-					if(con.verifyFieldSetComponent(ss[0],ss[1])) {
-						log(LogStatus.PASS, ss[0]+" is verified : "+ss1[0], YesNo.No);
+					if(con.verifyFieldSetComponent(ss[i],ss1[i])) {
+						log(LogStatus.PASS, ss[i]+" is verified : "+ss1[i], YesNo.No);
 					}else {
-						log(LogStatus.ERROR, ss[0]+" is not verified : "+ss1[0], YesNo.Yes);
-						sa.assertTrue(false, ss[0]+" is not verified : "+ss1[0]);
+						log(LogStatus.ERROR, ss[i]+" is not verified : "+ss1[i], YesNo.Yes);
+						sa.assertTrue(false, ss[i]+" is not verified : "+ss1[i]);
 					}
 				}
 			}else {
@@ -510,4 +510,73 @@ public class FieldSet extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
+
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc009_changeTheFieldPositionAndCheckImpact(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
+		String parentWindow = null;
+		String reverseObjects=reverseString(FS_FieldsName1);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot change Field position");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot change Field position",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot change Field position");
+			}
+			ThreadSleep(3000);
+			
+			object object1 = object.valueOf(FS_Object1);
+			
+			if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,FS_FieldSetLabel1, reverseObjects, FS_FieldsName1)) {
+				log(LogStatus.PASS, "Field Set Object position is changed for : "+FS_FieldSetLabel1, YesNo.No);
+			}else {
+				log(LogStatus.ERROR,"Field Set Object position is not changed for : "+FS_FieldSetLabel1, YesNo.Yes);
+				sa.assertTrue(false, "Field Set Object position is not changed for : "+FS_FieldSetLabel1);
+			}
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot change Field Set Component position", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot create Field Set Component position");
+		}
+		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
+			if(con.clickOnCreatedContact(projectName, FS_Con1_FName, FS_Con1_LName)) {
+				log(LogStatus.INFO,"clicked on created contact : "+FS_Con1_FName+" "+FS_Con1_LName, YesNo.No);
+				ThreadSleep(5000);
+				String[] ss = reverseObjects.split("<break>");
+				String[] ss1 = {FS_Con1_Phone,FS_Con1_Email,FS_Ins1,FS_Con1_FName+" "+FS_Con1_LName};;
+				
+				for(int i=0; i<ss.length; i++) {
+					if(con.verifyFieldSetComponent(ss[i],ss1[i])) {
+						log(LogStatus.PASS, ss[i]+" is verified : "+ss1[i], YesNo.No);
+					}else {
+						log(LogStatus.ERROR, ss[i]+" is not verified : "+ss1[i], YesNo.Yes);
+						sa.assertTrue(false, ss[i]+" is not verified : "+ss1[i]);
+					}
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to click on created contact "+FS_Con1_FName+" "+FS_Con1_LName+" so cannot verify Advanced field set component", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on created contact "+FS_Con1_FName+" "+FS_Con1_LName+" so cannot verify Advanced field set component");
+			}
+		} else {
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object2Tab+" so cannot verify Advanced field set component",YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object2Tab+" so cannot verify Advanced field set component");
+		}
+		
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
 }

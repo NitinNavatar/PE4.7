@@ -882,7 +882,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		if (ProjectName.MNA.toString().equalsIgnoreCase(projectName)) {
 			AcctOrLegalName="Account Name";
 		}else if (ProjectName.PE.toString().equalsIgnoreCase(projectName)) {
-			AcctOrLegalName="Legal Name";;
+			AcctOrLegalName="Legal Name";
 		} else {
 			AcctOrLegalName="Firm";
 		}
@@ -941,7 +941,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		}else {
 			 finalLabelName = labelName;
 		}
-		String xpath="//*[@id='parentDiv'][@class='cDisplayFieldSet']//*[contains(text(),'"+finalLabelName+"')]/following-sibling::div/*/*";
+		String xpath="//*[@id='parentDiv'][@class='cDisplayFieldSet']//*[contains(text(),'"+finalLabelName+"')]/following-sibling::div/*";
 		
 		WebElement ele = FindElement(driver, xpath, finalLabelName + " label text", action.SCROLLANDBOOLEAN, 5);
 		if (ele != null) {

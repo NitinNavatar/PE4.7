@@ -1,5 +1,6 @@
 package com.navatar.pageObjects;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -644,6 +645,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 	
 	
 	
+	
 	/**
 	 * @author ANKIT JAISWAL
 	 * @param objectName
@@ -804,4 +806,100 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 		return flag;
 	}
+
+	public boolean changePositionOfFieldSetComponent(object objectName,ObjectFeatureName objectFeatureName,String fieldSetLabel,String DragComponentName,String removableObjectName) {
+		boolean flag = false;
+		WebElement ele=null,sourceElement=null;
+		int count=0;
+		if(searchStandardOrCustomObject(environment,mode, objectName)) {
+			log(LogStatus.INFO, "click on Object : "+objectName, YesNo.No);
+			ThreadSleep(2000);
+			if(clickOnObjectFeature(environment,mode, objectName, objectFeatureName)) {
+				log(LogStatus.INFO, "Clicked on feature : "+objectFeatureName, YesNo.No);
+				ThreadSleep(1000);
+				if(sendKeys(driver, getQuickSearchInObjectManager_Lighting(10), fieldSetLabel, "search text box", action.BOOLEAN)) {
+					String xpath="//span[text()='"+fieldSetLabel+"']/..";
+					ele = isDisplayed(driver, FindElement(driver, xpath, "field set label text", action.BOOLEAN, 3), "visibility", 3, "field set label text");
+					if(ele!=null) {
+						if(click(driver, ele, "create field set "+fieldSetLabel, action.BOOLEAN)) {
+							log(LogStatus.INFO, "Field Set Label "+fieldSetLabel+" is already created ", YesNo.No);
+							switchToFrame(driver, 20, getEditPageLayoutFrame_Lighting(20));
+							if(removableObjectName!=null) {
+								String[] removeObject= removableObjectName.split("<break>");
+								List<WebElement> lst = getDraggedObjectListInCreateFieldSet();
+								if(!lst.isEmpty()) {
+									for(int i=0; i<removeObject.length; i++) {
+										xpath="//div[@id='defaultView']//div[starts-with(text(),'"+removeObject[i]+"')]/ancestor::div[contains(@class,'field-source')]";
+										ele=FindElement(driver,xpath,removeObject[i]+" xpath", action.BOOLEAN,10);
+										
+										String id =ele.getAttribute("id");
+										ThreadSleep(1000);
+										((JavascriptExecutor) driver).executeScript("document.getElementById('"+id+"').setAttribute('class', 'field-source field-selected field-hover');");
+										ThreadSleep(2000);
+										if(click(driver,FindElement(driver, xpath+"//div[@class='remove']", "remove Icon", action.BOOLEAN, 10), "remove icon", action.BOOLEAN)) {
+											log(LogStatus.INFO,"Clicked on reomve icon of object : "+removeObject[i],YesNo.No);
+										}else {
+											log(LogStatus.INFO,"Not able to click on reomve icon of object : "+removeObject[i]+" so cannot remove old object and dragged new objects in field set",YesNo.No);
+											return false;
+										}
+									}
+								}else {
+									log(LogStatus.ERROR, "Object is not present in create field set "+fieldSetLabel+" so cannot remove old object and dragged new objects in field set", YesNo.Yes);
+									return false;
+								}
+								
+							}
+							if(DragComponentName!=null) {
+								String[] splitedDragComponent= DragComponentName.split("<break>");
+								for(int i=0; i<splitedDragComponent.length; i++) {
+									sendKeys(driver, getQuickFindSearchBox(environment, mode, 10), splitedDragComponent[i], "Search Value : "+splitedDragComponent[i], action.BOOLEAN);
+									if(splitedDragComponent[i].equalsIgnoreCase("Highest Stage Reached")) {
+										String DragComponent=splitedDragComponent[i].split(" ")[0];
+										sourceElement =isDisplayed(driver, FindElement(driver, "//span[starts-with(text(),'"+DragComponent+"')]", "", action.BOOLEAN,10), "visibility",10,splitedDragComponent[i]+" page layout link");
+									}else {
+										sourceElement =isDisplayed(driver, FindElement(driver, "//span[starts-with(text(),'"+splitedDragComponent[i]+"')]", "", action.BOOLEAN,10), "visibility",10,splitedDragComponent[i]+" page layout link");
+									}
+									ThreadSleep(2000);
+									if(dragNDropOperation(driver, sourceElement, getFieldSetdefaultViewDragAndDropTextLabel(5))) {
+										log(LogStatus.INFO, "Dragged Successfully : "+splitedDragComponent[i], YesNo.No);
+										count++;
+									}else {
+										log(LogStatus.ERROR, "Not able to drag and drop field "+splitedDragComponent[i]+" in created field set component "+fieldSetLabel, YesNo.Yes);
+									}
+								}
+								if(count==splitedDragComponent.length) {
+									flag=true;
+								}
+							}else {
+								flag=true;
+							}
+							if(click(driver, getPageLayoutSaveBtn(object.Global_Actions, 10), "page layouts save button", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Save button", YesNo.No);
+
+							}else {
+								log(LogStatus.ERROR, "Not able to click on Save button cannot save pagelayout dragged object or section in field set component "+fieldSetLabel, YesNo.Yes);
+								flag=false;
+							}
+						}else {
+							log(LogStatus.INFO, "Not able to click on created Field Set Label "+fieldSetLabel+" is not visible so cannot change position of labels", YesNo.Yes);
+						}
+					}else {
+						log(LogStatus.INFO, "created Field Set Label "+fieldSetLabel+" is not visible so cannot change position of labels", YesNo.Yes);
+					}
+				}else {
+					log(LogStatus.INFO, "Not able to search created Field Set Label "+fieldSetLabel, YesNo.Yes);
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to click on object feature : "+objectFeatureName, YesNo.Yes);
+			}
+			
+		}else {
+			log(LogStatus.ERROR, "Not able to click on Object : "+objectName+" so cannot create field set component", YesNo.Yes);
+		}
+		switchToDefaultContent(driver);
+		return flag;
+	}
+
+
+
 }
