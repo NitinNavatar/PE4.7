@@ -882,7 +882,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		if (ProjectName.MNA.toString().equalsIgnoreCase(projectName)) {
 			AcctOrLegalName="Account Name";
 		}else if (ProjectName.PE.toString().equalsIgnoreCase(projectName)) {
-			AcctOrLegalName="Legal Name";;
+			AcctOrLegalName="Legal Name";
 		} else {
 			AcctOrLegalName="Firm";
 		}
@@ -933,5 +933,51 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 
 	}
 	
+	
+	public boolean verifyFieldSetComponent(String labelName, String value) {
+		String finalLabelName="";
+		if(labelName.contains("_")) {
+			 finalLabelName = labelName.replace("_", " ");
+		}else {
+			 finalLabelName = labelName;
+		}
+		String xpath="//*[@id='parentDiv'][@class='cDisplayFieldSet']//*[contains(text(),'"+finalLabelName+"')]/following-sibling::div/*";
+		
+		WebElement ele = FindElement(driver, xpath, finalLabelName + " label text", action.SCROLLANDBOOLEAN, 5);
+		if (ele != null) {
+			String aa = ele.getText().trim();
+			appLog.info("<<<<<<<<     "+finalLabelName+ " : Lable Value is: "+aa+"      >>>>>>>>>>>");
 
+			if (aa.isEmpty()) {
+				appLog.error(finalLabelName + " Value is Empty label Value "+value);
+				return false;
+			}
+
+			if (labelName.equalsIgnoreCase(excelLabel.Phone.toString()) || labelName.equalsIgnoreCase(excelLabel.Fax.toString())||
+					labelName.equalsIgnoreCase(ContactPageFieldLabelText.Mobile.toString()) ||
+					labelName.equalsIgnoreCase(excelLabel.Asst_Phone.toString())) {
+
+				if(aa.contains(value) || aa.contains(changeNumberIntoUSFormat(value))) {
+					appLog.info(value + " Value is matched successfully.");
+					return true;
+
+				}
+			}else if(aa.contains(value)) {
+				appLog.info(value + " Value is matched successfully.");
+				return true;
+
+			}else {
+				appLog.info(value + " Value is not matched. Expected: "+value+" /t Actual : "+aa);
+			}
+		} else {
+			appLog.error(finalLabelName + " Value is not visible so cannot matched  label Value "+value);
+		}
+		return false;
+		
+	}
+	
+	
+	
+	
+	
 }

@@ -53,6 +53,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -940,7 +941,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 							}
 						}
 					}
-				} else if (e.getMessage().contains("is not clickable at point") || e.getMessage().contains("Other element would receive the click")){
+				} else if (e.getMessage().contains("is not clickable at point") || e.getMessage().contains("Other element would receive the click") || e.getMessage().contains("element not interactable")){
 					String xpath = getXpath(element);
 					if(xpath!=null){
 						WebElement ele = FindElement(driver, xpath, elementName, action, 10);
@@ -2589,5 +2590,20 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 			return flag;
 		}
 		
+		
+		public static String reverseString(String reverseString) {
+			String[] myarraStrings = reverseString.split("<break>");
+			String newString="";
+			for(int i=myarraStrings.length-1;i>=0;i--) {
+				System.out.print(myarraStrings[i] + "  ");
+				if(i==myarraStrings.length-1) {
+					newString=newString+myarraStrings[i];
+				}else {
+					newString=newString+"<break>"+myarraStrings[i];
+				}
+			}
+			return newString;
+			
+		}
 	 
 }
