@@ -25,6 +25,7 @@ import com.android.dx.cf.iface.Field;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
+import com.navatar.generic.SoftAssert;
 import com.navatar.generic.EnumConstants.*;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
@@ -1358,4 +1359,329 @@ public class TaskWatchlist extends BaseLib{
 		sa.assertAll();
 	}
 
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void TWtc015_SaveTaskAgainAndVerifyImpact(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.TaskTab)) {
+			WebElement ele=tp.getTaskNameLinkInSideMMenu(projectName, TWTask2Subject, 15);
+		if (click(driver, ele, TWTask2Subject, action.BOOLEAN)) {
+			String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTask2Subject},
+					{PageLabel.Watchlist.toString(),Watchlist.False.toString()}};
+
+			if (tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10)) {
+
+				appLog.info("successfully verifid watchlist as checked before any action");
+			}
+			else {
+				appLog.error("could not verify watchlist as checked");
+				sa.assertTrue(false, "could not verify watchlist as checked");
+			}
+			ThreadSleep(3000);
+			scrollDownThroughWebelement(driver, ip.getEditButton(environment,  mode,10), "edit");
+			if (click(driver, ip.getEditButton(environment,  mode,10), "edit", action.SCROLLANDBOOLEAN)) {
+				if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), todaysDate, PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Entered value to Due Date Text Box", YesNo.Yes);
+					ThreadSleep(1000);
+				}else {
+					log(LogStatus.ERROR, "duedate textbox is not visible so task could not be created", YesNo.Yes);
+					sa.assertTrue(false,"duedate textbox is not visible so task could not be created" );
+				}
+				if  (click(driver, ip.getCustomTabSaveBtn(projectName,10), "save", action.BOOLEAN)) {
+					appLog.info("successfully clicked on save button after changing contact");
+
+					ThreadSleep(3000);
+					ele=ip.getCustomTabSaveBtn(projectName,10);
+					if (ele!=null) {
+						appLog.error("edit mode opened after clicking on save button");
+						sa.assertTrue(false, "edit mode opened after clicking on save button");
+						click(driver, ele, "save", action.BOOLEAN);
+					}
+					String[][] fieldsWithValues1= {{PageLabel.Subject.toString(),TWTask2Subject},
+							{PageLabel.Watchlist.toString(),Watchlist.True.toString()}};
+
+					if (tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues1, action.BOOLEAN, 10)) {
+
+						appLog.info("successfully verifid watchlist as unchecked after changing date");
+					}
+					else {
+						appLog.error("could not verify watchlist as unchecked");
+						sa.assertTrue(false, "could not verify watchlist as unchecked");
+					}
+				}else {
+					appLog.error("save button is not clickable so cannot verify watchlist checkbox functionality");
+					sa.assertTrue(false, "save button is not clickable so cannot verify watchlist checkbox functionality");
+				}
+
+			}else {
+				appLog.error("edit button is not clickable so cannot verify watchlist checkbox functionality");
+				sa.assertTrue(false, "edit button is not clickable so cannot verify watchlist checkbox functionality");
+			}
+		}else {
+			appLog.error("task name is not clickable so cannot verify watchlist checkbox functionality");
+			sa.assertTrue(false, "task name is not clickable so cannot verify watchlist checkbox functionality");
+		}
+		}else {
+			appLog.error("task tab is not clickable");
+			sa.assertTrue(false, "task tab is not clickable");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+
+	@Parameters({ "projectName"})
+	@Test
+	public void TWtc016_CreateNewTaskWithWatchlistAndVerifyImpact(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.TaskTab)) {
+
+			if (cp.clickOnShowMoreActionDownArrow(projectName, PageName.TaskPage, ShowMoreActionDropDownList.New_Task, 15)) {
+				log(LogStatus.INFO,"Clicked on New Task Button for show more action",YesNo.No);
+				ThreadSleep(1000);
+				if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask8Subject, "Subject", action.SCROLLANDBOOLEAN)) {
+					boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Related_To.toString(), TabName.Object1Tab, Smoke_TWINS2Name, action.SCROLLANDBOOLEAN, 10);		
+					if (flag) {
+						log(LogStatus.SKIP,"Selected "+Smoke_TWINS2Name+" For Label "+PageLabel.Related_To,YesNo.No);
+
+					} else {
+						sa.assertTrue(false,"Not Able to Select "+Smoke_TWINS2Name+" For Label "+PageLabel.Related_To);
+						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWINS2Name+" For Label "+PageLabel.Related_To,YesNo.Yes);
+					}
+
+					ThreadSleep(3000);
+					if  (click(driver, ip.getCustomTabSaveBtn(projectName,10), "save", action.BOOLEAN)) {
+						appLog.info("successfully clicked on save button after changing contact");
+
+						ThreadSleep(3000);
+						WebElement ele=ip.getCustomTabSaveBtn(projectName,10);
+						if (ele!=null) {
+							appLog.error("edit mode opened after clicking on save button");
+							sa.assertTrue(false, "edit mode opened after clicking on save button");
+							click(driver, ele, "save", action.BOOLEAN);
+						}
+						String[][] fieldsWithValues1= {{PageLabel.Subject.toString(),TWTask8Subject},
+								{PageLabel.Watchlist.toString(),Watchlist.False.toString()}};
+
+						if (tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues1, action.BOOLEAN, 10)) {
+
+							appLog.info("successfully verifid watchlist as unchecked after changing date");
+						}
+						else {
+							appLog.error("could not verify watchlist as unchecked");
+							sa.assertTrue(false, "could not verify watchlist as unchecked");
+						}
+					}else {
+						appLog.error("save button is not clickable so cannot verify watchlist checkbox functionality");
+						sa.assertTrue(false, "save button is not clickable so cannot verify watchlist checkbox functionality");
+					}
+
+				}else {
+					appLog.error("edit button is not clickable so cannot verify watchlist checkbox functionality");
+					sa.assertTrue(false, "edit button is not clickable so cannot verify watchlist checkbox functionality");
+				}
+			}else {
+				appLog.error("task name is not clickable so cannot verify watchlist checkbox functionality");
+				sa.assertTrue(false, "task name is not clickable so cannot verify watchlist checkbox functionality");
+			}
+		}else {
+			appLog.error("task tab is not clickable");
+			sa.assertTrue(false, "task tab is not clickable");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void TWtc017_AddWatchlistContactInStandardTask(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.TaskTab)) {
+			WebElement ele=tp.getTaskNameLinkInSideMMenu(projectName, TWTask8Subject, 15);
+			if (click(driver, ele, TWTask8Subject, action.BOOLEAN)) {
+				String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTask8Subject},
+						{PageLabel.Watchlist.toString(),Watchlist.False.toString()}};
+
+				if (tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10)) {
+
+					appLog.info("successfully verifid watchlist as unchecked before any action");
+				}
+				else {
+					appLog.error("could not verify watchlist as unchecked");
+					sa.assertTrue(false, "could not verify watchlist as unchecked");
+				}
+				ThreadSleep(3000);
+				scrollDownThroughWebelement(driver, ip.getEditButton(environment,  mode,10), "edit");
+				if (click(driver, ip.getEditButton(environment,  mode,10), "edit", action.SCROLLANDBOOLEAN)) {
+					if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), todaysDate, PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Entered value to Due Date Text Box", YesNo.Yes);
+						ThreadSleep(1000);
+					}else {
+						log(LogStatus.ERROR, "duedate textbox is not visible so task could not be created", YesNo.Yes);
+						sa.assertTrue(false,"duedate textbox is not visible so task could not be created" );
+					}
+
+					boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact4FName+" "+Smoke_TWContact4LName, action.SCROLLANDBOOLEAN, 10);		
+					if (flag) {
+						log(LogStatus.SKIP,"Selected "+Smoke_TWContact4FName+" "+Smoke_TWContact4LName+" For Label "+PageLabel.Name,YesNo.No);
+
+					} else {
+						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact4FName+" "+Smoke_TWContact4LName+" For Label "+PageLabel.Name);
+						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact4FName+" "+Smoke_TWContact4LName+" For Label "+PageLabel.Name,YesNo.Yes);
+
+					}
+					if  (click(driver, ip.getCustomTabSaveBtn(projectName,10), "save", action.BOOLEAN)) {
+						appLog.info("successfully clicked on save button after changing contact");
+						ThreadSleep(3000);
+						ele=ip.getCustomTabSaveBtn(projectName,10);
+						if (ele!=null) {
+							log(LogStatus.ERROR,"edit mode opened after clicking on save button",YesNo.Yes);
+							sa.assertTrue(false, "edit mode opened after clicking on save button");
+							click(driver, ele, "save", action.BOOLEAN);
+						}
+
+						String[][] fieldsWithValues1= {{PageLabel.Subject.toString(),TWTask8Subject},
+								{PageLabel.Watchlist.toString(),Watchlist.True.toString()}};
+
+						if (tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues1, action.BOOLEAN, 10)) {
+
+							log(LogStatus.INFO,"successfully verifid watchlist as checked after editing action",YesNo.No);
+						}
+						else {
+							log(LogStatus.ERROR,"could not verify watchlist as checked",YesNo.Yes);
+							sa.assertTrue(false, "could not verify watchlist as checked");
+						}
+					}else {
+						log(LogStatus.ERROR,"save button is not clickable",YesNo.Yes);
+						sa.assertTrue(false, "save button is not clickable");
+					}
+				}else {
+					log(LogStatus.ERROR,"edit button is not clickable",YesNo.Yes);
+					sa.assertTrue(false, "edit button is not clickable");
+				}
+			}else {
+				log(LogStatus.ERROR,"task link is not clickable, so cannot verify watchlist checkbox functionality",YesNo.Yes);
+				sa.assertTrue(false, "task link is not clickable, so cannot verify watchlist checkbox functionality");
+			}
+		}else {
+			log(LogStatus.ERROR,"task tab is not clickable",YesNo.Yes);
+			sa.assertTrue(false, "task tab is not clickable");
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+
+	@Parameters({ "projectName"})
+	@Test
+	public void TWtc018_EnableContactTransfer(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavatarSetupPageBusinessLayer np= new NavatarSetupPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		if (ip.clickOnTab(projectName, TabName.NavatarSetup)) {
+				if (np.clickOnNavatarSetupSideMenusTab(projectName, NavatarSetupSideMenuTab.ContactTransfer)) {
+					log(LogStatus.INFO,"Clicked on Contact Transfer Tab", YesNo.No);
+					if (clickUsingJavaScript(driver, np.getEditButtonforNavatarSetUpSideMenuTab(projectName,NavatarSetupSideMenuTab.ContactTransfer, 10), "Edit Button", action.BOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Edit Button", YesNo.No);
+						ThreadSleep(2000);
+						if (!isSelected(driver, np.getEnableCheckBoxforNavatarSetUpSideMenuTab(projectName,NavatarSetupSideMenuTab.ContactTransfer, EditViewMode.Edit, ClickOrCheckEnableDisableCheckBox.Click, 10), "Enabled CheckBox")) {
+
+							log(LogStatus.INFO, "Enable Contact Transfer is Unchecked", YesNo.No);
+
+							if (clickUsingJavaScript(driver,np.getEnableCheckBoxforClickNavatarSetUpSideMenuTab(projectName,NavatarSetupSideMenuTab.ContactTransfer, EditViewMode.Edit, 10),"Contact Trasfer CheckBox", action.BOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Enable Contact Transfer Box Checkbox", YesNo.No);
+								ThreadSleep(2000);
+								String keepActivitiesDefaultValue = np.keepActivitiesValue(projectName, KeepActivityEnum.OldInstitutionOnly);
+								String selectIncludeActivitiesValue = np.includeActivitiesValue(projectName, InculdeActivityEnum.ContactOnly);
+								if (selectVisibleTextFromDropDown(driver,np.getKeepActivitiesAtSelectList(projectName, EditViewMode.Edit, 10),keepActivitiesDefaultValue, keepActivitiesDefaultValue)) {
+									log(LogStatus.INFO, "Selected Keep Activities related to : " + keepActivitiesDefaultValue,YesNo.No);
+									ThreadSleep(1000);
+									
+									if (selectVisibleTextFromDropDown(driver,np.getIncludeActivitiesSelectList(projectName, EditViewMode.Edit, 10),selectIncludeActivitiesValue, selectIncludeActivitiesValue)) {
+										log(LogStatus.INFO, "Selected Include Activities related to : " + keepActivitiesDefaultValue,YesNo.No);
+										ThreadSleep(1000);
+										
+										if (click(driver, np.getSaveButtonforNavatarSetUpSideMenuTab(projectName, NavatarSetupSideMenuTab.ContactTransfer, 10, TopOrBottom.TOP), "Save Button", action.BOOLEAN)) {
+											ThreadSleep(5000);
+											log(LogStatus.INFO, "Clicked on Save Button", YesNo.No);
+											ThreadSleep(10000);
+												SoftAssert tsa = np.verifyingContactTransferTab(projectName, EditViewMode.View,CheckBox.Checked, keepActivitiesDefaultValue, selectIncludeActivitiesValue);
+												sa.combineAssertions(tsa);
+											
+										} else {
+											sa.assertTrue(false, "Not Able to Click on Save Button");
+											log(LogStatus.SKIP, "Not Able to Click on Save Button", YesNo.Yes);
+										}
+										
+										
+									} else {
+										sa.assertTrue(false,"Not Able to Select Include Activities related to : " + selectIncludeActivitiesValue);
+										log(LogStatus.SKIP,"Not Able to Select Include Activities related to : " + selectIncludeActivitiesValue,YesNo.Yes);
+
+									}
+										
+									
+									
+								} else {
+									sa.assertTrue(false,"Not Able to Select Keep Activities related to : " + keepActivitiesDefaultValue);
+									log(LogStatus.SKIP,"Not Able to Select Keep Activities related to : " + keepActivitiesDefaultValue,YesNo.Yes);
+
+								}
+
+
+							} else {
+								sa.assertTrue(false, "Not Able to Click on Enable Contact Transfer Checkbox");
+								log(LogStatus.SKIP, "Not Able to Click on Enable Contact Transfer Checkbox", YesNo.Yes);
+							}
+						}else {
+							//sa.assertTrue(false, "Not Able to Click on Enable Contact Transfer Checkbox");
+							log(LogStatus.SKIP, "Contact Transfer Checkbox is already checked", YesNo.Yes);
+						}
+					}else {
+						sa.assertTrue(false, "edit button is not clickable");
+						log(LogStatus.SKIP, "edit button is not clickable", YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false, "contact transfer side menu tab is not clickable");
+					log(LogStatus.SKIP, "contact transfer side menu tab is not clickable", YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false, "navatar setup tab is not clickable");
+				log(LogStatus.SKIP, "navatar setup tab is not clickable", YesNo.Yes);
+			}
+		
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+		}
+	
 }
