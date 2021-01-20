@@ -2,8 +2,6 @@ package com.navatar.scripts;
 
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
-import static com.navatar.generic.SmokeCommonVariables.Smoke_MTINS7Name;
-import static com.navatar.generic.SmokeCommonVariables.Smoke_Task2UpdatedSubject;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -1642,22 +1640,14 @@ public class TaskWatchlist extends BaseLib{
 											log(LogStatus.SKIP, "Not Able to Click on Save Button", YesNo.Yes);
 										}
 										
-										
 									} else {
 										sa.assertTrue(false,"Not Able to Select Include Activities related to : " + selectIncludeActivitiesValue);
 										log(LogStatus.SKIP,"Not Able to Select Include Activities related to : " + selectIncludeActivitiesValue,YesNo.Yes);
-
 									}
-										
-									
-									
 								} else {
 									sa.assertTrue(false,"Not Able to Select Keep Activities related to : " + keepActivitiesDefaultValue);
 									log(LogStatus.SKIP,"Not Able to Select Keep Activities related to : " + keepActivitiesDefaultValue,YesNo.Yes);
-
 								}
-
-
 							} else {
 								sa.assertTrue(false, "Not Able to Click on Enable Contact Transfer Checkbox");
 								log(LogStatus.SKIP, "Not Able to Click on Enable Contact Transfer Checkbox", YesNo.Yes);
@@ -1683,5 +1673,195 @@ public class TaskWatchlist extends BaseLib{
 		lp.CRMlogout();
 		sa.assertAll();
 		}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void TWtc019_TransferContact_Action(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object2Tab, Smoke_TWContact5FName+" "+Smoke_TWContact5LName, 20)) {
+				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task_with_Multiple_Associations , 10);
+				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task_with_Multiple_Associations.toString(), action.BOOLEAN)) {
+				if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTaskCR1Subject, "Subject", action.SCROLLANDBOOLEAN)) {
+					if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
+					}
+					else {
+						log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
+						sa.assertTrue(false,"save button is not clickable so task not created" );
+					}
+				}else {
+					log(LogStatus.ERROR, "subject textbox is not clickable", YesNo.Yes);
+					sa.assertTrue(false,"subject textbox is not clickable" );
+				}
+				}else {
+					log(LogStatus.ERROR, "new task button not clickable", YesNo.Yes);
+					sa.assertTrue(false,"new task button not clickable" );
+				}
+				refresh(driver);
+				
+				if (cp.clickOnShowMoreActionDownArrow(projectName, PageName.Object2Page, ShowMoreActionDropDownList.Contact_Transfer, 10)) {
+					log(LogStatus.INFO, "Clicked on Contact Transfer", YesNo.No);	
+
+					if (cp.enteringValueforLegalNameOnContactTransferPage(projectName, Smoke_TWINS4Name, 10)) {
+						log(LogStatus.PASS, "Able to Transfer Contact", YesNo.No);
+						ThreadSleep(2000);
+						refresh(driver);
+
+						if (cp.fieldValueVerification(projectName, PageName.Object2Page, PageLabel.Account_Name, Smoke_TWINS4Name, 5)) {
+							log(LogStatus.PASS, "Label Verified after contact Transfer", YesNo.No);	
+							ThreadSleep(2000);
+						} else {
+							sa.assertTrue(false, "Label Not Verified after contact Transfer");
+							log(LogStatus.FAIL, "Label Not Verified after contact Transfer", YesNo.Yes);
+						}
+					}else {
+						sa.assertTrue(false, "could not enter new inst vale on contact transfer");
+						log(LogStatus.FAIL, "could not enter new inst vale on contact transfer", YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false, "new task button is not clickable");
+					log(LogStatus.FAIL, "new task button is not clickable", YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false, Smoke_TWContact5FName+" "+Smoke_TWContact5LName+" contact is not found on contact tab");
+				log(LogStatus.FAIL, Smoke_TWContact5FName+" "+Smoke_TWContact5LName +" contact is not found on contact tab", YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false, "contact tab is not clickable");
+			log(LogStatus.FAIL, "contact tab is not clickable", YesNo.Yes);
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void TWtc019_TransferContact_Impact(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS4Name, 20)) {
+				WebElement ele=null;
+				String msg=BasePageErrorMessage.UpcomingTaskMsg(null, Smoke_TWContact5FName+" "+Smoke_TWContact5LName, 0);
+				msg+= " about "+Smoke_TWINS3Name;
+				lp.verifyActivityAtNextStep2(projectName, PageName.Object1Page, null,TWTaskCR1Subject, msg, DueDate.No_due_date.toString(),false, "",false, "", 10);
+				ele = tp.getElementForActivityTimeLineTask(projectName, PageName.Object1Page,ActivityType.Next, TWTaskCR1Subject, SubjectElement.SubjectLink, 10);
+				if (ele!=null) {
+					log(LogStatus.INFO, "successfully verified presence of task",YesNo.No);
+					if (click(driver, ele,TWTaskCR1Subject , action.BOOLEAN)){
+						String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTaskCR1Subject},
+								{PageLabel.Watchlist.toString(),Watchlist.True.toString()}};
+
+						if (tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10)) {
+
+							log(LogStatus.INFO,"successfully verifid watchlist as checked after editing action",YesNo.No);
+						}
+						else {
+							log(LogStatus.ERROR,"could not verify watchlist as checked",YesNo.Yes);
+							sa.assertTrue(false, "could not verify watchlist as checked");
+						}
+					}else {
+						log(LogStatus.ERROR,"task link is not clickable",YesNo.Yes);
+						sa.assertTrue(false, "task link is not clickable");
+					}
+				}else {
+					log(LogStatus.ERROR,"presence of task is not verified, so cannot verify watchlist checkbox",YesNo.Yes);
+					sa.assertTrue(false, "presence of task is not verified, so cannot verify watchlist checkbox");
+				}
+				
+			}else {
+				log(LogStatus.ERROR,Smoke_TWINS4Name+" ins is not found on entity tab",YesNo.Yes);
+				sa.assertTrue(false, Smoke_TWINS4Name+" ins is not found on entity tab");
+			}
+		}else {
+			log(LogStatus.ERROR,"entity tab is not clickable",YesNo.Yes);
+			sa.assertTrue(false, "entity tab is not clickable");
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void TWtc020_1_UpdateWatchlistLabels_Action(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		String parentID=null;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentID=switchOnWindow(driver);
+			if (parentID!=null) {
+				if (sp.searchStandardOrCustomObject(environment, mode,object.Activity )) {
+					if(sp.clickOnObjectFeature(environment, mode,object.Activity, ObjectFeatureName.FieldAndRelationShip)) {
+						if (sp.clickOnAlreadyCreatedLayout(PageLabel.Watchlist.toString())) {
+							switchToFrame(driver, 10, sp.getFrame(PageName.ActivityLayoutPage, 10));
+							if (click(driver, ip.getEditButton(environment,  Mode.Classic.toString(),10), "edit classic", action.BOOLEAN)) {
+								switchToDefaultContent(driver);
+								switchToFrame(driver, 10, sp.getFrame(PageName.ActivityLayoutPage, 10));
+								sp.getFieldLabelTextBox(10).sendKeys("Watch list");
+								
+								
+								if (click(driver, fp.getCustomTabSaveBtn(10), "save", action.BOOLEAN)) {
+											switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+											click(driver, fp.getCustomTabSaveBtn(10), "save", action.BOOLEAN);
+												
+											log(LogStatus.INFO, "successfully changed watchlist label", YesNo.No);
+									}else {
+										sa.assertTrue(false,"not able to click on save button");
+										log(LogStatus.SKIP,"not able to click on save button",YesNo.Yes);
+									}
+								
+								
+							}else {
+								sa.assertTrue(false,"edit button is not clickable");
+								log(LogStatus.SKIP,"edit button is not clickable",YesNo.Yes);
+							}
+						}else {
+							sa.assertTrue(false,"watchlist layout is not clickable");
+							log(LogStatus.SKIP,"watchlist layout is not clickable",YesNo.Yes);
+						}
+					}else {
+						sa.assertTrue(false,"field and relationships is not clickable");
+						log(LogStatus.SKIP,"field and relationships is not clickable",YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false,"activity object is not clickable");
+					log(LogStatus.SKIP,"activity object is not clickable",YesNo.Yes);
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				sa.assertTrue(false,"new window is not found, so cannot change watchlist label");
+				log(LogStatus.SKIP,"new window is not found, so cannot change watchlist label",YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"setup link is not clickable");
+			log(LogStatus.SKIP,"setup link is not clickable",YesNo.Yes);
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
 	
 }
