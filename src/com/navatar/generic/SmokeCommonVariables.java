@@ -59,7 +59,7 @@ public class SmokeCommonVariables {
 	public static String Smoke_MTFund1Name,Smoke_MTFund1Type,Smoke_MTFund1InvestmentCategory,Smoke_MTFund1RecordType;
 	public static String Smoke_MTFund2Name,Smoke_MTFund2Type,Smoke_MTFund2InvestmentCategory,Smoke_MTFund2RecordType;
 	public static String tabCustomObj,tabCustomObjField;
-	public static String tabObj1,tabObj2,tabObj3,tabObj4;
+	public static String tabObj1,tabObj2,tabObj3,tabObj4,tabObj5;
 	public static String taskCustomObj1Name,taskCustomObj1RecordType;
 	public static String taskCustomObj3Name,taskCustomObj3RecordType;
 	public static String taskCustomObj2Name,taskCustomObj2RecordType,taskCustomObj2UpdatedName;
@@ -170,6 +170,7 @@ public class SmokeCommonVariables {
 			tabObj2=ExcelUtils.readDataFromPropertyFile("Object2");
 			tabObj3=ExcelUtils.readDataFromPropertyFile("Object3");
 			tabObj4=ExcelUtils.readDataFromPropertyFile("Object4");
+			tabObj5=ExcelUtils.readDataFromPropertyFile("Object5");
 			tabCustomObjField=ExcelUtils.readDataFromPropertyFile("CustomTabFieldName");
 			System.err.println("smokeExcelPathCommonVariable : "+testCasesFilePath);
 			todaysDate=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "MM/dd/YYYY");
