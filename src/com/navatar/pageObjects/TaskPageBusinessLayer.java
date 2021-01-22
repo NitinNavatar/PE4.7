@@ -53,17 +53,17 @@ public class TaskPageBusinessLayer extends TaskPage {
 			label= fieldWithValue[0].replace("_", " ");
 			
 			if (ele!=null) {
-				if (!label.equalsIgnoreCase(PageLabel.Watchlist.toString()))
-				actualValue=ele.getText().trim();
-				else
+				if (fieldWithValue[0].equalsIgnoreCase(PageLabel.Watchlist.toString())||fieldWithValue[0].equalsIgnoreCase(PageLabel.Watch_list.toString()))
 					actualValue=ele.getAttribute("alt");
+				else
+					actualValue=ele.getText().trim();
 				if (value==null || value.equals("")){
 					flag=actualValue.equals(value);
 				} else {
 					if (fieldWithValue[0].equalsIgnoreCase(PageLabel.Due_Date.toString())) {
 						flag=verifyDate(value, actualValue);
 						//flag=value.contains(actualValue);
-					}else if(fieldWithValue[0].equalsIgnoreCase(PageLabel.Comments.toString())||fieldWithValue[0].equalsIgnoreCase(PageLabel.Watchlist.toString())){
+					}else if(fieldWithValue[0].equalsIgnoreCase(PageLabel.Comments.toString())||fieldWithValue[0].equalsIgnoreCase(PageLabel.Watchlist.toString())||(fieldWithValue[0].equalsIgnoreCase(PageLabel.Watch_list.toString()))){
 						flag=actualValue.equals(value);	
 					}else{
 						flag=actualValue.contains(value);	
@@ -112,7 +112,7 @@ public class TaskPageBusinessLayer extends TaskPage {
 		xpath="//span[text()='"+fieldLabel+"']/../following-sibling::div//span/span"	;
 		}else if(PageLabel.Name.toString().equals(label)) {
 		xpath="//span[text()='"+fieldLabel+"']/../following-sibling::div"	;
-		}else if(PageLabel.Watchlist.toString().equals(label)) {
+		}else if(PageLabel.Watchlist.toString().equals(label)||PageLabel.Watch_list.toString().equals(label)) {
 			xpath="//span[text()='"+fieldLabel+"']/../following-sibling::div//img"	;
 		}
 		else {

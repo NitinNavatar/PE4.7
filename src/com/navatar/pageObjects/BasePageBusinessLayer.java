@@ -648,6 +648,9 @@ public String getTabName(String projectName,TabName TabName) {
 	case Object4Tab:
 		tabName = tabObj4+"s";
 		break;
+	case Object5Tab:
+		tabName = tabObj5+"s";
+		break;
 	case SDGTab:
 		tabName = "Sortable Data Grids";
 		break;
@@ -2594,7 +2597,7 @@ public boolean fieldValueVerification(String projectName, PageName pageName,Page
 	} else if(ProjectName.PEEdge.toString().equalsIgnoreCase(projectName) && PageLabel.Account_Name.equals(pageLabel)){
 		label="Firm";
 	} 
-	xpath = "//span[text()='"+label+"']/../following-sibling::div//*[text()='"+labelValue+"']";
+	xpath = "//span[text()='"+label+"']/following-sibling::*//a[text()='"+labelValue+"']";
 	
 	ele = FindElement(driver, xpath, label+" with Value "+labelValue, action.SCROLLANDBOOLEAN, 5);
 	scrollDownThroughWebelement(driver, ele, label+" with Value "+labelValue);
@@ -4394,6 +4397,170 @@ public WebElement getInlineOrLockedAtToggle(String projectName,PageName pageName
 	return ele;
 }
 
+/**
+ * @param projectName
+ * @param TabName
+ * @return true if able to click on Tab
+ */
+public boolean clickOnTab(String projectName,String TabName) {
 
+	String tabName = null;
+	boolean flag = false;
+	WebElement ele;
+	tabName = TabName;
+	System.err.println("Passed switch statement");
+	if (tabName!=null) {
+		ele = FindElement(driver, "//a[contains(@href,'lightning') and contains(@title,'" + tabName + "')]/span/..",tabName, action.SCROLLANDBOOLEAN,30);
+		ele = isDisplayed(driver,ele,"visibility", 30, tabName);
+		if (ele != null) {
+			appLog.info("Tab Found");
+			ThreadSleep(5000);
+			if (clickUsingJavaScript(driver, ele, tabName+" :Tab")) {
+				CommonLib.log(LogStatus.INFO, "Tab found", YesNo.No);
+				appLog.info("Clicked on Tab : "+tabName);
+				flag = true;
+			} else {
+				appLog.error("Not Able to Click on Tab : "+tabName);
+			}
+
+		} else {
+			CommonLib.log(LogStatus.INFO, "Going to found tab after clicking on More Icon", YesNo.No);
+			if (click(driver, getMoreTabIcon(projectName, 10), "More Icon", action.SCROLLANDBOOLEAN)) {
+				ele = FindElement(driver,"//a[contains(@href,'lightning')]/span[@class='slds-truncate']/span[contains(text(),'"	+ tabName + "')]",tabName, action.SCROLLANDBOOLEAN, 10);
+				ele = isDisplayed(driver,ele,"visibility", 10, tabName);
+				if (ele!=null) {
+					if (clickUsingJavaScript(driver, ele, tabName+" :Tab")) {
+						appLog.info("Clicked on Tab on More Icon: "+tabName);
+						CommonLib.log(LogStatus.INFO, "Tab found on More Icon", YesNo.No);
+						flag = true;
+					}	
+				}
+
+			} else {
+				appLog.error("Not Able to Clicked on Tab on More Icon: "+tabName);
+			}
+
+		}
+	}
+
+	return flag;
+}
+
+
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param tabName
+ * @param alreadyCreated
+ * @param timeout
+ * @return true if able to click on particular item on Particular tab
+ */
+public boolean clickOnAlreadyCreatedItem(String projectName,String alreadyCreated, int timeout) {
+	boolean flag=false;
+	String xpath="";
+	String viewList = null;
+	viewList = "Automation All";
+	WebElement ele, selectListView;
+	ele = null;
+
+	refresh(driver);
+	if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+		ThreadSleep(3000);
+		xpath="//div[@class='listContent']//li/a/span[text()='" + viewList + "']";
+		selectListView = FindElement(driver, xpath,"Select List View : "+viewList, action.SCROLLANDBOOLEAN, 30);
+		if (click(driver, selectListView, "select List View : "+viewList, action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(3000);
+			ThreadSleep(5000);
+
+			if (sendKeys(driver, getSearchIcon_Lighting(20), alreadyCreated+"\n", "Search Icon Text",action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(5000);
+
+				xpath = "//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//*[text()='"+ alreadyCreated + "']";
+				ele = FindElement(driver,xpath,alreadyCreated, action.BOOLEAN, 30);
+				ThreadSleep(2000);
+
+				if (click(driver, ele, alreadyCreated, action.BOOLEAN)) {
+					ThreadSleep(3000);
+					click(driver, getPagePopUp(projectName,5), "Page PopUp", action.BOOLEAN);
+					flag=true;
+				} else {
+					appLog.error("Not able to Click on Already Created : " + alreadyCreated);
+				}
+			} else {
+				appLog.error("Not able to enter value on Search Box");
+			}
+		} else {
+			appLog.error("Not able to select on Select View List : "+viewList);
+		}
+	} else {
+		appLog.error("Not able to click on Select List Icon");
+	}
+	return flag;
+}
+
+
+/**
+ * @param projectName
+ * @param pageName
+ * @param relatedTab
+ * @param timeOut
+ * @return Related Tab WebElement
+ */
+public WebElement getRelatedTab(String projectName,String relatedTab,int timeOut){
+String xpath="";
+WebElement ele;
+String related = relatedTab.toString().replace("_", " ");
+if (projectName.equalsIgnoreCase(ProjectName.PE.toString()))
+	xpath="//li[@title='"+related+"']//a";
+else
+xpath = "//li//*[@title='"+related+"' or text()='"+related+"']";
+xpath = "//li//*[@title='"+related+"' or text()='"+related+"']";
+ele = isDisplayed(driver, FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut)
+		, "visiblity", 30, relatedTab.toString());
+if (ele!=null) {
+appLog.info("Element Found : "+related);	
+}else {
+	appLog.error("Element Not Found : "+related);	
+	appLog.error("Going to check on more "+related);	
+	xpath = "//li//button[@title='More Tabs']";
+	ele = FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut);
+	click(driver, ele, "More Tab", action.BOOLEAN);
+	ThreadSleep(3000);
+	
+	xpath = "//a/span[text()='"+related+"']";
+	ele = isDisplayed(driver, FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut)
+			, "visiblity", 30, relatedTab.toString());
+	
+	
+}
+return ele;
+
+}
+
+
+public WebElement toggleSDGButtons(String projectName,String toggleTab,ToggleButtonGroup btnName,action action,int timeOut) {
+	String btname = btnName.toString();
+	String xpath = "//*[contains(text(),'"+toggleTab+"')]/../../..//following-sibling::div//button[@title='"+btname+"']";
+	WebElement ele = FindElement(driver, xpath,toggleTab+" >> "+btname, action, timeOut);
+	scrollDownThroughWebelement(driver, ele, "Toggle Button : "+btname);
+	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btname);
+	return ele;
+}
+
+public WebElement toggleButton(String projectName,String btnName,action action,int timeOut) {
+	String xpath = "//button[contains(@title,'"+btnName+"')]";
+	WebElement ele = FindElement(driver, xpath,"Toggle Button : "+btnName, action, timeOut);
+	scrollDownThroughWebelement(driver, ele, "Toggle Button : "+btnName);
+	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btnName);
+	return ele;
+}
+
+public WebElement toggleButtonColumnNames(String projectName,String btnName,String columnName,action action,int timeOut) {
+	String xpath = "//a[text()='"+btnName+"']//ancestor::article//th//div/span[contains(text(),'"+columnName+"')]";
+	WebElement ele = FindElement(driver, xpath,"Toggle Button : "+btnName+" >> column Name : "+columnName, action, timeOut);
+	scrollDownThroughWebelement(driver, ele, "Toggle Button : "+btnName+" >> column Name : "+columnName);
+	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btnName+" >> column Name : "+columnName);
+	return ele;
+}
 
 }

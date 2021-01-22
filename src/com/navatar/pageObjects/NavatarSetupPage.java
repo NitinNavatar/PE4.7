@@ -40,7 +40,7 @@ public class NavatarSetupPage extends BasePageBusinessLayer {
 	public WebElement getdocumentTagDropdownValueViewMode(String environment, String mode,int timeOut) {
 		return isDisplayed(driver, documentTagDropdownValueViewMode, "Visibility", timeOut, "documentTagDropdownValueViewMode");
 	}
-	@FindBy(xpath="//div[contains(@id,'RightMenuContentSection')]//div[@class='slds-button-group float_r']")
+	@FindBy(xpath="//div[contains(@id,'RightMenuContentSection')]//div[@class='slds-button-group float_r']//input")
 	private WebElement editButtonforNavatarSetUpSideMenuTab;
 
 	/**
