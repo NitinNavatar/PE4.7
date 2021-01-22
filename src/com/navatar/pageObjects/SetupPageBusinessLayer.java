@@ -508,7 +508,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 	 * @param formulaText
 	 * @return true/false
 	 */
-	public boolean addCustomFieldforFormula(String environment, String mode,object objectName, String objectLeftSideActions, String dataType,String fieldLabelName,String[][] labelsWithValues,String formulaReturnType,String formulaText) {
+	public boolean addCustomFieldforFormula(String environment, String mode,object objectName, ObjectFeatureName objectLeftSideActions, String dataType,String fieldLabelName,String[][] labelsWithValues,String formulaReturnType,String formulaText) {
 		WebElement ele=null;
 		if(searchStandardOrCustomObject(environment, mode, objectName)) {
 			log(LogStatus.PASS, "object searched : "+objectName.toString(), YesNo.No);
@@ -853,7 +853,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 								String[] splitedDragComponent= DragComponentName.split("<break>");
 								for(int i=0; i<splitedDragComponent.length; i++) {
 									sendKeys(driver, getQuickFindSearchBox(environment, mode, 10), splitedDragComponent[i], "Search Value : "+splitedDragComponent[i], action.BOOLEAN);
-									if(splitedDragComponent[i].equalsIgnoreCase("Highest Stage Reached")) {
+									if(splitedDragComponent[i].equalsIgnoreCase("Highest Stage Reached") || splitedDragComponent[i].equalsIgnoreCase("Average Deal Quality Score") || splitedDragComponent[i].equalsIgnoreCase("Contact Referral Source") || splitedDragComponent[i].equalsIgnoreCase("Last Stay-in-Touch Request Date")) {
 										String DragComponent=splitedDragComponent[i].split(" ")[0];
 										sourceElement =isDisplayed(driver, FindElement(driver, "//span[starts-with(text(),'"+DragComponent+"')]", "", action.BOOLEAN,10), "visibility",10,splitedDragComponent[i]+" page layout link");
 									}else {

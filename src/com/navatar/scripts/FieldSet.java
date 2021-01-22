@@ -510,7 +510,6 @@ public class FieldSet extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-
 	
 	@Parameters({ "projectName"})
 	@Test
@@ -578,5 +577,121 @@ public class FieldSet extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc010_createNewFieldWithMaxCharacterAndAddOnContactProfileComponent(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
+		String parentWindow = null;
+		boolean flag = false;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create Field Set Component",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+			}
+			ThreadSleep(3000);
+			
+			String[][] labelAndValues= {{"Length",FC_Length1}};
+			
+			
+			
+			if(setup.addCustomFieldforFormula(environment,mode,object.Contact,ObjectFeatureName.FieldAndRelationShip,FC_FieldType,FC_FieldLabelName1, labelAndValues, null,null)) {
+				log(LogStatus.PASS, "Field Component is created for :"+FC_FieldLabelName1, YesNo.No);
+				flag=true;
+			}else {
+				log(LogStatus.PASS, "Field Component is not created for :"+FC_FieldLabelName1, YesNo.Yes);
+				sa.assertTrue(false, "Field Component is not created for :"+FC_FieldLabelName1);
+			}
+			if(flag) {
+				object object1 = object.valueOf(FS_Object1);
+				
+				if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,FS_FieldSetLabel1, FC_FieldLabel1SubString,null)) {
+					log(LogStatus.PASS, FC_FieldLabelName1+" Field Object is dragged On : "+FS_FieldSetLabel1, YesNo.No);
+				}else {
+					log(LogStatus.ERROR,FC_FieldLabelName1+" Field Set Object is not dragged on : "+FS_FieldSetLabel1, YesNo.Yes);
+					sa.assertTrue(false, FC_FieldLabelName1+" Field Set Object is not dragged on : "+FS_FieldSetLabel1);
+				}
+				
+			}else {
+				log(LogStatus.PASS, "Field Component is not created for :  "+FC_FieldLabelName1+" so cannot dragndrop component in "+FS_FieldSetLabel1, YesNo.Yes);
+				sa.assertTrue(false, "Field Component is not created for : "+FC_FieldLabelName1+" so cannot dragndrop component in "+FS_FieldSetLabel1);
+			}
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot create Field Set Component", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot create Field Set Component");
+		}
+		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
+			if(con.clickOnCreatedContact(projectName, FS_Con1_FName, FS_Con1_LName)) {
+				log(LogStatus.INFO,"clicked on created contact : "+FS_Con1_FName+" "+FS_Con1_LName, YesNo.No);
+				ThreadSleep(5000);
+				if(con.verifyFieldSetComponent(FC_FieldLabelName1,"")) {
+					log(LogStatus.PASS, FC_FieldLabelName1+" is verified : ", YesNo.No);
+				}else {
+					log(LogStatus.ERROR,FC_FieldLabelName1+" is not verified : ", YesNo.Yes);
+					sa.assertTrue(false,FC_FieldLabelName1+" is not verified : ");
+				}
 
+			}else {
+				log(LogStatus.ERROR, "Not able to click on created contact "+FS_Con1_FName+" "+FS_Con1_LName+" so cannot verify Advanced field set component", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on created contact "+FS_Con1_FName+" "+FS_Con1_LName+" so cannot verify Advanced field set component");
+			}
+		} else {
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object2Tab+" so cannot verify Advanced field set component",YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object2Tab+" so cannot verify Advanced field set component");
+		}
+		
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc011_AddingFiftyFieldsInCreatedFieldSet(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentWindow = null;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create Field Set Component",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+			}
+			ThreadSleep(3000);
+			object object1 = object.valueOf(FS_Object1);
+			if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,FS_FieldSetLabel1, FS_ExtraFieldsName1,null)) {
+				log(LogStatus.PASS, FC_FieldLabelName1+" Field Object is dragged On : "+FS_FieldSetLabel1, YesNo.No);
+			}else {
+				log(LogStatus.ERROR,FC_FieldLabelName1+" Field Set Object is not dragged on : "+FS_FieldSetLabel1, YesNo.Yes);
+				sa.assertTrue(false, FC_FieldLabelName1+" Field Set Object is not dragged on : "+FS_FieldSetLabel1);
+			}
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot create Field Set Component", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot create Field Set Component");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 }

@@ -950,9 +950,12 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 
 			if (aa.isEmpty()) {
 				appLog.error(finalLabelName + " Value is Empty label Value "+value);
-				return false;
+				if(value.isEmpty() && aa.isEmpty()) {
+					return true;
+				}else {
+					return false;
+				}
 			}
-
 			if (labelName.equalsIgnoreCase(excelLabel.Phone.toString()) || labelName.equalsIgnoreCase(excelLabel.Fax.toString())||
 					labelName.equalsIgnoreCase(ContactPageFieldLabelText.Mobile.toString()) ||
 					labelName.equalsIgnoreCase(excelLabel.Asst_Phone.toString())) {

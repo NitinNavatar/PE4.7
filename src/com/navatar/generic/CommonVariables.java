@@ -61,12 +61,13 @@ public class CommonVariables {
 	
 
 	public static String FS_Object1,FS_Object2,FS_Object3,FS_FieldSetLabel1,FS_FieldSetLabel2,FS_FieldSetLabel3,
-						FS_NameSpacePrefix1,FS_NameSpacePrefix2,FS_NameSpacePrefix3,FS_FieldsName1,FS_FieldsName2,FS_FieldsName3;
+						FS_NameSpacePrefix1,FS_NameSpacePrefix2,FS_NameSpacePrefix3,FS_FieldsName1,FS_FieldsName2,FS_FieldsName3,FS_ExtraFieldsName1;
 	
 	public static String FS_Ins1,FS_Ins1RecordType;
 	public static String FS_Con1_FName,FS_Con1_LName,FS_Con1_Email,FS_Con1_Phone,FS_Con1_RecordType;
 	public static String FS_DealName1,FS_Deal1CompanyName,FS_Deal1Stage,FS_Deal1SourceContact,FS_Deal1SourceFirm,FS_Deal1RecordType;
 	
+	public static String FC_Object1,FC_FieldLabelName1,FC_Length1,FC_FieldType,FC_FieldLabel1SubString;
 
 	public static String SDG;
 	
@@ -227,6 +228,7 @@ public class CommonVariables {
 			FS_Object1=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS1", excelLabel.Object_Name);
 			FS_Object2=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS2", excelLabel.Object_Name);
 			FS_Object3=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS3", excelLabel.Object_Name);
+			FS_ExtraFieldsName1=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS1", excelLabel.ExtraFieldsName);
 			
 			FS_FieldSetLabel1=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS1", excelLabel.Field_Set_Label);
 			FS_FieldSetLabel2=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS2", excelLabel.Field_Set_Label);
@@ -239,6 +241,7 @@ public class CommonVariables {
 			FS_FieldsName1=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS1", excelLabel.Fields_Name);
 			FS_FieldsName2=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS2", excelLabel.Fields_Name);
 			FS_FieldsName3=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS3", excelLabel.Fields_Name);
+			
 			
 			
 			FS_Con1_FName=ExcelUtils.readData(fieldSetFilePath,"Contacts",excelLabel.Variable_Name, "C1", excelLabel.Contact_FirstName);
@@ -256,6 +259,12 @@ public class CommonVariables {
 			FS_Deal1SourceFirm=FS_Ins1;
 			FS_Deal1RecordType=ExcelUtils.readData(fieldSetFilePath,"Deal",excelLabel.Variable_Name, "Deal1", excelLabel.Record_Type);
 			FS_Deal1SourceContact=ExcelUtils.readData(fieldSetFilePath,"Deal",excelLabel.Variable_Name, "Deal1", excelLabel.Source_Contact);
+			
+			FC_Object1=ExcelUtils.readData(fieldSetFilePath,"FieldComponent",excelLabel.Variable_Name, "FC1", excelLabel.Object_Name);
+			FC_FieldLabelName1=ExcelUtils.readData(fieldSetFilePath,"FieldComponent",excelLabel.Variable_Name, "FC1", excelLabel.Field_Label);
+			FC_Length1=ExcelUtils.readData(fieldSetFilePath,"FieldComponent",excelLabel.Variable_Name, "FC1", excelLabel.Length);
+			FC_FieldType=ExcelUtils.readData(fieldSetFilePath,"FieldComponent",excelLabel.Variable_Name, "FC1", excelLabel.Field_Type);
+			FC_FieldLabel1SubString=ExcelUtils.readData(fieldSetFilePath,"FieldComponent",excelLabel.Variable_Name, "FC1", excelLabel.FieldLabel_SubString);
 			
 		}
 		 System.err.println("");
