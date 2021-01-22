@@ -4678,7 +4678,7 @@ public abstract class BasePage extends BaseLib {
 	 */
 	public WebElement getEditPageOnSetUp(int timeOut) {
 		WebElement ele=null;
-			ele=setupLink_Lighting;
+			ele=editPageOnSetUp;
 		return isDisplayed(driver, ele, "Visibility", timeOut, "Edit Page");
 	}
 	
