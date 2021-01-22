@@ -2597,7 +2597,7 @@ public boolean fieldValueVerification(String projectName, PageName pageName,Page
 	} else if(ProjectName.PEEdge.toString().equalsIgnoreCase(projectName) && PageLabel.Account_Name.equals(pageLabel)){
 		label="Firm";
 	} 
-	xpath = "//span[text()='"+label+"']/../following-sibling::div//*[text()='"+labelValue+"']";
+	xpath = "//span[text()='"+label+"']/following-sibling::*//a[text()='"+labelValue+"']";
 	
 	ele = FindElement(driver, xpath, label+" with Value "+labelValue, action.SCROLLANDBOOLEAN, 5);
 	scrollDownThroughWebelement(driver, ele, label+" with Value "+labelValue);
