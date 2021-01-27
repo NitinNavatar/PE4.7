@@ -104,7 +104,7 @@ public class EnumConstants {
 		NavatarInvestorAddOns, CurrentInvesment, PotentialInvesment, RecentActivities, AllDocuments, HomeTab, 
 		FolderTemplate, FundDistributions, InvestorDistributions, MarketingInitiatives, MarketingProspects, 
 		NavatarSetup, Pipelines, FundDrawdowns, CapitalCalls, FundraisingContacts, LimitedPartne, ReportsTab, LimitedPartner,CompaniesTab, TaskRayTab,TaskRay,TestCustomObjectTab, TaskTab,
-		Other,Object1Tab,Object2Tab,Object3Tab,Object4Tab,RecycleBinTab,SDGTab,DealTab, Object5Tab;
+		Other,Object1Tab,Object2Tab,Object3Tab,Object4Tab,RecycleBinTab,SDGTab,DealTab, Object5Tab,Object6Tab,Object7Tab;
 	}
 	
 	public static enum Mode{
@@ -246,7 +246,7 @@ public class EnumConstants {
 		public String toString() {
 			return "Activity Setting";
 		}
-	}, Activity
+	}, Activity,Entity
 	};
 	
 	public static enum ObjectFeatureName{
@@ -984,7 +984,7 @@ public static enum PermissionType{
 			public String toString() {
 				return "Tasks: Completed";
 			}
-		} 
+		},Company 
 	};
 	
 	public static enum ProjectName{
@@ -993,12 +993,12 @@ public static enum PermissionType{
 	
 	
 	public static enum PageLabel{
-		First_Name,Last_Name,Email, Fund_Name, Deal_Name,Status, Meeting_Type{
+		First_Name,Last_Name,Email, Fund_Name, Deal_Name,Status, Investment_Type,Meeting_Type{
 			@Override
 			public String toString() {
 				return "Meeting Type";
 			}
-		}  ,Priority,Watchlist, Watch_list,Related_Associations,Name, Subject, Due_Date, New_Task, Related_To, Comments, Edit, Assigned_To, Start_Date, End_Date, End_Time, Start_Time, Type, Date, Contact_Name, Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places, Values, Is_Touchpoint,Description
+		}  ,Priority,Watchlist, Watch_list,Conversion_Date,Related_Associations,Name, Subject, Due_Date, New_Task, Related_To, Comments, Edit, Assigned_To, Start_Date, End_Date, End_Time, Start_Time, Type, Date, Contact_Name, Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places, Values, Is_Touchpoint,Description
 	};
 	
 	public static enum Links{
