@@ -82,9 +82,9 @@ public class CommonVariables {
 	
 	public static String ActiveDealToggleButton;
 	
-	public static String ToggleCheck1TabName,ToggleCheck1ItemName,ToggleCheck1RelatedTab,ToggleCheck1ToggleButtons,ToggleCheck1ColumnName1,ToggleCheck1ColumnName2;
-	public static String ToggleCheck2TabName,ToggleCheck2ItemName,ToggleCheck2RelatedTab,ToggleCheck2ToggleButtons,ToggleCheck2ColumnName1,ToggleCheck2ColumnName2;
-	public static String ToggleCheck3TabName,ToggleCheck3ItemName,ToggleCheck3RelatedTab,ToggleCheck3ToggleButtons,ToggleCheck3ColumnName1,ToggleCheck3ColumnName2;
+	public static String ToggleCheck1TabName,ToggleCheck1ItemName,ToggleCheck1RelatedTab,ToggleCheck1ToggleButtons,ToggleCheck1ColumnName;
+	public static String ToggleCheck2TabName,ToggleCheck2ItemName,ToggleCheck2RelatedTab,ToggleCheck2ToggleButtons,ToggleCheck2ColumnName;
+	public static String ToggleCheck3TabName,ToggleCheck3ItemName,ToggleCheck3RelatedTab,ToggleCheck3ToggleButtons,ToggleCheck3ColumnName;
 		
 //	/**
 //	 * 
@@ -186,25 +186,22 @@ public class CommonVariables {
 			ToggleCheck1ItemName=ExcelUtils.readData(toggleFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC1", excelLabel.Item);;
 			ToggleCheck1RelatedTab=ExcelUtils.readData(toggleFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC1", excelLabel.RelatedTab);
 			ToggleCheck1ToggleButtons=ExcelUtils.readData(toggleFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC1", excelLabel.ToggleButton);
-			ToggleCheck1ColumnName1=ExcelUtils.readData(toggleFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC1", excelLabel.Column_Name1);
-			ToggleCheck1ColumnName2=ExcelUtils.readData(toggleFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC1", excelLabel.Column_Name2);
-			
+			ToggleCheck1ColumnName=ExcelUtils.readData(toggleFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC1", excelLabel.Column_Name);
+				
 			//ToggleCheck1ColumnName1,ToggleCheck1ColumnName2
 			
 			ToggleCheck2TabName=ExcelUtils.readData(toggleFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC2", excelLabel.TabName);
 			ToggleCheck2ItemName=ExcelUtils.readData(toggleFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC2", excelLabel.Item);;
 			ToggleCheck2RelatedTab=ExcelUtils.readData(toggleFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC2", excelLabel.RelatedTab);
 			ToggleCheck2ToggleButtons=ExcelUtils.readData(toggleFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC2", excelLabel.ToggleButton);
-			ToggleCheck2ColumnName1=ExcelUtils.readData(toggleFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC2", excelLabel.Column_Name1);
-			ToggleCheck2ColumnName2=ExcelUtils.readData(toggleFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC2", excelLabel.Column_Name2);
+			ToggleCheck2ColumnName=ExcelUtils.readData(toggleFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC2", excelLabel.Column_Name);
 			
 			
 			ToggleCheck3TabName=ExcelUtils.readData(toggleFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC3", excelLabel.TabName);
 			ToggleCheck3ItemName=ExcelUtils.readData(toggleFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC3", excelLabel.Item);;
 			ToggleCheck3RelatedTab=ExcelUtils.readData(toggleFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC3", excelLabel.RelatedTab);
 			ToggleCheck3ToggleButtons=ExcelUtils.readData(toggleFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC3", excelLabel.ToggleButton);
-			ToggleCheck3ColumnName1=ExcelUtils.readData(toggleFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC3", excelLabel.Column_Name1);
-			ToggleCheck3ColumnName2=ExcelUtils.readData(toggleFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC3", excelLabel.Column_Name2);
+			ToggleCheck3ColumnName=ExcelUtils.readData(toggleFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC3", excelLabel.Column_Name);
 			
 			
 		}

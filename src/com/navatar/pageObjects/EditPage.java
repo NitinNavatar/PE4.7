@@ -64,7 +64,7 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, editPageSaveButton, "Visibility", timeOut, "Edit Page Save Button");
 	}
 	
-	@FindBy (xpath = "//button[text()='Save']")
+	@FindBy (xpath = "//a[contains(@class,'backButton')]")
 	private WebElement editPageBackButton;
 
 	/**
