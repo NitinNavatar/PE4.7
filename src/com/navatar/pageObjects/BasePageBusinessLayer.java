@@ -651,6 +651,12 @@ public String getTabName(String projectName,TabName TabName) {
 	case Object5Tab:
 		tabName = tabObj5+"s";
 		break;
+	case Object6Tab:
+		tabName = tabObj6+"s";
+		break;
+	case Object7Tab:
+		tabName = tabObj7+"s";
+		break;
 	case SDGTab:
 		tabName = "Sortable Data Grids";
 		break;
@@ -770,6 +776,15 @@ public boolean clickOnAlreadyCreatedItem(String projectName, TabName tabName,
 		break;
 	case Object4Tab:
 		viewList = "Automation All";
+		break;
+	case Object5Tab:
+		viewList = "All";
+		break;
+	case Object6Tab:
+		viewList = "All";
+		break;
+	case Object7Tab:
+		viewList = "All";
 		break;
 	case NavatarSetup:
 		viewList = "All";
@@ -4563,4 +4578,34 @@ public WebElement toggleButtonColumnNames(String projectName,String btnName,Stri
 	return ele;
 }
 
+
+public static String convertNumberAccordingToFormatWithCurrencySymbol(String number,String format){
+
+	double d = Double.parseDouble(number);
+	DecimalFormat myFormatter = new DecimalFormat(format);
+	String output = new DecimalFormatSymbols(Locale.US).getCurrencySymbol()+myFormatter.format(d);
+	System.err.println(" outpurttt >>>> "+output);
+	return output;
+
+}
+
+public WebElement verifyCreatedItemOnPage(Header header,String itemName)
+{
+	WebElement ele;
+	String xpath ="";
+	String head =header.toString().replace("_", " ");
+	ThreadSleep(3000);
+	xpath="//*[contains(text(),'"+head+"')]/..//*[text()='"+itemName+"']";
+	 ele = FindElement(driver, xpath, "Header : "+itemName, action.BOOLEAN, 30);
+	 ele = isDisplayed(driver, ele, "Visibility", 10, head+" : "+itemName);
+	return ele;
+}
+
+public static String convertNumberIntoMillions(String number){
+	double d = Double.parseDouble(number);
+	double aa = d/1000000;
+	String output = new DecimalFormatSymbols(Locale.US).getCurrencySymbol()+aa;
+	System.err.println("convertNumberIntoMillions  outpurttt >>>> "+output);
+	return output;
+}
 }

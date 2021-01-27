@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 
+
 import com.navatar.generic.EnumConstants.ProjectName;
 import com.navatar.generic.EnumConstants.action;
 import com.relevantcodes.extentreports.LogStatus;
@@ -141,7 +142,7 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 			inputXpath="/..//following-sibling::input";
 			textAreaXpath="/..//following-sibling::textarea";
 			if(labelName.toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString())) {
-				inputXpath="/..//following-sibling::div//input[@title='Search Institutions']";
+				inputXpath="/..//following-sibling::div//input[contains(@title,'Search')]";
 			}
 			
 		}
@@ -353,7 +354,7 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 		
 	}
 	
-	@FindBy(xpath="//label[@data-aura-class='uiLabel']//span[text()='Legal Name']/..//following-sibling::input")
+	@FindBy(xpath="//label[@data-aura-class='uiLabel']//span[text()='Firm']/..//following-sibling::input")
 	private WebElement legalNameTextBoxLighting;
 	
 	/**

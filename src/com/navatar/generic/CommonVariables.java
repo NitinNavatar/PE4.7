@@ -7,7 +7,7 @@ import static com.navatar.generic.BaseLib.testCasesFilePath;
 import static com.navatar.generic.BaseLib.toggleFilePath;
 import static com.navatar.generic.CommonLib.getDateAccToTimeZone;
 import static com.navatar.generic.BaseLib.taskWatchlistFilePath;
-import static com.navatar.generic.BaseLib.fieldSetFilePath;
+import static com.navatar.generic.BaseLib.pahse1DataSheetFilePath;
 import static com.navatar.generic.EnumConstants.*;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.pageObjects.BasePageErrorMessage;
@@ -65,12 +65,19 @@ public class CommonVariables {
 	public static String FS_Object1,FS_Object2,FS_Object3,FS_FieldSetLabel1,FS_FieldSetLabel2,FS_FieldSetLabel3,
 						FS_NameSpacePrefix1,FS_NameSpacePrefix2,FS_NameSpacePrefix3,FS_FieldsName1,FS_FieldsName2,FS_FieldsName3,FS_ExtraFieldsName1;
 	
-	public static String FS_Ins1,FS_Ins1RecordType;
+	public static String FS_Ins1,FS_Ins1RecordType,FS_Ins2,FS_Ins2RecordType,FS_LP1,FS_LP1RecordType;
 	public static String FS_Con1_FName,FS_Con1_LName,FS_Con1_Email,FS_Con1_Phone,FS_Con1_RecordType;
 	public static String FS_DealName1,FS_Deal1CompanyName,FS_Deal1Stage,FS_Deal1SourceContact,FS_Deal1SourceFirm,FS_Deal1RecordType;
 	
 	public static String FC_Object1,FC_FieldLabelName1,FC_Length1,FC_FieldType,FC_FieldLabel1SubString;
 
+	public static String FS_Fund1,FS_Fund1Type,FS_Fund1InvestmentCategory,FS_Fund2,FS_Fund2Type,FS_Fund2InvestmentCategory;
+	
+	public static String FS_PartnerShip1,FS_PartnerShip2;
+	
+	public static String FS_CommitmentID1,FS_CommitmentAmount1,FS_FinalCommitmentDate1,FS_CommitmentID2,FS_CommitmentAmount2,FS_FinalCommitmentDate2;
+	
+	
 	public static String SDG;
 	
 	public static String Sdg1Name,Sdg1TagName,Sdg1ObjectName;
@@ -266,46 +273,77 @@ public class CommonVariables {
 			
 		}else if(obj instanceof FieldSet){
 			
-			FS_Object1=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS1", excelLabel.Object_Name);
-			FS_Object2=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS2", excelLabel.Object_Name);
-			FS_Object3=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS3", excelLabel.Object_Name);
-			FS_ExtraFieldsName1=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS1", excelLabel.ExtraFieldsName);
+			FS_Object1=ExcelUtils.readData(pahse1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS1", excelLabel.Object_Name);
+			FS_Object2=ExcelUtils.readData(pahse1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS2", excelLabel.Object_Name);
+			FS_Object3=ExcelUtils.readData(pahse1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS3", excelLabel.Object_Name);
+			FS_ExtraFieldsName1=ExcelUtils.readData(pahse1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS1", excelLabel.ExtraFieldsName);
 			
-			FS_FieldSetLabel1=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS1", excelLabel.Field_Set_Label);
-			FS_FieldSetLabel2=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS2", excelLabel.Field_Set_Label);
-			FS_FieldSetLabel3=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS3", excelLabel.Field_Set_Label);
+			FS_FieldSetLabel1=ExcelUtils.readData(pahse1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS1", excelLabel.Field_Set_Label);
+			FS_FieldSetLabel2=ExcelUtils.readData(pahse1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS2", excelLabel.Field_Set_Label);
+			FS_FieldSetLabel3=ExcelUtils.readData(pahse1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS3", excelLabel.Field_Set_Label);
 			
-			FS_NameSpacePrefix1=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS1", excelLabel.NameSpace_PreFix);
-			FS_NameSpacePrefix2=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS2", excelLabel.NameSpace_PreFix);
-			FS_NameSpacePrefix3=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS3", excelLabel.NameSpace_PreFix);
+			FS_NameSpacePrefix1=ExcelUtils.readData(pahse1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS1", excelLabel.NameSpace_PreFix);
+			FS_NameSpacePrefix2=ExcelUtils.readData(pahse1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS2", excelLabel.NameSpace_PreFix);
+			FS_NameSpacePrefix3=ExcelUtils.readData(pahse1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS3", excelLabel.NameSpace_PreFix);
 			
-			FS_FieldsName1=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS1", excelLabel.Fields_Name);
-			FS_FieldsName2=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS2", excelLabel.Fields_Name);
-			FS_FieldsName3=ExcelUtils.readData(fieldSetFilePath,"FieldSet",excelLabel.Variable_Name, "FS3", excelLabel.Fields_Name);
+			FS_FieldsName1=ExcelUtils.readData(pahse1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS1", excelLabel.Fields_Name);
+			FS_FieldsName2=ExcelUtils.readData(pahse1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS2", excelLabel.Fields_Name);
+			FS_FieldsName3=ExcelUtils.readData(pahse1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS3", excelLabel.Fields_Name);
 			
 			
 			
-			FS_Con1_FName=ExcelUtils.readData(fieldSetFilePath,"Contacts",excelLabel.Variable_Name, "C1", excelLabel.Contact_FirstName);
-			FS_Con1_LName=ExcelUtils.readData(fieldSetFilePath,"Contacts",excelLabel.Variable_Name, "C1", excelLabel.Contact_LastName);
-			FS_Con1_Email=ExcelUtils.readData(fieldSetFilePath,"Contacts",excelLabel.Variable_Name, "C1", excelLabel.Contact_EmailId);
-			FS_Con1_Phone=ExcelUtils.readData(fieldSetFilePath,"Contacts",excelLabel.Variable_Name, "C1", excelLabel.Phone);
-			FS_Con1_RecordType=ExcelUtils.readData(fieldSetFilePath,"Contacts",excelLabel.Variable_Name, "C1", excelLabel.Record_Type);
+			FS_Con1_FName=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "C1", excelLabel.Contact_FirstName);
+			FS_Con1_LName=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "C1", excelLabel.Contact_LastName);
+			FS_Con1_Email=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "C1", excelLabel.Contact_EmailId);
+			FS_Con1_Phone=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "C1", excelLabel.Phone);
+			FS_Con1_RecordType=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "C1", excelLabel.Record_Type);
 			
-			FS_Ins1=ExcelUtils.readData(fieldSetFilePath,"Entities",excelLabel.Variable_Name, "Ins1", excelLabel.Institutions_Name);
-			FS_Ins1RecordType=ExcelUtils.readData(fieldSetFilePath,"Entities",excelLabel.Variable_Name, "Ins1", excelLabel.Record_Type);
+			FS_Ins1=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "Ins1", excelLabel.Institutions_Name);
+			FS_Ins1RecordType=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "Ins1", excelLabel.Record_Type);
 			
-			FS_DealName1= ExcelUtils.readData(fieldSetFilePath,"Deal",excelLabel.Variable_Name, "Deal1", excelLabel.Deal_Name);
+			FS_Ins2=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "Ins2", excelLabel.Institutions_Name);
+			FS_Ins2RecordType=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "Ins2", excelLabel.Record_Type);
+			
+			FS_LP1=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "Ins3", excelLabel.Institutions_Name);
+			FS_LP1RecordType=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "Ins3", excelLabel.Record_Type);
+			
+			
+			FS_Fund1=ExcelUtils.readData(pahse1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "Fund1", excelLabel.Fund_Name);
+			FS_Fund1Type=ExcelUtils.readData(pahse1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "Fund1", excelLabel.Fund_Type);
+			FS_Fund1InvestmentCategory=ExcelUtils.readData(pahse1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "Fund1", excelLabel.Investment_Category);
+			
+			
+			FS_Fund2=ExcelUtils.readData(pahse1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "Fund2", excelLabel.Fund_Name);
+			FS_Fund2Type=ExcelUtils.readData(pahse1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "Fund2", excelLabel.Fund_Type);
+			FS_Fund2InvestmentCategory=ExcelUtils.readData(pahse1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "Fund2", excelLabel.Investment_Category);
+			
+			
+			FS_PartnerShip1=ExcelUtils.readData(pahse1DataSheetFilePath,"Partnerships",excelLabel.Variable_Name, "P1", excelLabel.PartnerShip_Name);
+			FS_PartnerShip2=ExcelUtils.readData(pahse1DataSheetFilePath,"Partnerships",excelLabel.Variable_Name, "P2", excelLabel.PartnerShip_Name);
+			
+			
+			FS_CommitmentID1=ExcelUtils.readData(pahse1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "Com1", excelLabel.Commitment_ID);
+			FS_CommitmentAmount1=ExcelUtils.readData(pahse1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "Com1", excelLabel.Commitment_Amount);
+			FS_FinalCommitmentDate1=ExcelUtils.readData(pahse1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "Com1", excelLabel.Final_Commitment_Date);
+			
+			FS_CommitmentID2=ExcelUtils.readData(pahse1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "Com2", excelLabel.Commitment_ID);
+			FS_CommitmentAmount2=ExcelUtils.readData(pahse1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "Com2", excelLabel.Commitment_Amount);
+			FS_FinalCommitmentDate2=ExcelUtils.readData(pahse1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "Com2", excelLabel.Final_Commitment_Date);
+			
+			
+			
+			FS_DealName1= ExcelUtils.readData(pahse1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "Deal1", excelLabel.Deal_Name);
 			FS_Deal1CompanyName=FS_Ins1;
-			FS_Deal1Stage=ExcelUtils.readData(fieldSetFilePath,"Deal",excelLabel.Variable_Name, "Deal1", excelLabel.Stage);
+			FS_Deal1Stage=ExcelUtils.readData(pahse1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "Deal1", excelLabel.Stage);
 			FS_Deal1SourceFirm=FS_Ins1;
-			FS_Deal1RecordType=ExcelUtils.readData(fieldSetFilePath,"Deal",excelLabel.Variable_Name, "Deal1", excelLabel.Record_Type);
-			FS_Deal1SourceContact=ExcelUtils.readData(fieldSetFilePath,"Deal",excelLabel.Variable_Name, "Deal1", excelLabel.Source_Contact);
+			FS_Deal1RecordType=ExcelUtils.readData(pahse1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "Deal1", excelLabel.Record_Type);
+			FS_Deal1SourceContact=ExcelUtils.readData(pahse1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "Deal1", excelLabel.Source_Contact);
 			
-			FC_Object1=ExcelUtils.readData(fieldSetFilePath,"FieldComponent",excelLabel.Variable_Name, "FC1", excelLabel.Object_Name);
-			FC_FieldLabelName1=ExcelUtils.readData(fieldSetFilePath,"FieldComponent",excelLabel.Variable_Name, "FC1", excelLabel.Field_Label);
-			FC_Length1=ExcelUtils.readData(fieldSetFilePath,"FieldComponent",excelLabel.Variable_Name, "FC1", excelLabel.Length);
-			FC_FieldType=ExcelUtils.readData(fieldSetFilePath,"FieldComponent",excelLabel.Variable_Name, "FC1", excelLabel.Field_Type);
-			FC_FieldLabel1SubString=ExcelUtils.readData(fieldSetFilePath,"FieldComponent",excelLabel.Variable_Name, "FC1", excelLabel.FieldLabel_SubString);
+			FC_Object1=ExcelUtils.readData(pahse1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "FC1", excelLabel.Object_Name);
+			FC_FieldLabelName1=ExcelUtils.readData(pahse1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "FC1", excelLabel.Field_Label);
+			FC_Length1=ExcelUtils.readData(pahse1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "FC1", excelLabel.Length);
+			FC_FieldType=ExcelUtils.readData(pahse1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "FC1", excelLabel.Field_Type);
+			FC_FieldLabel1SubString=ExcelUtils.readData(pahse1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "FC1", excelLabel.FieldLabel_SubString);
 			
 		}
 		 System.err.println("");

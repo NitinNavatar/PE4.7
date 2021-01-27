@@ -14,12 +14,15 @@ import com.navatar.generic.EnumConstants.CreationPage;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.excelLabel;
+import com.navatar.pageObjects.CommitmentsPageBusinessLayer;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
 import com.navatar.pageObjects.EditPageBusinessLayer;
 import com.navatar.pageObjects.FundsPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
 import com.navatar.pageObjects.InstitutionsPageBusinessLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
+import com.navatar.pageObjects.MarketingEventPageBusinessLayer;
+import com.navatar.pageObjects.PartnershipsPageBusinessLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
@@ -179,7 +182,7 @@ public class FieldSet extends BaseLib {
 		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);	
 			String mailID=	lp.generateRandomEmailId(gmailUserName);
-			ExcelUtils.writeData(fieldSetFilePath, mailID, "Contacts", excelLabel.Variable_Name, "C1",excelLabel.Contact_EmailId);
+			ExcelUtils.writeData(pahse1DataSheetFilePath, mailID, "Contacts", excelLabel.Variable_Name, "C1",excelLabel.Contact_EmailId);
 			if (con.createContact(projectName, FS_Con1_FName, FS_Con1_LName, FS_Ins1, mailID,FS_Con1_RecordType,excelLabel.Phone.toString(), FS_Con1_Phone, CreationPage.ContactPage, null)) {
 				log(LogStatus.INFO,"successfully Created Contact : "+FS_Con1_FName+" "+FS_Con1_LName,YesNo.No);	
 			} else {
@@ -223,11 +226,11 @@ public class FieldSet extends BaseLib {
 				log(LogStatus.INFO,"clicked on created contact : "+FS_Con1_FName+" "+FS_Con1_LName, YesNo.No);
 				ThreadSleep(5000);
 				if(edit.clickOnEditPageLink()) {
-					if(edit.dragAndDropLayOutFromEditPage(projectName, PageName.Object2Page, RelatedTab.Details, "Navatar Fieldset")) {
+					if(edit.dragAndDropLayOutFromEditPage(projectName, PageName.Object2Page, RelatedTab.Details, "Navatar Fieldset",FS_FieldSetLabel1)) {
 						log(LogStatus.INFO, "Field set component is added on contact page :"+FS_Con1_FName+" "+FS_Con1_LName, YesNo.No);
 					}else {
-						log(LogStatus.ERROR, "Field set component is added on contact page :"+FS_Con1_FName+" "+FS_Con1_LName, YesNo.Yes);
-						sa.assertTrue(false, "Field set component is added on contact page :"+FS_Con1_FName+" "+FS_Con1_LName);
+						log(LogStatus.ERROR, "Field set component is not added on contact page :"+FS_Con1_FName+" "+FS_Con1_LName, YesNo.Yes);
+						sa.assertTrue(false, "Field set component is not added on contact page :"+FS_Con1_FName+" "+FS_Con1_LName);
 					}
 					
 				}else {
@@ -242,12 +245,13 @@ public class FieldSet extends BaseLib {
 			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object2Tab+" so cannot drag and drop Advanced field set component",YesNo.Yes);
 			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object2Tab+" so cannot drag and drop Advanced field set component");
 		}
+		ThreadSleep(3000);
 		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
 			if(lp.clickOnAlreadyCreatedItem(projectName,TabName.DealTab, FS_DealName1, 30)){
 				log(LogStatus.INFO,"clicked on created Deal : "+FS_DealName1, YesNo.No);
 				ThreadSleep(5000);
 				if(edit.clickOnEditPageLink()) {
-					if(edit.dragAndDropLayOutFromEditPage(projectName, PageName.Object4Page, RelatedTab.Details, "Navatar Fieldset")) {
+					if(edit.dragAndDropLayOutFromEditPage(projectName, PageName.Object4Page, RelatedTab.Details, "Navatar Fieldset",FS_FieldSetLabel3)) {
 						log(LogStatus.INFO, "Field set component is added on Deal page :"+FS_DealName1, YesNo.No);
 					}else {
 						log(LogStatus.ERROR, "Field set component is added on Deal page :"+FS_DealName1, YesNo.Yes);
@@ -694,4 +698,99 @@ public class FieldSet extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc012_CreatePreconditionDataForUploadImage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		PartnershipsPageBusinessLayer partnership = new PartnershipsPageBusinessLayer(driver);
+		CommitmentsPageBusinessLayer com = new CommitmentsPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		String value="";
+		String type="";
+		String[][] EntityOrAccounts = {{ FS_Ins2, FS_Ins2RecordType ,null,null},{ FS_LP1, FS_LP1RecordType,InstitutionPageFieldLabelText.Parent_Institution.toString(),FS_Ins2}};
+
+		for (String[] accounts : EntityOrAccounts) {
+			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
+				log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);	
+				value = accounts[0];
+				type = accounts[1];
+				if (ip.createInstitution(projectName, environment, mode, accounts[0],accounts[1], accounts[2],accounts[3])) {
+					log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
+					log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+value+" of record type : "+type,YesNo.Yes);
+				}
+
+
+			} else {
+				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object1Tab);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object1Tab,YesNo.Yes);
+			}
+		}
+		String[][] fundsOrDeals = {{FS_Fund1,"",FS_Fund1Type,FS_Fund1InvestmentCategory,null},
+				{FS_Fund2,"",FS_Fund2Type,FS_Fund2InvestmentCategory,null}};
+		for (String[] funds : fundsOrDeals) {
+			if (lp.clickOnTab(projectName, TabName.Object3Tab)) {
+				log(LogStatus.INFO,"Click on Tab : "+TabName.Object3Tab,YesNo.No);	
+
+
+				if (fp.createFundPE(projectName, funds[0], funds[1], funds[2], funds[3], null, 15)) {
+					log(LogStatus.INFO,"Created Fund : "+funds[0],YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Not Able to Create Fund : "+funds[0]);
+					log(LogStatus.SKIP,"Not Able to Create Fund  : "+funds[0],YesNo.Yes);
+				}
+
+			} else {
+				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object3Tab);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object3Tab,YesNo.Yes);
+			}
+		}
+		String[][] partnerships = {{FS_PartnerShip1,FS_Fund1},
+				{FS_PartnerShip2,FS_Fund2}};
+		for (String[] p : partnerships) {
+			if (lp.clickOnTab(projectName, TabName.Object6Tab)) {
+				log(LogStatus.INFO,"Click on Tab : "+TabName.Object6Tab,YesNo.No);	
+
+
+				if (partnership.createPartnership(projectName, environment, mode, p[0], p[1])) {
+					log(LogStatus.INFO,"Created partnership : "+p[0],YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Not Able to Create partnership : "+p[0]);
+					log(LogStatus.SKIP,"Not Able to Create partnership  : "+p[0],YesNo.Yes);
+				}
+
+			} else {
+				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object6Tab);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object6Tab,YesNo.Yes);
+			}
+		}
+		String[][] Commitments = {{FS_LP1,FS_PartnerShip1,FS_FinalCommitmentDate1,FS_CommitmentAmount1,"Com1"},
+				{FS_LP1,FS_PartnerShip2,FS_FinalCommitmentDate2,FS_CommitmentAmount2,FS_CommitmentID2,"Com2"}};
+		for (String[] comm : Commitments) {
+			if (lp.clickOnTab(projectName, TabName.Object7Tab)) {
+				log(LogStatus.INFO,"Click on Tab : "+TabName.Object7Tab,YesNo.No);	
+
+
+				if (com.createCommitment(projectName, comm[0],comm[1], comm[2],comm[3],pahse1DataSheetFilePath, comm[4])) {
+					log(LogStatus.INFO,"Created Commiments : "+comm[0]+" "+comm[1],YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Not Able to Create Commiments : "+comm[0]+" "+comm[1]);
+					log(LogStatus.SKIP,"Not Able to Create Commiments  : "+comm[0]+" "+comm[1],YesNo.Yes);
+				}
+
+			} else {
+				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object7Tab);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object7Tab,YesNo.Yes);
+			}
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+
 }
