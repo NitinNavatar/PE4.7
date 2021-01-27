@@ -57,7 +57,8 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 	
 	
 	public boolean clickOnELGSeachValueLink(String projectName,String searchValue,int timeOut) {
-		String xpath = "//span[@title='"+searchValue+"' or text()='"+searchValue+"']";
+		 click(driver, getElgDataProviderTextBoxSearchIcon(projectName, 30), searchValue, action.BOOLEAN);
+		String xpath = "//div[contains(@id,'dropdown-element')]//*[@title='"+searchValue+"']";
 		WebElement ele = FindElement(driver, xpath, "Search Value : "+searchValue, action.BOOLEAN, timeOut);
 		ele =  isDisplayed(driver, ele, "Visibility", timeOut, "Search Value : "+searchValue);
 		return click(driver, ele, searchValue, action.BOOLEAN);

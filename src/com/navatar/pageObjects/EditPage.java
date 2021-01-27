@@ -85,7 +85,7 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, editPageSeachTextBox, "Visibility", timeOut, "Edit Page Search TextBox");
 	}
 	
-	@FindBy (xpath = "//*[text()='Data Provider']/following-sibling::div")
+	@FindBy (xpath = "//*[text()='Data Provider']/following-sibling::div//input")
 	private WebElement elgDataProviderTextBox;
 
 	/**
@@ -117,6 +117,27 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, enableToggleCheckBox, "Visibility", timeOut, "Enable Toggle CheckBox");
 	}
 	
+	
+	@FindBy (xpath = "//a[text()='Add Component(s) Here']")
+	private WebElement addComponent;
+
+	/**
+	 * @return the addComponent
+	 */
+	public WebElement getAddComponent(String projectName,int timeOut) {
+		return isDisplayed(driver, addComponent, "Visibility", timeOut, "Add Component(s) Here");
+	}
+	
+	
+	@FindBy (xpath = "//*[text()='Data Provider']/following-sibling::div//*[@data-key='search']/../..")
+	private WebElement elgDataProviderTextBoxSearchIcon;
+
+	/**
+	 * @return the elgDataProviderTextBoxSearchIcon
+	 */
+	public WebElement getElgDataProviderTextBoxSearchIcon(String projectName,int timeOut) {
+		return isDisplayed(driver, elgDataProviderTextBoxSearchIcon, "Visibility", timeOut, "ELG Data Provider TextBox Search Box Icon");
+	}
 	
 	
 }
