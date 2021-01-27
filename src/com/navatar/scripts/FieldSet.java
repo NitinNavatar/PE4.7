@@ -182,7 +182,7 @@ public class FieldSet extends BaseLib {
 		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);	
 			String mailID=	lp.generateRandomEmailId(gmailUserName);
-			ExcelUtils.writeData(fieldSetFilePath, mailID, "Contacts", excelLabel.Variable_Name, "C1",excelLabel.Contact_EmailId);
+			ExcelUtils.writeData(pahse1DataSheetFilePath, mailID, "Contacts", excelLabel.Variable_Name, "C1",excelLabel.Contact_EmailId);
 			if (con.createContact(projectName, FS_Con1_FName, FS_Con1_LName, FS_Ins1, mailID,FS_Con1_RecordType,excelLabel.Phone.toString(), FS_Con1_Phone, CreationPage.ContactPage, null)) {
 				log(LogStatus.INFO,"successfully Created Contact : "+FS_Con1_FName+" "+FS_Con1_LName,YesNo.No);	
 			} else {
@@ -775,7 +775,7 @@ public class FieldSet extends BaseLib {
 				log(LogStatus.INFO,"Click on Tab : "+TabName.Object7Tab,YesNo.No);	
 
 
-				if (com.createCommitment(projectName, comm[0],comm[1], comm[2],comm[3],fieldSetFilePath, comm[4])) {
+				if (com.createCommitment(projectName, comm[0],comm[1], comm[2],comm[3],pahse1DataSheetFilePath, comm[4])) {
 					log(LogStatus.INFO,"Created Commiments : "+comm[0]+" "+comm[1],YesNo.No);	
 				} else {
 					sa.assertTrue(false,"Not Able to Create Commiments : "+comm[0]+" "+comm[1]);
