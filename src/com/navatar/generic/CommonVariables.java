@@ -6,7 +6,6 @@ package com.navatar.generic;
 import static com.navatar.generic.BaseLib.testCasesFilePath;
 import static com.navatar.generic.BaseLib.toggleFilePath;
 import static com.navatar.generic.CommonLib.getDateAccToTimeZone;
-import static com.navatar.generic.BaseLib.taskWatchlistFilePath;
 import static com.navatar.generic.BaseLib.pahse1DataSheetFilePath;
 import static com.navatar.generic.EnumConstants.*;
 import com.navatar.generic.EnumConstants.excelLabel;
@@ -209,67 +208,67 @@ public class CommonVariables {
 		}
 		
 		else if(obj instanceof TaskWatchlist){
-			Smoke_TWINS1Name=ExcelUtils.readData(taskWatchlistFilePath,"EntityorAccount",excelLabel.Variable_Name, "TWINS1", excelLabel.Institutions_Name);
-			Smoke_TWINS1RecordType=ExcelUtils.readData(taskWatchlistFilePath,"EntityorAccount",excelLabel.Variable_Name, "TWINS1", excelLabel.Record_Type);
-			Smoke_TWINS1Status=ExcelUtils.readData(taskWatchlistFilePath,"EntityorAccount",excelLabel.Variable_Name, "TWINS1", excelLabel.Status);
-			Smoke_CDINS1Name=ExcelUtils.readData(taskWatchlistFilePath,"EntityorAccount",excelLabel.Variable_Name, "CDINS1", excelLabel.Institutions_Name);
-			Smoke_CDINS1RecordType=ExcelUtils.readData(taskWatchlistFilePath,"EntityorAccount",excelLabel.Variable_Name, "CDINS1", excelLabel.Record_Type);
+			Smoke_TWINS1Name=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS1", excelLabel.Institutions_Name);
+			Smoke_TWINS1RecordType=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS1", excelLabel.Record_Type);
+			Smoke_TWINS1Status=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS1", excelLabel.Status);
+			Smoke_CDINS1Name=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS1", excelLabel.Institutions_Name);
+			Smoke_CDINS1RecordType=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS1", excelLabel.Record_Type);
 			
 			// TASK INS2..............
-			Smoke_TWINS2Name=ExcelUtils.readData(taskWatchlistFilePath,"EntityorAccount",excelLabel.Variable_Name, "TWINS2", excelLabel.Institutions_Name);
-			Smoke_TWINS2RecordType=ExcelUtils.readData(taskWatchlistFilePath,"EntityorAccount",excelLabel.Variable_Name, "TWINS2", excelLabel.Record_Type);
-			Smoke_TWINS2Status=ExcelUtils.readData(taskWatchlistFilePath,"EntityorAccount",excelLabel.Variable_Name, "TWINS2", excelLabel.Status);
-			Smoke_CDINS2Name=ExcelUtils.readData(taskWatchlistFilePath,"EntityorAccount",excelLabel.Variable_Name, "CDINS2", excelLabel.Institutions_Name);
+			Smoke_TWINS2Name=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS2", excelLabel.Institutions_Name);
+			Smoke_TWINS2RecordType=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS2", excelLabel.Record_Type);
+			Smoke_TWINS2Status=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS2", excelLabel.Status);
+			Smoke_CDINS2Name=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS2", excelLabel.Institutions_Name);
 			
 			// TASK INS3..............
-			Smoke_TWINS3Name=ExcelUtils.readData(taskWatchlistFilePath,"EntityorAccount",excelLabel.Variable_Name, "TWINS3", excelLabel.Institutions_Name);
-			Smoke_TWINS3RecordType=ExcelUtils.readData(taskWatchlistFilePath,"EntityorAccount",excelLabel.Variable_Name, "TWINS3", excelLabel.Record_Type);
-			Smoke_TWINS3Status=ExcelUtils.readData(taskWatchlistFilePath,"EntityorAccount",excelLabel.Variable_Name, "TWINS3", excelLabel.Status);
+			Smoke_TWINS3Name=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS3", excelLabel.Institutions_Name);
+			Smoke_TWINS3RecordType=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS3", excelLabel.Record_Type);
+			Smoke_TWINS3Status=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS3", excelLabel.Status);
 			
 			// TASK INS4..............
-			Smoke_TWINS4Name=ExcelUtils.readData(taskWatchlistFilePath,"EntityorAccount",excelLabel.Variable_Name, "TWINS4", excelLabel.Institutions_Name);
-			Smoke_TWINS4RecordType=ExcelUtils.readData(taskWatchlistFilePath,"EntityorAccount",excelLabel.Variable_Name, "TWINS4", excelLabel.Record_Type);
-			Smoke_TWINS4Status=ExcelUtils.readData(taskWatchlistFilePath,"EntityorAccount",excelLabel.Variable_Name, "TWINS4", excelLabel.Status);
+			Smoke_TWINS4Name=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS4", excelLabel.Institutions_Name);
+			Smoke_TWINS4RecordType=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS4", excelLabel.Record_Type);
+			Smoke_TWINS4Status=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS4", excelLabel.Status);
 			
 			
 			// TASK Contact1..............
-			Smoke_TWContact1FName=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON1", excelLabel.Contact_FirstName);
-			Smoke_TWContact1LName=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON1", excelLabel.Contact_LastName);
-			Smoke_TWContact1EmailID=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON1", excelLabel.Contact_EmailId);
-			Smoke_TWContact1RecordType=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON1", excelLabel.Record_Type);
+			Smoke_TWContact1FName=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON1", excelLabel.Contact_FirstName);
+			Smoke_TWContact1LName=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON1", excelLabel.Contact_LastName);
+			Smoke_TWContact1EmailID=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON1", excelLabel.Contact_EmailId);
+			Smoke_TWContact1RecordType=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON1", excelLabel.Record_Type);
 			
 			// TASK Contact2..............
-			Smoke_TWContact2FName=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON2", excelLabel.Contact_FirstName);
-			Smoke_TWContact2LName=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON2", excelLabel.Contact_LastName);
-			Smoke_TWContact2EmailID=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON2", excelLabel.Contact_EmailId);
-			Smoke_TWContact2RecordType=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON2", excelLabel.Record_Type);
+			Smoke_TWContact2FName=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON2", excelLabel.Contact_FirstName);
+			Smoke_TWContact2LName=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON2", excelLabel.Contact_LastName);
+			Smoke_TWContact2EmailID=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON2", excelLabel.Contact_EmailId);
+			Smoke_TWContact2RecordType=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON2", excelLabel.Record_Type);
 			
 			// TASK Contact3..............
-			Smoke_TWContact3FName=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON3", excelLabel.Contact_FirstName);
-			Smoke_TWContact3LName=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON3", excelLabel.Contact_LastName);
-			Smoke_TWContact3EmailID=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON3", excelLabel.Contact_EmailId);
-			Smoke_TWContact3RecordType=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON3", excelLabel.Record_Type);
+			Smoke_TWContact3FName=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON3", excelLabel.Contact_FirstName);
+			Smoke_TWContact3LName=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON3", excelLabel.Contact_LastName);
+			Smoke_TWContact3EmailID=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON3", excelLabel.Contact_EmailId);
+			Smoke_TWContact3RecordType=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON3", excelLabel.Record_Type);
 			
 			// TASK Contact4..............
-			Smoke_TWContact4FName=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON4", excelLabel.Contact_FirstName);
-			Smoke_TWContact4LName=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON4", excelLabel.Contact_LastName);
-			Smoke_TWContact4EmailID=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON4", excelLabel.Contact_EmailId);
-			Smoke_TWContact4RecordType=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON4", excelLabel.Record_Type);
+			Smoke_TWContact4FName=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON4", excelLabel.Contact_FirstName);
+			Smoke_TWContact4LName=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON4", excelLabel.Contact_LastName);
+			Smoke_TWContact4EmailID=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON4", excelLabel.Contact_EmailId);
+			Smoke_TWContact4RecordType=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON4", excelLabel.Record_Type);
 			
 			// TASK Contact5..............
-			Smoke_TWContact5FName=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON5", excelLabel.Contact_FirstName);
-			Smoke_TWContact5LName=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON5", excelLabel.Contact_LastName);
-			Smoke_TWContact5EmailID=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON5", excelLabel.Contact_EmailId);
-			Smoke_TWContact5RecordType=ExcelUtils.readData(taskWatchlistFilePath,"Contacts",excelLabel.Variable_Name, "TWCON5", excelLabel.Record_Type);
-			TWTask1Subject=ExcelUtils.readData(taskWatchlistFilePath,"Task",excelLabel.Variable_Name, "TWTask1", excelLabel.Subject);
-			TWTask2Subject=ExcelUtils.readData(taskWatchlistFilePath,"Task",excelLabel.Variable_Name, "TWTask2", excelLabel.Subject);
-			TWTask3Subject=ExcelUtils.readData(taskWatchlistFilePath,"Task",excelLabel.Variable_Name, "TWTask3", excelLabel.Subject);
-			TWTask4Subject=ExcelUtils.readData(taskWatchlistFilePath,"Task",excelLabel.Variable_Name, "TWTask4", excelLabel.Subject);
-			TWTask5Subject=ExcelUtils.readData(taskWatchlistFilePath,"Task",excelLabel.Variable_Name, "TWTask5", excelLabel.Subject);
-			TWTask6Subject=ExcelUtils.readData(taskWatchlistFilePath,"Task",excelLabel.Variable_Name, "TWTask6", excelLabel.Subject);
-			TWTask8Subject=ExcelUtils.readData(taskWatchlistFilePath,"Task",excelLabel.Variable_Name, "TWTask7", excelLabel.Subject);
-			TWTaskCR1Subject=ExcelUtils.readData(taskWatchlistFilePath,"Task",excelLabel.Variable_Name, "TWTask8", excelLabel.Subject);
-			TWTaskUpdateLabelSubject=ExcelUtils.readData(taskWatchlistFilePath,"Task",excelLabel.Variable_Name, "TWTask9", excelLabel.Subject);
+			Smoke_TWContact5FName=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON5", excelLabel.Contact_FirstName);
+			Smoke_TWContact5LName=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON5", excelLabel.Contact_LastName);
+			Smoke_TWContact5EmailID=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON5", excelLabel.Contact_EmailId);
+			Smoke_TWContact5RecordType=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON5", excelLabel.Record_Type);
+			TWTask1Subject=ExcelUtils.readData(pahse1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask1", excelLabel.Subject);
+			TWTask2Subject=ExcelUtils.readData(pahse1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask2", excelLabel.Subject);
+			TWTask3Subject=ExcelUtils.readData(pahse1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask3", excelLabel.Subject);
+			TWTask4Subject=ExcelUtils.readData(pahse1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask4", excelLabel.Subject);
+			TWTask5Subject=ExcelUtils.readData(pahse1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask5", excelLabel.Subject);
+			TWTask6Subject=ExcelUtils.readData(pahse1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask6", excelLabel.Subject);
+			TWTask8Subject=ExcelUtils.readData(pahse1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask7", excelLabel.Subject);
+			TWTaskCR1Subject=ExcelUtils.readData(pahse1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask8", excelLabel.Subject);
+			TWTaskUpdateLabelSubject=ExcelUtils.readData(pahse1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask9", excelLabel.Subject);
 			
 		}else if(obj instanceof FieldSet){
 			
