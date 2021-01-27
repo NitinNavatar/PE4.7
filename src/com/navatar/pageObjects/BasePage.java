@@ -591,7 +591,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, defaultCompactLayout, "Visibility", timeOut, "defaultCompactLayout");
 		
 	}
-	@FindBy(xpath = "//button[@title='Save']")
+	@FindBy(xpath = "//button[@title='Save' or text()='Save']")
 	private WebElement save_Lightning;
 	
 	@FindBy(xpath = "//input[@placeholder='Search all items...']")

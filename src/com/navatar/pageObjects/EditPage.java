@@ -117,6 +117,19 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, enableToggleCheckBox, "Visibility", timeOut, "Enable Toggle CheckBox");
 	}
 	
+	@FindBy(xpath = "//*[text()='Field Set Name']/following-sibling::div/input")
+	private WebElement fieldSetNameTextBox;
+
+	public WebElement getFieldSetNameTextBox(int timeOut) {
+		return isDisplayed(driver, fieldSetNameTextBox, "Visibility", timeOut, "field set name text box");
+	}
+	
+	@FindBy(xpath = "//a[@aria-describedby='backButton']")
+	private WebElement backButton;
+
+	public WebElement getBackButton(int timeOut) {
+		return isDisplayed(driver, backButton, "Visibility", timeOut, "back button");
+	}
 	
 	
 }

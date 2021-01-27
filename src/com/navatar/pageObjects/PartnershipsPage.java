@@ -1,10 +1,11 @@
 package com.navatar.pageObjects;
 
-import static com.navatar.generic.CommonLib.isDisplayed;
+import static com.navatar.generic.CommonLib.*;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
 import com.navatar.generic.EnumConstants.Mode;
 
 public class PartnershipsPage extends BasePageBusinessLayer {
@@ -17,7 +18,7 @@ public class PartnershipsPage extends BasePageBusinessLayer {
 	@FindBy(xpath="//input[@name='Name']")
 	private WebElement partnershipLegalName_Classic;
 	
-	@FindBy(xpath="//span[text()='Partnership Legal Name']/../following-sibling::input")
+	@FindBy(xpath="//*[text()='Partnership Legal Name']/following-sibling::div/input")
 	private WebElement partnershipLegalName_Lighting;
 
 	/**
@@ -35,7 +36,7 @@ public class PartnershipsPage extends BasePageBusinessLayer {
 	@FindBy(xpath="//span[@class='lookupInput']//input")
 	private WebElement fundTextBox_Classic;
 	
-	@FindBy(xpath="//span[text()='Fund']/../following-sibling::div//input[@title='Search Funds']")
+	@FindBy(xpath="//*[text()='Fund']/following-sibling::div//input[contains(@placeholder,'Search Funds')]")
 	private WebElement fundTextBox_Lighting;
 
 
@@ -60,13 +61,14 @@ public class PartnershipsPage extends BasePageBusinessLayer {
 	/**
 	 * @return the partnershipNameInViewMode
 	 */
-	public WebElement getPartnershipNameInViewMode(String environment,String mode,int timeOut) {
+	public WebElement getPartnershipNameInViewMode(String environment,String mode,int timeOut,String partnershipName) {
 		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
 			return isDisplayed(driver, partnershipNameInViewMode_Classic, "Visibility", timeOut, "Partnership Name in View Mode Classic");
 	}else{
-		return isDisplayed(driver, partnershipNameInViewMode_Lighting, "Visibility", timeOut, "Partnership Name in View Mode Lighting");
+		WebElement ele = FindElement(driver, "//*[contains(text(),'Partnership Legal Name')]/../..//*[text()='"+partnershipName+"']", "partnershipName", action.SCROLLANDBOOLEAN, timeOut);
+		return ele;
 	}
-
+		
 	}
 
 }

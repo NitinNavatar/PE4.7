@@ -1,10 +1,11 @@
 package com.navatar.pageObjects;
 
-import static com.navatar.generic.CommonLib.isDisplayed;
+import static com.navatar.generic.CommonLib.*;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
 import com.navatar.generic.EnumConstants.Mode;
 
 public class CommitmentsPage extends BasePageBusinessLayer {
@@ -17,7 +18,7 @@ public class CommitmentsPage extends BasePageBusinessLayer {
 	@FindBy(xpath="//label[text()='Limited Partner']/../..//span[@class='lookupInput']/input")
 	private WebElement limitedPartnerTextbox_Classic;
 	
-	@FindBy(xpath="//span[text()='Limited Partner']/../following-sibling::div//input[@title='Search Institutions']")
+	@FindBy(xpath="//*[text()='Limited Partner']/following-sibling::div//input[contains(@placeholder,'Search')]")
 	private WebElement limitedPartnerTextbox_Lighting;
 
 	/**
@@ -35,7 +36,7 @@ public class CommitmentsPage extends BasePageBusinessLayer {
 	@FindBy(xpath="//label[text()='Partnership']/../..//span[@class='lookupInput']/input")
 	private WebElement partnershipTextBox_Classic;
 	
-	@FindBy(xpath="//span[text()='Partnership']/../following-sibling::div//input[@title='Search Partnerships']")
+	@FindBy(xpath="//*[text()='Partnership']/following-sibling::div//input[contains(@placeholder,'Search')]")
 	private WebElement partnershipTextBox_Lighting;
 
 	/**
@@ -63,9 +64,24 @@ public class CommitmentsPage extends BasePageBusinessLayer {
 		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
 			return isDisplayed(driver, commitmentIdInViewMode_Classic, "Visibility", timeOut, "Commitment ID in View Mode Classic");
 	}else{
-		return isDisplayed(driver, commitmentIdInViewMode_Lighting, "Visibility", timeOut, "Commitment ID in View Mode Classic");
+		String xpath="//*[text()='Commitment']/../*/*[@slot='primaryField']/*";
+		WebElement ele = FindElement(driver,xpath, "commitment id xpath", action.SCROLLANDBOOLEAN, timeOut);
+		return ele;
 	}
 
 	}
+	
+	@FindBy(xpath = "//*[text()='Final Commitment Date']/following-sibling::div/input")
+	private WebElement finalCommimentDate;
 
+	public WebElement getFinalCommimentDate(int timeOut) {
+		return isDisplayed(driver, finalCommimentDate, "Visibility", timeOut, "final commitment date Text Box Lighting");
+	}
+	
+	@FindBy(xpath = "//*[text()='Commitment Amount']/following-sibling::div/input")
+	private WebElement CommimentAmount;
+
+	public WebElement getCommimentAmount(int timeOut) {
+		return isDisplayed(driver, CommimentAmount, "Visibility", timeOut, "commitment amount Text Box Lighting");
+	}
 }
