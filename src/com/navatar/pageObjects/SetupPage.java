@@ -178,7 +178,12 @@ public class SetupPage extends BasePageBusinessLayer {
 	
 	@FindBy(xpath = "//input[@id='MasterLabel']")
 	private WebElement fieldLabelTextBox;
-
+	@FindBy(xpath = "//*[text()='Label']/../following-sibling::td//input")
+	private WebElement fieldLabelTextBox1;
+	
+	public WebElement getFieldLabelTextBox1(int timeOut) {
+		return isDisplayed(driver, fieldLabelTextBox1, "Visibility", timeOut, "field label text box");
+	}
 	public WebElement getFieldLabelTextBox(int timeOut) {
 		return isDisplayed(driver, fieldLabelTextBox, "Visibility", timeOut, "field label text box");
 	}
