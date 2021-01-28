@@ -437,4 +437,40 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		return false;
 
 	}
+	
+	public boolean changeStatus(String projectName,String status) {
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		boolean flag=true;
+		status=status.replace("_", " ");
+		if (clickOnShowMoreActionDownArrow(projectName, PageName.Object1Page, ShowMoreActionDropDownList.Edit, 10)) {
+			if (click(driver, fp.getDealStatus(projectName, 10), "Status : "+status, action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(2000);
+				appLog.error("Clicked on Deal Status");
+				
+				String xpath="//div[@class='select-options']//li/a[@title='"+status+"']";
+				WebElement dealStatusEle = FindElement(driver,xpath, status,action.SCROLLANDBOOLEAN, 10);
+				ThreadSleep(2000);
+				if (click(driver, dealStatusEle, status, action.SCROLLANDBOOLEAN)) {
+					appLog.info("Selected Status : "+status);
+					ThreadSleep(2000);
+				} else {
+					log(LogStatus.ERROR,"Not able to Select on Status : "+status,YesNo.No);
+					flag=false;
+				}
+				if (click(driver, getSaveButton(projectName,10), "save button", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on save button");
+				}else {
+					appLog.error("save button is not clickable so cannot change cmpany to watchlist");
+					flag=false;
+				}
+			} else {
+				log(LogStatus.ERROR,"Not able to Click on Status : "+status,YesNo.Yes);
+				flag=false;
+			}
+			}else {
+				log(LogStatus.ERROR,"edit button is not clickable so cannot change cmpany to "+status, YesNo.Yes);
+				flag=false;
+			}
+		return flag;
+	}
 }

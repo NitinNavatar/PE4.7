@@ -24,7 +24,7 @@ import com.navatar.scripts.TaskWatchlist;
 public class CommonVariables {
 //	public static String abc;
 
-	public static String URL,todaysDate;
+	public static String URL,todaysDate,todaysDateSingleDigit;
 	public static String browserToLaunch;
 	public static String Smoke_TWINS1Name,Smoke_TWINS1RecordType,Smoke_TWINS1Status;
 	public static String Smoke_CDINS1Name,Smoke_CDINS1RecordType,Smoke_CDINS1Status;
@@ -109,6 +109,7 @@ public class CommonVariables {
 		environment=ExcelUtils.readDataFromPropertyFile("Environment");
 		mode=ExcelUtils.readDataFromPropertyFile("Mode");
 		todaysDate=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "MM/dd/YYYY");
+		todaysDateSingleDigit=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		
 			AdminUserFirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_First_Name);
 			AdminUserLastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_Last_Name);
@@ -213,12 +214,15 @@ public class CommonVariables {
 			Smoke_TWINS1Status=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS1", excelLabel.Status);
 			Smoke_CDINS1Name=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS1", excelLabel.Institutions_Name);
 			Smoke_CDINS1RecordType=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS1", excelLabel.Record_Type);
+			Smoke_CDINS1Status=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS1", excelLabel.Status);
+			Smoke_CDINS2Status=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS2", excelLabel.Status);
 			
 			// TASK INS2..............
 			Smoke_TWINS2Name=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS2", excelLabel.Institutions_Name);
 			Smoke_TWINS2RecordType=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS2", excelLabel.Record_Type);
 			Smoke_TWINS2Status=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS2", excelLabel.Status);
 			Smoke_CDINS2Name=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS2", excelLabel.Institutions_Name);
+			Smoke_CDINS2RecordType=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS2", excelLabel.Record_Type);
 			
 			// TASK INS3..............
 			Smoke_TWINS3Name=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS3", excelLabel.Institutions_Name);

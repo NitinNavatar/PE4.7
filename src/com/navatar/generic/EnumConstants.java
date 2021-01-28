@@ -131,7 +131,7 @@ public class EnumConstants {
 	public static enum PageName{
 		FundsPage,InstitutionsPage,CommitmentsPage,HomePage,NavatarInvestorManager,ManageFolderPopUp,ManageApprovalsPopUp,ProjectDetailsPoPUp,NavatarInvestorAddOnsPage,NewProjectPopUp
 		,CompanyPage,CreateFundraisingPage,CreateCommitmentFundType,CreateCommitmentCoInvestmentType,FundraisingPage,PartnershipsPage, DealPage,TaskRayPage, LimitedPartnerPage, BuildStep2Of3,PipelinesPage,NewTaskPage,
-	CRMUserPage,   TaskPage, NewTaskPopUP,TestCustomObjectPage, NewEventPopUp,ActivitiesOrMeetings,SearchActivitiesAttachment,EmailUploadPage,Object1Page,Object1PagePopup,Object2Page,Object3Page,Object4Page,ListEmail,CompactLayout, MeetingType, AddPickListMeetingType,ActivityLayoutPage, Object5Page;
+	CRMUserPage,   TaskPage, NewTaskPopUP,TestCustomObjectPage, NewEventPopUp,ActivitiesOrMeetings,SearchActivitiesAttachment,EmailUploadPage,Object1Page,Object1PagePopup,Object2Page,Object3Page,Object4Page,ListEmail,CompactLayout, MeetingType, AddPickListMeetingType,ActivityLayoutPage, Object5Page,AccountCustomFieldStatusPage;
 
 
 
@@ -998,7 +998,15 @@ public static enum PermissionType{
 			public String toString() {
 				return "Meeting Type";
 			}
-		}  ,Priority,Watchlist, Watch_list,Conversion_Date,Related_Associations,Name, Subject, Due_Date, New_Task, Related_To, Comments, Edit, Assigned_To, Start_Date, End_Date, End_Time, Start_Time, Type, Date, Contact_Name, Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places, Values, Is_Touchpoint,Description
+		}  ,Priority,Under_Evaluation,RenameWatchlist{
+			@Override
+			public String toString() {
+			return "Rename-Watchlist";
+		}},RenameUnder_Evaluation{
+			@Override
+			public String toString() {
+			return "Rename-Under Evaluation";
+		}},Watchlist, Watch_list,Conversion_Date,Portfolio_Company,Related_Associations,Name, Subject, Due_Date, New_Task, Related_To, Comments, Edit, Assigned_To, Start_Date, End_Date, End_Time, Start_Time, Type, Date, Contact_Name, Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places, Values, Is_Touchpoint,Description
 	};
 	
 	public static enum Links{

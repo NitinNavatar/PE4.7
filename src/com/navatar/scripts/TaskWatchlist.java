@@ -2056,13 +2056,175 @@ public class TaskWatchlist extends BaseLib{
 		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
 		
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		if (ip.clickOnTab(projectName, TabName.InstituitonsTab)) {
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.createEntityOrAccount(projectName, Smoke_CDINS1Name, Smoke_CDINS1RecordType, new String[][] {{PageLabel.Status.toString(),Smoke_CDINS1Status}}, 10)) {
 				log(LogStatus.INFO,"successfully Created Account/Entity : "+Smoke_CDINS1Name+" of record type : "+Smoke_CDINS1RecordType,YesNo.No);	
 			} else {
 				sa.assertTrue(false,"Not Able to Create Account/Entity : "+Smoke_CDINS1Name+" of record type : "+Smoke_CDINS1RecordType);
 				log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+Smoke_CDINS1Name+" of record type : "+Smoke_CDINS1RecordType,YesNo.Yes);
 			}
+		}else {
+			log(LogStatus.FAIL, "entity tab is not clickable", YesNo.Yes);
+			sa.assertTrue(false, "entity tab is not clickable");
 		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
 	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void ConvDatetc023_ChangeStatusOfCompanyAndCheck(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
+		String mode="Lightning";
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		String labels[]={PageLabel.Status.toString(),PageLabel.Conversion_Date.toString()};
+		int i=0;
+		String values1[]={PageLabel.Under_Evaluation.toString().replace("_", " "),todaysDateSingleDigit};
+		String values2[]={PageLabel.Watchlist.toString(),todaysDateSingleDigit};
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+		if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_CDINS1Name, 10)) {
+			if (ip.changeStatus(projectName, PageLabel.Under_Evaluation.toString())) {
+				for (String s:labels) {
+				if (ip.fieldValueVerificationOnInstitutionPage("", mode, TabName.Object1Tab, s, values1[i])) {
+					log(LogStatus.INFO,"successfully verified "+s+" : "+values1[i],YesNo.No);	
+				}else {
+					log(LogStatus.ERROR,"could not verify "+s+" : "+values1[i],YesNo.No);	
+					sa.assertTrue(false,"could not verify "+s+" : "+values1[i] );
+				}
+				i++;
+				}
+			}else {
+				log(LogStatus.ERROR,"could not verify conversion date : "+todaysDateSingleDigit,YesNo.No);	
+				sa.assertTrue(false,"could not verify conversion date : "+todaysDateSingleDigit );
+			}
+			
+			if (ip.changeStatus(projectName, PageLabel.Watchlist.toString())) {
+				i=0;
+				for (String s:labels) {
+				if (ip.fieldValueVerificationOnInstitutionPage("", mode, TabName.Object1Tab, s, values2[i])) {
+					log(LogStatus.INFO,"successfully verified "+s+" : "+values2[i],YesNo.No);	
+				}else {
+					log(LogStatus.ERROR,"could not verify "+s+" : "+values2[i],YesNo.No);	
+					sa.assertTrue(false,"could not verify "+s+" : "+values2[i] );
+				}
+				i++;
+				}
+			}else {
+				log(LogStatus.ERROR,"could not verify conversion date : "+todaysDateSingleDigit,YesNo.No);	
+				sa.assertTrue(false,"could not verify conversion date : "+todaysDateSingleDigit );
+			}
+		}else {
+			log(LogStatus.FAIL, "could not click on entity: "+Smoke_CDINS1Name, YesNo.Yes);
+			sa.assertTrue(false, "could not click on entity: "+Smoke_CDINS1Name);
+		}
+		}else {
+			log(LogStatus.FAIL, "entity tab is not clickable", YesNo.Yes);
+			sa.assertTrue(false, "entity tab is not clickable");
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void ConvDatetc024_CreateNewCompanyUnderEvalThenChangeToPortfolioCompany(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		String values1[]={PageLabel.Under_Evaluation.toString().replace("_", " "),""};
+		String values2[]={PageLabel.Watchlist.toString().replace("_", " "),""};
+		String values3[]={PageLabel.Under_Evaluation.toString().replace("_", " "),todaysDateSingleDigit};
+		String values4[]={PageLabel.Portfolio_Company.toString().replace("_", " "),todaysDateSingleDigit};
+		
+		String labels[]={PageLabel.Status.toString(),PageLabel.Conversion_Date.toString()};
+		int i=0;
+		
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.createEntityOrAccount(projectName, Smoke_CDINS2Name, Smoke_CDINS2RecordType, new String[][] {{PageLabel.Status.toString(),Smoke_CDINS2Status}}, 10)) {
+				log(LogStatus.INFO,"successfully Created Account/Entity : "+Smoke_CDINS1Name+" of record type : "+Smoke_CDINS1RecordType,YesNo.No);	
+				for (String s:labels) {
+					if (ip.fieldValueVerificationOnInstitutionPage("", mode, TabName.Object1Tab, s, values1[i])) {
+						log(LogStatus.INFO,"successfully verified "+s+" : "+values1[i],YesNo.No);	
+					}else {
+						log(LogStatus.ERROR,"could not verify "+s+" : "+values1[i],YesNo.No);	
+						sa.assertTrue(false,"could not verify "+s+" : "+values1[i] );
+					}
+					i++;
+				}
+				
+				
+				if (ip.changeStatus(projectName, PageLabel.Watchlist.toString())) {
+					i=0;
+					for (String s:labels) {
+					if (ip.fieldValueVerificationOnInstitutionPage("", mode, TabName.Object1Tab, s, values2[i])) {
+						log(LogStatus.INFO,"successfully verified "+s+" : "+values2[i],YesNo.No);	
+					}else {
+						log(LogStatus.ERROR,"could not verify "+s+" : "+values2[i],YesNo.No);	
+						sa.assertTrue(false,"could not verify "+s+" : "+values2[i] );
+					}
+					i++;
+					}
+				}else {
+					log(LogStatus.ERROR,"could not verify conversion date : "+todaysDateSingleDigit,YesNo.No);	
+					sa.assertTrue(false,"could not verify conversion date : "+todaysDateSingleDigit );
+				}
+				
+				if (ip.changeStatus(projectName, PageLabel.Under_Evaluation.toString())) {
+					i=0;
+					for (String s:labels) {
+					if (ip.fieldValueVerificationOnInstitutionPage("", mode, TabName.Object1Tab, s, values3[i])) {
+						log(LogStatus.INFO,"successfully verified "+s+" : "+values3[i],YesNo.No);	
+					}else {
+						log(LogStatus.ERROR,"could not verify "+s+" : "+values3[i],YesNo.No);	
+						sa.assertTrue(false,"could not verify "+s+" : "+values3[i] );
+					}
+					i++;
+					}
+				}else {
+					log(LogStatus.ERROR,"could not verify conversion date : "+todaysDateSingleDigit,YesNo.No);	
+					sa.assertTrue(false,"could not verify conversion date : "+todaysDateSingleDigit );
+				}
+				
+				
+				if (ip.changeStatus(projectName, PageLabel.Portfolio_Company.toString())) {
+					i=0;
+					for (String s:labels) {
+					if (ip.fieldValueVerificationOnInstitutionPage("", mode, TabName.Object1Tab, s, values4[i])) {
+						log(LogStatus.INFO,"successfully verified "+s+" : "+values4[i],YesNo.No);	
+					}else {
+						log(LogStatus.ERROR,"could not verify "+s+" : "+values4[i],YesNo.No);	
+						sa.assertTrue(false,"could not verify "+s+" : "+values4[i] );
+					}
+					i++;
+					}
+				}else {
+					log(LogStatus.ERROR,"could not verify conversion date : "+todaysDateSingleDigit,YesNo.No);	
+					sa.assertTrue(false,"could not verify conversion date : "+todaysDateSingleDigit );
+				}
+			} else {
+				sa.assertTrue(false,"Not Able to Create Account/Entity : "+Smoke_CDINS2Name+" of record type : "+Smoke_CDINS2RecordType);
+				log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+Smoke_CDINS2Name+" of record type : "+Smoke_CDINS2RecordType,YesNo.Yes);
+			}
+		}else {
+			log(LogStatus.FAIL, "entity tab is not clickable", YesNo.Yes);
+			sa.assertTrue(false, "entity tab is not clickable");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	
 }
