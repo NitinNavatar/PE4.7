@@ -246,7 +246,7 @@ public class EnumConstants {
 		public String toString() {
 			return "Activity Setting";
 		}
-	}, Activity
+	}, Activity,Entity
 	};
 	
 	public static enum ObjectFeatureName{
