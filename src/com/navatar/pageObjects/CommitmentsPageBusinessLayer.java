@@ -27,6 +27,7 @@ public class CommitmentsPageBusinessLayer extends CommitmentsPage{
 	}
 	
 	public boolean createCommitment(String projectName,String LimitedPartner, String Partnership,String finalCommitmnateDate,String commitmentAmount,String excelPath, String basedOnValue) {
+		refresh(driver);
 		ThreadSleep(5000);
 		if (click(driver, getNewButton(environment,mode,60), "New Button", action.BOOLEAN)) {
 			if (sendKeys(driver, getLimitedPartnerTextbox(environment,mode,60), LimitedPartner, "Limited Partner Text Box",

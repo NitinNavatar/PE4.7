@@ -608,7 +608,7 @@ public class FieldSet extends BaseLib {
 			
 			
 			
-			if(setup.addCustomFieldforFormula(environment,mode,object.Contact,ObjectFeatureName.FieldAndRelationShip,FC_FieldType,FC_FieldLabelName1, labelAndValues, null,null)) {
+			if(setup.addCustomFieldforFormula(environment,mode,object.Contact,ObjectFeatureName.FieldAndRelationShip,FC_FieldType1,FC_FieldLabelName1, labelAndValues, null,null)) {
 				log(LogStatus.PASS, "Field Component is created for :"+FC_FieldLabelName1, YesNo.No);
 				flag=true;
 			}else {
@@ -792,5 +792,56 @@ public class FieldSet extends BaseLib {
 		sa.assertAll();
 	}
 
-
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc013_createFieldsForStandardObject(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentWindow = null;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create Field object Component");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create Field object Component",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create Field object Component");
+			}
+			ThreadSleep(3000);
+			
+			String[][] labelAndValues= {{FC_FieldType2,FC_FieldLabelName2,excelLabel.Length.toString(),FC_Length2},
+					{FC_FieldType3,FC_FieldLabelName3,excelLabel.Length.toString(),FC_Length3},
+			{FC_FieldType4,FC_FieldLabelName4,excelLabel.Length.toString(),FC_Length4},
+			{FC_FieldType5,FC_FieldLabelName5,excelLabel.Length.toString(),FC_Length5},
+			{FC_FieldType6,FC_FieldLabelName6,excelLabel.Length.toString(),FC_Length6},
+			{FC_FieldType7,FC_FieldLabelName7,excelLabel.Length.toString(),FC_Length7},
+			{FC_FieldType8,FC_FieldLabelName8,excelLabel.Length.toString(),FC_Length8},
+			{FC_FieldType9,FC_FieldLabelName9,excelLabel.Length.toString(),FC_Length9},
+			{FC_FieldType10,FC_FieldLabelName10,excelLabel.Length.toString(),FC_Length10},
+			{FC_FieldType11,FC_FieldLabelName11,excelLabel.Length.toString(),FC_Length11}};
+			
+			
+			for(String[] objects : labelAndValues) {
+				String[][] valuesandLabel = {{objects[2],objects[3]}};
+				
+				if(setup.addCustomFieldforFormula(environment,mode,object.Entity,ObjectFeatureName.FieldAndRelationShip,objects[0],objects[1], valuesandLabel, null,null)) {
+					log(LogStatus.PASS, "Field Component is created for :"+objects[1], YesNo.No);
+				}else {
+					log(LogStatus.PASS, "Field Component is not created for :"+objects[1], YesNo.Yes);
+					sa.assertTrue(false, "Field Component is not created for :"+objects[1]);
+				}
+			}
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot create Field Set Component", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot create Field Set Component");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 }
