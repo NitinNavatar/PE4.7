@@ -993,12 +993,12 @@ public static enum PermissionType{
 	
 	
 	public static enum PageLabel{
-		First_Name,Last_Name,Email, Fund_Name, Deal_Name,Status, Meeting_Type{
+		First_Name,Last_Name,Email, Fund_Name, Deal_Name,Status, Investment_Type,Meeting_Type{
 			@Override
 			public String toString() {
 				return "Meeting Type";
 			}
-		}  ,Priority,Watchlist, Watch_list,Related_Associations,Name, Subject, Due_Date, New_Task, Related_To, Comments, Edit, Assigned_To, Start_Date, End_Date, End_Time, Start_Time, Type, Date, Contact_Name, Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places, Values, Is_Touchpoint,Description
+		}  ,Priority,Watchlist, Watch_list,Conversion_Date,Related_Associations,Name, Subject, Due_Date, New_Task, Related_To, Comments, Edit, Assigned_To, Start_Date, End_Date, End_Time, Start_Time, Type, Date, Contact_Name, Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places, Values, Is_Touchpoint,Description
 	};
 	
 	public static enum Links{

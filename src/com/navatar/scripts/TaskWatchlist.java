@@ -271,7 +271,7 @@ public class TaskWatchlist extends BaseLib{
 				recType=contacts[3];
 				title=contacts[4];
 				mailID=	lp.generateRandomEmailId(gmailUserName);
-				ExcelUtils.writeData(taskWatchlistFilePath, mailID, "Contacts", excelLabel.Variable_Name, "TWCON"+i,excelLabel.Contact_EmailId);
+				ExcelUtils.writeData(pahse1DataSheetFilePath, mailID, "Contacts", excelLabel.Variable_Name, "TWCON"+i,excelLabel.Contact_EmailId);
 
 				if (cp.createContact(projectName, fname, lname, ins, mailID,recType, null, null, CreationPage.ContactPage, title)) {
 					log(LogStatus.INFO,"successfully Created Contact : "+fname+" "+lname,YesNo.No);	
@@ -320,7 +320,7 @@ public class TaskWatchlist extends BaseLib{
 			ThreadSleep(10000);
 			if (!abc.isEmpty()) {
 				log(LogStatus.FAIL, "field not added/already present 1", YesNo.Yes);
-				sa.assertTrue(false, "field not added/already present 1");
+				//sa.assertTrue(false, "field not added/already present 1");
 			}else{
 				log(LogStatus.INFO, "field added/already present 1", YesNo.Yes);
 			}
@@ -1940,7 +1940,7 @@ public class TaskWatchlist extends BaseLib{
 			WebElement ele=tp.getTaskNameLinkInSideMMenu(projectName, TWTaskUpdateLabelSubject, 15);
 			if (click(driver, ele, TWTaskUpdateLabelSubject, action.BOOLEAN)) {
 				String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTaskUpdateLabelSubject},
-						{PageLabel.Watchlist.toString(),Watchlist.True.toString()}};
+						{PageLabel.Watch_list.toString(),Watchlist.True.toString()}};
 
 				if (tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10)) {
 
@@ -1997,6 +1997,72 @@ public class TaskWatchlist extends BaseLib{
 		sa.assertAll();
 	}
 
+	@Parameters({ "projectName"})
+	@Test
+	public void ConvDatetc022_1_AddConversionDateField(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
 		
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	
+		String parentID=null;
+		String mode="Lightning";
+		if (home.clickOnSetUpLink()) {
+			parentID=switchOnWindow(driver);
+			if (parentID!=null) {
+			List<String> layoutName = new ArrayList<String>();
+			layoutName.add("Company");
+			HashMap<String, String> sourceANDDestination = new HashMap<String, String>();
+			sourceANDDestination.put(PageLabel.Conversion_Date.toString(), PageLabel.Investment_Type.toString());
+			List<String> abc = setup.DragNDrop("", mode, object.Entity, ObjectFeatureName.pageLayouts, layoutName, sourceANDDestination);
+			ThreadSleep(10000);
+			if (!abc.isEmpty()) {
+				log(LogStatus.FAIL, "field not added/already present 1", YesNo.Yes);
+				//sa.assertTrue(false, "field not added/already present 1");
+			}else{
+				log(LogStatus.INFO, "field added/already present 1", YesNo.Yes);
+			}
+			driver.close();
+			driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.FAIL, "could not find new window to switch, so cannot add field", YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch, so cannot add field");
+			}
+		}
+		else {
+			log(LogStatus.FAIL, "could not click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "could not click on setup link");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	
+	}
+
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void ConvDatetc022_2_CreateInsCompany(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.InstituitonsTab)) {
+			if (ip.createEntityOrAccount(projectName, Smoke_CDINS1Name, Smoke_CDINS1RecordType, new String[][] {{PageLabel.Status.toString(),Smoke_CDINS1Status}}, 10)) {
+				log(LogStatus.INFO,"successfully Created Account/Entity : "+Smoke_CDINS1Name+" of record type : "+Smoke_CDINS1RecordType,YesNo.No);	
+			} else {
+				sa.assertTrue(false,"Not Able to Create Account/Entity : "+Smoke_CDINS1Name+" of record type : "+Smoke_CDINS1RecordType);
+				log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+Smoke_CDINS1Name+" of record type : "+Smoke_CDINS1RecordType,YesNo.Yes);
+			}
+		}
+	}
 }
