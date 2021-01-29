@@ -1269,13 +1269,20 @@ public abstract class BasePage extends BaseLib {
 	 
 	 @FindBy(xpath="//iframe[contains(@title,'Activity Custom Field')]")
 	 private WebElement activityLayoutFrame;
+	 @FindBy(xpath="//iframe[contains(@title,'Account Custom Field')]")
+	 private WebElement accountLayoutFrame;
 
+	 @FindBy(xpath="//iframe[contains(@title,'Picklist Edit: ')]")
+	 private WebElement statusPicklistFrame;
+	 public WebElement getstatusPicklistFrame(int timeOut) {
+			return isDisplayed(driver, statusPicklistFrame, "Visibility", timeOut, "status Picklist Frame");
+	}
 	 /**
 	  * @author Ankit Jaiswal
 	  * @param pageName
 	  * @param timeOut
 	  * @return webelement/null
-	  *///iframe[@id='project-details-frame']
+	  */
 	 public WebElement getFrame(PageName pageName,int timeOut) {
 	  WebElement ele=null;
 	  if(pageName.toString().equalsIgnoreCase(PageName.InstitutionsPage.toString())) {
@@ -1313,10 +1320,18 @@ public abstract class BasePage extends BaseLib {
 		  ele=isDisplayed(driver, meetingTypeFrame, "Visibility", timeOut, "meeting or activties Frame");
 	  } else if (pageName.toString().equalsIgnoreCase(PageName.AddPickListMeetingType.toString())){
 		  ele=isDisplayed(driver, addPickListMeetingTypeFrame, "Visibility", timeOut, "Add PickList meeting or activties Frame");
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.AccountCustomFieldStatusPage.toString())){
+		  ele=isDisplayed(driver, accountLayoutFrame, "Visibility", timeOut, "account Layout Frame");
 	  }
 	  return ele; 
 	 }
 	 
+	 @FindBy(xpath = "//input[@id='globalQuickfind']")
+	 private WebElement searchTextboxFieldsAndRelationships;
+	 
+	 public WebElement getsearchTextboxFieldsAndRelationships(int timeOut) {
+			return isDisplayed(driver, searchTextboxFieldsAndRelationships, "Visibility", timeOut, "search Textbox on Fields And Relationships");
+		}
 	 @FindBy(xpath="//div[@class='pbHeader']//input[@title='Edit']")
 	 private WebElement editButton_Classic;
 	 

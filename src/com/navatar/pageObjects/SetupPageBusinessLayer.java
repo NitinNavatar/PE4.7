@@ -527,7 +527,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 						if(click(driver, getCustomFieldNewButton(30),"new button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.PASS, "clicked on new button", YesNo.No);
 							ThreadSleep(1000);
-							if(switchToFrame(driver, 30, getNewCustomFieldFrame(objectName,30))) {
+							if(switchToFrame(driver, 30, getNewCustomFieldFrame(objectName.toString(),30))) {
 								if(click(driver, getNewCustomFieldDataTypeOrFormulaReturnType(dataType, 30),"data type radio button", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.PASS,dataType+" : data type radio button ",YesNo.No);
 									if(click(driver, getCustomFieldNextBtn(30),"next button", action.SCROLLANDBOOLEAN)) {
@@ -900,6 +900,11 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return flag;
 	}
 
-
+public WebElement clickOnEditInFrontOfStatus(String projectName, String status) {
+	status=status.replace("_", " ");
+	String xpath="//th[text()='"+status+"']/preceding-sibling::td//a[contains(@title,'Edit')]";
+	WebElement ele=isDisplayed(driver, FindElement(driver, xpath, "edit", action.SCROLLANDBOOLEAN, 10), "visibility", 10, "edit");
+	return ele;
+}
 
 }

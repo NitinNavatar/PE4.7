@@ -145,8 +145,11 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, customFieldNewButton, "Visibility", timeOut, "custom field new button");
 	}
 	
-	public WebElement getNewCustomFieldFrame(object objectName, int timeOut) {
-		String xpath="//iframe[contains(@title,'"+objectName.toString()+"')]";
+	public WebElement getNewCustomFieldFrame(String objectName, int timeOut) {
+		if(objectName.toString().equalsIgnoreCase(object.Deal.toString())) {
+			objectName="Pipeline";
+		}
+		String xpath="//iframe[contains(@title,'"+objectName+"')]";
 		WebElement ele= FindElement(driver, xpath,objectName+" new object frame xpath", action.SCROLLANDBOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "visibility", timeOut,objectName+" new object frame xpath");
 	}
@@ -175,7 +178,12 @@ public class SetupPage extends BasePageBusinessLayer {
 	
 	@FindBy(xpath = "//input[@id='MasterLabel']")
 	private WebElement fieldLabelTextBox;
-
+	@FindBy(xpath = "//*[text()='Label']/../following-sibling::td//input")
+	private WebElement fieldLabelTextBox1;
+	
+	public WebElement getFieldLabelTextBox1(int timeOut) {
+		return isDisplayed(driver, fieldLabelTextBox1, "Visibility", timeOut, "field label text box");
+	}
 	public WebElement getFieldLabelTextBox(int timeOut) {
 		return isDisplayed(driver, fieldLabelTextBox, "Visibility", timeOut, "field label text box");
 	}
