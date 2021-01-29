@@ -1211,6 +1211,319 @@ public class Toggle extends BaseLib {
 		sa.assertAll();
 	}
 	
+	@Parameters({ "projectName"})
+	@Test
+	public void ToggleTc009_VerifyOutSideAndInsideSdgInContainerAndEnableToggleSwitchingAndVerifySDG(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String baseLineSDG ="Origination_Watchlist_AllWatchlist_Baseline" ;
+		String customBaseLineSdgNAME = "CustomObject:"+baseLineSDG;
+
+		String baseLineSDG2 =Sdg1Name ;
+		String customBaseLineSdgNAME2 = "CustomObject:"+baseLineSDG2;
+
+		//	String sdgConfigDataProviderTextBox = ActiveDealToggleButton+":"+Sdg1Name;
+		String insideContainerTitle = "Inside Container";
+		String outSideContainerTitle = "Outside Container";
+
+		String sdgConfigDataProviderTextBox = "Watchlist:Origination_Watchlist_AllWatchlist_Baseline,Deals:Custom SDG";
+		String defaultSdgToggle = baseLineSDG;
+
+		String[] tabNames = {ToggleCheck1TabName,ToggleCheck2TabName,ToggleCheck3TabName};
+		String tabName;
+
+		String[] itemValues = {ToggleCheck1ItemName,ToggleCheck2ItemName,ToggleCheck3ItemName};
+		String itemValue;
+
+		String[] relatedTabs = {ToggleCheck1RelatedTab,ToggleCheck2RelatedTab,ToggleCheck3RelatedTab};
+		String relatedTab;
+
+		String toggleButtons[] = {ToggleCheck1ToggleButtons,ToggleCheck2ToggleButtons,ToggleCheck3ToggleButtons};
+		//ActiveDealToggle
+		String outsideContainerPath = ".\\AutoIT\\EditPage\\EditButton.PNG";
+		String insideContainerPath = ".\\AutoIT\\EditPage\\EditButton1.PNG";
+		String sValue = EditPageErrorMessage.EnhancedLightningGrid;
+		boolean outsideFlag=false;
+		boolean insideFlag=false;
+
+		boolean flag=false;
+		for (int i = 0; i < 1; i++) {
+			tabName = tabNames[i];
+			if (lp.clickOnTab(projectName, tabName)) {
+				log(LogStatus.INFO,"Click on Tab : "+tabName,YesNo.No);
+
+				itemValue = itemValues[i];
+				if (ip.clickOnAlreadyCreatedItem(projectName, itemValue, 15)) {
+					log(LogStatus.INFO,"Item found: "+itemValue, YesNo.Yes);
+					ThreadSleep(2000);
+
+					if (hp.clickOnEditPageLinkOnSetUpLink()) {
+						log(LogStatus.INFO,"click on Edit Page SetUp Link", YesNo.No);
+						ThreadSleep(1000);	
+						//scn.nextLine();
+						switchToDefaultContent(driver);
+
+
+						////////////////////////new////////////////////////////////////////
+
+						relatedTab=relatedTabs[i];
+						String[] toggles = toggleButtons[i].split(breakSP);
+						switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
+						if (click(driver, ip.getRelatedTab(projectName, relatedTab, 5), relatedTab.toString(), action.BOOLEAN)) {
+							log(LogStatus.INFO,"Click on Sub Tab : "+relatedTab,YesNo.No);
+							ThreadSleep(2000);
+							switchToDefaultContent(driver);
+							sValue = EditPageErrorMessage.EnhancedLightningGrid;
+							if (sendKeys(driver, edit.getEditPageSeachTextBox(projectName, 10),sValue,"Search TextBox",action.BOOLEAN)) {
+								ThreadSleep(20000);
+								log(LogStatus.INFO,"send value to Search TextBox : "+sValue,YesNo.No);
+							//	scn.nextLine();
+								ThreadSleep(10000);
+								if (edit.dragNDropUsingScreen(projectName, edit.getEditPageSeachValueLink(projectName, sValue, 30), insideContainerPath, 20)) {
+									log(LogStatus.INFO,"Able to DragNDrop : "+sValue,YesNo.No);
+									ThreadSleep(2000);
+
+									if (sendKeys(driver, edit.getElgTitleTextBox(projectName, 10),insideContainerTitle,"ELG Title TextBox",action.BOOLEAN)) {
+										ThreadSleep(500);
+										log(LogStatus.INFO,"send value to ELG Title TextBox : "+insideContainerTitle,YesNo.No);
+										insideFlag=true;
+
+									} else {
+										sa.assertTrue(false, "Not Able to send value to ELG Title TextBox : "+insideContainerTitle);
+										log(LogStatus.FAIL,"Not Able to send value to ELG Title TextBox : "+insideContainerTitle,YesNo.Yes);
+									}
+									ThreadSleep(2000);
+									if (edit.clickOnELGSeachValueLink(projectName, customBaseLineSdgNAME, 20)) {
+										log(LogStatus.INFO,"Click on ELG Search Vaue Link: "+customBaseLineSdgNAME,YesNo.No);;
+										ThreadSleep(500);
+
+									} else {
+										sa.assertTrue(false, "Not Able to Click on ELG Search Vaue Link: "+customBaseLineSdgNAME);
+										log(LogStatus.SKIP,"Not Able to Click on ELG Search Vaue Link: "+customBaseLineSdgNAME,YesNo.Yes);
+									}
+
+
+								} else {
+									sa.assertTrue(false, "Not Able to DragNDrop : "+sValue);
+									log(LogStatus.FAIL,"Not Able to DragNDrop : "+sValue,YesNo.Yes);
+								}
+
+							} else {
+								sa.assertTrue(false, "Not Able to send value to Search TextBox : "+sValue);
+								log(LogStatus.FAIL,"Not Able to send value to Search TextBox : "+sValue,YesNo.Yes);
+							}
+
+
+							// outside
+							System.err.println(">>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+							scn.nextLine();
+							ThreadSleep(10000);
+							switchToDefaultContent(driver);
+							sValue = EditPageErrorMessage.EnhancedLightningGrid;
+							if (sendKeys(driver, edit.getEditPageSeachTextBox(projectName, 10),sValue,"Search TextBox",action.BOOLEAN)) {
+								ThreadSleep(20000);
+								log(LogStatus.INFO,"send value to Search TextBox : "+sValue,YesNo.No);
+						//		scn.nextLine();
+								ThreadSleep(10000);
+								if (edit.dragNDropUsingScreen(projectName, edit.getEditPageSeachValueLink(projectName, sValue, 30), outsideContainerPath, 20)) {
+									log(LogStatus.INFO,"Able to DragNDrop : "+sValue,YesNo.No);
+									ThreadSleep(2000);
+
+									if (sendKeys(driver, edit.getElgTitleTextBox(projectName, 10),outSideContainerTitle,"ELG Title TextBox",action.BOOLEAN)) {
+										ThreadSleep(500);
+										log(LogStatus.INFO,"send value to ELG Title TextBox : "+outSideContainerTitle,YesNo.No);
+										outsideFlag=true;
+									} else {
+										sa.assertTrue(false, "Not Able to send value to ELG Title TextBox : "+outSideContainerTitle);
+										log(LogStatus.FAIL,"Not Able to send value to ELG Title TextBox : "+outSideContainerTitle,YesNo.Yes);
+									}
+									ThreadSleep(2000);
+									if (edit.clickOnELGSeachValueLink(projectName, customBaseLineSdgNAME2, 20)) {
+										log(LogStatus.INFO,"Click on ELG Search Vaue Link: "+customBaseLineSdgNAME2,YesNo.No);;
+										ThreadSleep(500);
+									} else {
+										sa.assertTrue(false, "Not Able to Click on ELG Search Vaue Link: "+customBaseLineSdgNAME2);
+										log(LogStatus.SKIP,"Not Able to Click on ELG Search Vaue Link: "+customBaseLineSdgNAME2,YesNo.Yes);
+									}
+
+
+								} else {
+									sa.assertTrue(false, "Not Able to DragNDrop : "+sValue);
+									log(LogStatus.FAIL,"Not Able to DragNDrop : "+sValue,YesNo.Yes);
+								}
+
+							} else {
+								sa.assertTrue(false, "Not Able to send value to Search TextBox : "+sValue);
+								log(LogStatus.FAIL,"Not Able to send value to Search TextBox : "+sValue,YesNo.Yes);
+							}
+
+
+							// togles
+							switchToDefaultContent(driver);
+							switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
+							scrollDownThroughWebelement(driver, ip.toggleButton(projectName, toggles[0], action.SCROLLANDBOOLEAN, 30), toggles[0]);
+							System.err.println(">>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+							scn.nextLine();
+							ThreadSleep(10000);
+							switchToDefaultContent(driver);
+							sValue = EditPageErrorMessage.NavatarSDGToggles;
+							if (sendKeys(driver, edit.getEditPageSeachTextBox(projectName, 10),sValue,"Search TextBox",action.BOOLEAN)) {
+								ThreadSleep(20000);
+								log(LogStatus.INFO,"send value to Search TextBox : "+sValue,YesNo.No);
+							//	scn.nextLine();
+								ThreadSleep(10000);
+								if (edit.dragNDropUsingScreen(projectName, edit.getEditPageSeachValueLink(projectName, sValue, 30), insideContainerPath, 20)) {
+									log(LogStatus.INFO,"Able to DragNDrop : "+sValue,YesNo.No);
+									ThreadSleep(2000);
+
+									if (sendKeysWithoutClearingTextBox(driver, edit.getsdgConfigDataProviderTextBox(projectName, 10),sdgConfigDataProviderTextBox,"sdg Config Data Provider TextBox : "+sdgConfigDataProviderTextBox,action.BOOLEAN)) {
+										ThreadSleep(500);
+										log(LogStatus.INFO,"send value to sdg Config Data Provider TextBox : "+sdgConfigDataProviderTextBox,YesNo.No);
+
+										if (sendKeys(driver, edit.getDefaultSDGToggleTextBox(projectName, 10),defaultSdgToggle,"Default SDG Toggle TextBox : "+defaultSdgToggle,action.BOOLEAN)) {
+											ThreadSleep(200);
+											log(LogStatus.INFO,"send value to Default SDG Toggle TextBox : "+defaultSdgToggle,YesNo.No);
+											if (click(driver, edit.getEditPageSaveButton(projectName, 10),"Edit Page Save Button", action.BOOLEAN)) {
+												log(LogStatus.INFO,"Click on Edit Page Save Button",YesNo.No);;
+											} else {
+												sa.assertTrue(false, "Not Able to Click on Edit Page Save Button");
+												log(LogStatus.SKIP,"Not Able to Click on Edit Page Save Button",YesNo.Yes);
+											}
+
+										} else {
+											sa.assertTrue(false, "Not Able to send value to Default SDG Toggle TextBox : "+defaultSdgToggle);
+											log(LogStatus.SKIP,"Not Able to send value to Default SDG Toggle TextBox : "+defaultSdgToggle,YesNo.Yes);
+										}
+
+									} else {
+										sa.assertTrue(false, "Not Able to send value to sdg Config Data Provider TextBox : "+sdgConfigDataProviderTextBox);
+										log(LogStatus.FAIL,"Not Able to send value to sdg Config Data Provider TextBox : "+sdgConfigDataProviderTextBox,YesNo.Yes);
+									}
+
+								} else {
+									sa.assertTrue(false, "Not Able to DragNDrop : "+sValue);
+									log(LogStatus.FAIL,"Not Able to DragNDrop : "+sValue,YesNo.Yes);
+								}
+
+							} else {
+								sa.assertTrue(false, "Not Able to send value to Search TextBox : "+sValue);
+								log(LogStatus.FAIL,"Not Able to send value to Search TextBox : "+sValue,YesNo.Yes);
+							}
+							switchToDefaultContent(driver);
+							switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
+							System.err.println(">>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+							scn.nextLine();
+							ThreadSleep(10000);
+							if (insideFlag) {
+								if (click(driver, ip.customToggleButton(projectName, insideContainerTitle, action.SCROLLANDBOOLEAN, 30), insideContainerTitle+" SDG", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.PASS,"Click on "+insideContainerTitle,YesNo.No);
+									ThreadSleep(200);
+									switchToDefaultContent(driver);
+									if (click(driver, edit.getEnableToggleCheckBox(projectName, 10), "Enable Toggle CheckBox", action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.INFO,"click on Enable Toggle CheckBox for : "+insideContainerTitle,YesNo.No);
+										ThreadSleep(200);
+
+										if (click(driver, edit.getEditPageSaveButton(projectName, 10),"Edit Page Save Button", action.BOOLEAN)) {
+											log(LogStatus.INFO,"Click on Edit Page Save Button",YesNo.No);
+											ThreadSleep(2000);
+										} else {
+											sa.assertTrue(false, "Not Able to Click on Edit Page Save Button");
+											log(LogStatus.FAIL,"Not Able to Click on Edit Page Save Button",YesNo.Yes);
+										}
+
+									} else {
+										sa.assertTrue(false, "Not Able to click on Enable Toggle CheckBox for : "+insideContainerTitle);
+										log(LogStatus.FAIL,"Not Able to click on Enable Toggle CheckBox for : "+insideContainerTitle,YesNo.Yes);
+
+									}
+
+								}else{
+									sa.assertTrue(false, "Not Able to Click on "+insideContainerTitle);
+									log(LogStatus.FAIL,"Not Able to Click on "+insideContainerTitle,YesNo.Yes);
+								}
+							}
+							
+
+							switchToDefaultContent(driver);
+							switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
+							if (outsideFlag) {
+								if (click(driver, ip.customToggleButton(projectName, outSideContainerTitle, action.SCROLLANDBOOLEAN, 30), outSideContainerTitle+" SDG", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.PASS,"Click on "+outSideContainerTitle,YesNo.No);
+									ThreadSleep(200);
+									switchToDefaultContent(driver);
+									if (click(driver, edit.getEnableToggleCheckBox(projectName, 10), "Enable Toggle CheckBox", action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.INFO,"click on Enable Toggle CheckBox for : "+outSideContainerTitle,YesNo.No);
+										ThreadSleep(200);
+
+										if (click(driver, edit.getEditPageSaveButton(projectName, 10),"Edit Page Save Button", action.BOOLEAN)) {
+											log(LogStatus.INFO,"Click on Edit Page Save Button",YesNo.No);
+											ThreadSleep(2000);
+										} else {
+											sa.assertTrue(false, "Not Able to Click on Edit Page Save Button");
+											log(LogStatus.FAIL,"Not Able to Click on Edit Page Save Button",YesNo.Yes);
+										}
+
+									} else {
+										sa.assertTrue(false, "Not Able to click on Enable Toggle CheckBox for : "+outSideContainerTitle);
+										log(LogStatus.FAIL,"Not Able to click on Enable Toggle CheckBox for : "+outSideContainerTitle,YesNo.Yes);
+
+									}
+
+								}else{
+									sa.assertTrue(false, "Not Able to Click on "+outSideContainerTitle);
+									log(LogStatus.FAIL,"Not Able to Click on "+outSideContainerTitle,YesNo.Yes);
+								}
+							}
+							
+						} else {
+							sa.assertTrue(false,"Not Able to Click on Sub Tab : "+relatedTab);
+							log(LogStatus.SKIP,"Not Able to Click on Sub Tab : "+relatedTab,YesNo.Yes);
+						}
+						System.err.println(">>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+						scn.nextLine();
+						ThreadSleep(10000);
+						//////////////////////////////////////new/////////////////////////////
+
+
+						switchToDefaultContent(driver);
+						if (clickUsingJavaScript(driver, edit.getEditPageBackButton(projectName, 10),"Edit Page Back Button", action.BOOLEAN)) {
+							log(LogStatus.INFO,"Click on Edit Page Back Button",YesNo.No);
+						} else {
+							sa.assertTrue(false, "Not Able to Click on Edit Page Back Button");
+							log(LogStatus.SKIP,"Not Able to Click on Edit Page Back Button",YesNo.Yes);
+						}
+
+
+					} else {
+						log(LogStatus.ERROR,"Not Able to click on Edit Page SetUp Link", YesNo.Yes);
+						sa.assertTrue(false,"Not Able to click on Edit Page SetUp Link");
+					}
+
+
+
+				}else {
+
+					log(LogStatus.ERROR,"Item not found: "+itemValue, YesNo.Yes);
+					sa.assertTrue(false,"Item not found: "+itemValue);
+				}
+				refresh(driver);
+				ThreadSleep(7000);
+			} else {
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabName);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabName,YesNo.Yes);
+			}
+			refresh(driver);
+		}
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
 }
 	
 	

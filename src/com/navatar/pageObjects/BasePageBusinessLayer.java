@@ -5,7 +5,9 @@ package com.navatar.pageObjects;
 
 import org.apache.poi.hssf.view.brush.PendingPaintings;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -33,6 +35,7 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -4563,7 +4566,7 @@ public WebElement toggleSDGButtons(String projectName,String toggleTab,ToggleBut
 }
 
 public WebElement toggleButton(String projectName,String btnName,action action,int timeOut) {
-	String xpath = "//button[contains(@title,'"+btnName+"')]";
+	String xpath = "//button[@title='"+btnName+"']";
 	WebElement ele = FindElement(driver, xpath,"Toggle Button : "+btnName, action, timeOut);
 	scrollDownThroughWebelement(driver, ele, "Toggle Button : "+btnName);
 	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btnName);
@@ -4608,4 +4611,14 @@ public static String convertNumberIntoMillions(String number){
 	System.err.println("convertNumberIntoMillions  outpurttt >>>> "+output);
 	return output;
 }
+
+public WebElement customToggleButton(String projectName,String btnName,action action,int timeOut) {
+	String xpath = "//*[text()='"+btnName+"']";
+	WebElement ele = FindElement(driver, xpath,"Toggle Button : "+btnName, action, timeOut);
+	scrollDownThroughWebelement(driver, ele, "Toggle Button : "+btnName);
+	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btnName);
+	return ele;
+}
+
+
 }
