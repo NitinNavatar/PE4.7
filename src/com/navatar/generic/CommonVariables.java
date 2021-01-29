@@ -59,6 +59,8 @@ public class CommonVariables {
 	
 	public static String ToggleMarketingEvent1Name,ToggleMarketingEvent1Date,ToggleMarketingEvent1RecordType,ToggleMarketingEvent1Organizer;
 	
+	public static String FS_MarketingEvent1Name,FS_MarketingEvent1Date,FS_MarketingEvent1RecordType,FS_MarketingEvent1Organizer;
+	
 
 	public static String FS_Object1,FS_Object2,FS_Object3,FS_FieldSetLabel1,FS_FieldSetLabel2,FS_FieldSetLabel3,
 						FS_NameSpacePrefix1,FS_NameSpacePrefix2,FS_NameSpacePrefix3,FS_FieldsName1,FS_FieldsName2,FS_FieldsName3,FS_ExtraFieldsName1;
@@ -568,6 +570,12 @@ public class CommonVariables {
 			FC_FieldLabelName31=ExcelUtils.readData(pahse1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "FC31", excelLabel.Field_Label);
 			FC_Length31=ExcelUtils.readData(pahse1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "FC31", excelLabel.Length);
 			FC_FieldType31=ExcelUtils.readData(pahse1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "FC31", excelLabel.Field_Type);
+			
+			//Marketing Event 
+			FS_MarketingEvent1Name=ExcelUtils.readData(pahse1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "ME1", excelLabel.Marketing_Event_Name);
+			FS_MarketingEvent1Date=ExcelUtils.readData(pahse1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "ME1", excelLabel.Date);
+			FS_MarketingEvent1RecordType=ExcelUtils.readData(pahse1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "ME1", excelLabel.Record_Type);
+			FS_MarketingEvent1Organizer=FS_Ins2;
 			
 		}
 		 System.err.println("");

@@ -246,7 +246,12 @@ public class EnumConstants {
 		public String toString() {
 			return "Activity Setting";
 		}
-	}, Activity,Entity
+	}, Activity,Entity,Maketing_Event{
+		@Override
+		public String toString() {
+			return "Marketing Event";
+		}
+	}
 	};
 	
 	public static enum ObjectFeatureName{
