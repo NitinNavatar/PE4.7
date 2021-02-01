@@ -149,6 +149,10 @@ public class CommonVariables {
 	public static String ToggleCheck2TabName,ToggleCheck2ItemName,ToggleCheck2RelatedTab,ToggleCheck2ToggleButtons,ToggleCheck2ColumnName;
 	public static String ToggleCheck3TabName,ToggleCheck3ItemName,ToggleCheck3RelatedTab,ToggleCheck3ToggleButtons,ToggleCheck3ColumnName;
 		
+	public static String customObject="CustomObject:";
+	public static String watchListSDG="Origination_Watchlist_AllWatchlist_Baseline";
+	public static String watchListTitle="Watchlist";
+	public static String dealTitle="Deals";
 //	/**
 //	 * 
 //	 */

@@ -54,5 +54,27 @@ public class MarketingEventPage extends BasePageBusinessLayer {
 	}
 	
 	
+	@FindBy(xpath="//*[text()='Attendees']/../../../../following-sibling::div//*[text()='New']	")
+	private WebElement newAttendee;
+
+	/**
+	 * @return the newAttendee
+	 */
+	public WebElement getNewAttendee(String projectName,int timeOut) {
+		return isDisplayed(driver, newAttendee, "Visibility", timeOut, "New Attendee");
+	}
+	
+	
+	@FindBy(xpath="//*[text()='Attendee Staff']/following-sibling::div//input[contains(@placeholder,'Search People')]")
+	private WebElement attendeeStaffTextBox;
+
+	/**
+	 * @return the organizer
+	 */
+	public WebElement getAttendeeStaffTextBoxe(String projectName,int timeOut) {
+		return isDisplayed(driver, attendeeStaffTextBox, "Visibility", timeOut, "attendee Staff TextBox");
+	}
+	
+	
 			
 }

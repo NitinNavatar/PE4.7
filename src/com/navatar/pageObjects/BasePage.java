@@ -4697,4 +4697,13 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, ele, "Visibility", timeOut, "Edit Page");
 	}
 	
+	@FindBy(xpath="//*[text()='Status']/..//div//input")
+	private WebElement statusDropDownList;
+
+	/**
+	 * @return the statusDropDownList
+	 */
+	public WebElement getStatus(String projectName,int timeOut) {
+		return isDisplayed(driver, statusDropDownList, "Visibility", timeOut, "Status ");
+	}
 }
