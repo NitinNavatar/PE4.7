@@ -152,14 +152,18 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			String labelName,String labelValue) {
 		String xpath = "";
 		WebElement ele = null;
+		String finalLabelName=labelName.replace("_", " ");
 		if(labelName.contains(excelLabel.Target_Commitments.toString().replaceAll("_", " "))) {
 			labelName=FundPageFieldLabelText.Target_Commitments.toString();
 		}
 		
 			
-			xpath = "//span[@class='test-id__field-label'][text()='" + labelName
+			xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
 					+ "']/../following-sibling::div//lightning-formatted-text";
-		
+			if (labelName.equalsIgnoreCase(excelLabel.Deal_Quality_Score.toString()))
+				xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
+				+ "']/../following-sibling::div";
+	
 		ele = isDisplayed(driver,
 				FindElement(driver, xpath, labelName + " label text in " + projectName, action.SCROLLANDBOOLEAN, 60),
 				"Visibility", 30, labelName + " label text in " + projectName);
@@ -448,7 +452,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 				if (sendKeys(driver, getCompanyName(projectName, 60), companyName, "Company Name",
 						action.SCROLLANDBOOLEAN)) {
 						ThreadSleep(1000);
-						if (click(driver,FindElement(driver,"//*[@title='"+companyName+"']","Company Name List", action.BOOLEAN, 30),
+						if (click(driver,FindElement(driver,"//input[contains(@placeholder,'Search')]/../following-sibling::*//*[@title='"+companyName+"']","Company Name List", action.BOOLEAN, 30),
 								companyName + "   :   Company Name", action.BOOLEAN)) {
 							appLog.info(companyName + "  is present in list.");
 						} else {

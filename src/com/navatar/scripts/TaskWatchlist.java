@@ -1,5 +1,6 @@
 package com.navatar.scripts;
 
+import static com.navatar.generic.BaseLib.pahse1DataSheetFilePath;
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
 
@@ -2101,8 +2102,8 @@ public class TaskWatchlist extends BaseLib{
 				i++;
 				}
 			}else {
-				log(LogStatus.ERROR,"could not verify conversion date : "+todaysDateSingleDigit,YesNo.No);	
-				sa.assertTrue(false,"could not verify conversion date : "+todaysDateSingleDigit );
+				log(LogStatus.ERROR,"could not change status",YesNo.No);	
+				sa.assertTrue(false,"could not change status" );
 			}
 			
 			if (ip.changeStatus(projectName, PageLabel.Watchlist.toString())) {
@@ -2117,8 +2118,8 @@ public class TaskWatchlist extends BaseLib{
 				i++;
 				}
 			}else {
-				log(LogStatus.ERROR,"could not verify conversion date : "+todaysDateSingleDigit,YesNo.No);	
-				sa.assertTrue(false,"could not verify conversion date : "+todaysDateSingleDigit );
+				log(LogStatus.ERROR,"could not change status",YesNo.No);	
+				sa.assertTrue(false,"could not change status" );
 			}
 		}else {
 			log(LogStatus.FAIL, "could not click on entity: "+Smoke_CDINS1Name, YesNo.Yes);
@@ -2144,10 +2145,10 @@ public class TaskWatchlist extends BaseLib{
 		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		String values1[]={PageLabel.Under_Evaluation.toString().replace("_", " "),""};
-		String values2[]={PageLabel.Watchlist.toString().replace("_", " "),""};
-		String values3[]={PageLabel.Under_Evaluation.toString().replace("_", " "),todaysDateSingleDigit};
-		String values4[]={PageLabel.Portfolio_Company.toString().replace("_", " "),todaysDateSingleDigit};
+		String values1[]={PageLabel.Under_Evaluation.toString(),""};
+		String values2[]={PageLabel.Watchlist.toString(),""};
+		String values3[]={PageLabel.Under_Evaluation.toString(),todaysDateSingleDigit};
+		String values4[]={PageLabel.Portfolio_Company.toString(),todaysDateSingleDigit};
 		
 		String labels[]={PageLabel.Status.toString(),PageLabel.Conversion_Date.toString()};
 		int i=0;
@@ -2178,8 +2179,8 @@ public class TaskWatchlist extends BaseLib{
 					i++;
 					}
 				}else {
-					log(LogStatus.ERROR,"could not verify conversion date : "+todaysDateSingleDigit,YesNo.No);	
-					sa.assertTrue(false,"could not verify conversion date : "+todaysDateSingleDigit );
+					log(LogStatus.ERROR,"could not change status",YesNo.No);	
+					sa.assertTrue(false,"could not change status" );
 				}
 				
 				if (ip.changeStatus(projectName, PageLabel.Under_Evaluation.toString())) {
@@ -2194,8 +2195,8 @@ public class TaskWatchlist extends BaseLib{
 					i++;
 					}
 				}else {
-					log(LogStatus.ERROR,"could not verify conversion date : "+todaysDateSingleDigit,YesNo.No);	
-					sa.assertTrue(false,"could not verify conversion date : "+todaysDateSingleDigit );
+					log(LogStatus.ERROR,"could not change status",YesNo.No);	
+					sa.assertTrue(false,"could not change status" );
 				}
 				
 				
@@ -2211,8 +2212,8 @@ public class TaskWatchlist extends BaseLib{
 					i++;
 					}
 				}else {
-					log(LogStatus.ERROR,"could not verify conversion date : "+todaysDateSingleDigit,YesNo.No);	
-					sa.assertTrue(false,"could not verify conversion date : "+todaysDateSingleDigit );
+					log(LogStatus.ERROR,"could not change status",YesNo.No);	
+					sa.assertTrue(false,"could not change status" );
 				}
 			} else {
 				sa.assertTrue(false,"Not Able to Create Account/Entity : "+Smoke_CDINS2Name+" of record type : "+Smoke_CDINS2RecordType);
@@ -2222,6 +2223,280 @@ public class TaskWatchlist extends BaseLib{
 			log(LogStatus.FAIL, "entity tab is not clickable", YesNo.Yes);
 			sa.assertTrue(false, "entity tab is not clickable");
 		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void ConvDatetc025_RenameStatusValues(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String parentID=null;
+		if (home.clickOnSetUpLink()) {
+			parentID=switchOnWindow(driver);
+			if (parentID!=null) {
+				if (sp.searchStandardOrCustomObject(environment, mode,object.Entity )) {
+					if(sp.clickOnObjectFeature(environment, mode,object.Entity, ObjectFeatureName.FieldAndRelationShip)) {
+						if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), PageLabel.Status.toString()+Keys.ENTER, "status", action.BOOLEAN)) {
+							if (sp.clickOnAlreadyCreatedLayout(PageLabel.Status.toString())) {
+								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
+								WebElement ele=sp.clickOnEditInFrontOfStatus(projectName, PageLabel.Watchlist.toString());
+								if (click(driver, ele, "watchlist", action.BOOLEAN)) {
+									switchToDefaultContent(driver);
+									switchToFrame(driver, 10, sp.getstatusPicklistFrame(10));
+									if (sendKeys(driver, sp.getFieldLabelTextBox1(10), PageLabel.RenameWatchlist.toString(), "label", action.BOOLEAN)) {
+										
+										if (click(driver, fp.getCustomTabSaveBtn(10), "save", action.BOOLEAN)) {
+											log(LogStatus.INFO,"successfully saved rename watchlist",YesNo.No);	
+											
+										}else {
+											log(LogStatus.ERROR,"could not click on save button, so cannot change watchlist name",YesNo.No);	
+											sa.assertTrue(false,"could not click on save button, so cannot change watchlist name" );
+										}
+									}else {
+										log(LogStatus.ERROR,"field label textbox is not visible",YesNo.No);	
+										sa.assertTrue(false,"field label textbox is not visible" );
+									}
+								}else {
+									log(LogStatus.ERROR,"edit link is not clickable for watchlist",YesNo.No);	
+									sa.assertTrue(false,"edit link is not clickable for watchlist" );
+								}
+								switchToDefaultContent(driver);
+								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
+								ele=sp.clickOnEditInFrontOfStatus(projectName, PageLabel.Under_Evaluation.toString());
+								if (click(driver, ele, "watchlist", action.BOOLEAN)) {
+									switchToDefaultContent(driver);
+									switchToFrame(driver, 10, sp.getstatusPicklistFrame(10));
+									
+									if (sendKeys(driver, sp.getFieldLabelTextBox1(10), PageLabel.RenameUnder_Evaluation.toString().replace("_", " "), "label", action.BOOLEAN)) {
+										
+										if (click(driver, fp.getCustomTabSaveBtn(10), "save", action.BOOLEAN)) {
+											log(LogStatus.INFO,"successfully saved rename watchlist",YesNo.No);	
+											
+										}else {
+											log(LogStatus.ERROR,"could not click on save button, so cannot change Under_Evaluation name",YesNo.No);	
+											sa.assertTrue(false,"could not click on save button, so cannot change Under_Evaluation name" );
+										}
+									}else {
+										log(LogStatus.ERROR,"field label textbox is not visible",YesNo.No);	
+										sa.assertTrue(false,"field label textbox is not visible" );
+									}
+								}else {
+									log(LogStatus.ERROR,"edit link is not clickable for watchlist",YesNo.No);	
+									sa.assertTrue(false,"edit link is not clickable for watchlist" );
+								}
+								switchToDefaultContent(driver);
+								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
+								ele=sp.clickOnEditInFrontOfStatus(projectName, PageLabel.RenameUnder_Evaluation.toString());
+								WebElement ele1=null;
+								ele1=sp.clickOnEditInFrontOfStatus(projectName, PageLabel.RenameWatchlist.toString());
+								if ((ele!=null)&&(ele1!=null)) {
+									log(LogStatus.INFO,"successfully verified rename of status values",YesNo.No);	
+									
+								}else {
+									log(LogStatus.ERROR,"status field is not renamed",YesNo.No);	
+									sa.assertTrue(false,"status field is not renamed" );
+								}
+							}else {
+								log(LogStatus.ERROR,"status field is not clickable",YesNo.No);	
+								sa.assertTrue(false,"status field is not clickable" );
+							}
+						}else {
+							log(LogStatus.ERROR,"fields and relationships search is not visible",YesNo.No);	
+							sa.assertTrue(false,"fields and relationships search is not visible" );
+						}
+					}else {
+						log(LogStatus.ERROR,"fields and relationships link is not clickable",YesNo.No);	
+						sa.assertTrue(false,"fields and relationships link is not clickable" );
+					}
+				}else {
+					log(LogStatus.ERROR,"entity object is not clickable",YesNo.No);	
+					sa.assertTrue(false,"entity object is not clickable" );
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.ERROR,"could not find new window to switch after clicking setup",YesNo.No);	
+				sa.assertTrue(false,"could not find new window to switch after clicking setup" );
+			}
+		}else {
+			log(LogStatus.ERROR,"setup link is not clickable, so cannot rename fields name",YesNo.No);	
+			sa.assertTrue(false,"setup link is not clickable, so cannot rename fields name" );
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void ConvDatetc026_CreateInsCompany(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
+		String status=PageLabel.RenameWatchlist.toString();
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		String labels[]={PageLabel.Status.toString(),PageLabel.Conversion_Date.toString()};
+		int i=0;
+		String values1[]={PageLabel.RenameWatchlist.toString(),""};
+		String values2[]={PageLabel.RenameUnder_Evaluation.toString(),todaysDateSingleDigit};
+		
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.createEntityOrAccount(projectName, Smoke_CDINS3Name, Smoke_CDINS3RecordType, new String[][] {{PageLabel.Status.toString(),status}}, 10)) {
+				log(LogStatus.INFO,"successfully Created Account/Entity : "+Smoke_CDINS3Name+" of record type : "+Smoke_CDINS3RecordType,YesNo.No);	
+				for (String s:labels) {
+					if (ip.fieldValueVerificationOnInstitutionPage("", mode, TabName.Object1Tab, s, values1[i])) {
+						log(LogStatus.INFO,"successfully verified "+s+" : "+values1[i],YesNo.No);	
+					}else {
+						log(LogStatus.ERROR,"could not verify "+s+" : "+values1[i],YesNo.No);	
+						sa.assertTrue(false,"could not verify "+s+" : "+values1[i] );
+					}
+					i++;
+					}
+				i=0;
+				if (ip.changeStatus(projectName, PageLabel.RenameUnder_Evaluation.toString())) {
+					for (String s:labels) {
+					if (ip.fieldValueVerificationOnInstitutionPage("", mode, TabName.Object1Tab, s, values2[i])) {
+						log(LogStatus.INFO,"successfully verified "+s+" : "+values2[i],YesNo.No);
+					}else {
+						log(LogStatus.ERROR,"could not verify "+s+" : "+values2[i],YesNo.No);	
+						sa.assertTrue(false,"could not verify "+s+" : "+values2[i] );
+					}
+					i++;
+					}
+				}else {
+					log(LogStatus.ERROR,"could not change status",YesNo.No);	
+					sa.assertTrue(false,"could not change status" );
+				}
+			} else {
+				sa.assertTrue(false,"Not Able to Create Account/Entity : "+Smoke_CDINS3Name+" of record type : "+Smoke_CDINS3RecordType);
+				log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+Smoke_CDINS3Name+" of record type : "+Smoke_CDINS3RecordType,YesNo.Yes);
+			}
+		}else {
+			log(LogStatus.FAIL, "entity tab is not clickable", YesNo.Yes);
+			sa.assertTrue(false, "entity tab is not clickable");
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void ConvDatetc027_PostConditionRevertRenameStatusValues(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String parentID=null;
+		if (home.clickOnSetUpLink()) {
+			parentID=switchOnWindow(driver);
+			if (parentID!=null) {
+				if (sp.searchStandardOrCustomObject(environment, mode,object.Entity )) {
+					if(sp.clickOnObjectFeature(environment, mode,object.Entity, ObjectFeatureName.FieldAndRelationShip)) {
+						if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), PageLabel.Status.toString()+Keys.ENTER, "status", action.BOOLEAN)) {
+							if (sp.clickOnAlreadyCreatedLayout(PageLabel.Status.toString())) {
+								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
+								WebElement ele=sp.clickOnEditInFrontOfStatus(projectName, PageLabel.RenameWatchlist.toString());
+								if (click(driver, ele, "watchlist", action.BOOLEAN)) {
+									switchToDefaultContent(driver);
+									switchToFrame(driver, 10, sp.getstatusPicklistFrame(10));
+									if (sendKeys(driver, sp.getFieldLabelTextBox1(10), PageLabel.Watchlist.toString(), "label", action.BOOLEAN)) {
+										
+										if (click(driver, fp.getCustomTabSaveBtn(10), "save", action.BOOLEAN)) {
+											log(LogStatus.INFO,"successfully saved rename watchlist",YesNo.No);	
+											
+										}else {
+											log(LogStatus.ERROR,"could not click on save button, so cannot change watchlist name",YesNo.No);	
+											sa.assertTrue(false,"could not click on save button, so cannot change watchlist name" );
+										}
+									}else {
+										log(LogStatus.ERROR,"field label textbox is not visible",YesNo.No);	
+										sa.assertTrue(false,"field label textbox is not visible" );
+									}
+								}else {
+									log(LogStatus.ERROR,"edit link is not clickable for watchlist",YesNo.No);	
+									sa.assertTrue(false,"edit link is not clickable for watchlist" );
+								}
+								switchToDefaultContent(driver);
+								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
+								ele=sp.clickOnEditInFrontOfStatus(projectName, PageLabel.RenameUnder_Evaluation.toString());
+								if (click(driver, ele, "watchlist", action.BOOLEAN)) {
+									switchToDefaultContent(driver);
+									switchToFrame(driver, 10, sp.getstatusPicklistFrame(10));
+									
+									if (sendKeys(driver, sp.getFieldLabelTextBox1(10), PageLabel.Under_Evaluation.toString().replace("_", " "), "label", action.BOOLEAN)) {
+										
+										if (click(driver, fp.getCustomTabSaveBtn(10), "save", action.BOOLEAN)) {
+											log(LogStatus.INFO,"successfully saved rename watchlist",YesNo.No);	
+											
+										}else {
+											log(LogStatus.ERROR,"could not click on save button, so cannot change Under_Evaluation name",YesNo.No);	
+											sa.assertTrue(false,"could not click on save button, so cannot change Under_Evaluation name" );
+										}
+									}else {
+										log(LogStatus.ERROR,"field label textbox is not visible",YesNo.No);	
+										sa.assertTrue(false,"field label textbox is not visible" );
+									}
+								}else {
+									log(LogStatus.ERROR,"edit link is not clickable for watchlist",YesNo.No);	
+									sa.assertTrue(false,"edit link is not clickable for watchlist" );
+								}
+								switchToDefaultContent(driver);
+								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
+								ele=sp.clickOnEditInFrontOfStatus(projectName, PageLabel.Under_Evaluation.toString());
+								WebElement ele1=null;
+								ele1=sp.clickOnEditInFrontOfStatus(projectName, PageLabel.Watchlist.toString());
+								if ((ele!=null)&&(ele1!=null)) {
+									log(LogStatus.INFO,"successfully verified rename of status values",YesNo.No);	
+									
+								}else {
+									log(LogStatus.ERROR,"status field is not renamed",YesNo.No);	
+									sa.assertTrue(false,"status field is not renamed" );
+								}
+							}else {
+								log(LogStatus.ERROR,"status field is not clickable",YesNo.No);	
+								sa.assertTrue(false,"status field is not clickable" );
+							}
+						}else {
+							log(LogStatus.ERROR,"fields and relationships search is not visible",YesNo.No);	
+							sa.assertTrue(false,"fields and relationships search is not visible" );
+						}
+					}else {
+						log(LogStatus.ERROR,"fields and relationships link is not clickable",YesNo.No);	
+						sa.assertTrue(false,"fields and relationships link is not clickable" );
+					}
+				}else {
+					log(LogStatus.ERROR,"entity object is not clickable",YesNo.No);	
+					sa.assertTrue(false,"entity object is not clickable" );
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.ERROR,"could not find new window to switch after clicking setup",YesNo.No);	
+				sa.assertTrue(false,"could not find new window to switch after clicking setup" );
+			}
+		}else {
+			log(LogStatus.ERROR,"setup link is not clickable, so cannot rename fields name",YesNo.No);	
+			sa.assertTrue(false,"setup link is not clickable, so cannot rename fields name" );
+		}
+		
 		lp.CRMlogout();
 		sa.assertAll();
 	}

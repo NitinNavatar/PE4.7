@@ -299,7 +299,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 	public boolean fieldValueVerificationOnInstitutionPage(String environment, String mode, TabName tabName,
 			String labelName,String labelValue) {
 		String finalLabelName;
-
+		labelValue=labelValue.replace("_", " ");
 		
 		
 		if(labelName.contains(excelLabel.Total_CoInvestment_Commitments.toString())) {
