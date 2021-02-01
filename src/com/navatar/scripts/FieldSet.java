@@ -804,11 +804,11 @@ public class FieldSet extends BaseLib {
 			parentWindow = switchOnWindow(driver);
 			if (parentWindow == null) {
 				sa.assertTrue(false,
-						"No new window is open after click on setup link in lighting mode so cannot create Field object");
+						"No new window is open after click on setup link in lighting mode so cannot create Fields object Entity for object");
 				log(LogStatus.SKIP,
-						"No new window is open after click on setup link in lighting mode so cannot create Field object",
+						"No new window is open after click on setup link in lighting mode so cannot create Fields object Entity for object",
 						YesNo.Yes);
-				exit("No new window is open after click on setup link in lighting mode so cannot create Field object");
+				exit("No new window is open after click on setup link in lighting mode so cannot create Fields object Entity for object");
 			}
 			ThreadSleep(3000);
 			
@@ -838,8 +838,8 @@ public class FieldSet extends BaseLib {
 			driver.close();
 			driver.switchTo().window(parentWindow);
 		}else {
-			log(LogStatus.ERROR, "Not able to click on setup link so cannot create Field Set Component", YesNo.Yes);
-			sa.assertTrue(false, "Not able to click on setup link so cannot create Field Set Component");
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot create Fields object Entity for object", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot create Fields object Entity for object");
 		}
 		lp.CRMlogout();
 		sa.assertAll();
@@ -917,12 +917,89 @@ public class FieldSet extends BaseLib {
 			driver.close();
 			driver.switchTo().window(parentWindow);
 		}else {
-			log(LogStatus.ERROR, "Not able to click on setup link so cannot create Field Set Component", YesNo.Yes);
-			sa.assertTrue(false, "Not able to click on setup link so cannot create Field Set Component");
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot create Fields Objects for Deal object", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot create Fields Objects for Deal object Marketing");
 		}
 		lp.CRMlogout();
 		sa.assertAll();
 	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc016_CreatedataForCustomObject(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		MarketingEventPageBusinessLayer me = new MarketingEventPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (lp.clickOnTab(projectName, TabName.Object5Tab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.Object5Tab,YesNo.No);	
 
 
+			if (me.createMarketingEvent(projectName, FS_MarketingEvent1Name, FS_MarketingEvent1RecordType, FS_MarketingEvent1Date, FS_MarketingEvent1Organizer, 10)) {
+				log(LogStatus.INFO,"Created Marketing Event : "+FS_MarketingEvent1Name,YesNo.No);	
+			} else {
+				sa.assertTrue(false,"Not Able to Create Marketing Event  : "+FS_MarketingEvent1Name);
+				log(LogStatus.SKIP,"Not Able to Create Marketing Event  : "+FS_MarketingEvent1Name,YesNo.Yes);
+			}
+
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object5Tab);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object5Tab,YesNo.Yes);
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc017_createFieldsForCustomObject(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentWindow = null;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create Fields Objects for custom object Marketing Event");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create Fields Objects for custom object Marketing Event",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create Fields Objects for custom object Marketing Event");
+			}
+			ThreadSleep(3000);
+			
+			String[][] labelAndValues= {{FC_FieldType22,FC_FieldLabelName22,excelLabel.Length.toString(),FC_Length22},
+					{FC_FieldType23,FC_FieldLabelName23,excelLabel.Length.toString(),FC_Length23},
+			{FC_FieldType24,FC_FieldLabelName24,excelLabel.Length.toString(),FC_Length24},
+			{FC_FieldType25,FC_FieldLabelName25,excelLabel.Length.toString(),FC_Length25},
+			{FC_FieldType26,FC_FieldLabelName26,excelLabel.Length.toString(),FC_Length26},
+			{FC_FieldType27,FC_FieldLabelName27,excelLabel.Length.toString(),FC_Length27},
+			{FC_FieldType28,FC_FieldLabelName28,excelLabel.Length.toString(),FC_Length28},
+			{FC_FieldType29,FC_FieldLabelName29,excelLabel.Length.toString(),FC_Length29},
+			{FC_FieldType30,FC_FieldLabelName30,excelLabel.Length.toString(),FC_Length30},
+			{FC_FieldType31,FC_FieldLabelName31,excelLabel.Length.toString(),FC_Length31}};
+			
+			
+			for(String[] objects : labelAndValues) {
+				String[][] valuesandLabel = {{objects[2],objects[3]}};
+				
+				if(setup.addCustomFieldforFormula(environment,mode,object.Maketing_Event,ObjectFeatureName.FieldAndRelationShip,objects[0],objects[1], valuesandLabel, null,null)) {
+					log(LogStatus.PASS, "Field Object is created for :"+objects[1], YesNo.No);
+				}else {
+					log(LogStatus.PASS, "Field Object is not created for :"+objects[1], YesNo.Yes);
+					sa.assertTrue(false, "Field Object is not created for :"+objects[1]);
+				}
+			}
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot create Fields Objects for custom object Marketing Event", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot create Fields Objects for custom object Marketing Event");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 }

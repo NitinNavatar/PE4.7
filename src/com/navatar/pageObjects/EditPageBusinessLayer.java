@@ -4,6 +4,7 @@ import static com.navatar.generic.AppListeners.appLog;
 
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.awt.event.InputEvent;
 import java.util.List;
 import java.util.Random;
 
@@ -164,6 +165,74 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		
 	}
 
+	/**
+	 * @return the editPageSeachTextBox
+	 */
+	public WebElement getElementWithText(String projectName,String searchValue,int timeOut) {
+		String xpath = "//*[text()='"+searchValue+"']/ancestor::div[@role='tablist']/..";
+		WebElement ele = FindElement(driver, xpath, "Search Value : "+searchValue, action.BOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "Search Value : "+searchValue);
+	}
+	
+	/**
+	 * @return the dragNDropUsingScreen
+	 */
+	public boolean dragNDropUsingScreen(String projectName,WebElement source,String imagePath,int timeOut) {
+		boolean flag=false;
+		Actions act = new Actions(driver);
+//		WebElement source=getEditPageSeachValueLink(projectName, sValue, 10);
+		act.clickAndHold(source).build().perform();
+		ThreadSleep(1000);
+		Screen screen = new Screen();
+		try {
+			screen.dropAt(imagePath);
+			Robot robot = new Robot();
+			ThreadSleep(1000);
+			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); // press left click	
+	       ThreadSleep(1000);
+			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			flag=true;
+		} catch (FindFailed | AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
 	
 	
+	/**
+	 * @return the dragNDropUsingScreen
+	 */
+	public boolean dragNDropUsingJscript(WebDriver driver,WebElement source,WebElement target) {
+		boolean flag=false;
+	    try {
+	    	final String java_script =
+					"var src=arguments[0],tgt=arguments[1];var dataTransfer={dropEffe" +
+							"ct:'',effectAllowed:'all',files:[],items:{},types:[],setData:fun" +
+							"ction(format,data){this.items[format]=data;this.types.append(for" +
+							"mat);},getData:function(format){return this.items[format];},clea" +
+							"rData:function(format){}};var emit=function(event,target){var ev" +
+							"t=document.createEvent('Event');evt.initEvent(event,true,false);" +
+							"evt.dataTransfer=dataTransfer;target.dispatchEvent(evt);};emit('" +
+							"dragstart',src);emit('dragenter',tgt);emit('dragover',tgt);emit(" +
+							"'drop',tgt);emit('dragend',src);";
+			            ((JavascriptExecutor)driver).executeScript(java_script, source, target);
+			            flag=true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return flag;
+	}
+	
+	
+	/**
+	 * @return the editPageSeachTextBox
+	 */
+	public WebElement getElementWithText1(String projectName,String searchValue,int timeOut) {
+		String xpath = "//*[text()='"+searchValue+"']/ancestor::article";
+		WebElement ele = FindElement(driver, xpath, "Search Value : "+searchValue, action.BOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "Search Value : "+searchValue);
+	}
 }

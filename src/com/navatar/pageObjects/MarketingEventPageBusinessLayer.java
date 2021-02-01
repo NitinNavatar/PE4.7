@@ -96,13 +96,10 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 					appLog.error("Not able to enter organizer name");
 					return false;
 				}
-
-
-
-				if (click(driver, getSaveButton(projectName,timeOut), "save button", action.SCROLLANDBOOLEAN)) {
+				if (click(driver, getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on save button");
 
-					String str = getText(driver, getMarketingEventHeader(projectName,timeOut), "Marketing Name Label Text",action.SCROLLANDBOOLEAN);
+					String str = getText(driver, getMarketingEventInViewMode(timeOut, marketingEventName), "Marketing Name Label Text",action.SCROLLANDBOOLEAN);
 					if (str != null) {
 						if (str.contains(marketingEventName)) {
 							appLog.info("created Marketing Event " + marketingEventName + " is verified successfully.");
@@ -176,6 +173,87 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 		WebElement ele = FindElement(driver, xpath,name, action, timeOut);
 		scrollDownThroughWebelement(driver, ele, name);
 		return ele;
+	}
+	
+	public boolean createAttendee(String projectName,String marketingEvent,String[][] requestInfo,action action,int timeOut) {
+		boolean flag=false;
+		String label;
+		String value;
+		String xpath="";
+		WebElement ele;
+
+		if(clickUsingJavaScript(driver, getNewAttendee(projectName, timeOut), "New Attendee Button")) {
+			log(LogStatus.INFO,"click on New Attendee Button",YesNo.Yes);
+
+			for (String[] reuestData : requestInfo) {
+				label=reuestData[0].replace("_", " ");
+				value=reuestData[1];
+
+				if(PageLabel.Attendee_Staff.toString().equals(reuestData[0])){
+					if (sendKeys(driver, getAttendeeStaffTextBoxe(projectName, timeOut), value, label+" : "+value,action)) {
+						ThreadSleep(1000);
+						log(LogStatus.INFO,"Able to send "+value+" to label : "+label,YesNo.Yes);
+						if (click(driver,FindElement(driver,"//*[@title='"+value+"']","ATTENDEE Name List", action, 30),
+								value + "   :   Company Name", action)) {
+							log(LogStatus.INFO,"Able to select "+value+" to label : "+label,YesNo.No);
+						} else {
+							sa.assertTrue(false,"Not Able to select "+value+" to label : "+label);
+							log(LogStatus.SKIP,"Not Able to select "+value+" to label : "+label,YesNo.Yes);
+						}
+
+					} else {
+						sa.assertTrue(false,"Not Able to send "+value+" to label : "+label);
+						log(LogStatus.SKIP,"Not Able to send "+value+" to label : "+label,YesNo.Yes);
+						return false;
+					}
+				}else if(PageLabel.Status.toString().equals(reuestData[0])) {
+
+					if (click(driver, getStatus(projectName, timeOut), label, action)) {
+						ThreadSleep(2000);
+						log(LogStatus.INFO,"Able to Click on "+label,YesNo.No);
+
+						xpath="//span[@title='"+value+"']";
+						ele = FindElement(driver,xpath, value,action, timeOut);
+						ThreadSleep(2000);
+						if (click(driver, ele, value, action)) {
+							log(LogStatus.INFO,"Able to select "+value+" to label : "+label,YesNo.No);	
+						} else {
+							sa.assertTrue(false,"Not Able to select "+value+" to label : "+label);
+							log(LogStatus.SKIP,"Not Able to select "+value+" to label : "+label,YesNo.Yes);
+						}
+
+					} else {
+						sa.assertTrue(false,"Not Able to Click on "+label);
+						log(LogStatus.SKIP,"Not Able to Click on "+label,YesNo.Yes);
+					}
+
+				}
+			}
+
+			xpath="//*[text()='Marketing Event']/following-sibling::div//input[@placeholder='"+marketingEvent+"']";
+			ele = FindElement(driver, xpath, marketingEvent, action, timeOut);
+			if (ele!=null) {
+				log(LogStatus.INFO,"marketingEvent Label prefilled with value : "+marketingEvent,YesNo.No);	
+			} else {
+				sa.assertTrue(false,"marketingEvent Label not prefilled with value : "+marketingEvent);
+				log(LogStatus.SKIP,"marketingEvent Label not prefilled with value : "+marketingEvent,YesNo.Yes);
+			}
+
+			if (click(driver, getSaveButton(projectName,timeOut), "save button", action)) {
+				appLog.info("clicked on save button");
+
+			} else {
+				sa.assertTrue(false,"Not Able to Click on save button so cannot create request");
+				log(LogStatus.SKIP,"Not Able to Click on save button so cannot create request",YesNo.Yes);
+			}
+
+
+		}else {
+			sa.assertTrue(false,"Not able to click on New Attendee button");
+			log(LogStatus.SKIP,"Not able to click on New Attendee button",YesNo.Yes);
+
+		}
+		return flag;
 	}
 	
 }
