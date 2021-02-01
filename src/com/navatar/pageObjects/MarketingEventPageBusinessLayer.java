@@ -96,13 +96,10 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 					appLog.error("Not able to enter organizer name");
 					return false;
 				}
-
-
-
-				if (click(driver, getSaveButton(projectName,timeOut), "save button", action.SCROLLANDBOOLEAN)) {
+				if (click(driver, getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on save button");
 
-					String str = getText(driver, getMarketingEventHeader(projectName,timeOut), "Marketing Name Label Text",action.SCROLLANDBOOLEAN);
+					String str = getText(driver, getMarketingEventInViewMode(timeOut, marketingEventName), "Marketing Name Label Text",action.SCROLLANDBOOLEAN);
 					if (str != null) {
 						if (str.contains(marketingEventName)) {
 							appLog.info("created Marketing Event " + marketingEventName + " is verified successfully.");

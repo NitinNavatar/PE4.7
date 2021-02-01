@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 
+import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.ProjectName;
 import com.navatar.generic.EnumConstants.action;
 import com.relevantcodes.extentreports.LogStatus;
@@ -53,7 +54,6 @@ public class MarketingEventPage extends BasePageBusinessLayer {
 	return isDisplayed(driver, marketingEventHeader, "Visibility", timeOut, "Marketing Name Header");
 	}
 	
-	
 	@FindBy(xpath="//*[text()='Attendees']/../../../../following-sibling::div//*[text()='New']	")
 	private WebElement newAttendee;
 
@@ -75,6 +75,12 @@ public class MarketingEventPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, attendeeStaffTextBox, "Visibility", timeOut, "attendee Staff TextBox");
 	}
 	
+	public WebElement getMarketingEventInViewMode(int timeOut,String marketingEvent) {
+		return FindElement(driver, "//*[contains(text(),'Partnership Legal Name')]/../..//*[text()='"+marketingEvent+"']", "marketing event text label", action.SCROLLANDBOOLEAN, timeOut);
+	}
+	
+	
+
 	
 			
 }
