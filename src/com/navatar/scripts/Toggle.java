@@ -1659,30 +1659,7 @@ public class Toggle extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-	
-	@Parameters({ "projectName"})
-	@Test
-	public void ToggleTc0011_createCRMUser(String projectName) {
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		DataLoaderWizardPageBusinessLayer dataload = new DataLoaderWizardPageBusinessLayer(driver);
-		mode=Mode.Classic.toString();
-		Boolean flag = false;
-		lp.CRMLogin(superAdminUserName, adminPassword);
-		lp.switchToClassic();
-		if(dataload.dataImportWizard(ObjectName.Navigation, ObjectType.Custom, "\\UploadCSV\\NavigationMenuTestData_PE.csv", DataImportType.AddNewRecords, "22")) {
-			appLog.info("Data is imported Successfully in "+ObjectName.Navigation);
-			flag=true;
-			
-		}else {
-			appLog.error("Data is not imported in "+ObjectName.Navigation);
-			sa.assertTrue(false, "Data is not imported in "+ObjectName.Navigation);
-		}
-		if(flag) {
-		}
-		lp.CRMlogout();
-		sa.assertAll();
-	}
-	
+		
 	
 }
 	
