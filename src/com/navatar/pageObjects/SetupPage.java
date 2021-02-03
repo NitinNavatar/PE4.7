@@ -292,4 +292,18 @@ public class SetupPage extends BasePageBusinessLayer {
 	public List<WebElement> getDraggedObjectListInCreateFieldSet(){
 		return FindElements(driver, "//div[@id='defaultView']/div", "dragged object list in created field set");
 	}
+	
+	@FindBy(xpath = "//div[@class='pbBody canvasDrop']")
+	private WebElement pageLayoutDropLocation;
+
+	public WebElement getPageLayoutDropLocation(int timeOut) {
+		return isDisplayed(driver, pageLayoutDropLocation, "Visibility", timeOut, "page layout drop location");
+	}
+	
+	public WebElement getDraggedFieldsLabelAndValueXpath(String label, int timeOut) {
+		String xpath="//div[@class='itemLabel']/span[text()='"+label+"']/../following-sibling::div[text()='www.salesforce.com']";
+		WebElement ele= FindElement(driver, xpath,label+" xpath", action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "visibility", timeOut,label+" xpath");
+	}
+	
 }

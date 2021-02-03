@@ -271,7 +271,7 @@ public class TaskWatchlist extends BaseLib{
 				recType=contacts[3];
 				title=contacts[4];
 				mailID=	lp.generateRandomEmailId(gmailUserName);
-				ExcelUtils.writeData(pahse1DataSheetFilePath, mailID, "Contacts", excelLabel.Variable_Name, "TWCON"+i,excelLabel.Contact_EmailId);
+				ExcelUtils.writeData(phase1DataSheetFilePath, mailID, "Contacts", excelLabel.Variable_Name, "TWCON"+i,excelLabel.Contact_EmailId);
 
 				if (cp.createContact(projectName, fname, lname, ins, mailID,recType, null, null, CreationPage.ContactPage, title)) {
 					log(LogStatus.INFO,"successfully Created Contact : "+fname+" "+lname,YesNo.No);	

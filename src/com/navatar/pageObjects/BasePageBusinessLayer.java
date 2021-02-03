@@ -663,6 +663,15 @@ public String getTabName(String projectName,TabName TabName) {
 	case SDGTab:
 		tabName = "Sortable Data Grids";
 		break;
+	case Entities:
+		tabName = "Entities";
+		break;
+	case Deals:
+		tabName = "Deals";
+		break;
+	case Marketing_Events:
+		tabName = "Marketing Events";
+		break;
 	case TaskTab:
 		tabName = "Tasks";
 		break;
@@ -670,7 +679,7 @@ public String getTabName(String projectName,TabName TabName) {
 		tabName = "Recycle Bin";
 		break;
 	default:
-		return null;
+		return tabName;
 	}
 	return tabName;
 }

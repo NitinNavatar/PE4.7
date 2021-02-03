@@ -1,10 +1,15 @@
 package com.navatar.generic;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.util.*;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import static com.navatar.generic.EnumConstants.*;
 
@@ -767,6 +772,59 @@ public class ExcelUtils{
 		return flag;
 	}
 	
+	@SuppressWarnings("deprecation")
+	public static String readAllDataForAColumn(String filePath, String sheetName, int cellNum, Boolean numericTypeValue){
+		String value = "";
+		try {
+			File src=new File(filePath);
+			FileInputStream fis=new FileInputStream(src);
+			XSSFWorkbook wb=new XSSFWorkbook(fis);
+			XSSFSheet sh1= wb.getSheet(sheetName);
+			int rowCount = sh1.getLastRowNum();
+			System.err.println("rowCount : "+rowCount);
+			String a="";
+			DataFormatter df = new DataFormatter();
+			for (int row=1;row<=rowCount;row++){
+				if(numericTypeValue){
+					XSSFRow row1 = sh1.getRow(row);
+					XSSFCell cell=row1.getCell(cellNum);
+					cell.setCellType(CellType.NUMERIC);
+					a=String.valueOf(cell.getNumericCellValue());
+//					AppListeners.appLog.info("Id : "+a);
+					String[] ss =a.split("E");
+//					AppListeners.appLog.info("ss0 >> "+ss[0]);
+//					AppListeners.appLog.info("ss1 >> "+ss[1]);
+					if(ss.length>1){
+						Double d = Double.valueOf(ss[0])*Math.pow(10, Integer.parseInt(ss[1]));
+//						System.err.println(d);
+						a= String.valueOf(new BigDecimal(Math.round(d)).toBigInteger());
+//						AppListeners.appLog.info(" Final Id : "+a);
+						value =a+"<break>"+value;
+					}else {
+//						AppListeners.appLog.info(" Final Id : "+a);
+						value = a+"<break>"+value;
+					}
+				}else {
+					a=df.formatCellValue((sh1.getRow(row).getCell(cellNum)));
+					if (row<rowCount) {
+						value=value+a+"<break>";
+					} else {
+						value=value+a;
+					}
+						
+					
+				}
+			}
+			fis.close();
+			wb.close();
+		}catch(Exception e){
+			  AppListeners.appLog.info("<<<<<<<<<<<<<Exception Error : >>>>>>>>>> :"+e);
+			  BaseLib.sa.assertTrue(false, "File Not Found : "+filePath);
+			  value=null;
+		}
+		return value;
+
+	}
 	
 	
 }

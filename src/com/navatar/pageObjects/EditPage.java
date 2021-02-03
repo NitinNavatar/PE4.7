@@ -152,5 +152,18 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, elgDataProviderTextBoxSearchIcon, "Visibility", timeOut, "ELG Data Provider TextBox Search Box Icon");
 	}
 	
+	@FindBy(xpath = "//div[@data-label='Navatar Fieldset']/div[@class='actualNode']")
+	private WebElement fieldSetCompoentXpath;
+
+	public WebElement getFieldSetCompoentXpath(int timeOut) {
+		return isDisplayed(driver, fieldSetCompoentXpath, "Visibility", timeOut, "field set component");
+	}
+	
+	@FindBy(xpath = "//*[contains(text(),'Image Field  Name')]/following-sibling::div/input")
+	private WebElement imageFieldNameTextBox;
+
+	public WebElement getImageFieldNameTextBox(int timeOut) {
+		return isDisplayed(driver, imageFieldNameTextBox, "Visibility", timeOut, "image field name text box");
+	}
 	
 }
