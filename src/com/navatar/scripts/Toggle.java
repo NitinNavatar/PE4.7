@@ -2,7 +2,6 @@ package com.navatar.scripts;
 
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
-
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.sql.Date;
@@ -70,7 +69,6 @@ import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
 import com.navatar.pageObjects.CustomObjPageBusinessLayer;
-import com.navatar.pageObjects.DataLoaderWizardPageBusinessLayer;
 import com.navatar.pageObjects.DealPageBusinessLayer;
 import com.navatar.pageObjects.EditPageBusinessLayer;
 import com.navatar.pageObjects.EditPageErrorMessage;
@@ -92,7 +90,7 @@ import bsh.org.objectweb.asm.Label;
 
 import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.BaseLib.testCasesFilePath;
-import static com.navatar.generic.BaseLib.pahse1DataSheetFilePath;
+import static com.navatar.generic.BaseLib.phase1DataSheetFilePath;
 import static com.navatar.generic.CommonLib.*;
 
 public class Toggle extends BaseLib {
@@ -348,7 +346,7 @@ public class Toggle extends BaseLib {
 		if (lp.clickOnTab(projectName, TabName.Object5Tab)) {
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object5Tab,YesNo.No);	
 			ToggleMarketingEvent1Date=	previousOrForwardDateAccordingToTimeZone(0, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);;
-			ExcelUtils.writeData(pahse1DataSheetFilePath, ToggleMarketingEvent1Date, "MarketingEvent", excelLabel.Variable_Name, "TOGGLEME1",excelLabel.Date);
+			ExcelUtils.writeData(phase1DataSheetFilePath, ToggleMarketingEvent1Date, "MarketingEvent", excelLabel.Variable_Name, "TOGGLEME1",excelLabel.Date);
 			
 			if (me.createMarketingEvent(projectName, ToggleMarketingEvent1Name, ToggleMarketingEvent1RecordType, ToggleMarketingEvent1Date, ToggleMarketingEvent1Organizer, 10)) {
 				log(LogStatus.INFO,"Created Marketing Event : "+ToggleMarketingEvent1Name,YesNo.No);	
@@ -364,10 +362,10 @@ public class Toggle extends BaseLib {
 	//	// scn.nextLine();
 		String relatedTab;
 		ToggleOpenQA1RequestedDate=	previousOrForwardDateAccordingToTimeZone(-2, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);;
-		ExcelUtils.writeData(pahse1DataSheetFilePath, ToggleOpenQA1RequestedDate, "DealRequestTracker", excelLabel.Variable_Name, "OPENQA1",excelLabel.Date_Requested);
+		ExcelUtils.writeData(phase1DataSheetFilePath, ToggleOpenQA1RequestedDate, "DealRequestTracker", excelLabel.Variable_Name, "OPENQA1",excelLabel.Date_Requested);
 		
 		ToggleClosedQA1RequestedDate=	previousOrForwardDateAccordingToTimeZone(-5, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);;
-		ExcelUtils.writeData(pahse1DataSheetFilePath, ToggleClosedQA1RequestedDate, "DealRequestTracker", excelLabel.Variable_Name, "CLOSEDQA1",excelLabel.Date_Requested);
+		ExcelUtils.writeData(phase1DataSheetFilePath, ToggleClosedQA1RequestedDate, "DealRequestTracker", excelLabel.Variable_Name, "CLOSEDQA1",excelLabel.Date_Requested);
 		
 		
 		String[][] openRequest = {{PageLabel.Date_Requested.toString(),ToggleOpenQA1RequestedDate}
