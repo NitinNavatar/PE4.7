@@ -292,4 +292,12 @@ public class SetupPage extends BasePageBusinessLayer {
 	public List<WebElement> getDraggedObjectListInCreateFieldSet(){
 		return FindElements(driver, "//div[@id='defaultView']/div", "dragged object list in created field set");
 	}
+	
+	@FindBy(xpath = "//div[@data-aura-class='uiScroller']")
+	private WebElement appMangerScroll;
+
+	public WebElement getAppMangerScroll(int timeOut) {
+		return isDisplayed(driver, appMangerScroll, "Visibility", timeOut, "ap pManger Scroll");
+	}
+	
 }

@@ -38,14 +38,14 @@ public class CommonVariables {
 	public static String Smoke_TWContact4FName,Smoke_TWContact4LName,Smoke_TWContact4EmailID,Smoke_TaskContact4UpdatedName,Smoke_TWContact4RecordType;
 	public static String Smoke_TWContact5FName,Smoke_TWContact5LName,Smoke_TWContact5EmailID,Smoke_TWContact5RecordType;
 	
-	public static String appName;
+	public static String appName,AppDeveloperName,AppDescription;
 	public static String superAdminUserName,superAdminRegistered,adminPassword;
 	public static String AdminUserFirstName,AdminUserLastName,AdminUserEmailID;
 	public static String crmUser1FirstName,crmUser1LastName,crmUser1EmailID,crmUserProfile,crmUserLience;
 	public static String gmailUserName,gmailUserName2,gmailPassword;
 	
 	public static String tabCustomObj,tabCustomObjField;
-	public static String tabObj1,tabObj2,tabObj3,tabObj4;
+	public static String tabObj1,tabObj2,tabObj3,tabObj4,tabObj5,tabObj6,tabObj7;
 	
 	public static String ToggleIns1,ToggleIns1RecordType;
 
@@ -173,6 +173,9 @@ public class CommonVariables {
 		tabObj2=ExcelUtils.readDataFromPropertyFile("Object2");
 		tabObj3=ExcelUtils.readDataFromPropertyFile("Object3");
 		tabObj4=ExcelUtils.readDataFromPropertyFile("Object4");
+		tabObj5=ExcelUtils.readDataFromPropertyFile("Object5");
+		tabObj6=ExcelUtils.readDataFromPropertyFile("Object6");
+		tabObj7=ExcelUtils.readDataFromPropertyFile("Object7");
 		tabCustomObjField=ExcelUtils.readDataFromPropertyFile("CustomTabFieldName");
 		environment=ExcelUtils.readDataFromPropertyFile("Environment");
 		mode=ExcelUtils.readDataFromPropertyFile("Mode");
@@ -202,6 +205,10 @@ public class CommonVariables {
 			
 			SDG = "Sortable Data Grids";
 			
+			AppDeveloperName=ExcelUtils.readDataFromPropertyFile("AppDeveloperName");
+			AppDescription=ExcelUtils.readDataFromPropertyFile("AppDescription");
+			
+			
 			//****************************************************************	Toggle Variable **********************************************************//
 
 			
@@ -219,7 +226,7 @@ public class CommonVariables {
 			ToggleFund2=ExcelUtils.readData(pahse1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Fund_Name);
 			ToggleFund2Type=ExcelUtils.readData(pahse1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Fund_Type);
 			ToggleFund2Category=ExcelUtils.readData(pahse1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Investment_Category);
-			ToggleFund1RecordType=ExcelUtils.readData(pahse1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Record_Type);
+			ToggleFund2RecordType=ExcelUtils.readData(pahse1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Record_Type);
 			
 			ToggleDeal1=ExcelUtils.readData(pahse1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Deal_Name);
 			ToggleDeal1CompanyName=ToggleIns1;

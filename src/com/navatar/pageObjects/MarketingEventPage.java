@@ -76,7 +76,7 @@ public class MarketingEventPage extends BasePageBusinessLayer {
 	}
 	
 	public WebElement getMarketingEventInViewMode(int timeOut,String marketingEvent) {
-		return FindElement(driver, "//*[contains(text(),'Partnership Legal Name')]/../..//*[text()='"+marketingEvent+"']", "marketing event text label", action.SCROLLANDBOOLEAN, timeOut);
+		return FindElement(driver, "//*[contains(text(),'Marketing Event')]/../..//*[text()='"+marketingEvent+"']", "marketing event text label", action.SCROLLANDBOOLEAN, timeOut);
 	}
 	
 	
