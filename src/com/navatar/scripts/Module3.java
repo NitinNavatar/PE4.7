@@ -242,13 +242,9 @@ public class Module3 extends BaseLib {
 				if(setup.searchStandardOrCustomObject(environment,mode, object.App_Manager)) {
 					log(LogStatus.INFO, "click on Object : "+object.App_Manager, YesNo.No);
 					ThreadSleep(2000);
-//					if(setup.clickOnObjectFeature(environment,mode, object.Apps, ObjectFeatureName.App_Manager)) {
-//						log(LogStatus.INFO, "Clicked on feature : "+ObjectFeatureName.App_Manager, YesNo.No);
-						ThreadSleep(1000);
-						scrollDownThroughWebelement(driver, setup.getAppMangerScroll(10), "App manager horizontal scroll");
-						setup.clickOnEditForApp(driver, appName, AppDeveloperName,"Navatar Private Equity app – Lightning View(Edge)", 10);
-						scn.nextLine();
-						if(true/*setup.clickOnEditForApp(driver, appName, AppDeveloperName,AppDescription, 10)*/) {
+//						setup.clickOnEditForApp(driver, appName, AppDeveloperName,"Navatar Private Equity app – Lightning View(Edge)", 10);
+//						scn.nextLine();
+						if(setup.clickOnEditForApp(driver, appName, AppDeveloperName,AppDescription, 10)) {
 							log(LogStatus.INFO,"able to click on edit button against "+appName+" : "+AppDeveloperName+" "+AppDescription, YesNo.No);
 							ThreadSleep(1000);
 							
@@ -304,10 +300,6 @@ public class Module3 extends BaseLib {
 							log(LogStatus.ERROR,"Not able to click on edit button against "+appName+" : "+AppDeveloperName+" "+AppDescription, YesNo.Yes);
 							sa.assertTrue(false, "Not able to click on edit button against "+appName+" : "+AppDeveloperName+" "+AppDescription);
 						}
-//					}else {
-//						log(LogStatus.ERROR, "Not able to click on App Manager set so cannot update Navigation Label", YesNo.Yes);
-//						sa.assertTrue(false, "Not able to click on App Manager set so cannot update Navigation Label");
-//					}
 
 				}else {
 					log(LogStatus.ERROR, "Not able to search/click on Apps so cannot update Navigation Label", YesNo.Yes);

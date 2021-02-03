@@ -4633,6 +4633,13 @@ public WebElement commonInputElement(String projectName,String labelName,action 
 	return ele;
 }
 
+public WebElement getMenuTab(String projectName,String labelName,action action,int timeOut) {
+	String xpath = "//div[@class='flexipageComponent']//span[text()='"+labelName+"']";
+	WebElement ele = FindElement(driver, xpath,labelName+" TextBox", action, timeOut);
+	ele = isDisplayed(driver, ele, "Visibility",timeOut, labelName);
+	return ele;
+}
+
 
 
 }
