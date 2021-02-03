@@ -306,4 +306,11 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, ele, "visibility", timeOut,label+" xpath");
 	}
 	
+	@FindBy(xpath = "//div[@data-aura-class='uiScroller']")
+	private WebElement appMangerScroll;
+
+	public WebElement getAppMangerScroll(int timeOut) {
+		return isDisplayed(driver, appMangerScroll, "Visibility", timeOut, "ap pManger Scroll");
+	}
+	
 }

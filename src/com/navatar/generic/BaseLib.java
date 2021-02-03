@@ -62,6 +62,7 @@ public class BaseLib extends AppListeners {
 	public static EventFiringWebDriver driver;
 	public AppListeners testListner;
 	public static SoftAssert sa=new SoftAssert();
+	public static boolean PublicFlag = true;
 	public CommonVariables cv = null;//common variable reference
 	public SmokeCommonVariables scv = null;//common variable reference
 	public static String downloadedFilePath=System.getProperty("user.dir")+"\\DownloadedFiles";

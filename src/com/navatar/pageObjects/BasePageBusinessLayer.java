@@ -4434,6 +4434,12 @@ public boolean clickOnTab(String projectName,String TabName) {
 	String tabName = null;
 	boolean flag = false;
 	WebElement ele;
+//	if (TabName.contains("Entit")) {
+//		tabName ="Entities";
+//	}else {
+//
+//		tabName = TabName+"s";
+//	}
 	tabName = TabName;
 	System.err.println("Passed switch statement");
 	if (tabName!=null) {
@@ -4628,6 +4634,14 @@ public WebElement customToggleButton(String projectName,String btnName,action ac
 	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btnName);
 	return ele;
 }
+
+public WebElement commonInputElement(String projectName,String labelName,action action,int timeOut) {
+	String xpath = "//*[text()='"+labelName+"']//following-sibling::div//input";
+	WebElement ele = FindElement(driver, xpath,labelName+" TextBox", action, timeOut);
+	ele = isDisplayed(driver, ele, "Visibility",timeOut, labelName+" TextBox");
+	return ele;
+}
+
 
 
 }

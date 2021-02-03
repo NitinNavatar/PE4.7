@@ -2,6 +2,7 @@ package com.navatar.pageObjects;
 
 import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.CommonLib.*;
+import static com.navatar.generic.CommonVariables.ToggleDeal1;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -90,7 +91,89 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return ele;
 	}
 	
-	
+	public boolean createNewRequest(String projectName,String dealName,String[][] requestInfo,int timeOut) {
+		boolean flag=false;
+		String label;
+		String value;
+		String xpath="";
+		WebElement ele;
+		if(clickUsingJavaScript(driver, getNewRequestTrackerBtn(projectName, timeOut), "New Request Tracker button")) {
+			appLog.info("clicked on New Request Tracker button");
+			log(LogStatus.INFO,"click on New Request Tracker Button",YesNo.Yes);
+
+			for (String[] reuestData : requestInfo) {
+				label=reuestData[0].replace("_", " ");
+				value=reuestData[1];
+
+				if (PageLabel.Request.toString().equals(reuestData[0])) {
+					xpath="//*[text()='Request']//following-sibling::div//textarea";
+					ele = FindElement(driver, xpath, label, action.BOOLEAN, timeOut);
+					if (sendKeys(driver,ele, value, label+" : "+value, action.BOOLEAN)) {
+						log(LogStatus.INFO,"Send "+value+" to label : "+label,YesNo.No);	
+					} else {
+						sa.assertTrue(false,"Not Able to Send "+value+" to label : "+label);
+						log(LogStatus.SKIP,"Not Able to Send "+value+" to label : "+label,YesNo.Yes);
+					}
+
+				}else if(PageLabel.Date_Requested.toString().equals(reuestData[0])){
+					xpath="//*[text()='Date Requested']//following-sibling::div//input";
+					ele = FindElement(driver, xpath, label, action.BOOLEAN, timeOut);
+					if (sendKeys(driver,ele, value, label+" : "+value, action.BOOLEAN)) {
+						log(LogStatus.INFO,"Send "+value+" to label : "+label,YesNo.No);	
+					} else {
+						sa.assertTrue(false,"Not Able to Send "+value+" to label : "+label);
+						log(LogStatus.SKIP,"Not Able to Send "+value+" to label : "+label,YesNo.Yes);
+					}
+				}else if(PageLabel.Status.toString().equals(reuestData[0])) {
+
+					if (click(driver, getStatus(projectName, timeOut), label, action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(2000);
+						log(LogStatus.INFO,"Able to Click on "+label,YesNo.No);
+
+						xpath="//span[@title='"+value+"']";
+						ele = FindElement(driver,xpath, value,action.SCROLLANDBOOLEAN, timeOut);
+						ThreadSleep(2000);
+						if (click(driver, ele, value, action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO,"Able to select "+value+" to label : "+label,YesNo.No);	
+						} else {
+							sa.assertTrue(false,"Not Able to select "+value+" to label : "+label);
+							log(LogStatus.SKIP,"Not Able to select "+value+" to label : "+label,YesNo.Yes);
+						}
+
+					} else {
+						sa.assertTrue(false,"Not Able to Click on "+label);
+						log(LogStatus.SKIP,"Not Able to Click on "+label,YesNo.Yes);
+					}
+
+				}
+			}
+
+			xpath="//*[text()='Deal']/following-sibling::div//input[@placeholder='"+dealName+"']";
+			ele = FindElement(driver, xpath, dealName, action.BOOLEAN, timeOut);
+			if (ele!=null) {
+				log(LogStatus.INFO,"Deal Label prefilled with value : "+dealName,YesNo.No);	
+			} else {
+				sa.assertTrue(false,"Deal Label not prefilled with value : "+dealName);
+				log(LogStatus.SKIP,"Deal Label not prefilled with value : "+dealName,YesNo.Yes);
+			}
+
+			if (click(driver, getCustomTabSaveBtn(projectName,timeOut), "save button", action.SCROLLANDBOOLEAN)) {
+				appLog.info("clicked on save button");
+				ThreadSleep(3000);
+
+			} else {
+				sa.assertTrue(false,"Not Able to Click on save button so cannot create request");
+				log(LogStatus.SKIP,"Not Able to Click on save button so cannot create request",YesNo.Yes);
+			}
+
+
+		}else {
+			sa.assertTrue(false,"Not able to click on New Request Tracker Button so cannot create request");
+			log(LogStatus.SKIP,"Not able to click on New Request Tracker Button so cannot create request",YesNo.Yes);
+
+		}
+		return flag;
+	}
 	
 	
 	
