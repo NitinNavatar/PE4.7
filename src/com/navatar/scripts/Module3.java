@@ -2,9 +2,14 @@ package com.navatar.scripts;
 
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
+import static com.navatar.generic.ExcelUtils.readAllDataForAColumn;
 
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.sql.Date;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -16,9 +21,12 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
@@ -82,6 +90,7 @@ import com.navatar.pageObjects.LoginPageBusinessLayer;
 import com.navatar.pageObjects.MarketingEventPageBusinessLayer;
 import com.navatar.pageObjects.NavatarSetUpPageErrorMessage;
 import com.navatar.pageObjects.NavatarSetupPageBusinessLayer;
+import static com.navatar.pageObjects.NavigationPageBusineesLayer.*;
 import com.navatar.pageObjects.SDGPageBusinessLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.navatar.pageObjects.TaskPageBusinessLayer;
@@ -92,20 +101,17 @@ import bsh.org.objectweb.asm.Label;
 
 import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.BaseLib.testCasesFilePath;
-import static com.navatar.generic.BaseLib.pahse1DataSheetFilePath;
+import static com.navatar.generic.BaseLib.phase1DataSheetFilePath;
 import static com.navatar.generic.CommonLib.*;
 
 public class Module3 extends BaseLib {
 	String passwordResetLink = null;
-
 	Scanner scn = new Scanner(System.in);
-	String breakSP = "<break>";
-	String columnSP = "<column>";
-	String commaSP = ",";
-	String colonSP = ":";
-	String emptyString="";
+
 	String navigationMenuName="Navigation Menu";
-	
+	public  String NavigationMenuTestData_PEExcel = System.getProperty("user.dir")+"\\UploadFiles\\Module 3\\UploadCSV\\NavigationMenuTestData_PE - AllNew.csv";
+	public  String NavigationMenuTestData_PESheet = "asd";
+
 	@Parameters({ "projectName"})
 	@Test
 	public void Module3Tc001_createCRMUser(String projectName) {
@@ -318,6 +324,34 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc004_OpentheNavigationMenuAndVerifyTheMenuItems(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		System.err.println(NavigationMenuTestData_PEExcel+" >>>>>>>>>>>>><<<<<<<<<<<< "+NavigationMenuTestData_PESheet);
+		List<String> csvRecords = ExcelUtils.readAllDataFromCSVFileIntoList(NavigationMenuTestData_PEExcel, false);
+		if (!csvRecords.isEmpty()) {
+			log(LogStatus.INFO, "Records Fetched from CSV File : "+NavigationMenuTestData_PEExcel, YesNo.No);
+		} else {
+			log(LogStatus.FAIL, "Unable to Fetch Records from CSV File : "+NavigationMenuTestData_PEExcel, YesNo.Yes);
+			sa.assertTrue(false, "Unable to Fetch Records from CSV File : "+NavigationMenuTestData_PEExcel);
+		}
+		Map<String, Integer> navigationParentLabelWithOrder = navigationParentLabelWithOrder(csvRecords);
+		System.out.println(navigationParentLabelWithOrder);
+		Map<String, Integer> navigationParentLabelWithSortedOrder = sortByValue(true, navigationParentLabelWithOrder);
+		System.err.println(navigationParentLabelWithSortedOrder);
+		Map<String, String> navigationParentLabelWithChildAndOrder = navigationParentLabelWithChildAndOrder(csvRecords);
+		System.out.println(navigationParentLabelWithChildAndOrder);
+		Map<String, String> navigationParentLabelWithChildSorted = navigationParentLabelWithChildSorted(navigationParentLabelWithChildAndOrder);
+		System.err.println(navigationParentLabelWithChildSorted);
+
+
+	}
+	
+
 	
 }
 	

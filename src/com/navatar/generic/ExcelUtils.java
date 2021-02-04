@@ -826,5 +826,36 @@ public class ExcelUtils{
 
 	}
 	
+	@SuppressWarnings("deprecation")
+	public static List<String> readAllDataFromCSVFileIntoList(String filePath, boolean isColumnIncluded){
+		String line="";
+		List<String> csvRecords = new ArrayList<String>();
+	 try {
+		BufferedReader br = new BufferedReader(new FileReader(filePath));
+		int i=0;
+		int k=0;
+		while ((line=br.readLine())!=null) {
+		//	System.err.println("Line: "+line);
+			if (isColumnIncluded && k==0) {
+				csvRecords.add(line);
+			} else {
+				if (k==0) {
+					k++;
+				} else {
+					csvRecords.add(line);
+				}
+			}
+	
+		}
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+		  AppListeners.appLog.info(filePath+"<<<<<<<<<<<<<Exception Error :while reading/parsing csv file >>>>>>>>>> :"+e);
+		  BaseLib.sa.assertTrue(false, filePath+"<<<<<<<<<<<<<Exception Error :while reading/parsing csv file >>>>>>>>>> :"+e);
+	}
+	return csvRecords;
+	 
+	}
+	
 	
 }

@@ -70,6 +70,11 @@ public class BaseLib extends AppListeners {
 	public static String taskWatchlistFilePath = System.getProperty("user.dir")+"/TaskWatchlist.xlsx";
 	public static String phase1DataSheetFilePath = System.getProperty("user.dir")+"/Phase1DataSheet.xlsx";
 	public static WiniumDriver dDriver = null;
+	public static	String breakSP = "<break>";
+	public static	String columnSP = "<column>";
+	public static String commaSP = ",";
+	public static	String colonSP = ":";
+	public static String emptyString="";
 	
 	@BeforeSuite
 	public void reportConfig(){
