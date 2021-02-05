@@ -380,7 +380,7 @@ public class Toggle extends BaseLib {
 			if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
 				log(LogStatus.INFO,"Click on Tab : "+TabName.Object4Tab,YesNo.No);	
 
-				if (ip.clickOnAlreadyCreatedItem(projectName, ToggleDeal1, 15)) {
+				if (ip.clickOnAlreadyCreatedItem(projectName, ToggleDeal1, true, 15)) {
 					log(LogStatus.INFO,"Item found: "+ToggleDeal1, YesNo.No);
 					ThreadSleep(2000);
 					
@@ -419,7 +419,7 @@ public class Toggle extends BaseLib {
 			if (lp.clickOnTab(projectName, TabName.Object5Tab)) {
 				log(LogStatus.INFO,"Click on Tab : "+TabName.Object5Tab,YesNo.No);	
 
-				if (ip.clickOnAlreadyCreatedItem(projectName, ToggleMarketingEvent1Name, 15)) {
+				if (ip.clickOnAlreadyCreatedItem(projectName, ToggleMarketingEvent1Name, true, 15)) {
 					log(LogStatus.INFO,"Item found: "+ToggleMarketingEvent1Name, YesNo.No);
 					ThreadSleep(2000);
 					
@@ -487,7 +487,7 @@ public class Toggle extends BaseLib {
 				log(LogStatus.INFO,"Click on Tab : "+tabName,YesNo.No);
 
 				itemValue = itemValues[i];
-				if (ip.clickOnAlreadyCreatedItem(projectName, itemValue, 15)) {
+				if (ip.clickOnAlreadyCreatedItem(projectName, itemValue, true, 15)) {
 					log(LogStatus.INFO,"Item found: "+itemValue, YesNo.Yes);
 					ThreadSleep(2000);
 
@@ -637,7 +637,7 @@ public class Toggle extends BaseLib {
 				log(LogStatus.INFO,"Click on Tab : "+tabName,YesNo.No);
 
 				itemValue = itemValues[i];
-				if (ip.clickOnAlreadyCreatedItem(projectName, itemValue, 15)) {
+				if (ip.clickOnAlreadyCreatedItem(projectName, itemValue, true, 15)) {
 					log(LogStatus.INFO,"Item found: "+itemValue, YesNo.Yes);
 					ThreadSleep(2000);
 					
@@ -871,7 +871,7 @@ public class Toggle extends BaseLib {
 				log(LogStatus.INFO,"Click on Tab : "+tabName,YesNo.No);
 
 				itemValue = itemValues[i];
-				if (ip.clickOnAlreadyCreatedItem(projectName, itemValue, 15)) {
+				if (ip.clickOnAlreadyCreatedItem(projectName, itemValue, true, 15)) {
 					log(LogStatus.INFO,"Item found: "+itemValue, YesNo.Yes);
 					ThreadSleep(2000);
 
@@ -1063,7 +1063,7 @@ public class Toggle extends BaseLib {
 				log(LogStatus.INFO,"Click on Tab : "+tabName,YesNo.No);
 
 				itemValue = itemValues[i];
-				if (ip.clickOnAlreadyCreatedItem(projectName, itemValue, 15)) {
+				if (ip.clickOnAlreadyCreatedItem(projectName, itemValue, true, 15)) {
 					log(LogStatus.INFO,"Item found: "+itemValue, YesNo.Yes);
 					ThreadSleep(2000);
 					
@@ -1227,7 +1227,7 @@ public class Toggle extends BaseLib {
 				log(LogStatus.INFO,"Click on Tab : "+tabName,YesNo.No);
 
 				itemValue = itemValues[i];
-				if (ip.clickOnAlreadyCreatedItem(projectName, itemValue, 15)) {
+				if (ip.clickOnAlreadyCreatedItem(projectName, itemValue, true, 15)) {
 					log(LogStatus.INFO,"Item found: "+itemValue, YesNo.Yes);
 					ThreadSleep(2000);
 
@@ -1506,7 +1506,7 @@ public class Toggle extends BaseLib {
 							log(LogStatus.INFO,"Click on Tab : "+tabName,YesNo.No);
 
 							itemValue = itemValues[i];
-							if (ip.clickOnAlreadyCreatedItem(projectName, itemValue, 15)) {
+							if (ip.clickOnAlreadyCreatedItem(projectName, itemValue, true, 15)) {
 								log(LogStatus.INFO,"Item found: "+itemValue, YesNo.Yes);
 								ThreadSleep(2000);
 
@@ -1597,7 +1597,7 @@ public class Toggle extends BaseLib {
 				log(LogStatus.INFO,"Click on Tab : "+tabName,YesNo.No);
 
 				itemValue = itemValues[i];
-				if (ip.clickOnAlreadyCreatedItem(projectName, itemValue, 15)) {
+				if (ip.clickOnAlreadyCreatedItem(projectName, itemValue, true, 15)) {
 					log(LogStatus.INFO,"Item found: "+itemValue, YesNo.Yes);
 					ThreadSleep(2000);
 

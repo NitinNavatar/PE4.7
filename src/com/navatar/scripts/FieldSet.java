@@ -1021,7 +1021,7 @@ public class FieldSet extends BaseLib {
 			TabName tabName =TabName.valueOf(tabNames.get(i));
 			if (lp.clickOnTab(projectName, tabName)) {
 				log(LogStatus.INFO,"Click on Tab : "+tabName,YesNo.No);
-				if(lp.clickOnAlreadyCreatedItem(projectName, Items.get(i), 20)) {
+				if(lp.clickOnAlreadyCreatedItem(projectName, Items.get(i), true, 20)) {
 					log(LogStatus.INFO,"clicked on created item : "+Items.get(i), YesNo.No);
 					ThreadSleep(5000);
 					if(edit.clickOnEditPageLink()) {

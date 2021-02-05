@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.Map.Entry;
 
 import com.navatar.generic.ExcelUtils;
@@ -50,7 +51,23 @@ public class Demo {
 		Map<String, String> childMap = new LinkedHashMap<String, String>();  
 		System.err.println(NavigationMenuTestData_PEExcel+" >>>>>>>>>>>>><<<<<<<<<<<< "+NavigationMenuTestData_PESheet);
 		List<String> csvRecords = ExcelUtils.readAllDataFromCSVFileIntoList(NavigationMenuTestData_PEExcel, false);
+		
+		for (String string : csvRecords) {
+			System.err.println(string);	
+		}
 		Map<String, Integer> navigationParentLabelWithOrder = navigationParentLabelWithOrder(csvRecords);
+		Set<String> abc = navigationParentLabelWithOrder.keySet();
+		for (String string : abc) {
+			System.err.println("Set : "+string);
+		}
+//		for (int i = 0; i < abc.size(); i++) {
+//			//System.err.println("Set : "+abc);
+//		}
+		for ( String key : navigationParentLabelWithOrder.keySet() ) {
+		    System.out.println(">>>> "+ key );
+		    System.out.println(">>>>value "+ navigationParentLabelWithOrder.get(key) );
+		}
+		System.err.println(">>>>>>> : "+navigationParentLabelWithOrder.keySet());
 		System.out.println(navigationParentLabelWithOrder);
 		System.err.println(sortByValue(true, navigationParentLabelWithOrder));
 		Map<String, String> navigationParentLabelWithChildAndOrder = navigationParentLabelWithChildAndOrder(csvRecords);

@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 import com.navatar.generic.EnumConstants.AddProspectsTab;
+import com.navatar.generic.EnumConstants.AppSetting;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.action;
@@ -36,6 +37,7 @@ import java.util.Map.Entry;
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.AppListeners.*;
 public class NavigationPageBusineesLayer extends NavigationPage {
+	
 	public NavigationPageBusineesLayer(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
@@ -181,4 +183,125 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 
 	}
 
+	/**
+	 * @return the editPageSeachTextBox
+	 */
+	public boolean clickOnNavatarEdgeLinkHomePage(String projectName,String searchValue,action action,int timeOut) {
+		boolean flag=false;;
+		verifyingNavigationMenuLink(projectName, null, null, action, timeOut);
+		String xpath = "//div[@class='flexipagePage']//span[text()='"+searchValue+"']";
+		WebElement ele = FindElement(driver, xpath, searchValue, action, timeOut);
+		if (click(driver, ele, searchValue, action)) {
+			log(LogStatus.INFO, "able to click on "+searchValue, YesNo.No);	
+			xpath = "//div[@class='flexipagePage']//h2[text()='"+searchValue+"']";
+			ele = FindElement(driver, xpath, searchValue, action, timeOut);
+			ele = isDisplayed(driver, ele, "Visibility", timeOut, searchValue+" Header");
+			if (ele!=null && getNavatarQuickLinkMinimize_Lighting(projectName, timeOut)!=null) {
+				log(LogStatus.INFO, "Header and minimize icon Verified after click on "+searchValue, YesNo.No);	
+				flag=true;
+			} else {
+				log(LogStatus.ERROR, "Header and minimize icon Not Verified after click on "+searchValue, YesNo.No);	
+			}
+			
+		} else {
+			log(LogStatus.ERROR, "Not able to click on "+searchValue, YesNo.No);
+		}
+		return flag;
+	}
+
+	
+	/**
+	 * @return the editPageSeachTextBox
+	 */
+	public void verifyingNavigationMenuLink(String projectName,Map<String, Integer> onlyParent,Map<String, String> parentwithChild,action action,int timeOut) {
+		boolean flag=false;
+		WebElement ele ;
+		int k=0;
+		String xpath = "";
+		String[] childs = null;
+
+		if (onlyParent!=null) {
+			Set<String> navigationParentLabel = onlyParent.keySet();
+			System.err.println("navigationParentLabel>>>>>>>>> : "+navigationParentLabel);
+			for (Iterator iterator = navigationParentLabel.iterator(); iterator.hasNext();) {
+				String parentLabel = (String) iterator.next();
+				System.err.println("parentLabel>>>>>>>>> : "+parentLabel);
+				if (k==0) {
+					xpath = "//div[@id='treeview12']//*//*[text()='"+parentLabel+"']";
+					ele = FindElement(driver, xpath, parentLabel, action, timeOut);
+					if (ele!=null) {
+						log(LogStatus.INFO, "1st Navigation Link Find "+parentLabel, YesNo.No);
+					} else {
+						log(LogStatus.ERROR, "1st Navigation Link not found "+parentLabel+" so cannot verified navigation order : "+navigationParentLabel, YesNo.Yes);
+						sa.assertTrue(false,"1st Navigation Link not found "+parentLabel+" so cannot verified navigation order : "+navigationParentLabel);
+						break;
+					}
+
+				} else {
+					xpath = xpath+"/../following-sibling::*//*[text()='"+parentLabel+"']";
+					ele = FindElement(driver, xpath, parentLabel, action, timeOut);
+					if (ele!=null) {
+						log(LogStatus.INFO, "Navigation Link Find "+parentLabel, YesNo.No);
+					} else {
+						log(LogStatus.ERROR, "Navigation Link not found "+parentLabel+" so cannot verified navigation order : "+navigationParentLabel, YesNo.Yes);
+						sa.assertTrue(false,"Navigation Link not found "+parentLabel+" so cannot verified navigation order : "+navigationParentLabel);
+						//	break;
+					}
+
+				}
+				k++;
+			}
+		}
+		if (parentwithChild!=null) {
+
+			for ( String parent : parentwithChild.keySet() ) {
+				System.out.println(">>>> "+ parent );
+				System.out.println(">>>>value "+ parentwithChild.get(parent) );
+				xpath="";
+				childs=parentwithChild.get(parent).split(commaSP);
+				for (int i = 0; i < childs.length; i++) {
+					xpath = "//div[@id='treeview12']//*//*[text()='"+childs[i]+"']";
+					ele = FindElement(driver, xpath, childs[i], action, timeOut);
+					ele = isDisplayed(driver, ele, "Visibility", timeOut, childs[i]);
+					if (ele==null) {
+						log(LogStatus.INFO, "Navigation Link not visible "+childs[i], YesNo.No);
+					} else {
+						log(LogStatus.ERROR, "Navigation Link found "+childs[i]+" hence it is not under parent : "+parent, YesNo.Yes);
+						sa.assertTrue(false,"Navigation Link found "+childs[i]+" hence it is not under parent : "+parent);;
+					}
+				}
+				xpath = "//div[@id='treeview12']//*//*[text()='"+parent+"']";
+				ele = FindElement(driver, xpath, parent, action, timeOut);
+				if (click(driver, ele, parent, action)) {
+					log(LogStatus.INFO, "Able to Click on Navigation Label : "+parent+" so going to check child label : "+parentwithChild.get(parent), YesNo.No);
+					ThreadSleep(2000);
+					for (int i = 0; i < childs.length; i++) {
+						xpath = xpath+"/../following-sibling::*//*[text()='"+childs[i]+"']";;
+						ele = FindElement(driver, xpath, childs[i], action, timeOut);
+						ele = isDisplayed(driver, ele, "Visibility", timeOut, childs[i]);
+						if (ele!=null) {
+							log(LogStatus.INFO, "Navigation Link found & visible "+childs[i]+" and under parent : "+parent, YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "Navigation Link not found "+childs[i]+" hence it is not under parent : "+parent, YesNo.Yes);
+							sa.assertTrue(false,"Navigation Link not found "+childs[i]+" hence it is not under parent : "+parent);
+							//	break;
+						}
+					}
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on Navigation Label : "+parent+" so cannot check child label : "+parentwithChild.get(parent), YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on Navigation Label : "+parent+" so cannot check child label : "+parentwithChild.get(parent));
+				}
+
+
+			}
+		}
+
+	}
+	
+	public WebElement getNavigationLabel(String projectName,String navigationLabel,action action,int timeOut) {
+		String xpath = "//div[@id='treeview12']//*//*[text()='"+navigationLabel+"']";
+		WebElement ele = FindElement(driver, xpath, navigationLabel, action, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, navigationLabel);
+	}
+	
 }

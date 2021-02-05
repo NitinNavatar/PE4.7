@@ -4483,12 +4483,13 @@ public boolean clickOnTab(String projectName,String TabName) {
 /**
  * @author Azhar Alam
  * @param projectName
- * @param tabName
  * @param alreadyCreated
+ * @param isClick TODO
  * @param timeout
+ * @param tabName
  * @return true if able to click on particular item on Particular tab
  */
-public boolean clickOnAlreadyCreatedItem(String projectName,String alreadyCreated, int timeout) {
+public boolean clickOnAlreadyCreatedItem(String projectName,String alreadyCreated, boolean isClick, int timeout) {
 	boolean flag=false;
 	String xpath="";
 	String viewList = null;
@@ -4511,14 +4512,23 @@ public boolean clickOnAlreadyCreatedItem(String projectName,String alreadyCreate
 				xpath = "//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//*[text()='"+ alreadyCreated + "']";
 				ele = FindElement(driver,xpath,alreadyCreated, action.BOOLEAN, 30);
 				ThreadSleep(2000);
-
-				if (click(driver, ele, alreadyCreated, action.BOOLEAN)) {
-					ThreadSleep(3000);
-					click(driver, getPagePopUp(projectName,5), "Page PopUp", action.BOOLEAN);
-					flag=true;
+				if (isClick) {
+					if (click(driver, ele, alreadyCreated, action.BOOLEAN)) {
+						ThreadSleep(3000);
+						click(driver, getPagePopUp(projectName,5), "Page PopUp", action.BOOLEAN);
+						flag=true;
+					} else {
+					
+					}
 				} else {
-					appLog.error("Not able to Click on Already Created : " + alreadyCreated);
+					if (ele!=null) {
+						appLog.info("Item Found : " + alreadyCreated);
+						flag=true;
+					} else {
+						appLog.error("Item not Found : " + alreadyCreated);
+					}
 				}
+				
 			} else {
 				appLog.error("Not able to enter value on Search Box");
 			}
