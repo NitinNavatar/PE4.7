@@ -1552,7 +1552,16 @@ public boolean clickOnShowMoreActionDownArrow(String projectName,PageName pageNa
 					log(LogStatus.INFO, "clicked on "+actionDropDown+" link", YesNo.No);
 					flag=true;
 			 }else {
-					log(LogStatus.ERROR, "Not able to click on "+actionDropDown+" link", YesNo.Yes);
+					//log(LogStatus.ERROR, "Not able to click on "+actionDropDown+" link", YesNo.Yes);
+					xpath = "//button[@name='"+actionDropDown+"']";
+					ele=FindElement(driver, xpath, actionDropDown, action.BOOLEAN,10);
+					if (click(driver, ele, actionDropDown, action.SCROLLANDBOOLEAN)) {
+						flag=true;
+					}
+					else {
+						log(LogStatus.ERROR, "Not able to click on "+actionDropDown+" link", YesNo.Yes);
+					}
+					
 				}
 		}else {
 			log(LogStatus.ERROR, "Not able to click on show more action down arrow", YesNo.Yes);

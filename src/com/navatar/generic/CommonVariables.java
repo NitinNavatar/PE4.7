@@ -38,7 +38,8 @@ public class CommonVariables {
 	public static String Smoke_HSRINS3Name,Smoke_HSRINS3RecordType,Smoke_HSRDINS3Status;
 	public static String Smoke_HSRINS4Name,Smoke_HSRINS4RecordType,Smoke_HSRDINS4Status;
 	public static String Smoke_HSRINS5Name,Smoke_HSRINS5RecordType,Smoke_HSRDINS5Status;
-	
+	public static double averageDealQualityScore,dealQualityScore;
+	public static int totalDealsshown;
 	public static String Smoke_TWContact1FName,Smoke_TWContact1LName,Smoke_TWContact1EmailID,Smoke_TWContact1RecordType;
 	public static String Smoke_TWContact2FName,Smoke_TWContact2LName,Smoke_TWContact2EmailID,Smoke_TWContact2RecordType;
 	public static String Smoke_TWContact3FName,Smoke_TWContact3LName,Smoke_TWContact3EmailID,Smoke_TWContact3RecordType;

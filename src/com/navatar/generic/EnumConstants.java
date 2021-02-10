@@ -151,6 +151,14 @@ public class EnumConstants {
 		Activate,Deactivate,View,LastActivatedOn,CreatedOn;
 	}
 	
+	public static enum Stage {
+		NDA_Signed,Deal_Received,Management_Meeting,IOI,LOI,Due_Diligence,Parked,Closed,DeclinedDead{
+			@Override
+			public String toString() {
+				return "Declined/Dead";
+		}
+		};
+	}
 	public static enum YesNo {
 		Yes,No,YesWinium;
 	}
