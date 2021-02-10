@@ -4659,6 +4659,28 @@ public WebElement getMenuTab(String projectName,String labelName,action action,i
 	return ele;
 }
 
+public boolean isAutomationAllListViewAdded(String projectName, int timeOut) {
+	String viewList="Automation All",xpath="";
+	if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+		ThreadSleep(3000);
+		xpath="//div[@class='listContent']//li/a/span[text()='" + viewList + "']";
+		WebElement selectListView = FindElement(driver, xpath,"Select List View : "+viewList, action.SCROLLANDBOOLEAN, 5);
+		ThreadSleep(3000);
+		if ( selectListView!=null) {
+			log(LogStatus.INFO, "automation all is already present", YesNo.No);
+			return true;
+		}
+		else {
+			log(LogStatus.ERROR, "not found automation all.. now creating", YesNo.No);
+			
+		}
+	}else {
+		log(LogStatus.ERROR, "list dropdown is not clickable, so cannot check presence of Automation All", YesNo.Yes);
+		
+	}
+
+	return false;
+}
 
 
 }

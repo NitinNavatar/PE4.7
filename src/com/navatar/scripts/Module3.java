@@ -458,7 +458,357 @@ public class Module3 extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
+		
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc006_VerifyTheItemsForWhichQuickCreateObjectFieldWasFill(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		Map<String, String> parentChildForQuickActionObject = new LinkedHashMap<String, String>(); 
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		System.err.println(NavigationMenuTestData_PEExcel+" >>>>>>>>>>>>><<<<<<<<<<<< "+NavigationMenuTestData_PESheet);
 
+		if (!csvRecords.isEmpty()) {
+			log(LogStatus.INFO, "Records Fetched from CSV File : "+NavigationMenuTestData_PEExcel, YesNo.No);
+			// Verify the items for which Quick Create Object field was fill
+			String labelValue="";
+			String quickActionObject="";
+			WebElement ele;
+			String actualUrl="";
+			String parent="";
+			for (String labelName : csvRecords) {
+
+				try {
+					System.err.println(labelName);
+					labelValue=labelName.split(commaSP)[0].trim();
+					parent=labelName.split(commaSP)[2].trim();
+					quickActionObject=labelName.split(commaSP)[3].trim();
+					System.out.println(labelValue+" >>>>>>> "+quickActionObject);
+					if (quickActionObject.isEmpty() || quickActionObject.equals("")) {
+						quickActionObject=none;
+					} else {
+						if (parentChildForQuickActionObject.get(parent)!=null) {
+							String a=parentChildForQuickActionObject.get(parent);
+							parentChildForQuickActionObject.put(parent,a+breakSP+labelValue);
+						} else {
+							parentChildForQuickActionObject.put(parent,labelValue);
+						}
+					}
+				} catch (Exception e) {
+					quickActionObject=none;
+					System.out.println("Exception "+labelValue+" >>>>>>> "+quickActionObject);
+				}
+
+
+			}
+			String childs[]=null;
+			if (!parentChildForQuickActionObject.isEmpty()) {
+
+				for (String pr : parentChildForQuickActionObject.keySet()) {
+					childs=parentChildForQuickActionObject.get(pr).split(breakSP);
+					for (int i = 0; i < childs.length; i++) {
+						if (pr.isEmpty()) {
+
+						} else {
+							ele=npbl.getNavigationLabel(projectName, pr, action.BOOLEAN, 5);
+							click(driver, ele, pr, action.BOOLEAN);
+						}
+						ele=npbl.getNavigationLabel(projectName, childs[i], action.BOOLEAN, 5);
+						if (click(driver, ele, childs[i], action.BOOLEAN)) {
+							log(LogStatus.INFO, "Not able to click on "+childs[i], YesNo.No);
+							ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, childs[i], action.BOOLEAN, 30);
+							if (ele!=null) {
+								log(LogStatus.INFO, "Pop Up open after clicking on "+childs[i] , YesNo.No);
+								if (click(driver, ele, childs[i]+" pop up cross button", action.BOOLEAN)) {
+									log(LogStatus.INFO, "click on cross button "+childs[i] , YesNo.No);
+								} else {
+									log(LogStatus.ERROR, "Not Able to click on cross button "+childs[i], YesNo.Yes);
+									sa.assertTrue(false, "Not Able to click on cross button "+childs[i]);
+								}
+							} else {
+								log(LogStatus.ERROR, "No Pop Up is open after clicking on "+childs[i], YesNo.Yes);
+								sa.assertTrue(false, "No Pop Up is open after clicking on "+childs[i]);
+							}
+						} else {
+							log(LogStatus.ERROR, "Not able to click on "+childs[i], YesNo.Yes);
+							sa.assertTrue(false, "Not able to click on "+childs[i]);
+						}
+					}
+
+				}
+
+			} else {
+				log(LogStatus.FAIL, "Map is empty its means No label is present with Quick Action Object so cannot continue test case", YesNo.Yes);
+				sa.assertTrue(false, "Map is empty its means No label is present with Quick Action Object so cannot continue test case");
+			}
+		} else {
+			log(LogStatus.FAIL, "Unable to Fetch Records from CSV File : "+NavigationMenuTestData_PEExcel, YesNo.Yes);
+			sa.assertTrue(false, "Unable to Fetch Records from CSV File : "+NavigationMenuTestData_PEExcel);
+		}
+		System.err.println("parentChildForQuickActionObject : "+parentChildForQuickActionObject);
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc007_VerifyTheNavigationMenuForWhichListViewObjectFilled(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		Map<String, String> parentChildForListViewObject = new LinkedHashMap<String, String>(); 
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		System.err.println(NavigationMenuTestData_PEExcel+" >>>>>>>>>>>>><<<<<<<<<<<< "+NavigationMenuTestData_PESheet);
+
+		if (!csvRecords.isEmpty()) {
+			log(LogStatus.INFO, "Records Fetched from CSV File : "+NavigationMenuTestData_PEExcel, YesNo.No);
+			// Verify the items for which Quick Create Object field was fill
+			String labelValue="";
+			String listViewObject="";
+			WebElement ele;
+			String parent="";
+			for (String labelName : csvRecords) {
+
+				try {
+					System.err.println(labelName);
+					labelValue=labelName.split(commaSP)[0].trim();
+					parent=labelName.split(commaSP)[2].trim();
+					listViewObject=labelName.split(commaSP)[5].trim();
+					System.out.println(labelValue+" >>>>>>> "+listViewObject);
+					if (listViewObject.isEmpty() || listViewObject.equals("")) {
+						listViewObject=none;
+					} else {
+						if (parentChildForListViewObject.get(parent)!=null) {
+							String a=parentChildForListViewObject.get(parent);
+							parentChildForListViewObject.put(parent,a+breakSP+labelValue);
+						} else {
+							parentChildForListViewObject.put(parent,labelValue);
+						}
+					}
+				} catch (Exception e) {
+					listViewObject=none;
+					System.out.println("Exception "+labelValue+" >>>>>>> "+listViewObject);
+				}
+
+
+			}
+			String childs[]=null;
+			boolean flag=false;
+			if (!parentChildForListViewObject.isEmpty()) {
+
+				for (String pr : parentChildForListViewObject.keySet()) {
+					childs=parentChildForListViewObject.get(pr).split(breakSP);
+					for (int i = 0; i < childs.length; i++) {
+						if (pr.isEmpty()) {
+
+						} else {
+							ele=npbl.getNavigationLabel(projectName, pr, action.BOOLEAN, 5);
+							click(driver, ele, pr, action.BOOLEAN);
+						}
+						ele=npbl.getNavigationLabel(projectName, childs[i], action.BOOLEAN, 5);
+						if (click(driver, ele, childs[i], action.BOOLEAN)) {
+							log(LogStatus.INFO, "Not able to click on "+childs[i], YesNo.No);
+							flag=npbl.isAutomationAllListViewAdded(projectName, 30);
+							if (flag) {
+								log(LogStatus.INFO, "List View is available after clicking on "+childs[i] , YesNo.No);
+								
+							} else {
+								log(LogStatus.ERROR, "No List View is available is open after clicking on "+childs[i], YesNo.Yes);
+								sa.assertTrue(false, "No List View is available is open after clicking on "+childs[i]);
+							}
+						} else {
+							log(LogStatus.ERROR, "Not able to click on "+childs[i], YesNo.Yes);
+							sa.assertTrue(false, "Not able to click on "+childs[i]);
+						}
+					}
+
+				}
+
+			} else {
+				log(LogStatus.FAIL, "Map is empty its means No label is present with List View Object so cannot continue test case", YesNo.Yes);
+				sa.assertTrue(false, "Map is empty its means No label is present with List View Object so cannot continue test case");
+			}
+		} else {
+			log(LogStatus.FAIL, "Unable to Fetch Records from CSV File : "+NavigationMenuTestData_PEExcel, YesNo.Yes);
+			sa.assertTrue(false, "Unable to Fetch Records from CSV File : "+NavigationMenuTestData_PEExcel);
+		}
+		System.err.println("parentChildForQuickActionObject : "+parentChildForListViewObject);
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc008_VerifyTheitemsForWhichURLAndActionObjectAndLiewViewObjectFieldWasBlank(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		Map<String, String> parentChildForListViewObject = new LinkedHashMap<String, String>(); 
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		System.err.println(NavigationMenuTestData_PEExcel+" >>>>>>>>>>>>><<<<<<<<<<<< "+NavigationMenuTestData_PESheet);
+
+		if (!csvRecords.isEmpty()) {
+			log(LogStatus.INFO, "Records Fetched from CSV File : "+NavigationMenuTestData_PEExcel, YesNo.No);
+			// Verify the items for which Quick Create Object field was fill
+			String labelValue="";
+			String listViewObject="";
+			String quickActionObject="";
+			String urlValue="";
+			String expectedUrl="";
+			String actualUrl;
+			WebElement ele;
+			String parent="";
+			expectedUrl=getURL(driver, 10);
+			for (String labelName : csvRecords) {
+
+				try {
+					System.err.println(labelName);
+					labelValue=labelName.split(commaSP)[0].trim();
+					parent=labelName.split(commaSP)[2].trim();
+					urlValue=labelName.split(commaSP)[7].trim();
+					quickActionObject=labelName.split(commaSP)[3].trim();
+					listViewObject=labelName.split(commaSP)[5].trim();
+					System.out.println(labelValue+" >>>>>>> "+listViewObject);
+					if (listViewObject.isEmpty() || listViewObject.equals("") 
+							|| quickActionObject.isEmpty() || quickActionObject.equals("") 
+							|| urlValue.isEmpty() || urlValue.equals("")) {
+						listViewObject=none;
+					} else {
+						if (parentChildForListViewObject.get(parent)!=null) {
+							String a=parentChildForListViewObject.get(parent);
+							parentChildForListViewObject.put(parent,a+breakSP+labelValue);
+						} else {
+							parentChildForListViewObject.put(parent,labelValue);
+						}
+					}
+				} catch (Exception e) {
+					listViewObject=none;
+					System.out.println("Exception "+labelValue+" >>>>>>> "+listViewObject);
+				}
+
+
+			}
+			String childs[]=null;
+			boolean flag=false;
+			if (!parentChildForListViewObject.isEmpty()) {
+
+				for (String pr : parentChildForListViewObject.keySet()) {
+					childs=parentChildForListViewObject.get(pr).split(breakSP);
+					for (int i = 0; i < childs.length; i++) {
+						if (pr.isEmpty()) {
+
+						} else {
+							ele=npbl.getNavigationLabel(projectName, pr, action.BOOLEAN, 5);
+							click(driver, ele, pr, action.BOOLEAN);
+						}
+						ele=npbl.getNavigationLabel(projectName, childs[i], action.BOOLEAN, 5);
+						if (click(driver, ele, childs[i], action.BOOLEAN)) {
+							log(LogStatus.INFO, "Not able to click on "+childs[i], YesNo.No);
+							flag=npbl.isAutomationAllListViewAdded(projectName, 10);	
+							if (!flag && ele==null ) {
+								log(LogStatus.INFO, "No List View is available after clicking on "+childs[i] , YesNo.No);
+
+								if (!flag) {
+									log(LogStatus.INFO, "List View is available after clicking on "+childs[i] , YesNo.No);
+									ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, childs[i], action.BOOLEAN, 30);
+									if (ele==null ) {
+										log(LogStatus.INFO, "No Pop Up List View is open after clicking on "+childs[i] , YesNo.No);
+										actualUrl=getURL(driver, 10);
+										if (expectedUrl.contains(actualUrl)) {
+											log(LogStatus.INFO, "No change in url link after click on "+childs[i], YesNo.No);
+										} else {
+											log(LogStatus.ERROR, "url link sholud not be changed after click on "+childs[i]+" Actual : "+actualUrl+"\t Expected : "+expectedUrl, YesNo.Yes);
+											sa.assertTrue(false,"url link sholud not be changed after click on "+childs[i]+" Actual : "+actualUrl+"\t Expected : "+expectedUrl);
+											refresh(driver);
+										}
+									} else {
+										log(LogStatus.ERROR, "No Pop Up Should be open after clicking on "+childs[i], YesNo.Yes);
+										sa.assertTrue(false, "No Pop Up Should be open after clicking on "+childs[i]);
+									}
+
+								} else {
+									log(LogStatus.ERROR, "List View should not available after clicking on "+childs[i], YesNo.Yes);
+									sa.assertTrue(false, "List View should not available after clicking on "+childs[i]);
+								}
+
+							} else {
+								log(LogStatus.ERROR, "No List View is available is open after clicking on "+childs[i], YesNo.Yes);
+								sa.assertTrue(false, "No List View is available is open after clicking on "+childs[i]);
+							}
+						} else {
+							log(LogStatus.ERROR, "Not able to click on "+childs[i], YesNo.Yes);
+							sa.assertTrue(false, "Not able to click on "+childs[i]);
+						}
+					}
+
+				}
+
+			} else {
+				log(LogStatus.FAIL, "Map is empty its means No label For Which URL, ActionObject And Liew View Object Field is Blank", YesNo.Yes);
+				sa.assertTrue(false, "Map is empty its means No label For Which URL, ActionObject And Liew View Object Field is Blank");
+			}
+		} else {
+			log(LogStatus.FAIL, "Unable to Fetch Records from CSV File : "+NavigationMenuTestData_PEExcel, YesNo.Yes);
+			sa.assertTrue(false, "Unable to Fetch Records from CSV File : "+NavigationMenuTestData_PEExcel);
+		}
+		System.err.println("parentChildForQuickActionObject : "+parentChildForListViewObject);
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc010_VerifyTheFieldsOnNavigationObject(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		List<String> navigationField = new LinkedList<String>();
+		navigationField.add("Navigation Label");
+		navigationField.add("URL");
+		navigationField.add("Parent");
+		navigationField.add("Order");
+		navigationField.add("Action Object");
+		navigationField.add("Action Record Type");
+		navigationField.add("List View Object");
+		navigationField.add("List View Name");
+		if (npbl.clickOnTab(projectName, navigationTab)) {
+			log(LogStatus.INFO, "Click on Tab : "+navigationTab, YesNo.No);
+			if(clickUsingJavaScript(driver, lp.getNewButton(projectName, 10), "new button")) {
+				log(LogStatus.INFO, "Click on new button going to verify navigation field : "+navigationField, YesNo.No);
+				WebElement ele = npbl.getCrossButtonForNavigationLabelPopuP(projectName, navigationTab, action.BOOLEAN, 60);
+				if (ele!=null) {
+					log(LogStatus.INFO, "Pop Up open after clicking on new button for : "+navigationTab , YesNo.No);
+					for (String nf : navigationField) {
+						ele = npbl.getNavigationField(projectName, nf, action.SCROLLANDBOOLEAN, 2);
+						if (ele!=null) {
+							log(LogStatus.INFO, nf+" field is present & verified on "+navigationTab+" pop up" , YesNo.No);
+						} else {
+							log(LogStatus.ERROR, nf+" field not present on "+navigationTab+" pop up" , YesNo.Yes);
+							sa.assertTrue(false, nf+" field not present on "+navigationTab+" pop up");
+						}
+					}
+				} else {
+					log(LogStatus.ERROR, "No Pop Up is open after clicking on new button for : "+navigationTab, YesNo.Yes);
+					sa.assertTrue(false, "No Pop Up is open after clicking on new button for : "+navigationTab);
+				}
+
+
+			}else {
+				log(LogStatus.ERROR, "Not Able to Click on new button so cannot verify navigation field : "+navigationField, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to Click on new button so cannot verify navigation field : "+navigationField);
+
+			}
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on Tab : "+navigationTab, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on Tab : "+navigationTab);
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 
 }
 	

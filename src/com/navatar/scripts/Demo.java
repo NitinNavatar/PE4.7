@@ -9,9 +9,15 @@ import static com.navatar.pageObjects.NavigationPageBusineesLayer.navigationPare
 import static com.navatar.pageObjects.NavigationPageBusineesLayer.sortByValue;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,6 +38,9 @@ import java.util.Map.Entry;
 
 import com.navatar.generic.ExcelUtils;
 import com.navatar.pageObjects.NavigationPageBusineesLayer;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvException;
 
 public class Demo {
 	Scanner scn = new Scanner(System.in);
@@ -43,38 +52,131 @@ public class Demo {
 	String navigationMenuName="Navigation Menu";
 	public static  String NavigationMenuTestData_PEExcel = System.getProperty("user.dir")+"\\UploadFiles\\Module 3\\UploadCSV\\NavigationMenuTestData_PE - AllNew.csv";
 	public static  String NavigationMenuTestData_PESheet = "asd";
+	public static Scanner x;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Demo  dm = new Demo();
-		Map<String, Integer> map = new LinkedHashMap<String, Integer>();  
-		Map<String, String> childMap = new LinkedHashMap<String, String>();  
-		System.err.println(NavigationMenuTestData_PEExcel+" >>>>>>>>>>>>><<<<<<<<<<<< "+NavigationMenuTestData_PESheet);
-		List<String> csvRecords = ExcelUtils.readAllDataFromCSVFileIntoList(NavigationMenuTestData_PEExcel, false);
-		
-		for (String string : csvRecords) {
-			System.err.println(string);	
-		}
-		Map<String, Integer> navigationParentLabelWithOrder = navigationParentLabelWithOrder(csvRecords);
-		Set<String> abc = navigationParentLabelWithOrder.keySet();
-		for (String string : abc) {
-			System.err.println("Set : "+string);
-		}
-//		for (int i = 0; i < abc.size(); i++) {
-//			//System.err.println("Set : "+abc);
+//		Demo  dm = new Demo();
+//		Map<String, Integer> map = new LinkedHashMap<String, Integer>();  
+//		Map<String, String> childMap = new LinkedHashMap<String, String>();  
+//		System.err.println(NavigationMenuTestData_PEExcel+" >>>>>>>>>>>>><<<<<<<<<<<< "+NavigationMenuTestData_PESheet);
+//		List<String> csvRecords = ExcelUtils.readAllDataFromCSVFileIntoList(NavigationMenuTestData_PEExcel, false);
+//		
+//		for (String string : csvRecords) {
+//			System.err.println(string);	
 //		}
-		for ( String key : navigationParentLabelWithOrder.keySet() ) {
-		    System.out.println(">>>> "+ key );
-		    System.out.println(">>>>value "+ navigationParentLabelWithOrder.get(key) );
-		}
-		System.err.println(">>>>>>> : "+navigationParentLabelWithOrder.keySet());
-		System.out.println(navigationParentLabelWithOrder);
-		System.err.println(sortByValue(true, navigationParentLabelWithOrder));
-		Map<String, String> navigationParentLabelWithChildAndOrder = navigationParentLabelWithChildAndOrder(csvRecords);
-		System.out.println(navigationParentLabelWithChildAndOrder);
-		Map<String, String> navigationParentLabelWithChildSorted = navigationParentLabelWithChildSorted(navigationParentLabelWithChildAndOrder);
-		System.err.println(navigationParentLabelWithChildSorted);
-
+//		Map<String, Integer> navigationParentLabelWithOrder = navigationParentLabelWithOrder(csvRecords);
+//		Set<String> abc = navigationParentLabelWithOrder.keySet();
+//		for (String string : abc) {
+//			System.err.println("Set : "+string);
+//		}
+////		for (int i = 0; i < abc.size(); i++) {
+////			//System.err.println("Set : "+abc);
+////		}
+//		for ( String key : navigationParentLabelWithOrder.keySet() ) {
+//		    System.out.println(">>>> "+ key );
+//		    System.out.println(">>>>value "+ navigationParentLabelWithOrder.get(key) );
+//		}
+//		System.err.println(">>>>>>> : "+navigationParentLabelWithOrder.keySet());
+//		System.out.println(navigationParentLabelWithOrder);
+//		System.err.println(sortByValue(true, navigationParentLabelWithOrder));
+//		Map<String, String> navigationParentLabelWithChildAndOrder = navigationParentLabelWithChildAndOrder(csvRecords);
+//		System.out.println(navigationParentLabelWithChildAndOrder);
+//		Map<String, String> navigationParentLabelWithChildSorted = navigationParentLabelWithChildSorted(navigationParentLabelWithChildAndOrder);
+//		System.err.println(navigationParentLabelWithChildSorted);
+		
+		/////////////////////////////////
+//		try {
+//			
+//			CSVReader products = new CSVReader(new FileReader(new File(NavigationMenuTestData_PEExcel)));
+//			List<String[]> abc = null;
+//			while (products.readNext()!=null) {
+//				abc = products.readAll();
+//			}
+//			for (String[] strings : abc) {
+//				
+//				for (int i = 0; i < strings.length; i++) {
+//					System.err.print(strings[i]+">");
+//					
+//				}
+//				System.err.println(" ");
+//			}
+//			String tempFile="temp11.txt";
+//			String tmvalue="";
+//			File oldFile = new File(NavigationMenuTestData_PEExcel);
+//			File newFile = new File(tempFile);
+//			FileWriter fw = new FileWriter(tempFile,true);
+//			BufferedWriter bw = new BufferedWriter(fw);
+//			PrintWriter pw  = new PrintWriter(bw);
+//			 x= new Scanner(new File(NavigationMenuTestData_PEExcel));
+//			 x.useDelimiter("[,\n]");
+//			 while (x.hasNext()) {
+//				 tmvalue=x.next();
+//				 System.out.println("tmvalue"+tmvalue);
+//				 if (tmvalue.equalsIgnoreCase("Reports")) {
+//					 pw.print("Alam");
+//				} else {
+//
+//				}
+//				
+//				
+//			}
+//			 x.close();
+//			 pw.flush();
+//			 pw.close();
+//			 oldFile.delete();
+//			 File dump = new File(NavigationMenuTestData_PEExcel);
+//			 newFile.renameTo(dump);
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
+		
+		////////////////////////////////////
+		
+//		
+//		try {
+//			File inputFile = new File(NavigationMenuTestData_PEExcel);
+//
+//			// Read existing file
+//			CSVReader reader = new CSVReader(new FileReader(inputFile));
+//			List<String[]> csvBody = reader.readAll();
+//			System.err.println("csvBody: "+csvBody.size());
+//			// get CSV row column and replace with by using row and column
+//			for(int i=0; i<csvBody.size(); i++){
+//			    String[] strArray = csvBody.get(i);
+//			    System.err.println("strArray: "+strArray.length);
+//			    for(int j=0; j<strArray.length; j++){
+//			        if(strArray[j].equalsIgnoreCase("Reports1111")){ //String to be replaced
+//			            csvBody.get(i)[j] = "Reports"; //Target replacement
+//			        }
+//			    }
+//			}
+//			reader.close();
+//
+//			// Write to CSV file which is open
+//			CSVWriter writer = new CSVWriter(new FileWriter(inputFile));
+//			writer.writeAll(csvBody);
+//			writer.flush();
+//			writer.close();
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (CsvException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//int l =ExcelUtils.getColumnNumberFromCSVFileBasedOnLabel(NavigationMenuTestData_PEExcel, "URL");
+//System.err.println(l);
+//int m=ExcelUtils.getRowNumberFromCSVFileBasedOnLabelAndValue(NavigationMenuTestData_PEExcel, "Navigation Label", "Reports");
+//System.err.println(m);
+String value = ExcelUtils.readDataFromCSVFile(NavigationMenuTestData_PEExcel, "Order", "35", "Action Record Type");
+System.err.println(value);
+ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, "Azhar", "Navigation Label", "Contact", "URL");
+	
+		
 	}
 
 

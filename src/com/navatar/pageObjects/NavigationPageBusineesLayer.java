@@ -304,4 +304,19 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		return isDisplayed(driver, ele, "Visibility", timeOut, navigationLabel);
 	}
 	
+	public WebElement getCrossButtonForNavigationLabelPopuP(String projectName,String navigationLabel,action action,int timeOut) {
+		String xpath = "//h2[contains(text(),'New') and contains(text(),'"+navigationLabel+"')]/ancestor::div//following-sibling::button[@title='Close this window']";
+		WebElement ele = FindElement(driver, xpath, navigationLabel, action, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, navigationLabel);
+	}
+	
+	
+	public WebElement getNavigationField(String projectName,String navigationField,action action,int timeOut) {
+		String xpath = "//*[text()='"+navigationField+"']/following-sibling::div//input";
+		WebElement ele = FindElement(driver, xpath, navigationField, action, timeOut);
+		scrollDownThroughWebelement(driver, ele, navigationField);
+		return isDisplayed(driver, ele, "Visibility", timeOut, navigationField);
+	}
+	
+	
 }
