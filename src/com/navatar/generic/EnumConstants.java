@@ -105,7 +105,7 @@ public class EnumConstants {
 		NavatarInvestorAddOns, CurrentInvesment, PotentialInvesment, RecentActivities, AllDocuments, HomeTab, 
 		FolderTemplate, FundDistributions, InvestorDistributions, MarketingInitiatives, MarketingProspects, 
 		NavatarSetup, Pipelines, FundDrawdowns, CapitalCalls, FundraisingContacts, LimitedPartne, ReportsTab, LimitedPartner,CompaniesTab, TaskRayTab,TaskRay,TestCustomObjectTab, TaskTab,
-		Other,Object1Tab,Object2Tab,Object3Tab,Object4Tab,RecycleBinTab,SDGTab,DealTab, Object5Tab,Object6Tab,Object7Tab;
+		Other,Object1Tab,Object2Tab,Object3Tab,Object4Tab,RecycleBinTab,SDGTab,DealTab, Object5Tab,Object6Tab,Object7Tab,Entities,Deals,Marketing_Events;
 	}
 	
 	public static enum Mode{
@@ -255,12 +255,18 @@ public class EnumConstants {
 		public String toString() {
 			return "Activity Setting";
 		}
-	}, Activity,Entity,Maketing_Event{
+	}, Activity,Entity,Marketing_Event{
 		@Override
 		public String toString() {
 			return "Marketing Event";
 		}
-	}
+	}, Apps,
+	App_Manager{
+		@Override
+		public String toString() {
+			return "App Manager";
+		}
+}
 	};
 	
 	public static enum ObjectFeatureName{
@@ -1020,7 +1026,7 @@ public static enum PermissionType{
 			@Override
 			public String toString() {
 			return "Rename-Under Evaluation";
-		}},Watchlist, Watch_list,Conversion_Date,Portfolio_Company,Related_Associations,Name, Subject, Due_Date, New_Task, Related_To, Comments, Edit, Assigned_To, Start_Date, End_Date, End_Time, Start_Time, Type, Date, Contact_Name, Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places, Values, Is_Touchpoint,Description, Request, Date_Requested, Attendee_Staff
+		}},Watchlist, Watch_list,Conversion_Date,Portfolio_Company,Related_Associations,Name, Subject, Due_Date, New_Task, Related_To, Comments, Edit, Assigned_To, Start_Date, End_Date, End_Time, Start_Time, Type, Date, Contact_Name, Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places, Values, Is_Touchpoint,Description, Request, Date_Requested, Attendee_Staff, Label
 	};
 	
 	public static enum Links{
@@ -1159,5 +1165,61 @@ public static enum PermissionType{
             }
         };    
     };
+    
+
+	public static enum SearchItemName{
+		Data_Import_Wizard;
+	}
+	
+	public static enum SearchItemcategory{
+		Import;
+	}
+	public static enum ObjectName{
+		InstitutionAndContacts {
+			@Override
+			public String toString() {
+				return "Institutions and Contacts";
+			}},Funds,Fundraisings,Partnerships, Navigation;
+	}
+	public static enum ObjectType{
+		Standard,Custom;
+	}
+	
+	public static enum DataImportType{
+		AddNewRecords {
+			@Override
+			public String toString() {
+				return "Add new records";
+			}},
+		UpdateExistingRecords {
+				@Override
+				public String toString() {
+					return "Update existing records";
+				}},
+		AddNewAndUpdateExistingRecords {
+					@Override
+					public String toString() {
+						return "Add new and update existing records";
+					}}
+	}
+	
+	public static enum AppSetting{
+		Utility_Items {
+			@Override
+			public String toString() {
+				return "Utility Items";
+			}},
+		Navigation_Items {
+				@Override
+				public String toString() {
+					return "Navigation Items";
+				}},
+		User_Profiles {
+					@Override
+					public String toString() {
+						return "User Profiles";
+					}}
+	}
+	
 
 }

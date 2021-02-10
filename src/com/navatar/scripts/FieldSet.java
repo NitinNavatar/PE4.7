@@ -1,7 +1,9 @@
 package com.navatar.scripts;
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
+import static com.navatar.generic.ExcelUtils.*;
 import java.util.List;
+import java.util.concurrent.Phaser;
 
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
@@ -11,9 +13,12 @@ import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.EnumConstants.CreationPage;
+import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
+import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
+import com.navatar.generic.EnumConstants.object;
 import com.navatar.pageObjects.CommitmentsPageBusinessLayer;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
 import com.navatar.pageObjects.EditPageBusinessLayer;
@@ -182,7 +187,7 @@ public class FieldSet extends BaseLib {
 		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);	
 			String mailID=	lp.generateRandomEmailId(gmailUserName);
-			ExcelUtils.writeData(pahse1DataSheetFilePath, mailID, "Contacts", excelLabel.Variable_Name, "C1",excelLabel.Contact_EmailId);
+			ExcelUtils.writeData(phase1DataSheetFilePath, mailID, "Contacts", excelLabel.Variable_Name, "C1",excelLabel.Contact_EmailId);
 			if (con.createContact(projectName, FS_Con1_FName, FS_Con1_LName, FS_Ins1, mailID,FS_Con1_RecordType,excelLabel.Phone.toString(), FS_Con1_Phone, CreationPage.ContactPage, null)) {
 				log(LogStatus.INFO,"successfully Created Contact : "+FS_Con1_FName+" "+FS_Con1_LName,YesNo.No);	
 			} else {
@@ -775,7 +780,7 @@ public class FieldSet extends BaseLib {
 				log(LogStatus.INFO,"Click on Tab : "+TabName.Object7Tab,YesNo.No);	
 
 
-				if (com.createCommitment(projectName, comm[0],comm[1], comm[2],comm[3],pahse1DataSheetFilePath, comm[4])) {
+				if (com.createCommitment(projectName, comm[0],comm[1], comm[2],comm[3],phase1DataSheetFilePath, comm[4])) {
 					log(LogStatus.INFO,"Created Commiments : "+comm[0]+" "+comm[1],YesNo.No);	
 				} else {
 					sa.assertTrue(false,"Not Able to Create Commiments : "+comm[0]+" "+comm[1]);
@@ -985,7 +990,7 @@ public class FieldSet extends BaseLib {
 			for(String[] objects : labelAndValues) {
 				String[][] valuesandLabel = {{objects[2],objects[3]}};
 				
-				if(setup.addCustomFieldforFormula(environment,mode,object.Maketing_Event,ObjectFeatureName.FieldAndRelationShip,objects[0],objects[1], valuesandLabel, null,null)) {
+				if(setup.addCustomFieldforFormula(environment,mode,object.Marketing_Event,ObjectFeatureName.FieldAndRelationShip,objects[0],objects[1], valuesandLabel, null,null)) {
 					log(LogStatus.PASS, "Field Object is created for :"+objects[1], YesNo.No);
 				}else {
 					log(LogStatus.PASS, "Field Object is not created for :"+objects[1], YesNo.Yes);
@@ -1002,4 +1007,175 @@ public class FieldSet extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc018_verifyFieldSetImagePath(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
+		List<String> Items = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
+		List<String> ItemFieldName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",3,false));
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		for(int i=0; i<tabNames.size(); i++) {
+			TabName tabName =TabName.valueOf(tabNames.get(i));
+			if (lp.clickOnTab(projectName, tabName)) {
+				log(LogStatus.INFO,"Click on Tab : "+tabName,YesNo.No);
+				if(lp.clickOnAlreadyCreatedItem(projectName, Items.get(i), true, 20)) {
+					log(LogStatus.INFO,"clicked on created item : "+Items.get(i), YesNo.No);
+					ThreadSleep(5000);
+					if(edit.clickOnEditPageLink()) {
+						ThreadSleep(2000);
+						switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
+						if(click(driver, edit.getFieldSetCompoentXpath(10), "field set component xpath", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on field set component", YesNo.No);
+							ThreadSleep(2000);
+							switchToDefaultContent(driver);
+							if(getValueFromElementUsingJavaScript(driver, edit.getImageFieldNameTextBox(10), "image field name xpath").equalsIgnoreCase(ItemFieldName.get(i))){
+								log(LogStatus.PASS, "Image Field Name is verified on "+tabName+" for "+Items.get(i), YesNo.No);
+
+							}else {
+								log(LogStatus.ERROR, "Image Field Name is not verified on "+tabName+" for "+Items.get(i), YesNo.Yes);
+								sa.assertTrue(false, "Image Field Name is verified on "+tabName+" for "+Items.get(i));
+							}
+							ThreadSleep(2000);
+							if(clickUsingJavaScript(driver, edit.getBackButton(10), "back button", action.BOOLEAN)) {
+								log(LogStatus.PASS, "clicked on back button", YesNo.No);
+							}else {
+								log(LogStatus.ERROR, "Not able to click on back button so cannot back on page ", YesNo.Yes);
+								sa.assertTrue(false, "Not able to click on back button so cannot back on page ");
+							}
+						}else {
+							log(LogStatus.ERROR, "Not able to click on field set component "+tabNames.get(i)+" so cannot verify field set name", YesNo.Yes);
+							sa.assertTrue(false, "Not able to click on field set component "+tabNames.get(i)+" so cannot verify field set name");
+						}
+					}else {
+						log(LogStatus.ERROR, "Not able to click on edit page so cannot add field set component on contact page : "+FS_Con1_FName+" "+FS_Con1_LName, YesNo.Yes);
+						sa.assertTrue(false, "Not able to click on edit page so cannot add field set component on contact page : "+FS_Con1_FName+" "+FS_Con1_LName);
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to click on created item "+Items.get(i)+" so cannot verify field set image", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on created item "+Items.get(i)+" so cannot verify field set image");
+				}
+			} else {
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabName+" so cannot verify field set image",YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabName+" so cannot verify field set image");
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc019_addProfileImageFieldOnLayOut(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home= new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		String parentWindow =null;
+		List<String> objectNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",4,false));
+		List<String> objectAPINames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",5,false));
+		List<String> FieldsNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",6,false));
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create Fields Objects for custom object Marketing Event");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create Fields Objects for custom object Marketing Event",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create Fields Objects for custom object Marketing Event");
+			}
+			ThreadSleep(3000);
+			
+			
+			for(int i=0; i<objectNames.size(); i++) {
+				object ObjectName =object.valueOf(objectNames.get(i));
+				if(setup.searchStandardOrCustomObject(environment,mode, ObjectName)) {
+					log(LogStatus.INFO, "click on Object : "+ObjectName, YesNo.No);
+					ThreadSleep(2000);
+					if(setup.clickOnObjectFeature(environment,mode, ObjectName, ObjectFeatureName.pageLayouts)) {
+						log(LogStatus.INFO, "Clicked on feature : "+ObjectFeatureName.pageLayouts+" of "+ObjectName, YesNo.No);
+						ThreadSleep(1000);
+						ThreadSleep(1000);
+						if(sendKeys(driver, setup.getQuickSearchInObjectManager_Lighting(10), objectAPINames.get(i), "search text box", action.BOOLEAN)) {
+							String xpath="//span[text()='"+objectAPINames.get(i)+"']/..";
+							WebElement ele = isDisplayed(driver, FindElement(driver, xpath, "field set label text", action.BOOLEAN, 3), "visibility", 3, "field set label text");
+							if(ele!=null) {
+								if(click(driver, ele, "create field set "+objectAPINames.get(i), action.BOOLEAN)) {
+									log(LogStatus.INFO, "Field Set Label "+objectAPINames.get(i)+" is already created ", YesNo.No);
+									ThreadSleep(3000);
+									switchToFrame(driver, 20, setup.getEditPageLayoutFrame_Lighting(20));
+									sendKeys(driver, setup.getQuickFindSearchBox(environment, mode, 10), FieldsNames.get(i), "Search Value : "+FieldsNames.get(i), action.BOOLEAN);
+									ThreadSleep(1000);
+									WebElement sourceElement =isDisplayed(driver, FindElement(driver, "//span[starts-with(text(),'"+FieldsNames.get(i)+"')]", "", action.BOOLEAN,10), "visibility",10,FieldsNames.get(i)+" page layout link");
+
+									ThreadSleep(2000);
+									scrollDownThroughWebelement(driver, setup.getPageLayoutDropLocation(10), "");
+									if(dragNDropOperation(driver, sourceElement, setup.getPageLayoutDropLocation(10))) {
+										log(LogStatus.INFO, "Dragged Successfully : "+FieldsNames.get(i)+" page layout of "+ObjectName, YesNo.No);
+										ThreadSleep(2000);
+										if(setup.getDraggedFieldsLabelAndValueXpath(FieldsNames.get(i), 5)!=null) {
+											log(LogStatus.PASS, "Dragged Field is visible on page layout "+FieldsNames.get(i)+" with url www.salesforce.com", YesNo.No);
+										}else {
+											log(LogStatus.ERROR, "Dragged Field is not visible on page layout "+FieldsNames.get(i)+" with url www.salesforce.com", YesNo.Yes);
+											sa.assertTrue(false, "Dragged Field is not visible on page layout "+FieldsNames.get(i)+" with url www.salesforce.com");
+										}
+
+										if(click(driver, setup.getPageLayoutSaveBtn(object.Global_Actions, 10), "page layouts save button", action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "Clicked on Save button", YesNo.No);
+
+										}else {
+											log(LogStatus.ERROR, "Not able to click on Save button cannot save pagelayout dragged object or section in field set component "+FieldsNames.get(i), YesNo.Yes);
+										}
+
+									}else {
+										log(LogStatus.ERROR, "Not able to drag and drop field "+FieldsNames.get(i)+" in page layout of "+ObjectName, YesNo.Yes);
+									}
+
+								}else {
+									log(LogStatus.INFO, "Not able to click on created Field Set Label "+objectAPINames.get(i)+" is not visible so cannot change position of labels", YesNo.Yes);
+								}
+							}else {
+								log(LogStatus.INFO, "created Field Set Label "+objectAPINames.get(i)+" is not visible so cannot change position of labels", YesNo.Yes);
+							}
+						}else {
+							log(LogStatus.INFO, "Not able to search created Field Set Label "+objectAPINames.get(i), YesNo.Yes);
+						}
+					}else {
+						log(LogStatus.ERROR, "Not able to click on object feature : "+ObjectFeatureName.pageLayouts+" of "+ObjectName, YesNo.Yes);
+					}
+					
+				}else {
+					log(LogStatus.ERROR, "Not able to click on Object : "+ObjectName+" so cannot create field set component", YesNo.Yes);
+				}
+				switchToDefaultContent(driver);
+			}
+			
+			
+			
+		
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot create Fields Objects for custom object Marketing Event", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot create Fields Objects for custom object Marketing Event");
+		}
+		
+		
+		
+		
+		
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+
+
+
+
 }

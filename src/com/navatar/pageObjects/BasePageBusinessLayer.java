@@ -663,6 +663,15 @@ public String getTabName(String projectName,TabName TabName) {
 	case SDGTab:
 		tabName = "Sortable Data Grids";
 		break;
+	case Entities:
+		tabName = "Entities";
+		break;
+	case Deals:
+		tabName = "Deals";
+		break;
+	case Marketing_Events:
+		tabName = "Marketing Events";
+		break;
 	case TaskTab:
 		tabName = "Tasks";
 		break;
@@ -670,7 +679,7 @@ public String getTabName(String projectName,TabName TabName) {
 		tabName = "Recycle Bin";
 		break;
 	default:
-		return null;
+		return tabName;
 	}
 	return tabName;
 }
@@ -4434,6 +4443,12 @@ public boolean clickOnTab(String projectName,String TabName) {
 	String tabName = null;
 	boolean flag = false;
 	WebElement ele;
+//	if (TabName.contains("Entit")) {
+//		tabName ="Entities";
+//	}else {
+//
+//		tabName = TabName+"s";
+//	}
 	tabName = TabName;
 	System.err.println("Passed switch statement");
 	if (tabName!=null) {
@@ -4477,12 +4492,13 @@ public boolean clickOnTab(String projectName,String TabName) {
 /**
  * @author Azhar Alam
  * @param projectName
- * @param tabName
  * @param alreadyCreated
+ * @param isClick TODO
  * @param timeout
+ * @param tabName
  * @return true if able to click on particular item on Particular tab
  */
-public boolean clickOnAlreadyCreatedItem(String projectName,String alreadyCreated, int timeout) {
+public boolean clickOnAlreadyCreatedItem(String projectName,String alreadyCreated, boolean isClick, int timeout) {
 	boolean flag=false;
 	String xpath="";
 	String viewList = null;
@@ -4505,14 +4521,23 @@ public boolean clickOnAlreadyCreatedItem(String projectName,String alreadyCreate
 				xpath = "//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//*[text()='"+ alreadyCreated + "']";
 				ele = FindElement(driver,xpath,alreadyCreated, action.BOOLEAN, 30);
 				ThreadSleep(2000);
-
-				if (click(driver, ele, alreadyCreated, action.BOOLEAN)) {
-					ThreadSleep(3000);
-					click(driver, getPagePopUp(projectName,5), "Page PopUp", action.BOOLEAN);
-					flag=true;
+				if (isClick) {
+					if (click(driver, ele, alreadyCreated, action.BOOLEAN)) {
+						ThreadSleep(3000);
+						click(driver, getPagePopUp(projectName,5), "Page PopUp", action.BOOLEAN);
+						flag=true;
+					} else {
+					
+					}
 				} else {
-					appLog.error("Not able to Click on Already Created : " + alreadyCreated);
+					if (ele!=null) {
+						appLog.info("Item Found : " + alreadyCreated);
+						flag=true;
+					} else {
+						appLog.error("Item not Found : " + alreadyCreated);
+					}
 				}
+				
 			} else {
 				appLog.error("Not able to enter value on Search Box");
 			}
@@ -4627,6 +4652,43 @@ public WebElement customToggleButton(String projectName,String btnName,action ac
 	scrollDownThroughWebelement(driver, ele, "Toggle Button : "+btnName);
 	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btnName);
 	return ele;
+}
+
+public WebElement commonInputElement(String projectName,String labelName,action action,int timeOut) {
+	String xpath = "//*[text()='"+labelName+"']//following-sibling::div//input";
+	WebElement ele = FindElement(driver, xpath,labelName+" TextBox", action, timeOut);
+	ele = isDisplayed(driver, ele, "Visibility",timeOut, labelName+" TextBox");
+	return ele;
+}
+
+public WebElement getMenuTab(String projectName,String labelName,action action,int timeOut) {
+	String xpath = "//div[@class='flexipageComponent']//span[text()='"+labelName+"']";
+	WebElement ele = FindElement(driver, xpath,labelName+" TextBox", action, timeOut);
+	ele = isDisplayed(driver, ele, "Visibility",timeOut, labelName);
+	return ele;
+}
+
+public boolean isAutomationAllListViewAdded(String projectName, int timeOut) {
+	String viewList="Automation All",xpath="";
+	if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+		ThreadSleep(3000);
+		xpath="//div[@class='listContent']//li/a/span[text()='" + viewList + "']";
+		WebElement selectListView = FindElement(driver, xpath,"Select List View : "+viewList, action.SCROLLANDBOOLEAN, 5);
+		ThreadSleep(3000);
+		if ( selectListView!=null) {
+			log(LogStatus.INFO, "automation all is already present", YesNo.No);
+			return true;
+		}
+		else {
+			log(LogStatus.ERROR, "not found automation all.. now creating", YesNo.No);
+			
+		}
+	}else {
+		log(LogStatus.ERROR, "list dropdown is not clickable, so cannot check presence of Automation All", YesNo.Yes);
+		
+	}
+
+	return false;
 }
 
 

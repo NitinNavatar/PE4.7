@@ -157,8 +157,9 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 				log(LogStatus.SKIP,"Deal Label not prefilled with value : "+dealName,YesNo.Yes);
 			}
 
-			if (click(driver, getSaveButton(projectName,timeOut), "save button", action.SCROLLANDBOOLEAN)) {
+			if (click(driver, getCustomTabSaveBtn(projectName,timeOut), "save button", action.SCROLLANDBOOLEAN)) {
 				appLog.info("clicked on save button");
+				ThreadSleep(3000);
 
 			} else {
 				sa.assertTrue(false,"Not Able to Click on save button so cannot create request");

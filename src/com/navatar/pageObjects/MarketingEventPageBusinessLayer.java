@@ -239,7 +239,7 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 				log(LogStatus.SKIP,"marketingEvent Label not prefilled with value : "+marketingEvent,YesNo.Yes);
 			}
 
-			if (click(driver, getSaveButton(projectName,timeOut), "save button", action)) {
+			if (click(driver, getCustomTabSaveBtn(projectName,timeOut), "save button", action)) {
 				appLog.info("clicked on save button");
 
 			} else {

@@ -1,10 +1,19 @@
 package com.navatar.generic;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.util.*;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvException;
 
 import static com.navatar.generic.EnumConstants.*;
 
@@ -767,6 +776,249 @@ public class ExcelUtils{
 		return flag;
 	}
 	
+	@SuppressWarnings("deprecation")
+	public static String readAllDataForAColumn(String filePath, String sheetName, int cellNum, Boolean numericTypeValue){
+		String value = "";
+		try {
+			File src=new File(filePath);
+			FileInputStream fis=new FileInputStream(src);
+			XSSFWorkbook wb=new XSSFWorkbook(fis);
+			XSSFSheet sh1= wb.getSheet(sheetName);
+			int rowCount = sh1.getLastRowNum();
+			System.err.println("rowCount : "+rowCount);
+			String a="";
+			DataFormatter df = new DataFormatter();
+			for (int row=1;row<=rowCount;row++){
+				if(numericTypeValue){
+					XSSFRow row1 = sh1.getRow(row);
+					XSSFCell cell=row1.getCell(cellNum);
+					cell.setCellType(CellType.NUMERIC);
+					a=String.valueOf(cell.getNumericCellValue());
+//					AppListeners.appLog.info("Id : "+a);
+					String[] ss =a.split("E");
+//					AppListeners.appLog.info("ss0 >> "+ss[0]);
+//					AppListeners.appLog.info("ss1 >> "+ss[1]);
+					if(ss.length>1){
+						Double d = Double.valueOf(ss[0])*Math.pow(10, Integer.parseInt(ss[1]));
+//						System.err.println(d);
+						a= String.valueOf(new BigDecimal(Math.round(d)).toBigInteger());
+//						AppListeners.appLog.info(" Final Id : "+a);
+						value =a+"<break>"+value;
+					}else {
+//						AppListeners.appLog.info(" Final Id : "+a);
+						value = a+"<break>"+value;
+					}
+				}else {
+					a=df.formatCellValue((sh1.getRow(row).getCell(cellNum)));
+					if (row<rowCount) {
+						value=value+a+"<break>";
+					} else {
+						value=value+a;
+					}
+						
+					
+				}
+			}
+			fis.close();
+			wb.close();
+		}catch(Exception e){
+			  AppListeners.appLog.info("<<<<<<<<<<<<<Exception Error : >>>>>>>>>> :"+e);
+			  BaseLib.sa.assertTrue(false, "File Not Found : "+filePath);
+			  value=null;
+		}
+		return value;
+
+	}
 	
+	@SuppressWarnings("deprecation")
+	public static List<String> readAllDataFromCSVFileIntoList(String filePath, boolean isColumnIncluded){
+		String line="";
+		List<String> csvRecords = new ArrayList<String>();
+	 try {
+		BufferedReader br = new BufferedReader(new FileReader(filePath));
+		int i=0;
+		int k=0;
+		while ((line=br.readLine())!=null) {
+		//	System.err.println("Line: "+line);
+			if (isColumnIncluded && k==0) {
+				csvRecords.add(line);
+			} else {
+				if (k==0) {
+					k++;
+				} else {
+					csvRecords.add(line);
+				}
+			}
 	
+		}
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+		  AppListeners.appLog.info(filePath+"<<<<<<<<<<<<<Exception Error :while reading/parsing csv file >>>>>>>>>> :"+e);
+		  BaseLib.sa.assertTrue(false, filePath+"<<<<<<<<<<<<<Exception Error :while reading/parsing csv file >>>>>>>>>> :"+e);
+	}
+	return csvRecords;
+	 
+	}
+	
+	public static int getColumnNumberFromCSVFileBasedOnLabel(String path, String label) {
+		int k = 0;
+		label=label.replace("_", "");
+		CSVReader reader=null;
+		try {
+			File inputFile = new File(path);
+			reader = new CSVReader(new FileReader(inputFile));
+			List<String[]> csvBody = reader.readAll();
+		//	System.err.println("csvBody: "+csvBody.size());
+			for(int i=0; i<1; i++){
+				String[] strArray = csvBody.get(i);
+			//	System.err.println("strArray: "+strArray.length);
+				for(int j=0; j<strArray.length; j++){
+					if(strArray[j].equalsIgnoreCase(label)){
+						k = j;
+						break;
+					} else {
+						if (j == strArray.length - 1) {
+							AppListeners.appLog.info(label.toString()+" is not present in the excel.");
+							System.out.println(label.toString() + " is not present in the excel.");
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			//			e.printStackTrace();
+		} finally {
+			try {
+				reader.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				//				e.printStackTrace();
+			}
+		}
+		return k;
+	}
+	
+	public static int getRowNumberFromCSVFileBasedOnLabelAndValue(String path, String basedOnLabel,
+			String basedOnValue) {
+		int k = 0;
+		basedOnLabel=basedOnLabel.replace("_", "");
+		CSVReader reader=null;
+		try {
+			File inputFile = new File(path);
+			reader = new CSVReader(new FileReader(inputFile));
+			List<String[]> csvBody = reader.readAll();
+		//	System.err.println("csvBody: "+csvBody.size());
+			String currentlyItreatingValue = "";
+			int j = 0;
+			int searchInColumnNumber = getColumnNumberFromCSVFileBasedOnLabel(path, basedOnLabel);
+			for (int i = 1; i < csvBody.size()-1; i++) {
+				try {
+					currentlyItreatingValue = csvBody.get(i)[searchInColumnNumber];
+				} catch (NullPointerException e) {
+					j++;
+					if (j == 100) {
+						break;
+					}
+					continue;
+				}
+				if (currentlyItreatingValue.equalsIgnoreCase(basedOnValue.toString())) {
+					k = i;
+					break;
+				} else {
+//					System.out.println(basedOnValue + " value is not found under label " + basedOnLabel.toString());
+//					AppListeners.appLog.error(basedOnValue + " value is not found under label " + basedOnLabel.toString());
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				reader.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+//				e.printStackTrace();
+			}
+		}
+		
+		return k;
+
+	}
+	
+	public static String readDataFromCSVFile(String filePath, String basedOnLabel, String basedOnValue, String searchUnderLabel){
+		CSVReader reader=null;
+		try {
+			
+			int r =ExcelUtils.getRowNumberFromCSVFileBasedOnLabelAndValue(filePath, basedOnLabel, basedOnValue);
+			System.err.println("Row : "+r);
+			int c=ExcelUtils.getColumnNumberFromCSVFileBasedOnLabel(filePath, searchUnderLabel);
+			System.err.println("Column : "+c);
+
+			System.err.println("Row Column : "+r+" "+c);
+			File inputFile = new File(filePath);
+			reader = new CSVReader(new FileReader(inputFile));
+			List<String[]> csvBody = reader.readAll();
+			System.err.println("Size: "+csvBody.size());
+			return csvBody.get(r)[c];
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+					e.printStackTrace();
+		} finally {
+			try {
+				reader.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+							e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	public static boolean writeDataOnCSVFile(String path, Object dataToWrite, String basedOnLabel,
+			String basedOnValue, String writeUnderLabel) {
+		try {
+			writeDataInCSVFile(path, dataToWrite,
+					getRowNumberFromCSVFileBasedOnLabelAndValue(path, basedOnLabel, basedOnValue),
+					getColumnNumberFromCSVFileBasedOnLabel(path, writeUnderLabel));
+			return true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		}
+
+		return false;
+	}
+
+	public static void writeDataInCSVFile(String path, Object msg, int rowNum, int  cellNum) {
+
+		try {
+			File inputFile = new File(path);
+
+			// Read existing file
+			CSVReader reader = new CSVReader(new FileReader(inputFile));
+			List<String[]> csvBody = reader.readAll();
+			System.err.println("csvBody: "+csvBody.size());
+			csvBody.get(rowNum)[cellNum] = msg.toString(); 
+			reader.close();
+
+			// Write to CSV file which is open
+			CSVWriter writer = new CSVWriter(new FileWriter(inputFile));
+			writer.writeAll(csvBody);
+			writer.flush();
+			writer.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CsvException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

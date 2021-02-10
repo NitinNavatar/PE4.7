@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import com.navatar.generic.EnumConstants.Mode;
+import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.object;
@@ -37,12 +38,13 @@ public class SetupPageBusinessLayer extends SetupPage {
 	 */
 	public boolean searchStandardOrCustomObject(String environment, String mode, object objectName) {
 		String index="[1]";
-		if (objectName==object.Global_Actions || objectName==object.Activity_Setting) {
+		if (objectName==object.Global_Actions || objectName==object.Activity_Setting || objectName==object.App_Manager) {
 			if (objectName==object.Global_Actions) {
 				index="[2]";	
 			}
 			ThreadSleep(3000);
 			if (sendKeys(driver, getQucikSearchInSetupPage(10), objectName.toString(),objectName.toString(), action.BOOLEAN)) {
+				ThreadSleep(2000);
 				if (click(driver, FindElement(driver, "(//mark[text()='"+objectName.toString()+"'])"+index,objectName.toString(), 
 						action.BOOLEAN, 10), "global actions", action.BOOLEAN)) {
 					return true;
@@ -906,5 +908,133 @@ public WebElement clickOnEditInFrontOfStatus(String projectName, String status) 
 	WebElement ele=isDisplayed(driver, FindElement(driver, xpath, "edit", action.SCROLLANDBOOLEAN, 10), "visibility", 10, "edit");
 	return ele;
 }
+
+public boolean clickOnEditForApp(WebDriver driver,String appName,String developerName,String description,int timeOut) {
+	boolean flag=false;;
+	String xpath="";
+	xpath="//*[text()='"+appName+"']/../../following-sibling::*//*[text()='"+developerName+"']/../../following-sibling::*//*[text()='"+description+"']/../../following-sibling::*//*[text()='Show Actions']/..";
+	WebElement ele=isDisplayed(driver, FindElement(driver, xpath, "show more action", action.SCROLLANDBOOLEAN, timeOut), "visibility", timeOut, "show more action");
+	if (click(driver, ele, "Show more action against "+appName+" : "+developerName+" "+description, action.BOOLEAN)) {
+		log(LogStatus.INFO, "Not able to click on Show more action against "+appName+" : "+developerName+" "+description, YesNo.No);
+		ThreadSleep(1000);
+		xpath="//li/a[@title='Edit']";
+		 ele=isDisplayed(driver, FindElement(driver, xpath, "edit", action.SCROLLANDBOOLEAN, timeOut), "visibility", timeOut, "edit");
+		 if (click(driver, ele, "Show more action against "+appName+" : "+developerName+" "+description, action.BOOLEAN)) {
+			log(LogStatus.INFO, "able to click on edit button against "+appName+" : "+developerName+" "+description, YesNo.No);
+			ThreadSleep(1000);
+			flag=true;
+		} else {
+			log(LogStatus.ERROR, "Not able to click on edit button against "+appName+" : "+developerName+" "+description, YesNo.Yes);
+		}
+		
+	} else {
+		log(LogStatus.ERROR, "Not able to click on Show more action against "+appName+" : "+developerName+" "+description, YesNo.Yes);
+	}
+	return flag;
+}
+
+public boolean clickOnAppSettingList(WebDriver driver,AppSetting appSetting,int timeOut) {
+	boolean flag=false;;
+	String xpath="";
+	xpath="//*[contains(text(),'"+appSetting+"')]";
+	WebElement ele=isDisplayed(driver, FindElement(driver, xpath, "show more action", action.SCROLLANDBOOLEAN, timeOut), "visibility", timeOut, "show more action");
+	if (click(driver, ele, appSetting.toString(), action.BOOLEAN)) {
+		log(LogStatus.INFO, "able to click on "+appSetting, YesNo.No);
+		flag=true;
+	} else {
+		log(LogStatus.ERROR, "Not able to click on "+appSetting, YesNo.Yes);
+	}
+	return flag;
+}
+
+public void addRemoveAppSetingData(String projectName,String addRemoveTabName, customTabActionType customTabActionType) {
+	String[] splitedTabs = addRemoveTabName.split(",");
+	WebElement ele;
+	String xpath ;
+	int count=0;
+	if (customTabActionType.toString().equalsIgnoreCase("Add")) {
+		System.err.println("inside Add");
+		for (int i = 0; i < splitedTabs.length; i++) {
+			//////////////////////////////////////////////////////
+			xpath = "//div[contains(text(),'Selected')]/..//following-sibling::*//*[text()='"+splitedTabs[i]+"']";
+			ele = FindElement(driver, xpath, "selected item : "+splitedTabs[i], action.BOOLEAN, 10);
+			if (ele!=null) {
+				log(LogStatus.INFO, splitedTabs[i]+" Already added", YesNo.No);
+			} else {
+				log(LogStatus.INFO, "going to add "+splitedTabs[i], YesNo.No);
+				xpath = "//div[@class='search-form']//input";
+				ele = FindElement(driver, xpath, "available item search box", action.BOOLEAN, 10);
+				if (sendKeys(driver, ele,splitedTabs[i],"available item search box",action.BOOLEAN)) {
+					log(LogStatus.INFO,"send value to available item search box : "+splitedTabs[i],YesNo.No);
+					ThreadSleep(500);
+					xpath = "//div[contains(text(),'Available')]/..//following-sibling::*//*[text()='"+splitedTabs[i]+"']";
+					ele = FindElement(driver, xpath, splitedTabs[i], action.BOOLEAN, 10);
+					if (click(driver, ele,splitedTabs[i]+" from available item", action.BOOLEAN)) {
+						log(LogStatus.INFO,"Able to select "+splitedTabs[i]+" from available item",YesNo.No);
+						ThreadSleep(500);	
+						xpath = "//*[@title='Add']";
+						ele = FindElement(driver, xpath, "Add icon for : "+splitedTabs[i], action.BOOLEAN, 10);
+						if (click(driver, ele,"Add icon for : "+splitedTabs[i], action.BOOLEAN)) {
+							log(LogStatus.INFO,"Able to clcik on Add icon for : "+splitedTabs[i],YesNo.No);
+							ThreadSleep(500);		
+							count++;
+						} else {
+							sa.assertTrue(false, "Not Able to click on Add icon for : "+splitedTabs[i]);
+							log(LogStatus.FAIL,"Not Able to click on Add icon for : "+splitedTabs[i],YesNo.Yes);
+						}
+					} else {
+						sa.assertTrue(false, "Not Able to select "+splitedTabs[i]+" from available item");
+						log(LogStatus.FAIL,"Not Able to select "+splitedTabs[i]+" from available item",YesNo.Yes);
+					}
+
+				} else {
+					sa.assertTrue(false, "Not Able to send value to available item search box : "+splitedTabs[i]);
+					log(LogStatus.FAIL,"Not Able to send value to available item search box : "+splitedTabs[i],YesNo.Yes);
+				}
+
+			}
+		}
+
+
+
+	} else if (customTabActionType.toString().equalsIgnoreCase("Remove")) {
+		System.err.println("inside remove");
+		for (int i = 0; i < splitedTabs.length; i++) {
+			//////////////////////////////////////////////////////
+			xpath = "//div[contains(text(),'Selected')]/..//following-sibling::*//*[text()='"+splitedTabs[i]+"']";
+			ele = FindElement(driver, xpath, "selected item : "+splitedTabs[i], action.BOOLEAN, 10);
+			if (ele==null) {
+				log(LogStatus.INFO, splitedTabs[i]+" Already removed", YesNo.No);
+			} else {
+				log(LogStatus.INFO, "going to remove "+splitedTabs[i], YesNo.No);
+				xpath = "//*[@title='Remove']";
+				ele = FindElement(driver, xpath, "Add icon for : "+splitedTabs[i], action.BOOLEAN, 10);
+				if (click(driver, ele,"Add icon for : "+splitedTabs[i], action.BOOLEAN)) {
+					log(LogStatus.INFO,"Able to click on remove icon for : "+splitedTabs[i],YesNo.No);
+					ThreadSleep(500);	
+					count++;
+				} else {
+					sa.assertTrue(false, "Not Able to click on remove icon for : "+splitedTabs[i]);
+					log(LogStatus.FAIL,"Not Able to click on remove icon for : "+splitedTabs[i],YesNo.Yes);
+				}
+
+
+			}
+		}
+	} 
+
+	if (count>0) {
+		if (click(driver, getCustomTabSaveBtn(projectName,60), "Custom Tab Save Button", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO,"click on save button",YesNo.No);
+			ThreadSleep(5000);
+		} else {
+			sa.assertTrue(false, "Not Able to click on save button");
+			log(LogStatus.FAIL,"Not Able to click on save button",YesNo.Yes);
+		}	
+	} 
+	
+
+}
+
 
 }
