@@ -2521,8 +2521,8 @@ public class TaskWatchlist extends BaseLib{
 		String ins,rt,fn,ln,mailID;
 		for (int i =0;i<5;i++) {/*
 			if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
-				ins=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS"+(i+1), excelLabel.Institutions_Name);
-				rt=ExcelUtils.readData(pahse1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS"+(i+1), excelLabel.Record_Type);
+				ins=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS"+(i+1), excelLabel.Institutions_Name);
+				rt=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS"+(i+1), excelLabel.Record_Type);
 
 				if (ip.createEntityOrAccount(projectName, ins, rt, null, 10)) {
 					log(LogStatus.INFO,"successfully Created Account/Entity : "+ins+" of record type : "+rt,YesNo.No);	
@@ -2538,12 +2538,12 @@ public class TaskWatchlist extends BaseLib{
 		for (int i=0;i<3;i++) {/*
 			if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
 				log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);	
-				fn=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON"+(i+1), excelLabel.Contact_FirstName);
-				ln=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON"+(i+1), excelLabel.Contact_LastName);
-				ins=ExcelUtils.readData(pahse1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON"+(i+1), excelLabel.Institutions_Name);
+				fn=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON"+(i+1), excelLabel.Contact_FirstName);
+				ln=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON"+(i+1), excelLabel.Contact_LastName);
+				ins=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON"+(i+1), excelLabel.Institutions_Name);
 
 				mailID=	lp.generateRandomEmailId(gmailUserName);
-				ExcelUtils.writeData(pahse1DataSheetFilePath, mailID, "Contacts", excelLabel.Variable_Name, "HSRCON"+(i+1),excelLabel.Contact_EmailId);
+				ExcelUtils.writeData(phase1DataSheetFilePath, mailID, "Contacts", excelLabel.Variable_Name, "HSRCON"+(i+1),excelLabel.Contact_EmailId);
 
 				if (cp.createContact(projectName, fn, ln, ins, mailID,"", null, null, CreationPage.ContactPage, null)) {
 					log(LogStatus.INFO,"successfully Created Contact : "+fn+" "+ln,YesNo.No);	
@@ -2562,11 +2562,11 @@ public class TaskWatchlist extends BaseLib{
 		for (int i=0;i<1;i++) {
 			if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
 				log(LogStatus.INFO,"Click on Tab : "+TabName.Object4Tab,YesNo.No);	
-				pipe= ExcelUtils.readData(pahse1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP"+(i+1), excelLabel.Deal_Name);
-				company= ExcelUtils.readData(pahse1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP"+(i+1), excelLabel.Company_Name);
-				sf= ExcelUtils.readData(pahse1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP"+(i+1), excelLabel.Source_Firm);
-				sc= ExcelUtils.readData(pahse1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP"+(i+1), excelLabel.Source_Contact);
-				stage= ExcelUtils.readData(pahse1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP"+(i+1), excelLabel.Stage);
+				pipe= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP"+(i+1), excelLabel.Deal_Name);
+				company= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP"+(i+1), excelLabel.Company_Name);
+				sf= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP"+(i+1), excelLabel.Source_Firm);
+				sc= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP"+(i+1), excelLabel.Source_Contact);
+				stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP"+(i+1), excelLabel.Stage);
 				String[][] otherLabels = {{excelLabel.Source_Contact.toString(),sc},{excelLabel.Source_Firm.toString(),sf}};
 				refresh(driver);
 				ThreadSleep(3000);
@@ -3336,11 +3336,11 @@ public class TaskWatchlist extends BaseLib{
 		WebElement ele=null;
 		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object4Tab,YesNo.No);	
-			pipe= ExcelUtils.readData(pahse1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP2", excelLabel.Deal_Name);
-			company= ExcelUtils.readData(pahse1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP2", excelLabel.Company_Name);
-			sf= ExcelUtils.readData(pahse1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP2", excelLabel.Source_Firm);
-			sc= ExcelUtils.readData(pahse1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP2", excelLabel.Source_Contact);
-			stage= ExcelUtils.readData(pahse1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP2", excelLabel.Stage);
+			pipe= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP2", excelLabel.Deal_Name);
+			company= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP2", excelLabel.Company_Name);
+			sf= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP2", excelLabel.Source_Firm);
+			sc= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP2", excelLabel.Source_Contact);
+			stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP2", excelLabel.Stage);
 			String[][] otherLabels = {{excelLabel.Source_Contact.toString(),sc},{excelLabel.Source_Firm.toString(),sf}};
 			refresh(driver);
 			ThreadSleep(3000);

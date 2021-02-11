@@ -845,6 +845,48 @@ public boolean clickOnAlreadyCreatedItem(String projectName, TabName tabName,
 	}
 	return flag;
 }
+public boolean clickOnAlreadyCreatedItem(String projectName,String alreadyCreated, int timeout) {
+	boolean flag=false;
+	String xpath="";
+	String viewList = null;
+	viewList = "Automation All";
+	WebElement ele, selectListView;
+	ele = null;
+
+	refresh(driver);
+	if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+		ThreadSleep(3000);
+		xpath="//div[@class='listContent']//li/a/span[text()='" + viewList + "']";
+		selectListView = FindElement(driver, xpath,"Select List View : "+viewList, action.SCROLLANDBOOLEAN, 30);
+		if (click(driver, selectListView, "select List View : "+viewList, action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(3000);
+			ThreadSleep(5000);
+
+			if (sendKeys(driver, getSearchIcon_Lighting(20), alreadyCreated+"\n", "Search Icon Text",action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(5000);
+
+				xpath = "//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//*[text()='"+ alreadyCreated + "']";
+				ele = FindElement(driver,xpath,alreadyCreated, action.BOOLEAN, 30);
+				ThreadSleep(2000);
+
+				if (click(driver, ele, alreadyCreated, action.BOOLEAN)) {
+					ThreadSleep(3000);
+					click(driver, getPagePopUp(projectName,5), "Page PopUp", action.BOOLEAN);
+					flag=true;
+				} else {
+					appLog.error("Not able to Click on Already Created : " + alreadyCreated);
+				}
+			} else {
+				appLog.error("Not able to enter value on Search Box");
+			}
+		} else {
+			appLog.error("Not able to select on Select View List : "+viewList);
+		}
+	} else {
+		appLog.error("Not able to click on Select List Icon");
+	}
+	return flag;
+}
 
 /**
  * @author Azhar Alam
