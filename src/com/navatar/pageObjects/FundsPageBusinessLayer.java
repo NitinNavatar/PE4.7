@@ -12,6 +12,8 @@ import org.openqa.selenium.WebElement;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageLabel;
+import com.navatar.generic.EnumConstants.PageName;
+import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.action;
 import com.relevantcodes.extentreports.LogStatus;
@@ -152,6 +154,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			String labelName,String labelValue) {
 		String xpath = "";
 		WebElement ele = null;
+		labelValue=labelValue.replace("_", " ");
 		String finalLabelName=labelName.replace("_", " ");
 		if(labelName.contains(excelLabel.Target_Commitments.toString().replaceAll("_", " "))) {
 			labelName=FundPageFieldLabelText.Target_Commitments.toString();
@@ -162,7 +165,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 					+ "']/../following-sibling::div//lightning-formatted-text";
 			if (labelName.equalsIgnoreCase(excelLabel.Deal_Quality_Score.toString()))
 				xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
-				+ "']/../following-sibling::div";
+				+ "']/../following-sibling::div//lightning-formatted-number";
 	
 		ele = isDisplayed(driver,
 				FindElement(driver, xpath, labelName + " label text in " + projectName, action.SCROLLANDBOOLEAN, 60),
@@ -622,6 +625,38 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		return flag;
 	}
 	
-	
+	public boolean changeStage(String projectName, String stage, int timeOut) {
+		boolean flag=true;
+		stage=stage.replace("_", " ");
+		if (clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Edit, 10)) {
+		
+		if (click(driver, getDealStage(projectName, timeOut), "Deal stage : "+stage, action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(2000);
+			appLog.error("Clicked on Deal stage");
+			String xpath="//span[@title='"+stage+"']";
+			//String xpath="//div[@class='select-options']//li/a[@title='"+stage+"']";
+			WebElement dealStageEle = FindElement(driver,xpath, stage,action.SCROLLANDBOOLEAN, timeOut);
+			ThreadSleep(2000);
+			if (click(driver, dealStageEle, stage, action.SCROLLANDBOOLEAN)) {
+				appLog.info("Selected Deal stage : "+stage);
+			} else {
+				appLog.error("Not able to Select on Deal stage : "+stage);
+			}
+			
+		} else {
+			appLog.error("Not able to Click on Deal stage : ");
+		}
+		
+		if (click(driver, getCustomTabSaveBtn(projectName,30), "Save Button", action.SCROLLANDBOOLEAN)) {
+			appLog.error("Click on save Button");	
+			flag = true;
+		}else{
+			appLog.error("Not Able to Click on save Button");	
+		}
+		}else{
+			appLog.error("Not Able to Click on edit Button");	
+		}
+		return flag;
+	}
 	
 }
