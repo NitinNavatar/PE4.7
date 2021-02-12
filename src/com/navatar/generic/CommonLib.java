@@ -307,6 +307,18 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		}
 		return true;
 	}
+	
+	public static boolean mouseOverClickOperation(WebDriver driver, WebElement webElement) {
+		Actions actions = new Actions(driver);
+		try {
+			actions.moveToElement(webElement).click().build().perform();
+			appLog.info("Mouse over and click Successfull");
+		} catch (Exception e){
+			appLog.info("Mouse over UnSuccessfull");
+			return false;
+		}
+		return true;
+	}
 
 	public static boolean mouseHoverJScript(WebDriver driver,WebElement HoverElement, String elementName, int timeOut) {
 		boolean flag=true;
