@@ -863,7 +863,7 @@ public class ExcelUtils{
 	
 	public static int getColumnNumberFromCSVFileBasedOnLabel(String path, String label) {
 		int k = 0;
-		label=label.replace("_", "");
+		label=label.replace("_", " ");
 		CSVReader reader=null;
 		try {
 			File inputFile = new File(path);
@@ -902,7 +902,7 @@ public class ExcelUtils{
 	public static int getRowNumberFromCSVFileBasedOnLabelAndValue(String path, String basedOnLabel,
 			String basedOnValue) {
 		int k = 0;
-		basedOnLabel=basedOnLabel.replace("_", "");
+		basedOnLabel=basedOnLabel.replace("_", " ");
 		CSVReader reader=null;
 		try {
 			File inputFile = new File(path);
@@ -1021,4 +1021,37 @@ public class ExcelUtils{
 			e.printStackTrace();
 		}
 	}
+	
+	public static List<String[]> readAllDataFromCSVFile(String path) {
+		List<String[]> csvBody = null;
+		CSVReader reader = null;
+		try {
+			File inputFile = new File(path);
+
+			// Read existing file
+			reader= new CSVReader(new FileReader(inputFile));
+			csvBody = reader.readAll();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CsvException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				reader.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+							e.printStackTrace();
+			}
+		}
+		return csvBody;
+	}
+	
 }

@@ -172,10 +172,52 @@ public class Demo {
 //System.err.println(l);
 //int m=ExcelUtils.getRowNumberFromCSVFileBasedOnLabelAndValue(NavigationMenuTestData_PEExcel, "Navigation Label", "Reports");
 //System.err.println(m);
-String value = ExcelUtils.readDataFromCSVFile(NavigationMenuTestData_PEExcel, "Order", "35", "Action Record Type");
-System.err.println(value);
-ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, "Azhar", "Navigation Label", "Contact", "URL");
+//String value = ExcelUtils.readDataFromCSVFile(NavigationMenuTestData_PEExcel, "Order", "35", "Action Record Type");
+//System.err.println(value);
+//ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, "Azhar", "Navigation Label", "Contact", "URL");
 	
+//		try {
+//			CSVReader reader2 = new CSVReader(new FileReader(NavigationMenuTestData_PEExcel));
+//			List<String[]> allElements = reader2.readAll();
+//			allElements.remove(1);
+//			FileWriter sw = new FileWriter(NavigationMenuTestData_PEExcel);
+//			CSVWriter writer = new CSVWriter(sw);
+//			writer.writeAll(allElements);
+//			writer.close();
+			
+//			String csv = NavigationMenuTestData_PEExcel;
+//		      CSVWriter writer = new CSVWriter(new FileWriter(csv, true));
+//
+//		      String [] record = "3,David,Feezor,USA,40".split(",");
+//
+//		      writer.writeNext(record);
+//
+//		      writer.close();
+			
+//			List<String[]> abc = ExcelUtils.readAllDataFromCSVFile(NavigationMenuTestData_PEExcel);
+//			for (String[] strings : abc) {
+//				for (int i = 0; i < strings.length; i++) {
+//					System.err.print(strings[i]+" ");
+//				}
+//				System.err.print("\n");
+//			}
+			List<String> jgh = ExcelUtils.readAllDataFromCSVFileIntoList(NavigationMenuTestData_PEExcel, false);
+			for (String string : jgh) {
+				if (string.contains("Home")) {
+					System.err.println("pass : "+string);
+				} else {
+
+				}
+			}
+
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
 		
 	}
 

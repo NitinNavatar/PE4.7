@@ -11,6 +11,7 @@ import com.navatar.generic.EnumConstants.AddProspectsTab;
 import com.navatar.generic.EnumConstants.AppSetting;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageName;
+import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.ExcelUtils;
@@ -312,6 +313,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	
 	
 	public WebElement getNavigationField(String projectName,String navigationField,action action,int timeOut) {
+		navigationField=navigationField.replace("_", " ");
 		String xpath = "//*[text()='"+navigationField+"']/following-sibling::div//input";
 		WebElement ele = FindElement(driver, xpath, navigationField, action, timeOut);
 		scrollDownThroughWebelement(driver, ele, navigationField);
@@ -319,4 +321,36 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	}
 	
 	
+	public WebElement getAll(String projectName,String allReportorDashboard,action action,int timeOut) {
+		String all ="All "+allReportorDashboard;
+		String xpath = "//h2[text()='"+allReportorDashboard+"']/following-sibling::*//*[text()='"+all+"']";
+		WebElement ele = FindElement(driver, xpath, allReportorDashboard, action, timeOut);
+		scrollDownThroughWebelement(driver, ele, allReportorDashboard);
+		return isDisplayed(driver, ele, "Visibility", timeOut, allReportorDashboard);
+	}
+	
+	public WebElement actionDropdownElement(String projectName, ShowMoreActionDropDownList smaddl, int timeOut) {
+		String actionDropDown = smaddl.toString().replace("_", " ");
+		String xpath ="//span[text()='"+actionDropDown+"']";
+		xpath="//*[@name='"+actionDropDown+"' or text()='"+actionDropDown+"']";
+		return isDisplayed(driver, FindElement(driver, xpath, "show more action down arrow", action.SCROLLANDBOOLEAN, 10), "visibility", timeOut, actionDropDown);
+	}
+	
+	public boolean clickOnShowMoreDropdownOnly(String projectName) {
+		String xpath = "";int i =1;
+		WebElement ele=null;
+		boolean flag = true;
+		refresh(driver);
+		ThreadSleep(2000);
+		xpath="(//span[contains(text(),'more actions')])[1]/..";
+		ele=FindElement(driver, xpath, "show more action down arrow", action.SCROLLANDBOOLEAN, 30);
+		if(click(driver, ele, "show more action on ", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "clicked on show more actions icon", YesNo.No);
+		}
+		else {
+			log(LogStatus.FAIL, "cannot click on show more actions icon", YesNo.Yes);
+			flag = false;
+		}
+		return flag;
+	}
 }
