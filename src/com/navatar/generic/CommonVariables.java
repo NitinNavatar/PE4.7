@@ -223,8 +223,8 @@ public class CommonVariables {
 			
 			SDG = "Sortable Data Grids";
 			
-			AppDeveloperName=ExcelUtils.readDataFromPropertyFile("AppDeveloperName");
-			AppDescription=ExcelUtils.readDataFromPropertyFile("AppDescription");
+			AppDeveloperName="Navatar";
+			AppDescription="Navatar Private Equity app – Lightning View(Edge)";
 			
 			
 			//****************************************************************	Toggle Variable **********************************************************//
