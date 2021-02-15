@@ -809,7 +809,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return flag;
 	}
 
-	public boolean changePositionOfFieldSetComponent(object objectName,ObjectFeatureName objectFeatureName,String fieldSetLabel,String DragComponentName,String removableObjectName) {
+	public boolean changePositionOfFieldSetComponent(object objectName,ObjectFeatureName objectFeatureName,String fieldSetLabel,String DragComponentName,String removableObjectName,YesNo removeSomeFields) {
 		boolean flag = false;
 		WebElement ele=null,sourceElement=null;
 		int count=0;
@@ -825,6 +825,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 					if(ele!=null) {
 						if(click(driver, ele, "create field set "+fieldSetLabel, action.BOOLEAN)) {
 							log(LogStatus.INFO, "Field Set Label "+fieldSetLabel+" is already created ", YesNo.No);
+							ThreadSleep(5000);
 							switchToFrame(driver, 20, getEditPageLayoutFrame_Lighting(20));
 							if(removableObjectName!=null) {
 								String[] removeObject= removableObjectName.split("<break>");
@@ -850,6 +851,45 @@ public class SetupPageBusinessLayer extends SetupPage {
 									return false;
 								}
 								
+							}
+							if(removeSomeFields.toString().equalsIgnoreCase(YesNo.Yes.toString())) {
+								xpath="//div[@id='defaultView']/div";
+								List<WebElement> fieldSetList=FindElements(driver, xpath, "all dragged field set list xpath");
+								if(!fieldSetList.isEmpty()) {
+									for(int i=0; i<fieldSetList.size()-2; i++) {
+										ThreadSleep(1000);
+										String id =fieldSetList.get(i).getAttribute("id");
+										ThreadSleep(1000);
+										((JavascriptExecutor) driver).executeScript("document.getElementById('"+id+"').setAttribute('class','field-source');");
+										ThreadSleep(1000);
+										mouseOverOperation(driver, fieldSetList.get(i));
+										ThreadSleep(3000);
+										WebElement ele1 =FindElement(driver, "//div[@id='"+id+"']//div[@class='remove']", "remove Icon", action.BOOLEAN, 10);
+										mouseOverClickOperation(driver, ele1);
+//										if(clickUsingJavaScript(driver,ele1, "remove icon", action.BOOLEAN)) {
+//											log(LogStatus.INFO,"Clicked on reomve icon of object "+(i+1),YesNo.No);
+//											ele1 =FindElement(driver, "//div[@id='"+id+"']//div[@class='remove']", "remove Icon", action.BOOLEAN, 10);
+//											if(ele1!=null) {
+//												click(driver,ele1, "remove icon", action.BOOLEAN);
+//											}else {
+//												log(LogStatus.INFO,"reomved object "+(i+1),YesNo.No);
+//											}
+//
+//										}else {
+//											log(LogStatus.INFO,"Not able to click on reomve icon of object : "+(i+1),YesNo.No);
+//
+//										}
+										fieldSetList=FindElements(driver, xpath, "all dragged field set list xpath");
+										if(fieldSetList.size()!=2) {
+											continue;
+										}else {
+											break;
+										}
+									}
+									
+								}else {
+									log(LogStatus.ERROR, "Field Set objects is not available so cannot remove some field set", YesNo.Yes);
+								}
 							}
 							if(DragComponentName!=null) {
 								String[] splitedDragComponent= DragComponentName.split("<break>");

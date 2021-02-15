@@ -544,7 +544,7 @@ public class FieldSet extends BaseLib {
 			
 			object object1 = object.valueOf(FS_Object1);
 			
-			if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,FS_FieldSetLabel1, reverseObjects, FS_FieldsName1)) {
+			if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,FS_FieldSetLabel1, reverseObjects, FS_FieldsName1,YesNo.No)) {
 				log(LogStatus.PASS, "Field Set Object position is changed for : "+FS_FieldSetLabel1, YesNo.No);
 			}else {
 				log(LogStatus.ERROR,"Field Set Object position is not changed for : "+FS_FieldSetLabel1, YesNo.Yes);
@@ -623,7 +623,7 @@ public class FieldSet extends BaseLib {
 			if(flag) {
 				object object1 = object.valueOf(FS_Object1);
 				
-				if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,FS_FieldSetLabel1, FC_FieldLabel1SubString,null)) {
+				if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,FS_FieldSetLabel1, FC_FieldLabel1SubString,null,YesNo.No)) {
 					log(LogStatus.PASS, FC_FieldLabelName1+" Field Object is dragged On : "+FS_FieldSetLabel1, YesNo.No);
 				}else {
 					log(LogStatus.ERROR,FC_FieldLabelName1+" Field Set Object is not dragged on : "+FS_FieldSetLabel1, YesNo.Yes);
@@ -687,7 +687,7 @@ public class FieldSet extends BaseLib {
 			}
 			ThreadSleep(3000);
 			object object1 = object.valueOf(FS_Object1);
-			if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,FS_FieldSetLabel1, FS_ExtraFieldsName1,null)) {
+			if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,FS_FieldSetLabel1, FS_ExtraFieldsName1,null,YesNo.No)) {
 				log(LogStatus.PASS, FC_FieldLabelName1+" Field Object is dragged On : "+FS_FieldSetLabel1, YesNo.No);
 			}else {
 				log(LogStatus.ERROR,FC_FieldLabelName1+" Field Set Object is not dragged on : "+FS_FieldSetLabel1, YesNo.Yes);
@@ -1164,18 +1164,408 @@ public class FieldSet extends BaseLib {
 			log(LogStatus.ERROR, "Not able to click on setup link so cannot create Fields Objects for custom object Marketing Event", YesNo.Yes);
 			sa.assertTrue(false, "Not able to click on setup link so cannot create Fields Objects for custom object Marketing Event");
 		}
-		
-		
-		
-		
-		
-		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc020_verifyDefaultImage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
+		List<String> itemNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		for(int i=0; i<tabNames.size(); i++) {
+			if (lp.clickOnTab(projectName,tabNames.get(i) )) {
+				log(LogStatus.INFO,"Click on Tab : "+tabNames.get(i),YesNo.No);
+				if(lp.clickOnAlreadyCreatedItem(projectName, itemNames.get(i), true,20)) {
+					log(LogStatus.INFO,"clicked on created item : "+itemNames.get(i), YesNo.No);
+					ThreadSleep(3000);
+					if(lp.getDefaultImageXpath(20)!=null) {
+						log(LogStatus.PASS, "Default image is displaying in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+					}else {
+						log(LogStatus.PASS, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						sa.assertTrue(false, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i));
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to click on created item "+itemNames.get(i)+" so cannot verify default image", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on created item "+itemNames.get(i)+" so cannot verify default image");
+				}
+			} else {
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify default image",YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify default image");
+			}
+		}
 		lp.CRMlogout();
 		sa.assertAll();
 	}
 
-
-
-
-
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc021_deletesomeFieldsFromFieldSet(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentWindow = null;
+		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
+		List<String> itemNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
+		List<String> objectName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",4,false));
+		List<String> pageLayoutName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",8,false));
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot change Field position");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot change Field position",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot change Field position");
+			}
+			ThreadSleep(3000);
+			for(int i=0; i<objectName.size(); i++) {
+				object object1 = object.valueOf(objectName.get(i));
+				
+				if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,pageLayoutName.get(i), null, null,YesNo.Yes)) {
+					log(LogStatus.PASS, "Field Set Object position is changed for : "+FS_FieldSetLabel1, YesNo.No);
+				}else {
+					log(LogStatus.ERROR,"Field Set Object position is not changed for : "+FS_FieldSetLabel1, YesNo.Yes);
+					sa.assertTrue(false, "Field Set Object position is not changed for : "+FS_FieldSetLabel1);
+				}
+				
+			}
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot change Field Set Component position", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot create Field Set Component position");
+		}
+		for(int i=0; i<tabNames.size(); i++) {
+			if (lp.clickOnTab(projectName,tabNames.get(i) )) {
+				log(LogStatus.INFO,"Click on Tab : "+tabNames.get(i),YesNo.No);
+				if(lp.clickOnAlreadyCreatedItem(projectName, itemNames.get(i), true,20)) {
+					log(LogStatus.INFO,"clicked on created item : "+itemNames.get(i), YesNo.No);
+					ThreadSleep(3000);
+					if(lp.getDefaultImageXpath(20)!=null) {
+						String imagesize =lp.getDefaultImageXpath(20).getAttribute("style");
+						String expctImageSize="100px";
+						if(imagesize.contains(expctImageSize)) {
+							log(LogStatus.PASS, "Image size is  matched "+expctImageSize+"  in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						}else {
+							log(LogStatus.PASS, "Image size is not  matched "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+							sa.assertTrue(false, "Image size is not  matched "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i));
+						}
+					}else {
+						log(LogStatus.PASS, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						sa.assertTrue(false, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i));
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to click on created item "+itemNames.get(i)+" so cannot verify default image", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on created item "+itemNames.get(i)+" so cannot verify default image");
+				}
+			} else {
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify default image",YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify default image");
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc022_verifyMinimumImageSizeAfterAddTwoFieldSet(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentWindow = null;
+		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
+		List<String> itemNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
+		List<String> objectName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",4,false));
+		List<String> draggedComponentName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",7,false));
+		List<String> fieldSetNametName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",8,false));
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot change Field position");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot change Field position",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot change Field position");
+			}
+			ThreadSleep(3000);
+			for(int i=0; i<objectName.size(); i++) {
+				object object1 = object.valueOf(objectName.get(i));
+				String[] draggedComponent = draggedComponentName.get(i).split("<break>");
+				
+				if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,fieldSetNametName.get(i), draggedComponent[0]+"<break>"+draggedComponent[1], null,YesNo.No)) {
+					log(LogStatus.PASS, "Dargged Object in : "+fieldSetNametName.get(i), YesNo.No);
+				}else {
+					log(LogStatus.ERROR,"Not able to drag Field Set Object on : "+fieldSetNametName.get(i), YesNo.Yes);
+					sa.assertTrue(false, "Not able to drag Field Set Object on : "+fieldSetNametName.get(i));
+				}
+			}
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot drag and drop component on objects", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot drag and drop component on objects");
+		}
+		for(int i=0; i<tabNames.size(); i++) {
+			if (lp.clickOnTab(projectName,tabNames.get(i) )) {
+				log(LogStatus.INFO,"Click on Tab : "+tabNames.get(i),YesNo.No);
+				if(lp.clickOnAlreadyCreatedItem(projectName, itemNames.get(i), true,20)) {
+					log(LogStatus.INFO,"clicked on created item : "+itemNames.get(i), YesNo.No);
+					ThreadSleep(3000);
+					if(lp.getDefaultImageXpath(20)!=null) {
+						String imagesize =lp.getDefaultImageXpath(20).getAttribute("style");
+						String expctImageSize="100px";
+						if(imagesize.contains(expctImageSize)) {
+							log(LogStatus.PASS, "Image size is  matched "+expctImageSize+"  in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						}else {
+							log(LogStatus.PASS, "Image size is not  matched "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+							sa.assertTrue(false, "Image size is not  matched "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i));
+						}
+					}else {
+						log(LogStatus.PASS, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						sa.assertTrue(false, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i));
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to click on created item "+itemNames.get(i)+" so cannot verify minimum image", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on created item "+itemNames.get(i)+" so cannot verify minimum image");
+				}
+			} else {
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify minimum image",YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify minimum image");
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc023_verifyMediumImageSizeAfterAddTwoMoreFieldSet(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentWindow = null;
+		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
+		List<String> itemNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
+		List<String> objectName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",4,false));
+		List<String> draggedComponentName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",7,false));
+		List<String> fieldSetNametName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",8,false));
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot drag and drop component on objects");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot drag and drop component on objects",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot drag and drop component on objects");
+			}
+			ThreadSleep(3000);
+			for(int i=0; i<objectName.size(); i++) {
+				object object1 = object.valueOf(objectName.get(i));
+				String[] draggedComponent = draggedComponentName.get(i).split("<break>");
+				
+				if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,fieldSetNametName.get(i), draggedComponent[2]+"<break>"+draggedComponent[3], null,YesNo.No)) {
+					log(LogStatus.PASS, "Dargged Object in : "+fieldSetNametName.get(i), YesNo.No);
+				}else {
+					log(LogStatus.ERROR,"Not able to drag Field Set Object on : "+fieldSetNametName.get(i), YesNo.Yes);
+					sa.assertTrue(false, "Not able to drag Field Set Object on : "+fieldSetNametName.get(i));
+				}
+			}
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot drag and drop component on objects", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot drag and drop component on objects");
+		}
+		for(int i=0; i<tabNames.size(); i++) {
+			if (lp.clickOnTab(projectName,tabNames.get(i) )) {
+				log(LogStatus.INFO,"Click on Tab : "+tabNames.get(i),YesNo.No);
+				if(lp.clickOnAlreadyCreatedItem(projectName, itemNames.get(i), true,20)) {
+					log(LogStatus.INFO,"clicked on created item : "+itemNames.get(i), YesNo.No);
+					ThreadSleep(3000);
+					if(lp.getDefaultImageXpath(20)!=null) {
+						String imagesize =lp.getDefaultImageXpath(20).getAttribute("style");
+						String expctImageSize="140px";
+						if(imagesize.contains(expctImageSize)) {
+							log(LogStatus.PASS, "Image size is  matched "+expctImageSize+"  in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						}else {
+							log(LogStatus.PASS, "Image size is not  matched "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+							sa.assertTrue(false, "Image size is not  matched "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i));
+						}
+					}else {
+						log(LogStatus.PASS, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						sa.assertTrue(false, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i));
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to click on created item "+itemNames.get(i)+" so cannot verify medium image size", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on created item "+itemNames.get(i)+" so cannot verify medium image size");
+				}
+			} else {
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify medium image size",YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify medium image size");
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc024_verifyMaximumImageSizeAfterAddTwoMoreFieldSet(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentWindow = null;
+		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
+		List<String> itemNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
+		List<String> objectName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",4,false));
+		List<String> draggedComponentName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",7,false));
+		List<String> fieldSetNametName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",8,false));
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot drag and drop component on objects");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot drag and drop component on objects",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot drag and drop component on objects");
+			}
+			ThreadSleep(3000);
+			for(int i=0; i<objectName.size(); i++) {
+				object object1 = object.valueOf(objectName.get(i));
+				String[] draggedComponent = draggedComponentName.get(i).split("<break>");
+				
+				if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,fieldSetNametName.get(i), draggedComponent[4]+"<break>"+draggedComponent[5], null,YesNo.No)) {
+					log(LogStatus.PASS, "Dargged Object in : "+fieldSetNametName.get(i), YesNo.No);
+				}else {
+					log(LogStatus.ERROR,"Not able to drag Field Set Object on : "+fieldSetNametName.get(i), YesNo.Yes);
+					sa.assertTrue(false, "Not able to drag Field Set Object on : "+fieldSetNametName.get(i));
+				}
+			}
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot drag and drop component on objects", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot drag and drop component on objects");
+		}
+		for(int i=0; i<tabNames.size(); i++) {
+			if (lp.clickOnTab(projectName,tabNames.get(i) )) {
+				log(LogStatus.INFO,"Click on Tab : "+tabNames.get(i),YesNo.No);
+				if(lp.clickOnAlreadyCreatedItem(projectName, itemNames.get(i), true,20)) {
+					log(LogStatus.INFO,"clicked on created item : "+itemNames.get(i), YesNo.No);
+					ThreadSleep(3000);
+					if(lp.getDefaultImageXpath(20)!=null) {
+						String imagesize =lp.getDefaultImageXpath(20).getAttribute("style");
+						String expctImageSize="180px";
+						if(imagesize.contains(expctImageSize)) {
+							log(LogStatus.PASS, "Image size is  matched "+expctImageSize+"  in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						}else {
+							log(LogStatus.PASS, "Image size is not  matched "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+							sa.assertTrue(false, "Image size is not  matched "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i));
+						}
+					}else {
+						log(LogStatus.PASS, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						sa.assertTrue(false, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i));
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to click on created item "+itemNames.get(i)+" so cannot verify maximum image size", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on created item "+itemNames.get(i)+" so cannot verify maximum image size");
+				}
+			} else {
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify maximum image size",YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify maximum image size");
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc025_verifyImageSizeAfterAddTenMoreFieldSet(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentWindow = null;
+		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
+		List<String> itemNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
+		List<String> objectName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",4,false));
+		List<String> draggedComponentName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",7,false));
+		List<String> fieldSetNametName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",8,false));
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot drag and drop component on objects");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot drag and drop component on objects",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot drag and drop component on objects");
+			}
+			ThreadSleep(3000);
+			for(int i=0; i<objectName.size(); i++) {
+				object object1 = object.valueOf(objectName.get(i));
+				String[] draggedComponent = draggedComponentName.get(i).split("<break>");
+				
+				if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,fieldSetNametName.get(i), draggedComponent[4]+"<break>"+draggedComponent[5], null,YesNo.No)) {
+					log(LogStatus.PASS, "Dargged Object in : "+fieldSetNametName.get(i), YesNo.No);
+				}else {
+					log(LogStatus.ERROR,"Not able to drag Field Set Object on : "+fieldSetNametName.get(i), YesNo.Yes);
+					sa.assertTrue(false, "Not able to drag Field Set Object on : "+fieldSetNametName.get(i));
+				}
+			}
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot drag and drop component on objects", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot drag and drop component on objects");
+		}
+		for(int i=0; i<tabNames.size(); i++) {
+			if (lp.clickOnTab(projectName,tabNames.get(i) )) {
+				log(LogStatus.INFO,"Click on Tab : "+tabNames.get(i),YesNo.No);
+				if(lp.clickOnAlreadyCreatedItem(projectName, itemNames.get(i), true,20)) {
+					log(LogStatus.INFO,"clicked on created item : "+itemNames.get(i), YesNo.No);
+					ThreadSleep(3000);
+					if(lp.getDefaultImageXpath(20)!=null) {
+						String imagesize =lp.getDefaultImageXpath(20).getAttribute("style");
+						String expctImageSize="140px";
+						if(imagesize.contains(expctImageSize)) {
+							log(LogStatus.PASS, "Image size is  matched "+expctImageSize+"  in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						}else {
+							log(LogStatus.PASS, "Image size is not  matched "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+							sa.assertTrue(false, "Image size is not  matched "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i));
+						}
+					}else {
+						log(LogStatus.PASS, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						sa.assertTrue(false, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i));
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to click on created item "+itemNames.get(i)+" so cannot verify medium image size", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on created item "+itemNames.get(i)+" so cannot verify medium image size");
+				}
+			} else {
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify medium image size",YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify medium image size");
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 }
