@@ -30,5 +30,12 @@ public class NavigationPage extends BasePageBusinessLayer {
 	public WebElement getNavatarQuickLinkMinimize_Lighting(String projectName,int timeOut) {
 		return isDisplayed(driver, navatarQuickLinkMinimize_Lighting, "Visibility", timeOut, "Navatar Quick Link Minimize Lighting");
 	}
+	
+	/**
+	 * @return the getExpandIcon
+	 */
+	public List<WebElement> getExpandIcon(String projectName,int timeOut) {
+		return FindElements(driver, "//span[@class='icon expand-icon glyphicon glyphicon-plus']", "> icon");
+	}
 }
 

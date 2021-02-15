@@ -4697,6 +4697,7 @@ public WebElement customToggleButton(String projectName,String btnName,action ac
 }
 
 public WebElement commonInputElement(String projectName,String labelName,action action,int timeOut) {
+	labelName=labelName.replace("_", " ");
 	String xpath = "//*[text()='"+labelName+"']//following-sibling::div//input";
 	WebElement ele = FindElement(driver, xpath,labelName+" TextBox", action, timeOut);
 	ele = isDisplayed(driver, ele, "Visibility",timeOut, labelName+" TextBox");

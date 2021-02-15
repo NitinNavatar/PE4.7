@@ -353,4 +353,11 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		}
 		return flag;
 	}
+	
+	public WebElement getItemInList(String projectName,String itemName,action action,int timeOut) {
+		String xpath = "//*[@title='"+itemName+"']//strong[text()='"+itemName+"']";
+		WebElement ele = FindElement(driver, xpath, itemName, action, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, itemName);
+	}
+	
 }
