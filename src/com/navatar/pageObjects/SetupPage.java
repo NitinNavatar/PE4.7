@@ -184,6 +184,13 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getFieldLabelTextBox1(int timeOut) {
 		return isDisplayed(driver, fieldLabelTextBox1, "Visibility", timeOut, "field label text box");
 	}
+	
+	@FindBy(xpath = "//*[text()='API Name']/following-sibling::td//input")
+	private WebElement apiLabelTextBox;
+	
+	public WebElement getapiLabelTextBox(int timeOut) {
+		return isDisplayed(driver, apiLabelTextBox, "Visibility", timeOut, "field label text box");
+	}
 	public WebElement getFieldLabelTextBox(int timeOut) {
 		return isDisplayed(driver, fieldLabelTextBox, "Visibility", timeOut, "field label text box");
 	}

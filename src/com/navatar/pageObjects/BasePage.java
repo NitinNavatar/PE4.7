@@ -1271,6 +1271,8 @@ public abstract class BasePage extends BaseLib {
 	 private WebElement activityLayoutFrame;
 	 @FindBy(xpath="//iframe[contains(@title,'Account Custom Field')]")
 	 private WebElement accountLayoutFrame;
+	 @FindBy(xpath="//iframe[contains(@title,'Salesforce - Enterprise Edition')]")
+	 private WebElement pipelineLayoutFrame;
 
 	 @FindBy(xpath="//iframe[contains(@title,'Picklist Edit: ')]")
 	 private WebElement statusPicklistFrame;
@@ -1322,6 +1324,8 @@ public abstract class BasePage extends BaseLib {
 		  ele=isDisplayed(driver, addPickListMeetingTypeFrame, "Visibility", timeOut, "Add PickList meeting or activties Frame");
 	  }else if (pageName.toString().equalsIgnoreCase(PageName.AccountCustomFieldStatusPage.toString())){
 		  ele=isDisplayed(driver, accountLayoutFrame, "Visibility", timeOut, "account Layout Frame");
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.PipelineCustomPage.toString())){
+		  ele=isDisplayed(driver, pipelineLayoutFrame, "Visibility", timeOut, "pipeline custom page frame");
 	  }
 	  return ele; 
 	 }
