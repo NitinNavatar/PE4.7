@@ -4718,7 +4718,7 @@ public boolean isAutomationAllListViewAdded(String projectName, int timeOut) {
 	String viewList="Automation All",xpath="";
 	if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
 		ThreadSleep(3000);
-		xpath="//div[@class='listContent']//li/a/span[text()='" + viewList + "']";
+		xpath="//span[text()='" + viewList + "']";
 		WebElement selectListView = FindElement(driver, xpath,"Select List View : "+viewList, action.SCROLLANDBOOLEAN, 5);
 		ThreadSleep(3000);
 		if ( selectListView!=null) {

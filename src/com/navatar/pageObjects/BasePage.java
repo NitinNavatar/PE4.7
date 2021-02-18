@@ -3656,7 +3656,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, moreTabIConLighting, "Visibility", timeOut, "More Tab ICon Lighting");	
 	}
 	
-	@FindBy(xpath="//a[@title='New']")
+	@FindBy(xpath="//*[@title='New']")
 	private WebElement newButtonLighting;
 	
 	/**

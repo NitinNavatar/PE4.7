@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 
 import com.navatar.generic.EnumConstants.AddProspectsTab;
 import com.navatar.generic.EnumConstants.AppSetting;
+import com.navatar.generic.EnumConstants.CSVLabel;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
@@ -58,7 +59,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 			order2=csvRecords2[1].trim();
 			int i=0;
 
-			if (parent2.isEmpty() || parent2.equals(" ") ||parent2.equals("")) {
+			if (parent2.isEmpty() || parent2.equals(" ") ||parent2.equals("") || parent2.equalsIgnoreCase("")) {
 				//System.err.println("inside parent blank");	
 				//System.out.println("ye wala "+navigationLabel2+" "+order2+" "+parent2);
 				if (order2.isEmpty() || order2.equals(" ") ||order2.equals("")) {
@@ -300,9 +301,21 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	}
 	
 	public WebElement getNavigationLabel(String projectName,String navigationLabel,action action,int timeOut) {
-		String xpath = "//div[@id='treeview12']//*//*[text()='"+navigationLabel+"']";
-		WebElement ele = FindElement(driver, xpath, navigationLabel, action, timeOut);
-		return isDisplayed(driver, ele, "Visibility", timeOut, navigationLabel);
+		if (navigationLabel.contains("/")) {
+			int i=0;
+			String[] nb = navigationLabel.split("/");
+			for (i = 0; i < nb.length-1; i++) {
+				click(driver, getNavigationLabel(projectName, nb[i], action, timeOut), nb[i], action);
+			}
+			String xpath = "//div[@id='treeview12']//*//*[text()='"+nb[nb.length-1]+"']";
+			WebElement ele = FindElement(driver, xpath, nb[nb.length-1], action, timeOut);
+			return isDisplayed(driver, ele, "Visibility", timeOut, nb[nb.length-1]);
+		}else {
+
+			String xpath = "//div[@id='treeview12']//*//*[text()='"+navigationLabel+"']";
+			WebElement ele = FindElement(driver, xpath, navigationLabel, action, timeOut);
+			return isDisplayed(driver, ele, "Visibility", timeOut, navigationLabel);
+		}
 	}
 	
 	public WebElement getCrossButtonForNavigationLabelPopuP(String projectName,String navigationLabel,action action,int timeOut) {
@@ -358,6 +371,78 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		String xpath = "//*[@title='"+itemName+"']//strong[text()='"+itemName+"']";
 		WebElement ele = FindElement(driver, xpath, itemName, action, timeOut);
 		return isDisplayed(driver, ele, "Visibility", timeOut, itemName);
+	}
+	
+	
+	public boolean addingPageToApp(String projectName,String appName,action action,int timeOut) {
+		String xpath="";
+		boolean flag=false;
+		if (click(driver, getLightningExperienceTab(projectName, timeOut),"lightning Experience Tab", action.BOOLEAN)) {
+			log(LogStatus.INFO,"Click on lightning Experience Tab",YesNo.No);
+			ThreadSleep(5000);
+			xpath = "//div//li/a[text()='"+appName+"']";
+			List<WebElement> eleList = FindElements(driver, xpath, appName);
+			for (WebElement webElement : eleList) {
+				
+				if (click(driver, webElement,appName, action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO,"Click on : "+appName,YesNo.No);
+					xpath="//*[contains(text(),'Add page to app')]";
+					List<WebElement> eleList1 = FindElements(driver, xpath, "Add page to app");
+					for (WebElement webElement2 : eleList1) {
+						webElement2=isDisplayed(driver, webElement2, "Visibility", timeOut, "Add page to app");
+						
+						if (webElement2!=null) {
+							if (click(driver, webElement2,appName, action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO,"Click on Add page to app : "+appName,YesNo.No);
+								flag=true;
+								ThreadSleep(4000);
+							} else {
+								sa.assertTrue(false, "Not Able to Click on Add page to app : "+appName);
+								log(LogStatus.FAIL,"Not Able to Click on Add page to app : "+appName,YesNo.Yes);
+							}
+						} else {
+
+						}
+					}
+							
+				} else {
+					sa.assertTrue(false, "Not Able to Click on : "+appName);
+					log(LogStatus.FAIL,"Not Able to Click on : "+appName,YesNo.Yes);
+				}
+			}
+			
+		} else {
+			sa.assertTrue(false, "Not Able to Click on lightning Experience Tab");
+			log(LogStatus.FAIL,"Not Able to Click on lightning Experience Tab",YesNo.Yes);
+		}
+		return flag;
+	}
+	
+	public WebElement getNavigationField1(String projectName,String navigationField,action action,int timeOut) {
+		navigationField=navigationField.replace("_", " ");
+		String xpath = "//*[text()='"+navigationField+"']/following-sibling::div//input";
+		WebElement ele = FindElement(driver, xpath, navigationField, action, timeOut);
+		scrollDownThroughWebelement(driver, ele, navigationField);
+		return isDisplayed(driver, ele, "Visibility", timeOut, navigationField);
+	}
+	
+	
+	public void enteringValueForNavigation(String projectName,String[][] navigationFieldWithValues,action action,int timeOut) {
+		String navigationField;
+		String navigationvalue;
+		WebElement ele;
+		for (String[] navigationFieldAndvalue : navigationFieldWithValues) {
+			navigationField=navigationFieldAndvalue[0];
+			navigationvalue = navigationFieldAndvalue[1];
+			ele =getNavigationField(projectName, navigationField, action, 20);
+			if (sendKeys(driver, ele, navigationvalue, navigationField, action)) {
+				log(LogStatus.INFO, "Able to enter "+navigationField, YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Not Able to enter "+navigationField, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to enter "+navigationField);
+			}
+		}
+		
 	}
 	
 }

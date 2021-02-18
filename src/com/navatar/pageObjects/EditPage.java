@@ -166,4 +166,40 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, imageFieldNameTextBox, "Visibility", timeOut, "image field name text box");
 	}
 	
+	@FindBy (xpath = "//button[text()='Activate']")
+	private WebElement activateButton;
+
+	/**
+	 * @return the activateButton
+	 */
+	public WebElement getActivateButton(String projectName,int timeOut) {
+		return isDisplayed(driver, activateButton, "Visibility", timeOut, "Activate Button");
+	}
+	
+	@FindBy (xpath = "(//button[text()='Save'])[2]")
+	private WebElement editPageSaveButton2;
+
+	/**
+	 * @return the editPageSaveButton
+	 */
+	public WebElement getEditPageSaveButton2(String projectName,int timeOut) {
+		return isDisplayed(driver, editPageSaveButton2, "Visibility", timeOut, "Edit Page Save Button2");
+	}
+	
+	@FindBy (xpath = "//button[text()='Finish']")
+	private WebElement finishButton2;
+
+	/**
+	 * @return the finishButton2
+	 */
+	public WebElement getFinishButton2(String projectName,int timeOut) {
+		return isDisplayed(driver, finishButton2, "Visibility", timeOut, "Finish Button2");
+	}
+	
+	
+	
+	
+	
+	
+	
 }
