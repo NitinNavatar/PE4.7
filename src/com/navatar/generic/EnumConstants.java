@@ -130,7 +130,7 @@ public class EnumConstants {
 	
 	
 	public static enum PageName{
-		FundsPage,InstitutionsPage,CommitmentsPage,HomePage,NavatarInvestorManager,ManageFolderPopUp,ManageApprovalsPopUp,ProjectDetailsPoPUp,NavatarInvestorAddOnsPage,NewProjectPopUp
+		FundsPage,InstitutionsPage,CommitmentsPage,HomePage,NavatarInvestorManager,ManageFolderPopUp,ManageApprovalsPopUp,ProjectDetailsPoPUp,NavatarInvestorAddOnsPage,NewProjectPopUp,PipelineCustomPage
 		,CompanyPage,CreateFundraisingPage,CreateCommitmentFundType,CreateCommitmentCoInvestmentType,FundraisingPage,PartnershipsPage, DealPage,TaskRayPage, LimitedPartnerPage, BuildStep2Of3,PipelinesPage,NewTaskPage,
 	CRMUserPage,   TaskPage, NewTaskPopUP,TestCustomObjectPage, NewEventPopUp,ActivitiesOrMeetings,SearchActivitiesAttachment,EmailUploadPage,Object1Page,Object1PagePopup,Object2Page,Object3Page,Object4Page,ListEmail,CompactLayout, MeetingType, AddPickListMeetingType,ActivityLayoutPage, Object5Page,AccountCustomFieldStatusPage;
 
@@ -152,7 +152,18 @@ public class EnumConstants {
 	}
 	
 	public static enum Stage {
-		NDA_Signed,Deal_Received,Management_Meeting,IOI,LOI,Due_Diligence,Parked,Closed,DeclinedDead{
+		NDA_Signed,Deal_Received,Management_Meeting,IOI,IndicationOfInterest{
+			@Override
+			public String toString() {
+				return "Indication of Interest";
+		}
+		},LOI,Due_Diligence,Parked,Closed,NonDisclosureAgreement{
+			@Override
+			public String toString() {
+				return "Non-Disclosure Agreement";
+		}
+		}
+		,DeclinedDead{
 			@Override
 			public String toString() {
 				return "Declined/Dead";
@@ -260,7 +271,7 @@ public class EnumConstants {
 			public String toString() {
 				return "Marketing Event";
 			}
-		}, Apps,
+		}, Apps,Pipeline,
 		App_Manager{
 			@Override
 			public String toString() {
@@ -273,6 +284,7 @@ public class EnumConstants {
 			}
 		}
 	};
+
 	
 	public static enum ObjectFeatureName{
 		

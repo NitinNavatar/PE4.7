@@ -943,7 +943,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return flag;
 	}
 
-public WebElement clickOnEditInFrontOfStatus(String projectName, String status) {
+public WebElement clickOnEditInFrontOfFieldValues(String projectName, String status) {
 	status=status.replace("_", " ");
 	String xpath="//th[text()='"+status+"']/preceding-sibling::td//a[contains(@title,'Edit')]";
 	WebElement ele=isDisplayed(driver, FindElement(driver, xpath, "edit", action.SCROLLANDBOOLEAN, 10), "visibility", 10, "edit");

@@ -44,7 +44,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 public class TaskWatchlist extends BaseLib{
 	public static double dealReceivedScore=1.0,NDASignedScore=1.0,managementMeetingScore=3.0,ioiScore=3.0,loiScore=5.0;
-	public static double dueDiligenceScore=5.0,closedScore=5.0,declinedDead=1.0,parkedScore=5.0;
+	public static double dueDiligenceScore=5.0,closedScore=5.0,declinedDeadScore=5.0,parkedScore=5.0;
 	@Parameters({ "projectName"})
 	@Test
 	public void TWtc001_1_CreateCRMUser(String projectName) {
@@ -2253,7 +2253,7 @@ public class TaskWatchlist extends BaseLib{
 						if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), PageLabel.Status.toString()+Keys.ENTER, "status", action.BOOLEAN)) {
 							if (sp.clickOnAlreadyCreatedLayout(PageLabel.Status.toString())) {
 								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
-								WebElement ele=sp.clickOnEditInFrontOfStatus(projectName, PageLabel.Watchlist.toString());
+								WebElement ele=sp.clickOnEditInFrontOfFieldValues(projectName, PageLabel.Watchlist.toString());
 								if (click(driver, ele, "watchlist", action.BOOLEAN)) {
 									switchToDefaultContent(driver);
 									switchToFrame(driver, 10, sp.getstatusPicklistFrame(10));
@@ -2276,7 +2276,7 @@ public class TaskWatchlist extends BaseLib{
 								}
 								switchToDefaultContent(driver);
 								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
-								ele=sp.clickOnEditInFrontOfStatus(projectName, PageLabel.Under_Evaluation.toString());
+								ele=sp.clickOnEditInFrontOfFieldValues(projectName, PageLabel.Under_Evaluation.toString());
 								if (click(driver, ele, "watchlist", action.BOOLEAN)) {
 									switchToDefaultContent(driver);
 									switchToFrame(driver, 10, sp.getstatusPicklistFrame(10));
@@ -2300,9 +2300,9 @@ public class TaskWatchlist extends BaseLib{
 								}
 								switchToDefaultContent(driver);
 								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
-								ele=sp.clickOnEditInFrontOfStatus(projectName, PageLabel.RenameUnder_Evaluation.toString());
+								ele=sp.clickOnEditInFrontOfFieldValues(projectName, PageLabel.RenameUnder_Evaluation.toString());
 								WebElement ele1=null;
-								ele1=sp.clickOnEditInFrontOfStatus(projectName, PageLabel.RenameWatchlist.toString());
+								ele1=sp.clickOnEditInFrontOfFieldValues(projectName, PageLabel.RenameWatchlist.toString());
 								if ((ele!=null)&&(ele1!=null)) {
 									log(LogStatus.INFO,"successfully verified rename of status values",YesNo.No);	
 									
@@ -2419,7 +2419,7 @@ public class TaskWatchlist extends BaseLib{
 						if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), PageLabel.Status.toString()+Keys.ENTER, "status", action.BOOLEAN)) {
 							if (sp.clickOnAlreadyCreatedLayout(PageLabel.Status.toString())) {
 								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
-								WebElement ele=sp.clickOnEditInFrontOfStatus(projectName, PageLabel.RenameWatchlist.toString());
+								WebElement ele=sp.clickOnEditInFrontOfFieldValues(projectName, PageLabel.RenameWatchlist.toString());
 								if (click(driver, ele, "watchlist", action.BOOLEAN)) {
 									switchToDefaultContent(driver);
 									switchToFrame(driver, 10, sp.getstatusPicklistFrame(10));
@@ -2442,7 +2442,7 @@ public class TaskWatchlist extends BaseLib{
 								}
 								switchToDefaultContent(driver);
 								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
-								ele=sp.clickOnEditInFrontOfStatus(projectName, PageLabel.RenameUnder_Evaluation.toString());
+								ele=sp.clickOnEditInFrontOfFieldValues(projectName, PageLabel.RenameUnder_Evaluation.toString());
 								if (click(driver, ele, "watchlist", action.BOOLEAN)) {
 									switchToDefaultContent(driver);
 									switchToFrame(driver, 10, sp.getstatusPicklistFrame(10));
@@ -2466,9 +2466,9 @@ public class TaskWatchlist extends BaseLib{
 								}
 								switchToDefaultContent(driver);
 								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
-								ele=sp.clickOnEditInFrontOfStatus(projectName, PageLabel.Under_Evaluation.toString());
+								ele=sp.clickOnEditInFrontOfFieldValues(projectName, PageLabel.Under_Evaluation.toString());
 								WebElement ele1=null;
-								ele1=sp.clickOnEditInFrontOfStatus(projectName, PageLabel.Watchlist.toString());
+								ele1=sp.clickOnEditInFrontOfFieldValues(projectName, PageLabel.Watchlist.toString());
 								if ((ele!=null)&&(ele1!=null)) {
 									log(LogStatus.INFO,"successfully verified rename of status values",YesNo.No);	
 									
@@ -3625,5 +3625,761 @@ public class TaskWatchlist extends BaseLib{
 		lp.CRMlogout();
 		sa.assertAll();
 	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void HighestStageReachedtc038_ChangeStageToDeclinedDead_Action(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		totalDealsshown=2;dealQualityScore=declinedDeadScore;averageDealQualityScore=(parkedScore+declinedDeadScore)/totalDealsshown;
+		
+		//dealQualityScore=5.0;averageDealQualityScore=1.0;totalDealsshown=1;
+		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
+				,excelLabel.Deal_Quality_Score.toString()};
+		String labelValues[]={Stage.LOI.toString(),Stage.DeclinedDead.toString(),String.valueOf(dealQualityScore)};
+		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
+		};
+		WebElement ele;
+		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+			if (fp.clickOnAlreadyCreatedItem(projectName, Smoke_HSRPipeline2Name, 10)){
+				if (fp.changeStage(projectName, Stage.DeclinedDead.toString(), 10)) {
+					ele=ip.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+					click(driver, ele, "details", action.SCROLLANDBOOLEAN);
+					log(LogStatus.INFO,"successfully changed stage to "+Stage.LOI,YesNo.Yes);
+					for (int i =0;i<labelName.length;i++) {
+						if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i])) {
+							log(LogStatus.INFO,"successfully verified "+labelName[i],YesNo.Yes);
+						}else {
+							sa.assertTrue(false,"Not Able to verify "+labelName[i]);
+							log(LogStatus.SKIP,"Not Able to verify "+labelName[i],YesNo.Yes);
+						}
+					
+					}
+					
+				}else {
+					sa.assertTrue(false,"not able to change stage to "+Stage.LOI);
+					log(LogStatus.SKIP,"not able to change stage to "+Stage.LOI,YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,"not able to find pipeline "+Smoke_HSRPipeline2Name);
+				log(LogStatus.SKIP,"not able to find pipeline "+Smoke_HSRPipeline2Name,YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"not able to click on deal tab");
+			log(LogStatus.SKIP,"not able to click on deal tab",YesNo.Yes);
+		}
+		lp.CRMlogout();
+		sa.assertAll();
 	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void HighestStageReachedtc038_ChangeStageToDeclinedDead_Impact(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		totalDealsshown=2;dealQualityScore=declinedDeadScore;averageDealQualityScore=(parkedScore+declinedDeadScore)/totalDealsshown;
+		
+		//averageDealQualityScore=5.0;totalDealsshown=2;
+		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
+		};
+		String labelValues1[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
+		
+		TabName tabName[]={TabName.Object1Tab,TabName.Object2Tab};
+		String records[]={Smoke_HSRINS1Name,Smoke_HSRContact1FName+" "+Smoke_HSRContact1LName};
+		int j=0;
+		WebElement ele;
+		for (TabName tab:tabName) {
+		if (lp.clickOnTab(projectName, tab)) {
+			if (fp.clickOnAlreadyCreatedItem(projectName, records[j], 10)){
+				ele=ip.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				if (click(driver, ele, "details tab", action.SCROLLANDBOOLEAN)) {
+				
+				for (int i =0;i<labelName1.length;i++) {
+					if (ip.fieldValueVerificationOnInstitutionPage(environment,mode,TabName.Object1Tab, labelName1[i],labelValues1[i])) {
+						log(LogStatus.SKIP,"successfully verified "+labelName1[i],YesNo.No);
+						
+					}else {
+						sa.assertTrue(false,"Not Able to verify "+labelName1[i]);
+						log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
+					}
+				}
+				}else {
+					sa.assertTrue(false,"not able to click on details tab");
+					log(LogStatus.SKIP,"not able to click on details tab",YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,"Not Able to click "+records[j]);
+				log(LogStatus.SKIP,"Not Able to click "+records[j],YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"not able to click on "+tab);
+			log(LogStatus.SKIP,"not able to click on "+tab,YesNo.Yes);
+		}
+		j++;
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void HighestStageReachedtc039_ChangeStageToClosed_Action(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		totalDealsshown=2;dealQualityScore=closedScore;averageDealQualityScore=(parkedScore+closedScore)/totalDealsshown;
+		
+		//dealQualityScore=5.0;averageDealQualityScore=1.0;totalDealsshown=1;
+		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
+				,excelLabel.Deal_Quality_Score.toString()};
+		String labelValues[]={Stage.Closed.toString(),Stage.Closed.toString(),String.valueOf(dealQualityScore)};
+		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
+		};
+		WebElement ele;
+		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+			if (fp.clickOnAlreadyCreatedItem(projectName, Smoke_HSRPipeline2Name, 10)){
+				if (fp.changeStage(projectName, Stage.Closed.toString(), 10)) {
+					ele=ip.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+					click(driver, ele, "details", action.SCROLLANDBOOLEAN);
+					log(LogStatus.INFO,"successfully changed stage to "+Stage.Closed,YesNo.Yes);
+					for (int i =0;i<labelName.length;i++) {
+						if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i])) {
+							log(LogStatus.INFO,"successfully verified "+labelName[i],YesNo.Yes);
+						}else {
+							sa.assertTrue(false,"Not Able to verify "+labelName[i]);
+							log(LogStatus.SKIP,"Not Able to verify "+labelName[i],YesNo.Yes);
+						}
+					
+					}
+					
+				}else {
+					sa.assertTrue(false,"not able to change stage to "+Stage.LOI);
+					log(LogStatus.SKIP,"not able to change stage to "+Stage.LOI,YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,"not able to find pipeline "+Smoke_HSRPipeline2Name);
+				log(LogStatus.SKIP,"not able to find pipeline "+Smoke_HSRPipeline2Name,YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"not able to click on deal tab");
+			log(LogStatus.SKIP,"not able to click on deal tab",YesNo.Yes);
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void HighestStageReachedtc039_ChangeStageToClosed_Impact(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		totalDealsshown=2;dealQualityScore=closedScore;averageDealQualityScore=(parkedScore+closedScore)/totalDealsshown;
+		
+		//averageDealQualityScore=5.0;totalDealsshown=2;
+		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
+		};
+		String labelValues1[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
+		
+		TabName tabName[]={TabName.Object1Tab,TabName.Object2Tab};
+		String records[]={Smoke_HSRINS1Name,Smoke_HSRContact1FName+" "+Smoke_HSRContact1LName};
+		int j=0;
+		WebElement ele;
+		for (TabName tab:tabName) {
+		if (lp.clickOnTab(projectName, tab)) {
+			if (fp.clickOnAlreadyCreatedItem(projectName, records[j], 10)){
+				ele=ip.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				if (click(driver, ele, "details tab", action.SCROLLANDBOOLEAN)) {
+				
+				for (int i =0;i<labelName1.length;i++) {
+					if (ip.fieldValueVerificationOnInstitutionPage(environment,mode,TabName.Object1Tab, labelName1[i],labelValues1[i])) {
+						log(LogStatus.SKIP,"successfully verified "+labelName1[i],YesNo.No);
+						
+					}else {
+						sa.assertTrue(false,"Not Able to verify "+labelName1[i]);
+						log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
+					}
+				}
+				}else {
+					sa.assertTrue(false,"not able to click on details tab");
+					log(LogStatus.SKIP,"not able to click on details tab",YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,"Not Able to click "+records[j]);
+				log(LogStatus.SKIP,"Not Able to click "+records[j],YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"not able to click on "+tab);
+			log(LogStatus.SKIP,"not able to click on "+tab,YesNo.Yes);
+		}
+		j++;
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void HighestStageReachedtc040_CreatePiplelineWithDifferentSourceFirm_Action(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		String pipe,company,stage,sf,sc;
+		for (int i=0;i<1;i++) {
+			if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+				log(LogStatus.INFO,"Click on Tab : "+TabName.Object4Tab,YesNo.No);	
+				pipe= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP3", excelLabel.Deal_Name);
+				company= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP3", excelLabel.Company_Name);
+				sf= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP3", excelLabel.Source_Firm);
+				sc= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP3", excelLabel.Source_Contact);
+				stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP3", excelLabel.Stage);
+				String[][] otherLabels = {{excelLabel.Source_Contact.toString(),sc},{excelLabel.Source_Firm.toString(),sf}};
+				refresh(driver);
+				ThreadSleep(3000);
+				if (fp.createDeal(projectName,"",pipe, company, stage,otherLabels, 15)) {
+					log(LogStatus.INFO,"Created Deal : "+pipe,YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Not Able to Create Deal  : "+pipe);
+					log(LogStatus.SKIP,"Not Able to Create Deal  : "+pipe,YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,"not able to click on deal tab");
+				log(LogStatus.SKIP,"not able to click on deal tab",YesNo.Yes);
+			}
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void HighestStageReachedtc040_CreatePiplelineWithDifferentSourceFirm_Impact(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		totalDealsshown=3;dealQualityScore=loiScore;averageDealQualityScore=(parkedScore+closedScore+loiScore)/totalDealsshown;
+		String dealsForInst="1";
+		//dealQualityScore=5.0;averageDealQualityScore=5.0;totalDealsshown=1;
+		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
+				,excelLabel.Deal_Quality_Score.toString()};
+		String labelValues[]={Smoke_HSRPipeline3Stage,Smoke_HSRPipeline3Stage,String.valueOf(dealQualityScore)};
+		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
+		};
+		String labelValues1[]={String.valueOf(averageDealQualityScore),dealsForInst};
+		String labelValues2[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
+
+		WebElement ele;
+		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+			if (fp.clickOnAlreadyCreatedItem(projectName, Smoke_HSRPipeline3Name, 10)){
+				ele=ip.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				if (click(driver, ele, "details tab", action.SCROLLANDBOOLEAN)) {
+					for (int i =0;i<labelName.length;i++) {
+						if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i])) {
+							log(LogStatus.SKIP,"successfully verified "+labelName[i],YesNo.No);
+							
+						}else {
+							sa.assertTrue(false,"Not Able to verify "+labelName[i]);
+							log(LogStatus.SKIP,"Not Able to verify "+labelName[i],YesNo.Yes);
+						}
+
+					}
+				}else {
+					sa.assertTrue(false,"not able to click on details tab");
+					log(LogStatus.SKIP,"not able to click on details tab",YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,"Not Able to click "+Smoke_HSRPipeline1Name);
+				log(LogStatus.SKIP,"Not Able to click "+Smoke_HSRPipeline1Name,YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"not able to click on deal tab");
+			log(LogStatus.SKIP,"not able to click on deal tab",YesNo.Yes);
+		}
+		TabName tabName[]={TabName.Object1Tab,TabName.Object2Tab};
+		String records[]={Smoke_HSRINS2Name,Smoke_HSRContact1FName+" "+Smoke_HSRContact1LName};
+		int j=0;
+		String temp[];
+		for (TabName tab:tabName) {
+			if (lp.clickOnTab(projectName, tab)) {
+				if (fp.clickOnAlreadyCreatedItem(projectName, records[j], 10)){
+					ele=ip.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+					if (click(driver, ele, "details tab", action.SCROLLANDBOOLEAN)) {
+						if (j==0)
+							temp=labelValues1;
+						else
+							temp=labelValues2;
+						for (int i =0;i<labelName1.length;i++) {
+							if (ip.fieldValueVerificationOnInstitutionPage(environment,mode,TabName.Object1Tab, labelName1[i],temp[i])) {
+								log(LogStatus.SKIP,"successfully verified "+labelName1[i],YesNo.No);
+								
+							}else {
+								sa.assertTrue(false,"Not Able to verify "+labelName1[i]);
+								log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
+							}
+
+						}
+					}else {
+						sa.assertTrue(false,"not able to click on details tab");
+						log(LogStatus.SKIP,"not able to click on details tab",YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false,"Not Able to click "+records[j]);
+					log(LogStatus.SKIP,"Not Able to click "+records[j],YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,"not able to click on deal tab");
+				log(LogStatus.SKIP,"not able to click on deal tab",YesNo.Yes);
+			}
+			j++;
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void HighestStageReachedtc041_DeletePipeline_Action(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+			if (fp.clickOnAlreadyCreatedItem(projectName, Smoke_HSRPipeline1Name, 10)) {
+				cp.clickOnShowMoreDropdownOnly(projectName, PageName.Object4Page);
+				log(LogStatus.INFO,"Able to Click on Show more Icon : "+TabName.Object4Tab+" For : "+Smoke_HSRPipeline1Name,YesNo.No);
+				ThreadSleep(500);
+				WebElement ele = cp.actionDropdownElement(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Delete, 15);
+				 if (ele==null) {
+					 ele =cp.getDeleteButton(projectName, 30);
+				} 
+				
+				 if (click(driver, ele, "Delete More Icon", action.BOOLEAN)) {
+					log(LogStatus.INFO,"Able to Click on Delete more Icon : "+TabName.Object4Tab+" For : "+Smoke_HSRPipeline1Name,YesNo.No);
+					ThreadSleep(1000);
+					if (click(driver, cp.getDeleteButtonOnDeletePopUp(projectName, 30), "Delete Button", action.BOOLEAN)) {
+						log(LogStatus.INFO,"Able to Click on Delete button on Delete PoPup : "+TabName.Object4Tab+" For : "+Smoke_HSRPipeline1Name,YesNo.No);
+						ThreadSleep(10000);
+						if (cp.clickOnTab(projectName, TabName.Object4Tab)) {
+							log(LogStatus.INFO,"Clicked on Tab : "+TabName.Object4Tab+" For : "+Smoke_HSRPipeline1Name,YesNo.No);
+							ThreadSleep(1000);
+							if (!cp.clickOnAlreadyCreatedItem(projectName, TabName.Object4Tab, Smoke_HSRPipeline1Name, 10)) {
+								log(LogStatus.INFO,"Item has been Deleted after delete operation  : "+Smoke_HSRPipeline1Name+" For : "+TabName.Object4Tab,YesNo.No);
+
+							}else {
+								sa.assertTrue(false,"Item has not been Deleted after delete operation  : "+Smoke_HSRPipeline1Name+" For : "+TabName.Object4Tab);
+								log(LogStatus.SKIP,"Item has not been Deleted after delete operation  : "+Smoke_HSRPipeline1Name+" For : "+TabName.Object4Tab,YesNo.Yes);
+							}
+
+						}else {
+							sa.assertTrue(false,"Not Able to Click on Tab after delete : "+TabName.Object4Tab+" For : "+Smoke_HSRPipeline1Name);
+							log(LogStatus.SKIP,"Not Able to Click on Tab after delete : "+TabName.Object4Tab+" For : "+Smoke_HSRPipeline1Name,YesNo.Yes);	
+						}
+					}else {
+						log(LogStatus.INFO,"not able to click on delete button, so not deleted : "+TabName.Object4Tab+" For : "+Smoke_HSRPipeline1Name,YesNo.No);
+						sa.assertTrue(false,"not able to click on delete button, so not deleted : "+TabName.Object4Tab+" For : "+Smoke_HSRPipeline1Name);
+					}
+				 }else {
+					 log(LogStatus.INFO,"not Able to Click on Delete more Icon : "+TabName.Object4Tab+" For : "+Smoke_HSRPipeline1Name,YesNo.No);
+					 sa.assertTrue(false,"not Able to Click on Delete more Icon : "+TabName.Object4Tab+" For : "+Smoke_HSRPipeline1Name);
+				 }
+			}else {
+				 log(LogStatus.INFO,"not Able to Click on "+Smoke_HSRPipeline1Name,YesNo.No);
+				 sa.assertTrue(false,"not Able to Click on "+Smoke_HSRPipeline1Name);
+			 }
+		}else {
+			 log(LogStatus.INFO,"not Able to Click on "+TabName.Object4Tab,YesNo.No);
+			 sa.assertTrue(false,"not Able to Click on "+TabName.Object4Tab);
+		 }
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void HighestStageReachedtc041_DeletePipeline_Impact(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		totalDealsshown=2;dealQualityScore=closedScore;averageDealQualityScore=(parkedScore+closedScore)/totalDealsshown;
+		
+		//averageDealQualityScore=5.0;totalDealsshown=2;
+		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
+		};
+		String labelValues2[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
+		String labelValues1[]={String.valueOf(averageDealQualityScore),"1"};
+		
+		String temp[];
+		TabName tabName[]={TabName.Object1Tab,TabName.Object2Tab};
+		String records[]={Smoke_HSRINS1Name,Smoke_HSRContact1FName+" "+Smoke_HSRContact1LName};
+		int j=0;
+		WebElement ele;
+		for (TabName tab:tabName) {
+		if (lp.clickOnTab(projectName, tab)) {
+			if (fp.clickOnAlreadyCreatedItem(projectName, records[j], 10)){
+				ele=ip.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				if (click(driver, ele, "details tab", action.SCROLLANDBOOLEAN)) {
+				if (j==0)
+					temp=labelValues1;
+				else
+					temp=labelValues2;
+				for (int i =0;i<labelName1.length;i++) {
+					if (ip.fieldValueVerificationOnInstitutionPage(environment,mode,TabName.Object1Tab, labelName1[i],temp[i])) {
+						log(LogStatus.SKIP,"successfully verified "+labelName1[i],YesNo.No);
+						
+					}else {
+						sa.assertTrue(false,"Not Able to verify "+labelName1[i]);
+						log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
+					}
+				}
+				}else {
+					sa.assertTrue(false,"not able to click on details tab");
+					log(LogStatus.SKIP,"not able to click on details tab",YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,"Not Able to click "+records[j]);
+				log(LogStatus.SKIP,"Not Able to click "+records[j],YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"not able to click on "+tab);
+			log(LogStatus.SKIP,"not able to click on "+tab,YesNo.Yes);
+		}
+		j++;
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void HighestStageReachedtc042_RestorePipeline_Action(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		WebElement ele = null ;
+	
+		
+		TabName tabName = TabName.RecycleBinTab;
+		String name = Smoke_HSRPipeline1Name;
+		
+			if (cp.clickOnTab(projectName, tabName)) {
+				log(LogStatus.INFO,"Clicked on Tab : "+tabName+" For : "+name,YesNo.No);
+				ThreadSleep(1000);
+				cp.clickOnAlreadyCreatedItem(projectName, tabName, name, 20);
+					log(LogStatus.INFO,"Clicked on  : "+name+" For : "+tabName,YesNo.No);
+					ThreadSleep(2000);
+					
+					 ele=cp.getCheckboxOfRestoreItemOnRecycleBin(projectName, name, 10);
+					 if (clickUsingJavaScript(driver, ele, "Check box against : "+name, action.BOOLEAN)) {
+						 log(LogStatus.INFO,"Click on checkbox for "+name,YesNo.No);
+						 
+						 ThreadSleep(1000);
+						 ele=cp.getRestoreButtonOnRecycleBin(projectName, 10);
+						 if (clickUsingJavaScript(driver, ele, "Restore Button : "+name, action.BOOLEAN)) {
+							 log(LogStatus.INFO,"Click on Restore Button for "+name,YesNo.No);
+							 ThreadSleep(1000);
+//							 ele = cp.getAnyMsg(projectName, tp.restoreItemMsg(projectName, name), 20);
+//								if (ele!=null) {
+//									log(LogStatus.SKIP,"Restore Msg Ele Found and Verified : "+name,YesNo.No);
+//
+//								} else {
+//									sa.assertTrue(false,"Restore Task Msg Ele not Found : "+name);
+//									log(LogStatus.SKIP,"Restore Task Msg Ele not Found : "+name,YesNo.Yes);
+//
+//								}
+								
+						} else {
+							sa.assertTrue(false,"Not Able to Click on Restore Button for "+name);
+							log(LogStatus.SKIP,"Not Able to Click on Restore Button for "+name,YesNo.Yes);
+						}
+						 
+					} else {
+						sa.assertTrue(false,"Not Able to Click on checkbox for "+name);
+						log(LogStatus.SKIP,"Not Able to Click on checkbox for "+name,YesNo.Yes);
+					}
+
+			} else {
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabName+" For : "+name);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabName+" For : "+name,YesNo.Yes);
+			}
+			switchToDefaultContent(driver);
+
+
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void HighestStageReachedtc042_RestorePipeline_Impact(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		totalDealsshown=3;dealQualityScore=closedScore;averageDealQualityScore=(parkedScore+loiScore+closedScore)/totalDealsshown;
+		String instDealCOunt="2";
+		//averageDealQualityScore=5.0;totalDealsshown=3;dealQualityScore=5.0;
+		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
+		};
+		String labelValues2[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
+		String labelValues1[]={String.valueOf(averageDealQualityScore),instDealCOunt};
+		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
+				,excelLabel.Deal_Quality_Score.toString()};
+		String labelValues[]={Stage.Due_Diligence.toString(),Stage.Parked.toString(),String.valueOf(dealQualityScore)};
+		
+		String temp[];
+		TabName tabName[]={TabName.Object1Tab,TabName.Object2Tab};
+		String records[]={Smoke_HSRINS1Name,Smoke_HSRContact1FName+" "+Smoke_HSRContact1LName};
+		int j=0;
+		WebElement ele;
+		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+			if (fp.clickOnAlreadyCreatedItem(projectName, Smoke_HSRPipeline1Name, 10)){
+				ele=ip.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				if (click(driver, ele, "details tab", action.SCROLLANDBOOLEAN)) {
+					for (int i =0;i<labelName.length;i++) {
+						if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i])) {
+							log(LogStatus.SKIP,"successfully verified "+labelName[i],YesNo.No);
+							
+						}else {
+							sa.assertTrue(false,"Not Able to verify "+labelName[i]);
+							log(LogStatus.SKIP,"Not Able to verify "+labelName[i],YesNo.Yes);
+						}
+
+					}
+				}else {
+					sa.assertTrue(false,"not able to click on details tab");
+					log(LogStatus.SKIP,"not able to click on details tab",YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,"Not Able to click "+Smoke_HSRPipeline1Name);
+				log(LogStatus.SKIP,"Not Able to click "+Smoke_HSRPipeline1Name,YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"not able to click on deal tab");
+			log(LogStatus.SKIP,"not able to click on deal tab",YesNo.Yes);
+		}
+		for (TabName tab:tabName) {
+			if (lp.clickOnTab(projectName, tab)) {
+				if (fp.clickOnAlreadyCreatedItem(projectName, records[j], 10)){
+					ele=ip.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+					if (click(driver, ele, "details tab", action.SCROLLANDBOOLEAN)) {
+						if (j==0)
+							temp=labelValues1;
+						else
+							temp=labelValues2;
+						for (int i =0;i<labelName1.length;i++) {
+							if (ip.fieldValueVerificationOnInstitutionPage(environment,mode,TabName.Object1Tab, labelName1[i],temp[i])) {
+								log(LogStatus.SKIP,"successfully verified "+labelName1[i],YesNo.No);
+
+							}else {
+								sa.assertTrue(false,"Not Able to verify "+labelName1[i]);
+								log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
+							}
+						}
+					}else {
+						sa.assertTrue(false,"not able to click on details tab");
+						log(LogStatus.SKIP,"not able to click on details tab",YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false,"Not Able to click "+records[j]);
+					log(LogStatus.SKIP,"Not Able to click "+records[j],YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,"not able to click on "+tab);
+				log(LogStatus.SKIP,"not able to click on "+tab,YesNo.Yes);
+			}
+			j++;
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+
+	@Parameters({ "projectName"})
+	@Test
+	public void HighestStageReachedtc043_UpdateStageNames(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		String parentID=null;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String[][] newAndOldStage= {{Stage.NDA_Signed.toString(),Stage.NonDisclosureAgreement.toString()},
+				{Stage.IOI.toString(),Stage.IndicationOfInterest.toString()}};
+		if (home.clickOnSetUpLink()) {
+			parentID=switchOnWindow(driver);
+			if (parentID!=null) {
+				if (sp.searchStandardOrCustomObject(environment, mode,object.Deal )) {
+					if(sp.clickOnObjectFeature(environment, mode,object.Deal, ObjectFeatureName.FieldAndRelationShip)) {
+						if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), excelLabel.Stage.toString()+Keys.ENTER, "status", action.BOOLEAN)) {
+
+							if (sp.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
+								for (int i = 0;i<newAndOldStage.length;i++) {
+									switchToDefaultContent(driver);
+									switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
+									WebElement ele=sp.clickOnEditInFrontOfFieldValues(projectName, newAndOldStage[i][0]);
+									if (click(driver, ele, "watchlist", action.BOOLEAN)) {
+										switchToDefaultContent(driver);
+										ThreadSleep(3000);
+										switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
+										sendKeys(driver, sp.getFieldLabelTextBox1(10), newAndOldStage[i][1], "label", action.BOOLEAN);
+											
+
+										if (click(driver, fp.getCustomTabSaveBtn(10), "save", action.BOOLEAN)) {
+
+											log(LogStatus.INFO, "successfully changed watchlist label", YesNo.No);
+										}else {
+											sa.assertTrue(false,"not able to click on save button");
+											log(LogStatus.SKIP,"not able to click on save button",YesNo.Yes);
+										}
+
+									}else {
+										sa.assertTrue(false,"edit button is not clickable");
+										log(LogStatus.SKIP,"edit button is not clickable",YesNo.Yes);
+									}
+								}
+								ThreadSleep(3000);
+								switchToDefaultContent(driver);
+								switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
+								WebElement ele=sp.clickOnEditInFrontOfFieldValues(projectName, newAndOldStage[0][1]);
+								WebElement ele1=null;
+								ele1=sp.clickOnEditInFrontOfFieldValues(projectName, newAndOldStage[1][1]);
+								if ((ele!=null)&&(ele1!=null)) {
+									log(LogStatus.INFO,"successfully verified rename of stage values",YesNo.No);	
+									
+								}else {
+									log(LogStatus.ERROR,"stage field is not renamed",YesNo.No);	
+									sa.assertTrue(false,"stage field is not renamed" );
+								}
+							}else {
+								sa.assertTrue(false,"stage field is not clickable");
+								log(LogStatus.SKIP,"stage field is not clickable",YesNo.Yes);
+							}
+						}else {
+							sa.assertTrue(false,"field textbox is not visible");
+							log(LogStatus.SKIP,"field textbox is not visible",YesNo.Yes);
+						}
+					}else {
+						sa.assertTrue(false,"field and relationships is not clickable");
+						log(LogStatus.SKIP,"field and relationships is not clickable",YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false,"activity object is not clickable");
+					log(LogStatus.SKIP,"activity object is not clickable",YesNo.Yes);
+				}
+				ThreadSleep(3000);
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				sa.assertTrue(false,"new window is not found, so cannot change watchlist label");
+				log(LogStatus.SKIP,"new window is not found, so cannot change watchlist label",YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"setup link is not clickable");
+			log(LogStatus.SKIP,"setup link is not clickable",YesNo.Yes);
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void HighestStageReachedtc044_CreatePiplelineWithNewStageValues_Action(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		String pipe,company,stage,sf,sc;
+			if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+				log(LogStatus.INFO,"Click on Tab : "+TabName.Object4Tab,YesNo.No);	
+				pipe= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP4", excelLabel.Deal_Name);
+				company= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP4", excelLabel.Company_Name);
+				sf= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP4", excelLabel.Source_Firm);
+				sc= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP4", excelLabel.Source_Contact);
+				stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP4", excelLabel.Stage);
+				String[][] otherLabels = {{excelLabel.Source_Contact.toString(),sc},{excelLabel.Source_Firm.toString(),sf}};
+				refresh(driver);
+				ThreadSleep(3000);
+				if (fp.createDeal(projectName,"",pipe, company, stage,otherLabels, 15)) {
+					log(LogStatus.INFO,"Created Deal : "+pipe,YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Not Able to Create Deal  : "+pipe);
+					log(LogStatus.SKIP,"Not Able to Create Deal  : "+pipe,YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,"not able to click on deal tab");
+				log(LogStatus.SKIP,"not able to click on deal tab",YesNo.Yes);
+			}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	
+}
 
