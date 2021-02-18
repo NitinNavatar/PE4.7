@@ -675,6 +675,9 @@ public String getTabName(String projectName,TabName TabName) {
 	case TaskTab:
 		tabName = "Tasks";
 		break;
+	case Deal_Team:
+		tabName = "Deal Team";
+		break;
 	case RecycleBinTab:
 		tabName = "Recycle Bin";
 		break;
