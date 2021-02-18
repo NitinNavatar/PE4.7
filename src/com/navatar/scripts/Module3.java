@@ -120,7 +120,7 @@ public class Module3 extends BaseLib {
 	String dashBoardTab="Dashboards";
 	List<String> csvRecords = ExcelUtils.readAllDataFromCSVFileIntoList(NavigationMenuTestData_PEExcel, false);
 	String none="None";
-
+	String myAppPage="My App Page";
 	@Parameters({ "projectName"})
 	@Test
 	public void Module3Tc001_createCRMUser(String projectName) {
@@ -1491,7 +1491,7 @@ public class Module3 extends BaseLib {
 	public void Module3Tc018_CreateSubMenuAndVerify(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
-		//	lp.CRMLogin(superAdminUserName, adminPassword);
+		lp.CRMLogin(superAdminUserName, adminPassword);
 		String updatedParent="";
 		WebElement ele;
 		String[] navigationLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name).split(breakSP);
@@ -1732,6 +1732,442 @@ public class Module3 extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc021_FillThirdPartyWebsiteToReportAndDashboardAndVerifyTheNavigation(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		WebElement ele;
+		String[] navigationLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name).split(breakSP);
+		String[] thirdPartyURLS= {"https://www.hubspot.com","https://www.preqin.com","https://pe4604.lightning.force.com/lightning/n/My_App_Page"};
+		String[] navigationLabelWithParent=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_With_Parent).split(breakSP);
+
+		String navLb;
+		String thirdPartyURL;
+		for (int j = 0; j < navigationLabel.length; j++) {
+
+			navLb=navigationLabel[j];
+			if (npbl.clickOnTab(projectName, navigationTab)) {
+				log(LogStatus.INFO, "Click on Tab : "+navigationTab, YesNo.No);
+				if (npbl.clickOnAlreadyCreatedItem(projectName, navLb, true, 15)) {
+					log(LogStatus.INFO,"Item found: "+navLb+" on Tab : "+navigationTab, YesNo.No);
+
+					npbl.clickOnShowMoreDropdownOnly(projectName);
+					ele = npbl.actionDropdownElement(projectName, ShowMoreActionDropDownList.Edit, 10);
+
+					if (click(driver, ele, ShowMoreActionDropDownList.Edit.toString(), action.BOOLEAN)) {
+						log(LogStatus.INFO, "Not Able to Click on Edit Button : "+navLb, YesNo.No);
+						ele = npbl.getNavigationField(projectName, CSVLabel.URL.toString(), action.BOOLEAN, 20);
+						thirdPartyURL = thirdPartyURLS[j];
+						try {
+							ele.clear();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						ThreadSleep(2000);
+						if (sendKeys(driver, ele, thirdPartyURL, CSVLabel.URL.toString(), action.BOOLEAN)) {
+							log(LogStatus.INFO, "Able to enter "+CSVLabel.URL.toString(), YesNo.No);
+							ThreadSleep(2000);
+							if (click(driver, npbl.getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.ERROR, "Click on save Button : "+navLb, YesNo.No);
+								ThreadSleep(2000);
+
+								if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, thirdPartyURL, CSVLabel.Navigation_Label.toString(), navLb, CSVLabel.URL.toString())) {
+									log(LogStatus.INFO, thirdPartyURL+" value has been written under "+CSVLabel.URL.toString()+" for "+navLb, YesNo.No);
+								} else {
+									log(LogStatus.ERROR, thirdPartyURL+" value has not been written under "+CSVLabel.URL.toString()+" for "+navLb, YesNo.Yes);
+									sa.assertTrue(false, thirdPartyURL+" value has not been written under "+CSVLabel.URL.toString()+" for "+navLb);
+								}
+
+							} else {
+								log(LogStatus.ERROR, "Not Able to Click on save Button : "+navLb, YesNo.Yes);
+								sa.assertTrue(false,"Not Able to Click on save Button : "+navLb);}
+
+						} else {
+							log(LogStatus.ERROR, "Not Able to enter "+CSVLabel.Parent.toString(), YesNo.Yes);
+							sa.assertTrue(false,"Not Able to enter "+CSVLabel.Parent.toString());
+						}
+					} else {
+						log(LogStatus.ERROR, "Not Able to Click on Edit Button : "+navLb, YesNo.Yes);
+						sa.assertTrue(false,"Not Able to Click on Edit Button : "+navLb);
+					}
+
+				}else {
+
+					log(LogStatus.ERROR,"Item not found: "+navLb+" on Tab : "+navigationTab, YesNo.Yes);
+					sa.assertTrue(false,"Item not found: "+navLb+" on Tab : "+navigationTab);
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on Tab : "+navigationTab, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+navigationTab);
+			}
+
+		}
+
+		String redirectLink;
+		String labelValue="";
+		String actualUrl="";
+
+		for (int i = 0; i < navigationLabelWithParent.length; i++) {
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+				labelValue=navigationLabelWithParent[i];
+				ele=npbl.getNavigationLabel(projectName, labelValue, action.BOOLEAN, 10);
+				if (click(driver, ele, labelValue, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on "+labelValue+" going to verify url", YesNo.No);
+					ThreadSleep(5000);
+					String pareNTiD=switchOnWindow(driver);
+					if (pareNTiD!=null) {
+						
+						redirectLink=thirdPartyURLS[i];
+						actualUrl=getURL(driver, 60);
+						if (redirectLink.equalsIgnoreCase(actualUrl) || actualUrl.equalsIgnoreCase(redirectLink)) {
+							log(LogStatus.ERROR, "After clicking : "+labelValue+" redirected to "+redirectLink, YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "After clicking : "+labelValue+" should be redirected to "+redirectLink, YesNo.Yes);
+							sa.assertTrue(false,"After clicking : "+labelValue+" should be redirected to "+redirectLink);
+							
+						}
+						driver.close();
+						driver.switchTo().window(pareNTiD);
+					} else {
+						log(LogStatus.ERROR, "No new window is open for  "+labelValue+" so cannot verify url", YesNo.Yes);
+						sa.assertTrue(false,"No new window is open for  "+labelValue+" so cannot verify url");
+					}
+					
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+labelValue+" so cannot verify url", YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+labelValue+" so cannot verify url");
+
+				}
+				click(driver, npbl.getNavatarQuickLinkMinimize_Lighting(projectName, 3), "Minimize Icon", action.BOOLEAN);
+				refresh(driver);
+				ThreadSleep(5000);
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify url for label : "+labelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify url for label : "+labelValue);
+			}
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc023_CreateALightningAppPageAndVerifyTheNavigationForLighteningAppPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		if (home.clickOnSetUpLink()) {
+			String parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+				log(LogStatus.INFO, "Able to switch on new window, so going to update Navigation Label", YesNo.No);
+				ThreadSleep(500);
+
+				if(setup.searchStandardOrCustomObject(environment,mode, object.Lightning_App_Builder)) {
+					log(LogStatus.INFO, "click on Object : "+object.Lightning_App_Builder, YesNo.No);
+					ThreadSleep(2000);
+					//						setup.clickOnEditForApp(driver, appName, AppDeveloperName,"Navatar Private Equity app – Lightning View(Edge)", 10);
+					//						scn.nextLine();
+					switchToFrame(driver, 20, setup.getSetUpPageIframe(60));
+					if(clickUsingJavaScript(driver, lp.getNewButton(projectName, 60), "new button")) {
+						log(LogStatus.INFO, "Click on new button going to create Lightning App : "+myAppPage, YesNo.No);	
+						switchToDefaultContent(driver);
+						if(click(driver, npbl.getLightningPageNextBtn(projectName, 120), "Next Button", action.BOOLEAN)) {
+							log(LogStatus.INFO, "Click on next button going to create Lightning App : "+myAppPage, YesNo.No);
+							ThreadSleep(500);
+							if (sendKeys(driver, setup.commonInputElement(projectName, PageLabel.Label.toString(), action.BOOLEAN, 10),myAppPage,PageLabel.Label.toString()+" textbox value : "+myAppPage,action.BOOLEAN)) {
+								ThreadSleep(500);
+								log(LogStatus.INFO,"send value to "+PageLabel.Label.toString()+" textbox value : "+myAppPage,YesNo.No);
+								if(click(driver, npbl.getLightningPageNextBtn2(projectName, 30), "Next Button2", action.BOOLEAN)) {
+									log(LogStatus.INFO, "Click on next button going to create Lightning App : "+myAppPage, YesNo.No);
+									ThreadSleep(500);
+									
+									if(click(driver, npbl.getLightningPagFinishBtn(projectName, 30), "Finish Button", action.BOOLEAN)) {
+										log(LogStatus.INFO, "Click on Finish button going to create Lightning App : "+myAppPage, YesNo.No);
+										ThreadSleep(500);
+										
+										if (click(driver, edit.getEditPageSaveButton(projectName, 30),"Save Button", action.BOOLEAN)) {
+											log(LogStatus.INFO,"Click on Save Button",YesNo.No);
+											ThreadSleep(5000);
+											
+										if (click(driver, edit.getActivateButton(projectName, 30),"Activate Button", action.BOOLEAN)) {
+												log(LogStatus.INFO,"Click on Activate Button",YesNo.No);
+												ThreadSleep(2000);
+												
+												///
+												
+												if (npbl.addingPageToApp(projectName, appName, action.BOOLEAN, 20)) {
+													
+													if (click(driver, edit.getEditPageSaveButton2(projectName, 30),"Save Button2", action.BOOLEAN)) {
+														log(LogStatus.INFO,"Click on Save Button2",YesNo.No);
+														ThreadSleep(5000);
+														
+														click(driver, edit.getFinishButton2(projectName, 30),"Finish Button2", action.BOOLEAN);
+//														if (click(driver, edit.getFinishButton2(projectName, 30),"Finish Button2", action.BOOLEAN)) {
+//															log(LogStatus.INFO,"Click on Finish Button2",YesNo.No);
+//															ThreadSleep(5000);
+//															} else {
+//															sa.assertTrue(false, "Not Able to Click on Finish Button2");
+//															log(LogStatus.FAIL,"Not Able to Click on Finish Button2",YesNo.Yes);
+//														}
+
+														if (click(driver, edit.getEditPageSaveButton(projectName, 30),"Save Button", action.BOOLEAN)) {
+															log(LogStatus.INFO,"Click on Save Button",YesNo.No);
+															ThreadSleep(5000);
+															} else {
+															sa.assertTrue(false, "Not Able to Click on Save Button");
+															log(LogStatus.FAIL,"Not Able to Click on Save Button",YesNo.Yes);
+														}
+														
+													
+														
+													} else {
+														sa.assertTrue(false, "Not Able to Click on Save Button2");
+														log(LogStatus.FAIL,"Not Able to Click on Save Button2",YesNo.Yes);
+													}
+													
+												} else {
+													sa.assertTrue(false, "Not Able to add page to App");
+													log(LogStatus.FAIL,"Not Able to add page to App",YesNo.Yes);
+												}
+												
+												
+											} else {
+												sa.assertTrue(false, "Not Able to Click on Activate Button");
+												log(LogStatus.FAIL,"Not Able to Click on Activate Button",YesNo.Yes);
+											}
+											
+										} else {
+											sa.assertTrue(false, "Not Able to Click on Save Button");
+											log(LogStatus.FAIL,"Not Able to Click on Save Button",YesNo.Yes);
+										}
+										
+										
+									}else {
+										log(LogStatus.ERROR, "Not Able to Click on Finish button so cannot create Lightning App : "+myAppPage, YesNo.Yes);
+										sa.assertTrue(false, "Not Able to Click on Finish button so cannot create Lightning App : "+myAppPage);
+
+									}
+									
+								}else {
+									log(LogStatus.ERROR, "Not Able to Click on next button so cannot create Lightning App : "+myAppPage, YesNo.Yes);
+									sa.assertTrue(false, "Not Able to Click on next button so cannot create Lightning App : "+myAppPage);
+
+								}
+							} else {
+								sa.assertTrue(false, "Not Able to send value to "+PageLabel.Label.toString()+" textbox value : "+myAppPage);
+								log(LogStatus.FAIL,"Not Able to send value to "+PageLabel.Label.toString()+" textbox value : "+myAppPage,YesNo.Yes);
+							}
+							
+						}else {
+							log(LogStatus.ERROR, "Not Able to Click on next button so cannot create Lightning App : "+myAppPage, YesNo.Yes);
+							sa.assertTrue(false, "Not Able to Click on next button so cannot create Lightning App : "+myAppPage);
+
+						}
+						
+					}else {
+						log(LogStatus.ERROR, "Not Able to Click on new button so cannot create Lightning App : "+myAppPage, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Click on new button so cannot create Lightning App : "+myAppPage);
+
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to search/click on "+object.Lightning_App_Builder, YesNo.Yes);
+					sa.assertTrue(false, "Not able to search/click on "+object.Lightning_App_Builder);
+				}
+
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.FAIL, "could not find new window to switch, so cannot update Navigation Label", YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch, so cannot update Navigation Label");
+			}
+
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link");	
+		}
+		
+		///////////////////////////////////////////
+		
+		String redirectLink;
+		String labelValue="";
+		String actualUrl="";
+		String[] navigationLabelWithParent=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_With_Parent).split(breakSP);
+
+		for (int i = 0; i < navigationLabelWithParent.length; i++) {
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+				labelValue=navigationLabelWithParent[i];
+				WebElement ele = npbl.getNavigationLabel(projectName, labelValue, action.BOOLEAN, 10);
+				if (click(driver, ele, labelValue, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on "+labelValue+" going to verify url", YesNo.No);
+					ThreadSleep(5000);
+//					String pareNTiD=switchOnWindow(driver);
+//					if (pareNTiD!=null) {
+						
+						redirectLink="";
+						actualUrl=getURL(driver, 60);
+						if (redirectLink.equalsIgnoreCase(actualUrl) || actualUrl.equalsIgnoreCase(redirectLink)) {
+							log(LogStatus.ERROR, "After clicking : "+labelValue+" redirected to "+redirectLink, YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "After clicking : "+labelValue+" should be redirected to "+redirectLink, YesNo.Yes);
+							sa.assertTrue(false,"After clicking : "+labelValue+" should be redirected to "+redirectLink);
+							
+						}
+//						driver.close();
+//						driver.switchTo().window(pareNTiD);
+//					} else {
+//						log(LogStatus.ERROR, "No new window is open for  "+labelValue+" so cannot verify url", YesNo.Yes);
+//						sa.assertTrue(false,"No new window is open for  "+labelValue+" so cannot verify url");
+//					}
+					
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+labelValue+" so cannot verify url", YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+labelValue+" so cannot verify url");
+
+				}
+				click(driver, npbl.getNavatarQuickLinkMinimize_Lighting(projectName, 3), "Minimize Icon", action.BOOLEAN);
+				refresh(driver);
+				ThreadSleep(5000);
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify url for label : "+labelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify url for label : "+labelValue);
+			}
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	
+		/////////////////////////////////////////////;
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc022_CreateListViewAndVerifyTheNavigationForListView(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		WebElement ele;
+		String navigationLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name);
+		String listViewObject=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.List_View_Object);
+		String listViewName=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.List_View_Name);
+		String[][] navigationFieldWithValues= {{CSVLabel.List_View_Object.toString(),listViewObject},{CSVLabel.List_View_Name.toString(),listViewName}};
+		String navLb;
+		navLb=navigationLabel;
+
+		if (lp.clickOnTab(projectName, navLb)) {	
+			if (lp.addAutomationAllListView(projectName, navLb, 10)) {
+				log(LogStatus.INFO,"list view added on "+navLb,YesNo.No);
+			} else {
+				log(LogStatus.FAIL,"list view could not added on "+navLb,YesNo.Yes);
+				sa.assertTrue(false, "list view could not added on "+navLb);
+			}
+		} else {
+			log(LogStatus.FAIL,"could not click on "+navLb,YesNo.Yes);
+			sa.assertTrue(false, "could not click on "+navLb);
+		}
+
+		if (npbl.clickOnTab(projectName, navigationTab)) {
+			log(LogStatus.INFO, "Click on Tab : "+navigationTab, YesNo.No);
+			if (npbl.clickOnAlreadyCreatedItem(projectName, navLb, true, 15)) {
+				log(LogStatus.INFO,"Item found: "+navLb+" on Tab : "+navigationTab, YesNo.No);
+
+				npbl.clickOnShowMoreDropdownOnly(projectName);
+				ele = npbl.actionDropdownElement(projectName, ShowMoreActionDropDownList.Edit, 10);
+
+				if (click(driver, ele, ShowMoreActionDropDownList.Edit.toString(), action.BOOLEAN)) {
+					log(LogStatus.INFO, "Not Able to Click on Edit Button : "+navLb, YesNo.No);
+					npbl.enteringValueForNavigation(projectName, navigationFieldWithValues, action.BOOLEAN, 20);
+					if (click(driver, npbl.getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.ERROR, "Click on save Button : "+navLb, YesNo.No);
+						ThreadSleep(2000);
+						
+
+						if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewName
+								, CSVLabel.Navigation_Label.toString(), navLb, CSVLabel.List_View_Name.toString())) {
+							log(LogStatus.INFO, listViewName+" value has been written under "+CSVLabel.List_View_Name.toString()+" for "+navLb, YesNo.No);
+						} else {
+							log(LogStatus.ERROR, listViewName+" value has not been written under "+CSVLabel.List_View_Name.toString()+" for "+navLb, YesNo.Yes);
+							sa.assertTrue(false, listViewName+" value has not been written under "+CSVLabel.List_View_Name.toString()+" for "+navLb);
+						}
+						
+
+						if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewObject, CSVLabel.Navigation_Label.toString(), navLb, CSVLabel.List_View_Object.toString())) {
+							log(LogStatus.INFO, listViewObject+" value has been written under "+CSVLabel.List_View_Object.toString()+" for "+navLb, YesNo.No);
+						} else {
+							log(LogStatus.ERROR, listViewObject+" value has not been written under "+CSVLabel.List_View_Object.toString()+" for "+navLb, YesNo.Yes);
+							sa.assertTrue(false, listViewObject+" value has not been written under "+CSVLabel.List_View_Object.toString()+" for "+navLb);
+						}
+						
+					} else {
+						log(LogStatus.ERROR, "Not Able to Click on save Button : "+navLb, YesNo.Yes);
+						sa.assertTrue(false,"Not Able to Click on save Button : "+navLb);}
+
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on Edit Button : "+navLb, YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on Edit Button : "+navLb);
+				}
+
+			}else {
+
+				log(LogStatus.ERROR,"Item not found: "+navLb+" on Tab : "+navigationTab, YesNo.Yes);
+				sa.assertTrue(false,"Item not found: "+navLb+" on Tab : "+navigationTab);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on Tab : "+navigationTab, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on Tab : "+navigationTab);
+		}
+
+
+
+		String redirectLink;
+		String labelValue="";
+		String actualUrl="";
+
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+			labelValue=navigationLabel;
+			ele=npbl.getNavigationLabel(projectName, labelValue, action.BOOLEAN, 10);
+			if (click(driver, ele, labelValue, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on "+labelValue+" going to verify url", YesNo.No);
+				ThreadSleep(5000);
+				boolean flag=npbl.isAutomationAllListViewAdded(projectName, 30);
+				if (flag) {
+					log(LogStatus.INFO, "List View is available after clicking on "+labelValue , YesNo.No);
+					
+				} else {
+					log(LogStatus.ERROR, "No List View is available is open after clicking on "+labelValue, YesNo.Yes);
+					sa.assertTrue(false, "No List View is available is open after clicking on "+labelValue);
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+labelValue+" so cannot verify url", YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+labelValue+" so cannot verify url");
+
+			}
+			click(driver, npbl.getNavatarQuickLinkMinimize_Lighting(projectName, 3), "Minimize Icon", action.BOOLEAN);
+			refresh(driver);
+			ThreadSleep(5000);
+
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify url for label : "+labelValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify url for label : "+labelValue);
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
 }
 	
 	

@@ -38,7 +38,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 	 */
 	public boolean searchStandardOrCustomObject(String environment, String mode, object objectName) {
 		String index="[1]";
-		if (objectName==object.Global_Actions || objectName==object.Activity_Setting || objectName==object.App_Manager) {
+		if (objectName==object.Global_Actions || objectName==object.Activity_Setting || objectName==object.App_Manager
+				|| objectName==object.Lightning_App_Builder) {
 			if (objectName==object.Global_Actions) {
 				index="[2]";	
 			}
