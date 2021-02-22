@@ -282,7 +282,7 @@ public class EnumConstants {
 			public String toString() {
 				return "Lightning App Builder";
 			}
-		}
+		}, Profiles
 	};
 
 	
@@ -318,6 +318,11 @@ public class EnumConstants {
 	@Override
 	public String toString() {
 		return "Field Sets";
+	}
+},recordTypes{
+	@Override
+	public String toString() {
+		return "Record Types";
 	}
 }
 };
@@ -1242,4 +1247,27 @@ public static enum PermissionType{
 		Navigation_Label ,Order,Parent,Action_Object,Action_Record_Type,List_View_Object,List_View_Name,URL;
 	}
 
+	public static enum recordTypeLabel{
+		Record_Type_Label {
+			@Override
+			public String toString() {
+				return "Record Type Label";
+			}},
+		Record_Type_Name {
+				@Override
+				public String toString() {
+					return "Record Type Name";
+				}},
+		Description {
+					@Override
+					public String toString() {
+						return "Description";
+					}},
+		Active {
+						@Override
+						public String toString() {
+							return "Active";
+						}}
+	}
+	
 }

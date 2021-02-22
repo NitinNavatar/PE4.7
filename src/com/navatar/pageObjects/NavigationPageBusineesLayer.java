@@ -445,4 +445,73 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		
 	}
 	
+	
+	/**
+	 * @return the radioButtonforNewInstitution
+	 */
+	public WebElement getRadioButtonforRecordTypeAtAccount(String recordType,int timeOut) {
+		String xpath="//span[text()='"+recordType+"']/preceding-sibling::input";
+		WebElement ele = null;
+		ele=FindElement(driver, xpath, "radio button of record type "+recordType, action.SCROLLANDBOOLEAN,timeOut);
+		return isDisplayed(driver,ele,"visibility",timeOut,"radio button of record type "+recordType);
+	}
+	
+	public boolean enterValueOnEditPopUpForNavigationTab(String projectName,String labelValue,String[][] labelWithValue,int timeOut) {
+		String navigationTab="Navigation";
+		WebElement ele;
+		String label;
+		String value;
+		boolean flag=false;
+		if (clickOnTab(projectName, navigationTab)) {
+			log(LogStatus.INFO, "Click on Tab : "+navigationTab, YesNo.No);
+			if ( clickOnAlreadyCreatedItem(projectName, labelValue, true, 15)) {
+				log(LogStatus.INFO,"Item found: "+labelValue+" on Tab : "+navigationTab, YesNo.No);
+				clickOnShowMoreDropdownOnly(projectName);
+				ele =  actionDropdownElement(projectName, ShowMoreActionDropDownList.Edit, 10);
+				if (click(driver, ele, ShowMoreActionDropDownList.Edit.toString(), action.BOOLEAN)) {
+					log(LogStatus.INFO, "Not Able to Click on Edit Button : "+labelValue, YesNo.No);
+					for (String[] lv : labelWithValue) {
+						label=lv[0];
+						value=lv[1];
+						ele =  getNavigationField(projectName, label, action.BOOLEAN, 20);
+						try {
+							ele.clear();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						ThreadSleep(2000);
+						if (sendKeys(driver, ele, value, label, action.BOOLEAN)) {
+							log(LogStatus.INFO, "Able to enter "+label, YesNo.No);
+							ThreadSleep(2000);
+							flag=true;
+						} else {
+							log(LogStatus.ERROR, "Not Able to enter "+value+" to label "+label, YesNo.Yes);
+							sa.assertTrue(false,"Not Able to enter "+value+" to label "+label);
+						}
+					}
+					if (click(driver,  getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.ERROR, "Click on save Button : "+labelValue, YesNo.No);
+						ThreadSleep(2000);
+						flag=true;
+					} else {
+						log(LogStatus.ERROR, "Not Able to Click on save Button : "+labelValue, YesNo.Yes);
+						sa.assertTrue(false,"Not Able to Click on save Button : "+labelValue);
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on Edit Button : "+labelValue, YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on Edit Button : "+labelValue);
+				}
+			}else {
+
+				log(LogStatus.ERROR,"Item not found: "+labelValue+" on Tab : "+navigationTab, YesNo.Yes);
+				sa.assertTrue(false,"Item not found: "+labelValue+" on Tab : "+navigationTab);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on Tab : "+navigationTab, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on Tab : "+navigationTab);
+		}
+		return flag;
+	}
 }
