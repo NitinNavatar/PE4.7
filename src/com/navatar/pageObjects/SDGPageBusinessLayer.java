@@ -102,4 +102,48 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		
 		return flag;
 	}
+	
+	public boolean addFieldOnSDG(String projectName, String names, String values) {
+		names= names.replace("_", " ");
+		String name[] = names.split(",");
+		//values= values.replace("_", " ");
+		String value[] = values.split(",");
+		if (name.length!=value.length) {
+			log(LogStatus.INFO, name.length + " does not match "+value.length, YesNo.No);
+			return false;
+		}
+		WebElement ele;
+		boolean flag=true;
+		ele=getRelatedTab(projectName, RelatedTab.Related.toString(), 10);
+		if (click(driver, ele, "related tab", action.BOOLEAN)) {
+			int i=0;
+			if (click(driver, getFieldNewButton(projectName, 10), "field new button", action.BOOLEAN)) {
+				for (String f:name) {
+					System.err.println(f);
+					ele=getLabelTextBox(projectName, PageName.SDGPage.toString(),f, 10);
+					if (sendKeys(driver, ele, value[i], f, action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO,"successfully entered "+value[i]+" in "+f,YesNo.Yes);
+
+					}
+					else {
+						log(LogStatus.SKIP,"could not enter "+value[i]+" in "+f,YesNo.Yes);
+
+					}
+					i++;
+				}
+				if (click(driver, getRecordPageSettingSave(10), "save", action.BOOLEAN)) {
+					log(LogStatus.INFO,"successfully clicked on save button",YesNo.Yes);
+				}
+				else {
+					log(LogStatus.SKIP,"could not click on save button, so could not add "+f,YesNo.Yes);
+					flag=false;
+				}
+
+			}else {
+				log(LogStatus.SKIP,"could not click on related tab, so cannot add "+f,YesNo.Yes);
+				flag=false;
+			}
+		}
+		return flag;
+	}
 }
