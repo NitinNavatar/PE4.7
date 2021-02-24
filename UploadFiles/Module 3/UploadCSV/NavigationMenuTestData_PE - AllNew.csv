@@ -1,23 +1,24 @@
-"Navigation Label","Order","Parent","Action Object","Action Record Type","List View Object","List View Name","URL"
-"Home","0","","","","","","/lightning/page/home"
-"Accounts","5","","Account","","","",""
-"New Contact","40","","Contact","","","",""
-"New Fund","-5","","navpeII__Fund__c","","","",""
-"Fundraising","85","","navpeII__Fundraising__c","","","",""
-"Partnership"," ","","navpeII__Partnership__c","","","",""
-"Commitment","40","","navpeII__Commitment__c","","","",""
-"Pipelines","30",""," navpeII__Pipeline__c","","","",""
-"Marketing Initiative","","","","","navpeII__Marketing_Initiative__c","List View API name",""
-"Marketing Prospects","","","","","navpeII__Marketing_Prospect__c","Automation_All",""
-"Navatar Setup","","","","","","","/lightning/n/navpeII__Navatar_Setup"
-"Reports","-10","Accounts","","","","","https://www.hubspot.com"
-"Dashboards","41","","","","","","https://www.preqin.com"
-"Custom Label 1","60","New Contact","","","","",""
-"Custom Label 2","75","Accounts","","","","","https://pe4604.lightning.force.com/lightning/n/My_App_Page"
-"Company","10","Accounts","Account","Company","","",""
-"Fund Manager","5","Accounts","Account","Fund_Manager","","",""
-"Fund Managers Fund","5","Accounts","Account","Fund_Manager_s_Fund","","",""
-"Individual Investor","35","Accounts","Account","Individual_Investor","","",""
-"Institution","-10","Accounts","Account","Institution","","",""
-"Intermediary","1","Accounts","Account","Intermediary","","",""
-"Limited Partner","","Accounts","Account","LimitedPartner","","",""
+Navigation Label,Order,Parent,Action Object,Action Record Type,List View Object,List View Name,URL
+Home,0,,,,,,/lightning/page/home
+Accounts,5,,Account,,,,
+New Contact,40,,Contact,,,,
+New Fund,-5,,navpeII__Fund__c,,,,
+Fundraising,85,,navpeII__Fundraising__c,,,,
+Partnership, ,,navpeII__Partnership__c,,,,
+Commitment,40,,navpeII__Commitment__c,,,,
+Pipelines,30,, navpeII__Pipeline__c,,,,
+Marketing Initiative,,,,,navpeII__Marketing_Initiative__c,List View API name,
+Marketing Prospects,,,,,navpeII__Marketing_Prospect__c,Automation_All,
+Navatar Setup,,,,,,,
+Reports,-10,Accounts,,,,,https://www.hubspot.com
+OtherAccount,,,,,,Automation_All,
+Dashboards,41,,,,,,https://www.preqin.com
+Custom Label 1,60,New Contact,,,,,
+Custom Label 2,75,Accounts,,,,,https://pe4604.lightning.force.com/lightning/n/My_App_Page
+Company,10,Accounts,Account,Company,,,
+Fund Manager,5,Accounts,Account,Fund_Manager,,,
+Fund Managers Fund,5,Accounts,Account,Fund_Manager_s_Fund,,,
+Individual Investor,35,Accounts,Account,Individual_Investor,,,
+Institution,-10,Accounts,Account,Institution,,,
+Intermediary,1,Accounts,Account,Intermediary,,,
+Limited Partner,,Accounts,Account,LimitedPartner,,,

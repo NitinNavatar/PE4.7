@@ -39,7 +39,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 	public boolean searchStandardOrCustomObject(String environment, String mode, object objectName) {
 		String index="[1]";
 		if (objectName==object.Global_Actions || objectName==object.Activity_Setting || objectName==object.App_Manager
-				|| objectName==object.Lightning_App_Builder) {
+				|| objectName==object.Lightning_App_Builder || objectName==object.Profiles) {
 			if (objectName==object.Global_Actions) {
 				index="[2]";	
 			}
@@ -1076,6 +1076,63 @@ public void addRemoveAppSetingData(String projectName,String addRemoveTabName, c
 	
 
 }
+
+
+public boolean changeRecordTypeSetting(WebDriver driver,String userName,String recordType,int timeOut) {
+	switchToDefaultContent(driver);
+	switchToFrame(driver, 20, getSetUpPageIframe(60));
+	boolean flag=false;;
+	String xpath="";
+	xpath="//th//a[text()='"+userName+"']";
+	WebElement ele=FindElement(driver, xpath,userName, action.SCROLLANDBOOLEAN, timeOut);
+	ele=isDisplayed(driver, ele, "visibility", timeOut, userName);
+	if (click(driver, ele, userName.toString(), action.BOOLEAN)) {
+		log(LogStatus.INFO, "able to click on "+userName, YesNo.No);
+		switchToDefaultContent(driver);
+		ThreadSleep(5000);
+		switchToFrame(driver, 60, getSetUpPageIframe(20));
+		xpath="//*[text()='Accounts']/following-sibling::*//*[text()='Edit']";
+		ele=FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, timeOut);
+		if (click(driver, ele, "Edit Button", action.BOOLEAN)) {
+			log(LogStatus.INFO, "able to click on edit button for record type settiing", YesNo.No);
+			switchToDefaultContent(driver);
+			ThreadSleep(5000);
+			switchToFrame(driver, 20, getSetUpPageIframe(20));
+			xpath="//select[@id='p5']";
+			ele=FindElement(driver, xpath, "Record dropdown", action.SCROLLANDBOOLEAN, timeOut);
+			scrollDownThroughWebelement(driver, ele, "Record dropdown");
+			if (selectVisibleTextFromDropDown(driver, ele, recordType, recordType)) {
+				log(LogStatus.INFO, "selected default record Type : "+recordType, YesNo.No);
+
+				if (click(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
+						action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
+					flag=true;
+				} else {
+					log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
+				}
+
+				flag=true;
+			} else {
+				log(LogStatus.ERROR, "not able to select default record Type : "+recordType, YesNo.Yes);
+			}
+
+		} else {
+			log(LogStatus.ERROR, "not able to click on edit button for record type settiing", YesNo.Yes);
+		}
+
+	} else {
+		log(LogStatus.ERROR, "Not able to click on "+userName, YesNo.Yes);
+	}
+	return flag;
+}
+
+public WebElement getRecordTypeLabel(String projectName,String recordTypeLabel,int timeOut) {
+	String xpath="//*[text()='"+recordTypeLabel+"']/..//following-sibling::td//input";
+	WebElement ele=isDisplayed(driver, FindElement(driver, xpath, recordTypeLabel, action.BOOLEAN, 10), "visibility", 10, recordTypeLabel);
+	return ele;
+}
+
 
 
 }

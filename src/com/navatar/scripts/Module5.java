@@ -93,7 +93,7 @@ import static com.navatar.generic.BaseLib.testCasesFilePath;
 import static com.navatar.generic.BaseLib.phase1DataSheetFilePath;
 import static com.navatar.generic.CommonLib.*;
 
-public class Toggle extends BaseLib {
+public class Module5 extends BaseLib {
 	String passwordResetLink = null;
 
 	Scanner scn = new Scanner(System.in);
@@ -105,7 +105,7 @@ public class Toggle extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void ToggleTc001_createCRMUser(String projectName) {
+	public void Module5TC001_createCRMUser(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -202,7 +202,7 @@ public class Toggle extends BaseLib {
 
 	@Parameters({ "projectName"})
 	@Test
-	public void ToggleTc002_1_Prerequisite(String projectName) {
+	public void Module5TC002_1_Prerequisite(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		String[][] userAndPassword = {{superAdminUserName,adminPassword},{crmUser1EmailID,adminPassword}};
 		for (String[] userPass : userAndPassword) {
@@ -238,7 +238,7 @@ public class Toggle extends BaseLib {
 
 	@Parameters({ "projectName"})
 	@Test
-	public void ToggleTc002_2_AddListView(String projectName) {
+	public void Module5TC002_2_AddListView(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
@@ -269,7 +269,7 @@ public class Toggle extends BaseLib {
 
 	@Parameters({ "projectName"})
 	@Test
-	public void ToggleTc003_1_CreatePreconditionData(String projectName) {
+	public void Module5TC003_1_CreatePreconditionData(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -456,7 +456,7 @@ public class Toggle extends BaseLib {
 
 	@Parameters({ "projectName"})
 	@Test
-	public void ToggleTc004_VerifyTheToggleButtonAndFunctionalityOfToggleButtonOnPageRecord(String projectName) {
+	public void Module5TC004_VerifyTheToggleButtonAndFunctionalityOfToggleButtonOnPageRecord(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
@@ -609,7 +609,7 @@ public class Toggle extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void ToggleTc005_VerifyTheRetainAndDefaultSelectionOfToggleButton(String projectName) {
+	public void Module5TC005_VerifyTheRetainAndDefaultSelectionOfToggleButton(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
@@ -802,7 +802,7 @@ public class Toggle extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void ToggleTc006_CreateNewCustomSDG(String projectName) {
+	public void Module5TC006_CreateNewCustomSDG(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		SDGPageBusinessLayer sg = new SDGPageBusinessLayer(driver);
 
@@ -841,7 +841,7 @@ public class Toggle extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void ToggleTc007_VerifyToAddNewToggleButtonWithMaxAndSpecialCharacter(String projectName) {
+	public void Module5TC007_VerifyToAddNewToggleButtonWithMaxAndSpecialCharacter(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
@@ -1035,7 +1035,7 @@ public class Toggle extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void ToggleTc008_CreateNewToggleButtonAsDefaultButton(String projectName) {
+	public void Module5TC008_CreateNewToggleButtonAsDefaultButton(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
@@ -1182,7 +1182,7 @@ public class Toggle extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void ToggleTc009_VerifyOutSideAndInsideSdgInContainerAndEnableToggleSwitchingAndVerifySDG(String projectName) {
+	public void Module5TC009_VerifyOutSideAndInsideSdgInContainerAndEnableToggleSwitchingAndVerifySDG(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
@@ -1573,7 +1573,7 @@ public class Toggle extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void ToggleTc010_VerifyTheButtonToggleButtonWithUserNewSession(String projectName) {
+	public void Module5TC010_VerifyTheButtonToggleButtonWithUserNewSession(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);

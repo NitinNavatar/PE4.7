@@ -9,7 +9,7 @@ import static com.navatar.generic.CommonLib.getDateAccToTimeZone;
 import static com.navatar.generic.EnumConstants.*;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.pageObjects.BasePageErrorMessage;
-import com.navatar.scripts.Toggle;
+import com.navatar.scripts.Module5;
 
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.scripts.FieldSet;
@@ -238,7 +238,7 @@ public class CommonVariables {
 
 			
 			
-		if(obj instanceof Toggle){
+		if(obj instanceof Module5){
 			
 			ToggleIns1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Institutions_Name);
 			ToggleIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Record_Type);
