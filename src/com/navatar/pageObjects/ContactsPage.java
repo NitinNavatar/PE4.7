@@ -159,7 +159,11 @@ public class ContactsPage extends BasePageBusinessLayer {
 		}else if (labelName.equalsIgnoreCase(excelLabel.Phone.toString())) {
 			xpath="//*[starts-with(text(),'"+finalLabelName+"')]/..//following-sibling::input";
 			finalXpath=xpath+inputXpath;
-		}else {
+		}else if (labelName.equalsIgnoreCase(excelLabel.Region.toString())||( labelName.equalsIgnoreCase(excelLabel.Industry.toString()))) {
+				xpath="//*[text()='"+finalLabelName+"']/..//following-sibling::*//input";
+				finalXpath=xpath;
+			}
+		else {
 			finalXpath=xpath+inputXpath;
 		}
 		ele=isDisplayed(driver, FindElement(driver, finalXpath, finalLabelName+" text box in "+projectName, action.SCROLLANDBOOLEAN,30), "Visibility", timeOut, finalLabelName+"text box in "+projectName);
@@ -408,5 +412,31 @@ public class ContactsPage extends BasePageBusinessLayer {
 		
 		
 	}
+	@FindBy(xpath = "//a[text()='Update Photo']")
+	private WebElement updatePhotoLink;
 	
+	public WebElement getupdatePhotoLink(String projectName,ContactPagePhotoActions cpp,int timeOut) {
+		String action1 = cpp.toString().replace("_"," ");
+		String xpath = "//a[@title='"+action1+"']";
+		WebElement ele=FindElement(driver, xpath, "photo action link", action.SCROLLANDBOOLEAN, timeOut);
+		//return ele;
+		return isDisplayed(driver, ele, "Visibility", timeOut, "update photo link");
+		
+	}
+	
+	@FindBy(xpath = "//div[@id='parentDiv']//img")
+	private WebElement imgLink;
+	
+	public WebElement getimgLink(String projectName,int timeOut) {
+		return isDisplayed(driver, imgLink, "Visibility", timeOut, "send Button on List Email");
+		
+	}
+	@FindBy(xpath = "//span[contains(text(),'Upload')]")
+	private WebElement uploadPhotoButton;
+	
+	public WebElement getuploadPhotoButton(String projectName,int timeOut) {
+		return isDisplayed(driver, uploadPhotoButton, "Visibility", timeOut, "send Button on List Email");
+		
+	}
+
 }

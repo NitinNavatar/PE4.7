@@ -663,6 +663,9 @@ public String getTabName(String projectName,TabName TabName) {
 	case SDGTab:
 		tabName = "Sortable Data Grids";
 		break;
+	case AttendeeTab:
+		tabName = "Attendies";
+		break;
 	case Entities:
 		tabName = "Entities";
 		break;
@@ -4735,6 +4738,63 @@ public boolean isAutomationAllListViewAdded(String projectName, int timeOut) {
 	}
 
 	return false;
+}
+
+public boolean verifyAccordion(String projectName,String recordName,String[] fieldValues,boolean image) {
+	String field="";
+	String value="";
+	boolean flag=true;
+	String finalx="",xpath = "//article[@class='cRelatedListAccordion']//a[text()='"+recordName+"']";
+	WebElement ele=FindElement(driver, xpath, recordName, action.SCROLLANDBOOLEAN,10);
+	if (isDisplayed(driver, ele, "visibility", 10, recordName+" in accordion")!=null) {
+		xpath = "//article[@class='cRelatedListAccordion']//a[text()='"+recordName+"']/following-sibling::ul";
+		for (String fieldValue:fieldValues) {
+			field=fieldValue.split(breakSP)[0];
+			value=fieldValue.split(breakSP)[1];
+			finalx=xpath+"//li//div[@title='"+field+"']/following-sibling::div[@title='"+value+"']";
+			ele=FindElement(driver, finalx, field+" and "+value, action.SCROLLANDBOOLEAN, 10);
+			ele=isDisplayed(driver, ele, "visibility", 10, field+" and "+value);
+			if (ele!=null) {
+				log(LogStatus.INFO, "successfully verified presence of "+field+" and "+value, YesNo.No);
+					
+			}
+			else {
+				log(LogStatus.ERROR, "could not verify "+field+" and "+value, YesNo.Yes);
+				BaseLib.sa.assertTrue(false,"could not verify "+field+" and "+value);
+				flag=false;
+			}
+		}
+	}else {
+		log(LogStatus.ERROR, "could not verify presence of "+recordName+" in accordion ", YesNo.Yes);
+		BaseLib.sa.assertTrue(false,"could not verify presence of "+recordName+" in accordion ");
+		flag=false;
+	}
+	return flag;
+}
+
+public boolean verifyAccordianRecordImage(String projectName, String record, String imgId) {
+	boolean flag=true;
+	String xpath = "//article[@class='cRelatedListAccordion']//a[text()='"+record+"']";
+	String finalx=xpath +"/../preceding-sibling::div//img";
+	WebElement ele=FindElement(driver, xpath, "accordion record", action.SCROLLANDBOOLEAN, 10);
+	ele=isDisplayed(driver, ele, "visibility", 10, "accordion record profile image");
+	if (ele!=null) {
+		ele=FindElement(driver, finalx, "img in contact accordion", action.BOOLEAN, 10);
+		ele=isDisplayed(driver, ele, "visibility", 10, "accordion record profile image");
+		String id = ele.getAttribute("src");
+		if (id.equalsIgnoreCase(imgId)) {
+			log(LogStatus.INFO, "successfully verified img id\n"+id+"\nand\n"+imgId, YesNo.No);
+
+		}
+		else {
+			log(LogStatus.ERROR, "could not verify id. found:\n"+id+"\nexpected:\n"+imgId, YesNo.Yes);
+			flag=false;
+		}
+	}else {
+		log(LogStatus.ERROR, "could not find accordion", YesNo.Yes);
+		flag=false;
+	}
+	return flag;
 }
 
 
