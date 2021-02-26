@@ -514,4 +514,11 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		}
 		return flag;
 	}
+	
+	public WebElement getrecordTypeWithDescription(String recordType,String desc,int timeOut) {
+		String xpath ="//*[text()='"+recordType+"']/*[text()='"+desc+"']";
+		WebElement ele = FindElement(dDriver, xpath, recordType+" "+desc, action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, recordType+" "+desc);
+	}
+	
 }
