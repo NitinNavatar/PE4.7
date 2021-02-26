@@ -4,10 +4,12 @@ import static com.navatar.generic.AppListeners.appLog;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.server.handler.SwitchToFrame;
 
 import com.navatar.generic.BaseLib;
@@ -63,7 +65,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 			xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
 					+ "']/../following-sibling::div/span";
 
-
+		
 		if(finalLabelName.contains("Street") || finalLabelName.contains("City") || finalLabelName.contains("State") || finalLabelName.contains("Postal") || finalLabelName.contains("ZIP") || finalLabelName.contains("Zip")|| finalLabelName.contains("Country")) {
 
 			
@@ -77,7 +79,11 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 				}
 			
 		}
+		if(labelName.equalsIgnoreCase(excelLabel.Region.toString()) || labelName.equalsIgnoreCase(excelLabel.Industry.toString())) {
+			xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
+					+ "']/../following-sibling::div/span//a";
 
+		}
 		ele = isDisplayed(driver,
 				FindElement(driver, xpath, finalLabelName + " label text in " + projectName, action.SCROLLANDBOOLEAN, 5),
 				"Visibility", 5, finalLabelName + " label text in " + projectName);
@@ -226,6 +232,18 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 										appLog.error("Not able to pass value "+labelValue[i]+" in "+labelNames[i]+" field");
 										BaseLib.sa.assertTrue(false, "Not able to pass value "+labelValue[i]+" in "+labelNames[i]+" field");
 									}
+									if (labelNames[i].equalsIgnoreCase(excelLabel.Region.toString()) || labelNames[i].equalsIgnoreCase(excelLabel.Industry.toString())) {
+										if (click(driver,
+												FindElement(driver,
+														"//div[contains(@class,'uiAutocomplete')]//a//div[@title='" + labelValue[i]
+														+ "']",
+														"Legal Name List", action.THROWEXCEPTION, 30),
+												labelNames[i] + "   :   Account Name", action.BOOLEAN)) {
+											appLog.info(labelNames[i] + "  is present in list.");
+										} else {
+											appLog.info(labelNames[i] + "  is not present in the list.");
+										}
+									}
 								}
 								
 							}
@@ -267,11 +285,14 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 										refresh(driver);
 										ThreadSleep(5000);
 									}
+									WebElement ele=getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+									click(driver, ele, RelatedTab.Details.toString(), action.SCROLLANDBOOLEAN);
+									
 
 									if (getContactFullNameInViewMode(projectName, 60) != null) {
 										String contactFullName = getText(driver,
 												getContactFullNameInViewMode(projectName, 60), "Contact Name",
-												action.BOOLEAN);
+												action.SCROLLANDBOOLEAN);
 										System.err.println("Contact Name : "+contactFullName);
 										if (contactFullName.contains(contactFirstName + " " + contactLastName)) {
 											appLog.info("Contact Created Successfully :" + contactFirstName + " "
@@ -979,7 +1000,49 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		
 	}
 	
-	
+	public boolean updatePhotoInDetailPage(String projectName,String attachmentPath) {
+		Actions actions = new Actions(driver);
+		scrollDownThroughWebelement(driver,getimgLink(projectName, 10) , "img");
+		actions.moveToElement( getimgLink(projectName, 10)).click(getimgLink(projectName, 10)).build().perform();
+		ThreadSleep(2000);
+		//actions.release().build().perform();
+			log(LogStatus.INFO, "click on img link", YesNo.No);
+			/*WebElement ele=getupdatePhotoLink(projectName,ContactPagePhotoActions.Update_Photo, 10);
+			actions.moveToElement(ele).click(ele).build().perform();
+			ThreadSleep(2000);
+			*/if (click(driver, getupdatePhotoLink(projectName,ContactPagePhotoActions.Update_Photo, 10), ContactPagePhotoActions.Update_Photo.toString(), action.SCROLLANDBOOLEAN)) {
+				if (click(driver, getuploadPhotoButton(projectName,10) ,"upload photo button", action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(5000);
+					if (uploadFileAutoIT(attachmentPath)) {
+						log(LogStatus.INFO, "successfully uploaded file "+attachmentPath, YesNo.No);
+						ThreadSleep(10000);
+						if (click(driver, getRecordPageSettingSave(10), "save", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "successfully uploaded photo", YesNo.No);
+							ThreadSleep(4000);
+							return true;
+
+						}else {
+							log(LogStatus.ERROR, "save button is not clickable", YesNo.Yes);
+							sa.assertTrue(false, "save button is not clickable");
+						}
+					}else {
+						log(LogStatus.ERROR, "could not upload file "+attachmentPath, YesNo.Yes);
+						sa.assertTrue(false, "could not upload file "+attachmentPath);
+					}
+				}else {
+					log(LogStatus.ERROR, "upload photo button is not clickable", YesNo.Yes);
+					sa.assertTrue(false, "upload photo button is not clickable");
+				}
+			}else {
+				log(LogStatus.ERROR, "update photo button is not clickable", YesNo.Yes);
+				sa.assertTrue(false, "update photo button is not clickable");
+			}
+		/*}else {
+			log(LogStatus.ERROR, "photo button on contact page is not clickable", YesNo.Yes);
+			sa.assertTrue(false, "photo button on contact page is not clickable");
+		}*/
+		return false;
+	}
 	
 	
 	

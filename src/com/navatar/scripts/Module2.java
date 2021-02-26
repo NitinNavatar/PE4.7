@@ -3,21 +3,14 @@ package com.navatar.scripts;
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.server.handler.SendKeys;
-import org.openqa.selenium.remote.server.handler.SwitchToWindow;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
 
 import com.android.dx.cf.iface.Field;
 import com.navatar.generic.BaseLib;
@@ -27,7 +20,6 @@ import com.navatar.generic.SoftAssert;
 import com.navatar.generic.EnumConstants.*;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
-import com.navatar.pageObjects.CustomObjPageBusinessLayer;
 import com.navatar.pageObjects.FundsPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
 import com.navatar.pageObjects.InstitutionsPageBusinessLayer;
@@ -37,7 +29,7 @@ import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.navatar.pageObjects.TaskPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
-public class TaskWatchlist extends BaseLib{
+public class Module2 extends BaseLib{
 	public static double dealReceivedScore=1.0,NDASignedScore=1.0,managementMeetingScore=3.0,ioiScore=3.0,loiScore=5.0;
 	public static double dueDiligenceScore=5.0,closedScore=5.0,declinedDeadScore=5.0,parkedScore=5.0;
 	@Parameters({ "projectName"})
@@ -211,7 +203,6 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void TWtc002_1_CreatePreconditionData(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -300,7 +291,6 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void TWtc003_1_AddWatchlistField(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -2003,7 +1993,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void ConvDatetc022_1_AddConversionDateField(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -2050,7 +2040,6 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void ConvDatetc022_2_CreateInsCompany(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -2078,7 +2067,6 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void ConvDatetc023_ChangeStatusOfCompanyAndCheck(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -2139,7 +2127,6 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void ConvDatetc024_CreateNewCompanyUnderEvalThenChangeToPortfolioCompany(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -2232,7 +2219,6 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void ConvDatetc025_RenameStatusValues(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -2341,7 +2327,6 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void ConvDatetc026_CreateInsCompany(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -2398,7 +2383,6 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void ConvDatetc027_PostConditionRevertRenameStatusValues(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -2506,7 +2490,6 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc028_1_Precondition(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -2584,7 +2567,6 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc028_2_Precondition(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -2665,7 +2647,6 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc029_ChangeStageToNDASigned_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -2716,7 +2697,6 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc029_ChangeStageToNDASigned_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -2771,7 +2751,6 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc030_ChangeStageToManagementMeeting_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -2823,7 +2802,6 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc030_ChangeStageToManagementMeeting_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -2880,7 +2858,6 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc031_ChangeStageToIOI_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -2932,7 +2909,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc031_ChangeStageToIOI_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -2988,7 +2965,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc032_ChangeStageToLOI_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -3040,7 +3017,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc032_ChangeStageToLOI_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -3096,7 +3073,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc033_ChangeStageToDueDiligence_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -3148,7 +3125,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc033_ChangeStageToDueDiligence_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -3204,7 +3181,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc034_ChangeStageToParked_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -3256,7 +3233,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc034_ChangeStageToParked_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -3312,7 +3289,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc035_CreateReliancePipelines(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -3409,7 +3386,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc036_ChangeStageToLOI_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -3461,7 +3438,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc036_ChangeStageToLOI_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -3517,7 +3494,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc037_ChangeStageToParked_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -3569,7 +3546,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc037_ChangeStageToParked_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -3625,7 +3602,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc038_ChangeStageToDeclinedDead_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -3677,7 +3654,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc038_ChangeStageToDeclinedDead_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -3733,7 +3710,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc039_ChangeStageToClosed_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -3785,7 +3762,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc039_ChangeStageToClosed_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -3842,7 +3819,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc040_CreatePiplelineWithDifferentSourceFirm_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -3881,7 +3858,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc040_CreatePiplelineWithDifferentSourceFirm_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -3971,7 +3948,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc041_DeletePipeline_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -4034,7 +4011,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc041_DeletePipeline_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -4095,7 +4072,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc042_RestorePipeline_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -4161,7 +4138,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc042_RestorePipeline_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -4342,7 +4319,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc044_CreatePiplelineWithNewStageValues_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -4379,7 +4356,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc044_CreatePiplelineWithNewStageValues_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -4471,7 +4448,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc045_CreateNewPipleline_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -4508,7 +4485,7 @@ public class TaskWatchlist extends BaseLib{
 	@Test
 	public void HighestStageReachedtc045_CreateNewPipleline_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);

@@ -197,9 +197,22 @@ public class EditPage extends BasePageBusinessLayer {
 	}
 	
 	
+	public WebElement getFieldTextbox(String projectName,String pageLabel,int timeOut) {
+		String label=pageLabel.replace("_", " ");
+		String xpath = "//*[text()='"+label+"']/following-sibling::div/input";
+		WebElement ele=FindElement(driver, xpath,pageLabel.toString(), action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "Finish Button2");
+	}
+	//span[text()='Expanded']/../..//input[@type='checkbox']
 	
 	
-	
-	
-	
+	@FindBy (xpath = "//span[text()='Expanded']/../..//input[@type='checkbox']")
+	private WebElement expandedCheckbox;
+
+	/**
+	 * @return the finishButton2
+	 */
+	public WebElement getexpandedCheckbox(String projectName,int timeOut) {
+		return isDisplayed(driver, expandedCheckbox, "Visibility", timeOut, "expandedCheckbox");
+	}
 }

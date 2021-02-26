@@ -235,4 +235,114 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		WebElement ele = FindElement(driver, xpath, "Search Value : "+searchValue, action.BOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "Search Value : "+searchValue);
 	}
+	
+	public boolean dragAndDropAccordian(String projectName,PageName pageName, String DropComponentName, String[] fieldValues) {
+		boolean flag = true;
+		Actions actions = new Actions(driver);
+		WebElement ele=null,dropComponentXpath=null,dropLocation=null;
+		if(switchToFrame(driver, 30, getEditPageFrame(projectName,30))) {
+			log(LogStatus.INFO,"Click on Sub Tab : "+RelatedTab.Investment,YesNo.No);
+			ThreadSleep(2000);
+			switchToDefaultContent(driver);
+			if(sendKeys(driver,getEditPageSeachTextBox(projectName, 10), DropComponentName,DropComponentName+" component xpath", action.BOOLEAN)) {
+				log(LogStatus.INFO, "Enter component name in search box : "+DropComponentName, YesNo.No);
+
+				String xpath = "//span[@title='"+DropComponentName+"' or text()='"+DropComponentName+"']";
+				dropComponentXpath =  isDisplayed(driver, FindElement(driver, xpath, "Search Value : "+DropComponentName, action.BOOLEAN, 10), "Visibility", 10, "Search Value : "+DropComponentName);
+				if(dropComponentXpath!=null) {
+					//							Actions builder = new Actions(driver);
+					//							builder.clickAndHold(dropComponentXpath).build().perform();
+					switchToFrame(driver, 30, getEditPageFrame(projectName,30));
+					String dropLocationXpath="(//a[@class='flexipageEditorContainerPlaceholder'])[1]";
+					dropLocation = FindElement(driver, dropLocationXpath,"header xpath",action.BOOLEAN, 10);
+
+					if (dropLocation!=null) {
+						if (clickUsingJavaScript(driver,dropLocation , "add component", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on add component link", YesNo.No);
+
+							switchToDefaultContent(driver);
+							if (click(driver, dropComponentXpath,"accordion", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "clicked on accordion link"+dropLocation, YesNo.No);
+								flag=true;
+
+							}
+							switchToDefaultContent(driver);
+							/*Screen screen = new Screen();
+						try {
+
+							//                                		screen.dropAt("\\AutoIT\\AddComponentHere.PNG");
+							screen.dragDrop("\\AutoIT\\FIeldSet.PNG", "\\AutoIT\\AddComponentHere.PNG");
+
+							ThreadSleep(500);
+						} catch (FindFailed e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							flag=false;
+						}
+							 */if (flag) {
+								 String value="",field="";
+								 for (String fieldValue:fieldValues) {
+									 value=fieldValue.split("<break>")[1];
+									 field=fieldValue.split("<break>")[0];
+									 if(sendKeys(driver, getFieldTextbox(projectName, field, 10), value, field, action.BOOLEAN)) {
+										 log(LogStatus.INFO, "field : "+field+", value: "+value, YesNo.No);
+									 }else {
+										 log(LogStatus.ERROR, "Not able to enter : "+value+" on"+field, YesNo.Yes);
+										 flag=false;
+									 }
+								 }
+								 if (!isSelected(driver, getexpandedCheckbox(projectName, 10), "expanded")) {
+									 if (click(driver, getexpandedCheckbox(projectName, 10),  "expanded", action.BOOLEAN)) {
+
+										 log(LogStatus.INFO, "expanded checkbox is now selected", YesNo.No);
+									 }
+									 else {
+										 log(LogStatus.ERROR, "could not click on expanded", YesNo.No);
+										 flag=false;
+									 }
+
+								 }
+								 else {
+									 log(LogStatus.INFO, "expanded checkbox is already selected", YesNo.No);
+
+								 }
+								 if(click(driver, getCustomTabSaveBtn(projectName, 10), "save button", action.BOOLEAN)) {
+									 log(LogStatus.INFO, "clicked on save button", YesNo.No);
+									 ThreadSleep(2000);
+									 actions.moveToElement(getBackButton(10)).build().perform();
+									 ThreadSleep(2000);
+									 if(clickUsingJavaScript(driver, getBackButton(10), "back button", action.BOOLEAN)) {
+										 log(LogStatus.PASS, "clicked on back button", YesNo.No);
+										 flag=true;
+									 }else {
+										 log(LogStatus.ERROR, "Not able to click on back button so cannot back on page ", YesNo.Yes);
+									 }
+								 }else {
+									 log(LogStatus.ERROR, "Not able to click on save button so cannot create accordion : ", YesNo.No);
+								 }
+							 }else {
+								 log(LogStatus.ERROR, "Drop location is not visible in list so cannot drag and drop component "+DropComponentName, YesNo.Yes);
+							 }
+						}else {
+							log(LogStatus.ERROR, "could not click on add component link", YesNo.Yes);
+						}
+					}else {
+						log(LogStatus.ERROR, "add component link is not visible in list so cannot drag and drop component "+DropComponentName, YesNo.Yes);
+					}
+				}else {
+					log(LogStatus.ERROR, "add component link is not visible in list so cannot drag and drop component "+DropComponentName, YesNo.Yes);
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to search on component so cannot drag and drop component "+DropComponentName, YesNo.Yes);
+			}
+		}else {
+			log(LogStatus.ERROR, "Cannot switch in edit page iframe cannot drag and drop component "+DropComponentName, YesNo.Yes);
+		}
+		switchToDefaultContent(driver);
+		return flag;
+
+
+
+	}
+
 }
