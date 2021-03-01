@@ -28,6 +28,7 @@ import com.navatar.generic.EnumConstants.excelLabel;
 import com.relevantcodes.extentreports.LogStatus;
 
 import static com.navatar.generic.CommonLib.*;
+import static com.navatar.generic.CommonVariables.M4Ins1;
 
 public class ContactsPageBusinessLayer extends ContactsPage implements ContactPageErrorMessage {
 
@@ -1000,7 +1001,8 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		
 	}
 	
-	public boolean updatePhotoInDetailPage(String projectName,String attachmentPath) {
+	public String updatePhotoInDetailPage(String projectName,String attachmentPath) {
+		String imgId=null;
 		Actions actions = new Actions(driver);
 		scrollDownThroughWebelement(driver,getimgLink(projectName, 10) , "img");
 		actions.moveToElement( getimgLink(projectName, 10)).click(getimgLink(projectName, 10)).build().perform();
@@ -1011,27 +1013,36 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 			actions.moveToElement(ele).click(ele).build().perform();
 			ThreadSleep(2000);
 			*/if (click(driver, getupdatePhotoLink(projectName,ContactPagePhotoActions.Update_Photo, 10), ContactPagePhotoActions.Update_Photo.toString(), action.SCROLLANDBOOLEAN)) {
-				if (click(driver, getuploadPhotoButton(projectName,10) ,"upload photo button", action.SCROLLANDBOOLEAN)) {
+				if (sendKeys(driver, getuploadPhotoButton(projectName,10), attachmentPath, "upload photo button", action.SCROLLANDBOOLEAN) ) {
 					ThreadSleep(5000);
-					if (uploadFileAutoIT(attachmentPath)) {
+					/*if (uploadFileAutoIT(attachmentPath)) {
 						log(LogStatus.INFO, "successfully uploaded file "+attachmentPath, YesNo.No);
 						ThreadSleep(10000);
-						if (click(driver, getRecordPageSettingSave(10), "save", action.SCROLLANDBOOLEAN)) {
+					*/	if (click(driver, getRecordPageSettingSave(10), "save", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "successfully uploaded photo", YesNo.No);
 							ThreadSleep(4000);
-							return true;
-
+							imgId=getimgLink(projectName, 10).getAttribute("src");
+							if (imgId!=null){
+								log(LogStatus.INFO, "found id of img uploaded: "+imgId, YesNo.Yes);
+								
+								return imgId;
+							}
+							else {
+								log(LogStatus.ERROR, "could not find id of img uploaded", YesNo.Yes);
+								sa.assertTrue(false, "could not find id of img uploaded");
+						
+							}
 						}else {
 							log(LogStatus.ERROR, "save button is not clickable", YesNo.Yes);
 							sa.assertTrue(false, "save button is not clickable");
 						}
-					}else {
+					/*}else {
 						log(LogStatus.ERROR, "could not upload file "+attachmentPath, YesNo.Yes);
 						sa.assertTrue(false, "could not upload file "+attachmentPath);
-					}
+					}*/
 				}else {
-					log(LogStatus.ERROR, "upload photo button is not clickable", YesNo.Yes);
-					sa.assertTrue(false, "upload photo button is not clickable");
+					log(LogStatus.ERROR, "could not pass attachment path to image", YesNo.Yes);
+					sa.assertTrue(false, "could not pass attachment path to image");
 				}
 			}else {
 				log(LogStatus.ERROR, "update photo button is not clickable", YesNo.Yes);
@@ -1041,9 +1052,42 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 			log(LogStatus.ERROR, "photo button on contact page is not clickable", YesNo.Yes);
 			sa.assertTrue(false, "photo button on contact page is not clickable");
 		}*/
+		return null;
+	}
+
+	public boolean deleteImage(String projectName, String recordName) {
+		String imgId=null;
+		Actions actions = new Actions(driver);
+		scrollDownThroughWebelement(driver,getimgLink(projectName, 10) , "img");
+		actions.moveToElement( getimgLink(projectName, 10)).click(getimgLink(projectName, 10)).build().perform();
+		ThreadSleep(2000);
+		log(LogStatus.INFO, "click on img link", YesNo.No);
+		if (click(driver, getupdatePhotoLink(projectName,ContactPagePhotoActions.Delete_Photo, 10), ContactPagePhotoActions.Update_Photo.toString(), action.SCROLLANDBOOLEAN)) {
+
+			if (click(driver, getdeletePhotoButton(projectName,10) ,"delete photo button", action.SCROLLANDBOOLEAN)) {
+				imgId=getimgLink(projectName, 10).getAttribute("src");
+				if (imgId!=null) {
+					if (imgId.contains(defaultPhotoText)) {
+						log(LogStatus.INFO, "successfully delete image", YesNo.Yes);
+						return true;
+					}else {
+						log(LogStatus.ERROR, "not able to delete image", YesNo.Yes);
+						sa.assertTrue(false,"not able to delete image" );
+					}
+				}else {
+					log(LogStatus.ERROR, "id of image not found so cannot verify delete image", YesNo.Yes);
+					sa.assertTrue(false,"id of image not found so cannot verify delete image" );
+				}
+			}else {
+				log(LogStatus.ERROR, "delete photo button on popup is not clickable", YesNo.Yes);
+				sa.assertTrue(false,"delete photo button on popup is not clickable" );
+			}
+		}else {
+			log(LogStatus.ERROR, "delete photo button is not clickable", YesNo.Yes);
+			sa.assertTrue(false,"delete photo button is not clickable" );
+		}
 		return false;
 	}
-	
 	
 	
 }

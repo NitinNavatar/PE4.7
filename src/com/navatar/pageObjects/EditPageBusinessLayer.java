@@ -344,5 +344,14 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 
 	}
+	public WebElement clickOnAccordion(String projectName, TabName tabName) {
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String xpath = "//div[contains(@class,'RelatedListAccordion')]/following-sibling::article//header//a[contains(text(),'"+bp.getTabName(projectName,tabName)+"')]/..";
+		WebElement ele=FindElement(driver, xpath, "accordian", action.BOOLEAN, 10);
+		return isDisplayed(driver, ele, "visiblity",10, "acordion");
+	}
 
+	public String ContactSDGQuery(String fieldName) {
+		return "SELECT Id, Name, Title,"+fieldName+" Industry__c, Region__c,Profile_Image__c FROM Contact WHERE (AccountId = '<<recordId>>') ORDER BY Name ASC";
+}
 }

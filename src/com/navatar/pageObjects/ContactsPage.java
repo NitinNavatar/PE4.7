@@ -431,12 +431,26 @@ public class ContactsPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, imgLink, "Visibility", timeOut, "send Button on List Email");
 		
 	}
-	@FindBy(xpath = "//span[contains(text(),'Upload')]")
+	@FindBy(xpath = "//input[@name='fileUploader']")
 	private WebElement uploadPhotoButton;
 	
 	public WebElement getuploadPhotoButton(String projectName,int timeOut) {
-		return isDisplayed(driver, uploadPhotoButton, "Visibility", timeOut, "send Button on List Email");
+		return isDisplayed(driver, uploadPhotoButton, "Visibility", timeOut, "upload photo button");
 		
 	}
-
+	
+	@FindBy(xpath = "//button[text()='Delete Photo']")
+	private WebElement deletePhotoButton;
+	
+	public WebElement getdeletePhotoButton(String projectName,int timeOut) {
+		return isDisplayed(driver, deletePhotoButton, "Visibility", timeOut, "delete photo button");
+		
+	}
+	/*@FindBy(xpath = "//input[@name='fileUploader']")
+	private WebElement deletePhotoButton;
+	
+	public WebElement getdeletePhotoButton(String projectName,int timeOut) {
+		return isDisplayed(driver, deletePhotoButton, "Visibility", timeOut, "send Button on List Email");
+		
+	}*/
 }

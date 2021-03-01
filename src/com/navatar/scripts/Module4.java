@@ -1,18 +1,25 @@
 package com.navatar.scripts;
 
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import static com.navatar.generic.BaseLib.phase1DataSheetFilePath;
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
 import com.navatar.generic.BaseLib;
 import static com.navatar.generic.EnumConstants.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 import com.navatar.generic.ExcelUtils;
+import com.navatar.generic.EnumConstants.*;
 import com.navatar.pageObjects.*;
 import com.relevantcodes.extentreports.LogStatus;
 
@@ -65,7 +72,7 @@ public class Module4 extends BaseLib{
 		String industry="";
 		
 		String recType;
-		for (int i = 0;i<8;i++) {
+		for (int i = 0;i<7;i++) {
 			if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
 				log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
 				
@@ -382,7 +389,7 @@ public class Module4 extends BaseLib{
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		String fieldValues[]={EditPageLabel.Title.toString()+"<break>"+"Contacts",EditPageLabel.Query.toString()+"<break>"+EditPageErrorMessage.ContactSDGQuery,
+		String fieldValues[]={EditPageLabel.Title.toString()+"<break>"+"Contacts",EditPageLabel.Query.toString()+"<break>"+ep.ContactSDGQuery(""),
 				EditPageLabel.Image_Field_API_Name.toString()+"<break>"+"Profile_Image__c",EditPageLabel.Number_of_Records_to_Display.toString()+"<break>6",
 				EditPageLabel.SDG_Name.toString()+"<break>"+"Contact",EditPageLabel.Popup_Title.toString()+"<break>"+"Contacts"
 		};
@@ -416,6 +423,50 @@ public class Module4 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
+	public void M4tc006_VerifyAccordionOnEntityPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		String id=null;
+		WebElement ele=null;
+		String contact=M4Contact1FName+" "+M4Contact1LName;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String ind=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Industry);
+		
+		String fieldValue[]={excelLabel.Title.toString()+breakSP+M4Contact1Title};
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1,10)) {
+				if (ip.verifyAccordion(projectName, contact, fieldValue,10)) {
+					log(LogStatus.INFO, "successfully verified fields and values in accordion", YesNo.No);
+
+				}else {
+					log(LogStatus.ERROR, "could not verify fields and values in accordion", YesNo.Yes);
+					sa.assertTrue(false,"could not verify fields and values in accordion" );
+				}
+				if (ip.verifyAccordianRecordImage(projectName, contact, BasePageErrorMessage.defaultPhotoText)) {
+					log(LogStatus.INFO, "successfully verified update photo in accordion", YesNo.No);
+
+				}else {
+					log(LogStatus.ERROR, "could not verify update photo in accordion", YesNo.Yes);
+					sa.assertTrue(false,"could not verify update photo in accordion" );
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to go to entity record "+M4Ins1, YesNo.Yes);
+				sa.assertTrue(false,"Not able to go to entity record "+M4Ins1 );
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on entity tab", YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on entity tab" );
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
 	public void M4tc007_UpdateImageOnContactProfile(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
@@ -423,56 +474,481 @@ public class Module4 extends BaseLib{
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
-		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
-		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
-		MarketingEventPageBusinessLayer me = new MarketingEventPageBusinessLayer(driver);
-		DealTeamPageBusinessLayer dtp = new DealTeamPageBusinessLayer(driver);
-
+		String id=null;
 		String attachmentPath1= System.getProperty("user.dir")+"\\UploadFiles\\Module 4\\tc7\\1.jpg";
 		String attachmentPath2= System.getProperty("user.dir")+"\\UploadFiles\\Module 4\\tc7\\2.jpg";
 		WebElement ele=null;
+		String contact=M4Contact1FName+" "+M4Contact1LName;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName,contact , 10)) {
+				ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
+				click(driver, ele, "overview tab", action.BOOLEAN);
+				id=cp.updatePhotoInDetailPage(projectName, attachmentPath1);
+				if (id!=null) {
+					log(LogStatus.INFO, "successfully updated photo", YesNo.No);
+
+				}else {
+					log(LogStatus.ERROR, "could not update photo", YesNo.Yes);
+					sa.assertTrue(false,"could not update photo" );
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to go to contact record "+contact, YesNo.Yes);
+				sa.assertTrue(false,"Not able to go to contact record "+contact );
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on contact tab", YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on contact tab" );
+		}
+		
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1,10)) {
+				if (ip.verifyAccordianRecordImage(projectName, contact, id)) {
+					log(LogStatus.INFO, "successfully verified update photo in accordion", YesNo.No);
+
+				}else {
+					log(LogStatus.ERROR, "could not verify update photo in accordion", YesNo.Yes);
+					sa.assertTrue(false,"could not verify update photo in accordion" );
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to go to entity record "+M4Ins1, YesNo.Yes);
+				sa.assertTrue(false,"Not able to go to entity record "+M4Ins1 );
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on entity tab", YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on entity tab" );
+		}
+		
+		if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Contact1FName+" "+M4Contact1LName, 10)) {
+				ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
+				click(driver, ele, "overview tab", action.BOOLEAN);
+				id=cp.updatePhotoInDetailPage(projectName,attachmentPath2);
+				if (id!=null) {
+					log(LogStatus.INFO, "successfully updated photo", YesNo.No);
+
+				}else {
+					log(LogStatus.ERROR, "could not update photo", YesNo.Yes);
+					sa.assertTrue(false,"could not update photo" );
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to go to contact record "+M4Contact1FName+" "+M4Contact1LName, YesNo.Yes);
+				sa.assertTrue(false,"Not able to go to contact record "+M4Contact1FName+" "+M4Contact1LName );
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on contact tab", YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on contact tab" );
+		}
+		
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1,10)) {
+				if (ip.verifyAccordianRecordImage(projectName, contact, id)) {
+					log(LogStatus.INFO, "successfully verified update photo in accordion", YesNo.No);
+
+				}else {
+					log(LogStatus.ERROR, "could not verify update photo in accordion", YesNo.Yes);
+					sa.assertTrue(false,"could not verify update photo in accordion" );
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to go to entity record "+M4Ins1, YesNo.Yes);
+				sa.assertTrue(false,"Not able to go to entity record "+M4Ins1 );
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on entity tab", YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on entity tab" );
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc008_DeleteImageOnContactProfile(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		String id=null;
+		WebElement ele=null;
+		String contact=M4Contact1FName+" "+M4Contact1LName;
+		
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName,contact , 10)) {
+				ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
+				click(driver, ele, "overview tab", action.BOOLEAN);
+				if (cp.deleteImage(projectName, contact)) {
+					log(LogStatus.INFO, "successfully deleted photo", YesNo.No);
+
+				}else {
+					log(LogStatus.ERROR, "could not deleted photo", YesNo.Yes);
+					sa.assertTrue(false,"could not deleted photo" );
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to go to contact record "+contact, YesNo.Yes);
+				sa.assertTrue(false,"Not able to go to contact record "+contact );
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on contact tab", YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on contact tab" );
+		}
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1,10)) {
+				if (ip.verifyAccordianRecordImage(projectName, contact, BasePageErrorMessage.defaultPhotoText)) {
+					log(LogStatus.INFO, "successfully verified deleted photo in accordion", YesNo.No);
+
+				}else {
+					log(LogStatus.ERROR, "could not verify deleted photo in accordion", YesNo.Yes);
+					sa.assertTrue(false,"could not verify deleted photo in accordion" );
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to go to entity record "+M4Ins1, YesNo.Yes);
+				sa.assertTrue(false,"Not able to go to entity record "+M4Ins1 );
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on entity tab", YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on entity tab" );
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc009_VerifyMinimumRecordsOnAccordionEntityPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		String id=null;
+		WebElement ele=null;
+		String contact=M4Contact1FName+" "+M4Contact1LName;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String first,last,title;
+		
+		String fieldValue[]={excelLabel.Title.toString()+breakSP+M4Contact1Title};
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1,10)) {
+				for (int i = 0;i<7;i++) {
+					first=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON"+(i+1), excelLabel.Contact_FirstName);
+					last=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON"+(i+1), excelLabel.Contact_LastName);
+					contact=first+" "+last;
+					title=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON"+(i+1), excelLabel.Title);
+					fieldValue[0]=excelLabel.Title.toString()+breakSP+title;
+					if (i==6) {
+						if (!ip.verifyAccordion(projectName, contact, fieldValue,5)) {
+							log(LogStatus.INFO, "successfully verified absence of 7th contact in accordion", YesNo.No);
+
+						}else {
+							log(LogStatus.ERROR, "7th contact is present but it should not be", YesNo.Yes);
+							sa.assertTrue(false,"7th contact is present but it should not be" );
+						}
+					}
+					else {
+
+						if (ip.verifyAccordion(projectName, contact, fieldValue,10)) {
+							log(LogStatus.INFO, "successfully verified "+(i+1)+"th contact in accordion", YesNo.No);
+
+						}else {
+							log(LogStatus.ERROR, "could not verify "+(i+1)+"th contact in accordion", YesNo.Yes);
+							sa.assertTrue(false,"could not verify "+(i+1)+"th contact in accordion" );
+						}
+					}
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to go to entity record "+M4Ins1, YesNo.Yes);
+				sa.assertTrue(false,"Not able to go to entity record "+M4Ins1 );
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on entity tab", YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on entity tab" );
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc010_VerifyExpandCollapseOnAccordion(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		String id=null;
+		WebElement ele=null;
+		String contact=M4Contact1FName+" "+M4Contact1LName;
+		String contactHeader=ip.getTabName(projectName,TabName.Object2Tab);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1,10)) {
+				ele=ip.returnAccordionViewDetailsLink(projectName, contactHeader);
+				if (click(driver, ele, "accordion view details", action.SCROLLANDBOOLEAN)) {
+					ele=ip.getHeaderTextForPage(projectName, PageName.NewTaskPopUP, contactHeader, action.BOOLEAN, 10);
+					if (ele!=null) {
+						log(LogStatus.INFO, "successfully verified presence of header in accordion", YesNo.No);
+
+					}else {
+						log(LogStatus.ERROR, "could not verify presence of header in accordion", YesNo.Yes);
+						sa.assertTrue(false,"could not verify presence of header in accordion" );
+					}
+					ele=ip.accordionExpandCollapse(projectName, ExpandCollapse.Collapse, 10);
+					
+					if (ele!=null) {
+						log(LogStatus.INFO, "verified default is expanded sdg", YesNo.No);
+
+						if (click(driver, ele, "collapse icon", action.BOOLEAN)) {
+							log(LogStatus.INFO, "clicked on collapse link", YesNo.No);
+
+							ele=ip.accordionExpandCollapse(projectName, ExpandCollapse.Collapse,2);
+							if (ele==null)
+								log(LogStatus.INFO, "successfully verified collapsed sdg", YesNo.No);
+							else {
+								log(LogStatus.ERROR, "could not verify sdg collapse", YesNo.Yes);
+								sa.assertTrue(false,"could not verify sdg collapse" );
+							}
+						}else {
+							log(LogStatus.ERROR, "Collapse icon is not clickable", YesNo.Yes);
+							sa.assertTrue(false,"Collapse icon is not clickable" );
+						}
+					}else {
+						log(LogStatus.ERROR, "Collapse icon is not visible, so cannot verify collapse functionality", YesNo.Yes);
+						sa.assertTrue(false,"Collapse icon is not visible, so cannot verify collapse functionality" );
+					}
+					click(driver, ip.accordionModalWindowClose(projectName, contactHeader),"cross icon", action.BOOLEAN);
+				}else {
+					log(LogStatus.ERROR, "accordion link is not clickable", YesNo.Yes);
+					sa.assertTrue(false,"accordion link is not clickable" );
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to go to entity record "+M4Ins1, YesNo.Yes);
+				sa.assertTrue(false,"Not able to go to entity record "+M4Ins1 );
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on entity tab", YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on entity tab" );
+		}
+		lp.CRMlogout();
+		ThreadSleep(3000);
+		driver.close();
+		
+		config(browserToLaunch);
+		lp = new LoginPageBusinessLayer(driver);
+		fp = new FundsPageBusinessLayer(driver);
+		cp = new ContactsPageBusinessLayer(driver);
+		ip = new InstitutionsPageBusinessLayer(driver);
+		
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1,10)) {
+				ele=ip.returnAccordionViewDetailsLink(projectName, contactHeader);
+				if (click(driver, ele, "accordion view details", action.SCROLLANDBOOLEAN)) {
+					ele=ip.getHeaderTextForPage(projectName, PageName.NewTaskPopUP, contactHeader, action.BOOLEAN, 10);
+					if (ele!=null) {
+						log(LogStatus.INFO, "successfully verified presence of header in accordion", YesNo.No);
+
+					}else {
+						log(LogStatus.ERROR, "could not verify presence of header in accordion", YesNo.Yes);
+						sa.assertTrue(false,"could not verify presence of header in accordion" );
+					}
+					ele=ip.accordionExpandCollapse(projectName, ExpandCollapse.Collapse, 2);
+					
+					if (ele==null) {
+						log(LogStatus.INFO, "verified sdg is collapsed", YesNo.No);
+
+							ele=ip.accordionExpandCollapse(projectName, ExpandCollapse.Expand,2);
+							if (ele!=null)
+								log(LogStatus.INFO, "successfully verified collapsed sdg", YesNo.No);
+							else {
+								log(LogStatus.ERROR, "could not verify sdg collapse", YesNo.Yes);
+								sa.assertTrue(false,"could not verify sdg collapse" );
+							}
+					}else {
+						log(LogStatus.ERROR, "Collapse icon is visible, but it should not be", YesNo.Yes);
+						sa.assertTrue(false,"Collapse icon is visible, but it should not be" );
+					}
+					click(driver, ip.accordionModalWindowClose(projectName, contactHeader),"cross icon", action.BOOLEAN);
+				}else {
+					log(LogStatus.ERROR, "accordion link is not clickable", YesNo.Yes);
+					sa.assertTrue(false,"accordion link is not clickable" );
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to go to entity record "+M4Ins1, YesNo.Yes);
+				sa.assertTrue(false,"Not able to go to entity record "+M4Ins1 );
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on entity tab", YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on entity tab" );
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc011_1_VerifySpecialCharacterFields(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String parentID=null;
+		boolean flag=false;
+		WebElement ele=null;
+		String special="Test@%^$%^%^&%^^%^&^%^&%^dhgf";
+		String length="255";
+		String[][] labelAndValues= {{"Length",length}};
+		ObjectFeatureName objectFeatureName=ObjectFeatureName.pageLayouts;
+		if (home.clickOnSetUpLink()) {
+			parentID=switchOnWindow(driver);
+			if (parentID!=null) {
+				if (sp.addCustomFieldforFormula(environment,mode, object.Contact, ObjectFeatureName.FieldAndRelationShip, "Text", special, labelAndValues, null, null)) {
+					flag=true;
+					log(LogStatus.INFO, "successfully created new custom field", YesNo.No);
+					if (sendKeys(driver, sp.getQuickSearchInObjectManager_Lighting(10),special, "search", action.SCROLLANDBOOLEAN)) {
+						
+					}
+				}
+				else {
+					log(LogStatus.FAIL, "could not create new field", YesNo.Yes);
+					sa.assertTrue(false, "could not create new field");
+				
+				}
+				if (flag) {
+				List<String> layoutName = new ArrayList<String>();
+				layoutName.add("Contact Layout");
+				HashMap<String, String> sourceANDDestination = new HashMap<String, String>();
+				sourceANDDestination.put(special,excelLabel.Title.toString());
+				List<String> abc = sp.DragNDrop("", mode, object.Contact, objectFeatureName.pageLayouts, layoutName, sourceANDDestination);
+				ThreadSleep(10000);
+				if (!abc.isEmpty()) {
+					log(LogStatus.FAIL, "field not added/already present 1", YesNo.Yes);
+					sa.assertTrue(false, "field not added/already present 1");
+				}else{
+					log(LogStatus.INFO, "field added/already present 1", YesNo.Yes);
+				}
+				}else {
+					log(LogStatus.FAIL, "new field could not be created, so no need to add in page layout", YesNo.Yes);
+					sa.assertTrue(false, "new field could not be created, so no need to add in page layout");
+
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.FAIL, "could not find new window to switch", YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch");
+
+			}
+		}
+		else {
+			log(LogStatus.FAIL, "could not click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "could not click on setup link");
+		
+		}
+		Actions actions = new Actions(driver);
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1,10)) {
+				if (ep.clickOnEditPageLink()) {
+					log(LogStatus.INFO, "successfully reached edit page", YesNo.No);
+					switchToFrame(driver, 30, ep.getEditPageFrame(projectName,30));
+						ele=ep.clickOnAccordion(projectName, TabName.Object2Tab);
+						actions.moveToElement(ele).build().perform();
+						ThreadSleep(2000);
+						actions.click(ele).perform();
+							String query= ep.ContactSDGQuery(special+",");
+							switchToDefaultContent(driver);
+							if (sendKeys(driver, ep.getFieldTextbox(projectName, EditPageLabel.Query.toString(), 10),query, "query textbox", action.SCROLLANDBOOLEAN)) {
+								
+							if(click(driver, ep.getCustomTabSaveBtn(projectName, 10), "save button", action.BOOLEAN)) {
+								 log(LogStatus.INFO, "clicked on save button", YesNo.No);
+								 ThreadSleep(2000);
+								 actions.moveToElement(ep.getBackButton(10)).build().perform();
+								 ThreadSleep(2000);
+								 if(clickUsingJavaScript(driver, ep.getBackButton(10), "back button", action.BOOLEAN)) {
+									 log(LogStatus.PASS, "clicked on back button", YesNo.No);
+									 flag=true;
+								 }else {
+									 log(LogStatus.ERROR, "Not able to click on back button", YesNo.Yes);
+								 }
+							 }else {
+							log(LogStatus.ERROR, "Not able to click on save button so cannot edit accordion : ", YesNo.No);
+								sa.assertTrue(false, "Not able to click on save button so cannot edit accordion : ");
+									
+							 }
+						}else {
+							log(LogStatus.ERROR, "field text box is not visible", YesNo.No);
+							sa.assertTrue(false, "field text box is not visible");
+								
+						 }
+				}
+				else {
+					log(LogStatus.ERROR, "edit page link is not clickable", YesNo.No);
+					sa.assertTrue(false, "edit page link is not clickable");
+						
+				 }
+			}else {
+				log(LogStatus.ERROR, "could not click on "+M4Ins1, YesNo.No);
+				sa.assertTrue(false,  "could not click on "+M4Ins1);
+					
+			 }
+		}else {
+			log(LogStatus.ERROR, "entity tab is not clickable", YesNo.No);
+			sa.assertTrue(false, "entity tab is not clickable");
+				
+		 }
+						
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc011_2_VerifySpecialCharacterFields(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		String fname="",lname="",ins="",mailID,special="Test@%^$%^%^&%^^%^&^%^&%^dhgf",value="Demo^%^%#^%&^&&^&*^E^#";
+
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
-			if (ip.clickOnAlreadyCreatedItem(projectName, M4Contact1FName+" "+M4Contact1LName, 10)) {
-				ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
-				click(driver, ele, "overview tab", action.BOOLEAN);
-				if (cp.updatePhotoInDetailPage(projectName, attachmentPath1)) {
-					log(LogStatus.INFO, "successfully updated photo", YesNo.No);
 
-				}else {
-					log(LogStatus.ERROR, "could not update photo", YesNo.Yes);
-					sa.assertTrue(false,"could not update photo" );
-				}
-			}else {
-				log(LogStatus.ERROR, "Not able to go to contact record "+M4Contact1FName+" "+M4Contact1LName, YesNo.Yes);
-				sa.assertTrue(false,"Not able to go to contact record "+M4Contact1FName+" "+M4Contact1LName );
-			}
-		}else {
-			log(LogStatus.ERROR, "Not able to click on contact tab", YesNo.Yes);
-			sa.assertTrue(false,"Not able to click on contact tab" );
-		}
-		
-		
-		
-		
-		if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
-			if (ip.clickOnAlreadyCreatedItem(projectName, M4Contact1FName+" "+M4Contact1LName, 10)) {
-				ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
-				click(driver, ele, "overview tab", action.BOOLEAN);
-				if (cp.updatePhotoInDetailPage(projectName,attachmentPath2)) {
-					log(LogStatus.INFO, "successfully updated photo", YesNo.No);
+		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
 
-				}else {
-					log(LogStatus.ERROR, "could not update photo", YesNo.Yes);
-					sa.assertTrue(false,"could not update photo" );
-				}
-			}else {
-				log(LogStatus.ERROR, "Not able to go to contact record "+M4Contact1FName+" "+M4Contact1LName, YesNo.Yes);
-				sa.assertTrue(false,"Not able to go to contact record "+M4Contact1FName+" "+M4Contact1LName );
+			fname=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON8", excelLabel.Contact_FirstName);
+			lname=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON8", excelLabel.Contact_LastName);
+			ins=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON8", excelLabel.Institutions_Name);
+			String[] contactsInfo = {  special, value};
+			System.err.println("field is "+contactsInfo[0]+" value is "+contactsInfo[1]);
+			mailID=	lp.generateRandomEmailId(gmailUserName);
+			ExcelUtils.writeData(phase1DataSheetFilePath, mailID, "Contacts", excelLabel.Variable_Name, "M4CON8",excelLabel.Contact_EmailId);
+			
+			if (cp.createContact(projectName, fname, lname, ins, mailID,"", contactsInfo[0], contactsInfo[1], CreationPage.ContactPage, null)) {
+				log(LogStatus.INFO,"successfully Created Contact : "+fname+" "+lname,YesNo.No);	
+			} else {
+				sa.assertTrue(false,"Not Able to Create Contact : "+fname+" "+lname);
+				log(LogStatus.SKIP,"Not Able to Create Contact: "+fname+" "+lname,YesNo.Yes);
 			}
-		}else {
-			log(LogStatus.ERROR, "Not able to click on contact tab", YesNo.Yes);
-			sa.assertTrue(false,"Not able to click on contact tab" );
+
+
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object2Tab);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object2Tab,YesNo.Yes);
 		}
+
+		lp.CRMlogout();
+		sa.assertAll();
 	}
 }
