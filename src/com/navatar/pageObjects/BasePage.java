@@ -592,7 +592,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, defaultCompactLayout, "Visibility", timeOut, "defaultCompactLayout");
 		
 	}
-	@FindBy(xpath = "//button[@title='Save' or text()='Save']")
+	@FindBy(xpath = "//*[@title='Save' or text()='Save']")
 	private WebElement save_Lightning;
 	
 	@FindBy(xpath = "//input[@placeholder='Search all items...']")
@@ -3657,7 +3657,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, moreTabIConLighting, "Visibility", timeOut, "More Tab ICon Lighting");	
 	}
 	
-	@FindBy(xpath="//a[@title='New']")
+	@FindBy(xpath="//*[@title='New']")
 	private WebElement newButtonLighting;
 	
 	/**

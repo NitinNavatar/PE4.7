@@ -88,14 +88,14 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, setupPageIframe, "Visibility", timeOut, "active users iframe");
 	}
 	
-	@FindBy(xpath="//td[@id='topButtonRow']//input[@name='save']")
+	@FindBy(xpath="//td[contains(@id,'ButtonRow')]//input[@name='save']")
 	private WebElement createUserSaveBtn_Lighting;
 
 	/**
 	 * @return the createUserSaveBtn
 	 */
 	public WebElement getCreateUserSaveBtn_Lighting(int timeOut) {
-		return isDisplayed(driver, createUserSaveBtn_Lighting, "Visibility", timeOut, "create user save button in lighting");
+		return isDisplayed(driver, createUserSaveBtn_Lighting, "Visibility", timeOut, " save button in lighting");
 	}
 	
 	@FindBy(id = "ImportedPackage_font")
@@ -318,6 +318,58 @@ public class SetupPage extends BasePageBusinessLayer {
 
 	public WebElement getAppMangerScroll(int timeOut) {
 		return isDisplayed(driver, appMangerScroll, "Visibility", timeOut, "ap pManger Scroll");
+	}
+	
+	@FindBy(xpath = "//*[@title='Record Type']")
+	private WebElement recordTypeNewButton;
+
+	public WebElement getRecordTypeNewButton(int timeOut) {
+		return isDisplayed(driver, recordTypeNewButton, "Visibility", timeOut, "Record Type New Button");
+	}
+	
+	@FindBy(xpath = "//input[@id='selectAllProfiles']")
+	private WebElement makeAvailableCheckBox;
+
+	public WebElement getMakeAvailableCheckBox(int timeOut) {
+		return isDisplayed(driver, makeAvailableCheckBox, "Visibility", timeOut, "make Available CheckBox");
+	}
+	
+	@FindBy(xpath = "//div[@class='pbBottomButtons']//input[@name='goNext']")
+	private WebElement customFieldNextBtn2;
+
+	public WebElement getCustomFieldNextBtn2(int timeOut) {
+		return isDisplayed(driver, customFieldNextBtn2, "Visibility", timeOut, " next button");
+	}
+	
+	@FindBy(xpath = "//input[@id='selectAllMakeDefaults']")
+	private WebElement makeDefaultCheckBox;
+
+	public WebElement getMakeDefaultCheckBoxCheckBox(int timeOut) {
+		return isDisplayed(driver, makeDefaultCheckBox, "Visibility", timeOut, "make Default CheckBox");
+	}
+	
+	@FindBy(xpath = "//input[@title='New Custom Object Tabs']")
+	private WebElement customObjectTabNewBtn;
+
+	public WebElement getCustomObjectTabNewBtn(int timeOut) {
+		return isDisplayed(driver, customObjectTabNewBtn, "Visibility", timeOut, "custom Object Tab NewBtn");
+	}
+	
+	@FindBy(xpath = "//select[@id='p1']")
+	private WebElement objectDropDown;
+
+	public WebElement getObjectDropDown(int timeOut) {
+		return isDisplayed(driver, objectDropDown, "Visibility", timeOut, "Object drop down");
+	}
+	
+	@FindBy(xpath="(//img[@title='Lookup (New Window)'])[2]")
+	private WebElement tabObjectLookUpIcon;
+
+	/**
+	 * @return the tabObjectLookUpIcon
+	 */
+	public WebElement getTabObjectLookUpIcon(int timeOut) {
+		return isDisplayed(driver, tabObjectLookUpIcon, "Visibility", timeOut, "tab Object Look Up Icon");
 	}
 	
 }

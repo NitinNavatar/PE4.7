@@ -72,13 +72,15 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 				FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 				String label;
 				String value;
+				if (!date.equals("") || !date.isEmpty()) {
 
-				WebElement ele = getLabelTextBox(projectName, PageName.Object5Page.toString(), PageLabel.Date.toString(), timeOut);
-				if (sendKeys(driver,ele, date, date, action.BOOLEAN)) {
-					appLog.info("Successfully Entered value on date TextBox : "+date);		
-					ThreadSleep(1000);
-				}else {
+					WebElement ele = getLabelTextBox(projectName, PageName.Object5Page.toString(), PageLabel.Date.toString(), timeOut);
+					if (sendKeys(driver,ele, date, date, action.BOOLEAN)) {
+						appLog.info("Successfully Entered value on date TextBox : "+date);		
+						ThreadSleep(1000);
+					}else {
 
+					}
 				}
 
 				if (sendKeys(driver, getOrganizerName(projectName, 60), organizer, "organizer Name",
@@ -176,12 +178,12 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 	}
 	
 	public boolean createAttendee(String projectName,String marketingEvent,String[][] requestInfo,action action,int timeOut) {
-		boolean flag=false;
+		boolean flag=true;
 		String label;
 		String value;
 		String xpath="";
 		WebElement ele;
-
+		
 		if(clickUsingJavaScript(driver, getNewAttendee(projectName, timeOut), "New Attendee Button")) {
 			log(LogStatus.INFO,"click on New Attendee Button",YesNo.Yes);
 
@@ -193,12 +195,13 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 					if (sendKeys(driver, getAttendeeStaffTextBoxe(projectName, timeOut), value, label+" : "+value,action)) {
 						ThreadSleep(1000);
 						log(LogStatus.INFO,"Able to send "+value+" to label : "+label,YesNo.Yes);
-						if (click(driver,FindElement(driver,"//*[@title='"+value+"']","ATTENDEE Name List", action, 30),
+						if (click(driver,FindElement(driver,"//span[contains(@class,'listbox')]//*[@title='"+value+"']","ATTENDEE Name List", action, 30),
 								value + "   :   Company Name", action)) {
 							log(LogStatus.INFO,"Able to select "+value+" to label : "+label,YesNo.No);
 						} else {
 							sa.assertTrue(false,"Not Able to select "+value+" to label : "+label);
 							log(LogStatus.SKIP,"Not Able to select "+value+" to label : "+label,YesNo.Yes);
+							flag=false;
 						}
 
 					} else {
@@ -220,13 +223,26 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 						} else {
 							sa.assertTrue(false,"Not Able to select "+value+" to label : "+label);
 							log(LogStatus.SKIP,"Not Able to select "+value+" to label : "+label,YesNo.Yes);
+							flag=false;
 						}
 
 					} else {
 						sa.assertTrue(false,"Not Able to Click on "+label);
 						log(LogStatus.SKIP,"Not Able to Click on "+label,YesNo.Yes);
+						flag=false;
 					}
 
+				}
+				else if(AttendeeLabels.Notes.toString().equals(reuestData[0])) {
+					AttendeePage ap = new AttendeePage(driver);
+					if (sendKeys(driver, ap.labelTextBox(projectName,reuestData[0], 60), value, "notes",
+							action.BOOLEAN)) {
+
+					} else {
+						sa.assertTrue(false,"not able to enter text to "+label);
+						log(LogStatus.SKIP,"not able to enter text to "+label,YesNo.Yes);
+						flag=false;
+					}
 				}
 			}
 
@@ -237,6 +253,7 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 			} else {
 				sa.assertTrue(false,"marketingEvent Label not prefilled with value : "+marketingEvent);
 				log(LogStatus.SKIP,"marketingEvent Label not prefilled with value : "+marketingEvent,YesNo.Yes);
+				flag=false;
 			}
 
 			if (click(driver, getCustomTabSaveBtn(projectName,timeOut), "save button", action)) {
@@ -245,12 +262,14 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 			} else {
 				sa.assertTrue(false,"Not Able to Click on save button so cannot create request");
 				log(LogStatus.SKIP,"Not Able to Click on save button so cannot create request",YesNo.Yes);
+				flag=false;
 			}
 
 
 		}else {
 			sa.assertTrue(false,"Not able to click on New Attendee button");
 			log(LogStatus.SKIP,"Not able to click on New Attendee button",YesNo.Yes);
+			flag=false;
 
 		}
 		return flag;

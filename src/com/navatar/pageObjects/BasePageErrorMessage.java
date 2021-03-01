@@ -64,6 +64,7 @@ public interface BasePageErrorMessage {
 	public String UpcomingTaskMsg3="You have an upcoming Task";
 	public String UpcomingTaskMsg4="has an upcoming Task about";
 	public String AmericaLosAngelesTimeZone="America/Los_Angeles";
+	public static String defaultPhotoText="standard";
 	public static String OldTaskMsg(String user,String contactName,  int otherContactNum) {
 		String msg="a Task";
 		if (user==null) {
@@ -170,4 +171,6 @@ public interface BasePageErrorMessage {
 		
 		return msg;
 	}
+	
+	
 }

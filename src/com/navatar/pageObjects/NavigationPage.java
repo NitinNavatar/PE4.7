@@ -37,5 +37,47 @@ public class NavigationPage extends BasePageBusinessLayer {
 	public List<WebElement> getExpandIcon(String projectName,int timeOut) {
 		return FindElements(driver, "//span[@class='icon expand-icon glyphicon glyphicon-plus']", "> icon");
 	}
+	
+	@FindBy(xpath="//div/a[text()='Next']")
+	private WebElement lightningPageNextBtn;
+
+	/**
+	 * @return the lightningPageNextBtn
+	 */
+	public WebElement getLightningPageNextBtn(String projectName,int timeOut) {
+		return isDisplayed(driver, lightningPageNextBtn, "Visibility", timeOut, "lightning Page Next Btn");
+	}
+	
+	@FindBy(xpath="(//div/a[text()='Next'])[2]")
+	private WebElement lightningPageNextBtn2;
+
+	/**
+	 * @return the lightningPageNextBtn
+	 */
+	public WebElement getLightningPageNextBtn2(String projectName,int timeOut) {
+		return isDisplayed(driver, lightningPageNextBtn2, "Visibility", timeOut, "lightning Page Next Btn2");
+	}
+	
+	@FindBy(xpath="//div/a[text()='Finish']")
+	private WebElement lightningPageFinishBtn;
+
+	/**
+	 * @return the lightningPageNextBtn
+	 */
+	public WebElement getLightningPagFinishBtn(String projectName,int timeOut) {
+		return isDisplayed(driver, lightningPageFinishBtn, "Visibility", timeOut, "lightning Page Finish Btn");
+	}
+	
+
+	@FindBy (xpath = "//*[text()='Lightning Experience']")
+	private WebElement lightningExperienceTab;
+
+	/**
+	 * @return the lightningExperience
+	 */
+	public WebElement getLightningExperienceTab(String projectName,int timeOut) {
+		return isDisplayed(driver, lightningExperienceTab, "Visibility", timeOut, "lightning Experience Tab");
+	}
+	
 }
 

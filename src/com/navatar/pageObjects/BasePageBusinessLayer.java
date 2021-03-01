@@ -663,6 +663,9 @@ public String getTabName(String projectName,TabName TabName) {
 	case SDGTab:
 		tabName = "Sortable Data Grids";
 		break;
+	case AttendeeTab:
+		tabName = "Attendies";
+		break;
 	case Entities:
 		tabName = "Entities";
 		break;
@@ -674,6 +677,9 @@ public String getTabName(String projectName,TabName TabName) {
 		break;
 	case TaskTab:
 		tabName = "Tasks";
+		break;
+	case Deal_Team:
+		tabName = "Deal Team";
 		break;
 	case RecycleBinTab:
 		tabName = "Recycle Bin";
@@ -4715,7 +4721,7 @@ public boolean isAutomationAllListViewAdded(String projectName, int timeOut) {
 	String viewList="Automation All",xpath="";
 	if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
 		ThreadSleep(3000);
-		xpath="//div[@class='listContent']//li/a/span[text()='" + viewList + "']";
+		xpath="//span[text()='" + viewList + "']";
 		WebElement selectListView = FindElement(driver, xpath,"Select List View : "+viewList, action.SCROLLANDBOOLEAN, 5);
 		ThreadSleep(3000);
 		if ( selectListView!=null) {
@@ -4732,6 +4738,60 @@ public boolean isAutomationAllListViewAdded(String projectName, int timeOut) {
 	}
 
 	return false;
+}
+
+public boolean verifyAccordion(String projectName,String recordName,String[] fieldValues, int timeOut) {
+	String field="";
+	String value="";
+	boolean flag=true;
+	String finalx="",xpath = "//article[@class='cRelatedListAccordion']//a[text()='"+recordName+"']";
+	WebElement ele=FindElement(driver, xpath, recordName, action.SCROLLANDBOOLEAN,10);
+	if (isDisplayed(driver, ele, "visibility", timeOut, recordName+" in accordion")!=null) {
+		xpath = "//article[@class='cRelatedListAccordion']//a[text()='"+recordName+"']/following-sibling::ul";
+		for (String fieldValue:fieldValues) {
+			field=fieldValue.split(breakSP)[0];
+			value=fieldValue.split(breakSP)[1];
+			finalx=xpath+"//li//div[@title='"+field+"']/following-sibling::div[@title='"+value+"']";
+			ele=FindElement(driver, finalx, field+" and "+value, action.SCROLLANDBOOLEAN, 10);
+			ele=isDisplayed(driver, ele, "visibility", 10, field+" and "+value);
+			if (ele!=null) {
+				log(LogStatus.INFO, "successfully verified presence of "+field+" and "+value, YesNo.No);
+					
+			}
+			else {
+				log(LogStatus.ERROR, "could not verify "+field+" and "+value, YesNo.Yes);
+				flag=false;
+			}
+		}
+	}else {
+		log(LogStatus.ERROR, "could not verify presence of "+recordName+" in accordion ", YesNo.Yes);
+		flag=false;
+	}
+	return flag;
+}
+
+public boolean verifyAccordianRecordImage(String projectName, String record, String imgId) {
+	boolean flag=true;
+	String xpath = "//article[@class='cRelatedListAccordion']//a[text()='"+record+"']";
+	String finalx=xpath +"/../preceding-sibling::div//img";
+	WebElement ele=FindElement(driver, xpath, "accordion record", action.SCROLLANDBOOLEAN, 10);
+	ele=isDisplayed(driver, ele, "visibility", 10, "accordion record profile image");
+	if (ele!=null) {
+		ele=FindElement(driver, finalx, "img in contact accordion", action.BOOLEAN, 10);
+		ele=isDisplayed(driver, ele, "visibility", 10, "accordion record profile image");
+		String id = ele.getAttribute("src");
+		if (id.contains(imgId)) {
+			log(LogStatus.INFO, "successfully verified img id\n"+id+"\nand\n"+imgId, YesNo.No);
+		}
+		else {
+			log(LogStatus.ERROR, "could not verify id. found:\n"+id+"\nexpected:\n"+imgId, YesNo.Yes);
+			flag=false;
+		}
+	}else {
+		log(LogStatus.ERROR, "could not find accordion", YesNo.Yes);
+		flag=false;
+	}
+	return flag;
 }
 
 
@@ -4778,4 +4838,33 @@ public boolean updatePhoto(String projectName,String pageName,String uploadImage
 }
 
 
+
+	
+
+public WebElement returnAccordionLink(String projectName, String object) {
+	String xpath = "//article[@class='cRelatedListAccordion']//a[text()='"+object+"']";
+	WebElement ele=FindElement(driver, xpath, object + "accordion", action.SCROLLANDBOOLEAN, 10);
+	return isDisplayed(driver, ele, "visibility", 10, object + "accordion");
+	
+}
+
+public WebElement returnAccordionViewDetailsLink(String projectName, String object) {
+	String xpath = "//article[@class='cRelatedListAccordion']//a[text()='"+object+"']/../../../following-sibling::footer//a[contains(text(),'View')][contains(text(),'Details')]";
+	WebElement ele=FindElement(driver, xpath, object + "accordion", action.SCROLLANDBOOLEAN, 10);
+	return isDisplayed(driver, ele, "visibility", 10, object + "accordion");
+	
+}
+public WebElement accordionExpandCollapse(String projectName, ExpandCollapse ec, int timeOut) {
+	String xpath="//div[contains(@id,'modal')]//*[@title='"+ec.toString()+"']";
+	WebElement ele=FindElement(driver, xpath, ec + " accordion", action.SCROLLANDBOOLEAN, timeOut);
+	return isDisplayed(driver, ele, "visibility", timeOut, ec + " accordion");
+
+}
+
+public WebElement accordionModalWindowClose(String projectName, String object) {
+	String xpath = "//h2[text()='"+object+"']/preceding-sibling::button[@title='close']";
+	WebElement ele=FindElement(driver, xpath, object + "accordion", action.SCROLLANDBOOLEAN, 10);
+	return isDisplayed(driver, ele, "visibility", 10, object + "accordion");
+	
+}
 }

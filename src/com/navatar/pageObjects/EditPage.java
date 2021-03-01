@@ -166,4 +166,53 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, imageFieldNameTextBox, "Visibility", timeOut, "image field name text box");
 	}
 	
+	@FindBy (xpath = "//button[text()='Activate']")
+	private WebElement activateButton;
+
+	/**
+	 * @return the activateButton
+	 */
+	public WebElement getActivateButton(String projectName,int timeOut) {
+		return isDisplayed(driver, activateButton, "Visibility", timeOut, "Activate Button");
+	}
+	
+	@FindBy (xpath = "(//button[text()='Save'])[2]")
+	private WebElement editPageSaveButton2;
+
+	/**
+	 * @return the editPageSaveButton
+	 */
+	public WebElement getEditPageSaveButton2(String projectName,int timeOut) {
+		return isDisplayed(driver, editPageSaveButton2, "Visibility", timeOut, "Edit Page Save Button2");
+	}
+	
+	@FindBy (xpath = "//button[text()='Finish']")
+	private WebElement finishButton2;
+
+	/**
+	 * @return the finishButton2
+	 */
+	public WebElement getFinishButton2(String projectName,int timeOut) {
+		return isDisplayed(driver, finishButton2, "Visibility", timeOut, "Finish Button2");
+	}
+	
+	
+	public WebElement getFieldTextbox(String projectName,String pageLabel,int timeOut) {
+		String label=pageLabel.replace("_", " ");
+		String xpath = "//*[text()='"+label+"']/following-sibling::div/input";
+		WebElement ele=FindElement(driver, xpath,pageLabel.toString(), action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "Finish Button2");
+	}
+	//span[text()='Expanded']/../..//input[@type='checkbox']
+	
+	
+	@FindBy (xpath = "//span[text()='Expanded']/../..//input[@type='checkbox']")
+	private WebElement expandedCheckbox;
+
+	/**
+	 * @return the finishButton2
+	 */
+	public WebElement getexpandedCheckbox(String projectName,int timeOut) {
+		return isDisplayed(driver, expandedCheckbox, "Visibility", timeOut, "expandedCheckbox");
+	}
 }
