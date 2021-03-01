@@ -7,6 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageLabel;
+import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.object;
@@ -111,7 +112,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 				appLog.error(object+" object "+objectFeatureName+" feature is not visible so cannot click on it");
 			}
 		}else {
-			ele=isDisplayed(driver, FindElement(driver, "//table[@data-aura-class='uiVirtualDataGrid--default uiVirtualDataGrid']//a[contains(text(),'"+object+"')]", "", action.BOOLEAN,20), "visibility",20,"page layout link");
+			ele=isDisplayed(driver, FindElement(driver, "//table[@data-aura-class='uiVirtualDataGrid--default uiVirtualDataGrid']//a[text()='"+object+"']", "", action.BOOLEAN,20), "visibility",20,"page layout link");
 			if(ele!=null) {
 				if(click(driver, ele, object+" object link", action.SCROLLANDBOOLEAN)) {
 					appLog.info("click on object link : "+object);
@@ -1133,8 +1134,177 @@ public WebElement getRecordTypeLabel(String projectName,String recordTypeLabel,i
 	return ele;
 }
 
+
+public boolean createRecordTypeForObject(String projectName,String[][] labelWithValue,boolean isMakeAvailable,boolean isMakeDefault,int timeOut) {
+	WebElement ele;
+	String label;
+	String value;
+	boolean flag=false;
+	if (click(driver,getRecordTypeNewButton(10), "Record Type New Button", action.SCROLLANDBOOLEAN)) {
+		log(LogStatus.INFO, "Click on Record Type New Button", YesNo.No);
+		ThreadSleep(5000);
+		switchToFrame(driver, 20, getSetUpPageIframe(60));
+		for (String[] lv : labelWithValue) {
+			label=lv[0];
+			value=lv[1];
+			ele =  getRecordTypeLabel(projectName, label, 20);
+			ThreadSleep(2000);
+			if (label.equals(recordTypeLabel.Active.toString())) {
+
+				if (click(driver, ele, "Active CheckBox", action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on Active CheckBox", YesNo.No);	
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on Active CheckBox", YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on Active CheckBox");
+				}
+			} else {
+
+				if (sendKeys(driver, ele, value, label, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Able to enter "+label, YesNo.No);
+					ThreadSleep(2000);
+					flag=true;
+				} else {
+					log(LogStatus.ERROR, "Not Able to enter "+value+" to label "+label, YesNo.Yes);
+					sa.assertTrue(false,"Not Able to enter "+value+" to label "+label);
+				}
+
+			}
+
+		}
+		if (isMakeAvailable) {
+			ele=getMakeAvailableCheckBox(10);
+			if (click(driver, ele, "make Available CheckBox", action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on make Available CheckBox", YesNo.No);	
+				ThreadSleep(1000);
+
+
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on make Available CheckBox", YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on make Available CheckBox");
+			}	
+		}
+
+		if (isMakeDefault) {
+			ele=getMakeDefaultCheckBoxCheckBox(10);
+			if (click(driver, ele, "make Default CheckBox", action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on make Default CheckBox", YesNo.No);	
+				ThreadSleep(1000);
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on make Default CheckBox", YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on make Default CheckBox");
+			}
+		}
+		if(click(driver, getCustomFieldNextBtn2(30),"next button", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.PASS, "Clicked on Next button", YesNo.No);
+			ThreadSleep(1000);		
+
+			if (click(driver,  getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.ERROR, "Click on save Button ", YesNo.No);
+				ThreadSleep(5000);
+				flag=true;
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on save Button ", YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on save Button ");
+			}
+
+		}else {
+			log(LogStatus.FAIL, "Not able to click on next button so cannot record Type",YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on next button so cannot record Type");
+		}
+
+
+
+
+	} else {
+		log(LogStatus.ERROR, "Not Able to Click on Record Type New Button", YesNo.Yes);
+		sa.assertTrue(false,"Not Able to Click on Record Type New Button");
+	}
+	return flag;
+}
+
+public boolean editRecordTypeForObject(String projectName,String[][] labelWithValue,int timeOut) {
+	WebElement ele;
+	String label;
+	String value;
+	boolean flag=false;
+	ThreadSleep(5000);
+	switchToDefaultContent(driver);
+	switchToFrame(driver, 20, getSetUpPageIframe(60));
+	if (click(driver, getEditButton(environment,"Classic",10), "edit", action.SCROLLANDBOOLEAN)) {
+		log(LogStatus.INFO, "Click on edit Button", YesNo.No);
+		ThreadSleep(5000);
+		switchToDefaultContent(driver);
+		switchToFrame(driver, 20, getSetUpPageIframe(60));
+		for (String[] lv : labelWithValue) {
+			label=lv[0];
+			value=lv[1];
+			ele =  getRecordTypeLabel(projectName, label, 20);
+			ThreadSleep(2000);
+			if (label.equals(recordTypeLabel.Active.toString())) {
+				if (click(driver, ele, "Active CheckBox", action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on Active CheckBox", YesNo.No);	
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on Active CheckBox", YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on Active CheckBox");
+				}
+			} else {
+
+				if (sendKeys(driver, ele, value, label, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Able to enter "+label, YesNo.No);
+					ThreadSleep(2000);
+					flag=true;
+				} else {
+					log(LogStatus.ERROR, "Not Able to enter "+value+" to label "+label, YesNo.Yes);
+					sa.assertTrue(false,"Not Able to enter "+value+" to label "+label);
+				}
+
+			}
+
+		}
+		
+		if (click(driver,getCreateUserSaveBtn_Lighting(30), "Save Button",action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "clicked on save button", YesNo.No);
+			flag=true;
+			ThreadSleep(5000);
+			recordTypeVerification(labelWithValue);
+		} else {
+			log(LogStatus.ERROR, "not able to click on save button", YesNo.Yes);
+			sa.assertTrue(false, "not able to click on save button");
+		}
+
+
+
+
+	} else {
+		log(LogStatus.ERROR, "Not Able to Click on Edit Button", YesNo.Yes);
+		sa.assertTrue(false,"Not Able to Click on Edit Button");
+	}
+	return flag;
+}
+
+public void recordTypeVerification(String[][] labelWithValue) {
+	String xpath = "";
+	WebElement ele;
+	ThreadSleep(5000);
+	switchToDefaultContent(driver);
+	switchToFrame(driver, 20, getSetUpPageIframe(60));
+	for (String[] labelValue : labelWithValue) {
+		xpath ="//*[text()='"+labelValue[0]+"']/..//following-sibling::td[text()='"+labelValue[1]+"']";
+		ele=FindElement(driver, xpath, labelValue[0]+" with Value "+labelValue[1], action.BOOLEAN, 10);
+		if (ele!=null) {
+			log(LogStatus.PASS, labelValue[0]+" with Value "+labelValue[1]+" verified", YesNo.No);	
+		} else {
+			log(LogStatus.ERROR, labelValue[0]+" with Value "+labelValue[1]+" not verified", YesNo.Yes);
+			sa.assertTrue(false, labelValue[0]+" with Value "+labelValue[1]+" not verified");
+		}
+		
+	}
+}
+
 public String returnAPINameOfField(String projectName, String field) {
 	return ""; 
-	}
+}
+
 
 }
