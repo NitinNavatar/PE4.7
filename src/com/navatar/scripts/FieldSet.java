@@ -3,7 +3,6 @@ import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
 import static com.navatar.generic.ExcelUtils.*;
 import java.util.List;
-import java.util.concurrent.Phaser;
 
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
@@ -13,6 +12,7 @@ import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.EnumConstants.CreationPage;
+import com.navatar.generic.EnumConstants.IconType;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
@@ -221,7 +221,6 @@ public class FieldSet extends BaseLib {
 	@Test
 	public void FSTc005_addAdvanceFieldSetLayoutOnContactAndDealPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
 		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
@@ -283,9 +282,7 @@ public class FieldSet extends BaseLib {
 	@Test
 	public void FSTc006_verifyAdvanceFieldSetLayoutOnContactAndDealPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
-		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
@@ -401,9 +398,7 @@ public class FieldSet extends BaseLib {
 	@Parameters({ "projectName"})
 	@Test
 	public void FSTc007_2_verifyRemoveObjectImpactFromPEUser(String projectName) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
@@ -492,9 +487,7 @@ public class FieldSet extends BaseLib {
 	@Parameters({ "projectName"})
 	@Test
 	public void FSTc008_2_verifyGiveObjectImpactFromPEUser(String projectName) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
@@ -1568,4 +1561,118 @@ public class FieldSet extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc026_verifyCameraIconUploadImageAndRelativePath(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
+		List<String> itemNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
+		
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String imagepath="\\UploadImages\\JPG1Image.jpg";
+		
+		for(int i=0; i<tabNames.size(); i++) {
+			if (lp.clickOnTab(projectName,tabNames.get(i) )) {
+				log(LogStatus.INFO,"Click on Tab : "+tabNames.get(i),YesNo.No);
+				if(lp.clickOnAlreadyCreatedItem(projectName, itemNames.get(i), true,20)) {
+					log(LogStatus.INFO,"clicked on created item : "+itemNames.get(i), YesNo.No);
+					ThreadSleep(3000);
+					if(lp.getDefaultImageXpath(20)!=null) {
+						log(LogStatus.INFO, "Default Image icon is displaying on "+tabNames.get(i)+" in  "+itemNames.get(i), YesNo.No);
+						
+					}else {
+						log(LogStatus.PASS, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.Yes);
+						sa.assertTrue(false, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i));
+					}
+					if(lp.getUpdatePhotoCameraIcon(10)!=null) {
+						log(LogStatus.INFO, "update photo icon is displaying on "+tabNames.get(i)+" in  "+itemNames.get(i), YesNo.No);
+					}else {
+						log(LogStatus.PASS, "update photo icon is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.Yes);
+						sa.assertTrue(false, "update photo icon is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i));
+					}
+					if(lp.updatePhoto(projectName, tabNames.get(i), imagepath)) {
+						log(LogStatus.PASS, "photo is updated successfully in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+					}else {
+						log(LogStatus.PASS, "photo is not updated in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						sa.assertTrue(false, "photo is not updated in "+itemNames.get(i)+" on "+tabNames.get(i));
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to click on created item "+itemNames.get(i)+" so cannot verify medium image size", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on created item "+itemNames.get(i)+" so cannot verify medium image size");
+				}
+			} else {
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify medium image size",YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify medium image size");
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc027_verifyPopulatedUnderImages(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
+		List<String> itemNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		for(int i=0; i<tabNames.size(); i++) {
+			if (lp.clickOnTab(projectName,tabNames.get(i) )) {
+				log(LogStatus.INFO,"Click on Tab : "+tabNames.get(i),YesNo.No);
+				if(lp.clickOnAlreadyCreatedItem(projectName, itemNames.get(i), true,20)) {
+					log(LogStatus.INFO,"clicked on created item : "+itemNames.get(i), YesNo.No);
+					ThreadSleep(3000);
+					if(lp.getDefaultImageXpath(20)!=null) {
+						log(LogStatus.INFO, "Default Image icon is displaying on "+tabNames.get(i)+" in  "+itemNames.get(i), YesNo.No);
+						
+					}else {
+						log(LogStatus.PASS, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.Yes);
+						sa.assertTrue(false, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i));
+					}
+					if(lp.getUpdatePhotoCameraIcon(10)!=null) {
+						log(LogStatus.INFO, "update photo icon is displaying on "+tabNames.get(i)+" in  "+itemNames.get(i), YesNo.No);
+						ThreadSleep(500);
+						if(click(driver, lp.getUpdatePhotoCameraIcon(10),"update photo camera icon", action.BOOLEAN)) {
+							log(LogStatus.INFO, "clicked on update photo icon", YesNo.No);
+							if(lp.updateAndDeletePhotoXpath(IconType.updatePhoto, 10)!=null) {
+								log(LogStatus.INFO, "update photo button is displaying", YesNo.No);
+						
+							}else {
+								log(LogStatus.ERROR, "update photo button is not displaying on "+tabNames.get(i), YesNo.Yes);
+								sa.assertTrue(false, "update photo button is not displaying on "+tabNames.get(i));
+							}
+							
+							if(lp.updateAndDeletePhotoXpath(IconType.DeletePhoto, 10)!=null) {
+								log(LogStatus.INFO,  "delete photo button is displaying", YesNo.No);
+						
+							}else {
+								log(LogStatus.ERROR, "delete photo button is not displaying on "+tabNames.get(i), YesNo.Yes);
+								sa.assertTrue(false, "delete photo button is not displaying on "+tabNames.get(i));
+							}
+							
+						}else {
+							log(LogStatus.ERROR, "Not able to click on update photo icon so cannot check upload and delete photo button on "+tabNames.get(i), YesNo.Yes);
+							sa.assertTrue(false, "Not able to click on update photo icon so cannot check upload and delete photo button on "+tabNames.get(i));
+						}
+					}else {
+						log(LogStatus.PASS, "update photo icon is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.Yes);
+						sa.assertTrue(false, "update photo icon is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i));
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to click on created item "+itemNames.get(i)+" so cannot verify medium image size", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on created item "+itemNames.get(i)+" so cannot verify medium image size");
+				}
+			} else {
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify medium image size",YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify medium image size");
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	
+
+
 }

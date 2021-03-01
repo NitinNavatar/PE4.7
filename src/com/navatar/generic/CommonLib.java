@@ -26,6 +26,8 @@ import org.openqa.selenium.winium.WiniumDriverService;
 import org.testng.Assert;
 
 import static com.navatar.generic.EnumConstants.*;
+
+import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.relevantcodes.extentreports.LogStatus;
@@ -2618,4 +2620,19 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 			
 		}
 	 
+		
+		public static boolean uploadFile(String filepath) {
+			String exePath=System.getProperty("user.dir")+"\\AutoIT\\NewUploadFile.exe";
+			ProcessBuilder process = new ProcessBuilder(exePath,filepath);
+			try {
+				process.start();
+				ThreadSleep(500);
+				log(LogStatus.PASS, "File is uploaded successfully "+filepath, YesNo.No);
+				return true;
+			}catch (Exception e) {
+				log(LogStatus.FAIL, "File is not uploaded "+filepath, YesNo.Yes);
+			}
+			return false;
+		}
+		
 }

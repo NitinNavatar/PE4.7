@@ -4735,4 +4735,47 @@ public boolean isAutomationAllListViewAdded(String projectName, int timeOut) {
 }
 
 
+public boolean updatePhoto(String projectName,String pageName,String uploadImagePath) {
+	WebElement ele=getUpdatePhotoCameraIcon(10);
+	if(ele!=null) {
+		log(LogStatus.INFO, "clicked on update photo icon", YesNo.No);
+		ThreadSleep(500);
+		if(click(driver, ele,"update photo camera icon", action.BOOLEAN)) {
+			log(LogStatus.INFO, "clicked on update photo icon", YesNo.No);
+			if(click(driver, updateAndDeletePhotoXpath(IconType.updatePhoto, 10), "update photo button", action.BOOLEAN)) {
+				log(LogStatus.INFO, "clicked on update photo button", YesNo.No);
+				ThreadSleep(1000);
+				String path=System.getProperty("user.dir")+uploadImagePath;
+				System.err.println("Path : "+path);
+				if(click(driver, getUploadImageXpath(10),"upload image button", action.BOOLEAN)) {
+					log(LogStatus.PASS, "clicked on upload image button on "+pageName, YesNo.No);
+					ThreadSleep(500);
+					if(uploadFile(path)) {
+						ThreadSleep(1000);
+						if(click(driver, getCustomTabSaveBtn(projectName,10),"Save button", action.BOOLEAN)) {
+							log(LogStatus.PASS, "clicked on save button and image is updtaed "+path +" on "+pageName, YesNo.No);
+							return true;
+						}else {
+							log(LogStatus.PASS, "Not able to click on save button and so cannot updtaed image from path "+path +" on "+pageName, YesNo.No);
+						}
+					}else {
+						log(LogStatus.ERROR,"Not able to pass path in file uploaded : "+path+" on "+pageName, YesNo.Yes);
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to click on upload image on "+pageName+" so cannot update image from Path : "+path, YesNo.Yes);
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to click on update photo button so cannot update photo on "+pageName, YesNo.Yes);
+			}
+			
+		}else {
+			log(LogStatus.ERROR, "Not able to click on update photo icon so cannot upload photo on "+pageName, YesNo.Yes);
+		}
+	}else {
+		log(LogStatus.ERROR, "Update photo icon is not displaying on "+pageName+" so cannot upload photo", YesNo.Yes);
+	}
+	return false;
+}
+
+
 }

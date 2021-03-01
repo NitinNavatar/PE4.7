@@ -138,6 +138,10 @@ public class EnumConstants {
 
 	}
 	
+	public static enum IconType{
+		updatePhoto,DeletePhoto;
+	}
+	
 	public static enum NavatarSetupSideMenuTab{
 		DealCreation, IndividualInvestorCreation, CommitmentCreation, ContactTransfer, AccountAssociations, OfficeLocations, CoInvestmentSettings, PipelineStageLog, BulkEmail
 		}
