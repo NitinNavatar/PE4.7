@@ -4098,7 +4098,103 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc044_CreateACustomObjectAndAddFewFieldsOnTheObject(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp = new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		String customObject=tabCustomObj;
+		/////////////////////////////////////////////////////
+		boolean flag=true;
+		if (home.clickOnSetUpLink()) {
+			flag=false;
+			String parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+				if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(),object.Create )) {
+					log(LogStatus.INFO, "Click on Create/Custom object so going to create : "+customObject, YesNo.No);
+					String[][] labelWithValue= {{customObjectLabel.Label.toString(),customObject},{customObjectLabel.Plural_Label.toString(),customObject+"s"}};
+					if(sp.createCustomObject(projectName, labelWithValue, 10)) {
+						log(LogStatus.INFO, "Custom Object Created : "+customObject, YesNo.No);
+						flag=true;
+					}else {
+						log(LogStatus.ERROR, "Not Able to Create : "+customObject, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Create : "+customObject);
+					}
+				}else {
+					log(LogStatus.ERROR, "Not Able to Click on Create/Custom object so cannot create : "+customObject, YesNo.Yes);
+					sa.assertTrue(false, "Not Able to Click on Create/Custom object so cannot create : "+customObject);
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch");
+			}
+		}else {
+			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "could not click on setup link");
+		}
+
+		switchToDefaultContent(driver);
+		if (flag) {
+			if (home.clickOnSetUpLink()) {
+				flag=false;
+				String parentID = switchOnWindow(driver);
+				if (parentID!=null) {
+					FC_Length1="255";
+					FC_FieldType1="Text";
+					FC_FieldLabelName1="Test Demo1";
+					String[][] labelAndValues= {{"Length",FC_Length1}};
+					if(sp.addCustomFieldforFormula(environment,mode,object.Custom_Object,ObjectFeatureName.FieldAndRelationShip,FC_FieldType1,FC_FieldLabelName1, labelAndValues, null,null)) {
+						log(LogStatus.PASS, "Field Component is created for :"+FC_FieldLabelName1, YesNo.No);
+						flag=true;
+					}else {
+						log(LogStatus.PASS, "Field Component is not created for :"+FC_FieldLabelName1, YesNo.Yes);
+						sa.assertTrue(false, "Field Component is not created for :"+FC_FieldLabelName1);
+					} 
+					driver.close();
+					driver.switchTo().window(parentID);
+				}else {
+					log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+					sa.assertTrue(false, "could not find new window to switch");
+				}
+			}else {
+				log(LogStatus.ERROR, "could not click on setup link so cannot create Field", YesNo.Yes);
+				sa.assertTrue(false, "could not click on setup link so cannot create Field");
+			}
+
+			switchToDefaultContent(driver);
+			if (home.clickOnSetUpLink()) {
+				flag=false;
+				String parentID = switchOnWindow(driver);
+				if (parentID!=null) {
+					
+					if(sp.addObjectToTab(environment, mode, projectName, object.Tabs, customObject, "Box")) {
+						log(LogStatus.PASS, customObject+" added to Tab", YesNo.No);
+						flag=true;
+					}else {
+						log(LogStatus.PASS, customObject+" not added to Tab", YesNo.Yes);
+						sa.assertTrue(false, customObject+" not added to Tab");
+					} 
+					driver.close();
+					driver.switchTo().window(parentID);
+				}else {
+					log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+					sa.assertTrue(false, "could not find new window to switch");
+				}
+			}else {
+				log(LogStatus.ERROR, "could not click on setup link so cannot add custom object to Tab", YesNo.Yes);
+				sa.assertTrue(false, "could not click on setup link so cannot add custom object to Tab");
+			}
+			
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 	
 }
 	

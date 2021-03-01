@@ -287,7 +287,7 @@ public class EnumConstants {
 			public String toString() {
 				return "Lightning App Builder";
 			}
-		}, Profiles
+		}, Profiles, Custom_Object, Tabs, Create
 	};
 
 	
@@ -1286,6 +1286,15 @@ public static enum PermissionType{
 						public String toString() {
 							return "Active";
 						}}
+	}
+	
+	public static enum customObjectLabel{
+		Label,
+		Plural_Label {
+				@Override
+				public String toString() {
+					return "Plural Label";
+				}}
 	}
 	
 }
