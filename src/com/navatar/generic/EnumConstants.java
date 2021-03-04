@@ -484,7 +484,7 @@ public static enum PermissionType{
 	}
 	
 	public static enum AttendeeLabels {
-		Attendee_Staff,Marketing_Event,Status,Notes
+		Attendee_Staff,Marketing_Event,Status,Notes,Attendee
 	}
 	public static enum CreateCommitmentPageFieldLabelText{
 		Legal_Name,Fundraising_Name, Investment_Likely_Amount{

@@ -67,7 +67,7 @@ public class CommonVariables {
 	public static String tabObj1,tabObj2,tabObj3,tabObj4,tabObj5,tabObj6,tabObj7;
 	
 	public static String ToggleIns1,ToggleIns1RecordType;
-	public static String M4Ins1,M4Ins1RecordType;
+	public static String M4Ins1,M4Ins1RecordType,M4Deal1;
 	public static String M4Contact1FName,M4Contact1LName,M4Contact1EmailID,M4Contact1RecordType,M4Contact1Title;
 	
 	public static String environment,mode;
@@ -664,6 +664,7 @@ public class CommonVariables {
 			M4Sdg3ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG3", excelLabel.sObjectName);
 			M4Sdg3ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG3", excelLabel.Parent_Field_Name);
 			M4Ins1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M4INS1", excelLabel.Institutions_Name);
+			M4Deal1=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M4Deal1", excelLabel.Deal_Name);
 			
 			
 			M4MarketingEvent1Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME1", excelLabel.Marketing_Event_Name);

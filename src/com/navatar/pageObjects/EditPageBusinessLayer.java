@@ -7,6 +7,7 @@ import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -346,12 +347,15 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 	}
 	public WebElement clickOnAccordion(String projectName, TabName tabName) {
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String xpath = "//div[contains(@class,'RelatedListAccordion')]/following-sibling::article//header//a[contains(text(),'"+bp.getTabName(projectName,tabName)+"')]/..";
+		String xpath = "//div[contains(@class,'RelatedListAccordion')]/following-sibling::article//header//a[contains(text(),'"+bp.getTabName(projectName,tabName)+"')]/ancestor::article/../following-sibling::*//div[@title='Move component']";
 		WebElement ele=FindElement(driver, xpath, "accordian", action.BOOLEAN, 10);
 		return isDisplayed(driver, ele, "visiblity",10, "acordion");
 	}
 
 	public String ContactSDGQuery(String fieldName) {
 		return "SELECT Id, Name, Title,"+fieldName+" Industry__c, Region__c,Profile_Image__c FROM Contact WHERE (AccountId = '<<recordId>>') ORDER BY Name ASC";
+}
+	public String DealTeamSDGQuery(String fieldName) {
+		return "SELECT Member__c, Member__r.Name,Member__r.Title,"+fieldName+"Team_Member_Role__c,Type__c,Member__r.MediumPhotoURL FROM Deal_Team__c WHERE ( Pipeline__c = '<<recordId>>' AND (member__c <> null)) ORDER BY Id ASC";
 }
 }

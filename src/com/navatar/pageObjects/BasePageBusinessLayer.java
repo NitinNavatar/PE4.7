@@ -4748,19 +4748,22 @@ public boolean verifyAccordion(String projectName,String recordName,String[] fie
 	WebElement ele=FindElement(driver, xpath, recordName, action.SCROLLANDBOOLEAN,10);
 	if (isDisplayed(driver, ele, "visibility", timeOut, recordName+" in accordion")!=null) {
 		xpath = "//article[@class='cRelatedListAccordion']//a[text()='"+recordName+"']/following-sibling::ul";
-		for (String fieldValue:fieldValues) {
-			field=fieldValue.split(breakSP)[0];
-			value=fieldValue.split(breakSP)[1];
-			finalx=xpath+"//li//div[@title='"+field+"']/following-sibling::div[@title='"+value+"']";
-			ele=FindElement(driver, finalx, field+" and "+value, action.SCROLLANDBOOLEAN, 10);
-			ele=isDisplayed(driver, ele, "visibility", 10, field+" and "+value);
-			if (ele!=null) {
-				log(LogStatus.INFO, "successfully verified presence of "+field+" and "+value, YesNo.No);
-					
-			}
-			else {
-				log(LogStatus.ERROR, "could not verify "+field+" and "+value, YesNo.Yes);
-				flag=false;
+		if (fieldValues!=null) {
+			for (String fieldValue:fieldValues) {
+				field=fieldValue.split(breakSP)[0];
+				value=fieldValue.split(breakSP)[1];
+				field = field.replace("_", " ");
+				finalx=xpath+"//li//div[@title='"+field+"']/following-sibling::div[@title='"+value+"']";
+				ele=FindElement(driver, finalx, field+" and "+value, action.SCROLLANDBOOLEAN, 10);
+				ele=isDisplayed(driver, ele, "visibility", 10, field+" and "+value);
+				if (ele!=null) {
+					log(LogStatus.INFO, "successfully verified presence of "+field+" and "+value, YesNo.No);
+
+				}
+				else {
+					log(LogStatus.ERROR, "could not verify "+field+" and "+value, YesNo.Yes);
+					flag=false;
+				}
 			}
 		}
 	}else {
@@ -4820,5 +4823,21 @@ public WebElement accordionModalWindowClose(String projectName, String object) {
 	WebElement ele=FindElement(driver, xpath, object + "accordion", action.SCROLLANDBOOLEAN, 10);
 	return isDisplayed(driver, ele, "visibility", 10, object + "accordion");
 	
+}
+
+public WebElement actionDropdownElement(String projectName, ShowMoreActionDropDownList smaddl, int timeOut) {
+	String actionDropDown = smaddl.toString().replace("_", " ");
+	String xpath ="//span[text()='"+actionDropDown+"']";
+	xpath="//*[@name='"+actionDropDown+"' or text()='"+actionDropDown+"']";
+	return isDisplayed(driver, FindElement(driver, xpath, "show more action down arrow", action.SCROLLANDBOOLEAN, 10), "visibility", timeOut, actionDropDown);
+}
+
+public WebElement accordionSDGButtons(String projectName,String toggleTab,ToggleButtonGroup btnName,action action,int timeOut) {
+	String btname = btnName.toString();
+	String xpath = "//h2[contains(text(),'"+toggleTab+"')]/../../..//following-sibling::div//button[@title='"+btname+"']";
+	WebElement ele = FindElement(driver, xpath,toggleTab+" >> "+btname, action, timeOut);
+	scrollDownThroughWebelement(driver, ele, "Toggle Button : "+btname);
+	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btname);
+	return ele;
 }
 }

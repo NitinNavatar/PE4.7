@@ -1303,6 +1303,11 @@ public void recordTypeVerification(String[][] labelWithValue) {
 }
 
 public String returnAPINameOfField(String projectName, String field) {
+	String xpath = "//span[text()='"+field+"']/../../following-sibling::td[1]/span";
+	WebElement ele= isDisplayed(driver, FindElement(driver, xpath,field,
+			action.SCROLLANDBOOLEAN, 10), "visibility", 10, field);
+	if (ele!=null)
+		return ele.getText();
 	return ""; 
 }
 
