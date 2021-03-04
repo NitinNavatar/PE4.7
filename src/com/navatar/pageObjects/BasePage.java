@@ -3,6 +3,7 @@
  */
 package com.navatar.pageObjects;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.server.handler.FindElements;
@@ -4716,6 +4717,46 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement getDefaultImageXpath(int timeOut) {
 		return isDisplayed(driver, defaultImageXpath, "Visibility", timeOut, "default image xpath");
+	}
+	
+//	@FindBy(xpath = "//*[@id='parentDiv']//div[contains(@class,'imageIcon')]")
+//	private WebElement updatePhotoCameraIcon;
+
+	public WebElement getUpdatePhotoCameraIcon(int timeOut) {
+		
+		String xpath="//*[@id='parentDiv']//div[contains(@class,'imageIcon')]";
+		WebElement ele=null;
+		ele= FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, timeOut);
+		if(ele!=null) {
+			((JavascriptExecutor) driver).executeScript("arguments[0].setAttribute('class','imageIcon show');",ele);
+			xpath="//*[@id='parentDiv']//div[contains(@class,'imageIcon show')]";
+			ele= FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, timeOut);
+			return isDisplayed(driver, ele, "Visibility", timeOut, "update photo camera icon");
+		}
+		return null;
+		
+	}
+	
+	public WebElement updateAndDeletePhotoXpath(IconType iconType, int timeOut) {
+		String photo="";
+		if(iconType.toString().equalsIgnoreCase(IconType.updatePhoto.toString())) {
+			photo="Update Photo";
+		}else {
+			photo="Delete Photo";
+		}
+		String xpath ="//*[@class='actionMenu']//a[@title='"+photo+"']";
+		WebElement ele= FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, iconType+" xpath");
+	}
+	////*[text()='Upload Files']
+	//input[@name='fileUploader']
+	
+	
+	@FindBy(xpath = "//*[text()='Upload Files']")
+	private WebElement uploadImageXpath;
+
+	public WebElement getUploadImageXpath(int timeOut) {
+		return isDisplayed(driver, uploadImageXpath, "Visibility", timeOut,"upload image xpath");
 	}
 
 }

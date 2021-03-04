@@ -5,8 +5,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
+import com.navatar.generic.EnumConstants.LookUpIcon;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageLabel;
+import com.navatar.generic.EnumConstants.PopUpName;
 import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
@@ -40,19 +42,19 @@ public class SetupPageBusinessLayer extends SetupPage {
 	public boolean searchStandardOrCustomObject(String environment, String mode, object objectName) {
 		String index="[1]";
 		if (objectName==object.Global_Actions || objectName==object.Activity_Setting || objectName==object.App_Manager
-				|| objectName==object.Lightning_App_Builder || objectName==object.Profiles) {
-			if (objectName==object.Global_Actions) {
+				|| objectName==object.Lightning_App_Builder || objectName==object.Profiles || objectName==object.Tabs) {
+			if (objectName==object.Global_Actions || objectName==object.Tabs) {
 				index="[2]";	
 			}
 			ThreadSleep(3000);
 			if (sendKeys(driver, getQucikSearchInSetupPage(10), objectName.toString(),objectName.toString(), action.BOOLEAN)) {
 				ThreadSleep(2000);
 				if (click(driver, FindElement(driver, "(//mark[text()='"+objectName.toString()+"'])"+index,objectName.toString(), 
-						action.BOOLEAN, 10), "global actions", action.BOOLEAN)) {
+						action.BOOLEAN, 10), objectName.toString(), action.BOOLEAN)) {
 					return true;
 				}
 				else {
-					log(LogStatus.ERROR, "could not click on global actions",YesNo.Yes);
+					log(LogStatus.ERROR, "could not click on "+objectName,YesNo.Yes);
 					
 				}
 			}
@@ -69,8 +71,32 @@ public class SetupPageBusinessLayer extends SetupPage {
 				appLog.error("Not able to search object in classic : "+objectName);
 			}
 		}else {
-			if (clickUsingJavaScript(driver, getObjectManager_Lighting(30), "object manager tab", action.SCROLLANDBOOLEAN)) {
+			if (objectName==object.Create) {
+				String xpath = "//a[@title='Create Menu']/span[text()='"+objectName.toString()+"']";
+				if (click(driver, FindElement(driver, xpath,objectName.toString(), action.BOOLEAN, 10), "create Custom Object", action.BOOLEAN)) {
+					appLog.info("clicked on "+objectName);
+					ThreadSleep(2000);
+					xpath = "//a[@title='Custom Object']//span[text()='Custom Object']";
+					if (click(driver, FindElement(driver, xpath,"create Custom Object", action.BOOLEAN, 10), "create Custom Object", action.BOOLEAN)) {
+						appLog.info("clicked on custom object");
+						return true;
+					} else {
+						appLog.error("Not able to click on custom object link");
+					}
+					
+				} else {
+					appLog.error("Not able to click on create icon");
+				}
+			}else if (clickUsingJavaScript(driver, getObjectManager_Lighting(30), "object manager tab", action.SCROLLANDBOOLEAN)) {
 				appLog.info("clicked on object manager tab");
+				if (objectName==object.Custom_Object) {
+					if(sendKeys(driver, getQuickSearchInObjectManager_Lighting(30), tabCustomObj, "quick search text box in lighting", action.SCROLLANDBOOLEAN)) {
+						appLog.info("passed value in quick search text box: "+ tabCustomObj);
+						return true;
+					}else {
+						appLog.error("Not able to search object in lighting : "+tabCustomObj);
+					}
+				}
 				if(sendKeys(driver, getQuickSearchInObjectManager_Lighting(30), objectName.toString(), "quick search text box in lighting", action.SCROLLANDBOOLEAN)) {
 					appLog.info("passed value in quick search text box: "+ objectName);
 					return true;
@@ -514,10 +540,17 @@ public class SetupPageBusinessLayer extends SetupPage {
 	 */
 	public boolean addCustomFieldforFormula(String environment, String mode,object objectName, ObjectFeatureName objectLeftSideActions, String dataType,String fieldLabelName,String[][] labelsWithValues,String formulaReturnType,String formulaText) {
 		WebElement ele=null;
+		 tabCustomObj=tabCustomObj;
 		if(searchStandardOrCustomObject(environment, mode, objectName)) {
 			log(LogStatus.PASS, "object searched : "+objectName.toString(), YesNo.No);
 			ThreadSleep(5000);
 			String xpath="//div[@data-aura-class='uiScroller']//a[text()='"+objectName.toString()+"']";
+			if (objectName==object.Custom_Object) {
+				xpath="//div[@data-aura-class='uiScroller']//a[text()='"+tabCustomObj.toString()+"']";
+			}else {
+				 xpath="//div[@data-aura-class='uiScroller']//a[text()='"+objectName.toString()+"']";
+			}
+			
 			ele=FindElement(driver, xpath,objectName.toString()+" xpath", action.SCROLLANDBOOLEAN,30);
 			if(ele!=null) {
 				if(click(driver, ele, objectName.toString()+" xpath ", action.SCROLLANDBOOLEAN)) {
@@ -1134,7 +1167,6 @@ public WebElement getRecordTypeLabel(String projectName,String recordTypeLabel,i
 	return ele;
 }
 
-
 public boolean createRecordTypeForObject(String projectName,String[][] labelWithValue,boolean isMakeAvailable,boolean isMakeDefault,int timeOut) {
 	WebElement ele;
 	String label;
@@ -1309,6 +1341,140 @@ public String returnAPINameOfField(String projectName, String field) {
 	if (ele!=null)
 		return ele.getText();
 	return ""; 
+
+}
+
+public WebElement getLabelInputBoxwithCommonXpath(String projectName,String label,int timeOut) {
+	String xpath="//*[text()='"+label+"']/..//following-sibling::td//input";
+	WebElement ele=isDisplayed(driver, FindElement(driver, xpath, label, action.BOOLEAN, 10), "visibility", 10, label);
+	return ele;
+}
+
+public boolean createCustomObject(String projectName,String[][] labelWithValue,int timeOut) {
+	WebElement ele;
+	String label;
+	String value;
+	boolean flag=false;
+		switchToDefaultContent(driver);
+		switchToFrame(driver, 20, getSetUpPageIframe(60));
+		for (String[] lv : labelWithValue) {
+			label=lv[0];
+			value=lv[1];
+			ele =  getLabelInputBoxwithCommonXpath(projectName, label, 20);
+			ThreadSleep(2000);
+			if (sendKeys(driver, ele, value, label, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Able to enter "+label, YesNo.No);
+				ThreadSleep(2000);
+				flag=true;
+			} else {
+				log(LogStatus.ERROR, "Not Able to enter "+value+" to label "+label, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to enter "+value+" to label "+label);
+			}
+		}
+		flag=false;
+		if (click(driver,  getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.ERROR, "Click on save Button ", YesNo.No);
+			ThreadSleep(5000);
+			flag=true;
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on save Button ", YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on save Button ");
+		}
+	
+	return flag;
+}
+
+public boolean addObjectToTab(String environment, String mode,String projectName,object objectName, String ObjecttoAddedOnTab,String styleType) {
+	WebElement ele=null;
+	boolean flag=false;
+	if(searchStandardOrCustomObject(environment, mode, objectName)) {
+		log(LogStatus.PASS, "object searched : "+objectName.toString(), YesNo.No);
+		ThreadSleep(5000);
+		switchToDefaultContent(driver);
+		switchToFrame(driver, 20, getSetUpPageIframe(60));
+		if (click(driver, getCustomObjectTabNewBtn(20), "New", action.BOOLEAN)) {
+			log(LogStatus.PASS, "clicked on new button ", YesNo.No);
+			ThreadSleep(5000);
+			switchToDefaultContent(driver);
+			switchToFrame(driver, 20, getSetUpPageIframe(60));
+			if (selectVisibleTextFromDropDown(driver, getObjectDropDown(10), ObjecttoAddedOnTab, ObjecttoAddedOnTab)) {
+				log(LogStatus.INFO, "selected OBJECT : "+ObjecttoAddedOnTab, YesNo.No);
+
+				if (tabStyleSelector(styleType)) {
+					log(LogStatus.INFO, "selected style : "+styleType, YesNo.No);
+					ThreadSleep(1000);
+					if(click(driver, getCustomFieldNextBtn2(30),"next button", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.PASS, "Clicked on Next button", YesNo.No);
+						ThreadSleep(1000);		
+						switchToDefaultContent(driver);
+						switchToFrame(driver, 20, getSetUpPageIframe(60));
+						if(click(driver, getCustomFieldNextBtn2(30),"next button", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.PASS, "Clicked on Next button", YesNo.No);
+							ThreadSleep(1000);		
+
+							if (click(driver,  getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.ERROR, "Click on save Button & succeessfully add "+ObjecttoAddedOnTab+" to tab", YesNo.No);
+								ThreadSleep(5000);
+								flag = true;
+							} else {
+								log(LogStatus.ERROR, "Not Able to Click on save Button so cannot add add custom object on Tab", YesNo.Yes);
+								sa.assertTrue(false,"Not Able to Click on save Button so cannot add add custom object on Tab");
+							}
+
+						}else {
+							log(LogStatus.FAIL, "Not able to click on next button so cannot add custom object on Tab",YesNo.Yes);
+							sa.assertTrue(false,"Not able to click on next button so cannot add custom object on Tab");
+						}
+
+					}else {
+						log(LogStatus.FAIL, "Not able to click on next button so cannot add custom object on Tab",YesNo.Yes);
+						sa.assertTrue(false,"Not able to click on next button so cannot add custom object on Tab");
+					}
+
+				} else {
+					log(LogStatus.ERROR, "not able to select style : "+styleType, YesNo.Yes);
+				}
+			} else {
+				log(LogStatus.ERROR, "not able to select OBJECT : "+objectName, YesNo.Yes);
+			}
+
+		} else {
+			log(LogStatus.FAIL, "Not able to click on new button so cannot add custom object on Tab", YesNo.Yes);
+
+		}
+
+
+	}else {
+		log(LogStatus.FAIL, "Not able to search object "+objectName.toString()+" so cannot add custom object on Tab", YesNo.Yes);
+	}
+	switchToDefaultContent(driver);
+	return flag;
+}
+
+public boolean tabStyleSelector( String styleType) {
+	boolean flag = false;
+	if(click(driver,getTabObjectLookUpIcon(30), "tab Style look up icon", action.BOOLEAN)) {
+		String parentWindow=null;
+		WebElement ele=null;
+		parentWindow=switchOnWindow(driver);
+		if(parentWindow!=null) {
+			ele=isDisplayed(driver, FindElement(driver, "//*[text()='"+styleType+"']",styleType, action.SCROLLANDBOOLEAN, 20),"visibility", 20,styleType);
+			if(click(driver, ele, "go button", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "selected "+styleType,YesNo.No);
+				flag=true;
+			}else {
+				log(LogStatus.ERROR, "cannot select "+styleType,YesNo.Yes);
+			}
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			log(LogStatus.ERROR, "No new window is open so cannot select value "+styleType+" from look up",YesNo.Yes);
+		}
+
+	}else {
+		log(LogStatus.ERROR, "Not able to click on tab Style look up icon",YesNo.Yes);
+	}
+	return flag;
 }
 
 

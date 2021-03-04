@@ -347,4 +347,29 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getMakeDefaultCheckBoxCheckBox(int timeOut) {
 		return isDisplayed(driver, makeDefaultCheckBox, "Visibility", timeOut, "make Default CheckBox");
 	}
+	
+	@FindBy(xpath = "//input[@title='New Custom Object Tabs']")
+	private WebElement customObjectTabNewBtn;
+
+	public WebElement getCustomObjectTabNewBtn(int timeOut) {
+		return isDisplayed(driver, customObjectTabNewBtn, "Visibility", timeOut, "custom Object Tab NewBtn");
+	}
+	
+	@FindBy(xpath = "//select[@id='p1']")
+	private WebElement objectDropDown;
+
+	public WebElement getObjectDropDown(int timeOut) {
+		return isDisplayed(driver, objectDropDown, "Visibility", timeOut, "Object drop down");
+	}
+	
+	@FindBy(xpath="(//img[@title='Lookup (New Window)'])[2]")
+	private WebElement tabObjectLookUpIcon;
+
+	/**
+	 * @return the tabObjectLookUpIcon
+	 */
+	public WebElement getTabObjectLookUpIcon(int timeOut) {
+		return isDisplayed(driver, tabObjectLookUpIcon, "Visibility", timeOut, "tab Object Look Up Icon");
+	}
+	
 }

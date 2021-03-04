@@ -140,6 +140,10 @@ public class EnumConstants {
 
 	}
 	
+	public static enum IconType{
+		updatePhoto,DeletePhoto;
+	}
+	
 	public static enum NavatarSetupSideMenuTab{
 		DealCreation, IndividualInvestorCreation, CommitmentCreation, ContactTransfer, AccountAssociations, OfficeLocations, CoInvestmentSettings, PipelineStageLog, BulkEmail
 		}
@@ -287,7 +291,7 @@ public class EnumConstants {
 			public String toString() {
 				return "Lightning App Builder";
 			}
-		}, Profiles
+		}, Profiles, Custom_Object, Tabs, Create
 	};
 
 	
@@ -1286,6 +1290,15 @@ public static enum PermissionType{
 						public String toString() {
 							return "Active";
 						}}
+	}
+	
+	public static enum customObjectLabel{
+		Label,
+		Plural_Label {
+				@Override
+				public String toString() {
+					return "Plural Label";
+				}}
 	}
 	
 }

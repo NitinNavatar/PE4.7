@@ -3,7 +3,6 @@ import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
 import static com.navatar.generic.ExcelUtils.*;
 import java.util.List;
-import java.util.concurrent.Phaser;
 
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
@@ -13,6 +12,7 @@ import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.EnumConstants.CreationPage;
+import com.navatar.generic.EnumConstants.IconType;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
@@ -221,7 +221,6 @@ public class FieldSet extends BaseLib {
 	@Test
 	public void FSTc005_addAdvanceFieldSetLayoutOnContactAndDealPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
 		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
@@ -283,9 +282,7 @@ public class FieldSet extends BaseLib {
 	@Test
 	public void FSTc006_verifyAdvanceFieldSetLayoutOnContactAndDealPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
-		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
@@ -401,9 +398,7 @@ public class FieldSet extends BaseLib {
 	@Parameters({ "projectName"})
 	@Test
 	public void FSTc007_2_verifyRemoveObjectImpactFromPEUser(String projectName) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
@@ -492,9 +487,7 @@ public class FieldSet extends BaseLib {
 	@Parameters({ "projectName"})
 	@Test
 	public void FSTc008_2_verifyGiveObjectImpactFromPEUser(String projectName) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
@@ -1279,12 +1272,14 @@ public class FieldSet extends BaseLib {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		String parentWindow = null;
 		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
 		List<String> itemNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
 		List<String> objectName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",4,false));
 		List<String> draggedComponentName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",7,false));
 		List<String> fieldSetNametName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",8,false));
+		String imagepath="\\UploadImages\\imgSize16mb.jpg";
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (home.clickOnSetUpLink()) {
 			parentWindow = switchOnWindow(driver);
@@ -1334,6 +1329,49 @@ public class FieldSet extends BaseLib {
 						log(LogStatus.PASS, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
 						sa.assertTrue(false, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i));
 					}
+					if(lp.updatePhoto(projectName, tabNames.get(i), imagepath)) {
+						log(LogStatus.PASS, "photo is updated successfully in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						if(lp.getDefaultImageXpath(20)!=null) {
+							String imagesize =lp.getDefaultImageXpath(20).getAttribute("style");
+							String expctImageSize="100px";
+							if(imagesize.contains(expctImageSize)) {
+								log(LogStatus.PASS, "Image minimum size is  matched after updating 16 mb image "+expctImageSize+"  in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+							
+							}else {
+								log(LogStatus.PASS, "Image minimum size is not  matched after updating 16 mb image "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+								sa.assertTrue(false, "Image minimum size is not  matched after updating 16 mb image "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i));
+							}
+						}else {
+							log(LogStatus.PASS, "updated image is not displaying after updating 16 MB image in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+							sa.assertTrue(false, "updated image is not displaying after updating 16 MB image in "+itemNames.get(i)+" on "+tabNames.get(i));
+						}
+						if (cp.deleteImage(projectName, itemNames.get(i))) {
+							log(LogStatus.INFO, "successfully deleted photo on "+itemNames.get(i), YesNo.No);
+							
+							if(lp.getDefaultImageXpath(20)!=null) {
+								String imagesize =lp.getDefaultImageXpath(20).getAttribute("style");
+								String expctImageSize="100px";
+								if(imagesize.contains(expctImageSize)) {
+									log(LogStatus.PASS, "default minimum size is  matched after deleting 16 mb image "+expctImageSize+"  in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+								
+								}else {
+									log(LogStatus.PASS, "default minimum size is not  matched after deleting 16 mb image "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+									sa.assertTrue(false, "default minimum size is not  matched after deleteing 16 mb image "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i));
+								}
+							}else {
+								log(LogStatus.PASS, "default image is not displaying after deleting 16 MB image in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+								sa.assertTrue(false, "default image is not displaying after deleteing 16 MB image in "+itemNames.get(i)+" on "+tabNames.get(i));
+							}
+							
+
+						}else {
+							log(LogStatus.ERROR, "could not deleted photo on "+itemNames.get(i), YesNo.Yes);
+							sa.assertTrue(false,"could not deleted photo on "+itemNames.get(i) );
+						}
+					}else {
+						log(LogStatus.PASS, "photo is not updated in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						sa.assertTrue(false, "photo is not updated in "+itemNames.get(i)+" on "+tabNames.get(i));
+					}
 				}else {
 					log(LogStatus.ERROR, "Not able to click on created item "+itemNames.get(i)+" so cannot verify minimum image", YesNo.Yes);
 					sa.assertTrue(false, "Not able to click on created item "+itemNames.get(i)+" so cannot verify minimum image");
@@ -1353,12 +1391,14 @@ public class FieldSet extends BaseLib {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		String parentWindow = null;
 		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
 		List<String> itemNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
 		List<String> objectName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",4,false));
 		List<String> draggedComponentName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",7,false));
 		List<String> fieldSetNametName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",8,false));
+		String imagepath="\\UploadImages\\imgSize16mb.jpg";
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (home.clickOnSetUpLink()) {
 			parentWindow = switchOnWindow(driver);
@@ -1408,6 +1448,56 @@ public class FieldSet extends BaseLib {
 						log(LogStatus.PASS, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
 						sa.assertTrue(false, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i));
 					}
+					
+					
+					if(lp.updatePhoto(projectName, tabNames.get(i), imagepath)) {
+						log(LogStatus.PASS, "photo is updated successfully in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						if(lp.getDefaultImageXpath(20)!=null) {
+							String imagesize =lp.getDefaultImageXpath(20).getAttribute("style");
+							String expctImageSize="140px";
+							if(imagesize.contains(expctImageSize)) {
+								log(LogStatus.PASS, "Image medium size is  matched after updating 16 mb image "+expctImageSize+"  in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+							
+							}else {
+								log(LogStatus.PASS, "Image medium size is not  matched after updating 16 mb image "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+								sa.assertTrue(false, "Image medium size is not  matched after updating 16 mb image "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i));
+							}
+						}else {
+							log(LogStatus.PASS, "updated medium size image is not displaying after updating 16 MB image in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+							sa.assertTrue(false, "updated medium size image is not displaying after updating 16 MB image in "+itemNames.get(i)+" on "+tabNames.get(i));
+						}
+						if (cp.deleteImage(projectName, itemNames.get(i))) {
+							log(LogStatus.INFO, "successfully deleted photo on "+itemNames.get(i), YesNo.No);
+							
+							if(lp.getDefaultImageXpath(20)!=null) {
+								String imagesize =lp.getDefaultImageXpath(20).getAttribute("style");
+								String expctImageSize="140px";
+								if(imagesize.contains(expctImageSize)) {
+									log(LogStatus.PASS, "default medium size is  matched after deleting 16 mb image "+expctImageSize+"  in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+								
+								}else {
+									log(LogStatus.PASS, "default medium size is not  matched after deleting 16 mb image "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+									sa.assertTrue(false, "default medium size is not  matched after deleteing 16 mb image "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i));
+								}
+							}else {
+								log(LogStatus.PASS, "default image is not displaying after deleting 16 MB image in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+								sa.assertTrue(false, "default image is not displaying after deleteing 16 MB image in "+itemNames.get(i)+" on "+tabNames.get(i));
+							}
+							
+
+						}else {
+							log(LogStatus.ERROR, "could not deleted photo on "+itemNames.get(i), YesNo.Yes);
+							sa.assertTrue(false,"could not deleted photo on "+itemNames.get(i) );
+						}
+					}else {
+						log(LogStatus.PASS, "photo is not updated in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						sa.assertTrue(false, "photo is not updated in "+itemNames.get(i)+" on "+tabNames.get(i));
+					}
+					
+					
+					
+					
+					
 				}else {
 					log(LogStatus.ERROR, "Not able to click on created item "+itemNames.get(i)+" so cannot verify medium image size", YesNo.Yes);
 					sa.assertTrue(false, "Not able to click on created item "+itemNames.get(i)+" so cannot verify medium image size");
@@ -1427,12 +1517,14 @@ public class FieldSet extends BaseLib {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		String parentWindow = null;
 		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
 		List<String> itemNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
 		List<String> objectName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",4,false));
 		List<String> draggedComponentName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",7,false));
 		List<String> fieldSetNametName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",8,false));
+		String imagepath="\\UploadImages\\imgSize16mb.jpg";
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (home.clickOnSetUpLink()) {
 			parentWindow = switchOnWindow(driver);
@@ -1482,6 +1574,56 @@ public class FieldSet extends BaseLib {
 						log(LogStatus.PASS, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
 						sa.assertTrue(false, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i));
 					}
+					
+					
+					if(lp.updatePhoto(projectName, tabNames.get(i), imagepath)) {
+						log(LogStatus.PASS, "photo is updated successfully in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						if(lp.getDefaultImageXpath(20)!=null) {
+							String imagesize =lp.getDefaultImageXpath(20).getAttribute("style");
+							String expctImageSize="180px";
+							if(imagesize.contains(expctImageSize)) {
+								log(LogStatus.PASS, "Image maximum size is  matched after updating 16 mb image "+expctImageSize+"  in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+							
+							}else {
+								log(LogStatus.PASS, "Image maximum size is not  matched after updating 16 mb image "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+								sa.assertTrue(false, "Image maximum size is not  matched after updating 16 mb image "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i));
+							}
+						}else {
+							log(LogStatus.PASS, "updated maximum size image is not displaying after updating 16 MB image in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+							sa.assertTrue(false, "updated maximum size image is not displaying after updating 16 MB image in "+itemNames.get(i)+" on "+tabNames.get(i));
+						}
+						if (cp.deleteImage(projectName, itemNames.get(i))) {
+							log(LogStatus.INFO, "successfully deleted photo on "+itemNames.get(i), YesNo.No);
+							
+							if(lp.getDefaultImageXpath(20)!=null) {
+								String imagesize =lp.getDefaultImageXpath(20).getAttribute("style");
+								String expctImageSize="180px";
+								if(imagesize.contains(expctImageSize)) {
+									log(LogStatus.PASS, "default maximum size is  matched after deleting 16 mb image "+expctImageSize+"  in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+								
+								}else {
+									log(LogStatus.PASS, "default maximum size is not  matched after deleting 16 mb image "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+									sa.assertTrue(false, "default maximum size is not  matched after deleteing 16 mb image "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i));
+								}
+							}else {
+								log(LogStatus.PASS, "default image is not displaying after deleting 16 MB image in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+								sa.assertTrue(false, "default image is not displaying after deleteing 16 MB image in "+itemNames.get(i)+" on "+tabNames.get(i));
+							}
+							
+
+						}else {
+							log(LogStatus.ERROR, "could not deleted photo on "+itemNames.get(i), YesNo.Yes);
+							sa.assertTrue(false,"could not deleted photo on "+itemNames.get(i) );
+						}
+					}else {
+						log(LogStatus.PASS, "photo is not updated in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						sa.assertTrue(false, "photo is not updated in "+itemNames.get(i)+" on "+tabNames.get(i));
+					}
+					
+					
+					
+					
+					
 				}else {
 					log(LogStatus.ERROR, "Not able to click on created item "+itemNames.get(i)+" so cannot verify maximum image size", YesNo.Yes);
 					sa.assertTrue(false, "Not able to click on created item "+itemNames.get(i)+" so cannot verify maximum image size");
@@ -1501,12 +1643,14 @@ public class FieldSet extends BaseLib {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		String parentWindow = null;
 		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
 		List<String> itemNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
 		List<String> objectName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",4,false));
 		List<String> draggedComponentName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",7,false));
 		List<String> fieldSetNametName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",8,false));
+		String imagepath="\\UploadImages\\imgSize16mb.jpg";
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (home.clickOnSetUpLink()) {
 			parentWindow = switchOnWindow(driver);
@@ -1545,7 +1689,7 @@ public class FieldSet extends BaseLib {
 					ThreadSleep(3000);
 					if(lp.getDefaultImageXpath(20)!=null) {
 						String imagesize =lp.getDefaultImageXpath(20).getAttribute("style");
-						String expctImageSize="140px";
+						String expctImageSize="180px";
 						if(imagesize.contains(expctImageSize)) {
 							log(LogStatus.PASS, "Image size is  matched "+expctImageSize+"  in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
 						}else {
@@ -1555,6 +1699,103 @@ public class FieldSet extends BaseLib {
 					}else {
 						log(LogStatus.PASS, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
 						sa.assertTrue(false, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i));
+					}
+					
+					
+					if(lp.updatePhoto(projectName, tabNames.get(i), imagepath)) {
+						log(LogStatus.PASS, "photo is updated successfully in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						if(lp.getDefaultImageXpath(20)!=null) {
+							String imagesize =lp.getDefaultImageXpath(20).getAttribute("style");
+							String expctImageSize="180px";
+							if(imagesize.contains(expctImageSize)) {
+								log(LogStatus.PASS, "Image maximum size is  matched after updating 16 mb image "+expctImageSize+"  in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+							
+							}else {
+								log(LogStatus.PASS, "Image maximum size is not  matched after updating 16 mb image "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+								sa.assertTrue(false, "Image maximum size is not  matched after updating 16 mb image "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i));
+							}
+						}else {
+							log(LogStatus.PASS, "updated maximum size image is not displaying after updating 16 MB image in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+							sa.assertTrue(false, "updated maximum size image is not displaying after updating 16 MB image in "+itemNames.get(i)+" on "+tabNames.get(i));
+						}
+						if (cp.deleteImage(projectName, itemNames.get(i))) {
+							log(LogStatus.INFO, "successfully deleted photo on "+itemNames.get(i), YesNo.No);
+							
+							if(lp.getDefaultImageXpath(20)!=null) {
+								String imagesize =lp.getDefaultImageXpath(20).getAttribute("style");
+								String expctImageSize="180px";
+								if(imagesize.contains(expctImageSize)) {
+									log(LogStatus.PASS, "default maximum size is  matched after deleting 16 mb image "+expctImageSize+"  in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+								
+								}else {
+									log(LogStatus.PASS, "default maximum size is not  matched after deleting 16 mb image "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+									sa.assertTrue(false, "default maximum size is not  matched after deleteing 16 mb image "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i));
+								}
+							}else {
+								log(LogStatus.PASS, "default image is not displaying after deleting 16 MB image in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+								sa.assertTrue(false, "default image is not displaying after deleteing 16 MB image in "+itemNames.get(i)+" on "+tabNames.get(i));
+							}
+							
+
+						}else {
+							log(LogStatus.ERROR, "could not deleted photo on "+itemNames.get(i), YesNo.Yes);
+							sa.assertTrue(false,"could not deleted photo on "+itemNames.get(i) );
+						}
+					}else {
+						log(LogStatus.PASS, "photo is not updated in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						sa.assertTrue(false, "photo is not updated in "+itemNames.get(i)+" on "+tabNames.get(i));
+					}
+					
+					
+					
+					
+				}else {
+					log(LogStatus.ERROR, "Not able to click on created item "+itemNames.get(i)+" so cannot verify medium image size", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on created item "+itemNames.get(i)+" so cannot verify medium image size");
+				}
+			} else {
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify medium image size",YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify medium image size");
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc026_verifyCameraIconUploadImageAndRelativePath(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
+		List<String> itemNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
+		
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String imagepath="\\UploadImages\\JPG1Image.jpg";
+		
+		for(int i=0; i<tabNames.size(); i++) {
+			if (lp.clickOnTab(projectName,tabNames.get(i) )) {
+				log(LogStatus.INFO,"Click on Tab : "+tabNames.get(i),YesNo.No);
+				if(lp.clickOnAlreadyCreatedItem(projectName, itemNames.get(i), true,20)) {
+					log(LogStatus.INFO,"clicked on created item : "+itemNames.get(i), YesNo.No);
+					ThreadSleep(3000);
+					if(lp.getDefaultImageXpath(20)!=null) {
+						log(LogStatus.INFO, "Default Image icon is displaying on "+tabNames.get(i)+" in  "+itemNames.get(i), YesNo.No);
+						
+					}else {
+						log(LogStatus.PASS, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.Yes);
+						sa.assertTrue(false, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i));
+					}
+					if(lp.getUpdatePhotoCameraIcon(10)!=null) {
+						log(LogStatus.INFO, "update photo icon is displaying on "+tabNames.get(i)+" in  "+itemNames.get(i), YesNo.No);
+					}else {
+						log(LogStatus.PASS, "update photo icon is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.Yes);
+						sa.assertTrue(false, "update photo icon is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i));
+					}
+					if(lp.updatePhoto(projectName, tabNames.get(i), imagepath)) {
+						log(LogStatus.PASS, "photo is updated successfully in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+					}else {
+						log(LogStatus.PASS, "photo is not updated in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						sa.assertTrue(false, "photo is not updated in "+itemNames.get(i)+" on "+tabNames.get(i));
 					}
 				}else {
 					log(LogStatus.ERROR, "Not able to click on created item "+itemNames.get(i)+" so cannot verify medium image size", YesNo.Yes);
@@ -1568,4 +1809,70 @@ public class FieldSet extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc027_verifyPopulatedUnderImages(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
+		List<String> itemNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		for(int i=0; i<tabNames.size(); i++) {
+			if (lp.clickOnTab(projectName,tabNames.get(i) )) {
+				log(LogStatus.INFO,"Click on Tab : "+tabNames.get(i),YesNo.No);
+				if(lp.clickOnAlreadyCreatedItem(projectName, itemNames.get(i), true,20)) {
+					log(LogStatus.INFO,"clicked on created item : "+itemNames.get(i), YesNo.No);
+					ThreadSleep(3000);
+					if(lp.getDefaultImageXpath(20)!=null) {
+						log(LogStatus.INFO, "Default Image icon is displaying on "+tabNames.get(i)+" in  "+itemNames.get(i), YesNo.No);
+						
+					}else {
+						log(LogStatus.PASS, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.Yes);
+						sa.assertTrue(false, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i));
+					}
+					if(lp.getUpdatePhotoCameraIcon(10)!=null) {
+						log(LogStatus.INFO, "update photo icon is displaying on "+tabNames.get(i)+" in  "+itemNames.get(i), YesNo.No);
+						ThreadSleep(500);
+						if(click(driver, lp.getUpdatePhotoCameraIcon(10),"update photo camera icon", action.BOOLEAN)) {
+							log(LogStatus.INFO, "clicked on update photo icon", YesNo.No);
+							if(lp.updateAndDeletePhotoXpath(IconType.updatePhoto, 10)!=null) {
+								log(LogStatus.INFO, "update photo button is displaying", YesNo.No);
+						
+							}else {
+								log(LogStatus.ERROR, "update photo button is not displaying on "+tabNames.get(i), YesNo.Yes);
+								sa.assertTrue(false, "update photo button is not displaying on "+tabNames.get(i));
+							}
+							
+							if(lp.updateAndDeletePhotoXpath(IconType.DeletePhoto, 10)!=null) {
+								log(LogStatus.INFO,  "delete photo button is displaying", YesNo.No);
+						
+							}else {
+								log(LogStatus.ERROR, "delete photo button is not displaying on "+tabNames.get(i), YesNo.Yes);
+								sa.assertTrue(false, "delete photo button is not displaying on "+tabNames.get(i));
+							}
+							
+						}else {
+							log(LogStatus.ERROR, "Not able to click on update photo icon so cannot check upload and delete photo button on "+tabNames.get(i), YesNo.Yes);
+							sa.assertTrue(false, "Not able to click on update photo icon so cannot check upload and delete photo button on "+tabNames.get(i));
+						}
+					}else {
+						log(LogStatus.PASS, "update photo icon is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.Yes);
+						sa.assertTrue(false, "update photo icon is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i));
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to click on created item "+itemNames.get(i)+" so cannot verify medium image size", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on created item "+itemNames.get(i)+" so cannot verify medium image size");
+				}
+			} else {
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify medium image size",YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify medium image size");
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	
+
+
 }
