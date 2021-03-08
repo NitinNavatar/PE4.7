@@ -4867,4 +4867,28 @@ public WebElement accordionModalWindowClose(String projectName, String object) {
 	return isDisplayed(driver, ele, "visibility", 10, object + "accordion");
 	
 }
+
+public boolean isAutomationAllListViewForObject(String projectName,String ObjectName, int timeOut) {
+	String viewList="Automation All",xpath="";
+		ThreadSleep(3000);
+		xpath="//span[text()='"+ObjectName+"']/../../../following-sibling::div//span[text()='"+viewList+"']";
+		WebElement selectListView = FindElement(driver, xpath,"Select List View : "+viewList+" for "+ObjectName, action.SCROLLANDBOOLEAN, 5);
+		ThreadSleep(3000);
+		if ( selectListView!=null) {
+			log(LogStatus.INFO, viewList+" for "+ObjectName+" available", YesNo.No);
+			return true;
+		}
+		else {
+			log(LogStatus.ERROR,  viewList+" for "+ObjectName+" is not available", YesNo.No);
+			
+		}
+	
+
+	return false;
+}
+
+
+
+
+
 }

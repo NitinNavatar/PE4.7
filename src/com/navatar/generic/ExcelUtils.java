@@ -1054,4 +1054,20 @@ public class ExcelUtils{
 		return csvBody;
 	}
 	
+	public static boolean writeOneRecordOnCSV(String path,String recordValue) {
+	boolean flag=false;
+	     try {
+	    	  String csv = path;
+		      CSVWriter writer = new CSVWriter(new FileWriter(csv, true));
+		      String [] record = recordValue.split(",");
+		      writer.writeNext(record);
+		      writer.close();
+		      flag=true;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
+	
 }

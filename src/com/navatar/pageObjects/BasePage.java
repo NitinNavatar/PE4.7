@@ -4759,4 +4759,21 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, uploadImageXpath, "Visibility", timeOut,"upload image xpath");
 	}
 
+	@FindBy(xpath = "//*[@name='SaveEdit']")
+	private WebElement navigationTabSaveBtn;
+	
+	public WebElement getNavigationTabSaveBtn(String projectName,int timeOut) {
+		return isDisplayed(driver, navigationTabSaveBtn, "Visibility", timeOut, "Save Button");
+		
+	}
+	
+	@FindBy(xpath = "//div[@class='slds-global-header__logo']")
+	private WebElement headerImg;
+	
+	public WebElement getHeaderImg(String projectName,int timeOut) {
+		return isDisplayed(driver, headerImg, "Visibility", timeOut, "Header Image");
+		
+	}
+
+
 }
