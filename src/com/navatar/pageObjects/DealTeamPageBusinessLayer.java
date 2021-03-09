@@ -90,7 +90,7 @@ public class DealTeamPageBusinessLayer extends DealTeamPage{
 
 			
 
-			if (click(driver, getCustomTabSaveBtn(projectName,timeOut), "save button", action)) {
+			if (click(driver, getRecordPageSettingSave(timeOut), "save button", action)) {
 				appLog.info("clicked on save button");
 				
 				ThreadSleep(3000);

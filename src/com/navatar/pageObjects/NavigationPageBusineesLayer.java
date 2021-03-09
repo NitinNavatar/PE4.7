@@ -370,12 +370,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		return isDisplayed(driver, ele, "Visibility", timeOut, allReportorDashboard);
 	}
 	
-	public WebElement actionDropdownElement(String projectName, ShowMoreActionDropDownList smaddl, int timeOut) {
-		String actionDropDown = smaddl.toString().replace("_", " ");
-		String xpath ="//span[text()='"+actionDropDown+"']";
-		xpath="//*[@name='"+actionDropDown+"' or text()='"+actionDropDown+"']";
-		return isDisplayed(driver, FindElement(driver, xpath, "show more action down arrow", action.SCROLLANDBOOLEAN, 10), "visibility", timeOut, actionDropDown);
-	}
+	
 	
 	public boolean clickOnShowMoreDropdownOnly(String projectName) {
 		String xpath = "";int i =1;
