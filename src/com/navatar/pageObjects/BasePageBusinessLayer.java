@@ -4886,4 +4886,17 @@ public WebElement accordionSDGButtons(String projectName,String toggleTab,Toggle
 	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btname);
 	return ele;
 }
+public WebElement sdgButtons(String projectName, String field,String edit, int timeOut) {
+	String xpath ="//span//*[text()='"+field+"']/../../../following-sibling::td//button[text()='"+edit+"']";
+	WebElement ele = FindElement(driver, xpath,"sdg buttons", action.BOOLEAN, timeOut);
+	return isDisplayed(driver, ele, "visibility", timeOut, "sdg button");
+}
+
+public WebElement sdgContactImage(String projectName, String contact, int timeOut) {
+	String xpath ="//*[@title='"+contact+"']/preceding-sibling::img";
+	WebElement ele = FindElement(driver, xpath,"contact image on sdg", action.BOOLEAN, timeOut);
+	return isDisplayed(driver, ele, "visibility", timeOut, "contact image on sdg");
+}
+//*[@title='Test N1 Contact1']/preceding-sibling::img
+
 }
