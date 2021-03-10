@@ -4771,4 +4771,22 @@ public abstract class BasePage extends BaseLib {
 		WebElement ele= FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "img for "+object);
 	}
+
+	@FindBy(xpath = "//*[@name='SaveEdit']")
+	private WebElement navigationTabSaveBtn;
+	
+	public WebElement getNavigationTabSaveBtn(String projectName,int timeOut) {
+		return isDisplayed(driver, navigationTabSaveBtn, "Visibility", timeOut, "Save Button");
+		
+	}
+	
+	@FindBy(xpath = "//div[@class='slds-global-header__logo']")
+	private WebElement headerImg;
+	
+	public WebElement getHeaderImg(String projectName,int timeOut) {
+		return isDisplayed(driver, headerImg, "Visibility", timeOut, "Header Image");
+		
+	}
+
+
 }

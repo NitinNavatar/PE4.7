@@ -4871,6 +4871,25 @@ public WebElement accordionModalWindowClose(String projectName, String object) {
 	
 }
 
+public boolean isAutomationAllListViewForObject(String projectName,String ObjectName, int timeOut) {
+	String viewList="Automation All",xpath="";
+		ThreadSleep(3000);
+		xpath="//span[text()='"+ObjectName+"']/../../../following-sibling::div//span[text()='"+viewList+"']";
+		WebElement selectListView = FindElement(driver, xpath,"Select List View : "+viewList+" for "+ObjectName, action.SCROLLANDBOOLEAN, 5);
+		ThreadSleep(3000);
+		if ( selectListView!=null) {
+			log(LogStatus.INFO, viewList+" for "+ObjectName+" available", YesNo.No);
+			return true;
+		}
+		else {
+			log(LogStatus.ERROR,  viewList+" for "+ObjectName+" is not available", YesNo.No);
+			
+		}
+	
+
+	return false;
+}
+
 public WebElement actionDropdownElement(String projectName, ShowMoreActionDropDownList smaddl, int timeOut) {
 	String actionDropDown = smaddl.toString().replace("_", " ");
 	String xpath ="//span[text()='"+actionDropDown+"']";
@@ -4897,6 +4916,5 @@ public WebElement sdgContactImage(String projectName, String contact, int timeOu
 	WebElement ele = FindElement(driver, xpath,"contact image on sdg", action.BOOLEAN, timeOut);
 	return isDisplayed(driver, ele, "visibility", timeOut, "contact image on sdg");
 }
-//*[@title='Test N1 Contact1']/preceding-sibling::img
 
 }

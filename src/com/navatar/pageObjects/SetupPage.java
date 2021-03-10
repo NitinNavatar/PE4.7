@@ -362,7 +362,7 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, objectDropDown, "Visibility", timeOut, "Object drop down");
 	}
 	
-	@FindBy(xpath="(//img[@title='Lookup (New Window)'])[2]")
+	@FindBy(xpath="//img[@title='Lookup (New Window)']")
 	private WebElement tabObjectLookUpIcon;
 
 	/**
@@ -371,5 +371,36 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getTabObjectLookUpIcon(int timeOut) {
 		return isDisplayed(driver, tabObjectLookUpIcon, "Visibility", timeOut, "tab Object Look Up Icon");
 	}
+	
+	
+	@FindBy(xpath="//div[@aria-labelledby='appImageLabel']//span")
+	private WebElement imgName;
+
+	/**
+	 * @return the tabObjectLookUpIcon
+	 */
+	public WebElement getImgName(int timeOut) {
+		return isDisplayed(driver, imgName, "Visibility", timeOut, "Image Name");
+	}
+	
+	
+
+@FindBy(xpath = "//input[@type='file']")
+private WebElement uploadPhotoButton;
+
+public WebElement getuploadPhotoButton(String projectName,int timeOut) {
+    return isDisplayed(driver, uploadPhotoButton, "Visibility", timeOut, "upload photo button");
+   
+}
+
+@FindBy(xpath = "//button[text()='Clear']")
+private WebElement imgClearButton;
+
+public WebElement getImgClearButton(String projectName,int timeOut) {
+    return isDisplayed(driver, imgClearButton, "Visibility", timeOut, "Img Clear button");
+   
+}
+
+
 	
 }

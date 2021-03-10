@@ -63,7 +63,7 @@ public class CommonVariables {
 	public static String crmUser1FirstName,crmUser1LastName,crmUser1EmailID,crmUserProfile,crmUserLience;
 	public static String gmailUserName,gmailUserName2,gmailPassword;
 	
-	public static String tabCustomObj,tabCustomObjField;
+	public static String tabCustomObj,tabCustomObjField,tabCustomObjAPIName;
 	public static String tabObj1,tabObj2,tabObj3,tabObj4,tabObj5,tabObj6,tabObj7;
 	
 	public static String ToggleIns1,ToggleIns1RecordType;
@@ -195,6 +195,7 @@ public class CommonVariables {
 		superAdminRegistered=ExcelUtils.readDataFromPropertyFile("SuperAdminRegistered");
 		appName=ExcelUtils.readDataFromPropertyFile("AppName");
 		tabCustomObj=ExcelUtils.readDataFromPropertyFile("CustomTabName");
+		tabCustomObjAPIName=tabCustomObj+"__c";
 		tabObj1=ExcelUtils.readDataFromPropertyFile("Object1");
 		tabObj2=ExcelUtils.readDataFromPropertyFile("Object2");
 		tabObj3=ExcelUtils.readDataFromPropertyFile("Object3");
