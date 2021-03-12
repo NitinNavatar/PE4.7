@@ -116,5 +116,70 @@ public class HomePageBusineesLayer extends HomePage {
 		return flag;
 	}
 	
+	public boolean clickOnLinkFromNavatarQuickLink(String environment,String mode,NavatarQuickLink navatarQuickLink){
+		boolean flag =false;
+		if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+		
+			if (clickUsingJavaScript(driver, getNavatarQuickLink_Lighting(environment, 20), "Navatar Quik Link")) {
+				ThreadSleep(1000);
+				switchToFrame(driver, 10, getNavatarQuickLinkFrame_Lighting(environment, 10));
+			}
+		}else{
+			if(getCloseSideBar(5)==null){
+				if(click(driver, getOpenSideBar(30), "Open sied bar", action.BOOLEAN)){
+					log(LogStatus.INFO, "Opened the side bar.", YesNo.No);
+				} else {
+//					BaseLib.sa.assertTrue(false, "cannot open the side bar, So cannot check the navatar quick link.");
+//					log(LogStatus.ERROR, "cannot open the side bar, So cannot check the navatar quick link.", YesNo.Yes);
+				}
+			}
+			ThreadSleep(1000);
+			appLog.info("Inside Classic Frame");
+			switchToFrame(driver, 10, getNavatarQuickLinkFrame_Classic(environment, 10));	
+		}
+		
+		WebElement quickLink = FindElement(driver, "//a[contains(text(),'"+navatarQuickLink+"')]", "Navatar Quick Link : "+navatarQuickLink, action.SCROLLANDBOOLEAN, 20);
+		if (click(driver, quickLink, "Navatar Quick Link : "+navatarQuickLink, action.SCROLLANDBOOLEAN)) {	
+			flag = true;
+		}
+		
+		switchToDefaultContent(driver);
+		if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			if (click(driver, getNavatarQuickLinkMinimize_Lighting(environment, 20), "Navatar Quik Link Minimize Icon",
+					action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(1000);
+			}
+		}
+		
+		return flag;
+		
+	}
+	
+public boolean verifyLandingPageAfterClickingOnNavatarSetUpPage(String environment,String mode, NavatarQuickLink navatarQuickLink) {
+		
+		String landingPage = null;
+		WebElement ele;
+		switch (navatarQuickLink) {
+		case CreateDeal:
+			landingPage = "Deal Creation";
+			break;
+		case BulkEmail:
+			landingPage = "Bulk E-mail";
+			break;
+		default:
+			return false;
+		}
+		ThreadSleep(2000);
+		System.err.println("Passed switch statement");
+	
+			
+			ele = isDisplayed(driver, FindElement(driver, "//p[text()='"+landingPage+"']", landingPage,
+					action.SCROLLANDBOOLEAN, 10), "visibility", 10, landingPage);
+			if (ele != null) {
+				return true;
+			}
+		return false;
+	}
+
 	
 }

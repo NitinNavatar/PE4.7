@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 
+import com.navatar.generic.CommonLib;
 import com.navatar.generic.EnumConstants.ContactPagePhotoActions;
 import com.navatar.generic.EnumConstants.LookUpIcon;
 import com.navatar.generic.EnumConstants.Mode;
@@ -44,8 +45,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 	public boolean searchStandardOrCustomObject(String environment, String mode, object objectName) {
 		String index="[1]";
 		if (objectName==object.Global_Actions || objectName==object.Activity_Setting || objectName==object.App_Manager
-				|| objectName==object.Lightning_App_Builder || objectName==object.Profiles || objectName==object.Tabs) {
-			if (objectName==object.Global_Actions || objectName==object.Tabs) {
+				|| objectName==object.Lightning_App_Builder || objectName==object.Profiles || objectName==object.Tabs ||  objectName==object.Users) {
+			if (objectName==object.Global_Actions || objectName==object.Tabs ||  objectName==object.Users) {
 				index="[2]";	
 			}
 			ThreadSleep(3000);
@@ -1536,5 +1537,93 @@ public boolean updateEdgeIcon(String projectName,String attachmentPath,String im
 }
 
 
+public boolean permissionChangeForUserONObject(WebDriver driver,String userName,String[][] LabelswithCheck,int timeOut) {
+
+	ThreadSleep(10000);
+	switchToDefaultContent(driver);
+	switchToFrame(driver, 60, getSetUpPageIframe(60));
+	boolean flag=false;;
+	String xpath="";
+	xpath="//th//a[text()='"+userName+"']";
+	WebElement ele=FindElement(driver, xpath,userName, action.SCROLLANDBOOLEAN, timeOut);
+	ele=isDisplayed(driver, ele, "visibility", timeOut, userName);
+	if (click(driver, ele, userName.toString(), action.BOOLEAN)) {
+		log(LogStatus.INFO, "able to click on "+userName, YesNo.No);
+		ThreadSleep(10000);
+		switchToDefaultContent(driver);
+		switchToFrame(driver, 60, getSetUpPageIframe(60));
+		xpath="//*[@id='topButtonRow']//input[@name='edit']";
+		ele=FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, timeOut);
+		ThreadSleep(5000);
+		if (click(driver, ele, "Edit Button", action.BOOLEAN)) {
+			log(LogStatus.INFO, "able to click on edit button", YesNo.No);
+			ThreadSleep(10000);
+			switchToDefaultContent(driver);
+			switchToFrame(driver, 60, getSetUpPageIframe(60));
+			String OnObject="";
+			String permission = "";
+			for (String[] strings : LabelswithCheck) {
+				OnObject=strings[0];
+				permission=strings[1];
+				xpath="//*[text()='"+OnObject+"']/following-sibling::*//td/input[contains(@title,'"+permission+"')]";
+				ele = FindElement(driver, xpath, OnObject+" with permission "+permission, action.SCROLLANDBOOLEAN, timeOut);
+
+				if (click(driver, ele, OnObject+" with permission "+permission,action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "clicked on checkbox "+permission+" for "+OnObject, YesNo.No);
+					flag=true;
+					if (click(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
+						ThreadSleep(10000);
+						flag=true;
+					} else {
+						log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Able clicked on checkbox "+permission+" for "+OnObject, YesNo.Yes);
+				}
+
+
+			}
+		} else {
+			log(LogStatus.ERROR, "not able to click on edit button", YesNo.Yes);
+		}
+
+	} else {
+		log(LogStatus.ERROR, "Not able to click on "+userName, YesNo.Yes);
+	}
+	return flag;
+}
+
+public boolean clickOnEditBtnForCRMUser(WebDriver driver,String userLastName,String userFirstName,int timeOut) {
+	boolean flag=false;
+	switchToDefaultContent(driver);
+	ThreadSleep(10000);
+	switchToFrame(driver, 60, getSetUpPageIframe(60));
+	WebElement ele = FindElement(driver,
+			"//a[text()='" + userLastName + "," + " " + userFirstName+ "']",userLastName+", "+userFirstName, action.SCROLLANDBOOLEAN, 10);
+	if (ele != null) {
+		if (click(driver, ele, userLastName+", "+userFirstName, action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(10000);
+			switchToFrame(driver, 40, getSetUpPageIframe(40));
+			ele=getEditButton("", "Classic", timeOut);
+			if (click(driver, ele, "Edit icon", action.SCROLLANDBOOLEAN)) {
+				switchToDefaultContent(driver);
+				ThreadSleep(10000);
+				switchToFrame(driver, 20, getSetUpPageIframe(20));
+				flag=true;
+			} else {
+				appLog.info("Not able to click on edit icon");
+			}
+
+		} else {
+			appLog.info("Not able to click on "+userLastName+", "+userFirstName);
+		}
+	} else {
+		appLog.info("Element is not present");
+	}
+	return flag;
+}
 
 }

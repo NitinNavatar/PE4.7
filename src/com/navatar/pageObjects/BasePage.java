@@ -565,8 +565,17 @@ public abstract class BasePage extends BaseLib {
 	}
 	
 	public WebElement getCustomTabSaveBtn(String projectName,int timeOut) {
+		List<WebElement> eleList = FindElements(driver, "//*[@title='Save' or text()='Save']", "Save Button");
+		for (WebElement webElement : eleList) {
+			webElement=isDisplayed(driver, webElement, "Visibility", 2, "Custom Tab Save Button lightning");
+			if (webElement!=null) {
+				return webElement;
+			} else {
+
+			}
+		}
 		return isDisplayed(driver, save_Lightning, "Visibility", timeOut, "Custom Tab Save Button lightning");
-		
+
 	}
 	
 	@FindBy(xpath = "//button[text()='Compact Layout Assignment']")
