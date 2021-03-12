@@ -4767,6 +4767,19 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getUploadImageXpath(int timeOut) {
 		return isDisplayed(driver, uploadImageXpath, "Visibility", timeOut,"upload image xpath");
 	}
+	
+
+	public WebElement getImgForObject(String object,int timeOut) {
+		String xpath ="//*[text()='"+object+"']/../../preceding-sibling::*//img";
+		WebElement ele= FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "img for "+object);
+	}
+	
+	public WebElement getCustomNumberOfImg(String object,String record,int timeOut) {
+		String xpath ="//article[@class='cRelatedListAccordion']//a[text()='"+object+"']/../../../following-sibling::div//a[text()='"+record+"']/../preceding-sibling::div/*/*/*";
+		WebElement ele= FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "img for "+object);
+	}
 
 	@FindBy(xpath = "//*[@name='SaveEdit']")
 	private WebElement navigationTabSaveBtn;

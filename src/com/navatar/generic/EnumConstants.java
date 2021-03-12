@@ -1147,7 +1147,7 @@ public static enum PermissionType{
     };
     
     public static enum SDGCreationLabel{
-    	SDG_Name,SDG_Tag,sObjectName,Parent_Field_Name,Filter;
+    	SDG_Name,SDG_Tag,sObjectName,Parent_Field_Name,Filter,Image_Field_API;
     };
     
     public static enum ToggleButton{
