@@ -684,6 +684,13 @@ public String getTabName(String projectName,TabName TabName) {
 	case RecycleBinTab:
 		tabName = "Recycle Bin";
 		break;
+	case PartnershipsTab:
+		tabName = "Partnerships";
+		break;
+	case CommitmentsTab:
+		tabName = "Commitments";
+		break;
+		
 	default:
 		return tabName;
 	}
@@ -4553,7 +4560,7 @@ public boolean clickOnAlreadyCreatedItem(String projectName,String alreadyCreate
 	viewList = "Automation All";
 	WebElement ele, selectListView;
 	ele = null;
-
+	ThreadSleep(3000);
 	refresh(driver);
 	if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
 		ThreadSleep(3000);
@@ -4648,7 +4655,7 @@ public WebElement toggleSDGButtons(String projectName,String toggleTab,ToggleBut
 }
 
 public WebElement toggleButton(String projectName,String btnName,action action,int timeOut) {
-	String xpath = "//button[@title='"+btnName+"']";
+	String xpath = "//button[contains(@title,'"+btnName+"')]";
 	WebElement ele = FindElement(driver, xpath,"Toggle Button : "+btnName, action, timeOut);
 	scrollDownThroughWebelement(driver, ele, "Toggle Button : "+btnName);
 	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btnName);
@@ -4905,5 +4912,21 @@ public WebElement accordionSDGButtons(String projectName,String toggleTab,Toggle
 	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btname);
 	return ele;
 }
+
+public WebElement toggleEditSaveButton(String projectName,String btnName,action action,int timeOut) {
+	String xpath = "//button[contains(text(),'"+btnName+"')]/../../../../../../../..//button[text()='Save']";
+	WebElement ele = FindElement(driver, xpath,"Toggle Button : "+btnName, action, timeOut);
+	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btnName);
+	return ele;
+}
+
+public WebElement toggleEditCancelButton(String projectName,String btnName,action action,int timeOut) {
+	String xpath = "//button[contains(text(),'"+btnName+"')]/../../../../../../../..//button[text()='Cancel']";
+	WebElement ele = FindElement(driver, xpath,"Toggle Button : "+btnName, action, timeOut);
+	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btnName);
+	return ele;
+}
+
+
 
 }
