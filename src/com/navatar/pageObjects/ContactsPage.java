@@ -424,13 +424,7 @@ public class ContactsPage extends BasePageBusinessLayer {
 		
 	}
 	
-	@FindBy(xpath = "//div[@id='parentDiv']//img")
-	private WebElement imgLink;
 	
-	public WebElement getimgLink(String projectName,int timeOut) {
-		return isDisplayed(driver, imgLink, "Visibility", timeOut, "send Button on List Email");
-		
-	}
 	@FindBy(xpath = "//input[@name='fileUploader']")
 	private WebElement uploadPhotoButton;
 	

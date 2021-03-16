@@ -599,4 +599,28 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 
 	}
 	
+	public WebElement getPageDoesNotExist(String projectName,action action,int timeOut) {
+		String msg = NavatarSetUpPageErrorMessage.PageDoesExist;
+		String xpath = "//h2[contains(text(),'"+msg+"')]/ancestor::div//following-sibling::button[@title='Close this window']";
+		WebElement ele = FindElement(driver, xpath, msg, action, timeOut);
+		ele = isDisplayed(driver, ele, "Visibility", timeOut, msg);
+		if (ele!=null) {
+			msg = NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain;
+			 xpath = "//h2[contains(text(),'"+msg+"')]/ancestor::div//following-sibling::button[@title='Close this window']";
+			 ele = FindElement(driver, xpath, msg, action, timeOut);
+			ele = isDisplayed(driver, ele, "Visibility", timeOut, msg);
+		} 
+		return ele;
+	}
+	
+	public WebElement getCoverageTabAfterClick(String projectName,String tabName,action action,int timeOut) {
+		String xpath = "//a[contains(@href,'lightning') and contains(@title,'" + tabName + "')]/span/..";
+		WebElement ele = FindElement(driver, xpath,tabName, action.SCROLLANDBOOLEAN,timeOut);
+		ele = isDisplayed(driver,ele,"visibility", timeOut, tabName);
+		return ele;
+	}
+	
+	
+	
+	
 }

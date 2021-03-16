@@ -137,7 +137,7 @@ public class Module4 extends BaseLib{
 		}
 		String staff="",status="",event="",notes="";
 		WebElement ele=null;
-		for (i = 0;i<6;i++) {
+		for (i = 0;i<9;i++) {
 			if (lp.clickOnTab(projectName, TabName.Object5Tab)) {
 
 				if (ip.clickOnAlreadyCreatedItem(projectName, M4MarketingEvent1Name, true, 15)) {
@@ -1393,6 +1393,7 @@ public class Module4 extends BaseLib{
 				}
 				refresh(driver);
 				ThreadSleep(3000);
+				ExcelUtils.writeData(phase1DataSheetFilePath, id, "FilePath", excelLabel.TestCases_Name, "M4tc016_UpdateImageOnUserProfile",excelLabel.URL);
 				
 				if (ip.verifyAccordianRecordImage(projectName, user, id)) {
 					log(LogStatus.INFO, "successfully verified update photo in accordion", YesNo.No);
@@ -1579,7 +1580,7 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		String tab=M4Sdg3Name;
 		String fieldValues[]={EditPageLabel.Title.toString()+"<break>"+tab,EditPageLabel.Query.toString()+"<break>"+ep.attendeeQuery,
-				EditPageLabel.Image_Field_API_Name.toString()+"<break>"+"Member__r.MediumPhotoURL",EditPageLabel.Number_of_Records_to_Display.toString()+"<break>8",
+				EditPageLabel.Image_Field_API_Name.toString()+"<break>"+"Attendee_Staff__r.MediumPhotoURL",EditPageLabel.Number_of_Records_to_Display.toString()+"<break>8",
 				EditPageLabel.SDG_Name.toString()+"<break>"+tab,EditPageLabel.Popup_Title.toString()+"<break>"+tab
 		};
 		if (ip.clickOnTab(projectName, TabName.Object5Tab)) {
@@ -1597,6 +1598,765 @@ public class Module4 extends BaseLib{
 				}else {
 					log(LogStatus.ERROR, "Not able to open edit page, so cannot add accordion", YesNo.Yes);
 					sa.assertTrue(false,"Not able to open edit page, so cannot add accordion" );
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to go to entity record "+M4Ins1, YesNo.Yes);
+				sa.assertTrue(false,"Not able to go to entity record "+M4Ins1 );
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on entity tab", YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on entity tab" );
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc020_VerifyAccordionOnEventPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		String id=null;
+		WebElement ele=null;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String user="";
+		String status1="";
+		id=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, "M4tc016_UpdateImageOnUserProfile", excelLabel.URL);
+		
+		String fieldValue[]=new String[1];
+		if (ip.clickOnTab(projectName, TabName.Object5Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4MarketingEvent1Name,10)) {
+				for (int i = 0;i<6;i++) {
+					user=ExcelUtils.readData(phase1DataSheetFilePath,"Attendees",excelLabel.Variable_Name, "M4Att"+(i+1), excelLabel.Attendee_Staff);
+					status1=ExcelUtils.readData(phase1DataSheetFilePath,"Attendees",excelLabel.Variable_Name, "M4Att"+(i+1), excelLabel.Status);
+					fieldValue[0]=PageLabel.Status.toString()+breakSP+status1;
+					if (ip.verifyAccordion(projectName, user, fieldValue,10)) {
+						log(LogStatus.INFO, "successfully verified fields and values in accordion", YesNo.No);
+
+					}else {
+						log(LogStatus.ERROR, "could not verify fields and values in accordion", YesNo.Yes);
+						sa.assertTrue(false,"could not verify fields and values in accordion" );
+					}
+					if (ip.verifyAccordianRecordImage(projectName, user, id)) {
+						log(LogStatus.INFO, "successfully verified update photo in accordion", YesNo.No);
+
+					}else {
+						log(LogStatus.ERROR, "could not verify update photo in accordion", YesNo.Yes);
+						sa.assertTrue(false,"could not verify update photo in accordion" );
+					}
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to go to event record "+M4MarketingEvent1Name, YesNo.Yes);
+				sa.assertTrue(false,"Not able to go to event record "+M4MarketingEvent1Name );
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on event tab", YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on event tab" );
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc021_UpdateImageOnUserProfileAndCheckEventAccordion(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		DealPageBusinessLayer dp =new DealPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		String id=null,parentID=null;
+		String attachmentPath1= System.getProperty("user.dir")+"\\UploadFiles\\Module 4\\tc20\\3.png";
+		String attachmentPath2= System.getProperty("user.dir")+"\\UploadFiles\\Module 4\\tc20\\4.png";
+		WebElement ele=null;
+		String user=AdminUserFirstName+" "+AdminUserLastName;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object5Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName,M4MarketingEvent1Name , 10)) {
+				ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
+				click(driver, ele, "overview tab", action.BOOLEAN);
+				ele=dp.returnAccordionLink(projectName, user);
+				if (click(driver, ele, "accordion header", action.BOOLEAN)) {
+					parentID=switchOnWindow(driver);
+					if (parentID!=null) {
+						ThreadSleep(3000);
+						id=dp.updatePhotoInUserPage(projectName, attachmentPath1);
+						if (id!=null) {
+							log(LogStatus.INFO, "successfully updated photo", YesNo.No);
+
+						}else {
+							log(LogStatus.ERROR, "could not update photo", YesNo.Yes);
+							sa.assertTrue(false,"could not update photo" );
+						}
+						driver.close();
+						driver.switchTo().window(parentID);
+					}else {
+						log(LogStatus.ERROR, "could not find new window to switch, so cannot update admin photo", YesNo.Yes);
+						sa.assertTrue(false,"could not find new window to switch, so cannot update admin photo" );
+					}
+					
+					
+				}else {
+					log(LogStatus.ERROR, "could not click on accordion header, so cannot update admin photo", YesNo.Yes);
+					sa.assertTrue(false,"could not click on accordion header, so cannot update admin photo" );
+				}
+				refresh(driver);
+				ThreadSleep(3000);
+				if (ip.verifyAccordianRecordImage(projectName, user, id)) {
+					log(LogStatus.INFO, "successfully verified update photo in accordion", YesNo.No);
+					
+				}else {
+					log(LogStatus.ERROR, "could not verify update photo in accordion", YesNo.Yes);
+					sa.assertTrue(false,"could not verify update photo in accordion" );
+				}
+				refresh(driver);
+				ThreadSleep(3000);
+				
+				ele=dp.returnAccordionLink(projectName, user);
+				if (click(driver, ele, "accordion header", action.BOOLEAN)) {
+					parentID=switchOnWindow(driver);
+					if (parentID!=null) {
+						ThreadSleep(3000);
+						id=dp.updatePhotoInUserPage(projectName, attachmentPath2);
+						if (id!=null) {
+							log(LogStatus.INFO, "successfully updated photo", YesNo.No);
+
+						}else {
+							log(LogStatus.ERROR, "could not update photo", YesNo.Yes);
+							sa.assertTrue(false,"could not update photo" );
+						}
+						driver.close();
+						driver.switchTo().window(parentID);
+					}else {
+						log(LogStatus.ERROR, "could not find new window to switch, so cannot update admin photo", YesNo.Yes);
+						sa.assertTrue(false,"could not find new window to switch, so cannot update admin photo" );
+					}
+					
+					
+				}else {
+					log(LogStatus.ERROR, "could not click on accordion header, so cannot update admin photo", YesNo.Yes);
+					sa.assertTrue(false,"could not click on accordion header, so cannot update admin photo" );
+				}
+				refresh(driver);
+				ThreadSleep(3000);
+				ExcelUtils.writeData(phase1DataSheetFilePath, id, "FilePath", excelLabel.TestCases_Name, "M4tc016_UpdateImageOnUserProfile",excelLabel.URL);
+				
+				if (ip.verifyAccordianRecordImage(projectName, user, id)) {
+					log(LogStatus.INFO, "successfully verified update photo in accordion", YesNo.No);
+
+				}else {
+					log(LogStatus.ERROR, "could not verify update photo in accordion", YesNo.Yes);
+					sa.assertTrue(false,"could not verify update photo in accordion" );
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to go to event record "+M4MarketingEvent1Name, YesNo.Yes);
+				sa.assertTrue(false,"Not able to go to event record "+M4MarketingEvent1Name );
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on event tab", YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on event tab" );
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc022_VerifyNoOfRecordsOnEventPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		DealPageBusinessLayer dp =new DealPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		String id=null,parentID=null;
+		WebElement ele=null;
+		String user=AdminUserFirstName+" "+AdminUserLastName;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object5Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName,M4MarketingEvent1Name , 10)) {
+				ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
+				String xpath = "//article[@class='cRelatedListAccordion']//a[text()='"+user+"']";
+				List<WebElement> li=FindElements(driver, xpath, "list of deal team records");
+				if (li.size()==8) {
+					log(LogStatus.INFO, "successfully verified 8 records found", YesNo.No);
+
+				}else {
+					log(LogStatus.ERROR, "could not verify presence of 8 records. found: "+li.size(), YesNo.Yes);
+					sa.assertTrue(false,"could not verify presence of 8 records. found: "+li.size() );
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to go to event record "+M4MarketingEvent1Name, YesNo.Yes);
+				sa.assertTrue(false,"Not able to go to event record "+M4MarketingEvent1Name );
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on event tab", YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on event tab" );
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc023_VerifyExpandCollapseOnEventAccordion(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		String id=null;
+		WebElement ele=null;
+		String user=AdminUserFirstName+" "+AdminUserLastName;
+		String dealteamHeader=AttendeeLabels.Attendee.toString();
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object5Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4MarketingEvent1Name,10)) {
+				ele=ip.returnAccordionViewDetailsLink(projectName, dealteamHeader);
+				if (click(driver, ele, "accordion view details", action.SCROLLANDBOOLEAN)) {
+					ele=ip.getHeaderTextForPage(projectName, PageName.NewTaskPopUP, dealteamHeader, action.BOOLEAN, 10);
+					if (ele!=null) {
+						log(LogStatus.INFO, "successfully verified presence of header in accordion", YesNo.No);
+
+					}else {
+						log(LogStatus.ERROR, "could not verify presence of header in accordion", YesNo.Yes);
+						sa.assertTrue(false,"could not verify presence of header in accordion" );
+					}
+					ele=ip.accordionExpandCollapse(projectName, ExpandCollapse.Collapse, 10);
+					
+					if (ele!=null) {
+						log(LogStatus.INFO, "verified default is expanded sdg", YesNo.No);
+
+						if (click(driver, ele, "collapse icon", action.BOOLEAN)) {
+							log(LogStatus.INFO, "clicked on collapse link", YesNo.No);
+
+							ele=ip.accordionExpandCollapse(projectName, ExpandCollapse.Collapse,2);
+							if (ele==null)
+								log(LogStatus.INFO, "successfully verified collapsed sdg", YesNo.No);
+							else {
+								log(LogStatus.ERROR, "could not verify sdg collapse", YesNo.Yes);
+								sa.assertTrue(false,"could not verify sdg collapse" );
+							}
+						}else {
+							log(LogStatus.ERROR, "Collapse icon is not clickable", YesNo.Yes);
+							sa.assertTrue(false,"Collapse icon is not clickable" );
+						}
+					}else {
+						log(LogStatus.ERROR, "Collapse icon is not visible, so cannot verify collapse functionality", YesNo.Yes);
+						sa.assertTrue(false,"Collapse icon is not visible, so cannot verify collapse functionality" );
+					}
+					click(driver, ip.accordionModalWindowClose(projectName, dealteamHeader),"cross icon", action.BOOLEAN);
+				}else {
+					log(LogStatus.ERROR, "accordion link is not clickable", YesNo.Yes);
+					sa.assertTrue(false,"accordion link is not clickable" );
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to go to event record "+M4MarketingEvent1Name, YesNo.Yes);
+				sa.assertTrue(false,"Not able to go to event record "+M4MarketingEvent1Name );
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on event tab", YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on event tab" );
+		}
+		lp.CRMlogout();
+		ThreadSleep(3000);
+		driver.close();
+		
+		config(browserToLaunch);
+		lp = new LoginPageBusinessLayer(driver);
+		fp = new FundsPageBusinessLayer(driver);
+		cp = new ContactsPageBusinessLayer(driver);
+		ip = new InstitutionsPageBusinessLayer(driver);
+		
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object5Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4MarketingEvent1Name,10)) {
+				ele=ip.returnAccordionViewDetailsLink(projectName, dealteamHeader);
+				if (click(driver, ele, "accordion view details", action.SCROLLANDBOOLEAN)) {
+					ele=ip.getHeaderTextForPage(projectName, PageName.NewTaskPopUP, dealteamHeader, action.BOOLEAN, 10);
+					if (ele!=null) {
+						log(LogStatus.INFO, "successfully verified presence of header in accordion", YesNo.No);
+
+					}else {
+						log(LogStatus.ERROR, "could not verify presence of header in accordion", YesNo.Yes);
+						sa.assertTrue(false,"could not verify presence of header in accordion" );
+					}
+					ele=ip.accordionExpandCollapse(projectName, ExpandCollapse.Collapse, 2);
+					
+					if (ele==null) {
+						log(LogStatus.INFO, "verified sdg is collapsed", YesNo.No);
+
+							ele=ip.accordionExpandCollapse(projectName, ExpandCollapse.Expand,2);
+							if (ele!=null)
+								log(LogStatus.INFO, "successfully verified collapsed sdg", YesNo.No);
+							else {
+								log(LogStatus.ERROR, "could not verify sdg collapse", YesNo.Yes);
+								sa.assertTrue(false,"could not verify sdg collapse" );
+							}
+					}else {
+						log(LogStatus.ERROR, "Collapse icon is visible, but it should not be", YesNo.Yes);
+						sa.assertTrue(false,"Collapse icon is visible, but it should not be" );
+					}
+					click(driver, ip.accordionModalWindowClose(projectName, dealteamHeader),"cross icon", action.BOOLEAN);
+				}else {
+					log(LogStatus.ERROR, "accordion link is not clickable", YesNo.Yes);
+					sa.assertTrue(false,"accordion link is not clickable" );
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to go to event record "+M4MarketingEvent1Name, YesNo.Yes);
+				sa.assertTrue(false,"Not able to go to event record "+M4MarketingEvent1Name );
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on event tab", YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on event tab" );
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc024_Add3RelatedListAccordianOnEntityPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		WebElement ele=null;
+		String user=AdminUserFirstName+" "+AdminUserLastName;
+		String tab[] = {tabObj5,tabObj4,M4Sdg2Name};
+		String record[]={M4MarketingEvent1Name,M4Deal1,user};
+		String query[]={EditPageErrorMessage.query1,EditPageErrorMessage.query2,EditPageErrorMessage.query3};
+		String image[]={EditPageErrorMessage.image1,EditPageErrorMessage.image2,EditPageErrorMessage.image3};
+		String fieldValues[]= new String[3];
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {/*
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
+				for (int i = 0;i<3;i++) {
+					fieldValues[0]=EditPageLabel.Title.toString()+breakSP+tab[i];
+					fieldValues[1]=EditPageLabel.Query.toString()+breakSP+query[i];
+					fieldValues[2]=EditPageLabel.Image_Field_API_Name.toString()+breakSP+image[i];
+					if (ep.clickOnEditPageLink()) {
+						log(LogStatus.INFO, "successfully reached edit page", YesNo.No);
+
+						if (ep.dragAndDropAccordian(projectName, PageName.Object1Page, "RelatedListAccordion", fieldValues)) {
+							log(LogStatus.INFO, "successfully added "+tab[i]+" accordion on entity page", YesNo.No);
+
+						}else {
+							log(LogStatus.ERROR, "could not drop "+tab[i]+" accordion on entity page", YesNo.Yes);
+							sa.assertTrue(false,"could not drop "+tab[i]+" accordion on entity page" );
+						}
+					}else {
+						log(LogStatus.ERROR, "Not able to open edit page, so cannot add accordion", YesNo.Yes);
+						sa.assertTrue(false,"Not able to open edit page, so cannot add accordion" );
+					}
+					ThreadSleep(4000);
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to go to entity record "+M4Ins1, YesNo.Yes);
+				sa.assertTrue(false,"Not able to go to entity record "+M4Ins1 );
+			}
+		*/}else {
+			log(LogStatus.ERROR, "Not able to click on entity tab", YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on entity tab" );
+		}
+		String imgId=null;
+		TabName tname[]={TabName.Object5Tab,TabName.Object4Tab};
+		for (int i = 0;i<2;i++) {
+			String src=null;
+			if (ip.clickOnTab(projectName, tname[i])) {
+				if (ip.clickOnAlreadyCreatedItem(projectName, record[i], 10)) {
+					ele=ip.getImgForObject(tab[i], 10);
+					if (ele!=null) {
+						src=ele.getAttribute("src");
+						if (src!=null) {
+							log(LogStatus.INFO, "successfully retrieved "+src+" from photo", YesNo.No);
+
+						}else {
+							log(LogStatus.ERROR, "could not retrieve "+src+" from photo", YesNo.Yes);
+							sa.assertTrue(false,"could not retrieve "+src+" from photo");
+						}
+					}else {
+						log(LogStatus.ERROR, "could not retrieve src from photo", YesNo.Yes);
+						sa.assertTrue(false,"could not retrieve src from photo");
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to go to event record "+record[i], YesNo.Yes);
+					sa.assertTrue(false,"Not able to go to event record "+record[i] );
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to click on event tab", YesNo.Yes);
+				sa.assertTrue(false,"Not able to click on event tab" );
+			}
+			if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+				if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
+					ele=ip.getCustomNumberOfImg(tab[i], record[i], 10);
+					String customNo=null;
+					if (ele!=null) {
+						customNo=ele.getAttribute("data-key");
+						if (src.contains(customNo)) {
+							log(LogStatus.INFO, "successfully verified "+customNo+" matches photo", YesNo.No);
+
+						}else {
+							log(LogStatus.ERROR, "not matched "+customNo+" in "+src, YesNo.Yes);
+							sa.assertTrue(false,"not matched "+customNo+" in "+src);
+						}
+					}else {
+						log(LogStatus.ERROR, "could not get number of image on accordion", YesNo.Yes);
+						sa.assertTrue(false,"could not get number of image on accordion");
+					}
+					if (i==1) {
+						ele=dp.returnAccordionLink(projectName, user);
+						if (click(driver, ele, "accordion header", action.BOOLEAN)) {
+							String parentID=switchOnWindow(driver);
+							if (parentID!=null) {
+								ThreadSleep(3000);
+								imgId=dp.getimgIconForPath(projectName, 10).getAttribute("src");
+								if (imgId!=null){
+									log(LogStatus.INFO, "found id of img uploaded: "+imgId, YesNo.Yes);
+
+								}
+								else {
+									log(LogStatus.ERROR, "could not find id of img uploaded", YesNo.Yes);
+									sa.assertTrue(false, "could not find id of img uploaded");
+
+								}
+								driver.close();
+								driver.switchTo().window(parentID);
+							}else {
+								log(LogStatus.ERROR, "could not find new window to switch, so cannot update admin photo", YesNo.Yes);
+								sa.assertTrue(false,"could not find new window to switch, so cannot update admin photo" );
+							}
+							if (ip.verifyAccordianRecordImage(projectName, user, imgId)) {
+								log(LogStatus.INFO, "successfully verified "+imgId+" for image on Deal team accordion for "+user, YesNo.Yes);
+
+							}
+							else {
+								log(LogStatus.ERROR, "could not verify "+imgId+" for image on Deal team accordion for "+user, YesNo.Yes);
+								sa.assertTrue(false,"could not verify "+imgId+" for image on Deal team accordion for "+user );
+							}
+
+						}else {
+							log(LogStatus.ERROR, "could not click on accordion header, so cannot update admin photo", YesNo.Yes);
+							sa.assertTrue(false,"could not click on accordion header, so cannot update admin photo" );
+						}
+
+
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to go to entity record "+M4Ins1, YesNo.Yes);
+					sa.assertTrue(false,"Not able to go to entity record "+M4Ins1 );
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to click on entity tab", YesNo.Yes);
+				sa.assertTrue(false,"Not able to click on entity tab" );
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc025_VerifyAddingContactImageInSDG(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		WebElement ele=null;
+		String contactHeader=ip.getTabName(projectName,TabName.Object2Tab);
+		String parentID=null;
+		int i = 0;
+		String fields[]={excelLabel.Name.toString()};
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
+				ele=ip.returnAccordionViewDetailsLink(projectName, contactHeader);
+				if (click(driver, ele, "view details link", action.SCROLLANDBOOLEAN)) {
+					ele=ip.accordionSDGButtons(projectName, ip.getTabName(projectName, TabName.Object2Tab),ToggleButtonGroup.SDGButton , action.BOOLEAN, 10);
+					if (click(driver, ele, "sdp setup button", action.SCROLLANDBOOLEAN)) {
+						parentID=switchOnWindow(driver);
+						if (parentID!=null) {
+							ele=ip.getRelatedTab(projectName, RelatedTab.Related.toString(), 10);
+							if (click(driver, ele, "related tab", action.BOOLEAN)) {
+							for (String field:fields) {
+									ele=ip.sdgButtons(projectName,fields[i], ShowMoreActionDropDownList.Edit.toString(), 10);
+									if (click(driver, ele, "edit", action.SCROLLANDBOOLEAN)) {
+										ele=sdg.getLabelTextBox(projectName, PageName.SDGPage.toString(),SDGCreationLabel.Image_Field_API.toString(), 10);
+										if (sendKeys(driver, ele, EditPageErrorMessage.image1, "image field api", action.SCROLLANDBOOLEAN)) {
+
+
+											if (click(driver, sdg.getRecordPageSettingSave(10), "save", action.BOOLEAN)) {
+												log(LogStatus.INFO,"successfully clicked on save button",YesNo.Yes);
+											}
+											else {
+												log(LogStatus.SKIP,"could not click on save button, so could not add "+field,YesNo.Yes);
+												sa.assertTrue(false, "could not click on save button, so could not add "+field);
+											}
+										}else {
+											log(LogStatus.SKIP,"image field api field is not visible",YesNo.Yes);
+											sa.assertTrue(false, "image field api field is not visible");
+										}
+									}else {
+										log(LogStatus.SKIP,"edit button is not clickable for "+field,YesNo.Yes);
+										sa.assertTrue(false, "edit button is not clickable for "+field);
+									}
+									i++;
+							}
+								}else {
+									log(LogStatus.SKIP,"related tab is not clickable",YesNo.Yes);
+									sa.assertTrue(false, "related tab is not clickable");
+								}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}else {
+							log(LogStatus.SKIP,"could not find new window to switch, so cannot edit field",YesNo.Yes);
+							sa.assertTrue(false, "could not find new window to switch, so cannot edit field");
+						}
+					}else {
+						log(LogStatus.SKIP,"setup button on sdg is not clickable",YesNo.Yes);
+						sa.assertTrue(false, "setup button on sdg is not clickable");
+					}
+					refresh(driver);
+					ele=ip.returnAccordionViewDetailsLink(projectName,contactHeader );
+					click(driver, ele, "view details", action.SCROLLANDBOOLEAN);
+					ThreadSleep(3000);
+					String first="",last="",contact="";
+					for (i = 0;i<6;i++) {
+						first=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON"+(i+1), excelLabel.Contact_FirstName);
+						last=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON"+(i+1), excelLabel.Contact_LastName);
+						contact=first+" "+last;
+						ele=ip.sdgContactImage(projectName, contact, 10);
+						if (ele!=null) {
+
+							if (ele.getAttribute("src").contains(BasePageErrorMessage.defaultPhotoText)) {
+								log(LogStatus.INFO,"successfully verified photo of contact "+contact,YesNo.Yes);
+
+							}
+							else {
+								log(LogStatus.SKIP,"could not verify picture in front of "+contact,YesNo.Yes);
+								sa.assertTrue(false, "could not verify picture in front of "+contact);
+							}
+						}else {
+							log(LogStatus.SKIP,"picture not present in front of "+contact,YesNo.Yes);
+							sa.assertTrue(false, "picture not present in front of "+contact);
+						}
+					}
+				}else {
+					log(LogStatus.SKIP,"view details link is not clickable",YesNo.Yes);
+					sa.assertTrue(false, "view details link is not clickable");
+				}
+			}else {
+				log(LogStatus.SKIP,"could not click on entity record "+M4Ins1,YesNo.Yes);
+				sa.assertTrue(false, "could not click on entity record "+M4Ins1);
+			}
+		}else {
+			log(LogStatus.SKIP,"entity tab is not clickable",YesNo.Yes);
+			sa.assertTrue(false, "entity tab is not clickable");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc026_VerifyChangingContactImageInSDG(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		String contactHeader=ip.getTabName(projectName,TabName.Object2Tab);
+		
+		String contact=M4Contact2FName+" "+M4Contact2LName;
+		String attachmentPath1= System.getProperty("user.dir")+"\\UploadFiles\\Module 4\\tc7\\1.jpg";
+		String attachmentPath2= System.getProperty("user.dir")+"\\UploadFiles\\Module 4\\tc7\\2.jpg";
+		String id=null;
+		WebElement ele=null;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName,contact , 10)) {
+				ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
+				click(driver, ele, "overview tab", action.BOOLEAN);
+				id=cp.updatePhotoInDetailPage(projectName, attachmentPath1);
+				if (id!=null) {
+					log(LogStatus.INFO, "successfully updated photo", YesNo.No);
+
+				}else {
+					log(LogStatus.ERROR, "could not update photo", YesNo.Yes);
+					sa.assertTrue(false,"could not update photo" );
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to go to contact record "+contact, YesNo.Yes);
+				sa.assertTrue(false,"Not able to go to contact record "+contact );
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on contact tab", YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on contact tab" );
+		}
+		
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1,10)) {
+				ele=ip.returnAccordionViewDetailsLink(projectName, contactHeader);
+				if (click(driver, ele, "view details link", action.SCROLLANDBOOLEAN)) {
+				
+					ele=ip.sdgContactImage(projectName, contact, 10);
+					if (ele!=null) {
+
+						if (ele.getAttribute("src").contains(id)) {
+							log(LogStatus.INFO,"successfully verified photo of contact "+contact,YesNo.Yes);
+
+						}
+						else {
+							log(LogStatus.SKIP,"could not verify picture in front of "+contact,YesNo.Yes);
+							sa.assertTrue(false, "could not verify picture in front of "+contact);
+						}
+					}else {
+						log(LogStatus.SKIP,"picture not present in front of "+contact,YesNo.Yes);
+						sa.assertTrue(false, "picture not present in front of "+contact);
+					}
+				click(driver, ip.accordionModalWindowClose(projectName, cp.getTabName(projectName, TabName.Object2Tab)), "cross", action.BOOLEAN);
+				}else {
+					log(LogStatus.SKIP,"view details link is not clickable",YesNo.Yes);
+					sa.assertTrue(false, "view details link is not clickable");
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to go to entity record "+M4Ins1, YesNo.Yes);
+				sa.assertTrue(false,"Not able to go to entity record "+M4Ins1 );
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on entity tab", YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on entity tab" );
+		}
+		
+		if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, contact, 10)) {
+				ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
+				click(driver, ele, "overview tab", action.BOOLEAN);
+				id=cp.updatePhotoInDetailPage(projectName,attachmentPath2);
+				if (id!=null) {
+					log(LogStatus.INFO, "successfully updated photo", YesNo.No);
+
+				}else {
+					log(LogStatus.ERROR, "could not update photo", YesNo.Yes);
+					sa.assertTrue(false,"could not update photo" );
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to go to contact record "+contact, YesNo.Yes);
+				sa.assertTrue(false,"Not able to go to contact record "+contact );
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on contact tab", YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on contact tab" );
+		}
+		
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1,10)) {
+				ele=ip.returnAccordionViewDetailsLink(projectName, contactHeader);
+				if (click(driver, ele, "view details link", action.SCROLLANDBOOLEAN)) {
+				
+					ele=ip.sdgContactImage(projectName, contact, 10);
+					if (ele!=null) {
+
+						if (ele.getAttribute("src").contains(id)) {
+							log(LogStatus.INFO,"successfully verified photo of contact "+contact,YesNo.Yes);
+
+						}
+						else {
+							log(LogStatus.SKIP,"could not verify picture in front of "+contact,YesNo.Yes);
+							sa.assertTrue(false, "could not verify picture in front of "+contact);
+						}
+					}else {
+						log(LogStatus.SKIP,"picture not present in front of "+contact,YesNo.Yes);
+						sa.assertTrue(false, "picture not present in front of "+contact);
+					}
+					click(driver, ip.accordionModalWindowClose(projectName, cp.getTabName(projectName, TabName.Object2Tab)), "cross", action.BOOLEAN);
+				}else {
+					log(LogStatus.SKIP,"view details link is not clickable",YesNo.Yes);
+					sa.assertTrue(false, "view details link is not clickable");
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to go to entity record "+M4Ins1, YesNo.Yes);
+				sa.assertTrue(false,"Not able to go to entity record "+M4Ins1 );
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on entity tab", YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on entity tab" );
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+		
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc027_VerifyDeletingContactImageInSDG(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		String contactHeader=ip.getTabName(projectName,TabName.Object2Tab);
+		String contact=M4Contact2FName+" "+M4Contact2LName;
+		WebElement ele=null;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName,contact , 10)) {
+				ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
+				click(driver, ele, "overview tab", action.BOOLEAN);
+				if (cp.deleteImage(projectName, contact)) {
+					log(LogStatus.INFO, "successfully deleted photo", YesNo.No);
+
+				}else {
+					log(LogStatus.ERROR, "could not deleted photo", YesNo.Yes);
+					sa.assertTrue(false,"could not deleted photo" );
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to go to contact record "+contact, YesNo.Yes);
+				sa.assertTrue(false,"Not able to go to contact record "+contact );
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on contact tab", YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on contact tab" );
+		}
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1,10)) {
+				ele=ip.returnAccordionViewDetailsLink(projectName, contactHeader);
+				if (click(driver, ele, "view details link", action.SCROLLANDBOOLEAN)) {
+
+					ele=ip.sdgContactImage(projectName, contact, 10);
+					if (ele!=null) {
+
+						if (ele.getAttribute("src").contains(BasePageErrorMessage.defaultPhotoText)) {
+							log(LogStatus.INFO,"successfully verified photo removed of contact "+contact,YesNo.Yes);
+
+						}
+						else {
+							log(LogStatus.SKIP,"could not verify photo removed in front of "+contact,YesNo.Yes);
+							sa.assertTrue(false, "could not verify photo removed in front of "+contact);
+						}
+					}else {
+						log(LogStatus.SKIP,"removed picture not present in front of "+contact,YesNo.Yes);
+						sa.assertTrue(false, "removed picture not present in front of "+contact);
+					}
+					click(driver, ip.accordionModalWindowClose(projectName, cp.getTabName(projectName, TabName.Object2Tab)), "cross", action.BOOLEAN);
+				}else {
+					log(LogStatus.SKIP,"view details link is not clickable",YesNo.Yes);
+					sa.assertTrue(false, "view details link is not clickable");
 				}
 			}else {
 				log(LogStatus.ERROR, "Not able to go to entity record "+M4Ins1, YesNo.Yes);

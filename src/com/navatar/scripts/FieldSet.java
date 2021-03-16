@@ -1872,7 +1872,95 @@ public class FieldSet extends BaseLib {
 		sa.assertAll();
 	}
 	
-	
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc028_verifyAllTypeOfImageFormatByUpdateImage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
+		List<String> itemNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
+		
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String jpgMinimumSizeimagepath="\\UploadImages\\JPGImage.jpg";
+		String jpgMaxSizeimagepath="\\UploadImages\\imgSize16mb.jpg";
+		String pngMinimumSizeimagepath="\\UploadImages\\PNG Image.png";
+		String pngMaxSizeimagepath="\\UploadImages\\16MBFile.png";
+		String gifMinimumSizeimagepath="\\UploadImages\\GIF Image.gif";
+		String gifMaxSizeimagepath="\\UploadImages\\imgSize16mb.gif";
+		
+		String[] allImages = {jpgMinimumSizeimagepath,jpgMaxSizeimagepath,pngMinimumSizeimagepath,pngMaxSizeimagepath,gifMinimumSizeimagepath,gifMaxSizeimagepath};
+		String [] imagesNames= {"JPG Minimum size","JPG Maximum size","PNG Minimum size","PNG Maximum size","GIF Minimum size","GIF Maximum size"};
+		
+		for(int i=0; i<tabNames.size(); i++) {
+			if (lp.clickOnTab(projectName,tabNames.get(i) )) {
+				log(LogStatus.INFO,"Click on Tab : "+tabNames.get(i),YesNo.No);
+				if(lp.clickOnAlreadyCreatedItem(projectName, itemNames.get(i), true,20)) {
+					log(LogStatus.INFO,"clicked on created item : "+itemNames.get(i), YesNo.No);
+					ThreadSleep(3000);
+					
+					for(int j=0; j<allImages.length; j++) {
+						if(lp.updatePhoto(projectName, tabNames.get(i), allImages[j])) {
+							log(LogStatus.PASS, imagesNames[j]+" photo is updated successfully in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+							
+							
+							ThreadSleep(3000);
+							if(lp.getDefaultImageXpath(20)!=null) {
+								String imagesize =lp.getDefaultImageXpath(20).getAttribute("style");
+								String expctImageSize="180px";
+								if(imagesize.contains(expctImageSize)) {
+									log(LogStatus.PASS, imagesNames[j]+" Image size is  matched "+expctImageSize+"  in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+								}else {
+									log(LogStatus.PASS, imagesNames[j]+" Image size is not  matched "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+									sa.assertTrue(false, imagesNames[j]+" Image size is not  matched "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i));
+								}
+							}else {
+								log(LogStatus.PASS, "Maximum image size is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i)+" so cannot check "+imagesNames[j]+" image", YesNo.No);
+								sa.assertTrue(false, "Maximum image size is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i)+" so cannot check "+imagesNames[j]+" image");
+							}
+							
+							
+							if (cp.deleteImage(projectName, itemNames.get(i))) {
+								log(LogStatus.INFO, "successfully deleted photo on "+itemNames.get(i), YesNo.No);
+								
+								if(lp.getDefaultImageXpath(20)!=null) {
+									String imagesize =lp.getDefaultImageXpath(20).getAttribute("style");
+									String expctImageSize="180px";
+									if(imagesize.contains(expctImageSize)) {
+										log(LogStatus.PASS, "default maximum size is  matched after deleting 16 mb image "+expctImageSize+"  in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+									
+									}else {
+										log(LogStatus.PASS, "default maximum size is not  matched after deleting 16 mb image "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+										sa.assertTrue(false, "default maximum size is not  matched after deleteing 16 mb image "+expctImageSize+" in "+itemNames.get(i)+" on "+tabNames.get(i));
+									}
+								}else {
+									log(LogStatus.PASS, "default image is not displaying after deleting 16 MB image in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+									sa.assertTrue(false, "default image is not displaying after deleteing 16 MB image in "+itemNames.get(i)+" on "+tabNames.get(i));
+								}
+								
+
+							}else {
+								log(LogStatus.ERROR, "could not deleted photo on "+itemNames.get(i), YesNo.Yes);
+								sa.assertTrue(false,"could not deleted photo on "+itemNames.get(i) );
+							}
+							
+							
+						}else {
+							log(LogStatus.PASS, imagesNames[j]+" photo is not updated in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+							sa.assertTrue(false, imagesNames[j]+" photo is not updated in "+itemNames.get(i)+" on "+tabNames.get(i));
+						}
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to click on created item "+itemNames.get(i)+" so cannot verify minimum and maximum updated image size", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on created item "+itemNames.get(i)+" so cannot verify minimum and maximum updated image size");
+				}
+			} else {
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify minimum and maximum updated image size",YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify minimum and maximum updated image size");
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 
 
 }

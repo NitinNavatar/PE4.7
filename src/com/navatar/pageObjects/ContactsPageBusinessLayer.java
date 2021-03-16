@@ -1057,34 +1057,46 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 
 	public boolean deleteImage(String projectName, String recordName) {
 		String imgId=null;
-		Actions actions = new Actions(driver);
-		scrollDownThroughWebelement(driver,getimgLink(projectName, 10) , "img");
-		actions.moveToElement( getimgLink(projectName, 10)).click(getimgLink(projectName, 10)).build().perform();
-		ThreadSleep(2000);
-		log(LogStatus.INFO, "click on img link", YesNo.No);
-		if (click(driver, getupdatePhotoLink(projectName,ContactPagePhotoActions.Delete_Photo, 10), ContactPagePhotoActions.Update_Photo.toString(), action.SCROLLANDBOOLEAN)) {
+//		Actions actions = new Actions(driver);
+//		scrollDownThroughWebelement(driver,getimgLink(projectName, 10) , "img");
+//		actions.moveToElement( getimgLink(projectName, 10)).click(getimgLink(projectName, 10)).build().perform();
+		WebElement ele=getUpdatePhotoCameraIcon(10);
+		if(ele!=null) {
+			if(click(driver, ele,"update photo camera icon", action.BOOLEAN)) {
+				log(LogStatus.INFO, "clicked on update photo icon", YesNo.No);
+				ThreadSleep(2000);
+				if (click(driver, getupdatePhotoLink(projectName,ContactPagePhotoActions.Delete_Photo, 10), ContactPagePhotoActions.Update_Photo.toString(), action.SCROLLANDBOOLEAN)) {
 
-			if (click(driver, getdeletePhotoButton(projectName,10) ,"delete photo button", action.SCROLLANDBOOLEAN)) {
-				imgId=getimgLink(projectName, 10).getAttribute("src");
-				if (imgId!=null) {
-					if (imgId.contains(defaultPhotoText)) {
-						log(LogStatus.INFO, "successfully delete image", YesNo.Yes);
-						return true;
+					if (click(driver, getdeletePhotoButton(projectName,10) ,"delete photo button", action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(4000);
+						imgId=getimgLink(projectName, 10).getAttribute("src");
+						if (imgId!=null) {
+							if (imgId.contains(defaultPhotoText)) {
+								log(LogStatus.INFO, "successfully delete image", YesNo.Yes);
+								return true;
+							}else {
+								log(LogStatus.ERROR, "not able to delete image", YesNo.Yes);
+								sa.assertTrue(false,"not able to delete image" );
+							}
+						}else {
+							log(LogStatus.ERROR, "id of image not found so cannot verify delete image", YesNo.Yes);
+							sa.assertTrue(false,"id of image not found so cannot verify delete image" );
+						}
 					}else {
-						log(LogStatus.ERROR, "not able to delete image", YesNo.Yes);
-						sa.assertTrue(false,"not able to delete image" );
+						log(LogStatus.ERROR, "delete photo button on popup is not clickable", YesNo.Yes);
+						sa.assertTrue(false,"delete photo button on popup is not clickable" );
 					}
 				}else {
-					log(LogStatus.ERROR, "id of image not found so cannot verify delete image", YesNo.Yes);
-					sa.assertTrue(false,"id of image not found so cannot verify delete image" );
+					log(LogStatus.ERROR, "delete photo button is not clickable", YesNo.Yes);
+					sa.assertTrue(false,"delete photo button is not clickable" );
 				}
 			}else {
-				log(LogStatus.ERROR, "delete photo button on popup is not clickable", YesNo.Yes);
-				sa.assertTrue(false,"delete photo button on popup is not clickable" );
+				log(LogStatus.ERROR, "Not able to click on update photo icon so cannot delete photo on "+recordName, YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on update photo icon so cannot delete photo on "+recordName);
 			}
 		}else {
-			log(LogStatus.ERROR, "delete photo button is not clickable", YesNo.Yes);
-			sa.assertTrue(false,"delete photo button is not clickable" );
+			log(LogStatus.ERROR, "camera photo icon is not displaying on "+recordName+" so cannot delete photo", YesNo.Yes);
+			sa.assertTrue(false,"camera photo icon is not displaying on "+recordName+" so cannot delete photo");
 		}
 		return false;
 	}
