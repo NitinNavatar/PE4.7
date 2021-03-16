@@ -301,22 +301,45 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	}
 	
 	public WebElement getNavigationLabel(String projectName,String navigationLabel,action action,int timeOut) {
-		if (navigationLabel.contains("/")) {
-			int i=0;
-			String[] nb = navigationLabel.split("/");
-			for (i = 0; i < nb.length-1; i++) {
-				click(driver, getNavigationLabel(projectName, nb[i], action, timeOut), nb[i], action);
+//		if (navigationLabel.contains("/")) {
+//			int i=0;
+//			String[] nb = navigationLabel.split("/");
+//			for (i = 0; i < nb.length-1; i++) {
+//				click(driver, getNavigationLabel(projectName, nb[i], action, timeOut), nb[i], action);
+//			}
+//			String xpath = "//div[@id='treeview12']//*//*[text()='"+nb[nb.length-1]+"']";
+//			WebElement ele = FindElement(driver, xpath, nb[nb.length-1], action, timeOut);
+//			return isDisplayed(driver, ele, "Visibility", timeOut, nb[nb.length-1]);
+//		}else {
+//
+//			String xpath = "//div[@id='treeview12']//*//*[text()='"+navigationLabel+"']";
+//			WebElement ele = FindElement(driver, xpath, navigationLabel, action, timeOut);
+//			return isDisplayed(driver, ele, "Visibility", timeOut, navigationLabel);
+//		}
+		
+		
+		int i=0;
+		String[] nb = navigationLabel.split("/");
+		String xpath = "";
+		WebElement ele=null;
+		for (i = 0; i < nb.length; i++) {
+			if (i==0) {
+				xpath = "//div[@id='treeview12']//*//*[text()='"+nb[i]+"']";	
+				ele = FindElement(driver, xpath, nb[i], action, timeOut);
+				
+			} else {
+				xpath=xpath+"/../following-sibling::*/*[text()='"+nb[i]+"']";
 			}
-			String xpath = "//div[@id='treeview12']//*//*[text()='"+nb[nb.length-1]+"']";
-			WebElement ele = FindElement(driver, xpath, nb[nb.length-1], action, timeOut);
-			return isDisplayed(driver, ele, "Visibility", timeOut, nb[nb.length-1]);
-		}else {
-
-			String xpath = "//div[@id='treeview12']//*//*[text()='"+navigationLabel+"']";
-			WebElement ele = FindElement(driver, xpath, navigationLabel, action, timeOut);
-			return isDisplayed(driver, ele, "Visibility", timeOut, navigationLabel);
+			if (nb.length>1 && i==nb.length-1) {
+				click(driver,ele, nb[i], action);	
+			}
 		}
+		ele = FindElement(driver, xpath, navigationLabel, action, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, navigationLabel);
+
 	}
+	
+	
 	
 	public WebElement getCrossButtonForNavigationLabelPopuP(String projectName,String navigationLabel,action action,int timeOut) {
 		String xpath = "//h2[contains(text(),'New') and contains(text(),'"+navigationLabel+"')]/ancestor::div//following-sibling::button[@title='Close this window']";
@@ -327,6 +350,11 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	
 	public WebElement getNavigationField(String projectName,String navigationField,action action,int timeOut) {
 		navigationField=navigationField.replace("_", " ");
+		if (navigationField.equalsIgnoreCase(CSVLabel.Parent.toString())) {
+			String xpath = "//*[text()='Parent']/following-sibling::*//*//button";
+			WebElement ele = FindElement(driver, xpath, navigationField, action, 5);	
+			click(driver, ele, "PARENT Cross icon", action.BOOLEAN);
+		}
 		String xpath = "//*[text()='"+navigationField+"']/following-sibling::div//input";
 		WebElement ele = FindElement(driver, xpath, navigationField, action, timeOut);
 		scrollDownThroughWebelement(driver, ele, navigationField);
@@ -342,12 +370,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		return isDisplayed(driver, ele, "Visibility", timeOut, allReportorDashboard);
 	}
 	
-	public WebElement actionDropdownElement(String projectName, ShowMoreActionDropDownList smaddl, int timeOut) {
-		String actionDropDown = smaddl.toString().replace("_", " ");
-		String xpath ="//span[text()='"+actionDropDown+"']";
-		xpath="//*[@name='"+actionDropDown+"' or text()='"+actionDropDown+"']";
-		return isDisplayed(driver, FindElement(driver, xpath, "show more action down arrow", action.SCROLLANDBOOLEAN, 10), "visibility", timeOut, actionDropDown);
-	}
+	
 	
 	public boolean clickOnShowMoreDropdownOnly(String projectName) {
 		String xpath = "";int i =1;
@@ -368,7 +391,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	}
 	
 	public WebElement getItemInList(String projectName,String itemName,action action,int timeOut) {
-		String xpath = "//*[@title='"+itemName+"']//strong[text()='"+itemName+"']";
+		String xpath = "//*[@title='"+itemName+"']//strong[text()='"+itemName.split(" ")[0]+"']";
 		WebElement ele = FindElement(driver, xpath, itemName, action, timeOut);
 		return isDisplayed(driver, ele, "Visibility", timeOut, itemName);
 	}
@@ -437,6 +460,19 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 			ele =getNavigationField(projectName, navigationField, action, 20);
 			if (sendKeys(driver, ele, navigationvalue, navigationField, action)) {
 				log(LogStatus.INFO, "Able to enter "+navigationField, YesNo.No);
+				
+				if (navigationField.equalsIgnoreCase(CSVLabel.Parent.toString())) {
+					ThreadSleep(10000);
+					if (click(driver,getItemInList(projectName, navigationvalue, action.BOOLEAN, 20),
+							navigationvalue + "   :  Parent Name", action.BOOLEAN)) {
+						log(LogStatus.INFO, navigationvalue+" is available", YesNo.No);
+					} else {
+						log(LogStatus.ERROR, navigationvalue+" is not available", YesNo.Yes);
+						sa.assertTrue(false, navigationvalue+" is not available");
+
+					}	
+				}
+				
 			} else {
 				log(LogStatus.ERROR, "Not Able to enter "+navigationField, YesNo.Yes);
 				sa.assertTrue(false,"Not Able to enter "+navigationField);
@@ -480,10 +516,10 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						ThreadSleep(2000);
+						ThreadSleep(500);
 						if (sendKeys(driver, ele, value, label, action.BOOLEAN)) {
 							log(LogStatus.INFO, "Able to enter "+label, YesNo.No);
-							ThreadSleep(2000);
+							ThreadSleep(500);
 							flag=true;
 						} else {
 							log(LogStatus.ERROR, "Not Able to enter "+value+" to label "+label, YesNo.Yes);
@@ -492,7 +528,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 					}
 					if (click(driver,  getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.ERROR, "Click on save Button : "+labelValue, YesNo.No);
-						ThreadSleep(2000);
+						ThreadSleep(5000);
 						flag=true;
 					} else {
 						log(LogStatus.ERROR, "Not Able to Click on save Button : "+labelValue, YesNo.Yes);
@@ -520,5 +556,71 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		WebElement ele = FindElement(dDriver, xpath, recordType+" "+desc, action.SCROLLANDBOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "Visibility", timeOut, recordType+" "+desc);
 	}
+	
+	public boolean createNavigationItem(String projectName,String[][] labelWithValue,int timeOut) {
+		String navigationTab="Navigation";
+		boolean flag=false;
+		if (clickOnTab(projectName, navigationTab)) {
+			log(LogStatus.INFO, "Click on Tab : "+navigationTab, YesNo.No);
+			if(clickUsingJavaScript(driver, getNewButton(projectName, 10), "new button")) {
+				log(LogStatus.INFO, "Click on new button going to create ", YesNo.No);
+				enteringValueForNavigation(projectName, labelWithValue, action.BOOLEAN, timeOut);
+				if (click(driver,  getNavigationTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.ERROR, "Click on save Button ", YesNo.No);
+					ThreadSleep(5000);
+					flag=true;
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on save Button ", YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on save Button ");
+				}
+				
+			}else {
+				log(LogStatus.ERROR, "Not Able to Click on new button so cannot create", YesNo.Yes);
+				sa.assertTrue(false, "Not Able to Click on new button so cannot create");
+
+			}
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on Tab : "+navigationTab, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on Tab : "+navigationTab);
+		}
+		return flag;
+	}
+	
+	public WebElement getNavigationLabel(String projectName,String parentLabel,String childNavigationLabel,action action,int timeOut) {
+		click(driver, getNavigationLabel(projectName, parentLabel, action, timeOut), parentLabel, action);
+		String xpath = "//div[@id='treeview12']//*//*[text()='"+parentLabel+"']";
+		int i=0;
+		String[] nb = childNavigationLabel.split("<break>");
+		for (i = 0; i < nb.length; i++) {
+			xpath=xpath+"/../following-sibling::*/*[text()='"+nb[i]+"']";
+		}
+		WebElement ele = FindElement(driver, xpath, parentLabel+" "+childNavigationLabel, action, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, parentLabel+" "+childNavigationLabel);
+
+	}
+	
+	public WebElement getPageDoesNotExist(String projectName,action action,int timeOut) {
+		String msg = NavatarSetUpPageErrorMessage.PageDoesExist;
+		String xpath = "//h2[contains(text(),'"+msg+"')]/ancestor::div//following-sibling::button[@title='Close this window']";
+		WebElement ele = FindElement(driver, xpath, msg, action, timeOut);
+		ele = isDisplayed(driver, ele, "Visibility", timeOut, msg);
+		if (ele!=null) {
+			msg = NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain;
+			 xpath = "//h2[contains(text(),'"+msg+"')]/ancestor::div//following-sibling::button[@title='Close this window']";
+			 ele = FindElement(driver, xpath, msg, action, timeOut);
+			ele = isDisplayed(driver, ele, "Visibility", timeOut, msg);
+		} 
+		return ele;
+	}
+	
+	public WebElement getCoverageTabAfterClick(String projectName,String tabName,action action,int timeOut) {
+		String xpath = "//a[contains(@href,'lightning') and contains(@title,'" + tabName + "')]/span/..";
+		WebElement ele = FindElement(driver, xpath,tabName, action.SCROLLANDBOOLEAN,timeOut);
+		ele = isDisplayed(driver,ele,"visibility", timeOut, tabName);
+		return ele;
+	}
+	
+	
+	
 	
 }

@@ -205,7 +205,15 @@ public class EditPage extends BasePageBusinessLayer {
 	}
 	//span[text()='Expanded']/../..//input[@type='checkbox']
 	
-	
+	@FindBy (xpath = "//*[text()='Number of Records to Display']/following-sibling::div[2]")
+	private WebElement noOfRecordsErrorMessage;
+
+	/**
+	 * @return the finishButton2
+	 */
+	public WebElement getnoOfRecordsErrorMessage(String projectName,int timeOut) {
+		return isDisplayed(driver, noOfRecordsErrorMessage, "Visibility", timeOut, "noOfRecordsErrorMessage");
+	}
 	@FindBy (xpath = "//span[text()='Expanded']/../..//input[@type='checkbox']")
 	private WebElement expandedCheckbox;
 
@@ -214,5 +222,24 @@ public class EditPage extends BasePageBusinessLayer {
 	 */
 	public WebElement getexpandedCheckbox(String projectName,int timeOut) {
 		return isDisplayed(driver, expandedCheckbox, "Visibility", timeOut, "expandedCheckbox");
+	}
+	
+	@FindBy (xpath = "//h2[text()='Error']/../following-sibling::div//div[@class='error']")
+	private WebElement noOfRecordsErrorPopup;
+
+	/**
+	 * @return the finishButton2
+	 */
+	public WebElement getnoOfRecordsErrorPopup(String projectName,int timeOut) {
+		return isDisplayed(driver, noOfRecordsErrorPopup, "Visibility", timeOut, "noOfRecordsErrorPopup");
+	}
+	@FindBy (xpath = "//h2[text()='Error']/../following-sibling::div[contains(@class,'footer')]//button[text()='OK']")
+	private WebElement noOfRecordsErrorPopupOK;
+
+	/**
+	 * @return the finishButton2
+	 */
+	public WebElement getnoOfRecordsErrorPopupOK(String projectName,int timeOut) {
+		return isDisplayed(driver, noOfRecordsErrorPopupOK, "Visibility", timeOut, "noOfRecordsErrorPopupOK");
 	}
 }

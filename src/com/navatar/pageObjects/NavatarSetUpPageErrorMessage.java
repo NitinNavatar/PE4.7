@@ -22,6 +22,11 @@ public interface NavatarSetUpPageErrorMessage {
 	public String KeepActivitiesDefaultValue="Old and New Accounts";
 	public String selectIncludeActivitiesValue="Contact Only";
 	
+	//Page doesn't exist
+	public String PageDoesExist="Page doesn\'t exist";
+	
+//Enter a valid URL and try again
+	public String EnterAValidURLAndTryAgain="Enter a valid URL and try again";
 	
 
 }

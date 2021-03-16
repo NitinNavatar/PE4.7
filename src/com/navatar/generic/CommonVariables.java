@@ -14,6 +14,7 @@ import com.navatar.scripts.Module5;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.scripts.FieldSet;
 import com.navatar.scripts.Module2;
+import com.navatar.scripts.Module3;
 import com.navatar.scripts.Module4;
 
 
@@ -61,14 +62,16 @@ public class CommonVariables {
 	public static String superAdminUserName,superAdminRegistered,adminPassword;
 	public static String AdminUserFirstName,AdminUserLastName,AdminUserEmailID;
 	public static String crmUser1FirstName,crmUser1LastName,crmUser1EmailID,crmUserProfile,crmUserLience;
+	public static String crmUser2FirstName,crmUser2LastName,crmUser2EmailID;
 	public static String gmailUserName,gmailUserName2,gmailPassword;
 	
-	public static String tabCustomObj,tabCustomObjField;
-	public static String tabObj1,tabObj2,tabObj3,tabObj4,tabObj5,tabObj6,tabObj7;
+	public static String tabCustomObj,tabCustomObjField,tabCustomObjAPIName;
+	public static String tabObj1,tabObj2,tabObj3,tabObj4,tabObj5,tabObj6,tabObj7,tabObj8Coverage;
 	
 	public static String ToggleIns1,ToggleIns1RecordType;
-	public static String M4Ins1,M4Ins1RecordType;
+	public static String M4Ins1,M4Ins1RecordType,M4Deal1;
 	public static String M4Contact1FName,M4Contact1LName,M4Contact1EmailID,M4Contact1RecordType,M4Contact1Title;
+	public static String M4Contact2FName,M4Contact2LName,M4Contact2EmailID;
 	
 	public static String environment,mode;
 	public static String TWTask1Subject,TWTask2Subject,TWTask3Subject,TWTask4Subject,TWTask5Subject,TWTask6Subject,TWTask8Subject,TWTaskCR1Subject,TWTaskUpdateLabelSubject;
@@ -180,6 +183,14 @@ public class CommonVariables {
 	public static String watchListSDG="Origination_Watchlist_AllWatchlist_Baseline";
 	public static String watchListTitle="Watchlist";
 	public static String dealTitle="Deals";
+	
+	public static String energyCoverage,energyCoverageRecordType;
+	public static String healthCareCoverage,healthCareCoverageRecordType;
+	public static String manufacturingCoverage,manufacturingCoverageRecordType;
+	public static String businessServicesCoverage,businessServicesCoverageRecordType;
+	public static String TechonlogyCoverage,TechonlogyCoverageRecordType;
+	public static String pharmaCoverage,pharmaCoverageRecordType;
+	
 //	/**
 //	 * 
 //	 */
@@ -194,6 +205,7 @@ public class CommonVariables {
 		superAdminRegistered=ExcelUtils.readDataFromPropertyFile("SuperAdminRegistered");
 		appName=ExcelUtils.readDataFromPropertyFile("AppName");
 		tabCustomObj=ExcelUtils.readDataFromPropertyFile("CustomTabName");
+		tabCustomObjAPIName=tabCustomObj+"__c";
 		tabObj1=ExcelUtils.readDataFromPropertyFile("Object1");
 		tabObj2=ExcelUtils.readDataFromPropertyFile("Object2");
 		tabObj3=ExcelUtils.readDataFromPropertyFile("Object3");
@@ -221,12 +233,17 @@ public class CommonVariables {
 			crmUserProfile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User1", excelLabel.User_Profile);
 			crmUserLience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User1", excelLabel.User_License);
 
+			crmUser2FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User2", excelLabel.User_First_Name);
+			crmUser2LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User2", excelLabel.User_Last_Name);
+			crmUser2EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User2", excelLabel.User_Email);
+			
 			
 			tabCustomObj=ExcelUtils.readDataFromPropertyFile("CustomTabName");
 			tabObj1=ExcelUtils.readDataFromPropertyFile("Object1");
 			tabObj2=ExcelUtils.readDataFromPropertyFile("Object2");
 			tabObj3=ExcelUtils.readDataFromPropertyFile("Object3");
 			tabObj4=ExcelUtils.readDataFromPropertyFile("Object4");
+			tabObj8Coverage=ExcelUtils.readDataFromPropertyFile("Object8");
 			
 			SDG = "Sortable Data Grids";
 			
@@ -648,8 +665,7 @@ public class CommonVariables {
 			FS_MarketingEvent1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "ME1", excelLabel.Record_Type);
 			FS_MarketingEvent1Organizer=FS_Ins2;
 			
-		}
-		if(obj instanceof Module4){
+		} else if(obj instanceof Module4){
 			
 			M4Sdg1Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG1", excelLabel.SDG_Name);
 			M4Sdg1TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG1", excelLabel.SDG_Tag);;
@@ -664,6 +680,7 @@ public class CommonVariables {
 			M4Sdg3ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG3", excelLabel.sObjectName);
 			M4Sdg3ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG3", excelLabel.Parent_Field_Name);
 			M4Ins1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M4INS1", excelLabel.Institutions_Name);
+			M4Deal1=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M4Deal1", excelLabel.Deal_Name);
 			
 			
 			M4MarketingEvent1Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME1", excelLabel.Marketing_Event_Name);
@@ -675,8 +692,33 @@ public class CommonVariables {
 			M4Contact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Contact_EmailId);
 			M4Contact1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Record_Type);
 			M4Contact1Title=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Title);
+
+			M4Contact2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON2", excelLabel.Contact_FirstName);
+			M4Contact2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON2", excelLabel.Contact_LastName);
+
 			
+		}else if(obj instanceof Module3){
+		
+			energyCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage1", excelLabel.Coverage_Name);
+			energyCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage1", excelLabel.Record_Type);
+			
+			healthCareCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage2", excelLabel.Coverage_Name);
+			healthCareCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage2", excelLabel.Record_Type);
+			
+			manufacturingCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage3", excelLabel.Coverage_Name);
+			manufacturingCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage3", excelLabel.Record_Type);
+			
+			businessServicesCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage4", excelLabel.Coverage_Name);
+			businessServicesCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage4", excelLabel.Record_Type);
+			
+			TechonlogyCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage5", excelLabel.Coverage_Name);
+			TechonlogyCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage5", excelLabel.Record_Type);
+			
+			pharmaCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage6", excelLabel.Coverage_Name);
+			pharmaCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage6", excelLabel.Record_Type);
+	
 		}
+		
 		 System.err.println("");
 		AppListeners.appLog.info("Done with intialization. Enjoy the show.\nTotal Time Taken: "+((System.currentTimeMillis()-StartTime)/1000)+" seconds.");
 		

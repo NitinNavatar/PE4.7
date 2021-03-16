@@ -565,8 +565,17 @@ public abstract class BasePage extends BaseLib {
 	}
 	
 	public WebElement getCustomTabSaveBtn(String projectName,int timeOut) {
+		List<WebElement> eleList = FindElements(driver, "//*[@title='Save' or text()='Save']", "Save Button");
+		for (WebElement webElement : eleList) {
+			webElement=isDisplayed(driver, webElement, "Visibility", 2, "Custom Tab Save Button lightning");
+			if (webElement!=null) {
+				return webElement;
+			} else {
+
+			}
+		}
 		return isDisplayed(driver, save_Lightning, "Visibility", timeOut, "Custom Tab Save Button lightning");
-		
+
 	}
 	
 	@FindBy(xpath = "//button[text()='Compact Layout Assignment']")
@@ -4766,5 +4775,34 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, imgLink, "Visibility", timeOut, "send Button on List Email");
 		
 	}
+
+	public WebElement getImgForObject(String object,int timeOut) {
+		String xpath ="//*[text()='"+object+"']/../../preceding-sibling::*//img";
+		WebElement ele= FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "img for "+object);
+	}
+	
+	public WebElement getCustomNumberOfImg(String object,String record,int timeOut) {
+		String xpath ="//article[@class='cRelatedListAccordion']//a[text()='"+object+"']/../../../following-sibling::div//a[text()='"+record+"']/../preceding-sibling::div/*/*/*";
+		WebElement ele= FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "img for "+object);
+	}
+
+	@FindBy(xpath = "//*[@name='SaveEdit']")
+	private WebElement navigationTabSaveBtn;
+	
+	public WebElement getNavigationTabSaveBtn(String projectName,int timeOut) {
+		return isDisplayed(driver, navigationTabSaveBtn, "Visibility", timeOut, "Save Button");
+		
+	}
+	
+	@FindBy(xpath = "//div[@class='slds-global-header__logo']")
+	private WebElement headerImg;
+	
+	public WebElement getHeaderImg(String projectName,int timeOut) {
+		return isDisplayed(driver, headerImg, "Visibility", timeOut, "Header Image");
+		
+	}
+
 
 }

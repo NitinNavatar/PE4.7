@@ -3,8 +3,11 @@ package com.navatar.pageObjects;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 
+import com.navatar.generic.CommonLib;
+import com.navatar.generic.EnumConstants.ContactPagePhotoActions;
 import com.navatar.generic.EnumConstants.LookUpIcon;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageLabel;
@@ -42,8 +45,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 	public boolean searchStandardOrCustomObject(String environment, String mode, object objectName) {
 		String index="[1]";
 		if (objectName==object.Global_Actions || objectName==object.Activity_Setting || objectName==object.App_Manager
-				|| objectName==object.Lightning_App_Builder || objectName==object.Profiles || objectName==object.Tabs) {
-			if (objectName==object.Global_Actions || objectName==object.Tabs) {
+				|| objectName==object.Lightning_App_Builder || objectName==object.Profiles || objectName==object.Tabs ||  objectName==object.Users) {
+			if (objectName==object.Global_Actions || objectName==object.Tabs ||  objectName==object.Users) {
 				index="[2]";	
 			}
 			ThreadSleep(3000);
@@ -1334,6 +1337,16 @@ public void recordTypeVerification(String[][] labelWithValue) {
 	}
 }
 
+public String returnAPINameOfField(String projectName, String field) {
+	String xpath = "//span[text()='"+field+"']/../../following-sibling::td[1]/span";
+	WebElement ele= isDisplayed(driver, FindElement(driver, xpath,field,
+			action.SCROLLANDBOOLEAN, 10), "visibility", 10, field);
+	if (ele!=null)
+		return ele.getText();
+	return ""; 
+
+}
+
 public WebElement getLabelInputBoxwithCommonXpath(String projectName,String label,int timeOut) {
 	String xpath="//*[text()='"+label+"']/..//following-sibling::td//input";
 	WebElement ele=isDisplayed(driver, FindElement(driver, xpath, label, action.BOOLEAN, 10), "visibility", 10, label);
@@ -1374,35 +1387,38 @@ public boolean createCustomObject(String projectName,String[][] labelWithValue,i
 	return flag;
 }
 
-public boolean addObjectToTab(String environment, String mode,String projectName,object objectName, String ObjecttoAddedOnTab,String styleType) {
+public boolean addObjectToTab(String environment, String mode,String projectName,object objectName, String ObjecttoAddedOnTab,String styleType,String parentId) {
 	WebElement ele=null;
 	boolean flag=false;
 	if(searchStandardOrCustomObject(environment, mode, objectName)) {
 		log(LogStatus.PASS, "object searched : "+objectName.toString(), YesNo.No);
 		ThreadSleep(5000);
 		switchToDefaultContent(driver);
-		switchToFrame(driver, 20, getSetUpPageIframe(60));
-		if (click(driver, getCustomObjectTabNewBtn(20), "New", action.BOOLEAN)) {
+		switchToFrame(driver, 20, getSetUpPageIframe(120));
+		if (click(driver, getCustomObjectTabNewBtn(120), "New", action.BOOLEAN)) {
 			log(LogStatus.PASS, "clicked on new button ", YesNo.No);
 			ThreadSleep(5000);
 			switchToDefaultContent(driver);
-			switchToFrame(driver, 20, getSetUpPageIframe(60));
-			if (selectVisibleTextFromDropDown(driver, getObjectDropDown(10), ObjecttoAddedOnTab, ObjecttoAddedOnTab)) {
+			switchToFrame(driver, 20, getSetUpPageIframe(120));
+			if (selectVisibleTextFromDropDown(driver, getObjectDropDown(120), ObjecttoAddedOnTab, ObjecttoAddedOnTab)) {
 				log(LogStatus.INFO, "selected OBJECT : "+ObjecttoAddedOnTab, YesNo.No);
 
-				if (tabStyleSelector(styleType)) {
+				if (tabStyleSelector(styleType,parentId)) {
 					log(LogStatus.INFO, "selected style : "+styleType, YesNo.No);
-					ThreadSleep(1000);
-					if(click(driver, getCustomFieldNextBtn2(30),"next button", action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(1000);		
+					switchToDefaultContent(driver);
+					switchToFrame(driver, 20, getSetUpPageIframe(120));
+					if(click(driver, getCustomFieldNextBtn2(10),"next button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.PASS, "Clicked on Next button", YesNo.No);
 						ThreadSleep(1000);		
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 20, getSetUpPageIframe(60));
-						if(click(driver, getCustomFieldNextBtn2(30),"next button", action.SCROLLANDBOOLEAN)) {
+						switchToFrame(driver, 20, getSetUpPageIframe(120));
+						if(click(driver, getCustomFieldNextBtn2(120),"next button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.PASS, "Clicked on Next button", YesNo.No);
-							ThreadSleep(1000);		
-
-							if (click(driver,  getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
+							ThreadSleep(1000);			
+							switchToDefaultContent(driver);
+							switchToFrame(driver, 20, getSetUpPageIframe(120));
+							if (click(driver,  getCustomTabSaveBtn(projectName, 120), "save button", action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.ERROR, "Click on save Button & succeessfully add "+ObjecttoAddedOnTab+" to tab", YesNo.No);
 								ThreadSleep(5000);
 								flag = true;
@@ -1441,22 +1457,33 @@ public boolean addObjectToTab(String environment, String mode,String projectName
 	return flag;
 }
 
-public boolean tabStyleSelector( String styleType) {
+public boolean tabStyleSelector(String styleType,String parentId) {
 	boolean flag = false;
+	boolean windowFlag=false;
 	if(click(driver,getTabObjectLookUpIcon(30), "tab Style look up icon", action.BOOLEAN)) {
-		String parentWindow=null;
 		WebElement ele=null;
-		parentWindow=switchOnWindow(driver);
-		if(parentWindow!=null) {
-			ele=isDisplayed(driver, FindElement(driver, "//*[text()='"+styleType+"']",styleType, action.SCROLLANDBOOLEAN, 20),"visibility", 20,styleType);
-			if(click(driver, ele, "go button", action.SCROLLANDBOOLEAN)) {
+		String currentWindow=driver.getWindowHandle();
+		log(LogStatus.INFO, "Tab window "+currentWindow,YesNo.No);
+		log(LogStatus.INFO, "First window "+parentId,YesNo.No);
+		for (String window : driver.getWindowHandles()) {
+			if (!window.equals(currentWindow) && !window.equals(parentId)) {
+				driver.switchTo().window(window);
+				windowFlag=true;
+			}
+		}
+		
+		if(windowFlag) {
+			ele= FindElement(driver, "//*[text()='"+styleType+"']",styleType, action.SCROLLANDBOOLEAN, 20);
+			ele=isDisplayed(driver,ele,"visibility", 20,styleType);
+			if(click(driver, ele, styleType, action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "selected "+styleType,YesNo.No);
 				flag=true;
 			}else {
 				log(LogStatus.ERROR, "cannot select "+styleType,YesNo.Yes);
 			}
-			driver.close();
-			driver.switchTo().window(parentWindow);
+			flag=true;
+			//driver.close();
+			driver.switchTo().window(currentWindow);
 		}else {
 			log(LogStatus.ERROR, "No new window is open so cannot select value "+styleType+" from look up",YesNo.Yes);
 		}
@@ -1467,5 +1494,136 @@ public boolean tabStyleSelector( String styleType) {
 	return flag;
 }
 
+
+public boolean updateEdgeIcon(String projectName,String attachmentPath,String imgName) {
+	boolean flag=false;
+	attachmentPath=attachmentPath+imgName;
+	if (click(driver, getImgClearButton(projectName, 10),"Img Clear button", action.BOOLEAN)) {
+		log(LogStatus.INFO,"Click on Img Clear Button",YesNo.No);
+		ThreadSleep(5000);		
+		
+		if (sendKeys(driver, getuploadPhotoButton(projectName, 10),attachmentPath,attachmentPath,action.BOOLEAN)) {
+			ThreadSleep(500);
+			log(LogStatus.INFO,"send value to "+attachmentPath,YesNo.No);
+			if (click(driver, getCustomTabSaveBtn(projectName, 10)," Save Button", action.BOOLEAN)) {
+				log(LogStatus.INFO,"Click on Save Button",YesNo.No);
+				ThreadSleep(5000);	
+				flag=true;
+//				String xpath = "//div[@aria-labelledby='appImageLabel']//span[text()='"+imgName+"']";
+//				WebElement ele= FindElement(driver, xpath, imgName, action.BOOLEAN, 30);
+//				if (ele!=null) {
+//					log(LogStatus.INFO,"File uploaded successfully "+imgName,YesNo.No);
+//					flag=true;
+//				} else {
+//					sa.assertTrue(false, "File not uploaded "+imgName);
+//					log(LogStatus.FAIL,"File not uploaded "+imgName,YesNo.Yes);
+//				}
+			} else {
+				sa.assertTrue(false, "Not Able to Click on Save Button");
+				log(LogStatus.FAIL,"Not Able to Click on Save Button",YesNo.Yes);
+			}
+
+		} else {
+			sa.assertTrue(false, "Not Able to send value to "+attachmentPath);
+			log(LogStatus.FAIL,"Not Able to send value to "+attachmentPath,YesNo.Yes);
+		}
+		
+	} else {
+		sa.assertTrue(false, "Not Able to Click on Img Clear Button");
+		log(LogStatus.FAIL,"Not Able to Click on Img Clear Button",YesNo.Yes);
+	}
+	return flag;
+	
+}
+
+
+public boolean permissionChangeForUserONObject(WebDriver driver,String userName,String[][] LabelswithCheck,int timeOut) {
+
+	ThreadSleep(10000);
+	switchToDefaultContent(driver);
+	switchToFrame(driver, 60, getSetUpPageIframe(60));
+	boolean flag=false;;
+	String xpath="";
+	xpath="//th//a[text()='"+userName+"']";
+	WebElement ele=FindElement(driver, xpath,userName, action.SCROLLANDBOOLEAN, timeOut);
+	ele=isDisplayed(driver, ele, "visibility", timeOut, userName);
+	if (click(driver, ele, userName.toString(), action.BOOLEAN)) {
+		log(LogStatus.INFO, "able to click on "+userName, YesNo.No);
+		ThreadSleep(10000);
+		switchToDefaultContent(driver);
+		switchToFrame(driver, 60, getSetUpPageIframe(60));
+		xpath="//*[@id='topButtonRow']//input[@name='edit']";
+		ele=FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, timeOut);
+		ThreadSleep(5000);
+		if (click(driver, ele, "Edit Button", action.BOOLEAN)) {
+			log(LogStatus.INFO, "able to click on edit button", YesNo.No);
+			ThreadSleep(10000);
+			switchToDefaultContent(driver);
+			switchToFrame(driver, 60, getSetUpPageIframe(60));
+			String OnObject="";
+			String permission = "";
+			for (String[] strings : LabelswithCheck) {
+				OnObject=strings[0];
+				permission=strings[1];
+				xpath="//*[text()='"+OnObject+"']/following-sibling::*//td/input[contains(@title,'"+permission+"')]";
+				ele = FindElement(driver, xpath, OnObject+" with permission "+permission, action.SCROLLANDBOOLEAN, timeOut);
+
+				if (click(driver, ele, OnObject+" with permission "+permission,action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "clicked on checkbox "+permission+" for "+OnObject, YesNo.No);
+					flag=true;
+					if (click(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
+						ThreadSleep(10000);
+						flag=true;
+					} else {
+						log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Able clicked on checkbox "+permission+" for "+OnObject, YesNo.Yes);
+				}
+
+
+			}
+		} else {
+			log(LogStatus.ERROR, "not able to click on edit button", YesNo.Yes);
+		}
+
+	} else {
+		log(LogStatus.ERROR, "Not able to click on "+userName, YesNo.Yes);
+	}
+	return flag;
+}
+
+public boolean clickOnEditBtnForCRMUser(WebDriver driver,String userLastName,String userFirstName,int timeOut) {
+	boolean flag=false;
+	switchToDefaultContent(driver);
+	ThreadSleep(10000);
+	switchToFrame(driver, 60, getSetUpPageIframe(60));
+	WebElement ele = FindElement(driver,
+			"//a[text()='" + userLastName + "," + " " + userFirstName+ "']",userLastName+", "+userFirstName, action.SCROLLANDBOOLEAN, 10);
+	if (ele != null) {
+		if (click(driver, ele, userLastName+", "+userFirstName, action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(10000);
+			switchToFrame(driver, 40, getSetUpPageIframe(40));
+			ele=getEditButton("", "Classic", timeOut);
+			if (click(driver, ele, "Edit icon", action.SCROLLANDBOOLEAN)) {
+				switchToDefaultContent(driver);
+				ThreadSleep(10000);
+				switchToFrame(driver, 20, getSetUpPageIframe(20));
+				flag=true;
+			} else {
+				appLog.info("Not able to click on edit icon");
+			}
+
+		} else {
+			appLog.info("Not able to click on "+userLastName+", "+userFirstName);
+		}
+	} else {
+		appLog.info("Element is not present");
+	}
+	return flag;
+}
 
 }

@@ -4748,19 +4748,22 @@ public boolean verifyAccordion(String projectName,String recordName,String[] fie
 	WebElement ele=FindElement(driver, xpath, recordName, action.SCROLLANDBOOLEAN,10);
 	if (isDisplayed(driver, ele, "visibility", timeOut, recordName+" in accordion")!=null) {
 		xpath = "//article[@class='cRelatedListAccordion']//a[text()='"+recordName+"']/following-sibling::ul";
-		for (String fieldValue:fieldValues) {
-			field=fieldValue.split(breakSP)[0];
-			value=fieldValue.split(breakSP)[1];
-			finalx=xpath+"//li//div[@title='"+field+"']/following-sibling::div[@title='"+value+"']";
-			ele=FindElement(driver, finalx, field+" and "+value, action.SCROLLANDBOOLEAN, 10);
-			ele=isDisplayed(driver, ele, "visibility", 10, field+" and "+value);
-			if (ele!=null) {
-				log(LogStatus.INFO, "successfully verified presence of "+field+" and "+value, YesNo.No);
-					
-			}
-			else {
-				log(LogStatus.ERROR, "could not verify "+field+" and "+value, YesNo.Yes);
-				flag=false;
+		if (fieldValues!=null) {
+			for (String fieldValue:fieldValues) {
+				field=fieldValue.split(breakSP)[0];
+				value=fieldValue.split(breakSP)[1];
+				field = field.replace("_", " ");
+				finalx=xpath+"//li//div[@title='"+field+"']/following-sibling::div[@title='"+value+"']";
+				ele=FindElement(driver, finalx, field+" and "+value, action.SCROLLANDBOOLEAN, 10);
+				ele=isDisplayed(driver, ele, "visibility", 10, field+" and "+value);
+				if (ele!=null) {
+					log(LogStatus.INFO, "successfully verified presence of "+field+" and "+value, YesNo.No);
+
+				}
+				else {
+					log(LogStatus.ERROR, "could not verify "+field+" and "+value, YesNo.Yes);
+					flag=false;
+				}
 			}
 		}
 	}else {
@@ -4879,4 +4882,51 @@ public WebElement accordionModalWindowClose(String projectName, String object) {
 	return isDisplayed(driver, ele, "visibility", 10, object + "accordion");
 	
 }
+
+public boolean isAutomationAllListViewForObject(String projectName,String ObjectName, int timeOut) {
+	String viewList="Automation All",xpath="";
+		ThreadSleep(3000);
+		xpath="//span[text()='"+ObjectName+"']/../../../following-sibling::div//span[text()='"+viewList+"']";
+		WebElement selectListView = FindElement(driver, xpath,"Select List View : "+viewList+" for "+ObjectName, action.SCROLLANDBOOLEAN, 5);
+		ThreadSleep(3000);
+		if ( selectListView!=null) {
+			log(LogStatus.INFO, viewList+" for "+ObjectName+" available", YesNo.No);
+			return true;
+		}
+		else {
+			log(LogStatus.ERROR,  viewList+" for "+ObjectName+" is not available", YesNo.No);
+			
+		}
+	
+
+	return false;
+}
+
+public WebElement actionDropdownElement(String projectName, ShowMoreActionDropDownList smaddl, int timeOut) {
+	String actionDropDown = smaddl.toString().replace("_", " ");
+	String xpath ="//span[text()='"+actionDropDown+"']";
+	xpath="//*[@name='"+actionDropDown+"' or text()='"+actionDropDown+"']";
+	return isDisplayed(driver, FindElement(driver, xpath, "show more action down arrow", action.SCROLLANDBOOLEAN, 10), "visibility", timeOut, actionDropDown);
+}
+
+public WebElement accordionSDGButtons(String projectName,String toggleTab,ToggleButtonGroup btnName,action action,int timeOut) {
+	String btname = btnName.toString();
+	String xpath = "//h2[contains(text(),'"+toggleTab+"')]/../../..//following-sibling::div//button[@title='"+btname+"']";
+	WebElement ele = FindElement(driver, xpath,toggleTab+" >> "+btname, action, timeOut);
+	scrollDownThroughWebelement(driver, ele, "Toggle Button : "+btname);
+	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btname);
+	return ele;
+}
+public WebElement sdgButtons(String projectName, String field,String edit, int timeOut) {
+	String xpath ="//span//*[text()='"+field+"']/../../../following-sibling::td//button[text()='"+edit+"']";
+	WebElement ele = FindElement(driver, xpath,"sdg buttons", action.BOOLEAN, timeOut);
+	return isDisplayed(driver, ele, "visibility", timeOut, "sdg button");
+}
+
+public WebElement sdgContactImage(String projectName, String contact, int timeOut) {
+	String xpath ="//*[@title='"+contact+"']/preceding-sibling::img";
+	WebElement ele = FindElement(driver, xpath,"contact image on sdg", action.BOOLEAN, timeOut);
+	return isDisplayed(driver, ele, "visibility", timeOut, "contact image on sdg");
+}
+
 }
