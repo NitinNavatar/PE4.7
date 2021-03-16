@@ -4752,11 +4752,19 @@ public abstract class BasePage extends BaseLib {
 	//input[@name='fileUploader']
 	
 	
-	@FindBy(xpath = "//*[text()='Upload Files']")
+	@FindBy(xpath = "//input[@name='fileUploader']")
 	private WebElement uploadImageXpath;
 
 	public WebElement getUploadImageXpath(int timeOut) {
 		return isDisplayed(driver, uploadImageXpath, "Visibility", timeOut,"upload image xpath");
+	}
+	
+	@FindBy(xpath = "//div[@id='parentDiv']//img")
+	private WebElement imgLink;
+	
+	public WebElement getimgLink(String projectName,int timeOut) {
+		return isDisplayed(driver, imgLink, "Visibility", timeOut, "send Button on List Email");
+		
 	}
 
 }

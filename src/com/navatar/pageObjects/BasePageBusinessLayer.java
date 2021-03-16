@@ -4796,6 +4796,7 @@ public boolean verifyAccordianRecordImage(String projectName, String record, Str
 
 
 public boolean updatePhoto(String projectName,String pageName,String uploadImagePath) {
+	String imgId=null;
 	WebElement ele=getUpdatePhotoCameraIcon(10);
 	if(ele!=null) {
 		log(LogStatus.INFO, "clicked on update photo icon", YesNo.No);
@@ -4807,20 +4808,31 @@ public boolean updatePhoto(String projectName,String pageName,String uploadImage
 				ThreadSleep(1000);
 				String path=System.getProperty("user.dir")+uploadImagePath;
 				System.err.println("Path : "+path);
-				if(click(driver, getUploadImageXpath(10),"upload image button", action.BOOLEAN)) {
+				
+				if (sendKeys(driver, getUploadImageXpath(10), path, "upload photo button", action.SCROLLANDBOOLEAN) ) {
+				
+				
+//				if(click(driver, getUploadImageXpath(10),"upload image button", action.BOOLEAN)) {
 					log(LogStatus.PASS, "clicked on upload image button on "+pageName, YesNo.No);
 					ThreadSleep(500);
-					if(uploadFile(path)) {
+//					if(uploadFile(path)) {
 						ThreadSleep(1000);
-						if(click(driver, getCustomTabSaveBtn(projectName,10),"Save button", action.BOOLEAN)) {
+						if(click(driver, getRecordPageSettingSave(10),"Save button", action.BOOLEAN)) {
 							log(LogStatus.PASS, "clicked on save button and image is updtaed "+path +" on "+pageName, YesNo.No);
-							return true;
+							ThreadSleep(4000);
+							imgId=getimgLink(projectName, 10).getAttribute("src");
+							if (imgId!=null){
+								log(LogStatus.INFO, "found id of img uploaded: "+imgId, YesNo.Yes);
+								return true;
+							}else {
+								log(LogStatus.ERROR, "could not find id of img uploaded", YesNo.Yes);
+							}
 						}else {
 							log(LogStatus.PASS, "Not able to click on save button and so cannot updtaed image from path "+path +" on "+pageName, YesNo.No);
 						}
-					}else {
-						log(LogStatus.ERROR,"Not able to pass path in file uploaded : "+path+" on "+pageName, YesNo.Yes);
-					}
+//					}else {
+//						log(LogStatus.ERROR,"Not able to pass path in file uploaded : "+path+" on "+pageName, YesNo.Yes);
+//					}
 				}else {
 					log(LogStatus.ERROR, "Not able to click on upload image on "+pageName+" so cannot update image from Path : "+path, YesNo.Yes);
 				}
@@ -4832,7 +4844,7 @@ public boolean updatePhoto(String projectName,String pageName,String uploadImage
 			log(LogStatus.ERROR, "Not able to click on update photo icon so cannot upload photo on "+pageName, YesNo.Yes);
 		}
 	}else {
-		log(LogStatus.ERROR, "Update photo icon is not displaying on "+pageName+" so cannot upload photo", YesNo.Yes);
+		log(LogStatus.ERROR, "camera icon is not displaying on "+pageName+" so cannot upload photo", YesNo.Yes);
 	}
 	return false;
 }
