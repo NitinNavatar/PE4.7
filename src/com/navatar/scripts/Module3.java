@@ -5994,6 +5994,7 @@ public class Module3 extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
+		none="--"+none+"--";
 		boolean flag=false;
 		if (home.clickOnSetUpLink()) {
 			String parentID = switchOnWindow(driver);
@@ -6228,6 +6229,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
+	@Parameters({ "projectName"})
+	@Test
 	public void Module3Tc071_ChangetheUserIndustryAsManufacturingAndVerifyImpactonNavigationMenu(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);

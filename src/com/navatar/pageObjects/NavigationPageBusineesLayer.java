@@ -606,7 +606,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		ele = isDisplayed(driver, ele, "Visibility", timeOut, msg);
 		if (ele!=null) {
 			msg = NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain;
-			 xpath = "//h2[contains(text(),'"+msg+"')]/ancestor::div//following-sibling::button[@title='Close this window']";
+			 xpath = "//div[contains(text(),'"+msg+"')]/ancestor::div//following-sibling::button[@title='Close this window']";
 			 ele = FindElement(driver, xpath, msg, action, timeOut);
 			ele = isDisplayed(driver, ele, "Visibility", timeOut, msg);
 		} 
