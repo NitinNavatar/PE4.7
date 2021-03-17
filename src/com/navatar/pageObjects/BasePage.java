@@ -565,8 +565,17 @@ public abstract class BasePage extends BaseLib {
 	}
 	
 	public WebElement getCustomTabSaveBtn(String projectName,int timeOut) {
+		List<WebElement> eleList = FindElements(driver, "//*[@title='Save' or text()='Save']", "Save Button");
+		for (WebElement webElement : eleList) {
+		webElement=isDisplayed(driver, webElement, "Visibility", 2, "Custom Tab Save Button lightning");
+		if (webElement!=null) {
+				return webElement;
+			} else {
+
+			}
+		}
 		return isDisplayed(driver, save_Lightning, "Visibility", timeOut, "Custom Tab Save Button lightning");
-		
+
 	}
 	
 	@FindBy(xpath = "//button[text()='Compact Layout Assignment']")
@@ -4752,13 +4761,20 @@ public abstract class BasePage extends BaseLib {
 	//input[@name='fileUploader']
 	
 	
-	@FindBy(xpath = "//*[text()='Upload Files']")
+	@FindBy(xpath = "//input[@name='fileUploader']")
 	private WebElement uploadImageXpath;
 
 	public WebElement getUploadImageXpath(int timeOut) {
 		return isDisplayed(driver, uploadImageXpath, "Visibility", timeOut,"upload image xpath");
 	}
 	
+	@FindBy(xpath = "//div[@id='parentDiv']//img")
+	private WebElement imgLink;
+	
+	public WebElement getimgLink(String projectName,int timeOut) {
+		return isDisplayed(driver, imgLink, "Visibility", timeOut, "send Button on List Email");
+		
+	}
 
 	public WebElement getImgForObject(String object,int timeOut) {
 		String xpath ="//*[text()='"+object+"']/../../preceding-sibling::*//img";

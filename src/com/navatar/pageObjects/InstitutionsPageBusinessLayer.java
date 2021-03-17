@@ -9,6 +9,7 @@ import com.navatar.generic.EnumConstants.RecordType;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
+import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.SoftAssert;
 import com.relevantcodes.extentreports.LogStatus;
 
@@ -473,4 +474,249 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 			}
 		return flag;
 	}
+	
+	
+	public boolean createInstitution(String environment,String mode,String institutionName,String recordType, String otherLabelFields,String otherLabelValues) {
+		String labelNames[]=null;
+		String labelValue[]=null;
+		if(otherLabelFields!=null && otherLabelValues !=null) {
+			labelNames= otherLabelFields.split(",");
+			labelValue=otherLabelValues.split(",");
+		}
+		refresh(driver);
+		ThreadSleep(3000);
+		if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			ThreadSleep(10000);
+			if(clickUsingJavaScript(driver, getNewButton(environment, mode, 60), "new button")) {
+				appLog.info("clicked on new button");
+			}else {
+				appLog.error("Not able to click on New Button so cannot create institution: " + institutionName);
+				return false;
+			}
+		}else {
+			if (click(driver, getNewButton(environment,mode,60), "New Button", action.SCROLLANDBOOLEAN)) {
+				appLog.info("clicked on new button");
+			} else {
+				appLog.error("Not able to click on New Button so cannot create institution: " + institutionName);
+				return false;
+			}
+		}
+			if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+				ThreadSleep(2000);
+				if (selectVisibleTextFromDropDown(driver, getRecordTypeOfNewRecordDropDownList(60),
+						"Record type of new record drop down list", recordType)) {
+					appLog.info("selecte institution from record type of new record drop down list");
+				}else{
+					appLog.error("Not Able to selecte institution from record type of new record drop down list");
+					return false;
+				}
+			}else{
+				ThreadSleep(2000);
+				if(click(driver, getRadioButtonforRecordType(recordType, 60), "Radio Button for New Institution", action.SCROLLANDBOOLEAN)){
+					appLog.info("Clicked on radio Button for institution from record type");
+				}else{
+					appLog.info("Not Able to Clicked on radio Button for institution from record type");
+					return false;
+				}
+			}
+
+				if (click(driver, getContinueOrNextBtn(environment,mode,60), "Continue Button", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on continue button");
+					if (sendKeys(driver, getLegalNameTextBox(environment,mode,30), institutionName, "leagl name text box",
+							action.SCROLLANDBOOLEAN)) {
+						appLog.info("passed data in text box: " + institutionName);
+						if(labelNames!=null && labelValue!=null) {
+							for(int i=0; i<labelNames.length; i++) {
+								WebElement ele = getInstitutionPageTextBoxOrRichTextBoxWebElement(environment, mode, labelNames[i].trim(), 30);
+								if(sendKeys(driver, ele, labelValue[i], labelNames[i]+" text box", action.SCROLLANDBOOLEAN)) {
+									appLog.info("passed value "+labelValue[i]+" in "+labelNames[i]+" field");
+									
+
+									if (mode.equalsIgnoreCase(Mode.Lightning.toString()) && labelNames[i].toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString())) {
+										
+										ThreadSleep(1000);
+										if (click(driver,
+												FindElement(driver,
+														"//div[contains(@class,'uiAutocomplete')]//a//div//div[contains(@class,'primary') and @title='"+labelValue[i]+"']",
+														"Legal Name List", action.SCROLLANDBOOLEAN, 30),
+												labelValue[i] + "   :   Legal Name", action.SCROLLANDBOOLEAN)) {
+											appLog.info(labelValue[i] + "  is present in list.");
+										} else {
+											appLog.info(labelValue[i] + "  is not present in the list.");
+											BaseLib.sa.assertTrue(false,labelValue[i] + "  is not present in the list.");
+										}
+									}
+									
+								}else {
+									appLog.error("Not able to pass value "+labelValue[i]+" in "+labelNames[i]+" field");
+									BaseLib.sa.assertTrue(false, "Not able to pass value "+labelValue[i]+" in "+labelNames[i]+" field");
+								}
+							}
+							
+						}
+						if (click(driver, getSaveButton(mode,30), "save button", action.SCROLLANDBOOLEAN)) {
+							appLog.info("clicked on save button");
+							ThreadSleep(5000);
+//							String	xpath="//span[@class='custom-truncate uiOutputText'][text()='"+institutionName+"']";
+//							WebElement ele = FindElement(driver, xpath, "Header : "+institutionName, action.BOOLEAN, 30);
+							WebElement ele = verifyCreatedItemOnPage(Header.Company, institutionName);
+							if (ele != null) {
+									appLog.info("created institution " + institutionName + " is verified successfully.");
+									appLog.info(institutionName + " is created successfully.");
+									
+									if(labelNames!=null && labelValue!=null ) {
+										for(int i=0; i<labelNames.length; i++) {
+//											
+											if(fieldValueVerificationOnInstitutionPage(environment, mode, null, labelNames[i].replace("_", " ").trim(),labelValue[i])){
+												appLog.info(labelNames[i]+" label value "+labelValue[i]+" is matched successfully.");
+											}else {
+												appLog.info(labelNames[i]+" label value "+labelValue[i]+" is not matched successfully.");
+												BaseLib.sa.assertTrue(false, labelNames[i]+" label value "+labelValue[i]+" is not matched.");
+											}
+										
+										}
+									}
+									return true;
+								
+							} else {
+								appLog.error("Created institution " + institutionName + " is not visible");
+							}
+						} else {
+							appLog.error("Not able to click on save button so cannot create institution: "
+									+ institutionName);
+						}
+					} else {
+						appLog.error("Not able to pass data in legal name text box so cannot create institution: "
+								+ institutionName);
+					}
+				} else {
+					appLog.error(
+							"Not able to click on continue button so cannot create institution: " + institutionName);
+				}
+			
+		
+		return false;
+	}
+	
+	public boolean createPartnership(String environment,String mode,String partnershipLegalName, String fund) {
+		refresh(driver);
+		ThreadSleep(5000);
+		if (click(driver, getNewButton(environment,mode,60), "New Button", action.BOOLEAN)) {
+			if (sendKeys(driver, getPartnershipLegalName(environment,mode,60), partnershipLegalName, "Partnership Legal Name",
+					action.BOOLEAN)) {
+				if (sendKeys(driver, getFundTextBox(environment,mode,60), fund, "Fund Text Box", action.BOOLEAN)) {
+					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						ThreadSleep(1000);
+						if (click(driver,
+								FindElement(driver,
+										"//*[contains(@class,'slds-listbox__option-text')]/*[@title='"+fund+"']",
+										"fund Name List", action.THROWEXCEPTION, 30),
+								fund + "   :   fund Name", action.BOOLEAN)) {
+							appLog.info(fund + "  is present in list.");
+						} else {
+							appLog.info(fund + "  is not present in the list.");
+						}
+					}
+					if (click(driver, getCustomTabSaveBtn(mode,60), "Save Button", action.BOOLEAN)) {
+						if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+							ThreadSleep(5000);
+						}
+						if (getPartnershipNameInViewMode(environment,mode,60,partnershipLegalName) != null) {
+							String partnershipName = getText(driver, getPartnershipNameInViewMode(environment,mode,60,partnershipLegalName),
+									"Partnership name in view mode", action.BOOLEAN);
+							if (partnershipName.equalsIgnoreCase(partnershipLegalName)) {
+								appLog.info("Partnership created successfully.:" + partnershipLegalName);
+								return true;
+							} else {
+								appLog.error("Partnership is not created successfully." + partnershipLegalName);
+							}
+						} else {
+							appLog.error("Partnership name is not displaying");
+						}
+					} else {
+						appLog.error("Not able to click on save button");
+					}
+				} else {
+					appLog.error("Not able to enter value in fund text box");
+				}
+			} else {
+				appLog.error("Not able to enter value in partnershp legal name text box");
+			}
+		} else {
+			appLog.error("Not able to click on new button so we cannot create partnership");
+		}
+		return false;
+	}
+	
+	public boolean createCommitment(String environment,String mode,String LimitedPartner, String Partnership, String basedOnValue,String excelPath) {
+		refresh(driver);
+		ThreadSleep(5000);
+		if (click(driver, getNewButton(environment,mode,60), "New Button", action.BOOLEAN)) {
+			ThreadSleep(5000);
+			if (sendKeys(driver, getLimitedPartnerTextbox(mode,60), LimitedPartner, "Limited Partner Text Box",
+					action.BOOLEAN)) {
+				if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+					ThreadSleep(1000);
+					if (click(driver,
+							FindElement(driver,
+									"//*[contains(@class,'slds-listbox__option-text')]/*[@title='"+LimitedPartner+"']",
+									"LimitedPartner Name List", action.THROWEXCEPTION, 30),
+							LimitedPartner + "   :   LimitedPartner Name", action.BOOLEAN)) {
+						appLog.info(LimitedPartner + "  is present in list.");
+					} else {
+						appLog.error(LimitedPartner + "  is not present in the list.");
+					}
+				}
+				if (sendKeys(driver, getPartnershipTextBox(mode,60), Partnership, "Partnership Text Box", action.BOOLEAN)) {
+					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						ThreadSleep(1000);
+						if (click(driver,
+								FindElement(driver,
+										"//*[contains(@class,'slds-listbox__option-text')]/*[@title='"+Partnership+"']",
+										"Partnership Name List", action.THROWEXCEPTION, 30),
+								Partnership + "   :   Partnership Name", action.BOOLEAN)) {
+							appLog.info(Partnership + "  is present in list.");
+						} else {
+							appLog.error(Partnership + "  is not present in the list.");
+						}
+					}
+					if (click(driver, getCustomTabSaveBtn(mode,60), "Save Button", action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(5000);
+						for(int i=0; i<2; i++) {
+							if (getCommitmentIdInViewMode(environment,mode,20) != null) {
+								String commitmentId = getText(driver, getCommitmentIdInViewMode(environment,mode,60), "Commitment ID",
+										action.BOOLEAN);
+								appLog.info(commitmentId  + " : commitment id is generated");
+								if(excelPath!=null) {
+									ExcelUtils.writeData(excelPath,commitmentId, "Entities", excelLabel.Variable_Name, basedOnValue,
+											excelLabel.Commitment_ID);
+								}else {
+									ExcelUtils.writeData(commitmentId, "Entities", excelLabel.Variable_Name, basedOnValue,
+											excelLabel.Commitment_ID);
+								}
+								return true;
+							} else {
+								if(i==1) {
+									appLog.error("Not able to find Commitment id");
+								}else {
+									refresh(driver);
+								}
+							}
+						}
+					} else {
+						appLog.error("Not able to click on save button");
+					}
+				} else {
+					appLog.error("Not able to enter value in partnership text box");
+				}
+			} else {
+				appLog.error("Not able to enter value in limited partner text box");
+			}
+		} else {
+			appLog.error("Not able to click on new button so we cannot create commitment");
+		}
+		return false;
+	}
+	
+	
 }

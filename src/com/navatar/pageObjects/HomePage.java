@@ -968,7 +968,16 @@ public class HomePage extends BasePageBusinessLayer {
 		return isDisplayed(driver, createFundraisingDefaultFundraisingValuesAddRowsLink, "Visibility", timeOut, "create Fundraising Default Fundraising Values AddRows Link");
 	}
 	
+	@FindBy(xpath="//div[@class='flexipagePage']//span[text()='Minimize']")
+	private WebElement navatarQuickLinkMinimize_Lighting;
 
+	/**
+	 * @return the navatarQuickLinkMinimize_Lighting
+	 */
+	public WebElement getNavatarQuickLinkMinimize_Lighting(String environment,int timeOut) {
+		return isDisplayed(driver, navatarQuickLinkMinimize_Lighting, "Visibility", timeOut, "Navatar Quick Link Minimize Lighting");
+	}
+	
 
 }
 

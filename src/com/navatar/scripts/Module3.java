@@ -79,6 +79,7 @@ import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
+import com.navatar.pageObjects.CoveragePageBusinessLayer;
 import com.navatar.pageObjects.CustomObjPageBusinessLayer;
 import com.navatar.pageObjects.DataLoaderWizardPageBusinessLayer;
 import com.navatar.pageObjects.DealPageBusinessLayer;
@@ -5358,6 +5359,1019 @@ public class Module3 extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc061_VerifyThatBulkEmailpageFromNavigationmenu(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		String navigationLabel=CSVLabel.Navigation_Label.toString();
+		String navigationLabelValue=NavatarQuickLink.BulkEmail.toString();
+		String urlLabel=CSVLabel.URL.toString();
+		String urlLabelValue="";
+		String[][] labelWithValue= {{navigationLabel,navigationLabelValue},{urlLabel,urlLabelValue}};
+		WebElement ele;
+
+		if (hp.clickOnLinkFromNavatarQuickLink(environment, mode, NavatarQuickLink.BulkEmail)) {
+			log(LogStatus.INFO, "Clicked On Bulk Email Link with Navatar Quick Link", YesNo.No);
+			switchToFrame(driver, 30, hp.getCreateFundraisingsFrame_Lighting(20));
+			urlLabelValue=getURL(driver, 10);
+			if (hp.verifyLandingPageAfterClickingOnNavatarSetUpPage(environment, mode, NavatarQuickLink.BulkEmail)) {
+				log(LogStatus.PASS, "Landing Page Verified for Bulk Email", YesNo.No);
+			} else {
+				sa.assertTrue(false, "Landing Page Not Verified for Bulk Email");
+				log(LogStatus.FAIL, "Landing Page Not Verified for Bulk Email", YesNo.Yes);
+			}	
+		} else {
+			sa.assertTrue(false, "Not Able to Click On Bulk Email Link with Navatar Quick Link");
+			log(LogStatus.SKIP, "Not Able to Click On Bulk Email Link with Navatar Quick Link", YesNo.Yes);
+		}
+
+
+		if (npbl.createNavigationItem(projectName, labelWithValue, 20)) {
+			log(LogStatus.INFO, "created "+navigationLabelValue, YesNo.No);
+
+			refresh(driver);
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+				ele=npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+				if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+					ThreadSleep(5000);
+					switchToFrame(driver, 30, hp.getCreateFundraisingsFrame_Lighting(20));
+					if (hp.verifyLandingPageAfterClickingOnNavatarSetUpPage(environment, mode, NavatarQuickLink.BulkEmail)) {
+						log(LogStatus.PASS, "Landing Page Verified for Bulk Email", YesNo.No);
+					} else {
+						sa.assertTrue(false, "Landing Page Not Verified for Bulk Email");
+						log(LogStatus.FAIL, "Landing Page Not Verified for Bulk Email", YesNo.Yes);
+					}
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot check label : "+navigationLabelValue);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not Able to create "+navigationLabelValue, YesNo.Yes);
+			sa.assertTrue(false, "Not Able to create "+navigationLabelValue);
+
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc063_1_RemoveTheRecordCreationRightForStandardUser(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+
+		String[] userNames= {"PE Standard User"};
+		String onObject="Accounts";
+		String permission="Create";
+		for (String userName : userNames) {
+			switchToDefaultContent(driver);
+			if (home.clickOnSetUpLink()) {
+				String parentID = switchOnWindow(driver);
+				if (parentID!=null) {
+					log(LogStatus.INFO, "Able to switch on new window, so going to update Navigation Label", YesNo.No);
+					ThreadSleep(500);
+					if(setup.searchStandardOrCustomObject(environment,mode, object.Profiles)) {
+						log(LogStatus.INFO, "click on Object : "+object.Profiles, YesNo.No);
+						ThreadSleep(2000);
+						if (setup.permissionChangeForUserONObject(driver, userName, new String[][]{{onObject,permission}}, 20)) {
+							log(LogStatus.PASS,permission+ " permission change for "+userName+" on object "+onObject,YesNo.No);
+						} else {
+							sa.assertTrue(false, permission+ " permission not change for "+userName+" on object "+onObject);
+							log(LogStatus.FAIL,permission+ " permission not change for "+userName+" on object "+onObject,YesNo.Yes);
+						}
+					}else {
+						log(LogStatus.ERROR, "Not able to search/click on "+object.Profiles, YesNo.Yes);
+						sa.assertTrue(false, "Not able to search/click on "+object.Profiles);
+					}
+					driver.close();
+					driver.switchTo().window(parentID);
+				}else {
+					log(LogStatus.FAIL, "could not find new window to switch, so cannot update Navigation Label", YesNo.Yes);
+					sa.assertTrue(false, "could not find new window to switch, so cannot update Navigation Label");
+				}
+
+			}else {
+				log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on setup link");	
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc063_2_RemoveTheRecordCreationRightForStandardUser(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		WebElement ele;
+		String navigationLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name);
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+			
+			ele=npbl.getNavigationLabel(projectName, navigationLabel, action.BOOLEAN, 10);
+			if (click(driver, ele, navigationLabel, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on "+navigationLabel+" going to verify url", YesNo.No);
+				ThreadSleep(5000);
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationLabel, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationLabel);
+
+			}
+			
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify label : "+navigationLabel, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify label : "+navigationLabel);
+		}
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc064_SetTheUserIndustryAsEnergy(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+
+		if (home.clickOnSetUpLink()) {
+			String parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+				log(LogStatus.INFO, "Able to switch on new window, so going to Set the User Industry as "+energyCoverage, YesNo.No);
+				ThreadSleep(100);
+				if(setup.searchStandardOrCustomObject(environment,mode, object.Users)) {
+					log(LogStatus.INFO, "click on Object : "+object.Users, YesNo.No);
+					ThreadSleep(2000);
+
+					if(setup.clickOnEditBtnForCRMUser(driver, crmUser1LastName, crmUser1FirstName, 20)) {
+						log(LogStatus.INFO, "Click on edit Button "+crmUser1LastName+","+crmUser1FirstName, YesNo.No);
+						ThreadSleep(2000);
+
+						if (selectVisibleTextFromDropDown(driver, setup.getIndustryDropdownList(10), "Industry DropDown List",energyCoverage)) {
+							log(LogStatus.INFO, "selected visbible text from the Industry dropdown "+energyCoverage, YesNo.No);
+							ThreadSleep(2000);
+
+							if (click(driver, setup.getSaveButton(20), "Save Button",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.No);
+								switchToDefaultContent(driver);
+								ThreadSleep(5000);
+								switchToFrame(driver, 20, setup.getSetUpPageIframe(20));
+								scrollDownThroughWebelement(driver, setup.getIndustryDropdownList("Industry", energyCoverage, 10), energyCoverage);
+								if (setup.getIndustryDropdownList("Industry", energyCoverage, 10)!=null) {
+									log(LogStatus.INFO, "Industry Value verified "+energyCoverage, YesNo.No);
+								} else {
+									log(LogStatus.ERROR, "Industry Value not verified "+energyCoverage, YesNo.Yes);
+									sa.assertTrue(false, "Industry Value not verified "+energyCoverage);
+								}
+							} else {
+								log(LogStatus.ERROR, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+								sa.assertTrue(false, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to select visbible text from the Industry dropdown "+energyCoverage, YesNo.Yes);
+							sa.assertTrue(false, "Not able to select visbible text from the Industry dropdown "+energyCoverage);
+						}
+
+
+					}else {
+						log(LogStatus.ERROR, "Not Able to Click on edit Button "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Click on edit Button "+crmUser1LastName+","+crmUser1FirstName);
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to search/click on "+object.Users, YesNo.Yes);
+					sa.assertTrue(false, "Not able to search/click on "+object.Users);
+				}
+
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.FAIL, "could not find new window to switch, so cannot Set the User Industry as "+energyCoverage, YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch, so cannot Set the User Industry as "+energyCoverage);
+			}
+
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link");	
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc065_CreateMyIndustryMenuItem(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		
+		String navigationLabel=CSVLabel.Navigation_Label.toString();
+		String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name);
+
+		String orderLabel=CSVLabel.Order.toString();
+		String orderLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Updated_Order);
+		String urlObjectLabel=CSVLabel.URL.toString();
+		String urlObjecValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.URL);
+
+		String[][] labelWithValue= {{navigationLabel,navigationLabelValue},{orderLabel,orderLabelValue},{urlObjectLabel,urlObjecValue}};
+		WebElement ele;
+		if (npbl.createNavigationItem(projectName, labelWithValue, 20)) {
+			log(LogStatus.INFO, "created "+customMenu, YesNo.No);
+			refresh(driver);
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+				ele=npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+				if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+					ThreadSleep(5000);
+					ele=npbl.getPageDoesNotExist(projectName, action.BOOLEAN, 30);
+					if (ele!=null) {
+						log(LogStatus.INFO, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" verified " , YesNo.No);
+
+					} else {
+						log(LogStatus.ERROR, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" not verified ", YesNo.Yes);
+						sa.assertTrue(false, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" not verified ");
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not Able to create "+customMenu, YesNo.Yes);
+			sa.assertTrue(false, "Not Able to create "+customMenu);
+
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc066_CreateRecordOnCoverageObjectAndVerifyMyIndustrylink(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CoveragePageBusinessLayer cp = new CoveragePageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		String[][] industryCoverages = {{energyCoverage,energyCoverageRecordType},{healthCareCoverage,healthCareCoverageRecordType},
+				{manufacturingCoverage,manufacturingCoverageRecordType},{businessServicesCoverage,businessServicesCoverageRecordType},
+				{TechonlogyCoverage,TechonlogyCoverageRecordType},{pharmaCoverage,pharmaCoverageRecordType}};
+
+		String coverageName="";
+		String coverageRecordType="";
+		for (String[] industryCov : industryCoverages) {
+			coverageName=industryCov[0];
+			coverageRecordType=industryCov[1];
+			if (cp.clickOnTab(projectName, tabObj8Coverage)) {
+				log(LogStatus.INFO, "Click on Tab : "+tabObj8Coverage, YesNo.No);
+
+				if (cp.createCoverage(projectName, coverageRecordType, coverageName)) {
+					log(LogStatus.INFO, "created/verified "+coverageName+" of type "+coverageRecordType, YesNo.No);
+				} else {
+					log(LogStatus.ERROR, "cannot create "+coverageName+" of type "+coverageRecordType, YesNo.Yes);
+					sa.assertTrue(false,"cannot create "+coverageName+" of type "+coverageRecordType);
+
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on Tab : "+tabObj8Coverage+" so cannot create "+coverageName+" of type "+coverageRecordType, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj8Coverage+" so cannot create "+coverageName+" of type "+coverageRecordType);
+			}
+
+		}
+		
+		refresh(driver);
+		String dependentTC="Module3Tc065_CreateMyIndustryMenuItem";
+		String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+			WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+			if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+				ThreadSleep(5000);
+				if (npbl.getCoverageTabAfterClick(projectName, energyCoverage, action.SCROLLANDBOOLEAN, 20)!=null) {
+					log(LogStatus.INFO, energyCoverage+" is open after click on "+navigationLabelValue, YesNo.No);
+				} else {
+					log(LogStatus.ERROR, energyCoverage+" should be open after click on "+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false,energyCoverage+" should be open after click on "+navigationLabelValue);
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+		}
+		
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc067_1_ChangetheUserIndustryAsHealthCareAndVerifyImpactonNavigationMenu(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		boolean flag=false;
+		if (home.clickOnSetUpLink()) {
+			String parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+				log(LogStatus.INFO, "Able to switch on new window, so going to Set the User Industry as "+healthCareCoverage, YesNo.No);
+				ThreadSleep(100);
+				if(setup.searchStandardOrCustomObject(environment,mode, object.Users)) {
+					log(LogStatus.INFO, "click on Object : "+object.Users, YesNo.No);
+					ThreadSleep(2000);
+
+					if(setup.clickOnEditBtnForCRMUser(driver, crmUser1LastName, crmUser1FirstName, 20)) {
+						log(LogStatus.INFO, "Click on edit Button "+crmUser1LastName+","+crmUser1FirstName, YesNo.No);
+						ThreadSleep(2000);
+
+						if (selectVisibleTextFromDropDown(driver, setup.getIndustryDropdownList(10), "Industry DropDown List",healthCareCoverage)) {
+							log(LogStatus.INFO, "selected visbible text from the Industry dropdown "+healthCareCoverage, YesNo.No);
+							ThreadSleep(2000);
+
+							if (click(driver, setup.getSaveButton(20), "Save Button",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.No);
+								switchToDefaultContent(driver);
+								ThreadSleep(5000);
+								switchToFrame(driver, 20, setup.getSetUpPageIframe(20));
+								scrollDownThroughWebelement(driver, setup.getIndustryDropdownList("Industry", healthCareCoverage, 10), healthCareCoverage);
+								if (setup.getIndustryDropdownList("Industry", healthCareCoverage, 10)!=null) {
+									log(LogStatus.INFO, "Industry Value verified "+healthCareCoverage, YesNo.No);
+									flag=true;
+								} else {
+									log(LogStatus.ERROR, "Industry Value not verified "+healthCareCoverage, YesNo.Yes);
+									sa.assertTrue(false, "Industry Value not verified "+healthCareCoverage);
+								}
+							} else {
+								log(LogStatus.ERROR, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+								sa.assertTrue(false, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to select visbible text from the Industry dropdown "+healthCareCoverage, YesNo.Yes);
+							sa.assertTrue(false, "Not able to select visbible text from the Industry dropdown "+healthCareCoverage);
+						}
+
+
+					}else {
+						log(LogStatus.ERROR, "Not Able to Click on edit Button "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Click on edit Button "+crmUser1LastName+","+crmUser1FirstName);
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to search/click on "+object.Users, YesNo.Yes);
+					sa.assertTrue(false, "Not able to search/click on "+object.Users);
+				}
+
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.FAIL, "could not find new window to switch, so cannot Set the User Industry as "+healthCareCoverage, YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch, so cannot Set the User Industry as "+healthCareCoverage);
+			}
+
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link");	
+		}
+
+		if (flag) {
+			refresh(driver);
+			String dependentTC="Module3Tc065_CreateMyIndustryMenuItem";
+			String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
+			NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+				WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+				if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+					ThreadSleep(5000);
+					if (npbl.getCoverageTabAfterClick(projectName, healthCareCoverage, action.SCROLLANDBOOLEAN, 20)!=null) {
+						log(LogStatus.INFO, healthCareCoverage+" is open after click on "+navigationLabelValue, YesNo.No);
+					} else {
+						log(LogStatus.ERROR, healthCareCoverage+" should be open after click on "+navigationLabelValue, YesNo.Yes);
+						sa.assertTrue(false,healthCareCoverage+" should be open after click on "+navigationLabelValue);
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+			}	
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc067_2_ChangetheUserIndustryAsHealthCareAndVerifyImpactonNavigationMenu(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		String dependentTC="Module3Tc065_CreateMyIndustryMenuItem";
+		String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+			WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+			if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+				ThreadSleep(5000);
+				if (npbl.getCoverageTabAfterClick(projectName, healthCareCoverage, action.SCROLLANDBOOLEAN, 20)!=null) {
+					log(LogStatus.INFO, healthCareCoverage+" is open after click on "+navigationLabelValue, YesNo.No);
+				} else {
+					log(LogStatus.ERROR, healthCareCoverage+" should be open after click on "+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false,healthCareCoverage+" should be open after click on "+navigationLabelValue);
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+		}	
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc068_1_ChangetheUserIndustryAsTechnologyAndVerifyImpactonNavigationMenu(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		boolean flag=false;
+		if (home.clickOnSetUpLink()) {
+			String parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+				log(LogStatus.INFO, "Able to switch on new window, so going to Set the User Industry as "+TechonlogyCoverage, YesNo.No);
+				ThreadSleep(100);
+				if(setup.searchStandardOrCustomObject(environment,mode, object.Users)) {
+					log(LogStatus.INFO, "click on Object : "+object.Users, YesNo.No);
+					ThreadSleep(2000);
+
+					if(setup.clickOnEditBtnForCRMUser(driver, crmUser1LastName, crmUser1FirstName, 20)) {
+						log(LogStatus.INFO, "Click on edit Button "+crmUser1LastName+","+crmUser1FirstName, YesNo.No);
+						ThreadSleep(2000);
+
+						if (selectVisibleTextFromDropDown(driver, setup.getIndustryDropdownList(10), "Industry DropDown List",TechonlogyCoverage)) {
+							log(LogStatus.INFO, "selected visbible text from the Industry dropdown "+TechonlogyCoverage, YesNo.No);
+							ThreadSleep(2000);
+
+							if (click(driver, setup.getSaveButton(20), "Save Button",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.No);
+								switchToDefaultContent(driver);
+								ThreadSleep(5000);
+								switchToFrame(driver, 20, setup.getSetUpPageIframe(20));
+								scrollDownThroughWebelement(driver, setup.getIndustryDropdownList("Industry", TechonlogyCoverage, 10), TechonlogyCoverage);
+								if (setup.getIndustryDropdownList("Industry", TechonlogyCoverage, 10)!=null) {
+									log(LogStatus.INFO, "Industry Value verified "+TechonlogyCoverage, YesNo.No);
+									flag=true;
+								} else {
+									log(LogStatus.ERROR, "Industry Value not verified "+TechonlogyCoverage, YesNo.Yes);
+									sa.assertTrue(false, "Industry Value not verified "+TechonlogyCoverage);
+								}
+							} else {
+								log(LogStatus.ERROR, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+								sa.assertTrue(false, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to select visbible text from the Industry dropdown "+TechonlogyCoverage, YesNo.Yes);
+							sa.assertTrue(false, "Not able to select visbible text from the Industry dropdown "+TechonlogyCoverage);
+						}
+
+
+					}else {
+						log(LogStatus.ERROR, "Not Able to Click on edit Button "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Click on edit Button "+crmUser1LastName+","+crmUser1FirstName);
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to search/click on "+object.Users, YesNo.Yes);
+					sa.assertTrue(false, "Not able to search/click on "+object.Users);
+				}
+
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.FAIL, "could not find new window to switch, so cannot Set the User Industry as "+TechonlogyCoverage, YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch, so cannot Set the User Industry as "+TechonlogyCoverage);
+			}
+
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link");	
+		}
+
+		if (flag) {
+			refresh(driver);
+			String dependentTC="Module3Tc065_CreateMyIndustryMenuItem";
+			String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
+			NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+				WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+				if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+					ThreadSleep(5000);
+					ele=npbl.getPageDoesNotExist(projectName, action.BOOLEAN, 30);
+					if (ele!=null) {
+						log(LogStatus.INFO, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" verified " , YesNo.No);
+					} else {
+						log(LogStatus.ERROR, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" not verified ", YesNo.Yes);
+						sa.assertTrue(false, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" not verified ");
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+			}	
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc068_2_ChangetheUserIndustryAsTechnologyAndVerifyImpactonNavigationMenu(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		String dependentTC="Module3Tc065_CreateMyIndustryMenuItem";
+		String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+			WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+			if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+				ThreadSleep(5000);
+				ele=npbl.getPageDoesNotExist(projectName, action.BOOLEAN, 30);
+				if (ele!=null) {
+					log(LogStatus.INFO, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" verified " , YesNo.No);
+				} else {
+					log(LogStatus.ERROR, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" not verified ", YesNo.Yes);
+					sa.assertTrue(false, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" not verified ");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+		}	
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc069_1_ChangetheUserIndustryAsNoneAndVerifyImpactonNavigationMenu(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		none="--"+none+"--";
+		boolean flag=false;
+		if (home.clickOnSetUpLink()) {
+			String parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+				log(LogStatus.INFO, "Able to switch on new window, so going to Set the User Industry as "+TechonlogyCoverage, YesNo.No);
+				ThreadSleep(100);
+				if(setup.searchStandardOrCustomObject(environment,mode, object.Users)) {
+					log(LogStatus.INFO, "click on Object : "+object.Users, YesNo.No);
+					ThreadSleep(2000);
+
+					if(setup.clickOnEditBtnForCRMUser(driver, crmUser1LastName, crmUser1FirstName, 20)) {
+						log(LogStatus.INFO, "Click on edit Button "+crmUser1LastName+","+crmUser1FirstName, YesNo.No);
+						ThreadSleep(2000);
+
+						if (selectVisibleTextFromDropDown(driver, setup.getIndustryDropdownList(10), "Industry DropDown List",none)) {
+							log(LogStatus.INFO, "selected visbible text from the Industry dropdown "+none, YesNo.No);
+							ThreadSleep(2000);
+
+							if (click(driver, setup.getSaveButton(20), "Save Button",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.No);
+								switchToDefaultContent(driver);
+								ThreadSleep(5000);
+								switchToFrame(driver, 20, setup.getSetUpPageIframe(20));
+								scrollDownThroughWebelement(driver, setup.getIndustryDropdownList("Industry", none, 10), none);
+								if (setup.getIndustryDropdownList("Industry", none, 10)!=null) {
+									log(LogStatus.INFO, "Industry Value verified "+none, YesNo.No);
+									flag=true;
+								} else {
+									log(LogStatus.ERROR, "Industry Value not verified "+none, YesNo.Yes);
+									sa.assertTrue(false, "Industry Value not verified "+none);
+								}
+							} else {
+								log(LogStatus.ERROR, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+								sa.assertTrue(false, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to select visbible text from the Industry dropdown "+none, YesNo.Yes);
+							sa.assertTrue(false, "Not able to select visbible text from the Industry dropdown "+none);
+						}
+
+
+					}else {
+						log(LogStatus.ERROR, "Not Able to Click on edit Button "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Click on edit Button "+crmUser1LastName+","+crmUser1FirstName);
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to search/click on "+object.Users, YesNo.Yes);
+					sa.assertTrue(false, "Not able to search/click on "+object.Users);
+				}
+
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.FAIL, "could not find new window to switch, so cannot Set the User Industry as "+none, YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch, so cannot Set the User Industry as "+none);
+			}
+
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link");	
+		}
+
+		if (flag) {
+			refresh(driver);
+			String dependentTC="Module3Tc065_CreateMyIndustryMenuItem";
+			String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
+			NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+				WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+				if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+					ThreadSleep(5000);
+					ele=npbl.getPageDoesNotExist(projectName, action.BOOLEAN, 30);
+					if (ele!=null) {
+						log(LogStatus.INFO, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" verified " , YesNo.No);
+					} else {
+						log(LogStatus.ERROR, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" not verified ", YesNo.Yes);
+						sa.assertTrue(false, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" not verified ");
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+			}	
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc069_2_ChangetheUserIndustryAsNoneAndVerifyImpactonNavigationMenu(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		String dependentTC="Module3Tc065_CreateMyIndustryMenuItem";
+		String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+			WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+			if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+				ThreadSleep(5000);
+				ele=npbl.getPageDoesNotExist(projectName, action.BOOLEAN, 30);
+				if (ele!=null) {
+					log(LogStatus.INFO, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" verified " , YesNo.No);
+				} else {
+					log(LogStatus.ERROR, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" not verified ", YesNo.Yes);
+					sa.assertTrue(false, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" not verified ");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+		}	
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc070_createCRMUser2(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentWindow = null;
+		String[] splitedUserLastName = removeNumbersFromString(crmUser2LastName);
+		String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
+		String emailId = lp.generateRandomEmailId(gmailUserName);
+		ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User2",excelLabel.User_Last_Name);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		boolean flag = false;
+		for (int i = 0; i < 3; i++) {
+			try {
+				if (home.clickOnSetUpLink()) {
+					flag = true;
+					parentWindow = switchOnWindow(driver);
+					if (parentWindow == null) {
+						sa.assertTrue(false,
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+						log(LogStatus.SKIP,
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+								YesNo.Yes);
+						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					}
+					if (setup.createPEUser( crmUser2FirstName, UserLastName, emailId, crmUserLience,
+							crmUserProfile)) {
+						log(LogStatus.INFO, "CRM User is created Successfully: " + crmUser2FirstName + " " + UserLastName, YesNo.No);
+						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User2",
+								excelLabel.User_Email);
+						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User2",
+								excelLabel.User_Last_Name);
+						flag = true;
+						break;
+
+					}
+					driver.close();
+					driver.switchTo().window(parentWindow);
+
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				log(LogStatus.INFO, "could not find setup link, trying again..", YesNo.No);
+			}
+
+		}
+		if (flag) {
+
+			if (setup.installedPackages(crmUser2FirstName, UserLastName)) {
+				appLog.info("PE Package is installed Successfully in CRM User: " + crmUser2FirstName + " "
+						+ UserLastName);
+
+			} else {
+				appLog.error(
+						"Not able to install PE package in CRM User2: " + crmUser2FirstName + " " + UserLastName);
+				sa.assertTrue(false,
+						"Not able to install PE package in CRM User2: " + crmUser2FirstName + " " + UserLastName);
+				log(LogStatus.ERROR,
+						"Not able to install PE package in CRM User2: " + crmUser2FirstName + " " + UserLastName,
+						YesNo.Yes);
+			}
+
+		}else{
+
+			log(LogStatus.ERROR, "could not click on setup link, test case fail", YesNo.Yes);
+			sa.assertTrue(false, "could not click on setup link, test case fail");
+
+		}
+
+		lp.CRMlogout();
+		closeBrowser();
+		config(ExcelUtils.readDataFromPropertyFile("Browser"));
+		lp = new LoginPageBusinessLayer(driver);
+		String passwordResetLink=null;
+		try {
+			passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
+					ExcelUtils.readDataFromPropertyFile("gmailUserName"),
+					ExcelUtils.readDataFromPropertyFile("gmailPassword"));
+		} catch (InterruptedException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		appLog.info("ResetLinkIs: " + passwordResetLink);
+		driver.get(passwordResetLink);
+		if (lp.setNewPassword()) {
+			appLog.info("Password is set successfully for CRM User2: " + crmUser2FirstName + " " + UserLastName );
+		} else {
+			appLog.info("Password is not set for CRM User2: " + crmUser2FirstName + " " + UserLastName);
+			sa.assertTrue(false, "Password is not set for CRM User2: " + crmUser2FirstName + " " + UserLastName);
+			log(LogStatus.ERROR, "Password is not set for CRM User2: " + crmUser2FirstName + " " + UserLastName,
+					YesNo.Yes);
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc071_ChangetheUserIndustryAsManufacturingAndVerifyImpactonNavigationMenu(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		boolean flag=false;
+		if (home.clickOnSetUpLink()) {
+			String parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+				log(LogStatus.INFO, "Able to switch on new window, so going to Set the User Industry as "+manufacturingCoverage, YesNo.No);
+				ThreadSleep(100);
+				if(setup.searchStandardOrCustomObject(environment,mode, object.Users)) {
+					log(LogStatus.INFO, "click on Object : "+object.Users, YesNo.No);
+					ThreadSleep(2000);
+
+					if(setup.clickOnEditBtnForCRMUser(driver, crmUser1LastName, crmUser1FirstName, 20)) {
+						log(LogStatus.INFO, "Click on edit Button "+crmUser1LastName+","+crmUser1FirstName, YesNo.No);
+						ThreadSleep(2000);
+
+						if (selectVisibleTextFromDropDown(driver, setup.getIndustryDropdownList(10), "Industry DropDown List",manufacturingCoverage)) {
+							log(LogStatus.INFO, "selected visbible text from the Industry dropdown "+manufacturingCoverage, YesNo.No);
+							ThreadSleep(2000);
+
+							if (click(driver, setup.getSaveButton(20), "Save Button",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.No);
+								switchToDefaultContent(driver);
+								ThreadSleep(5000);
+								switchToFrame(driver, 20, setup.getSetUpPageIframe(20));
+								scrollDownThroughWebelement(driver, setup.getIndustryDropdownList("Industry", manufacturingCoverage, 10), manufacturingCoverage);
+								if (setup.getIndustryDropdownList("Industry", manufacturingCoverage, 10)!=null) {
+									log(LogStatus.INFO, "Industry Value verified "+manufacturingCoverage, YesNo.No);
+									flag=true;
+								} else {
+									log(LogStatus.ERROR, "Industry Value not verified "+manufacturingCoverage, YesNo.Yes);
+									sa.assertTrue(false, "Industry Value not verified "+manufacturingCoverage);
+								}
+							} else {
+								log(LogStatus.ERROR, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+								sa.assertTrue(false, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to select visbible text from the Industry dropdown "+manufacturingCoverage, YesNo.Yes);
+							sa.assertTrue(false, "Not able to select visbible text from the Industry dropdown "+manufacturingCoverage);
+						}
+
+
+					}else {
+						log(LogStatus.ERROR, "Not Able to Click on edit Button "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Click on edit Button "+crmUser1LastName+","+crmUser1FirstName);
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to search/click on "+object.Users, YesNo.Yes);
+					sa.assertTrue(false, "Not able to search/click on "+object.Users);
+				}
+
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.FAIL, "could not find new window to switch, so cannot Set the User Industry as "+manufacturingCoverage, YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch, so cannot Set the User Industry as "+manufacturingCoverage);
+			}
+
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link");	
+		}
+
+		if (flag) {
+			refresh(driver);
+			String dependentTC="Module3Tc065_CreateMyIndustryMenuItem";
+			String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
+			NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+				WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+				if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+					ThreadSleep(5000);
+					if (npbl.getCoverageTabAfterClick(projectName, manufacturingCoverage, action.SCROLLANDBOOLEAN, 20)!=null) {
+						log(LogStatus.INFO, manufacturingCoverage+" is open after click on "+navigationLabelValue, YesNo.No);
+					} else {
+						log(LogStatus.ERROR, manufacturingCoverage+" should be open after click on "+navigationLabelValue, YesNo.Yes);
+						sa.assertTrue(false,manufacturingCoverage+" should be open after click on "+navigationLabelValue);
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+			}	
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc072_ChangetheUserIndustryAsManufacturingAndVerifyImpactonNavigationMenu(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		String dependentTC="Module3Tc065_CreateMyIndustryMenuItem";
+		String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+			WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+			if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+				ThreadSleep(5000);
+				if (npbl.getCoverageTabAfterClick(projectName, manufacturingCoverage, action.SCROLLANDBOOLEAN, 20)!=null) {
+					log(LogStatus.INFO, manufacturingCoverage+" is open after click on "+navigationLabelValue, YesNo.No);
+				} else {
+					log(LogStatus.ERROR, manufacturingCoverage+" should be open after click on "+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false,manufacturingCoverage+" should be open after click on "+navigationLabelValue);
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+		}	
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	
+	
 	
 }
 	
