@@ -13,6 +13,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.sikuli.script.App;
+import org.sikuli.script.FindFailed;
+import org.sikuli.script.Screen;
 import org.testng.Assert;
 
 import com.jcraft.jsch.ConfigRepository.Config;
@@ -5051,6 +5053,17 @@ public WebElement toggleEditCancelButton(String projectName,String btnName,actio
 	return ele;
 }
 
-
+public boolean dragNDropUsingScreen(String projectName,String sourceImg,String targetImg,int timeOut) {
+	boolean flag=false;
+	Screen screen = new Screen();
+	try {
+		screen.dragDrop(sourceImg, targetImg);
+		flag=true;
+	} catch (FindFailed e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return flag;
+}
 
 }
