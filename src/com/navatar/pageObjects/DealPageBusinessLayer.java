@@ -185,53 +185,37 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		Actions actions = new Actions(driver);
 		scrollDownThroughWebelement(driver,getimgIcon(projectName, 10) , "img");
 		click(driver, getimgIcon(projectName, 10), "img icon", action.SCROLLANDBOOLEAN);
-		//actions.moveToElement( getimgIcon(projectName, 10)).click(getimgIcon(projectName, 10)).build().perform();
 		ThreadSleep(2000);
-		//actions.release().build().perform();
-			log(LogStatus.INFO, "click on img link", YesNo.No);
-			/*WebElement ele=getupdatePhotoLink(projectName,ContactPagePhotoActions.Update_Photo, 10);
-			actions.moveToElement(ele).click(ele).build().perform();
-			ThreadSleep(2000);
-			*/if (click(driver,cp. getupdatePhotoLink(projectName,ContactPagePhotoActions.Update_Photo, 10), ContactPagePhotoActions.Update_Photo.toString(), action.SCROLLANDBOOLEAN)) {
-				if (sendKeys(driver, getuploadPhotoButton(projectName,10), attachmentPath, "upload photo button", action.SCROLLANDBOOLEAN) ) {
-					ThreadSleep(5000);
-					/*if (uploadFileAutoIT(attachmentPath)) {
-						log(LogStatus.INFO, "successfully uploaded file "+attachmentPath, YesNo.No);
-						ThreadSleep(10000);
-					*/	if (click(driver, getSaveButton(10), "save", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "successfully uploaded photo", YesNo.No);
-							ThreadSleep(4000);
-							imgId=getimgIconForPath(projectName, 10).getAttribute("src");
-							if (imgId!=null){
-								log(LogStatus.INFO, "found id of img uploaded: "+imgId, YesNo.Yes);
-								
-								return imgId;
-							}
-							else {
-								log(LogStatus.ERROR, "could not find id of img uploaded", YesNo.Yes);
-								sa.assertTrue(false, "could not find id of img uploaded");
-						
-							}
-						}else {
-							log(LogStatus.ERROR, "save button is not clickable", YesNo.Yes);
-							sa.assertTrue(false, "save button is not clickable");
-						}
-					/*}else {
-						log(LogStatus.ERROR, "could not upload file "+attachmentPath, YesNo.Yes);
-						sa.assertTrue(false, "could not upload file "+attachmentPath);
-					}*/
+		log(LogStatus.INFO, "click on img link", YesNo.No);
+		if (click(driver,cp. getupdatePhotoLink(projectName,ContactPagePhotoActions.Update_Photo, 10), ContactPagePhotoActions.Update_Photo.toString(), action.SCROLLANDBOOLEAN)) {
+			if (sendKeys(driver, getuploadPhotoButton(projectName,10), attachmentPath, "upload photo button", action.SCROLLANDBOOLEAN) ) {
+				ThreadSleep(5000);
+				if (click(driver, getSaveButton(10), "save", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "successfully uploaded photo", YesNo.No);
+					ThreadSleep(4000);
+					imgId=getimgIconForPath(projectName, 10).getAttribute("src");
+					if (imgId!=null){
+						log(LogStatus.INFO, "found id of img uploaded: "+imgId, YesNo.Yes);
+
+						return imgId;
+					}
+					else {
+						log(LogStatus.ERROR, "could not find id of img uploaded", YesNo.Yes);
+						sa.assertTrue(false, "could not find id of img uploaded");
+
+					}
 				}else {
-					log(LogStatus.ERROR, "could not pass attachment path to image", YesNo.Yes);
-					sa.assertTrue(false, "could not pass attachment path to image");
+					log(LogStatus.ERROR, "save button is not clickable", YesNo.Yes);
+					sa.assertTrue(false, "save button is not clickable");
 				}
 			}else {
-				log(LogStatus.ERROR, "update photo button is not clickable", YesNo.Yes);
-				sa.assertTrue(false, "update photo button is not clickable");
+				log(LogStatus.ERROR, "could not pass attachment path to image", YesNo.Yes);
+				sa.assertTrue(false, "could not pass attachment path to image");
 			}
-		/*}else {
-			log(LogStatus.ERROR, "photo button on contact page is not clickable", YesNo.Yes);
-			sa.assertTrue(false, "photo button on contact page is not clickable");
-		}*/
+		}else {
+			log(LogStatus.ERROR, "update photo button is not clickable", YesNo.Yes);
+			sa.assertTrue(false, "update photo button is not clickable");
+		}
 		return null;
 	}
 	
@@ -261,8 +245,6 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		WebElement ele = FindElement(driver, xpath,itemValue, action, timeOut);
 		return ele;
 	}
-	
-	
 	
 }
 

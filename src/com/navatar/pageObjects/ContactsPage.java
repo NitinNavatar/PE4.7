@@ -25,7 +25,7 @@ public class ContactsPage extends BasePageBusinessLayer {
 	@FindBy(xpath="//input[@name='name_firstcon2']")
 	private WebElement contactFirstName_Classic;
 	
-	@FindBy(xpath="//span[text()='First Name']/../following-sibling::input")
+	@FindBy(xpath="//*[text()='First Name']/following-sibling::*//input")
 	private WebElement contactFirstName_Lighting;
 
 	/**
@@ -41,7 +41,7 @@ public class ContactsPage extends BasePageBusinessLayer {
 	@FindBy(xpath="//input[@name='name_lastcon2']")
 	private WebElement contactLastName_Classic;
 	
-	@FindBy(xpath="//span[text()='Last Name']/../following-sibling::input")
+	@FindBy(xpath="//*[text()='Last Name']/following-sibling::*//input")
 	private WebElement contactLastName_Lighting;
 
 	/**
@@ -54,7 +54,7 @@ public class ContactsPage extends BasePageBusinessLayer {
 		
 	}
 	
-	@FindBy(xpath="//span[text()='Title']/../following-sibling::input")
+	@FindBy(xpath="//*[text()='Title']/following-sibling::*//input")
 	private WebElement contactTitle;
 
 	/**
@@ -159,7 +159,7 @@ public class ContactsPage extends BasePageBusinessLayer {
 		}else if (labelName.equalsIgnoreCase(excelLabel.Phone.toString())) {
 			xpath="//*[starts-with(text(),'"+finalLabelName+"')]/..//following-sibling::input";
 			finalXpath=xpath+inputXpath;
-		}else if (labelName.equalsIgnoreCase(excelLabel.Region.toString())||( labelName.equalsIgnoreCase(excelLabel.Industry.toString()))) {
+		}else if (labelName.equalsIgnoreCase(excelLabel.Region.toString())|| (labelName.equalsIgnoreCase(excelLabel.Industry.toString())|| labelName.equalsIgnoreCase(PageLabel.Profile_Image.toString()))) {
 				xpath="//*[text()='"+finalLabelName+"']/..//following-sibling::*//input";
 				finalXpath=xpath;
 			}
