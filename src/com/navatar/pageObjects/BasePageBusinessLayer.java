@@ -4905,16 +4905,117 @@ public WebElement accordionSDGButtons(String projectName,String toggleTab,Toggle
 	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btname);
 	return ele;
 }
+
+public WebElement accordionSDGActionButtons(String projectName,String toggleTab,String btnName,action action,int timeOut) {
+	String btname = btnName.toString();
+	String xpath = "//h2[contains(text(),'"+toggleTab+"')]/../../..//following-sibling::div//button[text()='"+btname+"']";
+	WebElement ele = FindElement(driver, xpath,toggleTab+" >> "+btname, action, timeOut);
+	scrollDownThroughWebelement(driver, ele, "Toggle Button : "+btname);
+	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btname);
+	return ele;
+}
+
 public WebElement sdgButtons(String projectName, String field,String edit, int timeOut) {
 	String xpath ="//span//*[text()='"+field+"']/../../../following-sibling::td//button[text()='"+edit+"']";
 	WebElement ele = FindElement(driver, xpath,"sdg buttons", action.BOOLEAN, timeOut);
 	return isDisplayed(driver, ele, "visibility", timeOut, "sdg button");
 }
 
+public String sdgContactImageXpath(String projectName, String contact) {
+	return "//*[@title='"+contact+"']/preceding-sibling::img";
+}
 public WebElement sdgContactImage(String projectName, String contact, int timeOut) {
-	String xpath ="//*[@title='"+contact+"']/preceding-sibling::img";
+	String xpath =sdgContactImageXpath(projectName, contact);
 	WebElement ele = FindElement(driver, xpath,"contact image on sdg", action.BOOLEAN, timeOut);
 	return isDisplayed(driver, ele, "visibility", timeOut, "contact image on sdg");
 }
+public boolean clickOnEditButtonOnSDG(String projectName, String contact, String field,int timeOut) {
+	String xpath ="//*[text()='"+contact+"']/../../../../following-sibling::td[contains(@data-label,'"+field+"')]//button";
+	WebElement ele = FindElement(driver, xpath,"edit button for "+field, action.BOOLEAN, timeOut);
+	//ele= isDisplayed(driver, ele, "visibility", timeOut, "edit button for "+field);
+	JavascriptExecutor js = null;
+	js.executeScript("return arguments[0].setAttribute('style','display: inline-block;')", ele);
+	click(driver, ele, "edit", action.BOOLEAN);
+	return true;
+}
+public WebElement SDGInputTextbox(String projectName, String field, int timeOut) {
+	String xpath ="//input[@name='"+field+"']";
+	WebElement ele = FindElement(driver, xpath,"input textbox "+field, action.BOOLEAN, timeOut);
+	return isDisplayed(driver, ele, "visibility", timeOut, "input textbox "+field);
+}
+
+public WebElement documentNameOnFilesApp(String projectName, String fileName, int timeOut) {
+	String xpath ="//span[@title='"+fileName+"']";
+	WebElement ele = FindElement(driver, xpath,fileName, action.BOOLEAN, timeOut);
+	return isDisplayed(driver, ele, "visibility", timeOut, fileName);
+}
+
+public String rightClickOnFileAndCopy(String projectName, String fileName, int timeOut) {
+	String xpath ="//img[@alt='"+fileName+"']";
+	WebElement ele = FindElement(driver, xpath,fileName, action.BOOLEAN, timeOut);
+	ele=isDisplayed(driver, ele, "visibility", timeOut, fileName);
+	Actions actions = new Actions(driver);
+	actions.contextClick(ele).build().perform();
+	String a="";
+	ThreadSleep(1000);
+	try {
+		Robot robot = new Robot();
+		robot.keyPress(KeyEvent.VK_DOWN);
+		robot.keyRelease(KeyEvent.VK_DOWN);
+		robot.keyPress(KeyEvent.VK_DOWN);
+		robot.keyRelease(KeyEvent.VK_DOWN);
+		robot.keyPress(KeyEvent.VK_DOWN);
+		robot.keyRelease(KeyEvent.VK_DOWN);
+		robot.keyPress(KeyEvent.VK_DOWN);
+		robot.keyRelease(KeyEvent.VK_DOWN);
+		ThreadSleep(1000);
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.keyRelease(KeyEvent.VK_ENTER);
+		a=getClipBoardData();
+		ThreadSleep(3000);
+		robot.keyPress(KeyEvent.VK_ESCAPE);
+		robot.keyRelease(KeyEvent.VK_ESCAPE);
+	} catch (AWTException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return a;
+	
+}
+
+public boolean deletePhotoInUserPage(String projectName, String user) {
+	String imgId=null;
+	DealPage dp = new DealPage(driver);
+	ContactsPage cp = new ContactsPage(driver);
+	Actions actions = new Actions(driver);
+	scrollDownThroughWebelement(driver,dp.getimgIcon(projectName, 10) , "img");
+	click(driver, dp.getimgIcon(projectName, 10), "img icon", action.SCROLLANDBOOLEAN);
+	ThreadSleep(2000);
+	log(LogStatus.INFO, "click on img link", YesNo.No);
+	if (click(driver,cp. getupdatePhotoLink(projectName,ContactPagePhotoActions.Delete_Photo, 10), ContactPagePhotoActions.Delete_Photo.toString(), action.SCROLLANDBOOLEAN)) {
+		if (click(driver, getdeletePhotoButton(projectName, 10), "delete button", action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(5000);
+			log(LogStatus.INFO, "successfully uploaded photo", YesNo.No);
+			if (dp.getimgIconForPath(projectName, 5)==null) {
+				log(LogStatus.INFO, "successfully deleted img"+imgId, YesNo.Yes);
+
+				return true;
+			}
+			else {
+				log(LogStatus.ERROR, "could not delete user img for "+user, YesNo.Yes);
+				sa.assertTrue(false, "could not delete user img for "+user);
+
+			}
+		}else {
+			log(LogStatus.ERROR, "delete photo button on popup is not clickable", YesNo.Yes);
+			sa.assertTrue(false, "delete photo button on popup is not clickable");
+		}
+	}else {
+		log(LogStatus.ERROR, "delete photo button is not clickable", YesNo.Yes);
+		sa.assertTrue(false, "delete photo button is not clickable");
+	}
+	return false;
+}
+
 
 }
