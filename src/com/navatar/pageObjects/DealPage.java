@@ -63,4 +63,13 @@ public class DealPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, uploadPhotoButton, "Visibility", timeOut, "upload photo button");
 		
 	}
+	
+	@FindBy(xpath = "//textarea")
+	private WebElement textArea;
+	
+	public WebElement getTextArea(int timeOut) {
+		return isDisplayed(driver, textArea, "Visibility", timeOut, "textArea");
+		
+	}
+	
 }

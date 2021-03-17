@@ -2,7 +2,10 @@ package com.navatar.scripts;
 
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
+
+import java.awt.AWTException;
 import java.awt.Robot;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.sql.Date;
 import java.text.DecimalFormat;
@@ -58,6 +61,7 @@ import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.RecordType;
 import com.navatar.generic.EnumConstants.RelatedList;
 import com.navatar.generic.EnumConstants.RelatedTab;
+import com.navatar.generic.EnumConstants.SDGLabels;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.TopOrBottom;
 import com.navatar.generic.EnumConstants.YesNo;
@@ -217,7 +221,7 @@ public class Module5 extends BaseLib {
 			else{
 				tab1=tabObj1;
 			}
-			addRemoveTabName=tab1+"s,"+tabObj5+"s,"+tabObj3+"s,"+tabObj4+"s";
+			addRemoveTabName=tab1+"s,"+tabObj5+"s,"+tabObj3+"s,"+tabObj4+"s,"+"Partnerships,Commitments";
 			if (lp.addTab_Lighting( addRemoveTabName, 5)) {
 				log(LogStatus.INFO,"Tab added : "+addRemoveTabName,YesNo.No);
 			} else {
@@ -275,6 +279,8 @@ public class Module5 extends BaseLib {
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		DealPageBusinessLayer  dp = new DealPageBusinessLayer(driver);
 		MarketingEventPageBusinessLayer me = new MarketingEventPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
 		String value="";
@@ -373,7 +379,7 @@ public class Module5 extends BaseLib {
 										,{PageLabel.Status.toString(),ToggleOpenQA1Status}};
 		
 		String[][] closeRequest = {{PageLabel.Date_Requested.toString(),ToggleClosedQA1RequestedDate}
-						,{PageLabel.Request.toString(),ToggleClosedQA1Request}};
+						,{PageLabel.Request.toString(),ToggleClosedQA1Request},{PageLabel.Status.toString(),ToggleClosedQA1Status}};
 		
 		
 		for (int i = 0; i < 2; i++) {
@@ -448,7 +454,72 @@ public class Module5 extends BaseLib {
 				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object5Tab,YesNo.Yes);
 			}
 		}
+
+		if(bp.clickOnTab(projectName,TabName.Object1Tab)) {
+
+			if(ins.createInstitution(environment, mode, ToggleLP1, "Limited Partner", InstitutionPageFieldLabelText.Parent_Institution.toString(), ToggleIns1)) {
+				appLog.info("limited partner is created: "+ToggleLP1);
+			}else {
+				appLog.error("Not able to create limited partner: "+ToggleLP1);
+				sa.assertTrue(false, "Not able to create limited partner: "+ToggleLP1);
+			}
+		}else {
+			appLog.error("Not able to click on institution tab so cannot create limite partner: "+ToggleLP1);
+			sa.assertTrue(false, "Not able to click on institution tab so cannot create limite partner: "+ToggleLP1);
+		}
 		
+		if(bp.clickOnTab(projectName,TabName.PartnershipsTab)) {
+			if(ins.createPartnership(environment,mode,TogglePartnerShip1,ToggleFund1)) {
+				appLog.info("partnership is created: "+TogglePartnerShip1);
+			}else {
+				appLog.error("Not able to create partnership: "+TogglePartnerShip1);
+				sa.assertTrue(false, "Not able to create partnership: "+TogglePartnerShip1);
+			}
+		}else {
+			appLog.error("Not able to click on partnership tab so cannot create partnership: "+TogglePartnerShip1);
+			sa.assertTrue(false, "Not able to click on partnership tab so cannot create partnership: "+TogglePartnerShip1);
+		}
+	
+		if(bp.clickOnTab(projectName,TabName.PartnershipsTab)) {
+			if(ins.createPartnership(environment,mode,TogglePartnerShip2,ToggleFund2)) {
+				appLog.info("partnership is created: "+TogglePartnerShip2);
+			}else {
+				appLog.error("Not able to create partnership: "+TogglePartnerShip2);
+				sa.assertTrue(false, "Not able to create partnership: "+TogglePartnerShip2);
+			}
+		}else {
+			appLog.error("Not able to click on partnership tab so cannot create partnership: "+TogglePartnerShip2);
+			sa.assertTrue(false, "Not able to click on partnership tab so cannot create partnership: "+TogglePartnerShip2);
+		}
+		
+		if(bp.clickOnTab(projectName,TabName.CommitmentsTab)) {
+
+			if(ins.createCommitment(environment, mode,ToggleLP1,TogglePartnerShip1,"TOGGLECMT1", phase1DataSheetFilePath)) {
+				appLog.info("commitment is created successfully");
+			}else {
+				appLog.error("Not able to create commitment for limited partner: "+ToggleLP1+" and partnership Name: "+TogglePartnerShip1);
+				sa.assertTrue(false, "Not able to create commitment for limited partner: "+ToggleLP1+" and partnership Name: "+TogglePartnerShip1);
+			}
+		}else {
+			appLog.error("Not able to click on commitment tab so cannot create committment for limite partner: "+ToggleLP1+" and partnership Name: "+TogglePartnerShip1);
+			sa.assertTrue(false, "Not able to click on commitment tab so cannot create committment for limite partner: "+ToggleLP1+" and partnership Name: "+TogglePartnerShip1);
+		}
+		
+		if(bp.clickOnTab(projectName,TabName.CommitmentsTab)) {
+
+			if(ins.createCommitment(environment, mode,ToggleLP1,TogglePartnerShip2,"TOGGLECMT2", phase1DataSheetFilePath)) {
+				appLog.info("commitment is created successfully");
+			}else {
+				appLog.error("Not able to create commitment for limited partner: "+ToggleLP1+" and partnership Name: "+TogglePartnerShip2);
+				sa.assertTrue(false, "Not able to create commitment for limited partner: "+ToggleLP1+" and partnership Name: "+TogglePartnerShip2);
+			}
+		}else {
+			appLog.error("Not able to click on commitment tab so cannot create committment for limite partner: "+ToggleLP1+" and partnership Name: "+TogglePartnerShip2);
+			sa.assertTrue(false, "Not able to click on commitment tab so cannot create committment for limite partner: "+ToggleLP1+" and partnership Name: "+TogglePartnerShip2);
+		}
+		
+		
+
 		switchToDefaultContent(driver);
 		lp.CRMlogout();
 		sa.assertAll();
@@ -461,7 +532,7 @@ public class Module5 extends BaseLib {
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
 		String[] tabNames = {ToggleCheck1TabName,ToggleCheck2TabName,ToggleCheck3TabName};
 		String tabName;
@@ -531,6 +602,7 @@ public class Module5 extends BaseLib {
 									}
 								}
 								
+								
 								if (i==1) {
 									if (dp.verifyingOpenRequest(projectName, ToggleOpenQA1ID, ToggleOpenQA1RequestedDate, ToggleOpenQA1Request, ToggleOpenQA1Status, 10)) {
 										log(LogStatus.PASS,toggleBtn+" Records Verified : "+ToggleOpenQA1Request,YesNo.Yes);
@@ -538,6 +610,88 @@ public class Module5 extends BaseLib {
 										sa.assertTrue(false,toggleBtn+" Records Not Verified : "+ToggleOpenQA1Request);
 										log(LogStatus.FAIL,toggleBtn+" Records Not Verified : "+ToggleOpenQA1Request,YesNo.Yes);
 									}
+									ThreadSleep(1000);
+									if (mouseHoverJScript(driver, dp.getRequestAtToggle(projectName, null, ToggleOpenQA1Request, action.SCROLLANDBOOLEAN, 10), ToggleOpenQA1Request, 10)) {
+										log(LogStatus.INFO,"Mouse hover on : "+ToggleOpenQA1Request,YesNo.No);
+									} else {
+										sa.assertTrue(false,"Not ABle to Mouse hover on : "+ToggleOpenQA1Request);
+										log(LogStatus.FAIL,"Not ABle to Mouse hover on : "+ToggleOpenQA1Request,YesNo.Yes);
+									}
+									ThreadSleep(1000);
+									if (dp.isRequestAtToggleToolTip(projectName, null, ToggleOpenQA1Request, action.SCROLLANDBOOLEAN, 10)) {
+										log(LogStatus.INFO,"Tool Tip Verified : "+ToggleOpenQA1Request,YesNo.No);
+									} else {
+										sa.assertTrue(false,"Tool Tip Not Verified : "+ToggleOpenQA1Request);
+										log(LogStatus.FAIL,"Tool Tip Not Verified : "+ToggleOpenQA1Request,YesNo.Yes);
+									}
+									ele = dp.getEditBtn(projectName, ToggleOpenQA1Request, action.SCROLLANDBOOLEAN, 10);
+									if (clickUsingJavaScript(driver, ele, ToggleOpenQA1Request, action.BOOLEAN)) {
+										log(LogStatus.INFO,"Click on Edit Btn : "+ToggleOpenQA1Request,YesNo.No);
+										ThreadSleep(5000);
+										
+										if (click(driver, dp.getTextArea(20), ToggleOpenQA1Request, action.BOOLEAN)) {
+											log(LogStatus.INFO,"Click on text area for "+ToggleOpenQA1Request,YesNo.No);
+											ThreadSleep(5000);
+											try {
+												dp.getTextArea(20).clear();
+												
+												 Robot robot = new Robot();  // Robot class throws AWT Exception	
+										           Thread.sleep(1000); // Thread.sleep throws InterruptedException	
+										           robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+										           Thread.sleep(1000);
+										           robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+										           Thread.sleep(1000);
+										           
+											} catch (Exception e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+											if (sendKeys(driver, dp.getTextArea(20), ToggleOpenQA1Request+"s", ToggleOpenQA1Request, action.BOOLEAN)) {
+												log(LogStatus.INFO,"enter value on textarea "+ToggleOpenQA1Request,YesNo.No);
+												
+												ThreadSleep(2000);
+												 try {
+													Robot robot = new Robot();  // Robot class throws AWT Exception	
+													   Thread.sleep(1000); // Thread.sleep throws InterruptedException	
+													   robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+													   Thread.sleep(1000);
+													   robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+													   Thread.sleep(1000);
+												} catch (AWTException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (InterruptedException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+												if (ip.toggleEditSaveButton(projectName, toggleBtn, action.BOOLEAN, 30)!=null) {
+													log(LogStatus.INFO,"Edit Save button verified "+ToggleOpenQA1Request,YesNo.Yes);
+												} else {
+													sa.assertTrue(false,"Edit Save button not verified "+ToggleOpenQA1Request);
+													log(LogStatus.SKIP,"Edit Save button not verified "+ToggleOpenQA1Request,YesNo.Yes);
+												}
+												if (ip.toggleEditCancelButton(projectName, toggleBtn, action.BOOLEAN, 30)!=null) {
+													log(LogStatus.INFO,"Edit Cancel button verified "+ToggleOpenQA1Request,YesNo.Yes);
+												} else {
+													sa.assertTrue(false,"Edit Cancel button not verified "+ToggleOpenQA1Request);
+													log(LogStatus.SKIP,"Edit Cancel button not verified "+ToggleOpenQA1Request,YesNo.Yes);
+												}
+												
+											} else {
+												sa.assertTrue(false,"Not Able to enter value on textarea "+ToggleOpenQA1Request);
+												log(LogStatus.SKIP,"Not Able to enter value on textarea "+ToggleOpenQA1Request,YesNo.Yes);
+											}
+										} else {
+											sa.assertTrue(false,"Not Able to Click on text area for "+ToggleOpenQA1Request);
+											log(LogStatus.SKIP,"Not Able to Click on text area for "+ToggleOpenQA1Request,YesNo.Yes);
+										}
+										
+										
+									} else {
+										sa.assertTrue(false,"Not Able to Click on Edit Btn : "+ToggleOpenQA1Request);
+										log(LogStatus.SKIP,"Not Able to Click on Edit Btn : "+ToggleOpenQA1Request,YesNo.Yes);
+									}
+									
 								}
 								
 							} else {
@@ -805,7 +959,7 @@ public class Module5 extends BaseLib {
 	public void Module5TC006_CreateNewCustomSDG(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		SDGPageBusinessLayer sg = new SDGPageBusinessLayer(driver);
-
+		String fields=SDGLabels.APIName.toString();String values="";
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (lp.searchAndClickOnApp(SDG, 30)) {
 			log(LogStatus.INFO,"Able to Click/Search : "+SDG+" going to create custom SDG",YesNo.No);	 
@@ -820,6 +974,19 @@ public class Module5 extends BaseLib {
 
 				if (sg.createCustomSDG(projectName, Sdg1Name, sdgLabels, action.BOOLEAN, 20)) {
 					log(LogStatus.PASS,"create/verify created SDG : "+Sdg1Name,YesNo.No);
+					
+					for(int i = 0;i<1;i++) {
+						String api=ExcelUtils.readData(phase1DataSheetFilePath,"Fields",excelLabel.Variable_Name, "CField" + (i+1), excelLabel.APIName);
+						values=api;
+						if (sg.addFieldOnSDG(projectName,fields,values)) {
+							log(LogStatus.INFO,"Successfully added fields on "+Sdg1Name,YesNo.Yes);
+
+						}else {
+							sa.assertTrue(false,"Not Able to add fields on SDG : "+Sdg1Name);
+							log(LogStatus.SKIP,"Not Able to add fields on SDG : "+Sdg1Name,YesNo.Yes);
+						}
+					}
+					
 				} else {
 					sa.assertTrue(false,"Not Able to create/verify created SDG : "+Sdg1Name);
 					log(LogStatus.SKIP,"Not Able to create/verify created SDG : "+Sdg1Name,YesNo.Yes);
@@ -929,7 +1096,16 @@ public class Module5 extends BaseLib {
 											sa.assertTrue(false, "Not Able to Click on ELG Search Vaue Link: "+customSdgNAME);
 											log(LogStatus.SKIP,"Not Able to Click on ELG Search Vaue Link: "+customSdgNAME,YesNo.Yes);
 										}
+										if (sendKeys(driver, edit.getElgTitleTextBox(projectName, 10),ActiveDealToggleButton,"ELG Title TextBox",action.BOOLEAN)) {
+											ThreadSleep(500);
+											log(LogStatus.INFO,"send value to ELG Title TextBox : "+ActiveDealToggleButton,YesNo.No);
+										
 
+										} else {
+											sa.assertTrue(false, "Not Able to send value to ELG Title TextBox : "+ActiveDealToggleButton);
+											log(LogStatus.FAIL,"Not Able to send value to ELG Title TextBox : "+ActiveDealToggleButton,YesNo.Yes);
+										}
+										
 										//	// scn.nextLine();
 										if (click(driver, edit.getEnableToggleCheckBox(projectName, 10), "Enable Toggle CheckBox", action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO,"click on Enable Toggle CheckBox",YesNo.No);
@@ -997,11 +1173,12 @@ public class Module5 extends BaseLib {
 							sa.assertTrue(false,"Not Able to Click on Sub Tab : "+relatedTab);
 							log(LogStatus.SKIP,"Not Able to Click on Sub Tab : "+relatedTab,YesNo.Yes);
 						}
-
+						ThreadSleep(5000);
 						switchToDefaultContent(driver);
 						if (clickUsingJavaScript(driver, edit.getEditPageBackButton(projectName, 10),"Edit Page Back Button", action.BOOLEAN)) {
 							log(LogStatus.INFO,"Click on Edit Page Back Button",YesNo.No);
-							//// scn.nextLine();} else {
+							//// scn.nextLine();
+						} else {
 							sa.assertTrue(false, "Not Able to Click on Edit Page Back Button");
 							log(LogStatus.SKIP,"Not Able to Click on Edit Page Back Button",YesNo.Yes);
 						}

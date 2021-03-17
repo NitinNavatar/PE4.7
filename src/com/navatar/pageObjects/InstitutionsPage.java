@@ -483,4 +483,80 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 	
 	}
 	
+	
+	@FindBy(xpath="//*[text()='Partnership Legal Name']/following-sibling::div/input")
+	private WebElement partnershipLegalName_Lighting;
+
+	/**
+	 * @return the partnershipLegalName
+	 */
+	public WebElement getPartnershipLegalName(String environment,String mode,int timeOut) {
+		
+			 return isDisplayed(driver, partnershipLegalName_Lighting, "Visibility", timeOut, "Partnership Legal Name Lighting");
+		
+		
+	}
+	
+	@FindBy(xpath="//*[text()='Fund']/following-sibling::div//input[@title='Search Funds' or contains(@placeholder,'Search Funds')]")
+	private WebElement fundTextBox_Lighting;
+
+
+	/**
+	 * @return the fundTextBox
+	 */
+	public WebElement getFundTextBox(String environment,String mode,int timeOut) {
+		
+			return isDisplayed(driver, fundTextBox_Lighting, "Visibility", timeOut, "Fund Name Text Box Lighting");
+		
+	
+	}
+	
+	@FindBy(xpath="//div[@id='Name_ileinner']")
+	private WebElement partnershipNameInViewMode_Classic;
+	
+	@FindBy(xpath="//div[@class='slds-media__body']//h1//span[@data-aura-class='uiOutputText']")
+	private WebElement partnershipNameInViewMode_Lighting;
+
+	/**
+	 * @return the partnershipNameInViewMode
+	 */
+	public WebElement getPartnershipNameInViewMode(String environment,String mode,int timeOut,String partnershipName) {
+	WebElement ele = FindElement(driver, "//*[contains(text(),'Partnership Legal Name')]/../..//*[text()='"+partnershipName+"']", "partnershipName", action.SCROLLANDBOOLEAN, timeOut);
+		return ele;
+	}
+	
+	public WebElement getCommitmentIdInViewMode(String environment,String mode,int timeOut) {
+	
+		String xpath="//*[text()='Commitment']/../*/*[@slot='primaryField']/*";
+		WebElement ele = FindElement(driver,xpath, "commitment id xpath", action.SCROLLANDBOOLEAN, timeOut);
+		return ele;
+	}
+	
+	@FindBy(xpath="//*[text()='Limited Partner']/following-sibling::div//input")
+	private WebElement limitedPartnerTextbox_Lighting;
+
+	/**
+	 * @return the limitedPArtnerTextbox
+	 */
+	public WebElement getLimitedPartnerTextbox(String mode,int timeOut) {
+	return isDisplayed(driver, limitedPartnerTextbox_Lighting, "Visibility", timeOut, "Limited Partner Text Box Lighting");
+	}
+	
+	
+	@FindBy(xpath="//*[text()='Partnership']/following-sibling::div//input[@title='Search Partnerships' or contains(@placeholder,'Search Partnerships')]")
+	private WebElement partnershipTextBox_Lighting;
+
+	/**
+	 * @return the partnershipTextBox
+	 */
+	public WebElement getPartnershipTextBox(String mode,int timeOut) {
+		
+		return isDisplayed(driver, partnershipTextBox_Lighting, "Visibility", timeOut, "Partnership Text Box Lighting");
+	
+	
+	}
+	
+	
+	
+		
 }

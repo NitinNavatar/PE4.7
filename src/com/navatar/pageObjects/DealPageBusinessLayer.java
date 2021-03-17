@@ -43,6 +43,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 			ele = isDisplayed(driver, ele, "Visibility", timeOut, "Open Request");
 			log(LogStatus.INFO,"Verified Open Request with information as: "+requestID+" >> "+dateRequested+" >> "+request+" >> "+status,YesNo.No);
 			flag=true;
+			return flag;
 		}
 		log(LogStatus.INFO,"Not Verified Open Request with information as: "+requestID+" >> "+dateRequested+" >> "+request+" >> "+status,YesNo.No);
 		BaseLib.sa.assertTrue(false, "Not Verified Open Request with information as: "+requestID+" >> "+dateRequested+" >> "+request+" >> "+status);
@@ -63,6 +64,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 			ele = isDisplayed(driver, ele, "Visibility", timeOut, "Closed Request");
 			log(LogStatus.INFO,"Verified Closed Request with information as: "+requestID+" >> "+dateRequested+" >> "+request,YesNo.No);
 			flag=true;
+			return flag;
 		}
 		log(LogStatus.INFO,"Not Verified Closed Request with information as: "+requestID+" >> "+dateRequested+" >> "+request,YesNo.No);
 		BaseLib.sa.assertTrue(false, "Not Verified Closed Request with information as: "+requestID+" >> "+dateRequested+" >> "+request);
@@ -232,6 +234,35 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		}*/
 		return null;
 	}
+	
+	public WebElement getRequestAtToggle(String projectName,PageName pageName,String request,action action,int timeOut) {
+		String xpath = "//*[@data-label='Request: ']//*[text()='"+request+"']";
+		WebElement ele = FindElement(driver, xpath,request, action, timeOut);
+		scrollDownThroughWebelement(driver, ele, "request : "+request);
+		ele = isDisplayed(driver, ele, "Visibility", timeOut, "request : "+request);
+		return ele;
+	}
+	
+	public boolean isRequestAtToggleToolTip(String projectName,PageName pageName,String request,action action,int timeOut) {
+		boolean flag=false;
+		String xpath = "//*[@data-label='Request: ']//*[text()='"+request+"']";
+		WebElement ele = FindElement(driver, xpath,request, action, timeOut);
+		scrollDownThroughWebelement(driver, ele, "request : "+request);
+		ele = isDisplayed(driver, ele, "Visibility", timeOut, "request : "+request);
+		if (ele!=null) {
+			flag=ele.getAttribute("title").equalsIgnoreCase(request);
+			return flag;
+		} 
+		return flag;
+	}
+	
+	public WebElement getEditBtn(String projectName,String itemValue,action action,int timeOut) {
+		String xpath = "//*[text()='"+itemValue+"']/../following-sibling::*//*[@title='Edit']";
+		WebElement ele = FindElement(driver, xpath,itemValue, action, timeOut);
+		return ele;
+	}
+	
+	
 	
 }
 
