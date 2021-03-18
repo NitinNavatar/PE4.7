@@ -65,57 +65,6 @@ public interface BasePageErrorMessage {
 	public String UpcomingTaskMsg4="has an upcoming Task about";
 	public String AmericaLosAngelesTimeZone="America/Los_Angeles";
 	public static String defaultPhotoText="standard";
-	public static String OldTaskMsg(String user,String contactName,  int otherContactNum) {
-		String msg="a Task";
-		if (user==null) {
-			msg="You had "+msg;
-		}
-		else {
-			msg=user+" had "+msg;
-		}
-		if (contactName!=null) {
-			msg+=" with "+contactName;
-			if (otherContactNum>0) {
-				msg+= " and "+ otherContactNum + " other";
-			}
-		}
-		
-		return msg;
-	}
-	public static String UpcomingEventMsg(String user,String contactName,  int otherContactNum) {
-		String msg="an upcoming Event";
-		if (user==null) {
-			msg="You have "+msg;
-		}
-		else {
-			msg=user+" has "+msg;
-		}
-		if (contactName!=null) {
-			msg+=" with "+contactName;
-			if (otherContactNum>0) {
-				msg+= " and "+ otherContactNum + " other";
-			}
-		}
-		
-		return msg;
-	}
-	public static String OldEventMsg(String user,String contactName,  int otherContactNum) {
-		String msg="an Event";
-		if (user==null) {
-			msg="You had "+msg;
-		}
-		else {
-			msg=user+" had "+msg;
-		}
-		if (contactName!=null) {
-			msg+=" with "+contactName;
-			if (otherContactNum>0) {
-				msg+= " and "+ otherContactNum + " other";
-			}
-		}
-		
-		return msg;
-	}
 	public static String UpcomingTaskMsg(String user,String contactName,  int otherContactNum) {
 		String msg="an upcoming Task";
 		if (user==null) {
@@ -133,44 +82,10 @@ public interface BasePageErrorMessage {
 		
 		return msg;
 	}
-	public static String LoggedCallMsg(String user,String contactName,  int otherContactNum) {
-		String msg="logged a call";
-		if (user==null) {
-			msg="You "+msg;
-		}
-		else {
-			msg=user+" "+msg;
-		}
-		if (contactName!=null) {
-			msg+=" with "+contactName;
-			if (otherContactNum>0) {
-				msg+= " and "+ otherContactNum + " other";
-			}
-		}
-		
-		return msg;
-	}
-	public static String MailSentMsg(String user,String contactName,  int otherContactNum, boolean list) {
-		String msg="";
-		if (list)
-		msg="sent a list email.";
-		else
-		msg="sent an email";
-		if (user==null) {
-			msg="You "+msg;
-		}
-		else {
-			msg=user+" "+msg;
-		}
-		if (contactName!=null) {
-			msg+=" to "+contactName;
-			if (otherContactNum>0) {
-				msg+= " and "+ otherContactNum + " other";
-			}
-		}
-		
-		return msg;
-	}
+
 	
+	public static String invalidImageErrorMsg ="Incorrect file format. Please upload a JPG, JPEG, GIF or PNG file.";
+	public static String updatePhotoErrorMsg="You can upload a JPG, JPEG, GIF or PNG file. Maximum file size is 16 MB.";
+	public static String currentPhotoTextMsg="Current Photo:";
 	
 }

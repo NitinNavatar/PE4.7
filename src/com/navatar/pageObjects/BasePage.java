@@ -4803,6 +4803,74 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, headerImg, "Visibility", timeOut, "Header Image");
 		
 	}
+	
+	@FindBy(xpath = "//div[@class='forcePageError']/p")
+	private WebElement invalidImageErrorMsg;
 
+	public WebElement getInvalidImageErrorMsg(int timeOut) {
+		return isDisplayed(driver, invalidImageErrorMsg, "Visibility", timeOut, "invalid image error message");
+	}
+	
+	@FindBy(xpath = "//footer//*[text()='Cancel']")
+	private WebElement cancelBtn;
+
+	public WebElement getCancelBtn(int timeOut) {
+		return isDisplayed(driver, cancelBtn, "Visibility", timeOut, "cancel button");
+	}
+	
+	@FindBy(xpath = "//*[@data-aura-class='cFileUploader']//*[contains(@class,'slds-p-around_medium')]/div[2]")
+	private WebElement uploadImageErrorMsg;
+
+	public WebElement getUploadImageErrorMsg(int timeOut) {
+		return isDisplayed(driver, uploadImageErrorMsg, "Visibility", timeOut, "upload image error message");
+	}
+	
+	@FindBy(xpath = "//*[@data-aura-class='cFileUploader']//*[contains(@class,'slds-p-around_medium')]/div[4]/div")
+	private WebElement currentPhotoText;
+
+	public WebElement getCurrentPhotoText(int timeOut) {
+		return isDisplayed(driver, currentPhotoText, "Visibility", timeOut, "current photo text message");
+	}
+	
+	@FindBy(xpath = "//*[@data-aura-class='cFileUploader']//*[contains(@class,'slds-p-around_medium')]/div[5]")
+	private WebElement UpdatePhotodefaultImageXpath;
+
+	public WebElement getUpdatePhotodefaultImageXpath(int timeOut) {
+		return isDisplayed(driver, UpdatePhotodefaultImageXpath, "Visibility", timeOut, "update photo default image xpath");
+	}
+	
+	@FindBy(xpath = "//*[@data-aura-class='cFileUploader']//h2[text()='Update Photo']")
+	private WebElement updatePhotoTextXpath;
+
+	public WebElement getUpdatePhotoTextXpath(int timeOut) {
+		return isDisplayed(driver, updatePhotoTextXpath, "Visibility", timeOut, "update photo text xpath");
+	}
+	
+	@FindBy(xpath = "//*[@data-aura-class='cFileUploader']//*[text()='close']")
+	private WebElement updatePhotoCrossIcon;
+
+	public WebElement getUpdatePhotoCrossIcon(int timeOut) {
+		return isDisplayed(driver, updatePhotoCrossIcon, "Visibility", timeOut, "update photo cross icon");
+	}
+	
+	@FindBy(xpath = "//div[contains(@class,'deletePopup')]/div/div")
+	private WebElement deletePhotoPopUpErrorMsg;
+
+	public WebElement getDeletePhotoPopUpErrorMsg(int timeOut) {
+		return isDisplayed(driver, deletePhotoPopUpErrorMsg, "Visibility", timeOut, "delete photo popup error message");
+	}
+	
+	public WebElement deletePhotoPopUpCrossCancelDeleteButton(Buttons buttons, int timeOut) {
+		String xpath= "";
+		String button = buttons.toString().replace("_", " ");
+		if(buttons.toString().equalsIgnoreCase(Buttons.close.toString())) {
+			 xpath= "//div[contains(@class,'deletePopup')]//button/span[text()='"+button+"']";
+		}else {
+			xpath= "//div[contains(@class,'deletePopup')]//button[text()='"+button+"']";
+		}
+		WebElement ele= FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, button+" delete popUp xpath ");
+	
+	}
 
 }

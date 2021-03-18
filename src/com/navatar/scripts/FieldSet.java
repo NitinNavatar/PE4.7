@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
+import com.navatar.generic.EnumConstants.ContactPagePhotoActions;
 import com.navatar.generic.EnumConstants.CreationPage;
 import com.navatar.generic.EnumConstants.IconType;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
@@ -19,6 +20,7 @@ import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.generic.EnumConstants.object;
+import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.pageObjects.CommitmentsPageBusinessLayer;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
 import com.navatar.pageObjects.EditPageBusinessLayer;
@@ -1329,7 +1331,7 @@ public class FieldSet extends BaseLib {
 						log(LogStatus.PASS, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
 						sa.assertTrue(false, "Default image is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i));
 					}
-					if(lp.updatePhoto(projectName, tabNames.get(i), imagepath)) {
+					if(lp.updatePhoto(projectName, tabNames.get(i), imagepath,false)) {
 						log(LogStatus.PASS, "photo is updated successfully in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
 						if(lp.getDefaultImageXpath(20)!=null) {
 							String imagesize =lp.getDefaultImageXpath(20).getAttribute("style");
@@ -1450,7 +1452,7 @@ public class FieldSet extends BaseLib {
 					}
 					
 					
-					if(lp.updatePhoto(projectName, tabNames.get(i), imagepath)) {
+					if(lp.updatePhoto(projectName, tabNames.get(i), imagepath,true)) {
 						log(LogStatus.PASS, "photo is updated successfully in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
 						if(lp.getDefaultImageXpath(20)!=null) {
 							String imagesize =lp.getDefaultImageXpath(20).getAttribute("style");
@@ -1576,7 +1578,7 @@ public class FieldSet extends BaseLib {
 					}
 					
 					
-					if(lp.updatePhoto(projectName, tabNames.get(i), imagepath)) {
+					if(lp.updatePhoto(projectName, tabNames.get(i), imagepath,false)) {
 						log(LogStatus.PASS, "photo is updated successfully in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
 						if(lp.getDefaultImageXpath(20)!=null) {
 							String imagesize =lp.getDefaultImageXpath(20).getAttribute("style");
@@ -1702,7 +1704,7 @@ public class FieldSet extends BaseLib {
 					}
 					
 					
-					if(lp.updatePhoto(projectName, tabNames.get(i), imagepath)) {
+					if(lp.updatePhoto(projectName, tabNames.get(i), imagepath,false)) {
 						log(LogStatus.PASS, "photo is updated successfully in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
 						if(lp.getDefaultImageXpath(20)!=null) {
 							String imagesize =lp.getDefaultImageXpath(20).getAttribute("style");
@@ -1791,7 +1793,7 @@ public class FieldSet extends BaseLib {
 						log(LogStatus.PASS, "update photo icon is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.Yes);
 						sa.assertTrue(false, "update photo icon is not displaying in "+itemNames.get(i)+" on "+tabNames.get(i));
 					}
-					if(lp.updatePhoto(projectName, tabNames.get(i), imagepath)) {
+					if(lp.updatePhoto(projectName, tabNames.get(i), imagepath,false)) {
 						log(LogStatus.PASS, "photo is updated successfully in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
 					}else {
 						log(LogStatus.PASS, "photo is not updated in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
@@ -1899,7 +1901,7 @@ public class FieldSet extends BaseLib {
 					ThreadSleep(3000);
 					
 					for(int j=0; j<allImages.length; j++) {
-						if(lp.updatePhoto(projectName, tabNames.get(i), allImages[j])) {
+						if(lp.updatePhoto(projectName, tabNames.get(i), allImages[j],false)) {
 							log(LogStatus.PASS, imagesNames[j]+" photo is updated successfully in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
 							
 							
@@ -1956,6 +1958,215 @@ public class FieldSet extends BaseLib {
 			} else {
 				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify minimum and maximum updated image size",YesNo.Yes);
 				sa.assertTrue(false,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify minimum and maximum updated image size");
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc029_verifyErrorMessageAllTypeOfImage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
+		List<String> itemNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
+		
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String textFile="\\InvalidFiles\\IPTextData.txt";
+		String docFile="\\InvalidFiles\\TestData1.docx";
+		String excelFile="\\InvalidFiles\\TestData4.xlsx";
+		String pdfFile="\\InvalidFiles\\Upload3.pdf";
+		
+		String[] allImages = {textFile,docFile,excelFile,pdfFile};
+		String [] imagesNames= {"text file","doc file","excel file","pdf file"};
+		
+		for(int i=0; i<tabNames.size(); i++) {
+			if (lp.clickOnTab(projectName,tabNames.get(i) )) {
+				log(LogStatus.INFO,"Click on Tab : "+tabNames.get(i),YesNo.No);
+				if(lp.clickOnAlreadyCreatedItem(projectName, itemNames.get(i), true,20)) {
+					log(LogStatus.INFO,"clicked on created item : "+itemNames.get(i), YesNo.No);
+					ThreadSleep(3000);
+					
+					for(int j=0; j<allImages.length; j++) {
+						if(lp.updatePhoto(projectName, tabNames.get(i), allImages[j],true)) {
+							log(LogStatus.PASS, imagesNames[j]+" Error Message is verified in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+							
+						
+						}else {
+							log(LogStatus.PASS, imagesNames[j]+" Error Message is verified in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+							sa.assertTrue(false, imagesNames[j]+" Error Message is verified in "+itemNames.get(i)+" on "+tabNames.get(i));
+						}
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to click on created item "+itemNames.get(i)+" so cannot verify Error Message : "+BasePageErrorMessage.invalidImageErrorMsg, YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on created item "+itemNames.get(i)+" so cannot verify Error Message : "+BasePageErrorMessage.invalidImageErrorMsg);
+				}
+			} else {
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify Error Message : "+BasePageErrorMessage.invalidImageErrorMsg,YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify Error Message : "+BasePageErrorMessage.invalidImageErrorMsg);
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void FSTc030_verifyUiOfUloadImageAndDeletePopUp(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
+		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
+		List<String> itemNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		for(int i=0; i<tabNames.size(); i++) {
+			if (lp.clickOnTab(projectName,tabNames.get(i) )) {
+				log(LogStatus.INFO,"Click on Tab : "+tabNames.get(i),YesNo.No);
+				if(lp.clickOnAlreadyCreatedItem(projectName, itemNames.get(i), true,20)) {
+					log(LogStatus.INFO,"clicked on created item : "+itemNames.get(i), YesNo.No);
+					ThreadSleep(3000);
+					WebElement ele=lp.getUpdatePhotoCameraIcon(10);
+					if(ele!=null) {
+						ThreadSleep(500);
+						if(click(driver, con.getupdatePhotoLink(projectName, ContactPagePhotoActions.Update_Photo, 10),"update photo camera icon", action.BOOLEAN)) {
+							log(LogStatus.INFO, "clicked on update photo icon", YesNo.No);
+							
+							String errorMsg=BasePageErrorMessage.updatePhotoErrorMsg;
+							if(lp.getUploadImageErrorMsg(10)!=null) {
+								String ss = lp.getUploadImageErrorMsg(10).getText().trim();
+								if(ss.contains(errorMsg)) {
+									log(LogStatus.PASS, errorMsg+": Error Message is verified on "+tabNames.get(i), YesNo.No);
+								}else {
+									log(LogStatus.PASS, errorMsg+": Error Message is not verified on "+tabNames.get(i), YesNo.No);
+									sa.assertTrue(false, errorMsg+": Error Message is not verified on "+tabNames.get(i));
+								}
+								
+								
+							}else {
+								log(LogStatus.ERROR, errorMsg+" : Not able to find upload image error message", YesNo.Yes);
+								sa.assertTrue(false,errorMsg+" : Not able to find upload image error message");
+							}
+							
+							errorMsg=BasePageErrorMessage.currentPhotoTextMsg;
+							if(lp.getCurrentPhotoText(10)!=null) {
+								String ss = lp.getCurrentPhotoText(10).getText().trim();
+								if(ss.contains(errorMsg)) {
+									log(LogStatus.PASS, errorMsg+": Error Message is verified on "+tabNames.get(i), YesNo.No);
+								}else {
+									log(LogStatus.PASS, errorMsg+": Error Message is not verified on "+tabNames.get(i), YesNo.No);
+									sa.assertTrue(false, errorMsg+": Error Message is not verified on "+tabNames.get(i));
+								}
+								
+								
+							}else {
+								log(LogStatus.ERROR, errorMsg+": Not able to find current photo error message", YesNo.Yes);
+								sa.assertTrue(false, errorMsg+": Not able to find current photo error message");
+							}
+							if(lp.getUpdatePhotodefaultImageXpath(10)!=null) {
+								log(LogStatus.PASS, "Default image is displaying in update photo popUp", YesNo.No);
+								
+							}else {
+								log(LogStatus.ERROR, "Default image is displaying in update photo popUp", YesNo.Yes);
+								sa.assertTrue(false,"Default image is displaying in update photo popUp");
+							}
+							if(click(driver, lp.getUpdatePhotoCrossIcon(10), "cross icon", action.BOOLEAN)) {
+								log(LogStatus.PASS, "clicked on cross icon", YesNo.No);
+							}else {
+								log(LogStatus.ERROR, "Not able to click on cross icon so cannot close udate photo popUp", YesNo.Yes);
+								sa.assertTrue(false, "Not able to click on cross icon so cannot close udate photo popUp");
+							}
+						}else {
+							log(LogStatus.ERROR, "Not able to click on update photo icon so cannot check Update photo UI on "+tabNames.get(i), YesNo.Yes);
+							sa.assertTrue(false, "Not able to click on update photo icon so cannot check Update photo UI on "+tabNames.get(i));
+						}
+					
+					}else {
+						log(LogStatus.ERROR, "camera icon is not displaying on "+tabNames.get(i)+" so cannot check Update photo UI", YesNo.Yes);
+						sa.assertTrue(false, "camera icon is not displaying on "+tabNames.get(i)+" so cannot check Update photo UI");
+					}
+					
+					
+					String jpgMinimumSizeimagepath="\\UploadImages\\JPGImage.jpg";
+					
+					if(lp.updatePhoto(projectName, tabNames.get(i), jpgMinimumSizeimagepath,false)) {
+						log(LogStatus.PASS, jpgMinimumSizeimagepath+" Error Message is verified in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						for(int j=0; j<2 ; j++) {
+							ele=lp.getUpdatePhotoCameraIcon(10);
+							if(ele!=null) {
+								ThreadSleep(500);
+								if(click(driver, ele,"update photo camera icon", action.BOOLEAN)) {
+									log(LogStatus.INFO, "clicked on update photo icon", YesNo.No);
+									ThreadSleep(500);
+									if (click(driver, con.getupdatePhotoLink(projectName,ContactPagePhotoActions.Delete_Photo, 10), ContactPagePhotoActions.Update_Photo.toString(), action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.PASS, "clicked on update photo delete option", YesNo.No);
+										ThreadSleep(200);
+										
+										if(j==0) {
+											if(lp.deletePhotoPopUpCrossCancelDeleteButton(Buttons.Cancel, 2)!=null) {
+												log(LogStatus.PASS, "cancel button is displaying", YesNo.No);
+											}else {
+												log(LogStatus.PASS, "cancel button is not displaying", YesNo.No);
+												sa.assertTrue(false, "cancel button is not displaying");
+											}
+											if(lp.deletePhotoPopUpCrossCancelDeleteButton(Buttons.close, 2)!=null) {
+												log(LogStatus.PASS, "cross button is displaying", YesNo.No);
+											}else {
+												log(LogStatus.PASS, "cross button is not displaying", YesNo.No);
+												sa.assertTrue(false, "cross button is not displaying");
+											}
+											
+											if(lp.deletePhotoPopUpCrossCancelDeleteButton(Buttons.Delete_Photo, 2)!=null) {
+												log(LogStatus.PASS, "delete photo button is displaying", YesNo.No);
+											}else {
+												log(LogStatus.PASS, "delete photo button is not displaying", YesNo.No);
+												sa.assertTrue(false, "delete photo button is not displaying");
+											}
+											
+											if(click(driver, lp.deletePhotoPopUpCrossCancelDeleteButton(Buttons.close, 2), "cross icon", action.BOOLEAN)) {
+												log(LogStatus.PASS, "clicked on cross icon", YesNo.No);
+											}else {
+												log(LogStatus.PASS, "Not able to click on delete photo popUp cross icon", YesNo.No);
+												sa.assertTrue(false, "Not able to click on delete photo popUp cross icon");
+											}
+										}
+										if(j==1) {
+											if(click(driver, lp.deletePhotoPopUpCrossCancelDeleteButton(Buttons.Cancel, 2), "Cancel icon", action.BOOLEAN)) {
+												log(LogStatus.PASS, "clicked on Cancel icon", YesNo.No);
+											}else {
+												log(LogStatus.PASS, "Not able to click on delete photo popUp Cancel icon", YesNo.No);
+												sa.assertTrue(false, "Not able to click on delete photo popUp Cancel icon");
+											}
+										}
+										
+									}else {
+										log(LogStatus.ERROR, "delete photo button is not clickable", YesNo.Yes);
+										sa.assertTrue(false,"delete photo button is not clickable" );
+									}
+									
+								}else {
+									log(LogStatus.ERROR, "Not able to click on update photo icon so cannot check delete photo UI on "+tabNames.get(i), YesNo.Yes);
+									sa.assertTrue(false, "Not able to click on update photo icon so cannot check delete photo UI on "+tabNames.get(i));
+								}
+								
+							}else {
+								log(LogStatus.ERROR, "camera icon is not displaying on "+tabNames.get(i)+" so cannot check delete photo UI", YesNo.Yes);
+								sa.assertTrue(false, "camera icon is not displaying on "+tabNames.get(i)+" so cannot check delete photo UI");
+							}
+							
+						}
+
+					}else {
+						log(LogStatus.PASS, jpgMinimumSizeimagepath+" cannot update photo on "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
+						sa.assertTrue(false, jpgMinimumSizeimagepath+" cannot update photo on "+itemNames.get(i)+" on "+tabNames.get(i));
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to click on created item "+itemNames.get(i)+" so cannot verify Error Message : "+BasePageErrorMessage.invalidImageErrorMsg, YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on created item "+itemNames.get(i)+" so cannot verify Error Message : "+BasePageErrorMessage.invalidImageErrorMsg);
+				}
+			} else {
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify Error Message : "+BasePageErrorMessage.invalidImageErrorMsg,YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify Error Message : "+BasePageErrorMessage.invalidImageErrorMsg);
 			}
 		}
 		lp.CRMlogout();

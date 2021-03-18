@@ -4805,11 +4805,11 @@ public boolean verifyAccordianRecordImage(String projectName, String record, Str
 }
 
 
-public boolean updatePhoto(String projectName,String pageName,String uploadImagePath) {
+public boolean updatePhoto(String projectName,String pageName,String uploadImagePath,boolean errorMsgCheck) {
 	String imgId=null;
+	boolean flag = false;
 	WebElement ele=getUpdatePhotoCameraIcon(10);
 	if(ele!=null) {
-		log(LogStatus.INFO, "clicked on update photo icon", YesNo.No);
 		ThreadSleep(500);
 		if(click(driver, ele,"update photo camera icon", action.BOOLEAN)) {
 			log(LogStatus.INFO, "clicked on update photo icon", YesNo.No);
@@ -4818,31 +4818,42 @@ public boolean updatePhoto(String projectName,String pageName,String uploadImage
 				ThreadSleep(1000);
 				String path=System.getProperty("user.dir")+uploadImagePath;
 				System.err.println("Path : "+path);
-				
 				if (sendKeys(driver, getUploadImageXpath(10), path, "upload photo button", action.SCROLLANDBOOLEAN) ) {
-				
-				
-//				if(click(driver, getUploadImageXpath(10),"upload image button", action.BOOLEAN)) {
 					log(LogStatus.PASS, "clicked on upload image button on "+pageName, YesNo.No);
 					ThreadSleep(500);
-//					if(uploadFile(path)) {
 						ThreadSleep(1000);
-						if(click(driver, getRecordPageSettingSave(10),"Save button", action.BOOLEAN)) {
-							log(LogStatus.PASS, "clicked on save button and image is updtaed "+path +" on "+pageName, YesNo.No);
-							ThreadSleep(4000);
-							imgId=getimgLink(projectName, 10).getAttribute("src");
-							if (imgId!=null){
-								log(LogStatus.INFO, "found id of img uploaded: "+imgId, YesNo.Yes);
-								return true;
+						if(!errorMsgCheck) {
+							if(click(driver, getRecordPageSettingSave(10),"Save button", action.BOOLEAN)) {
+								log(LogStatus.PASS, "clicked on save button and image is updtaed "+path +" on "+pageName, YesNo.No);
+								ThreadSleep(4000);
+								imgId=getimgLink(projectName, 10).getAttribute("src");
+								if (imgId!=null){
+									log(LogStatus.INFO, "found id of img uploaded: "+imgId, YesNo.Yes);
+									flag= true;
+								}else {
+									log(LogStatus.ERROR, "could not find id of img uploaded", YesNo.Yes);
+								}
 							}else {
-								log(LogStatus.ERROR, "could not find id of img uploaded", YesNo.Yes);
+								log(LogStatus.PASS, "Not able to click on save button and so cannot updtaed image from path "+path +" on "+pageName, YesNo.No);
 							}
 						}else {
-							log(LogStatus.PASS, "Not able to click on save button and so cannot updtaed image from path "+path +" on "+pageName, YesNo.No);
+							if(getInvalidImageErrorMsg(10)!=null) {
+								String ss = getInvalidImageErrorMsg(10).getText().trim();
+								if(ss.equalsIgnoreCase(BasePageErrorMessage.invalidImageErrorMsg)) {
+									log(LogStatus.PASS, "Error Message is verified for "+uploadImagePath, YesNo.No);
+									flag= true;
+								}else {
+									log(LogStatus.ERROR, "Error Message is not verified : "+uploadImagePath, YesNo.Yes);
+								}
+							}else {
+								log(LogStatus.ERROR, "Not able to find the error meesage after upload invalid image : "+uploadImagePath, YesNo.Yes);
+							}
+							if(click(driver, getCancelBtn(10), "cancel button", action.BOOLEAN)) {
+								log(LogStatus.PASS, "Clicked on upload image popoup cancel button", YesNo.No);
+							}else {
+								log(LogStatus.ERROR, "Not able to click on upload image cancel button so cannot close popup", YesNo.Yes);
+							}
 						}
-//					}else {
-//						log(LogStatus.ERROR,"Not able to pass path in file uploaded : "+path+" on "+pageName, YesNo.Yes);
-//					}
 				}else {
 					log(LogStatus.ERROR, "Not able to click on upload image on "+pageName+" so cannot update image from Path : "+path, YesNo.Yes);
 				}
@@ -4856,7 +4867,7 @@ public boolean updatePhoto(String projectName,String pageName,String uploadImage
 	}else {
 		log(LogStatus.ERROR, "camera icon is not displaying on "+pageName+" so cannot upload photo", YesNo.Yes);
 	}
-	return false;
+	return flag;
 }
 
 

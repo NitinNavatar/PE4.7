@@ -416,11 +416,12 @@ public class ContactsPage extends BasePageBusinessLayer {
 	private WebElement updatePhotoLink;
 	
 	public WebElement getupdatePhotoLink(String projectName,ContactPagePhotoActions cpp,int timeOut) {
+		WebElement ele=null;
 		String action1 = cpp.toString().replace("_"," ");
 		String xpath = "//a[@title='"+action1+"']";
-		WebElement ele=FindElement(driver, xpath, "photo action link", action.SCROLLANDBOOLEAN, timeOut);
+		ele=FindElement(driver, xpath, "photo action link", action.SCROLLANDBOOLEAN, timeOut);
 		//return ele;
-		return isDisplayed(driver, ele, "Visibility", timeOut, "update photo link");
+		return ele;
 		
 	}
 	
