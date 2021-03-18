@@ -358,4 +358,10 @@ public class LoginPage extends BasePageBusinessLayer{
 	
 	}
 	
+	public WebElement getProfilePageLink(String projectName, String user,int timeOut) {
+		String xpath="//a[text()='"+user+"']/../../..//img[@alt='User']";
+		return isDisplayed(driver, FindElement(driver,xpath," user profile link", action.BOOLEAN,timeOut), "visibility", timeOut," app name xpath in App luncher Name ");	
+	
+	}
+	
 }

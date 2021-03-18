@@ -65,6 +65,9 @@ public interface BasePageErrorMessage {
 	public String UpcomingTaskMsg4="has an upcoming Task about";
 	public String AmericaLosAngelesTimeZone="America/Los_Angeles";
 	public static String defaultPhotoText="standard";
+
+	public static String defaultPhotoTextForAdminPhoto="profilephoto";
+	
 	public static String UpcomingTaskMsg(String user,String contactName,  int otherContactNum) {
 		String msg="an upcoming Task";
 		if (user==null) {

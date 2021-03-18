@@ -442,6 +442,22 @@ public class SetupPage extends BasePageBusinessLayer {
 
 	}
 	
+	public WebElement getRegionDropdownList(String dropDownLabel,String dropDownValue,int timeOut) {
+		String xpath = "//*[text()='"+dropDownLabel+"']/following-sibling::*[text()='"+dropDownValue+"']";
+		WebElement ele = FindElement(driver, xpath, dropDownLabel+" "+dropDownValue, action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, dropDownLabel+" "+dropDownValue);
+
+	}
+	
+	@FindBy(xpath = "//*[text()='Region']/../following-sibling::*//select")
+	private WebElement regionDropdownList;
+
+	public WebElement getRegionDropdownList(int timeOut) {
+		scrollDownThroughWebelement(driver, regionDropdownList, "Region DropDown List");
+		return isDisplayed(driver, regionDropdownList, "Visibility", timeOut, "Region DropDown List");
+
+	}
+	
 	
 
 }

@@ -24,6 +24,7 @@ import com.navatar.pageObjects.*;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class Module4 extends BaseLib{
+	Scanner sc = new Scanner(System.in);
 	@Parameters({ "projectName"})
 	@Test
 	public void M4tc001_CreatePrecondition(String projectName) {
@@ -1937,7 +1938,7 @@ public class Module4 extends BaseLib{
 		String query[]={EditPageErrorMessage.query1,EditPageErrorMessage.query2,EditPageErrorMessage.query3};
 		String image[]={EditPageErrorMessage.image1,EditPageErrorMessage.image2,EditPageErrorMessage.image3};
 		String fieldValues[]= new String[3];
-		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {/*
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
 				for (int i = 0;i<3;i++) {
 					fieldValues[0]=EditPageLabel.Title.toString()+breakSP+tab[i];
@@ -1963,7 +1964,7 @@ public class Module4 extends BaseLib{
 				log(LogStatus.ERROR, "Not able to go to entity record "+M4Ins1, YesNo.Yes);
 				sa.assertTrue(false,"Not able to go to entity record "+M4Ins1 );
 			}
-		*/}else {
+		}else {
 			log(LogStatus.ERROR, "Not able to click on entity tab", YesNo.Yes);
 			sa.assertTrue(false,"Not able to click on entity tab" );
 		}
@@ -2368,5 +2369,626 @@ public class Module4 extends BaseLib{
 		}
 		lp.CRMlogout();
 		sa.assertAll();
+	}
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc028_VerifyBrokenImageInContactProfile(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String contactHeader=ip.getTabName(projectName,TabName.Object2Tab);
+		String contact=M4Contact2FName+" "+M4Contact2LName;
+		String parentID=null;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentID=switchOnWindow(driver);
+			if (parentID!=null) {
+			List<String> layoutName = new ArrayList<String>();
+			layoutName.add("Contact Layout");
+			HashMap<String, String> sourceANDDestination = new HashMap<String, String>();
+			sourceANDDestination.put(PageLabel.Profile_Image.toString(), PageLabel.Industry.toString());
+			List<String> abc = sp.DragNDrop("", mode, object.Contact, ObjectFeatureName.pageLayouts, layoutName, sourceANDDestination);
+			ThreadSleep(10000);
+			if (!abc.isEmpty()) {
+				log(LogStatus.FAIL, "field not added/already present 1", YesNo.Yes);
+				//sa.assertTrue(false, "field not added/already present 1");
+			}else{
+				log(LogStatus.INFO, "field added/already present 1", YesNo.Yes);
+			}
+			driver.close();
+			driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.FAIL, "could not find new window to switch, so cannot add field", YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch, so cannot add field");
+			}
+		}
+		else {
+			log(LogStatus.FAIL, "could not click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "could not click on setup link");
+		}
+		lp.CRMlogout();
+		driver.close();
+		config(browserToLaunch);
+		lp = new LoginPageBusinessLayer(driver);
+		cp = new ContactsPageBusinessLayer(driver);
+		ip = new InstitutionsPageBusinessLayer(driver);
+		ep = new EditPageBusinessLayer(driver);
+		dp = new DealPageBusinessLayer(driver);
+		sdg = new SDGPageBusinessLayer(driver);
+		sp=new SetupPageBusinessLayer(driver);
+		WebElement ele=null;
+		lp.CRMLogin(crmUser1EmailID, adminPassword,appName);
+		lp.searchAndClickOnApp(AppName.Files.toString(), 10);
+		ele=ip.getuploadFilesButton(projectName, 10);
+		String attachmentPath= System.getProperty("user.dir")+"\\UploadImages\\JPEGImage.jpg";
+		String fileName=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name,currentlyExecutingTC, excelLabel.File);
+		String imgUrl="";
+		if (click(driver, ele, "upload button", action.BOOLEAN)) {
+			if (uploadFileAutoIT(attachmentPath)) {
+				log(LogStatus.INFO, "successfully uploaded file "+attachmentPath, YesNo.No);
+				ThreadSleep(5000);
+				if (click(driver, ip.getdoneButtonListView(projectName, 10), "done", action.SCROLLANDBOOLEAN)) {
+					
+					
+					ele=ip.documentNameOnFilesApp(projectName, fileName, 10);
+					if (click(driver, ele, fileName, action.SCROLLANDBOOLEAN)) {
+						imgUrl=ip.rightClickOnFileAndCopy(projectName,fileName,10);
+						if (!imgUrl.equals("")) {
+							log(LogStatus.INFO, "successfully copied img url", YesNo.Yes);
+								
+						}else {
+							log(LogStatus.FAIL, "could not copy image path", YesNo.Yes);
+							sa.assertTrue(false, "could not copy image path");
+						}
+					}else {
+						log(LogStatus.FAIL, "image name is not clickable", YesNo.Yes);
+						sa.assertTrue(false, "image name is not clickable");
+					}
+				}else {
+					log(LogStatus.FAIL, "done button is not clickable", YesNo.Yes);
+					sa.assertTrue(false, "done button is not clickable");
+				}
+			}else {
+				log(LogStatus.FAIL, "could not upload file", YesNo.Yes);
+				sa.assertTrue(false, "could not upload file");
+			}
+		}else {
+			log(LogStatus.FAIL, "upload button is not clickable", YesNo.Yes);
+			sa.assertTrue(false, "upload button is not clickable");
+		}
+		String a[]=imgUrl.split(".com");
+				imgUrl=a[0]+"akul.com"+a[1];
+		if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName,contact , 10)) {
+				ele=cp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele, "Details tab", action.BOOLEAN);
+				if (ip.clickOnShowMoreActionDownArrow(projectName, PageName.Object2Page, ShowMoreActionDropDownList.Edit, 10)) {
+
+					ele=cp.getContactPageTextBoxOrRichTextBoxWebElement(projectName, PageLabel.Profile_Image.toString(), 10);
+					if (ele!=null) {
+						sendKeys(driver, ele, imgUrl, "profile image", action.SCROLLANDBOOLEAN);
+						if (click(driver, cp.getNavigationTabSaveBtn(projectName, 60), "Save Button",action.SCROLLANDBOOLEAN)){
+							log(LogStatus.INFO, "successfully saved profile image", YesNo.Yes);
+
+						}
+						else {
+							log(LogStatus.FAIL, "could not click on save button", YesNo.Yes);
+							sa.assertTrue(false, "could not click on save button");
+						}
+					}
+					else {
+						log(LogStatus.FAIL, "profile image textbos is not visible", YesNo.Yes);
+						sa.assertTrue(false, "profile image textbos is not visible");
+					}
+				}else {
+					log(LogStatus.FAIL, "edit button is not clickable", YesNo.Yes);
+					sa.assertTrue(false, "edit button is not clickable");
+				}
+				
+				ele=ip.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
+				if (click(driver, ele, "overview tab", action.SCROLLANDBOOLEAN)) {
+					ele=cp.getimgLink(projectName, 10);
+					if (ele.getAttribute("src").contains(BasePageErrorMessage.defaultPhotoText)) {
+						log(LogStatus.INFO, "successfully verified broken photo on contact page", YesNo.Yes);
+						
+					}else {
+						log(LogStatus.FAIL, "could not verify standard photo on contact page", YesNo.Yes);
+						sa.assertTrue(false, "could not verify standard photo on contact page");
+					}
+				}else {
+					log(LogStatus.FAIL, "overview tab is not clickable", YesNo.Yes);
+					sa.assertTrue(false, "overview tab is not clickable");
+				}
+			}else {
+				log(LogStatus.FAIL, contact+" not found on contact page", YesNo.Yes);
+				sa.assertTrue(false, contact+" not found on contact page");
+			}
+		}else {
+			log(LogStatus.FAIL, "could not click on contact object", YesNo.Yes);
+			sa.assertTrue(false, "could not click on contact object");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc029_VerifySDGProperties(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		WebElement ele=null;
+		String contactHeader=ip.getTabName(projectName,TabName.Object2Tab);
+		String contact=M4Contact2FName+" "+M4Contact2LName;
+		String parentID=null;
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1,10)) {
+				ele=ip.returnAccordionViewDetailsLink(projectName, contactHeader);
+				if (click(driver, ele, "view details link", action.SCROLLANDBOOLEAN)) {
+					if (ip.clickOnEditButtonOnSDG(projectName, contact, EditPageLabel.Title.toString(), 10)) {
+						appLog.error(">>>>");
+						sc.next();
+						
+						ele=ip.SDGInputTextbox(projectName, EditPageLabel.Title.toString(), 10);
+						
+						sendKeys(driver, ele, M4Contact2Title+"a", "title textbox", action.BOOLEAN);
+						if (click(driver, ip.getsdgSaveButton(projectName,10), "save", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.ERROR, "successfully clicked on save button", YesNo.Yes);
+
+						}else {
+							log(LogStatus.ERROR, "could not click on save button", YesNo.Yes);
+							sa.assertTrue(false,"could not click on save button" );
+						}
+					}else {
+						log(LogStatus.ERROR, "could not click on edit button", YesNo.Yes);
+						sa.assertTrue(false,"could not click on edit button" );
+					}
+
+					if (ip.clickOnEditButtonOnSDG(projectName, contact, excelLabel.Email.toString(), 10)) {
+						ele=ip.SDGInputTextbox(projectName, excelLabel.Email.toString(), 10);
+						sendKeys(driver, ele, M4Contact2Email+"a", "email textbox", action.BOOLEAN);
+						appLog.error(">>>>");
+						sc.next();
+						if (click(driver, ip.getsdgSaveButton(projectName,10), "save", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.ERROR, "successfully clicked on save button", YesNo.Yes);
+
+						}else {
+							log(LogStatus.ERROR, "could not click on save button", YesNo.Yes);
+							sa.assertTrue(false,"could not click on save button" );
+						}
+					}else {
+						log(LogStatus.ERROR, "could not click on edit button", YesNo.Yes);
+						sa.assertTrue(false,"could not click on edit button" );
+					}
+
+					ele=ip.accordionSDGActionButtons(projectName, contactHeader, "New", action.SCROLLANDBOOLEAN, 10);
+					if (click(driver, ele, "new", action.SCROLLANDBOOLEAN)) {
+						if (sendKeys(driver, cp.getContactFirstName(projectName, 60), M4Contact8FName, "Contact first Name",
+								action.BOOLEAN)) {
+							if (sendKeys(driver, cp.getContactLastName(projectName, 60), M4Contact8LName, "Contact Last Name",
+									action.BOOLEAN)) {
+								if (sendKeys(driver, cp.getcontactTitle(projectName, 10), M4Contact8Title, "title", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "passed value "+M4Contact8Title+" to title", YesNo.No);
+									if (click(driver, ip.getNavigationTabSaveBtn(projectName, 10), "save", action.SCROLLANDBOOLEAN)) {
+
+									}else {
+										log(LogStatus.ERROR, "could not click on save button, so cannot create contact from sdg", YesNo.No);
+										BaseLib.sa.assertTrue(false,"could not click on save button, so cannot create contact from sdg" );
+									}
+								}
+								else {
+									log(LogStatus.ERROR, "could not pass value "+M4Contact8Title+" to title", YesNo.Yes);
+									BaseLib.sa.assertTrue(false,"could not pass value "+M4Contact8Title+" to title" );
+								}
+							}else {
+								log(LogStatus.ERROR, "could not pass value "+M4Contact8LName+" to last name", YesNo.Yes);
+								BaseLib.sa.assertTrue(false,"could not pass value "+M4Contact8LName+" to last name" );
+							}
+						}else {
+							log(LogStatus.ERROR, "could not pass value "+M4Contact8FName+" to first name", YesNo.Yes);
+							BaseLib.sa.assertTrue(false,"could not pass value "+M4Contact8FName+" to first name" );
+						}
+						click(driver, ip.accordionModalWindowClose(projectName, contactHeader), "cross icon", action.BOOLEAN);
+					}
+				}else {
+					log(LogStatus.ERROR, "could not click on view details link", YesNo.Yes);
+					sa.assertTrue(false,"could not click on view details link" );
+				}
+			}else {
+				log(LogStatus.ERROR, "could not click on "+M4Ins1, YesNo.Yes);
+				sa.assertTrue(false,"could not click on "+M4Ins1 );
+			}
+		}else {
+			log(LogStatus.ERROR, "entity tab is not clickable", YesNo.Yes);
+			sa.assertTrue(false,"entity tab is not clickable" );
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc030_VerifyCancelAndCrossOnEntityPageContactAccordionSDG(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		WebElement ele=null;
+		String contactHeader=ip.getTabName(projectName,TabName.Object2Tab);
+		String contact=M4Contact2FName+" "+M4Contact2LName;
+		String parentID=null;
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1,10)) {
+				for (int i = 0;i<2;i++) {
+
+					ele=ip.returnAccordionViewDetailsLink(projectName, contactHeader);
+					if (click(driver, ele, "accordion view details", action.SCROLLANDBOOLEAN)) {
+						ele=ip.getHeaderTextForPage(projectName, PageName.NewTaskPopUP, contactHeader, action.BOOLEAN, 10);
+						if (ele!=null) {
+							log(LogStatus.INFO, "successfully verified presence of header in accordion", YesNo.No);
+
+						}else {
+							log(LogStatus.ERROR, "could not verify presence of header in accordion", YesNo.Yes);
+							sa.assertTrue(false,"could not verify presence of header in accordion" );
+						}
+						if (i==0)
+							ele=ip.accordionModalWindowClose(projectName, cp.getTabName(projectName, TabName.Object2Tab));
+						else
+							ele=ip.getfooterCloseButton(projectName, 10);
+						if (click(driver,ele , "cross", action.BOOLEAN)) {
+							if (isDisplayed(driver, ele, "visibility", 5, "close")==null) {
+								log(LogStatus.INFO, "successfully verified window is closed", YesNo.No);
+
+							}else {
+								log(LogStatus.ERROR, "window is still present after clicking on close button", YesNo.Yes);
+								sa.assertTrue(false,"window is still present after clicking on close button" );
+							}
+						}else {
+							log(LogStatus.ERROR, "close icon is not clickable", YesNo.Yes);
+							sa.assertTrue(false,"close icon is not clickable" );
+						}
+					}else {
+						log(LogStatus.ERROR, "view details is not clickable", YesNo.Yes);
+						sa.assertTrue(false,"view details is not clickable" );
+					}
+				}
+			}else {
+				log(LogStatus.ERROR, M4Ins1+" is not found on entity page", YesNo.Yes);
+				sa.assertTrue(false,M4Ins1+" is not found on entity page" );
+			}
+		}else {
+			log(LogStatus.ERROR, "entity page is not clickable", YesNo.Yes);
+			sa.assertTrue(false,"entity page is not clickable" );
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc031_VerifyUserImageOnSDG(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		WebElement ele=null;
+		String dealteamHeader=ip.getTabName(projectName,TabName.Deal_Team);
+		String contact=M4Contact2FName+" "+M4Contact2LName;
+		String parentID=null;
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		int i = 0;
+		String field="Member__r.Name";
+		if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Deal1, 10)) {
+				ele=ip.returnAccordionViewDetailsLink(projectName, dealteamHeader);
+				if (click(driver, ele, "view details link", action.SCROLLANDBOOLEAN)) {
+					ele=ip.accordionSDGButtons(projectName, dealteamHeader,ToggleButtonGroup.SDGButton , action.BOOLEAN, 10);
+					if (click(driver, ele, "sdp setup button", action.SCROLLANDBOOLEAN)) {
+						parentID=switchOnWindow(driver);
+						if (parentID!=null) {
+							ele=ip.getRelatedTab(projectName, RelatedTab.Related.toString(), 10);
+							if (click(driver, ele, "related tab", action.BOOLEAN)) {
+									ele=ip.sdgButtons(projectName,field, ShowMoreActionDropDownList.Edit.toString(), 10);
+									if (click(driver, ele, "edit", action.SCROLLANDBOOLEAN)) {
+										ele=sdg.getLabelTextBox(projectName, PageName.SDGPage.toString(),SDGCreationLabel.Image_Field_API.toString(), 10);
+										if (sendKeys(driver, ele, EditPageErrorMessage.image3, "image field api", action.SCROLLANDBOOLEAN)) {
+
+
+											if (click(driver, sdg.getRecordPageSettingSave(10), "save", action.BOOLEAN)) {
+												log(LogStatus.INFO,"successfully clicked on save button",YesNo.Yes);
+											}
+											else {
+												log(LogStatus.SKIP,"could not click on save button, so could not add "+field,YesNo.Yes);
+												sa.assertTrue(false, "could not click on save button, so could not add "+field);
+											}
+										}else {
+											log(LogStatus.SKIP,"image field api field is not visible",YesNo.Yes);
+											sa.assertTrue(false, "image field api field is not visible");
+										}
+									}else {
+										log(LogStatus.SKIP,"edit button is not clickable for "+field,YesNo.Yes);
+										sa.assertTrue(false, "edit button is not clickable for "+field);
+									}
+								}else {
+									log(LogStatus.SKIP,"related tab is not clickable",YesNo.Yes);
+									sa.assertTrue(false, "related tab is not clickable");
+								}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}else {
+							log(LogStatus.SKIP,"could not find new window to switch, so cannot edit field",YesNo.Yes);
+							sa.assertTrue(false, "could not find new window to switch, so cannot edit field");
+						}
+					}else {
+						log(LogStatus.SKIP,"setup button on sdg is not clickable",YesNo.Yes);
+						sa.assertTrue(false, "setup button on sdg is not clickable");
+					}
+				}else {
+					log(LogStatus.SKIP,"view details link is not clickable",YesNo.Yes);
+					sa.assertTrue(false, "view details link is not clickable");
+				}
+			}else {
+				log(LogStatus.SKIP,"could not click on deal "+M4Deal1,YesNo.Yes);
+				sa.assertTrue(false, "could not click on deal "+M4Deal1);
+			}
+		}else {
+			log(LogStatus.SKIP,"deals tab is not clickable",YesNo.Yes);
+			sa.assertTrue(false, "deals tab is not clickable");
+		}
+		
+		lp.CRMlogout();
+		driver.close();
+		config(browserToLaunch);
+		
+		lp = new LoginPageBusinessLayer(driver);
+		fp = new FundsPageBusinessLayer(driver);
+		cp = new ContactsPageBusinessLayer(driver);
+		ip = new InstitutionsPageBusinessLayer(driver);
+		ep = new EditPageBusinessLayer(driver);
+		dp = new DealPageBusinessLayer(driver);
+		sdg = new SDGPageBusinessLayer(driver);
+		sp=new SetupPageBusinessLayer(driver);
+		String user=AdminUserFirstName+" "+AdminUserLastName,imgId="";
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Deal1, 10)) {
+				ele=ip.returnAccordionViewDetailsLink(projectName, dealteamHeader);
+				if (click(driver, ele, "view details link", action.SCROLLANDBOOLEAN)) {
+					ele=dp.returnAccordionLink(projectName, user);
+					if (click(driver, ele, "accordion username", action.BOOLEAN)) {
+						parentID=switchOnWindow(driver);
+						if (parentID!=null) {
+							ThreadSleep(3000);
+							imgId=dp.getimgIconForPath(projectName, 10).getAttribute("src");
+							if (imgId!=null){
+								log(LogStatus.INFO, "found id of img uploaded: "+imgId, YesNo.Yes);
+
+							}
+							else {
+								log(LogStatus.ERROR, "could not find id of img uploaded", YesNo.Yes);
+								sa.assertTrue(false, "could not find id of img uploaded");
+
+							}
+							driver.close();
+							driver.switchTo().window(parentID);
+						}else {
+							log(LogStatus.ERROR, "could not find new window to switch, so cannot update admin photo", YesNo.Yes);
+							sa.assertTrue(false,"could not find new window to switch, so cannot update admin photo" );
+						}
+						List<WebElement> li = FindElements(driver, ip.sdgContactImageXpath(projectName, user), "admin profile photos");
+						i=1;
+						for (WebElement ele1:li) {
+							String src=ele1.getAttribute("src");
+							if (src.equalsIgnoreCase(imgId)) {
+								log(LogStatus.INFO, "successfully verified "+imgId+" for image on Deal team accordion for "+user, YesNo.Yes);
+		
+							}else {
+								log(LogStatus.ERROR, "expected: "+imgId+"\nfound: "+src+" for image on Deal team accordion for "+i+" th "+user, YesNo.Yes);
+								sa.assertTrue(false,"expected: "+imgId+"\nfound: "+src+" for image on Deal team accordion for "+i+" th "+user );
+							}
+							i++;
+						}
+						
+
+					}else {
+						log(LogStatus.ERROR, "could not click on accordion header, so cannot update admin photo", YesNo.Yes);
+						sa.assertTrue(false,"could not click on accordion header, so cannot update admin photo" );
+					}
+				}else {
+					log(LogStatus.ERROR, "view details link is not clickable", YesNo.Yes);
+					sa.assertTrue(false,"view details link is not clickable" );
+				}
+			}else {
+				log(LogStatus.ERROR, M4Deal1+" is not found", YesNo.Yes);
+				sa.assertTrue(false,M4Deal1+" is not found" );
+			}
+		}else {
+			log(LogStatus.ERROR, "deals object is not clickable", YesNo.Yes);
+			sa.assertTrue(false,"deals object is not clickable" );
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc032_VerifyImageFieldByUploadingNewImage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		WebElement ele=null;
+		String attachmentPath= System.getProperty("user.dir")+"\\UploadImages\\JPGImage.jpg";
+
+		String dealteamHeader=ip.getTabName(projectName,TabName.Deal_Team);
+		String user=AdminUserFirstName+" "+AdminUserLastName;
+		String parentID=null;
+		String id = null;
+		boolean flag = false;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		ele=lp.getUserMenuTab_Lightning().get(0);
+		if (click(driver, ele, "profile link", action.BOOLEAN)) {
+			ele=lp.getProfilePageLink(projectName, AdminUserFirstName+" "+AdminUserLastName, 10);
+			if (click(driver, ele, "profile link", action.BOOLEAN)) {
+				id=dp.updatePhotoInUserPage(projectName, attachmentPath);
+				if (id!=null) {
+					log(LogStatus.INFO, "successfully updated photo", YesNo.No);
+					flag = true;
+				}else {
+					log(LogStatus.ERROR, "could not update photo", YesNo.Yes);
+					sa.assertTrue(false,"could not update photo" );
+				}
+			}else {
+				log(LogStatus.ERROR, "profile link on user dropdown is not clickable, so cannot verify updated photo", YesNo.Yes);
+				sa.assertTrue(false,"profile link on user dropdown is not clickable, so cannot verify updated photo" );
+			}
+		}else {
+			log(LogStatus.ERROR, "profile link is not clickable, so cannot verify updated photo", YesNo.Yes);
+			sa.assertTrue(false,"profile link is not clickable, so cannot verify updated photo" );
+		}
+		if (flag) {
+			if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
+				if (ip.clickOnAlreadyCreatedItem(projectName,M4Deal1 , 10)) {
+					ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
+					click(driver, ele, "overview tab", action.BOOLEAN);
+					if (ip.verifyAccordianRecordImage(projectName, user, id)) {
+						log(LogStatus.INFO, "successfully verified update photo in accordion", YesNo.No);
+
+					}else {
+						log(LogStatus.ERROR, "could not verify update photo in accordion", YesNo.Yes);
+						sa.assertTrue(false,"could not verify update photo in accordion" );
+					}
+				}else {
+					log(LogStatus.ERROR, "could not click on deal "+M4Deal1, YesNo.Yes);
+					sa.assertTrue(false,"could not click on deal "+M4Deal1 );
+				}
+			}else {
+				log(LogStatus.ERROR, "could not click on deal tab", YesNo.Yes);
+				sa.assertTrue(false,"could not click on deal tab" );
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc033_VerifyImageFieldByPerformingDeleteAction(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		WebElement ele=null;
+		String dealteamHeader=ip.getTabName(projectName,TabName.Deal_Team);
+		
+		String user=AdminUserFirstName+" "+AdminUserLastName;
+		String parentID=null;
+		String id = BasePageErrorMessage.defaultPhotoTextForAdminPhoto;
+		boolean flag = false;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		ele=lp.getUserMenuTab_Lightning().get(0);
+		if (click(driver, ele, "profile link", action.BOOLEAN)) {
+			ele=lp.getProfilePageLink(projectName, AdminUserFirstName+" "+AdminUserLastName, 10);
+			if (click(driver, ele, "profile link", action.BOOLEAN)) {
+			if (ip.deletePhotoInUserPage(projectName, user)) {
+				log(LogStatus.ERROR, "successfully delete photo for user "+user, YesNo.Yes);
+				flag=true;
+			}else {
+				log(LogStatus.ERROR, "could not delete photo for user "+user, YesNo.Yes);
+				sa.assertTrue(false,"could not delete photo for user "+user );
+			}
+			}else {
+				log(LogStatus.ERROR, "profile link on profile menu is not clickable", YesNo.Yes);
+				sa.assertTrue(false,"profile link on profile menu is not clickable"+user );
+			}
+		}else {
+			log(LogStatus.ERROR, "profile link is not clickable, so cannot delete photo", YesNo.Yes);
+			sa.assertTrue(false,"profile link is not clickable, so cannot delete photo" );
+		}
+		int i = 0;
+		if (flag) {
+			if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
+				if (ip.clickOnAlreadyCreatedItem(projectName,M4Deal1 , 10)) {
+					ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
+					click(driver, ele, "overview tab", action.BOOLEAN);
+					ele=ip.returnAccordionViewDetailsLink(projectName, dealteamHeader);
+					if (click(driver, ele, "view details link", action.BOOLEAN)) {
+						List<WebElement> li = FindElements(driver, ip.sdgContactImageXpath(projectName, user), "admin profile photos");
+						i=1;
+						for (WebElement ele1:li) {
+							String src=ele1.getAttribute("src");
+							if (src.contains(BasePageErrorMessage.defaultPhotoTextForAdminPhoto)) {
+								log(LogStatus.INFO, "successfully verified no image on Deal team accordion for "+user, YesNo.Yes);
+
+							}else {
+								log(LogStatus.ERROR, "expected: no image\nfound: "+src+" for image on Deal team accordion for "+i+" th "+user, YesNo.Yes);
+								sa.assertTrue(false,"expected: no image\nfound: "+src+" for image on Deal team accordion for "+i+" th "+user );
+							}
+							i++;
+						}
+					}
+					if (ip.verifyAccordianRecordImage(projectName, user, id)) {
+						log(LogStatus.INFO, "successfully verified deleted photo in accordion", YesNo.No);
+
+					}else {
+						log(LogStatus.ERROR, "photo on accordion for admin should be deleted but it is still present", YesNo.Yes);
+						sa.assertTrue(false,"photo on accordion for admin should be deleted but it is still present" );
+					}
+				}else {
+					log(LogStatus.ERROR, "could not click on deal "+M4Deal1, YesNo.Yes);
+					sa.assertTrue(false,"could not click on deal "+M4Deal1 );
+				}
+			}else {
+				log(LogStatus.ERROR, "could not click on deal tab", YesNo.Yes);
+				sa.assertTrue(false,"could not click on deal tab" );
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+		
 	}
 }

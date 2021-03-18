@@ -4873,4 +4873,34 @@ public abstract class BasePage extends BaseLib {
 	
 	}
 
+	@FindBy(xpath = "//footer//button[@title='Close']")
+	private WebElement footerCloseButton;
+	
+	public WebElement getfooterCloseButton(String projectName,int timeOut) {
+		return isDisplayed(driver, footerCloseButton, "Visibility", timeOut, "footerCloseButton");
+		
+	}
+	@FindBy(xpath = "//div[contains(@class,'sdgborder')]//button[@title='Save' or text()='Save']")
+	private WebElement sdgSave;
+	
+	public WebElement getsdgSaveButton(String projectName,int timeOut) {
+		return isDisplayed(driver, sdgSave, "Visibility", timeOut, "sdgSaveButton");
+		
+	}
+	@FindBy(xpath = "//a[@title='Upload Files']")
+	private WebElement uploadFiles;
+	
+	public WebElement getuploadFilesButton(String projectName,int timeOut) {
+		return isDisplayed(driver, uploadFiles, "Visibility", timeOut, "uploadFiles");
+		
+	}
+	@FindBy(xpath = "//span[text()='Delete Photo']/..")
+	private WebElement deletePhotoButton;
+	
+	public WebElement getdeletePhotoButton(String projectName,int timeOut) {
+		return isDisplayed(driver, deletePhotoButton, "Visibility", timeOut, "deletePhotoButton");
+		
+	}
+	
+	
 }

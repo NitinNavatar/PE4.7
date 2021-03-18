@@ -5994,6 +5994,7 @@ public class Module3 extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
+		none="--"+none+"--";
 		boolean flag=false;
 		if (home.clickOnSetUpLink()) {
 			String parentID = switchOnWindow(driver);
@@ -6228,6 +6229,8 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
+	@Parameters({ "projectName"})
+	@Test
 	public void Module3Tc071_ChangetheUserIndustryAsManufacturingAndVerifyImpactonNavigationMenu(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -6367,8 +6370,769 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc073_SetTheUserRegionAsLondon(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+
+		if (home.clickOnSetUpLink()) {
+			String parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+				log(LogStatus.INFO, "Able to switch on new window, so going to Set the User Region as "+LondonCoverage, YesNo.No);
+				ThreadSleep(100);
+				if(setup.searchStandardOrCustomObject(environment,mode, object.Users)) {
+					log(LogStatus.INFO, "click on Object : "+object.Users, YesNo.No);
+					ThreadSleep(2000);
+
+					if(setup.clickOnEditBtnForCRMUser(driver, crmUser1LastName, crmUser1FirstName, 20)) {
+						log(LogStatus.INFO, "Click on edit Button "+crmUser1LastName+","+crmUser1FirstName, YesNo.No);
+						ThreadSleep(2000);
+
+						if (selectVisibleTextFromDropDown(driver, setup.getRegionDropdownList(10), "Region DropDown List",LondonCoverage)) {
+							log(LogStatus.INFO, "selected visbible text from the Region dropdown "+LondonCoverage, YesNo.No);
+							ThreadSleep(2000);
+
+							if (click(driver, setup.getSaveButton(20), "Save Button",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.No);
+								switchToDefaultContent(driver);
+								ThreadSleep(5000);
+								switchToFrame(driver, 20, setup.getSetUpPageIframe(20));
+								scrollDownThroughWebelement(driver, setup.getIndustryDropdownList("Region", LondonCoverage, 10), LondonCoverage);
+								if (setup.getRegionDropdownList("Region", LondonCoverage, 10)!=null) {
+									log(LogStatus.INFO, "Region Value verified "+LondonCoverage, YesNo.No);
+								} else {
+									log(LogStatus.ERROR, "Region Value not verified "+LondonCoverage, YesNo.Yes);
+									sa.assertTrue(false, "Region Value not verified "+LondonCoverage);
+								}
+							} else {
+								log(LogStatus.ERROR, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+								sa.assertTrue(false, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to select visbible text from the Region dropdown "+LondonCoverage, YesNo.Yes);
+							sa.assertTrue(false, "Not able to select visbible text from the Region dropdown "+LondonCoverage);
+						}
+
+
+					}else {
+						log(LogStatus.ERROR, "Not Able to Click on edit Button "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Click on edit Button "+crmUser1LastName+","+crmUser1FirstName);
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to search/click on "+object.Users, YesNo.Yes);
+					sa.assertTrue(false, "Not able to search/click on "+object.Users);
+				}
+
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.FAIL, "could not find new window to switch, so cannot Set the User Region as "+LondonCoverage, YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch, so cannot Set the User Region as "+LondonCoverage);
+			}
+
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link");	
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc074_CreateMyRegionMenuItem(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		
+		String navigationLabel=CSVLabel.Navigation_Label.toString();
+		String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name);
+
+		String orderLabel=CSVLabel.Order.toString();
+		String orderLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Updated_Order);
+		String urlObjectLabel=CSVLabel.URL.toString();
+		String urlObjecValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.URL);
+
+		String[][] labelWithValue= {{navigationLabel,navigationLabelValue},{orderLabel,orderLabelValue},{urlObjectLabel,urlObjecValue}};
+		WebElement ele;
+		if (npbl.createNavigationItem(projectName, labelWithValue, 20)) {
+			log(LogStatus.INFO, "created "+customMenu, YesNo.No);
+			refresh(driver);
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+				ele=npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+				if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+					ThreadSleep(5000);
+					ele=npbl.getPageDoesNotExist(projectName, action.BOOLEAN, 30);
+					if (ele!=null) {
+						log(LogStatus.INFO, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" verified " , YesNo.No);
+
+					} else {
+						log(LogStatus.ERROR, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" not verified ", YesNo.Yes);
+						sa.assertTrue(false, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" not verified ");
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not Able to create "+customMenu, YesNo.Yes);
+			sa.assertTrue(false, "Not Able to create "+customMenu);
+
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc075_CreateRecordOnCoverageObjectAndVerifyMyRegionlink(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		CoveragePageBusinessLayer cp = new CoveragePageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		String[][] industryCoverages = {{dublinCoverage,dublinCoverageRecordType},{LondonCoverage,LondonCoverageRecordType},{NewYorkCoverage,NewYorkCoverageRecordType}};
+
+		String coverageName="";
+		String coverageRecordType="";
+		for (String[] industryCov : industryCoverages) {
+			coverageName=industryCov[0];
+			coverageRecordType=industryCov[1];
+			if (cp.clickOnTab(projectName, tabObj8Coverage)) {
+				log(LogStatus.INFO, "Click on Tab : "+tabObj8Coverage, YesNo.No);
+
+				if (cp.createCoverage(projectName, coverageRecordType, coverageName)) {
+					log(LogStatus.INFO, "created/verified "+coverageName+" of type "+coverageRecordType, YesNo.No);
+				} else {
+					log(LogStatus.ERROR, "cannot create "+coverageName+" of type "+coverageRecordType, YesNo.Yes);
+					sa.assertTrue(false,"cannot create "+coverageName+" of type "+coverageRecordType);
+
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on Tab : "+tabObj8Coverage+" so cannot create "+coverageName+" of type "+coverageRecordType, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj8Coverage+" so cannot create "+coverageName+" of type "+coverageRecordType);
+			}
+
+		}
+		
+		refresh(driver);
+		String dependentTC="Module3Tc074_CreateMyRegionMenuItem";
+		String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+			WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+			if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+				ThreadSleep(5000);
+				if (npbl.getCoverageTabAfterClick(projectName, LondonCoverage, action.SCROLLANDBOOLEAN, 20)!=null) {
+					log(LogStatus.INFO, LondonCoverage+" is open after click on "+navigationLabelValue, YesNo.No);
+				} else {
+					log(LogStatus.ERROR, LondonCoverage+" should be open after click on "+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false,LondonCoverage+" should be open after click on "+navigationLabelValue);
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+		}
+		
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc076_1_ChangetheUserRegionAsNewYorkAndVerifyImpactonNavigationMenu(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		boolean flag=false;
+		if (home.clickOnSetUpLink()) {
+			String parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+				log(LogStatus.INFO, "Able to switch on new window, so going to Set the User Region as "+NewYorkCoverage, YesNo.No);
+				ThreadSleep(100);
+				if(setup.searchStandardOrCustomObject(environment,mode, object.Users)) {
+					log(LogStatus.INFO, "click on Object : "+object.Users, YesNo.No);
+					ThreadSleep(2000);
+
+					if(setup.clickOnEditBtnForCRMUser(driver, crmUser1LastName, crmUser1FirstName, 20)) {
+						log(LogStatus.INFO, "Click on edit Button "+crmUser1LastName+","+crmUser1FirstName, YesNo.No);
+						ThreadSleep(2000);
+
+						if (selectVisibleTextFromDropDown(driver, setup.getRegionDropdownList(10), "Region DropDown List",NewYorkCoverage)) {
+							log(LogStatus.INFO, "selected visbible text from the Region dropdown "+NewYorkCoverage, YesNo.No);
+							ThreadSleep(2000);
+
+							if (click(driver, setup.getSaveButton(20), "Save Button",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.No);
+								switchToDefaultContent(driver);
+								ThreadSleep(5000);
+								switchToFrame(driver, 20, setup.getSetUpPageIframe(20));
+								scrollDownThroughWebelement(driver, setup.getRegionDropdownList("Region", NewYorkCoverage, 10), NewYorkCoverage);
+								if (setup.getRegionDropdownList("Region", NewYorkCoverage, 10)!=null) {
+									log(LogStatus.INFO, "Region Value verified "+NewYorkCoverage, YesNo.No);
+									flag=true;
+								} else {
+									log(LogStatus.ERROR, "Region Value not verified "+NewYorkCoverage, YesNo.Yes);
+									sa.assertTrue(false, "Region Value not verified "+NewYorkCoverage);
+								}
+							} else {
+								log(LogStatus.ERROR, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+								sa.assertTrue(false, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to select visbible text from the Region dropdown "+NewYorkCoverage, YesNo.Yes);
+							sa.assertTrue(false, "Not able to select visbible text from the Region dropdown "+NewYorkCoverage);
+						}
+
+
+					}else {
+						log(LogStatus.ERROR, "Not Able to Click on edit Button "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Click on edit Button "+crmUser1LastName+","+crmUser1FirstName);
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to search/click on "+object.Users, YesNo.Yes);
+					sa.assertTrue(false, "Not able to search/click on "+object.Users);
+				}
+
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.FAIL, "could not find new window to switch, so cannot Set the User Region as "+NewYorkCoverage, YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch, so cannot Set the User Region as "+NewYorkCoverage);
+			}
+
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link");	
+		}
+
+		if (flag) {
+			refresh(driver);
+			String dependentTC="Module3Tc074_CreateMyRegionMenuItem";
+			String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
+			NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+				WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+				if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+					ThreadSleep(5000);
+					if (npbl.getCoverageTabAfterClick(projectName, NewYorkCoverage, action.SCROLLANDBOOLEAN, 20)!=null) {
+						log(LogStatus.INFO, NewYorkCoverage+" is open after click on "+navigationLabelValue, YesNo.No);
+					} else {
+						log(LogStatus.ERROR, NewYorkCoverage+" should be open after click on "+navigationLabelValue, YesNo.Yes);
+						sa.assertTrue(false,NewYorkCoverage+" should be open after click on "+navigationLabelValue);
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+			}	
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc076_2_ChangetheUserRegionAsNewYorkAndVerifyImpactonNavigationMenu(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		String dependentTC="Module3Tc074_CreateMyRegionMenuItem";
+		String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+			WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+			if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+				ThreadSleep(5000);
+				if (npbl.getCoverageTabAfterClick(projectName, NewYorkCoverage, action.SCROLLANDBOOLEAN, 20)!=null) {
+					log(LogStatus.INFO, NewYorkCoverage+" is open after click on "+navigationLabelValue, YesNo.No);
+				} else {
+					log(LogStatus.ERROR, NewYorkCoverage+" should be open after click on "+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false,NewYorkCoverage+" should be open after click on "+navigationLabelValue);
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+		}	
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc077_1_ChangetheUserRegionAsLosAngelesAndVerifyImpactonNavigationMenu(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		boolean flag=false;
+		if (home.clickOnSetUpLink()) {
+			String parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+				log(LogStatus.INFO, "Able to switch on new window, so going to Set the User Region as "+LosAngelesCoverage, YesNo.No);
+				ThreadSleep(100);
+				if(setup.searchStandardOrCustomObject(environment,mode, object.Users)) {
+					log(LogStatus.INFO, "click on Object : "+object.Users, YesNo.No);
+					ThreadSleep(2000);
+
+					if(setup.clickOnEditBtnForCRMUser(driver, crmUser1LastName, crmUser1FirstName, 20)) {
+						log(LogStatus.INFO, "Click on edit Button "+crmUser1LastName+","+crmUser1FirstName, YesNo.No);
+						ThreadSleep(2000);
+
+						if (selectVisibleTextFromDropDown(driver, setup.getRegionDropdownList(10), "Region DropDown List",LosAngelesCoverage)) {
+							log(LogStatus.INFO, "selected visbible text from the Region dropdown "+LosAngelesCoverage, YesNo.No);
+							ThreadSleep(2000);
+
+							if (click(driver, setup.getSaveButton(20), "Save Button",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.No);
+								switchToDefaultContent(driver);
+								ThreadSleep(5000);
+								switchToFrame(driver, 20, setup.getSetUpPageIframe(20));
+								scrollDownThroughWebelement(driver, setup.getRegionDropdownList("Region", LosAngelesCoverage, 10), LosAngelesCoverage);
+								if (setup.getRegionDropdownList("Region", LosAngelesCoverage, 10)!=null) {
+									log(LogStatus.INFO, "Region Value verified "+LosAngelesCoverage, YesNo.No);
+									flag=true;
+								} else {
+									log(LogStatus.ERROR, "Region Value not verified "+LosAngelesCoverage, YesNo.Yes);
+									sa.assertTrue(false, "Region Value not verified "+LosAngelesCoverage);
+								}
+							} else {
+								log(LogStatus.ERROR, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+								sa.assertTrue(false, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to select visbible text from the Region dropdown "+LosAngelesCoverage, YesNo.Yes);
+							sa.assertTrue(false, "Not able to select visbible text from the Region dropdown "+LosAngelesCoverage);
+						}
+
+
+					}else {
+						log(LogStatus.ERROR, "Not Able to Click on edit Button "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Click on edit Button "+crmUser1LastName+","+crmUser1FirstName);
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to search/click on "+object.Users, YesNo.Yes);
+					sa.assertTrue(false, "Not able to search/click on "+object.Users);
+				}
+
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.FAIL, "could not find new window to switch, so cannot Set the User Region as "+LosAngelesCoverage, YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch, so cannot Set the User Region as "+LosAngelesCoverage);
+			}
+
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link");	
+		}
+
+		if (flag) {
+			refresh(driver);
+			String dependentTC="Module3Tc074_CreateMyRegionMenuItem";
+			String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
+			NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+				WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+				if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+					ThreadSleep(5000);
+					ele=npbl.getPageDoesNotExist(projectName, action.BOOLEAN, 30);
+					if (ele!=null) {
+						log(LogStatus.INFO, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" verified " , YesNo.No);
+					} else {
+						log(LogStatus.ERROR, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" not verified ", YesNo.Yes);
+						sa.assertTrue(false, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" not verified ");
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+			}	
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc077_2_ChangetheUserRegionAsLosAngelesAndVerifyImpactonNavigationMenu(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		String dependentTC="Module3Tc074_CreateMyRegionMenuItem";
+		String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+			WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+			if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+				ThreadSleep(5000);
+				ele=npbl.getPageDoesNotExist(projectName, action.BOOLEAN, 30);
+				if (ele!=null) {
+					log(LogStatus.INFO, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" verified " , YesNo.No);
+				} else {
+					log(LogStatus.ERROR, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" not verified ", YesNo.Yes);
+					sa.assertTrue(false, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" not verified ");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+		}	
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc078_1_ChangetheUserRegionAsNoneAndVerifyImpactonNavigationMenu(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		none="--"+none+"--";
+		boolean flag=false;
+		if (home.clickOnSetUpLink()) {
+			String parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+				log(LogStatus.INFO, "Able to switch on new window, so going to Set the User Region as "+TechonlogyCoverage, YesNo.No);
+				ThreadSleep(100);
+				if(setup.searchStandardOrCustomObject(environment,mode, object.Users)) {
+					log(LogStatus.INFO, "click on Object : "+object.Users, YesNo.No);
+					ThreadSleep(2000);
+
+					if(setup.clickOnEditBtnForCRMUser(driver, crmUser1LastName, crmUser1FirstName, 20)) {
+						log(LogStatus.INFO, "Click on edit Button "+crmUser1LastName+","+crmUser1FirstName, YesNo.No);
+						ThreadSleep(2000);
+
+						if (selectVisibleTextFromDropDown(driver, setup.getRegionDropdownList(10), "Region DropDown List",none)) {
+							log(LogStatus.INFO, "selected visbible text from the Region dropdown "+none, YesNo.No);
+							ThreadSleep(2000);
+
+							if (click(driver, setup.getSaveButton(20), "Save Button",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.No);
+								switchToDefaultContent(driver);
+								ThreadSleep(5000);
+								switchToFrame(driver, 20, setup.getSetUpPageIframe(20));
+								scrollDownThroughWebelement(driver, setup.getRegionDropdownList("Region", none, 10), none);
+								if (setup.getRegionDropdownList("Region", none, 10)!=null) {
+									log(LogStatus.INFO, "Region Value verified "+none, YesNo.No);
+									flag=true;
+								} else {
+									log(LogStatus.ERROR, "Region Value not verified "+none, YesNo.Yes);
+									sa.assertTrue(false, "Region Value not verified "+none);
+								}
+							} else {
+								log(LogStatus.ERROR, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+								sa.assertTrue(false, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to select visbible text from the Region dropdown "+none, YesNo.Yes);
+							sa.assertTrue(false, "Not able to select visbible text from the Region dropdown "+none);
+						}
+
+
+					}else {
+						log(LogStatus.ERROR, "Not Able to Click on edit Button "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Click on edit Button "+crmUser1LastName+","+crmUser1FirstName);
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to search/click on "+object.Users, YesNo.Yes);
+					sa.assertTrue(false, "Not able to search/click on "+object.Users);
+				}
+
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.FAIL, "could not find new window to switch, so cannot Set the User Region as "+none, YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch, so cannot Set the User Region as "+none);
+			}
+
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link");	
+		}
+
+		if (flag) {
+			refresh(driver);
+			String dependentTC="Module3Tc074_CreateMyRegionMenuItem";
+			String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
+			NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+				WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+				if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+					ThreadSleep(5000);
+					ele=npbl.getPageDoesNotExist(projectName, action.BOOLEAN, 30);
+					if (ele!=null) {
+						log(LogStatus.INFO, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" verified " , YesNo.No);
+					} else {
+						log(LogStatus.ERROR, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" not verified ", YesNo.Yes);
+						sa.assertTrue(false, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" not verified ");
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+			}	
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc078_2_ChangetheUserRegionAsNoneAndVerifyImpactonNavigationMenu(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		String dependentTC="Module3Tc074_CreateMyRegionMenuItem";
+		String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+			WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+			if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+				ThreadSleep(5000);
+				ele=npbl.getPageDoesNotExist(projectName, action.BOOLEAN, 30);
+				if (ele!=null) {
+					log(LogStatus.INFO, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" verified " , YesNo.No);
+				} else {
+					log(LogStatus.ERROR, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" not verified ", YesNo.Yes);
+					sa.assertTrue(false, NavatarSetUpPageErrorMessage.PageDoesExist+" and "+NavatarSetUpPageErrorMessage.EnterAValidURLAndTryAgain+" not verified ");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+		}	
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc079_ChangetheUserRegionAsDublinAndVerifyImpactonNavigationMenu(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		boolean flag=false;
+		if (home.clickOnSetUpLink()) {
+			String parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+				log(LogStatus.INFO, "Able to switch on new window, so going to Set the User Region as "+dublinCoverage, YesNo.No);
+				ThreadSleep(100);
+				if(setup.searchStandardOrCustomObject(environment,mode, object.Users)) {
+					log(LogStatus.INFO, "click on Object : "+object.Users, YesNo.No);
+					ThreadSleep(2000);
+
+					if(setup.clickOnEditBtnForCRMUser(driver, crmUser2LastName, crmUser2FirstName, 20)) {
+						log(LogStatus.INFO, "Click on edit Button "+crmUser2LastName+","+crmUser2FirstName, YesNo.No);
+						ThreadSleep(2000);
+
+						if (selectVisibleTextFromDropDown(driver, setup.getRegionDropdownList(10), "Region DropDown List",dublinCoverage)) {
+							log(LogStatus.INFO, "selected visbible text from the Region dropdown "+dublinCoverage, YesNo.No);
+							ThreadSleep(2000);
+
+							if (click(driver, setup.getSaveButton(20), "Save Button",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Click on Save Button for  "+crmUser2LastName+","+crmUser2FirstName, YesNo.No);
+								switchToDefaultContent(driver);
+								ThreadSleep(5000);
+								switchToFrame(driver, 20, setup.getSetUpPageIframe(20));
+								scrollDownThroughWebelement(driver, setup.getRegionDropdownList("Region", dublinCoverage, 10), dublinCoverage);
+								if (setup.getRegionDropdownList("Region", dublinCoverage, 10)!=null) {
+									log(LogStatus.INFO, "Region Value verified "+dublinCoverage, YesNo.No);
+									flag=true;
+								} else {
+									log(LogStatus.ERROR, "Region Value not verified "+dublinCoverage, YesNo.Yes);
+									sa.assertTrue(false, "Region Value not verified "+dublinCoverage);
+								}
+							} else {
+								log(LogStatus.ERROR, "Not Able to Click on Save Button for  "+crmUser2LastName+","+crmUser2FirstName, YesNo.Yes);
+								sa.assertTrue(false, "Not Able to Click on Save Button for  "+crmUser2LastName+","+crmUser2FirstName);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to select visbible text from the Region dropdown "+dublinCoverage, YesNo.Yes);
+							sa.assertTrue(false, "Not able to select visbible text from the Region dropdown "+dublinCoverage);
+						}
+
+
+					}else {
+						log(LogStatus.ERROR, "Not Able to Click on edit Button "+crmUser2LastName+","+crmUser2FirstName, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Click on edit Button "+crmUser2LastName+","+crmUser2FirstName);
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to search/click on "+object.Users, YesNo.Yes);
+					sa.assertTrue(false, "Not able to search/click on "+object.Users);
+				}
+
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.FAIL, "could not find new window to switch, so cannot Set the User Region as "+dublinCoverage, YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch, so cannot Set the User Region as "+dublinCoverage);
+			}
+
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link");	
+		}
+
+		if (flag) {
+			refresh(driver);
+			String dependentTC="Module3Tc074_CreateMyRegionMenuItem";
+			String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
+			NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+				WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+				if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+					ThreadSleep(5000);
+					if (npbl.getCoverageTabAfterClick(projectName, dublinCoverage, action.SCROLLANDBOOLEAN, 20)!=null) {
+						log(LogStatus.INFO, dublinCoverage+" is open after click on "+navigationLabelValue, YesNo.No);
+					} else {
+						log(LogStatus.ERROR, dublinCoverage+" should be open after click on "+navigationLabelValue, YesNo.Yes);
+						sa.assertTrue(false,dublinCoverage+" should be open after click on "+navigationLabelValue);
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+			}	
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc080_ChangetheUserRegionAsDublinAndVerifyImpactonNavigationMenu(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser2EmailID, adminPassword);
+
+		String dependentTC="Module3Tc074_CreateMyRegionMenuItem";
+		String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+			WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+			if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+				ThreadSleep(5000);
+				if (npbl.getCoverageTabAfterClick(projectName, dublinCoverage, action.SCROLLANDBOOLEAN, 20)!=null) {
+					log(LogStatus.INFO, dublinCoverage+" is open after click on "+navigationLabelValue, YesNo.No);
+				} else {
+					log(LogStatus.ERROR, dublinCoverage+" should be open after click on "+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false,dublinCoverage+" should be open after click on "+navigationLabelValue);
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+		}	
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 	
 }
 	

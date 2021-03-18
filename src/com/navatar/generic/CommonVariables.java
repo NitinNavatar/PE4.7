@@ -74,7 +74,8 @@ public class CommonVariables {
 	public static String TogglePartnerShip2;
 	public static String M4Ins1,M4Ins1RecordType,M4Deal1;
 	public static String M4Contact1FName,M4Contact1LName,M4Contact1EmailID,M4Contact1RecordType,M4Contact1Title;
-	public static String M4Contact2FName,M4Contact2LName,M4Contact2EmailID;
+	public static String M4Contact2FName,M4Contact2LName,M4Contact2EmailID,M4Contact2Title,M4Contact2Email;
+	public static String M4Contact8FName,M4Contact8LName,M4Contact8Title;
 	
 	public static String environment,mode;
 	public static String TWTask1Subject,TWTask2Subject,TWTask3Subject,TWTask4Subject,TWTask5Subject,TWTask6Subject,TWTask8Subject,TWTaskCR1Subject,TWTaskUpdateLabelSubject;
@@ -193,6 +194,12 @@ public class CommonVariables {
 	public static String businessServicesCoverage,businessServicesCoverageRecordType;
 	public static String TechonlogyCoverage,TechonlogyCoverageRecordType;
 	public static String pharmaCoverage,pharmaCoverageRecordType;
+	
+	public static String dublinCoverage,dublinCoverageRecordType;
+	public static String LondonCoverage,LondonCoverageRecordType;
+	public static String LosAngelesCoverage,LosAngelesCoverageRecordType;
+	public static String NewYorkCoverage,NewYorkCoverageRecordType;
+	
 	
 //	/**
 //	 * 
@@ -699,6 +706,15 @@ public class CommonVariables {
 			M4Contact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Contact_EmailId);
 			M4Contact1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Record_Type);
 			M4Contact1Title=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Title);
+			M4Contact2Title=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON2", excelLabel.Title);
+			M4Contact2Email=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON2", excelLabel.Contact_EmailId);
+			
+			M4Contact2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON2", excelLabel.Contact_FirstName);
+			M4Contact2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON2", excelLabel.Contact_LastName);
+			M4Contact8FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON8", excelLabel.Contact_FirstName);
+			M4Contact8LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON8", excelLabel.Contact_LastName);
+			M4Contact8Title=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON8", excelLabel.Title);
+			
 
 			M4Contact2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON2", excelLabel.Contact_FirstName);
 			M4Contact2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON2", excelLabel.Contact_LastName);
@@ -724,6 +740,19 @@ public class CommonVariables {
 			pharmaCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage6", excelLabel.Coverage_Name);
 			pharmaCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage6", excelLabel.Record_Type);
 	
+			dublinCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region1", excelLabel.Coverage_Name);
+			dublinCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region1", excelLabel.Record_Type);
+			
+			LondonCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region2", excelLabel.Coverage_Name);
+			LondonCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region2", excelLabel.Record_Type);
+			
+			LosAngelesCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region3", excelLabel.Coverage_Name);
+			LosAngelesCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region3", excelLabel.Record_Type);
+			
+			NewYorkCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region4", excelLabel.Coverage_Name);
+			NewYorkCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region4", excelLabel.Record_Type);
+			
+			
 		}
 		
 		 System.err.println("");
