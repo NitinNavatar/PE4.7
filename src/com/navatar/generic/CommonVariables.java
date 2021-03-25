@@ -201,6 +201,12 @@ public class CommonVariables {
 	public static String TechonlogyCoverage,TechonlogyCoverageRecordType;
 	public static String pharmaCoverage,pharmaCoverageRecordType;
 	
+	public static String dublinCoverage,dublinCoverageRecordType;
+	public static String LondonCoverage,LondonCoverageRecordType;
+	public static String LosAngelesCoverage,LosAngelesCoverageRecordType;
+	public static String NewYorkCoverage,NewYorkCoverageRecordType;
+	
+	
 //	/**
 //	 * 
 //	 */
@@ -757,6 +763,19 @@ public class CommonVariables {
 			pharmaCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage6", excelLabel.Coverage_Name);
 			pharmaCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage6", excelLabel.Record_Type);
 	
+			dublinCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region1", excelLabel.Coverage_Name);
+			dublinCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region1", excelLabel.Record_Type);
+			
+			LondonCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region2", excelLabel.Coverage_Name);
+			LondonCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region2", excelLabel.Record_Type);
+			
+			LosAngelesCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region3", excelLabel.Coverage_Name);
+			LosAngelesCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region3", excelLabel.Record_Type);
+			
+			NewYorkCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region4", excelLabel.Coverage_Name);
+			NewYorkCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region4", excelLabel.Record_Type);
+			
+			
 		}
 		
 		 System.err.println("");

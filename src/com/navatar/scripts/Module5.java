@@ -62,6 +62,7 @@ import com.navatar.generic.EnumConstants.RecordType;
 import com.navatar.generic.EnumConstants.RelatedList;
 import com.navatar.generic.EnumConstants.RelatedTab;
 import com.navatar.generic.EnumConstants.SDGLabels;
+import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.TopOrBottom;
 import com.navatar.generic.EnumConstants.YesNo;
@@ -1393,6 +1394,9 @@ public class Module5 extends BaseLib {
 		//ActiveDealToggle
 		String outsideContainerPath = ".\\AutoIT\\EditPage\\EditButton.PNG";
 		String insideContainerPath = ".\\AutoIT\\EditPage\\EditButton1.PNG";
+		String EnhanceLightningGridImg = ".\\AutoIT\\EditPage\\EnhanceLightningGrid.PNG";
+		String NavatarSDGToggleImg = ".\\AutoIT\\EditPage\\NavatarSDGToggle.PNG";
+		
 		String sValue = EditPageErrorMessage.EnhancedLightningGrid;
 		boolean outsideFlag=false;
 		boolean insideFlag=false;
@@ -1431,7 +1435,8 @@ public class Module5 extends BaseLib {
 								log(LogStatus.INFO,"send value to Search TextBox : "+sValue,YesNo.No);
 							//	// scn.nextLine();
 								ThreadSleep(10000);
-								if (edit.dragNDropUsingScreen(projectName, edit.getEditPageSeachValueLink(projectName, sValue, 30), insideContainerPath, 20)) {
+								//edit.dragNDropUsingScreen(projectName, edit.getEditPageSeachValueLink(projectName, sValue, 30), insideContainerPath, 20)
+								if (edit.dragNDropUsingScreen(projectName, EnhanceLightningGridImg, insideContainerPath, 20)) {
 									log(LogStatus.INFO,"Able to DragNDrop : "+sValue,YesNo.No);
 									ThreadSleep(2000);
 
@@ -1477,7 +1482,14 @@ public class Module5 extends BaseLib {
 								log(LogStatus.INFO,"send value to Search TextBox : "+sValue,YesNo.No);
 						//		// scn.nextLine();
 								ThreadSleep(10000);
-								if (edit.dragNDropUsingScreen(projectName, edit.getEditPageSeachValueLink(projectName, sValue, 30), outsideContainerPath, 20)) {
+								switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
+								ThreadSleep(2000);
+								WebElement ele = edit.actionDropdownElement(projectName, ShowMoreActionDropDownList.Edit, 10);
+								scrollDownThroughWebelement(driver, ele, "EDIT");
+								ThreadSleep(3000);
+								//edit.dragNDropUsingScreen(projectName, edit.getEditPageSeachValueLink(projectName, sValue, 30), outsideContainerPath, 20)
+								switchToDefaultContent(driver);
+								if (edit.dragNDropUsingScreen(projectName, EnhanceLightningGridImg, outsideContainerPath, 20)) {
 									log(LogStatus.INFO,"Able to DragNDrop : "+sValue,YesNo.No);
 									ThreadSleep(2000);
 
@@ -1524,7 +1536,8 @@ public class Module5 extends BaseLib {
 								log(LogStatus.INFO,"send value to Search TextBox : "+sValue,YesNo.No);
 							//	// scn.nextLine();
 								ThreadSleep(10000);
-								if (edit.dragNDropUsingScreen(projectName, edit.getEditPageSeachValueLink(projectName, sValue, 30), insideContainerPath, 20)) {
+								//edit.dragNDropUsingScreen(projectName, edit.getEditPageSeachValueLink(projectName, sValue, 30), insideContainerPath, 20)
+								if (edit.dragNDropUsingScreen(projectName, NavatarSDGToggleImg, insideContainerPath, 20)) {
 									log(LogStatus.INFO,"Able to DragNDrop : "+sValue,YesNo.No);
 									ThreadSleep(2000);
 
@@ -1677,7 +1690,7 @@ public class Module5 extends BaseLib {
 
 				driver.get(url);
 				ThreadSleep(5000);
-				if (lp.CRMLogin("navatariptesting+8991@gmail.com", adminPassword, appName)) {
+				if (lp.CRMLogin(crmUser1EmailID, adminPassword, appName)) {
 						tabName = tabNames[i];
 						if (lp.clickOnTab(projectName, tabName)) {
 							log(LogStatus.INFO,"Click on Tab : "+tabName,YesNo.No);
@@ -1694,22 +1707,22 @@ public class Module5 extends BaseLib {
 
 									String toggleBtn = watchListTitle;
 									if (ip.toggleButton(projectName, toggleBtn, action.BOOLEAN, 10)==null) {
-										log(LogStatus.INFO,"Toggle is present : "+toggleBtn,YesNo.No);
+										log(LogStatus.INFO,"Toggle is not present : "+toggleBtn,YesNo.No);
 										ThreadSleep(2000);
 									} else {
-										sa.assertTrue(false,"Toggle should be present : "+toggleBtn);
-										log(LogStatus.SKIP,"Toggle should be present : "+toggleBtn,YesNo.Yes);
+										sa.assertTrue(false,"Toggle should not present : "+toggleBtn);
+										log(LogStatus.SKIP,"Toggle should not present : "+toggleBtn,YesNo.Yes);
 									}
 									
 
 
 									toggleBtn = dealTitle;
 									if (ip.toggleButton(projectName, toggleBtn, action.BOOLEAN, 10)==null) {
-										log(LogStatus.INFO,"Toggle is present : "+toggleBtn,YesNo.No);
+										log(LogStatus.INFO,"Toggle is not present : "+toggleBtn,YesNo.No);
 										ThreadSleep(2000);
 									} else {
-										sa.assertTrue(false,"Toggle should be present : "+toggleBtn);
-										log(LogStatus.SKIP,"Toggle should be present : "+toggleBtn,YesNo.Yes);
+										sa.assertTrue(false,"Toggle should not present : "+toggleBtn);
+										log(LogStatus.SKIP,"Toggle should not present : "+toggleBtn,YesNo.Yes);
 									}
 									
 
@@ -1735,6 +1748,9 @@ public class Module5 extends BaseLib {
 				}
 				driver.close();
 				driver.switchTo().window(parentId);
+				lp.CRMlogout();
+				ThreadSleep(2000);
+				lp.CRMLogin(superAdminUserName, adminPassword, appName);
 				
 			} else {
 				sa.assertTrue(false,"Not Able to Click on Tab : "+tabName);
@@ -1753,9 +1769,8 @@ public class Module5 extends BaseLib {
 	public void Module5TC010_VerifyTheButtonToggleButtonWithUserNewSession(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
 		String[] tabNames = {ToggleCheck1TabName,ToggleCheck2TabName,ToggleCheck3TabName};
 		String tabName;
@@ -1807,7 +1822,7 @@ public class Module5 extends BaseLib {
 							sa.assertTrue(false,"Toggle should be present : "+toggleBtn);
 							log(LogStatus.SKIP,"Toggle should be present : "+toggleBtn,YesNo.Yes);
 						}
-						if (ip.toggleSDGButtons(projectName, toggleBtn,ToggleButtonGroup.SDGButton, action.BOOLEAN, 30)==null) {
+						if (ip.toggleSDGButtons(projectName, toggleBtn,ToggleButtonGroup.SDGButton, action.BOOLEAN, 30)!=null) {
 							log(LogStatus.PASS,"At "+toggleBtn+" "+ToggleButtonGroup.SDGButton+" is present",YesNo.Yes);
 						} else {
 							sa.assertTrue(false,"At "+toggleBtn+" "+ToggleButtonGroup.SDGButton+" should be present");

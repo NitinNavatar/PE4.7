@@ -1012,7 +1012,7 @@ public static enum PermissionType{
 	}
 		
 	public static enum Buttons{
-		SaveNext,SaveClose,Cancel,Cross;	  
+		SaveNext,SaveClose,Cancel,Cross,Delete_Photo,close;	  
 	};
 	
 	public static enum ProjectLabel{
