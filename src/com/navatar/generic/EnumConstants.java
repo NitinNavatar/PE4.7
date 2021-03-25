@@ -1026,7 +1026,7 @@ public static enum PermissionType{
 			public String toString() {
 				return "Q&A";
 			}
-		}, Overview;	  
+		}, Overview,Events;	  
 	};
 	
 	public static enum Header{
@@ -1063,7 +1063,7 @@ public static enum PermissionType{
 			@Override
 			public String toString() {
 			return "Rename-Under Evaluation";
-		}},Watchlist, Profile_Image,Industry,Watch_list,Conversion_Date,Portfolio_Company,Related_Associations,Name, Subject, Due_Date, New_Task, Related_To, Comments, Edit, Assigned_To, Start_Date, End_Date, End_Time, Start_Time, Type, Date, Contact_Name, Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places, Values, Is_Touchpoint,Description, Request, Date_Requested, Attendee_Staff, Label, Panel_Width, Panel_Height,Deal,Team_Member_Role,Member
+		}},Watchlist, Profile_Image,Industry,Watch_list,Conversion_Date,Portfolio_Company,Related_Associations,Name, Subject, Due_Date, New_Task, Related_To, Comments, Edit, Assigned_To, Start_Date, End_Date, End_Time, Start_Time, Type, Date, Contact_Name, Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places, Values, Is_Touchpoint,Description, Request, Date_Requested, Attendee_Staff, Label, Panel_Width, Panel_Height,Deal,Team_Member_Role,Member,Organizer
 	};
 	
 	public static enum Links{
@@ -1263,7 +1263,11 @@ public static enum PermissionType{
 	}
 
 	public static enum EditPageLabel{
-		Title,Query,Image_Field_API_Name,Number_of_Records_to_Display,SDG_Name,Popup_Title;
+		Title,Query,Image_Field_API_Name,Number_of_Records_to_Display,SDG_Name,Popup_Title,Start_DateTime{
+			@Override
+			public String toString() {
+				return "Start Date/Time";
+			}},Title_Highlight_Color,Filter,Onclick_Title;
 	}
 	public static enum ContactPagePhotoActions{
 		Update_Photo,Delete_Photo;
@@ -1303,5 +1307,8 @@ public static enum PermissionType{
 	
 	public static enum AppName {
 		Files,PE,Navatar
+	}
+	public static enum CalenderButton{
+		Month,Day,Year,Week
 	}
 }

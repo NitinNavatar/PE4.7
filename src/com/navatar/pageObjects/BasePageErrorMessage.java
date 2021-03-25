@@ -66,6 +66,9 @@ public interface BasePageErrorMessage {
 	public String AmericaLosAngelesTimeZone="America/Los_Angeles";
 	public static String defaultPhotoText="standard";
 	public static String defaultPhotoTextForAdminPhoto="profilephoto";
+	public static String titleHighlightColor="RecordType.DeveloperName;Firm_Events:#6464FF,Third_Party_Event:#D2691E;";
+	public static String filter="Organizer__c = '<<recordid>>' or recordtype.developername = 'Firm_Events'";
+	public static String onclickTitle="Event_Invitees";
 	public static String OldTaskMsg(String user,String contactName,  int otherContactNum) {
 		String msg="a Task";
 		if (user==null) {

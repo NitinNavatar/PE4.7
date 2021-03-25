@@ -2,6 +2,8 @@ package com.navatar.pageObjects;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageName;
@@ -15,6 +17,9 @@ import com.relevantcodes.extentreports.LogStatus;
 
 import static com.navatar.generic.CommonLib.*;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.InputEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -717,6 +722,77 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		}
 		return false;
 	}
+	public int findLocationOfDate(String projectName, String date) {
+		String xpath="//a[text()='"+date+"']/../preceding-sibling::td";
+		List<WebElement> li = FindElements(driver, xpath, "list of preceding dates");
+		return li.size()+1;
+	}
+	public WebElement getEventPresentOnCalender(String projectName, String date, int location, int timeOut) {
+		String xpath="//a[text()='"+date+"']/../../../following-sibling::tbody//td["+location+"]//a";
+		WebElement ele=null;
+		ele=FindElement(driver,xpath,"event on calender", action.BOOLEAN, timeOut);
+		if (ele!=null) {
+			ele=isDisplayed(driver, ele, "visibility", timeOut, "event on calender");
+			return ele;
+		}
+		return null;
+
+	}
+	public List<WebElement> getListOfEvents(String projectName, String date,  int timeOut) {
+		String xpath="//a[text()='"+date+"']/../../../following-sibling::tbody//td//a";
+		List<WebElement> ele=null;
+		ele=FindElements(driver,xpath,"event on calender" );
+		
+		return ele;
+
+	}
+	public boolean calendarBox(String projectName, String dateHiphen) {
+		String date=dateHiphen.split("-")[2];
+		/*String xpath = "//a[text()='"+date+"']";
+		WebElement ele=FindElement(driver,xpath,"date block on calender", action.THROWEXCEPTION, 10);
+		ele=isDisplayed(driver, ele, "visibility", 10, "date block on calender");
+		if (click(driver, ele, "date box", action.BOOLEAN)) {
+		*/	String xpath = "//tbody//td[contains(@data-date,'"+dateHiphen+"')]";
+		WebElement ele=FindElement(driver,xpath,"date block on calender", action.BOOLEAN, 10);
+		Actions ac = new Actions(driver);
+		ac.moveToElement(ele).build().perform();
+		Robot robot;
+		try {
+			robot = new Robot();
+			robot.mousePress(InputEvent.BUTTON1_MASK);
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
 	
-	
+	public WebElement calenderButtons(String projectName, CalenderButton cb) {
+		String xpath = "//button[text()='"+cb+"']";
+		WebElement ele=FindElement(driver, xpath, "calender button", action.BOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", 10, "calender button");
+		
+	}
+	public boolean reachToDesiredMonthOnCalnder(String projectName, String month) {
+		click(driver, calenderButtons(projectName, CalenderButton.Month), "calnder button", action.BOOLEAN);
+		String xpathOfCalender = "//div[contains(@class,'Fullcalendar')]//h2";
+		String xpathOfNext="";
+		WebElement ele=FindElement(driver,xpathOfCalender,"selected month on calender", action.THROWEXCEPTION, 10);
+		if (ele!=null) {
+			while (!ele.getText().trim().equalsIgnoreCase(month)) {
+				xpathOfNext = "//button[@aria-label='next']";
+				ele=FindElement(driver,xpathOfNext,"selected month on calender", action.THROWEXCEPTION, 10);
+				click(driver, ele, "next", action.SCROLLANDBOOLEAN);
+				ele=FindElement(driver,xpathOfCalender,"selected month on calender", action.THROWEXCEPTION, 10);
+				System.out.println(ele.getText().trim());
+			}
+			log(LogStatus.INFO, "successfully reached desired month "+month, YesNo.No);
+			return true;
+		}
+		else {
+			log(LogStatus.ERROR, "could not find calender month "+month, YesNo.Yes);
+			
+		}
+		return false;
+	}
 }

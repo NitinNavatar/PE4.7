@@ -555,8 +555,43 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 	
 	
 	}
+	@FindBy(xpath="//div[contains(@class,'Fullcalendar')]//h2")
+	private WebElement calenderHeader;
+
+	/**
+	 * @return the partnershipTextBox
+	 */
+	public WebElement getcalenderHeader(String projectName,int timeOut) {
+		
+		return isDisplayed(driver, calenderHeader, "Visibility", timeOut, "calender Header");
 	
 	
 	
+	}
+	@FindBy(xpath="//h2[text()='Event Invitees']")
+	private WebElement eventInviteesHeader;
+
+	/**
+	 * @return the partnershipTextBox
+	 */
+	public WebElement geteventInviteesHeader(String projectName,int timeOut) {
+		
+		return isDisplayed(driver, eventInviteesHeader, "Visibility", timeOut, "eventInvitees Header");
+	
+	
+	}
+	
+	@FindBy(xpath="//button[@aria-label='prev']")
+	private WebElement previousButtonOnCalender;
+
+	/**
+	 * @return the partnershipTextBox
+	 */
+	public WebElement getpreviousButtonOnCalender(String projectName,int timeOut) {
+		
+		return isDisplayed(driver, previousButtonOnCalender, "Visibility", timeOut, "previous Button On Calender");
+	
+	
+	}
 		
 }
