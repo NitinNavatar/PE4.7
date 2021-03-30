@@ -204,7 +204,6 @@ public class EditPage extends BasePageBusinessLayer {
 		WebElement ele=FindElement(driver, xpath,pageLabel.toString(), action.SCROLLANDBOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "Finish Button2");
 	}
-	//span[text()='Expanded']/../..//input[@type='checkbox']
 	
 	@FindBy (xpath = "//*[text()='Number of Records to Display']/following-sibling::div[2]")
 	private WebElement noOfRecordsErrorMessage;
