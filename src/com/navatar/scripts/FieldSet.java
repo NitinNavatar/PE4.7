@@ -11,18 +11,23 @@ import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
+import com.navatar.generic.EnumConstants.AttendeeLabels;
 import com.navatar.generic.EnumConstants.ContactPagePhotoActions;
 import com.navatar.generic.EnumConstants.CreationPage;
 import com.navatar.generic.EnumConstants.IconType;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
+import com.navatar.generic.EnumConstants.PageLabel;
+import com.navatar.generic.EnumConstants.RelatedTab;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.generic.EnumConstants.object;
+import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.pageObjects.CommitmentsPageBusinessLayer;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
+import com.navatar.pageObjects.DealPageBusinessLayer;
 import com.navatar.pageObjects.EditPageBusinessLayer;
 import com.navatar.pageObjects.FundsPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
@@ -730,8 +735,8 @@ public class FieldSet extends BaseLib {
 				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object1Tab,YesNo.Yes);
 			}
 		}
-		String[][] fundsOrDeals = {{FS_Fund1,"",FS_Fund1Type,FS_Fund1InvestmentCategory,null},
-				{FS_Fund2,"",FS_Fund2Type,FS_Fund2InvestmentCategory,null}};
+		String[][] fundsOrDeals = {{FS_Fund1,"Fund Name",FS_Fund1Type,FS_Fund1InvestmentCategory,null},
+				{FS_Fund2,"Fund Name",FS_Fund2Type,FS_Fund2InvestmentCategory,null}};
 		for (String[] funds : fundsOrDeals) {
 			if (lp.clickOnTab(projectName, TabName.Object3Tab)) {
 				log(LogStatus.INFO,"Click on Tab : "+TabName.Object3Tab,YesNo.No);	
@@ -850,6 +855,7 @@ public class FieldSet extends BaseLib {
 	public void FSTc014_CreatedataForPackageObject(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String[][] values = {{FS_DealName2,FS_Deal2CompanyName,FS_Deal2Stage},{FS_DealName3,FS_Deal3CompanyName,FS_Deal3Stage}};
 		for(String[] value : values) {
@@ -866,6 +872,59 @@ public class FieldSet extends BaseLib {
 				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object4Tab,YesNo.Yes);
 			}
 		}
+		
+		String relatedTab;
+		ToggleOpenQA1RequestedDate=	previousOrForwardDateAccordingToTimeZone(-2, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);;
+		ExcelUtils.writeData(phase1DataSheetFilePath, ToggleOpenQA1RequestedDate, "DealRequestTracker", excelLabel.Variable_Name, "OPENQA1",excelLabel.Date_Requested);
+		
+		ToggleClosedQA1RequestedDate=	previousOrForwardDateAccordingToTimeZone(-5, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);;
+		ExcelUtils.writeData(phase1DataSheetFilePath, ToggleClosedQA1RequestedDate, "DealRequestTracker", excelLabel.Variable_Name, "CLOSEDQA1",excelLabel.Date_Requested);
+		
+		
+		String[][] openRequest = {{PageLabel.Date_Requested.toString(),ToggleOpenQA1RequestedDate}
+								,{PageLabel.Request.toString(),ToggleOpenQA1Request}
+										,{PageLabel.Status.toString(),ToggleOpenQA1Status}};
+		
+		String[][] closeRequest = {{PageLabel.Date_Requested.toString(),ToggleClosedQA1RequestedDate}
+						,{PageLabel.Request.toString(),ToggleClosedQA1Request},{PageLabel.Status.toString(),ToggleClosedQA1Status}};
+		
+		
+		for (int i = 0; i < 2; i++) {
+			if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+				log(LogStatus.INFO,"Click on Tab : "+TabName.Object4Tab,YesNo.No);	
+
+				if (fp.clickOnAlreadyCreatedItem(projectName, FS_DealName2, true, 15)) {
+					log(LogStatus.INFO,"Item found: "+FS_DealName2, YesNo.No);
+					ThreadSleep(2000);
+					
+					relatedTab=ToggleCheck2RelatedTab;
+					if (click(driver, fp.getRelatedTab(projectName, relatedTab, 5), relatedTab.toString(), action.BOOLEAN)) {
+						log(LogStatus.INFO,"Click on Sub Tab : "+relatedTab,YesNo.No);
+						ThreadSleep(2000);
+						if (i==0) {
+						dp.createNewRequest(projectName, FS_DealName2, openRequest , 10);
+						}else {
+						dp.createNewRequest(projectName, FS_DealName2, closeRequest , 10);
+						}
+						
+						} else {
+						sa.assertTrue(false,"Not Able to Click on Sub Tab : "+relatedTab);
+						log(LogStatus.SKIP,"Not Able to Click on Sub Tab : "+relatedTab,YesNo.Yes);
+					}
+					
+				}else {
+
+						log(LogStatus.ERROR,"Item not found: "+FS_DealName2, YesNo.Yes);
+						sa.assertTrue(false,"Item not found: "+FS_DealName2);
+					}
+			} else {
+				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object4Tab);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object4Tab,YesNo.Yes);
+			}
+		}
+		
+		
+		
 		switchToDefaultContent(driver);
 		lp.CRMlogout();
 		sa.assertAll();
@@ -929,6 +988,7 @@ public class FieldSet extends BaseLib {
 	public void FSTc016_CreatedataForCustomObject(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		MarketingEventPageBusinessLayer me = new MarketingEventPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (lp.clickOnTab(projectName, TabName.Object5Tab)) {
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object5Tab,YesNo.No);	
@@ -944,6 +1004,38 @@ public class FieldSet extends BaseLib {
 		} else {
 			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object5Tab);
 			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object5Tab,YesNo.Yes);
+		}
+		
+		String staff="",status="",event="";
+		WebElement ele=null;
+		for (int i = 0;i<2;i++) {
+			if (lp.clickOnTab(projectName, TabName.Object5Tab)) {
+
+				if (ip.clickOnAlreadyCreatedItem(projectName, FS_MarketingEvent1Name, true, 15)) {
+					ele=ip.getRelatedTab(projectName, RelatedTab.Related.toString(), 10);
+					click(driver, ele, "related", action.SCROLLANDBOOLEAN);
+					log(LogStatus.INFO,"Item found: "+FS_MarketingEvent1Name, YesNo.No);
+					log(LogStatus.INFO,"Click on Tab : "+TabName.AttendeeTab,YesNo.No);	
+					staff= AdminUserFirstName+" "+AdminUserLastName;
+					status= ExcelUtils.readData(phase1DataSheetFilePath,"Attendees",excelLabel.Variable_Name, "M4Att"+(1), excelLabel.Status);
+					
+					String[][] attendee1 = {{AttendeeLabels.Attendee_Staff.toString(),staff},{AttendeeLabels.Status.toString(),status}};
+
+					if (me.createAttendee(projectName, event, attendee1, action.SCROLLANDBOOLEAN, 10)) {
+						log(LogStatus.INFO,"Created Marketing Event : "+FS_MarketingEvent1Name,YesNo.No);	
+					} else {
+						sa.assertTrue(false,"Not Able to Create Marketing Event  : "+FS_MarketingEvent1Name);
+						log(LogStatus.SKIP,"Not Able to Create Marketing Event  : "+FS_MarketingEvent1Name,YesNo.Yes);
+					}
+				}
+				else {
+					sa.assertTrue(false,"Not Able to Click on Marketing Event : "+FS_MarketingEvent1Name);
+					log(LogStatus.SKIP,"Not Able to Click on Marketing Event : "+FS_MarketingEvent1Name,YesNo.Yes);
+				}
+			} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object5Tab);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object5Tab,YesNo.Yes);
+		}
 		}
 		switchToDefaultContent(driver);
 		lp.CRMlogout();
@@ -1013,25 +1105,25 @@ public class FieldSet extends BaseLib {
 		List<String> ItemFieldName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",3,false));
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		for(int i=0; i<tabNames.size(); i++) {
-			TabName tabName =TabName.valueOf(tabNames.get(i));
-			if (lp.clickOnTab(projectName, tabName)) {
-				log(LogStatus.INFO,"Click on Tab : "+tabName,YesNo.No);
+			if (lp.clickOnTab(projectName,tabNames.get(i) )) {
+				log(LogStatus.INFO,"Click on Tab : "+tabNames.get(i),YesNo.No);
 				if(lp.clickOnAlreadyCreatedItem(projectName, Items.get(i), true, 20)) {
 					log(LogStatus.INFO,"clicked on created item : "+Items.get(i), YesNo.No);
 					ThreadSleep(5000);
 					if(edit.clickOnEditPageLink()) {
-						ThreadSleep(2000);
+						ThreadSleep(5000);
 						switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
+						scrollDownThroughWebelement(driver, edit.getFieldSetCompoentXpath(10), "");
 						if(click(driver, edit.getFieldSetCompoentXpath(10), "field set component xpath", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on field set component", YesNo.No);
 							ThreadSleep(2000);
 							switchToDefaultContent(driver);
 							if(getValueFromElementUsingJavaScript(driver, edit.getImageFieldNameTextBox(10), "image field name xpath").equalsIgnoreCase(ItemFieldName.get(i))){
-								log(LogStatus.PASS, "Image Field Name is verified on "+tabName+" for "+Items.get(i), YesNo.No);
+								log(LogStatus.PASS, "Image Field Name is verified on "+tabNames.get(i)+" for "+Items.get(i), YesNo.No);
 
 							}else {
-								log(LogStatus.ERROR, "Image Field Name is not verified on "+tabName+" for "+Items.get(i), YesNo.Yes);
-								sa.assertTrue(false, "Image Field Name is verified on "+tabName+" for "+Items.get(i));
+								log(LogStatus.ERROR, "Image Field Name is not verified on "+tabNames.get(i)+" for "+Items.get(i), YesNo.Yes);
+								sa.assertTrue(false, "Image Field Name is verified on "+tabNames.get(i)+" for "+Items.get(i));
 							}
 							ThreadSleep(2000);
 							if(clickUsingJavaScript(driver, edit.getBackButton(10), "back button", action.BOOLEAN)) {
@@ -1053,8 +1145,8 @@ public class FieldSet extends BaseLib {
 					sa.assertTrue(false, "Not able to click on created item "+Items.get(i)+" so cannot verify field set image");
 				}
 			} else {
-				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabName+" so cannot verify field set image",YesNo.Yes);
-				sa.assertTrue(false,"Not Able to Click on Tab : "+tabName+" so cannot verify field set image");
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify field set image",YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabNames.get(i)+" so cannot verify field set image");
 			}
 		}
 		lp.CRMlogout();
@@ -1093,8 +1185,7 @@ public class FieldSet extends BaseLib {
 					ThreadSleep(2000);
 					if(setup.clickOnObjectFeature(environment,mode, ObjectName, ObjectFeatureName.pageLayouts)) {
 						log(LogStatus.INFO, "Clicked on feature : "+ObjectFeatureName.pageLayouts+" of "+ObjectName, YesNo.No);
-						ThreadSleep(1000);
-						ThreadSleep(1000);
+						ThreadSleep(2000);
 						if(sendKeys(driver, setup.getQuickSearchInObjectManager_Lighting(10), objectAPINames.get(i), "search text box", action.BOOLEAN)) {
 							String xpath="//span[text()='"+objectAPINames.get(i)+"']/..";
 							WebElement ele = isDisplayed(driver, FindElement(driver, xpath, "field set label text", action.BOOLEAN, 3), "visibility", 3, "field set label text");
@@ -1171,7 +1262,7 @@ public class FieldSet extends BaseLib {
 		List<String> itemNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		for(int i=0; i<tabNames.size(); i++) {
-			if (lp.clickOnTab(projectName,tabNames.get(i) )) {
+			if (lp.clickOnTab(projectName,tabNames.get(i))) {
 				log(LogStatus.INFO,"Click on Tab : "+tabNames.get(i),YesNo.No);
 				if(lp.clickOnAlreadyCreatedItem(projectName, itemNames.get(i), true,20)) {
 					log(LogStatus.INFO,"clicked on created item : "+itemNames.get(i), YesNo.No);
@@ -1281,7 +1372,8 @@ public class FieldSet extends BaseLib {
 		List<String> objectName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",4,false));
 		List<String> draggedComponentName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",7,false));
 		List<String> fieldSetNametName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",8,false));
-		String imagepath="\\UploadImages\\imgSize16mb.jpg";
+		String imagepath="\\UploadImages\\15mbfile.jpeg";
+		
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (home.clickOnSetUpLink()) {
 			parentWindow = switchOnWindow(driver);
@@ -1296,8 +1388,7 @@ public class FieldSet extends BaseLib {
 			ThreadSleep(3000);
 			for(int i=0; i<objectName.size(); i++) {
 				object object1 = object.valueOf(objectName.get(i));
-				String[] draggedComponent = draggedComponentName.get(i).split("<break>");
-				
+				String[] draggedComponent = draggedComponentName.get(i).split("<breakOn>");
 				if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,fieldSetNametName.get(i), draggedComponent[0]+"<break>"+draggedComponent[1], null,YesNo.No)) {
 					log(LogStatus.PASS, "Dargged Object in : "+fieldSetNametName.get(i), YesNo.No);
 				}else {
@@ -1313,7 +1404,7 @@ public class FieldSet extends BaseLib {
 			sa.assertTrue(false, "Not able to click on setup link so cannot drag and drop component on objects");
 		}
 		for(int i=0; i<tabNames.size(); i++) {
-			if (lp.clickOnTab(projectName,tabNames.get(i) )) {
+			if (lp.clickOnTab(projectName,tabNames.get(i))) {
 				log(LogStatus.INFO,"Click on Tab : "+tabNames.get(i),YesNo.No);
 				if(lp.clickOnAlreadyCreatedItem(projectName, itemNames.get(i), true,20)) {
 					log(LogStatus.INFO,"clicked on created item : "+itemNames.get(i), YesNo.No);
@@ -1400,37 +1491,37 @@ public class FieldSet extends BaseLib {
 		List<String> objectName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",4,false));
 		List<String> draggedComponentName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",7,false));
 		List<String> fieldSetNametName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",8,false));
-		String imagepath="\\UploadImages\\imgSize16mb.jpg";
+		String imagepath="\\UploadImages\\15mbfile.jpeg";
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		if (home.clickOnSetUpLink()) {
-			parentWindow = switchOnWindow(driver);
-			if (parentWindow == null) {
-				sa.assertTrue(false,
-						"No new window is open after click on setup link in lighting mode so cannot drag and drop component on objects");
-				log(LogStatus.SKIP,
-						"No new window is open after click on setup link in lighting mode so cannot drag and drop component on objects",
-						YesNo.Yes);
-				exit("No new window is open after click on setup link in lighting mode so cannot drag and drop component on objects");
-			}
-			ThreadSleep(3000);
-			for(int i=0; i<objectName.size(); i++) {
-				object object1 = object.valueOf(objectName.get(i));
-				String[] draggedComponent = draggedComponentName.get(i).split("<break>");
-				
-				if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,fieldSetNametName.get(i), draggedComponent[2]+"<break>"+draggedComponent[3], null,YesNo.No)) {
-					log(LogStatus.PASS, "Dargged Object in : "+fieldSetNametName.get(i), YesNo.No);
-				}else {
-					log(LogStatus.ERROR,"Not able to drag Field Set Object on : "+fieldSetNametName.get(i), YesNo.Yes);
-					sa.assertTrue(false, "Not able to drag Field Set Object on : "+fieldSetNametName.get(i));
-				}
-			}
-			switchToDefaultContent(driver);
-			driver.close();
-			driver.switchTo().window(parentWindow);
-		}else {
-			log(LogStatus.ERROR, "Not able to click on setup link so cannot drag and drop component on objects", YesNo.Yes);
-			sa.assertTrue(false, "Not able to click on setup link so cannot drag and drop component on objects");
-		}
+//		if (home.clickOnSetUpLink()) {
+//			parentWindow = switchOnWindow(driver);
+//			if (parentWindow == null) {
+//				sa.assertTrue(false,
+//						"No new window is open after click on setup link in lighting mode so cannot drag and drop component on objects");
+//				log(LogStatus.SKIP,
+//						"No new window is open after click on setup link in lighting mode so cannot drag and drop component on objects",
+//						YesNo.Yes);
+//				exit("No new window is open after click on setup link in lighting mode so cannot drag and drop component on objects");
+//			}
+//			ThreadSleep(3000);
+//			for(int i=0; i<objectName.size(); i++) {
+//				object object1 = object.valueOf(objectName.get(i));
+//				String[] draggedComponent = draggedComponentName.get(i).split("<breakOn>");
+//				
+//				if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,fieldSetNametName.get(i), draggedComponent[2]+"<break>"+draggedComponent[3], null,YesNo.No)) {
+//					log(LogStatus.PASS, "Dargged Object in : "+fieldSetNametName.get(i), YesNo.No);
+//				}else {
+//					log(LogStatus.ERROR,"Not able to drag Field Set Object on : "+fieldSetNametName.get(i), YesNo.Yes);
+//					sa.assertTrue(false, "Not able to drag Field Set Object on : "+fieldSetNametName.get(i));
+//				}
+//			}
+//			switchToDefaultContent(driver);
+//			driver.close();
+//			driver.switchTo().window(parentWindow);
+//		}else {
+//			log(LogStatus.ERROR, "Not able to click on setup link so cannot drag and drop component on objects", YesNo.Yes);
+//			sa.assertTrue(false, "Not able to click on setup link so cannot drag and drop component on objects");
+//		}
 		for(int i=0; i<tabNames.size(); i++) {
 			if (lp.clickOnTab(projectName,tabNames.get(i) )) {
 				log(LogStatus.INFO,"Click on Tab : "+tabNames.get(i),YesNo.No);
@@ -1452,7 +1543,7 @@ public class FieldSet extends BaseLib {
 					}
 					
 					
-					if(lp.updatePhoto(projectName, tabNames.get(i), imagepath,true)) {
+					if (lp.updatePhoto(projectName, tabNames.get(i), imagepath,false)) {
 						log(LogStatus.PASS, "photo is updated successfully in "+itemNames.get(i)+" on "+tabNames.get(i), YesNo.No);
 						if(lp.getDefaultImageXpath(20)!=null) {
 							String imagesize =lp.getDefaultImageXpath(20).getAttribute("style");
@@ -1526,7 +1617,7 @@ public class FieldSet extends BaseLib {
 		List<String> objectName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",4,false));
 		List<String> draggedComponentName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",7,false));
 		List<String> fieldSetNametName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",8,false));
-		String imagepath="\\UploadImages\\imgSize16mb.jpg";
+		String imagepath="\\UploadImages\\15mbfile.jpeg";
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (home.clickOnSetUpLink()) {
 			parentWindow = switchOnWindow(driver);
@@ -1541,7 +1632,7 @@ public class FieldSet extends BaseLib {
 			ThreadSleep(3000);
 			for(int i=0; i<objectName.size(); i++) {
 				object object1 = object.valueOf(objectName.get(i));
-				String[] draggedComponent = draggedComponentName.get(i).split("<break>");
+				String[] draggedComponent = draggedComponentName.get(i).split("<breakOn>");
 				
 				if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,fieldSetNametName.get(i), draggedComponent[4]+"<break>"+draggedComponent[5], null,YesNo.No)) {
 					log(LogStatus.PASS, "Dargged Object in : "+fieldSetNametName.get(i), YesNo.No);
@@ -1652,7 +1743,7 @@ public class FieldSet extends BaseLib {
 		List<String> objectName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",4,false));
 		List<String> draggedComponentName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",7,false));
 		List<String> fieldSetNametName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",8,false));
-		String imagepath="\\UploadImages\\imgSize16mb.jpg";
+		String imagepath="\\UploadImages\\15mbfile.jpeg";
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (home.clickOnSetUpLink()) {
 			parentWindow = switchOnWindow(driver);
@@ -1667,7 +1758,7 @@ public class FieldSet extends BaseLib {
 			ThreadSleep(3000);
 			for(int i=0; i<objectName.size(); i++) {
 				object object1 = object.valueOf(objectName.get(i));
-				String[] draggedComponent = draggedComponentName.get(i).split("<break>");
+				String[] draggedComponent = draggedComponentName.get(i).split("<breakOn>");
 				
 				if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,fieldSetNametName.get(i), draggedComponent[4]+"<break>"+draggedComponent[5], null,YesNo.No)) {
 					log(LogStatus.PASS, "Dargged Object in : "+fieldSetNametName.get(i), YesNo.No);
@@ -1884,11 +1975,11 @@ public class FieldSet extends BaseLib {
 		
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		String jpgMinimumSizeimagepath="\\UploadImages\\JPGImage.jpg";
-		String jpgMaxSizeimagepath="\\UploadImages\\imgSize16mb.jpg";
+		String jpgMaxSizeimagepath="\\UploadImages\\15mbfile.jpeg";
 		String pngMinimumSizeimagepath="\\UploadImages\\PNG Image.png";
-		String pngMaxSizeimagepath="\\UploadImages\\16MBFile.png";
+		String pngMaxSizeimagepath="\\UploadImages\\15MbPNGFile.png";
 		String gifMinimumSizeimagepath="\\UploadImages\\GIF Image.gif";
-		String gifMaxSizeimagepath="\\UploadImages\\imgSize16mb.gif";
+		String gifMaxSizeimagepath="\\UploadImages\\imgSize5.7mg16mb.gif";
 		
 		String[] allImages = {jpgMinimumSizeimagepath,jpgMaxSizeimagepath,pngMinimumSizeimagepath,pngMaxSizeimagepath,gifMinimumSizeimagepath,gifMaxSizeimagepath};
 		String [] imagesNames= {"JPG Minimum size","JPG Maximum size","PNG Minimum size","PNG Maximum size","GIF Minimum size","GIF Maximum size"};
