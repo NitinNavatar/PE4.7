@@ -138,11 +138,11 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 			
 		}else {
 			//span[text()='Description']/..//following-sibling::textarea
-			xpath="//span[text()='"+finalLabelName+"']";
-			inputXpath="/..//following-sibling::input";
-			textAreaXpath="/..//following-sibling::textarea";
+			xpath="//*[text()='"+finalLabelName+"']";
+			inputXpath="/following-sibling::div/input";
+			textAreaXpath="/following-sibling::div/textarea";
 			if(labelName.toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString())) {
-				inputXpath="/..//following-sibling::div//input[contains(@title,'Search')]";
+				inputXpath="/following-sibling::div//input[contains(@placeholder,'Search')]";
 			}
 			
 		}
@@ -354,7 +354,7 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 		
 	}
 	
-	@FindBy(xpath="//label[@data-aura-class='uiLabel']//span[text()='Firm']/..//following-sibling::input")
+	@FindBy(xpath="//*[text()='Firm']/following-sibling::*/input")
 	private WebElement legalNameTextBoxLighting;
 	
 	/**
@@ -555,8 +555,43 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 	
 	
 	}
+	@FindBy(xpath="//div[contains(@class,'Fullcalendar')]//h2")
+	private WebElement calenderHeader;
+
+	/**
+	 * @return the partnershipTextBox
+	 */
+	public WebElement getcalenderHeader(String projectName,int timeOut) {
+		
+		return isDisplayed(driver, calenderHeader, "Visibility", timeOut, "calender Header");
 	
 	
 	
+	}
+	@FindBy(xpath="//h2[text()='Event Invitees']")
+	private WebElement eventInviteesHeader;
+
+	/**
+	 * @return the partnershipTextBox
+	 */
+	public WebElement geteventInviteesHeader(String projectName,int timeOut) {
+		
+		return isDisplayed(driver, eventInviteesHeader, "Visibility", timeOut, "eventInvitees Header");
+	
+	
+	}
+	
+	@FindBy(xpath="//button[@aria-label='prev']")
+	private WebElement previousButtonOnCalender;
+
+	/**
+	 * @return the partnershipTextBox
+	 */
+	public WebElement getpreviousButtonOnCalender(String projectName,int timeOut) {
+		
+		return isDisplayed(driver, previousButtonOnCalender, "Visibility", timeOut, "previous Button On Calender");
+	
+	
+	}
 		
 }

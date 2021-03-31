@@ -126,6 +126,84 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 		}
 		return flag;
 	}
+	public boolean createMarketingEventFromSDG(String projectName,String marketingEventName,String recordType, String date,String organizer,int timeOut) {
+		boolean flag=false;
+
+			if (!recordType.equals("") || !recordType.isEmpty()) {
+				ThreadSleep(2000);
+				if(click(driver, getRadioButtonforRecordTypeME(recordType, timeOut), "Radio Button for : "+recordType, action.SCROLLANDBOOLEAN)){
+					appLog.info("Clicked on radio Button for Marketing Event for record type : "+recordType);
+					if (click(driver, getContinueOrNextButton(projectName,timeOut), "Continue Button", action.BOOLEAN)) {
+						appLog.info("Clicked on Continue or Nxt Button");	
+						ThreadSleep(1000);
+					}else{
+						appLog.error("Not Able to Clicked on Next Button");
+						return false;	
+					}
+				}else{
+					appLog.error("Not Able to Clicked on radio Button for record type : "+recordType);
+					return false;
+				}
+
+			}
+
+			if (sendKeys(driver, getMarketingEventTextBox(projectName,timeOut), marketingEventName, "leagl name text box",action.SCROLLANDBOOLEAN)) {
+				appLog.info("passed data in text box: " + marketingEventName);
+
+				FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+				String label;
+				String value;
+				if (!date.equals("") || !date.isEmpty()) {
+
+					WebElement ele = getLabelTextBox(projectName, PageName.Object5Page.toString(), PageLabel.Date.toString(), timeOut);
+					if (sendKeys(driver,ele, date, date, action.BOOLEAN)) {
+						appLog.info("Successfully Entered value on date TextBox : "+date);		
+						ThreadSleep(1000);
+					}else {
+
+					}
+				}
+				if(organizer!=null) {
+				if (sendKeys(driver, getOrganizerName(projectName, 60), organizer, "organizer Name",
+						action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(1000);
+					if (click(driver,FindElement(driver,"//*[@title='"+organizer+"']","organizer Name List", action.BOOLEAN, 30),
+							organizer + "   :   Company Name", action.BOOLEAN)) {
+						appLog.info(organizer + "  is present in list.");
+					} else {
+						appLog.info(organizer + "  is not present in the list.");
+						return false;
+					}
+
+				} else {
+					appLog.error("Not able to enter organizer name");
+					return false;
+				}
+				}
+				if (click(driver, getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on save button");
+
+					String str = getText(driver, getMarketingEventInViewMode(timeOut, marketingEventName), "Marketing Name Label Text",action.SCROLLANDBOOLEAN);
+					if (str != null) {
+						if (str.contains(marketingEventName)) {
+							appLog.info("created Marketing Event " + marketingEventName + " is verified successfully.");
+							appLog.info(marketingEventName + " is created successfully.");
+							flag=true;
+						} else {
+							appLog.error("Created  " + marketingEventName + " is not matched with " + str);
+						}
+					} else {
+						appLog.error("Created  " + marketingEventName + " is not visible");
+					}
+				} else {
+					appLog.error("Not able to click on save button so cannot create : "+ marketingEventName);
+				}
+			} else {
+				appLog.error("Not able to pass data in Marketing name text box so cannot create : "+ marketingEventName);
+			}
+
+		return flag;
+	}
 	
 	public WebElement toggleButton(String projectName,PageName pageName,String btnName,action action,int timeOut) {
 		String xpath = "//button[@title='"+btnName+"']";
@@ -275,4 +353,10 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 		return flag;
 	}
 	
+	public WebElement getRadioButtonforRecordTypeME(String recordType,int timeOut) {
+		String xpath="//div[@id='containerBodyID']//span[text()='"+recordType+"']/..//input";
+		WebElement ele = null;
+		ele=FindElement(driver, xpath, "radio button of record type "+recordType, action.SCROLLANDBOOLEAN,timeOut);
+		return isDisplayed(driver,ele,"visibility",timeOut,"radio button of record type "+recordType);
+	}
 }

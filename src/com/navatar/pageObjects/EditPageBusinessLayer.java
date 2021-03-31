@@ -249,6 +249,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 				log(LogStatus.INFO, "Enter component name in search box : "+DropComponentName, YesNo.No);
 
 				String xpath = "//span[@title='"+DropComponentName+"' or text()='"+DropComponentName+"']";
+				appLog.error(">>>>");
 				dropComponentXpath =  isDisplayed(driver, FindElement(driver, xpath, "Search Value : "+DropComponentName, action.BOOLEAN, 10), "Visibility", 10, "Search Value : "+DropComponentName);
 				if(dropComponentXpath!=null) {
 					//							Actions builder = new Actions(driver);
@@ -268,7 +269,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 							}
 							switchToDefaultContent(driver);
-							/*Screen screen = new Screen();
+							Screen screen = new Screen();
 						try {
 
 							//                                		screen.dropAt("\\AutoIT\\AddComponentHere.PNG");
@@ -280,7 +281,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 							e.printStackTrace();
 							flag=false;
 						}
-							 */if (flag) {
+							 if (flag) {
 								 String value="",field="";
 								 for (String fieldValue:fieldValues) {
 									 value=fieldValue.split("<break>")[1];
@@ -358,4 +359,37 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 	public String DealTeamSDGQuery(String fieldName) {
 		return "SELECT Member__c, Member__r.Name,Member__r.Title,"+fieldName+"Team_Member_Role__c,Type__c,Member__r.MediumPhotoURL FROM Deal_Team__c WHERE ( Pipeline__c = '<<recordId>>' AND (member__c <> null)) ORDER BY Id ASC";
 }
+
+	public boolean dragAndDropCalender(String projectName,PageName pageName, RelatedTab relatedTab,String DropComponentName, String[] fieldValues) {
+	boolean flag=false;
+	Actions actions = new Actions(driver);	 
+	String value="",field="";
+	appLog.info(">>>>");
+	new Scanner(System.in).next();
+		 for (String fieldValue:fieldValues) {
+			 value=fieldValue.split("<break>")[1];
+			 field=fieldValue.split("<break>")[0];
+			 field=field.replace("_", " ");
+			 if(sendKeys(driver, getFieldTextbox(projectName, field, 10), value, field, action.BOOLEAN)) {
+				 log(LogStatus.INFO, "field : "+field+", value: "+value, YesNo.No);
+			 }else {
+				 log(LogStatus.ERROR, "Not able to enter : "+value+" on"+field, YesNo.Yes);
+				 flag=false;
+			 }
+		 }if(click(driver, getCustomTabSaveBtn(projectName, 10), "save button", action.BOOLEAN)) {
+			 log(LogStatus.INFO, "clicked on save button", YesNo.No);
+			 ThreadSleep(2000);
+			 actions.moveToElement(getBackButton(10)).build().perform();
+			 ThreadSleep(2000);
+			 if(clickUsingJavaScript(driver, getBackButton(10), "back button", action.BOOLEAN)) {
+				 log(LogStatus.PASS, "clicked on back button", YesNo.No);
+				 flag=true;
+			 }else {
+				 log(LogStatus.ERROR, "Not able to click on back button so cannot back on page ", YesNo.Yes);
+			 }
+		 }else {
+			 log(LogStatus.ERROR, "Not able to click on save button so cannot create accordion : ", YesNo.No);
+		 }
+		return flag;
+	}
 }

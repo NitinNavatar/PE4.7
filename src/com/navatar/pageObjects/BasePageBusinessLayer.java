@@ -4938,10 +4938,16 @@ public WebElement accordionSDGButtons(String projectName,String toggleTab,Toggle
 	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btname);
 	return ele;
 }
-
+public WebElement accordionSDGContactCheckbox(String projectName,String contact,String field,action action,int timeOut) {
+	String xpath ="//*[text()='"+contact+"']/../../../../following-sibling::td[contains(@data-label,'"+field+"')]/../../..//th//input";
+	WebElement ele = FindElement(driver, xpath,"checkbox for "+contact, action, timeOut);
+	scrollDownThroughWebelement(driver, ele, "checkbox for "+contact);
+	ele = isDisplayed(driver, ele, "Visibility", timeOut, "checkbox for "+contact);
+	return ele;
+}
 public WebElement accordionSDGActionButtons(String projectName,String toggleTab,String btnName,action action,int timeOut) {
-	String btname = btnName.toString();
-	String xpath = "//h2[contains(text(),'"+toggleTab+"')]/../../..//following-sibling::div//button[text()='"+btname+"']";
+	String btname = btnName.replace("_", " ");
+	String xpath = "//*[contains(text(),'"+toggleTab+"')]/../../..//following-sibling::div//button[text()='"+btname+"']";
 	WebElement ele = FindElement(driver, xpath,toggleTab+" >> "+btname, action, timeOut);
 	scrollDownThroughWebelement(driver, ele, "Toggle Button : "+btname);
 	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btname);
@@ -4966,8 +4972,8 @@ public boolean clickOnEditButtonOnSDG(String projectName, String contact, String
 	String xpath ="//*[text()='"+contact+"']/../../../../following-sibling::td[contains(@data-label,'"+field+"')]//button";
 	WebElement ele = FindElement(driver, xpath,"edit button for "+field, action.BOOLEAN, timeOut);
 	//ele= isDisplayed(driver, ele, "visibility", timeOut, "edit button for "+field);
-	JavascriptExecutor js = null;
-	js.executeScript("return arguments[0].setAttribute('style','display: inline-block;')", ele);
+	JavascriptExecutor js = (JavascriptExecutor)driver;
+	js.executeScript("return arguments[0].setAttribute('Styles','display: inline-block;')", ele);
 	click(driver, ele, "edit", action.BOOLEAN);
 	return true;
 }
@@ -5062,6 +5068,14 @@ public WebElement toggleEditCancelButton(String projectName,String btnName,actio
 	String xpath = "//button[contains(text(),'"+btnName+"')]/../../../../../../../..//button[text()='Cancel']";
 	WebElement ele = FindElement(driver, xpath,"Toggle Button : "+btnName, action, timeOut);
 	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btnName);
+	return ele;
+}
+
+public WebElement crossIconForEventField(String projectName, String field, String name,int timeOut) {
+	String xpath = "//label[text()='"+field+"']/following-sibling::div//input[@placeholder='"+name+"']/following-sibling::div/button";
+	
+	WebElement ele = FindElement(driver, xpath,"cross Button : "+field, action.BOOLEAN, timeOut);
+	ele = isDisplayed(driver, ele, "Visibility", timeOut, "cross Button : "+field);
 	return ele;
 }
 

@@ -6,13 +6,13 @@ package com.navatar.generic;
 import static com.navatar.generic.BaseLib.testCasesFilePath;
 import static com.navatar.generic.BaseLib.phase1DataSheetFilePath;
 import static com.navatar.generic.CommonLib.getDateAccToTimeZone;
-import static com.navatar.generic.EnumConstants.*;
+import static com.navatar.generic.CommonLib.previousOrForwardDate;
+
+import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.scripts.Module5;
-
-import com.navatar.generic.EnumConstants.excelLabel;
-import com.navatar.scripts.FieldSet;
+import com.navatar.scripts.Module6;
 import com.navatar.scripts.Module2;
 import com.navatar.scripts.Module3;
 import com.navatar.scripts.Module4;
@@ -25,7 +25,7 @@ import com.navatar.scripts.Module4;
 public class CommonVariables {
 //	public static String abc;
 
-	public static String URL,todaysDate,todaysDateSingleDigit;
+	public static String URL,todaysDate,tomorrowsDate,todaysDateSingleDigit;
 	public static String browserToLaunch;
 	public static String Smoke_TWINS1Name,Smoke_TWINS1RecordType,Smoke_TWINS1Status;
 	public static String Smoke_CDINS1Name,Smoke_CDINS1RecordType,Smoke_CDINS1Status;
@@ -87,7 +87,12 @@ public class CommonVariables {
 	
 	public static String ToggleMarketingEvent1Name,ToggleMarketingEvent1Date,ToggleMarketingEvent1RecordType,ToggleMarketingEvent1Organizer;
 	public static String M4MarketingEvent1Name,M4MarketingEvent1Date,M4MarketingEvent1RecordType,M4MarketingEvent1Organizer;
-	
+	public static String M4MarketingEvent2Name,M4MarketingEvent2Date,M4MarketingEvent2RecordType;
+	public static String M4MarketingEvent3Name,M4MarketingEvent3Date,M4MarketingEvent3RecordType;
+	public static String M4MarketingEvent4Name,M4MarketingEvent4Date,M4MarketingEvent4RecordType;
+	public static String M4MarketingEvent5Name,M4MarketingEvent5Date,M4MarketingEvent5RecordType;
+	public static String M4MarketingEvent6Name,M4MarketingEvent6Date,M4MarketingEvent6RecordType;
+
 	public static String FS_MarketingEvent1Name,FS_MarketingEvent1Date,FS_MarketingEvent1RecordType,FS_MarketingEvent1Organizer;
 	
 
@@ -259,6 +264,7 @@ public class CommonVariables {
 		mode=ExcelUtils.readDataFromPropertyFile("Mode");
 		todaysDate=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "MM/dd/YYYY");
 		todaysDateSingleDigit=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
+		tomorrowsDate=previousOrForwardDate(1, "M/d/YYYY");
 		
 			AdminUserFirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_First_Name);
 			AdminUserLastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_Last_Name);
@@ -471,7 +477,18 @@ public class CommonVariables {
 			TWTaskCR1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask8", excelLabel.Subject);
 			TWTaskUpdateLabelSubject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask9", excelLabel.Subject);
 			
-		}else if(obj instanceof FieldSet){
+		}else if(obj instanceof Module6){
+			
+			ToggleOpenQA1ID=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Request_Tracker_ID);
+			ToggleOpenQA1RequestedDate=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Date_Requested);;
+			ToggleOpenQA1Request=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Request);
+			ToggleOpenQA1Status=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Status);
+			
+			ToggleClosedQA1ID=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Request_Tracker_ID);
+			ToggleClosedQA1RequestedDate=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Date_Requested);;
+			ToggleClosedQA1Request=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Request);
+			ToggleClosedQA1Status=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Status);
+			
 			
 			FS_Object1=ExcelUtils.readData(phase1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS1", excelLabel.Object_Name);
 			FS_Object2=ExcelUtils.readData(phase1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS2", excelLabel.Object_Name);
@@ -732,6 +749,22 @@ public class CommonVariables {
 			M4MarketingEvent1Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME1", excelLabel.Date);
 			M4MarketingEvent1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME1", excelLabel.Record_Type);
 			M4MarketingEvent1Organizer=M4Ins1;
+			M4MarketingEvent2Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME2", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent2Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME2", excelLabel.Date);
+			M4MarketingEvent2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME2", excelLabel.Record_Type);
+			M4MarketingEvent3Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME3", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent3Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME3", excelLabel.Date);
+			M4MarketingEvent3RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME3", excelLabel.Record_Type);
+			M4MarketingEvent4Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME4", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent4Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME4", excelLabel.Date);
+			M4MarketingEvent4RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME4", excelLabel.Record_Type);
+			M4MarketingEvent5Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME5", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent5Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME5", excelLabel.Date);
+			M4MarketingEvent5RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME5", excelLabel.Record_Type);
+			M4MarketingEvent6Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME6", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent6Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME6", excelLabel.Date);
+			M4MarketingEvent6RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME6", excelLabel.Record_Type);
+			
 			M4Contact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Contact_FirstName);
 			M4Contact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Contact_LastName);
 			M4Contact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Contact_EmailId);

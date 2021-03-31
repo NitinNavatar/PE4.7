@@ -67,6 +67,60 @@ public interface BasePageErrorMessage {
 	public static String defaultPhotoText="standard";
 
 	public static String defaultPhotoTextForAdminPhoto="profilephoto";
+	public static String titleHighlightColor="RecordType.DeveloperName;Firm_Events:#6464FF,Third_Party_Event:#D2691E;";
+	public static String filter="Organizer__c = '<<recordid>>' or recordtype.developername = 'Firm_Events'";
+	public static String onclickTitle="Event_Invitees";
+	public static String OldTaskMsg(String user,String contactName,  int otherContactNum) {
+		String msg="a Task";
+		if (user==null) {
+			msg="You had "+msg;
+		}
+		else {
+			msg=user+" had "+msg;
+		}
+		if (contactName!=null) {
+			msg+=" with "+contactName;
+			if (otherContactNum>0) {
+				msg+= " and "+ otherContactNum + " other";
+			}
+		}
+		
+		return msg;
+	}
+	public static String UpcomingEventMsg(String user,String contactName,  int otherContactNum) {
+		String msg="an upcoming Event";
+		if (user==null) {
+			msg="You have "+msg;
+		}
+		else {
+			msg=user+" has "+msg;
+		}
+		if (contactName!=null) {
+			msg+=" with "+contactName;
+			if (otherContactNum>0) {
+				msg+= " and "+ otherContactNum + " other";
+			}
+		}
+		
+		return msg;
+	}
+	public static String OldEventMsg(String user,String contactName,  int otherContactNum) {
+		String msg="an Event";
+		if (user==null) {
+			msg="You had "+msg;
+		}
+		else {
+			msg=user+" had "+msg;
+		}
+		if (contactName!=null) {
+			msg+=" with "+contactName;
+			if (otherContactNum>0) {
+				msg+= " and "+ otherContactNum + " other";
+			}
+		}
+		
+		return msg;
+	}
 	
 	public static String UpcomingTaskMsg(String user,String contactName,  int otherContactNum) {
 		String msg="an upcoming Task";

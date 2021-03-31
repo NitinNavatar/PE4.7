@@ -2480,6 +2480,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 
         Actions ac = new Actions(driver);
         try {
+        	
         ac.clickAndHold(ele).build().perform();
         ThreadSleep(500);
         ac.release(ele).click().build().perform();
@@ -2514,6 +2515,25 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		//return a+" "+date.split("/")[1];
 	}
 	
+	public static String findMonthNameAndYear(String date) {
+		String mon=date.split("/")[0];
+		int m=Integer.parseInt(mon);
+		String a=Month.of(m).name();
+		System.err.println("month >>>>"+a);
+		a=capitalize(a);
+		a = a+" "+date.split("/")[2];
+		return a;
+	}
+	
+	public static String findMonthDateCommaYear(String date) {
+		String mon=date.split("/")[0];
+		int m=Integer.parseInt(mon);
+		String a=Month.of(m).name();
+		System.err.println("month >>>>"+a);
+		a=capitalize(a);
+		a = a+" "+date.split("/")[1]+", "+date.split("/")[2];
+		return a;
+	}
 	 public static String dateAndTimeAccordingToTimeZone(int howManyMinuteBeforeOrAfter, String dateFormat,String zone) {
 	       
 	       
@@ -2523,12 +2543,42 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 	        date.setTimeZone(TimeZone.getTimeZone(zone));
 	        return date.format(cal.getTime());
 	    }
-	 
+	 public static String findCurrentWeek( String dateFormat,String zone) {
+	       
+	       
+	        Calendar cal = Calendar.getInstance();
+	        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+	        SimpleDateFormat date = new SimpleDateFormat(dateFormat);
+	        date.setTimeZone(TimeZone.getTimeZone(zone));
+	        String date1=date.format(cal.getTime());
+	        System.out.println();
+	        
+	        cal.add(Calendar.DATE, 6);
+	        date = new SimpleDateFormat(dateFormat);
+	        date.setTimeZone(TimeZone.getTimeZone(zone));
+	        String date2=date.format(cal.getTime());
+	        System.out.println(date2);
+	        String monthName1=findThreeLetterMonthName(date1).split(" ")[0];
+	        String monthName2=findThreeLetterMonthName(date2).split(" ")[0];
+	        if (monthName1.equalsIgnoreCase(monthName2))
+	        	return findThreeLetterMonthName(date1)+" – "+date2.split("/")[1]+", "+date1.split("/")[2];
+	        else
+	        	return findThreeLetterMonthName(date1)+" – "+findThreeLetterMonthName(date2)+", "+date1.split("/")[2];
+	 }
 	 public static String previousOrForwardDateAccordingToTimeZone(int howManyDaysBeforeOrAfter, String dateFormat,String zone) {
 
 
 			final Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.DATE, howManyDaysBeforeOrAfter);
+			SimpleDateFormat date = new SimpleDateFormat(dateFormat);
+			date.setTimeZone(TimeZone.getTimeZone(zone));
+			return date.format(cal.getTime());
+		}
+	 public static String previousOrForwardMonthAccordingToTimeZone(int howManyDaysBeforeOrAfter, String dateFormat,String zone) {
+
+
+			final Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.MONTH, howManyDaysBeforeOrAfter);
 			SimpleDateFormat date = new SimpleDateFormat(dateFormat);
 			date.setTimeZone(TimeZone.getTimeZone(zone));
 			return date.format(cal.getTime());
