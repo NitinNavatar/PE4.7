@@ -1833,6 +1833,7 @@ public boolean enteringSubjectAndSelectDropDownValuesonTaskPopUp(String projectN
 	String label;
 	String value;
 	boolean flag=false;
+	getLabelTextBox(projectName, PageName.TaskPage.toString(), PageLabel.Subject.toString(),timeOut).clear();
 	if (sendKeys(driver, getLabelTextBox(projectName, PageName.TaskPage.toString(), PageLabel.Subject.toString(),timeOut), subjectText, "Subject", action.SCROLLANDBOOLEAN)) {
 		log(LogStatus.INFO, "Entered value to Subject Text Box", YesNo.Yes);
 	

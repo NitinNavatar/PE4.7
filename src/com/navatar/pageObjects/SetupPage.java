@@ -458,6 +458,53 @@ public class SetupPage extends BasePageBusinessLayer {
 
 	}
 	
-	
+	@FindBy(xpath = "//input[@title='New Action']")
+	private WebElement newActionBtn;
 
+	public WebElement getNewActionBtnNewBtn(int timeOut) {
+		return isDisplayed(driver, newActionBtn, "Visibility", timeOut, "New ACtion Button");
+	}
+
+	@FindBy(xpath = "//h3[text()='Predefined Field Values']/../following-sibling::td//input")
+	private WebElement predefinedFieldValuesNewButton;
+
+	public WebElement getpredefinedFieldValuesNewButtonn(int timeOut) {
+		return isDisplayed(driver, predefinedFieldValuesNewButton, "Visibility", timeOut, "Predefined Field Values New Button");
+	}
+	
+	@FindBy(xpath = "//select[@id='ColumnEnumOrId']")
+	private WebElement selectFieldName;
+
+	public WebElement getSelectFieldName(int timeOut) {
+		return isDisplayed(driver, selectFieldName, "Visibility", timeOut, "Select Field Name");
+	}
+	
+	@FindBy(xpath = "//textarea[@id='DefaultValueFormula']")
+	private WebElement formulaValueTextArea;
+
+	public WebElement getFormulaValueTextArea(int timeOut) {
+		return isDisplayed(driver, formulaValueTextArea, "Visibility", timeOut, "formula Value TextArea");
+	}
+	
+	@FindBy(xpath = "//*[@title='Page Layout']")
+	private WebElement pageLayoutNewButton;
+
+	public WebElement getPageLayoutNewButton(int timeOut) {
+		return isDisplayed(driver, pageLayoutNewButton, "Visibility", timeOut, "Page Layout New Button");
+	}
+	
+	@FindBy(xpath = "//select[@id='p2']")
+	private WebElement selectExistingPageLayout;
+
+	public WebElement getSelectExistingPageLayout(int timeOut) {
+		return isDisplayed(driver, selectExistingPageLayout, "Visibility", timeOut, "Select Existing Page Layout");
+	}
+
+	@FindBy(xpath = "//select[@id='p13']")
+	private WebElement applyOneLayoutToAllProfiles;
+
+	public WebElement getApplyOneLayoutToAllProfiles(int timeOut) {
+		return isDisplayed(driver, applyOneLayoutToAllProfiles, "Visibility", timeOut, "Select Page Layout");
+	}
+	
 }
