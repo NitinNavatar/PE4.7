@@ -1,22 +1,24 @@
 package com.navatar.scripts;
+
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
 import static com.navatar.generic.ExcelUtils.*;
 import java.util.List;
-
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
 import com.navatar.generic.BaseLib;
-import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.EnumConstants.AttendeeLabels;
+import com.navatar.generic.EnumConstants.Buttons;
 import com.navatar.generic.EnumConstants.ContactPagePhotoActions;
 import com.navatar.generic.EnumConstants.CreationPage;
 import com.navatar.generic.EnumConstants.IconType;
+import com.navatar.generic.EnumConstants.InstitutionPageFieldLabelText;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.PageLabel;
+import com.navatar.generic.EnumConstants.PageName;
+import com.navatar.generic.EnumConstants.PermissionType;
 import com.navatar.generic.EnumConstants.RelatedTab;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
@@ -38,7 +40,7 @@ import com.navatar.pageObjects.PartnershipsPageBusinessLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
-public class FieldSet extends BaseLib {
+public class Module6 extends BaseLib {
 	
 	
 	
