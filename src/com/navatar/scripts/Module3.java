@@ -8348,7 +8348,7 @@ public class Module3 extends BaseLib {
 		String expecedHeader="New Task: ";
 		String actualHeader="";
 
-		for (int i = 0; i < navigationLabels.length(); i++) {
+		for (int i = 0; i < navigationLabel.length; i++) {
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
 				log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
 				navigationLabelValue=navigationLabel[i];
@@ -8358,20 +8358,21 @@ public class Module3 extends BaseLib {
 					ThreadSleep(5000);
 					ele=npbl.getnavigationPopUpHeader(projectName, 10);
 					if (ele!=null) {
-						expecedHeader=expecedHeader+recordTypeArray[i];
-						ele.getText().trim();
 						log(LogStatus.INFO, "PopUp is open" , YesNo.No);
+						expecedHeader=expecedHeader+recordTypeArray[i];
+						actualHeader=ele.getText().trim();
 						if (ele.getText().trim().equals(expecedHeader)) {
+							log(LogStatus.INFO, "Header Text verified : "+expecedHeader, YesNo.Yes);
 							
 						} else {
-
+							log(LogStatus.ERROR, "Header Text not verified Actual : "+actualHeader+" \t Expected : "+expecedHeader, YesNo.Yes);
+							sa.assertTrue(false, "Header Text not verified Actual : "+actualHeader+" \t Expected : "+expecedHeader);
 						}
 
 					} else {
 						log(LogStatus.ERROR, "No PopUp is open so cannoy verify Heading "+expecedHeader, YesNo.Yes);
 						sa.assertTrue(false, "No PopUp is open so cannoy verify Heading "+expecedHeader);
 					}
-					System.err.println("<<<<"+ele.getText().trim()+">>>");
 					} else {
 					log(LogStatus.ERROR, "Not Able to Click on "+parentLabel+"/"+navigationLabelValue, YesNo.Yes);
 					sa.assertTrue(false,"Not Able to Click on "+parentLabel+"/"+navigationLabelValue);
@@ -8382,6 +8383,8 @@ public class Module3 extends BaseLib {
 				log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+parentLabel+"/"+navigationLabelValue, YesNo.Yes);
 				sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+parentLabel+"/"+navigationLabelValue);
 			}
+			refresh(driver);
+			expecedHeader="New Task: ";
 		}
 		switchToDefaultContent(driver);
 		lp.CRMlogout();
