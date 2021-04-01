@@ -12,7 +12,7 @@ import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.scripts.Module5;
-import com.navatar.scripts.Module6;
+import com.navatar.scripts.Module1;
 import com.navatar.scripts.Module2;
 import com.navatar.scripts.Module3;
 import com.navatar.scripts.Module4;
@@ -477,7 +477,7 @@ public class CommonVariables {
 			TWTaskCR1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask8", excelLabel.Subject);
 			TWTaskUpdateLabelSubject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask9", excelLabel.Subject);
 			
-		}else if(obj instanceof Module6){
+		}else if(obj instanceof Module1){
 			
 			ToggleOpenQA1ID=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Request_Tracker_ID);
 			ToggleOpenQA1RequestedDate=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Date_Requested);;
