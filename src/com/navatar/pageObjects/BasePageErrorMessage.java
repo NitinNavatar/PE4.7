@@ -64,6 +64,8 @@ public interface BasePageErrorMessage {
 	public String UpcomingTaskMsg3="You have an upcoming Task";
 	public String UpcomingTaskMsg4="has an upcoming Task about";
 	public String AmericaLosAngelesTimeZone="America/Los_Angeles";
+	public String NewZealandTimeZone="Pacific/Auckland";
+	
 	public static String defaultPhotoText="standard";
 
 	public static String defaultPhotoTextForAdminPhoto="profilephoto";

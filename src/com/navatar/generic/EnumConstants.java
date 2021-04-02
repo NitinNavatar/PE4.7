@@ -41,7 +41,7 @@ public class EnumConstants {
 		, Pipeline_Name, Company_Name, Stage, Source, Source_Firm, Source_Contact, Deal_Type, Employees, Website, Email, Legal_Name, Name, Investment_Size, Log_In_Date, Our_Role, Last_Name, Last_Stage_Change_Date, Highest_Stage_Reached, Age_of_Current_Stage, Date_Stage_Changed, Changed_Stage, Age, First_Stage_Changed, Second_Stage_Changed, Office_Location_Name, State_Province, ZIP, Organization_Name, Primary, Updated_Primary, Start, Related_To, Due_Date,Investment_Likely_Amount,Total_Fundraising_Contacts,Fundraising_Contact_ID,Fundraising,Role, Other_Address,
 		Mailing_Address,Total_Commitments,Commitment_Amount,Partner_Type,Tax_Forms,Final_Commitment_Date,Company,Bank_Name,Placement_Fee,Fund_Investment_Category,Total_CoInvestment_Commitments,Total_Fund_Commitments, Institution_Type, Fund_Preferences, Industry_Preferences, Shipping_Street, Shipping_City, Shipping_State, Shipping_Zip, Shipping_Country, Mobile_Phone, Assistant, Asst_Phone, Phone,Total_Call_Amount_Received, Total_Amount_Called,Total_Amount_Received,Total_Uncalled_Amount,Total_Commitment_Due,Commitment_Called,Called_Due,Preferred_Mode_of_Contact,Percent, 
 		Parent_Field_Name,Override_Label,APIName,FieldOrder,URL,Region,Industry,Attendee_Staff,Marketing_Event,Notes,DTID,Member,File,
-		TotalCommitment, Priority, Project_Type, Project_Name, Task_Name, Status, Fund_InvestmentCategory,Comment, Updated_Priority, Updated_Subject, Updated_Comment, Start_Date, End_Date, Data_Type, Field_Label, Length, Decimal_Places, Options, Deal_Name, SDG_Name, sObjectName, SDG_Tag, Object_Name, Field_Set_Label, NameSpace_PreFix, Fields_Name, Toggle_Button, Request, Date_Requested, Request_Tracker_ID, Marketing_Event_Name, Date, TabName, Item, RelatedTab, ToggleButton, Column_Name1, Column_Name2,Field_Type, FieldLabel_SubString, ExtraFieldsName, Column_Name, Navigation_Label_Name, Redirection_Label_Name, Update_Navigation_Label_Name, Updated_Order, Parent, Navigation_Label_With_Parent, List_View_Object, List_View_Name, Action_Object, Coverage_Name;
+		TotalCommitment, Priority, Project_Type, Project_Name, Task_Name, Status, Fund_InvestmentCategory,Comment, Updated_Priority, Updated_Subject, Updated_Comment, Start_Date, End_Date, Data_Type, Field_Label, Length, Decimal_Places, Options, Deal_Name, SDG_Name, sObjectName, SDG_Tag, Object_Name, Field_Set_Label, NameSpace_PreFix, Fields_Name, Toggle_Button, Request, Date_Requested, Request_Tracker_ID, Marketing_Event_Name, Date, TabName, Item, RelatedTab, ToggleButton, Column_Name1, Column_Name2,Field_Type, FieldLabel_SubString, ExtraFieldsName, Column_Name, Navigation_Label_Name, Redirection_Label_Name, Update_Navigation_Label_Name, Updated_Order, Parent, Navigation_Label_With_Parent, List_View_Object, List_View_Name, Action_Object, Coverage_Name,Action_Order,Event,Event_Payload,Action_Type;
 
 
 };
@@ -59,7 +59,7 @@ public class EnumConstants {
 	}
 	
 	public static enum accessType {
-		InternalUserAccess, AdminUserAccess;
+		InternalUserAccess, AdminUserAccess,ExternalUserAccess;
 	}
 
 	public static enum userType {
@@ -134,7 +134,7 @@ public class EnumConstants {
 	public static enum PageName{
 		FundsPage,InstitutionsPage,CommitmentsPage,HomePage,NavatarInvestorManager,ManageFolderPopUp,ManageApprovalsPopUp,ProjectDetailsPoPUp,NavatarInvestorAddOnsPage,NewProjectPopUp,PipelineCustomPage
 		,CompanyPage,CreateFundraisingPage,CreateCommitmentFundType,CreateCommitmentCoInvestmentType,FundraisingPage,PartnershipsPage, DealPage,TaskRayPage, LimitedPartnerPage, BuildStep2Of3,PipelinesPage,NewTaskPage,
-	CRMUserPage,   TaskPage, NewTaskPopUP,TestCustomObjectPage, NewEventPopUp,ActivitiesOrMeetings,SearchActivitiesAttachment,EmailUploadPage,Object1Page,Object1PagePopup,Object2Page,Object3Page,Object4Page,ListEmail,CompactLayout, MeetingType, AddPickListMeetingType,ActivityLayoutPage, Object5Page,AccountCustomFieldStatusPage,SDGPage;
+	CRMUserPage,   TaskPage, NewTaskPopUP,TestCustomObjectPage, NewEventPopUp,ActivitiesOrMeetings,SearchActivitiesAttachment,EmailUploadPage,Object1Page,Object1PagePopup,Object2Page,Object3Page,Object4Page,ListEmail,CompactLayout, MeetingType, AddPickListMeetingType,ActivityLayoutPage, SDGPage,Object5Page,AccountCustomFieldStatusPage,MEPageFromCalender,SharingSettingsPage;
 
 
 
@@ -291,7 +291,7 @@ public class EnumConstants {
 			public String toString() {
 				return "Lightning App Builder";
 			}
-		}, Profiles, Custom_Object, Tabs, Create, Flows, Users
+		}, Profiles, Custom_Object, Tabs, Create, Flows, Users,Sharing_Settings
 	};
 
 	
@@ -484,7 +484,7 @@ public static enum PermissionType{
 		};
 	}
 	public static enum SDGLabels{
-		APIName,Override_Label,FieldOrder,Parent_Field_Name,URL;
+		APIName,Override_Label,FieldOrder,Parent_Field_Name,URL,Actions;
 	}
 	
 	public static enum AttendeeLabels {
@@ -881,7 +881,7 @@ public static enum PermissionType{
 				public String toString() {
 					return "New Task with Multiple Associations";
 				}
-			}, Contact_Transfer,Change_Date,Change_Priority,Change_Status,Edit_Comments
+			}, Contact_Transfer,Change_Date,Change_Priority,Change_Status,Edit_Comments,New_Attendee,New
 			};
 		
 	public static enum IndiviualInvestorSectionsName{
@@ -1041,7 +1041,7 @@ public static enum PermissionType{
 			public String toString() {
 				return "Tasks: Completed";
 			}
-		},Company 
+		},Company,Contact 
 	};
 	
 	public static enum ProjectName{
@@ -1267,7 +1267,7 @@ public static enum PermissionType{
 			@Override
 			public String toString() {
 				return "Start Date/Time";
-			}},Title_Highlight_Color,Filter,Onclick_Title;
+			}},Title_Highlight_Color,Filter,Onclick_Title,Calendar_Filter_1,Calendar_Filter_2,Calendar_Filter_3;
 	}
 	public static enum ContactPagePhotoActions{
 		Update_Photo,Delete_Photo;
@@ -1306,9 +1306,13 @@ public static enum PermissionType{
 	}
 	
 	public static enum AppName {
-		Files,PE,Navatar
+		Files,PE,Navatar;
 	}
 	public static enum CalenderButton{
-		Month,Day,Year,Week
+		Month,Day,Year,Week,next,prev;
 	}
+	public static enum SDGActionsCreationLabel{
+		Name,Event,Action_Order,Action_Type,Event_Payload;
+    };
+    
 }

@@ -53,5 +53,21 @@ public class SDGPage extends BasePageBusinessLayer {
 		
 		
 	}
+	@FindBy(xpath = "//span[text()='More options']/..")
+	private WebElement moreOptionsButton;
+	public WebElement getmoreOptionsButton(String projectName,int timeOut) {
+		return isDisplayed(driver, moreOptionsButton, "Visibility", timeOut, "more Options Button");
+	}
+	public WebElement getSDGValue(String projectName,String header,String value,int timeOut) {
+		
+		String xpath ="//div//h2//a[text()='"+header+"']/../../../../../following-sibling::*//table//*[text()='"+value+"']";
+		WebElement ele = FindElement(driver, xpath,value , action.SCROLLANDBOOLEAN, timeOut);
+		scrollDownThroughWebelement(driver, ele, value);
+		ele = isDisplayed(driver, ele, "Visibility", timeOut, value);
+		return isDisplayed(driver, ele, "Visibility", timeOut,value);
+		
+		
+	}
+	
 	
 }

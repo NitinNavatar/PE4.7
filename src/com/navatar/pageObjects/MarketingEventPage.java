@@ -33,7 +33,15 @@ public class MarketingEventPage extends BasePageBusinessLayer {
 	public WebElement getOrganizerName(String projectName,int timeOut) {
 		return isDisplayed(driver, organizer, "Visibility", timeOut, "Organizer Name");
 	}
-	
+	@FindBy(xpath="//*[text()='Organizer']/../following-sibling::div//input[contains(@placeholder,'Search Entities')]")
+	private WebElement organizerForCalender;
+
+	/**
+	 * @return the organizer
+	 */
+	public WebElement getOrganizerNameForCalender(String projectName,int timeOut) {
+		return isDisplayed(driver, organizerForCalender, "Visibility", timeOut, "Organizer Name");
+	}
 	@FindBy(xpath="//*[text()='Marketing Event Name']/following-sibling::div//input")
 	private WebElement marketingEventTextBox;
 	
@@ -43,7 +51,15 @@ public class MarketingEventPage extends BasePageBusinessLayer {
 	public WebElement getMarketingEventTextBox(String projectName,int timeOut) {
 		return isDisplayed(driver, marketingEventTextBox, "Visibility", timeOut, "Marketing Name");
 		} 
+	@FindBy(xpath="//*[text()='Marketing Event Name']/../following-sibling::input")
+	private WebElement marketingEventTextBoxForCalender;
 	
+	/**
+	 * @return the marketingEventTextBox
+	 */
+	public WebElement getMarketingEventTextBoxForCalender(String projectName,int timeOut) {
+		return isDisplayed(driver, marketingEventTextBoxForCalender, "Visibility", timeOut, "Marketing Name");
+		} 
 	@FindBy(xpath="//span[@class='custom-truncate uiOutputText']")
 	private WebElement marketingEventHeader;
 	

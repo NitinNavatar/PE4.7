@@ -44,15 +44,17 @@ public class SetupPageBusinessLayer extends SetupPage {
 	 */
 	public boolean searchStandardOrCustomObject(String environment, String mode, object objectName) {
 		String index="[1]";
+		String o=objectName.toString().replace("_", " ");
 		if (objectName==object.Global_Actions || objectName==object.Activity_Setting || objectName==object.App_Manager
-				|| objectName==object.Lightning_App_Builder || objectName==object.Profiles || objectName==object.Tabs ||  objectName==object.Users) {
+				|| objectName==object.Lightning_App_Builder || objectName==object.Profiles || objectName==object.Tabs ||  objectName==object.Users||  objectName==object.Sharing_Settings) {
 			if (objectName==object.Global_Actions || objectName==object.Tabs ||  objectName==object.Users) {
 				index="[2]";	
 			}
 			ThreadSleep(3000);
-			if (sendKeys(driver, getQucikSearchInSetupPage(10), objectName.toString(),objectName.toString(), action.BOOLEAN)) {
+			if (sendKeys(driver, getQucikSearchInSetupPage(10), o,o, action.BOOLEAN)) {
+				
 				ThreadSleep(2000);
-				if (click(driver, FindElement(driver, "(//mark[text()='"+objectName.toString()+"'])"+index,objectName.toString(), 
+				if (click(driver, FindElement(driver, "(//mark[text()='"+o+"'])"+index,objectName.toString(), 
 						action.BOOLEAN, 10), objectName.toString(), action.BOOLEAN)) {
 					return true;
 				}
@@ -1624,6 +1626,19 @@ public boolean clickOnEditBtnForCRMUser(WebDriver driver,String userLastName,Str
 		appLog.info("Element is not present");
 	}
 	return flag;
+}
+
+public WebElement selectObjectDropdownOnSharingSettings(String projectName, String object,accessType at) {
+	object=object.replace("_", " ");
+	int i=0;
+	if (at==accessType.InternalUserAccess)
+		i=1;
+	else if(at==accessType.ExternalUserAccess)
+		i=2;
+	String xpath = "(//*[text()='"+object+"']/following-sibling::*//select)["+i+"]";
+	WebElement ele=FindElement(driver, xpath,"dropdown", action.SCROLLANDBOOLEAN, 10);
+	return isDisplayed(driver, ele, "visibility", 10, "dropdown");
+	
 }
 
 }

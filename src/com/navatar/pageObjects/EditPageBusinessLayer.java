@@ -392,4 +392,15 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		 }
 		return flag;
 	}
+
+	public boolean clickOnCalenderEditPage(String projectName) {
+		String xpath = "//button[text()='Their Events']/../../../../../preceding-sibling::div";
+		WebElement ele=FindElement(driver, xpath, "accordian", action.BOOLEAN, 10);
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		js.executeScript("return arguments[0].setAttribute('class','flexipageEditorNode flexipageEditorElement flexipageEditorComponent sf-interactions-liveSelected sf-interactions-proxyToolboxVisible')", ele);
+		clickUsingJavaScript(driver, ele, "calender move component");
+		
+		return true;
+	}
+		
 }

@@ -2063,10 +2063,82 @@ public class Module4 extends BaseLib{
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-
 	@Parameters({ "projectName"})
 	@Test
-	public void M4tc025_VerifyAddingContactImageInSDG(String projectName) {
+	public void M4tc025_1_Precondition(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		WebElement ele=null;
+		String parentWindow=null;
+		String contactHeader=ip.getTabName(projectName,TabName.Object2Tab);
+		String fieldValues[]={SDGActionsCreationLabel.Name.toString()+breakSP+M4SDGAction2Name,SDGActionsCreationLabel.Action_Order.toString()+breakSP+M4SDGAction2Order,
+				SDGActionsCreationLabel.Event.toString()+breakSP+M4SDGAction2Event,SDGActionsCreationLabel.Event_Payload.toString()+breakSP+M4SDGAction2EventPayload,
+				SDGActionsCreationLabel.Action_Type+breakSP+M4SDGAction2Type
+				};
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
+
+				ele=ip.returnAccordionViewDetailsLink(projectName, contactHeader);
+				if (click(driver, ele, "accordion view details", action.SCROLLANDBOOLEAN)) {
+					ele=ip.accordionSDGButtons(projectName, ip.getTabName(projectName, TabName.Object2Tab),ToggleButtonGroup.SDGButton , action.BOOLEAN, 10);
+					if (click(driver, ele, "sdp setup button", action.SCROLLANDBOOLEAN)) {
+						parentWindow=switchOnWindow(driver);
+						if (parentWindow!=null) {
+							ele=ip.getRelatedTab(projectName, RelatedTab.Related.toString(), 10);
+							if (click(driver, ele, "related", action.BOOLEAN)) {
+								ele=ip.sdgButtons(projectName, SDGLabels.Actions.toString(), "New", 10);
+								if(click(driver,ele, "new action",  action.SCROLLANDBOOLEAN)) {
+									ip.createSDGAction(projectName, fieldValues);
+									ThreadSleep(5000);
+									click(driver, ip.getactionsSDGRefresh(projectName, 10), "refresh", action.SCROLLANDBOOLEAN);
+									if (sdg.getSDGValue(projectName, "Actions",M4SDGAction2Name , 10)!=null) {
+										log(LogStatus.INFO,"successfully verified new actions link on sdg",YesNo.No);
+
+									}else {
+										log(LogStatus.SKIP,"could not verify new action created",YesNo.Yes);
+										sa.assertTrue(false, "could not verify new action created");
+									}
+								}else {
+									log(LogStatus.SKIP,"new actions button is not cilckable",YesNo.Yes);
+									sa.assertTrue(false, "new actions button is not cilckable");
+								}
+							}else {
+								log(LogStatus.SKIP,"related tab is not clickable",YesNo.Yes);
+								sa.assertTrue(false, "related tab is not clickable");
+							}
+							driver.close();
+							driver.switchTo().window(parentWindow);
+						}else {
+							log(LogStatus.SKIP,"not found new window to switch",YesNo.Yes);
+							sa.assertTrue(false, "not found new window to switch");
+						}
+					}else {
+						log(LogStatus.SKIP,"sdg setup btton is not clickable",YesNo.Yes);
+						sa.assertTrue(false, "sdg setup btton is not clickable");
+					}
+				}else {
+					log(LogStatus.SKIP,"view details link is not clickable",YesNo.Yes);
+					sa.assertTrue(false, "view details link is not clickable");
+				}
+			}else {
+				log(LogStatus.SKIP,M4Ins1+" entity is not found on entity tab",YesNo.Yes);
+				sa.assertTrue(false, M4Ins1+" entity is not found on entity tab");
+			}
+		}else {
+			log(LogStatus.SKIP,"entity tab is not clickable",YesNo.Yes);
+			sa.assertTrue(false, "entity tab is not clickable");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc025_2_VerifyAddingContactImageInSDG(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -2534,11 +2606,11 @@ public class Module4 extends BaseLib{
 		String contactHeader=ip.getTabName(projectName,TabName.Object2Tab);
 		String contact=M4Contact2FName+" "+M4Contact2LName;
 		String parentID=null;
-
+		boolean flag=true;
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1,10)) {
-				appLog.error(">>>>");sc.next();ele=ip.returnAccordionViewDetailsLink(projectName, contactHeader);
+				ele=ip.returnAccordionViewDetailsLink(projectName, contactHeader);
 				if (click(driver, ele, "view details link", action.SCROLLANDBOOLEAN)) {
 					if (ip.clickOnEditButtonOnSDG(projectName, contact, EditPageLabel.Title.toString(), 10)) {
 						appLog.error(">>>>");
@@ -2572,7 +2644,7 @@ public class Module4 extends BaseLib{
 						click(driver, ele, "checkbox", action.SCROLLANDBOOLEAN);
 						click(driver, ele, "checkbox", action.SCROLLANDBOOLEAN);
 						if (click(driver, ip.getsdgSaveButton(projectName,10), "save", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.ERROR, "successfully clicked on save button", YesNo.Yes);
+							log(LogStatus.INFO, "successfully clicked on save button", YesNo.No);
 
 						}else {
 							log(LogStatus.ERROR, "could not click on save button", YesNo.Yes);
@@ -2582,17 +2654,39 @@ public class Module4 extends BaseLib{
 						log(LogStatus.ERROR, "could not click on edit button", YesNo.Yes);
 						sa.assertTrue(false,"could not click on edit button" );
 					}
+					if (ip.clickOnShowMoreActionDownArrow(projectName, PageName.SDGPage, ShowMoreActionDropDownList.New, 10)) {
+						log(LogStatus.INFO, "successfully clicked on new button", YesNo.No);
+					}
+					else {
+						ele=ip.accordionSDGActionButtons(projectName, contactHeader, "New", action.SCROLLANDBOOLEAN, 10);
+						if (click(driver, ele, "new", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "successfully clicked on new button", YesNo.Yes);
 
-					ele=ip.accordionSDGActionButtons(projectName, contactHeader, "New", action.SCROLLANDBOOLEAN, 10);
-					if (click(driver, ele, "new", action.SCROLLANDBOOLEAN)) {
-						if (sendKeys(driver, cp.getContactFirstName(projectName, 60), M4Contact8FName, "Contact first Name",
+						}
+						else {
+							log(LogStatus.ERROR, "could not click on new button on sdg", YesNo.Yes);
+							sa.assertTrue(false,"could not click on new button on sdg" );
+							flag=false;
+						}
+					}
+					if (flag) {
+					if (sendKeys(driver, cp.getContactFirstName(projectName, 60), M4Contact8FName, "Contact first Name",
 								action.BOOLEAN)) {
 							if (sendKeys(driver, cp.getContactLastName(projectName, 60), M4Contact8LName, "Contact Last Name",
 									action.BOOLEAN)) {
 								if (sendKeys(driver, cp.getcontactTitle(projectName, 10), M4Contact8Title, "title", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "passed value "+M4Contact8Title+" to title", YesNo.No);
 									if (click(driver, ip.getNavigationTabSaveBtn(projectName, 10), "save", action.SCROLLANDBOOLEAN)) {
-
+										ThreadSleep(2000);
+										refresh(driver);
+										ThreadSleep(2000);
+										if(cp.verifyCreatedItemOnPage(Header.Contact, M4Contact8FName+" "+M4Contact8LName)!=null) {
+											log(LogStatus.INFO, "successfully verified contact is created", YesNo.No);
+											
+										}else {
+											log(LogStatus.ERROR, "could not verify contact created", YesNo.No);
+											BaseLib.sa.assertTrue(false,"could not verify contact created" );
+										}
 									}else {
 										log(LogStatus.ERROR, "could not click on save button, so cannot create contact from sdg", YesNo.No);
 										BaseLib.sa.assertTrue(false,"could not click on save button, so cannot create contact from sdg" );
@@ -2610,7 +2704,9 @@ public class Module4 extends BaseLib{
 							log(LogStatus.ERROR, "could not pass value "+M4Contact8FName+" to first name", YesNo.Yes);
 							BaseLib.sa.assertTrue(false,"could not pass value "+M4Contact8FName+" to first name" );
 						}
-						click(driver, ip.accordionModalWindowClose(projectName, contactHeader), "cross icon", action.BOOLEAN);
+					}else {
+						log(LogStatus.ERROR, "could not click on new button", YesNo.Yes);
+						sa.assertTrue(false,"could not click on new button" );
 					}
 				}else {
 					log(LogStatus.ERROR, "could not click on view details link", YesNo.Yes);
@@ -3155,10 +3251,61 @@ public class Module4 extends BaseLib{
 		sa.assertAll();
 	}
 
-	
 	@Parameters({ "projectName"})
 	@Test
-	public void M4tc035_AddFullCalenderOnInstPage(String projectName) {
+	public void M4tc035_1_CalenderPrecondition(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		WebElement ele=null;
+		String sdgEvent="InternalEventInvitees";
+		String contact=M4Contact2FName+" "+M4Contact2LName;
+		String parentID=null;
+		String field=ExcelUtils.readData(phase1DataSheetFilePath,"Fields",excelLabel.Variable_Name,"AFIeld1", excelLabel.APIName);
+		String fieldValues[]={SDGActionsCreationLabel.Name.toString()+breakSP+M4SDGAction1Name,SDGActionsCreationLabel.Action_Order.toString()+breakSP+M4SDGAction1Order,
+				SDGActionsCreationLabel.Event.toString()+breakSP+M4SDGAction1Event,SDGActionsCreationLabel.Event_Payload.toString()+breakSP+M4SDGAction1EventPayload,
+				SDGActionsCreationLabel.Action_Type+breakSP+M4SDGAction1Type
+				};
+		lp.CRMLogin(superAdminUserName, adminPassword, SDG);
+		String DropComponentName="Fullcalender";
+		if (ip.clickOnTab(projectName, TabName.SDGTab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.SDGTab, sdgEvent, 10)) {
+			ele=ip.getRelatedTab(projectName, RelatedTab.Related.toString(), 10);
+			if (click(driver, ele, "related", action.BOOLEAN)) {
+				ele=ip.sdgButtons(projectName, SDGLabels.Actions.toString(), "New", 10);
+				if(click(driver,ele, "new action",  action.SCROLLANDBOOLEAN)) {
+					ip.createSDGAction(projectName, fieldValues);
+					ThreadSleep(5000);
+					click(driver, ip.getactionsSDGRefresh(projectName, 10), "refresh", action.SCROLLANDBOOLEAN);
+				}else {
+					log(LogStatus.SKIP,"new actions button is not cilckable",YesNo.Yes);
+					sa.assertTrue(false, "new actions button is not cilckable");
+				}
+			}else {
+				log(LogStatus.SKIP,"related tab is not clickable",YesNo.Yes);
+				sa.assertTrue(false, "related tab is not clickable");
+			}
+			}else {
+				log(LogStatus.SKIP,sdgEvent+" sdg is not found",YesNo.Yes);
+				sa.assertTrue(false,sdgEvent+ " sdg is not found");
+			}
+		}else {
+			log(LogStatus.SKIP,"SDG tab is not clickable",YesNo.Yes);
+			sa.assertTrue(false, "SDG tab is not clickable");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc035_2_AddFullCalenderOnInstPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -3429,6 +3576,160 @@ public class Module4 extends BaseLib{
 	}
 	@Parameters({ "projectName"})
 	@Test
+	public void M4tc039_VerifyClickingOnEventRedirectToAppPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		MarketingEventPageBusinessLayer me = new MarketingEventPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		AttendeePageBusinessLayer ap = new AttendeePageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String date=previousOrForwardDate(2, "M/d/YYYY");
+		WebElement ele=null;
+		String parentID=null;
+		String xpath = "";
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
+					ele=ip.getRelatedTab(projectName, RelatedTab.Events.toString(), 10);
+					if (click(driver, ele, "events tab", action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(3000);
+						String monthAndYear=findMonthNameAndYear(date);
+						if (ip.reachToDesiredMonthOnCalnder(projectName, monthAndYear)) {
+							log(LogStatus.INFO, "successfully reached to desired month on calender", YesNo.No);
+							
+							int loc=ip.findLocationOfDate(projectName, date.split("/")[1]);
+							ele=ip.getEventPresentOnCalender(projectName, date.split("/")[1], loc,7);
+								if (ele!=null) {
+									if (click(driver, ele,M4MarketingEvent2Name, action.SCROLLANDBOOLEAN)) {
+										parentID=switchOnWindow(driver);
+										if (parentID!=null) {
+											ThreadSleep(5000);
+											if (ip.clickOnShowMoreActionDownArrow(projectName, PageName.SDGPage, ShowMoreActionDropDownList.New_Attendee, 10)) {
+												if (sendKeys(driver, me.getAttendeeStaffTextBoxe(projectName, 10), crmUser1FirstName+" "+crmUser1LastName, crmUser1FirstName+" "+crmUser1LastName,action.SCROLLANDBOOLEAN)) {
+													ThreadSleep(1000);
+													log(LogStatus.INFO,"Able to send "+crmUser1FirstName+" "+crmUser1LastName,YesNo.Yes);
+													if (click(driver,FindElement(driver,"//span[contains(@class,'listbox')]//*[@title='"+crmUser1FirstName+" "+crmUser1LastName+"']","ATTENDEE Name List", action.SCROLLANDBOOLEAN, 30),
+															crmUser1FirstName+" "+crmUser1LastName, action.SCROLLANDBOOLEAN)) {
+														log(LogStatus.INFO,"Able to select "+crmUser1FirstName+" "+crmUser1LastName,YesNo.No);
+													} else {
+														sa.assertTrue(false,"Not Able to select "+crmUser1FirstName+" "+crmUser1LastName);
+														log(LogStatus.SKIP,"Not Able to select "+crmUser1FirstName+" "+crmUser1LastName,YesNo.Yes);
+													}
+
+												} else {
+													sa.assertTrue(false,"Not Able to send "+crmUser1FirstName+" "+crmUser1LastName);
+													log(LogStatus.SKIP,"Not Able to send "+crmUser1FirstName+" "+crmUser1LastName,YesNo.Yes);
+												}
+												String label="status",value=M4Attendee10Status;
+												if (click(driver, me.getStatus(projectName, 10), label, action.SCROLLANDBOOLEAN)) {
+													ThreadSleep(2000);
+													log(LogStatus.INFO,"Able to Click on "+label,YesNo.No);
+
+													xpath="//span[@title='"+value+"']";
+													ele = FindElement(driver,xpath, value,action.SCROLLANDBOOLEAN, 10);
+													ThreadSleep(2000);
+													if (click(driver, ele, value, action.SCROLLANDBOOLEAN)) {
+														log(LogStatus.INFO,"Able to select "+value+" to label : "+label,YesNo.No);	
+													} else {
+														sa.assertTrue(false,"Not Able to select "+value+" to label : "+label);
+														log(LogStatus.SKIP,"Not Able to select "+value+" to label : "+label,YesNo.Yes);
+													}
+
+												} else {
+													sa.assertTrue(false,"Not Able to Click on "+label);
+													log(LogStatus.SKIP,"Not Able to Click on "+label,YesNo.Yes);
+												}
+												ele=ap.labelTextBox(projectName,AttendeeLabels.Marketing_Event.toString(), 60);
+												if (sendKeys(driver, ele, M4MarketingEvent2Name, "event textbox", action.BOOLEAN)){
+													xpath="//li//span[@title='"+M4MarketingEvent2Name+"']";
+													ThreadSleep(3000);
+													ele = FindElement(driver, xpath, "marketingEvent", action.SCROLLANDBOOLEAN, 10);
+													ele=isDisplayed(driver, ele, "visibility", 10, "marketing event");
+													if (clickUsingJavaScript(driver, ele, "marketing event", action.SCROLLANDBOOLEAN)) {
+														log(LogStatus.INFO,"marketingEvent Label prefilled with value : ",YesNo.No);	
+													} else {
+														sa.assertTrue(false,"could not select marketing event");
+														log(LogStatus.SKIP,"could not select marketing event",YesNo.Yes);
+													}
+
+												}else {
+													sa.assertTrue(false,"could not select marketing event");
+													log(LogStatus.SKIP,"could not select marketing event",YesNo.Yes);
+												}
+													
+												ele=ip.getCustomTabSaveBtn(projectName,10);
+												if (click(driver, ele, value, action.SCROLLANDBOOLEAN)) {
+													log(LogStatus.INFO,"Able to click on save button",YesNo.No);	
+												} else {
+													sa.assertTrue(false,"Not Able to click on save button ");
+													log(LogStatus.SKIP,"Not Able to click on save button ",YesNo.Yes);
+												}
+											}else {
+												sa.assertTrue(false,"not able to select dropdown");
+												log(LogStatus.SKIP,"not able to select dropdown",YesNo.Yes);
+											}
+											ThreadSleep(4000);
+												driver.close();
+												driver.switchTo().window(parentID);
+										}else {
+											sa.assertTrue(false,"could not find new window to switch");
+											log(LogStatus.SKIP,"could not find new window to switch",YesNo.Yes);
+										}
+									}else {
+										log(LogStatus.ERROR, "could not click on event name on calender", YesNo.Yes);
+										sa.assertTrue(false,"could not click on event name on calender" );
+									}
+									
+									ele=ip.getEventPresentOnCalender(projectName, date.split("/")[1], loc,7);
+									if (click(driver, ele, "event 2", action.BOOLEAN)) {
+										parentID=switchOnWindow(driver);
+										ThreadSleep(4000);
+										if (parentID!=null) {
+										if (sdg.getSDGValue(projectName, "Internal", crmUser1FirstName+" "+crmUser1LastName, 10)!=null) {
+											log(LogStatus.INFO, "successfully verified presence of attendee staff on event sdg"+M4MarketingEvent2Name,YesNo.Yes);
+											
+										}else {
+											log(LogStatus.ERROR, "could not verify presence of attendee staff on event sdg"+M4MarketingEvent2Name,YesNo.Yes);
+											sa.assertTrue(false,"could not verify presence of attendee staff on event sdg"+M4MarketingEvent2Name);
+										}
+										driver.close();
+										driver.switchTo().window(parentID);
+										}else {
+											log(LogStatus.ERROR, "could not find new window to switch, so cannot verify event sdg", YesNo.Yes);
+											sa.assertTrue(false,"could not find new window to switch, so cannot verify event sdg" );
+										}
+									}
+								}else {
+									log(LogStatus.ERROR, "event name should not be present but it is: "+M4MarketingEvent2Name,YesNo.Yes);
+									sa.assertTrue(false,"event name should not be present but it is: "+M4MarketingEvent2Name);
+								}
+						}else {
+							log(LogStatus.ERROR, "could not reach to desired month of event, so cannot verify event", YesNo.Yes);
+							sa.assertTrue(false,"could not reach to desired month of event, so cannot verify event" );
+						}
+					}else {
+						log(LogStatus.ERROR, "events tab is not clickable", YesNo.Yes);
+						sa.assertTrue(false,"events tab is not clickable" );
+					}
+			}else {
+				log(LogStatus.ERROR, M4Ins1+" not found on entity tab", YesNo.Yes);
+				sa.assertTrue(false,M4Ins1+" not found on entity tab" );
+			}
+		}else {
+			log(LogStatus.ERROR, "entity tab is not clickable", YesNo.Yes);
+			sa.assertTrue(false,"entity tab is not clickable" );
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
 	public void M4tc040_CreateEventWithoutOrganizerCalenderOnInstPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3444,9 +3745,6 @@ public class Module4 extends BaseLib{
 		String button="New "+excelLabel.Marketing_Event.toString();
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		WebElement ele=null;
-		String marketingE[][]={{M4MarketingEvent4Name,M4MarketingEvent4RecordType,date,null},
-				{M4MarketingEvent5Name,M4MarketingEvent5RecordType,date2,null}
-		};
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
@@ -3633,16 +3931,12 @@ public class Module4 extends BaseLib{
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
 		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
-		String toggleTab="Upcoming Events",date=previousOrForwardDate(3, "M/d/YYYY");;
+		String date=previousOrForwardDate(3, "M/d/YYYY");;
 		String date2=previousOrForwardMonthAccordingToTimeZone(1, "M/d/YYYY", BasePageErrorMessage.AmericaLosAngelesTimeZone);
-		String button="New "+excelLabel.Marketing_Event.toString();
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		String parentID=null;
 		WebElement ele=null;
 		String head[]={todaysDateSingleDigit.split("/")[2],findMonthNameAndYear(todaysDateSingleDigit),findCurrentWeek("M/d/YYYY",BasePageErrorMessage.AmericaLosAngelesTimeZone),findMonthDateCommaYear(todaysDateSingleDigit)};
-		String marketingE[][]={{M4MarketingEvent4Name,M4MarketingEvent4RecordType,date,null},
-				{M4MarketingEvent5Name,M4MarketingEvent5RecordType,date2,null}
-		};
 		CalenderButton cb[] = {CalenderButton.Year,CalenderButton.Month,CalenderButton.Week,CalenderButton.Day};
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
@@ -3663,28 +3957,29 @@ public class Module4 extends BaseLib{
 					}
 					int i =0;
 					for (CalenderButton button1:cb) {
-						
-					ele=ip.calenderButtons(projectName, button1);
-					if (click(driver, ele, button1+" button", action.BOOLEAN)) {
-						
-						ele=ip.getcalenderHeader(projectName, 10);
-						if (ele!=null) {
-							if (ele.getText().trim().equalsIgnoreCase(head[i])) {
-								log(LogStatus.INFO, "successfully verified "+head[i], YesNo.Yes);
 
-							}else {
-								log(LogStatus.ERROR, "could not verify calender header: expected:"+head[i]+"\nactual: "+ele.getText(), YesNo.Yes);
-								sa.assertTrue(false,"could not verify calender header: expected:"+head[i]+"\nactual: "+ele.getText() );
-							}
-							
-							String xpath = "";
-							if ((i==0)||(i==2)) {
-								xpath = "//div[contains(@class,'Fullcalendar')]//a[text()='"+M4MarketingEvent2Name+"']";
-							}
-							else if(i==1)
-								xpath = "//div[contains(@class,'Fullcalendar')]//a[@title='"+M4MarketingEvent2Name+"']";
-							
-							if ((i==0)||(i==1)||(i==2)) {
+						ele=ip.calenderButtons(projectName, button1);
+						if (click(driver, ele, button1+" button", action.BOOLEAN)) {
+
+							ele=ip.getcalenderHeader(projectName, 10);
+							if (ele!=null) {
+								if (ele.getText().trim().equalsIgnoreCase(head[i])) {
+									log(LogStatus.INFO, "successfully verified "+head[i], YesNo.Yes);
+
+								}else {
+									log(LogStatus.ERROR, "could not verify calender header: expected:"+head[i]+"\nactual: "+ele.getText(), YesNo.Yes);
+									sa.assertTrue(false,"could not verify calender header: expected:"+head[i]+"\nactual: "+ele.getText() );
+								}
+
+								String xpath = "";
+								if ((i==0)||(i==2)) {
+									xpath = "//div[contains(@class,'Fullcalendar')]//a[text()='"+M4MarketingEvent2Name+"']";
+								}
+								else if(i==1)
+									xpath = "//div[contains(@class,'Fullcalendar')]//a[@title='"+M4MarketingEvent2Name+"']";
+								else if(i==3)
+									xpath = "//div[contains(@class,'Fullcalendar')]//a[@title='"+M4MarketingEvent4Name+"']";
+
 								ele=FindElement(driver, xpath, "event name", action.SCROLLANDBOOLEAN, 10);
 								ele=isDisplayed(driver, ele, "visibility", 10, "event name");
 
@@ -3716,16 +4011,15 @@ public class Module4 extends BaseLib{
 									log(LogStatus.ERROR, M4MarketingEvent2Name+" event name could not be found", YesNo.Yes);
 									sa.assertTrue(false,M4MarketingEvent2Name+" event name could not be found" );
 								}
+							}else {
+								log(LogStatus.ERROR, "date header is not present", YesNo.Yes);
+								sa.assertTrue(false,"date header is not present" );
 							}
 						}else {
-							log(LogStatus.ERROR, "date header is not present", YesNo.Yes);
-							sa.assertTrue(false,"date header is not present" );
+							log(LogStatus.ERROR, button1+" button is not present", YesNo.Yes);
+							sa.assertTrue(false,button1+" button is not present" );
 						}
-					}else {
-						log(LogStatus.ERROR, button1+" button is not present", YesNo.Yes);
-						sa.assertTrue(false,button1+" button is not present" );
-					}
-					i++;
+						i++;
 					}
 				}else {
 					log(LogStatus.ERROR, "events tab is not clickable", YesNo.Yes);
@@ -3756,9 +4050,7 @@ public class Module4 extends BaseLib{
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
 		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
-		String toggleTab="Upcoming Events";String twodaysdate=previousOrForwardDate(2, "M/d/YYYY");
-		String date2=previousOrForwardMonthAccordingToTimeZone(1, "M/d/YYYY", BasePageErrorMessage.AmericaLosAngelesTimeZone);
-		String button="New "+excelLabel.Marketing_Event.toString();
+		String twodaysdate=previousOrForwardDate(2, "M/d/YYYY");
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		String parentID=null;
 		WebElement ele=null;
@@ -3851,5 +4143,916 @@ public class Module4 extends BaseLib{
 		lp.CRMlogout();
 		sa.assertAll();
 		}
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc043_VerifyCalenderDateCellbycreatingMultipleEvents(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		MarketingEventPageBusinessLayer me = new MarketingEventPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		String fourdaysdate=previousOrForwardDate(4, "M/d/YYYY");
+		String fivedaysdate=previousOrForwardDate(5, "M/d/YYYY");
+		
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentID=null,name,recordtype, monthAndYear;
+		WebElement ele=null;
+		List<WebElement> li=null;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
+				ele=ip.getRelatedTab(projectName, RelatedTab.Events.toString(), 10);
+				if (click(driver, ele, "events tab", action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(3000);
+					for(int i = 11;i<16;i++) {
+						ThreadSleep(3000);
+						name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME"+i, excelLabel.Marketing_Event_Name);
+						recordtype=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME"+i, excelLabel.Record_Type);
+						
+						monthAndYear=findMonthNameAndYear(fourdaysdate);
+						if (ip.reachToDesiredMonthOnCalnder(projectName, monthAndYear)) {
+							log(LogStatus.INFO, "successfully reached to desired month on calender", YesNo.No);
+							appLog.error(">>>");
+							sc.next();
+							if (me.createMarketingEventFromCalendar(projectName, name,recordtype, "", M4Ins1, 10)) {
+							log(LogStatus.INFO, "successfully created event from sdg", YesNo.No);
+
+							}else {
+								log(LogStatus.ERROR, "could not create ME "+name, YesNo.Yes);
+								sa.assertTrue(false,"could not create ME "+name );
+							}
+
+							
+						}else {
+							log(LogStatus.ERROR, "could not reach to desired month of event, so cannot verify event", YesNo.Yes);
+							sa.assertTrue(false,"could not reach to desired month of event, so cannot verify event" );
+						}
+					}
+					boolean flag=false;
+					String filesName=M4MarketingEvent11Name+","+M4MarketingEvent12Name+","+M4MarketingEvent13Name+","+M4MarketingEvent14Name+","+M4MarketingEvent15Name;
+					ele=ip.plusMoreButtonOnCalendar(projectName, 3, 10);
+					click(driver, ele, "plus button", action.SCROLLANDBOOLEAN);
+					li=ip.getListOfEvents(projectName, findMonthDateCommaYear(fourdaysdate), 7);
+					List<String> check=compareMultipleListOnBasisOfTitle(driver, filesName, li);
+					if (check.size()==0) {
+						log(LogStatus.INFO, "successfully verified all events present on date"+fourdaysdate, YesNo.No);
+						
+					}
+					else {
+						for (int i = 0;i<check.size();i++) {
+							log(LogStatus.ERROR, "not found "+check.get(i), YesNo.No);
+							sa.assertTrue(false,"not found "+check.get(i));
+								
+						}
+					}
+					
+					for(int i = 16;i<20;i++) {
+						ThreadSleep(3000);
+						name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME"+i, excelLabel.Marketing_Event_Name);
+						recordtype=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME"+i, excelLabel.Record_Type);
+						
+						monthAndYear=findMonthNameAndYear(fivedaysdate);
+						if (ip.reachToDesiredMonthOnCalnder(projectName, monthAndYear)) {
+							log(LogStatus.INFO, "successfully reached to desired month on calender", YesNo.No);
+							appLog.error(">>>");
+							sc.next();
+							if (me.createMarketingEventFromCalendar(projectName, name,recordtype, "", M4Ins1, 10)) {
+							log(LogStatus.INFO, "successfully created event from sdg", YesNo.No);
+
+							}else {
+								log(LogStatus.ERROR, "could not create ME "+name, YesNo.Yes);
+								sa.assertTrue(false,"could not create ME "+name );
+							}
+
+							
+						}else {
+							log(LogStatus.ERROR, "could not reach to desired month of event, so cannot verify event", YesNo.Yes);
+							sa.assertTrue(false,"could not reach to desired month of event, so cannot verify event" );
+						}
+					}
+					flag=false;
+					filesName=M4MarketingEvent16Name+","+M4MarketingEvent17Name+","+M4MarketingEvent18Name+","+M4MarketingEvent19Name;
+					ele=ip.plusMoreButtonOnCalendar(projectName, 2, 10);
+					click(driver, ele, "plus button", action.SCROLLANDBOOLEAN);
+					li=ip.getListOfEvents(projectName, findMonthDateCommaYear(fivedaysdate), 7);
+					check.clear();
+					check=compareMultipleListOnBasisOfTitle(driver, filesName, li);
+					if (check.size()==0) {
+						log(LogStatus.INFO, "successfully verified all events present on date"+fivedaysdate, YesNo.No);
+						
+					}
+					else {
+						for (int i = 0;i<check.size();i++) {
+							log(LogStatus.ERROR, "not found "+check.get(i), YesNo.No);
+							sa.assertTrue(false,"not found "+check.get(i));
+								
+						}
+					}
+					
+					
+				}else {
+					log(LogStatus.ERROR, "events related tab is not clickable", YesNo.Yes);
+					sa.assertTrue(false,"events related tab is not clickable" );
+				}
+			}else {
+				log(LogStatus.ERROR, M4Ins1+" entity is not clickable", YesNo.Yes);
+				sa.assertTrue(false,M4Ins1+" entity is not clickable" );
+			}
+		}else {
+			log(LogStatus.ERROR, "entity tab is not clickable", YesNo.Yes);
+			sa.assertTrue(false,"entity tab is not clickable" );
+		}
+		
+		
+		if (ip.clickOnTab(projectName, TabName.Object5Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4MarketingEvent11Name, 10)) {
+				ThreadSleep(3000);
+				if (ip.clickOnShowMoreActionDownArrow(projectName, PageName.Object5Page, ShowMoreActionDropDownList.Edit, 10)) {
+					ele = me.getLabelTextBox(projectName, PageName.Object5Page.toString(), PageLabel.Date.toString(), 10);
+					if (sendKeys(driver,ele, fivedaysdate, fivedaysdate, action.BOOLEAN)) {
+						appLog.info("Successfully Entered value on date TextBox : "+fivedaysdate);		
+						ThreadSleep(1000);
+					
+						if (click(driver, me.getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
+							appLog.info("clicked on save button");
+
+						}else {
+							log(LogStatus.ERROR, "could not click on save button", YesNo.Yes);
+							sa.assertTrue(false,"could not click on save button" );
+						}
+					}else {
+						log(LogStatus.ERROR, "date textbox is not visible", YesNo.Yes);
+						sa.assertTrue(false,"date textbox is not visible" );
+					}
+				}else {
+					log(LogStatus.ERROR, "edit button is not clickable", YesNo.Yes);
+					sa.assertTrue(false,"edit button is not clickable" );
+				}
+		}else {
+			log(LogStatus.ERROR, M4MarketingEvent11Name+" event is not found on events tab", YesNo.Yes);
+			sa.assertTrue(false,M4MarketingEvent11Name+" event is not found on events tab" );
+		}
+	}else {
+		log(LogStatus.ERROR, "marketing events tab is not clickable", YesNo.Yes);
+		sa.assertTrue(false,"marketing events tab is not clickable" );
 	}
+		boolean flag=false;
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
+				ele=ip.getRelatedTab(projectName, RelatedTab.Events.toString(), 10);
+				if (click(driver, ele, "events tab", action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(3000);
+					ele=ip.plusMoreButtonOnCalendar(projectName, 3, 10);
+					click(driver, ele, "plus button", action.SCROLLANDBOOLEAN);
+					li=ip.getListOfEvents(projectName, findMonthDateCommaYear(fivedaysdate), 7);
+					for(WebElement ele1:li) {
+						if(ele1.getAttribute("title").trim().equals(M4MarketingEvent11Name)){
+							log(LogStatus.ERROR, "successfully found "+M4MarketingEvent11Name+" for date "+fivedaysdate, YesNo.No);
+							
+							flag=true;
+							break;
+						}
+							
+					}
+					if(!flag){
+							log(LogStatus.ERROR, "could not find event "+M4MarketingEvent11Name+" for date "+fivedaysdate, YesNo.Yes);
+							sa.assertTrue(false,"could not find event "+M4MarketingEvent11Name+" for date "+fivedaysdate);
+					}
+				}else {
+					log(LogStatus.ERROR, "related events tab is not clickable", YesNo.Yes);
+					sa.assertTrue(false,"related events tab is not clickable" );
+				}
+			}else {
+				log(LogStatus.ERROR, M4Ins1+" entity is not found on entity tab", YesNo.Yes);
+				sa.assertTrue(false,M4Ins1+" entity is not found on entity tab" );
+			}
+		}else {
+			log(LogStatus.ERROR, "entity tab is not clickable", YesNo.Yes);
+			sa.assertTrue(false,"entity tab is not clickable" );
+		}
+		if (ip.clickOnTab(projectName, TabName.Object5Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4MarketingEvent11Name, 10)) {
+				ThreadSleep(3000);
+				if (ip.clickOnShowMoreActionDownArrow(projectName, PageName.Object5Page, ShowMoreActionDropDownList.Delete, 10)) {
+					ele = me.getDeleteButtonPopUp(projectName, 10);
+					if (click(driver,ele, "delete",  action.BOOLEAN)) {
+						appLog.info("Successfully deleted event : "+M4MarketingEvent11Name);		
+						ThreadSleep(1000);
+					
+					}else {
+						log(LogStatus.ERROR, "delete button on popup is not clickable", YesNo.Yes);
+						sa.assertTrue(false,"delete button on popup is not clickable" );
+					}
+				}else {
+					log(LogStatus.ERROR, "delete button is not clickable", YesNo.Yes);
+					sa.assertTrue(false,"delete button is not clickable" );
+				}
+		}else {
+			log(LogStatus.ERROR, M4MarketingEvent11Name+" event is not found on events tab", YesNo.Yes);
+			sa.assertTrue(false,M4MarketingEvent11Name+" event is not found on events tab" );
+		}
+	}else {
+		log(LogStatus.ERROR, "marketing events tab is not clickable", YesNo.Yes);
+		sa.assertTrue(false,"marketing events tab is not clickable" );
+	}
+		flag=true;
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+		if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
+			ele=ip.getRelatedTab(projectName, RelatedTab.Events.toString(), 10);
+			if (click(driver, ele, "events tab", action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(3000);
+				ele=ip.plusMoreButtonOnCalendar(projectName, 2, 10);
+				click(driver, ele, "plus button", action.SCROLLANDBOOLEAN);
+				li=ip.getListOfEvents(projectName, findMonthDateCommaYear(fourdaysdate), 7);
+				for(WebElement ele1:li) {
+					if(ele1.getAttribute("title").trim().equals(M4MarketingEvent11Name)){
+						log(LogStatus.ERROR, "event found "+M4MarketingEvent11Name+" for date "+fivedaysdate+" but it should not be there", YesNo.Yes);
+						sa.assertTrue(false,"event found "+M4MarketingEvent11Name+" for date "+fivedaysdate+" but it should not be there");
+						flag=false;
+						
+						break;
+					}
+						
+				}
+				if(flag){
+					log(LogStatus.INFO, "successfully verified absence of "+M4MarketingEvent11Name, YesNo.Yes);
+					
+				}
+			}else {
+				log(LogStatus.ERROR, "related events tab is not clickable", YesNo.Yes);
+				sa.assertTrue(false,"related events tab is not clickable" );
+			}
+		}else {
+			log(LogStatus.ERROR, M4Ins1+" entity is not found on entity tab", YesNo.Yes);
+			sa.assertTrue(false,M4Ins1+" entity is not found on entity tab" );
+		}
+	}else {
+		log(LogStatus.ERROR, "entity tab is not clickable", YesNo.Yes);
+		sa.assertTrue(false,"entity tab is not clickable" );
+	}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc044_VerifyAddingFilterByEditPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		MarketingEventPageBusinessLayer me = new MarketingEventPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentID=null,value,field, monthAndYear;
+		WebElement ele=null;
+		Actions actions = new Actions(driver);
+		List<WebElement> li=null;
+		String fieldValues[]={EditPageLabel.Calendar_Filter_1.toString()+"<break>"+"Industry_New__c",EditPageLabel.Calendar_Filter_2.toString()+"<break>"+"Status__c",
+				EditPageLabel.Calendar_Filter_3.toString()+"<break>"+"Type__c"
+		};
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
+				if (ep.clickOnEditPageLink()) {
+					log(LogStatus.INFO, "successfully reached edit page", YesNo.No);
+
+					ThreadSleep(3000);
+					switchToFrame(driver, 10, ep.getEditPageFrame(projectName, 10));
+					ele=ep.getRelatedTab(ProjectName.PEEdge.toString(), PageName.Object1Page,RelatedTab.Events, 10);
+					if (click(driver, ele, "events related ", action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(5000);
+						if (ep.clickOnCalenderEditPage(projectName)){
+						ThreadSleep(3000);
+						switchToDefaultContent(driver);
+							for (String fieldValue:fieldValues) {
+								value=fieldValue.split("<break>")[1];
+								field=fieldValue.split("<break>")[0];
+								if(sendKeys(driver, ep.getFieldTextbox(projectName, field, 10), value, field, action.BOOLEAN)) {
+									log(LogStatus.INFO, "field : "+field+", value: "+value, YesNo.No);
+								}else {
+									log(LogStatus.ERROR, "Not able to enter : "+value+" on"+field, YesNo.Yes);
+									sa.assertTrue(false, "Not able to enter : "+value+" on"+field );
+								}
+							}
+							if(click(driver, ep.getCustomTabSaveBtn(projectName, 10), "save button", action.BOOLEAN)) {
+								log(LogStatus.INFO, "clicked on save button", YesNo.No);
+								ThreadSleep(2000);
+								actions.moveToElement(ep.getBackButton(10)).build().perform();
+								ThreadSleep(2000);
+								if(clickUsingJavaScript(driver, ep.getBackButton(10), "back button", action.BOOLEAN)) {
+									log(LogStatus.PASS, "clicked on back button", YesNo.No);
+
+								}else {
+									log(LogStatus.ERROR, "Not able to click on back button so cannot back on page ", YesNo.Yes);
+									sa.assertTrue(false, "Not able to click on back button so cannot back on page ");
+								}
+							}else {
+								log(LogStatus.ERROR, "Not able to click on save button so cannot add filter fields", YesNo.No);
+								sa.assertTrue(false, "Not able to click on save button so cannot add filter fields");
+
+							}
+						}else {
+							log(LogStatus.ERROR, "Not able to find calendar on edit page", YesNo.No);
+							sa.assertTrue(false, "Not able to find calendar on edit page");
+
+						}
+					}else {
+						log(LogStatus.ERROR, "Events related tab is not clickable", YesNo.No);
+						sa.assertTrue(false, "Events related tab is not clickable");
+					}
+				}else {
+					log(LogStatus.ERROR, "edit page link is not clickabl", YesNo.No);
+					sa.assertTrue(false, "edit page link is not clickabl");
+				}
+			}else {
+				log(LogStatus.ERROR, M4Ins1+" entity record is not found", YesNo.No);
+				sa.assertTrue(false, M4Ins1+" entity record is not found");
+			}
+		}else {
+			log(LogStatus.ERROR, "entity tab is not clickable", YesNo.No);
+			sa.assertTrue(false, "entity tab is not clickable");
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc045_VerifyCalenderByChangingTitleHighlightColor(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		MarketingEventPageBusinessLayer me = new MarketingEventPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentID=null,value="", monthAndYear;
+		WebElement ele=null;
+		Actions actions = new Actions(driver);
+		List<WebElement> li=null;
+		String color="RecordType.DeveloperName;Firm_Event:#6464FF";
+		String field=EditPageLabel.Title_Highlight_Color.toString();
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
+				if (ep.clickOnEditPageLink()) {
+					log(LogStatus.INFO, "successfully reached edit page", YesNo.No);
+
+					ThreadSleep(3000);
+					switchToFrame(driver, 10, ep.getEditPageFrame(projectName, 10));
+					ele=ep.getRelatedTab(ProjectName.PEEdge.toString(), PageName.Object1Page,RelatedTab.Events, 10);
+					if (click(driver, ele, "events related ", action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(5000);
+						if (ep.clickOnCalenderEditPage(projectName)){
+						ThreadSleep(3000);
+						switchToDefaultContent(driver);
+						if(sendKeys(driver, ep.getFieldTextbox(projectName, field, 10), color, field, action.BOOLEAN)) {
+							log(LogStatus.INFO, "field : "+field+", value: "+color, YesNo.No);
+						}else {
+							log(LogStatus.ERROR, "Not able to enter : "+color+" on"+field, YesNo.Yes);
+							sa.assertTrue(false, "Not able to enter : "+color+" on"+field );
+						}
+						if(click(driver, ep.getCustomTabSaveBtn(projectName, 10), "save button", action.BOOLEAN)) {
+							log(LogStatus.INFO, "clicked on save button", YesNo.No);
+							ThreadSleep(2000);
+							actions.moveToElement(ep.getBackButton(10)).build().perform();
+							ThreadSleep(2000);
+							if(clickUsingJavaScript(driver, ep.getBackButton(10), "back button", action.BOOLEAN)) {
+								log(LogStatus.PASS, "clicked on back button", YesNo.No);
+
+							}else {
+								log(LogStatus.ERROR, "Not able to click on back button so cannot back on page ", YesNo.Yes);
+								sa.assertTrue(false, "Not able to click on back button so cannot back on page ");
+							}
+						}else {
+							log(LogStatus.ERROR, "Not able to click on save button so cannot add filter fields", YesNo.Yes);
+							sa.assertTrue(false, "Not able to click on save button so cannot add filter fields");
+
+						}
+						}else {
+							log(LogStatus.ERROR, "Not able to click on calender button so cannot check change of colours", YesNo.Yes);
+							sa.assertTrue(false, "Not able to click on calender button so cannot check change of colours");
+
+						}
+					}else {
+						log(LogStatus.ERROR, "Events related tab is not clickable", YesNo.Yes);
+						sa.assertTrue(false, "Events related tab is not clickable");
+
+					}
+					switchToDefaultContent(driver);
+				}else {
+					log(LogStatus.ERROR, "edit page link is not clickable", YesNo.Yes);
+					sa.assertTrue(false, "edit page link is not clickable");
+
+				}
+				
+				ThreadSleep(5000);
+			}else {
+				log(LogStatus.ERROR,M4Ins1+ " is not found on entity page", YesNo.Yes);
+				sa.assertTrue(false,M4Ins1+ " is not found on entity page");
+
+			}
+		}else {
+			log(LogStatus.ERROR, "entity tab is not found", YesNo.Yes);
+			sa.assertTrue(false, "entity tab is not found");
+
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc046_VerifyCalenderByChangingTimezoneForUsers(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		MarketingEventPageBusinessLayer me = new MarketingEventPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentID=null,value="", monthAndYear;
+		WebElement ele=null;
+		boolean flag=false;
+		String newZeland="(GMT+13:00) New Zealand Daylight Time (Pacific/Auckland)";
+		Actions actions = new Actions(driver);
+		List<WebElement> li=null;
+		String field=EditPageLabel.Title_Highlight_Color.toString();
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink("", Mode.Lightning.toString())) {
+			parentID=switchOnWindow(driver);
+			if (parentID!=null) {
+				log(LogStatus.INFO, "Able to switch on new window", YesNo.No);
+				ThreadSleep(100);
+				if(setup.searchStandardOrCustomObject(environment,mode, object.Users)) {
+					log(LogStatus.INFO, "click on Object : "+object.Users, YesNo.No);
+					ThreadSleep(2000);
+
+					if(setup.clickOnEditBtnForCRMUser(driver, crmUser1LastName, crmUser1FirstName, 20)) {
+						log(LogStatus.INFO, "Click on edit Button "+crmUser1LastName+","+crmUser1FirstName, YesNo.No);
+						ThreadSleep(2000);
+
+						if (selectVisibleTextFromDropDown(driver, setup.gettimezoneDropdownList(10), "Timezone DropDown List",newZeland)) {
+							log(LogStatus.INFO, "selected visbible text from the Timezone dropdown "+newZeland, YesNo.No);
+							ThreadSleep(2000);
+
+							if (click(driver, setup.getSaveButton(20), "Save Button",action.SCROLLANDBOOLEAN)) {
+								switchToDefaultContent(driver);
+								ThreadSleep(5000);
+								switchToFrame(driver, 20, setup.getSetUpPageIframe(20));
+								scrollDownThroughWebelement(driver, setup.getRegionDropdownList("Time Zone", newZeland, 10), newZeland);
+								if (setup.getRegionDropdownList("Time Zone", newZeland, 10)!=null) {
+									log(LogStatus.INFO, "Time Zone Value verified "+newZeland, YesNo.No);
+									flag=true;
+								} else {
+									log(LogStatus.ERROR, "Time Zone Value not verified "+newZeland, YesNo.Yes);
+									sa.assertTrue(false, "Time Zone Value not verified "+newZeland);
+								}
+							} else {
+								log(LogStatus.ERROR, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+								sa.assertTrue(false, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName);
+							}
+						} else {
+							log(LogStatus.ERROR, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+							sa.assertTrue(false, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName);
+						}
+					}else {
+						log(LogStatus.ERROR, "edit button is not clickable",YesNo.Yes);
+						sa.assertTrue(false, "edit button is not clickable");
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to search/click on "+object.Users, YesNo.Yes);
+					sa.assertTrue(false, "Not able to search/click on "+object.Users);
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.FAIL, "could not find new window to switch, so cannot Set the Time Zone as "+newZeland, YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch, so cannot Set the Time Zone as "+newZeland);
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link");	
+		}
+
+		lp.CRMlogout();
+		driver.close();
+		config(browserToLaunch);
+		lp = new LoginPageBusinessLayer(driver);
+		fp = new FundsPageBusinessLayer(driver);
+		cp = new ContactsPageBusinessLayer(driver);
+		ip = new InstitutionsPageBusinessLayer(driver);
+
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		String date=findMonthDateCommaYear(todaysDateSingleDigit);
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
+				ele=ip.getRelatedTab(projectName, RelatedTab.Events.toString(), 10);
+				if (click(driver, ele, "events tab", action.SCROLLANDBOOLEAN)) {
+					ele=ip.calenderButtons(projectName, CalenderButton.Day);
+					if (click(driver, ele, "calendar day button", action.SCROLLANDBOOLEAN)) {
+						ele=ip.getcalenderHeader(projectName, 10);
+						if (ele!=null) {
+							if (ele.getText().trim().equalsIgnoreCase(date)) {
+								log(LogStatus.INFO, "successfully verified calender header as current date :"+date, YesNo.No);
+								
+							}else {
+								log(LogStatus.ERROR, "could not verify calender header as current date: \nexpected: "+date+"\nactual: "+ele.getText(), YesNo.Yes);
+								sa.assertTrue(false, "could not verify calender header as current date: \nexpected: "+date+"\nactual: "+ele.getText());	
+							}
+						}else {
+							log(LogStatus.ERROR, "could not find date on calender header, so cannot verify date", YesNo.Yes);
+							sa.assertTrue(false, "could not find date on calender header, so cannot verify date");	
+						}
+					}else {
+						log(LogStatus.ERROR, "could not click on day button on calender", YesNo.Yes);
+						sa.assertTrue(false, "could not click on day button on calender");	
+					}
+				}else {
+					log(LogStatus.ERROR, "events related tab is not clickable", YesNo.Yes);
+					sa.assertTrue(false, "events related tab is not clickable");	
+				}
+			}
+			else {
+				log(LogStatus.ERROR,M4Ins1+ " is not found on entity page", YesNo.Yes);
+				sa.assertTrue(false,M4Ins1+ " is not found on entity page");
+
+			}
+		}else {
+			log(LogStatus.ERROR, "entity tab is not found", YesNo.Yes);
+			sa.assertTrue(false, "entity tab is not found");
+
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc047_VerifyCalenderByChangingTimezoneForUsers_1_Action(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		MarketingEventPageBusinessLayer me = new MarketingEventPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentID=null,value="", monthAndYear;
+		WebElement ele=null;
+		String dateMinusOne=previousOrForwardDate(-1, "M/d/YYYY");
+		
+		
+		boolean flag=false;
+		Actions actions = new Actions(driver);
+		List<WebElement> li=null;
+		String field=EditPageLabel.Title_Highlight_Color.toString();
+		/*lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object5Tab)) {
+			log(LogStatus.INFO, "successfully clicked on "+TabName.Object5Tab, YesNo.No);
+
+			if (me.createMarketingEvent(projectName, M4MarketingEvent20Name, M4MarketingEvent20RecordType, dateMinusOne, M4MarketingEvent20Organizer, 10)) {
+				log(LogStatus.INFO, "successfully created marketing event "+M4MarketingEvent20Name, YesNo.Yes);
+
+			}else {
+				log(LogStatus.ERROR, "could not create marketing event "+M4MarketingEvent20Name, YesNo.Yes);
+				sa.assertTrue(false, "could not create marketing event "+M4MarketingEvent20Name);
+
+			}
+		}else {
+			log(LogStatus.ERROR, "could not click on marketing event tab", YesNo.Yes);
+			sa.assertTrue(false, "could not click on marketing event tab");
+
+		}
+		
+		lp.CRMlogout();
+		driver.close();
+		config(browserToLaunch);
+		lp = new LoginPageBusinessLayer(driver);
+		fp = new FundsPageBusinessLayer(driver);
+		cp = new ContactsPageBusinessLayer(driver);
+		ip = new InstitutionsPageBusinessLayer(driver);
+		ep = new EditPageBusinessLayer(driver);
+		me = new MarketingEventPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object5Tab)) {
+			log(LogStatus.INFO, "successfully clicked on "+TabName.Object5Tab, YesNo.No);
+
+			if (me.createMarketingEvent(projectName, M4MarketingEvent21Name, M4MarketingEvent21RecordType, dateMinusOne, M4MarketingEvent21Organizer, 10)) {
+				log(LogStatus.INFO, "successfully created marketing event "+M4MarketingEvent21Name, YesNo.Yes);
+
+			}else {
+				log(LogStatus.ERROR, "could not create marketing event "+M4MarketingEvent21Name, YesNo.Yes);
+				sa.assertTrue(false, "could not create marketing event "+M4MarketingEvent21Name);
+
+			}
+		}else {
+			log(LogStatus.ERROR, "could not click on marketing event tab", YesNo.Yes);
+			sa.assertTrue(false, "could not click on marketing event tab");
+
+		}lp.CRMlogout();
+		driver.close();
+		config(browserToLaunch);
+		*/lp = new LoginPageBusinessLayer(driver);
+		fp = new FundsPageBusinessLayer(driver);
+		cp = new ContactsPageBusinessLayer(driver);
+		ip = new InstitutionsPageBusinessLayer(driver);
+		ep = new EditPageBusinessLayer(driver);
+		me = new MarketingEventPageBusinessLayer(driver);
+		setup=new SetupPageBusinessLayer(driver);
+		
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+				log(LogStatus.INFO, "Able to switch on new window, so going to Set the User Region as "+TechonlogyCoverage, YesNo.No);
+				ThreadSleep(100);
+				if(setup.searchStandardOrCustomObject(environment,mode, object.Sharing_Settings)) {
+					log(LogStatus.INFO, "click on Object : "+object.Users, YesNo.No);
+					ThreadSleep(2000);
+					switchToFrame(driver, 10, lp.getFrame(PageName.SharingSettingsPage, 10));
+					ele=lp.getEditButton("",Mode.Classic.toString(), 10);
+					if (click(driver, ele, "edit", action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(2000);
+						switchToDefaultContent(driver);
+						switchToFrame(driver, 10, lp.getFrame(PageName.PipelineCustomPage, 10));
+						ele=setup.selectObjectDropdownOnSharingSettings(projectName, object.Marketing_Event.toString(), accessType.InternalUserAccess);
+						if (selectVisibleTextFromDropDown(driver,ele , "marketing event Internal dropdown", "Private")) {
+							log(LogStatus.INFO, "successfully select private in internal access dropdown", YesNo.Yes);
+							
+						}else {
+							log(LogStatus.ERROR, "could not select private in internal access dropdown", YesNo.Yes);
+							sa.assertTrue(false, "could not select private in internal access dropdown");
+
+						}
+						ele=setup.selectObjectDropdownOnSharingSettings(projectName, object.Marketing_Event.toString(), accessType.ExternalUserAccess);
+						if (selectVisibleTextFromDropDown(driver,ele , "marketing event Internal dropdown", "Private")) {
+							log(LogStatus.INFO, "successfully select private in internal access dropdown", YesNo.Yes);
+							
+						}else {
+							log(LogStatus.ERROR, "could not select private in internal access dropdown", YesNo.Yes);
+							sa.assertTrue(false, "could not select private in internal access dropdown");
+
+						}
+						if (click(driver, setup.getCreateUserSaveBtn_Lighting(10), "save", action.SCROLLANDBOOLEAN)) {
+							ThreadSleep(5000);
+						}else {
+							log(LogStatus.ERROR, "save button is not clickable", YesNo.Yes);
+							sa.assertTrue(false, "save button is not clickable");
+
+						}
+					}else {
+						log(LogStatus.ERROR, "edit button is not clickable", YesNo.Yes);
+						sa.assertTrue(false, "edit button is not clickable");
+
+					}
+				}else {
+					log(LogStatus.ERROR, "not able to select sharing settings", YesNo.Yes);
+					sa.assertTrue(false, "not able to select sharing settings");
+
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch");
+
+			}
+		}else {
+			log(LogStatus.ERROR, "setup link is not clickable", YesNo.Yes);
+			sa.assertTrue(false, "setup link is not clickable");
+
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc047_VerifyCalenderByChangingTimezoneForUsers_2_Impact(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		MarketingEventPageBusinessLayer me = new MarketingEventPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentID=null,value="", monthAndYear;
+		WebElement ele=null;
+		String dateMinusOne=previousOrForwardDate(-1, "M/d/YYYY");
+		
+		
+		boolean flag=false;
+		Actions actions = new Actions(driver);
+		List<WebElement> li=null;
+		String field=EditPageLabel.Title_Highlight_Color.toString();
+		//lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
+				ele=ip.getRelatedTab(projectName, RelatedTab.Events.toString(), 10);
+				if (click(driver, ele, "events tab", action.SCROLLANDBOOLEAN)) {
+					monthAndYear=findMonthNameAndYear(dateMinusOne);
+					if (ip.getcalenderHeader(projectName, 10).getText().trim().equalsIgnoreCase(monthAndYear)) {
+						log(LogStatus.INFO, "successfully reached to desired month on calender", YesNo.No);
+					}
+					else {
+						ele=ip.calenderButtons(projectName, CalenderButton.prev);
+						click(driver,ele , "previous button", action.BOOLEAN);
+						if (ip.getcalenderHeader(projectName, 10).getText().trim().equalsIgnoreCase(monthAndYear)) {
+							log(LogStatus.INFO, "successfully reached to desired month on calender", YesNo.No);
+						}
+						else {
+							log(LogStatus.ERROR, "could not find current month on calender", YesNo.No);
+						}	
+					}
+					int loc=ip.findLocationOfDate(projectName, dateMinusOne.split("/")[1]);
+					ele=ip.getEventPresentOnCalender(projectName, dateMinusOne.split("/")[1], loc,10);
+					if (ele!=null) {
+						if (ele.getAttribute("title").equalsIgnoreCase(M4MarketingEvent21Name)) {
+							log(LogStatus.ERROR, M4MarketingEvent21Name+" event name should not present on calendar, but it is still present", YesNo.Yes);
+							sa.assertTrue(false,M4MarketingEvent21Name+" event name should not present on calendar, but it is still present");
+
+						}else {
+							log(LogStatus.INFO, "successfully verified absence of "+M4MarketingEvent21Name, YesNo.No);
+						}
+					}else {
+						log(LogStatus.ERROR, "could not create event from sdg", YesNo.Yes);
+						sa.assertTrue(false,"could not create event from sdg" );
+					}
+				}else {
+					log(LogStatus.ERROR, "events tab is not clickable", YesNo.Yes);
+					sa.assertTrue(false,"events tab is not clickable" );
+				}
+			}else {
+				log(LogStatus.ERROR, M4Ins1+" entity is not found on entity tab", YesNo.Yes);
+				sa.assertTrue(false,M4Ins1+" entity is not found on entity tab" );
+			}
+		}else {
+			log(LogStatus.ERROR, "entity tab is not clickable", YesNo.Yes);
+			sa.assertTrue(false,"entity tab is not clickable" );
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc047_VerifyCalenderByChangingTimezoneForUsers_3_Impact(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		MarketingEventPageBusinessLayer me = new MarketingEventPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentID=null,value="", monthAndYear;
+		WebElement ele=null;
+		String dateMinusOne=previousOrForwardDate(-1, "M/d/YYYY");
+		
+		
+		boolean flag=false;
+		Actions actions = new Actions(driver);
+		List<WebElement> li=null;
+		String field=EditPageLabel.Title_Highlight_Color.toString();
+		//lp.CRMLogin(crmUser2EmailID, adminPassword, appName);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
+				ele=ip.getRelatedTab(projectName, RelatedTab.Events.toString(), 10);
+				if (click(driver, ele, "events tab", action.SCROLLANDBOOLEAN)) {
+					monthAndYear=findMonthNameAndYear(dateMinusOne);
+					if (ip.getcalenderHeader(projectName, 10).getText().trim().equalsIgnoreCase(monthAndYear)) {
+						log(LogStatus.INFO, "successfully reached to desired month on calender", YesNo.No);
+					}
+					else {
+						ele=ip.calenderButtons(projectName, CalenderButton.prev);
+						click(driver,ele , "previous button", action.BOOLEAN);
+						if (ip.getcalenderHeader(projectName, 10).getText().trim().equalsIgnoreCase(monthAndYear)) {
+							log(LogStatus.INFO, "successfully reached to desired month on calender", YesNo.No);
+						}
+						else {
+							log(LogStatus.ERROR, "could not find current month on calender", YesNo.No);
+						}	
+					}
+					int loc=ip.findLocationOfDate(projectName, dateMinusOne.split("/")[1]);
+					ele=ip.getEventPresentOnCalender(projectName, dateMinusOne.split("/")[1], loc,10);
+					if (ele!=null) {
+						if (ele.getAttribute("title").equalsIgnoreCase(M4MarketingEvent20Name)) {
+							log(LogStatus.ERROR, M4MarketingEvent20Name+" event name should not present on calendar, but it is still present", YesNo.Yes);
+							sa.assertTrue(false,M4MarketingEvent20Name+" event name should not present on calendar, but it is still present");
+
+						}else {
+							log(LogStatus.INFO, "successfully verified absence of "+M4MarketingEvent20Name, YesNo.No);
+						}
+					}else {
+						log(LogStatus.ERROR, "could not create event from sdg", YesNo.Yes);
+						sa.assertTrue(false,"could not create event from sdg" );
+					}
+				}else {
+					log(LogStatus.ERROR, "events tab is not clickable", YesNo.Yes);
+					sa.assertTrue(false,"events tab is not clickable" );
+				}
+			}else {
+				log(LogStatus.ERROR, M4Ins1+" entity is not found on entity tab", YesNo.Yes);
+				sa.assertTrue(false,M4Ins1+" entity is not found on entity tab" );
+			}
+		}else {
+			log(LogStatus.ERROR, "entity tab is not clickable", YesNo.Yes);
+			sa.assertTrue(false,"entity tab is not clickable" );
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	@Parameters({ "projectName"})
+	@Test
+	public void M4tc048_VerifyTooltipOnEventOnCalendar(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
+		MarketingEventPageBusinessLayer me = new MarketingEventPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentID=null,value="", monthAndYear;
+		WebElement ele=null;
+		
+		boolean flag=false;
+		Actions actions = new Actions(driver);
+		List<WebElement> li=null;
+		String field=EditPageLabel.Title_Highlight_Color.toString();
+		//lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
+				ele=ip.getRelatedTab(projectName, RelatedTab.Events.toString(), 10);
+				if (click(driver, ele, "events tab", action.SCROLLANDBOOLEAN)) {
+					int loc=ip.findLocationOfDate(projectName, todaysDateSingleDigit.split("/")[1]);
+					ele=ip.getEventPresentOnCalender(projectName, todaysDateSingleDigit.split("/")[1], loc,10);
+					if (ele!=null) {
+						scrollDownThroughWebelement(driver, ele, "event name");
+						if (mouseHoverJScript(driver, ele)) {
+							log(LogStatus.INFO, "successfully performed mouseover operation", YesNo.Yes);
+								
+						}else {
+							log(LogStatus.ERROR, "could not perform mouseover operation", YesNo.Yes);
+							sa.assertTrue(false,"could not perform mouseover operation" );
+						}
+						ThreadSleep(3000);
+						if (ele.getAttribute("title").equalsIgnoreCase(M4MarketingEvent4Name)){
+							log(LogStatus.INFO, "successfully verified presence of tooltip "+M4MarketingEvent4Name, YesNo.No);
+							
+						}else {
+							log(LogStatus.ERROR, "could not verify tooltip", YesNo.Yes);
+							sa.assertTrue(false,"could not verify tooltip" );
+						}
+					}else {
+							log(LogStatus.ERROR, "could not verify event present on todays date", YesNo.Yes);
+							sa.assertTrue(false,"could not verify event present on todays date" );
+						}
+					}else {
+						log(LogStatus.ERROR, "could not click on event tab", YesNo.Yes);
+						sa.assertTrue(false,"could not click on event tab" );
+					}
+			}else {
+				log(LogStatus.ERROR, M4Ins1+" entity is not found on entity tab", YesNo.Yes);
+				sa.assertTrue(false,M4Ins1+" entity is not found on entity tab" );
+			}
+		}else {
+			log(LogStatus.ERROR, "entity tab is not clickable", YesNo.Yes);
+			sa.assertTrue(false,"entity tab is not clickable" );
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+}
 

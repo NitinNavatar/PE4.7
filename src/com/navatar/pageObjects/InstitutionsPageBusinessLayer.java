@@ -739,7 +739,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 
 	}
 	public List<WebElement> getListOfEvents(String projectName, String date,  int timeOut) {
-		String xpath="//a[text()='"+date+"']/../../../following-sibling::tbody//td//a";
+		String xpath="//span[text()='"+date+"']/../following-sibling::div//div[contains(@class,'fc-event-container')]//a";
 		List<WebElement> ele=null;
 		ele=FindElements(driver,xpath,"event on calender" );
 		
@@ -768,7 +768,11 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 	}
 	
 	public WebElement calenderButtons(String projectName, CalenderButton cb) {
-		String xpath = "//button[text()='"+cb+"']";
+		String xpath="";
+		if ((cb == CalenderButton.next) || (cb==CalenderButton.prev))
+		xpath="//button[@aria-label='"+cb+"']";
+		else
+			xpath = "//button[text()='"+cb+"']";
 		WebElement ele=FindElement(driver, xpath, "calender button", action.BOOLEAN, 10);
 		return isDisplayed(driver, ele, "Visibility", 10, "calender button");
 		
@@ -794,5 +798,12 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 			
 		}
 		return false;
+	}
+	public WebElement plusMoreButtonOnCalendar(String projectName,int count, int timeOut) {
+		
+		String xpath = "//td[contains(@class,'more-cell')]//a[text()='+"+count+" more']";
+		WebElement ele=FindElement(driver,xpath,"selected month on calender", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", 10, "calender button");
+		
 	}
 }
