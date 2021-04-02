@@ -156,6 +156,7 @@ public class EditPage extends BasePageBusinessLayer {
 	private WebElement fieldSetCompoentXpath;
 
 	public WebElement getFieldSetCompoentXpath(int timeOut) {
+		scrollDownThroughWebelement(driver, fieldSetCompoentXpath, "");
 		return isDisplayed(driver, fieldSetCompoentXpath, "Visibility", timeOut, "field set component");
 	}
 	

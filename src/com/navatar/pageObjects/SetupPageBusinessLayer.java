@@ -162,6 +162,16 @@ public class SetupPageBusinessLayer extends SetupPage {
 				}
 			}else {
 				appLog.error(object+" object link is not visible so cannot click on it's feature : "+objectFeatureName);
+				ele=isDisplayed(driver, FindElement(driver, "//a[contains(text(),'"+objectFeatureName+"')]", "", action.BOOLEAN,20), "visibility",20,objectFeatureName+" feature link");
+				if(ele!=null) {
+					if(click(driver, ele, objectFeatureName+" object feature link", action.SCROLLANDBOOLEAN)) {
+						return true;
+					}else {
+						appLog.error("Not able to click on object "+object+" feature "+objectFeatureName);
+					}
+				}else {
+					appLog.error(object+" object feature "+objectFeatureName+" is not visible so cannot click on it");
+				}
 			}
 		}
 		return false;
@@ -1172,11 +1182,13 @@ public WebElement getRecordTypeLabel(String projectName,String recordTypeLabel,i
 	return ele;
 }
 
-public boolean createRecordTypeForObject(String projectName,String[][] labelWithValue,boolean isMakeAvailable,boolean isMakeDefault,int timeOut) {
+public boolean createRecordTypeForObject(String projectName,String[][] labelWithValue,boolean isMakeAvailable,boolean isMakeDefault,String layOut,int timeOut) {
 	WebElement ele;
 	String label;
 	String value;
 	boolean flag=false;
+
+	switchToDefaultContent(driver);
 	if (click(driver,getRecordTypeNewButton(10), "Record Type New Button", action.SCROLLANDBOOLEAN)) {
 		log(LogStatus.INFO, "Click on Record Type New Button", YesNo.No);
 		ThreadSleep(5000);
@@ -1236,6 +1248,14 @@ public boolean createRecordTypeForObject(String projectName,String[][] labelWith
 			log(LogStatus.PASS, "Clicked on Next button", YesNo.No);
 			ThreadSleep(1000);		
 
+			if (layOut!=null) {
+				if(selectVisibleTextFromDropDown(driver, getApplyOneLayoutToAllProfiles(10), "Page Layout",layOut)) {
+					log(LogStatus.INFO,"Select Existing Page Layout drop down "+layOut,YesNo.No);
+					ThreadSleep(1000);	
+				}else {
+					log(LogStatus.ERROR,"Not able to select value from Existing Page Layout drop down "+layOut,YesNo.Yes);
+				}	
+			}
 			if (click(driver,  getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.ERROR, "Click on save Button ", YesNo.No);
 				ThreadSleep(5000);
@@ -1638,7 +1658,227 @@ public WebElement selectObjectDropdownOnSharingSettings(String projectName, Stri
 	String xpath = "(//*[text()='"+object+"']/following-sibling::*//select)["+i+"]";
 	WebElement ele=FindElement(driver, xpath,"dropdown", action.SCROLLANDBOOLEAN, 10);
 	return isDisplayed(driver, ele, "visibility", 10, "dropdown");
-	
+}
+
+public boolean createNewAction(WebDriver driver,String[][] labelsWithValues,int timeOut) {
+	boolean flag=false;
+	switchToDefaultContent(driver);
+	ThreadSleep(10000);
+	switchToFrame(driver, 60, getSetUpPageIframe(60));
+	ThreadSleep(5000);
+	if (click(driver, getNewActionBtnNewBtn(timeOut), "New Action Button", action.BOOLEAN)) {
+		log(LogStatus.INFO, "click on New Action Button", YesNo.No);
+		switchToDefaultContent(driver);
+		ThreadSleep(10000);
+		switchToFrame(driver, 60, getSetUpPageIframe(60));
+		ThreadSleep(5000);
+		String label="";
+		String value="";
+		String xpath="";
+		WebElement ele;
+		for (String[] labelWithValue : labelsWithValues) {
+			label=labelWithValue[0].replace("_", " ");
+			value=labelWithValue[1];
+			xpath = "//*[text()='"+label+"']/../following-sibling::td//input";
+			ele = FindElement(driver, xpath, label, action.BOOLEAN, 10);
+			if (ele!=null) {
+				log(LogStatus.INFO, "Label not found : "+label, YesNo.No);
+				if (sendKeys(driver, ele, value, label, action.BOOLEAN)) {
+					log(LogStatus.INFO, "enter value "+value+" to Label : "+label, YesNo.No);
+					flag=true;
+				} else {
+					log(LogStatus.ERROR, "Not Able to enter value "+value+" to Label : "+label, YesNo.Yes);
+					sa.assertTrue(false, "Not Able to enter value "+value+" to Label : "+label);
+				}
+			} else {
+				log(LogStatus.ERROR, "Label not found : "+label, YesNo.Yes);
+				sa.assertTrue(false, "Label not found : "+label);
+			}
+		}
+
+		if (click(driver, getSaveButton(20), "Save Button",action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Click on Save Button ", YesNo.No);
+
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on Save Button", YesNo.Yes);
+			sa.assertTrue(false, "Not Able to Click on Save Button");
+		}
+
+
+	} else {
+		log(LogStatus.ERROR, "Not able to click on New Action Button", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on New Action Button");
+	}
+	return flag;
+}
+
+
+public void createPredefinedValueForGlobalAction(WebDriver driver,String actionName,String[][] labelsWithValues,int timeOut) {
+	boolean flag=false;
+	switchToDefaultContent(driver);
+	ThreadSleep(10000);
+	switchToFrame(driver, 60, getSetUpPageIframe(60));
+	ThreadSleep(5000);
+	String xpath="";
+	WebElement ele;
+	String label="";
+	String value="";
+	xpath = "//a[text()='"+actionName+"']";
+	ele= FindElement(driver, xpath, actionName, action.SCROLLANDBOOLEAN, timeOut);
+	if (click(driver, ele, actionName, action.BOOLEAN)) {
+		log(LogStatus.INFO, "click on "+actionName, YesNo.No);
+		for (String[] labelWithValue : labelsWithValues) {
+
+			switchToDefaultContent(driver);
+			ThreadSleep(20000);
+			switchToFrame(driver, 60, getSetUpPageIframe(60));
+			ThreadSleep(5000);
+			label=labelWithValue[0].replace("_", " ");
+			value=labelWithValue[1];
+			log(LogStatus.INFO, "Going to fill value : "+value+" for label : "+label, YesNo.No);
+			if (click(driver, getpredefinedFieldValuesNewButtonn(timeOut), "Predefined Field Values New Button", action.BOOLEAN)) {
+				log(LogStatus.INFO, "click on Predefined Field Values New Button", YesNo.No);
+
+				switchToDefaultContent(driver);
+				ThreadSleep(20000);
+				switchToFrame(driver, 60, getSetUpPageIframe(60));
+				ThreadSleep(5000);
+				
+				if (click(driver, getSelectFieldName(10), label, action.SCROLLANDBOOLEAN)/*selectVisibleTextFromDropDown(driver,getSelectFieldName(10), label,label)*/) {
+					log(LogStatus.INFO, "selected visbible text from the Field Name dropdown "+label, YesNo.No);
+					ThreadSleep(2000);
+					xpath="//select[@id='ColumnEnumOrId']//*[text()='"+label+"']";
+					ele = FindElement(driver, xpath, label, action.SCROLLANDBOOLEAN, timeOut);
+					click(driver, ele, label, action.SCROLLANDBOOLEAN);
+					ThreadSleep(2000);
+					if (sendKeys(driver, getFormulaValueTextArea(20), value, "Formula Field : "+value, action.BOOLEAN)) {
+						log(LogStatus.INFO, "enter value for "+label, YesNo.Yes);
+
+						if (click(driver, getSaveButton(20), "Save Button",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Click on Save Button for  "+label, YesNo.No);
+							
+						} else {
+							log(LogStatus.ERROR, "Not Able to Click on Save Button for  "+label, YesNo.Yes);
+							sa.assertTrue(false, "Not Able to Click on Save Button for  "+label);
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Not Able to enter value for "+label, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to enter value for "+label);
+					}
+
+
+
+				} else {
+					log(LogStatus.ERROR, "Not able to select visbible text from the Field Name dropdown "+label, YesNo.Yes);
+					sa.assertTrue(false, "Not able to select visbible text from the Field Name dropdown "+label);
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on Predefined Field Values New Button", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on Predefined Field Values New Button");
+			}
+
+		}
+		
+
+
+	} else {
+		log(LogStatus.ERROR, "Not able to click on "+actionName, YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on "+actionName);
+	}
+}
+
+public boolean createPageLayout(String projectName,String[][] labelWithValue,String existingPageLayout,String src,String trgt,int timeOut) {
+	WebElement ele;
+	String label;
+	String value;
+	boolean flag=false;
+	switchToDefaultContent(driver);
+	if (click(driver,getPageLayoutNewButton(10), "Page Layout New Button", action.SCROLLANDBOOLEAN)) {
+		log(LogStatus.INFO, "Click on Page Layout New Button", YesNo.No);
+		ThreadSleep(5000);
+		switchToFrame(driver, 20, getSetUpPageIframe(60));
+		for (String[] lv : labelWithValue) {
+			label=lv[0];
+			value=lv[1];
+			ele =  getRecordTypeLabel(projectName, "Page Layout Name", 20);
+			if (sendKeys(driver, ele, value, label, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Able to enter "+label, YesNo.No);
+				ThreadSleep(2000);
+				flag=true;
+			} else {
+				log(LogStatus.ERROR, "Not Able to enter "+value+" to label "+label, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to enter "+value+" to label "+label);
+			}
+		}
+		if(selectVisibleTextFromDropDown(driver, getSelectExistingPageLayout(10), "field accessbility drop down",existingPageLayout)) {
+			log(LogStatus.INFO,"Select Existing Page Layout drop down "+existingPageLayout,YesNo.No);
+			ThreadSleep(1000);
+
+			if (click(driver,  getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.ERROR, "Click on save Button ", YesNo.No);
+				ThreadSleep(5000);
+				ThreadSleep(5000);
+				switchToFrame(driver, 20, getSetUpPageIframe(60));
+				if (dragDropOnPageLayout(src, trgt)) {
+					log(LogStatus.INFO, "Able to dragNDrop "+src+" at "+trgt+" location", YesNo.No);
+					flag=true;
+				} else {
+					log(LogStatus.ERROR, "Not able to dragNDrop "+src+" at "+trgt+" location", YesNo.Yes);
+					sa.assertTrue(false,"Not able to dragNDrop "+src+" at "+trgt+" location");
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on save Button ", YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on save Button ");
+			}
+
+
+		}else {
+			log(LogStatus.ERROR,"Not able to select value from Existing Page Layout drop down "+existingPageLayout,YesNo.Yes);
+		}
+
+	} else {
+		log(LogStatus.ERROR, "Not Able to Click on Page Layout New Button", YesNo.Yes);
+		sa.assertTrue(false,"Not Able to Click on Page Layout New Button");
+	}
+	return flag;
+}
+
+public boolean dragDropOnPageLayout(String src,String trgt){
+	boolean flag=false;
+	sendKeys(driver, getquickFindSearch(10), src, src, action.BOOLEAN);
+	WebElement targetElement = FindElement(driver, "//span[@class='labelText'][text()='"+trgt+"']", "", action.BOOLEAN,20);
+	WebElement ele = isDisplayed(driver, FindElement(driver, " //span[text()='"+src+"']", "", action.BOOLEAN,20), "visibility",20,src+" field");
+	if(ele!=null) {
+		WebElement ele1 = isDisplayed(driver, targetElement, "visibility",20,trgt+" field");
+		ThreadSleep(5000);
+		if(ele1!=null) {
+			if(dragNDropField(driver, ele, ele1)) {
+				ThreadSleep(5000);
+				appLog.info("Successfully dragNDrop "+src+" at "+trgt+" location");
+				if (FindElement(driver, "//span[@class='labelText'][text()='"+src+"']", "", action.BOOLEAN,20)!=null) {
+					appLog.info("successfully verified drag and drop of "+src);
+					if(click(driver, getPageLayoutSaveBtn(object.Apps,30), "page layouts save button", action.SCROLLANDBOOLEAN)) {
+						appLog.info("clicked on save button");
+						flag=true;
+					}else {
+						appLog.error("Not able to click on Save button cannot save pagelayout dragged object or section");
+					}
+				}
+				else {
+					appLog.error("Not able to dragNDrop "+src+" at "+trgt+" location");
+				}
+				appLog.info("Successfully dragNDrop "+src+" at "+trgt+" location");
+			}else {
+				appLog.error("Not able to dragNDrop "+src+" at "+trgt+" location");
+			}
+		}else {
+			appLog.error(trgt+" location is not visible so cannot dragNDrop "+src+" at location "+trgt);
+		}
+	}else {
+		appLog.error(src+" is not visible so cannot dragNdrop "+src);
+	}
+	return flag;
 }
 
 }

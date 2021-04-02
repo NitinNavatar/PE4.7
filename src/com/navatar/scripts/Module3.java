@@ -3,6 +3,15 @@ package com.navatar.scripts;
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
 import static com.navatar.generic.ExcelUtils.readAllDataForAColumn;
+import static com.navatar.generic.SmokeCommonVariables.Smoke_EntityMeeting1Priority;
+import static com.navatar.generic.SmokeCommonVariables.Smoke_EntityMeeting1Type;
+import static com.navatar.generic.SmokeCommonVariables.Smoke_STDTask2OnComment;
+import static com.navatar.generic.SmokeCommonVariables.Smoke_STDTask2OnSubject;
+import static com.navatar.generic.SmokeCommonVariables.Smoke_Task2MultipleComment;
+import static com.navatar.generic.SmokeCommonVariables.Smoke_TaskFund1Name;
+import static com.navatar.generic.SmokeCommonVariables.Smoke_TaskINS3Name;
+import static com.navatar.generic.SmokeCommonVariables.tabCustomObjField;
+import static com.navatar.generic.SmokeCommonVariables.taskCustomObj1Name;
 
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
@@ -59,7 +68,9 @@ import com.navatar.generic.EnumConstants.AddProspectsTab;
 import com.navatar.generic.EnumConstants.AddressAction;
 import com.navatar.generic.EnumConstants.CheckBox;
 import com.navatar.generic.EnumConstants.ClickOrCheckEnableDisableCheckBox;
+import com.navatar.generic.EnumConstants.CreationPage;
 import com.navatar.generic.EnumConstants.EditViewMode;
+import com.navatar.generic.EnumConstants.InstitutionPageFieldLabelText;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.NavatarSetupSideMenuTab;
@@ -3041,7 +3052,7 @@ public class Module3 extends BaseLib {
 		boolean isMakeAvailable=true;
 		boolean isMakeDefault =true;
 		boolean flag=false;
-		for (int i = 1; i < recordTypeArray.length; i++) {
+		for (int i = 0; i < recordTypeArray.length; i++) {
 			if (home.clickOnSetUpLink()) {
 				flag=false;
 				String parentID = switchOnWindow(driver);
@@ -3051,10 +3062,10 @@ public class Module3 extends BaseLib {
 						if(sp.clickOnObjectFeature("", Mode.Lightning.toString(),object.Fund, ObjectFeatureName.recordTypes)) {
 							ThreadSleep(5000);
 							if (i==0) {
-								flag=sp.createRecordTypeForObject(projectName, fundRecordType, isMakeAvailable, isMakeDefault, 10);	
+								flag=sp.createRecordTypeForObject(projectName, fundRecordType, isMakeAvailable, isMakeDefault,null, 10);	
 							} else {
 								isMakeDefault=false;
-								flag=sp.createRecordTypeForObject(projectName, ffrecordType, isMakeAvailable, isMakeDefault, 10);
+								flag=sp.createRecordTypeForObject(projectName, ffrecordType, isMakeAvailable, isMakeDefault,null, 10);
 							}
 							if (flag) {
 								log(LogStatus.ERROR, "Created Record Type : "+recordTypeArray[i], YesNo.No);
@@ -7129,6 +7140,1252 @@ public class Module3 extends BaseLib {
 			sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
 		}	
 
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc081_CreateMultiTaggedLogACallAllNavigationMenuItem(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		String createNewLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Parent);
+
+		String logAcall = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name);
+		String logAcallOrder = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Updated_Order);
+		String logAcallActionObject = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Action_Object);
+
+		if (npbl.createNavigationItem(projectName, new String[][]{{CSVLabel.Navigation_Label.toString(),createNewLabel}}, 20)) {
+			log(LogStatus.INFO, "created "+createNewLabel, YesNo.No);
+
+			if (npbl.createNavigationItem(projectName, new String[][]{{CSVLabel.Navigation_Label.toString(),logAcall},{CSVLabel.Parent.toString(),createNewLabel},{CSVLabel.Order.toString(),logAcallOrder},{CSVLabel.Action_Object.toString(),logAcallActionObject}}, 20)) {
+				log(LogStatus.INFO, "created "+logAcall, YesNo.No);
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to create "+logAcall, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to create "+logAcall);
+
+			}
+
+
+		} else {
+			log(LogStatus.ERROR, "Not Able to create "+createNewLabel+" so cannot create child : "+logAcall, YesNo.Yes);
+			sa.assertTrue(false, "Not Able to create "+createNewLabel+" so cannot create child : "+logAcall);
+
+		}
+		Map<String,String> parentWithChild = new LinkedHashMap<String,String>(); 
+		parentWithChild.put(createNewLabel,logAcall);
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+			npbl.verifyingNavigationMenuLink(projectName, null, parentWithChild, action.BOOLEAN, 2);
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot verify order", YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot verify order");
+		}
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc082_ClickOnLogACallwithMultipleAssociationsMenuItem(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp = new TaskPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		String dependentTC="Module3Tc081_CreateMultiTaggedLogACallAllNavigationMenuItem";
+		String createNewLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Parent);
+		String logAcall = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
+		String navigationLabelValue=createNewLabel+"/"+logAcall;
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+			WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+			if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+				ThreadSleep(5000);
+
+				ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, "New Task", action.BOOLEAN, 30);
+				if (ele!=null) {
+					log(LogStatus.INFO, "New Task Pop Up is open after clicking on "+navigationLabelValue , YesNo.No);
+
+					String task="TC082TaskSubjectName";	
+
+					if (tp.enteringSubjectAndSelectDropDownValuesonTaskPopUp(projectName, PageName.TaskPage, task, null, action.SCROLLANDBOOLEAN, 10)) {	
+
+						log(LogStatus.INFO,"Entered Value on Subject Text Box : "+task,  YesNo.Yes);
+
+						if (clickUsingJavaScript(driver,lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
+							ThreadSleep(1000);
+							ele = cp.getCreatedConfirmationMsg(projectName, 15);
+							if (ele!=null) {
+								String actualValue = ele.getText().trim();
+								String expectedValue=tp.taskCreatesMsg(projectName, task);
+								if (actualValue.contains(expectedValue)) {
+									log(LogStatus.INFO,expectedValue+" matched FOR Confirmation Msg", YesNo.No);
+
+								} else {
+									log(LogStatus.ERROR,"Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg", YesNo.Yes);
+									BaseLib.sa.assertTrue(false, "Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg");
+								}
+							} else {
+								sa.assertTrue(false,"Created Task Msg Ele not Found");
+								log(LogStatus.SKIP,"Created Task Msg Ele not Found",YesNo.Yes);
+
+							}
+
+
+						}
+						else {
+							log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
+							sa.assertTrue(false,"save button is not clickable so task not created" );
+						}
+
+					}else {
+						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
+						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
+					}
+
+
+
+				} else {
+					log(LogStatus.ERROR, "New Task Pop Up should be open after clicking on "+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false, "New Task Pop Up should be open after clicking on "+navigationLabelValue);
+				}
+
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+		}	
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc083_ClickOnLogACallwithMultipleAssociationsMenuItem(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp = new TaskPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		
+
+		String dependentTC="Module3Tc081_CreateMultiTaggedLogACallAllNavigationMenuItem";
+		String createNewLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Parent);
+		String logAcall = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
+		String navigationLabelValue=createNewLabel+"/"+logAcall;
+		
+		String listViewNameLabel=CSVLabel.List_View_Name.toString();
+		String listViewNameLabelValue=logAcall.replace(" ", "_");
+		String[][] labelWithValue= {{listViewNameLabel,listViewNameLabelValue}};
+		boolean flag=false;
+
+		if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, logAcall, labelWithValue, 20)) {
+			log(LogStatus.INFO, listViewNameLabelValue+" value has been updated & saved under "+listViewNameLabel+" for "+logAcall, YesNo.No);
+		}else{
+			log(LogStatus.ERROR, "Not Able to enter value on" +listViewNameLabel+" for "+logAcall, YesNo.Yes);
+			sa.assertTrue(false, "Not Able to enter value on" +listViewNameLabel+" for "+logAcall);
+		}
+
+		
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+			WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+			if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+				ThreadSleep(5000);
+
+				ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, "New Task", action.BOOLEAN, 30);
+				if (ele!=null) {
+					log(LogStatus.INFO, "New Task Pop Up is open after clicking on "+navigationLabelValue , YesNo.No);
+
+					String task="TC083LogACallSubjectName";	
+
+					if (tp.enteringSubjectAndSelectDropDownValuesonTaskPopUp(projectName, PageName.TaskPage, task, null, action.SCROLLANDBOOLEAN, 10)) {	
+
+						log(LogStatus.INFO,"Entered Value on Subject Text Box : "+task,  YesNo.Yes);
+
+						if (clickUsingJavaScript(driver,lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
+							ThreadSleep(1000);
+							ele = cp.getCreatedConfirmationMsg(projectName, 15);
+							if (ele!=null) {
+								String actualValue = ele.getText().trim();
+								String expectedValue=tp.taskCreatesMsg(projectName, task);
+								if (actualValue.contains(expectedValue)) {
+									log(LogStatus.INFO,expectedValue+" matched FOR Confirmation Msg", YesNo.No);
+
+								} else {
+									log(LogStatus.ERROR,"Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg", YesNo.Yes);
+									BaseLib.sa.assertTrue(false, "Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg");
+								}
+							} else {
+								sa.assertTrue(false,"Created Task Msg Ele not Found");
+								log(LogStatus.SKIP,"Created Task Msg Ele not Found",YesNo.Yes);
+
+							}
+
+
+						}
+						else {
+							log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
+							sa.assertTrue(false,"save button is not clickable so task not created" );
+						}
+
+					}else {
+						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
+						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
+					}
+
+
+
+				} else {
+					log(LogStatus.ERROR, "New Task Pop Up should be open after clicking on "+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false, "New Task Pop Up should be open after clicking on "+navigationLabelValue);
+				}
+
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+		}	
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module5TC084_1_CreateData(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+
+		String value="";
+		String type="";
+		String[][] EntityOrAccounts = {{ M3Ins1, M3Ins1RecordType ,null},{ M3Ins2, M3Ins2RecordType ,null}};
+
+		for (String[] accounts : EntityOrAccounts) {
+			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
+				log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);	
+				value = accounts[0];
+				type = accounts[1];
+				if (ip.createEntityOrAccount(projectName, value, type, null, 20)) {
+					log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
+					log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+value+" of record type : "+type,YesNo.Yes);
+				}
+
+
+			} else {
+				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object1Tab);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object1Tab,YesNo.Yes);
+			}
+		}
+		
+		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);	
+			
+			M3Contact1EmailID=	lp.generateRandomEmailId(gmailUserName);
+			ExcelUtils.writeData(phase1DataSheetFilePath, M3Contact1EmailID, "Contacts", excelLabel.Variable_Name, "M3CON1",excelLabel.Contact_EmailId);
+
+			if (cp.createContact(projectName, M3Contact1FName, M3Contact1LName, M3Ins1, M3Contact1EmailID,M3Contact1RecordType, null, null, CreationPage.ContactPage, null)) {
+				log(LogStatus.INFO,"successfully Created Contact : "+M3Contact1FName+" "+M3Contact1LName,YesNo.No);	
+			} else {
+				sa.assertTrue(false,"Not Able to Create Contact : "+M3Contact1FName+" "+M3Contact1LName);
+				log(LogStatus.SKIP,"Not Able to Create Contact: "+M3Contact1FName+" "+M3Contact1LName,YesNo.Yes);
+			}
+
+
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object2Tab);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object2Tab,YesNo.Yes);
+		}
+		
+		if (lp.clickOnTab(projectName, TabName.Object3Tab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.Object3Tab,YesNo.No);	
+			String[] funds = {M3Fund1,M3Fund1Type,M3Fund1RecordType,M3Fund1RecordType};
+			if (fp.createFundPE(projectName, funds[0], funds[3], funds[1], funds[2], null, 15)) {
+				log(LogStatus.INFO,"Created Fund : "+funds[0],YesNo.No);	
+			} else {
+				sa.assertTrue(false,"Not Able to Create Fund : "+funds[0]);
+				log(LogStatus.SKIP,"Not Able to Create Fund  : "+funds[0],YesNo.Yes);
+			}
+
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object3Tab);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object3Tab,YesNo.Yes);
+		}
+		
+		if (lp.clickOnTab(projectName, TabName.TestCustomObjectTab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.TestCustomObjectTab,YesNo.No);	
+
+			if (cop.createRecord(projectName, M3TestCustomObj1RecordType, tabCustomObjField, M3TestCustomObj1Name, false)) {
+				log(LogStatus.INFO,"successfully Created custom record : "+M3TestCustomObj1Name,YesNo.No);	
+			} else {
+				sa.assertTrue(false,"Not Able to Create custom record  : "+M3TestCustomObj1Name);
+				log(LogStatus.SKIP,"Not Able to Create custom record  : "+M3TestCustomObj1Name,YesNo.Yes);
+			}
+
+
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object3Tab);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object3Tab,YesNo.Yes);
+		}
+		
+		
+		
+		
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc085_CreateCustomActionOfTypeTask(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		String newMeeting=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name);
+		
+		if (home.clickOnSetUpLink()) {
+			String parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+				log(LogStatus.INFO, "Able to switch on new window, so going to Create Custom action of Type 'Task'", YesNo.No);
+				ThreadSleep(100);
+				if(setup.searchStandardOrCustomObject(environment,mode, object.Global_Actions)) {
+					log(LogStatus.INFO , "Able to search/click on "+object.Global_Actions, YesNo.No);
+					String[][] labelsWithValues= {{excelLabel.Label.toString(),newMeeting}};
+					if (setup.createNewAction(driver, labelsWithValues, 20)) {
+						log(LogStatus.INFO, "created action "+newMeeting, YesNo.No);
+					} else {
+						log(LogStatus.ERROR, "not able to create action "+newMeeting, YesNo.Yes);
+						sa.assertTrue(false, "not able to create action "+newMeeting);
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to search/click on "+object.Global_Actions, YesNo.Yes);
+					sa.assertTrue(false, "Not able to search/click on "+object.Global_Actions);
+				}
+
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.FAIL, "could not find new window to switch, so cannot Create Custom action of Type 'Task'", YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch, so cannot Create Custom action of Type 'Task'");
+			}
+
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link");	
+		}
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc086_CreateNavigationRecordsRelatedToMultiTaggedActions(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		String createNewLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Parent);
+
+		String newTask = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name);
+		String newTaskOrder = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Updated_Order);
+		String newTaskActionObject = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Action_Object);
+		if (npbl.createNavigationItem(projectName, new String[][]{{CSVLabel.Navigation_Label.toString(),newTask},{CSVLabel.Parent.toString(),createNewLabel},{CSVLabel.Order.toString(),newTaskOrder},{CSVLabel.Action_Object.toString(),newTaskActionObject}}, 20)) {
+			log(LogStatus.INFO, "created "+newTask, YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Not Able to create "+newTask, YesNo.Yes);
+			sa.assertTrue(false, "Not Able to create "+newTask);
+		}
+		refresh(driver);
+		String dependtTC="Module3Tc085_CreateCustomActionOfTypeTask";
+		String newMeeting = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependtTC, excelLabel.Navigation_Label_Name);
+		newTaskOrder = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependtTC, excelLabel.Updated_Order);
+		newTaskActionObject = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependtTC, excelLabel.Action_Object);
+		if (npbl.createNavigationItem(projectName, new String[][]{{CSVLabel.Navigation_Label.toString(),newMeeting},{CSVLabel.Parent.toString(),createNewLabel},{CSVLabel.Order.toString(),newTaskOrder},{CSVLabel.Action_Object.toString(),newTaskActionObject}}, 20)) {
+			log(LogStatus.INFO, "created "+newMeeting, YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Not Able to create "+newMeeting, YesNo.Yes);
+			sa.assertTrue(false, "Not Able to create "+newMeeting);
+		}
+
+		refresh(driver);
+		String logAcall = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, "Module3Tc081_CreateMultiTaggedLogACallAllNavigationMenuItem", excelLabel.Navigation_Label_Name);
+		Map<String,String> parentWithChild = new LinkedHashMap<String,String>(); 
+		parentWithChild.put(createNewLabel,logAcall+","+newTask+","+newMeeting);
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+			npbl.verifyingNavigationMenuLink(projectName, null, parentWithChild, action.BOOLEAN, 2);
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot verify order", YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot verify order");
+		}
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc088_VerifyLogACallWithMultipleAssociationsAction(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp = new TaskPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		String dependentTC="Module3Tc081_CreateMultiTaggedLogACallAllNavigationMenuItem";
+		String createNewLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Parent);
+		String logAcall = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
+		String navigationLabelValue=createNewLabel+"/"+logAcall;
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+			WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+			if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+				ThreadSleep(5000);
+
+				ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, "", action.BOOLEAN, 30);
+				if (ele!=null) {
+					log(LogStatus.INFO, "New Task Pop Up is open after clicking on "+navigationLabelValue , YesNo.No);
+
+					///////////////////////////////////////////////////
+
+					String subject=M3Task1Subject;
+					String dueDate=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "MM/dd/YYYY");
+					String status1 = M3Task1Status;
+					try {
+						String name = getValueFromElementUsingJavaScript(driver, tp.getLabelTextBox(projectName, PageName.TaskPage.toString(),PageLabel.Subject.toString(),10), "subject");
+						if (name.contains(subject.trim())) {
+							log(LogStatus.INFO, "successfully verified subject textbox : "+subject, YesNo.No);
+						}
+						else {
+							log(LogStatus.ERROR, "could not verify subject textbox, found: "+name, YesNo.No);
+							sa.assertTrue(false,"could not verify subject textbox, found: "+name);
+
+						}
+
+						String status=getValueFromElementUsingJavaScript(driver, tp.getstatusDropdownInCreateNewTask(projectName, 10), "status dropdown");
+						System.out.println("div value "+status);
+						if (status.trim().contains(status1)) {
+							log(LogStatus.INFO, "successfully verfied status dropdown", YesNo.No);
+						}
+						else {
+							log(LogStatus.ERROR, "could not verify status dropdown. Found is "+status, YesNo.Yes);
+							sa.assertTrue(false,"could not verify status dropdown. Found is "+status );
+
+						}
+
+						if ( tp.getdueDateTextBoxInNewTask(projectName, 10)!=null) {
+							//name= getdueDateTextBoxInNewTask(projectName, 20).getText().trim();
+							name=getValueFromElementUsingJavaScript(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), "dueDateTextBoxInNewTask");
+							if (tp.verifyDate(todaysDate, name)) {
+								log(LogStatus.INFO, "successfully verified dueDate textbox "+dueDate + " contains "+name, YesNo.No);
+							}
+							else {
+								log(LogStatus.ERROR, "could not verify dueDate textbox, found: "+name, YesNo.No);
+								sa.assertTrue(false,"could not verify dueDate textbox, found: "+name);
+
+							}
+						}else {
+							log(LogStatus.ERROR, "not visible on page dueDate textbox", YesNo.No);
+							sa.assertTrue(false,"not visible on page dueDate textbox" );
+
+						}
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+
+
+
+
+
+
+
+					/////////////////////////////////////////////////////
+					String task=subject;	
+
+					String[][] dropDownLabelWithValues = {{PageLabel.Priority.toString(),M3Task1Priority}};
+					String relatedContact = M3Contact1FName+" "+M3Contact1LName;
+					if (tp.enteringSubjectAndSelectDropDownValuesonTaskPopUp(projectName, PageName.NewTaskPopUP, task, dropDownLabelWithValues, action.SCROLLANDBOOLEAN, 10)) {	
+						log(LogStatus.INFO,"Entered Value on Subject Text Box : "+task,  YesNo.Yes);
+
+						boolean flag = cp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.NewTaskPopUP, PageLabel.Name.toString(), TabName.TaskTab, relatedContact, action.SCROLLANDBOOLEAN, 10);		
+						if (flag) {
+							log(LogStatus.INFO,"Selected "+relatedContact+" For  Drown Down Value : "+cp.getTabName(projectName, TabName.TaskTab)+" For Label "+PageLabel.Name,YesNo.No);
+							ele=cp.getCrossButtonForAlreadySelectedItem(projectName, PageName.NewTaskPopUP, PageLabel.Name.toString(),true, relatedContact, action.SCROLLANDBOOLEAN, 5);
+							if (ele!=null) {
+								log(LogStatus.INFO, relatedContact+" Found For Label "+PageLabel.Name.toString(),YesNo.No);	
+							} else {
+								sa.assertTrue(false,relatedContact+" not Found For Label "+PageLabel.Name.toString());
+								log(LogStatus.ERROR, relatedContact+" not Found For Label "+PageLabel.Name.toString(),YesNo.Yes);
+
+							}
+						} else {
+							sa.assertTrue(false,"Not Able to Select "+relatedContact+" For Label "+PageLabel.Name);
+							log(LogStatus.SKIP,"Not Able to Select "+relatedContact+" For Label "+PageLabel.Name,YesNo.Yes);
+
+						}
+						
+						flag=cp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.NewTaskPopUP, PageLabel.Related_Associations.toString(), TabName.Object1Tab, M3Ins1, action.SCROLLANDBOOLEAN, 10);		
+						if (flag) {
+							log(LogStatus.INFO,"Selected "+M3Ins1+" For Label "+PageLabel.Related_Associations,YesNo.No);
+
+						} else {
+							sa.assertTrue(false,"Not Able to Select "+M3Ins1+" For Label "+PageLabel.Related_Associations);
+							log(LogStatus.SKIP,"Not Able to Select "+M3Ins1+" For Label "+PageLabel.Related_Associations,YesNo.Yes);
+
+						}
+						
+						flag=cp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.NewTaskPopUP, PageLabel.Related_Associations.toString(), TabName.Object1Tab, M3Ins2, action.SCROLLANDBOOLEAN, 10);		
+						if (flag) {
+							log(LogStatus.INFO,"Selected "+M3Ins2+" For Label "+PageLabel.Related_Associations,YesNo.No);
+
+						} else {
+							sa.assertTrue(false,"Not Able to Select "+M3Ins2+" For Label "+PageLabel.Related_Associations);
+							log(LogStatus.SKIP,"Not Able to Select "+M3Ins2+" For Label "+PageLabel.Related_Associations,YesNo.Yes);
+
+						}
+						
+						
+						if (sendKeys(driver, cp.getcommentsTextBox(projectName, 10), M3Task1Comment, "comments", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "value entered in comment textbox", YesNo.No);	
+							
+						}
+						else {
+							log(LogStatus.ERROR, "comments textbox is not visible so task could not be created", YesNo.Yes);
+							sa.assertTrue(false,"comments textbox is not visible so task could not be created" );
+						}
+						
+						
+						
+						if (clickUsingJavaScript(driver,lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
+							ThreadSleep(1000);
+							ele = cp.getCreatedConfirmationMsg(projectName, 15);
+							if (ele!=null) {
+								String actualValue = ele.getText().trim();
+								String expectedValue=tp.taskCreatesMsg(projectName, task);
+								if (actualValue.contains(expectedValue)) {
+									log(LogStatus.INFO,expectedValue+" matched FOR Confirmation Msg", YesNo.No);
+
+								} else {
+									log(LogStatus.ERROR,"Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg", YesNo.Yes);
+									BaseLib.sa.assertTrue(false, "Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg");
+								}
+							} else {
+								sa.assertTrue(false,"Created Task Msg Ele not Found");
+								log(LogStatus.SKIP,"Created Task Msg Ele not Found",YesNo.Yes);
+
+							}
+
+							
+							String relatedAssoctaion=tp.Comment(projectName, PageLabel.Related_Associations, M3Ins1)+", "+M3Ins2;
+							String comment = relatedAssoctaion+"\n"+TaskPagePageErrorMessage.Dots+"\n"+M3Task1Comment;
+
+							String[][] fieldsWithValues= {
+									{PageLabel.Subject.toString(),M3Task1Subject},
+									{PageLabel.Due_Date.toString(),dueDate},
+									{PageLabel.Status.toString(),M3Task1Status},
+									{PageLabel.Priority.toString(),M3Task1Priority},
+									{PageLabel.Name.toString(),M3Contact1FName+" "+M3Contact1LName},
+									{PageLabel.Related_Associations.toString(),M3Ins1+", "+M3Ins2},
+									{PageLabel.Comments.toString(),comment}};
+
+							tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
+
+
+							
+							
+
+						}
+						else {
+							log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
+							sa.assertTrue(false,"save button is not clickable so task not created" );
+						}
+
+					}else {
+						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
+						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
+					}
+
+
+
+				} else {
+					log(LogStatus.ERROR, "New Task Pop Up should be open after clicking on "+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false, "New Task Pop Up should be open after clicking on "+navigationLabelValue);
+				}
+
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+		}	
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc089_VerifyNewTaskwithMultipleAssociationsAction(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp = new TaskPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		String dependentTC="Module3Tc081_CreateMultiTaggedLogACallAllNavigationMenuItem";
+		String createNewLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Parent);
+		String newTask = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, "Module3Tc086_CreateNavigationRecordsRelatedToMultiTaggedActions", excelLabel.Navigation_Label_Name);
+		String navigationLabelValue=createNewLabel+"/"+newTask;
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+			WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+			if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+				ThreadSleep(5000);
+
+				ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, "", action.BOOLEAN, 30);
+				if (ele!=null) {
+					log(LogStatus.INFO, "New Task Pop Up is open after clicking on "+navigationLabelValue , YesNo.No);
+
+					String task=M3Task2Subject;	
+
+					String[][] dropDownLabelWithValues = {{PageLabel.Status.toString(),M3Task2Status},{PageLabel.Priority.toString(),M3Task2Priority}};
+					String relatedContact = M3Contact1FName+" "+M3Contact1LName;
+					if (tp.enteringSubjectAndSelectDropDownValuesonTaskPopUp(projectName, PageName.NewTaskPopUP, task, dropDownLabelWithValues, action.SCROLLANDBOOLEAN, 10)) {	
+						log(LogStatus.INFO,"Entered Value on Subject Text Box : "+task,  YesNo.Yes);
+
+						boolean flag = cp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.NewTaskPopUP, PageLabel.Name.toString(), TabName.TaskTab, relatedContact, action.SCROLLANDBOOLEAN, 10);		
+						if (flag) {
+							log(LogStatus.INFO,"Selected "+relatedContact+" For  Drown Down Value : "+cp.getTabName(projectName, TabName.TaskTab)+" For Label "+PageLabel.Name,YesNo.No);
+							ele=cp.getCrossButtonForAlreadySelectedItem(projectName, PageName.NewTaskPopUP, PageLabel.Name.toString(),true, relatedContact, action.SCROLLANDBOOLEAN, 5);
+							if (ele!=null) {
+								log(LogStatus.INFO, relatedContact+" Found For Label "+PageLabel.Name.toString(),YesNo.No);	
+							} else {
+								sa.assertTrue(false,relatedContact+" not Found For Label "+PageLabel.Name.toString());
+								log(LogStatus.ERROR, relatedContact+" not Found For Label "+PageLabel.Name.toString(),YesNo.Yes);
+
+							}
+						} else {
+							sa.assertTrue(false,"Not Able to Select "+relatedContact+" For Label "+PageLabel.Name);
+							log(LogStatus.SKIP,"Not Able to Select "+relatedContact+" For Label "+PageLabel.Name,YesNo.Yes);
+
+						}
+						
+						flag=cp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.NewTaskPopUP, PageLabel.Related_Associations.toString(), TabName.Object1Tab, M3Ins1, action.SCROLLANDBOOLEAN, 10);		
+						if (flag) {
+							log(LogStatus.INFO,"Selected "+M3Ins1+" For Label "+PageLabel.Related_Associations,YesNo.No);
+
+						} else {
+							sa.assertTrue(false,"Not Able to Select "+M3Ins1+" For Label "+PageLabel.Related_Associations);
+							log(LogStatus.SKIP,"Not Able to Select "+M3Ins1+" For Label "+PageLabel.Related_Associations,YesNo.Yes);
+
+						}
+						
+						flag=cp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.NewTaskPopUP, PageLabel.Related_Associations.toString(), TabName.Object1Tab, M3Ins2, action.SCROLLANDBOOLEAN, 10);		
+						if (flag) {
+							log(LogStatus.INFO,"Selected "+M3Ins2+" For Label "+PageLabel.Related_Associations,YesNo.No);
+
+						} else {
+							sa.assertTrue(false,"Not Able to Select "+M3Ins2+" For Label "+PageLabel.Related_Associations);
+							log(LogStatus.SKIP,"Not Able to Select "+M3Ins2+" For Label "+PageLabel.Related_Associations,YesNo.Yes);
+
+						}
+						
+						flag=cp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.NewTaskPopUP, PageLabel.Related_Associations.toString(), TabName.Object3Tab, M3Fund1, action.SCROLLANDBOOLEAN, 10);		
+						if (flag) {
+							log(LogStatus.INFO,"Selected "+M3Fund1+" For Label "+PageLabel.Related_Associations,YesNo.No);
+
+						} else {
+							sa.assertTrue(false,"Not Able to Select "+M3Fund1+" For Label "+PageLabel.Related_Associations);
+							log(LogStatus.SKIP,"Not Able to Select "+M3Fund1+" For Label "+PageLabel.Related_Associations,YesNo.Yes);
+
+						}
+						
+//						flag=cp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.NewTaskPopUP, PageLabel.Related_Associations.toString(), TabName.TestCustomObjectTab, M3TestCustomObj1Name, action.SCROLLANDBOOLEAN, 10);		
+//						if (flag) {
+//							log(LogStatus.INFO,"Selected "+M3TestCustomObj1Name+" For Label "+PageLabel.Related_Associations,YesNo.No);
+//
+//						} else {
+//							sa.assertTrue(false,"Not Able to Select "+M3TestCustomObj1Name+" For Label "+PageLabel.Related_Associations);
+//							log(LogStatus.SKIP,"Not Able to Select "+M3TestCustomObj1Name+" For Label "+PageLabel.Related_Associations,YesNo.Yes);
+//
+//						}
+						
+						
+						
+						if (sendKeys(driver, cp.getcommentsTextBox(projectName, 10), M3Task2Comment, "comments", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "value entered in comment textbox", YesNo.No);	
+							
+						}
+						else {
+							log(LogStatus.ERROR, "comments textbox is not visible so task could not be created", YesNo.Yes);
+							sa.assertTrue(false,"comments textbox is not visible so task could not be created" );
+						}
+						
+						
+						
+						if (clickUsingJavaScript(driver,lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
+							ThreadSleep(5000);
+							scn.nextLine();
+							ele = cp.getCreatedConfirmationMsg(projectName, 15);
+							if (ele!=null) {
+								String actualValue = ele.getText().trim();
+								String expectedValue=tp.taskCreatesMsg(projectName, task);
+								if (actualValue.contains(expectedValue)) {
+									log(LogStatus.INFO,expectedValue+" matched FOR Confirmation Msg", YesNo.No);
+
+								} else {
+									log(LogStatus.ERROR,"Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg", YesNo.Yes);
+									BaseLib.sa.assertTrue(false, "Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg");
+								}
+							} else {
+								sa.assertTrue(false,"Created Task Msg Ele not Found");
+								log(LogStatus.SKIP,"Created Task Msg Ele not Found",YesNo.Yes);
+
+							}
+
+							
+							String relatedAssoctaion=tp.Comment(projectName, PageLabel.Related_Associations, M3Ins1)+", "+M3Ins2+", "+M3Fund1;
+							String comment = relatedAssoctaion+"\n"+TaskPagePageErrorMessage.Dots+"\n"+M3Task2Comment;
+
+							String dueDate = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "MM/dd/YYYY");
+							String[][] fieldsWithValues= {
+									{PageLabel.Subject.toString(),M3Task2Subject},
+									{PageLabel.Due_Date.toString(),dueDate},
+									{PageLabel.Status.toString(),M3Task2Status},
+									{PageLabel.Priority.toString(),M3Task2Priority},
+									{PageLabel.Name.toString(),M3Contact1FName+" "+M3Contact1LName},
+									{PageLabel.Related_Associations.toString(),M3Ins1+", "+M3Ins2+", "+M3Fund1},
+									{PageLabel.Comments.toString(),comment}};
+
+							tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
+
+
+							
+							
+
+						}
+						else {
+							log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
+							sa.assertTrue(false,"save button is not clickable so task not created" );
+						}
+
+					}else {
+						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
+						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
+					}
+
+
+
+				} else {
+					log(LogStatus.ERROR, "New Task Pop Up should be open after clicking on "+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false, "New Task Pop Up should be open after clicking on "+navigationLabelValue);
+				}
+
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+		}	
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc090_VerifyNewMeetingAction(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp = new TaskPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		String dependentTC="Module3Tc081_CreateMultiTaggedLogACallAllNavigationMenuItem";
+		String createNewLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Parent);
+		String newMeeting = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, "Module3Tc085_CreateCustomActionOfTypeTask", excelLabel.Navigation_Label_Name);
+		String navigationLabelValue=createNewLabel+"/"+newMeeting;
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+			WebElement ele = npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
+			if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+				ThreadSleep(5000);
+
+				ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, "", action.BOOLEAN, 30);
+				if (ele!=null) {
+					log(LogStatus.INFO, "New Task Pop Up is open after clicking on "+navigationLabelValue , YesNo.No);
+
+					String task=M3Task3Subject;	
+
+					String[][] dropDownLabelWithValues = {{PageLabel.Status.toString(),M3Task3Status},{PageLabel.Priority.toString(),M3Task3Priority},{PageLabel.Meeting_Type.toString(),M3Task3MeetingType}};
+					String relatedContact = M3Contact1FName+" "+M3Contact1LName;
+					if (tp.enteringSubjectAndSelectDropDownValuesonTaskPopUp(projectName, PageName.NewTaskPopUP, task, dropDownLabelWithValues, action.SCROLLANDBOOLEAN, 10)) {	
+						log(LogStatus.INFO,"Entered Value on Subject Text Box : "+task,  YesNo.Yes);
+
+						boolean flag = cp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.NewTaskPopUP, PageLabel.Name.toString(), TabName.TaskTab, relatedContact, action.SCROLLANDBOOLEAN, 10);		
+						if (flag) {
+							log(LogStatus.INFO,"Selected "+relatedContact+" For  Drown Down Value : "+cp.getTabName(projectName, TabName.TaskTab)+" For Label "+PageLabel.Name,YesNo.No);
+							ele=cp.getCrossButtonForAlreadySelectedItem(projectName, PageName.NewTaskPopUP, PageLabel.Name.toString(),true, relatedContact, action.SCROLLANDBOOLEAN, 5);
+							if (ele!=null) {
+								log(LogStatus.INFO, relatedContact+" Found For Label "+PageLabel.Name.toString(),YesNo.No);	
+							} else {
+								sa.assertTrue(false,relatedContact+" not Found For Label "+PageLabel.Name.toString());
+								log(LogStatus.ERROR, relatedContact+" not Found For Label "+PageLabel.Name.toString(),YesNo.Yes);
+
+							}
+						} else {
+							sa.assertTrue(false,"Not Able to Select "+relatedContact+" For Label "+PageLabel.Name);
+							log(LogStatus.SKIP,"Not Able to Select "+relatedContact+" For Label "+PageLabel.Name,YesNo.Yes);
+
+						}
+						
+						flag=cp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.NewTaskPopUP, PageLabel.Related_Associations.toString(), TabName.Object1Tab, M3Ins1, action.SCROLLANDBOOLEAN, 10);		
+						if (flag) {
+							log(LogStatus.INFO,"Selected "+M3Ins1+" For Label "+PageLabel.Related_Associations,YesNo.No);
+
+						} else {
+							sa.assertTrue(false,"Not Able to Select "+M3Ins1+" For Label "+PageLabel.Related_Associations);
+							log(LogStatus.SKIP,"Not Able to Select "+M3Ins1+" For Label "+PageLabel.Related_Associations,YesNo.Yes);
+
+						}
+						
+						flag=cp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.NewTaskPopUP, PageLabel.Related_Associations.toString(), TabName.Object1Tab, M3Ins2, action.SCROLLANDBOOLEAN, 10);		
+						if (flag) {
+							log(LogStatus.INFO,"Selected "+M3Ins2+" For Label "+PageLabel.Related_Associations,YesNo.No);
+
+						} else {
+							sa.assertTrue(false,"Not Able to Select "+M3Ins2+" For Label "+PageLabel.Related_Associations);
+							log(LogStatus.SKIP,"Not Able to Select "+M3Ins2+" For Label "+PageLabel.Related_Associations,YesNo.Yes);
+
+						}
+						
+						flag=cp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.NewTaskPopUP, PageLabel.Related_Associations.toString(), TabName.Object3Tab, M3Fund1, action.SCROLLANDBOOLEAN, 10);		
+						if (flag) {
+							log(LogStatus.INFO,"Selected "+M3Fund1+" For Label "+PageLabel.Related_Associations,YesNo.No);
+
+						} else {
+							sa.assertTrue(false,"Not Able to Select "+M3Fund1+" For Label "+PageLabel.Related_Associations);
+							log(LogStatus.SKIP,"Not Able to Select "+M3Fund1+" For Label "+PageLabel.Related_Associations,YesNo.Yes);
+
+						}
+						
+//						flag=cp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.NewTaskPopUP, PageLabel.Related_Associations.toString(), TabName.TestCustomObjectTab, M3TestCustomObj1Name, action.SCROLLANDBOOLEAN, 10);		
+//						if (flag) {
+//							log(LogStatus.INFO,"Selected "+M3TestCustomObj1Name+" For Label "+PageLabel.Related_Associations,YesNo.No);
+//
+//						} else {
+//							sa.assertTrue(false,"Not Able to Select "+M3TestCustomObj1Name+" For Label "+PageLabel.Related_Associations);
+//							log(LogStatus.SKIP,"Not Able to Select "+M3TestCustomObj1Name+" For Label "+PageLabel.Related_Associations,YesNo.Yes);
+//
+//						}
+						
+						
+						
+						if (sendKeys(driver, cp.getcommentsTextBox(projectName, 10), M3Task3Comment, "comments", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "value entered in comment textbox", YesNo.No);	
+							
+						}
+						else {
+							log(LogStatus.ERROR, "comments textbox is not visible so task could not be created", YesNo.Yes);
+							sa.assertTrue(false,"comments textbox is not visible so task could not be created" );
+						}
+						
+						
+						
+						if (clickUsingJavaScript(driver,lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
+							ThreadSleep(5000);
+							scn.nextLine();
+							ele = cp.getCreatedConfirmationMsg(projectName, 15);
+							if (ele!=null) {
+								String actualValue = ele.getText().trim();
+								String expectedValue=tp.taskCreatesMsg(projectName, task);
+								if (actualValue.contains(expectedValue)) {
+									log(LogStatus.INFO,expectedValue+" matched FOR Confirmation Msg", YesNo.No);
+
+								} else {
+									log(LogStatus.ERROR,"Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg", YesNo.Yes);
+									BaseLib.sa.assertTrue(false, "Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg");
+								}
+							} else {
+								sa.assertTrue(false,"Created Task Msg Ele not Found");
+								log(LogStatus.SKIP,"Created Task Msg Ele not Found",YesNo.Yes);
+
+							}
+
+							
+							String relatedAssoctaion=tp.Comment(projectName, PageLabel.Related_Associations, M3Ins1)+", "+M3Ins2+", "+M3Fund1;
+							String comment = relatedAssoctaion+"\n"+TaskPagePageErrorMessage.Dots+"\n"+M3Task3Comment;
+
+							String dueDate = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "MM/dd/YYYY");
+							String[][] fieldsWithValues= {
+									{PageLabel.Subject.toString(),M3Task3Subject},
+									{PageLabel.Due_Date.toString(),dueDate},
+									{PageLabel.Status.toString(),M3Task3Status},
+									{PageLabel.Priority.toString(),M3Task3Priority},
+									{PageLabel.Meeting_Type.toString(),M3Task3MeetingType},
+									{PageLabel.Name.toString(),M3Contact1FName+" "+M3Contact1LName},
+									{PageLabel.Related_Associations.toString(),M3Ins1+", "+M3Ins2+", "+M3Fund1},
+									{PageLabel.Comments.toString(),comment}};
+
+							tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
+
+
+							
+							
+
+						}
+						else {
+							log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
+							sa.assertTrue(false,"save button is not clickable so task not created" );
+						}
+
+					}else {
+						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
+						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
+					}
+
+
+
+				} else {
+					log(LogStatus.ERROR, "New Task Pop Up should be open after clicking on "+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false, "New Task Pop Up should be open after clicking on "+navigationLabelValue);
+				}
+
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+navigationLabelValue);
+		}	
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc091_CreatePredefinendValuesInNavigationRecords(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		String actionName="";
+		String allAction=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name);
+		String[] actionNames =allAction.split(breakSP);
+		String[][] labelsWithValues;
+		for (int i = 0; i < actionNames.length; i++) {
+			actionName=actionNames[i];
+			
+			if (home.clickOnSetUpLink()) {
+				String parentID = switchOnWindow(driver);
+				if (parentID!=null) {
+					log(LogStatus.INFO, "Able to switch on new window, so going to Create predefined values ", YesNo.No);
+					ThreadSleep(100);
+					if(setup.searchStandardOrCustomObject(environment,mode, object.Global_Actions)) {
+						log(LogStatus.INFO , "Able to search/click on "+object.Global_Actions, YesNo.No);
+						if (i==0) {
+							labelsWithValues=newTaskPredefinedValue;
+						} else if(i==1) {
+							labelsWithValues=LogACallPredefinedValue;
+						}else {
+							labelsWithValues=newMeetingPredefinedValue;
+						}
+						setup.createPredefinedValueForGlobalAction(driver,actionName, labelsWithValues, 20);
+					}else {
+						log(LogStatus.ERROR, "Not able to search/click on "+object.Global_Actions, YesNo.Yes);
+						sa.assertTrue(false, "Not able to search/click on "+object.Global_Actions);
+					}
+
+					driver.close();
+					driver.switchTo().window(parentID);
+				}else {
+					log(LogStatus.FAIL, "could not find new window to switch, so cannot Create predefined values", YesNo.Yes);
+					sa.assertTrue(false, "could not find new window to switch, so cannot Create predefined values");
+				}
+
+			}else {
+				log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on setup link");	
+			}
+			
+		}
+		
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc093_CreateTaskRecordTypesAndPageLayouts(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+
+
+		String recordTypeList=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Record_Type);
+		String recordTypeArray[] =recordTypeList.split(breakSP);
+		String[][] taskType1 = {{recordTypeLabel.Record_Type_Label.toString(),recordTypeArray[0]},
+				{recordTypeLabel.Active.toString(),""}};
+
+		String[][] taskType2 = {{recordTypeLabel.Record_Type_Label.toString(),recordTypeArray[1]},
+				{recordTypeLabel.Active.toString(),""}};
+
+		String[][] taskType3 = {{recordTypeLabel.Record_Type_Label.toString(),recordTypeArray[2]},
+				{recordTypeLabel.Active.toString(),""}};
+
+		boolean isMakeAvailable=true, isMakeDefault=true;
+
+		boolean flag=false;
+		String existingPageLayout="Task Layout";
+		String src = "Task Record Type";
+		String trgt="";
+
+		String pageLayouts="Cst Pageloyout1"+breakSP+"Cst Pageloyout2"+breakSP+"Cst Pageloyout3";
+		String[] pageLayout=pageLayouts.split(breakSP);
+		if (home.clickOnSetUpLink()) {
+			flag=false;
+			String parentID = switchOnWindow(driver);
+			SetupPageBusinessLayer sp = new SetupPageBusinessLayer(driver);
+			if (parentID!=null) {
+				if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(),object.Task )) {
+					log(LogStatus.INFO, "Click on "+object.Task, YesNo.No);
+					for (int i = 0; i < recordTypeArray.length; i++) {
+						switchToDefaultContent(driver);
+						if(sp.clickOnObjectFeature("", Mode.Lightning.toString(),object.Task, ObjectFeatureName.pageLayouts)) {
+							log(LogStatus.INFO, "Click on "+ObjectFeatureName.pageLayouts, YesNo.No);
+							ThreadSleep(5000);
+							if (i==0) {
+								trgt="Status";
+								flag=sp.createPageLayout(projectName,new String[][]{{PageLabel.Page_Layout_Name.toString(),pageLayout[i]}} , existingPageLayout, src, trgt, 10)	;	
+							} else if(i==1) {
+								trgt="Priority";
+								flag=sp.createPageLayout(projectName,new String[][]{{PageLabel.Page_Layout_Name.toString(),pageLayout[i]}} , existingPageLayout, src, trgt, 10)	;	
+
+							}else {
+								trgt="Due Date";
+								flag=sp.createPageLayout(projectName,new String[][]{{PageLabel.Page_Layout_Name.toString(),pageLayout[i]}} , existingPageLayout, src, trgt, 10)	;	
+							}
+							if (flag) {
+								log(LogStatus.ERROR, "Created Page Layout : "+pageLayout[i], YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Created Page Layout : "+pageLayout[i], YesNo.Yes);
+								sa.assertTrue(false,"Created Page Layout : "+pageLayout[i]);
+							}
+
+						}else {
+							log(LogStatus.ERROR, "object feature "+ObjectFeatureName.pageLayouts+" is not clickable", YesNo.Yes);
+							sa.assertTrue(false, "object feature "+ObjectFeatureName.pageLayouts+" is not clickable");
+						}
+
+						switchToDefaultContent(driver);
+						if(sp.clickOnObjectFeature("", Mode.Lightning.toString(),object.Task, ObjectFeatureName.recordTypes)) {
+							log(LogStatus.INFO, "Click on "+ObjectFeatureName.recordTypes, YesNo.No);
+							ThreadSleep(5000);
+							if (i==0) {
+								flag=sp.createRecordTypeForObject(projectName, taskType1, isMakeAvailable, isMakeDefault,pageLayout[i], 10);	
+							} else if(i==1) {
+								isMakeDefault=false;
+								flag=sp.createRecordTypeForObject(projectName, taskType2, isMakeAvailable, isMakeDefault,pageLayout[i], 10);
+							}else {
+								isMakeDefault=false;
+								flag=sp.createRecordTypeForObject(projectName, taskType3, isMakeAvailable, isMakeDefault,pageLayout[i], 10);
+							}
+							if (flag) {
+								log(LogStatus.ERROR, "Created Record Type : "+recordTypeArray[i], YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Not Able to Create Record Type : "+recordTypeArray[i], YesNo.Yes);
+								sa.assertTrue(false,"Not Able to Create Record Type : "+recordTypeArray[i]);
+							}
+
+						}else {
+							log(LogStatus.ERROR, "object feature "+ObjectFeatureName.recordTypes+" is not clickable", YesNo.Yes);
+							sa.assertTrue(false, "object feature "+ObjectFeatureName.recordTypes+" is not clickable");
+						}
+					}
+				}else {
+					log(LogStatus.ERROR, "Task object could not be found in object manager", YesNo.Yes);
+					sa.assertTrue(false, "Task object could not be found in object manager");
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+				switchToDefaultContent(driver);
+				refresh(driver);
+			}else {
+				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch");
+			}
+		}else {
+			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "could not click on setup link");
+		}
+
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc094_EditNavigationRecordAndSetRecordTypesInEachRecord(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		String actionName="";
+		String allAction=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name);
+		String[] actionNames =allAction.split(breakSP);
+
+		String recordTypeList=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Record_Type);
+		String recordTypeArray[] =recordTypeList.split(breakSP);
+
+		String actionRecordTypeLabel=CSVLabel.Action_Record_Type.toString();
+		String actionRecordTypeLabelValue="";
+		for (int i = 0; i < actionNames.length; i++) {
+			actionName=actionNames[i];
+
+			actionRecordTypeLabelValue=recordTypeArray[i].replace(" ", "_");
+			String[][] labelWithValue= {{actionRecordTypeLabel,actionRecordTypeLabelValue}};
+			if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, actionName, labelWithValue, 20)) {
+				log(LogStatus.INFO, actionRecordTypeLabelValue+" value has been updated & saved under "+actionRecordTypeLabel+" for "+actionName, YesNo.No);
+			}else{
+				log(LogStatus.ERROR, "Not Able to enter value on" +actionRecordTypeLabel+" for "+actionName, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to enter value on" +actionRecordTypeLabel+" for "+actionName);
+			}
+
+
+		}
+
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc095_VerifyActionsfromNavigationPageAfterAssigningRecordTypes(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		String parentLabel = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Parent);;
+
+		String navigationLabels=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name);
+		String[] navigationLabel =navigationLabels.split(breakSP);
+
+		String recordTypeList=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Record_Type);
+		String recordTypeArray[] =recordTypeList.split(breakSP);
+
+		String navigationLabelValue="";
+		WebElement ele=null;
+		String expecedHeader="New Task: ";
+		String actualHeader="";
+
+		for (int i = 0; i < navigationLabel.length; i++) {
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
+				navigationLabelValue=navigationLabel[i];
+				ele=npbl.getNavigationLabel(projectName, parentLabel+"/"+navigationLabelValue, action.BOOLEAN, 10);
+				if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
+					ThreadSleep(5000);
+					ele=npbl.getnavigationPopUpHeader(projectName, 10);
+					if (ele!=null) {
+						log(LogStatus.INFO, "PopUp is open" , YesNo.No);
+						expecedHeader=expecedHeader+recordTypeArray[i];
+						actualHeader=ele.getText().trim();
+						if (ele.getText().trim().equals(expecedHeader)) {
+							log(LogStatus.INFO, "Header Text verified : "+expecedHeader, YesNo.Yes);
+							
+						} else {
+							log(LogStatus.ERROR, "Header Text not verified Actual : "+actualHeader+" \t Expected : "+expecedHeader, YesNo.Yes);
+							sa.assertTrue(false, "Header Text not verified Actual : "+actualHeader+" \t Expected : "+expecedHeader);
+						}
+
+					} else {
+						log(LogStatus.ERROR, "No PopUp is open so cannoy verify Heading "+expecedHeader, YesNo.Yes);
+						sa.assertTrue(false, "No PopUp is open so cannoy verify Heading "+expecedHeader);
+					}
+					} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+parentLabel+"/"+navigationLabelValue, YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+parentLabel+"/"+navigationLabelValue);
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot check label : "+parentLabel+"/"+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot check label : "+parentLabel+"/"+navigationLabelValue);
+			}
+			refresh(driver);
+			expecedHeader="New Task: ";
+		}
 		switchToDefaultContent(driver);
 		lp.CRMlogout();
 		sa.assertAll();

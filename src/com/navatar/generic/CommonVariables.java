@@ -7,13 +7,12 @@ import static com.navatar.generic.BaseLib.testCasesFilePath;
 import static com.navatar.generic.BaseLib.phase1DataSheetFilePath;
 import static com.navatar.generic.CommonLib.getDateAccToTimeZone;
 import static com.navatar.generic.CommonLib.previousOrForwardDate;
-import static com.navatar.generic.EnumConstants.*;
+
+import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.scripts.Module5;
-
-import com.navatar.generic.EnumConstants.excelLabel;
-import com.navatar.scripts.FieldSet;
+import com.navatar.scripts.Module1;
 import com.navatar.scripts.Module2;
 import com.navatar.scripts.Module3;
 import com.navatar.scripts.Module4;
@@ -213,6 +212,37 @@ public class CommonVariables {
 	public static String LondonCoverage,LondonCoverageRecordType;
 	public static String LosAngelesCoverage,LosAngelesCoverageRecordType;
 	public static String NewYorkCoverage,NewYorkCoverageRecordType;
+	
+	public static String M3Ins1,M3Ins1RecordType;
+	public static String M3Ins2,M3Ins2RecordType;
+	public static String M3Contact1FName,M3Contact1LName,M3Contact1EmailID,M3Contact1RecordType;
+	public static String M3Fund1,M3Fund1Type,M3Fund1Category,M3Fund1RecordType;
+	public static String M3TestCustomObj1Name,M3TestCustomObj1RecordType;
+	
+	public static String M3Task1Subject,M3Task1dueDate,M3Task1Status,M3Task1Priority,M3Task1Comment;
+	public static String M3Task2Subject,M3Task2dueDate,M3Task2Status,M3Task2Priority,M3Task2Comment;
+	public static String M3Task3Subject,M3Task3dueDate,M3Task3Status,M3Task3Priority,M3Task3Comment,M3Task3MeetingType;
+	
+	
+	public static String[][] newTaskPredefinedValue = {{PageLabel.Subject.toString(),"\"Client Demo Request\""},
+											{PageLabel.Due_Date.toString(),"\"Today() + 2\""},
+												{PageLabel.Status.toString(),"\"Not Started\""},
+												{PageLabel.Priority.toString(),"\"High\""},
+													{PageLabel.Comments.toString(),"\"Test for predefined comments in Events\""}};
+	
+	public static String[][] LogACallPredefinedValue = {{PageLabel.Subject.toString(),"\"Call for Client Demo\""},
+			{PageLabel.Due_Date.toString(),"\"Today() - 1\""},
+				{PageLabel.Priority.toString(),"\"Normal\""},
+					{PageLabel.Comments.toString(),"\"Test for predefined comments in Log a call\""}};
+	
+	public static String[][] newMeetingPredefinedValue = {{PageLabel.Subject.toString(),"\"Client Success Meeting\""},
+			{PageLabel.Due_Date.toString(),"\"Today() + 2\""},
+				{PageLabel.Status.toString(),"\"Deferred\""},
+				{PageLabel.Priority.toString(),"\"High\""},
+				{PageLabel.Meeting_Type.toString(),"\"Board Meeting\""},
+					{PageLabel.Comments.toString(),"\"Test for predefined comments in Meeting\""}};
+	//,LogACallPredefinedValue,newMeetingPredefinedValue;
+	
 	
 	
 //	/**
@@ -457,7 +487,18 @@ public class CommonVariables {
 			TWTaskCR1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask8", excelLabel.Subject);
 			TWTaskUpdateLabelSubject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask9", excelLabel.Subject);
 			
-		}else if(obj instanceof FieldSet){
+		}else if(obj instanceof Module1){
+			
+			ToggleOpenQA1ID=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Request_Tracker_ID);
+			ToggleOpenQA1RequestedDate=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Date_Requested);;
+			ToggleOpenQA1Request=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Request);
+			ToggleOpenQA1Status=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Status);
+			
+			ToggleClosedQA1ID=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Request_Tracker_ID);
+			ToggleClosedQA1RequestedDate=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Date_Requested);;
+			ToggleClosedQA1Request=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Request);
+			ToggleClosedQA1Status=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Status);
+			
 			
 			FS_Object1=ExcelUtils.readData(phase1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS1", excelLabel.Object_Name);
 			FS_Object2=ExcelUtils.readData(phase1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS2", excelLabel.Object_Name);
@@ -811,7 +852,42 @@ public class CommonVariables {
 			NewYorkCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region4", excelLabel.Coverage_Name);
 			NewYorkCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region4", excelLabel.Record_Type);
 			
+			M3Ins1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS1", excelLabel.Institutions_Name);
+			M3Ins1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS1", excelLabel.Record_Type);
 			
+			M3Ins2=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS2", excelLabel.Institutions_Name);
+			M3Ins2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS2", excelLabel.Record_Type);
+			
+			M3Contact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON1", excelLabel.Contact_FirstName);
+			M3Contact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON1", excelLabel.Contact_LastName);
+			M3Contact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON1", excelLabel.Contact_EmailId);
+			M3Contact1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON1", excelLabel.Record_Type);
+		
+			M3Fund1=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "M3FUND1", excelLabel.Fund_Name);
+			M3Fund1Type=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "M3FUND1", excelLabel.Fund_Type);
+			M3Fund1Category=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "M3FUND1", excelLabel.Investment_Category);
+			M3Fund1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "M3FUND1", excelLabel.Record_Type);
+		
+			M3TestCustomObj1Name=ExcelUtils.readData(testCasesFilePath, "Test Custom Object", excelLabel.Variable_Name,"M3CSTOBJ", excelLabel.Test_Custom_Object_Name);
+			M3TestCustomObj1RecordType=ExcelUtils.readData(testCasesFilePath, "Test Custom Object", excelLabel.Variable_Name,"M3CSTOBJ", excelLabel.Record_Type);
+			
+			M3Task1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task1", excelLabel.Subject);
+			M3Task1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task1", excelLabel.Status);
+			M3Task1Priority=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task1", excelLabel.Priority);
+			M3Task1Comment=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task1", excelLabel.Comment);
+			
+			M3Task2Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task2", excelLabel.Subject);
+			M3Task2Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task2", excelLabel.Status);
+			M3Task2Priority=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task2", excelLabel.Priority);
+			M3Task2Comment=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task2", excelLabel.Comment);
+			
+			M3Task3Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task3", excelLabel.Subject);
+			M3Task3Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task3", excelLabel.Status);
+			M3Task3Priority=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task3", excelLabel.Priority);
+			M3Task3Comment=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task3", excelLabel.Comment);
+			M3Task3MeetingType=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task3", excelLabel.Meeting_Type);
+			
+		//	newTaskPredefinedValue,LogACallPredefinedValue,newMeetingPredefinedValue;
 		}
 		
 		 System.err.println("");

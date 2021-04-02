@@ -1069,18 +1069,23 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 
 					if (click(driver, getdeletePhotoButton(projectName,10) ,"delete photo button", action.SCROLLANDBOOLEAN)) {
 						ThreadSleep(4000);
-						imgId=getimgLink(projectName, 10).getAttribute("src");
-						if (imgId!=null) {
-							if (imgId.contains(defaultPhotoText)) {
-								log(LogStatus.INFO, "successfully delete image", YesNo.Yes);
-								return true;
+						try {
+							imgId=getimgLink(projectName, 10).getAttribute("src");
+							if (imgId!=null) {
+								if (imgId.contains(defaultPhotoText)) {
+									log(LogStatus.INFO, "successfully delete image", YesNo.Yes);
+									return true;
+								}else {
+									log(LogStatus.ERROR, "not able to delete image", YesNo.Yes);
+									sa.assertTrue(false,"not able to delete image" );
+								}
 							}else {
-								log(LogStatus.ERROR, "not able to delete image", YesNo.Yes);
-								sa.assertTrue(false,"not able to delete image" );
+								log(LogStatus.ERROR, "id of image not found so cannot verify delete image", YesNo.Yes);
+								sa.assertTrue(false,"id of image not found so cannot verify delete image" );
 							}
-						}else {
-							log(LogStatus.ERROR, "id of image not found so cannot verify delete image", YesNo.Yes);
-							sa.assertTrue(false,"id of image not found so cannot verify delete image" );
+						}catch (Exception e) {
+							log(LogStatus.ERROR, "id of image not found so image is deleted", YesNo.Yes);
+							return true;
 						}
 					}else {
 						log(LogStatus.ERROR, "delete photo button on popup is not clickable", YesNo.Yes);
