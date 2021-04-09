@@ -693,10 +693,10 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 										action.BOOLEAN);
 								appLog.info(commitmentId  + " : commitment id is generated");
 								if(excelPath!=null) {
-									ExcelUtils.writeData(excelPath,commitmentId, "Entities", excelLabel.Variable_Name, basedOnValue,
+									ExcelUtils.writeData(excelPath,commitmentId, "Commitments", excelLabel.Variable_Name, basedOnValue,
 											excelLabel.Commitment_ID);
 								}else {
-									ExcelUtils.writeData(commitmentId, "Entities", excelLabel.Variable_Name, basedOnValue,
+									ExcelUtils.writeData(commitmentId, "Commitments", excelLabel.Variable_Name, basedOnValue,
 											excelLabel.Commitment_ID);
 								}
 								return true;
