@@ -51,20 +51,24 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		String navigationLabel2=null;
 		String parent2="";
 		String order2="";
-
+		String emptyType="\"\"";
+		String emptyType1="\" \"";
 		for (String abc2 : csvRecords) {
 			csvRecords2=abc2.split(commaSP);
-			navigationLabel2=csvRecords2[0].trim();
-			parent2=csvRecords2[2].trim();
-			order2=csvRecords2[1].trim();
+			navigationLabel2=csvRecords2[0].trim().replace("\"", "");
+			parent2=csvRecords2[2].trim().replace("\"", "");
+			order2=csvRecords2[1].trim().replace("\"", "");
+			System.err.println("Parent : "+parent2);
+			System.err.println("order2 : "+order2);
 			int i=0;
 
-			if (parent2.isEmpty() || parent2.equals(" ") ||parent2.equals("") || parent2.equalsIgnoreCase("")) {
+			if (parent2.isEmpty() || parent2.equals(" ") ||parent2.equals("") || parent2.equalsIgnoreCase("") || parent2.equalsIgnoreCase(emptyType)|| parent2.equalsIgnoreCase(emptyType1)) {
 				//System.err.println("inside parent blank");	
 				//System.out.println("ye wala "+navigationLabel2+" "+order2+" "+parent2);
-				if (order2.isEmpty() || order2.equals(" ") ||order2.equals("")) {
+				if (order2.isEmpty() || order2.equals(" ") || order2.equals("") || order2.equals(emptyType1) || order2.equals(emptyType)) {
 					i=1000;
 				}else {
+					order2=order2.replace("\"", "");
 					i=Integer.parseInt(order2);
 
 				}
@@ -76,6 +80,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 
 
 		}
+		System.err.println("navigationParentLabelWithOrder : "+map);
 		return map;
 
 	}
@@ -86,23 +91,26 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		String navigationLabel2=null;
 		String parent2="";
 		String order2="";
+		String emptyType="\"\"";
+		String emptyType1="\" \"";
 
 		for (String abc2 : csvRecords) {
 			csvRecords2=abc2.split(commaSP);
-			navigationLabel2=csvRecords2[0].trim();
-			parent2=csvRecords2[2].trim();
-			order2=csvRecords2[1].trim();
+			navigationLabel2=csvRecords2[0].trim().replace("\"", "");;
+			parent2=csvRecords2[2].trim().replace("\"", "");
+			order2=csvRecords2[1].trim().replace("\"", "");
 			int i=0;
 
-			if (parent2.isEmpty() || parent2.equals(" ") ||parent2.equals("")) {
+			if (parent2.isEmpty() || parent2.equals(" ") ||parent2.equals("") || parent2.equalsIgnoreCase(emptyType) || parent2.equalsIgnoreCase(emptyType1)) {
 
 
 			}else {
 
 				//	System.out.println("ye wala11 "+navigationLabel2+" "+order2+" "+parent2);
-				if (order2.isEmpty() || order2.equals(" ") ||order2.equals("")) {
+				if (order2.isEmpty() || order2.equals(" ") ||order2.equals("") || order2.equalsIgnoreCase(emptyType) || order2.equalsIgnoreCase(emptyType1)) {
 					i=1000;
 				}else {
+					order2=order2.replace("\"", "");
 					i=Integer.parseInt(order2);
 
 				}
@@ -118,12 +126,15 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 
 
 		}
+
+		System.err.println("navigationParentLabelWithChildAndOrder : "+childMap);
 		return childMap;
 
 	}
 
 	public static Map<String, Integer> sortByValue(boolean order,Map<String, Integer> map)   
 	{  
+		
 		//convert HashMap into List   
 		List<Entry<String, Integer>> list = new LinkedList<Entry<String, Integer>>(map.entrySet());  
 		//sorting the list elements  
@@ -148,9 +159,10 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 			sortedMap.put(entry.getKey(), entry.getValue());  
 		}  
 		//printMap(sortedMap);  
+		System.err.println("sortByValue : "+sortedMap);
 		return sortedMap;
 	}  
-
+	
 	public static Map<String,String> navigationParentLabelWithChildSorted(Map<String, String> childMap){
 		String[] childWithOrder;
 		String[] childOrderSpillter;
@@ -181,6 +193,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 			childOrder=new LinkedHashMap<String, Integer>();
 		} 
 
+		System.err.println("navigationParentLabelWithChildSorted : "+parentChild);
 		return parentChild;
 
 	}
@@ -221,7 +234,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		int k=0;
 		String xpath = "";
 		String[] childs = null;
-
+		ThreadSleep(20000);
 		if (onlyParent!=null) {
 			Set<String> navigationParentLabel = onlyParent.keySet();
 			System.err.println("navigationParentLabel>>>>>>>>> : "+navigationParentLabel);
@@ -521,6 +534,19 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 							log(LogStatus.INFO, "Able to enter "+label, YesNo.No);
 							ThreadSleep(500);
 							flag=true;
+							
+							if (label.equalsIgnoreCase(CSVLabel.Parent.toString())) {
+								ThreadSleep(10000);
+								if (click(driver,getItemInList(projectName, value, action.BOOLEAN, 20),
+										value + "   :  Parent Name", action.BOOLEAN)) {
+									log(LogStatus.INFO, value+" is available", YesNo.No);
+								} else {
+									log(LogStatus.ERROR, value+" is not available", YesNo.Yes);
+									sa.assertTrue(false, value+" is not available");
+
+								}	
+							}
+							
 						} else {
 							log(LogStatus.ERROR, "Not Able to enter "+value+" to label "+label, YesNo.Yes);
 							sa.assertTrue(false,"Not Able to enter "+value+" to label "+label);
@@ -614,9 +640,27 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	}
 	
 	public WebElement getCoverageTabAfterClick(String projectName,String tabName,action action,int timeOut) {
-		String xpath = "//a[contains(@href,'lightning') and contains(@title,'" + tabName + "')]/span/..";
+		ThreadSleep(5000);
+		String xpath = "//a[contains(@href,'lightning') and contains(@title,'Coverages')]/span/..";
 		WebElement ele = FindElement(driver, xpath,tabName, action.SCROLLANDBOOLEAN,timeOut);
 		ele = isDisplayed(driver,ele,"visibility", timeOut, tabName);
+		
+		String url=getURL(driver, 10);
+		String coverage="coverage";
+		
+		if (url.contains(coverage) || url.contains("Coverage")) {
+			log(LogStatus.INFO, "Coverage verified : "+tabName, YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Coverage not verified : "+tabName, YesNo.Yes);
+			sa.assertTrue(false,"Coverage not verified : "+tabName);
+		}
+		
+		if (getPageDoesNotExist(projectName, action.BOOLEAN, 5)==null) {
+			
+		} else {
+			log(LogStatus.ERROR, "Coverage not verified : "+tabName, YesNo.Yes);
+			sa.assertTrue(false,"Coverage not verified : "+tabName);
+		}
 		return ele;
 	}
 	

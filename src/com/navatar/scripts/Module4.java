@@ -3316,6 +3316,8 @@ public class Module4 extends BaseLib{
 		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
 
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String source= System.getProperty("user.dir")+"\\AutoIT\\EditPage\\fc.png";
+		String target= System.getProperty("user.dir")+"\\AutoIT\\EditPage\\caldest.png";
 		WebElement ele=null;
 		String attendeeHeader=AttendeeLabels.Attendee.toString();
 		String contact=M4Contact2FName+" "+M4Contact2LName;
@@ -3326,17 +3328,34 @@ public class Module4 extends BaseLib{
 				EditPageLabel.Filter.toString()+"<break>"+BasePageErrorMessage.filter,EditPageLabel.Onclick_Title.toString()+"<break>"+BasePageErrorMessage.onclickTitle
 				};
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		String DropComponentName="Fullcalender";
+		String DropComponentName="Fullcalendar";
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
 				if (ep.clickOnEditPageLink()) {
 					log(LogStatus.INFO, "successfully reached edit page", YesNo.No);
-					if (ep.dragAndDropCalender(projectName, PageName.Object1Page, RelatedTab.Events, DropComponentName, fieldValues)) {
-						log(LogStatus.ERROR, "successfully dragged calender", YesNo.Yes);
-							
+					ThreadSleep(3000);
+					if (sendKeys(driver, ep.getEditPageSeachTextBox(projectName, 10), DropComponentName, "calendar", action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(3000);
+						switchToFrame(driver, 10, ep.getEditPageFrame(projectName, 10));
+						ele=ep.getRelatedTab(ProjectName.PEEdge.toString(), PageName.Object1Page,RelatedTab.Events, 10);
+						if (click(driver, ele, "events related ", action.SCROLLANDBOOLEAN)) {
+							ThreadSleep(5000);
+						switchToDefaultContent(driver);
+						if (ep.dragAndDropCalender(projectName, source,target,PageName.Object1Page, RelatedTab.Events, DropComponentName, fieldValues)) {
+							log(LogStatus.ERROR, "successfully dragged calender", YesNo.Yes);
+
+						}else {
+							log(LogStatus.ERROR, "could not drag and drop calender", YesNo.Yes);
+							sa.assertTrue(false,"could not drag and drop calender" );
+						}
+						}else {
+							log(LogStatus.ERROR, "events tab is not clickable", YesNo.Yes);
+							sa.assertTrue(false,"events tab is not clickable" );
+						}
+						switchToDefaultContent(driver);
 					}else {
-						log(LogStatus.ERROR, "could not drag and drop calender", YesNo.Yes);
-						sa.assertTrue(false,"could not drag and drop calender" );
+						log(LogStatus.ERROR, "search text box is not visible", YesNo.Yes);
+						sa.assertTrue(false,"search text box is not visible" );
 					}
 				}else {
 					log(LogStatus.ERROR, "could not drag and drop calender", YesNo.Yes);
