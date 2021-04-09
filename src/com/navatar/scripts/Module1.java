@@ -991,21 +991,21 @@ public class Module1 extends BaseLib {
 		MarketingEventPageBusinessLayer me = new MarketingEventPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-//		if (lp.clickOnTab(projectName, TabName.Object5Tab)) {
-//			log(LogStatus.INFO,"Click on Tab : "+TabName.Object5Tab,YesNo.No);	
-//
-//
-//			if (me.createMarketingEvent(projectName, FS_MarketingEvent1Name, FS_MarketingEvent1RecordType, FS_MarketingEvent1Date, FS_MarketingEvent1Organizer, 10)) {
-//				log(LogStatus.INFO,"Created Marketing Event : "+FS_MarketingEvent1Name,YesNo.No);	
-//			} else {
-//				sa.assertTrue(false,"Not Able to Create Marketing Event  : "+FS_MarketingEvent1Name);
-//				log(LogStatus.SKIP,"Not Able to Create Marketing Event  : "+FS_MarketingEvent1Name,YesNo.Yes);
-//			}
-//
-//		} else {
-//			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object5Tab);
-//			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object5Tab,YesNo.Yes);
-//		}
+		if (lp.clickOnTab(projectName, TabName.Object5Tab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.Object5Tab,YesNo.No);	
+
+
+			if (me.createMarketingEvent(projectName, FS_MarketingEvent1Name, FS_MarketingEvent1RecordType, FS_MarketingEvent1Date, FS_MarketingEvent1Organizer, 10)) {
+				log(LogStatus.INFO,"Created Marketing Event : "+FS_MarketingEvent1Name,YesNo.No);	
+			} else {
+				sa.assertTrue(false,"Not Able to Create Marketing Event  : "+FS_MarketingEvent1Name);
+				log(LogStatus.SKIP,"Not Able to Create Marketing Event  : "+FS_MarketingEvent1Name,YesNo.Yes);
+			}
+
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object5Tab);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object5Tab,YesNo.Yes);
+		}
 		
 		String staff="",status="",event="";
 		WebElement ele=null;
