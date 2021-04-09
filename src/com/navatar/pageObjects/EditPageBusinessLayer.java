@@ -360,12 +360,14 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		return "SELECT Member__c, Member__r.Name,Member__r.Title,"+fieldName+"Team_Member_Role__c,Type__c,Member__r.MediumPhotoURL FROM Deal_Team__c WHERE ( Pipeline__c = '<<recordId>>' AND (member__c <> null)) ORDER BY Id ASC";
 }
 
-	public boolean dragAndDropCalender(String projectName,PageName pageName, RelatedTab relatedTab,String DropComponentName, String[] fieldValues) {
+	public boolean dragAndDropCalender(String projectName,String source,String target,PageName pageName, RelatedTab relatedTab,String DropComponentName, String[] fieldValues) {
 	boolean flag=false;
 	Actions actions = new Actions(driver);	 
 	String value="",field="";
 	appLog.info(">>>>");
-	new Scanner(System.in).next();
+	ThreadSleep(3000);
+	dragNDropUsingScreen(projectName, source, target, 10);
+	ThreadSleep(3000);
 		 for (String fieldValue:fieldValues) {
 			 value=fieldValue.split("<break>")[1];
 			 field=fieldValue.split("<break>")[0];
