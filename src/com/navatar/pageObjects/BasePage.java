@@ -1286,6 +1286,9 @@ public abstract class BasePage extends BaseLib {
 
 	 @FindBy(xpath="//iframe[contains(@title,'Picklist Edit: ')]")
 	 private WebElement statusPicklistFrame;
+	 @FindBy(xpath="//iframe[contains(@title,'Sharing Settings ~ Salesforce - Enterprise Edition')]")
+	 private WebElement sharingSettingsFrame;
+	 
 	 public WebElement getstatusPicklistFrame(int timeOut) {
 			return isDisplayed(driver, statusPicklistFrame, "Visibility", timeOut, "status Picklist Frame");
 	}
@@ -1336,6 +1339,8 @@ public abstract class BasePage extends BaseLib {
 		  ele=isDisplayed(driver, accountLayoutFrame, "Visibility", timeOut, "account Layout Frame");
 	  }else if (pageName.toString().equalsIgnoreCase(PageName.PipelineCustomPage.toString())){
 		  ele=isDisplayed(driver, pipelineLayoutFrame, "Visibility", timeOut, "pipeline custom page frame");
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.SharingSettingsPage.toString())){
+		  ele=isDisplayed(driver, sharingSettingsFrame, "Visibility", timeOut, "Sharing Settings Page frame");
 	  }
 	  return ele; 
 	 }
@@ -4901,6 +4906,12 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, deletePhotoButton, "Visibility", timeOut, "deletePhotoButton");
 		
 	}
+	@FindBy(xpath = "(//*[contains(text(),'Actions')]/../../..//following-sibling::div//button[@title='Reload'])[2]")
+	private WebElement actionsSDGRefresh;
 	
+	public WebElement getactionsSDGRefresh(String projectName,int timeOut) {
+		return isDisplayed(driver, actionsSDGRefresh, "Visibility", timeOut, "actionsSDGRefresh");
+		
+	}
 	
 }

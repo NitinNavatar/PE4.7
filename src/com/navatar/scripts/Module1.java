@@ -40,7 +40,7 @@ import com.navatar.pageObjects.PartnershipsPageBusinessLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
-public class Module6 extends BaseLib {
+public class Module1 extends BaseLib {
 	
 	
 	

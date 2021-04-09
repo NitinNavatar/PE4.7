@@ -476,6 +476,14 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, regionDropdownList, "Visibility", timeOut, "Region DropDown List");
 
 	}
+	@FindBy(xpath = "//*[text()='Time Zone']/../following-sibling::*//select")
+	private WebElement timezoneDropdownList;
+
+	public WebElement gettimezoneDropdownList(int timeOut) {
+		scrollDownThroughWebelement(driver, timezoneDropdownList, "time zone Dropdown List");
+		return isDisplayed(driver, timezoneDropdownList, "Visibility", timeOut, "time zone Dropdown List");
+
+	}
 	
 	@FindBy(xpath = "//input[@title='New Action']")
 	private WebElement newActionBtn;

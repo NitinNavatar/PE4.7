@@ -23,6 +23,7 @@ public class AttendeePage extends BasePageBusinessLayer{
 
 	}
 	public WebElement labelTextBox(String projectName, String field, int timeOut) {
+		field=field.replace("_", " ");
 		String xpath = "//*[text()='"+field+"']/..//input";
 		if (field.equalsIgnoreCase(AttendeeLabels.Notes.toString()))
 			xpath = "//*[text()='Notes']/..//textarea";

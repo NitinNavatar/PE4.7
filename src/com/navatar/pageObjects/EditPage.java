@@ -242,4 +242,14 @@ public class EditPage extends BasePageBusinessLayer {
 	public WebElement getnoOfRecordsErrorPopupOK(String projectName,int timeOut) {
 		return isDisplayed(driver, noOfRecordsErrorPopupOK, "Visibility", timeOut, "noOfRecordsErrorPopupOK");
 	}
+	@FindBy (xpath = "//div[contains(@class,'elementProxyContainer')]//a")
+	private WebElement calendarOnEditPage;
+
+	/**
+	 * @return the finishButton2
+	 */
+	public WebElement getcalendarOnEditPage(String projectName,int timeOut) {
+		return isDisplayed(driver, calendarOnEditPage, "Visibility", timeOut, "calendarOnEditPage");
+	}
+	
 }

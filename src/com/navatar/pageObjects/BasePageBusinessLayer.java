@@ -751,6 +751,8 @@ public WebElement getLabelTextBox(String projectName,String pageName,String labe
 		xpath="//*[text()='"+labelTextBox+"']/..//input";
 	else if(pageName.equalsIgnoreCase(PageName.FundsPage.toString()))
 		xpath="//*[text()='"+labelTextBox+"']/following-sibling::div//input";
+	else if(pageName.equalsIgnoreCase(PageName.MEPageFromCalender.toString()))
+		xpath="//*[text()='"+labelTextBox+"']/../following-sibling::div//input";
 	ele = FindElement(driver, xpath, labelTextBox, action.SCROLLANDBOOLEAN, timeOut);
 	ele =isDisplayed(driver, ele, "Visibility", timeOut, labelTextBox);	
 	return ele;
@@ -818,6 +820,9 @@ public boolean clickOnAlreadyCreatedItem(String projectName, TabName tabName,
 		break;
 	case RecycleBinTab:
 		viewList = "Org Recycle Bin";
+		break;
+	case SDGTab:
+		viewList = "All";
 		break;
 	default:
 		return false;
@@ -1607,7 +1612,7 @@ public boolean clickOnShowMoreActionDownArrow(String projectName,PageName pageNa
 			log(LogStatus.INFO, "clicked on show more actions icon", YesNo.No);
 			if (pageName.equals(PageName.TaskPage)) 
 				xpath="//div[@role='menu']//li/a[@title='"+actionDropDown+"']";
-			else if(pageName.equals(PageName.Object1Page))
+			else if(pageName.equals(PageName.Object1Page) || pageName.equals(PageName.SDGPage))
 				xpath="//*[@role='menu']//span[text()='"+actionDropDown+"']";
 			else
 			xpath="//div[@role='menu']//span[text()='"+actionDropDown+"']";
@@ -2430,7 +2435,9 @@ public boolean clickOnShowMoreDropdownOnly(String projectName,PageName pageName)
 	String xpath = "";int i =1;
 	WebElement ele=null;
 	boolean flag = true;
+	if(pageName!=PageName.SDGPage) {
 	refresh(driver);
+	}
 	ThreadSleep(2000);
 	xpath="(//span[contains(text(),'more actions')])[1]/..";
 	if (PageName.TestCustomObjectPage.equals(pageName) || PageName.Object3Page.equals(pageName)) {
@@ -2438,6 +2445,9 @@ public boolean clickOnShowMoreDropdownOnly(String projectName,PageName pageName)
 	}
 	else if(PageName.TaskPage.equals(pageName)) {
 		xpath="//a[@title='Show one more action']";
+	}
+	else if(PageName.SDGPage.equals(pageName)) {
+		xpath="(//span[contains(text(),'More options')])[1]/..";
 	}
 	ele=FindElement(driver, xpath, "show more action down arrow", action.SCROLLANDBOOLEAN, 30);
 	if(click(driver, ele, "show more action on "+pageName.toString(), action.SCROLLANDBOOLEAN)) {
@@ -4954,8 +4964,8 @@ public WebElement accordionSDGActionButtons(String projectName,String toggleTab,
 	return ele;
 }
 
-public WebElement sdgButtons(String projectName, String field,String edit, int timeOut) {
-	String xpath ="//span//*[text()='"+field+"']/../../../following-sibling::td//button[text()='"+edit+"']";
+public WebElement sdgButtons(String projectName, String field,String new1, int timeOut) {
+	String xpath ="//span//*[text()='"+field+"']/../../../following-sibling::div//button[text()='"+new1+"']";
 	WebElement ele = FindElement(driver, xpath,"sdg buttons", action.BOOLEAN, timeOut);
 	return isDisplayed(driver, ele, "visibility", timeOut, "sdg button");
 }
@@ -5092,6 +5102,7 @@ public boolean dragNDropUsingScreen(String projectName,String sourceImg,String t
 	return flag;
 }
 
+
 public boolean isAutomationAllListViewForObject(String projectName,String ObjectName,String viewList, int timeOut) {
 	String xpath="";
 		ThreadSleep(3000);
@@ -5111,5 +5122,64 @@ public boolean isAutomationAllListViewForObject(String projectName,String Object
 	return false;
 }
 
+
+
+public WebElement SDGNewButton(String projectName, String field, String name,int timeOut) {
+	String xpath = "//label[text()='"+field+"']/following-sibling::div//input[@placeholder='"+name+"']/following-sibling::div/button";
+	
+	WebElement ele = FindElement(driver, xpath,"cross Button : "+field, action.BOOLEAN, timeOut);
+	ele = isDisplayed(driver, ele, "Visibility", timeOut, "cross Button : "+field);
+	return ele;
+}
+
+public boolean createSDGAction(String projectName, String[] fieldValues) {
+	String xpath = "";
+	WebElement ele=null;
+	String finalLabelName="";
+	String labelName="",value="";
+	for (String field:fieldValues) {
+		labelName=field.split(breakSP)[0];
+		value=field.split(breakSP)[1];
+		finalLabelName=labelName.replace("_", " ");
+		xpath = "//*[text()='"+finalLabelName+"']/following-sibling::div//input";
+		if (labelName.equalsIgnoreCase(SDGActionsCreationLabel.Event_Payload.toString()))
+			xpath = "//*[text()='"+finalLabelName+"']/following-sibling::div//textarea";
+		ele= FindElement(driver, xpath,finalLabelName, action.BOOLEAN, 10);
+		ele = isDisplayed(driver, ele, "Visibility", 10, finalLabelName);
+		if (labelName.equalsIgnoreCase(SDGActionsCreationLabel.Action_Type.toString())) {
+			if (clickUsingJavaScript(driver, ele, finalLabelName)) {
+				xpath="//*[text()='Action Type']/following-sibling::div//*[@title='"+value+"']";
+				ele= FindElement(driver, xpath,finalLabelName, action.BOOLEAN, 10);
+				ele = isDisplayed(driver, ele, "Visibility", 10, finalLabelName);
+				if (clickUsingJavaScript(driver, ele, value)) {
+					log(LogStatus.INFO,value+" dropdown element successfully selected",YesNo.Yes);
+					
+				}else {
+					log(LogStatus.SKIP,value+" dropdown element is not visible",YesNo.Yes);
+					BaseLib.sa.assertTrue(false, value+" dropdown element is not visible");
+				}
+			}else {
+				log(LogStatus.SKIP,finalLabelName+" dropdown is not visible",YesNo.Yes);
+				BaseLib.sa.assertTrue(false,finalLabelName+" dropdown is not visible");
+			}
+		}
+		else {
+			if (sendKeys(driver, ele, value, finalLabelName, action.SCROLLANDBOOLEAN)) {
+				
+			}else {
+				log(LogStatus.SKIP,finalLabelName+" is not visible",YesNo.Yes);
+				BaseLib.sa.assertTrue(false, finalLabelName+" is not visible");
+			}
+		}
+
+	}
+	if (click(driver, getNavigationTabSaveBtn(projectName, 10), "save", action.SCROLLANDBOOLEAN)) {
+		
+	}else {
+		log(LogStatus.SKIP,"save button is not clickable",YesNo.Yes);
+		BaseLib.sa.assertTrue(false, "save button is not clickable");
+	}
+	return true;
+}
 
 }

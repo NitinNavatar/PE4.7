@@ -12,7 +12,7 @@ import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.scripts.Module5;
-import com.navatar.scripts.Module6;
+import com.navatar.scripts.Module1;
 import com.navatar.scripts.Module2;
 import com.navatar.scripts.Module3;
 import com.navatar.scripts.Module4;
@@ -25,7 +25,7 @@ import com.navatar.scripts.Module4;
 public class CommonVariables {
 //	public static String abc;
 
-	public static String URL,todaysDate,tomorrowsDate,todaysDateSingleDigit;
+	public static String URL,todaysDate,tomorrowsDate,todaysDateSingleDigit,todaysDateNewZealand;
 	public static String browserToLaunch;
 	public static String Smoke_TWINS1Name,Smoke_TWINS1RecordType,Smoke_TWINS1Status;
 	public static String Smoke_CDINS1Name,Smoke_CDINS1RecordType,Smoke_CDINS1Status;
@@ -92,7 +92,15 @@ public class CommonVariables {
 	public static String M4MarketingEvent4Name,M4MarketingEvent4Date,M4MarketingEvent4RecordType;
 	public static String M4MarketingEvent5Name,M4MarketingEvent5Date,M4MarketingEvent5RecordType;
 	public static String M4MarketingEvent6Name,M4MarketingEvent6Date,M4MarketingEvent6RecordType;
-
+	public static String M4MarketingEvent11Name,M4MarketingEvent12Name,M4MarketingEvent13Name;
+	public static String M4MarketingEvent14Name,M4MarketingEvent15Name,M4MarketingEvent16Name;
+	public static String M4MarketingEvent17Name,M4MarketingEvent18Name,M4MarketingEvent19Name;
+	public static String M4MarketingEvent20Name,M4MarketingEvent20RecordType,M4MarketingEvent20Organizer;
+	public static String M4MarketingEvent21Name,M4MarketingEvent21RecordType,M4MarketingEvent21Organizer;
+	public static String M4SDGAction1Name,M4SDGAction1Order,M4SDGAction1Type,M4SDGAction1Event,M4SDGAction1EventPayload;
+	public static String M4SDGAction2Name,M4SDGAction2Order,M4SDGAction2Type,M4SDGAction2Event,M4SDGAction2EventPayload;
+	
+	public static String M4Attendee10Status;
 	public static String FS_MarketingEvent1Name,FS_MarketingEvent1Date,FS_MarketingEvent1RecordType,FS_MarketingEvent1Organizer;
 	
 
@@ -264,6 +272,8 @@ public class CommonVariables {
 		mode=ExcelUtils.readDataFromPropertyFile("Mode");
 		todaysDate=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "MM/dd/YYYY");
 		todaysDateSingleDigit=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
+		todaysDateNewZealand=getDateAccToTimeZone(BasePageErrorMessage.NewZealandTimeZone, "M/d/YYYY");
+		
 		tomorrowsDate=previousOrForwardDate(1, "M/d/YYYY");
 		
 			AdminUserFirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_First_Name);
@@ -477,7 +487,7 @@ public class CommonVariables {
 			TWTaskCR1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask8", excelLabel.Subject);
 			TWTaskUpdateLabelSubject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask9", excelLabel.Subject);
 			
-		}else if(obj instanceof Module6){
+		}else if(obj instanceof Module1){
 			
 			ToggleOpenQA1ID=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Request_Tracker_ID);
 			ToggleOpenQA1RequestedDate=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Date_Requested);;
@@ -764,6 +774,22 @@ public class CommonVariables {
 			M4MarketingEvent6Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME6", excelLabel.Marketing_Event_Name);
 			M4MarketingEvent6Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME6", excelLabel.Date);
 			M4MarketingEvent6RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME6", excelLabel.Record_Type);
+			M4MarketingEvent11Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME11", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent12Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME12", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent13Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME13", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent14Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME14", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent15Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME15", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent16Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME16", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent17Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME17", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent18Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME18", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent19Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME19", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent20Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME20", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent20RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME20", excelLabel.Record_Type);
+			M4MarketingEvent20Organizer=M4Ins1;
+			M4MarketingEvent21Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME21", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent21RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME21", excelLabel.Record_Type);
+			M4MarketingEvent21Organizer=M4Ins1;
+			M4Attendee10Status=ExcelUtils.readData(phase1DataSheetFilePath,"Attendees",excelLabel.Variable_Name, "M4Att10", excelLabel.Status);
 			
 			M4Contact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Contact_FirstName);
 			M4Contact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Contact_LastName);
@@ -783,7 +809,17 @@ public class CommonVariables {
 			M4Contact2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON2", excelLabel.Contact_FirstName);
 			M4Contact2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON2", excelLabel.Contact_LastName);
 
-			
+			M4SDGAction1Name=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction1", excelLabel.Name);
+			M4SDGAction1Order=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction1", excelLabel.Action_Order);
+			M4SDGAction1Event=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction1", excelLabel.Event);
+			M4SDGAction1EventPayload=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction1", excelLabel.Event_Payload);
+			M4SDGAction1Type=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction1", excelLabel.Action_Type);
+			M4SDGAction2Name=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction2", excelLabel.Name);
+			M4SDGAction2Order=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction2", excelLabel.Action_Order);
+			M4SDGAction2Event=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction2", excelLabel.Event);
+			M4SDGAction2EventPayload=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction2", excelLabel.Event_Payload);
+			M4SDGAction2Type=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction2", excelLabel.Action_Type);
+
 		}else if(obj instanceof Module3){
 		
 			energyCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage1", excelLabel.Coverage_Name);
