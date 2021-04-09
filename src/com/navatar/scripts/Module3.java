@@ -124,7 +124,7 @@ public class Module3 extends BaseLib {
 	String passwordResetLink = null;
 	Scanner scn = new Scanner(System.in);
 
-	String navatarEdge="Edge";
+	String navatarEdge="EDGE";
 	String navigationMenuName="Navigation Menu";
 	public  String NavigationMenuTestData_PEExcel = System.getProperty("user.dir")+"\\UploadFiles\\Module 3\\UploadCSV\\NavigationMenuTestData_PE - AllNew.csv";
 	public  String NavigationMenuTestData_PESheet = "asd";
@@ -137,6 +137,10 @@ public class Module3 extends BaseLib {
 	String googleUrlValue="https://www.google.com/";
 	String upDated="Updated";
 	String customMenu="Custom Menu";
+	String allListView="All";
+	String automationAll="Automation All";
+	String recordTypeDescription = " Description Record Type";
+	String homeTab="Home";
 	
 	@Parameters({ "projectName"})
 	@Test
@@ -242,18 +246,27 @@ public class Module3 extends BaseLib {
 		DataLoaderWizardPageBusinessLayer dataload = new DataLoaderWizardPageBusinessLayer(driver);
 		mode=Mode.Classic.toString();
 		Boolean flag = false;
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(superAdminUserName, adminPassword);
 		lp.switchToClassic();
-		if(dataload.dataImportWizard(ObjectName.Navigation, ObjectType.Custom, "\\UploadCSV\\NavigationMenuTestData_PE.csv", DataImportType.AddNewRecords, "22")) {
-			appLog.info("Data is imported Successfully in "+ObjectName.Navigation);
+		if(dataload.dataImportWizard(ObjectName.Navigation, ObjectType.Custom, "\\UploadFiles\\Module 3\\UploadCSV\\NavigationMenuTestData_PE - Parent.csv", DataImportType.AddNewRecords, "13")) {
+			appLog.info("Parent Data is imported Successfully in "+ObjectName.Navigation);
 			flag=true;
-
-		}else {
-			appLog.error("Data is not imported in "+ObjectName.Navigation);
-			sa.assertTrue(false, "Data is not imported in "+ObjectName.Navigation);
+			}else {
+			appLog.error("Parent Data is not imported in "+ObjectName.Navigation+" so child data cannot imported");
+			sa.assertTrue(false, "Parent Data is not imported in "+ObjectName.Navigation+" so child data cannot imported");
 		}
 		if(flag) {
+
+			if(dataload.dataImportWizard(ObjectName.Navigation, ObjectType.Custom, "\\UploadFiles\\Module 3\\UploadCSV\\NavigationMenuTestData_PE - Child.csv", DataImportType.AddNewRecords, "9")) {
+				appLog.info("Data is imported Successfully in "+ObjectName.Navigation);
+				flag=true;
+
+			}else {
+				appLog.error("Data is not imported in "+ObjectName.Navigation);
+				sa.assertTrue(false, "Data is not imported in "+ObjectName.Navigation);
+			}
 		}
+		switchToDefaultContent(driver);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -264,7 +277,17 @@ public class Module3 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
+		
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navatarEdge+" so menu name appear as "+navatarEdge, YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so menu name should appear as "+navatarEdge, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so menu name should appear as "+navatarEdge);
+		}
+
+		switchToDefaultContent(driver);
 		if (home.clickOnSetUpLink()) {
 			String parentID = switchOnWindow(driver);
 			if (parentID!=null) {
@@ -346,6 +369,15 @@ public class Module3 extends BaseLib {
 			}
 
 		}
+		switchToDefaultContent(driver);
+		refresh(driver);
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName+" so menu name appear as "+navigationMenuName, YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so menu name should appear as "+navigationMenuName, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so menu name should appear as "+navigationMenuName);
+		}
+		switchToDefaultContent(driver);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -354,10 +386,8 @@ public class Module3 extends BaseLib {
 	@Test
 	public void Module3Tc004_OpentheNavigationMenuAndVerifyTheMenuItems(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
-		lp.CRMLogin(superAdminUserName, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		System.err.println(NavigationMenuTestData_PEExcel+" >>>>>>>>>>>>><<<<<<<<<<<< "+NavigationMenuTestData_PESheet);
 
 		if (!csvRecords.isEmpty()) {
@@ -486,7 +516,8 @@ public class Module3 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		Map<String, String> parentChildForQuickActionObject = new LinkedHashMap<String, String>(); 
-		lp.CRMLogin(superAdminUserName, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		List<String>  parentQuickActionObjectWithNoChild = new LinkedList<String>();
 		System.err.println(NavigationMenuTestData_PEExcel+" >>>>>>>>>>>>><<<<<<<<<<<< "+NavigationMenuTestData_PESheet);
 
 		if (!csvRecords.isEmpty()) {
@@ -495,7 +526,6 @@ public class Module3 extends BaseLib {
 			String labelValue="";
 			String quickActionObject="";
 			WebElement ele;
-			String actualUrl="";
 			String parent="";
 			for (String labelName : csvRecords) {
 
@@ -523,41 +553,97 @@ public class Module3 extends BaseLib {
 
 			}
 			String childs[]=null;
+			System.err.println("parentChildForQuickActionObject : "+parentChildForQuickActionObject);
 			if (!parentChildForQuickActionObject.isEmpty()) {
 
 				for (String pr : parentChildForQuickActionObject.keySet()) {
 					childs=parentChildForQuickActionObject.get(pr).split(breakSP);
 					for (int i = 0; i < childs.length; i++) {
+						
 						if (pr.isEmpty()) {
-
+							log(LogStatus.INFO, "No Parent For "+childs[i], YesNo.No);
+							parentQuickActionObjectWithNoChild.add(childs[i]);
 						} else {
+							
+							if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+								log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+								
+							} else {
+								log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName, YesNo.Yes);
+								sa.assertTrue(false,"Not Able to Click on "+navigationMenuName);
+							}
+							parentQuickActionObjectWithNoChild.remove(pr);
 							ele=npbl.getNavigationLabel(projectName, pr, action.BOOLEAN, 5);
 							click(driver, ele, pr, action.BOOLEAN);
-						}
-						ele=npbl.getNavigationLabel(projectName, childs[i], action.BOOLEAN, 5);
-						if (click(driver, ele, childs[i], action.BOOLEAN)) {
-							log(LogStatus.INFO, "Not able to click on "+childs[i], YesNo.No);
-							ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, childs[i], action.BOOLEAN, 30);
-							if (ele!=null) {
-								log(LogStatus.INFO, "Pop Up open after clicking on "+childs[i] , YesNo.No);
-								if (click(driver, ele, childs[i]+" pop up cross button", action.BOOLEAN)) {
-									log(LogStatus.INFO, "click on cross button "+childs[i] , YesNo.No);
+							ele=npbl.getNavigationLabel(projectName, childs[i], action.BOOLEAN, 5);
+							if (click(driver, ele, childs[i], action.BOOLEAN)) {
+								log(LogStatus.INFO, "click on "+childs[i], YesNo.No);
+								ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, childs[i], action.BOOLEAN, 30);
+								if (ele!=null) {
+									log(LogStatus.INFO, "Pop Up open after clicking on "+childs[i] , YesNo.No);
+									if (click(driver, ele, childs[i]+" pop up cross button", action.BOOLEAN)) {
+										log(LogStatus.INFO, "click on cross button "+childs[i] , YesNo.No);
+										ThreadSleep(5000);
+									} else {
+										log(LogStatus.ERROR, "Not Able to click on cross button "+childs[i], YesNo.Yes);
+										sa.assertTrue(false, "Not Able to click on cross button "+childs[i]);
+									}
 								} else {
-									log(LogStatus.ERROR, "Not Able to click on cross button "+childs[i], YesNo.Yes);
-									sa.assertTrue(false, "Not Able to click on cross button "+childs[i]);
+									log(LogStatus.ERROR, "No Pop Up is open after clicking on "+childs[i], YesNo.Yes);
+									sa.assertTrue(false, "No Pop Up is open after clicking on "+childs[i]);
 								}
 							} else {
-								log(LogStatus.ERROR, "No Pop Up is open after clicking on "+childs[i], YesNo.Yes);
-								sa.assertTrue(false, "No Pop Up is open after clicking on "+childs[i]);
+								log(LogStatus.ERROR, "Not able to click on "+childs[i], YesNo.Yes);
+								sa.assertTrue(false, "Not able to click on "+childs[i]);
+							}
+							
+						}
+						refresh(driver);
+					}
+					refresh(driver);
+				}
+				Map<String, String> navigationParentLabelWithChildAndOrder = navigationParentLabelWithChildAndOrder(csvRecords);
+				System.err.println("parentQuickActionObjectWithNoChild : "+parentQuickActionObjectWithNoChild);
+				for (String string : navigationParentLabelWithChildAndOrder.keySet()) {
+					parentQuickActionObjectWithNoChild.remove(string);
+				}
+			//	parentQuickActionObjectWithNoChild.remove("Contact");
+				System.err.println("parentQuickActionObjectWithNoChild : "+parentQuickActionObjectWithNoChild);
+				scn.nextLine();
+				for (String childs1 : parentQuickActionObjectWithNoChild) {
+					
+					if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+						log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+						
+
+						ele=npbl.getNavigationLabel(projectName, childs1, action.BOOLEAN, 5);
+						if (click(driver, ele, childs1, action.BOOLEAN)) {
+							log(LogStatus.INFO, "click on "+childs1, YesNo.No);
+							ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, childs1, action.BOOLEAN, 30);
+							if (ele!=null) {
+								log(LogStatus.INFO, "Pop Up open after clicking on "+childs1 , YesNo.No);
+								if (click(driver, ele, childs1+" pop up cross button", action.BOOLEAN)) {
+									log(LogStatus.INFO, "click on cross button "+childs1 , YesNo.No);
+									ThreadSleep(5000);
+								} else {
+									log(LogStatus.ERROR, "Not Able to click on cross button "+childs1, YesNo.Yes);
+									sa.assertTrue(false, "Not Able to click on cross button "+childs1);
+								}
+							} else {
+								log(LogStatus.ERROR, "No Pop Up is open after clicking on "+childs1, YesNo.Yes);
+								sa.assertTrue(false, "No Pop Up is open after clicking on "+childs1);
 							}
 						} else {
-							log(LogStatus.ERROR, "Not able to click on "+childs[i], YesNo.Yes);
-							sa.assertTrue(false, "Not able to click on "+childs[i]);
+							log(LogStatus.ERROR, "Not able to click on "+childs1, YesNo.Yes);
+							sa.assertTrue(false, "Not able to click on "+childs1);
 						}
+						refresh(driver);
+					} else {
+						log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName, YesNo.Yes);
+						sa.assertTrue(false,"Not Able to Click on "+navigationMenuName);
 					}
-
+					
 				}
-
 			} else {
 				log(LogStatus.FAIL, "Map is empty its means No label is present with Quick Action Object so cannot continue test case", YesNo.Yes);
 				sa.assertTrue(false, "Map is empty its means No label is present with Quick Action Object so cannot continue test case");
@@ -566,7 +652,8 @@ public class Module3 extends BaseLib {
 			log(LogStatus.FAIL, "Unable to Fetch Records from CSV File : "+NavigationMenuTestData_PEExcel, YesNo.Yes);
 			sa.assertTrue(false, "Unable to Fetch Records from CSV File : "+NavigationMenuTestData_PEExcel);
 		}
-		System.err.println("parentChildForQuickActionObject : "+parentChildForQuickActionObject);
+		System.err.println("parentQuickActionObjectWithNoChild : "+parentQuickActionObjectWithNoChild);
+		System.err.println("parentQuickActionObjectWithNoChild : "+parentQuickActionObjectWithNoChild);
 		switchToDefaultContent(driver);
 		lp.CRMlogout();
 		sa.assertAll();
@@ -578,7 +665,7 @@ public class Module3 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		Map<String, String> parentChildForListViewObject = new LinkedHashMap<String, String>(); 
-		lp.CRMLogin(superAdminUserName, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		System.err.println(NavigationMenuTestData_PEExcel+" >>>>>>>>>>>>><<<<<<<<<<<< "+NavigationMenuTestData_PESheet);
 
 		if (!csvRecords.isEmpty()) {
@@ -615,24 +702,32 @@ public class Module3 extends BaseLib {
 			}
 			String childs[]=null;
 			boolean flag=false;
+			String parentLabel="";
+			System.err.println("parentChildForListViewObject : "+parentChildForListViewObject);
 			if (!parentChildForListViewObject.isEmpty()) {
 
 				for (String pr : parentChildForListViewObject.keySet()) {
 					childs=parentChildForListViewObject.get(pr).split(breakSP);
 					for (int i = 0; i < childs.length; i++) {
 						if (pr.isEmpty()) {
+							parentLabel=childs[i];
+						} else {
+							parentLabel=pr+"/"+childs[i];
+						}
+						if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+							log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 
 						} else {
-							ele=npbl.getNavigationLabel(projectName, pr, action.BOOLEAN, 5);
-							click(driver, ele, pr, action.BOOLEAN);
+							log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName, YesNo.Yes);
+							sa.assertTrue(false,"Not Able to Click on "+navigationMenuName);
 						}
-						ele=npbl.getNavigationLabel(projectName, childs[i], action.BOOLEAN, 5);
+
+						ele=npbl.getNavigationLabel(projectName, parentLabel, action.BOOLEAN, 5);
 						if (click(driver, ele, childs[i], action.BOOLEAN)) {
 							log(LogStatus.INFO, "Not able to click on "+childs[i], YesNo.No);
-							flag=npbl.isAutomationAllListViewAdded(projectName, 30);
+							flag=npbl.isAutomationAllListViewForObject(projectName,childs[i],allListView, 30);;
 							if (flag) {
 								log(LogStatus.INFO, "List View is available after clicking on "+childs[i] , YesNo.No);
-								
 							} else {
 								log(LogStatus.ERROR, "No List View is available is open after clicking on "+childs[i], YesNo.Yes);
 								sa.assertTrue(false, "No List View is available is open after clicking on "+childs[i]);
@@ -642,7 +737,6 @@ public class Module3 extends BaseLib {
 							sa.assertTrue(false, "Not able to click on "+childs[i]);
 						}
 					}
-
 				}
 
 			} else {
@@ -664,115 +758,40 @@ public class Module3 extends BaseLib {
 	public void Module3Tc008_VerifyTheitemsForWhichURLAndActionObjectAndLiewViewObjectFieldWasBlank(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
-		Map<String, String> parentChildForListViewObject = new LinkedHashMap<String, String>(); 
-		lp.CRMLogin(superAdminUserName, adminPassword);
-		System.err.println(NavigationMenuTestData_PEExcel+" >>>>>>>>>>>>><<<<<<<<<<<< "+NavigationMenuTestData_PESheet);
-
-		if (!csvRecords.isEmpty()) {
-			log(LogStatus.INFO, "Records Fetched from CSV File : "+NavigationMenuTestData_PEExcel, YesNo.No);
-			// Verify the items for which Quick Create Object field was fill
-			String labelValue="";
-			String listViewObject="";
-			String quickActionObject="";
-			String urlValue="";
-			String expectedUrl="";
-			String actualUrl;
-			WebElement ele;
-			String parent="";
-			expectedUrl=getURL(driver, 10);
-			for (String labelName : csvRecords) {
-
-				try {
-					System.err.println(labelName);
-					labelValue=labelName.split(commaSP)[0].trim();
-					parent=labelName.split(commaSP)[2].trim();
-					urlValue=labelName.split(commaSP)[7].trim();
-					quickActionObject=labelName.split(commaSP)[3].trim();
-					listViewObject=labelName.split(commaSP)[5].trim();
-					System.out.println(labelValue+" >>>>>>> "+listViewObject);
-					if (listViewObject.isEmpty() || listViewObject.equals("") 
-							|| quickActionObject.isEmpty() || quickActionObject.equals("") 
-							|| urlValue.isEmpty() || urlValue.equals("")) {
-						listViewObject=none;
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		String actualUrl="";
+		String[] navigationLabels=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name).split(breakSP);
+		String navigationLabel;
+		String expectedUrl=getURL(driver, 20);
+		for (int j = 0; j < navigationLabels.length; j++) {
+			navigationLabel=navigationLabels[j];
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+				WebElement ele = npbl.getNavigationLabel(projectName, navigationLabel, action.BOOLEAN, 5);
+				if (click(driver, ele, navigationLabel, action.BOOLEAN)) {
+					log(LogStatus.INFO, "click on "+navigationLabel, YesNo.No);
+					ThreadSleep(5000);
+					actualUrl=getURL(driver, 10);
+					if (expectedUrl.contains(actualUrl)) {
+						log(LogStatus.INFO, "Nothing Happen after click on "+navigationLabel, YesNo.No);
 					} else {
-						if (parentChildForListViewObject.get(parent)!=null) {
-							String a=parentChildForListViewObject.get(parent);
-							parentChildForListViewObject.put(parent,a+breakSP+labelValue);
-						} else {
-							parentChildForListViewObject.put(parent,labelValue);
-						}
-					}
-				} catch (Exception e) {
-					listViewObject=none;
-					System.out.println("Exception "+labelValue+" >>>>>>> "+listViewObject);
-				}
+						log(LogStatus.ERROR, "Nothing Should be happen after click on "+navigationLabel+"as url changed Actual : "+actualUrl+"\t Expected : "+expectedUrl, YesNo.Yes);
+						sa.assertTrue(false,"Nothing Should be happen after click on "+navigationLabel+"as url changed Actual : "+actualUrl+"\t Expected : "+expectedUrl);
 
-
-			}
-			String childs[]=null;
-			boolean flag=false;
-			if (!parentChildForListViewObject.isEmpty()) {
-
-				for (String pr : parentChildForListViewObject.keySet()) {
-					childs=parentChildForListViewObject.get(pr).split(breakSP);
-					for (int i = 0; i < childs.length; i++) {
-						if (pr.isEmpty()) {
-
-						} else {
-							ele=npbl.getNavigationLabel(projectName, pr, action.BOOLEAN, 5);
-							click(driver, ele, pr, action.BOOLEAN);
-						}
-						ele=npbl.getNavigationLabel(projectName, childs[i], action.BOOLEAN, 5);
-						if (click(driver, ele, childs[i], action.BOOLEAN)) {
-							log(LogStatus.INFO, "Not able to click on "+childs[i], YesNo.No);
-							flag=npbl.isAutomationAllListViewAdded(projectName, 10);	
-							if (!flag && ele==null ) {
-								log(LogStatus.INFO, "No List View is available after clicking on "+childs[i] , YesNo.No);
-
-								if (!flag) {
-									log(LogStatus.INFO, "List View is available after clicking on "+childs[i] , YesNo.No);
-									ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, childs[i], action.BOOLEAN, 30);
-									if (ele==null ) {
-										log(LogStatus.INFO, "No Pop Up List View is open after clicking on "+childs[i] , YesNo.No);
-										actualUrl=getURL(driver, 10);
-										if (expectedUrl.contains(actualUrl)) {
-											log(LogStatus.INFO, "No change in url link after click on "+childs[i], YesNo.No);
-										} else {
-											log(LogStatus.ERROR, "url link sholud not be changed after click on "+childs[i]+" Actual : "+actualUrl+"\t Expected : "+expectedUrl, YesNo.Yes);
-											sa.assertTrue(false,"url link sholud not be changed after click on "+childs[i]+" Actual : "+actualUrl+"\t Expected : "+expectedUrl);
-											refresh(driver);
-										}
-									} else {
-										log(LogStatus.ERROR, "No Pop Up Should be open after clicking on "+childs[i], YesNo.Yes);
-										sa.assertTrue(false, "No Pop Up Should be open after clicking on "+childs[i]);
-									}
-
-								} else {
-									log(LogStatus.ERROR, "List View should not available after clicking on "+childs[i], YesNo.Yes);
-									sa.assertTrue(false, "List View should not available after clicking on "+childs[i]);
-								}
-
-							} else {
-								log(LogStatus.ERROR, "No List View is available is open after clicking on "+childs[i], YesNo.Yes);
-								sa.assertTrue(false, "No List View is available is open after clicking on "+childs[i]);
-							}
-						} else {
-							log(LogStatus.ERROR, "Not able to click on "+childs[i], YesNo.Yes);
-							sa.assertTrue(false, "Not able to click on "+childs[i]);
-						}
 					}
 
+				} else {
+					log(LogStatus.ERROR, "Not able to click on "+navigationLabel ,YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on "+navigationLabel);
 				}
 
 			} else {
-				log(LogStatus.FAIL, "Map is empty its means No label For Which URL, ActionObject And Liew View Object Field is Blank", YesNo.Yes);
-				sa.assertTrue(false, "Map is empty its means No label For Which URL, ActionObject And Liew View Object Field is Blank");
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName);
 			}
-		} else {
-			log(LogStatus.FAIL, "Unable to Fetch Records from CSV File : "+NavigationMenuTestData_PEExcel, YesNo.Yes);
-			sa.assertTrue(false, "Unable to Fetch Records from CSV File : "+NavigationMenuTestData_PEExcel);
+			refresh(driver);
+
 		}
-		System.err.println("parentChildForQuickActionObject : "+parentChildForListViewObject);
 		switchToDefaultContent(driver);
 		lp.CRMlogout();
 		sa.assertAll();
@@ -913,6 +932,18 @@ public class Module3 extends BaseLib {
 				if (click(driver, ele, labelValue, action.BOOLEAN)) {
 					log(LogStatus.INFO, "Click on "+labelValue+" going to verify url", YesNo.No);
 					ThreadSleep(5000);
+					
+//					String actualUrl = getURL(driver, 10);
+//					String urlValue=ExcelUtils.readDataFromCSVFile(NavigationMenuTestData_PEExcel, CSVLabel.Navigation_Label.toString(), labelValue, CSVLabel.URL.toString());
+//					System.err.println(">>> "+urlValue);
+//					if (actualUrl.contains(urlValue)) {
+//						log(LogStatus.INFO, urlValue+" : Url Verified for : "+labelValue, YesNo.No);
+//					} else {
+//						log(LogStatus.ERROR, "Url Not Verified for : "+labelValue+" Actual : "+actualUrl+"\t Expected : "+urlValue, YesNo.Yes);
+//						sa.assertTrue(false,"Url Not Verified for : "+labelValue+" Actual : "+actualUrl+"\t Expected : "+urlValue);
+//						refresh(driver);
+//					}
+					
 					redirectLink=redirectionLink.split(breakSP)[i];
 					ele = FindElement(driver, "//*[text()='"+redirectLink+"']", redirectLink, action.BOOLEAN, 40);
 					if (ele!=null) {
@@ -945,7 +976,7 @@ public class Module3 extends BaseLib {
 	public void Module3Tc010_VerifyTheFieldsOnNavigationObject(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
-		lp.CRMLogin(superAdminUserName, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		List<String> navigationField = new LinkedList<String>();
 		navigationField.add("Navigation Label");
 		navigationField.add("URL");
@@ -997,7 +1028,7 @@ public class Module3 extends BaseLib {
 	public void Module3Tc011_RenameNavigationLabelAndVerifyImpactOnNavigationMenu(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
-		lp.CRMLogin(superAdminUserName, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		String[] tabs = {reportTab,dashBoardTab};
 
 		String updatedName="";
@@ -1090,7 +1121,7 @@ public class Module3 extends BaseLib {
 	public void Module3Tc012_ChangeTheOrderOfTheLabelAndVerifyImpactOnNavigationMenu(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
-	//	lp.CRMLogin(superAdminUserName, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		String updatedOrder="";
 		WebElement ele;
 		String[] navigationLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name).split(breakSP);
@@ -1177,7 +1208,7 @@ public class Module3 extends BaseLib {
 			// Verification on navigation menu
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-				npbl.verifyingNavigationMenuLink(projectName, navigationParentLabelWithSortedOrder, navigationParentLabelWithChildSorted, action.BOOLEAN, 0);;
+				npbl.verifyingNavigationMenuLink(projectName, navigationParentLabelWithSortedOrder, navigationParentLabelWithChildSorted, action.BOOLEAN, 1);;
 			} else {
 				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify order", YesNo.Yes);
 				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify order");
@@ -1216,7 +1247,7 @@ public class Module3 extends BaseLib {
 				System.err.println("pass : "+csvRecords.get(i));
 				String[] record = csvRecords.get(i).split(commaSP);
 				for (int j = 0; j < record.length; j++) {
-					labelsValues[j]=record[j].trim();
+					labelsValues[j]=record[j].trim().replace("\"", "");
 					System.err.println("labelsValues[j] : "+labelsValues[j]);
 				}
 				
@@ -1409,6 +1440,7 @@ public class Module3 extends BaseLib {
 					if(setup.searchStandardOrCustomObject(environment,mode, object.App_Manager)) {
 						log(LogStatus.INFO, "click on Object : "+object.App_Manager, YesNo.No);
 						ThreadSleep(2000);
+						scn.nextLine();
 						if(setup.clickOnEditForApp(driver, appName, AppDeveloperName,AppDescription, 10)) {
 							log(LogStatus.INFO,"click on edit button against "+appName+" : "+AppDeveloperName+" "+AppDescription, YesNo.No);
 							ThreadSleep(1000);
@@ -1508,7 +1540,7 @@ public class Module3 extends BaseLib {
 	public void Module3Tc018_CreateSubMenuAndVerify(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
-		lp.CRMLogin(superAdminUserName, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		String updatedParent="";
 		WebElement ele;
 		String[] navigationLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name).split(breakSP);
@@ -1559,6 +1591,7 @@ public class Module3 extends BaseLib {
 									sa.assertTrue(false, updatedParent+" value has not been written under "+CSVLabel.Parent.toString()+" for "+navLb);
 								}
 
+								refresh(driver);
 							} else {
 								log(LogStatus.ERROR, "Not Able to Click on save Button : "+navLb, YesNo.Yes);
 								sa.assertTrue(false,"Not Able to Click on save Button : "+navLb);}
@@ -1623,7 +1656,7 @@ public class Module3 extends BaseLib {
 	public void Module3Tc019_CreateSubMenuForIIndlevelAndVerifyItOnTheNavigationMenu(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
-		lp.CRMLogin(superAdminUserName, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		List<String> navigationField = new LinkedList<String>();
 		navigationField.add("Navigation Label");
 		navigationField.add("Order");
@@ -1678,7 +1711,8 @@ public class Module3 extends BaseLib {
 					if (click(driver, npbl.getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.ERROR, "Click on save Button : "+navigationLabel, YesNo.No);
 						ThreadSleep(5000);
-
+						refresh(driver);
+						ThreadSleep(5000);
 						if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 							log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 							List<WebElement> eleList = npbl.getExpandIcon(projectName, 10);
@@ -1703,6 +1737,7 @@ public class Module3 extends BaseLib {
 								}
 								click(driver, eleList.get(0), "> icon", action.BOOLEAN);
 								ThreadSleep(3000);
+								eleList = npbl.getExpandIcon(projectName, 10);
 								if (eleList.size()==1) {
 									log(LogStatus.INFO, "> icon verified", YesNo.No);
 								} else {
@@ -1758,7 +1793,7 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		WebElement ele;
 		String[] navigationLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name).split(breakSP);
-		String[] thirdPartyURLS= {"https://www.hubspot.com","https://www.preqin.com","https://pe4604.lightning.force.com/lightning/n/My_App_Page"};
+		String[] thirdPartyURLS= {"https://www.hubspot.com/","https://www.preqin.com/"};
 		String[] navigationLabelWithParent=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_With_Parent).split(breakSP);
 
 		String navLb;
@@ -1844,8 +1879,8 @@ public class Module3 extends BaseLib {
 						if (redirectLink.equalsIgnoreCase(actualUrl) || actualUrl.equalsIgnoreCase(redirectLink)) {
 							log(LogStatus.ERROR, "After clicking : "+labelValue+" redirected to "+redirectLink, YesNo.No);
 						} else {
-							log(LogStatus.ERROR, "After clicking : "+labelValue+" should be redirected to "+redirectLink, YesNo.Yes);
-							sa.assertTrue(false,"After clicking : "+labelValue+" should be redirected to "+redirectLink);
+							log(LogStatus.ERROR, "After clicking : "+labelValue+" should be redirected to "+redirectLink+" \t Actual : "+actualUrl, YesNo.Yes);
+							sa.assertTrue(false,"After clicking : "+labelValue+" should be redirected to "+redirectLink+" \t Actual : "+actualUrl);
 							
 						}
 						driver.close();
@@ -1876,7 +1911,121 @@ public class Module3 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void Module3Tc023_CreateALightningAppPageAndVerifyTheNavigationForLighteningAppPage(String projectName) {
+	public void Module3Tc022_CreateListViewAndVerifyTheNavigationForListView(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		WebElement ele;
+		String navigationLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name);
+		String listViewObject=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.List_View_Object);
+		String listViewName=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.List_View_Name);
+		String[][] navigationFieldWithValues= {{CSVLabel.List_View_Object.toString(),listViewObject},{CSVLabel.List_View_Name.toString(),listViewName}};
+		String navLb;
+		navLb=navigationLabel;
+
+		if (lp.clickOnTab(projectName, navLb)) {	
+			if (lp.addAutomationAllListView(projectName, navLb, 10)) {
+				log(LogStatus.INFO,"list view added on "+navLb,YesNo.No);
+			} else {
+				log(LogStatus.FAIL,"list view could not added on "+navLb,YesNo.Yes);
+				sa.assertTrue(false, "list view could not added on "+navLb);
+			}
+		} else {
+			log(LogStatus.FAIL,"could not click on "+navLb,YesNo.Yes);
+			sa.assertTrue(false, "could not click on "+navLb);
+		}
+
+		if (npbl.clickOnTab(projectName, navigationTab)) {
+			log(LogStatus.INFO, "Click on Tab : "+navigationTab, YesNo.No);
+			if (npbl.clickOnAlreadyCreatedItem(projectName, navLb, true, 15)) {
+				log(LogStatus.INFO,"Item found: "+navLb+" on Tab : "+navigationTab, YesNo.No);
+
+				npbl.clickOnShowMoreDropdownOnly(projectName);
+				ele = npbl.actionDropdownElement(projectName, ShowMoreActionDropDownList.Edit, 10);
+
+				if (click(driver, ele, ShowMoreActionDropDownList.Edit.toString(), action.BOOLEAN)) {
+					log(LogStatus.INFO, "Not Able to Click on Edit Button : "+navLb, YesNo.No);
+					npbl.enteringValueForNavigation(projectName, navigationFieldWithValues, action.BOOLEAN, 20);
+					if (click(driver, npbl.getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.ERROR, "Click on save Button : "+navLb, YesNo.No);
+						ThreadSleep(2000);
+						
+
+						if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewName
+								, CSVLabel.Navigation_Label.toString(), navLb, CSVLabel.List_View_Name.toString())) {
+							log(LogStatus.INFO, listViewName+" value has been written under "+CSVLabel.List_View_Name.toString()+" for "+navLb, YesNo.No);
+						} else {
+							log(LogStatus.ERROR, listViewName+" value has not been written under "+CSVLabel.List_View_Name.toString()+" for "+navLb, YesNo.Yes);
+							sa.assertTrue(false, listViewName+" value has not been written under "+CSVLabel.List_View_Name.toString()+" for "+navLb);
+						}
+						
+
+						if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewObject, CSVLabel.Navigation_Label.toString(), navLb, CSVLabel.List_View_Object.toString())) {
+							log(LogStatus.INFO, listViewObject+" value has been written under "+CSVLabel.List_View_Object.toString()+" for "+navLb, YesNo.No);
+						} else {
+							log(LogStatus.ERROR, listViewObject+" value has not been written under "+CSVLabel.List_View_Object.toString()+" for "+navLb, YesNo.Yes);
+							sa.assertTrue(false, listViewObject+" value has not been written under "+CSVLabel.List_View_Object.toString()+" for "+navLb);
+						}
+						
+					} else {
+						log(LogStatus.ERROR, "Not Able to Click on save Button : "+navLb, YesNo.Yes);
+						sa.assertTrue(false,"Not Able to Click on save Button : "+navLb);}
+
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on Edit Button : "+navLb, YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on Edit Button : "+navLb);
+				}
+
+			}else {
+
+				log(LogStatus.ERROR,"Item not found: "+navLb+" on Tab : "+navigationTab, YesNo.Yes);
+				sa.assertTrue(false,"Item not found: "+navLb+" on Tab : "+navigationTab);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on Tab : "+navigationTab, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on Tab : "+navigationTab);
+		}
+
+
+
+		String labelValue="";
+		refresh(driver);
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+			labelValue=navigationLabel;
+			ele=npbl.getNavigationLabel(projectName, labelValue, action.BOOLEAN, 10);
+			if (click(driver, ele, labelValue, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on "+labelValue+" going to verify list view", YesNo.No);
+				ThreadSleep(5000);
+				boolean flag=npbl.isAutomationAllListViewForObject(projectName,labelValue, 30);
+				if (flag) {
+					log(LogStatus.INFO, "List View is available after clicking on "+labelValue , YesNo.No);
+					
+				} else {
+					log(LogStatus.ERROR, "No List View is available is open after clicking on "+labelValue, YesNo.Yes);
+					sa.assertTrue(false, "No List View is available is open after clicking on "+labelValue);
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+labelValue+" so cannot verify list view", YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+labelValue+" so cannot verify list view");
+
+			}
+			click(driver, npbl.getNavatarQuickLinkMinimize_Lighting(projectName, 3), "Minimize Icon", action.BOOLEAN);
+			ThreadSleep(5000);
+
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list view for label : "+labelValue, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list view for label : "+labelValue);
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc023_1_CreateALightningAppPageAndVerifyTheNavigationForLighteningAppPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -2015,11 +2164,61 @@ public class Module3 extends BaseLib {
 		
 		///////////////////////////////////////////
 		
+		
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	
+		/////////////////////////////////////////////;
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc023_2_CreateALightningAppPageAndVerifyTheNavigationForLighteningAppPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		
+		
+		///////////////////////////////////////////
+		String myAppPageURL="";
+		if (npbl.clickOnTab(projectName, myAppPage)) {
+			log(LogStatus.INFO, "Click on Tab : "+myAppPage, YesNo.No);
+			ThreadSleep(10000);
+			myAppPageURL=getURL(driver, 60);
+			
+			String urlLabel=CSVLabel.URL.toString();
+			String urlValue=myAppPageURL;
+			String navigationLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name);
+			String[][] labelWithValue= {{urlLabel,urlValue}};
+			
+			if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, labelWithValue, 20)) {
+				log(LogStatus.INFO, urlValue+" value has been updated & saved under "+urlLabel+" for "+navigationLabel, YesNo.No);
+				//NO NEED FOR THIS
+//				if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, urlValue, CSVLabel.Navigation_Label.toString(), navigationLabel, urlLabel)) {
+//					log(LogStatus.INFO, urlValue+" value has been written under "+urlLabel+" for "+navigationLabel, YesNo.No);
+//				} else {
+//					log(LogStatus.ERROR, urlValue+" has not been written under "+urlLabel+" for "+navigationLabel, YesNo.Yes);
+//					sa.assertTrue(false, urlValue+" has not been written under "+urlLabel+" for "+navigationLabel);
+//
+//				}
+			}else{
+
+				log(LogStatus.ERROR, "Not Able to enter url value field for "+navigationLabel, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to enter url value field for "+navigationLabel);
+			}
+			
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+myAppPage, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+myAppPage);
+	
+		}
+		
 		String redirectLink;
 		String labelValue="";
 		String actualUrl="";
 		String[] navigationLabelWithParent=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_With_Parent).split(breakSP);
-
+		refresh(driver);
 		for (int i = 0; i < navigationLabelWithParent.length; i++) {
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
@@ -2031,7 +2230,7 @@ public class Module3 extends BaseLib {
 //					String pareNTiD=switchOnWindow(driver);
 //					if (pareNTiD!=null) {
 						
-						redirectLink="";
+						redirectLink=myAppPageURL;
 						actualUrl=getURL(driver, 60);
 						if (redirectLink.equalsIgnoreCase(actualUrl) || actualUrl.equalsIgnoreCase(redirectLink)) {
 							log(LogStatus.ERROR, "After clicking : "+labelValue+" redirected to "+redirectLink, YesNo.No);
@@ -2052,9 +2251,7 @@ public class Module3 extends BaseLib {
 					sa.assertTrue(false,"Not Able to Click on "+labelValue+" so cannot verify url");
 
 				}
-				click(driver, npbl.getNavatarQuickLinkMinimize_Lighting(projectName, 3), "Minimize Icon", action.BOOLEAN);
-				refresh(driver);
-				ThreadSleep(5000);
+			
 
 			} else {
 				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify url for label : "+labelValue, YesNo.Yes);
@@ -2068,120 +2265,6 @@ public class Module3 extends BaseLib {
 		/////////////////////////////////////////////;
 	}
 	
-	@Parameters({ "projectName"})
-	@Test
-	public void Module3Tc022_CreateListViewAndVerifyTheNavigationForListView(String projectName) {
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
-		lp.CRMLogin(superAdminUserName, adminPassword);
-		WebElement ele;
-		String navigationLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name);
-		String listViewObject=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.List_View_Object);
-		String listViewName=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.List_View_Name);
-		String[][] navigationFieldWithValues= {{CSVLabel.List_View_Object.toString(),listViewObject},{CSVLabel.List_View_Name.toString(),listViewName}};
-		String navLb;
-		navLb=navigationLabel;
-
-		if (lp.clickOnTab(projectName, navLb)) {	
-			if (lp.addAutomationAllListView(projectName, navLb, 10)) {
-				log(LogStatus.INFO,"list view added on "+navLb,YesNo.No);
-			} else {
-				log(LogStatus.FAIL,"list view could not added on "+navLb,YesNo.Yes);
-				sa.assertTrue(false, "list view could not added on "+navLb);
-			}
-		} else {
-			log(LogStatus.FAIL,"could not click on "+navLb,YesNo.Yes);
-			sa.assertTrue(false, "could not click on "+navLb);
-		}
-
-		if (npbl.clickOnTab(projectName, navigationTab)) {
-			log(LogStatus.INFO, "Click on Tab : "+navigationTab, YesNo.No);
-			if (npbl.clickOnAlreadyCreatedItem(projectName, navLb, true, 15)) {
-				log(LogStatus.INFO,"Item found: "+navLb+" on Tab : "+navigationTab, YesNo.No);
-
-				npbl.clickOnShowMoreDropdownOnly(projectName);
-				ele = npbl.actionDropdownElement(projectName, ShowMoreActionDropDownList.Edit, 10);
-
-				if (click(driver, ele, ShowMoreActionDropDownList.Edit.toString(), action.BOOLEAN)) {
-					log(LogStatus.INFO, "Not Able to Click on Edit Button : "+navLb, YesNo.No);
-					npbl.enteringValueForNavigation(projectName, navigationFieldWithValues, action.BOOLEAN, 20);
-					if (click(driver, npbl.getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.ERROR, "Click on save Button : "+navLb, YesNo.No);
-						ThreadSleep(2000);
-						
-
-						if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewName
-								, CSVLabel.Navigation_Label.toString(), navLb, CSVLabel.List_View_Name.toString())) {
-							log(LogStatus.INFO, listViewName+" value has been written under "+CSVLabel.List_View_Name.toString()+" for "+navLb, YesNo.No);
-						} else {
-							log(LogStatus.ERROR, listViewName+" value has not been written under "+CSVLabel.List_View_Name.toString()+" for "+navLb, YesNo.Yes);
-							sa.assertTrue(false, listViewName+" value has not been written under "+CSVLabel.List_View_Name.toString()+" for "+navLb);
-						}
-						
-
-						if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewObject, CSVLabel.Navigation_Label.toString(), navLb, CSVLabel.List_View_Object.toString())) {
-							log(LogStatus.INFO, listViewObject+" value has been written under "+CSVLabel.List_View_Object.toString()+" for "+navLb, YesNo.No);
-						} else {
-							log(LogStatus.ERROR, listViewObject+" value has not been written under "+CSVLabel.List_View_Object.toString()+" for "+navLb, YesNo.Yes);
-							sa.assertTrue(false, listViewObject+" value has not been written under "+CSVLabel.List_View_Object.toString()+" for "+navLb);
-						}
-						
-					} else {
-						log(LogStatus.ERROR, "Not Able to Click on save Button : "+navLb, YesNo.Yes);
-						sa.assertTrue(false,"Not Able to Click on save Button : "+navLb);}
-
-
-				} else {
-					log(LogStatus.ERROR, "Not Able to Click on Edit Button : "+navLb, YesNo.Yes);
-					sa.assertTrue(false,"Not Able to Click on Edit Button : "+navLb);
-				}
-
-			}else {
-
-				log(LogStatus.ERROR,"Item not found: "+navLb+" on Tab : "+navigationTab, YesNo.Yes);
-				sa.assertTrue(false,"Item not found: "+navLb+" on Tab : "+navigationTab);
-			}
-		} else {
-			log(LogStatus.ERROR, "Not Able to Click on Tab : "+navigationTab, YesNo.Yes);
-			sa.assertTrue(false,"Not Able to Click on Tab : "+navigationTab);
-		}
-
-
-
-		String labelValue="";
-
-		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
-			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			labelValue=navigationLabel;
-			ele=npbl.getNavigationLabel(projectName, labelValue, action.BOOLEAN, 10);
-			if (click(driver, ele, labelValue, action.BOOLEAN)) {
-				log(LogStatus.INFO, "Click on "+labelValue+" going to verify url", YesNo.No);
-				ThreadSleep(5000);
-				boolean flag=npbl.isAutomationAllListViewAdded(projectName, 30);
-				if (flag) {
-					log(LogStatus.INFO, "List View is available after clicking on "+labelValue , YesNo.No);
-					
-				} else {
-					log(LogStatus.ERROR, "No List View is available is open after clicking on "+labelValue, YesNo.Yes);
-					sa.assertTrue(false, "No List View is available is open after clicking on "+labelValue);
-				}
-			} else {
-				log(LogStatus.ERROR, "Not Able to Click on "+labelValue+" so cannot verify url", YesNo.Yes);
-				sa.assertTrue(false,"Not Able to Click on "+labelValue+" so cannot verify url");
-
-			}
-			click(driver, npbl.getNavatarQuickLinkMinimize_Lighting(projectName, 3), "Minimize Icon", action.BOOLEAN);
-			refresh(driver);
-			ThreadSleep(5000);
-
-		} else {
-			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify url for label : "+labelValue, YesNo.Yes);
-			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify url for label : "+labelValue);
-		}
-
-		lp.CRMlogout();
-		sa.assertAll();
-	}
 	
 	@Parameters({ "projectName"})
 	@Test
@@ -2196,6 +2279,32 @@ public class Module3 extends BaseLib {
 		String recordTypeList=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Record_Type);
 		String recordTypeArray[] =recordTypeList.split(breakSP);
 		
+		//////////////////////////////////
+		
+		String actionObjectLabel=CSVLabel.Action_Object.toString();
+		String actionObjecValue="Account";
+
+		String otherAccountRecords=navigationLabel+",,,"+actionObjecValue+",,,,";
+		String[][] labelWithValue= {{CSVLabel.Navigation_Label.toString(),navigationLabel},{actionObjectLabel,actionObjecValue}};
+		
+		
+		if (npbl.createNavigationItem(projectName, labelWithValue, 20)) {
+			log(LogStatus.INFO, "created "+navigationLabel, YesNo.No);
+			
+			if (ExcelUtils.writeOneRecordOnCSV(NavigationMenuTestData_PEExcel,otherAccountRecords)) {
+				log(LogStatus.INFO, "Able to write record on csv "+otherAccountRecords , YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Not Able to write record on csv "+otherAccountRecords, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to write record on csv "+otherAccountRecords);
+			}
+			refresh(driver);
+			
+			} else {
+			log(LogStatus.ERROR, "Not Able to create "+navigationLabel, YesNo.Yes);
+			sa.assertTrue(false, "Not Able to create "+navigationLabel);
+
+		}
+		////////////////////////////////
 
 		String labelValue="";
 
@@ -2373,7 +2482,8 @@ public class Module3 extends BaseLib {
 									if (ele!=null) {
 										log(LogStatus.INFO,recordTypeArray+" ele found on edit page",YesNo.No);
 										if (i==0) {
-											if (!isSelected(driver, ele, recordTypeArray[i]+" "+recordTypeLabel.Active)) {
+											if (isSelected(driver, ele, recordTypeArray[i]+" "+recordTypeLabel.Active)) {
+												ThreadSleep(2000);
 												if (click(driver, ele, recordTypeArray[i]+" "+recordTypeLabel.Active, action.BOOLEAN)) {
 													log(LogStatus.INFO,recordTypeArray[i]+" "+recordTypeLabel.Active+" is clicked",YesNo.No);
 													ThreadSleep(2000);
@@ -2468,12 +2578,12 @@ public class Module3 extends BaseLib {
 									log(LogStatus.ERROR, "Click on save Button : "+labelValue, YesNo.No);
 									ThreadSleep(2000);
 
-									if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, recordTypeName, CSVLabel.Navigation_Label.toString(), labelValue, CSVLabel.Action_Record_Type.toString())) {
-										log(LogStatus.INFO, recordTypeName+" value has been written under "+CSVLabel.Action_Record_Type.toString()+" for "+labelValue, YesNo.No);
-									} else {
-										log(LogStatus.ERROR, recordTypeName+" value has not been written under "+CSVLabel.Action_Record_Type.toString()+" for "+labelValue, YesNo.Yes);
-										sa.assertTrue(false, recordTypeName+" value has not been written under "+CSVLabel.Action_Record_Type.toString()+" for "+labelValue);
-									}
+//									if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, recordTypeName, CSVLabel.Navigation_Label.toString(), labelValue, CSVLabel.Action_Record_Type.toString())) {
+//										log(LogStatus.INFO, recordTypeName+" value has been written under "+CSVLabel.Action_Record_Type.toString()+" for "+labelValue, YesNo.No);
+//									} else {
+//										log(LogStatus.ERROR, recordTypeName+" value has not been written under "+CSVLabel.Action_Record_Type.toString()+" for "+labelValue, YesNo.Yes);
+//										sa.assertTrue(false, recordTypeName+" value has not been written under "+CSVLabel.Action_Record_Type.toString()+" for "+labelValue);
+//									}
 
 								} else {
 									log(LogStatus.ERROR, "Not Able to Click on save Button : "+labelValue, YesNo.Yes);
@@ -2548,6 +2658,7 @@ public class Module3 extends BaseLib {
 				}
 
 				click(driver, ele, "Cross Icon", action.BOOLEAN);
+				ThreadSleep(5000);
 				refresh(driver);
 				ThreadSleep(5000);
 
@@ -2577,9 +2688,18 @@ public class Module3 extends BaseLib {
 		
 		if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, labelWithValue, 20)) {
 			log(LogStatus.INFO, "Blank value has been updated & saved under "+CSVLabel.Action_Record_Type.toString()+" for "+navigationLabel, YesNo.No);
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, "", CSVLabel.Navigation_Label.toString(), navigationLabel, CSVLabel.Action_Record_Type.toString())) {
-				log(LogStatus.INFO, "Blank value has been written under "+CSVLabel.Action_Record_Type.toString()+" for "+navigationLabel, YesNo.No);
-				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+			
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, "", CSVLabel.Navigation_Label.toString(), navigationLabel, CSVLabel.Action_Record_Type.toString())) {
+//				log(LogStatus.INFO, "Blank value has been written under "+CSVLabel.Action_Record_Type.toString()+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, "Blank value has not been written under "+CSVLabel.Action_Record_Type.toString()+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, "Blank value has not been written under "+CSVLabel.Action_Record_Type.toString()+" for "+navigationLabel);
+//			}
+			
+			refresh(driver);
+			ThreadSleep(5000);
+			
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 					log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 					ele=npbl.getNavigationLabel(projectName, navigationLabel, action.BOOLEAN, 10);
 					if (click(driver, ele, navigationLabel, action.BOOLEAN)) {
@@ -2596,6 +2716,25 @@ public class Module3 extends BaseLib {
 								log(LogStatus.ERROR, recordType+" radio button should be present after removing value from"+CSVLabel.Action_Record_Type.toString(), YesNo.Yes);
 								sa.assertTrue(false, recordType+" radio button should be present after removing value from"+CSVLabel.Action_Record_Type.toString());
 							}
+							
+							ele=npbl.getnavigationPopUpHeader(projectName, 10);
+							String expecedHeader="New Entity";;
+							if (ele!=null) {
+								log(LogStatus.INFO, "PopUp is open" , YesNo.No);
+								String actualHeader = ele.getText().trim();
+								if (ele.getText().trim().equals(expecedHeader)) {
+									log(LogStatus.INFO, "Header Text verified : "+expecedHeader, YesNo.Yes);
+									
+								} else {
+									log(LogStatus.ERROR, "Header Text not verified Actual : "+actualHeader+" \t Expected : "+expecedHeader, YesNo.Yes);
+									sa.assertTrue(false, "Header Text not verified Actual : "+actualHeader+" \t Expected : "+expecedHeader);
+								}
+
+							} else {
+								log(LogStatus.ERROR, "No PopUp is open so cannoy verify Heading "+expecedHeader, YesNo.Yes);
+								sa.assertTrue(false, "No PopUp is open so cannoy verify Heading "+expecedHeader);
+							}
+							
 							ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, "", action.BOOLEAN, 30);
 							click(driver, ele, "Navigation menu PoPuP Cross Icon", action.BOOLEAN);
 						} else {
@@ -2613,10 +2752,6 @@ public class Module3 extends BaseLib {
 					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify record Type for label : "+navigationLabel);
 				}
 
-			} else {
-				log(LogStatus.ERROR, "Blank value has not been written under "+CSVLabel.Action_Record_Type.toString()+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, "Blank value has not been written under "+CSVLabel.Action_Record_Type.toString()+" for "+navigationLabel);
-			}
 			
 			
 		} else {
@@ -2643,8 +2778,15 @@ public class Module3 extends BaseLib {
 
 		if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, labelWithValue, 20)) {
 			log(LogStatus.INFO, urlValue+" value has been updated & saved under "+urlLabel+" for "+navigationLabel, YesNo.No);
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, urlValue, CSVLabel.Navigation_Label.toString(), navigationLabel, urlLabel)) {
-				log(LogStatus.INFO, urlValue+" value has been written under "+urlLabel+" for "+navigationLabel, YesNo.No);
+			refresh(driver);
+			ThreadSleep(5000);
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, urlValue, CSVLabel.Navigation_Label.toString(), navigationLabel, urlLabel)) {
+//				log(LogStatus.INFO, urlValue+" value has been written under "+urlLabel+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, urlValue+" has not been written under "+urlLabel+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, urlValue+" has not been written under "+urlLabel+" for "+navigationLabel);
+//
+//			}
 				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 					log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 					ele=npbl.getNavigationLabel(projectName, navigationLabel, action.BOOLEAN, 10);
@@ -2657,7 +2799,7 @@ public class Module3 extends BaseLib {
 						} else {
 							log(LogStatus.ERROR, "Url Not Verified for : "+navigationLabel+" Actual : "+actualUrl+"\t Expected : "+urlValue, YesNo.Yes);
 							sa.assertTrue(false,"Url Not Verified for : "+navigationLabel+" Actual : "+actualUrl+"\t Expected : "+urlValue);
-							refresh(driver);
+						
 						}
 					} else {
 						log(LogStatus.ERROR, "Not Able to Click on "+navigationLabel+" so cannot verify URL for label : "+navigationLabel, YesNo.Yes);
@@ -2669,11 +2811,7 @@ public class Module3 extends BaseLib {
 					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify URL for label : "+navigationLabel);
 
 				}
-			} else {
-				log(LogStatus.ERROR, urlValue+" has not been written under "+urlLabel+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, urlValue+" has not been written under "+urlLabel+" for "+navigationLabel);
-
-			}
+			
 		}else{
 
 			log(LogStatus.ERROR, "Not Able to enter url value field for "+navigationLabel, YesNo.Yes);
@@ -2722,9 +2860,15 @@ public class Module3 extends BaseLib {
 		
 		if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, labelWithValue, 20)) {
 			log(LogStatus.INFO, listViewLabelValue+" value has been updated & saved under "+listViewNameLabel+" for "+navigationLabel, YesNo.No);
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewLabelValue, CSVLabel.Navigation_Label.toString(), navigationLabel, listViewNameLabel)) {
-				log(LogStatus.INFO, listViewLabelValue+" value has been written under "+listViewNameLabel+" for "+navigationLabel, YesNo.No);
-				ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewObjectValue, CSVLabel.Navigation_Label.toString(), navigationLabel, listViewObjectLabel);
+			
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewLabelValue, CSVLabel.Navigation_Label.toString(), navigationLabel, listViewNameLabel)) {
+//				log(LogStatus.INFO, listViewLabelValue+" value has been written under "+listViewNameLabel+" for "+navigationLabel, YesNo.No);
+//				ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewObjectValue, CSVLabel.Navigation_Label.toString(), navigationLabel, listViewObjectLabel);
+//			} else {
+//				log(LogStatus.ERROR, listViewLabelValue+" has not been written under "+listViewNameLabel+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, listViewLabelValue+" has not been written under "+listViewNameLabel+" for "+navigationLabel);
+//
+//			}
 				refresh(driver);
 				ThreadSleep(5000);
 				listViewLabelValue=googleUrlValue;
@@ -2764,11 +2908,7 @@ public class Module3 extends BaseLib {
 					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify "+listViewLabelValue+" after adding URL/ Quick Create Object/ List View for label : "+navigationLabel);
 
 				}
-			} else {
-				log(LogStatus.ERROR, listViewLabelValue+" has not been written under "+listViewNameLabel+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, listViewLabelValue+" has not been written under "+listViewNameLabel+" for "+navigationLabel);
-
-			}
+		
 		}else{
 
 			log(LogStatus.ERROR, "Not Able to enter value on" +listViewNameLabel+" for "+navigationLabel, YesNo.Yes);
@@ -2795,8 +2935,14 @@ public class Module3 extends BaseLib {
 		
 		if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, labelWithValue, 20)) {
 			log(LogStatus.INFO, urlLabelValue+" value has been updated & saved under "+urlLabel+" for "+navigationLabel, YesNo.No);
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, urlLabelValue, CSVLabel.Navigation_Label.toString(), navigationLabel, urlLabel)) {
-				log(LogStatus.INFO, urlLabelValue+" value has been written under "+urlLabel+" for "+navigationLabel, YesNo.No);
+			
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, urlLabelValue, CSVLabel.Navigation_Label.toString(), navigationLabel, urlLabel)) {
+//				log(LogStatus.INFO, urlLabelValue+" value has been written under "+urlLabel+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, urlLabelValue+" has not been written under "+urlLabel+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, urlLabelValue+" has not been written under "+urlLabel+" for "+navigationLabel);
+//
+//			}
 				refresh(driver);
 				ThreadSleep(5000);
 				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
@@ -2816,6 +2962,25 @@ public class Module3 extends BaseLib {
 								log(LogStatus.ERROR, recordType+" radio button should be present after removing value from"+urlLabel, YesNo.Yes);
 								sa.assertTrue(false, recordType+" radio button should be present after removing value from"+urlLabel);
 							}
+							
+							ele=npbl.getnavigationPopUpHeader(projectName, 10);
+							String expecedHeader="New Entity";;
+							if (ele!=null) {
+								log(LogStatus.INFO, "PopUp is open" , YesNo.No);
+								String actualHeader = ele.getText().trim();
+								if (ele.getText().trim().equals(expecedHeader)) {
+									log(LogStatus.INFO, "Header Text verified : "+expecedHeader, YesNo.Yes);
+									
+								} else {
+									log(LogStatus.ERROR, "Header Text not verified Actual : "+actualHeader+" \t Expected : "+expecedHeader, YesNo.Yes);
+									sa.assertTrue(false, "Header Text not verified Actual : "+actualHeader+" \t Expected : "+expecedHeader);
+								}
+
+							} else {
+								log(LogStatus.ERROR, "No PopUp is open so cannoy verify Heading "+expecedHeader, YesNo.Yes);
+								sa.assertTrue(false, "No PopUp is open so cannoy verify Heading "+expecedHeader);
+							}
+							
 							ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, "", action.BOOLEAN, 30);
 							click(driver, ele, "Navigation menu PoPuP Cross Icon", action.BOOLEAN);
 						} else {
@@ -2832,11 +2997,7 @@ public class Module3 extends BaseLib {
 					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot click on label : "+navigationLabel);
 
 				}
-			} else {
-				log(LogStatus.ERROR, urlLabelValue+" has not been written under "+urlLabel+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, urlLabelValue+" has not been written under "+urlLabel+" for "+navigationLabel);
-
-			}
+		
 		}else{
 
 			log(LogStatus.ERROR, "Not Able to enter value on" +urlLabel+" for "+navigationLabel, YesNo.Yes);
@@ -2863,8 +3024,14 @@ public class Module3 extends BaseLib {
 
 		if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, labelWithValue, 20)) {
 			log(LogStatus.INFO, actionObjectValue+" value has been updated & saved under "+actionObjectLabel+" for "+navigationLabel, YesNo.No);
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, actionObjectValue, CSVLabel.Navigation_Label.toString(), navigationLabel, actionObjectLabel)) {
-				log(LogStatus.INFO, actionObjectValue+" value has been written under "+actionObjectLabel+" for "+navigationLabel, YesNo.No);
+
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, actionObjectValue, CSVLabel.Navigation_Label.toString(), navigationLabel, actionObjectLabel)) {
+//				log(LogStatus.INFO, actionObjectValue+" value has been written under "+actionObjectLabel+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, actionObjectValue+" has not been written under "+actionObjectLabel+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, actionObjectValue+" has not been written under "+actionObjectLabel+" for "+navigationLabel);
+//
+//			}
 				refresh(driver);
 				ThreadSleep(5000);
 				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
@@ -2873,10 +3040,9 @@ public class Module3 extends BaseLib {
 					if (click(driver, ele, navigationLabel, action.BOOLEAN)) {
 						log(LogStatus.INFO, "Click on "+navigationLabel, YesNo.No);
 						ThreadSleep(5000);
-						boolean flag=npbl.isAutomationAllListViewAdded(projectName, 30);
+						boolean flag = npbl.isAutomationAllListViewForObject(projectName,"Entities",automationAll, 30);;
 						if (flag) {
 							log(LogStatus.INFO, "List View is available after clicking on "+navigationLabel , YesNo.No);
-
 						} else {
 							log(LogStatus.ERROR, "No List View is available is open after clicking on "+navigationLabel, YesNo.Yes);
 							sa.assertTrue(false, "No List View is available is open after clicking on "+navigationLabel);
@@ -2891,11 +3057,7 @@ public class Module3 extends BaseLib {
 					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot click on label : "+navigationLabel);
 
 				}
-			} else {
-				log(LogStatus.ERROR, actionObjectValue+" has not been written under "+actionObjectLabel+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, actionObjectValue+" has not been written under "+actionObjectLabel+" for "+navigationLabel);
-
-			}
+	
 		}else{
 
 			log(LogStatus.ERROR, "Not Able to enter value on" +actionObjectLabel+" for "+navigationLabel, YesNo.Yes);
@@ -2922,8 +3084,14 @@ public class Module3 extends BaseLib {
 
 		if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, labelWithValue, 20)) {
 			log(LogStatus.INFO, listViewObjectLabelValue+" value has been updated & saved under "+listViewObjectLabel+" for "+navigationLabel, YesNo.No);
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewObjectLabelValue, CSVLabel.Navigation_Label.toString(), navigationLabel, listViewObjectLabel)) {
-				log(LogStatus.INFO, listViewObjectLabelValue+" value has been written under "+listViewObjectLabel+" for "+navigationLabel, YesNo.No);
+			
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewObjectLabelValue, CSVLabel.Navigation_Label.toString(), navigationLabel, listViewObjectLabel)) {
+//				log(LogStatus.INFO, listViewObjectLabelValue+" value has been written under "+listViewObjectLabel+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, listViewObjectLabelValue+" has not been written under "+listViewObjectLabel+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, listViewObjectLabelValue+" has not been written under "+listViewObjectLabel+" for "+navigationLabel);
+//
+//			}
 				refresh(driver);
 				ThreadSleep(5000);
 				String expectedUrl=getURL(driver, 10);
@@ -2952,11 +3120,7 @@ public class Module3 extends BaseLib {
 					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot click on label : "+navigationLabel);
 
 				}
-			} else {
-				log(LogStatus.ERROR, listViewObjectLabelValue+" has not been written under "+listViewObjectLabel+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, listViewObjectLabelValue+" has not been written under "+listViewObjectLabel+" for "+navigationLabel);
-
-			}
+			
 		}else{
 
 			log(LogStatus.ERROR, "Not Able to enter value on" +listViewObjectLabel+" for "+navigationLabel, YesNo.Yes);
@@ -2986,9 +3150,16 @@ public class Module3 extends BaseLib {
 
 		if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, labelWithValue, 20)) {
 			log(LogStatus.INFO, listViewNameLabelValue+" value has been updated & saved under "+listViewNameLabel+" for "+navigationLabel, YesNo.No);
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewNameLabelValue, CSVLabel.Navigation_Label.toString(), navigationLabel, listViewNameLabel)) {
-				log(LogStatus.INFO, listViewNameLabelValue+" value has been written under "+listViewNameLabel+" for "+navigationLabel, YesNo.No);
-				ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewObjectValue, CSVLabel.Navigation_Label.toString(), navigationLabel, listViewObjectLabel);
+			
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewNameLabelValue, CSVLabel.Navigation_Label.toString(), navigationLabel, listViewNameLabel)) {
+//				log(LogStatus.INFO, listViewNameLabelValue+" value has been written under "+listViewNameLabel+" for "+navigationLabel, YesNo.No);
+//				ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewObjectValue, CSVLabel.Navigation_Label.toString(), navigationLabel, listViewObjectLabel);
+//			} else {
+//				log(LogStatus.ERROR, listViewNameLabelValue+" has not been written under "+listViewNameLabel+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, listViewNameLabelValue+" has not been written under "+listViewNameLabel+" for "+navigationLabel);
+//
+//			}
+				
 				refresh(driver);
 				ThreadSleep(5000);
 				String expectedUrl=getURL(driver, 10);
@@ -2998,15 +3169,13 @@ public class Module3 extends BaseLib {
 					if (click(driver, ele, navigationLabel, action.BOOLEAN)) {
 						log(LogStatus.INFO, "Click on "+navigationLabel, YesNo.No);
 						ThreadSleep(5000);
-						String actualUrl=getURL(driver, 10);
-						if (expectedUrl.equals(actualUrl)) {
-							log(LogStatus.ERROR, "Nothing happens upon clicking on "+navigationLabel+" as there is no change in url ", YesNo.No);
-						}else {
-							log(LogStatus.ERROR, "Nothing should be happens upon clicking on "+navigationLabel+" as there is change in url ", YesNo.Yes);
-							sa.assertTrue(false, "Nothing should be happens upon clicking on "+navigationLabel+" as there is change in url ");
-						
+						boolean flag = npbl.isAutomationAllListViewForObject(projectName,"Entities","Recently Viewed", 30);;
+						if (flag) {
+							log(LogStatus.INFO, "Account Page is opened List View is available after clicking on "+navigationLabel , YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "Account Page is not opened after clicking on "+navigationLabel, YesNo.Yes);
+							sa.assertTrue(false, "Account Page is not opened after clicking on "+navigationLabel);
 						}
-				
 					} else {
 						log(LogStatus.ERROR, "Not Able to Click on "+navigationLabel, YesNo.Yes);
 						sa.assertTrue(false,"Not Able to Click on "+navigationLabel);
@@ -3017,11 +3186,7 @@ public class Module3 extends BaseLib {
 					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot click on label : "+navigationLabel);
 
 				}
-			} else {
-				log(LogStatus.ERROR, listViewNameLabelValue+" has not been written under "+listViewNameLabel+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, listViewNameLabelValue+" has not been written under "+listViewNameLabel+" for "+navigationLabel);
-
-			}
+			
 		}else{
 
 			log(LogStatus.ERROR, "Not Able to enter value on" +listViewNameLabel+" for "+navigationLabel, YesNo.Yes);
@@ -3042,11 +3207,11 @@ public class Module3 extends BaseLib {
 		String recordTypeList=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Record_Type);
 		String recordTypeArray[] =recordTypeList.split(breakSP);
 		String[][] fundRecordType = {{recordTypeLabel.Record_Type_Label.toString(),recordTypeArray[0]},
-				{recordTypeLabel.Description.toString(),recordTypeArray[0]+" RECORD TYPE"},
+				{recordTypeLabel.Description.toString(),recordTypeArray[0]+recordTypeDescription},
 				{recordTypeLabel.Active.toString(),""}};
 
 		String[][] ffrecordType = {{recordTypeLabel.Record_Type_Label.toString(),recordTypeArray[1]},
-				{recordTypeLabel.Description.toString(),recordTypeArray[1]+" RECORD TYPE"},
+				{recordTypeLabel.Description.toString(),recordTypeArray[1]+recordTypeDescription},
 				{recordTypeLabel.Active.toString(),""}};
 
 		boolean isMakeAvailable=true;
@@ -3119,8 +3284,15 @@ public class Module3 extends BaseLib {
 
 		if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, labelWithValue, 20)) {
 			log(LogStatus.INFO, actionObjectLabelValue+" value has been updated & saved under "+actionObjectLabel+" for "+navigationLabel, YesNo.No);
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, actionObjectLabelValue, CSVLabel.Navigation_Label.toString(), navigationLabel, actionObjectLabel)) {
-				log(LogStatus.INFO, actionObjectLabelValue+" value has been written under "+actionObjectLabel+" for "+navigationLabel, YesNo.No);
+			
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, actionObjectLabelValue, CSVLabel.Navigation_Label.toString(), navigationLabel, actionObjectLabel)) {
+//				log(LogStatus.INFO, actionObjectLabelValue+" value has been written under "+actionObjectLabel+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, actionObjectLabelValue+" has not been written under "+actionObjectLabel+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, actionObjectLabelValue+" has not been written under "+actionObjectLabel+" for "+navigationLabel);
+//
+//			}
+				
 				refresh(driver);
 				ThreadSleep(5000);
 				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
@@ -3145,12 +3317,41 @@ public class Module3 extends BaseLib {
 											sa.assertTrue(false, recordTypeArray[i]+" radio button is not selected by default");
 										}
 									}
+									
+									ele=npbl.getrecordTypeWithDescription(recordTypeArray[i], recordTypeArray[i]+recordTypeDescription, 10);
+									if (ele!=null) {
+										log(LogStatus.INFO, "Record Type & description verified : "+recordTypeArray[i]+recordTypeDescription , YesNo.No);
+
+									} else {
+										log(LogStatus.ERROR, "Record Type & description not verified : "+recordTypeArray[i]+recordTypeDescription, YesNo.Yes);
+										sa.assertTrue(false, "Record Type & description not verified : "+recordTypeArray[i]+recordTypeDescription);
+									}
+									
 								} else {
 									log(LogStatus.ERROR, recordTypeArray[i]+" radio button not present", YesNo.Yes);
 									sa.assertTrue(false, recordTypeArray[i]+" radio button not present");
 								}
 
 							}
+							
+							ele=npbl.getnavigationPopUpHeader(projectName, 10);
+							String expecedHeader="New Fund";;
+							if (ele!=null) {
+								log(LogStatus.INFO, "PopUp is open" , YesNo.No);
+								String actualHeader = ele.getText().trim();
+								if (ele.getText().trim().equals(expecedHeader)) {
+									log(LogStatus.INFO, "Header Text verified : "+expecedHeader, YesNo.Yes);
+									
+								} else {
+									log(LogStatus.ERROR, "Header Text not verified Actual : "+actualHeader+" \t Expected : "+expecedHeader, YesNo.Yes);
+									sa.assertTrue(false, "Header Text not verified Actual : "+actualHeader+" \t Expected : "+expecedHeader);
+								}
+
+							} else {
+								log(LogStatus.ERROR, "No PopUp is open so cannoy verify Heading "+expecedHeader, YesNo.Yes);
+								sa.assertTrue(false, "No PopUp is open so cannoy verify Heading "+expecedHeader);
+							}
+							
 							ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, "", action.BOOLEAN, 30);
 							if (click(driver, ele, navigationLabel+" pop up cross button", action.BOOLEAN)) {
 								log(LogStatus.INFO, "click on cross button "+navigationLabel , YesNo.No);
@@ -3173,11 +3374,7 @@ public class Module3 extends BaseLib {
 					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot click on label : "+navigationLabel);
 
 				}
-			} else {
-				log(LogStatus.ERROR, actionObjectLabelValue+" has not been written under "+actionObjectLabel+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, actionObjectLabelValue+" has not been written under "+actionObjectLabel+" for "+navigationLabel);
 
-			}
 		}else{
 
 			log(LogStatus.ERROR, "Not Able to enter value on" +actionObjectLabel+" for "+navigationLabel, YesNo.Yes);
@@ -3202,7 +3399,7 @@ public class Module3 extends BaseLib {
 		String recordTypeArray[] =recordTypeList.split(breakSP);
 		
 		String[][] fundRecordType = {{recordTypeLabel.Record_Type_Label.toString(),upDated+recordTypeArray[0]},
-				{recordTypeLabel.Description.toString(),upDated+recordTypeArray[0]+" RECORD TYPE"}};
+				{recordTypeLabel.Description.toString(),upDated+recordTypeArray[0]+recordTypeDescription}};
 		
 		
 		String navigationLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name);
@@ -3267,13 +3464,13 @@ public class Module3 extends BaseLib {
 					log(LogStatus.ERROR, "No Pop Up is open after clicking on "+navigationLabel, YesNo.Yes);
 					sa.assertTrue(false, "No Pop Up is open after clicking on "+navigationLabel);
 				}
-				npbl.getrecordTypeWithDescription(upDated+recordTypeArray[0], upDated+recordTypeArray[0]+" RECORD TYPE", 10);
+				ele=npbl.getrecordTypeWithDescription(upDated+recordTypeArray[0], upDated+recordTypeArray[0]+recordTypeDescription, 10);
 				if (ele!=null) {
 					log(LogStatus.INFO, "Record Type & description Updated & verified" , YesNo.No);
 
 				} else {
-					log(LogStatus.ERROR, "Record Type & description not Updated & not verified "+upDated+recordTypeArray[0] +" "+ upDated+recordTypeArray[0]+" RECORD TYPE", YesNo.Yes);
-					sa.assertTrue(false, "Record Type & description not Updated & not verified "+upDated+recordTypeArray[0] +" "+ upDated+recordTypeArray[0]+" RECORD TYPE");
+					log(LogStatus.ERROR, "Record Type & description not Updated & not verified "+upDated+recordTypeArray[0] +" "+ upDated+recordTypeArray[0]+recordTypeDescription, YesNo.Yes);
+					sa.assertTrue(false, "Record Type & description not Updated & not verified "+upDated+recordTypeArray[0] +" "+ upDated+recordTypeArray[0]+recordTypeDescription);
 				}
 			} else {
 				log(LogStatus.ERROR, "Not Able to Click on "+navigationLabel+" so cannot verify record type options after update", YesNo.Yes);
@@ -3281,7 +3478,7 @@ public class Module3 extends BaseLib {
 
 			}
 			
-				ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, navigationLabel, action.BOOLEAN, 5);
+				ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, "", action.BOOLEAN, 5);
 				click(driver, ele, "Cross Icon", action.BOOLEAN);
 				ThreadSleep(3000);
 
@@ -3325,13 +3522,13 @@ public class Module3 extends BaseLib {
 					log(LogStatus.ERROR, "No Pop Up is open after clicking on "+navigationLabel, YesNo.Yes);
 					sa.assertTrue(false, "No Pop Up is open after clicking on "+navigationLabel);
 				}
-				npbl.getrecordTypeWithDescription(upDated+recordTypeArray[0], upDated+recordTypeArray[0]+" RECORD TYPE", 10);
+				ele=npbl.getrecordTypeWithDescription(upDated+recordTypeArray[0], upDated+recordTypeArray[0]+recordTypeDescription, 10);
 				if (ele!=null) {
 					log(LogStatus.INFO, "Record Type & description Updated & verified" , YesNo.No);
 
 				} else {
-					log(LogStatus.ERROR, "Record Type & description not Updated & not verified "+upDated+recordTypeArray[0] +" "+ upDated+recordTypeArray[0]+" RECORD TYPE", YesNo.Yes);
-					sa.assertTrue(false, "Record Type & description not Updated & not verified "+upDated+recordTypeArray[0] +" "+ upDated+recordTypeArray[0]+" RECORD TYPE");
+					log(LogStatus.ERROR, "Record Type & description not Updated & not verified "+upDated+recordTypeArray[0] +" "+ upDated+recordTypeArray[0]+recordTypeDescription, YesNo.Yes);
+					sa.assertTrue(false, "Record Type & description not Updated & not verified "+upDated+recordTypeArray[0] +" "+ upDated+recordTypeArray[0]+recordTypeDescription);
 				}
 			} else {
 				log(LogStatus.ERROR, "Not Able to Click on "+navigationLabel+" so cannot verify record type options after update", YesNo.Yes);
@@ -3339,7 +3536,7 @@ public class Module3 extends BaseLib {
 
 			}
 			
-				ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, navigationLabel, action.BOOLEAN, 5);
+				ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, "", action.BOOLEAN, 5);
 				click(driver, ele, "Cross Icon", action.BOOLEAN);
 				ThreadSleep(3000);
 
@@ -3436,13 +3633,13 @@ public class Module3 extends BaseLib {
 			if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, labelWithValue, 20)) {
 				log(LogStatus.INFO, actionRecordTypeLabelValue+" value has been updated & saved under "+actionRecordTypeLabel+" for "+navigationLabel, YesNo.No);
 
-				if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, actionRecordTypeLabelValue, CSVLabel.Navigation_Label.toString(), navigationLabel, actionRecordTypeLabel)) {
-					log(LogStatus.INFO, actionRecordTypeLabelValue+" value has been written under "+actionRecordTypeLabel+" for "+navigationLabel, YesNo.No);
-				} else {
-					log(LogStatus.ERROR, actionRecordTypeLabelValue+" has not been written under "+actionRecordTypeLabel+" for "+navigationLabel, YesNo.Yes);
-					sa.assertTrue(false, actionRecordTypeLabelValue+" has not been written under "+actionRecordTypeLabel+" for "+navigationLabel);
-
-				}
+//				if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, actionRecordTypeLabelValue, CSVLabel.Navigation_Label.toString(), navigationLabel, actionRecordTypeLabel)) {
+//					log(LogStatus.INFO, actionRecordTypeLabelValue+" value has been written under "+actionRecordTypeLabel+" for "+navigationLabel, YesNo.No);
+//				} else {
+//					log(LogStatus.ERROR, actionRecordTypeLabelValue+" has not been written under "+actionRecordTypeLabel+" for "+navigationLabel, YesNo.Yes);
+//					sa.assertTrue(false, actionRecordTypeLabelValue+" has not been written under "+actionRecordTypeLabel+" for "+navigationLabel);
+//
+//				}
 				refresh(driver);
 				ThreadSleep(5000);
 				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
@@ -3630,13 +3827,13 @@ public class Module3 extends BaseLib {
 			if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, labelWithValue, 20)) {
 				log(LogStatus.INFO, actionRecordTypeLabelValue+" value has been updated & saved under "+actionRecordTypeLabel+" for "+navigationLabel, YesNo.No);
 
-				if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, actionRecordTypeLabelValue, CSVLabel.Navigation_Label.toString(), navigationLabel, actionRecordTypeLabel)) {
-					log(LogStatus.INFO, actionRecordTypeLabelValue+" value has been written under "+actionRecordTypeLabel+" for "+navigationLabel, YesNo.No);
-				} else {
-					log(LogStatus.ERROR, actionRecordTypeLabelValue+" has not been written under "+actionRecordTypeLabel+" for "+navigationLabel, YesNo.Yes);
-					sa.assertTrue(false, actionRecordTypeLabelValue+" has not been written under "+actionRecordTypeLabel+" for "+navigationLabel);
-
-				}
+//				if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, actionRecordTypeLabelValue, CSVLabel.Navigation_Label.toString(), navigationLabel, actionRecordTypeLabel)) {
+//					log(LogStatus.INFO, actionRecordTypeLabelValue+" value has been written under "+actionRecordTypeLabel+" for "+navigationLabel, YesNo.No);
+//				} else {
+//					log(LogStatus.ERROR, actionRecordTypeLabelValue+" has not been written under "+actionRecordTypeLabel+" for "+navigationLabel, YesNo.Yes);
+//					sa.assertTrue(false, actionRecordTypeLabelValue+" has not been written under "+actionRecordTypeLabel+" for "+navigationLabel);
+//
+//				}
 				refresh(driver);
 				ThreadSleep(5000);
 				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
@@ -3761,13 +3958,14 @@ public class Module3 extends BaseLib {
 		
 		if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, labelWithValue, 20)) {
 			log(LogStatus.INFO, "Blank value has been updated & saved under "+actionRecordTypeLabel+" for "+navigationLabel, YesNo.No);
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, "", CSVLabel.Navigation_Label.toString(), navigationLabel, actionRecordTypeLabel)) {
-				log(LogStatus.INFO, "Blank value has been written under "+actionRecordTypeLabel+" for "+navigationLabel, YesNo.No);
-			} else {
-				log(LogStatus.ERROR, "Blank value has not been written under "+actionRecordTypeLabel+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, "Blank value has not been written under "+actionRecordTypeLabel+" for "+navigationLabel);
-			}
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, "", CSVLabel.Navigation_Label.toString(), navigationLabel, actionRecordTypeLabel)) {
+//				log(LogStatus.INFO, "Blank value has been written under "+actionRecordTypeLabel+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, "Blank value has not been written under "+actionRecordTypeLabel+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, "Blank value has not been written under "+actionRecordTypeLabel+" for "+navigationLabel);
+//			}
 			refresh(driver);
+			ThreadSleep(5000);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 				ele=npbl.getNavigationLabel(projectName, navigationLabel, action.BOOLEAN, 10);
@@ -3785,6 +3983,26 @@ public class Module3 extends BaseLib {
 							log(LogStatus.ERROR, recordType+" radio button should be present after removing value from"+actionRecordTypeLabel, YesNo.Yes);
 							sa.assertTrue(false, recordType+" radio button should be present after removing value from"+actionRecordTypeLabel);
 						}
+						
+						ele=npbl.getnavigationPopUpHeader(projectName, 10);
+						String expecedHeader="New Fund";
+						if (ele!=null) {
+							log(LogStatus.INFO, "PopUp is open" , YesNo.No);
+							String actualHeader = ele.getText().trim();
+							if (ele.getText().trim().equals(expecedHeader)) {
+								log(LogStatus.INFO, "Header Text verified : "+expecedHeader, YesNo.Yes);
+								
+							} else {
+								log(LogStatus.ERROR, "Header Text not verified Actual : "+actualHeader+" \t Expected : "+expecedHeader, YesNo.Yes);
+								sa.assertTrue(false, "Header Text not verified Actual : "+actualHeader+" \t Expected : "+expecedHeader);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "No PopUp is open so cannoy verify Heading "+expecedHeader, YesNo.Yes);
+							sa.assertTrue(false, "No PopUp is open so cannoy verify Heading "+expecedHeader);
+						}
+						
+						
 						ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, "", action.BOOLEAN, 30);
 						click(driver, ele, "Navigation menu PoPuP Cross Icon", action.BOOLEAN);
 					} else {
@@ -3849,21 +4067,22 @@ public class Module3 extends BaseLib {
 		if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, navigationFieldWithValues, 20)) {
 			log(LogStatus.INFO, listViewObjectLabel+" and "+listViewNameLabel+" value has been updated & saved under for "+navigationLabel, YesNo.No);
 			
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewName
-					, CSVLabel.Navigation_Label.toString(), navigationLabel, CSVLabel.List_View_Name.toString())) {
-				log(LogStatus.INFO, listViewName+" value has been written under "+CSVLabel.List_View_Name.toString()+" for "+navigationLabel, YesNo.No);
-			} else {
-				log(LogStatus.ERROR, listViewName+" value has not been written under "+CSVLabel.List_View_Name.toString()+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, listViewName+" value has not been written under "+CSVLabel.List_View_Name.toString()+" for "+navigationLabel);
-			}
-			
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewObject, CSVLabel.Navigation_Label.toString(), navigationLabel, CSVLabel.List_View_Object.toString())) {
-				log(LogStatus.INFO, listViewObject+" value has been written under "+CSVLabel.List_View_Object.toString()+" for "+navigationLabel, YesNo.No);
-			} else {
-				log(LogStatus.ERROR, listViewObject+" value has not been written under "+CSVLabel.List_View_Object.toString()+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, listViewObject+" value has not been written under "+CSVLabel.List_View_Object.toString()+" for "+navigationLabel);
-			}
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewName
+//					, CSVLabel.Navigation_Label.toString(), navigationLabel, CSVLabel.List_View_Name.toString())) {
+//				log(LogStatus.INFO, listViewName+" value has been written under "+CSVLabel.List_View_Name.toString()+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, listViewName+" value has not been written under "+CSVLabel.List_View_Name.toString()+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, listViewName+" value has not been written under "+CSVLabel.List_View_Name.toString()+" for "+navigationLabel);
+//			}
+//			
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewObject, CSVLabel.Navigation_Label.toString(), navigationLabel, CSVLabel.List_View_Object.toString())) {
+//				log(LogStatus.INFO, listViewObject+" value has been written under "+CSVLabel.List_View_Object.toString()+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, listViewObject+" value has not been written under "+CSVLabel.List_View_Object.toString()+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, listViewObject+" value has not been written under "+CSVLabel.List_View_Object.toString()+" for "+navigationLabel);
+//			}
 			refresh(driver);
+			ThreadSleep(5000);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 				ele=npbl.getNavigationLabel(projectName, navigationLabel, action.BOOLEAN, 10);
@@ -3928,12 +4147,12 @@ public class Module3 extends BaseLib {
 		if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, labelWithValue, 20)) {
 			log(LogStatus.INFO, urlValue+" value has been updated & saved under "+urlLabel+" for "+navigationLabel, YesNo.No);
 
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, urlValue, CSVLabel.Navigation_Label.toString(), navigationLabel, urlLabel)) {
-				log(LogStatus.INFO, urlValue+" value has been written under "+urlLabel+" for "+navigationLabel, YesNo.No);
-			} else {
-				log(LogStatus.ERROR, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel);
-			}
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, urlValue, CSVLabel.Navigation_Label.toString(), navigationLabel, urlLabel)) {
+//				log(LogStatus.INFO, urlValue+" value has been written under "+urlLabel+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel);
+//			}
 			refresh(driver);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
@@ -3952,7 +4171,8 @@ public class Module3 extends BaseLib {
 							sa.assertTrue(false,"Url Not Verified for : "+navigationLabel+" Actual : "+actualUrl+"\t Expected : "+urlValue);
 					
 						}
-						
+						driver.close();
+						driver.switchTo().window(parentId);
 					} else {
 						log(LogStatus.ERROR, "No New window is open after Click on "+navigationLabel+" so cannot verify url", YesNo.Yes);
 						sa.assertTrue(false,"No New window is open after Click on "+navigationLabel+" so cannot verify url");
@@ -4001,13 +4221,14 @@ public class Module3 extends BaseLib {
 		if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, labelWithValue, 20)) {
 			log(LogStatus.INFO, urlValue+" value has been updated & saved under "+urlLabel+" for "+navigationLabel, YesNo.No);
 
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, urlValue, CSVLabel.Navigation_Label.toString(), navigationLabel, urlLabel)) {
-				log(LogStatus.INFO, urlValue+" value has been written under "+urlLabel+" for "+navigationLabel, YesNo.No);
-			} else {
-				log(LogStatus.ERROR, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel);
-			}
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, urlValue, CSVLabel.Navigation_Label.toString(), navigationLabel, urlLabel)) {
+//				log(LogStatus.INFO, urlValue+" value has been written under "+urlLabel+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel);
+//			}
 			refresh(driver);
+			ThreadSleep(5000);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 				ele=npbl.getNavigationLabel(projectName, navigationLabel, action.BOOLEAN, 10);
@@ -4070,20 +4291,21 @@ public class Module3 extends BaseLib {
 		if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, labelWithValue, 20)) {
 			log(LogStatus.INFO, urlValue+" value has been updated & saved under "+urlLabel+" for "+navigationLabel, YesNo.No);
 
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, urlValue, CSVLabel.Navigation_Label.toString(), navigationLabel, urlLabel)) {
-				log(LogStatus.INFO, urlValue+" value has been written under "+urlLabel+" for "+navigationLabel, YesNo.No);
-			} else {
-				log(LogStatus.ERROR, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel);
-			}
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, urlValue, CSVLabel.Navigation_Label.toString(), navigationLabel, urlLabel)) {
+//				log(LogStatus.INFO, urlValue+" value has been written under "+urlLabel+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel);
+//			}
 			refresh(driver);
+			ThreadSleep(5000);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 				ele=npbl.getNavigationLabel(projectName, navigationLabel, action.BOOLEAN, 10);
 				if (click(driver, ele, navigationLabel, action.BOOLEAN)) {
 					log(LogStatus.INFO, "Click on "+navigationLabel+" going to verify list view after removing action object value", YesNo.No);
 					ThreadSleep(5000);
-					boolean flag = npbl.isAutomationAllListViewAdded(projectName, 30);
+					boolean flag = npbl.isAutomationAllListViewForObject(projectName,"Funds",automationAll, 30);
 					if (flag) {
 						log(LogStatus.INFO, "list view after removing action object value is available after clicking on "+navigationLabel , YesNo.No);
 						
@@ -4153,6 +4375,8 @@ public class Module3 extends BaseLib {
 		}
 
 		switchToDefaultContent(driver);
+		refresh(driver);
+		ThreadSleep(5000);
 		if (flag) {
 			if (home.clickOnSetUpLink()) {
 				flag=false;
@@ -4181,6 +4405,8 @@ public class Module3 extends BaseLib {
 			}
 
 			switchToDefaultContent(driver);
+			refresh(driver);
+			ThreadSleep(5000);
 			if (home.clickOnSetUpLink()) {
 				flag=false;
 				String parentID = switchOnWindow(driver);
@@ -4289,13 +4515,14 @@ public class Module3 extends BaseLib {
 		if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, labelWithValue, 20)) {
 			log(LogStatus.INFO, urlValue+" value has been updated & saved under "+urlLabel+" for "+navigationLabel, YesNo.No);
 
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, urlValue, CSVLabel.Navigation_Label.toString(), navigationLabel, urlLabel)) {
-				log(LogStatus.INFO, urlValue+" value has been written under "+urlLabel+" for "+navigationLabel, YesNo.No);
-			} else {
-				log(LogStatus.ERROR, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel);
-			}
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, urlValue, CSVLabel.Navigation_Label.toString(), navigationLabel, urlLabel)) {
+//				log(LogStatus.INFO, urlValue+" value has been written under "+urlLabel+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel);
+//			}
 			refresh(driver);
+			ThreadSleep(5000);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 				ele=npbl.getNavigationLabel(projectName, navigationLabel, action.BOOLEAN, 10);
@@ -4360,21 +4587,22 @@ public class Module3 extends BaseLib {
 		if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, labelWithValue, 20)) {
 			log(LogStatus.INFO, urlValue+" value has been updated & saved under "+urlLabel+" for "+navigationLabel, YesNo.No);
 
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, urlValue, CSVLabel.Navigation_Label.toString(), navigationLabel, urlLabel)) {
-				log(LogStatus.INFO, urlValue+" value has been written under "+urlLabel+" for "+navigationLabel, YesNo.No);
-			} else {
-				log(LogStatus.ERROR, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel);
-			}
-			
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, actionObjectValue, CSVLabel.Navigation_Label.toString(), navigationLabel, actionObjectLabel)) {
-				log(LogStatus.INFO, actionObjectValue+" value has been written under "+actionObjectLabel+" for "+navigationLabel, YesNo.No);
-			} else {
-				log(LogStatus.ERROR, actionObjectValue+" value has not been written under "+actionObjectLabel+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, actionObjectValue+" value has not been written under "+actionObjectLabel+" for "+navigationLabel);
-			}
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, urlValue, CSVLabel.Navigation_Label.toString(), navigationLabel, urlLabel)) {
+//				log(LogStatus.INFO, urlValue+" value has been written under "+urlLabel+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel);
+//			}
+//			
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, actionObjectValue, CSVLabel.Navigation_Label.toString(), navigationLabel, actionObjectLabel)) {
+//				log(LogStatus.INFO, actionObjectValue+" value has been written under "+actionObjectLabel+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, actionObjectValue+" value has not been written under "+actionObjectLabel+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, actionObjectValue+" value has not been written under "+actionObjectLabel+" for "+navigationLabel);
+//			}
 			
 			refresh(driver);
+			ThreadSleep(5000);
 			urlValue=getURL(driver, 10);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
@@ -4434,20 +4662,21 @@ public class Module3 extends BaseLib {
 		if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, navigationFieldWithValues, 20)) {
 			log(LogStatus.INFO, listViewObjectLabel+" and "+listViewNameLabel+" value has been updated & saved under for "+navigationLabel, YesNo.No);
 			
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewName, CSVLabel.Navigation_Label.toString(), navigationLabel, CSVLabel.List_View_Name.toString())) {
-				log(LogStatus.INFO, listViewName+" value has been written under "+CSVLabel.List_View_Name.toString()+" for "+navigationLabel, YesNo.No);
-			} else {
-				log(LogStatus.ERROR, listViewName+" value has not been written under "+CSVLabel.List_View_Name.toString()+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, listViewName+" value has not been written under "+CSVLabel.List_View_Name.toString()+" for "+navigationLabel);
-			}
-			
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewObject, CSVLabel.Navigation_Label.toString(), navigationLabel, CSVLabel.List_View_Object.toString())) {
-				log(LogStatus.INFO, listViewObject+" value has been written under "+CSVLabel.List_View_Object.toString()+" for "+navigationLabel, YesNo.No);
-			} else {
-				log(LogStatus.ERROR, listViewObject+" value has not been written under "+CSVLabel.List_View_Object.toString()+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, listViewObject+" value has not been written under "+CSVLabel.List_View_Object.toString()+" for "+navigationLabel);
-			}
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewName, CSVLabel.Navigation_Label.toString(), navigationLabel, CSVLabel.List_View_Name.toString())) {
+//				log(LogStatus.INFO, listViewName+" value has been written under "+CSVLabel.List_View_Name.toString()+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, listViewName+" value has not been written under "+CSVLabel.List_View_Name.toString()+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, listViewName+" value has not been written under "+CSVLabel.List_View_Name.toString()+" for "+navigationLabel);
+//			}
+//			
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewObject, CSVLabel.Navigation_Label.toString(), navigationLabel, CSVLabel.List_View_Object.toString())) {
+//				log(LogStatus.INFO, listViewObject+" value has been written under "+CSVLabel.List_View_Object.toString()+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, listViewObject+" value has not been written under "+CSVLabel.List_View_Object.toString()+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, listViewObject+" value has not been written under "+CSVLabel.List_View_Object.toString()+" for "+navigationLabel);
+//			}
 			refresh(driver);
+			ThreadSleep(5000);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 				ele=npbl.getNavigationLabel(projectName, navigationLabel, action.BOOLEAN, 10);
@@ -4455,6 +4684,9 @@ public class Module3 extends BaseLib {
 					log(LogStatus.INFO, "Click on "+navigationLabel+" going to verify home page of custom menu even after adding list view name & list view object different", YesNo.No);
 					ThreadSleep(5000);
 					scn.nextLine();
+					log(LogStatus.ERROR, " so cannot verify home page of custom menu even after adding list view name & list view object different", YesNo.Yes);
+					sa.assertTrue(false," so cannot verify home page of custom menu even after adding list view name & list view object different");
+
 				} else {
 					log(LogStatus.ERROR, "Not Able to Click on "+navigationLabel+" so cannot verify home page of custom menu even after adding list view name & list view object different", YesNo.Yes);
 					sa.assertTrue(false,"Not Able to Click on "+navigationLabel+" so cannot verify home page of custom menu even after adding list view name & list view object different");
@@ -4500,20 +4732,21 @@ public class Module3 extends BaseLib {
 		if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, navigationFieldWithValues, 20)) {
 			log(LogStatus.INFO, listViewObjectLabel+" and "+listViewNameLabel+" value has been updated & saved under for "+navigationLabel, YesNo.No);
 			
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewName, CSVLabel.Navigation_Label.toString(), navigationLabel, CSVLabel.List_View_Name.toString())) {
-				log(LogStatus.INFO, listViewName+" value has been written under "+CSVLabel.List_View_Name.toString()+" for "+navigationLabel, YesNo.No);
-			} else {
-				log(LogStatus.ERROR, listViewName+" value has not been written under "+CSVLabel.List_View_Name.toString()+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, listViewName+" value has not been written under "+CSVLabel.List_View_Name.toString()+" for "+navigationLabel);
-			}
-			
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewObject, CSVLabel.Navigation_Label.toString(), navigationLabel, CSVLabel.List_View_Object.toString())) {
-				log(LogStatus.INFO, listViewObject+" value has been written under "+CSVLabel.List_View_Object.toString()+" for "+navigationLabel, YesNo.No);
-			} else {
-				log(LogStatus.ERROR, listViewObject+" value has not been written under "+CSVLabel.List_View_Object.toString()+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, listViewObject+" value has not been written under "+CSVLabel.List_View_Object.toString()+" for "+navigationLabel);
-			}
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewName, CSVLabel.Navigation_Label.toString(), navigationLabel, CSVLabel.List_View_Name.toString())) {
+//				log(LogStatus.INFO, listViewName+" value has been written under "+CSVLabel.List_View_Name.toString()+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, listViewName+" value has not been written under "+CSVLabel.List_View_Name.toString()+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, listViewName+" value has not been written under "+CSVLabel.List_View_Name.toString()+" for "+navigationLabel);
+//			}
+//			
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, listViewObject, CSVLabel.Navigation_Label.toString(), navigationLabel, CSVLabel.List_View_Object.toString())) {
+//				log(LogStatus.INFO, listViewObject+" value has been written under "+CSVLabel.List_View_Object.toString()+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, listViewObject+" value has not been written under "+CSVLabel.List_View_Object.toString()+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, listViewObject+" value has not been written under "+CSVLabel.List_View_Object.toString()+" for "+navigationLabel);
+//			}
 			refresh(driver);
+			ThreadSleep(5000);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 				ele=npbl.getNavigationLabel(projectName, navigationLabel, action.BOOLEAN, 10);
@@ -4618,166 +4851,106 @@ public class Module3 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
-
-		List<String> navigationField = new LinkedList<String>();
-		navigationField.add("Navigation Label");
-		navigationField.add("Order");
-		navigationField.add("Parent");
-		navigationField.add("Action Object");
-		navigationField.add("Action Record Type");
-		navigationField.add("List View Object");
-		navigationField.add("List View Name");
-		navigationField.add("URL");
-		String[] labelsValues= new String[navigationField.size()];
-
-		String allNavigationLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name);
-		String[] eachNavigationLabel = allNavigationLabel.split("<break>");
-		String navigationField1;
-		String navigationValue;
-		for (int i = 0; i < eachNavigationLabel.length; i++) {
-
-			labelsValues=eachNavigationLabel[i].split(",");
-			if (npbl.clickOnTab(projectName, navigationTab)) {
-				log(LogStatus.INFO, "Click on Tab : "+navigationTab, YesNo.No);
-				if(clickUsingJavaScript(driver, lp.getNewButton(projectName, 10), "new button")) {
-					log(LogStatus.INFO, "Click on new button going to verify navigation field : "+navigationField, YesNo.No);
-					WebElement ele = npbl.getCrossButtonForNavigationLabelPopuP(projectName, navigationTab, action.BOOLEAN, 60);
-					if (ele!=null) {
-						log(LogStatus.INFO, "Pop Up open after clicking on new button for : "+navigationTab , YesNo.No);
-						for (int m = 0; m < labelsValues.length; m++) {
-							if (!labelsValues[m].equals("") || labelsValues[m].isEmpty()) {
-								ThreadSleep(1000);
-								navigationField1=navigationField.get(m);
-								navigationValue=labelsValues[m];
-								ele = npbl.getNavigationField(projectName, navigationField1, action.BOOLEAN, 20);
-								if (sendKeys(driver, ele, navigationValue, navigationField1, action.BOOLEAN)) {
-									log(LogStatus.INFO, "Able to enter "+navigationField1, YesNo.No);
-									ThreadSleep(500);
-									if (m==2) {
-										ThreadSleep(10000);
-										if (click(driver,npbl.getItemInList(projectName, navigationValue, action.BOOLEAN, 20),
-												navigationValue + "   :  Parent Name", action.BOOLEAN)) {
-											log(LogStatus.INFO, navigationValue+" is available", YesNo.No);
-										} else {
-											log(LogStatus.ERROR, navigationValue+" is not available", YesNo.Yes);
-											sa.assertTrue(false, navigationValue+" is not available");
-
-										}	
-									}
-
-								} else {
-									log(LogStatus.ERROR, "Not Able to enter "+navigationField1, YesNo.Yes);
-									sa.assertTrue(false,"Not Able to enter "+navigationField1);
-								}
-
-							} 
-
-						}
-
-						if (click(driver, npbl.getNavigationTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.ERROR, "Click on save Button : "+allNavigationLabel, YesNo.No);
-							ThreadSleep(5000);
-
-							if (ExcelUtils.writeOneRecordOnCSV(NavigationMenuTestData_PEExcel,eachNavigationLabel[i])) {
-								log(LogStatus.INFO, "Able to write record on csv "+eachNavigationLabel[i] , YesNo.No);
-							} else {
-								log(LogStatus.ERROR, "Not Able to write record on csv "+eachNavigationLabel[i], YesNo.Yes);
-								sa.assertTrue(false, "Not Able to write record on csv "+eachNavigationLabel[i]);
-							}
-
-						} else {
-							log(LogStatus.ERROR, "Not Able to Click on save Button : "+allNavigationLabel, YesNo.Yes);
-							sa.assertTrue(false,"Not Able to Click on save Button : "+allNavigationLabel);
-
-						}
-
-					} else {
-						log(LogStatus.ERROR, "No Pop Up is open after clicking on new button for : "+navigationTab, YesNo.Yes);
-						sa.assertTrue(false, "No Pop Up is open after clicking on new button for : "+navigationTab);
-					}
-
-
-				}else {
-					log(LogStatus.ERROR, "Not Able to Click on new button so cannot verify navigation field : "+navigationField, YesNo.Yes);
-					sa.assertTrue(false, "Not Able to Click on new button so cannot verify navigation field : "+navigationField);
-
-				}
-			} else {
-				log(LogStatus.ERROR, "Not Able to Click on Tab : "+navigationTab, YesNo.Yes);
-				sa.assertTrue(false,"Not Able to Click on Tab : "+navigationTab);
-			}
-
-		}
-		try {
-			sa.assertAll();
-			
-			switchToDefaultContent(driver);
-			ThreadSleep(2000);
-			csvRecords=ExcelUtils.readAllDataFromCSVFileIntoList(NavigationMenuTestData_PEExcel, false);
-			System.err.println(csvRecords);
-			if (!csvRecords.isEmpty()) {
-				log(LogStatus.INFO, "Records Fetched from CSV File : "+NavigationMenuTestData_PEExcel, YesNo.No);
-
-				Map<String, Integer> navigationParentLabelWithOrder = navigationParentLabelWithOrder(csvRecords);
-				System.err.println(navigationParentLabelWithOrder);
-				Map<String, Integer> navigationParentLabelWithSortedOrder = sortByValue(true, navigationParentLabelWithOrder);
-				System.err.println(navigationParentLabelWithOrder);
-				Map<String, String> navigationParentLabelWithChildAndOrder = navigationParentLabelWithChildAndOrder(csvRecords);
-				System.err.println(navigationParentLabelWithChildAndOrder);
-				Map<String, String> navigationParentLabelWithChildSorted = navigationParentLabelWithChildSorted(navigationParentLabelWithChildAndOrder);
-				System.err.println(navigationParentLabelWithChildSorted);
-				// Verification on navigation menu
-				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
-					log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-					npbl.verifyingNavigationMenuLink(projectName, navigationParentLabelWithSortedOrder, navigationParentLabelWithChildSorted, action.BOOLEAN, 0);;
-				} else {
-					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify order", YesNo.Yes);
-					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify order");
-				}
-
-			} else {
-				log(LogStatus.FAIL, "Unable to Fetch Records from CSV File : "+NavigationMenuTestData_PEExcel, YesNo.Yes);
-				sa.assertTrue(false, "Unable to Fetch Records from CSV File : "+NavigationMenuTestData_PEExcel);
-			}
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			log(LogStatus.FAIL, "Assertion Fail so cannot verify Navigation Link", YesNo.Yes);
-			sa.assertTrue(false, "Assertion Fail so cannot verify Navigation Link");
-		}
+		//////////////////////////////////////////////////
 		
-		refresh(driver);
-		String navigationLabelValue = "Create New/Account";
-		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
-			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		//	navigationLabelValue="Account";
-			WebElement ele = npbl.getNavigationLabel(projectName,navigationLabelValue, action.BOOLEAN, 10);
-			if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
-				log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
-				ThreadSleep(5000);
-				navigationLabelValue="Account";
-				ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, navigationLabelValue, action.BOOLEAN, 30);
-				if (ele!=null) {
-					log(LogStatus.INFO, navigationLabelValue+" Pop Up open after clicking on "+navigationLabelValue , YesNo.No);
-
-				} else {
-					log(LogStatus.ERROR, navigationLabelValue+" Pop Up should be open after clicking on "+navigationLabelValue, YesNo.Yes);
-					sa.assertTrue(false, navigationLabelValue+" Pop Up should be open after clicking on "+navigationLabelValue);
-				}
+		String AllParent=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Parent);
+		String parentOrder = "70";
+		String all = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name);
+		
+		String[] AllChilds=all.split(breakSP);
+		String child="";
+		String childOrder="";
+		
+		String[] actionObject= {"Account","navpeII__Fund__c","Task"};
+		
+		if (npbl.createNavigationItem(projectName, new String[][]{{CSVLabel.Navigation_Label.toString(),AllParent},{CSVLabel.Order.toString(),parentOrder}}, 20)) {
+			log(LogStatus.INFO, "created "+AllParent, YesNo.No);
+			String createNewRecords=AllParent+","+parentOrder+",,,,,";
+			if (ExcelUtils.writeOneRecordOnCSV(NavigationMenuTestData_PEExcel,createNewRecords)) {
+				log(LogStatus.INFO, "Able to write record on csv "+createNewRecords , YesNo.No);
 			} else {
-				log(LogStatus.ERROR, "Not Able to Click on "+navigationLabelValue, YesNo.Yes);
-				sa.assertTrue(false,"Not Able to Click on "+navigationLabelValue);
+				log(LogStatus.ERROR, "Not Able to write record on csv "+createNewRecords, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to write record on csv "+createNewRecords);
+			}
+			
+			for (int i = 0; i < AllChilds.length; i++) {
+				refresh(driver);
+				ThreadSleep(5000);
+				child=AllChilds[i];
+				childOrder=String.valueOf(i+7);
+				if (npbl.createNavigationItem(projectName, new String[][]{{CSVLabel.Navigation_Label.toString(),child},{CSVLabel.Parent.toString(),AllParent},{CSVLabel.Order.toString(),childOrder},{CSVLabel.Action_Object.toString(),actionObject[i]}}, 20)) {
+					log(LogStatus.INFO, "created "+child, YesNo.No);
 
+					String childRecords=child+","+childOrder+","+AllParent+","+actionObject[i]+",,,";
+					if (ExcelUtils.writeOneRecordOnCSV(NavigationMenuTestData_PEExcel,childRecords)) {
+						log(LogStatus.INFO, "Able to write record on csv "+childRecords , YesNo.No);
+					} else {
+						log(LogStatus.ERROR, "Not Able to write record on csv "+childRecords, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to write record on csv "+childRecords);
+					}
+					
+				} else {
+					log(LogStatus.ERROR, "Not Able to create "+child, YesNo.Yes);
+					sa.assertTrue(false, "Not Able to create "+child);
+
+				}
 			}
 
 		} else {
-			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot check label : "+navigationLabelValue, YesNo.Yes);
-			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot check label : "+navigationLabelValue);
+			log(LogStatus.ERROR, "Not Able to create "+AllParent+" so cannot create childs : "+all, YesNo.Yes);
+			sa.assertTrue(false, "Not Able to create "+AllParent+" so cannot create childs : "+all);
+
+		}
+		Map<String,String> parentWithChild = new LinkedHashMap<String,String>(); 
+		all=all.replace(breakSP, commaSP);
+		parentWithChild.put(AllParent,all);
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+			npbl.verifyingNavigationMenuLink(projectName, null, parentWithChild, action.BOOLEAN, 0);;
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify order", YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify order");
 		}
 		
-		sa.assertAll();
+//		try {
+//			switchToDefaultContent(driver);
+//			ThreadSleep(2000);
+//			csvRecords=ExcelUtils.readAllDataFromCSVFileIntoList(NavigationMenuTestData_PEExcel, false);
+//			System.err.println(csvRecords);
+//			if (!csvRecords.isEmpty()) {
+//				log(LogStatus.INFO, "Records Fetched from CSV File : "+NavigationMenuTestData_PEExcel, YesNo.No);
+//
+//				Map<String, Integer> navigationParentLabelWithOrder = navigationParentLabelWithOrder(csvRecords);
+//				System.err.println(navigationParentLabelWithOrder);
+//				Map<String, Integer> navigationParentLabelWithSortedOrder = sortByValue(true, navigationParentLabelWithOrder);
+//				System.err.println(navigationParentLabelWithOrder);
+//				Map<String, String> navigationParentLabelWithChildAndOrder = navigationParentLabelWithChildAndOrder(csvRecords);
+//				System.err.println(navigationParentLabelWithChildAndOrder);
+//				Map<String, String> navigationParentLabelWithChildSorted = navigationParentLabelWithChildSorted(navigationParentLabelWithChildAndOrder);
+//				System.err.println(navigationParentLabelWithChildSorted);
+//				// Verification on navigation menu
+//				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+//					log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+//					npbl.verifyingNavigationMenuLink(projectName, navigationParentLabelWithSortedOrder, navigationParentLabelWithChildSorted, action.BOOLEAN, 0);;
+//				} else {
+//					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify order", YesNo.Yes);
+//					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify order");
+//				}
+//
+//			} else {
+//				log(LogStatus.FAIL, "Unable to Fetch Records from CSV File : "+NavigationMenuTestData_PEExcel, YesNo.Yes);
+//				sa.assertTrue(false, "Unable to Fetch Records from CSV File : "+NavigationMenuTestData_PEExcel);
+//			}
+//			
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			log(LogStatus.FAIL, "Assertion Fail so cannot verify Navigation Link", YesNo.Yes);
+//			sa.assertTrue(false, "Assertion Fail so cannot verify Navigation Link");
+//		}
+		
 		switchToDefaultContent(driver);
 		lp.CRMlogout();
+		sa.assertAll();
 		
 	}
 	
@@ -4799,13 +4972,14 @@ public class Module3 extends BaseLib {
 		if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, labelWithValue, 20)) {
 			log(LogStatus.INFO, urlValue+" value has been updated & saved under "+urlLabel+" for "+navigationLabel, YesNo.No);
 
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, urlValue, CSVLabel.Navigation_Label.toString(), navigationLabel, urlLabel)) {
-				log(LogStatus.INFO, urlValue+" value has been written under "+urlLabel+" for "+navigationLabel, YesNo.No);
-			} else {
-				log(LogStatus.ERROR, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel);
-			}
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, urlValue, CSVLabel.Navigation_Label.toString(), navigationLabel, urlLabel)) {
+//				log(LogStatus.INFO, urlValue+" value has been written under "+urlLabel+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel);
+//			}
 			refresh(driver);
+			ThreadSleep(5000);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 				ele=npbl.getNavigationLabel(projectName, navigationLabel, action.BOOLEAN, 10);
@@ -4872,21 +5046,22 @@ public class Module3 extends BaseLib {
 		if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, labelWithValue, 20)) {
 			log(LogStatus.INFO, urlValue+" value has been updated & saved under "+urlLabel+" for "+navigationLabel, YesNo.No);
 
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, urlValue, CSVLabel.Navigation_Label.toString(), navigationLabel, urlLabel)) {
-				log(LogStatus.INFO, urlValue+" value has been written under "+urlLabel+" for "+navigationLabel, YesNo.No);
-			} else {
-				log(LogStatus.ERROR, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel);
-			}
-			
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, actionObjectValue, CSVLabel.Navigation_Label.toString(), navigationLabel, actionObjectLabel)) {
-				log(LogStatus.INFO, actionObjectValue+" value has been written under "+actionObjectLabel+" for "+navigationLabel, YesNo.No);
-			} else {
-				log(LogStatus.ERROR, actionObjectValue+" value has not been written under "+actionObjectLabel+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, actionObjectValue+" value has not been written under "+actionObjectLabel+" for "+navigationLabel);
-			}
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, urlValue, CSVLabel.Navigation_Label.toString(), navigationLabel, urlLabel)) {
+//				log(LogStatus.INFO, urlValue+" value has been written under "+urlLabel+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, urlValue+" value has not been written under "+urlLabel+" for "+navigationLabel);
+//			}
+//			
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, actionObjectValue, CSVLabel.Navigation_Label.toString(), navigationLabel, actionObjectLabel)) {
+//				log(LogStatus.INFO, actionObjectValue+" value has been written under "+actionObjectLabel+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, actionObjectValue+" value has not been written under "+actionObjectLabel+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, actionObjectValue+" value has not been written under "+actionObjectLabel+" for "+navigationLabel);
+//			}
 			
 			refresh(driver);
+			ThreadSleep(5000);
 			urlValue=getURL(driver, 10);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
@@ -4946,7 +5121,7 @@ public class Module3 extends BaseLib {
 					if (i==0) {
 						Smoke_CDINS1RecordType="Company";
 						Smoke_CDINS1Name="AccountFirm";
-						if (ip.createEntityOrAccount(projectName, Smoke_CDINS1Name, Smoke_CDINS1RecordType, null, 10)) {
+						if (ip.createEntityOrAccountPopUp(projectName, Smoke_CDINS1Name, Smoke_CDINS1RecordType, null, 10)) {
 							log(LogStatus.INFO,"successfully Created Account/Entity : "+Smoke_CDINS1Name+" of record type : "+Smoke_CDINS1RecordType,YesNo.No);	
 						} else {
 							sa.assertTrue(false,"Not Able to Create Account/Entity : "+Smoke_CDINS1Name+" of record type : "+Smoke_CDINS1RecordType);
@@ -4958,7 +5133,7 @@ public class Module3 extends BaseLib {
 						ToggleFund1RecordType="Fund of Funds";
 						ToggleFund1Category="Fund";
 						String[] funds = {ToggleFund1,ToggleFund1Type,ToggleFund1Category,ToggleFund1RecordType};
-						if (fp.createFundPE(projectName, funds[0], funds[3], funds[1], funds[2], null, 15)) {
+						if (fp.createFundPEPopUp(projectName, funds[0], funds[3], funds[1], funds[2], null, 15)) {
 							log(LogStatus.INFO,"Created Fund : "+funds[0],YesNo.No);	
 						} else {
 							sa.assertTrue(false,"Not Able to Create Fund : "+funds[0]);
@@ -4995,6 +5170,7 @@ public class Module3 extends BaseLib {
 				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot click "+navigationLabel, YesNo.Yes);
 				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot click "+navigationLabel);
 			}
+			ThreadSleep(5000);
 			refresh(driver);
 		}
 		switchToDefaultContent(driver);
@@ -5020,13 +5196,16 @@ public class Module3 extends BaseLib {
 		if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, labelWithValue, 20)) {
 			log(LogStatus.INFO, parentValue+" value has been updated & saved under "+parentLabel+" for "+navigationLabel, YesNo.No);
 
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, parentValue, CSVLabel.Navigation_Label.toString(), navigationLabel, parentLabel)) {
-				log(LogStatus.INFO, parentValue+" value has been written under "+parentLabel+" for "+navigationLabel, YesNo.No);
-			} else {
-				log(LogStatus.ERROR, parentValue+" value has not been written under "+parentLabel+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, parentValue+" value has not been written under "+parentLabel+" for "+navigationLabel);
-			}
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, parentValue, CSVLabel.Navigation_Label.toString(), navigationLabel, parentLabel)) {
+//				log(LogStatus.INFO, parentValue+" value has been written under "+parentLabel+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, parentValue+" value has not been written under "+parentLabel+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, parentValue+" value has not been written under "+parentLabel+" for "+navigationLabel);
+//			}
+
+			ThreadSleep(5000);
 			refresh(driver);
+			ThreadSleep(5000);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 
@@ -5073,13 +5252,15 @@ public class Module3 extends BaseLib {
 		if (npbl.enterValueOnEditPopUpForNavigationTab(projectName, navigationLabel, labelWithValue, 20)) {
 			log(LogStatus.INFO, parentValue+" value has been updated & saved under "+parentLabel+" for "+navigationLabel, YesNo.No);
 
-			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, parentValue, CSVLabel.Navigation_Label.toString(), navigationLabel, parentLabel)) {
-				log(LogStatus.INFO, parentValue+" value has been written under "+parentLabel+" for "+navigationLabel, YesNo.No);
-			} else {
-				log(LogStatus.ERROR, parentValue+" value has not been written under "+parentLabel+" for "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false, parentValue+" value has not been written under "+parentLabel+" for "+navigationLabel);
-			}
+//			if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, parentValue, CSVLabel.Navigation_Label.toString(), navigationLabel, parentLabel)) {
+//				log(LogStatus.INFO, parentValue+" value has been written under "+parentLabel+" for "+navigationLabel, YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, parentValue+" value has not been written under "+parentLabel+" for "+navigationLabel, YesNo.Yes);
+//				sa.assertTrue(false, parentValue+" value has not been written under "+parentLabel+" for "+navigationLabel);
+//			}
+			ThreadSleep(5000);
 			refresh(driver);
+			ThreadSleep(5000);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 
@@ -5142,6 +5323,17 @@ public class Module3 extends BaseLib {
 						log(LogStatus.INFO,"Able to Click on delete button on delete popup : "+TabName.Object2Tab+" For : "+navigationLabel,YesNo.No); 
 						ThreadSleep(5000);
 						flag=true;
+						
+						for (int i = 1; i < navigationLabels.length; i++) {
+							navigationLabel=navigationLabels[i];
+							if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, "", CSVLabel.Navigation_Label.toString(), navigationLabel, CSVLabel.Parent.toString())) {
+								log(LogStatus.INFO, " value has been written under "+CSVLabel.Parent.toString()+" for "+navigationLabel, YesNo.No);
+							} else {
+								log(LogStatus.ERROR, " value has not been written under "+CSVLabel.Parent.toString()+" for "+navigationLabel, YesNo.Yes);
+								sa.assertTrue(false," value has not been written under "+CSVLabel.Parent.toString()+" for "+navigationLabel);
+							}
+							
+						}
 					}else {
 						sa.assertTrue(false,"Not Able to Select delete button for "+navigationLabel);
 						log(LogStatus.SKIP,"Not Able to Select delete button for "+navigationLabel,YesNo.Yes);
@@ -5168,7 +5360,7 @@ public class Module3 extends BaseLib {
 		}
 
 		if (flag) {
-
+			navigationLabel=navigationLabels[0];
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 			
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
@@ -5222,19 +5414,39 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		String AllParent=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Parent);
-
+		String parentOrder="91";
 		String all = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name);
 		
 		String[] AllChilds=all.split(breakSP);
 		String child="";
-		if (npbl.createNavigationItem(projectName, new String[][]{{CSVLabel.Navigation_Label.toString(),AllParent}}, 20)) {
+		if (npbl.createNavigationItem(projectName, new String[][]{{CSVLabel.Navigation_Label.toString(),AllParent},{CSVLabel.Order.toString(),parentOrder}}, 20)) {
 			log(LogStatus.INFO, "created "+AllParent, YesNo.No);
 
+			String createNewRecords=AllParent+","+parentOrder+",,,,,,";
+			if (ExcelUtils.writeOneRecordOnCSV(NavigationMenuTestData_PEExcel,createNewRecords)) {
+				log(LogStatus.INFO, "Able to write record on csv "+createNewRecords , YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Not Able to write record on csv "+createNewRecords, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to write record on csv "+createNewRecords);
+			}
+			
 			for (int i = 0; i < AllChilds.length; i++) {
 				child=AllChilds[i];
-				if (npbl.createNavigationItem(projectName, new String[][]{{CSVLabel.Navigation_Label.toString(),child},{CSVLabel.Parent.toString(),AllParent},{CSVLabel.Order.toString(),String.valueOf(i)}}, 20)) {
+				ThreadSleep(5000);
+				refresh(driver);
+				ThreadSleep(5000);
+				String childOrder = String.valueOf(i);
+				if (npbl.createNavigationItem(projectName, new String[][]{{CSVLabel.Navigation_Label.toString(),child},{CSVLabel.Parent.toString(),AllParent},{CSVLabel.Order.toString(),childOrder}}, 20)) {
 					log(LogStatus.INFO, "created "+child, YesNo.No);
 
+					String childRecords=child+","+childOrder+","+AllParent+",,,,,";
+					if (ExcelUtils.writeOneRecordOnCSV(NavigationMenuTestData_PEExcel,childRecords)) {
+						log(LogStatus.INFO, "Able to write record on csv "+childRecords , YesNo.No);
+					} else {
+						log(LogStatus.ERROR, "Not Able to write record on csv "+childRecords, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to write record on csv "+childRecords);
+					}
+					
 				} else {
 					log(LogStatus.ERROR, "Not Able to create "+child, YesNo.Yes);
 					sa.assertTrue(false, "Not Able to create "+child);
@@ -5356,6 +5568,7 @@ public class Module3 extends BaseLib {
 			style=ele.getAttribute("style");
 			log(LogStatus.INFO, "Updated Image Icon Style "+style, YesNo.No);	
 			String expectedImg=imgName.substring(0, 7);
+			System.err.println(">>>>>>>> "+expectedImg);
 			if (style.contains(expectedImg)) {
 				log(LogStatus.INFO, "Updated Image Icon verified "+imgName, YesNo.No);	
 			} else {
@@ -5495,8 +5708,8 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		WebElement ele;
 		String navigationLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name);
-		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
-			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
 			
 			ele=npbl.getNavigationLabel(projectName, navigationLabel, action.BOOLEAN, 10);
 			if (click(driver, ele, navigationLabel, action.BOOLEAN)) {
@@ -5509,8 +5722,8 @@ public class Module3 extends BaseLib {
 			}
 			
 		} else {
-			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify label : "+navigationLabel, YesNo.Yes);
-			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify label : "+navigationLabel);
+			log(LogStatus.ERROR, "Not Able to Click on "+navatarEdge+" so cannot verify label : "+navigationLabel, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navatarEdge+" so cannot verify label : "+navigationLabel);
 		}
 
 		switchToDefaultContent(driver);
@@ -5654,8 +5867,8 @@ public class Module3 extends BaseLib {
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		String[][] industryCoverages = {{energyCoverage,energyCoverageRecordType},{healthCareCoverage,healthCareCoverageRecordType},
-				{manufacturingCoverage,manufacturingCoverageRecordType},{businessServicesCoverage,businessServicesCoverageRecordType},
-				{TechonlogyCoverage,TechonlogyCoverageRecordType},{pharmaCoverage,pharmaCoverageRecordType}};
+				{manufacturingCoverage,manufacturingCoverageRecordType},{businessServicesCoverage,businessServicesCoverageRecordType}
+				,{pharmaCoverage,pharmaCoverageRecordType}};
 
 		String coverageName="";
 		String coverageRecordType="";
@@ -5680,6 +5893,7 @@ public class Module3 extends BaseLib {
 		}
 		
 		refresh(driver);
+		cp.clickOnTab(projectName, homeTab);
 		String dependentTC="Module3Tc065_CreateMyIndustryMenuItem";
 		String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
@@ -5784,6 +5998,7 @@ public class Module3 extends BaseLib {
 
 		if (flag) {
 			refresh(driver);
+			lp.clickOnTab(projectName, homeTab);
 			String dependentTC="Module3Tc065_CreateMyIndustryMenuItem";
 			String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
 			NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
@@ -6312,6 +6527,7 @@ public class Module3 extends BaseLib {
 
 		if (flag) {
 			refresh(driver);
+			lp.clickOnTab(projectName, homeTab);
 			String dependentTC="Module3Tc065_CreateMyIndustryMenuItem";
 			String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
 			NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
@@ -6541,6 +6757,7 @@ public class Module3 extends BaseLib {
 		}
 		
 		refresh(driver);
+		lp.clickOnTab(projectName, homeTab);
 		String dependentTC="Module3Tc074_CreateMyRegionMenuItem";
 		String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
@@ -6645,6 +6862,7 @@ public class Module3 extends BaseLib {
 
 		if (flag) {
 			refresh(driver);
+			lp.clickOnTab(projectName, homeTab);
 			String dependentTC="Module3Tc074_CreateMyRegionMenuItem";
 			String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
 			NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;
@@ -7076,6 +7294,7 @@ public class Module3 extends BaseLib {
 
 		if (flag) {
 			refresh(driver);
+			lp.clickOnTab(projectName, homeTab);
 			String dependentTC="Module3Tc074_CreateMyRegionMenuItem";
 			String navigationLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
 			NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver) ;

@@ -251,7 +251,7 @@ public class CommonVariables {
 		superAdminRegistered=ExcelUtils.readDataFromPropertyFile("SuperAdminRegistered");
 		appName=ExcelUtils.readDataFromPropertyFile("AppName");
 		tabCustomObj=ExcelUtils.readDataFromPropertyFile("CustomTabName");
-		tabCustomObjAPIName=tabCustomObj+"__c";
+		tabCustomObjAPIName=tabCustomObj.replace(" ", "_")+"__c";
 		tabObj1=ExcelUtils.readDataFromPropertyFile("Object1");
 		tabObj2=ExcelUtils.readDataFromPropertyFile("Object2");
 		tabObj3=ExcelUtils.readDataFromPropertyFile("Object3");

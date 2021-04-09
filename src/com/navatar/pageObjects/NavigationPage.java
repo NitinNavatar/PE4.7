@@ -79,7 +79,9 @@ public class NavigationPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, lightningExperienceTab, "Visibility", timeOut, "lightning Experience Tab");
 	}
 	
-	@FindBy (xpath = "//h2[@id='modal-heading-01']")
+	//div[@class='outPopupBox']//h2
+	//h2[@id='modal-heading-01']
+	@FindBy (xpath = "//div[@class='outPopupBox']//h2")
 	private WebElement navigationPopUpHeader;
 
 	/**

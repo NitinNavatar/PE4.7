@@ -12,6 +12,7 @@ import com.navatar.generic.EnumConstants.object;
 import static com.navatar.generic.CommonLib.*;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class SetupPage extends BasePageBusinessLayer {
 
@@ -85,6 +86,10 @@ public class SetupPage extends BasePageBusinessLayer {
 	 * @return the userIframe
 	 */
 	public WebElement getSetUpPageIframe(int timeOut) {
+//		Scanner scn = new Scanner(System.in);
+//		System.err.println(">>>>>>>>>>>>>>>>>>>>Inside frame before scanner");
+//		scn.nextLine();
+//		System.err.println("<<<<<<<<<<<<<<<<<<<<Inside frame after scanner");
 		return isDisplayed(driver, setupPageIframe, "Visibility", timeOut, "active users iframe");
 	}
 
@@ -149,7 +154,7 @@ public class SetupPage extends BasePageBusinessLayer {
 		if(objectName.toString().equalsIgnoreCase(object.Deal.toString())) {
 			objectName="Pipeline";
 		}
-		String xpath="//iframe[contains(@title,'"+objectName+"')]";
+		String xpath="//iframe[contains(@title,'"+objectName.replace("_", " ")+"')]";
 		WebElement ele= FindElement(driver, xpath,objectName+" new object frame xpath", action.SCROLLANDBOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "visibility", timeOut,objectName+" new object frame xpath");
 	}
@@ -443,6 +448,20 @@ public class SetupPage extends BasePageBusinessLayer {
 	}
 	
 	public WebElement getRegionDropdownList(String dropDownLabel,String dropDownValue,int timeOut) {
+		ThreadSleep(1000);
+		try {
+			String xpath = "//*[text()='"+dropDownLabel+"']/following-sibling::*";
+			WebElement ele = FindElement(driver, xpath, dropDownLabel+" "+dropDownValue, action.SCROLLANDBOOLEAN, timeOut);
+			System.err.println("getRegionDropdownList "+ele.getText().trim());
+			if (ele.getText().trim().isEmpty() || ele.getText().trim().equals("")) {
+				System.err.println("verified getRegionDropdownList "+ele.getText().trim());	
+			} else {
+				System.err.println("not verifed getRegionDropdownList "+ele.getText().trim());
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String xpath = "//*[text()='"+dropDownLabel+"']/following-sibling::*[text()='"+dropDownValue+"']";
 		WebElement ele = FindElement(driver, xpath, dropDownLabel+" "+dropDownValue, action.SCROLLANDBOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "Visibility", timeOut, dropDownLabel+" "+dropDownValue);
