@@ -5102,6 +5102,28 @@ public boolean dragNDropUsingScreen(String projectName,String sourceImg,String t
 	return flag;
 }
 
+
+public boolean isAutomationAllListViewForObject(String projectName,String ObjectName,String viewList, int timeOut) {
+	String xpath="";
+		ThreadSleep(3000);
+		xpath="//span[text()='"+ObjectName+"']/../../../following-sibling::div//span[text()='"+viewList+"']";
+		WebElement selectListView = FindElement(driver, xpath,"Select List View : "+viewList+" for "+ObjectName, action.SCROLLANDBOOLEAN, 5);
+		ThreadSleep(3000);
+		if ( selectListView!=null) {
+			log(LogStatus.INFO, viewList+" for "+ObjectName+" available", YesNo.No);
+			return true;
+		}
+		else {
+			log(LogStatus.ERROR,  viewList+" for "+ObjectName+" is not available", YesNo.No);
+			
+		}
+	
+
+	return false;
+}
+
+
+
 public WebElement SDGNewButton(String projectName, String field, String name,int timeOut) {
 	String xpath = "//label[text()='"+field+"']/following-sibling::div//input[@placeholder='"+name+"']/following-sibling::div/button";
 	
@@ -5159,4 +5181,5 @@ public boolean createSDGAction(String projectName, String[] fieldValues) {
 	}
 	return true;
 }
+
 }

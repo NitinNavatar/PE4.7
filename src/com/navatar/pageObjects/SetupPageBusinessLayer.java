@@ -436,7 +436,9 @@ public class SetupPageBusinessLayer extends SetupPage {
 			if (click(driver, getManageLicensesLink(60), "Manage licenses link", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO,"clicked on manage licenses link", YesNo.No);
 					switchToDefaultContent(driver);
+					ThreadSleep(10000);
 					switchToFrame(driver, 30, getSetUpPageIframe(30));
+					ThreadSleep(5000);
 				if (click(driver, getAddUsersbutton(60), "Add Users link", action.BOOLEAN)) {
 					log(LogStatus.INFO,"clicked on add users button", YesNo.No);
 						switchToDefaultContent(driver);
@@ -1005,7 +1007,7 @@ public boolean clickOnEditForApp(WebDriver driver,String appName,String develope
 	xpath="//*[text()='"+appName+"']/../../following-sibling::*//*[text()='"+developerName+"']/../../following-sibling::*//*[text()='"+description+"']/../../following-sibling::*//*[text()='Show Actions']/..";
 	WebElement ele=isDisplayed(driver, FindElement(driver, xpath, "show more action", action.SCROLLANDBOOLEAN, timeOut), "visibility", timeOut, "show more action");
 	if (click(driver, ele, "Show more action against "+appName+" : "+developerName+" "+description, action.BOOLEAN)) {
-		log(LogStatus.INFO, "Not able to click on Show more action against "+appName+" : "+developerName+" "+description, YesNo.No);
+		log(LogStatus.INFO, "click on Show more action against "+appName+" : "+developerName+" "+description, YesNo.No);
 		ThreadSleep(1000);
 		xpath="//li/a[@title='Edit']";
 		 ele=isDisplayed(driver, FindElement(driver, xpath, "edit", action.SCROLLANDBOOLEAN, timeOut), "visibility", timeOut, "edit");
@@ -1428,6 +1430,19 @@ public boolean addObjectToTab(String environment, String mode,String projectName
 				if (tabStyleSelector(styleType,parentId)) {
 					log(LogStatus.INFO, "selected style : "+styleType, YesNo.No);
 					ThreadSleep(1000);		
+					
+					for (String window : driver.getWindowHandles()) {
+						if (!window.equals(parentId)) {
+							try {
+								driver.switchTo().window(window);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					}
+					
+					
 					switchToDefaultContent(driver);
 					switchToFrame(driver, 20, getSetUpPageIframe(120));
 					if(click(driver, getCustomFieldNextBtn2(10),"next button", action.SCROLLANDBOOLEAN)) {
@@ -1495,17 +1510,27 @@ public boolean tabStyleSelector(String styleType,String parentId) {
 		}
 		
 		if(windowFlag) {
-			ele= FindElement(driver, "//*[text()='"+styleType+"']",styleType, action.SCROLLANDBOOLEAN, 20);
-			ele=isDisplayed(driver,ele,"visibility", 20,styleType);
-			if(click(driver, ele, styleType, action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "selected "+styleType,YesNo.No);
-				flag=true;
-			}else {
-				log(LogStatus.ERROR, "cannot select "+styleType,YesNo.Yes);
+			try {
+				ele= FindElement(driver, "//*[text()='"+styleType+"']",styleType, action.SCROLLANDBOOLEAN, 20);
+				ele=isDisplayed(driver,ele,"visibility", 20,styleType);
+				if(click(driver, ele, styleType, action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "selected "+styleType,YesNo.No);
+					flag=true;
+				}else {
+					log(LogStatus.ERROR, "cannot select "+styleType,YesNo.Yes);
+				}
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 			flag=true;
 			//driver.close();
-			driver.switchTo().window(currentWindow);
+			try {
+				driver.switchTo().window(currentWindow);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}else {
 			log(LogStatus.ERROR, "No new window is open so cannot select value "+styleType+" from look up",YesNo.Yes);
 		}
@@ -1573,6 +1598,7 @@ public boolean permissionChangeForUserONObject(WebDriver driver,String userName,
 		log(LogStatus.INFO, "able to click on "+userName, YesNo.No);
 		ThreadSleep(10000);
 		switchToDefaultContent(driver);
+		ThreadSleep(5000);
 		switchToFrame(driver, 60, getSetUpPageIframe(60));
 		xpath="//*[@id='topButtonRow']//input[@name='edit']";
 		ele=FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, timeOut);
@@ -1581,6 +1607,7 @@ public boolean permissionChangeForUserONObject(WebDriver driver,String userName,
 			log(LogStatus.INFO, "able to click on edit button", YesNo.No);
 			ThreadSleep(10000);
 			switchToDefaultContent(driver);
+			ThreadSleep(5000);
 			switchToFrame(driver, 60, getSetUpPageIframe(60));
 			String OnObject="";
 			String permission = "";

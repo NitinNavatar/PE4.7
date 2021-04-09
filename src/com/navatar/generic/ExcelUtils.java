@@ -846,7 +846,7 @@ public class ExcelUtils{
 				if (k==0) {
 					k++;
 				} else {
-					csvRecords.add(line);
+					csvRecords.add(line.replace("\"", ""));
 				}
 			}
 	
