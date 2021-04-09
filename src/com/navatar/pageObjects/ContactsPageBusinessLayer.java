@@ -79,6 +79,8 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 					xpath="//span[text()='Mailing Address']/../following-sibling::div";
 				}
 			
+		}else if(finalLabelName.contains(excelLabel.Phone.toString())) {
+			xpath = "//*[@class='test-id__field-label'][starts-with(text(),'"+finalLabelName+"')]/../following-sibling::div/*//a";
 		}
 		if(labelName.equalsIgnoreCase(excelLabel.Region.toString()) || labelName.equalsIgnoreCase(excelLabel.Industry.toString())) {
 			xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
@@ -206,8 +208,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 								ThreadSleep(1000);
 								if (click(driver,
 										FindElement(driver,
-												"//div[contains(@class,'uiAutocomplete')]//a//div[@title='" + legalName
-												+ "']",
+												"//*[@title='"+legalName+"' or text()='"+legalName+"']",
 												"Legal Name List", action.THROWEXCEPTION, 30),
 										legalName + "   :   Account Name", action.BOOLEAN)) {
 									appLog.info(legalName + "  is present in list.");
@@ -227,7 +228,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 							if(labelNames!=null && labelValue!=null) {
 								for(int i=0; i<labelNames.length; i++) {
 									WebElement ele = getContactPageTextBoxOrRichTextBoxWebElement(projectName, labelNames[i].trim(), 30);
-									if(sendKeys(driver, ele, labelValue[i], labelNames[i]+" text box", action.SCROLLANDBOOLEAN)) {
+									if(sendKeysAndPressEnter(driver, ele, labelValue[i], labelNames[i]+" text box", action.SCROLLANDBOOLEAN)) {
 										appLog.info("passed value "+labelValue[i]+" in "+labelNames[i]+" field");
 									}else {
 										appLog.error("Not able to pass value "+labelValue[i]+" in "+labelNames[i]+" field");
@@ -236,8 +237,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 									if (labelNames[i].equalsIgnoreCase(excelLabel.Region.toString()) || labelNames[i].equalsIgnoreCase(excelLabel.Industry.toString())) {
 										if (click(driver,
 												FindElement(driver,
-														"//div[contains(@class,'uiAutocomplete')]//a//div[@title='" + labelValue[i]
-														+ "']",
+														"//*[@title='"+labelValue[i]+"' or text()='"+labelValue[i]+"']",
 														"Legal Name List", action.THROWEXCEPTION, 30),
 												labelNames[i] + "   :   Account Name", action.BOOLEAN)) {
 											appLog.info(labelNames[i] + "  is present in list.");
@@ -257,12 +257,13 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 								BaseLib.sa.assertTrue(false,"could not pass value "+title+" to title" );
 							}
 							}
-							if (click(driver, getSaveButton(projectName, 60), "Save Button",
+							if (click(driver, getCustomTabSaveBtn(projectName, 60), "Save Button",
 									action.SCROLLANDBOOLEAN)) {
 								appLog.info("Clicked on save button");
+								
 								if(creationPage.toString().equalsIgnoreCase(CreationPage.AccountPage.toString())) {
 										if(clickOnGridSection_Lightning(projectName,RelatedList.Contacts, 30)) {
-											WebElement ele = isDisplayed(driver, FindElement(driver, "//span[@title='Contact Name']/ancestor::table/tbody/tr/th/span/a", "Contact Name Text", action.SCROLLANDBOOLEAN, 30), "visibility", 20, "");
+											WebElement ele = isDisplayed(driver, FindElement(driver, "//*[text()='Contact']/following-sibling::*//*[text()='"+contactFirstName+" "+contactLastName+"']", "Contact Name Text", action.SCROLLANDBOOLEAN, 30), "visibility", 20, "");
 											if (ele != null) {
 												String contactFullName = getText(driver,ele, "Contact Name",action.BOOLEAN);
 												System.err.println("Contact Name : "+contactFullName);
@@ -289,15 +290,16 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 									WebElement ele=getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 									click(driver, ele, RelatedTab.Details.toString(), action.SCROLLANDBOOLEAN);
 									
+									 ele = isDisplayed(driver, FindElement(driver, "//*[text()='Contact']/following-sibling::*//*[text()='"+contactFirstName+" "+contactLastName+"']", "Contact Name Text", action.SCROLLANDBOOLEAN, 30), "visibility", 20, "");
 
-									if (getContactFullNameInViewMode(projectName, 60) != null) {
-										String contactFullName = getText(driver,
-												getContactFullNameInViewMode(projectName, 60), "Contact Name",
-												action.SCROLLANDBOOLEAN);
+									if (ele != null) {
+										
+										String contactFullName = getText(driver,ele, "Contact Name",action.SCROLLANDBOOLEAN);
 										System.err.println("Contact Name : "+contactFullName);
 										if (contactFullName.contains(contactFirstName + " " + contactLastName)) {
 											appLog.info("Contact Created Successfully :" + contactFirstName + " "
 													+ contactLastName);
+											ThreadSleep(5000);
 											if(labelNames!=null && labelValue!=null ) {
 												for(int i=0; i<labelNames.length; i++) {
 													if(fieldValueVerificationOnContactPage(projectName, null, labelNames[i].replace("_", " ").trim(),labelValue[i])){

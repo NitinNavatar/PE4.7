@@ -209,7 +209,7 @@ public class Module1 extends BaseLib {
 		}
 		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object4Tab,YesNo.No);	
-			String[][] otherLabels = {{excelLabel.Source_Contact.toString(),FS_Deal1SourceContact},{excelLabel.Source_Firm.toString(),FS_Deal1SourceFirm}};
+			String[][] otherLabels = {{excelLabel.Source_Contact.toString(),FS_Con1_FName+" "+FS_Con1_LName},{excelLabel.Source_Firm.toString(),FS_Ins1}};
 
 			if (fp.createDeal(projectName,"",FS_DealName1, FS_Deal1CompanyName, FS_Deal1Stage,otherLabels, 15)) {
 				log(LogStatus.INFO,"Created Deal : "+FS_DealName1,YesNo.No);	
@@ -258,7 +258,7 @@ public class Module1 extends BaseLib {
 			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object2Tab+" so cannot drag and drop Advanced field set component",YesNo.Yes);
 			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object2Tab+" so cannot drag and drop Advanced field set component");
 		}
-		ThreadSleep(3000);
+		ThreadSleep(5000);
 		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
 			if(lp.clickOnAlreadyCreatedItem(projectName,TabName.DealTab, FS_DealName1, 30)){
 				log(LogStatus.INFO,"clicked on created Deal : "+FS_DealName1, YesNo.No);
@@ -717,7 +717,7 @@ public class Module1 extends BaseLib {
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String value="";
 		String type="";
-		String[][] EntityOrAccounts = {{ FS_Ins2, FS_Ins2RecordType ,null,null},{ FS_LP1, FS_LP1RecordType,InstitutionPageFieldLabelText.Parent_Institution.toString(),FS_Ins2}};
+		String[][] EntityOrAccounts = {{ FS_Ins2, FS_Ins2RecordType ,null,null},{ FS_LP1, FS_LP1RecordType,InstitutionPageFieldLabelText.Parent_Entity.toString(),FS_Ins2}};
 
 		for (String[] accounts : EntityOrAccounts) {
 			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
@@ -737,8 +737,8 @@ public class Module1 extends BaseLib {
 				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object1Tab,YesNo.Yes);
 			}
 		}
-		String[][] fundsOrDeals = {{FS_Fund1,"Fund Name",FS_Fund1Type,FS_Fund1InvestmentCategory,null},
-				{FS_Fund2,"Fund Name",FS_Fund2Type,FS_Fund2InvestmentCategory,null}};
+		String[][] fundsOrDeals = {{FS_Fund1,FS_Fund1RecordType,FS_Fund1Type,FS_Fund1InvestmentCategory,null},
+				{FS_Fund2,FS_Fund2RecordType,FS_Fund2Type,FS_Fund2InvestmentCategory,null}};
 		for (String[] funds : fundsOrDeals) {
 			if (lp.clickOnTab(projectName, TabName.Object3Tab)) {
 				log(LogStatus.INFO,"Click on Tab : "+TabName.Object3Tab,YesNo.No);	
@@ -874,7 +874,6 @@ public class Module1 extends BaseLib {
 				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object4Tab,YesNo.Yes);
 			}
 		}
-		
 		String relatedTab;
 		ToggleOpenQA1RequestedDate=	previousOrForwardDateAccordingToTimeZone(-2, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);;
 		ExcelUtils.writeData(phase1DataSheetFilePath, ToggleOpenQA1RequestedDate, "DealRequestTracker", excelLabel.Variable_Name, "OPENQA1",excelLabel.Date_Requested);
@@ -992,21 +991,21 @@ public class Module1 extends BaseLib {
 		MarketingEventPageBusinessLayer me = new MarketingEventPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		if (lp.clickOnTab(projectName, TabName.Object5Tab)) {
-			log(LogStatus.INFO,"Click on Tab : "+TabName.Object5Tab,YesNo.No);	
-
-
-			if (me.createMarketingEvent(projectName, FS_MarketingEvent1Name, FS_MarketingEvent1RecordType, FS_MarketingEvent1Date, FS_MarketingEvent1Organizer, 10)) {
-				log(LogStatus.INFO,"Created Marketing Event : "+FS_MarketingEvent1Name,YesNo.No);	
-			} else {
-				sa.assertTrue(false,"Not Able to Create Marketing Event  : "+FS_MarketingEvent1Name);
-				log(LogStatus.SKIP,"Not Able to Create Marketing Event  : "+FS_MarketingEvent1Name,YesNo.Yes);
-			}
-
-		} else {
-			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object5Tab);
-			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object5Tab,YesNo.Yes);
-		}
+//		if (lp.clickOnTab(projectName, TabName.Object5Tab)) {
+//			log(LogStatus.INFO,"Click on Tab : "+TabName.Object5Tab,YesNo.No);	
+//
+//
+//			if (me.createMarketingEvent(projectName, FS_MarketingEvent1Name, FS_MarketingEvent1RecordType, FS_MarketingEvent1Date, FS_MarketingEvent1Organizer, 10)) {
+//				log(LogStatus.INFO,"Created Marketing Event : "+FS_MarketingEvent1Name,YesNo.No);	
+//			} else {
+//				sa.assertTrue(false,"Not Able to Create Marketing Event  : "+FS_MarketingEvent1Name);
+//				log(LogStatus.SKIP,"Not Able to Create Marketing Event  : "+FS_MarketingEvent1Name,YesNo.Yes);
+//			}
+//
+//		} else {
+//			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object5Tab);
+//			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object5Tab,YesNo.Yes);
+//		}
 		
 		String staff="",status="",event="";
 		WebElement ele=null;

@@ -817,6 +817,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 									ThreadSleep(1000);
 									if(clickUsingJavaScript(driver, getfieldAccessOptionLink(fieldLabel,profileName,10),"profile link name", action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.INFO,"clicked on "+profileName+" link",YesNo.No);
+										ThreadSleep(5000);
 										switchToFrame(driver, 20, getFieldAndRelationShipFrame(20));
 										if(click(driver, getFieldLevelSecurityVisibleCheckBox(10), "check box", action.BOOLEAN)) {
 											log(LogStatus.INFO,"Clicked on field level security check box", YesNo.No);
@@ -967,6 +968,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 							}
 							if(click(driver, getPageLayoutSaveBtn(object.Global_Actions, 10), "page layouts save button", action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Save button", YesNo.No);
+								ThreadSleep(5000);
 
 							}else {
 								log(LogStatus.ERROR, "Not able to click on Save button cannot save pagelayout dragged object or section in field set component "+fieldSetLabel, YesNo.Yes);

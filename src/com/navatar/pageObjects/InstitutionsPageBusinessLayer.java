@@ -97,10 +97,10 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 							}
 						}
 					}
-					if (click(driver, getSaveButton(projectName,timeOut), "save button", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, getCustomTabSaveBtn(projectName,timeOut), "save button", action.SCROLLANDBOOLEAN)) {
 						appLog.info("clicked on save button");
-						
-						String str = getText(driver, getLegalNameHeader(projectName,timeOut), "legal Name Label Text",action.SCROLLANDBOOLEAN);
+					
+						String str = getText(driver, verifyCreatedItemOnPage(Header.Company, institutionName), "legal Name Label Text",action.SCROLLANDBOOLEAN);
 						if (str != null) {
 							if (str.contains(institutionName)) {
 								appLog.info("created institution " + institutionName + " is verified successfully.");
@@ -236,7 +236,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 									appLog.info("passed value "+labelValue[i]+" in "+labelNames[i]+" field");
 									
 
-									if (mode.equalsIgnoreCase(Mode.Lightning.toString()) && labelNames[i].toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString())) {
+									if (mode.equalsIgnoreCase(Mode.Lightning.toString()) && labelNames[i].toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Entity.toString())) {
 										
 										ThreadSleep(1000);
 										if (click(driver,
@@ -537,7 +537,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 									appLog.info("passed value "+labelValue[i]+" in "+labelNames[i]+" field");
 									
 
-									if (mode.equalsIgnoreCase(Mode.Lightning.toString()) && labelNames[i].toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString())) {
+									if (mode.equalsIgnoreCase(Mode.Lightning.toString()) && labelNames[i].toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Entity.toString())) {
 										
 										ThreadSleep(1000);
 										if (click(driver,
