@@ -458,7 +458,7 @@ public class Module5 extends BaseLib {
 
 		if(bp.clickOnTab(projectName,TabName.Object1Tab)) {
 
-			if(ins.createInstitution(environment, mode, ToggleLP1, "Limited Partner", InstitutionPageFieldLabelText.Parent_Institution.toString(), ToggleIns1)) {
+			if(ins.createInstitution(environment, mode, ToggleLP1, "Limited Partner", InstitutionPageFieldLabelText.Parent_Entity.toString(), ToggleIns1)) {
 				appLog.info("limited partner is created: "+ToggleLP1);
 			}else {
 				appLog.error("Not able to create limited partner: "+ToggleLP1);

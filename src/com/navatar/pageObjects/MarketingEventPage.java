@@ -70,7 +70,7 @@ public class MarketingEventPage extends BasePageBusinessLayer {
 	return isDisplayed(driver, marketingEventHeader, "Visibility", timeOut, "Marketing Name Header");
 	}
 	
-	@FindBy(xpath="//*[text()='Attendees']/../../../../following-sibling::div//*[text()='New']")
+	@FindBy(xpath="//*[text()='Attendees']/../../../../../following-sibling::div//*[text()='New']")
 	private WebElement newAttendee;
 
 	/**

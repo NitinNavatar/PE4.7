@@ -67,7 +67,7 @@ public class PipelinesPage extends BasePageBusinessLayer {
 			inputXpath="/..//following-sibling::input";
 			xpath1="/../following-sibling::div//input";
 			xpath2="/..//following-sibling::div//a";
-			if(labelName.toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString())) {
+			if(labelName.toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Entity.toString())) {
 				inputXpath="/..//following-sibling::div//input[@title='Search Institutions']";
 			}
 			
