@@ -144,7 +144,7 @@ public class Module3 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void Module3Tc001_createCRMUser(String projectName) {
+	public void Module3Tc001_1_createCRMUser(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -239,6 +239,60 @@ public class Module3 extends BaseLib {
 		sa.assertAll();
 	}
 
+	@Parameters({ "projectName"})
+	@Test
+	public void Module3Tc001_2_AddTabAndListView(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		String[][] userAndPassword = {{superAdminUserName,adminPassword},{crmUser1EmailID,adminPassword}};
+		for (String[] userPass : userAndPassword) {
+			lp.CRMLogin(userPass[0], userPass[1], appName);
+			
+			String addRemoveTabName="";
+			String tab1="";
+			if (tabObj1.equalsIgnoreCase("Entity")){
+				tab1="Entitie";
+			}
+			else{
+				tab1=tabObj1;
+			}
+			addRemoveTabName=tab1+"s,"+navigationTab+"s,"+tabObj3+"s,"+tabObj2+"s,"+tabObj8Coverage+"s";
+			if (lp.addTab_Lighting( addRemoveTabName, 5)) {
+				log(LogStatus.INFO,"Tab added : "+addRemoveTabName,YesNo.No);
+			} else {
+				log(LogStatus.FAIL,"Tab not added : "+addRemoveTabName,YesNo.No);
+				sa.assertTrue(false, "Tab not added : "+addRemoveTabName);
+			}		
+
+			
+			String[] tabs= {tabObj1,navigationTab,tabObj3,tabObj2,tabObj8Coverage};
+			//TabName[] tab= {TabName.Object1Tab,TabName.Object5Tab,TabName.Object3Tab,TabName.Object4Tab};
+			int i=0;
+			for (String t:tabs) {
+				if (lp.clickOnTab(projectName, t)) {	
+					if (lp.addAutomationAllListView(projectName, tabs[i], 10)) {
+						log(LogStatus.INFO,"list view added on "+tabs[i],YesNo.No);
+					} else {
+						log(LogStatus.FAIL,"list view could not added on "+tabs[i],YesNo.Yes);
+						sa.assertTrue(false, "list view could not added on "+tabs[i]);
+					}
+				} else {
+					log(LogStatus.FAIL,"could not click on "+tabs[i],YesNo.Yes);
+					sa.assertTrue(false, "could not click on "+tabs[i]);
+				}
+				i++;
+				ThreadSleep(5000);
+			}
+			ThreadSleep(5000);
+			lp.CRMlogout();
+			closeBrowser();
+			config(ExcelUtils.readDataFromPropertyFile("Browser"));
+			lp = new LoginPageBusinessLayer(driver);
+
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
 	@Parameters({ "projectName"})
 	@Test
 	public void Module3Tc002_UploadCsvToCreateTheNavigationData(String projectName) {

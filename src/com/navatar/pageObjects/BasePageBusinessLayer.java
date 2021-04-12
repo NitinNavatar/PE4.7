@@ -4529,13 +4529,11 @@ public boolean clickOnTab(String projectName,String TabName) {
 	String tabName = null;
 	boolean flag = false;
 	WebElement ele;
-//	if (TabName.contains("Entit")) {
-//		tabName ="Entities";
-//	}else {
-//
-//		tabName = TabName+"s";
-//	}
-	tabName = TabName;
+	if (TabName.contains("Entit")) {
+		tabName ="Entities";
+	}else {
+		tabName = TabName;
+	}
 	System.err.println("Passed switch statement");
 	if (tabName!=null) {
 		ele = FindElement(driver, "//a[contains(@href,'lightning') and contains(@title,'" + tabName + "')]/span/..",tabName, action.SCROLLANDBOOLEAN,30);

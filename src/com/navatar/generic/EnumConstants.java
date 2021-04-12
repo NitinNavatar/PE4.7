@@ -105,7 +105,7 @@ public class EnumConstants {
 		NavatarInvestorAddOns, CurrentInvesment, PotentialInvesment, RecentActivities, AllDocuments, HomeTab, 
 		FolderTemplate, FundDistributions, InvestorDistributions, MarketingInitiatives, MarketingProspects, 
 		NavatarSetup, Pipelines, FundDrawdowns, CapitalCalls, FundraisingContacts, LimitedPartne, ReportsTab, LimitedPartner,CompaniesTab, TaskRayTab,TaskRay,TestCustomObjectTab, TaskTab,
-		Other,Object1Tab,Object2Tab,Object3Tab,Object4Tab,RecycleBinTab,SDGTab,DealTab, Object5Tab,Object6Tab,AttendeeTab,Object7Tab,Entities,Deals,Marketing_Events,Deal_Team;
+		Other,Object1Tab,Object2Tab,Object3Tab,Object4Tab,RecycleBinTab,SDGTab,DealTab, Object5Tab,Object6Tab,AttendeeTab,Object7Tab,Entities,Deals,Marketing_Events,Deal_Team, Object8Tab;
 	}
 	
 	public static enum Mode{
