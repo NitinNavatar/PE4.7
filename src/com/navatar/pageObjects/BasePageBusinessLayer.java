@@ -1835,6 +1835,24 @@ public boolean ClickOnCrossButtonForAlreadySelectedItem(String projectName,PageN
  */
 public boolean enteringSubjectAndSelectDropDownValuesonTaskPopUp(String projectName,PageName pageName,String subjectText,String[][] dropDownLabelWithValues,action action,int timeOut) {
 	
+	WebElement ele = getTaskPopUpHeader(projectName, 10);
+	String expecedHeader="New Task";;
+	if (ele!=null) {
+		log(LogStatus.INFO, "PopUp is open" , YesNo.No);
+		String actualHeader = ele.getText().trim();
+		if (ele.getText().trim().equals(expecedHeader)) {
+			log(LogStatus.INFO, "Header Text verified : "+expecedHeader, YesNo.Yes);
+			
+		} else {
+			log(LogStatus.ERROR, "Header Text not verified Actual : "+actualHeader+" \t Expected : "+expecedHeader, YesNo.Yes);
+			sa.assertTrue(false, "Header Text not verified Actual : "+actualHeader+" \t Expected : "+expecedHeader);
+		}
+
+	} else {
+		log(LogStatus.ERROR, "No PopUp is open so cannot verify Heading "+expecedHeader, YesNo.Yes);
+		sa.assertTrue(false, "No PopUp is open so cannot verify Heading "+expecedHeader);
+	}
+	
 	String label;
 	String value;
 	boolean flag=false;

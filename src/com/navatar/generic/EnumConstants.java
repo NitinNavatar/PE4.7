@@ -1259,7 +1259,7 @@ public static enum PermissionType{
 	}
 	
 	public static enum CSVLabel{
-		Navigation_Label ,Order,Parent,Action_Object,Action_Record_Type,List_View_Object,List_View_Name,URL;
+		Navigation_Label ,Order,Parent,Action_Object,Action_Record_Type,List_View_Object,List_View_Name,URL,Activities_Button_API_Name;
 	}
 
 	public static enum EditPageLabel{

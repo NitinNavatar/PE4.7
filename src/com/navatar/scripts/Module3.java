@@ -122,7 +122,7 @@ import static com.navatar.generic.CommonLib.*;
 
 public class Module3 extends BaseLib {
 	String passwordResetLink = null;
-	Scanner scn = new Scanner(System.in);
+//	Scanner scn = new Scanner(System.in);
 
 	String navatarEdge="EDGE";
 	String navigationMenuName="Navigation Menu";
@@ -298,7 +298,7 @@ public class Module3 extends BaseLib {
 					log(LogStatus.INFO, "click on Object : "+object.App_Manager, YesNo.No);
 					ThreadSleep(2000);
 					//						setup.clickOnEditForApp(driver, appName, AppDeveloperName,"Navatar Private Equity app – Lightning View(Edge)", 10);
-					//						scn.nextLine();
+					//						// scn.nextLine();
 					if(setup.clickOnEditForApp(driver, appName, AppDeveloperName,AppDescription, 10)) {
 						log(LogStatus.INFO,"able to click on edit button against "+appName+" : "+AppDeveloperName+" "+AppDescription, YesNo.No);
 						ThreadSleep(1000);
@@ -609,7 +609,7 @@ public class Module3 extends BaseLib {
 				}
 			//	parentQuickActionObjectWithNoChild.remove("Contact");
 				System.err.println("parentQuickActionObjectWithNoChild : "+parentQuickActionObjectWithNoChild);
-				scn.nextLine();
+				// scn.nextLine();
 				for (String childs1 : parentQuickActionObjectWithNoChild) {
 					
 					if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
@@ -1074,8 +1074,15 @@ public class Module3 extends BaseLib {
 
 										}
 										click(driver, npbl.getNavatarQuickLinkMinimize_Lighting(projectName, 3), "Minimize Icon", action.BOOLEAN);
+										String customLabel1="Custom Label 1";
+										if (ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, updatedName, CSVLabel.Navigation_Label.toString(), customLabel1, CSVLabel.Parent.toString())) {
+											log(LogStatus.INFO, updatedName+" value has been written under "+CSVLabel.Parent.toString()+" for "+customLabel1, YesNo.No);
+										} else {
+											log(LogStatus.ERROR, updatedName+" value has not been written under "+CSVLabel.Parent.toString()+" for "+customLabel1, YesNo.Yes);
+											sa.assertTrue(false, updatedName+" value has not been written under "+CSVLabel.Parent.toString()+" for "+customLabel1);
+										}
 
-
+										
 									} else {
 										log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify url for label : "+updatedName, YesNo.Yes);
 										sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify url for label : "+updatedName);
@@ -1440,7 +1447,7 @@ public class Module3 extends BaseLib {
 					if(setup.searchStandardOrCustomObject(environment,mode, object.App_Manager)) {
 						log(LogStatus.INFO, "click on Object : "+object.App_Manager, YesNo.No);
 						ThreadSleep(2000);
-						scn.nextLine();
+						// scn.nextLine();
 						if(setup.clickOnEditForApp(driver, appName, AppDeveloperName,AppDescription, 10)) {
 							log(LogStatus.INFO,"click on edit button against "+appName+" : "+AppDeveloperName+" "+AppDescription, YesNo.No);
 							ThreadSleep(1000);
@@ -2042,7 +2049,7 @@ public class Module3 extends BaseLib {
 					log(LogStatus.INFO, "click on Object : "+object.Lightning_App_Builder, YesNo.No);
 					ThreadSleep(2000);
 					//						setup.clickOnEditForApp(driver, appName, AppDeveloperName,"Navatar Private Equity app – Lightning View(Edge)", 10);
-					//						scn.nextLine();
+					//						// scn.nextLine();
 					switchToFrame(driver, 20, setup.getSetUpPageIframe(60));
 					if(clickUsingJavaScript(driver, lp.getNewButton(projectName, 60), "new button")) {
 						log(LogStatus.INFO, "Click on new button going to create Lightning App : "+myAppPage, YesNo.No);	
@@ -2667,7 +2674,7 @@ public class Module3 extends BaseLib {
 				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify record type options for label : "+labelValue);
 			}
 			System.err.println("><><><><>");
-			scn.nextLine();
+			// scn.nextLine();
 		}
 
 
@@ -2793,14 +2800,23 @@ public class Module3 extends BaseLib {
 					if (click(driver, ele, navigationLabel, action.BOOLEAN)) {
 						log(LogStatus.INFO, "Click on "+navigationLabel+" going to verify url", YesNo.No);
 						ThreadSleep(5000);
-						String actualUrl=getURL(driver, 10);
-						if (actualUrl.contains(urlValue)) {
-							log(LogStatus.INFO, urlValue+" : Url Verified for : "+navigationLabel, YesNo.No);
+						String parentId = switchOnWindow(driver);
+						if (parentId!=null) {
+							String actualUrl=getURL(driver, 10);
+							if (actualUrl.contains(urlValue)) {
+								log(LogStatus.INFO, urlValue+" : Url Verified for : "+navigationLabel, YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Url Not Verified for : "+navigationLabel+" Actual : "+actualUrl+"\t Expected : "+urlValue, YesNo.Yes);
+								sa.assertTrue(false,"Url Not Verified for : "+navigationLabel+" Actual : "+actualUrl+"\t Expected : "+urlValue);
+
+							}
 						} else {
-							log(LogStatus.ERROR, "Url Not Verified for : "+navigationLabel+" Actual : "+actualUrl+"\t Expected : "+urlValue, YesNo.Yes);
-							sa.assertTrue(false,"Url Not Verified for : "+navigationLabel+" Actual : "+actualUrl+"\t Expected : "+urlValue);
-						
+
+							log(LogStatus.ERROR, "No New Window is open so cannot verify URL for label :"+navigationLabel, YesNo.Yes);
+							sa.assertTrue(false,"No New Window is open so cannot verify URL for label :"+navigationLabel);
+
 						}
+
 					} else {
 						log(LogStatus.ERROR, "Not Able to Click on "+navigationLabel+" so cannot verify URL for label : "+navigationLabel, YesNo.Yes);
 						sa.assertTrue(false,"Not Able to Click on "+navigationLabel+" so cannot verify URL for label : "+navigationLabel);
@@ -4341,8 +4357,9 @@ public class Module3 extends BaseLib {
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer sp = new SetupPageBusinessLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
-		String customObject=tabCustomObj;
+		String customObject=tabCustomObj+"s";
 		/////////////////////////////////////////////////////
 		boolean flag=true;
 		if (home.clickOnSetUpLink()) {
@@ -4431,6 +4448,43 @@ public class Module3 extends BaseLib {
 			}
 			
 		}
+		
+		String[] userNames= {"PE Standard User"};
+		String onObject=customObject;
+		String permission="Create";
+		for (String userName : userNames) {
+			switchToDefaultContent(driver);
+			if (home.clickOnSetUpLink()) {
+				String parentID = switchOnWindow(driver);
+				if (parentID!=null) {
+					log(LogStatus.INFO, "Able to switch on new window, so going to set"+permission+" for "+onObject, YesNo.No);
+					ThreadSleep(500);
+					if(setup.searchStandardOrCustomObject(environment,mode, object.Profiles)) {
+						log(LogStatus.INFO, "click on Object : "+object.Profiles, YesNo.No);
+						ThreadSleep(2000);
+						if (setup.permissionChangeForUserONObject(driver, userName, new String[][]{{onObject,permission},{onObject,"Delete"}}, 20)) {
+							log(LogStatus.PASS,permission+ " permission change for "+userName+" on object "+onObject,YesNo.No);
+						} else {
+							sa.assertTrue(false, permission+ " permission not change for "+userName+" on object "+onObject);
+							log(LogStatus.FAIL,permission+ " permission not change for "+userName+" on object "+onObject,YesNo.Yes);
+						}
+					}else {
+						log(LogStatus.ERROR, "Not able to search/click on "+object.Profiles, YesNo.Yes);
+						sa.assertTrue(false, "Not able to search/click on "+object.Profiles);
+					}
+					driver.close();
+					driver.switchTo().window(parentID);
+				}else {
+					log(LogStatus.FAIL, "could not find new window to switch, so cannot to set"+permission+" for "+onObject, YesNo.Yes);
+					sa.assertTrue(false, "could not find new window to switch, to set"+permission+" for "+onObject);
+				}
+
+			}else {
+				log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on setup link");	
+			}
+		}
+		
 		switchToDefaultContent(driver);
 		lp.CRMlogout();
 		sa.assertAll();
@@ -4683,7 +4737,7 @@ public class Module3 extends BaseLib {
 				if (click(driver, ele, navigationLabel, action.BOOLEAN)) {
 					log(LogStatus.INFO, "Click on "+navigationLabel+" going to verify home page of custom menu even after adding list view name & list view object different", YesNo.No);
 					ThreadSleep(5000);
-					scn.nextLine();
+					// scn.nextLine();
 					log(LogStatus.ERROR, " so cannot verify home page of custom menu even after adding list view name & list view object different", YesNo.Yes);
 					sa.assertTrue(false," so cannot verify home page of custom menu even after adding list view name & list view object different");
 
@@ -4911,42 +4965,6 @@ public class Module3 extends BaseLib {
 			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify order", YesNo.Yes);
 			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify order");
 		}
-		
-//		try {
-//			switchToDefaultContent(driver);
-//			ThreadSleep(2000);
-//			csvRecords=ExcelUtils.readAllDataFromCSVFileIntoList(NavigationMenuTestData_PEExcel, false);
-//			System.err.println(csvRecords);
-//			if (!csvRecords.isEmpty()) {
-//				log(LogStatus.INFO, "Records Fetched from CSV File : "+NavigationMenuTestData_PEExcel, YesNo.No);
-//
-//				Map<String, Integer> navigationParentLabelWithOrder = navigationParentLabelWithOrder(csvRecords);
-//				System.err.println(navigationParentLabelWithOrder);
-//				Map<String, Integer> navigationParentLabelWithSortedOrder = sortByValue(true, navigationParentLabelWithOrder);
-//				System.err.println(navigationParentLabelWithOrder);
-//				Map<String, String> navigationParentLabelWithChildAndOrder = navigationParentLabelWithChildAndOrder(csvRecords);
-//				System.err.println(navigationParentLabelWithChildAndOrder);
-//				Map<String, String> navigationParentLabelWithChildSorted = navigationParentLabelWithChildSorted(navigationParentLabelWithChildAndOrder);
-//				System.err.println(navigationParentLabelWithChildSorted);
-//				// Verification on navigation menu
-//				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
-//					log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-//					npbl.verifyingNavigationMenuLink(projectName, navigationParentLabelWithSortedOrder, navigationParentLabelWithChildSorted, action.BOOLEAN, 0);;
-//				} else {
-//					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify order", YesNo.Yes);
-//					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify order");
-//				}
-//
-//			} else {
-//				log(LogStatus.FAIL, "Unable to Fetch Records from CSV File : "+NavigationMenuTestData_PEExcel, YesNo.Yes);
-//				sa.assertTrue(false, "Unable to Fetch Records from CSV File : "+NavigationMenuTestData_PEExcel);
-//			}
-//			
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			log(LogStatus.FAIL, "Assertion Fail so cannot verify Navigation Link", YesNo.Yes);
-//			sa.assertTrue(false, "Assertion Fail so cannot verify Navigation Link");
-//		}
 		
 		switchToDefaultContent(driver);
 		lp.CRMlogout();
@@ -5596,7 +5614,6 @@ public class Module3 extends BaseLib {
 		String navigationLabelValue=NavatarQuickLink.BulkEmail.toString();
 		String urlLabel=CSVLabel.URL.toString();
 		String urlLabelValue="";
-		String[][] labelWithValue= {{navigationLabel,navigationLabelValue},{urlLabel,urlLabelValue}};
 		WebElement ele;
 
 		if (hp.clickOnLinkFromNavatarQuickLink(environment, mode, NavatarQuickLink.BulkEmail)) {
@@ -5615,10 +5632,12 @@ public class Module3 extends BaseLib {
 		}
 
 
+		String[][] labelWithValue= {{navigationLabel,navigationLabelValue},{urlLabel,urlLabelValue}};
 		if (npbl.createNavigationItem(projectName, labelWithValue, 20)) {
 			log(LogStatus.INFO, "created "+navigationLabelValue, YesNo.No);
 
 			refresh(driver);
+			ThreadSleep(5000);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 				ele=npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
@@ -5712,12 +5731,13 @@ public class Module3 extends BaseLib {
 			log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
 			
 			ele=npbl.getNavigationLabel(projectName, navigationLabel, action.BOOLEAN, 10);
-			if (click(driver, ele, navigationLabel, action.BOOLEAN)) {
-				log(LogStatus.INFO, "Click on "+navigationLabel+" going to verify url", YesNo.No);
+			if (ele==null) {
+				
+				log(LogStatus.INFO, navigationLabel+" is not present after removing creation access", YesNo.No);
 				ThreadSleep(5000);
 			} else {
-				log(LogStatus.ERROR, "Not Able to Click on "+navigationLabel, YesNo.Yes);
-				sa.assertTrue(false,"Not Able to Click on "+navigationLabel);
+				log(LogStatus.ERROR, navigationLabel+" should not present after removing creation access", YesNo.Yes);
+				sa.assertTrue(false,navigationLabel+" should not present after removing creation access");
 
 			}
 			
@@ -6524,7 +6544,7 @@ public class Module3 extends BaseLib {
 			log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
 			sa.assertTrue(false, "Not able to click on setup link");	
 		}
-
+		flag=false;
 		if (flag) {
 			refresh(driver);
 			lp.clickOnTab(projectName, homeTab);
@@ -6859,7 +6879,7 @@ public class Module3 extends BaseLib {
 			log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
 			sa.assertTrue(false, "Not able to click on setup link");	
 		}
-
+		flag=false;
 		if (flag) {
 			refresh(driver);
 			lp.clickOnTab(projectName, homeTab);
@@ -7002,7 +7022,7 @@ public class Module3 extends BaseLib {
 			log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
 			sa.assertTrue(false, "Not able to click on setup link");	
 		}
-
+		flag=false;
 		if (flag) {
 			refresh(driver);
 			String dependentTC="Module3Tc074_CreateMyRegionMenuItem";
@@ -7147,7 +7167,7 @@ public class Module3 extends BaseLib {
 			log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
 			sa.assertTrue(false, "Not able to click on setup link");	
 		}
-
+		flag=false;
 		if (flag) {
 			refresh(driver);
 			String dependentTC="Module3Tc074_CreateMyRegionMenuItem";
@@ -7291,7 +7311,7 @@ public class Module3 extends BaseLib {
 			log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
 			sa.assertTrue(false, "Not able to click on setup link");	
 		}
-
+		flag=false;
 		if (flag) {
 			refresh(driver);
 			lp.clickOnTab(projectName, homeTab);
@@ -7447,7 +7467,7 @@ public class Module3 extends BaseLib {
 							if (ele!=null) {
 								String actualValue = ele.getText().trim();
 								String expectedValue=tp.taskCreatesMsg(projectName, task);
-								if (actualValue.contains(expectedValue)) {
+								if (actualValue.contains(expectedValue) || expectedValue.contains(actualValue)) {
 									log(LogStatus.INFO,expectedValue+" matched FOR Confirmation Msg", YesNo.No);
 
 								} else {
@@ -7511,7 +7531,7 @@ public class Module3 extends BaseLib {
 		String logAcall = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Navigation_Label_Name);
 		String navigationLabelValue=createNewLabel+"/"+logAcall;
 		
-		String listViewNameLabel=CSVLabel.List_View_Name.toString();
+		String listViewNameLabel=CSVLabel.Activities_Button_API_Name.toString();
 		String listViewNameLabelValue=logAcall.replace(" ", "_");
 		String[][] labelWithValue= {{listViewNameLabel,listViewNameLabelValue}};
 		boolean flag=false;
@@ -7531,7 +7551,7 @@ public class Module3 extends BaseLib {
 				log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
 				ThreadSleep(5000);
 
-				ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, "New Task", action.BOOLEAN, 30);
+				ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, "", action.BOOLEAN, 30);
 				if (ele!=null) {
 					log(LogStatus.INFO, "New Task Pop Up is open after clicking on "+navigationLabelValue , YesNo.No);
 
@@ -7548,7 +7568,7 @@ public class Module3 extends BaseLib {
 							if (ele!=null) {
 								String actualValue = ele.getText().trim();
 								String expectedValue=tp.taskCreatesMsg(projectName, task);
-								if (actualValue.contains(expectedValue)) {
+								if (actualValue.contains(expectedValue) || expectedValue.contains(actualValue)) {
 									log(LogStatus.INFO,expectedValue+" matched FOR Confirmation Msg", YesNo.No);
 
 								} else {
@@ -7740,12 +7760,17 @@ public class Module3 extends BaseLib {
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
+		String listViewNameLabel=CSVLabel.Activities_Button_API_Name.toString();
+		String listViewNameLabelValue="";
+
 		String createNewLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Parent);
 
 		String newTask = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name);
 		String newTaskOrder = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Updated_Order);
 		String newTaskActionObject = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Action_Object);
-		if (npbl.createNavigationItem(projectName, new String[][]{{CSVLabel.Navigation_Label.toString(),newTask},{CSVLabel.Parent.toString(),createNewLabel},{CSVLabel.Order.toString(),newTaskOrder},{CSVLabel.Action_Object.toString(),newTaskActionObject}}, 20)) {
+		listViewNameLabelValue=newTask.replace(" ", "_");
+		if (npbl.createNavigationItem(projectName, new String[][]{{CSVLabel.Navigation_Label.toString(),newTask},{CSVLabel.Parent.toString(),createNewLabel},{CSVLabel.Order.toString(),newTaskOrder},{CSVLabel.Action_Object.toString(),newTaskActionObject}
+		,{listViewNameLabel,listViewNameLabelValue}}, 20)) {
 			log(LogStatus.INFO, "created "+newTask, YesNo.No);
 		} else {
 			log(LogStatus.ERROR, "Not Able to create "+newTask, YesNo.Yes);
@@ -7754,9 +7779,11 @@ public class Module3 extends BaseLib {
 		refresh(driver);
 		String dependtTC="Module3Tc085_CreateCustomActionOfTypeTask";
 		String newMeeting = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependtTC, excelLabel.Navigation_Label_Name);
+		listViewNameLabelValue=newMeeting.replace(" ", "_");
 		newTaskOrder = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependtTC, excelLabel.Updated_Order);
 		newTaskActionObject = ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependtTC, excelLabel.Action_Object);
-		if (npbl.createNavigationItem(projectName, new String[][]{{CSVLabel.Navigation_Label.toString(),newMeeting},{CSVLabel.Parent.toString(),createNewLabel},{CSVLabel.Order.toString(),newTaskOrder},{CSVLabel.Action_Object.toString(),newTaskActionObject}}, 20)) {
+		if (npbl.createNavigationItem(projectName, new String[][]{{CSVLabel.Navigation_Label.toString(),newMeeting},{CSVLabel.Parent.toString(),createNewLabel},{CSVLabel.Order.toString(),newTaskOrder},{CSVLabel.Action_Object.toString(),newTaskActionObject}
+		,{listViewNameLabel,listViewNameLabelValue}}, 20)) {
 			log(LogStatus.INFO, "created "+newMeeting, YesNo.No);
 		} else {
 			log(LogStatus.ERROR, "Not Able to create "+newMeeting, YesNo.Yes);
@@ -7923,7 +7950,7 @@ public class Module3 extends BaseLib {
 							if (ele!=null) {
 								String actualValue = ele.getText().trim();
 								String expectedValue=tp.taskCreatesMsg(projectName, task);
-								if (actualValue.contains(expectedValue)) {
+								if (actualValue.contains(expectedValue) || expectedValue.contains(actualValue)) {
 									log(LogStatus.INFO,expectedValue+" matched FOR Confirmation Msg", YesNo.No);
 
 								} else {
@@ -8094,12 +8121,12 @@ public class Module3 extends BaseLib {
 						if (clickUsingJavaScript(driver,lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
 							ThreadSleep(5000);
-							scn.nextLine();
+							// scn.nextLine();
 							ele = cp.getCreatedConfirmationMsg(projectName, 15);
 							if (ele!=null) {
 								String actualValue = ele.getText().trim();
 								String expectedValue=tp.taskCreatesMsg(projectName, task);
-								if (actualValue.contains(expectedValue)) {
+								if (actualValue.contains(expectedValue ) || expectedValue.contains(actualValue)) {
 									log(LogStatus.INFO,expectedValue+" matched FOR Confirmation Msg", YesNo.No);
 
 								} else {
@@ -8271,12 +8298,12 @@ public class Module3 extends BaseLib {
 						if (clickUsingJavaScript(driver,lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
 							ThreadSleep(5000);
-							scn.nextLine();
+							// scn.nextLine();
 							ele = cp.getCreatedConfirmationMsg(projectName, 15);
 							if (ele!=null) {
 								String actualValue = ele.getText().trim();
 								String expectedValue=tp.taskCreatesMsg(projectName, task);
-								if (actualValue.contains(expectedValue)) {
+								if (actualValue.contains(expectedValue) || expectedValue.contains(actualValue)) {
 									log(LogStatus.INFO,expectedValue+" matched FOR Confirmation Msg", YesNo.No);
 
 								} else {

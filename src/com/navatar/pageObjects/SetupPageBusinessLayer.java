@@ -1616,24 +1616,27 @@ public boolean permissionChangeForUserONObject(WebDriver driver,String userName,
 				permission=strings[1];
 				xpath="//*[text()='"+OnObject+"']/following-sibling::*//td/input[contains(@title,'"+permission+"')]";
 				ele = FindElement(driver, xpath, OnObject+" with permission "+permission, action.SCROLLANDBOOLEAN, timeOut);
+				if (!isSelected(driver, ele, OnObject+" with permission "+permission)) {
+					if (click(driver, ele, OnObject+" with permission "+permission,action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "clicked on checkbox "+permission+" for "+OnObject, YesNo.No);
 
-				if (click(driver, ele, OnObject+" with permission "+permission,action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "clicked on checkbox "+permission+" for "+OnObject, YesNo.No);
-					flag=true;
-					if (click(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
-							action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
-						ThreadSleep(10000);
-						flag=true;
 					} else {
-						log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
+						log(LogStatus.ERROR, "Not Able clicked on checkbox "+permission+" for "+OnObject, YesNo.Yes);
+						sa.assertTrue(false, permission+ " permission not change for "+userName+" on object "+OnObject);
+						log(LogStatus.FAIL,permission+ " permission not change for "+userName+" on object "+OnObject,YesNo.Yes);
+
 					}
-
-				} else {
-					log(LogStatus.ERROR, "Not Able clicked on checkbox "+permission+" for "+OnObject, YesNo.Yes);
 				}
+			}
 
-
+			if (click(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
+					action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
+				ThreadSleep(10000);
+				flag=true;
+				ThreadSleep(5000);
+			} else {
+				log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
 			}
 		} else {
 			log(LogStatus.ERROR, "not able to click on edit button", YesNo.Yes);
