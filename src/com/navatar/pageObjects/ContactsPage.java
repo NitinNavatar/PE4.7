@@ -75,7 +75,7 @@ public class ContactsPage extends BasePageBusinessLayer {
 	@FindBy(xpath="//span[text()='Legal Name']/../following-sibling::div//input[@title='Search Institutions']")
 	private WebElement legalName;
 	
-	@FindBy(xpath="//*[text()='Firm']/following-sibling::div//input")
+	@FindBy(xpath="//*[text()='Firm']/following-sibling::div//input[contains(@placeholder,'Search')]")
 	private WebElement firmName;
 
 	/**
@@ -99,7 +99,7 @@ public class ContactsPage extends BasePageBusinessLayer {
 	@FindBy(xpath="//table[@class='detailList']//input[@name='con15']")
 	private WebElement emailId_Clasic;
 	
-	@FindBy(xpath="//span[text()='Email']/../following-sibling::input")
+	@FindBy(xpath="//*[text()='Email']/following-sibling::*/input")
 	private WebElement emailId_Lighting;
 
 	/**
@@ -149,8 +149,8 @@ public class ContactsPage extends BasePageBusinessLayer {
 		
 			//span[text()='Description']/..//following-sibling::textarea
 			xpath="//*[text()='"+finalLabelName+"']";
-			inputXpath="/..//following-sibling::input";
-			textAreaXpath="/..//following-sibling::textarea";
+			inputXpath="/following-sibling::*/input";
+			textAreaXpath="/following-sibling::*/textarea";
 		
 		
 		if(labelName.equalsIgnoreCase(ContactPageFieldLabelText.Description.toString()) || labelName.equalsIgnoreCase(ContactPageFieldLabelText.Mailing_Street.toString()) || 
@@ -162,8 +162,7 @@ public class ContactsPage extends BasePageBusinessLayer {
 		}else if (labelName.equalsIgnoreCase(excelLabel.Region.toString())|| (labelName.equalsIgnoreCase(excelLabel.Industry.toString())|| labelName.equalsIgnoreCase(PageLabel.Profile_Image.toString()))) {
 				xpath="//*[text()='"+finalLabelName+"']/..//following-sibling::*//input";
 				finalXpath=xpath;
-			}
-		else {
+			}else {
 			finalXpath=xpath+inputXpath;
 		}
 		ele=isDisplayed(driver, FindElement(driver, finalXpath, finalLabelName+" text box in "+projectName, action.SCROLLANDBOOLEAN,30), "Visibility", timeOut, finalLabelName+"text box in "+projectName);

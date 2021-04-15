@@ -1,5 +1,6 @@
 package com.navatar.pageObjects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -819,6 +820,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 									ThreadSleep(1000);
 									if(clickUsingJavaScript(driver, getfieldAccessOptionLink(fieldLabel,profileName,10),"profile link name", action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.INFO,"clicked on "+profileName+" link",YesNo.No);
+										ThreadSleep(5000);
 										switchToFrame(driver, 20, getFieldAndRelationShipFrame(20));
 										if(click(driver, getFieldLevelSecurityVisibleCheckBox(10), "check box", action.BOOLEAN)) {
 											log(LogStatus.INFO,"Clicked on field level security check box", YesNo.No);
@@ -969,6 +971,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 							}
 							if(click(driver, getPageLayoutSaveBtn(object.Global_Actions, 10), "page layouts save button", action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Save button", YesNo.No);
+								ThreadSleep(5000);
 
 							}else {
 								log(LogStatus.ERROR, "Not able to click on Save button cannot save pagelayout dragged object or section in field set component "+fieldSetLabel, YesNo.Yes);
@@ -1005,6 +1008,9 @@ public boolean clickOnEditForApp(WebDriver driver,String appName,String develope
 	boolean flag=false;;
 	String xpath="";
 	xpath="//*[text()='"+appName+"']/../../following-sibling::*//*[text()='"+developerName+"']/../../following-sibling::*//*[text()='"+description+"']/../../following-sibling::*//*[text()='Show Actions']/..";
+	WebElement scrollEle = FindElement(driver, "//div[@class='uiScroller scroller-wrapper scroll-bidirectional native']", "Widget scroll",action.SCROLLANDBOOLEAN, 60);
+	scrollActiveWidget(driver,scrollEle,By.xpath(xpath));
+	ThreadSleep(2000);
 	WebElement ele=isDisplayed(driver, FindElement(driver, xpath, "show more action", action.SCROLLANDBOOLEAN, timeOut), "visibility", timeOut, "show more action");
 	if (click(driver, ele, "Show more action against "+appName+" : "+developerName+" "+description, action.BOOLEAN)) {
 		log(LogStatus.INFO, "click on Show more action against "+appName+" : "+developerName+" "+description, YesNo.No);
@@ -1300,6 +1306,22 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 			value=lv[1];
 			ele =  getRecordTypeLabel(projectName, label, 20);
 			ThreadSleep(2000);
+			
+			try {
+				if (isAlertPresent(driver)) {
+					switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				try {
+					switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			
 			if (label.equals(recordTypeLabel.Active.toString())) {
 				if (click(driver, ele, "Active CheckBox", action.BOOLEAN)) {
 					log(LogStatus.INFO, "Click on Active CheckBox", YesNo.No);	
@@ -1317,6 +1339,8 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 					log(LogStatus.ERROR, "Not Able to enter "+value+" to label "+label, YesNo.Yes);
 					sa.assertTrue(false,"Not Able to enter "+value+" to label "+label);
 				}
+				
+				
 
 			}
 
@@ -1616,24 +1640,27 @@ public boolean permissionChangeForUserONObject(WebDriver driver,String userName,
 				permission=strings[1];
 				xpath="//*[text()='"+OnObject+"']/following-sibling::*//td/input[contains(@title,'"+permission+"')]";
 				ele = FindElement(driver, xpath, OnObject+" with permission "+permission, action.SCROLLANDBOOLEAN, timeOut);
+			//	if (!isSelected(driver, ele, OnObject+" with permission "+permission)) {
+					if (click(driver, ele, OnObject+" with permission "+permission,action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "clicked on checkbox "+permission+" for "+OnObject, YesNo.No);
 
-				if (click(driver, ele, OnObject+" with permission "+permission,action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "clicked on checkbox "+permission+" for "+OnObject, YesNo.No);
-					flag=true;
-					if (click(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
-							action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
-						ThreadSleep(10000);
-						flag=true;
 					} else {
-						log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
+						log(LogStatus.ERROR, "Not Able clicked on checkbox "+permission+" for "+OnObject, YesNo.Yes);
+						sa.assertTrue(false, permission+ " permission not change for "+userName+" on object "+OnObject);
+						log(LogStatus.FAIL,permission+ " permission not change for "+userName+" on object "+OnObject,YesNo.Yes);
+
 					}
+			//	}
+			}
 
-				} else {
-					log(LogStatus.ERROR, "Not Able clicked on checkbox "+permission+" for "+OnObject, YesNo.Yes);
-				}
-
-
+			if (click(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
+					action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
+				ThreadSleep(10000);
+				flag=true;
+				ThreadSleep(5000);
+			} else {
+				log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
 			}
 		} else {
 			log(LogStatus.ERROR, "not able to click on edit button", YesNo.Yes);
@@ -1801,8 +1828,8 @@ public void createPredefinedValueForGlobalAction(WebDriver driver,String actionN
 					sa.assertTrue(false, "Not able to select visbible text from the Field Name dropdown "+label);
 				}
 			} else {
-				log(LogStatus.ERROR, "Not able to click on Predefined Field Values New Button", YesNo.Yes);
-				sa.assertTrue(false, "Not able to click on Predefined Field Values New Button");
+				log(LogStatus.ERROR, "Not able to click on Predefined Field Values New Button : "+actionName, YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on Predefined Field Values New Button : "+actionName);
 			}
 
 		}

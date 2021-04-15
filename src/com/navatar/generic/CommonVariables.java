@@ -176,7 +176,7 @@ public class CommonVariables {
 	public static String FC_Object31,FC_FieldLabelName31,FC_Length31,FC_FieldType31;
 	
 
-	public static String FS_Fund1,FS_Fund1Type,FS_Fund1InvestmentCategory,FS_Fund2,FS_Fund2Type,FS_Fund2InvestmentCategory;
+	public static String FS_Fund1,FS_Fund1RecordType,FS_Fund1Type,FS_Fund1InvestmentCategory,FS_Fund2,FS_Fund2RecordType,FS_Fund2Type,FS_Fund2InvestmentCategory;
 	
 	public static String FS_PartnerShip1,FS_PartnerShip2;
 	
@@ -225,18 +225,18 @@ public class CommonVariables {
 	
 	
 	public static String[][] newTaskPredefinedValue = {{PageLabel.Subject.toString(),"\"Client Demo Request\""},
-											{PageLabel.Due_Date.toString(),"\"Today() + 2\""},
+											{PageLabel.Due_Date.toString(),"(Today() + 2)"},
 												{PageLabel.Status.toString(),"\"Not Started\""},
 												{PageLabel.Priority.toString(),"\"High\""},
 													{PageLabel.Comments.toString(),"\"Test for predefined comments in Events\""}};
 	
 	public static String[][] LogACallPredefinedValue = {{PageLabel.Subject.toString(),"\"Call for Client Demo\""},
-			{PageLabel.Due_Date.toString(),"\"Today() - 1\""},
+			{PageLabel.Due_Date.toString(),"(Today() - 1)"},
 				{PageLabel.Priority.toString(),"\"Normal\""},
 					{PageLabel.Comments.toString(),"\"Test for predefined comments in Log a call\""}};
 	
 	public static String[][] newMeetingPredefinedValue = {{PageLabel.Subject.toString(),"\"Client Success Meeting\""},
-			{PageLabel.Due_Date.toString(),"\"Today() + 2\""},
+			{PageLabel.Due_Date.toString(),"(Today() + 2)"},
 				{PageLabel.Status.toString(),"\"Deferred\""},
 				{PageLabel.Priority.toString(),"\"High\""},
 				{PageLabel.Meeting_Type.toString(),"\"Board Meeting\""},
@@ -318,8 +318,8 @@ public class CommonVariables {
 			ToggleIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Record_Type);
 			
 			ToggleLP1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLELP1", excelLabel.Institutions_Name);
-			TogglePartnerShip1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEPS1", excelLabel.Institutions_Name);
-			TogglePartnerShip2=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEPS2", excelLabel.Institutions_Name);
+			TogglePartnerShip1=ExcelUtils.readData(phase1DataSheetFilePath,"Partnerships",excelLabel.Variable_Name, "TOGGLEPS1", excelLabel.Institutions_Name);
+			TogglePartnerShip2=ExcelUtils.readData(phase1DataSheetFilePath,"Partnerships",excelLabel.Variable_Name, "TOGGLEPS2", excelLabel.Institutions_Name);
 			
 			ToggleFund1=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND1", excelLabel.Fund_Name);
 			ToggleFund1Type=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND1", excelLabel.Fund_Type);
@@ -499,6 +499,9 @@ public class CommonVariables {
 			ToggleClosedQA1Request=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Request);
 			ToggleClosedQA1Status=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Status);
 			
+			ToggleCheck2RelatedTab=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC2", excelLabel.RelatedTab);
+			
+			
 			
 			FS_Object1=ExcelUtils.readData(phase1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS1", excelLabel.Object_Name);
 			FS_Object2=ExcelUtils.readData(phase1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS2", excelLabel.Object_Name);
@@ -537,10 +540,12 @@ public class CommonVariables {
 			
 			FS_Fund1=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "Fund1", excelLabel.Fund_Name);
 			FS_Fund1Type=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "Fund1", excelLabel.Fund_Type);
+			FS_Fund1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "Fund1", excelLabel.Record_Type);
 			FS_Fund1InvestmentCategory=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "Fund1", excelLabel.Investment_Category);
 			
 			
 			FS_Fund2=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "Fund2", excelLabel.Fund_Name);
+			FS_Fund2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "Fund2", excelLabel.Record_Type);
 			FS_Fund2Type=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "Fund2", excelLabel.Fund_Type);
 			FS_Fund2InvestmentCategory=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "Fund2", excelLabel.Investment_Category);
 			

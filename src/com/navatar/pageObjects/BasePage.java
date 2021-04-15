@@ -4914,4 +4914,16 @@ public abstract class BasePage extends BaseLib {
 		
 	}
 	
+	@FindBy (xpath = "//h2[@id='modal-heading-01']")
+	private WebElement taskPopUpHeader;
+
+	/**
+	 * @return the navigationPopUpHeader
+	 */
+	public WebElement getTaskPopUpHeader(String projectName,int timeOut) {
+		return isDisplayed(driver, taskPopUpHeader, "Visibility", timeOut, "tASK PopUp Header");
+	}
+	
+	
+	
 }

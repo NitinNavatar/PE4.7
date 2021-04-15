@@ -6,8 +6,10 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.navatar.generic.EnumConstants.Mode;
+import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.object;
+import com.relevantcodes.extentreports.LogStatus;
 
 import static com.navatar.generic.CommonLib.*;
 
@@ -86,10 +88,7 @@ public class SetupPage extends BasePageBusinessLayer {
 	 * @return the userIframe
 	 */
 	public WebElement getSetUpPageIframe(int timeOut) {
-//		Scanner scn = new Scanner(System.in);
-//		System.err.println(">>>>>>>>>>>>>>>>>>>>Inside frame before scanner");
-//		scn.nextLine();
-//		System.err.println("<<<<<<<<<<<<<<<<<<<<Inside frame after scanner");
+		ThreadSleep(10000);
 		return isDisplayed(driver, setupPageIframe, "Visibility", timeOut, "active users iframe");
 	}
 
@@ -441,6 +440,27 @@ public class SetupPage extends BasePageBusinessLayer {
 	
 
 	public WebElement getIndustryDropdownList(String dropDownLabel,String dropDownValue,int timeOut) {
+		ThreadSleep(1000);
+		try {
+			if (dropDownValue.contains("None") || dropDownValue.contains("none")) {
+				
+				String xpath = "//*[text()='"+dropDownLabel+"']/following-sibling::*";
+				WebElement ele = FindElement(driver, xpath, dropDownLabel+" "+dropDownValue, action.SCROLLANDBOOLEAN, timeOut);
+				System.err.println("getIndustryDropdownList "+ele.getText().trim());
+				if (ele.getText().trim().isEmpty() || ele.getText().trim().equals("")) {
+					System.err.println("verified getIndustryDropdownList "+ele.getText().trim());	
+					return ele;
+				} else {
+					log(LogStatus.ERROR, "Value not verified "+dropDownValue, YesNo.Yes);
+					sa.assertTrue(false, "Value not verified "+dropDownValue);
+				}
+				
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String xpath = "//*[text()='"+dropDownLabel+"']/following-sibling::*[text()='"+dropDownValue+"']";
 		WebElement ele = FindElement(driver, xpath, dropDownLabel+" "+dropDownValue, action.SCROLLANDBOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "Visibility", timeOut, dropDownLabel+" "+dropDownValue);
@@ -450,14 +470,21 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getRegionDropdownList(String dropDownLabel,String dropDownValue,int timeOut) {
 		ThreadSleep(1000);
 		try {
-			String xpath = "//*[text()='"+dropDownLabel+"']/following-sibling::*";
-			WebElement ele = FindElement(driver, xpath, dropDownLabel+" "+dropDownValue, action.SCROLLANDBOOLEAN, timeOut);
-			System.err.println("getRegionDropdownList "+ele.getText().trim());
-			if (ele.getText().trim().isEmpty() || ele.getText().trim().equals("")) {
-				System.err.println("verified getRegionDropdownList "+ele.getText().trim());	
-			} else {
-				System.err.println("not verifed getRegionDropdownList "+ele.getText().trim());
+			if (dropDownValue.contains("None") || dropDownValue.contains("none")) {
+				
+				String xpath = "//*[text()='"+dropDownLabel+"']/following-sibling::*";
+				WebElement ele = FindElement(driver, xpath, dropDownLabel+" "+dropDownValue, action.SCROLLANDBOOLEAN, timeOut);
+				System.err.println("getRegionDropdownList "+ele.getText().trim());
+				if (ele.getText().trim().isEmpty() || ele.getText().trim().equals("")) {
+					System.err.println("verified getRegionDropdownList "+ele.getText().trim());	
+					return ele;
+				} else {
+					log(LogStatus.ERROR, "Value not verified "+dropDownValue, YesNo.Yes);
+					sa.assertTrue(false, "Value not verified "+dropDownValue);
+				}
+				
 			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

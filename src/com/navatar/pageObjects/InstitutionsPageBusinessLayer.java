@@ -99,8 +99,8 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 					}
 					if (click(driver, getNavigationTabSaveBtn(projectName,timeOut), "save button", action.SCROLLANDBOOLEAN)) {
 						appLog.info("clicked on save button");
-						
-						String str = getText(driver, getLegalNameHeader(projectName,timeOut), "legal Name Label Text",action.SCROLLANDBOOLEAN);
+					
+						String str = getText(driver, verifyCreatedItemOnPage(Header.Company, institutionName), "legal Name Label Text",action.SCROLLANDBOOLEAN);
 						if (str != null) {
 							if (str.contains(institutionName)) {
 								appLog.info("created institution " + institutionName + " is verified successfully.");
@@ -236,7 +236,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 									appLog.info("passed value "+labelValue[i]+" in "+labelNames[i]+" field");
 									
 
-									if (mode.equalsIgnoreCase(Mode.Lightning.toString()) && labelNames[i].toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString())) {
+									if (mode.equalsIgnoreCase(Mode.Lightning.toString()) && labelNames[i].toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Entity.toString())) {
 										
 										ThreadSleep(1000);
 										if (click(driver,
@@ -537,7 +537,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 									appLog.info("passed value "+labelValue[i]+" in "+labelNames[i]+" field");
 									
 
-									if (mode.equalsIgnoreCase(Mode.Lightning.toString()) && labelNames[i].toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString())) {
+									if (mode.equalsIgnoreCase(Mode.Lightning.toString()) && labelNames[i].toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Entity.toString())) {
 										
 										ThreadSleep(1000);
 										if (click(driver,
@@ -693,10 +693,10 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 										action.BOOLEAN);
 								appLog.info(commitmentId  + " : commitment id is generated");
 								if(excelPath!=null) {
-									ExcelUtils.writeData(excelPath,commitmentId, "Entities", excelLabel.Variable_Name, basedOnValue,
+									ExcelUtils.writeData(excelPath,commitmentId, "Commitments", excelLabel.Variable_Name, basedOnValue,
 											excelLabel.Commitment_ID);
 								}else {
-									ExcelUtils.writeData(commitmentId, "Entities", excelLabel.Variable_Name, basedOnValue,
+									ExcelUtils.writeData(commitmentId, "Commitments", excelLabel.Variable_Name, basedOnValue,
 											excelLabel.Commitment_ID);
 								}
 								return true;

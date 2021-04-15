@@ -28,6 +28,7 @@ import org.testng.Assert;
 import static com.navatar.generic.EnumConstants.*;
 
 import com.navatar.generic.EnumConstants.YesNo;
+import com.navatar.generic.EnumConstants.action;
 import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.relevantcodes.extentreports.LogStatus;
@@ -1024,6 +1025,37 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		}
 	}
 	
+	public static boolean sendKeysAndPressEnter(WebDriver driver, WebElement element, String value, String elementName,
+			action action) {
+		try {
+			if (element != null) {
+				if(action==CommonLib.action.SCROLLANDTHROWEXCEPTION || action==CommonLib.action.SCROLLANDBOOLEAN)
+				scrollDownThroughWebelement(driver, element, elementName);
+				try{
+					element.clear();
+					appLog.info("Successfully cleared the text box.");
+				} catch (Exception e){
+					appLog.error("Not able to clear the text box.");
+				}
+				element.sendKeys(value+ "\n");
+				AppListeners.appLog.info("Passed value to element: " + elementName + "\nPassed Value: " + value);
+				return true;
+			} else {
+				AppListeners.appLog.info(elementName + " Text box is not present on this page.");
+				if (action == CommonLib.action.THROWEXCEPTION || action == CommonLib.action.SCROLLANDTHROWEXCEPTION)
+					throw new AppException(elementName + " Text box is not present on this page.");
+				return false;
+			}
+		} catch (Exception e) {
+//			AppListeners.appLog.info("Cannot enter text in " + elementName + "\nReason: " + e.getMessage());
+			errorMessage="Cannot enter text in " + elementName + "\nReason: " + e.getMessage();
+			failedMethod(e);
+			if (action == CommonLib.action.THROWEXCEPTION || action == CommonLib.action.SCROLLANDTHROWEXCEPTION)
+				throw new AppException("Cannot enter text in ." + elementName + "\nReason: " + e.getMessage());
+			return false;
+		}
+	}
+	
 	
 	public static boolean sendKeysWithoutClearingTextBox(WebDriver driver, WebElement element, String value, String elementName,
 			action action) {
@@ -1458,6 +1490,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 	 * @description Gets the current URL of the webpage
 	 */
 	public static String getURL(WebDriver driver, int timeOut){
+		ThreadSleep(5000);
 		String url;
 		int time=0;
 		while (true) {
@@ -2448,6 +2481,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 	
 	public static boolean clickUsingJavaScript(WebDriver driver, WebElement element,String elementName) {
 		String text =null;
+		ThreadSleep(5000);
 		try {
 		//text=(String) ((JavascriptExecutor) driver).executeScript("return $('"+Jquery+"')[0].value");
 			((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
