@@ -1,7 +1,7 @@
 Navigation Label,Order,Parent,Action Object,Action Record Type,List View Object,List View Name,URL
 Company,10,Accounts,Account,Company,,,
 Fund Manager,25,Accounts,Account,Fund_Manager,,,
-Fund Manager's Fund,5,Accounts,Account,Fund_Manager_s_Fund,,,
+Fund Manager’s Fund,5,Accounts,Account,Fund_Manager_s_Fund,,,
 Individual Investor,35,Accounts,Account,Individual_Investor,,,
 Institution,20,Accounts,Account,Institution,,,
 Intermediary,1,Accounts,Account,Intermediary,,,

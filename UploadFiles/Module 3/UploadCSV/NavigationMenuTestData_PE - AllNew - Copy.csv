@@ -7,13 +7,13 @@ Fundraising,85,,navpeII__Fundraising__c,,,,
 Partnership,50,,navpeII__Partnership__c,,,,
 Commitment,41,,navpeII__Commitment__c,,,,
 Deals,30,, navpeII__Pipeline__c,,,,
-Navatar Setup,,,,,,,/lightning/n/Setup
+Navatar Setup,,,,,,,/lightning/n/navpeII__Navatar_Setup
 Marketing Prospects,,,,,navpeII__Marketing_Prospect__c,All1,
 Reports,45,,,,,,/lightning/o/Report/home?queryScope=mru
 Dashboards,42,,,,,,/lightning/o/Dashboard/home?queryScope=mru
 Company,10,Accounts,Account,Company,,,
 Fund Manager,25,Accounts,Account,Fund_Manager,,,
-Fund Manager's Fund,5,Accounts,Account,Fund_Manager_s_Fund,,,
+Fund Manager’s Fund,5,Accounts,Account,Fund_Manager_s_Fund,,,
 Individual Investor,35,Accounts,Account,Individual_Investor,,,
 Institution,20,Accounts,Account,Institution,,,
 Intermediary,1,Accounts,Account,Intermediary,,,
