@@ -132,7 +132,7 @@ public class TaskPageBusinessLayer extends TaskPage {
 	 * @description this is used to return successful task created message
 	 */
 	public String taskCreatesMsg(String projectName,String taskName) {
-		return "Task \""+taskName+"\" was created"+"Task "+taskName+" was created";
+		return "Task \""+taskName+"\" was created"+"Task \""+taskName+"\" was created."+"Task "+taskName+" was created"+"Task "+taskName+" was created.";
 		
 	}
 	

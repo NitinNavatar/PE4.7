@@ -535,7 +535,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 							ThreadSleep(500);
 							flag=true;
 							
-							if (label.equalsIgnoreCase(CSVLabel.Parent.toString())) {
+							if (label.equalsIgnoreCase(CSVLabel.Parent.toString()) && !value.isEmpty() && !value.equals("")) {
 								ThreadSleep(10000);
 								if (click(driver,getItemInList(projectName, value, action.BOOLEAN, 20),
 										value + "   :  Parent Name", action.BOOLEAN)) {
@@ -579,7 +579,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	
 	public WebElement getrecordTypeWithDescription(String recordType,String desc,int timeOut) {
 		String xpath ="//*[text()='"+recordType+"']/*[text()='"+desc+"']";
-		WebElement ele = FindElement(dDriver, xpath, recordType+" "+desc, action.SCROLLANDBOOLEAN, timeOut);
+		WebElement ele = FindElement(driver, xpath, recordType+" "+desc, action.SCROLLANDBOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "Visibility", timeOut, recordType+" "+desc);
 	}
 	
@@ -641,7 +641,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	
 	public WebElement getCoverageTabAfterClick(String projectName,String tabName,action action,int timeOut) {
 		ThreadSleep(5000);
-		String xpath = "//a[contains(@href,'lightning') and contains(@title,'Coverages')]/span/..";
+		String xpath = "//a[contains(@href,'lightning') and contains(@title,'Coverages') or contains(@title,'"+tabName+"')]/span/..";
 		WebElement ele = FindElement(driver, xpath,tabName, action.SCROLLANDBOOLEAN,timeOut);
 		ele = isDisplayed(driver,ele,"visibility", timeOut, tabName);
 		

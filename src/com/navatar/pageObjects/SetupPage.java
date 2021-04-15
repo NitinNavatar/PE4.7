@@ -88,6 +88,7 @@ public class SetupPage extends BasePageBusinessLayer {
 	 * @return the userIframe
 	 */
 	public WebElement getSetUpPageIframe(int timeOut) {
+		ThreadSleep(10000);
 		return isDisplayed(driver, setupPageIframe, "Visibility", timeOut, "active users iframe");
 	}
 
@@ -441,7 +442,7 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getIndustryDropdownList(String dropDownLabel,String dropDownValue,int timeOut) {
 		ThreadSleep(1000);
 		try {
-			if (dropDownLabel.contains("None") || dropDownLabel.contains("none")) {
+			if (dropDownValue.contains("None") || dropDownValue.contains("none")) {
 				
 				String xpath = "//*[text()='"+dropDownLabel+"']/following-sibling::*";
 				WebElement ele = FindElement(driver, xpath, dropDownLabel+" "+dropDownValue, action.SCROLLANDBOOLEAN, timeOut);
@@ -469,7 +470,7 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getRegionDropdownList(String dropDownLabel,String dropDownValue,int timeOut) {
 		ThreadSleep(1000);
 		try {
-			if (dropDownLabel.contains("None") || dropDownLabel.contains("none")) {
+			if (dropDownValue.contains("None") || dropDownValue.contains("none")) {
 				
 				String xpath = "//*[text()='"+dropDownLabel+"']/following-sibling::*";
 				WebElement ele = FindElement(driver, xpath, dropDownLabel+" "+dropDownValue, action.SCROLLANDBOOLEAN, timeOut);

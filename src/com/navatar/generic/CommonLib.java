@@ -1490,6 +1490,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 	 * @description Gets the current URL of the webpage
 	 */
 	public static String getURL(WebDriver driver, int timeOut){
+		ThreadSleep(5000);
 		String url;
 		int time=0;
 		while (true) {
@@ -2480,6 +2481,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 	
 	public static boolean clickUsingJavaScript(WebDriver driver, WebElement element,String elementName) {
 		String text =null;
+		ThreadSleep(5000);
 		try {
 		//text=(String) ((JavascriptExecutor) driver).executeScript("return $('"+Jquery+"')[0].value");
 			((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);

@@ -1,5 +1,6 @@
 package com.navatar.pageObjects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -1007,6 +1008,9 @@ public boolean clickOnEditForApp(WebDriver driver,String appName,String develope
 	boolean flag=false;;
 	String xpath="";
 	xpath="//*[text()='"+appName+"']/../../following-sibling::*//*[text()='"+developerName+"']/../../following-sibling::*//*[text()='"+description+"']/../../following-sibling::*//*[text()='Show Actions']/..";
+	WebElement scrollEle = FindElement(driver, "//div[@class='uiScroller scroller-wrapper scroll-bidirectional native']", "Widget scroll",action.SCROLLANDBOOLEAN, 60);
+	scrollActiveWidget(driver,scrollEle,By.xpath(xpath));
+	ThreadSleep(2000);
 	WebElement ele=isDisplayed(driver, FindElement(driver, xpath, "show more action", action.SCROLLANDBOOLEAN, timeOut), "visibility", timeOut, "show more action");
 	if (click(driver, ele, "Show more action against "+appName+" : "+developerName+" "+description, action.BOOLEAN)) {
 		log(LogStatus.INFO, "click on Show more action against "+appName+" : "+developerName+" "+description, YesNo.No);
@@ -1302,6 +1306,22 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 			value=lv[1];
 			ele =  getRecordTypeLabel(projectName, label, 20);
 			ThreadSleep(2000);
+			
+			try {
+				if (isAlertPresent(driver)) {
+					switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				try {
+					switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			
 			if (label.equals(recordTypeLabel.Active.toString())) {
 				if (click(driver, ele, "Active CheckBox", action.BOOLEAN)) {
 					log(LogStatus.INFO, "Click on Active CheckBox", YesNo.No);	
@@ -1319,6 +1339,8 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 					log(LogStatus.ERROR, "Not Able to enter "+value+" to label "+label, YesNo.Yes);
 					sa.assertTrue(false,"Not Able to enter "+value+" to label "+label);
 				}
+				
+				
 
 			}
 
@@ -1618,7 +1640,7 @@ public boolean permissionChangeForUserONObject(WebDriver driver,String userName,
 				permission=strings[1];
 				xpath="//*[text()='"+OnObject+"']/following-sibling::*//td/input[contains(@title,'"+permission+"')]";
 				ele = FindElement(driver, xpath, OnObject+" with permission "+permission, action.SCROLLANDBOOLEAN, timeOut);
-				if (!isSelected(driver, ele, OnObject+" with permission "+permission)) {
+			//	if (!isSelected(driver, ele, OnObject+" with permission "+permission)) {
 					if (click(driver, ele, OnObject+" with permission "+permission,action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on checkbox "+permission+" for "+OnObject, YesNo.No);
 
@@ -1628,7 +1650,7 @@ public boolean permissionChangeForUserONObject(WebDriver driver,String userName,
 						log(LogStatus.FAIL,permission+ " permission not change for "+userName+" on object "+OnObject,YesNo.Yes);
 
 					}
-				}
+			//	}
 			}
 
 			if (click(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
@@ -1806,8 +1828,8 @@ public void createPredefinedValueForGlobalAction(WebDriver driver,String actionN
 					sa.assertTrue(false, "Not able to select visbible text from the Field Name dropdown "+label);
 				}
 			} else {
-				log(LogStatus.ERROR, "Not able to click on Predefined Field Values New Button", YesNo.Yes);
-				sa.assertTrue(false, "Not able to click on Predefined Field Values New Button");
+				log(LogStatus.ERROR, "Not able to click on Predefined Field Values New Button : "+actionName, YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on Predefined Field Values New Button : "+actionName);
 			}
 
 		}

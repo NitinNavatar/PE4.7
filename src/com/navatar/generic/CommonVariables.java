@@ -225,18 +225,18 @@ public class CommonVariables {
 	
 	
 	public static String[][] newTaskPredefinedValue = {{PageLabel.Subject.toString(),"\"Client Demo Request\""},
-											{PageLabel.Due_Date.toString(),"\"Today() + 2\""},
+											{PageLabel.Due_Date.toString(),"(Today() + 2)"},
 												{PageLabel.Status.toString(),"\"Not Started\""},
 												{PageLabel.Priority.toString(),"\"High\""},
 													{PageLabel.Comments.toString(),"\"Test for predefined comments in Events\""}};
 	
 	public static String[][] LogACallPredefinedValue = {{PageLabel.Subject.toString(),"\"Call for Client Demo\""},
-			{PageLabel.Due_Date.toString(),"\"Today() - 1\""},
+			{PageLabel.Due_Date.toString(),"(Today() - 1)"},
 				{PageLabel.Priority.toString(),"\"Normal\""},
 					{PageLabel.Comments.toString(),"\"Test for predefined comments in Log a call\""}};
 	
 	public static String[][] newMeetingPredefinedValue = {{PageLabel.Subject.toString(),"\"Client Success Meeting\""},
-			{PageLabel.Due_Date.toString(),"\"Today() + 2\""},
+			{PageLabel.Due_Date.toString(),"(Today() + 2)"},
 				{PageLabel.Status.toString(),"\"Deferred\""},
 				{PageLabel.Priority.toString(),"\"High\""},
 				{PageLabel.Meeting_Type.toString(),"\"Board Meeting\""},

@@ -121,6 +121,10 @@ import static com.navatar.generic.BaseLib.phase1DataSheetFilePath;
 import static com.navatar.generic.CommonLib.*;
 
 public class Module3 extends BaseLib {
+	
+	//////////////Condition Start/////////////////////
+	
+	/////////////////Condition End//////////////////
 	String passwordResetLink = null;
 //	Scanner scn = new Scanner(System.in);
 
@@ -302,7 +306,7 @@ public class Module3 extends BaseLib {
 		Boolean flag = false;
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		lp.switchToClassic();
-		if(dataload.dataImportWizard(ObjectName.Navigation, ObjectType.Custom, "\\UploadFiles\\Module 3\\UploadCSV\\NavigationMenuTestData_PE - Parent.csv", DataImportType.AddNewRecords, "13")) {
+		if(dataload.dataImportWizard(ObjectName.Navigation, ObjectType.Custom, "\\UploadFiles\\Module 3\\UploadCSV\\NavigationMenuTestData_PE - Parent.csv", DataImportType.AddNewRecords, "12")) {
 			appLog.info("Parent Data is imported Successfully in "+ObjectName.Navigation);
 			flag=true;
 			}else {
@@ -643,6 +647,9 @@ public class Module3 extends BaseLib {
 										sa.assertTrue(false, "Not Able to click on cross button "+childs[i]);
 									}
 								} else {
+									ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, "", action.BOOLEAN, 30);
+									click(driver, ele, " pop up cross button", action.BOOLEAN);
+									ThreadSleep(5000);
 									log(LogStatus.ERROR, "No Pop Up is open after clicking on "+childs[i], YesNo.Yes);
 									sa.assertTrue(false, "No Pop Up is open after clicking on "+childs[i]);
 								}
@@ -1319,7 +1326,7 @@ public class Module3 extends BaseLib {
 				if (npbl.clickOnTab(projectName, navigationTab)) {
 					log(LogStatus.INFO, "Click on Tab : "+navigationTab, YesNo.No);
 					if(clickUsingJavaScript(driver, lp.getNewButton(projectName, 10), "new button")) {
-						log(LogStatus.INFO, "Click on new button going to verify navigation field : "+navigationField, YesNo.No);
+						log(LogStatus.INFO, "Click on new button going to create: "+navigationLabel, YesNo.No);
 						WebElement ele = npbl.getCrossButtonForNavigationLabelPopuP(projectName, navigationTab, action.BOOLEAN, 60);
 						if (ele!=null) {
 							log(LogStatus.INFO, "Pop Up open after clicking on new button for : "+navigationTab , YesNo.No);
@@ -1378,8 +1385,8 @@ public class Module3 extends BaseLib {
 
 
 					}else {
-						log(LogStatus.ERROR, "Not Able to Click on new button so cannot verify navigation field : "+navigationField, YesNo.Yes);
-						sa.assertTrue(false, "Not Able to Click on new button so cannot verify navigation field : "+navigationField);
+						log(LogStatus.ERROR, "Not Able to Click on new button so cannot create : "+navigationLabel, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Click on new button so cannot create : "+navigationLabel);
 
 					}
 				} else {
@@ -2864,6 +2871,8 @@ public class Module3 extends BaseLib {
 								sa.assertTrue(false,"Url Not Verified for : "+navigationLabel+" Actual : "+actualUrl+"\t Expected : "+urlValue);
 
 							}
+							driver.close();
+							driver.switchTo().window(parentId);
 						} else {
 
 							log(LogStatus.ERROR, "No New Window is open so cannot verify URL for label :"+navigationLabel, YesNo.Yes);
@@ -4785,6 +4794,7 @@ public class Module3 extends BaseLib {
 //			}
 			refresh(driver);
 			ThreadSleep(5000);
+			String urlValue=getURL(driver, 10);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 				ele=npbl.getNavigationLabel(projectName, navigationLabel, action.BOOLEAN, 10);
@@ -4792,9 +4802,16 @@ public class Module3 extends BaseLib {
 					log(LogStatus.INFO, "Click on "+navigationLabel+" going to verify home page of custom menu even after adding list view name & list view object different", YesNo.No);
 					ThreadSleep(5000);
 					// scn.nextLine();
-					log(LogStatus.ERROR, " so cannot verify home page of custom menu even after adding list view name & list view object different", YesNo.Yes);
-					sa.assertTrue(false," so cannot verify home page of custom menu even after adding list view name & list view object different");
+					String afterClickUrl=getURL(driver, 10);
+					if (urlValue.equalsIgnoreCase(afterClickUrl)) {
+						log(LogStatus.INFO, "Nothing happen after adding list view name & list view object different for "+navigationLabel, YesNo.No);
+							
+					} else {
+						log(LogStatus.ERROR, "Nothing should happen after adding list view name & list view object different for "+navigationLabel, YesNo.Yes);
+						sa.assertTrue(false,"Nothing should happen after adding list view name & list view object different for "+navigationLabel);
 
+					}
+					
 				} else {
 					log(LogStatus.ERROR, "Not Able to Click on "+navigationLabel+" so cannot verify home page of custom menu even after adding list view name & list view object different", YesNo.Yes);
 					sa.assertTrue(false,"Not Able to Click on "+navigationLabel+" so cannot verify home page of custom menu even after adding list view name & list view object different");
@@ -6069,7 +6086,7 @@ public class Module3 extends BaseLib {
 			log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
 			sa.assertTrue(false, "Not able to click on setup link");	
 		}
-
+		flag=false;
 		if (flag) {
 			refresh(driver);
 			lp.clickOnTab(projectName, homeTab);
@@ -7504,10 +7521,6 @@ public class Module3 extends BaseLib {
 				log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
 				ThreadSleep(5000);
 
-				ele=npbl.getCrossButtonForNavigationLabelPopuP(projectName, "New Task", action.BOOLEAN, 30);
-				if (ele!=null) {
-					log(LogStatus.INFO, "New Task Pop Up is open after clicking on "+navigationLabelValue , YesNo.No);
-
 					String task="TC082TaskSubjectName";	
 
 					if (tp.enteringSubjectAndSelectDropDownValuesonTaskPopUp(projectName, PageName.TaskPage, task, null, action.SCROLLANDBOOLEAN, 10)) {	
@@ -7545,13 +7558,6 @@ public class Module3 extends BaseLib {
 						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
 						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
 					}
-
-
-
-				} else {
-					log(LogStatus.ERROR, "New Task Pop Up should be open after clicking on "+navigationLabelValue, YesNo.Yes);
-					sa.assertTrue(false, "New Task Pop Up should be open after clicking on "+navigationLabelValue);
-				}
 
 
 			} else {
@@ -7999,7 +8005,6 @@ public class Module3 extends BaseLib {
 						
 						if (clickUsingJavaScript(driver,lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
-							ThreadSleep(1000);
 							ele = cp.getCreatedConfirmationMsg(projectName, 15);
 							if (ele!=null) {
 								String actualValue = ele.getText().trim();
@@ -8174,7 +8179,6 @@ public class Module3 extends BaseLib {
 						
 						if (clickUsingJavaScript(driver,lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
-							ThreadSleep(5000);
 							// scn.nextLine();
 							ele = cp.getCreatedConfirmationMsg(projectName, 15);
 							if (ele!=null) {
@@ -8351,7 +8355,6 @@ public class Module3 extends BaseLib {
 						
 						if (clickUsingJavaScript(driver,lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
-							ThreadSleep(5000);
 							// scn.nextLine();
 							ele = cp.getCreatedConfirmationMsg(projectName, 15);
 							if (ele!=null) {
