@@ -138,7 +138,7 @@ public class Module4 extends BaseLib{
 		}
 		String staff="",status="",event="",notes="";
 		WebElement ele=null;
-		for (i = 0;i<9;i++) {
+		for ( i = 0;i<9;i++) {
 			if (lp.clickOnTab(projectName, TabName.Object5Tab)) {
 
 				if (ip.clickOnAlreadyCreatedItem(projectName, M4MarketingEvent1Name, true, 15)) {
@@ -170,7 +170,7 @@ public class Module4 extends BaseLib{
 		}
 		}
 		String deal="",member="",role="";
-		for (i = 0;i<11;i++) {
+		for ( i = 0;i<11;i++) {
 			if (lp.clickOnTab(projectName, TabName.Deal_Team)) {
 
 				log(LogStatus.INFO,"Click on Tab : "+TabName.Deal_Team,YesNo.No);	
@@ -388,12 +388,14 @@ public class Module4 extends BaseLib{
 				EditPageLabel.Image_Field_API_Name.toString()+"<break>"+"Profile_Image__c",EditPageLabel.Number_of_Records_to_Display.toString()+"<break>6",
 				EditPageLabel.SDG_Name.toString()+"<break>"+M4Sdg1Name,EditPageLabel.Popup_Title.toString()+"<break>"+M4Sdg1Name+"s"
 		};
+		String source= System.getProperty("user.dir")+"\\AutoIT\\EditPage\\rla.png";
+		String target= System.getProperty("user.dir")+"\\AutoIT\\AddComponentHere.png";
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
 				if (ep.clickOnEditPageLink()) {
 					log(LogStatus.INFO, "successfully reached edit page", YesNo.No);
 					
-					if (ep.dragAndDropAccordian(projectName, PageName.Object1Page, "RelatedListAccordion", fieldValues)) {
+					if (ep.dragAndDropAccordian(projectName, PageName.Object1Page, "RelatedListAccordion", fieldValues, source, target)) {
 						log(LogStatus.INFO, "successfully added accordion on entity page", YesNo.No);
 							
 					}else {
@@ -428,7 +430,7 @@ public class Module4 extends BaseLib{
 		String id=null;
 		WebElement ele=null;
 		String contact=M4Contact1FName+" "+M4Contact1LName;
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String ind=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Industry);
 		
 		String fieldValue[]={excelLabel.Title.toString()+breakSP+M4Contact1Title};
@@ -474,7 +476,7 @@ public class Module4 extends BaseLib{
 		String attachmentPath2= System.getProperty("user.dir")+"\\UploadFiles\\Module 4\\tc7\\2.jpg";
 		WebElement ele=null;
 		String contact=M4Contact1FName+" "+M4Contact1LName;
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName,contact , 10)) {
 				ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
@@ -570,7 +572,7 @@ public class Module4 extends BaseLib{
 		WebElement ele=null;
 		String contact=M4Contact1FName+" "+M4Contact1LName;
 		
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName,contact , 10)) {
 				ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
@@ -623,7 +625,7 @@ public class Module4 extends BaseLib{
 		String id=null;
 		WebElement ele=null;
 		String contact=M4Contact1FName+" "+M4Contact1LName;
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String first,last,title;
 		
 		String fieldValue[]={excelLabel.Title.toString()+breakSP+M4Contact1Title};
@@ -739,7 +741,7 @@ public class Module4 extends BaseLib{
 		cp = new ContactsPageBusinessLayer(driver);
 		ip = new InstitutionsPageBusinessLayer(driver);
 		
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1,10)) {
 				ele=ip.returnAccordionViewDetailsLink(projectName, contactHeader);
@@ -799,8 +801,9 @@ public class Module4 extends BaseLib{
 		String parentID=null;
 		boolean flag=false;
 		WebElement ele=null;
-		String special="Test@%^$%^%^&%^^%^&^%^&%^dhgf";
-		String length="255";
+		String special=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M4Field1", excelLabel.Field_Label);
+		String length=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M4Field1", excelLabel.Length);
+		
 		String a="";
 		String[][] labelAndValues= {{"Length",length}};
 		ObjectFeatureName objectFeatureName=ObjectFeatureName.pageLayouts;
@@ -929,7 +932,8 @@ public class Module4 extends BaseLib{
 		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
 		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
-		String fname="",lname="",ins="",mailID,special="Test@%^$%^%^&%^^%^&^%^&%^dhgf",value="Demo^%^%#^%&^&&^&*^E^#";
+		String special=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M4Field1", excelLabel.Field_Label);
+		String value="Demo^%^%#^%&^&&^&*^E^#";
 		WebElement ele=null;
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
@@ -1236,7 +1240,7 @@ public class Module4 extends BaseLib{
 				if (ep.clickOnEditPageLink()) {
 					log(LogStatus.INFO, "successfully reached edit page", YesNo.No);
 					
-					if (ep.dragAndDropAccordian(projectName, PageName.Object1Page, "RelatedListAccordion", fieldValues)) {
+					if (ep.dragAndDropAccordian(projectName, PageName.Object1Page, "RelatedListAccordion", fieldValues, null, null)) {
 						log(LogStatus.INFO, "successfully added accordion on entity page", YesNo.No);
 							
 					}else {
@@ -1589,7 +1593,7 @@ public class Module4 extends BaseLib{
 				if (ep.clickOnEditPageLink()) {
 					log(LogStatus.INFO, "successfully reached edit page", YesNo.No);
 					
-					if (ep.dragAndDropAccordian(projectName, PageName.Object1Page, "RelatedListAccordion", fieldValues)) {
+					if (ep.dragAndDropAccordian(projectName, PageName.Object1Page, "RelatedListAccordion", fieldValues, null, null)) {
 						log(LogStatus.INFO, "successfully added accordion on entity page", YesNo.No);
 							
 					}else {
@@ -1947,7 +1951,7 @@ public class Module4 extends BaseLib{
 					if (ep.clickOnEditPageLink()) {
 						log(LogStatus.INFO, "successfully reached edit page", YesNo.No);
 
-						if (ep.dragAndDropAccordian(projectName, PageName.Object1Page, "RelatedListAccordion", fieldValues)) {
+						if (ep.dragAndDropAccordian(projectName, PageName.Object1Page, "RelatedListAccordion", fieldValues, null, null)) {
 							log(LogStatus.INFO, "successfully added "+tab[i]+" accordion on entity page", YesNo.No);
 
 						}else {

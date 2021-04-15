@@ -436,7 +436,7 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 	@FindBy(xpath="//span[text()='Legal Name']/../following-sibling::input")
 	private WebElement legalNamePE;
 	
-	@FindBy(xpath="//span[text()='Firm']/../following-sibling::input")
+	@FindBy(xpath="//*[text()='Firm']/following-sibling::*//input")
 	private WebElement FirmPEEdge;
 
 	/**

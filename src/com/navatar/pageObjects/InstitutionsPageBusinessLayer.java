@@ -97,7 +97,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 							}
 						}
 					}
-					if (click(driver, getSaveButton(projectName,timeOut), "save button", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, getNavigationTabSaveBtn(projectName,timeOut), "save button", action.SCROLLANDBOOLEAN)) {
 						appLog.info("clicked on save button");
 						
 						String str = getText(driver, getLegalNameHeader(projectName,timeOut), "legal Name Label Text",action.SCROLLANDBOOLEAN);

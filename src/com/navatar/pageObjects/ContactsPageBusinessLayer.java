@@ -85,6 +85,11 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 					+ "']/../following-sibling::div/span//a";
 
 		}
+		else if(labelName.equalsIgnoreCase(excelLabel.Phone.toString())) {
+			xpath = "//span[@class='test-id__field-label'][contains(text(),'" + finalLabelName+ "')]/../following-sibling::div/span//a";
+
+		}
+		//span[@class='test-id__field-label'][contains(text(),'Phone')]/../following-sibling::div/span//a
 		ele = isDisplayed(driver,
 				FindElement(driver, xpath, finalLabelName + " label text in " + projectName, action.SCROLLANDBOOLEAN, 5),
 				"Visibility", 5, finalLabelName + " label text in " + projectName);
@@ -191,7 +196,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 					return false;
 				}
 			}
-		
+		WebElement ele=null;
 			ThreadSleep(2000);
 			if (sendKeys(driver, getContactFirstName(projectName, 60), contactFirstName, "Contact first Name",
 					action.BOOLEAN)) {
@@ -204,11 +209,11 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 						if (sendKeys(driver, getLegalName(projectName, 60), legalName, "Account Name",
 								action.SCROLLANDBOOLEAN)) {
 								ThreadSleep(1000);
-								if (click(driver,
-										FindElement(driver,
-												"//div[contains(@class,'uiAutocomplete')]//a//div[@title='" + legalName
-												+ "']",
-												"Legal Name List", action.THROWEXCEPTION, 30),
+								ele=FindElement(driver,
+										"//*[@title='"+legalName+"']//strong[contains(text(),'"+legalName.split(" ")[0]+"')]",
+										"Legal Name List", action.THROWEXCEPTION, 30);
+								if (clickUsingJavaScript(driver,ele
+										,
 										legalName + "   :   Account Name", action.BOOLEAN)) {
 									appLog.info(legalName + "  is present in list.");
 								} else {
@@ -221,12 +226,13 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 							return false;
 						}
 					}
+					ele = getLabelTextBox(projectName, PageName.Object2Page.toString(),PageLabel.Email.toString(), 10);
 					
-						if (sendKeys(driver, getEmailId(projectName, 60), emailID, "Email ID",
+						if (sendKeys(driver,ele, emailID, "Email ID",
 								action.SCROLLANDBOOLEAN)) {
 							if(labelNames!=null && labelValue!=null) {
 								for(int i=0; i<labelNames.length; i++) {
-									WebElement ele = getContactPageTextBoxOrRichTextBoxWebElement(projectName, labelNames[i].trim(), 30);
+									ele = getContactPageTextBoxOrRichTextBoxWebElement(projectName, labelNames[i].trim(), 30);
 									if(sendKeys(driver, ele, labelValue[i], labelNames[i]+" text box", action.SCROLLANDBOOLEAN)) {
 										appLog.info("passed value "+labelValue[i]+" in "+labelNames[i]+" field");
 									}else {
@@ -236,8 +242,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 									if (labelNames[i].equalsIgnoreCase(excelLabel.Region.toString()) || labelNames[i].equalsIgnoreCase(excelLabel.Industry.toString())) {
 										if (click(driver,
 												FindElement(driver,
-														"//div[contains(@class,'uiAutocomplete')]//a//div[@title='" + labelValue[i]
-														+ "']",
+														"//*[@title='" + labelValue[i]+ "']",
 														"Legal Name List", action.THROWEXCEPTION, 30),
 												labelNames[i] + "   :   Account Name", action.BOOLEAN)) {
 											appLog.info(labelNames[i] + "  is present in list.");
@@ -257,12 +262,16 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 								BaseLib.sa.assertTrue(false,"could not pass value "+title+" to title" );
 							}
 							}
-							if (click(driver, getSaveButton(projectName, 60), "Save Button",
+							if (click(driver, getNavigationTabSaveBtn(projectName, 60), "Save Button",
 									action.SCROLLANDBOOLEAN)) {
 								appLog.info("Clicked on save button");
+								ThreadSleep(3000);
+								if (getNavigationTabSaveBtn(projectName, 5)!=null) {
+									click(driver, getNavigationTabSaveBtn(projectName, 60), "save", action.BOOLEAN);
+								}
 								if(creationPage.toString().equalsIgnoreCase(CreationPage.AccountPage.toString())) {
 										if(clickOnGridSection_Lightning(projectName,RelatedList.Contacts, 30)) {
-											WebElement ele = isDisplayed(driver, FindElement(driver, "//span[@title='Contact Name']/ancestor::table/tbody/tr/th/span/a", "Contact Name Text", action.SCROLLANDBOOLEAN, 30), "visibility", 20, "");
+											ele = isDisplayed(driver, FindElement(driver, "//span[@title='Contact Name']/ancestor::table/tbody/tr/th/span/a", "Contact Name Text", action.SCROLLANDBOOLEAN, 30), "visibility", 20, "");
 											if (ele != null) {
 												String contactFullName = getText(driver,ele, "Contact Name",action.BOOLEAN);
 												System.err.println("Contact Name : "+contactFullName);
@@ -286,7 +295,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 										refresh(driver);
 										ThreadSleep(5000);
 									}
-									WebElement ele=getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+									ele=getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 									click(driver, ele, RelatedTab.Details.toString(), action.SCROLLANDBOOLEAN);
 									
 
