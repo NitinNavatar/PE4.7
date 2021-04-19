@@ -5198,4 +5198,11 @@ public boolean createSDGAction(String projectName, String[] fieldValues) {
 	return true;
 }
 
+public WebElement getItemInList(String projectName,String itemName,action action,int timeOut) {
+	String xpath = "//*[@title='"+itemName+"']//strong[text()='"+itemName.split(" ")[0]+"']";
+	WebElement ele = FindElement(driver, xpath, itemName, action, timeOut);
+	return isDisplayed(driver, ele, "Visibility", timeOut, itemName);
+}
+
+
 }

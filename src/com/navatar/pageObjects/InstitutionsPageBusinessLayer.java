@@ -540,11 +540,8 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 									if (mode.equalsIgnoreCase(Mode.Lightning.toString()) && labelNames[i].toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Entity.toString())) {
 										
 										ThreadSleep(1000);
-										if (click(driver,
-												FindElement(driver,
-														"//div[contains(@class,'uiAutocomplete')]//a//div//div[contains(@class,'primary') and @title='"+labelValue[i]+"']",
-														"Legal Name List", action.SCROLLANDBOOLEAN, 30),
-												labelValue[i] + "   :   Legal Name", action.SCROLLANDBOOLEAN)) {
+										if (click(driver,getItemInList("", labelValue[i], action.BOOLEAN, 20),
+												labelValue[i] + "   :  Parent Name", action.BOOLEAN)) {
 											appLog.info(labelValue[i] + "  is present in list.");
 										} else {
 											appLog.info(labelValue[i] + "  is not present in the list.");

@@ -625,73 +625,73 @@ public class Module5 extends BaseLib {
 										sa.assertTrue(false,"Tool Tip Not Verified : "+ToggleOpenQA1Request);
 										log(LogStatus.FAIL,"Tool Tip Not Verified : "+ToggleOpenQA1Request,YesNo.Yes);
 									}
-									ele = dp.getEditBtn(projectName, ToggleOpenQA1Request, action.SCROLLANDBOOLEAN, 10);
-									if (clickUsingJavaScript(driver, ele, ToggleOpenQA1Request, action.BOOLEAN)) {
-										log(LogStatus.INFO,"Click on Edit Btn : "+ToggleOpenQA1Request,YesNo.No);
-										ThreadSleep(5000);
-										
-										if (click(driver, dp.getTextArea(20), ToggleOpenQA1Request, action.BOOLEAN)) {
-											log(LogStatus.INFO,"Click on text area for "+ToggleOpenQA1Request,YesNo.No);
-											ThreadSleep(5000);
-											try {
-												dp.getTextArea(20).clear();
-												
-												 Robot robot = new Robot();  // Robot class throws AWT Exception	
-										           Thread.sleep(1000); // Thread.sleep throws InterruptedException	
-										           robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-										           Thread.sleep(1000);
-										           robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-										           Thread.sleep(1000);
-										           
-											} catch (Exception e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											}
-											if (sendKeys(driver, dp.getTextArea(20), ToggleOpenQA1Request+"s", ToggleOpenQA1Request, action.BOOLEAN)) {
-												log(LogStatus.INFO,"enter value on textarea "+ToggleOpenQA1Request,YesNo.No);
-												
-												ThreadSleep(2000);
-												 try {
-													Robot robot = new Robot();  // Robot class throws AWT Exception	
-													   Thread.sleep(1000); // Thread.sleep throws InterruptedException	
-													   robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-													   Thread.sleep(1000);
-													   robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-													   Thread.sleep(1000);
-												} catch (AWTException e) {
-													// TODO Auto-generated catch block
-													e.printStackTrace();
-												} catch (InterruptedException e) {
-													// TODO Auto-generated catch block
-													e.printStackTrace();
-												}
-												if (ip.toggleEditSaveButton(projectName, toggleBtn, action.BOOLEAN, 30)!=null) {
-													log(LogStatus.INFO,"Edit Save button verified "+ToggleOpenQA1Request,YesNo.Yes);
-												} else {
-													sa.assertTrue(false,"Edit Save button not verified "+ToggleOpenQA1Request);
-													log(LogStatus.SKIP,"Edit Save button not verified "+ToggleOpenQA1Request,YesNo.Yes);
-												}
-												if (ip.toggleEditCancelButton(projectName, toggleBtn, action.BOOLEAN, 30)!=null) {
-													log(LogStatus.INFO,"Edit Cancel button verified "+ToggleOpenQA1Request,YesNo.Yes);
-												} else {
-													sa.assertTrue(false,"Edit Cancel button not verified "+ToggleOpenQA1Request);
-													log(LogStatus.SKIP,"Edit Cancel button not verified "+ToggleOpenQA1Request,YesNo.Yes);
-												}
-												
-											} else {
-												sa.assertTrue(false,"Not Able to enter value on textarea "+ToggleOpenQA1Request);
-												log(LogStatus.SKIP,"Not Able to enter value on textarea "+ToggleOpenQA1Request,YesNo.Yes);
-											}
-										} else {
-											sa.assertTrue(false,"Not Able to Click on text area for "+ToggleOpenQA1Request);
-											log(LogStatus.SKIP,"Not Able to Click on text area for "+ToggleOpenQA1Request,YesNo.Yes);
-										}
-										
-										
-									} else {
-										sa.assertTrue(false,"Not Able to Click on Edit Btn : "+ToggleOpenQA1Request);
-										log(LogStatus.SKIP,"Not Able to Click on Edit Btn : "+ToggleOpenQA1Request,YesNo.Yes);
-									}
+//									ele = dp.getEditBtn(projectName, ToggleOpenQA1Request, action.SCROLLANDBOOLEAN, 10);
+//									if (clickUsingJavaScript(driver, ele, ToggleOpenQA1Request, action.BOOLEAN)) {
+//										log(LogStatus.INFO,"Click on Edit Btn : "+ToggleOpenQA1Request,YesNo.No);
+//										ThreadSleep(5000);
+//										
+//										if (click(driver, dp.getTextArea(20), ToggleOpenQA1Request, action.BOOLEAN)) {
+//											log(LogStatus.INFO,"Click on text area for "+ToggleOpenQA1Request,YesNo.No);
+//											ThreadSleep(5000);
+//											try {
+//												dp.getTextArea(20).clear();
+//												
+//												 Robot robot = new Robot();  // Robot class throws AWT Exception	
+//										           Thread.sleep(1000); // Thread.sleep throws InterruptedException	
+//										           robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+//										           Thread.sleep(1000);
+//										           robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+//										           Thread.sleep(1000);
+//										           
+//											} catch (Exception e) {
+//												// TODO Auto-generated catch block
+//												e.printStackTrace();
+//											}
+//											if (sendKeys(driver, dp.getTextArea(20), ToggleOpenQA1Request+"s", ToggleOpenQA1Request, action.BOOLEAN)) {
+//												log(LogStatus.INFO,"enter value on textarea "+ToggleOpenQA1Request,YesNo.No);
+//												
+//												ThreadSleep(2000);
+//												 try {
+//													Robot robot = new Robot();  // Robot class throws AWT Exception	
+//													   Thread.sleep(1000); // Thread.sleep throws InterruptedException	
+//													   robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+//													   Thread.sleep(1000);
+//													   robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+//													   Thread.sleep(1000);
+//												} catch (AWTException e) {
+//													// TODO Auto-generated catch block
+//													e.printStackTrace();
+//												} catch (InterruptedException e) {
+//													// TODO Auto-generated catch block
+//													e.printStackTrace();
+//												}
+//												if (ip.toggleEditSaveButton(projectName, toggleBtn, action.BOOLEAN, 30)!=null) {
+//													log(LogStatus.INFO,"Edit Save button verified "+ToggleOpenQA1Request,YesNo.Yes);
+//												} else {
+//													sa.assertTrue(false,"Edit Save button not verified "+ToggleOpenQA1Request);
+//													log(LogStatus.SKIP,"Edit Save button not verified "+ToggleOpenQA1Request,YesNo.Yes);
+//												}
+//												if (ip.toggleEditCancelButton(projectName, toggleBtn, action.BOOLEAN, 30)!=null) {
+//													log(LogStatus.INFO,"Edit Cancel button verified "+ToggleOpenQA1Request,YesNo.Yes);
+//												} else {
+//													sa.assertTrue(false,"Edit Cancel button not verified "+ToggleOpenQA1Request);
+//													log(LogStatus.SKIP,"Edit Cancel button not verified "+ToggleOpenQA1Request,YesNo.Yes);
+//												}
+//												
+//											} else {
+//												sa.assertTrue(false,"Not Able to enter value on textarea "+ToggleOpenQA1Request);
+//												log(LogStatus.SKIP,"Not Able to enter value on textarea "+ToggleOpenQA1Request,YesNo.Yes);
+//											}
+//										} else {
+//											sa.assertTrue(false,"Not Able to Click on text area for "+ToggleOpenQA1Request);
+//											log(LogStatus.SKIP,"Not Able to Click on text area for "+ToggleOpenQA1Request,YesNo.Yes);
+//										}
+//										
+//										
+//									} else {
+//										sa.assertTrue(false,"Not Able to Click on Edit Btn : "+ToggleOpenQA1Request);
+//										log(LogStatus.SKIP,"Not Able to Click on Edit Btn : "+ToggleOpenQA1Request,YesNo.Yes);
+//									}
 									
 								}
 								
@@ -1541,7 +1541,7 @@ public class Module5 extends BaseLib {
 									log(LogStatus.INFO,"Able to DragNDrop : "+sValue,YesNo.No);
 									ThreadSleep(2000);
 
-									if (sendKeysWithoutClearingTextBox(driver, edit.getsdgConfigDataProviderTextBox(projectName, 10),sdgConfigDataProviderTextBox,"sdg Config Data Provider TextBox : "+sdgConfigDataProviderTextBox,action.BOOLEAN)) {
+									if (sendKeysWithoutClearingTextBox(driver, edit.getsdgConfigDataProviderTextBox(projectName, 30),sdgConfigDataProviderTextBox,"sdg Config Data Provider TextBox : "+sdgConfigDataProviderTextBox,action.BOOLEAN)) {
 										ThreadSleep(500);
 										log(LogStatus.INFO,"send value to sdg Config Data Provider TextBox : "+sdgConfigDataProviderTextBox,YesNo.No);
 
@@ -1748,15 +1748,18 @@ public class Module5 extends BaseLib {
 				}
 				driver.close();
 				driver.switchTo().window(parentId);
+				switchToDefaultContent(driver);
 				lp.CRMlogout();
-				ThreadSleep(2000);
+				ThreadSleep(10000);
 				lp.CRMLogin(superAdminUserName, adminPassword, appName);
 				
 			} else {
 				sa.assertTrue(false,"Not Able to Click on Tab : "+tabName);
 				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabName,YesNo.Yes);
 			}
+			ThreadSleep(5000);
 			refresh(driver);
+			ThreadSleep(10000);
 		}
 
 		switchToDefaultContent(driver);
