@@ -4674,6 +4674,15 @@ return ele;
 }
 
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param toggleTab
+ * @param btnName
+ * @param action
+ * @param timeOut
+ * @return toggle SDG Button webElement
+ */
 public WebElement toggleSDGButtons(String projectName,String toggleTab,ToggleButtonGroup btnName,action action,int timeOut) {
 	String btname = btnName.toString();
 	String xpath = "//*[contains(text(),'"+toggleTab+"')]/../../..//following-sibling::div//button[@title='"+btname+"']";
@@ -4683,6 +4692,14 @@ public WebElement toggleSDGButtons(String projectName,String toggleTab,ToggleBut
 	return ele;
 }
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param btnName
+ * @param action
+ * @param timeOut
+ * @return toggle Button webElement
+ */
 public WebElement toggleButton(String projectName,String btnName,action action,int timeOut) {
 	String xpath = "//button[contains(@title,'"+btnName+"')]";
 	WebElement ele = FindElement(driver, xpath,"Toggle Button : "+btnName, action, timeOut);
@@ -4691,6 +4708,15 @@ public WebElement toggleButton(String projectName,String btnName,action action,i
 	return ele;
 }
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param btnName
+ * @param columnName
+ * @param action
+ * @param timeOut
+ * @return toggle Button Column Names webElement
+ */
 public WebElement toggleButtonColumnNames(String projectName,String btnName,String columnName,action action,int timeOut) {
 	String xpath = "//a[text()='"+btnName+"']//ancestor::article//th//div/span[contains(text(),'"+columnName+"')]";
 	WebElement ele = FindElement(driver, xpath,"Toggle Button : "+btnName+" >> column Name : "+columnName, action, timeOut);
@@ -4700,6 +4726,12 @@ public WebElement toggleButtonColumnNames(String projectName,String btnName,Stri
 }
 
 
+/**
+ * @author Akul Bhutani
+ * @param number
+ * @param format
+ * @return string with specific format with currency symbol
+ */
 public static String convertNumberAccordingToFormatWithCurrencySymbol(String number,String format){
 
 	double d = Double.parseDouble(number);
@@ -4710,6 +4742,12 @@ public static String convertNumberAccordingToFormatWithCurrencySymbol(String num
 
 }
 
+/**
+ * @author Azhar Alam
+ * @param header
+ * @param itemName
+ * @return webElement for created item on Page 
+ */
 public WebElement verifyCreatedItemOnPage(Header header,String itemName)
 {
 	WebElement ele;
@@ -4722,6 +4760,11 @@ public WebElement verifyCreatedItemOnPage(Header header,String itemName)
 	return ele;
 }
 
+/**
+ * @author Akul Bhutani
+ * @param number
+ * @return string after converting a number in to million format
+ */
 public static String convertNumberIntoMillions(String number){
 	double d = Double.parseDouble(number);
 	double aa = d/1000000;
@@ -4730,6 +4773,14 @@ public static String convertNumberIntoMillions(String number){
 	return output;
 }
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param btnName
+ * @param action
+ * @param timeOut
+ * @return custom Toggle Button webElement
+ */
 public WebElement customToggleButton(String projectName,String btnName,action action,int timeOut) {
 	String xpath = "//*[text()='"+btnName+"']";
 	WebElement ele = FindElement(driver, xpath,"Toggle Button : "+btnName, action, timeOut);
@@ -4738,6 +4789,14 @@ public WebElement customToggleButton(String projectName,String btnName,action ac
 	return ele;
 }
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param labelName
+ * @param action
+ * @param timeOut
+ * @return common Input Element
+ */
 public WebElement commonInputElement(String projectName,String labelName,action action,int timeOut) {
 	labelName=labelName.replace("_", " ");
 	String xpath = "//*[text()='"+labelName+"']//following-sibling::div//input";
@@ -4746,6 +4805,14 @@ public WebElement commonInputElement(String projectName,String labelName,action 
 	return ele;
 }
 
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param labelName
+ * @param action
+ * @param timeOut
+ * @return menu tab webElement
+ */
 public WebElement getMenuTab(String projectName,String labelName,action action,int timeOut) {
 	String xpath = "//div[@class='flexipageComponent']//span[text()='"+labelName+"']";
 	WebElement ele = FindElement(driver, xpath,labelName+" TextBox", action, timeOut);
@@ -4753,6 +4820,12 @@ public WebElement getMenuTab(String projectName,String labelName,action action,i
 	return ele;
 }
 
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param timeOut
+ * @return true if automation All is present in View List
+ */
 public boolean isAutomationAllListViewAdded(String projectName, int timeOut) {
 	String viewList="Automation All",xpath="";
 	if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
@@ -4776,6 +4849,14 @@ public boolean isAutomationAllListViewAdded(String projectName, int timeOut) {
 	return false;
 }
 
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param recordName
+ * @param fieldValues
+ * @param timeOut
+ * @return true if verify Accordion
+ */
 public boolean verifyAccordion(String projectName,String recordName,String[] fieldValues, int timeOut) {
 	String field="";
 	String value="";
@@ -4809,6 +4890,13 @@ public boolean verifyAccordion(String projectName,String recordName,String[] fie
 	return flag;
 }
 
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param record
+ * @param imgId
+ * @return true if verify Accordian Record Image
+ */
 public boolean verifyAccordianRecordImage(String projectName, String record, String imgId) {
 	boolean flag=true;
 	String xpath = "//article[@class='cRelatedListAccordion']//a[text()='"+record+"']";
@@ -4834,6 +4922,14 @@ public boolean verifyAccordianRecordImage(String projectName, String record, Str
 }
 
 
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param pageName
+ * @param uploadImagePath
+ * @param errorMsgCheck
+ * @return true if photo update successfully
+ */
 public boolean updatePhoto(String projectName,String pageName,String uploadImagePath,boolean errorMsgCheck) {
 	String imgId=null;
 	boolean flag = false;
@@ -4903,6 +4999,12 @@ public boolean updatePhoto(String projectName,String pageName,String uploadImage
 
 	
 
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param object
+ * @return return Accordion Link webElement
+ */
 public WebElement returnAccordionLink(String projectName, String object) {
 	String xpath = "//article[@class='cRelatedListAccordion']//a[text()='"+object+"']";
 	WebElement ele=FindElement(driver, xpath, object + "accordion", action.SCROLLANDBOOLEAN, 10);
@@ -4910,12 +5012,25 @@ public WebElement returnAccordionLink(String projectName, String object) {
 	
 }
 
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param object
+ * @return return Accordion View Details Link webElement
+ */
 public WebElement returnAccordionViewDetailsLink(String projectName, String object) {
 	String xpath = "//article[@class='cRelatedListAccordion']//a[text()='"+object+"']/../../../following-sibling::footer//a[contains(text(),'View')][contains(text(),'Details')]";
 	WebElement ele=FindElement(driver, xpath, object + "accordion", action.SCROLLANDBOOLEAN, 10);
 	return isDisplayed(driver, ele, "visibility", 10, object + "accordion");
 	
 }
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param ec
+ * @param timeOut
+ * @return accordion Expand Collapse webElement
+ */
 public WebElement accordionExpandCollapse(String projectName, ExpandCollapse ec, int timeOut) {
 	String xpath="//div[contains(@id,'modal')]//*[@title='"+ec.toString()+"']";
 	WebElement ele=FindElement(driver, xpath, ec + " accordion", action.SCROLLANDBOOLEAN, timeOut);
@@ -4923,6 +5038,12 @@ public WebElement accordionExpandCollapse(String projectName, ExpandCollapse ec,
 
 }
 
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param object
+ * @return accordion Modal Window Close webElement
+ */
 public WebElement accordionModalWindowClose(String projectName, String object) {
 	String xpath = "//h2[text()='"+object+"']/preceding-sibling::button[@title='close']";
 	WebElement ele=FindElement(driver, xpath, object + "accordion", action.SCROLLANDBOOLEAN, 10);
@@ -4930,6 +5051,13 @@ public WebElement accordionModalWindowClose(String projectName, String object) {
 	
 }
 
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param ObjectName
+ * @param timeOut
+ * @return true if Automation All view list is added
+ */
 public boolean isAutomationAllListViewForObject(String projectName,String ObjectName, int timeOut) {
 	String viewList="Automation All",xpath="";
 		ThreadSleep(3000);
@@ -4949,6 +5077,13 @@ public boolean isAutomationAllListViewForObject(String projectName,String Object
 	return false;
 }
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param smaddl
+ * @param timeOut
+ * @return  action Drop down Element
+ */
 public WebElement actionDropdownElement(String projectName, ShowMoreActionDropDownList smaddl, int timeOut) {
 	String actionDropDown = smaddl.toString().replace("_", " ");
 	String xpath ="//span[text()='"+actionDropDown+"']";
@@ -4956,6 +5091,15 @@ public WebElement actionDropdownElement(String projectName, ShowMoreActionDropDo
 	return isDisplayed(driver, FindElement(driver, xpath, "show more action down arrow", action.SCROLLANDBOOLEAN, 10), "visibility", timeOut, actionDropDown);
 }
 
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param toggleTab
+ * @param btnName
+ * @param action
+ * @param timeOut
+ * @return accordion SDGB uttons webelement
+ */
 public WebElement accordionSDGButtons(String projectName,String toggleTab,ToggleButtonGroup btnName,action action,int timeOut) {
 	String btname = btnName.toString();
 	String xpath = "//h2[contains(text(),'"+toggleTab+"')]/../../..//following-sibling::div//button[@title='"+btname+"']";
@@ -4964,6 +5108,15 @@ public WebElement accordionSDGButtons(String projectName,String toggleTab,Toggle
 	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btname);
 	return ele;
 }
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param contact
+ * @param field
+ * @param action
+ * @param timeOut
+ * @return accordion SDG Contact Checkbox webElement
+ */
 public WebElement accordionSDGContactCheckbox(String projectName,String contact,String field,action action,int timeOut) {
 	String xpath ="//*[text()='"+contact+"']/../../../../following-sibling::td[contains(@data-label,'"+field+"')]/../../..//th//input";
 	WebElement ele = FindElement(driver, xpath,"checkbox for "+contact, action, timeOut);
@@ -4971,6 +5124,15 @@ public WebElement accordionSDGContactCheckbox(String projectName,String contact,
 	ele = isDisplayed(driver, ele, "Visibility", timeOut, "checkbox for "+contact);
 	return ele;
 }
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param toggleTab
+ * @param btnName
+ * @param action
+ * @param timeOut
+ * @return accordion SDG Action Buttons webElement
+ */
 public WebElement accordionSDGActionButtons(String projectName,String toggleTab,String btnName,action action,int timeOut) {
 	String btname = btnName.replace("_", " ");
 	String xpath = "//*[contains(text(),'"+toggleTab+"')]/../../..//following-sibling::div//button[text()='"+btname+"']";
@@ -4980,20 +5142,50 @@ public WebElement accordionSDGActionButtons(String projectName,String toggleTab,
 	return ele;
 }
 
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param field
+ * @param new1
+ * @param timeOut
+ * @return sdg button element
+ */
 public WebElement sdgButtons(String projectName, String field,String new1, int timeOut) {
 	String xpath ="//span//*[text()='"+field+"']/../../../following-sibling::div//button[text()='"+new1+"']";
 	WebElement ele = FindElement(driver, xpath,"sdg buttons", action.BOOLEAN, timeOut);
 	return isDisplayed(driver, ele, "visibility", timeOut, "sdg button");
 }
 
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param contact
+ * @return sdg contact image xpath
+ */
 public String sdgContactImageXpath(String projectName, String contact) {
 	return "//*[@title='"+contact+"']/preceding-sibling::img";
 }
+
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param contact
+ * @param timeOut
+ * @return sdg contact image webElement
+ */
 public WebElement sdgContactImage(String projectName, String contact, int timeOut) {
 	String xpath =sdgContactImageXpath(projectName, contact);
 	WebElement ele = FindElement(driver, xpath,"contact image on sdg", action.BOOLEAN, timeOut);
 	return isDisplayed(driver, ele, "visibility", timeOut, "contact image on sdg");
 }
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param contact
+ * @param field
+ * @param timeOut
+ * @return true if successfully click on SDG edit button
+ */
 public boolean clickOnEditButtonOnSDG(String projectName, String contact, String field,int timeOut) {
 	String xpath ="//*[text()='"+contact+"']/../../../../following-sibling::td[contains(@data-label,'"+field+"')]//button";
 	WebElement ele = FindElement(driver, xpath,"edit button for "+field, action.BOOLEAN, timeOut);
@@ -5003,18 +5195,40 @@ public boolean clickOnEditButtonOnSDG(String projectName, String contact, String
 	click(driver, ele, "edit", action.BOOLEAN);
 	return true;
 }
+
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param field
+ * @param timeOut
+ * @return SDG input TextBox webElement
+ */
 public WebElement SDGInputTextbox(String projectName, String field, int timeOut) {
 	String xpath ="//input[@name='"+field+"']";
 	WebElement ele = FindElement(driver, xpath,"input textbox "+field, action.BOOLEAN, timeOut);
 	return isDisplayed(driver, ele, "visibility", timeOut, "input textbox "+field);
 }
 
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param fileName
+ * @param timeOut
+ * @return webElement for document Name
+ */
 public WebElement documentNameOnFilesApp(String projectName, String fileName, int timeOut) {
 	String xpath ="//span[@title='"+fileName+"']";
 	WebElement ele = FindElement(driver, xpath,fileName, action.BOOLEAN, timeOut);
 	return isDisplayed(driver, ele, "visibility", timeOut, fileName);
 }
 
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param fileName
+ * @param timeOut
+ * @return copied file link using right click
+ */
 public String rightClickOnFileAndCopy(String projectName, String fileName, int timeOut) {
 	String xpath ="//img[@alt='"+fileName+"']";
 	WebElement ele = FindElement(driver, xpath,fileName, action.BOOLEAN, timeOut);
@@ -5048,6 +5262,12 @@ public String rightClickOnFileAndCopy(String projectName, String fileName, int t
 	
 }
 
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param user
+ * @return true if able to delete photo 
+ */
 public boolean deletePhotoInUserPage(String projectName, String user) {
 	String imgId=null;
 	DealPage dp = new DealPage(driver);
@@ -5083,6 +5303,14 @@ public boolean deletePhotoInUserPage(String projectName, String user) {
 }
 
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param btnName
+ * @param action
+ * @param timeOut
+ * @return toggle edit save Button webElement
+ */
 public WebElement toggleEditSaveButton(String projectName,String btnName,action action,int timeOut) {
 	String xpath = "//button[contains(text(),'"+btnName+"')]/../../../../../../../..//button[text()='Save']";
 	WebElement ele = FindElement(driver, xpath,"Toggle Button : "+btnName, action, timeOut);
@@ -5090,6 +5318,14 @@ public WebElement toggleEditSaveButton(String projectName,String btnName,action 
 	return ele;
 }
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param btnName
+ * @param action
+ * @param timeOut
+ * @return toggle edit cancel Button webElement
+ */
 public WebElement toggleEditCancelButton(String projectName,String btnName,action action,int timeOut) {
 	String xpath = "//button[contains(text(),'"+btnName+"')]/../../../../../../../..//button[text()='Cancel']";
 	WebElement ele = FindElement(driver, xpath,"Toggle Button : "+btnName, action, timeOut);
@@ -5097,6 +5333,14 @@ public WebElement toggleEditCancelButton(String projectName,String btnName,actio
 	return ele;
 }
 
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param field
+ * @param name
+ * @param timeOut
+ * @return webElement for cross icon
+ */
 public WebElement crossIconForEventField(String projectName, String field, String name,int timeOut) {
 	String xpath = "//label[text()='"+field+"']/following-sibling::div//input[@placeholder='"+name+"']/following-sibling::div/button";
 	
@@ -5105,6 +5349,14 @@ public WebElement crossIconForEventField(String projectName, String field, Strin
 	return ele;
 }
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param sourceImg
+ * @param targetImg
+ * @param timeOut
+ * @return true if able to drag and drop successfully
+ */
 public boolean dragNDropUsingScreen(String projectName,String sourceImg,String targetImg,int timeOut) {
 	boolean flag=false;
 	Screen screen = new Screen();
@@ -5119,6 +5371,14 @@ public boolean dragNDropUsingScreen(String projectName,String sourceImg,String t
 }
 
 
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param ObjectName
+ * @param viewList
+ * @param timeOut
+ * @return true if automall all is added to view list
+ */
 public boolean isAutomationAllListViewForObject(String projectName,String ObjectName,String viewList, int timeOut) {
 	String xpath="";
 		ThreadSleep(3000);
@@ -5140,6 +5400,14 @@ public boolean isAutomationAllListViewForObject(String projectName,String Object
 
 
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param field
+ * @param name
+ * @param timeOut
+ * @return webElement
+ */
 public WebElement SDGNewButton(String projectName, String field, String name,int timeOut) {
 	String xpath = "//label[text()='"+field+"']/following-sibling::div//input[@placeholder='"+name+"']/following-sibling::div/button";
 	
@@ -5148,6 +5416,12 @@ public WebElement SDGNewButton(String projectName, String field, String name,int
 	return ele;
 }
 
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param fieldValues
+ * @return boolean if sdg action created successfully
+ */
 public boolean createSDGAction(String projectName, String[] fieldValues) {
 	String xpath = "";
 	WebElement ele=null;
@@ -5198,6 +5472,14 @@ public boolean createSDGAction(String projectName, String[] fieldValues) {
 	return true;
 }
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param itemName
+ * @param action
+ * @param timeOut
+ * @return webelement
+ */
 public WebElement getItemInList(String projectName,String itemName,action action,int timeOut) {
 	String xpath = "//*[@title='"+itemName+"']//strong[text()='"+itemName.split(" ")[0]+"']";
 	WebElement ele = FindElement(driver, xpath, itemName, action, timeOut);

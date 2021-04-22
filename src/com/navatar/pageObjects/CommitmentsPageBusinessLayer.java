@@ -26,6 +26,17 @@ public class CommitmentsPageBusinessLayer extends CommitmentsPage{
 		// TODO Auto-generated constructor stub
 	}
 	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param projectName
+	 * @param LimitedPartner
+	 * @param Partnership
+	 * @param finalCommitmnateDate
+	 * @param commitmentAmount
+	 * @param excelPath
+	 * @param basedOnValue
+	 * @return true if commmitment created successfully
+	 */
 	public boolean createCommitment(String projectName,String LimitedPartner, String Partnership,String finalCommitmnateDate,String commitmentAmount,String excelPath, String basedOnValue) {
 		refresh(driver);
 		ThreadSleep(5000);
@@ -115,6 +126,12 @@ public class CommitmentsPageBusinessLayer extends CommitmentsPage{
 		return false;
 	}
 
+	/**
+	 * @author Ankit Jaiswal
+	 * @param projectName
+	 * @param commitmentID
+	 * @return true if able to click on commitment id
+	 */
 	public boolean clickOnCreatedCommitmentId(String projectName,String commitmentID) {
 		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
 		int i =1;
@@ -170,6 +187,14 @@ public class CommitmentsPageBusinessLayer extends CommitmentsPage{
 		return false;
 	}
 	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param environment
+	 * @param mode
+	 * @param labelName
+	 * @param labelValue
+	 * @return true if successfully verified field & value on Commitment Page
+	 */
 	public boolean FieldValueVerificationOnCommitmentPage(String environment, String mode,String labelName,String labelValue) {
 		String xpath = "";
 		WebElement ele = null;
@@ -294,6 +319,12 @@ public class CommitmentsPageBusinessLayer extends CommitmentsPage{
 
 	}
 
+	/**
+	 * @author Ankit Jaiswal
+	 * @param topOrBottom
+	 * @param timeOut
+	 * @return commitment cancel webElement
+	 */
 	public WebElement getCommitmentCancelBtn(TopOrBottom topOrBottom,int timeOut){
 		
 		WebElement ele=null;
@@ -313,6 +344,12 @@ public class CommitmentsPageBusinessLayer extends CommitmentsPage{
 		
 	}
 	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param number
+	 * @param format
+	 * @return string as nimber conversion to for,at with currency symbol
+	 */
 	public static String convertNumberAccordingToFormatWithoutCurrencySymbol(String number,String format){
 
 		double d = Double.parseDouble(number);

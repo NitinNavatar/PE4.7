@@ -967,6 +967,12 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 	}
 	
 	
+	/**
+	 * @author Akul Bhutani
+	 * @param labelName
+	 * @param value
+	 * @return true if field set component verify successfully
+	 */
 	public boolean verifyFieldSetComponent(String labelName, String value) {
 		String finalLabelName="";
 		if(labelName.contains("_")) {
@@ -1012,6 +1018,12 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		
 	}
 	
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param attachmentPath
+	 * @return image id of updated photo in detail page
+	 */
 	public String updatePhotoInDetailPage(String projectName,String attachmentPath) {
 		String imgId=null;
 		Actions actions = new Actions(driver);
@@ -1066,6 +1078,12 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		return null;
 	}
 
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param recordName
+	 * @return true if image deleted successfully
+	 */
 	public boolean deleteImage(String projectName, String recordName) {
 		String imgId=null;
 //		Actions actions = new Actions(driver);

@@ -35,6 +35,15 @@ public class AttendeePageBusinessLayer extends AttendeePage{
 		super(driver);
 		// TODO Auto-generated constructor stub
 	}
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param event
+	 * @param staff
+	 * @param status
+	 * @param notes
+	 * @return true if attendee created successfully
+	 */
 	public boolean createAttendee(String projectName, String event, String staff,String status,String notes) {
 		String labelNames[]=null;
 		String labelValue[]=null;
@@ -120,6 +129,14 @@ public class AttendeePageBusinessLayer extends AttendeePage{
 		return false;
 	}
 	
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param tabName
+	 * @param labelName
+	 * @param labelValue
+	 * @return
+	 */
 	public boolean fieldValueVerificationOnAttendeePage(String projectName, TabName tabName,
 			String labelName,String labelValue) {
 		String finalLabelName="";

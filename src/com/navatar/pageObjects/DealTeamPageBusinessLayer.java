@@ -19,6 +19,16 @@ public class DealTeamPageBusinessLayer extends DealTeamPage{
 		super(driver);
 		// TODO Auto-generated constructor stub
 	}
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param dealName
+	 * @param requestInfo
+	 * @param basedOnValue
+	 * @param action
+	 * @param timeOut
+	 * @return true if Deal Team created successfully
+	 */
 	public boolean createDealTeam(String projectName,String dealName,String[][] requestInfo,String basedOnValue,action action,int timeOut) {
 		boolean flag=true;
 		String label;

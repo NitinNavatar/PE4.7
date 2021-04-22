@@ -60,6 +60,13 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 	}
 	
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param searchValue
+	 * @param timeOut
+	 * @return true if able to click on data provider text box search box icon
+	 */
 	public boolean clickOnELGSeachValueLink(String projectName,String searchValue,int timeOut) {
 		 click(driver, getElgDataProviderTextBoxSearchIcon(projectName, 30), searchValue, action.BOOLEAN);
 		String xpath = "//div[contains(@id,'dropdown-element')]//*[@title='"+searchValue+"']";
@@ -69,6 +76,10 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 	}
 	
 	
+	/**
+	 * @author Azhar Alam
+	 * @return true  if able to click on Edit Link
+	 */
 	public boolean clickOnEditPageLink() {
 		boolean flag = false;
 		if(click(driver, getSettingLink_Lighting(20), "setting icon", action.SCROLLANDBOOLEAN)) {
@@ -87,6 +98,15 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 	}
 	
 	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param projectName
+	 * @param pageName
+	 * @param relatedTab
+	 * @param DropComponentName
+	 * @param fieldSetApiName
+	 * @return true if successfully drag N drop layout on Edit Page
+	 */
 	public boolean dragAndDropLayOutFromEditPage(String projectName,PageName pageName, RelatedTab relatedTab,String DropComponentName, String fieldSetApiName) {
 		boolean flag = false;
 		WebElement ele=null,dropComponentXpath=null,dropLocation=null;
@@ -237,6 +257,16 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		return isDisplayed(driver, ele, "Visibility", timeOut, "Search Value : "+searchValue);
 	}
 	
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param pageName
+	 * @param DropComponentName
+	 * @param fieldValues
+	 * @param source
+	 * @param target
+	 * @return true if drap N drop successfully
+	 */
 	public boolean dragAndDropAccordian(String projectName,PageName pageName, String DropComponentName, String[] fieldValues, String source, String target) {
 		boolean flag = true;
 		Actions actions = new Actions(driver);
@@ -305,6 +335,13 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 
 	}
+	
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param tabName
+	 * @return 
+	 */
 	public WebElement clickOnAccordion(String projectName, TabName tabName) {
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		String xpath = "//div[contains(@class,'RelatedListAccordion')]/following-sibling::article//header//a[contains(text(),'"+bp.getTabName(projectName,tabName)+"')]/ancestor::article/../following-sibling::*//div[@title='Move component']";
@@ -312,13 +349,34 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		return isDisplayed(driver, ele, "visiblity",10, "acordion");
 	}
 
+	/**
+	 * @author Akul Bhutani
+	 * @param fieldName
+	 * @return Contact SDG Query
+	 */
 	public String ContactSDGQuery(String fieldName) {
 		return "SELECT Id, Name, Title,"+fieldName+" Industry__c, Region__c,Profile_Image__c FROM Contact WHERE (AccountId = '<<recordId>>') ORDER BY Name ASC";
 }
+	/**
+	 * @author Akul Bhutani
+	 * @param fieldName
+	 * @return Deal Team SDG Query
+	 */
 	public String DealTeamSDGQuery(String fieldName) {
 		return "SELECT Member__c, Member__r.Name,Member__r.Title,"+fieldName+"Team_Member_Role__c,Type__c,Member__r.MediumPhotoURL FROM Deal_Team__c WHERE ( Pipeline__c = '<<recordId>>' AND (member__c <> null)) ORDER BY Id ASC";
 }
 
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param source
+	 * @param target
+	 * @param pageName
+	 * @param relatedTab
+	 * @param DropComponentName
+	 * @param fieldValues
+	 * @return true if successfully drag And Drop Calender
+	 */
 	public boolean dragAndDropCalender(String projectName,String source,String target,PageName pageName, RelatedTab relatedTab,String DropComponentName, String[] fieldValues) {
 	boolean flag=false;
 	Actions actions = new Actions(driver);	 
@@ -354,6 +412,11 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		return flag;
 	}
 
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @return true if click on calender Edit Page
+	 */
 	public boolean clickOnCalenderEditPage(String projectName) {
 		String xpath = "//button[text()='Their Events']/../../../../../preceding-sibling::div";
 		WebElement ele=FindElement(driver, xpath, "accordian", action.BOOLEAN, 10);
