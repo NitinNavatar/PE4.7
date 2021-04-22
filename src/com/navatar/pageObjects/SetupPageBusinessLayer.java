@@ -920,19 +920,6 @@ public class SetupPageBusinessLayer extends SetupPage {
 										ThreadSleep(3000);
 										WebElement ele1 =FindElement(driver, "//div[@id='"+id+"']//div[@class='remove']", "remove Icon", action.BOOLEAN, 10);
 										mouseOverClickOperation(driver, ele1);
-//										if(clickUsingJavaScript(driver,ele1, "remove icon", action.BOOLEAN)) {
-//											log(LogStatus.INFO,"Clicked on reomve icon of object "+(i+1),YesNo.No);
-//											ele1 =FindElement(driver, "//div[@id='"+id+"']//div[@class='remove']", "remove Icon", action.BOOLEAN, 10);
-//											if(ele1!=null) {
-//												click(driver,ele1, "remove icon", action.BOOLEAN);
-//											}else {
-//												log(LogStatus.INFO,"reomved object "+(i+1),YesNo.No);
-//											}
-//
-//										}else {
-//											log(LogStatus.INFO,"Not able to click on reomve icon of object : "+(i+1),YesNo.No);
-//
-//										}
 										fieldSetList=FindElements(driver, xpath, "all dragged field set list xpath");
 										if(fieldSetList.size()!=2) {
 											continue;
@@ -956,7 +943,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 										sourceElement =isDisplayed(driver, FindElement(driver, "//span[starts-with(text(),'"+splitedDragComponent[i]+"')]", "", action.BOOLEAN,10), "visibility",10,splitedDragComponent[i]+" page layout link");
 									}
 									ThreadSleep(2000);
-									if(dragNDropOperation(driver, sourceElement, getFieldSetdefaultViewDragAndDropTextLabel(5))) {
+									if(dragNDropField(driver, sourceElement, getFieldSetdefaultViewDragAndDropTextLabel(5))) {
 										log(LogStatus.INFO, "Dragged Successfully : "+splitedDragComponent[i], YesNo.No);
 										count++;
 									}else {
@@ -996,6 +983,92 @@ public class SetupPageBusinessLayer extends SetupPage {
 		switchToDefaultContent(driver);
 		return flag;
 	}
+	
+	
+	public boolean deleteFieldSetComponent(object objectName,ObjectFeatureName objectFeatureName,String fieldSetLabel,YesNo removeSomeFields) {
+		boolean flag = false;
+		WebElement ele=null;
+		if(searchStandardOrCustomObject(environment,mode, objectName)) {
+			log(LogStatus.INFO, "click on Object : "+objectName, YesNo.No);
+			ThreadSleep(2000);
+			if(clickOnObjectFeature(environment,mode, objectName, objectFeatureName)) {
+				log(LogStatus.INFO, "Clicked on feature : "+objectFeatureName, YesNo.No);
+				ThreadSleep(1000);
+				while(true) {
+					if(sendKeys(driver, getQuickSearchInObjectManager_Lighting(10), fieldSetLabel, "search text box", action.BOOLEAN)) {
+						String xpath="//span[text()='"+fieldSetLabel+"']/..";
+						ele = isDisplayed(driver, FindElement(driver, xpath, "field set label text", action.BOOLEAN, 3), "visibility", 3, "field set label text");
+						if(ele!=null) {
+							if(click(driver, ele, "create field set "+fieldSetLabel, action.BOOLEAN)) {
+								log(LogStatus.INFO, "Field Set Label "+fieldSetLabel+" is already created ", YesNo.No);
+								ThreadSleep(5000);
+								switchToFrame(driver, 20, getEditPageLayoutFrame_Lighting(20));
+								if(removeSomeFields.toString().equalsIgnoreCase(YesNo.Yes.toString())) {
+									xpath="//div[@id='defaultView']/div";
+									List<WebElement> fieldSetList=FindElements(driver, xpath, "all dragged field set list xpath");
+									if(!fieldSetList.isEmpty() && fieldSetList.size() > 2) {
+										for(int i=0; i<fieldSetList.size()-2; i++) {
+											ThreadSleep(1000);
+											String id =fieldSetList.get(i).getAttribute("id");
+											ThreadSleep(1000);
+											((JavascriptExecutor) driver).executeScript("document.getElementById('"+id+"').setAttribute('class', 'field-source field-selected field-hover');");
+											ThreadSleep(2000);
+											if(click(driver,FindElement(driver, xpath+"//div[@class='remove']", "remove Icon", action.BOOLEAN, 10), "remove icon", action.BOOLEAN)) {
+												log(LogStatus.INFO,"Clicked on reomve icon of object",YesNo.No);
+											}else {
+												log(LogStatus.INFO,"Not able to click on reomve icon of object so cannot remove object from field set component",YesNo.No);
+												return false;
+											}
+										fieldSetList=FindElements(driver, xpath, "all dragged field set list xpath");
+										if(fieldSetList.size()!=2) {
+											if(click(driver, getPageLayoutSaveBtn(object.Global_Actions, 10), "page layouts save button", action.SCROLLANDBOOLEAN)) {
+												log(LogStatus.INFO, "Clicked on Save button", YesNo.No);
+												ThreadSleep(5000);
+												break;
+
+											}else {
+												log(LogStatus.ERROR, "Not able to click on Save button cannot save pagelayout dragged object or section in field set component "+fieldSetLabel, YesNo.Yes);
+												return false;
+											}
+										}else {
+											if(click(driver, getPageLayoutSaveBtn(object.Global_Actions, 10), "page layouts save button", action.SCROLLANDBOOLEAN)) {
+												log(LogStatus.INFO, "Clicked on Save button", YesNo.No);
+												ThreadSleep(5000);
+												return true;
+												
+											}else {
+												log(LogStatus.ERROR, "Not able to click on Save button cannot save pagelayout dragged object or section in field set component "+fieldSetLabel, YesNo.Yes);
+												flag=false;
+											}
+										}
+									}
+								}else {
+									log(LogStatus.ERROR, "more then 2 fields are not available in field set object", YesNo.Yes);
+								}
+							}
+							}else {
+								log(LogStatus.INFO, "Not able to click on created Field Set Label "+fieldSetLabel+" is not visible so cannot change position of labels", YesNo.Yes);
+							}
+						}else {
+							log(LogStatus.INFO, "created Field Set Label "+fieldSetLabel+" is not visible so cannot change position of labels", YesNo.Yes);
+						}
+					}else {
+						log(LogStatus.INFO, "Not able to search created Field Set Label "+fieldSetLabel, YesNo.Yes);
+					}
+					switchToDefaultContent(driver);
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to click on object feature : "+objectFeatureName, YesNo.Yes);
+			}
+			
+		}else {
+			log(LogStatus.ERROR, "Not able to click on Object : "+objectName+" so cannot create field set component", YesNo.Yes);
+		}
+		switchToDefaultContent(driver);
+		return flag;
+	}
+	
+	
 
 public WebElement clickOnEditInFrontOfFieldValues(String projectName, String status) {
 	status=status.replace("_", " ");

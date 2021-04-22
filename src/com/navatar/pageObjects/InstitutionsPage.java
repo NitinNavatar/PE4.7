@@ -132,7 +132,7 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 			xpath="//label[text()='"+finalLabelName+"']";
 			inputXpath="/../following-sibling::td/input";
 			textAreaXpath="/../following-sibling::td/textarea";
-			if(labelName.toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Entity.toString())) {
+			if(labelName.toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString())) {
 				inputXpath="/../following-sibling::td//span/input";
 			}
 			
@@ -141,7 +141,8 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 			xpath="//*[text()='"+finalLabelName+"']";
 			inputXpath="/following-sibling::div/input";
 			textAreaXpath="/following-sibling::div/textarea";
-			if(labelName.toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Entity.toString())) {
+			if(labelName.toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString())) {
+				xpath="//*[contains(text(),'Parent Institution')]";
 				inputXpath="/following-sibling::div//input[contains(@placeholder,'Search')]";
 			}
 			
@@ -382,7 +383,7 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 			xpath="//span[text()='"+finalLabelName+"']";
 			inputXpath="/..//following-sibling::input";
 			textAreaXpath="/..//following-sibling::textarea";
-			if(labelName.toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Entity.toString())) {
+			if(labelName.toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString())) {
 				inputXpath="/..//following-sibling::div//input[@title='Search Institutions']";
 			}
 			
