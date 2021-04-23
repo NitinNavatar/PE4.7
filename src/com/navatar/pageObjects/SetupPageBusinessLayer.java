@@ -531,6 +531,11 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return false;
 	}
 	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param layoutName
+	 * @return true if able to click on already created layout
+	 */
 	public boolean clickOnAlreadyCreatedLayout(String layoutName) {
 		String xpath="//td//a//span[text()='"+layoutName+"']";
 		WebElement ele=FindElement(driver, xpath, layoutName, action.SCROLLANDBOOLEAN, 10);
@@ -794,6 +799,15 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return flag;
 	}
 	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param objectName
+	 * @param objectFeatureName
+	 * @param permissionType
+	 * @param fieldLabel
+	 * @param profileName
+	 * @return true if able to give/Remove Object Permission From Object Manager
+	 */
 	public boolean giveAndRemoveObjectPermissionFromObjectManager(object objectName,ObjectFeatureName objectFeatureName,PermissionType permissionType, String fieldLabel, String profileName) {
 		boolean flag = false;
 		WebElement ele=null;
@@ -863,6 +877,16 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return flag;
 	}
 
+	/**
+	 * @author Ankit Jaiswal
+	 * @param objectName
+	 * @param objectFeatureName
+	 * @param fieldSetLabel
+	 * @param DragComponentName
+	 * @param removableObjectName
+	 * @param removeSomeFields
+	 * @return true if able to change Position Of Field Set Component
+	 */
 	public boolean changePositionOfFieldSetComponent(object objectName,ObjectFeatureName objectFeatureName,String fieldSetLabel,String DragComponentName,String removableObjectName,YesNo removeSomeFields) {
 		boolean flag = false;
 		WebElement ele=null,sourceElement=null;
@@ -985,6 +1009,14 @@ public class SetupPageBusinessLayer extends SetupPage {
 	}
 	
 	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param objectName
+	 * @param objectFeatureName
+	 * @param fieldSetLabel
+	 * @param removeSomeFields
+	 * @return true if able to delete field set component
+	 */
 	public boolean deleteFieldSetComponent(object objectName,ObjectFeatureName objectFeatureName,String fieldSetLabel,YesNo removeSomeFields) {
 		boolean flag = false;
 		WebElement ele=null;
@@ -1070,6 +1102,12 @@ public class SetupPageBusinessLayer extends SetupPage {
 	
 	
 
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param status
+ * @return EditInFrontOfFieldValues 
+ */
 public WebElement clickOnEditInFrontOfFieldValues(String projectName, String status) {
 	status=status.replace("_", " ");
 	String xpath="//th[text()='"+status+"']/preceding-sibling::td//a[contains(@title,'Edit')]";
@@ -1077,6 +1115,15 @@ public WebElement clickOnEditInFrontOfFieldValues(String projectName, String sta
 	return ele;
 }
 
+/**
+ * @author Azhar Alam
+ * @param driver
+ * @param appName
+ * @param developerName
+ * @param description
+ * @param timeOut
+ * @return true if clcik on edit for App
+ */
 public boolean clickOnEditForApp(WebDriver driver,String appName,String developerName,String description,int timeOut) {
 	boolean flag=false;;
 	String xpath="";
@@ -1104,6 +1151,12 @@ public boolean clickOnEditForApp(WebDriver driver,String appName,String develope
 	return flag;
 }
 
+/**
+ * @param driver
+ * @param appSetting
+ * @param timeOut
+ * @return true if able to click on particular app setting
+ */
 public boolean clickOnAppSettingList(WebDriver driver,AppSetting appSetting,int timeOut) {
 	boolean flag=false;;
 	String xpath="";
@@ -1118,6 +1171,12 @@ public boolean clickOnAppSettingList(WebDriver driver,AppSetting appSetting,int 
 	return flag;
 }
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param addRemoveTabName
+ * @param customTabActionType
+ */
 public void addRemoveAppSetingData(String projectName,String addRemoveTabName, customTabActionType customTabActionType) {
 	String[] splitedTabs = addRemoveTabName.split(",");
 	WebElement ele;
@@ -1208,6 +1267,14 @@ public void addRemoveAppSetingData(String projectName,String addRemoveTabName, c
 }
 
 
+/**
+ * @author Azhar Alam
+ * @param driver
+ * @param userName
+ * @param recordType
+ * @param timeOut
+ * @return true if Record Type Setting changed
+ */
 public boolean changeRecordTypeSetting(WebDriver driver,String userName,String recordType,int timeOut) {
 	switchToDefaultContent(driver);
 	switchToFrame(driver, 20, getSetUpPageIframe(60));
@@ -1257,12 +1324,29 @@ public boolean changeRecordTypeSetting(WebDriver driver,String userName,String r
 	return flag;
 }
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param recordTypeLabel
+ * @param timeOut
+ * @return getRecordTypeLabel
+ */
 public WebElement getRecordTypeLabel(String projectName,String recordTypeLabel,int timeOut) {
 	String xpath="//*[text()='"+recordTypeLabel+"']/..//following-sibling::td//input";
 	WebElement ele=isDisplayed(driver, FindElement(driver, xpath, recordTypeLabel, action.BOOLEAN, 10), "visibility", 10, recordTypeLabel);
 	return ele;
 }
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param labelWithValue
+ * @param isMakeAvailable
+ * @param isMakeDefault
+ * @param layOut
+ * @param timeOut
+ * @return true if record type is created for Object
+ */
 public boolean createRecordTypeForObject(String projectName,String[][] labelWithValue,boolean isMakeAvailable,boolean isMakeDefault,String layOut,int timeOut) {
 	WebElement ele;
 	String label;
@@ -1361,6 +1445,13 @@ public boolean createRecordTypeForObject(String projectName,String[][] labelWith
 	return flag;
 }
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param labelWithValue
+ * @param timeOut
+ * @return true if able to click on edit button for Object
+ */
 public boolean editRecordTypeForObject(String projectName,String[][] labelWithValue,int timeOut) {
 	WebElement ele;
 	String label;
@@ -1439,6 +1530,10 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 	return flag;
 }
 
+/**
+ * @author Azhar Alam
+ * @param labelWithValue
+ */
 public void recordTypeVerification(String[][] labelWithValue) {
 	String xpath = "";
 	WebElement ele;
@@ -1458,6 +1553,12 @@ public void recordTypeVerification(String[][] labelWithValue) {
 	}
 }
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param field
+ * @return API name of String
+ */
 public String returnAPINameOfField(String projectName, String field) {
 	String xpath = "//span[text()='"+field+"']/../../following-sibling::td[1]/span";
 	WebElement ele= isDisplayed(driver, FindElement(driver, xpath,field,
@@ -1468,12 +1569,26 @@ public String returnAPINameOfField(String projectName, String field) {
 
 }
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param label
+ * @param timeOut
+ * @return label iput box Element
+ */
 public WebElement getLabelInputBoxwithCommonXpath(String projectName,String label,int timeOut) {
 	String xpath="//*[text()='"+label+"']/..//following-sibling::td//input";
 	WebElement ele=isDisplayed(driver, FindElement(driver, xpath, label, action.BOOLEAN, 10), "visibility", 10, label);
 	return ele;
 }
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param labelWithValue
+ * @param timeOut
+ * @return true if custom object created successfully
+ */
 public boolean createCustomObject(String projectName,String[][] labelWithValue,int timeOut) {
 	WebElement ele;
 	String label;
@@ -1508,6 +1623,17 @@ public boolean createCustomObject(String projectName,String[][] labelWithValue,i
 	return flag;
 }
 
+/**
+ * @author Azhar Alam
+ * @param environment
+ * @param mode
+ * @param projectName
+ * @param objectName
+ * @param ObjecttoAddedOnTab
+ * @param styleType
+ * @param parentId
+ * @return true if object added to Tab
+ */
 public boolean addObjectToTab(String environment, String mode,String projectName,object objectName, String ObjecttoAddedOnTab,String styleType,String parentId) {
 	WebElement ele=null;
 	boolean flag=false;
@@ -1591,6 +1717,12 @@ public boolean addObjectToTab(String environment, String mode,String projectName
 	return flag;
 }
 
+/**
+ * @author Azhar Alam
+ * @param styleType
+ * @param parentId
+ * @return true if able to select style for tab
+ */
 public boolean tabStyleSelector(String styleType,String parentId) {
 	boolean flag = false;
 	boolean windowFlag=false;
@@ -1639,6 +1771,13 @@ public boolean tabStyleSelector(String styleType,String parentId) {
 }
 
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param attachmentPath
+ * @param imgName
+ * @return true if 	upload/update img
+ */
 public boolean updateEdgeIcon(String projectName,String attachmentPath,String imgName) {
 	boolean flag=false;
 	attachmentPath=attachmentPath+imgName;
@@ -1681,6 +1820,14 @@ public boolean updateEdgeIcon(String projectName,String attachmentPath,String im
 }
 
 
+/**
+ * @author Azhar Alam
+ * @param driver
+ * @param userName
+ * @param LabelswithCheck
+ * @param timeOut
+ * @return true if able to change permission for particular object for particular type for particular user
+ */
 public boolean permissionChangeForUserONObject(WebDriver driver,String userName,String[][] LabelswithCheck,int timeOut) {
 
 	ThreadSleep(10000);
@@ -1745,6 +1892,14 @@ public boolean permissionChangeForUserONObject(WebDriver driver,String userName,
 	return flag;
 }
 
+/**
+ * @author Azhar Alam
+ * @param driver
+ * @param userLastName
+ * @param userFirstName
+ * @param timeOut
+ * @return true if able to click on Edit button for CRM User
+ */
 public boolean clickOnEditBtnForCRMUser(WebDriver driver,String userLastName,String userFirstName,int timeOut) {
 	boolean flag=false;
 	switchToDefaultContent(driver);
@@ -1775,6 +1930,13 @@ public boolean clickOnEditBtnForCRMUser(WebDriver driver,String userLastName,Str
 	return flag;
 }
 
+/**
+ * @author Akul Bhutani
+ * @param projectName
+ * @param object
+ * @param at
+ * @return drop down object
+ */
 public WebElement selectObjectDropdownOnSharingSettings(String projectName, String object,accessType at) {
 	object=object.replace("_", " ");
 	int i=0;
@@ -1787,6 +1949,13 @@ public WebElement selectObjectDropdownOnSharingSettings(String projectName, Stri
 	return isDisplayed(driver, ele, "visibility", 10, "dropdown");
 }
 
+/**
+ * @author Azhar Alam
+ * @param driver
+ * @param labelsWithValues
+ * @param timeOut
+ * @return true if global action created successfully
+ */
 public boolean createNewAction(WebDriver driver,String[][] labelsWithValues,int timeOut) {
 	boolean flag=false;
 	switchToDefaultContent(driver);
@@ -1840,6 +2009,13 @@ public boolean createNewAction(WebDriver driver,String[][] labelsWithValues,int 
 }
 
 
+/**
+ * @author Azhar Alam
+ * @param driver
+ * @param actionName
+ * @param labelsWithValues
+ * @param timeOut create predefined value for Global Action
+ */
 public void createPredefinedValueForGlobalAction(WebDriver driver,String actionName,String[][] labelsWithValues,int timeOut) {
 	boolean flag=false;
 	switchToDefaultContent(driver);
@@ -1915,6 +2091,16 @@ public void createPredefinedValueForGlobalAction(WebDriver driver,String actionN
 	}
 }
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param labelWithValue
+ * @param existingPageLayout
+ * @param src
+ * @param trgt
+ * @param timeOut
+ * @return true if page layout created successfully
+ */
 public boolean createPageLayout(String projectName,String[][] labelWithValue,String existingPageLayout,String src,String trgt,int timeOut) {
 	WebElement ele;
 	String label;
@@ -1971,6 +2157,12 @@ public boolean createPageLayout(String projectName,String[][] labelWithValue,Str
 	return flag;
 }
 
+/**
+ * @author Azhar Alam
+ * @param src
+ * @param trgt
+ * @return true if successfully drag n drop & save layout
+ */
 public boolean dragDropOnPageLayout(String src,String trgt){
 	boolean flag=false;
 	sendKeys(driver, getquickFindSearch(10), src, src, action.BOOLEAN);

@@ -163,6 +163,7 @@ public class TaskPageBusinessLayer extends TaskPage {
 	}
 	
 	/**
+	 * @author Azhar Alam
 	 * @param projectName
 	 * @param timeOut
 	 * @return true if Related Contact Field Value is Blank on Task Page
@@ -196,6 +197,12 @@ public class TaskPageBusinessLayer extends TaskPage {
 		return flag;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param timeOut
+	 * @return true if comment is empty
+	 */
 	public boolean isCommentsEmpty(String projectName,int timeOut) {
 		WebElement ele=null;
 		String actual=null;
@@ -225,29 +232,29 @@ public class TaskPageBusinessLayer extends TaskPage {
 		return flag;
 	}
 	
-//	/**@author Azhar Alam
-//	 * @param projectName
-//	 * @param taskName
-//	 * @return String
-//	 * @description this is used to return successful task created message
-//	 */
-//	public String taskDeletedMsg(String projectName,String taskName) {
-//	//	return "Task \""+taskName+"\" was deleted";
-//		return "was deleted";
-//		
-//	}
-//	
-//	/**@author Azhar Alam
-//	 * @param projectName
-//	 * @param taskName
-//	 * @return String
-//	 * @description this is used to return successful task created message
-//	 */
-//	public String restoreItemMsg(String projectName,String restoreItem) {
-//		//return "\""+restoreItem+"\" was restored";
-//		return "was restored";
-//		
-//	}
+	/**@author Azhar Alam
+	 * @param projectName
+	 * @param taskName
+	 * @return String
+	 * @description this is used to return successful task deleted message
+	 */
+	public String taskDeletedMsg(String projectName,String taskName) {
+	//	return "Task \""+taskName+"\" was deleted";
+		return "was deleted";
+		
+	}
+	
+	/**@author Azhar Alam
+	 * @param projectName
+	 * @param taskName
+	 * @return String
+	 * @description this is used to return successful task restored message
+	 */
+	public String restoreItemMsg(String projectName,String restoreItem) {
+		//return "\""+restoreItem+"\" was restored";
+		return "was restored";
+		
+	}
 	
 	
 }

@@ -36,6 +36,14 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		// TODO Auto-generated constructor stub
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param label
+	 * @param action
+	 * @param timeOut
+	 * @return getSDGElementForCreation
+	 */
 	public WebElement getSDGElementForCreation(String projectName,String label,action action,int timeOut) {
 		String xpath="";
 		String fieldLabel=label.replace("_", " ");;
@@ -51,6 +59,14 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		return ele;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param labelWithValues
+	 * @param action
+	 * @param timeOut
+	 * @return true if able to enter value for SDG creation
+	 */
 	public boolean enterValueForSDGCreation(String projectName,String[][] labelWithValues,action action,int timeOut) {
 		boolean flag=false;
 		String label="";
@@ -71,6 +87,15 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		return flag;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param sdgName
+	 * @param labelWithValues
+	 * @param action
+	 * @param timeOut
+	 * @return true if SDG created successfully
+	 */
 	public boolean createCustomSDG(String projectName,String sdgName,String[][] labelWithValues,action action,int timeOut) {
 		boolean flag =false;
 		ThreadSleep(5000);
@@ -103,6 +128,13 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		return flag;
 	}
 	
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param names
+	 * @param values
+	 * @return true if able to add Field on SDG
+	 */
 	public boolean addFieldOnSDG(String projectName, String names, String values) {
 		names= names.replace("_", " ");
 		String name[] = names.split(",");

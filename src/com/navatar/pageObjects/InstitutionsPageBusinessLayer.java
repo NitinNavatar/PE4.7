@@ -129,6 +129,15 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		return flag;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param pageName
+	 * @param btnName
+	 * @param action
+	 * @param timeOut
+	 * @return toggle button
+	 */
 	public WebElement toggleButton(String projectName,PageName pageName,String btnName,action action,int timeOut) {
 		String xpath = "//button[@title='"+btnName+"']";
 		WebElement ele = FindElement(driver, xpath,"Toggle Button : "+btnName, action, timeOut);
@@ -137,6 +146,16 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		return ele;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param pageName
+	 * @param toggleTab
+	 * @param btnName
+	 * @param action
+	 * @param timeOut
+	 * @return SDG toggle button
+	 */
 	public WebElement toggleSDGButtons(String projectName,PageName pageName,String toggleTab,ToggleButtonGroup btnName,action action,int timeOut) {
 		String btname = btnName.toString();
 		String xpath = "//*[text()='"+toggleTab+"']/../../..//following-sibling::div//button[@title='"+btname+"']";
@@ -147,6 +166,15 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 	}
 	
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param pageName
+	 * @param fundName
+	 * @param action
+	 * @param timeOut
+	 * @return fund name webElement of Toggle
+	 */
 	public WebElement getFundNameAtToggle(String projectName,PageName pageName,String fundName,action action,int timeOut) {
 		String xpath = "//*[@data-label='Fund: ']//*[text()='"+fundName+"']";
 		WebElement ele = FindElement(driver, xpath,fundName, action, timeOut);
@@ -156,6 +184,15 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 	}
 	
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param pageName
+	 * @param fundName
+	 * @param action
+	 * @param timeOut
+	 * @return tool tip of fund name at toggle
+	 */
 	public WebElement getFundNameAtToggleToolTip(String projectName,PageName pageName,String fundName,action action,int timeOut) {
 		String xpath = "//*[@data-label='Fund: ']//*[text()='"+fundName+"']/..";
 		WebElement ele = FindElement(driver, xpath,fundName, action, timeOut);
@@ -164,6 +201,15 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		return ele;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param pageName
+	 * @param entityName
+	 * @param action
+	 * @param timeOut
+	 * @return Legal Entity At Toggle WebElement
+	 */
 	public WebElement getLegalEntityAtToggle(String projectName,PageName pageName,String entityName,action action,int timeOut) {
 		String xpath = "//*[@data-label='Legal Entity: ']//*[text()='"+entityName+"']";
 		WebElement ele = FindElement(driver, xpath,entityName, action, timeOut);
@@ -172,6 +218,15 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		return ele;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param pageName
+	 * @param name
+	 * @param action
+	 * @param timeOut
+	 * @return Inline webElement ofToggle
+	 */
 	public WebElement getInlineOrLockedAtToggle(String projectName,PageName pageName,String name,action action,int timeOut) {
 		String xpath = "//a[text()='Fund Investments']/../../../../../..//*[@title='"+name+"']/../following-sibling::span/button";
 		WebElement ele = FindElement(driver, xpath,name, action, timeOut);
@@ -180,6 +235,17 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 	}
 	
 	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param projectName
+	 * @param environment
+	 * @param mode
+	 * @param institutionName
+	 * @param recordType
+	 * @param otherLabelFields
+	 * @param otherLabelValues
+	 * @return if institution created successfully
+	 */
 	public boolean createInstitution(String projectName,String environment,String mode,String institutionName,String recordType, String otherLabelFields,String otherLabelValues) {
 		String labelNames[]=null;
 		String labelValue[]=null;
@@ -302,6 +368,15 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		return false;
 	}
 
+	/**
+	 * @author Ankit Jaiswal
+	 * @param environment
+	 * @param mode
+	 * @param tabName
+	 * @param labelName
+	 * @param labelValue
+	 * @return true if field Value Verified On Institution Page successfully
+	 */
 	public boolean fieldValueVerificationOnInstitutionPage(String environment, String mode, TabName tabName,
 			String labelName,String labelValue) {
 		String finalLabelName;
@@ -444,6 +519,12 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 
 	}
 	
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param status
+	 * @return if status of deal change successfully
+	 */
 	public boolean changeStatus(String projectName,String status) {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		boolean flag=true;
@@ -481,6 +562,16 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 	}
 	
 	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param environment
+	 * @param mode
+	 * @param institutionName
+	 * @param recordType
+	 * @param otherLabelFields
+	 * @param otherLabelValues
+	 * @return true if institution created successfully
+	 */
 	public boolean createInstitution(String environment,String mode,String institutionName,String recordType, String otherLabelFields,String otherLabelValues) {
 		String labelNames[]=null;
 		String labelValue[]=null;
@@ -600,6 +691,14 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		return false;
 	}
 	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param environment
+	 * @param mode
+	 * @param partnershipLegalName
+	 * @param fund
+	 * @return true if partnership created successfully
+	 */
 	public boolean createPartnership(String environment,String mode,String partnershipLegalName, String fund) {
 		refresh(driver);
 		ThreadSleep(5000);
@@ -650,6 +749,16 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		return false;
 	}
 	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param environment
+	 * @param mode
+	 * @param LimitedPartner
+	 * @param Partnership
+	 * @param basedOnValue
+	 * @param excelPath
+	 * @return true if commitment created successfully
+	 */
 	public boolean createCommitment(String environment,String mode,String LimitedPartner, String Partnership, String basedOnValue,String excelPath) {
 		refresh(driver);
 		ThreadSleep(5000);
@@ -719,11 +828,25 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		}
 		return false;
 	}
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param date
+	 * @return column index of particular date on Calendar
+	 */
 	public int findLocationOfDate(String projectName, String date) {
 		String xpath="//a[text()='"+date+"']/../preceding-sibling::td";
 		List<WebElement> li = FindElements(driver, xpath, "list of preceding dates");
 		return li.size()+1;
 	}
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param date
+	 * @param location
+	 * @param timeOut
+	 * @return Event Present On Calender webElement
+	 */
 	public WebElement getEventPresentOnCalender(String projectName, String date, int location, int timeOut) {
 		String xpath="//a[text()='"+date+"']/../../../following-sibling::tbody//td["+location+"]//a";
 		WebElement ele=null;
@@ -735,6 +858,13 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		return null;
 
 	}
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param date
+	 * @param timeOut
+	 * @return List<WebElement> of getListOfEvents
+	 */
 	public List<WebElement> getListOfEvents(String projectName, String date,  int timeOut) {
 		String xpath="//span[text()='"+date+"']/../following-sibling::div//div[contains(@class,'fc-event-container')]//a";
 		List<WebElement> ele=null;
@@ -743,6 +873,12 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		return ele;
 
 	}
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param dateHiphen
+	 * @return true if able erform mouse hover on Calender Box
+	 */
 	public boolean calendarBox(String projectName, String dateHiphen) {
 		String date=dateHiphen.split("-")[2];
 		/*String xpath = "//a[text()='"+date+"']";
@@ -764,6 +900,12 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		return false;
 	}
 	
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param cb
+	 * @return calende Buttons WebElement
+	 */
 	public WebElement calenderButtons(String projectName, CalenderButton cb) {
 		String xpath="";
 		if ((cb == CalenderButton.next) || (cb==CalenderButton.prev))
@@ -774,6 +916,12 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		return isDisplayed(driver, ele, "Visibility", 10, "calender button");
 		
 	}
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param month
+	 * @return true if able to reach Desired Month On Calnder
+	 */
 	public boolean reachToDesiredMonthOnCalnder(String projectName, String month) {
 		click(driver, calenderButtons(projectName, CalenderButton.Month), "calnder button", action.BOOLEAN);
 		String xpathOfCalender = "//div[contains(@class,'Fullcalendar')]//h2";
@@ -798,6 +946,15 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 	}
 
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param institutionName
+	 * @param recordType
+	 * @param labelsWithValues
+	 * @param timeOut
+	 * @return true if entity created successfully
+	 */
 	public boolean createEntityOrAccountPopUp(String projectName,String institutionName,String recordType, String[][] labelsWithValues,int timeOut) {
 		boolean flag=false;
 			ThreadSleep(5000);
@@ -871,6 +1028,13 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 	}
 	
 
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param count
+	 * @param timeOut
+	 * @return webElement of plus More Button On Calendar
+	 */
 	public WebElement plusMoreButtonOnCalendar(String projectName,int count, int timeOut) {
 		
 		String xpath = "//td[contains(@class,'more-cell')]//a[text()='+"+count+" more']";

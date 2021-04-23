@@ -45,6 +45,11 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * @author Azhar Alam
+	 * @param csvRecords
+	 * @return navigation parent as key and order as value
+	 */
 	public static Map<String,Integer> navigationParentLabelWithOrder(List<String> csvRecords){
 		Map<String, Integer> map = new LinkedHashMap<String, Integer>(); 
 		String[] csvRecords2=null;
@@ -85,6 +90,11 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 
 	}
 
+	/**
+	 * @author Azhar Alam
+	 * @param csvRecords
+	 * @return csv data as Map<String,String>
+	 */
 	public static Map<String,String> navigationParentLabelWithChildAndOrder(List<String> csvRecords){
 		Map<String,String> childMap = new LinkedHashMap<String,String>(); 
 		String[] csvRecords2=null;
@@ -132,6 +142,12 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 
 	}
 
+	/**
+	 * @author Azhar Alam
+	 * @param order
+	 * @param map
+	 * @return Map<String, Integer> as sort map by value
+	 */
 	public static Map<String, Integer> sortByValue(boolean order,Map<String, Integer> map)   
 	{  
 		
@@ -163,6 +179,11 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		return sortedMap;
 	}  
 	
+	/**
+	 * @author Azhar Alam
+	 * @param childMap
+	 * @return Map<String,String> with Parent-child Navigation menu iten 
+	 */
 	public static Map<String,String> navigationParentLabelWithChildSorted(Map<String, String> childMap){
 		String[] childWithOrder;
 		String[] childOrderSpillter;
@@ -198,8 +219,13 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 
 	}
 
+	
 	/**
-	 * @return the editPageSeachTextBox
+	 * @param projectName
+	 * @param searchValue
+	 * @param action
+	 * @param timeOut
+	 * @return true if able to click on Navatar Edge
 	 */
 	public boolean clickOnNavatarEdgeLinkHomePage(String projectName,String searchValue,action action,int timeOut) {
 		boolean flag=false;;
@@ -225,8 +251,14 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	}
 
 	
+	
 	/**
-	 * @return the editPageSeachTextBox
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param onlyParent
+	 * @param parentwithChild
+	 * @param action
+	 * @param timeOut verifying Navigation Menu Link 
 	 */
 	public void verifyingNavigationMenuLink(String projectName,Map<String, Integer> onlyParent,Map<String, String> parentwithChild,action action,int timeOut) {
 		boolean flag=false;
@@ -313,6 +345,14 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param navigationLabel
+	 * @param action
+	 * @param timeOut
+	 * @return getNavigationLabel
+	 */
 	public WebElement getNavigationLabel(String projectName,String navigationLabel,action action,int timeOut) {
 //		if (navigationLabel.contains("/")) {
 //			int i=0;
@@ -354,6 +394,14 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	
 	
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param navigationLabel
+	 * @param action
+	 * @param timeOut
+	 * @return getCrossButtonForNavigationLabelPopuP
+	 */
 	public WebElement getCrossButtonForNavigationLabelPopuP(String projectName,String navigationLabel,action action,int timeOut) {
 		String xpath = "//h2[contains(text(),'New') and contains(text(),'"+navigationLabel+"')]/ancestor::div//following-sibling::button[@title='Close this window']";
 		WebElement ele = FindElement(driver, xpath, navigationLabel, action, timeOut);
@@ -361,6 +409,14 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	}
 	
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param navigationField
+	 * @param action
+	 * @param timeOut
+	 * @return Navigation Field webElement
+	 */
 	public WebElement getNavigationField(String projectName,String navigationField,action action,int timeOut) {
 		navigationField=navigationField.replace("_", " ");
 		if (navigationField.equalsIgnoreCase(CSVLabel.Parent.toString())) {
@@ -375,6 +431,14 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	}
 	
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param allReportorDashboard
+	 * @param action
+	 * @param timeOut
+	 * @return All list view with report
+	 */
 	public WebElement getAll(String projectName,String allReportorDashboard,action action,int timeOut) {
 		String all ="All "+allReportorDashboard;
 		String xpath = "//h2[text()='"+allReportorDashboard+"']/following-sibling::*//*[text()='"+all+"']";
@@ -385,6 +449,11 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	
 	
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @return true if able to click on show more drop down value
+	 */
 	public boolean clickOnShowMoreDropdownOnly(String projectName) {
 		String xpath = "";int i =1;
 		WebElement ele=null;
@@ -410,6 +479,14 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	}
 	
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param appName
+	 * @param action
+	 * @param timeOut
+	 * @return true if able to add App to Page/tab
+	 */
 	public boolean addingPageToApp(String projectName,String appName,action action,int timeOut) {
 		String xpath="";
 		boolean flag=false;
@@ -454,6 +531,14 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		return flag;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param navigationField
+	 * @param action
+	 * @param timeOut
+	 * @return Navigation Field webElement
+	 */
 	public WebElement getNavigationField1(String projectName,String navigationField,action action,int timeOut) {
 		navigationField=navigationField.replace("_", " ");
 		String xpath = "//*[text()='"+navigationField+"']/following-sibling::div//input";
@@ -463,6 +548,14 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	}
 	
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param navigationFieldWithValues
+	 * @param action
+	 * @param timeOut
+	 * method ebnter valu on navigation popup
+	 */
 	public void enteringValueForNavigation(String projectName,String[][] navigationFieldWithValues,action action,int timeOut) {
 		String navigationField;
 		String navigationvalue;
@@ -505,6 +598,14 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		return isDisplayed(driver,ele,"visibility",timeOut,"radio button of record type "+recordType);
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param labelValue
+	 * @param labelWithValue
+	 * @param timeOut
+	 * @return true if value entered & save on Navigation PopUp
+	 */
 	public boolean enterValueOnEditPopUpForNavigationTab(String projectName,String labelValue,String[][] labelWithValue,int timeOut) {
 		String navigationTab="Navigation";
 		WebElement ele;
@@ -577,12 +678,26 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		return flag;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param recordType
+	 * @param desc
+	 * @param timeOut
+	 * @return record Type With Description webElement
+	 */
 	public WebElement getrecordTypeWithDescription(String recordType,String desc,int timeOut) {
 		String xpath ="//*[text()='"+recordType+"']/*[text()='"+desc+"']";
 		WebElement ele = FindElement(driver, xpath, recordType+" "+desc, action.SCROLLANDBOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "Visibility", timeOut, recordType+" "+desc);
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param labelWithValue
+	 * @param timeOut
+	 * @return true if successfully created navigation item
+	 */
 	public boolean createNavigationItem(String projectName,String[][] labelWithValue,int timeOut) {
 		String navigationTab="Navigation";
 		boolean flag=false;
@@ -612,6 +727,15 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		return flag;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param parentLabel
+	 * @param childNavigationLabel
+	 * @param action
+	 * @param timeOut
+	 * @return get Navigation Label
+	 */
 	public WebElement getNavigationLabel(String projectName,String parentLabel,String childNavigationLabel,action action,int timeOut) {
 		click(driver, getNavigationLabel(projectName, parentLabel, action, timeOut), parentLabel, action);
 		String xpath = "//div[@id='treeview12']//*//*[text()='"+parentLabel+"']";
@@ -625,6 +749,13 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param action
+	 * @param timeOut
+	 * @return PageDoesNotExist msg element
+	 */
 	public WebElement getPageDoesNotExist(String projectName,action action,int timeOut) {
 		String msg = NavatarSetUpPageErrorMessage.PageDoesExist;
 		String xpath = "//h2[contains(text(),'"+msg+"')]/ancestor::div//following-sibling::button[@title='Close this window']";
@@ -639,6 +770,14 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		return ele;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param tabName
+	 * @param action
+	 * @param timeOut
+	 * @return coverage item as tab after click on navigation menu item
+	 */
 	public WebElement getCoverageTabAfterClick(String projectName,String tabName,action action,int timeOut) {
 		ThreadSleep(5000);
 		String xpath = "//a[contains(@href,'lightning') and contains(@title,'Coverages') or contains(@title,'"+tabName+"')]/span/..";
