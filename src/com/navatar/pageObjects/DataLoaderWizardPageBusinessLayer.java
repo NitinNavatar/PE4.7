@@ -253,7 +253,7 @@ public class DataLoaderWizardPageBusinessLayer extends DataLoaderWizardPage {
 	 * @param environment
 	 * @param mode
 	 * @param searchitemName
-	 * @return true if successfully search 
+	 * @return true if successfully search object on Setup
 	 */
 	public boolean searchStandardOrCustomObject(String environment, String mode, SearchItemName searchitemName) {
 		if(mode.equalsIgnoreCase(Mode.Classic.toString())) {
@@ -287,7 +287,7 @@ public class DataLoaderWizardPageBusinessLayer extends DataLoaderWizardPage {
 	 * @param mode
 	 * @param object
 	 * @param objectFeatureName
-	 * @return true if able to click on Object
+	 * @return true if able to click on Object on setup page
 	 */
 	public boolean clickOnObjectFeature(String environment, String mode,SearchItemcategory object,SearchItemName objectFeatureName ) {
 		WebElement ele=null;
