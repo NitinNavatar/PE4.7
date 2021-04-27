@@ -98,6 +98,10 @@ public class HomePageBusineesLayer extends HomePage {
 		return flag;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @return true if able to click on Edit Page Link
+	 */
 	public boolean clickOnEditPageLinkOnSetUpLink() {
 		boolean flag = false;
 			if(click(driver, getSettingLink_Lighting(20), "setting icon", action.SCROLLANDBOOLEAN)) {
@@ -116,6 +120,13 @@ public class HomePageBusineesLayer extends HomePage {
 		return flag;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param environment
+	 * @param mode
+	 * @param navatarQuickLink
+	 * @return true if successfully click on Navatar Quick Link
+	 */
 	public boolean clickOnLinkFromNavatarQuickLink(String environment,String mode,NavatarQuickLink navatarQuickLink){
 		boolean flag =false;
 		if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
@@ -155,6 +166,13 @@ public class HomePageBusineesLayer extends HomePage {
 		
 	}
 	
+/**
+ * @author Azhar Alam
+ * @param environment
+ * @param mode
+ * @param navatarQuickLink
+ * @return true if successfully verify landing page after click on Navatar Setup Page 
+ */
 public boolean verifyLandingPageAfterClickingOnNavatarSetUpPage(String environment,String mode, NavatarQuickLink navatarQuickLink) {
 		
 		String landingPage = null;

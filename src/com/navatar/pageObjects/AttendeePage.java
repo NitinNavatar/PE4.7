@@ -22,6 +22,13 @@ public class AttendeePage extends BasePageBusinessLayer{
 		return isDisplayed(driver, newAttendeeButton, "Visibility", timeOut, "newAttendeeButton");
 
 	}
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param field
+	 * @param timeOut
+	 * @return
+	 */
 	public WebElement labelTextBox(String projectName, String field, int timeOut) {
 		field=field.replace("_", " ");
 		String xpath = "//*[text()='"+field+"']/..//input";

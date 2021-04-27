@@ -717,7 +717,7 @@ public class Module1 extends BaseLib {
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String value="";
 		String type="";
-		String[][] EntityOrAccounts = {{ FS_Ins2, FS_Ins2RecordType ,null,null},{ FS_LP1, FS_LP1RecordType,InstitutionPageFieldLabelText.Parent_Entity.toString(),FS_Ins2}};
+		String[][] EntityOrAccounts = {{ FS_Ins2, FS_Ins2RecordType ,null,null},{ FS_LP1, FS_LP1RecordType,InstitutionPageFieldLabelText.Parent_Institution.toString(),FS_Ins2}};
 
 		for (String[] accounts : EntityOrAccounts) {
 			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
@@ -1007,7 +1007,7 @@ public class Module1 extends BaseLib {
 			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object5Tab,YesNo.Yes);
 		}
 		
-		String staff="",status="",event="";
+		String staff="",status="",event=FS_MarketingEvent1Name;
 		WebElement ele=null;
 		for (int i = 0;i<2;i++) {
 			if (lp.clickOnTab(projectName, TabName.Object5Tab)) {
@@ -1313,7 +1313,7 @@ public class Module1 extends BaseLib {
 			for(int i=0; i<objectName.size(); i++) {
 				object object1 = object.valueOf(objectName.get(i));
 				
-				if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,pageLayoutName.get(i), null, null,YesNo.Yes)) {
+				if(setup.deleteFieldSetComponent(object1,ObjectFeatureName.FieldSets,pageLayoutName.get(i),YesNo.Yes)) {
 					log(LogStatus.PASS, "Field Set Object position is changed for : "+FS_FieldSetLabel1, YesNo.No);
 				}else {
 					log(LogStatus.ERROR,"Field Set Object position is not changed for : "+FS_FieldSetLabel1, YesNo.Yes);

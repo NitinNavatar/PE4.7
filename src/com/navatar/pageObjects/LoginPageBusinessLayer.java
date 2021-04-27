@@ -222,6 +222,12 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 	return false;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param appName
+	 * @param timOut
+	 * @return true if successfully search & clcik on App
+	 */
 	public boolean searchAndClickOnApp(String appName,int timOut) {
 		boolean flag = false;
 

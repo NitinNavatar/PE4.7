@@ -26,6 +26,15 @@ public class DataLoaderWizardPageBusinessLayer extends DataLoaderWizardPage {
 	}
 	
 	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param objectName
+	 * @param objectType
+	 * @param dataImportFilePath
+	 * @param dataImportType
+	 * @param numberOfRecordImportCount
+	 * @return true if succesfully import data through Data wizard
+	 */
 	public boolean dataImportWizard(ObjectName objectName,ObjectType objectType,String dataImportFilePath,DataImportType dataImportType, String numberOfRecordImportCount) {
 		boolean flag = false;
 		BaseLib.PublicFlag = false;
@@ -239,6 +248,13 @@ public class DataLoaderWizardPageBusinessLayer extends DataLoaderWizardPage {
 	
 	
 	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param environment
+	 * @param mode
+	 * @param searchitemName
+	 * @return true if successfully search object on Setup
+	 */
 	public boolean searchStandardOrCustomObject(String environment, String mode, SearchItemName searchitemName) {
 		if(mode.equalsIgnoreCase(Mode.Classic.toString())) {
 			if(sendKeys(driver,getQucikSearchInSetupPage(environment, mode, 30),searchitemName.toString().replace("_", " "),"quick search text box in setup page", action.SCROLLANDBOOLEAN)) {
@@ -265,6 +281,14 @@ public class DataLoaderWizardPageBusinessLayer extends DataLoaderWizardPage {
 	
 	
 	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param environment
+	 * @param mode
+	 * @param object
+	 * @param objectFeatureName
+	 * @return true if able to click on Object on setup page
+	 */
 	public boolean clickOnObjectFeature(String environment, String mode,SearchItemcategory object,SearchItemName objectFeatureName ) {
 		WebElement ele=null;
 		if(mode.equalsIgnoreCase(Mode.Classic.toString())) {
@@ -305,6 +329,10 @@ public class DataLoaderWizardPageBusinessLayer extends DataLoaderWizardPage {
 	}
 	
 	
+	/**
+	 * @author Ankit Jaiswal
+	 * @return true if quit data import wizard successfully
+	 */
 	public boolean QuitDataImportWizard() {
 		if(click(driver, getCancelYourImportBtn(30), "cancel your import button", action.BOOLEAN)) {
 			appLog.info("clicked on cancel your import button");

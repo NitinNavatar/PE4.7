@@ -28,6 +28,16 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		// TODO Auto-generated constructor stub
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param requestID
+	 * @param dateRequested
+	 * @param request
+	 * @param status
+	 * @param timeOut
+	 * @return true if successfully verified open request
+	 */
 	public boolean verifyingOpenRequest(String projectName,String requestID, String dateRequested,String request,String status,int timeOut) {
 
 		log(LogStatus.INFO,"Going to verify Open Request with information as: "+requestID+" >> "+dateRequested+" >> "+request+" >> "+status,YesNo.No);
@@ -50,6 +60,15 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return flag;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param requestID
+	 * @param dateRequested
+	 * @param request
+	 * @param timeOut
+	 * @return true if successfully verified closed request
+	 */
 	public boolean verifyingClosedRequest(String projectName,String requestID, String dateRequested,String request,int timeOut) {
 
 		log(LogStatus.INFO,"Going to verify Closed Request with information as: "+requestID+" >> "+dateRequested+" >> "+request,YesNo.No);
@@ -72,6 +91,15 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	}
 	
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param pageName
+	 * @param date
+	 * @param action
+	 * @param timeOut
+	 * @return date webElement at Toggle
+	 */
 	public WebElement getDateAtToggle(String projectName,PageName pageName,String date,action action,int timeOut) {
 		String xpath = "//*[@data-label='Date Requested: ']//*[text()='"+date+"']";
 		WebElement ele = FindElement(driver, xpath,date, action, timeOut);
@@ -80,6 +108,15 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return ele;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param pageName
+	 * @param date
+	 * @param action
+	 * @param timeOut
+	 * @return date tool tip 
+	 */
 	public WebElement getDateAtToggleToolTip(String projectName,PageName pageName,String date,action action,int timeOut) {
 		String xpath = "//*[@data-label='Date Requested: ']//*[text()='"+date+"']/..";
 		WebElement ele = FindElement(driver, xpath,date, action, timeOut);
@@ -88,6 +125,16 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return ele;
 	}
 	
+	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param pageName
+	 * @param name
+	 * @param action
+	 * @param timeOut
+	 * @return inLine
+	 */
 	public WebElement getInlineOrLockedAtToggle(String projectName,PageName pageName,String name,action action,int timeOut) {
 		String xpath = "//a[text()='Fund Investments']/../../../../../..//*[@title='"+name+"']/../following-sibling::span/button";
 		WebElement ele = FindElement(driver, xpath,name, action, timeOut);
@@ -95,6 +142,15 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return ele;
 	}
 	
+	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param dealName
+	 * @param requestInfo
+	 * @param timeOut
+	 * @return true if new request created successfully
+	 */
 	public boolean createNewRequest(String projectName,String dealName,String[][] requestInfo,int timeOut) {
 		boolean flag=false;
 		String label;
@@ -179,6 +235,13 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return flag;
 	}
 	
+	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param attachmentPath
+	 * @return image id of uploaded photo
+	 */
 	public String updatePhotoInUserPage(String projectName,String attachmentPath) {
 		String imgId=null;
 		ContactsPage cp = new ContactsPage(driver);
@@ -219,6 +282,15 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return null;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param pageName
+	 * @param request
+	 * @param action
+	 * @param timeOut
+	 * @return request webElement
+	 */
 	public WebElement getRequestAtToggle(String projectName,PageName pageName,String request,action action,int timeOut) {
 		String xpath = "//*[@data-label='Request: ']//*[text()='"+request+"']";
 		WebElement ele = FindElement(driver, xpath,request, action, timeOut);
@@ -227,6 +299,15 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return ele;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param pageName
+	 * @param request
+	 * @param action
+	 * @param timeOut
+	 * @return true if reuest present
+	 */
 	public boolean isRequestAtToggleToolTip(String projectName,PageName pageName,String request,action action,int timeOut) {
 		boolean flag=false;
 		String xpath = "//*[@data-label='Request: ']//*[text()='"+request+"']";
@@ -240,6 +321,14 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return flag;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param itemValue
+	 * @param action
+	 * @param timeOut
+	 * @return edit btn webElemnt
+	 */
 	public WebElement getEditBtn(String projectName,String itemValue,action action,int timeOut) {
 		String xpath = "//*[text()='"+itemValue+"']/../following-sibling::*//*[@title='Edit']";
 		WebElement ele = FindElement(driver, xpath,itemValue, action, timeOut);

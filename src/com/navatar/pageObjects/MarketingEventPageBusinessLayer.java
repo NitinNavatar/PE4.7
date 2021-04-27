@@ -126,6 +126,16 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 		}
 		return flag;
 	}
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param marketingEventName
+	 * @param recordType
+	 * @param date
+	 * @param organizer
+	 * @param timeOut
+	 * @return true if created Marketing Event From SDG
+	 */
 	public boolean createMarketingEventFromSDG(String projectName,String marketingEventName,String recordType, String date,String organizer,int timeOut) {
 		boolean flag=false;
 
@@ -204,6 +214,16 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 
 		return flag;
 	}
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param marketingEventName
+	 * @param recordType
+	 * @param date
+	 * @param organizer
+	 * @param timeOut
+	 * @return true if created Marketing Event From Calendar
+	 */
 	public boolean createMarketingEventFromCalendar(String projectName,String marketingEventName,String recordType, String date,String organizer,int timeOut) {
 		boolean flag=false;
 
@@ -271,6 +291,15 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 
 		return flag;
 	}
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param pageName
+	 * @param btnName
+	 * @param action
+	 * @param timeOut
+	 * @return toggleButton
+	 */
 	public WebElement toggleButton(String projectName,PageName pageName,String btnName,action action,int timeOut) {
 		String xpath = "//button[@title='"+btnName+"']";
 		WebElement ele = FindElement(driver, xpath,"Toggle Button : "+btnName, action, timeOut);
@@ -279,6 +308,16 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 		return ele;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param pageName
+	 * @param toggleTab
+	 * @param btnName
+	 * @param action
+	 * @param timeOut
+	 * @return getFundNameAtToggle
+	 */
 	public WebElement toggleSDGButtons(String projectName,PageName pageName,String toggleTab,ToggleButtonGroup btnName,action action,int timeOut) {
 		String btname = btnName.toString();
 		String xpath = "//*[text()='"+toggleTab+"']/../../..//following-sibling::div//button[@title='"+btname+"']";
@@ -289,6 +328,15 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 	}
 	
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param pageName
+	 * @param fundName
+	 * @param action
+	 * @param timeOut
+	 * @return getFundNameAtToggle
+	 */
 	public WebElement getFundNameAtToggle(String projectName,PageName pageName,String fundName,action action,int timeOut) {
 		String xpath = "//*[@data-label='Fund: ']//*[text()='"+fundName+"']";
 		WebElement ele = FindElement(driver, xpath,fundName, action, timeOut);
@@ -298,6 +346,15 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 	}
 	
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param pageName
+	 * @param fundName
+	 * @param action
+	 * @param timeOut
+	 * @return getLegalEntityAtToggle
+	 */
 	public WebElement getFundNameAtToggleToolTip(String projectName,PageName pageName,String fundName,action action,int timeOut) {
 		String xpath = "//*[@data-label='Fund: ']//*[text()='"+fundName+"']/..";
 		WebElement ele = FindElement(driver, xpath,fundName, action, timeOut);
@@ -306,6 +363,15 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 		return ele;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param pageName
+	 * @param entityName
+	 * @param action
+	 * @param timeOut
+	 * @return getLegalEntityAtToggle
+	 */
 	public WebElement getLegalEntityAtToggle(String projectName,PageName pageName,String entityName,action action,int timeOut) {
 		String xpath = "//*[@data-label='Legal Entity: ']//*[text()='"+entityName+"']";
 		WebElement ele = FindElement(driver, xpath,entityName, action, timeOut);
@@ -314,6 +380,15 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 		return ele;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param pageName
+	 * @param name
+	 * @param action
+	 * @param timeOut
+	 * @return getInlineOrLockedAtToggle
+	 */
 	public WebElement getInlineOrLockedAtToggle(String projectName,PageName pageName,String name,action action,int timeOut) {
 		String xpath = "//a[text()='Fund Investments']/../../../../../..//*[@title='"+name+"']/../following-sibling::span/button";
 		WebElement ele = FindElement(driver, xpath,name, action, timeOut);
@@ -321,6 +396,15 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 		return ele;
 	}
 	
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param marketingEvent
+	 * @param requestInfo
+	 * @param action
+	 * @param timeOut
+	 * @return true if attendee created successfully
+	 */
 	public boolean createAttendee(String projectName,String marketingEvent,String[][] requestInfo,action action,int timeOut) {
 		boolean flag=true;
 		String label;
@@ -419,6 +503,12 @@ public class MarketingEventPageBusinessLayer extends MarketingEventPage {
 		return flag;
 	}
 	
+	/**
+	 * @author Akul Bhutani
+	 * @param recordType
+	 * @param timeOut
+	 * @return getRadioButtonforRecordTypeME
+	 */
 	public WebElement getRadioButtonforRecordTypeME(String recordType,int timeOut) {
 		String xpath="//div[@id='containerBodyID']//span[text()='"+recordType+"']/..//input";
 		WebElement ele = null;

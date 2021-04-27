@@ -40,6 +40,13 @@ public class CoveragePageBusinessLayer extends CoveragePage  {
 	}
 	
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param recordType
+	 * @param coverageName
+	 * @return true if coverage item created successfully
+	 */
 	public boolean createCoverage(String projectName, String recordType, String coverageName) {
 		refresh(driver);
 		ThreadSleep(10000);
@@ -99,6 +106,12 @@ public class CoveragePageBusinessLayer extends CoveragePage  {
 		return false;
 	}
 	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param coverageName
+	 * @return coverage created message
+	 */
 	public String coverageCreatedMsg(String projectName,String coverageName) {
 		return "Coverage \""+coverageName+"\" was created.";
 		

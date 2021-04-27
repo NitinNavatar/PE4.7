@@ -46,8 +46,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 	 * @return true/false
 	 * @description verify all fields present on contact page
 	 */
-	public boolean fieldValueVerificationOnContactPage(String projectName, TabName tabName,
-			String labelName,String labelValue) {
+	public boolean fieldValueVerificationOnContactPage(String projectName, TabName tabName,String labelName,String labelValue) {
 		String finalLabelName="";
 
 
@@ -370,115 +369,9 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 			return false;
 	}
 	
-	
-	/**@author Akul Bhutani
-	 * @param projectName
-	 * @param contactFirstName
-	 * @param contactLastName
-	 * @param legalName
-	 * @param emailID
-	 * @param labelsWithValus
-	 * @param timeOut
-	 * @return true/false
-	 * @description this is used to create contact contact with arguments having 2d array of data
-	 */
-	public boolean createContact(String projectName, String contactFirstName, String contactLastName,
-			String legalName, String emailID,String recordType, String[][] labelsWithValus,int timeOut) {
-		boolean flag=false;
-		WebElement ele=null;
-		String xpath="";
-		refresh(driver);
-		ThreadSleep(5000);
-		if(clickUsingJavaScript(driver, getNewButton(projectName, 60), "new button")) {
-			appLog.info("clicked on new button");
-			ThreadSleep(2000);
-			
-			if (!recordType.equals("") || !recordType.isEmpty()) {
-				ThreadSleep(2000);
-				if(click(driver, getRadioButtonforRecordType(recordType, 5), "Radio Button for : "+recordType, action.SCROLLANDBOOLEAN)){
-					appLog.info("Clicked on radio Button  for record type : "+recordType);
-					if (click(driver, getContinueOrNextButton(projectName,5), "Continue Button", action.BOOLEAN)) {
-						appLog.info("Clicked on Continue or Nxt Button");	
-						ThreadSleep(1000);
-					}else{
-						appLog.error("Not Able to Clicked on Next Button");
-						return false;	
-					}
-				}else{
-					appLog.error("Not Able to Clicked on radio Button for record type : "+recordType);
-					return false;
-				}
-				
-			}
-			
-			ele = getLabelTextBox(projectName, PageName.Object2Page.toString(),PageLabel.First_Name.toString(), timeOut);
-			if (sendKeys(driver, ele, contactFirstName, "Contact first Name",action.BOOLEAN)) {
-				appLog.info("Enter value on Contact First Name Text Box : "+contactFirstName);
-				ele = getLabelTextBox(projectName, PageName.Object2Page.toString(),PageLabel.Last_Name.toString(), timeOut);
-				
-				if (sendKeys(driver, ele, contactLastName, "Contact Last Name",	action.BOOLEAN)) {
-					appLog.info("Enter value on Contact Last Name Text Box : "+contactLastName);
-					
-					ele = getLabelTextBox(projectName, PageName.Object2Page.toString(),PageLabel.Last_Name.toString(), timeOut);
-					if (sendKeys(driver, getLegalName(projectName, 60), legalName, "Legal Name",action.SCROLLANDBOOLEAN)) {
-						appLog.info("Enter value on Legal Text Box : "+legalName);
-						
-						ThreadSleep(1000);
-						xpath = "//div[contains(@class,'uiAutocomplete')]//a//div[@title='" + legalName+ "']";
-						ele = FindElement(driver,xpath,"Legal Name List", action.SCROLLANDBOOLEAN, timeOut);
-						if (click(driver,ele,legalName + "   :   Account Name", action.BOOLEAN)) {
-							appLog.info(legalName + "  is present in list.");
-							
-							ele = getLabelTextBox(projectName, PageName.Object2Page.toString(),PageLabel.Email.toString(), timeOut);
-							if (sendKeys(driver, ele, emailID, "Email ID",action.SCROLLANDBOOLEAN)) {
-								appLog.info("Enter value on Contact Email Text Box : "+emailID);
-								
-								if (click(driver, getSaveButton(projectName, 60), "Save Button",action.SCROLLANDBOOLEAN)) {
-									appLog.info("Clicked on save button");
-									
-									ThreadSleep(2000);
-									refresh(driver);
-									ThreadSleep(5000);
-									
-									if (getContactFullNameInViewMode(projectName, 20) != null) {
-										String contactFullName = getText(driver,getContactFullNameInViewMode(projectName, 60), "Contact Name",action.BOOLEAN);
-										appLog.info("Contact Name : "+contactFullName);
-										if (contactFullName.contains(contactFirstName + " " + contactLastName)) {
-											appLog.info("Contact Created Successfully :" + contactFirstName + " "+ contactLastName);
-											flag=true;
-										} else {
-											appLog.error("Contact created but not matched :" + contactFirstName+ " " + contactLastName);
-										}
-									} else {
-										appLog.error("Not able to find contact name label");
-									}
-								} else {
-									appLog.info("Not able to click on save button");
-								}
-							} else {
-								appLog.error("Not able to enter email id");
-							}
-							
-						} else {
-							appLog.info(legalName + "  is not present in the list.");
-						}
-					} else {
-						appLog.error("Not able to enter legal name");
-					}
-				}else {
-					appLog.error("Not able to enter Last name in text box");
 
-				}
-			} else {
-				appLog.error("Not able to enter first name in text box");
-			}
-		} else {
-			appLog.error("Not able to click on New Button so cannot create Contact: " + contactFirstName+" "+contactLastName);
-		}
-		return flag;
-	}
-	
-	/**@author Akul Bhutani
+	/**
+	 * @author Akul Bhutani
 	 * @param projectName
 	 * @param contactFirstName
 	 * @param contactLastName
@@ -503,404 +396,8 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		return false;
 	}
 	
-	/**@author Akul Bhutani
-	 * @param environment
-	 * @param mode
-	 * @param contactFirstName
-	 * @param contactLastName
-	 * @return true/false
-	 * @description this method is used to click on already created contact lightning/classic
-	 */
-	public boolean clickOnCreatedContact(String environment, String mode,String contactFirstName,String contactLastName){
-		int i =1;
-		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
-			if (getSelectedOptionOfDropDown(driver, getViewDropdown(60), "View dropdown", "text").equalsIgnoreCase("All Contacts")) {
-				if (click(driver, getGoButton(60), "Go button", action.BOOLEAN)) {
-				}
-				else {
-					appLog.error("Go button not found");
-					return false;
-				}
-			}
-			else{
-				if (selectVisibleTextFromDropDown(driver, getViewDropdown(60),"View dropdown","All Contacts") ){
-				}
-				else {
-					appLog.error("All Contacts  not found in dropdown");
-					return false;
-				}
-
-			}
-			WebElement contactName=null;
-			if(contactFirstName==null){
-				contactName = FindElement(driver, "//div[@class='x-panel-bwrap']//a//span[contains(text(),'"+ contactLastName + "')]", "Contact Name", action.BOOLEAN, 10);
-			} else {
-				contactName = FindElement(driver, "//div[@class='x-panel-bwrap']//a//span[contains(text(),'"
-						+ contactLastName + ", " + contactFirstName + "')]", "Contact Name", action.BOOLEAN, 10);
-			}
-
-			if (contactName != null) {
-				if (click(driver, contactName, "Contact Name", action.SCROLLANDBOOLEAN)) {
-					appLog.info(
-							"Clicked on created contact successfully :" + contactFirstName + " " + contactLastName);
-					return true;
-
-				} else {
-					appLog.error("Not able to click on created contact");
-					return false;
-				}
-			} else {
-				while (true) {
-					appLog.error("Contact is not Displaying on "+i+ " Page: " + contactLastName + ", " + contactFirstName);
-					if (click(driver, getNextImageonPage(10), "Contact Page Next Button",
-							action.SCROLLANDBOOLEAN)) {
-
-						appLog.info("Clicked on Next Button");
-						if(contactFirstName==null){
-							contactName = FindElement(driver, "//div[@class='x-panel-bwrap']//a//span[contains(text(),'"+ contactLastName + "')]", "Contact Name", action.BOOLEAN, 10);
-						} else {
-							contactName = FindElement(driver, "//div[@class='x-panel-bwrap']//a//span[contains(text(),'"
-									+ contactLastName + ", " + contactFirstName + "')]", "Contact Name", action.BOOLEAN, 10);
-						}
-						if (contactName != null) {
-							if (click(driver, contactName, contactLastName + ", " + contactFirstName, action.SCROLLANDBOOLEAN)) {
-								appLog.info("Clicked on Contact name : " + contactLastName + ", " + contactFirstName);
-								return true;
-
-							}
-						}
-
-
-
-					} else {
-						appLog.error("Contact Not Available : " + contactLastName + ", " + contactFirstName);
-						return false;
-					}
-					i++;
-				}
-			}
-
-		}else{
-			return true;
-		}
-	}
-
-	/**@author Akul Bhutani
-	 * @param projectName
-	 * @param subject
-	 * @param body
-	 * @param attachmentYesOrNo
-	 * @param attachment
-	 * @param timeOut
-	 * @return true/false
-	 * @description this method is used to send email from contact page
-	 */
-	public boolean sendEmail(String mode,String projectName, String subject, String body,boolean attachmentYesOrNo,String attachment,int timeOut) {
-		String parentID=null;
-		boolean attachmentFlag=false,mailFlag=false;
-		if (sendKeys(driver, getsubjectTextbox(projectName, timeOut), subject, "subject", action.SCROLLANDBOOLEAN)) {
-			if (sendKeys(driver, getbodyTextbox(projectName, timeOut), body, "body", action.SCROLLANDBOOLEAN)) {
-				if (attachmentYesOrNo) {
-					if (click(driver, getattachFileButton(mode,projectName, timeOut), "attach file button", action.SCROLLANDBOOLEAN)) {
-						parentID=switchOnWindow(driver);
-						if (parentID!=null) {
-							switchToFrame(driver,timeOut,getFrame(PageName.EmailUploadPage, timeOut) );
-							if (sendKeys(driver, getuploadFileBrowseButton(projectName, timeOut), attachment, "browse button", action.SCROLLANDBOOLEAN)) {
-								if (click(driver, getattachToEmail(projectName, timeOut), "attach button", action.BOOLEAN)) {
-									attachmentFlag=true;
-									ThreadSleep(4000);
-								}
-								else {
-									log(LogStatus.ERROR, "attach button not clickable, so cannot send email", YesNo.Yes);
-								}
-							}
-							else {
-								log(LogStatus.ERROR, "file path could not be sent, so cannot send email", YesNo.Yes);
-							}
-							driver.close();
-							driver.switchTo().window(parentID);
-						}
-					}else {
-						log(LogStatus.ERROR, "file path could not be sent, so cannot send email", YesNo.Yes);
-					}
-				}
-				else attachmentFlag=true;
-				WebElement ele=BaseLib.edriver.findElement(By.cssSelector("input[title='Send']"));
-				try {ele.click();
-				log(LogStatus.INFO, "successfully clicked on send button", YesNo.No);
-				}
-				catch(Exception e) {
-					e.printStackTrace();
-					return false;
-				}
-				if (isAlertPresent(driver)) {
-					switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
-					log(LogStatus.INFO, "successfully accepted alert", YesNo.No);
-				}
-				else {
-					log(LogStatus.ERROR, "alert is not present", YesNo.Yes);
-				}
-				mailFlag=true;
-			}else {
-				log(LogStatus.ERROR, "body textbox is not visible, so cannot send mail", YesNo.Yes);
-			}
-		}else {
-			log(LogStatus.ERROR, "subject textbox is not visible, so cannot send mail", YesNo.Yes);
-		}
-		return mailFlag&&attachmentFlag;
-	}
-	
-	/**@author Akul Bhutani
-	 * @param projectName
-	 * @param contactNames
-	 * @param subject
-	 * @param body
-	 * @param attachmentPath
-	 * @return true/false
-	 * @description send email through "send list email" button from contact detail page lightning
-	 */
-	public boolean sendListEmail(String projectName, String contactNames,String subject,String body,String attachmentPath) {
-		WebElement ele = null;
-		String[] contacts=contactNames.split(",");
-		String xpath="";
-		if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
-			ThreadSleep(3000);
-			xpath="//div[@class='listContent']//li/a/span[text()='Automation All']";
-			ele = FindElement(driver, xpath,"Select List View : Automation All", action.SCROLLANDBOOLEAN, 30);
-			if (click(driver, ele, "select List View : Automation All", action.SCROLLANDBOOLEAN)) {
-				ThreadSleep(3000);
-				refresh(driver);
-				ThreadSleep(5000);
-				for (String con:contacts) {
-					if (clickUsingJavaScript(driver, returnCheckboxOnContactHomePage(projectName, con, 10), "checkbox", action.BOOLEAN)) {
-						log(LogStatus.INFO, "successfully clicked on checkbox of "+con, YesNo.No);
-					}
-					else {
-						log(LogStatus.ERROR, "could not click on checkbox of "+con, YesNo.Yes);
-						sa.assertTrue(false, "could not click on checkbox of "+con);
-
-					}
-				}
-				if (click(driver, getsendListEmail(projectName, 10), "send list email button", action.BOOLEAN)) {
-					if (sendKeys(driver, getsendListEmailSubject(projectName, 10), subject, "subject", action.BOOLEAN)) {
-						switchToFrame(driver, 10, getcontainerFrameEmail(projectName, 10));
-						switchToFrame(driver, 10, getemailBodyFrame(projectName, 10));
-						if (sendKeys(driver, getemailBody(projectName, 10), body, "body", action.BOOLEAN)) {
-
-						}else {
-							log(LogStatus.ERROR, "email body textbox is not visible, so cannot enter text", YesNo.Yes);
-							sa.assertTrue(false, "email body textbox is not visible, so cannot enter text");
-						}
-						switchToDefaultContent(driver);
-
-						scrollDownThroughWebelement(driver, getattachFileButton(Mode.Lightning.toString(), projectName, 10), "attach");
-						if (click(driver, getattachFileButton(Mode.Lightning.toString(), projectName, 10), "attach", action.BOOLEAN)) {
-							if (clickUsingJavaScript(driver, getuploadFileButton(projectName, 10), "upload", action.BOOLEAN)) {
-								ThreadSleep(5000);
-								if (uploadFileAutoIT(attachmentPath)) {
-									log(LogStatus.INFO, "successfully uploaded file "+attachmentPath, YesNo.No);
-									ThreadSleep(4000);
-									if (click(driver, getsendButtonListEmail(projectName, 10), "send", action.SCROLLANDBOOLEAN)) {
-										log(LogStatus.INFO, "successfully sent email", YesNo.No);
-										return true;
-
-									}else {
-										log(LogStatus.ERROR, "send button is not clickable", YesNo.Yes);
-										sa.assertTrue(false, "send button is not clickable");
-									}
-								}else {
-									log(LogStatus.ERROR, "could not upload file "+attachmentPath, YesNo.Yes);
-									sa.assertTrue(false, "could not upload file "+attachmentPath);
-								}
-							}else {
-								log(LogStatus.ERROR, "upload button is not clickable", YesNo.Yes);
-								sa.assertTrue(false, "upload button is not clickable");
-							}
-						}else {
-							log(LogStatus.ERROR, "attach file button is not clickable", YesNo.Yes);
-							sa.assertTrue(false, "attach file button is not clickable");
-						}
-					}else {
-						log(LogStatus.ERROR, "subject textbox is not visible", YesNo.Yes);
-						sa.assertTrue(false, "subject textbox is not visible");
-					}
-				}else {
-					log(LogStatus.ERROR, "send list email button is not clickable", YesNo.Yes);
-					sa.assertTrue(false, "send list email button is not clickable");
-				}
-			}else {
-				log(LogStatus.ERROR, "list view dropdown : Automation all could not be clicked, so cannot send list email", YesNo.Yes);
-				sa.assertTrue(false, "list view dropdown : Automation all could not be clicked, so cannot send list email");
-			}
-		}
-		return false;
-
-
-	}
-	
-	/**@author Akul Bhutani
-	 * @param projectName
-	 * @param contactFullName
-	 * @param timeOut
-	 * @return WebElement
-	 * @description return checkbox in front of contact on contact detail page
-	 */
-	public WebElement returnCheckboxOnContactHomePage(String projectName, String contactFullName, int timeOut) {
-		String xpath="//a[@title='"+contactFullName+"']/../../preceding-sibling::td//input/following-sibling::span";
-		return isDisplayed(driver, FindElement(driver, xpath, "checkbox", action.SCROLLANDBOOLEAN, timeOut), "visibility", timeOut, "checkbox");
-	}
-	
 	/**
-	 * @param projectName
-	 * @param contactFirstName
-	 * @param contactLastName
-	 * @param legalName
-	 * @param emailID
-	 * @param recordType
-	 * @param otherLabelFields
-	 * @param otherLabelValues
-	 * @param creationPage
-	 * @return true if able to create contact
-	 */
-	public boolean createContactWithoutNew(String projectName, String contactFirstName, String contactLastName,
-			String legalName, String emailID, String recordType,String otherLabelFields,String otherLabelValues, CreationPage creationPage) {
-		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
-		String labelNames[]=null;
-		String labelValue[]=null;
-		if(otherLabelFields!=null && otherLabelValues !=null) {
-			labelNames= otherLabelFields.split(",");
-			labelValue=otherLabelValues.split(",");
-		}
-
-
-		if (!recordType.equals("") || !recordType.isEmpty()) {
-			ThreadSleep(2000);
-			if(click(driver, getRadioButtonforRecordType(recordType,true, 5), "Radio Button for : "+recordType, action.SCROLLANDBOOLEAN)){
-				appLog.info("Clicked on radio Button  for record type : "+recordType);
-				if (click(driver, getContinueOrNextButton(projectName,5), "Continue Button", action.BOOLEAN)) {
-					appLog.info("Clicked on Continue or Nxt Button");	
-					ThreadSleep(1000);
-				}else{
-					appLog.error("Not Able to Clicked on Next Button");
-					return false;	
-				}
-			}else{
-				appLog.error("Not Able to Clicked on radio Button for record type : "+recordType);
-				return false;
-			}
-
-		}
-		WebElement ele=null;
-		ThreadSleep(2000);
-		if (sendKeys(driver, getContactFirstName(projectName, 60), contactFirstName, "Contact first Name",
-				action.BOOLEAN)) {
-			if (sendKeys(driver, getContactLastName(projectName, 60), contactLastName, "Contact Last Name",
-					action.BOOLEAN)) {
-
-				if(creationPage.toString().equalsIgnoreCase(CreationPage.AccountPage.toString())) {
-
-				}else {
-					if (sendKeys(driver, getLegalName(projectName, 60), legalName, "Account Name",
-							action.SCROLLANDBOOLEAN)) {
-							ThreadSleep(1000);
-							ele=FindElement(driver,"//div[contains(@class,'uiAutocomplete')]//a//div[@title='" + legalName
-									+ "']",	"Legal Name List", action.THROWEXCEPTION, 30);
-							if (clickUsingJavaScript(driver,ele,legalName + " : Account Name", action.BOOLEAN)) {
-								appLog.info(legalName + "  is present in list.");
-							} else {
-								appLog.info(legalName + "  is not present in the list.");
-								return false;
-							}
-
-					} else {
-						appLog.error("Not able to enter legal name");
-						return false;
-					}
-				}
-
-				if (sendKeys(driver, getEmailId(projectName, 60), emailID, "Email ID",
-						action.SCROLLANDBOOLEAN)) {
-					if(labelNames!=null && labelValue!=null) {
-						for(int i=0; i<labelNames.length; i++) {
-							ele = getContactPageTextBoxOrRichTextBoxWebElement(projectName, labelNames[i].trim(), 30);
-							if(sendKeys(driver, ele, labelValue[i], labelNames[i]+" text box", action.SCROLLANDBOOLEAN)) {
-								appLog.info("passed value "+labelValue[i]+" in "+labelNames[i]+" field");
-							}else {
-								appLog.error("Not able to pass value "+labelValue[i]+" in "+labelNames[i]+" field");
-								BaseLib.sa.assertTrue(false, "Not able to pass value "+labelValue[i]+" in "+labelNames[i]+" field");
-							}
-						}
-
-					}
-					if (click(driver, getSaveButton(projectName, 60), "Save Button",
-							action.SCROLLANDBOOLEAN)) {
-						appLog.info("Clicked on save button");
-						if(creationPage.toString().equalsIgnoreCase(CreationPage.AccountPage.toString())) {
-							if(clickOnGridSection_Lightning(projectName,RelatedList.Contacts, 30)) {
-								ele = isDisplayed(driver, FindElement(driver, "//span[@title='Contact Name']/ancestor::table/tbody/tr/th/span/a", "Contact Name Text", action.SCROLLANDBOOLEAN, 30), "visibility", 20, "");
-								if (ele != null) {
-									String contactFullName = getText(driver,ele, "Contact Name",action.BOOLEAN);
-									System.err.println("Contact Name : "+contactFullName);
-									if (contactFullName.contains(contactFirstName + " " + contactLastName)) {
-										appLog.info("Contact Created Successfully :" + contactFirstName + " "+ contactLastName);
-										return true;
-									} else {
-										appLog.error("Contact did not get created successfully :" + contactFirstName
-												+ " " + contactLastName);
-									}
-								} else {
-									appLog.error("Not able to find contact name label");
-								}
-							}else {
-								log(LogStatus.ERROR, "Not able to click on Contacts related list view all section so cannot verify Created Contact "+contactFirstName+" "+contactLastName, YesNo.Yes);
-							}
-
-						}else {
-							if(projectName.equalsIgnoreCase(Mode.Lightning.toString())) {
-								ThreadSleep(2000);
-								refresh(driver);
-								ThreadSleep(5000);
-							}
-
-							if (getContactFullNameInViewMode(projectName, 60) != null) {
-								String contactFullName = getText(driver,
-										getContactFullNameInViewMode(projectName, 60), "Contact Name",
-										action.BOOLEAN);
-								System.err.println("Contact Name : "+contactFullName);
-								if (contactFullName.contains(contactFirstName + " " + contactLastName)) {
-									appLog.info("Contact Created Successfully :" + contactFirstName + " "
-											+ contactLastName);
-
-									return true;
-								} else {
-									appLog.error("Contact did not get created successfully :" + contactFirstName
-											+ " " + contactLastName);
-								}
-							} else {
-								appLog.error("Not able to find contact name label");
-							}
-
-						}
-
-					} else {
-						appLog.info("Not able to click on save button");
-					}
-
-				} else {
-					appLog.error("Not able to enter email id");
-				}
-
-			} else {
-				appLog.error("Not able to enter last name in text box");
-			}
-		} else {
-			appLog.error("Not able to enter first Name in text box");
-		}
-		return false;
-	}
-	
-	
-	/**
+	 * @author Azhar Alam
 	 * @param projectName
 	 * @param accountName
 	 * @param timeOut
@@ -967,6 +464,12 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 	}
 	
 	
+	/**
+	 * @author Akul Bhutani
+	 * @param labelName
+	 * @param value
+	 * @return true if field set component verify successfully
+	 */
 	public boolean verifyFieldSetComponent(String labelName, String value) {
 		String finalLabelName="";
 		if(labelName.contains("_")) {
@@ -1012,6 +515,12 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		
 	}
 	
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param attachmentPath
+	 * @return image id of updated photo in detail page
+	 */
 	public String updatePhotoInDetailPage(String projectName,String attachmentPath) {
 		String imgId=null;
 		Actions actions = new Actions(driver);
@@ -1066,6 +575,12 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		return null;
 	}
 
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param recordName
+	 * @return true if image deleted successfully
+	 */
 	public boolean deleteImage(String projectName, String recordName) {
 		String imgId=null;
 //		Actions actions = new Actions(driver);

@@ -625,6 +625,13 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		return flag;
 	}
 	
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param stage
+	 * @param timeOut
+	 * @return true if successfully change stage
+	 */
 	public boolean changeStage(String projectName, String stage, int timeOut) {
 		boolean flag=true;
 		stage=stage.replace("_", " ");
@@ -659,6 +666,17 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		return flag;
 	}
 	
+	/**
+	 * @author Akul Bhutani
+	 * @param projectName
+	 * @param fundName
+	 * @param recordType
+	 * @param fundType
+	 * @param investmentCategory
+	 * @param labelswithValues
+	 * @param timeOut
+	 * @return true successfully created fund
+	 */
 	public boolean createFundPEPopUp(String projectName, String fundName, String recordType,String fundType, String investmentCategory,String[][] labelswithValues, int timeOut) {
 		boolean flag=false;
 		WebElement ele = null;
