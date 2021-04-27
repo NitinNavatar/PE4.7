@@ -4981,7 +4981,7 @@ public WebElement accordionSDGActionButtons(String projectName,String toggleTab,
 }
 
 public WebElement sdgButtons(String projectName, String field,String new1, int timeOut) {
-	String xpath ="//span//*[text()='"+field+"']/../../../following-sibling::div//button[text()='"+new1+"']";
+	String xpath ="//span//*[text()='"+field+"']/../../../following-sibling::*//button[text()='"+new1+"']";
 	WebElement ele = FindElement(driver, xpath,"sdg buttons", action.BOOLEAN, timeOut);
 	return isDisplayed(driver, ele, "visibility", timeOut, "sdg button");
 }

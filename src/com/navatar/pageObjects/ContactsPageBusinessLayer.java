@@ -213,7 +213,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 								ThreadSleep(1000);
 								if (click(driver,
 										FindElement(driver,
-												"//*[@title='"+legalName+"' or text()='"+legalName+"']",
+												"//*[@title='"+legalName+"']//strong[text()='"+legalName.split(" ")[0]+"']",
 												"Legal Name List", action.THROWEXCEPTION, 30),
 										legalName + "   :   Account Name", action.BOOLEAN)) {
 									appLog.info(legalName + "  is present in list.");

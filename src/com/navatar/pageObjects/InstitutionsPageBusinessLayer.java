@@ -719,8 +719,10 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		}
 		return false;
 	}
-	public int findLocationOfDate(String projectName, String date) {
+	public int findLocationOfDate(String projectName, String date, String month) {
 		String xpath="//a[text()='"+date+"']/../preceding-sibling::td";
+		if (month!=null)
+		xpath="//a[text()='"+date+"']/../preceding-sibling::td[contains(@data-date,'"+month+"')]";
 		List<WebElement> li = FindElements(driver, xpath, "list of preceding dates");
 		return li.size()+1;
 	}
@@ -734,6 +736,15 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		}
 		return null;
 
+	}
+	public List<WebElement> getEventPresentOnCalender(String projectName, String date, int location) {
+		String xpath="//a[text()='"+date+"']/../../../following-sibling::tbody//td["+location+"]//a";
+		List<WebElement> ele=null;
+		ele=FindElements(driver,xpath,"event on calender" );
+		if (ele!=null) {
+			return ele;
+		}
+		return null;
 	}
 	public List<WebElement> getListOfEvents(String projectName, String date,  int timeOut) {
 		String xpath="//span[text()='"+date+"']/../following-sibling::div//div[contains(@class,'fc-event-container')]//a";
@@ -749,9 +760,34 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		WebElement ele=FindElement(driver,xpath,"date block on calender", action.THROWEXCEPTION, 10);
 		ele=isDisplayed(driver, ele, "visibility", 10, "date block on calender");
 		if (click(driver, ele, "date box", action.BOOLEAN)) {
-		*/	String xpath = "//tbody//td[contains(@data-date,'"+dateHiphen+"')]";
-		WebElement ele=FindElement(driver,xpath,"date block on calender", action.BOOLEAN, 10);
-		Actions ac = new Actions(driver);
+		*/
+		Scanner sc = new Scanner(System.in);
+		String xpath = "//div[@id='calendar']//tbody//tr/td[@class='fc-day fc-widget-content fc-fri fc-past']";
+		//String xpath = "//tbody//td[contains(@data-date,'"+dateHiphen+"')]";
+		List<WebElement> li=FindElements(driver, xpath, "date on cal");
+		try {
+			for (WebElement el:li) {
+				//WebElement ele=FindElement(driver,xpath,"date block on calender", action.BOOLEAN, 10);
+				//ele=isDisplayed(driver, ele, "visibility",10, "date");
+				clickUsingJavaScript(driver, el, "date on cal");
+				appLog.error(">>>");
+				sc.next();
+				ThreadSleep(2000);
+			}
+			li=FindElements(driver, xpath, "date on cal");
+			for (WebElement el:li) {
+				//WebElement ele=FindElement(driver,xpath,"date block on calender", action.BOOLEAN, 10);
+				//ele=isDisplayed(driver, ele, "visibility",10, "date");
+				click(driver, el, "date on cal",action.BOOLEAN);
+				appLog.error(">>>");
+				sc.next();
+				ThreadSleep(2000);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*Actions ac = new Actions(driver);
 		ac.moveToElement(ele).build().perform();
 		Robot robot;
 		try {
@@ -760,8 +796,8 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		} catch (AWTException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		return false;
+		}*/
+		return true;
 	}
 	
 	public WebElement calenderButtons(String projectName, CalenderButton cb) {

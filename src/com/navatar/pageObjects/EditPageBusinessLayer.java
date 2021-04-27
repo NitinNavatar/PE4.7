@@ -307,7 +307,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 	}
 	public WebElement clickOnAccordion(String projectName, TabName tabName) {
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String xpath = "//div[contains(@class,'RelatedListAccordion')]/following-sibling::article//header//a[contains(text(),'"+bp.getTabName(projectName,tabName)+"')]/ancestor::article/../following-sibling::*//div[@title='Move component']";
+		String xpath = "//div[contains(@class,'RelatedListAccordion')]/following-sibling::article//header//a[contains(text(),'"+bp.getTabName(projectName,tabName)+"')]/ancestor::article/../following-sibling::*";
 		WebElement ele=FindElement(driver, xpath, "accordian", action.BOOLEAN, 10);
 		return isDisplayed(driver, ele, "visiblity",10, "acordion");
 	}
