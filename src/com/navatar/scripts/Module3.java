@@ -70,6 +70,7 @@ import com.navatar.generic.EnumConstants.CheckBox;
 import com.navatar.generic.EnumConstants.ClickOrCheckEnableDisableCheckBox;
 import com.navatar.generic.EnumConstants.CreationPage;
 import com.navatar.generic.EnumConstants.EditViewMode;
+import com.navatar.generic.EnumConstants.Environment;
 import com.navatar.generic.EnumConstants.InstitutionPageFieldLabelText;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageLabel;
@@ -194,20 +195,23 @@ public class Module3 extends BaseLib {
 
 		}
 		if (flag) {
+			
+			if(!environment.equalsIgnoreCase(Environment.Sandbox.toString())) {
+				if (setup.installedPackages(crmUser1FirstName, UserLastName)) {
+					appLog.info("PE Package is installed Successfully in CRM User: " + crmUser1FirstName + " "
+							+ UserLastName);
 
-			if (setup.installedPackages(crmUser1FirstName, UserLastName)) {
-				appLog.info("PE Package is installed Successfully in CRM User: " + crmUser1FirstName + " "
-						+ UserLastName);
-
-			} else {
-				appLog.error(
-						"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
-				sa.assertTrue(false,
-						"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
-				log(LogStatus.ERROR,
-						"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName,
-						YesNo.Yes);
+				} else {
+					appLog.error(
+							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
+					sa.assertTrue(false,
+							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
+					log(LogStatus.ERROR,
+							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName,
+							YesNo.Yes);
+				}
 			}
+			
 
 		}else{
 
@@ -6497,20 +6501,24 @@ public class Module3 extends BaseLib {
 
 		}
 		if (flag) {
+			
+			if(!environment.equalsIgnoreCase(Environment.Sandbox.toString())) {
+				
+				if (setup.installedPackages(crmUser2FirstName, UserLastName)) {
+					appLog.info("PE Package is installed Successfully in CRM User: " + crmUser2FirstName + " "
+							+ UserLastName);
 
-			if (setup.installedPackages(crmUser2FirstName, UserLastName)) {
-				appLog.info("PE Package is installed Successfully in CRM User: " + crmUser2FirstName + " "
-						+ UserLastName);
-
-			} else {
-				appLog.error(
-						"Not able to install PE package in CRM User2: " + crmUser2FirstName + " " + UserLastName);
-				sa.assertTrue(false,
-						"Not able to install PE package in CRM User2: " + crmUser2FirstName + " " + UserLastName);
-				log(LogStatus.ERROR,
-						"Not able to install PE package in CRM User2: " + crmUser2FirstName + " " + UserLastName,
-						YesNo.Yes);
+				} else {
+					appLog.error(
+							"Not able to install PE package in CRM User2: " + crmUser2FirstName + " " + UserLastName);
+					sa.assertTrue(false,
+							"Not able to install PE package in CRM User2: " + crmUser2FirstName + " " + UserLastName);
+					log(LogStatus.ERROR,
+							"Not able to install PE package in CRM User2: " + crmUser2FirstName + " " + UserLastName,
+							YesNo.Yes);
+				}
 			}
+			
 
 		}else{
 

@@ -53,6 +53,7 @@ import com.navatar.generic.EnumConstants.AddressAction;
 import com.navatar.generic.EnumConstants.CheckBox;
 import com.navatar.generic.EnumConstants.ClickOrCheckEnableDisableCheckBox;
 import com.navatar.generic.EnumConstants.EditViewMode;
+import com.navatar.generic.EnumConstants.Environment;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.NavatarSetupSideMenuTab;
@@ -156,20 +157,22 @@ public class Module5 extends BaseLib {
 
 		}
 		if (flag) {
+			if(!environment.equalsIgnoreCase(Environment.Sandbox.toString())) {
+				if (setup.installedPackages(crmUser1FirstName, UserLastName)) {
+					appLog.info("PE Package is installed Successfully in CRM User: " + crmUser1FirstName + " "
+							+ UserLastName);
 
-			if (setup.installedPackages(crmUser1FirstName, UserLastName)) {
-				appLog.info("PE Package is installed Successfully in CRM User: " + crmUser1FirstName + " "
-						+ UserLastName);
-
-			} else {
-				appLog.error(
-						"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
-				sa.assertTrue(false,
-						"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
-				log(LogStatus.ERROR,
-						"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName,
-						YesNo.Yes);
+				} else {
+					appLog.error(
+							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
+					sa.assertTrue(false,
+							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
+					log(LogStatus.ERROR,
+							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName,
+							YesNo.Yes);
+				}
 			}
+			
 
 		}else{
 
