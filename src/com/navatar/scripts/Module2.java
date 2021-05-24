@@ -79,21 +79,22 @@ public class Module2 extends BaseLib{
 
 		}
 		if (flag) {
+			
+			if(!environment.equalsIgnoreCase(Environment.Sandbox.toString())) {
+				if (setup.installedPackages(crmUser1FirstName, UserLastName)) {
+					appLog.info("PE Package is installed Successfully in CRM User: " + crmUser1FirstName + " "
+							+ UserLastName);
 
-			if (setup.installedPackages(crmUser1FirstName, UserLastName)) {
-				appLog.info("PE Package is installed Successfully in CRM User: " + crmUser1FirstName + " "
-						+ UserLastName);
-
-			} else {
-				appLog.error(
-						"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
-				sa.assertTrue(false,
-						"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
-				log(LogStatus.ERROR,
-						"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName,
-						YesNo.Yes);
+				} else {
+					appLog.error(
+							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
+					sa.assertTrue(false,
+							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
+					log(LogStatus.ERROR,
+							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName,
+							YesNo.Yes);
+				}
 			}
-
 		}else{
 
 			log(LogStatus.ERROR, "could not click on setup link, test case fail", YesNo.Yes);

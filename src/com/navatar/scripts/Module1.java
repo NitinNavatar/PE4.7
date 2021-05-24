@@ -46,7 +46,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc002_verifyDefaultFieldSet(String projectName) {
+	public void M1Tc002_verifyDefaultFieldSet(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -113,7 +113,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc003_createFieldSet(String projectName) {
+	public void M1Tc003_createFieldSet(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -165,7 +165,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc004_CreatePreconditionData(String projectName) {
+	public void M1Tc004_CreatePreconditionData(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -228,7 +228,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc005_addAdvanceFieldSetLayoutOnContactAndDealPage(String projectName) {
+	public void M1Tc005_addAdvanceFieldSetLayoutOnContactAndDealPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
 		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
@@ -289,7 +289,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc006_verifyAdvanceFieldSetLayoutOnContactAndDealPage(String projectName) {
+	public void M1Tc006_verifyAdvanceFieldSetLayoutOnContactAndDealPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
@@ -346,7 +346,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc007_1_removeObjectPermissionFromObject(String projectName) {
+	public void M1Tc007_1_removeObjectPermissionFromObject(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -406,7 +406,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc007_2_verifyRemoveObjectImpactFromPEUser(String projectName) {
+	public void M1Tc007_2_verifyRemoveObjectImpactFromPEUser(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
@@ -435,7 +435,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc008_1_giveObjectPermissionFromObject(String projectName) {
+	public void M1Tc008_1_giveObjectPermissionFromObject(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -495,7 +495,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc008_2_verifyGiveObjectImpactFromPEUser(String projectName) {
+	public void M1Tc008_2_verifyGiveObjectImpactFromPEUser(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
@@ -524,7 +524,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc009_changeTheFieldPositionAndCheckImpact(String projectName) {
+	public void M1Tc009_changeTheFieldPositionAndCheckImpact(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -591,7 +591,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc010_createNewFieldWithMaxCharacterAndAddOnContactProfileComponent(String projectName) {
+	public void M1Tc010_createNewFieldWithMaxCharacterAndAddOnContactProfileComponent(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -671,7 +671,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc011_AddingFiftyFieldsInCreatedFieldSet(String projectName) {
+	public void M1Tc011_AddingFiftyFieldsInCreatedFieldSet(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -708,7 +708,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc012_CreatePreconditionDataForUploadImage(String projectName) {
+	public void M1Tc012_CreatePreconditionDataForUploadImage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -801,7 +801,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc013_createFieldsForStandardObject(String projectName) {
+	public void M1Tc013_createFieldsForStandardObject(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -854,7 +854,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc014_CreatedataForPackageObject(String projectName) {
+	public void M1Tc014_CreatedataForPackageObject(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
@@ -933,7 +933,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc015_createFieldsForPackageObject(String projectName) {
+	public void M1Tc015_createFieldsForPackageObject(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -986,7 +986,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc016_CreatedataForCustomObject(String projectName) {
+	public void M1Tc016_CreatedataForCustomObject(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		MarketingEventPageBusinessLayer me = new MarketingEventPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -1045,7 +1045,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc017_createFieldsForCustomObject(String projectName) {
+	public void M1Tc017_createFieldsForCustomObject(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1098,7 +1098,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc018_verifyFieldSetImagePath(String projectName) {
+	public void M1Tc018_verifyFieldSetImagePath(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
 		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
@@ -1156,7 +1156,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc019_addProfileImageFieldOnLayOut(String projectName) {
+	public void M1Tc019_addProfileImageFieldOnLayOut(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home= new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -1257,7 +1257,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc020_verifyDefaultImage(String projectName) {
+	public void M1Tc020_verifyDefaultImage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
 		List<String> itemNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
@@ -1289,7 +1289,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc021_deletesomeFieldsFromFieldSet(String projectName) {
+	public void M1Tc021_deletesomeFieldsFromFieldSet(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1362,7 +1362,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc022_verifyMinimumImageSizeAfterAddTwoFieldSet(String projectName) {
+	public void M1Tc022_verifyMinimumImageSizeAfterAddTwoFieldSet(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1481,7 +1481,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc023_verifyMediumImageSizeAfterAddTwoMoreFieldSet(String projectName) {
+	public void M1Tc023_verifyMediumImageSizeAfterAddTwoMoreFieldSet(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1607,7 +1607,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc024_verifyMaximumImageSizeAfterAddTwoMoreFieldSet(String projectName) {
+	public void M1Tc024_verifyMaximumImageSizeAfterAddTwoMoreFieldSet(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1733,7 +1733,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc025_verifyImageSizeAfterAddTenMoreFieldSet(String projectName) {
+	public void M1Tc025_verifyImageSizeAfterAddTenMoreFieldSet(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1858,7 +1858,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc026_verifyCameraIconUploadImageAndRelativePath(String projectName) {
+	public void M1Tc026_verifyCameraIconUploadImageAndRelativePath(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
 		List<String> itemNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
@@ -1906,7 +1906,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc027_verifyPopulatedUnderImages(String projectName) {
+	public void M1Tc027_verifyPopulatedUnderImages(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
 		List<String> itemNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
@@ -1968,7 +1968,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc028_verifyAllTypeOfImageFormatByUpdateImage(String projectName) {
+	public void M1Tc028_verifyAllTypeOfImageFormatByUpdateImage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
@@ -2058,7 +2058,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc029_verifyErrorMessageAllTypeOfImage(String projectName) {
+	public void M1Tc029_verifyErrorMessageAllTypeOfImage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
@@ -2105,7 +2105,7 @@ public class Module1 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void FSTc030_verifyUiOfUloadImageAndDeletePopUp(String projectName) {
+	public void M1Tc030_verifyUiOfUloadImageAndDeletePopUp(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
