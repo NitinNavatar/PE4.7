@@ -4732,7 +4732,7 @@ public class Module4 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void M4tc047_VerifyCalenderByChangingTimezoneForUsers_1_Action(String projectName) {
+	public void M4tc047_VerifySharingSettingFeatureForUsers_1_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -4876,7 +4876,7 @@ public class Module4 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void M4tc047_VerifyCalenderByChangingTimezoneForUsers_2_Impact(String projectName) {
+	public void M4tc047_VerifySharingSettingFeatureForUsers_2_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -4947,7 +4947,7 @@ public class Module4 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void M4tc047_VerifyCalenderByChangingTimezoneForUsers_3_Impact(String projectName) {
+	public void M4tc047_VerifySharingSettingFeatureForUsers_3_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
