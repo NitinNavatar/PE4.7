@@ -74,7 +74,6 @@ public class Module2 extends BaseLib{
 
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				log(LogStatus.INFO, "could not find setup link, trying again..", YesNo.No);
 			}
 
@@ -112,7 +111,6 @@ public class Module2 extends BaseLib{
 					ExcelUtils.readDataFromPropertyFile("gmailUserName"),
 					ExcelUtils.readDataFromPropertyFile("gmailPassword"));
 		} catch (InterruptedException e2) {
-			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
 		appLog.info("ResetLinkIs: " + passwordResetLink);
@@ -312,7 +310,6 @@ public class Module2 extends BaseLib{
 			ThreadSleep(10000);
 			if (!abc.isEmpty()) {
 				log(LogStatus.FAIL, "field not added/already present 1", YesNo.Yes);
-				//sa.assertTrue(false, "field not added/already present 1");
 			}else{
 				log(LogStatus.INFO, "field added/already present 1", YesNo.Yes);
 			}
@@ -384,16 +381,6 @@ public class Module2 extends BaseLib{
 						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.Yes);
 
 					}
-
-					//remove icon
-					/*if (click(driver, ip.getCrossButtonForAlreadySelectedItem(projectName, PageName.Object1Page, PageLabel.Related_Associations.toString(), true, Smoke_TaskINS1Name, action.SCROLLANDBOOLEAN, 10), "remove button", action.BOOLEAN)) {
-						log(LogStatus.SKIP,"clicked on remove icon",YesNo.No);
-
-					}
-					else {
-						log(LogStatus.ERROR, "remove Button is not clickable", YesNo.Yes);
-						sa.assertTrue(false, "remove Button is not clickable");
-					}*/
 
 					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask1Subject, "Subject", action.SCROLLANDBOOLEAN)) {
 								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
@@ -494,16 +481,6 @@ public class Module2 extends BaseLib{
 
 					}
 
-					//remove icon
-					/*if (click(driver, ip.getCrossButtonForAlreadySelectedItem(projectName, PageName.Object1Page, PageLabel.Related_Associations.toString(), true, Smoke_TaskINS1Name, action.SCROLLANDBOOLEAN, 10), "remove button", action.BOOLEAN)) {
-						log(LogStatus.SKIP,"clicked on remove icon",YesNo.No);
-
-					}
-					else {
-						log(LogStatus.ERROR, "remove Button is not clickable", YesNo.Yes);
-						sa.assertTrue(false, "remove Button is not clickable");
-					}*/
-
 					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask2Subject, "Subject", action.SCROLLANDBOOLEAN)) {
 								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
@@ -580,15 +557,6 @@ public class Module2 extends BaseLib{
 
 					}
 
-					//remove icon
-					/*if (click(driver, ip.getCrossButtonForAlreadySelectedItem(projectName, PageName.Object1Page, PageLabel.Related_Associations.toString(), true, Smoke_TaskINS1Name, action.SCROLLANDBOOLEAN, 10), "remove button", action.BOOLEAN)) {
-						log(LogStatus.SKIP,"clicked on remove icon",YesNo.No);
-
-					}
-					else {
-						log(LogStatus.ERROR, "remove Button is not clickable", YesNo.Yes);
-						sa.assertTrue(false, "remove Button is not clickable");
-					}*/
 					tp.getdueDateTextBoxInNewTask(projectName, 20).clear();						
 					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask3Subject, "Subject", action.SCROLLANDBOOLEAN)) {
 								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
@@ -659,15 +627,6 @@ public class Module2 extends BaseLib{
 
 					}
 
-					//remove icon
-					/*if (click(driver, ip.getCrossButtonForAlreadySelectedItem(projectName, PageName.Object1Page, PageLabel.Related_Associations.toString(), true, Smoke_TaskINS1Name, action.SCROLLANDBOOLEAN, 10), "remove button", action.BOOLEAN)) {
-						log(LogStatus.SKIP,"clicked on remove icon",YesNo.No);
-
-					}
-					else {
-						log(LogStatus.ERROR, "remove Button is not clickable", YesNo.Yes);
-						sa.assertTrue(false, "remove Button is not clickable");
-					}*/
 					tp.getdueDateTextBoxInNewTask(projectName, 20).clear();						
 					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask4Subject, "Subject", action.SCROLLANDBOOLEAN)) {
 								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
@@ -772,16 +731,7 @@ public class Module2 extends BaseLib{
 						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.Yes);
 
 					}
-					//remove icon
-					/*if (click(driver, ip.getCrossButtonForAlreadySelectedItem(projectName, PageName.Object1Page, PageLabel.Related_Associations.toString(), true, Smoke_TaskINS1Name, action.SCROLLANDBOOLEAN, 10), "remove button", action.BOOLEAN)) {
-						log(LogStatus.SKIP,"clicked on remove icon",YesNo.No);
-
-					}
-					else {
-						log(LogStatus.ERROR, "remove Button is not clickable", YesNo.Yes);
-						sa.assertTrue(false, "remove Button is not clickable");
-					}*/
-
+					
 					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask5Subject, "Subject", action.SCROLLANDBOOLEAN)) {
 								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
@@ -889,15 +839,7 @@ public class Module2 extends BaseLib{
 						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.Yes);
 
 					}
-					//remove icon
-					/*if (click(driver, ip.getCrossButtonForAlreadySelectedItem(projectName, PageName.Object1Page, PageLabel.Related_Associations.toString(), true, Smoke_TaskINS1Name, action.SCROLLANDBOOLEAN, 10), "remove button", action.BOOLEAN)) {
-						log(LogStatus.SKIP,"clicked on remove icon",YesNo.No);
-
-					}
-					else {
-						log(LogStatus.ERROR, "remove Button is not clickable", YesNo.Yes);
-						sa.assertTrue(false, "remove Button is not clickable");
-					}*/
+					
 					tp.getdueDateTextBoxInNewTask(projectName, 20).clear();						
 					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask6Subject, "Subject", action.SCROLLANDBOOLEAN)) {
 								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
@@ -1111,7 +1053,6 @@ public class Module2 extends BaseLib{
 					log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.Yes);
 
 				}
-				//ele=cp.getCrossButtonForAlreadySelectedItem(projectName, PageName.Object2Page, PageLabel.Name.toString(),false, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 15);
 				if  (click(driver, ip.getCustomTabSaveBtn(projectName,10), "save", action.BOOLEAN)) {
 					appLog.info("successfully clicked on save button after changing contact");
 
@@ -1182,7 +1123,6 @@ public class Module2 extends BaseLib{
 					log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.Yes);
 
 				}
-				//ele=cp.getCrossButtonForAlreadySelectedItem(projectName, PageName.Object2Page, PageLabel.Name.toString(),false, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 15);
 				if  (click(driver, ip.getCustomTabSaveBtn(projectName,10), "save", action.BOOLEAN)) {
 					appLog.info("successfully clicked on save button after changing contact");
 
@@ -1591,7 +1531,6 @@ public class Module2 extends BaseLib{
 								log(LogStatus.SKIP, "Not Able to Click on Enable Contact Transfer Checkbox", YesNo.Yes);
 							}
 						}else {
-							//sa.assertTrue(false, "Not Able to Click on Enable Contact Transfer Checkbox");
 							log(LogStatus.SKIP, "Contact Transfer Checkbox is already checked", YesNo.Yes);
 						}
 					}else {
@@ -2015,7 +1954,6 @@ public class Module2 extends BaseLib{
 			ThreadSleep(10000);
 			if (!abc.isEmpty()) {
 				log(LogStatus.FAIL, "field not added/already present 1", YesNo.Yes);
-				//sa.assertTrue(false, "field not added/already present 1");
 			}else{
 				log(LogStatus.INFO, "field added/already present 1", YesNo.Yes);
 			}
@@ -2757,7 +2695,6 @@ public class Module2 extends BaseLib{
 		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		//dealQualityScore=3.0;averageDealQualityScore=1.0;totalDealsshown=1;
 		dealQualityScore=managementMeetingScore;totalDealsshown=1;averageDealQualityScore=dealQualityScore/totalDealsshown;
 		
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
@@ -2808,7 +2745,6 @@ public class Module2 extends BaseLib{
 		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		//averageDealQualityScore=3.0;totalDealsshown=1;
 		dealQualityScore=managementMeetingScore;totalDealsshown=1;averageDealQualityScore=dealQualityScore/totalDealsshown;
 		
 		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
@@ -2864,7 +2800,6 @@ public class Module2 extends BaseLib{
 		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		//dealQualityScore=3.0;averageDealQualityScore=1.0;totalDealsshown=1;
 		dealQualityScore=ioiScore;totalDealsshown=1;averageDealQualityScore=dealQualityScore/totalDealsshown;
 		
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
@@ -2916,7 +2851,6 @@ public class Module2 extends BaseLib{
 		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		//averageDealQualityScore=3.0;totalDealsshown=1;
 		dealQualityScore=ioiScore;totalDealsshown=1;averageDealQualityScore=dealQualityScore/totalDealsshown;
 		
 		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
@@ -2974,7 +2908,6 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		dealQualityScore=loiScore;totalDealsshown=1;averageDealQualityScore=dealQualityScore/totalDealsshown;
 		
-		//dealQualityScore=5.0;averageDealQualityScore=1.0;totalDealsshown=1;
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
 				,excelLabel.Deal_Quality_Score.toString()};
 		String labelValues[]={Stage.LOI.toString(),Stage.LOI.toString(),String.valueOf(dealQualityScore)};
@@ -3026,7 +2959,6 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		dealQualityScore=loiScore;totalDealsshown=1;averageDealQualityScore=dealQualityScore/totalDealsshown;
 		
-		//averageDealQualityScore=5.0;totalDealsshown=1;
 		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
 		};
 		String labelValues1[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
@@ -3080,7 +3012,6 @@ public class Module2 extends BaseLib{
 		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		//dealQualityScore=5.0;averageDealQualityScore=1.0;totalDealsshown=1;
 		dealQualityScore=dueDiligenceScore;totalDealsshown=1;averageDealQualityScore=dealQualityScore/totalDealsshown;
 		
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
@@ -3132,7 +3063,6 @@ public class Module2 extends BaseLib{
 		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		//averageDealQualityScore=5.0;totalDealsshown=1;
 		dealQualityScore=dueDiligenceScore;totalDealsshown=1;averageDealQualityScore=dealQualityScore/totalDealsshown;
 		
 		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
@@ -3190,7 +3120,6 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		dealQualityScore=parkedScore;totalDealsshown=1;averageDealQualityScore=dealQualityScore/totalDealsshown;
 		
-		//dealQualityScore=5.0;averageDealQualityScore=1.0;totalDealsshown=1;
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
 				,excelLabel.Deal_Quality_Score.toString()};
 		String labelValues[]={Stage.Due_Diligence.toString(),Stage.Parked.toString(),String.valueOf(dealQualityScore)};
@@ -3242,7 +3171,6 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		dealQualityScore=parkedScore;totalDealsshown=1;averageDealQualityScore=dealQualityScore/totalDealsshown;
 		
-		//averageDealQualityScore=5.0;totalDealsshown=1;
 		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
 		};
 		String labelValues1[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
@@ -3395,7 +3323,6 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		totalDealsshown=2;dealQualityScore=loiScore;averageDealQualityScore=(parkedScore+loiScore)/totalDealsshown;
 		
-		//dealQualityScore=5.0;averageDealQualityScore=1.0;totalDealsshown=1;
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
 				,excelLabel.Deal_Quality_Score.toString()};
 		String labelValues[]={Stage.LOI.toString(),Stage.LOI.toString(),String.valueOf(dealQualityScore)};
@@ -3447,7 +3374,6 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		totalDealsshown=2;dealQualityScore=loiScore;averageDealQualityScore=(parkedScore+loiScore)/totalDealsshown;
 		
-		//averageDealQualityScore=5.0;totalDealsshown=2;
 		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
 		};
 		String labelValues1[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
@@ -3503,7 +3429,6 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		totalDealsshown=2;dealQualityScore=parkedScore;averageDealQualityScore=(parkedScore+parkedScore)/totalDealsshown;
 		
-		//dealQualityScore=5.0;averageDealQualityScore=1.0;totalDealsshown=1;
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
 				,excelLabel.Deal_Quality_Score.toString()};
 		String labelValues[]={Stage.LOI.toString(),Stage.Parked.toString(),String.valueOf(dealQualityScore)};
@@ -3555,7 +3480,6 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		totalDealsshown=2;dealQualityScore=parkedScore;averageDealQualityScore=(parkedScore+parkedScore)/totalDealsshown;
 		
-		//averageDealQualityScore=5.0;totalDealsshown=2;
 		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
 		};
 		String labelValues1[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
@@ -3611,7 +3535,6 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		totalDealsshown=2;dealQualityScore=declinedDeadScore;averageDealQualityScore=(parkedScore+declinedDeadScore)/totalDealsshown;
 		
-		//dealQualityScore=5.0;averageDealQualityScore=1.0;totalDealsshown=1;
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
 				,excelLabel.Deal_Quality_Score.toString()};
 		String labelValues[]={Stage.LOI.toString(),Stage.DeclinedDead.toString(),String.valueOf(dealQualityScore)};
@@ -3663,7 +3586,6 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		totalDealsshown=2;dealQualityScore=declinedDeadScore;averageDealQualityScore=(parkedScore+declinedDeadScore)/totalDealsshown;
 		
-		//averageDealQualityScore=5.0;totalDealsshown=2;
 		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
 		};
 		String labelValues1[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
@@ -3719,7 +3641,6 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		totalDealsshown=2;dealQualityScore=closedScore;averageDealQualityScore=(parkedScore+closedScore)/totalDealsshown;
 		
-		//dealQualityScore=5.0;averageDealQualityScore=1.0;totalDealsshown=1;
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
 				,excelLabel.Deal_Quality_Score.toString()};
 		String labelValues[]={Stage.Closed.toString(),Stage.Closed.toString(),String.valueOf(dealQualityScore)};
@@ -3771,7 +3692,6 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		totalDealsshown=2;dealQualityScore=closedScore;averageDealQualityScore=(parkedScore+closedScore)/totalDealsshown;
 		
-		//averageDealQualityScore=5.0;totalDealsshown=2;
 		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
 		};
 		String labelValues1[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
@@ -3867,7 +3787,6 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		totalDealsshown=3;dealQualityScore=loiScore;averageDealQualityScore=(parkedScore+closedScore+loiScore)/totalDealsshown;
 		String dealsForInst="1";
-		//dealQualityScore=5.0;averageDealQualityScore=5.0;totalDealsshown=1;
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
 				,excelLabel.Deal_Quality_Score.toString()};
 		String labelValues[]={Smoke_HSRPipeline3Stage,Smoke_HSRPipeline3Stage,String.valueOf(dealQualityScore)};
@@ -4020,7 +3939,6 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		totalDealsshown=2;dealQualityScore=closedScore;averageDealQualityScore=(parkedScore+closedScore)/totalDealsshown;
 		
-		//averageDealQualityScore=5.0;totalDealsshown=2;
 		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
 		};
 		String labelValues2[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
@@ -4101,16 +4019,6 @@ public class Module2 extends BaseLib{
 						 if (clickUsingJavaScript(driver, ele, "Restore Button : "+name, action.BOOLEAN)) {
 							 log(LogStatus.INFO,"Click on Restore Button for "+name,YesNo.No);
 							 ThreadSleep(1000);
-//							 ele = cp.getAnyMsg(projectName, tp.restoreItemMsg(projectName, name), 20);
-//								if (ele!=null) {
-//									log(LogStatus.SKIP,"Restore Msg Ele Found and Verified : "+name,YesNo.No);
-//
-//								} else {
-//									sa.assertTrue(false,"Restore Task Msg Ele not Found : "+name);
-//									log(LogStatus.SKIP,"Restore Task Msg Ele not Found : "+name,YesNo.Yes);
-//
-//								}
-								
 						} else {
 							sa.assertTrue(false,"Not Able to Click on Restore Button for "+name);
 							log(LogStatus.SKIP,"Not Able to Click on Restore Button for "+name,YesNo.Yes);
@@ -4125,9 +4033,6 @@ public class Module2 extends BaseLib{
 				sa.assertTrue(false,"Not Able to Click on Tab : "+tabName+" For : "+name);
 				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabName+" For : "+name,YesNo.Yes);
 			}
-			switchToDefaultContent(driver);
-
-
 
 		switchToDefaultContent(driver);
 		lp.CRMlogout();
@@ -4147,7 +4052,6 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		totalDealsshown=3;dealQualityScore=closedScore;averageDealQualityScore=(parkedScore+loiScore+closedScore)/totalDealsshown;
 		String instDealCOunt="2";
-		//averageDealQualityScore=5.0;totalDealsshown=3;dealQualityScore=5.0;
 		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
 		};
 		String labelValues2[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};

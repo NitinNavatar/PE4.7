@@ -30,7 +30,6 @@ public class Module4 extends BaseLib{
 	@Test
 	public void M4tc001_CreatePrecondition(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -104,7 +103,7 @@ public class Module4 extends BaseLib{
 			}
 		}
 		
-		String pipe,company,stage,sf,sc;
+		String pipe,company,stage;
 		int i = 0;
 		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object4Tab,YesNo.No);	
@@ -201,13 +200,9 @@ public class Module4 extends BaseLib{
 	@Test
 	public void M4tc002_CreateContactSDG(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
-		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
-		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, SDG);
 		String fields=SDGLabels.APIName.toString();String values="";
 		if (lp.searchAndClickOnApp(SDG, 30)) {
@@ -225,11 +220,7 @@ public class Module4 extends BaseLib{
 					log(LogStatus.PASS,"create/verify created SDG : "+M4Sdg1Name,YesNo.No);
 					for(int i = 0;i<5;i++) {
 						String api=ExcelUtils.readData(phase1DataSheetFilePath,"Fields",excelLabel.Variable_Name, "CField" + (i+1), excelLabel.APIName);
-						/*String over=ExcelUtils.readData(phase1DataSheetFilePath,"Fields",excelLabel.Variable_Name, "CField" + (i+1), excelLabel.Override_Label);
-						String fieldOrder=ExcelUtils.readData(phase1DataSheetFilePath,"Fields",excelLabel.Variable_Name, "CField" + (i+1), excelLabel.FieldOrder);
-						String url=ExcelUtils.readData(phase1DataSheetFilePath,"Fields",excelLabel.Variable_Name, "CField" + (i+1), excelLabel.URL);
-						String par=ExcelUtils.readData(phase1DataSheetFilePath,"Fields",excelLabel.Variable_Name, "CField" + (i+1), excelLabel.Parent_Field_Name);
-*/
+						
 						values=api;
 						if (sdg.addFieldOnSDG(projectName,fields,values)) {
 							log(LogStatus.INFO,"Successfully added fields on "+M4Sdg1Name,YesNo.Yes);
@@ -261,11 +252,7 @@ public class Module4 extends BaseLib{
 	@Test
 	public void M4tc003_CreateDealTeamSDG(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
-		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
 		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, SDG);
@@ -285,11 +272,6 @@ public class Module4 extends BaseLib{
 					log(LogStatus.PASS,"create/verify created SDG : "+M4Sdg2Name,YesNo.No);
 					for(int i = 0;i<4;i++) {
 						String api=ExcelUtils.readData(phase1DataSheetFilePath,"Fields",excelLabel.Variable_Name, "DTField" + (i+1), excelLabel.APIName);
-						/*String over=ExcelUtils.readData(phase1DataSheetFilePath,"Fields",excelLabel.Variable_Name, "DTField" + (i+1), excelLabel.Override_Label);
-						String fieldOrder=ExcelUtils.readData(phase1DataSheetFilePath,"Fields",excelLabel.Variable_Name, "DTField" + (i+1), excelLabel.FieldOrder);
-						String url=ExcelUtils.readData(phase1DataSheetFilePath,"Fields",excelLabel.Variable_Name, "DTField" + (i+1), excelLabel.URL);
-						String par=ExcelUtils.readData(phase1DataSheetFilePath,"Fields",excelLabel.Variable_Name, "DTField" + (i+1), excelLabel.Parent_Field_Name);
-*/
 						values=api;
 						if (sdg.addFieldOnSDG(projectName,fields,values)) {
 							log(LogStatus.INFO,"Successfully added fields on "+M4Sdg1Name,YesNo.Yes);
@@ -321,7 +303,6 @@ public class Module4 extends BaseLib{
 	@Test
 	public void M4tc004_CreateAttendeeSDG(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -345,11 +326,7 @@ public class Module4 extends BaseLib{
 					log(LogStatus.PASS,"create/verify created SDG : "+M4Sdg3Name,YesNo.No);
 					for(int i = 0;i<4;i++) {
 						String api=ExcelUtils.readData(phase1DataSheetFilePath,"Fields",excelLabel.Variable_Name, "AField" + (i+1), excelLabel.APIName);
-						/*String over=ExcelUtils.readData(phase1DataSheetFilePath,"Fields",excelLabel.Variable_Name, "AField" + (i+1), excelLabel.Override_Label);
-						String fieldOrder=ExcelUtils.readData(phase1DataSheetFilePath,"Fields",excelLabel.Variable_Name, "AField" + (i+1), excelLabel.FieldOrder);
-						String url=ExcelUtils.readData(phase1DataSheetFilePath,"Fields",excelLabel.Variable_Name, "AField" + (i+1), excelLabel.URL);
-						String par=ExcelUtils.readData(phase1DataSheetFilePath,"Fields",excelLabel.Variable_Name, "AField" + (i+1), excelLabel.Parent_Field_Name);
-*/
+			
 						values=api;
 						if (sdg.addFieldOnSDG(projectName,fields,values)) {
 							log(LogStatus.INFO,"Successfully added fields on "+M4Sdg3Name,YesNo.Yes);
@@ -423,16 +400,11 @@ public class Module4 extends BaseLib{
 	@Test
 	public void M4tc006_VerifyAccordionOnEntityPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
-		String id=null;
-		WebElement ele=null;
 		String contact=M4Contact1FName+" "+M4Contact1LName;
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		String ind=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Industry);
 		
 		String fieldValue[]={excelLabel.Title.toString()+breakSP+M4Contact1Title};
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
@@ -467,11 +439,9 @@ public class Module4 extends BaseLib{
 	@Test
 	public void M4tc007_UpdateImageOnContactProfile(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
 		String id=null;
 		String attachmentPath1= System.getProperty("user.dir")+"\\UploadFiles\\Module 4\\tc7\\1.jpg";
 		String attachmentPath2= System.getProperty("user.dir")+"\\UploadFiles\\Module 4\\tc7\\2.jpg";
@@ -564,12 +534,9 @@ public class Module4 extends BaseLib{
 	@Test
 	public void M4tc008_DeleteImageOnContactProfile(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
-		String id=null;
 		WebElement ele=null;
 		String contact=M4Contact1FName+" "+M4Contact1LName;
 		
@@ -618,13 +585,9 @@ public class Module4 extends BaseLib{
 	@Test
 	public void M4tc009_VerifyMinimumRecordsOnAccordionEntityPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
-		String id=null;
-		WebElement ele=null;
 		String contact=M4Contact1FName+" "+M4Contact1LName;
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String first,last,title;
@@ -674,12 +637,10 @@ public class Module4 extends BaseLib{
 	@Test
 	public void M4tc010_VerifyExpandCollapseOnAccordion(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
-		String id=null;
 		WebElement ele=null;
 		String contact=M4Contact1FName+" "+M4Contact1LName;
 		String contactHeader=ip.getTabName(projectName,TabName.Object2Tab);
@@ -1264,7 +1225,6 @@ public class Module4 extends BaseLib{
 	@Test
 	public void M4tc015_VerifyAccordionOnDealPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -1309,7 +1269,6 @@ public class Module4 extends BaseLib{
 	@Test
 	public void M4tc016_UpdateImageOnUserProfile(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -1415,7 +1374,6 @@ public class Module4 extends BaseLib{
 	@Test
 	public void M4tc017_VerifyNoOfRecordsOnDealPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -1452,7 +1410,6 @@ public class Module4 extends BaseLib{
 	@Test
 	public void M4tc018_VerifyExpandCollapseOnDealAccordion(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -1614,7 +1571,6 @@ public class Module4 extends BaseLib{
 	@Test
 	public void M4tc020_VerifyAccordionOnEventPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -1664,7 +1620,6 @@ public class Module4 extends BaseLib{
 	@Test
 	public void M4tc021_UpdateImageOnUserProfileAndCheckEventAccordion(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -1770,7 +1725,6 @@ public class Module4 extends BaseLib{
 	@Test
 	public void M4tc022_VerifyNoOfRecordsOnEventPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -1807,7 +1761,6 @@ public class Module4 extends BaseLib{
 	@Test
 	public void M4tc023_VerifyExpandCollapseOnEventAccordion(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		CustomObjPageBusinessLayer cop= new CustomObjPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -2700,24 +2653,24 @@ public class Module4 extends BaseLib{
 											
 										}else {
 											log(LogStatus.ERROR, "could not verify contact created", YesNo.No);
-											BaseLib.sa.assertTrue(false,"could not verify contact created" );
+											sa.assertTrue(false,"could not verify contact created" );
 										}
 									}else {
 										log(LogStatus.ERROR, "could not click on save button, so cannot create contact from sdg", YesNo.No);
-										BaseLib.sa.assertTrue(false,"could not click on save button, so cannot create contact from sdg" );
+										sa.assertTrue(false,"could not click on save button, so cannot create contact from sdg" );
 									}
 								}
 								else {
 									log(LogStatus.ERROR, "could not pass value "+M4Contact8Title+" to title", YesNo.Yes);
-									BaseLib.sa.assertTrue(false,"could not pass value "+M4Contact8Title+" to title" );
+									sa.assertTrue(false,"could not pass value "+M4Contact8Title+" to title" );
 								}
 							}else {
 								log(LogStatus.ERROR, "could not pass value "+M4Contact8LName+" to last name", YesNo.Yes);
-								BaseLib.sa.assertTrue(false,"could not pass value "+M4Contact8LName+" to last name" );
+								sa.assertTrue(false,"could not pass value "+M4Contact8LName+" to last name" );
 							}
 						}else {
 							log(LogStatus.ERROR, "could not pass value "+M4Contact8FName+" to first name", YesNo.Yes);
-							BaseLib.sa.assertTrue(false,"could not pass value "+M4Contact8FName+" to first name" );
+							sa.assertTrue(false,"could not pass value "+M4Contact8FName+" to first name" );
 						}
 					}else {
 						log(LogStatus.ERROR, "could not click on new button", YesNo.Yes);
@@ -4732,7 +4685,7 @@ public class Module4 extends BaseLib{
 		cp = new ContactsPageBusinessLayer(driver);
 		ip = new InstitutionsPageBusinessLayer(driver);
 
-		lp.CRMLogin(superAdminUserName, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		String date=findMonthDateCommaYear(todaysDateSingleDigit);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
@@ -5081,8 +5034,7 @@ public class Module4 extends BaseLib{
 		
 		boolean flag=false;
 		List<WebElement> li=null;
-		//lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
 				ele=ip.getRelatedTab(projectName, RelatedTab.Events.toString(), 10);
