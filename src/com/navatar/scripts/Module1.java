@@ -180,7 +180,7 @@ public class Module1 extends BaseLib {
 
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc001_3_AddListView(String projectName) {
+	public void M1tc001_3_AddListView(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 

@@ -111,7 +111,7 @@ public class Module5 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void Module5TC001_createCRMUser(String projectName) {
+	public void M5TC001_createCRMUser(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -210,7 +210,7 @@ public class Module5 extends BaseLib {
 
 	@Parameters({ "projectName"})
 	@Test
-	public void Module5TC002_1_Prerequisite(String projectName) {
+	public void M5TC002_1_Prerequisite(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		String[][] userAndPassword = {{superAdminUserName,adminPassword},{crmUser1EmailID,adminPassword}};
 		for (String[] userPass : userAndPassword) {
@@ -246,7 +246,7 @@ public class Module5 extends BaseLib {
 
 	@Parameters({ "projectName"})
 	@Test
-	public void Module5TC002_2_AddListView(String projectName) {
+	public void M5TC002_2_AddListView(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
@@ -277,7 +277,7 @@ public class Module5 extends BaseLib {
 
 	@Parameters({ "projectName"})
 	@Test
-	public void Module5TC003_1_CreatePreconditionData(String projectName) {
+	public void M5TC003_1_CreatePreconditionData(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -531,7 +531,7 @@ public class Module5 extends BaseLib {
 
 	@Parameters({ "projectName"})
 	@Test
-	public void Module5TC004_VerifyTheToggleButtonAndFunctionalityOfToggleButtonOnPageRecord(String projectName) {
+	public void M5TC004_VerifyTheToggleButtonAndFunctionalityOfToggleButtonOnPageRecord(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
@@ -767,7 +767,7 @@ public class Module5 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void Module5TC005_VerifyTheRetainAndDefaultSelectionOfToggleButton(String projectName) {
+	public void M5TC005_VerifyTheRetainAndDefaultSelectionOfToggleButton(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
@@ -960,7 +960,7 @@ public class Module5 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void Module5TC006_CreateNewCustomSDG(String projectName) {
+	public void M5TC006_CreateNewCustomSDG(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		SDGPageBusinessLayer sg = new SDGPageBusinessLayer(driver);
 		String fields=SDGLabels.APIName.toString();String values="";
@@ -1012,7 +1012,7 @@ public class Module5 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void Module5TC007_VerifyToAddNewToggleButtonWithMaxAndSpecialCharacter(String projectName) {
+	public void M5TC007_VerifyToAddNewToggleButtonWithMaxAndSpecialCharacter(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
@@ -1216,7 +1216,7 @@ public class Module5 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void Module5TC008_CreateNewToggleButtonAsDefaultButton(String projectName) {
+	public void M5TC008_CreateNewToggleButtonAsDefaultButton(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
@@ -1363,7 +1363,7 @@ public class Module5 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void Module5TC009_VerifyOutSideAndInsideSdgInContainerAndEnableToggleSwitchingAndVerifySDG(String projectName) {
+	public void M5TC009_VerifyOutSideAndInsideSdgInContainerAndEnableToggleSwitchingAndVerifySDG(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
@@ -1772,7 +1772,7 @@ public class Module5 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void Module5TC010_VerifyTheButtonToggleButtonWithUserNewSession(String projectName) {
+	public void M5TC010_VerifyTheButtonToggleButtonWithUserNewSession(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 

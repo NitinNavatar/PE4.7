@@ -37,7 +37,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc002_1_CreatePreconditionData(String projectName) {
+	public void M2tc002_1_CreatePreconditionData(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -125,7 +125,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc003_1_AddWatchlistField(String projectName) {
+	public void M2tc003_1_AddWatchlistField(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -169,7 +169,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc004_AddWatchlistContactAndVerifyImpact(String projectName) {
+	public void M2tc004_AddWatchlistContactAndVerifyImpact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -268,7 +268,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc005_AddUnderEvalContactAndVerifyImpact(String projectName) {
+	public void M2tc005_AddUnderEvalContactAndVerifyImpact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -367,7 +367,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc006_AddWatchlistContactAndVerifyImpact(String projectName) {
+	public void M2tc006_AddWatchlistContactAndVerifyImpact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -440,7 +440,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc007_AddUnderEvalContactAndVerifyImpact(String projectName) {
+	public void M2tc007_AddUnderEvalContactAndVerifyImpact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -510,7 +510,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc008_AddMultipleWatchlistContactAndVerifyImpact(String projectName) {
+	public void M2tc008_AddMultipleWatchlistContactAndVerifyImpact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -618,7 +618,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc009_AddMultipleWatchlistContactAndVerifyImpact(String projectName) {
+	public void M2tc009_AddMultipleWatchlistContactAndVerifyImpact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -727,7 +727,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc010_RemoveContactFromWatchlistContactAndVerifyImpact(String projectName) {
+	public void M2tc010_RemoveContactFromWatchlistContactAndVerifyImpact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -794,7 +794,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc011_RemoveContactFromWatchlistContactAndVerifyImpact(String projectName) {
+	public void M2tc011_RemoveContactFromWatchlistContactAndVerifyImpact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -862,7 +862,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc012_AddContactFromWatchlistContactAndVerifyImpact(String projectName) {
+	public void M2tc012_AddContactFromWatchlistContactAndVerifyImpact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -932,7 +932,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc013_AddContactFromWatchlistContactAndVerifyImpact(String projectName) {
+	public void M2tc013_AddContactFromWatchlistContactAndVerifyImpact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1002,7 +1002,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc014_SetStatusAsWatchlistAndVerifyImpact(String projectName) {
+	public void M2tc014_SetStatusAsWatchlistAndVerifyImpact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1076,7 +1076,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc015_SaveTaskAgainAndVerifyImpact(String projectName) {
+	public void M2tc015_SaveTaskAgainAndVerifyImpact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1155,7 +1155,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc016_CreateNewTaskWithWatchlistAndVerifyImpact(String projectName) {
+	public void M2tc016_CreateNewTaskWithWatchlistAndVerifyImpact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1225,7 +1225,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc017_AddWatchlistContactInStandardTask(String projectName) {
+	public void M2tc017_AddWatchlistContactInStandardTask(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1314,7 +1314,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc018_EnableContactTransfer(String projectName) {
+	public void M2tc018_EnableContactTransfer(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarSetupPageBusinessLayer np= new NavatarSetupPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1391,7 +1391,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc019_TransferContact_Action(String projectName) {
+	public void M2tc019_TransferContact_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1460,7 +1460,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc019_TransferContact_Impact(String projectName) {
+	public void M2tc019_TransferContact_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1514,7 +1514,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc020_1_UpdateWatchlistLabels_Action(String projectName) {
+	public void M2tc020_1_UpdateWatchlistLabels_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1580,7 +1580,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc020_2_UpdateWatchlistLabels_Action(String projectName) {
+	public void M2tc020_2_UpdateWatchlistLabels_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1660,7 +1660,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void TWtc021_DeleteContactAndVerifyImpact(String projectName) {
+	public void M2tc021_DeleteContactAndVerifyImpact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1768,7 +1768,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void ConvDatetc022_1_AddConversionDateField(String projectName) {
+	public void M2ConvDatetc022_1_AddConversionDateField(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1814,7 +1814,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void ConvDatetc022_2_CreateInsCompany(String projectName) {
+	public void M2ConvDatetc022_2_CreateInsCompany(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -1841,7 +1841,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void ConvDatetc023_ChangeStatusOfCompanyAndCheck(String projectName) {
+	public void M2ConvDatetc023_ChangeStatusOfCompanyAndCheck(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -1901,7 +1901,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void ConvDatetc024_CreateNewCompanyUnderEvalThenChangeToPortfolioCompany(String projectName) {
+	public void M2ConvDatetc024_CreateNewCompanyUnderEvalThenChangeToPortfolioCompany(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -1993,7 +1993,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void ConvDatetc025_RenameStatusValues(String projectName) {
+	public void M2ConvDatetc025_RenameStatusValues(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -2101,7 +2101,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void ConvDatetc026_CreateInsCompany(String projectName) {
+	public void M2ConvDatetc026_CreateInsCompany(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -2157,7 +2157,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void ConvDatetc027_PostConditionRevertRenameStatusValues(String projectName) {
+	public void M2ConvDatetc027_PostConditionRevertRenameStatusValues(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -2264,7 +2264,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc028_1_Precondition(String projectName) {
+	public void M2HighestStageReachedtc028_1_Precondition(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -2341,7 +2341,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc028_2_Precondition(String projectName) {
+	public void M2HighestStageReachedtc028_2_Precondition(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -2421,7 +2421,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc029_ChangeStageToNDASigned_Action(String projectName) {
+	public void M2HighestStageReachedtc029_ChangeStageToNDASigned_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -2471,7 +2471,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc029_ChangeStageToNDASigned_Impact(String projectName) {
+	public void M2HighestStageReachedtc029_ChangeStageToNDASigned_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -2525,7 +2525,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc030_ChangeStageToManagementMeeting_Action(String projectName) {
+	public void M2HighestStageReachedtc030_ChangeStageToManagementMeeting_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -2575,7 +2575,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc030_ChangeStageToManagementMeeting_Impact(String projectName) {
+	public void M2HighestStageReachedtc030_ChangeStageToManagementMeeting_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -2630,7 +2630,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc031_ChangeStageToIOI_Action(String projectName) {
+	public void M2HighestStageReachedtc031_ChangeStageToIOI_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -2680,7 +2680,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc031_ChangeStageToIOI_Impact(String projectName) {
+	public void M2HighestStageReachedtc031_ChangeStageToIOI_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2735,7 +2735,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc032_ChangeStageToLOI_Action(String projectName) {
+	public void M2HighestStageReachedtc032_ChangeStageToLOI_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2786,7 +2786,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc032_ChangeStageToLOI_Impact(String projectName) {
+	public void M2HighestStageReachedtc032_ChangeStageToLOI_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2841,7 +2841,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc033_ChangeStageToDueDiligence_Action(String projectName) {
+	public void M2HighestStageReachedtc033_ChangeStageToDueDiligence_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2892,7 +2892,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc033_ChangeStageToDueDiligence_Impact(String projectName) {
+	public void M2HighestStageReachedtc033_ChangeStageToDueDiligence_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2947,7 +2947,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc034_ChangeStageToParked_Action(String projectName) {
+	public void M2HighestStageReachedtc034_ChangeStageToParked_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -2998,7 +2998,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc034_ChangeStageToParked_Impact(String projectName) {
+	public void M2HighestStageReachedtc034_ChangeStageToParked_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3053,7 +3053,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc035_CreateReliancePipelines(String projectName) {
+	public void M2HighestStageReachedtc035_CreateReliancePipelines(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3150,7 +3150,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc036_ChangeStageToLOI_Action(String projectName) {
+	public void M2HighestStageReachedtc036_ChangeStageToLOI_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3201,7 +3201,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc036_ChangeStageToLOI_Impact(String projectName) {
+	public void M2HighestStageReachedtc036_ChangeStageToLOI_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3256,7 +3256,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc037_ChangeStageToParked_Action(String projectName) {
+	public void M2HighestStageReachedtc037_ChangeStageToParked_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3307,7 +3307,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc037_ChangeStageToParked_Impact(String projectName) {
+	public void M2HighestStageReachedtc037_ChangeStageToParked_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3362,7 +3362,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc038_ChangeStageToDeclinedDead_Action(String projectName) {
+	public void M2HighestStageReachedtc038_ChangeStageToDeclinedDead_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3413,7 +3413,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc038_ChangeStageToDeclinedDead_Impact(String projectName) {
+	public void M2HighestStageReachedtc038_ChangeStageToDeclinedDead_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3468,7 +3468,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc039_ChangeStageToClosed_Action(String projectName) {
+	public void M2HighestStageReachedtc039_ChangeStageToClosed_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3519,7 +3519,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc039_ChangeStageToClosed_Impact(String projectName) {
+	public void M2HighestStageReachedtc039_ChangeStageToClosed_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3575,7 +3575,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc040_CreatePiplelineWithDifferentSourceFirm_Action(String projectName) {
+	public void M2HighestStageReachedtc040_CreatePiplelineWithDifferentSourceFirm_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3614,7 +3614,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc040_CreatePiplelineWithDifferentSourceFirm_Impact(String projectName) {
+	public void M2HighestStageReachedtc040_CreatePiplelineWithDifferentSourceFirm_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3703,7 +3703,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc041_DeletePipeline_Action(String projectName) {
+	public void M2HighestStageReachedtc041_DeletePipeline_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3766,7 +3766,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc041_DeletePipeline_Impact(String projectName) {
+	public void M2HighestStageReachedtc041_DeletePipeline_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3826,7 +3826,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc042_RestorePipeline_Action(String projectName) {
+	public void M2HighestStageReachedtc042_RestorePipeline_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3879,7 +3879,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc042_RestorePipeline_Impact(String projectName) {
+	public void M2HighestStageReachedtc042_RestorePipeline_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -3969,7 +3969,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc043_UpdateStageNames(String projectName) {
+	public void M2HighestStageReachedtc043_UpdateStageNames(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4059,7 +4059,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc044_CreatePiplelineWithNewStageValues_Action(String projectName) {
+	public void M2HighestStageReachedtc044_CreatePiplelineWithNewStageValues_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4096,7 +4096,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc044_CreatePiplelineWithNewStageValues_Impact(String projectName) {
+	public void M2HighestStageReachedtc044_CreatePiplelineWithNewStageValues_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4188,7 +4188,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc045_CreateNewPipleline_Action(String projectName) {
+	public void M2HighestStageReachedtc045_CreateNewPipleline_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4225,7 +4225,7 @@ public class Module2 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void HighestStageReachedtc045_CreateNewPipleline_Impact(String projectName) {
+	public void M2HighestStageReachedtc045_CreateNewPipleline_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
