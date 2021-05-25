@@ -46,6 +46,12 @@ public class NavatarSetupPageBusinessLayer extends NavatarSetupPage implements N
 	}
 	
 	
+	/**@author Azhar Alam
+	 * @param projectName
+	 * @param timeOut
+	 * @return checkbox for roll up activities to account
+	 * @description returns checkbox for roll up activities to contact primary account
+	 */
 	public WebElement getRollUpActivitiesToContactPrimaryAccountCheckBox(String projectName,int timeOut) {
 		String xpath="";
 		xpath="//*[contains(text(),'Roll up activities to a contac')]/preceding-sibling::td/input";
@@ -113,6 +119,13 @@ public class NavatarSetupPageBusinessLayer extends NavatarSetupPage implements N
 	}
 	
 	
+	/**@author Azhar Alam
+	 * @param projectName
+	 * @param editviewMode
+	 * @param timeOut
+	 * @return dropdown webelement
+	 * @description this method returns dropdown of keep activities at
+	 */
 	public WebElement getKeepActivitiesAtSelectList(String projectName, EditViewMode editviewMode, int timeOut) {
 
 		List<WebElement> keepactivitiesList = FindElements(driver,
@@ -148,6 +161,15 @@ public class NavatarSetupPageBusinessLayer extends NavatarSetupPage implements N
 
 	}
 	
+	/**@author Azhar Alam
+	 * @param projectName
+	 * @param editViewMode
+	 * @param checkBox
+	 * @param keepActivityValue
+	 * @param includeActivityValue
+	 * @return SoftAssert
+	 * @description this method is used to verify contact transfer complete tab on navatar setup
+	 */
 	public SoftAssert verifyingContactTransferTab(String projectName,EditViewMode editViewMode,CheckBox checkBox,String keepActivityValue,String includeActivityValue){
 		SoftAssert saa = new SoftAssert();
 		

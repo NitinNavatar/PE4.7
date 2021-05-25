@@ -97,6 +97,13 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 		}
 	}
 	
+	/**@author Akul Bhutani
+	 * @param username
+	 * @param password
+	 * @param appName
+	 * @return true/false
+	 * @description this method is used to login to crm and then select appname
+	 */
 	public boolean CRMLogin(String username, String password, String appName) {
         BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
         driver.get("https://"+URL);
