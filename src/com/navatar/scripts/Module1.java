@@ -882,7 +882,7 @@ public class Module1 extends BaseLib {
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String value="";
 		String type="";
-		String[][] EntityOrAccounts = {{ FS_Ins2, FS_Ins2RecordType ,null,null},{ FS_LP1, FS_LP1RecordType,InstitutionPageFieldLabelText.Parent_Institution.toString(),FS_Ins2}};
+		String[][] EntityOrAccounts = {{ FS_Ins2, FS_Ins2RecordType ,null,null},{ FS_LP1, FS_LP1RecordType,InstitutionPageFieldLabelText.Parent_Entity.toString(),FS_Ins2}};
 
 		for (String[] accounts : EntityOrAccounts) {
 			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
@@ -1289,7 +1289,7 @@ public class Module1 extends BaseLib {
 
 							}else {
 								log(LogStatus.ERROR, "Image Field Name is not verified on "+tabNames.get(i)+" for "+Items.get(i), YesNo.Yes);
-								sa.assertTrue(false, "Image Field Name is verified on "+tabNames.get(i)+" for "+Items.get(i));
+								sa.assertTrue(false, "Image Field Name is not verified on "+tabNames.get(i)+" for "+Items.get(i));
 							}
 							ThreadSleep(2000);
 							if(clickUsingJavaScript(driver, edit.getBackButton(10), "back button", action.BOOLEAN)) {
@@ -1659,35 +1659,35 @@ public class Module1 extends BaseLib {
 		List<String> fieldSetNametName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",8,false));
 		String imagepath="\\UploadImages\\15mbfile.jpeg";
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-//		if (home.clickOnSetUpLink()) {
-//			parentWindow = switchOnWindow(driver);
-//			if (parentWindow == null) {
-//				sa.assertTrue(false,
-//						"No new window is open after click on setup link in lighting mode so cannot drag and drop component on objects");
-//				log(LogStatus.SKIP,
-//						"No new window is open after click on setup link in lighting mode so cannot drag and drop component on objects",
-//						YesNo.Yes);
-//				exit("No new window is open after click on setup link in lighting mode so cannot drag and drop component on objects");
-//			}
-//			ThreadSleep(3000);
-//			for(int i=0; i<objectName.size(); i++) {
-//				object object1 = object.valueOf(objectName.get(i));
-//				String[] draggedComponent = draggedComponentName.get(i).split("<breakOn>");
-//				
-//				if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,fieldSetNametName.get(i), draggedComponent[2]+"<break>"+draggedComponent[3], null,YesNo.No)) {
-//					log(LogStatus.PASS, "Dargged Object in : "+fieldSetNametName.get(i), YesNo.No);
-//				}else {
-//					log(LogStatus.ERROR,"Not able to drag Field Set Object on : "+fieldSetNametName.get(i), YesNo.Yes);
-//					sa.assertTrue(false, "Not able to drag Field Set Object on : "+fieldSetNametName.get(i));
-//				}
-//			}
-//			switchToDefaultContent(driver);
-//			driver.close();
-//			driver.switchTo().window(parentWindow);
-//		}else {
-//			log(LogStatus.ERROR, "Not able to click on setup link so cannot drag and drop component on objects", YesNo.Yes);
-//			sa.assertTrue(false, "Not able to click on setup link so cannot drag and drop component on objects");
-//		}
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot drag and drop component on objects");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot drag and drop component on objects",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot drag and drop component on objects");
+			}
+			ThreadSleep(3000);
+			for(int i=0; i<objectName.size(); i++) {
+				object object1 = object.valueOf(objectName.get(i));
+				String[] draggedComponent = draggedComponentName.get(i).split("<breakOn>");
+				
+				if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,fieldSetNametName.get(i), draggedComponent[2]+"<break>"+draggedComponent[3], null,YesNo.No)) {
+					log(LogStatus.PASS, "Dargged Object in : "+fieldSetNametName.get(i), YesNo.No);
+				}else {
+					log(LogStatus.ERROR,"Not able to drag Field Set Object on : "+fieldSetNametName.get(i), YesNo.Yes);
+					sa.assertTrue(false, "Not able to drag Field Set Object on : "+fieldSetNametName.get(i));
+				}
+			}
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot drag and drop component on objects", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot drag and drop component on objects");
+		}
 		for(int i=0; i<tabNames.size(); i++) {
 			if (lp.clickOnTab(projectName,tabNames.get(i) )) {
 				log(LogStatus.INFO,"Click on Tab : "+tabNames.get(i),YesNo.No);
@@ -1926,7 +1926,7 @@ public class Module1 extends BaseLib {
 				object object1 = object.valueOf(objectName.get(i));
 				String[] draggedComponent = draggedComponentName.get(i).split("<breakOn>");
 				
-				if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,fieldSetNametName.get(i), draggedComponent[4]+"<break>"+draggedComponent[5], null,YesNo.No)) {
+				if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,fieldSetNametName.get(i), draggedComponent[6]+"<break>"+draggedComponent[7], null,YesNo.No)) {
 					log(LogStatus.PASS, "Dargged Object in : "+fieldSetNametName.get(i), YesNo.No);
 				}else {
 					log(LogStatus.ERROR,"Not able to drag Field Set Object on : "+fieldSetNametName.get(i), YesNo.Yes);

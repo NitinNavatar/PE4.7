@@ -960,7 +960,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 								String[] splitedDragComponent= DragComponentName.split("<break>");
 								for(int i=0; i<splitedDragComponent.length; i++) {
 									sendKeys(driver, getQuickFindSearchBox(environment, mode, 10), splitedDragComponent[i], "Search Value : "+splitedDragComponent[i], action.BOOLEAN);
-									if(splitedDragComponent[i].equalsIgnoreCase("Highest Stage Reached") || splitedDragComponent[i].equalsIgnoreCase("Average Deal Quality Score") || splitedDragComponent[i].equalsIgnoreCase("Contact Referral Source") || splitedDragComponent[i].equalsIgnoreCase("Last Stay-in-Touch Request Date")) {
+									if(splitedDragComponent[i].equalsIgnoreCase("Highest Stage Reached") || splitedDragComponent[i].equalsIgnoreCase("Average Deal Quality Score") || splitedDragComponent[i].equalsIgnoreCase("Contact Referral Source") || splitedDragComponent[i].equalsIgnoreCase("Last Stay-in-Touch Request Date") 
+											||	splitedDragComponent[i].equalsIgnoreCase( "Total Fund Commitments (mn)") || splitedDragComponent[i].equalsIgnoreCase( "Total Co-investment Commitments (mn)")) {
 										String DragComponent=splitedDragComponent[i].split(" ")[0];
 										sourceElement =isDisplayed(driver, FindElement(driver, "//span[starts-with(text(),'"+DragComponent+"')]", "", action.BOOLEAN,10), "visibility",10,splitedDragComponent[i]+" page layout link");
 									}else {

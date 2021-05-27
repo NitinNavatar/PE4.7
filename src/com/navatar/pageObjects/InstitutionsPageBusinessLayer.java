@@ -306,12 +306,11 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 									appLog.info("passed value "+labelValue[i]+" in "+labelNames[i]+" field");
 									
 
-									if (mode.equalsIgnoreCase(Mode.Lightning.toString()) && labelNames[i].toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString())) {
+									if (labelNames[i].toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString()) || labelNames[i].toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Entity.toString())) {
 										
 										ThreadSleep(1000);
 										if (click(driver,
-												FindElement(driver,
-														"//*[contains(@class,'slds-listbox__option-text')]/*[@title='"+labelValue[i]+"']",
+												FindElement(driver,"//*[@title='"+labelValue[i]+"']//strong[text()='"+labelValue[i].split(" ")[0]+"']",
 														"Legal Name List", action.SCROLLANDBOOLEAN, 30),
 												labelValue[i] + "   :   Legal Name", action.SCROLLANDBOOLEAN)) {
 											appLog.info(labelValue[i] + "  is present in list.");

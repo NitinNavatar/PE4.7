@@ -145,7 +145,12 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 				xpath="//*[contains(text(),'Parent Institution')]";
 				inputXpath="/following-sibling::div//input[contains(@placeholder,'Search')]";
 			}
+			else if(labelName.toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Entity.toString()))
+			{
+				xpath="//*[contains(text(),'Parent Entity')]";
+				inputXpath="/following-sibling::div//input[contains(@placeholder,'Search')]";
 			
+			}
 		}
 		
 		if(labelName.equalsIgnoreCase(InstitutionPageFieldLabelText.Description.toString()) || labelName.equalsIgnoreCase(InstitutionPageFieldLabelText.Referral_Source_Description.toString()) 
