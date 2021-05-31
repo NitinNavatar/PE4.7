@@ -157,7 +157,7 @@ public class Module1 extends BaseLib {
 			else{
 				tab1=tabObj1;
 			}
-			addRemoveTabName=tab1+"s,"+tabObj2+"s,"+tabObj3+"s,"+tabObj4+"s,"+"Tasks"+",Recycle Bin"+",Navatar Setup";
+			addRemoveTabName=tab1+"s,"+tabObj2+"s,"+tabObj3+"s,"+tabObj4+"s,"+"Tasks"+",Recycle Bin"+",Navatar Setup"+",Partnerships"+",Commitments";
 			if (lp.addTab_Lighting( addRemoveTabName, 5)) {
 				log(LogStatus.INFO,"Tab added : "+addRemoveTabName,YesNo.No);
 			} else {
@@ -882,7 +882,7 @@ public class Module1 extends BaseLib {
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String value="";
 		String type="";
-		String[][] EntityOrAccounts = {{ FS_Ins2, FS_Ins2RecordType ,null,null},{ FS_LP1, FS_LP1RecordType,InstitutionPageFieldLabelText.Parent_Entity.toString(),FS_Ins2}};
+		String[][] EntityOrAccounts = {{ FS_Ins2, FS_Ins2RecordType ,null,null},{ FS_LP1, FS_LP1RecordType,InstitutionPageFieldLabelText.Parent_Institution.toString(),FS_Ins2}};
 
 		for (String[] accounts : EntityOrAccounts) {
 			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
