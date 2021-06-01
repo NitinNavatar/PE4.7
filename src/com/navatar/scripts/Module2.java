@@ -182,7 +182,10 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS2Name, 20)) {
+				scrollThroughOutWindow(driver);
+				ThreadSleep(3000);
 				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task_with_Multiple_Associations , 10);
+				scrollDownThroughWebelement(driver, ele, "new task");
 				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task_with_Multiple_Associations.toString(), action.BOOLEAN)) {
 				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task_with_Multiple_Associations , 10);
 				scrollDownThroughWebelement(driver, ip.relatedAssociations(projectName).get(0), "related associatons");
@@ -1019,7 +1022,7 @@ public class Module2 extends BaseLib{
 					ThreadSleep(2000);
 					appLog.error("Clicked on Deal Status");
 					
-					String xpath="//div[@class='select-options']//li/a[@title='"+PageLabel.Watchlist.toString()+"']";
+					String xpath="//span[@title='"+PageLabel.Watchlist.toString()+"']";
 					WebElement dealStatusEle = FindElement(driver,xpath, PageLabel.Watchlist.toString(),action.SCROLLANDBOOLEAN, 10);
 					ThreadSleep(2000);
 					if (click(driver, dealStatusEle, PageLabel.Watchlist.toString(), action.SCROLLANDBOOLEAN)) {
@@ -1029,7 +1032,7 @@ public class Module2 extends BaseLib{
 						log(LogStatus.ERROR,"Not able to Select on Status : "+PageLabel.Watchlist.toString(),YesNo.No);
 						sa.assertTrue(false, "Not able to Select on Status : "+PageLabel.Watchlist.toString());
 					}
-					if (click(driver, ip.getSaveButton(projectName,10), "save button", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, ip.getNavigationTabSaveBtn(projectName,10), "save button", action.SCROLLANDBOOLEAN)) {
 						appLog.info("clicked on save button");
 					}else {
 						appLog.error("save button is not clickable so cannot change cmpany to watchlist");
@@ -1405,12 +1408,19 @@ public class Module2 extends BaseLib{
 				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task_with_Multiple_Associations , 10);
 				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task_with_Multiple_Associations.toString(), action.BOOLEAN)) {
 				if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTaskCR1Subject, "Subject", action.SCROLLANDBOOLEAN)) {
+					if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), "", PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
+						
 					if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
 					}
 					else {
 						log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
 						sa.assertTrue(false,"save button is not clickable so task not created" );
+					}
+					}
+					else {
+						log(LogStatus.ERROR, "due date textbox is not visible", YesNo.Yes);
+						sa.assertTrue(false,"due date textbox is not visible" );
 					}
 				}else {
 					log(LogStatus.ERROR, "subject textbox is not clickable", YesNo.Yes);

@@ -85,7 +85,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 								ThreadSleep(2000);
 								appLog.error("Clicked on Deal Status");
 								
-								String xpath="//div[@class='select-options']//li/a[@title='"+strings[1]+"']";
+								String xpath="//span[@title='"+strings[1]+"']";
 								WebElement dealStatusEle = FindElement(driver,xpath, strings[1],action.SCROLLANDBOOLEAN, timeOut);
 								ThreadSleep(2000);
 								if (click(driver, dealStatusEle, strings[1], action.SCROLLANDBOOLEAN)) {
@@ -537,17 +537,17 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 				ThreadSleep(2000);
 				appLog.error("Clicked on Deal Status");
 				
-				String xpath="//div[@class='select-options']//li/a[@title='"+status+"']";
+				String xpath="//span[@title='"+status+"']";
 				WebElement dealStatusEle = FindElement(driver,xpath, status,action.SCROLLANDBOOLEAN, 10);
 				ThreadSleep(2000);
-				if (click(driver, dealStatusEle, status, action.SCROLLANDBOOLEAN)) {
+				if (clickUsingJavaScript(driver, dealStatusEle, status, action.SCROLLANDBOOLEAN)) {
 					appLog.info("Selected Status : "+status);
 					ThreadSleep(2000);
 				} else {
 					log(LogStatus.ERROR,"Not able to Select on Status : "+status,YesNo.No);
 					flag=false;
 				}
-				if (click(driver, getSaveButton(projectName,10), "save button", action.SCROLLANDBOOLEAN)) {
+				if (click(driver, getNavigationTabSaveBtn(projectName,10), "save button", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on save button");
 				}else {
 					appLog.error("save button is not clickable so cannot change cmpany to watchlist");

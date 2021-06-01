@@ -200,7 +200,7 @@ public class FundsPage extends BasePageBusinessLayer {
 	}
 	
 	
-	@FindBy(xpath="//span[text()='Status']/../..//div[@class='uiMenu']//a[@class='select']")
+	@FindBy(xpath="//*[text()='Status']/..//div//input")
 	private WebElement dealStatusDropDownList;
 
 	/**

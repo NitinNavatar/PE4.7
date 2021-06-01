@@ -1341,6 +1341,10 @@ public abstract class BasePage extends BaseLib {
 		  ele=isDisplayed(driver, pipelineLayoutFrame, "Visibility", timeOut, "pipeline custom page frame");
 	  }else if (pageName.toString().equalsIgnoreCase(PageName.SharingSettingsPage.toString())){
 		  ele=isDisplayed(driver, sharingSettingsFrame, "Visibility", timeOut, "Sharing Settings Page frame");
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.DashboardDeadDeals.toString())){
+		  ele=isDisplayed(driver, dashboardFrame, "Visibility", timeOut, "Sharing Settings Page frame");
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.AccountReferral.toString())){
+		  ele=isDisplayed(driver,accountReferralFrame , "Visibility", timeOut, "Sharing Settings Page frame");
 	  }
 	  return ele; 
 	 }
@@ -4924,6 +4928,10 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, taskPopUpHeader, "Visibility", timeOut, "tASK PopUp Header");
 	}
 	
+	@FindBy(xpath = "//iframe[@title='Report Viewer']")
+	private WebElement accountReferralFrame;
 	
+	@FindBy(xpath = "//iframe[@title='dashboard']")
+	private WebElement dashboardFrame;
 	
 }
