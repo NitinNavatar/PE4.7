@@ -832,6 +832,18 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		return false;
 	}
 	
+	public WebElement eventOnCalender(String projectName, String event) {
+		String xpath="//a[@title='"+event+"']";
+		WebElement ele=FindElement(driver,xpath,"event on calender", action.BOOLEAN, 10);
+		return ele;
+	}
+	
+	public int findLocationOfEvent(String projectName, String event ) {
+		String xpath="//td//a[@title='"+event+"']/../preceding-sibling::td";
+		List<WebElement> li = FindElements(driver, xpath, "list of preceding dates");
+		appLog.info("found event "+event +" at location "+li.size()+1);
+		return li.size()+1;
+	}
 	/**
 	 * @author Akul Bhutani
 	 * @param projectName
@@ -843,6 +855,8 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		if (month!=null)
 		xpath="//a[text()='"+date+"']/../preceding-sibling::td[contains(@data-date,'"+month+"')]";
 		List<WebElement> li = FindElements(driver, xpath, "list of preceding dates");
+		appLog.info("found date "+date +" at location "+li.size()+1);
+		
 		return li.size()+1;
 	}
 	/**
@@ -1009,7 +1023,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 				
 				if (!recordType.equals("") || !recordType.isEmpty()) {
 					ThreadSleep(2000);
-					if(click(driver, getRadioButtonforRecordType(recordType, timeOut), "Radio Button for : "+recordType, action.SCROLLANDBOOLEAN)){
+					if(click(driver, getRadioButtonforRecordTypeNavigationPopup(recordType, timeOut), "Radio Button for : "+recordType, action.SCROLLANDBOOLEAN)){
 						appLog.info("Clicked on radio Button for institution for record type : "+recordType);
 						if (click(driver, getContinueOrNextButton(projectName,timeOut), "Continue Button", action.BOOLEAN)) {
 							appLog.info("Clicked on Continue or Nxt Button");	
@@ -1051,7 +1065,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 							}
 						}
 					}
-					if (click(driver, getSaveButton(projectName,timeOut), "save button", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, getNavigationTabSaveBtn(projectName,timeOut), "save button", action.SCROLLANDBOOLEAN)) {
 						appLog.info("clicked on save button");
 						
 						String str = getText(driver, getLegalNameHeader(projectName,timeOut), "legal Name Label Text",action.SCROLLANDBOOLEAN);

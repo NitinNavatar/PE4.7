@@ -277,7 +277,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			switchToDefaultContent(driver);
 			if(sendKeys(driver,getEditPageSeachTextBox(projectName, 10), DropComponentName,DropComponentName+" component xpath", action.BOOLEAN)) {
 				log(LogStatus.INFO, "Enter component name in search box : "+DropComponentName, YesNo.No);
-				ThreadSleep(2000);
+				ThreadSleep(10000);
 				if (dragNDropUsingScreen(projectName, source, target, 10)){
 
 					String value="",field="";

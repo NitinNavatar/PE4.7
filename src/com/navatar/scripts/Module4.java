@@ -26,6 +26,10 @@ import com.relevantcodes.extentreports.LogStatus;
 
 public class Module4 extends BaseLib{
 	Scanner sc = new Scanner(System.in);
+	//Delete all SDG, remove calender from entity event tab
+	//Remove all accordions from entity, deal, event page
+	//Intermediary record typ enable
+	//Industry values should be present
 	@Parameters({ "projectName"})
 	@Test
 	public void M4tc001_CreatePrecondition(String projectName) {
@@ -3387,7 +3391,8 @@ public class Module4 extends BaseLib{
 								if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
 									ele=ip.getRelatedTab(projectName, RelatedTab.Events.toString(), 10);
 									if (click(driver, ele, "events tab", action.SCROLLANDBOOLEAN)) {
-										int loc=ip.findLocationOfDate(projectName, date.split("/")[1], null);
+										int loc=ip.findLocationOfEvent(projectName, M4MarketingEvent2Name);
+										//int loc=ip.findLocationOfDate(projectName, date.split("/")[1], null);
 										ele=ip.getEventPresentOnCalender(projectName, date.split("/")[1], loc,10);
 										if (ele!=null) {
 											if (ele.getAttribute("title").equalsIgnoreCase(M4MarketingEvent2Name)) {
@@ -3485,7 +3490,7 @@ public class Module4 extends BaseLib{
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
 		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
-		String toggleTab="Upcoming Events",date1=todaysDate;
+		String toggleTab="Upcoming Events",date1=todaysDateSingleDigit;
 		String date2=previousOrForwardMonthAccordingToTimeZone(1, "MM/d/YYYY", BasePageErrorMessage.AmericaLosAngelesTimeZone);
 		String button="New "+excelLabel.Marketing_Event.toString();
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -3517,29 +3522,24 @@ public class Module4 extends BaseLib{
 											String monthAndYear=findMonthNameAndYear(date);
 											if (ip.reachToDesiredMonthOnCalnder(projectName, monthAndYear)) {
 												log(LogStatus.INFO, "successfully reached to desired month on calender", YesNo.No);
-												
-												int loc=ip.findLocationOfDate(projectName, date.split("/")[1], marketingE[i][2].split("/")[0]);
-												List<WebElement> li=ip.getEventPresentOnCalender(projectName, date.split("/")[1], loc);
+												int loc=ip.findLocationOfEvent(projectName, marketingE[i][0]);
+												//int loc=ip.findLocationOfDate(projectName, date.split("/")[1], marketingE[i][2].split("/")[0]);
+												WebElement ele1=ip.getEventPresentOnCalender(projectName, date.split("/")[1], loc,10);
 												flag=false;
-												for (WebElement ele1:li) {
+												ThreadSleep(2000);
 													if (ele1!=null) {
 														if (ele1.getAttribute("title").equalsIgnoreCase(marketingE[i][0])) {
-															log(LogStatus.INFO, "successfully verified event name on calendar", YesNo.Yes);
+															log(LogStatus.INFO, "successfully verified event name "+marketingE[i][0]+" on calendar", YesNo.Yes);
 															flag=true;
 														}else {
 															log(LogStatus.ERROR, "event name not matched. expected: "+marketingE[i][0]+"\nactual: "+ele1.getAttribute("title"), YesNo.Yes);
+															sa.assertTrue(false,"event name not matched. expected: "+marketingE[i][0]+"\nactual: "+ele1.getAttribute("title"));
+															
 														}
 													}else {
-														log(LogStatus.ERROR, "could not create event from sdg", YesNo.Yes);
-														sa.assertTrue(false,"could not create event from sdg" );
+														log(LogStatus.ERROR, "could not find any event on sdg", YesNo.Yes);
+														sa.assertTrue(false,"could not find any event on sdg" );
 													}
-												}
-												if (flag) {
-													
-												}else {
-													log(LogStatus.ERROR, "event name not found. expected: "+marketingE[i][0], YesNo.Yes);
-													sa.assertTrue(false,"event name not found. expected: "+marketingE[i][0]);
-												}
 											}else {
 												log(LogStatus.ERROR, "could not reach to desired month of event, so cannot verify event", YesNo.Yes);
 												sa.assertTrue(false,"could not reach to desired month of event, so cannot verify event" );
@@ -3608,9 +3608,10 @@ public class Module4 extends BaseLib{
 						if (ip.reachToDesiredMonthOnCalnder(projectName, monthAndYear)) {
 							log(LogStatus.INFO, "successfully reached to desired month on calender", YesNo.No);
 							
-							int loc=ip.findLocationOfDate(projectName, date.split("/")[1], null);
-							ele=ip.getEventPresentOnCalender(projectName, date.split("/")[1], loc,7);
-								if (ele!=null) {
+							//int loc=ip.findLocationOfDate(projectName, date.split("/")[1], null);
+							//ele=ip.getEventPresentOnCalender(projectName, date.split("/")[1], loc,7);
+							ele=ip.eventOnCalender(projectName, M4MarketingEvent2Name);
+							if (ele!=null) {
 									if (click(driver, ele,M4MarketingEvent2Name, action.SCROLLANDBOOLEAN)) {
 										parentID=switchOnWindow(driver);
 										if (parentID!=null) {
@@ -3691,7 +3692,8 @@ public class Module4 extends BaseLib{
 										sa.assertTrue(false,"could not click on event name on calender" );
 									}
 									
-									ele=ip.getEventPresentOnCalender(projectName, date.split("/")[1], loc,7);
+									ele=ele=ip.eventOnCalender(projectName, M4MarketingEvent2Name);
+									
 									if (click(driver, ele, "event 2", action.BOOLEAN)) {
 										parentID=switchOnWindow(driver);
 										ThreadSleep(4000);
@@ -3889,8 +3891,8 @@ public class Module4 extends BaseLib{
 					String monthAndYear=findMonthNameAndYear(date);
 					if (ip.reachToDesiredMonthOnCalnder(projectName, monthAndYear)) {
 						log(LogStatus.INFO, "successfully reached to desired month on calender", YesNo.No);
-						
-						int loc=ip.findLocationOfDate(projectName, date.split("/")[1], date.split("/")[0]);
+						int loc=ip.findLocationOfEvent(projectName, M4MarketingEvent6Name);
+						//int loc=ip.findLocationOfDate(projectName, date.split("/")[1], date.split("/")[0]);
 						ele=ip.getEventPresentOnCalender(projectName, date.split("/")[1], loc,7);
 						if (ele!=null) {
 							if (ele.getAttribute("title").equalsIgnoreCase(M4MarketingEvent6Name)) {
@@ -4100,7 +4102,6 @@ public class Module4 extends BaseLib{
 					String monthAndYear=findMonthNameAndYear(twodaysdate);
 					if (ip.reachToDesiredMonthOnCalnder(projectName, monthAndYear)) {
 						log(LogStatus.INFO, "successfully reached to desired month on calender", YesNo.No);
-
 						int loc=ip.findLocationOfDate(projectName, twodaysdate.split("/")[1], null);
 						ele=ip.getEventPresentOnCalender(projectName, twodaysdate.split("/")[1], loc,7);
 						if (ele==null) {
@@ -4121,7 +4122,8 @@ public class Module4 extends BaseLib{
 						ele=ip.getpreviousButtonOnCalender(projectName, 10);
 						click(driver, ele, "previous button", action.SCROLLANDBOOLEAN);
 					}
-					int loc=ip.findLocationOfDate(projectName, todayPlusone.split("/")[1], todayPlusone.split("/")[0]);
+					int loc=ip.findLocationOfEvent(projectName, M4MarketingEvent2Name);
+					//int loc=ip.findLocationOfDate(projectName, todayPlusone.split("/")[1], todayPlusone.split("/")[0]);
 					ele=ip.getEventPresentOnCalender(projectName, todayPlusone.split("/")[1], loc,7);
 					if (ele!=null) {
 						if (ele.getText().trim().equalsIgnoreCase(M4MarketingEvent2Name))
@@ -4567,7 +4569,7 @@ public class Module4 extends BaseLib{
 				ele=ip.getRelatedTab(projectName, RelatedTab.Events.toString(), 10);
 				click(driver, ele, "events", action.SCROLLANDBOOLEAN);
 				ThreadSleep(3000);
-				int loc=ip.findLocationOfDate(projectName, todaysDateSingleDigit.split("/")[1], todaysDateSingleDigit.split("/")[0]);
+				int loc=ip.findLocationOfEvent(projectName,M4MarketingEvent4Name );
 				ele=ip.getEventPresentOnCalender(projectName, todaysDateSingleDigit.split("/")[1], loc,7);
 				if (ele!=null) {
 					String style=ele.getAttribute("style");
@@ -4808,6 +4810,8 @@ public class Module4 extends BaseLib{
 		
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		ThreadSleep(5000);
+		refresh(driver);
+		ThreadSleep(2000);
 		if (home.clickOnSetUpLink()) {
 			parentID = switchOnWindow(driver);
 			if (parentID!=null) {
@@ -4815,8 +4819,9 @@ public class Module4 extends BaseLib{
 				ThreadSleep(100);
 				if(setup.searchStandardOrCustomObject(environment,mode, object.Sharing_Settings)) {
 					log(LogStatus.INFO, "click on Object : "+object.Users, YesNo.No);
-					ThreadSleep(2000);
+					ThreadSleep(4000);
 					switchToFrame(driver, 10, lp.getFrame(PageName.SharingSettingsPage, 10));
+					ThreadSleep(4000);
 					ele=lp.getEditButton("",Mode.Classic.toString(), 10);
 					if (click(driver, ele, "edit", action.SCROLLANDBOOLEAN)) {
 						ThreadSleep(2000);
@@ -5039,7 +5044,7 @@ public class Module4 extends BaseLib{
 			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
 				ele=ip.getRelatedTab(projectName, RelatedTab.Events.toString(), 10);
 				if (click(driver, ele, "events tab", action.SCROLLANDBOOLEAN)) {
-					int loc=ip.findLocationOfDate(projectName, todaysDateSingleDigit.split("/")[1], null);
+					int loc=ip.findLocationOfEvent(projectName, M4MarketingEvent4Name);
 					ele=ip.getEventPresentOnCalender(projectName, todaysDateSingleDigit.split("/")[1], loc,10);
 					if (ele!=null) {
 						scrollDownThroughWebelement(driver, ele, "event name");

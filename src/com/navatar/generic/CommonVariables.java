@@ -267,6 +267,8 @@ public class CommonVariables {
 		tabObj5=ExcelUtils.readDataFromPropertyFile("Object5");
 		tabObj6=ExcelUtils.readDataFromPropertyFile("Object6");
 		tabObj7=ExcelUtils.readDataFromPropertyFile("Object7");
+		
+		
 		tabCustomObjField=ExcelUtils.readDataFromPropertyFile("CustomTabFieldName");
 		environment=ExcelUtils.readDataFromPropertyFile("Environment");
 		mode=ExcelUtils.readDataFromPropertyFile("Mode");
@@ -294,6 +296,7 @@ public class CommonVariables {
 			crmUser2LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User2", excelLabel.User_Last_Name);
 			crmUser2EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User2", excelLabel.User_Email);
 			
+			tabCustomObjField=ExcelUtils.readDataFromPropertyFile("CustomTabFieldName");
 			
 			tabCustomObj=ExcelUtils.readDataFromPropertyFile("CustomTabName");
 			tabObj1=ExcelUtils.readDataFromPropertyFile("Object1");
@@ -873,8 +876,8 @@ public class CommonVariables {
 			M3Fund1Category=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "M3FUND1", excelLabel.Investment_Category);
 			M3Fund1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "M3FUND1", excelLabel.Record_Type);
 		
-			M3TestCustomObj1Name=ExcelUtils.readData(testCasesFilePath, "Test Custom Object", excelLabel.Variable_Name,"M3CSTOBJ", excelLabel.Test_Custom_Object_Name);
-			M3TestCustomObj1RecordType=ExcelUtils.readData(testCasesFilePath, "Test Custom Object", excelLabel.Variable_Name,"M3CSTOBJ", excelLabel.Record_Type);
+			M3TestCustomObj1Name=ExcelUtils.readData(phase1DataSheetFilePath, "Test Custom Object", excelLabel.Variable_Name,"M3CSTOBJ", excelLabel.Test_Custom_Object_Name);
+			M3TestCustomObj1RecordType=ExcelUtils.readData(phase1DataSheetFilePath, "Test Custom Object", excelLabel.Variable_Name,"M3CSTOBJ", excelLabel.Record_Type);
 			
 			M3Task1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task1", excelLabel.Subject);
 			M3Task1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task1", excelLabel.Status);

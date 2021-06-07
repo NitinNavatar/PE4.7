@@ -4392,6 +4392,14 @@ public abstract class BasePage extends BaseLib {
 		ele=FindElement(driver, xpath, "radio button of record type "+recordType, action.SCROLLANDBOOLEAN,timeOut);
 		return isDisplayed(driver,ele,"visibility",timeOut,"radio button of record type "+recordType);
 	}
+	
+	public WebElement getRadioButtonforRecordTypeNavigationPopup(String recordType,int timeOut) {
+		String class1="";
+		String xpath="//span[text()='"+recordType+"']/preceding-sibling::input";
+		WebElement ele = null;
+		ele=FindElement(driver, xpath, "radio button of record type "+recordType, action.SCROLLANDBOOLEAN,timeOut);
+		return isDisplayed(driver,ele,"visibility",timeOut,"radio button of record type "+recordType);
+	}
 	public List<WebElement> createdRelatedContactNameOnPopUp(String projectName) {
 		List<WebElement> e=FindElements(driver, "//div[@id='conDIVid']//a", "created Contact Name Popup");
 		return e;
@@ -4918,14 +4926,23 @@ public abstract class BasePage extends BaseLib {
 		
 	}
 	
-	@FindBy (xpath = "//h2[@id='modal-heading-01']")
+	@FindBy (xpath = "//h2[contains(@class,'inlineTitle')]")
 	private WebElement taskPopUpHeader;
-
+	
+	@FindBy (xpath = "//h2[@id='modal-heading-01']")
+	private WebElement taskPopUpHeader1;
+	
 	/**
 	 * @return the navigationPopUpHeader
 	 */
 	public WebElement getTaskPopUpHeader(String projectName,int timeOut) {
-		return isDisplayed(driver, taskPopUpHeader, "Visibility", timeOut, "tASK PopUp Header");
+		WebElement ele=isDisplayed(driver, taskPopUpHeader, "Visibility", timeOut, "tASK PopUp Header");
+		
+		if(ele==null) {
+			 return isDisplayed(driver, taskPopUpHeader1, "Visibility", timeOut, "tASK PopUp Header");
+			
+		}
+		else return ele;
 	}
 	
 	@FindBy(xpath = "//iframe[@title='Report Viewer']")
