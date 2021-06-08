@@ -241,8 +241,8 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 									}
 									if (labelNames[i].equalsIgnoreCase(excelLabel.Region.toString()) || labelNames[i].equalsIgnoreCase(excelLabel.Industry.toString())) {
 										if (click(driver,
-												FindElement(driver,
-														"//*[@title='"+labelValue[i]+"' or text()='"+labelValue[i]+"']",
+												FindElement(driver,"//*[@title='"+labelValue[i]+"']//strong[text()='"+labelValue[i].split(" ")[0]+"']"
+														,
 														"Legal Name List", action.THROWEXCEPTION, 30),
 												labelNames[i] + "   :   Account Name", action.BOOLEAN)) {
 											appLog.info(labelNames[i] + "  is present in list.");

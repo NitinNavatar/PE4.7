@@ -152,7 +152,7 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, elgDataProviderTextBoxSearchIcon, "Visibility", timeOut, "ELG Data Provider TextBox Search Box Icon");
 	}
 	
-	@FindBy(xpath = "//div[@data-label='Navatar Fieldset']/div[@class='actualNode']")
+	@FindBy(xpath = "//*[contains(@class,'active uiTab')]//div[@data-label='Navatar Fieldset']/div[@class='actualNode']")
 	private WebElement fieldSetCompoentXpath;
 
 	public WebElement getFieldSetCompoentXpath(int timeOut) {

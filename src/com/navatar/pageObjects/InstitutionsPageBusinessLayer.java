@@ -85,7 +85,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 								ThreadSleep(2000);
 								appLog.error("Clicked on Deal Status");
 								
-								String xpath="//div[@class='select-options']//li/a[@title='"+strings[1]+"']";
+								String xpath="//span[@title='"+strings[1]+"']";
 								WebElement dealStatusEle = FindElement(driver,xpath, strings[1],action.SCROLLANDBOOLEAN, timeOut);
 								ThreadSleep(2000);
 								if (click(driver, dealStatusEle, strings[1], action.SCROLLANDBOOLEAN)) {
@@ -537,17 +537,17 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 				ThreadSleep(2000);
 				appLog.error("Clicked on Deal Status");
 				
-				String xpath="//div[@class='select-options']//li/a[@title='"+status+"']";
+				String xpath="//span[@title='"+status+"']";
 				WebElement dealStatusEle = FindElement(driver,xpath, status,action.SCROLLANDBOOLEAN, 10);
 				ThreadSleep(2000);
-				if (click(driver, dealStatusEle, status, action.SCROLLANDBOOLEAN)) {
+				if (clickUsingJavaScript(driver, dealStatusEle, status, action.SCROLLANDBOOLEAN)) {
 					appLog.info("Selected Status : "+status);
 					ThreadSleep(2000);
 				} else {
 					log(LogStatus.ERROR,"Not able to Select on Status : "+status,YesNo.No);
 					flag=false;
 				}
-				if (click(driver, getSaveButton(projectName,10), "save button", action.SCROLLANDBOOLEAN)) {
+				if (click(driver, getNavigationTabSaveBtn(projectName,10), "save button", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on save button");
 				}else {
 					appLog.error("save button is not clickable so cannot change cmpany to watchlist");
@@ -631,10 +631,10 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 									appLog.info("passed value "+labelValue[i]+" in "+labelNames[i]+" field");
 									
 
-									if (mode.equalsIgnoreCase(Mode.Lightning.toString()) && labelNames[i].toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString())) {
+									if (labelNames[i].toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Entity.toString()) || labelNames[i].toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString())) {
 										
 										ThreadSleep(1000);
-										if (click(driver,getItemInList("", labelValue[i], action.BOOLEAN, 20),
+										if (clickUsingJavaScript(driver,getItemInList("", labelValue[i], action.BOOLEAN, 20),
 												labelValue[i] + "   :  Parent Name", action.BOOLEAN)) {
 											appLog.info(labelValue[i] + "  is present in list.");
 										} else {
@@ -650,7 +650,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 							}
 							
 						}
-						if (click(driver, getSaveButton(mode,30), "save button", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, getNavigationTabSaveBtn(mode,30), "save button", action.SCROLLANDBOOLEAN)) {
 							appLog.info("clicked on save button");
 							ThreadSleep(5000);
 //							String	xpath="//span[@class='custom-truncate uiOutputText'][text()='"+institutionName+"']";
@@ -832,6 +832,18 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		return false;
 	}
 	
+	public WebElement eventOnCalender(String projectName, String event) {
+		String xpath="//a[@title='"+event+"']";
+		WebElement ele=FindElement(driver,xpath,"event on calender", action.BOOLEAN, 10);
+		return ele;
+	}
+	
+	public int findLocationOfEvent(String projectName, String event ) {
+		String xpath="//td//a[@title='"+event+"']/../preceding-sibling::td";
+		List<WebElement> li = FindElements(driver, xpath, "list of preceding dates");
+		appLog.info("found event "+event +" at location "+li.size()+1);
+		return li.size()+1;
+	}
 	/**
 	 * @author Akul Bhutani
 	 * @param projectName
@@ -843,6 +855,8 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		if (month!=null)
 		xpath="//a[text()='"+date+"']/../preceding-sibling::td[contains(@data-date,'"+month+"')]";
 		List<WebElement> li = FindElements(driver, xpath, "list of preceding dates");
+		appLog.info("found date "+date +" at location "+li.size()+1);
+		
 		return li.size()+1;
 	}
 	/**
@@ -1009,7 +1023,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 				
 				if (!recordType.equals("") || !recordType.isEmpty()) {
 					ThreadSleep(2000);
-					if(click(driver, getRadioButtonforRecordType(recordType, timeOut), "Radio Button for : "+recordType, action.SCROLLANDBOOLEAN)){
+					if(click(driver, getRadioButtonforRecordTypeNavigationPopup(recordType, timeOut), "Radio Button for : "+recordType, action.SCROLLANDBOOLEAN)){
 						appLog.info("Clicked on radio Button for institution for record type : "+recordType);
 						if (click(driver, getContinueOrNextButton(projectName,timeOut), "Continue Button", action.BOOLEAN)) {
 							appLog.info("Clicked on Continue or Nxt Button");	
@@ -1051,7 +1065,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 							}
 						}
 					}
-					if (click(driver, getSaveButton(projectName,timeOut), "save button", action.SCROLLANDBOOLEAN)) {
+					if (click(driver, getNavigationTabSaveBtn(projectName,timeOut), "save button", action.SCROLLANDBOOLEAN)) {
 						appLog.info("clicked on save button");
 						
 						String str = getText(driver, getLegalNameHeader(projectName,timeOut), "legal Name Label Text",action.SCROLLANDBOOLEAN);

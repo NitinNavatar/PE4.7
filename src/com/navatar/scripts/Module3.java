@@ -122,12 +122,14 @@ import static com.navatar.generic.BaseLib.phase1DataSheetFilePath;
 import static com.navatar.generic.CommonLib.*;
 
 public class Module3 extends BaseLib {
-	
-	//////////////Condition Start/////////////////////
-	
-	/////////////////Condition End//////////////////
+	//precondition
+	//Navigation menu empty
+	//Fund manager fund ' problem
+	//Fund should have no record type
+	//Test custom object should not be present
+	//Task object suld not have record type
+	//Delete predefined values from New task, log call, new meeting
 	String passwordResetLink = null;
-//	Scanner scn = new Scanner(System.in);
 
 	String navatarEdge="EDGE";
 	String navigationMenuName="Navigation Menu";
@@ -138,7 +140,7 @@ public class Module3 extends BaseLib {
 	String dashBoardTab="Dashboards";
 	List<String> csvRecords = ExcelUtils.readAllDataFromCSVFileIntoList(NavigationMenuTestData_PEExcel, false);
 	String none="None";
-	String myAppPage="My App Page";
+	String myAppPage="My App Pagel";
 	String googleUrlValue="https://www.google.com/";
 	String upDated="Updated";
 	String customMenu="Custom Menu";
@@ -997,17 +999,11 @@ public class Module3 extends BaseLib {
 				if (click(driver, ele, labelValue, action.BOOLEAN)) {
 					log(LogStatus.INFO, "Click on "+labelValue+" going to verify url", YesNo.No);
 					ThreadSleep(5000);
-					
-//					String actualUrl = getURL(driver, 10);
-//					String urlValue=ExcelUtils.readDataFromCSVFile(NavigationMenuTestData_PEExcel, CSVLabel.Navigation_Label.toString(), labelValue, CSVLabel.URL.toString());
-//					System.err.println(">>> "+urlValue);
-//					if (actualUrl.contains(urlValue)) {
-//						log(LogStatus.INFO, urlValue+" : Url Verified for : "+labelValue, YesNo.No);
-//					} else {
-//						log(LogStatus.ERROR, "Url Not Verified for : "+labelValue+" Actual : "+actualUrl+"\t Expected : "+urlValue, YesNo.Yes);
-//						sa.assertTrue(false,"Url Not Verified for : "+labelValue+" Actual : "+actualUrl+"\t Expected : "+urlValue);
-//						refresh(driver);
-//					}
+					if (i==1)
+						switchToFrame(driver, 10, npbl.getFrame(PageName.DashboardDeadDeals, 10));
+					else if(i==0)
+						switchToFrame(driver, 10, npbl.getFrame(PageName.AccountReferral, 10));
+						
 					
 					redirectLink=redirectionLink.split(breakSP)[i];
 					ele = FindElement(driver, "//*[text()='"+redirectLink+"']", redirectLink, action.BOOLEAN, 40);
@@ -1018,6 +1014,7 @@ public class Module3 extends BaseLib {
 						sa.assertTrue(false,"After clicking : "+labelValue+" should be redirected to "+redirectLink);
 						refresh(driver);
 					}
+					switchToDefaultContent(driver);
 				} else {
 					log(LogStatus.ERROR, "Not Able to Click on "+labelValue+" so cannot verify url", YesNo.Yes);
 					sa.assertTrue(false,"Not Able to Click on "+labelValue+" so cannot verify url");
@@ -1948,7 +1945,7 @@ public class Module3 extends BaseLib {
 						
 						redirectLink=thirdPartyURLS[i];
 						actualUrl=getURL(driver, 60);
-						if (redirectLink.equalsIgnoreCase(actualUrl) || actualUrl.equalsIgnoreCase(redirectLink)) {
+						if (redirectLink.equalsIgnoreCase(actualUrl) || actualUrl.equalsIgnoreCase(redirectLink) || actualUrl.contains(redirectLink)) {
 							log(LogStatus.ERROR, "After clicking : "+labelValue+" redirected to "+redirectLink, YesNo.No);
 						} else {
 							log(LogStatus.ERROR, "After clicking : "+labelValue+" should be redirected to "+redirectLink+" \t Actual : "+actualUrl, YesNo.Yes);
@@ -2150,13 +2147,6 @@ public class Module3 extends BaseLib {
 														ThreadSleep(5000);
 														
 														click(driver, edit.getFinishButton2(projectName, 30),"Finish Button2", action.BOOLEAN);
-//														if (click(driver, edit.getFinishButton2(projectName, 30),"Finish Button2", action.BOOLEAN)) {
-//															log(LogStatus.INFO,"Click on Finish Button2",YesNo.No);
-//															ThreadSleep(5000);
-//															} else {
-//															sa.assertTrue(false, "Not Able to Click on Finish Button2");
-//															log(LogStatus.FAIL,"Not Able to Click on Finish Button2",YesNo.Yes);
-//														}
 
 														if (click(driver, edit.getEditPageSaveButton(projectName, 30),"Save Button", action.BOOLEAN)) {
 															log(LogStatus.INFO,"Click on Save Button",YesNo.No);
@@ -4435,7 +4425,7 @@ public class Module3 extends BaseLib {
 			if (parentID!=null) {
 				if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(),object.Create )) {
 					log(LogStatus.INFO, "Click on Create/Custom object so going to create : "+customObject, YesNo.No);
-					String[][] labelWithValue= {{customObjectLabel.Label.toString(),customObject},{customObjectLabel.Plural_Label.toString(),customObject+"s"}};
+					String[][] labelWithValue= {{customObjectLabel.Label.toString(),tabCustomObj},{customObjectLabel.Plural_Label.toString(),customObject}};
 					if(sp.createCustomObject(projectName, labelWithValue, 10)) {
 						log(LogStatus.INFO, "Custom Object Created : "+customObject, YesNo.No);
 						flag=true;
@@ -4496,7 +4486,7 @@ public class Module3 extends BaseLib {
 				String parentID = switchOnWindow(driver);
 				if (parentID!=null) {
 					
-					if(sp.addObjectToTab(environment, mode, projectName, object.Tabs, customObject, "Bell",parentID)) {
+					if(sp.addObjectToTab(environment, mode, projectName, object.Tabs, tabCustomObj, "Bell",parentID)) {
 						log(LogStatus.PASS, customObject+" added to Tab", YesNo.No);
 						flag=true;
 					}else {
@@ -7610,7 +7600,9 @@ public class Module3 extends BaseLib {
 			log(LogStatus.ERROR, "Not Able to enter value on" +listViewNameLabel+" for "+logAcall, YesNo.Yes);
 			sa.assertTrue(false, "Not Able to enter value on" +listViewNameLabel+" for "+logAcall);
 		}
-
+		ThreadSleep(2000);
+		refresh(driver);
+		ThreadSleep(2000);
 		
 		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
 			log(LogStatus.INFO, "Able to Click on "+navatarEdge, YesNo.No);
@@ -7687,7 +7679,7 @@ public class Module3 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void M3TC084_1_CreateData(String projectName) {
+	public void M3Tc084_1_CreateData(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -8667,7 +8659,7 @@ public class Module3 extends BaseLib {
 				if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {
 					log(LogStatus.INFO, "Click on "+navigationLabelValue, YesNo.No);
 					ThreadSleep(5000);
-					ele=npbl.getnavigationPopUpHeader(projectName, 10);
+					ele=npbl.getTaskPopUpHeader(projectName, 10);
 					if (ele!=null) {
 						log(LogStatus.INFO, "PopUp is open" , YesNo.No);
 						expecedHeader=expecedHeader+recordTypeArray[i];
