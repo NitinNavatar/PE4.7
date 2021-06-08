@@ -631,10 +631,10 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 									appLog.info("passed value "+labelValue[i]+" in "+labelNames[i]+" field");
 									
 
-									if (mode.equalsIgnoreCase(Mode.Lightning.toString()) && labelNames[i].toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString())) {
+									if (labelNames[i].toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Entity.toString()) || labelNames[i].toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString())) {
 										
 										ThreadSleep(1000);
-										if (click(driver,getItemInList("", labelValue[i], action.BOOLEAN, 20),
+										if (clickUsingJavaScript(driver,getItemInList("", labelValue[i], action.BOOLEAN, 20),
 												labelValue[i] + "   :  Parent Name", action.BOOLEAN)) {
 											appLog.info(labelValue[i] + "  is present in list.");
 										} else {
@@ -650,7 +650,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 							}
 							
 						}
-						if (click(driver, getSaveButton(mode,30), "save button", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, getNavigationTabSaveBtn(mode,30), "save button", action.SCROLLANDBOOLEAN)) {
 							appLog.info("clicked on save button");
 							ThreadSleep(5000);
 //							String	xpath="//span[@class='custom-truncate uiOutputText'][text()='"+institutionName+"']";

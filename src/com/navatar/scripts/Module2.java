@@ -32,8 +32,9 @@ import com.relevantcodes.extentreports.LogStatus;
 public class Module2 extends BaseLib{
 	public static double dealReceivedScore=1.0,NDASignedScore=1.0,managementMeetingScore=3.0,ioiScore=3.0,loiScore=5.0;
 	public static double dueDiligenceScore=5.0,closedScore=5.0,declinedDeadScore=5.0,parkedScore=5.0;
-	
-	
+	//postcondition:
+	//ioi, nda signed revert
+	//watch list rename to watchlist
 
 	@Parameters({ "projectName"})
 	@Test
@@ -4319,6 +4320,146 @@ public class Module2 extends BaseLib{
 		sa.assertAll();
 	}
 
+	@Parameters({ "projectName"})
+	@Test
+	public void M2HighestStageReachedtc046_PostCondition(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		String parentID=null;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String[][] newAndOldStage= {{Stage.NonDisclosureAgreement.toString(),Stage.NDA_Signed.toString().replace("_", " ")},
+				{Stage.IndicationOfInterest.toString(),Stage.IOI.toString()}};
+		if (home.clickOnSetUpLink()) {
+			parentID=switchOnWindow(driver);
+			if (parentID!=null) {
+				if (sp.searchStandardOrCustomObject(environment, mode,object.Deal )) {
+					if(sp.clickOnObjectFeature(environment, mode,object.Deal, ObjectFeatureName.FieldAndRelationShip)) {
+						if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), excelLabel.Stage.toString()+Keys.ENTER, "status", action.BOOLEAN)) {
+
+							if (sp.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
+								for (int i = 0;i<newAndOldStage.length;i++) {
+									switchToDefaultContent(driver);
+									switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
+									WebElement ele=sp.clickOnEditInFrontOfFieldValues(projectName, newAndOldStage[i][0]);
+									if (click(driver, ele, "watchlist", action.BOOLEAN)) {
+										switchToDefaultContent(driver);
+										ThreadSleep(3000);
+										switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
+										sendKeys(driver, sp.getFieldLabelTextBox1(10), newAndOldStage[i][1], "label", action.BOOLEAN);
+											
+
+										if (click(driver, fp.getCustomTabSaveBtn(10), "save", action.BOOLEAN)) {
+
+											log(LogStatus.INFO, "successfully changed watchlist label", YesNo.No);
+										}else {
+											sa.assertTrue(false,"not able to click on save button");
+											log(LogStatus.SKIP,"not able to click on save button",YesNo.Yes);
+										}
+
+									}else {
+										sa.assertTrue(false,"edit button is not clickable");
+										log(LogStatus.SKIP,"edit button is not clickable",YesNo.Yes);
+									}
+								}
+								ThreadSleep(5000);
+								switchToDefaultContent(driver);
+								switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
+								WebElement ele=sp.clickOnEditInFrontOfFieldValues(projectName, newAndOldStage[0][1]);
+								WebElement ele1=null;
+								ele1=sp.clickOnEditInFrontOfFieldValues(projectName, newAndOldStage[1][1]);
+								if ((ele!=null)&&(ele1!=null)) {
+									log(LogStatus.INFO,"successfully verified rename of stage values",YesNo.No);	
+									
+								}else {
+									log(LogStatus.ERROR,"stage field is not renamed",YesNo.No);	
+									sa.assertTrue(false,"stage field is not renamed" );
+								}
+							}else {
+								sa.assertTrue(false,"stage field is not clickable");
+								log(LogStatus.SKIP,"stage field is not clickable",YesNo.Yes);
+							}
+						}else {
+							sa.assertTrue(false,"field textbox is not visible");
+							log(LogStatus.SKIP,"field textbox is not visible",YesNo.Yes);
+						}
+					}else {
+						sa.assertTrue(false,"field and relationships is not clickable");
+						log(LogStatus.SKIP,"field and relationships is not clickable",YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false,"activity object is not clickable");
+					log(LogStatus.SKIP,"activity object is not clickable",YesNo.Yes);
+				}
+				ThreadSleep(3000);
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				sa.assertTrue(false,"new window is not found, so cannot change watchlist label");
+				log(LogStatus.SKIP,"new window is not found, so cannot change watchlist label",YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"setup link is not clickable");
+			log(LogStatus.SKIP,"setup link is not clickable",YesNo.Yes);
+		}
+		/*
+		if (home.clickOnSetUpLink()) {
+			parentID=switchOnWindow(driver);
+			if (parentID!=null) {
+				if (sp.searchStandardOrCustomObject(environment, mode,object.Activity )) {
+					if(sp.clickOnObjectFeature(environment, mode,object.Activity, ObjectFeatureName.FieldAndRelationShip)) {
+						if (sp.clickOnAlreadyCreatedLayout(PageLabel.Watch_list.toString().replace("_", " "))) {
+							switchToFrame(driver, 10, sp.getFrame(PageName.ActivityLayoutPage, 10));
+							if (click(driver, ip.getEditButton(environment,  Mode.Classic.toString(),10), "edit classic", action.BOOLEAN)) {
+								switchToDefaultContent(driver);
+								switchToFrame(driver, 10, sp.getFrame(PageName.ActivityLayoutPage, 10));
+								sp.getFieldLabelTextBox(10).sendKeys(PageLabel.Watchlist.toString());
+								
+								
+								if (click(driver, fp.getCustomTabSaveBtn(10), "save", action.BOOLEAN)) {
+											switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+											click(driver, fp.getCustomTabSaveBtn(10), "save", action.BOOLEAN);
+												
+											log(LogStatus.INFO, "successfully changed watchlist label", YesNo.No);
+									}else {
+										sa.assertTrue(false,"not able to click on save button");
+										log(LogStatus.SKIP,"not able to click on save button",YesNo.Yes);
+									}
+								
+								
+							}else {
+								sa.assertTrue(false,"edit button is not clickable");
+								log(LogStatus.SKIP,"edit button is not clickable",YesNo.Yes);
+							}
+						}else {
+							sa.assertTrue(false,"watchlist layout is not clickable");
+							log(LogStatus.SKIP,"watchlist layout is not clickable",YesNo.Yes);
+						}
+					}else {
+						sa.assertTrue(false,"field and relationships is not clickable");
+						log(LogStatus.SKIP,"field and relationships is not clickable",YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false,"activity object is not clickable");
+					log(LogStatus.SKIP,"activity object is not clickable",YesNo.Yes);
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				sa.assertTrue(false,"new window is not found, so cannot change watchlist label");
+				log(LogStatus.SKIP,"new window is not found, so cannot change watchlist label",YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"setup link is not clickable");
+			log(LogStatus.SKIP,"setup link is not clickable",YesNo.Yes);
+		}*/
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 	
 }
 

@@ -30,6 +30,7 @@ public class Module4 extends BaseLib{
 	//Remove all accordions from entity, deal, event page
 	//Intermediary record typ enable
 	//Industry values should be present
+	//Delete all fund record types
 	@Parameters({ "projectName"})
 	@Test
 	public void M4tc001_CreatePrecondition(String projectName) {

@@ -122,6 +122,7 @@ import static com.navatar.generic.BaseLib.phase1DataSheetFilePath;
 import static com.navatar.generic.CommonLib.*;
 
 public class Module3 extends BaseLib {
+	//precondition
 	//Navigation menu empty
 	//Fund manager fund ' problem
 	//Fund should have no record type

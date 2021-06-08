@@ -290,7 +290,6 @@ public class Module5 extends BaseLib {
 		String value="";
 		String type="";
 		String[][] EntityOrAccounts = {{ ToggleIns1, ToggleIns1RecordType ,null}};
-
 		for (String[] accounts : EntityOrAccounts) {
 			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
 				log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);	
@@ -461,7 +460,7 @@ public class Module5 extends BaseLib {
 
 		if(bp.clickOnTab(projectName,TabName.Object1Tab)) {
 
-			if(ins.createInstitution(environment, mode, ToggleLP1, "Limited Partner", InstitutionPageFieldLabelText.Parent_Institution.toString(), ToggleIns1)) {
+			if(ins.createInstitution(environment, mode, ToggleLP1, "Limited Partner", InstitutionPageFieldLabelText.Parent_Entity.toString(), ToggleIns1)) {
 				appLog.info("limited partner is created: "+ToggleLP1);
 			}else {
 				appLog.error("Not able to create limited partner: "+ToggleLP1);
@@ -1075,8 +1074,11 @@ public class Module5 extends BaseLib {
 									act.clickAndHold(source).build().perform();
 									ThreadSleep(1000);
 									Screen screen = new Screen();
+									String psource= System.getProperty("user.dir")+"\\AutoIT\\EditPage\\"+fileLocation[i];
+									System.err.println("path of file : "+psource);
+										String p=".\\AutoIT\\EditPage\\"+fileLocation[i]+"";
 									try {
-										screen.dropAt(".\\AutoIT\\EditPage\\"+fileLocation[i]+"");
+										screen.dropAt(psource);
 										flag=true;
 									} catch (FindFailed e) {
 										// TODO Auto-generated catch block
