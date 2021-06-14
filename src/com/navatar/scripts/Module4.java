@@ -459,8 +459,12 @@ public class Module4 extends BaseLib{
 				click(driver, ele, "overview tab", action.BOOLEAN);
 				id=cp.updatePhotoInDetailPage(projectName, attachmentPath1);
 				if (id!=null) {
+					if (!id.contains(BasePageErrorMessage.defaultPhotoText))
 					log(LogStatus.INFO, "successfully updated photo", YesNo.No);
-
+				else {
+					log(LogStatus.ERROR, "could not update photo", YesNo.Yes);
+					sa.assertTrue(false,"could not update photo" );
+				}
 				}else {
 					log(LogStatus.ERROR, "could not update photo", YesNo.Yes);
 					sa.assertTrue(false,"could not update photo" );
@@ -498,7 +502,12 @@ public class Module4 extends BaseLib{
 				click(driver, ele, "overview tab", action.BOOLEAN);
 				id=cp.updatePhotoInDetailPage(projectName,attachmentPath2);
 				if (id!=null) {
-					log(LogStatus.INFO, "successfully updated photo", YesNo.No);
+					if (!id.contains(BasePageErrorMessage.defaultPhotoText))
+						log(LogStatus.INFO, "successfully updated photo", YesNo.No);
+					else {
+						log(LogStatus.ERROR, "could not update photo", YesNo.Yes);
+						sa.assertTrue(false,"could not update photo" );
+					}
 
 				}else {
 					log(LogStatus.ERROR, "could not update photo", YesNo.Yes);
@@ -2235,8 +2244,12 @@ public class Module4 extends BaseLib{
 				click(driver, ele, "overview tab", action.BOOLEAN);
 				id=cp.updatePhotoInDetailPage(projectName, attachmentPath1);
 				if (id!=null) {
+					if (!id.contains(BasePageErrorMessage.defaultPhotoText))
 					log(LogStatus.INFO, "successfully updated photo", YesNo.No);
-
+					else {
+						log(LogStatus.ERROR, "could not update photo", YesNo.Yes);
+						sa.assertTrue(false,"could not update photo" );
+					}
 				}else {
 					log(LogStatus.ERROR, "could not update photo", YesNo.Yes);
 					sa.assertTrue(false,"could not update photo" );
@@ -2290,7 +2303,12 @@ public class Module4 extends BaseLib{
 				click(driver, ele, "overview tab", action.BOOLEAN);
 				id=cp.updatePhotoInDetailPage(projectName,attachmentPath2);
 				if (id!=null) {
-					log(LogStatus.INFO, "successfully updated photo", YesNo.No);
+					if (!id.contains(BasePageErrorMessage.defaultPhotoText))
+						log(LogStatus.INFO, "successfully updated photo", YesNo.No);
+						else {
+							log(LogStatus.ERROR, "could not update photo", YesNo.Yes);
+							sa.assertTrue(false,"could not update photo" );
+						}
 
 				}else {
 					log(LogStatus.ERROR, "could not update photo", YesNo.Yes);
@@ -4921,7 +4939,14 @@ public class Module4 extends BaseLib{
 							log(LogStatus.ERROR, "could not find current month on calender", YesNo.No);
 						}	
 					}
-					int loc=ip.findLocationOfDate(projectName, dateMinusOne.split("/")[1], dateMinusOne.split("/")[0]);
+					int loc=ip.findLocationOfEvent(projectName,M4MarketingEvent21Name );
+					if (loc==1) {
+						log(LogStatus.INFO, "successfully verified absence of "+M4MarketingEvent21Name, YesNo.No);
+						
+					}
+					else {
+						
+					
 					ele=ip.getEventPresentOnCalender(projectName, dateMinusOne.split("/")[1], loc,10);
 					if (ele!=null) {
 						if (ele.getAttribute("title").equalsIgnoreCase(M4MarketingEvent21Name)) {
@@ -4934,6 +4959,7 @@ public class Module4 extends BaseLib{
 					}else {
 						log(LogStatus.ERROR, "could not create event from sdg", YesNo.Yes);
 						sa.assertTrue(false,"could not create event from sdg" );
+					}
 					}
 				}else {
 					log(LogStatus.ERROR, "events tab is not clickable", YesNo.Yes);
@@ -4993,7 +5019,12 @@ public class Module4 extends BaseLib{
 							log(LogStatus.ERROR, "could not find current month on calender", YesNo.No);
 						}	
 					}
-					int loc=ip.findLocationOfDate(projectName, dateMinusOne.split("/")[1], dateMinusOne.split("/")[0]);
+					int loc=ip.findLocationOfEvent(projectName, M4MarketingEvent20Name);
+					if (loc==1) {
+						log(LogStatus.INFO, "successfully verified absence of "+M4MarketingEvent20Name, YesNo.No);
+							
+					}
+					else {
 					ele=ip.getEventPresentOnCalender(projectName, dateMinusOne.split("/")[1], loc,10);
 					if (ele!=null) {
 						if (ele.getAttribute("title").equalsIgnoreCase(M4MarketingEvent20Name)) {
@@ -5006,6 +5037,7 @@ public class Module4 extends BaseLib{
 					}else {
 						log(LogStatus.ERROR, "could not create event from sdg", YesNo.Yes);
 						sa.assertTrue(false,"could not create event from sdg" );
+					}
 					}
 				}else {
 					log(LogStatus.ERROR, "events tab is not clickable", YesNo.Yes);

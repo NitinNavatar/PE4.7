@@ -841,7 +841,8 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 	public int findLocationOfEvent(String projectName, String event ) {
 		String xpath="//td//a[@title='"+event+"']/../preceding-sibling::td";
 		List<WebElement> li = FindElements(driver, xpath, "list of preceding dates");
-		appLog.info("found event "+event +" at location "+li.size()+1);
+		int size=li.size()+1;
+		appLog.info("returning event "+event +" list size as "+size);
 		return li.size()+1;
 	}
 	/**
@@ -855,7 +856,8 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		if (month!=null)
 		xpath="//a[text()='"+date+"']/../preceding-sibling::td[contains(@data-date,'"+month+"')]";
 		List<WebElement> li = FindElements(driver, xpath, "list of preceding dates");
-		appLog.info("found date "+date +" at location "+li.size()+1);
+		int size=li.size()+1;
+		appLog.info("found date "+date +" at location "+size);
 		
 		return li.size()+1;
 	}
