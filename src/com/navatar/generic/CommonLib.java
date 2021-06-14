@@ -23,6 +23,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.winium.DesktopOptions;
 import org.openqa.selenium.winium.WiniumDriver;
 import org.openqa.selenium.winium.WiniumDriverService;
+import org.sikuli.script.FindFailed;
+import org.sikuli.script.Pattern;
+import org.sikuli.script.Screen;
 import org.testng.Assert;
 
 import static com.navatar.generic.EnumConstants.*;
@@ -2715,6 +2718,36 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 				return true;
 			}catch (Exception e) {
 				log(LogStatus.FAIL, "File is not uploaded "+filepath, YesNo.Yes);
+			}
+			return false;
+		}
+		
+		/**
+		 * @author ANKIT JAISWAL
+		 * @param imagePath
+		 * @param textMessage
+		 * @return true/false
+		 */
+		public static boolean mouseHoveAndClickActionUsingSikuli(String imagePath, String textMessage) {
+			Pattern fileInputTextBox = new Pattern(System.getProperty("user.dir")+imagePath);
+			Screen scn = new Screen();
+			try {
+				scn.hover(fileInputTextBox);
+				log(LogStatus.INFO, "Mouse hover on "+textMessage,YesNo.No);
+				ThreadSleep(2000);
+				try {
+					scn.click(fileInputTextBox);
+					log(LogStatus.INFO, "Clicked on "+textMessage,YesNo.No);
+					return true;
+				} catch (FindFailed e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					log(LogStatus.INFO, "Not able to clicked on "+textMessage,YesNo.Yes);
+				}
+			} catch (FindFailed e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				log(LogStatus.INFO, "Not able to mouse hover on "+textMessage,YesNo.Yes);
 			}
 			return false;
 		}
