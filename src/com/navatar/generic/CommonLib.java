@@ -2728,7 +2728,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		 * @param textMessage
 		 * @return true/false
 		 */
-		public static boolean mouseHoveAndClickActionUsingSikuli(String imagePath, String textMessage) {
+		public static boolean mouseHoveAndClickAction(String imagePath, String textMessage) {
 			Pattern fileInputTextBox = new Pattern(System.getProperty("user.dir")+imagePath);
 			Screen scn = new Screen();
 			try {
