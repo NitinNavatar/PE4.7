@@ -4751,8 +4751,16 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, defaultImageXpath, "Visibility", timeOut, "default image xpath");
 	}
 	
+	@FindBy(xpath = "//*[@role='tabpanel']//*[@data-component-id='DisplayFieldSet']//img")
+	private WebElement uploadedImageRelativeXpath;
+	
+	
 //	@FindBy(xpath = "//*[@id='parentDiv']//div[contains(@class,'imageIcon')]")
 //	private WebElement updatePhotoCameraIcon;
+
+	public WebElement getUploadedImageRelativeXpath(int timeOut) {
+		return isDisplayed(driver, uploadedImageRelativeXpath, "Visibility", timeOut, "update photo camera icon");
+	}
 
 	public WebElement getUpdatePhotoCameraIcon(int timeOut) {
 		

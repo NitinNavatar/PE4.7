@@ -885,11 +885,12 @@ public class SetupPageBusinessLayer extends SetupPage {
 	 * @param DragComponentName
 	 * @param removableObjectName
 	 * @param removeSomeFields
+	 * @param ChangePosition TODO
 	 * @return true if able to change Position Of Field Set Component
 	 */
-	public boolean changePositionOfFieldSetComponent(object objectName,ObjectFeatureName objectFeatureName,String fieldSetLabel,String DragComponentName,String removableObjectName,YesNo removeSomeFields) {
+	public boolean changePositionOfFieldSetComponent(object objectName,ObjectFeatureName objectFeatureName,String fieldSetLabel,String DragComponentName,String removableObjectName,YesNo removeSomeFields, YesNo ChangePosition) {
 		boolean flag = false;
-		WebElement ele=null,sourceElement=null;
+		WebElement ele=null,sourceElement=null,destination=null;
 		int count=0;
 		if(searchStandardOrCustomObject(environment,mode, objectName)) {
 			log(LogStatus.INFO, "click on Object : "+objectName, YesNo.No);
@@ -905,7 +906,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 							log(LogStatus.INFO, "Field Set Label "+fieldSetLabel+" is already created ", YesNo.No);
 							ThreadSleep(5000);
 							switchToFrame(driver, 20, getEditPageLayoutFrame_Lighting(20));
-							if(removableObjectName!=null) {
+							if(removableObjectName!=null && ChangePosition.toString().equalsIgnoreCase(YesNo.No.toString())) {
 								String[] removeObject= removableObjectName.split("<break>");
 								List<WebElement> lst = getDraggedObjectListInCreateFieldSet();
 								if(!lst.isEmpty()) {
@@ -929,6 +930,34 @@ public class SetupPageBusinessLayer extends SetupPage {
 									return false;
 								}
 								
+							}else if (removableObjectName!=null && ChangePosition.toString().equalsIgnoreCase(YesNo.Yes.toString())) {
+								
+								String[] sourceComponent= DragComponentName.split("<break>");
+								String [] destinationComponent= removableObjectName.split("<break>");
+								for(int i=0; i<sourceComponent.length; i++) {
+									sendKeys(driver, getQuickFindSearchBox(environment, mode, 10), sourceComponent[i], "Search Value : "+sourceComponent[i], action.BOOLEAN);
+									if(sourceComponent[i].equalsIgnoreCase("Highest Stage Reached") || sourceComponent[i].equalsIgnoreCase("Average Deal Quality Score") || sourceComponent[i].equalsIgnoreCase("Contact Referral Source") || sourceComponent[i].equalsIgnoreCase("Last Stay-in-Touch Request Date") 
+											||	sourceComponent[i].equalsIgnoreCase( "Total Fund Commitments (mn)") || sourceComponent[i].equalsIgnoreCase( "Total Co-investment Commitments (mn)")) {
+										String DragComponent=sourceComponent[i].split(" ")[0];
+										sourceElement =isDisplayed(driver, FindElement(driver, "//span[starts-with(text(),'"+DragComponent+"')]", "", action.BOOLEAN,10), "visibility",10,sourceComponent[i]+" page layout link");
+									}else {
+										sourceElement =isDisplayed(driver, FindElement(driver, "//div[@id='defaultView']/div//*[contains(text(),'"+sourceComponent[i]+"')]", "", action.BOOLEAN,10), "visibility",10,sourceComponent[i]+" component in field set");
+										
+										destination = isDisplayed(driver, FindElement(driver, "//div[@id='defaultView']/div//*[contains(text(),'"+destinationComponent[i]+"')]", "", action.BOOLEAN,10), "visibility",10,destinationComponent[i]+" component in field set");
+												
+										
+									}
+									ThreadSleep(2000);
+									if(dragNDropField(driver, sourceElement, destination)) {
+										log(LogStatus.INFO, "Dragged Successfully : "+sourceComponent[i], YesNo.No);
+										count++;
+									}else {
+										log(LogStatus.ERROR, "Not able to drag and drop field "+sourceComponent[i]+" in created field set component "+fieldSetLabel, YesNo.Yes);
+									}
+								}
+								if(count==sourceComponent.length) {
+									flag=true;
+								}
 							}
 							if(removeSomeFields.toString().equalsIgnoreCase(YesNo.Yes.toString())) {
 								xpath="//div[@id='defaultView']/div";
@@ -956,7 +985,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 									log(LogStatus.ERROR, "Field Set objects is not available so cannot remove some field set", YesNo.Yes);
 								}
 							}
-							if(DragComponentName!=null) {
+							if(DragComponentName!=null && ChangePosition.toString().equalsIgnoreCase(YesNo.No.toString())) {
 								String[] splitedDragComponent= DragComponentName.split("<break>");
 								for(int i=0; i<splitedDragComponent.length; i++) {
 									sendKeys(driver, getQuickFindSearchBox(environment, mode, 10), splitedDragComponent[i], "Search Value : "+splitedDragComponent[i], action.BOOLEAN);
@@ -1039,8 +1068,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 								if(removeSomeFields.toString().equalsIgnoreCase(YesNo.Yes.toString())) {
 									xpath="//div[@id='defaultView']/div";
 									List<WebElement> fieldSetList=FindElements(driver, xpath, "all dragged field set list xpath");
-									if(!fieldSetList.isEmpty() && fieldSetList.size() > 2) {
-										for(int i=0; i<fieldSetList.size()-2; i++) {
+									if(!fieldSetList.isEmpty()) {
+										for(int i=0; i<fieldSetList.size(); i++) {
 											ThreadSleep(1000);
 											String id =fieldSetList.get(i).getAttribute("id");
 											ThreadSleep(1000);
@@ -1053,7 +1082,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 												return false;
 											}
 										fieldSetList=FindElements(driver, xpath, "all dragged field set list xpath");
-										if(fieldSetList.size()!=2) {
+										if(fieldSetList.isEmpty()) {
 											if(click(driver, getPageLayoutSaveBtn(object.Global_Actions, 10), "page layouts save button", action.SCROLLANDBOOLEAN)) {
 												log(LogStatus.INFO, "Clicked on Save button", YesNo.No);
 												ThreadSleep(5000);
