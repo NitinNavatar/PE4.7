@@ -2592,57 +2592,74 @@ public class Module4 extends BaseLib{
 
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		WebElement ele=null;
+		String imagePath="//AutoIT//CheckBox.PNG";
 		String contactHeader=ip.getTabName(projectName,TabName.Object2Tab);
 		String contact=M4Contact2FName+" "+M4Contact2LName;
 		String parentID=null;
 		boolean flag=true;
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1,10)) {
 				ele=ip.returnAccordionViewDetailsLink(projectName, contactHeader);
 				if (click(driver, ele, "view details link", action.SCROLLANDBOOLEAN)) {
-					/*if (ip.clickOnEditButtonOnSDG(projectName, contact, EditPageLabel.Title.toString(), 10)) {
-						appLog.error(">>>>");
-						sc.next();
-						
+					if (ip.clickOnEditButtonOnSDG(projectName, contact, EditPageLabel.Title.toString(), 10)) {
+						ThreadSleep(3000);
 						ele=ip.SDGInputTextbox(projectName, EditPageLabel.Title.toString(), 10);
-						
-						sendKeys(driver, ele, M4Contact2Title+"a", "title textbox", action.BOOLEAN);
-						ele=ip.accordionSDGContactCheckbox(projectName, contact, EditPageLabel.Title.toString(), action.BOOLEAN, 10);
-						click(driver, ele, "checkbox", action.SCROLLANDBOOLEAN);
-						click(driver, ele, "checkbox", action.SCROLLANDBOOLEAN);
-						if (click(driver, ip.getsdgSaveButton(projectName,10), "save", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.ERROR, "successfully clicked on save button", YesNo.Yes);
 
+						sendKeys(driver, ele, M4Contact2Title+"a", "title textbox", action.BOOLEAN);
+						if (mouseHoveAndClickActionUsingSikuli(imagePath, "checkbox")) {
+							ThreadSleep(5000);
+
+							log(LogStatus.INFO, "successfully clicked on checkbox button", YesNo.Yes);
+
+							if (click(driver, ip.getsdgSaveButton(projectName,10), "save", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "successfully clicked on save button", YesNo.Yes);
+
+							}else {
+								log(LogStatus.ERROR, "could not click on save button", YesNo.Yes);
+								sa.assertTrue(false,"could not click on save button" );
+							}
 						}else {
-							log(LogStatus.ERROR, "could not click on save button", YesNo.Yes);
-							sa.assertTrue(false,"could not click on save button" );
+							log(LogStatus.ERROR, "could not click on checkbox sikuli", YesNo.Yes);
+							sa.assertTrue(false,"could not click on checkbox sikuli" );
 						}
 					}else {
 						log(LogStatus.ERROR, "could not click on edit button", YesNo.Yes);
 						sa.assertTrue(false,"could not click on edit button" );
 					}
+					click(driver, ip.accordionModalWindowClose(projectName, contactHeader), "cross", action.SCROLLANDBOOLEAN);
+					ThreadSleep(2000);
+					
+					ele=ip.returnAccordionViewDetailsLink(projectName, contactHeader);
+					if (click(driver, ele, "view details link", action.SCROLLANDBOOLEAN)) {
 
-					if (ip.clickOnEditButtonOnSDG(projectName, contact, excelLabel.Email.toString(), 10)) {
-						ele=ip.SDGInputTextbox(projectName, excelLabel.Email.toString(), 10);
-						sendKeys(driver, ele, M4Contact2Email+"a", "email textbox", action.BOOLEAN);
-						appLog.error(">>>>");
-						sc.next();
-						
-						ele=ip.accordionSDGContactCheckbox(projectName, contact, EditPageLabel.Title.toString(), action.BOOLEAN, 10);
-						click(driver, ele, "checkbox", action.SCROLLANDBOOLEAN);
-						click(driver, ele, "checkbox", action.SCROLLANDBOOLEAN);
-						if (click(driver, ip.getsdgSaveButton(projectName,10), "save", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "successfully clicked on save button", YesNo.No);
+						if (ip.clickOnEditButtonOnSDG(projectName, contact, excelLabel.Email.toString(), 10)) {
+							ThreadSleep(3000);
+							ele=ip.SDGInputTextbox(projectName, excelLabel.Email.toString(), 10);
+							sendKeys(driver, ele, M4Contact2Email+"a", "email textbox", action.BOOLEAN);
 
+							if (mouseHoveAndClickActionUsingSikuli(imagePath, "checkbox")) {
+								ThreadSleep(5000);
+								if (click(driver, ip.getsdgSaveButton(projectName,10), "save", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "successfully clicked on save button", YesNo.No);
+
+								}else {
+									log(LogStatus.ERROR, "could not click on save button", YesNo.Yes);
+									sa.assertTrue(false,"could not click on save button" );
+								}
+							}else {
+								log(LogStatus.ERROR, "could not click on checkbox button", YesNo.Yes);
+								sa.assertTrue(false,"could not click on checkbox button" );
+							}
 						}else {
-							log(LogStatus.ERROR, "could not click on save button", YesNo.Yes);
-							sa.assertTrue(false,"could not click on save button" );
+							log(LogStatus.ERROR, "could not click on edit button", YesNo.Yes);
+							sa.assertTrue(false,"could not click on edit button" );
 						}
 					}else {
-						log(LogStatus.ERROR, "could not click on edit button", YesNo.Yes);
-						sa.assertTrue(false,"could not click on edit button" );
-					}*/
+						log(LogStatus.ERROR, "could not click on view details link", YesNo.Yes);
+						sa.assertTrue(false,"could not click on view details link" );
+					}
 					if (ip.clickOnShowMoreActionDownArrow(projectName, PageName.SDGPage, ShowMoreActionDropDownList.New, 10)) {
 						log(LogStatus.INFO, "successfully clicked on new button", YesNo.No);
 					}

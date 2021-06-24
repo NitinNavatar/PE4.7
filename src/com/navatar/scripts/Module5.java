@@ -552,6 +552,8 @@ public class Module5 extends BaseLib {
 		String columnNames[] = {ToggleCheck1ColumnName,ToggleCheck2ColumnName,ToggleCheck3ColumnName};
 		String[] columnName=null;
 		String[] toggleColumn=null;
+		String imagePath="//AutoIT//CheckBox.PNG";
+		
 		String cName;
 		WebElement ele;
 		
@@ -577,8 +579,8 @@ public class Module5 extends BaseLib {
 							toggleBtn = toggles[j];
 							toggleColumn=columnName[j].split(columnSP);
 							if (j==0) {
-								
-								if (ip.toggleButton(projectName, toggleBtn, action.BOOLEAN, 30)!=null) {
+								ele=ip.toggleButton(projectName, toggleBtn, action.BOOLEAN, 30);
+								if (ele!=null) {
 									log(LogStatus.INFO,"Toggle is present : "+toggleBtn,YesNo.No);
 									ThreadSleep(2000);
 								} else {
@@ -604,7 +606,109 @@ public class Module5 extends BaseLib {
 								
 									}
 								}
-								
+								//edit functionality start
+								if (i==0) {
+									appLog.error(">>>>");
+									// Entity
+									ele=ip.toggleButton(projectName, toggleBtn, action.BOOLEAN, 30);
+									if (click(driver, ele,"toggle: "+toggleBtn, action.SCROLLANDBOOLEAN)) {
+										if (dp.editButtonToggleSDG(projectName,PageName.Object1Page, ToggleLP1, 1, 10)) {
+											log(LogStatus.INFO,"Click on Edit Btn : "+ToggleLP1,YesNo.No);
+											ThreadSleep(5000);
+											if (click(driver, dp.getcrossInSDGEdit(projectName, 10), "cross", action.BOOLEAN)) {
+												if (sendKeys(driver, ip.getsearchEntitiesTextbox(projectName, 10), ToggleLP1,"textbox", action.BOOLEAN)) {
+													
+													if (click(driver,
+															FindElement(driver,
+																	"//*[@title='"+ToggleLP1+"']//strong[text()='"+ToggleLP1.split(" ")[0]+"']",
+																	"Legal Name List", action.THROWEXCEPTION, 30),
+															ToggleLP1 + "   :   Account Name", action.BOOLEAN)) {
+														appLog.info(ToggleLP1 + "  is present in list.");
+													} else {
+														appLog.error(ToggleLP1 + "  is not present in the list.");
+													}
+												}else {
+													sa.assertTrue(false,"search entities textbox not visible");
+													log(LogStatus.SKIP,"search entities textbox not visible",YesNo.Yes);
+												}
+											}else {
+												sa.assertTrue(false,"cross icon on entities textbox not visible");
+												log(LogStatus.SKIP,"cross icon on entities textbox not visible",YesNo.Yes);
+											}
+											if (mouseHoveAndClickActionUsingSikuli(imagePath, "checkbox")) {
+												log(LogStatus.INFO,"clicked on checkbox",YesNo.Yes);
+													
+											if (ip.toggleEditSaveButton(projectName, toggleBtn, action.BOOLEAN, 30)!=null) {
+												log(LogStatus.INFO,"Edit Save button verified "+ToggleLP1,YesNo.Yes);
+											} else {
+												sa.assertTrue(false,"Edit Save button not verified "+ToggleLP1);
+												log(LogStatus.SKIP,"Edit Save button not verified "+ToggleLP1,YesNo.Yes);
+											}
+											ele=ip.toggleEditCancelButton(projectName, toggleBtn, action.BOOLEAN, 30);
+											if (ele!=null) {
+												click(driver, ele, "cancel", action.BOOLEAN);
+												log(LogStatus.INFO,"Edit Cancel button verified "+ToggleLP1,YesNo.Yes);
+											} else {
+												sa.assertTrue(false,"Edit Cancel button not verified "+ToggleLP1);
+												log(LogStatus.SKIP,"Edit Cancel button not verified "+ToggleLP1,YesNo.Yes);
+											}
+											
+											}else {
+												sa.assertTrue(false,"mouse hover click could not be done on checkbox");
+												log(LogStatus.SKIP,"mouse hover click could not be done on checkbox",YesNo.Yes);
+											}
+										}else {
+											sa.assertTrue(false,"edit button could not be clicked");
+											log(LogStatus.SKIP,"edit button could not be clicked",YesNo.Yes);
+										}
+									}
+									
+								} else if(i==1) {
+									// Deal
+									ele=ip.toggleButton(projectName, toggleBtn, action.BOOLEAN, 30);
+									if (click(driver, ele,"toggle: "+toggleBtn, action.SCROLLANDBOOLEAN)) {
+										if (dp.editButtonToggleSDG(projectName,PageName.Object4Page, ToggleOpenQA1Request, 1, 10)) {
+											log(LogStatus.INFO,"Click on Edit Btn : "+ToggleOpenQA1Request,YesNo.No);
+											ThreadSleep(5000);
+											if (sendKeys(driver, dp.getTextArea(20), ToggleOpenQA1Request+"s", ToggleOpenQA1Request, action.BOOLEAN)) {
+												log(LogStatus.INFO,"enter value on textarea "+ToggleOpenQA1Request,YesNo.No);
+											if (mouseHoveAndClickActionUsingSikuli(imagePath, "checkbox")) {
+												log(LogStatus.INFO,"clicked on checkbox",YesNo.Yes);
+													
+											if (ip.toggleEditSaveButton(projectName, toggleBtn, action.BOOLEAN, 30)!=null) {
+												log(LogStatus.INFO,"Edit Save button verified "+ToggleLP1,YesNo.Yes);
+											} else {
+												sa.assertTrue(false,"Edit Save button not verified "+ToggleLP1);
+												log(LogStatus.SKIP,"Edit Save button not verified "+ToggleLP1,YesNo.Yes);
+											}
+											ele=ip.toggleEditCancelButton(projectName, toggleBtn, action.BOOLEAN, 30);
+											if (ele!=null) {
+												click(driver, ele, "cancel", action.BOOLEAN);
+												log(LogStatus.INFO,"Edit Cancel button verified "+ToggleLP1,YesNo.Yes);
+											} else {
+												sa.assertTrue(false,"Edit Cancel button not verified "+ToggleLP1);
+												log(LogStatus.SKIP,"Edit Cancel button not verified "+ToggleLP1,YesNo.Yes);
+											}
+
+											}else {
+												sa.assertTrue(false,"mouse hover click could not be done on checkbox");
+												log(LogStatus.SKIP,"mouse hover click could not be done on checkbox",YesNo.Yes);
+											}
+											}else {
+												sa.assertTrue(false,"textarea could not be visible");
+												log(LogStatus.SKIP,"textarea could not be visible",YesNo.Yes);
+											}
+										}else {
+											sa.assertTrue(false,"edit button could not be clicked");
+											log(LogStatus.SKIP,"edit button could not be clicked",YesNo.Yes);
+										}
+									}else {
+										sa.assertTrue(false,"toggle button could not be clicked");
+										log(LogStatus.SKIP,"toggle button could not be clicked",YesNo.Yes);
+									}
+								}else{
+									// MI
+								}
 								
 								if (i==1) {
 									if (dp.verifyingOpenRequest(projectName, ToggleOpenQA1ID, ToggleOpenQA1RequestedDate, ToggleOpenQA1Request, ToggleOpenQA1Status, 10)) {
@@ -627,74 +731,9 @@ public class Module5 extends BaseLib {
 										sa.assertTrue(false,"Tool Tip Not Verified : "+ToggleOpenQA1Request);
 										log(LogStatus.FAIL,"Tool Tip Not Verified : "+ToggleOpenQA1Request,YesNo.Yes);
 									}
-//									ele = dp.getEditBtn(projectName, ToggleOpenQA1Request, action.SCROLLANDBOOLEAN, 10);
-//									if (clickUsingJavaScript(driver, ele, ToggleOpenQA1Request, action.BOOLEAN)) {
-//										log(LogStatus.INFO,"Click on Edit Btn : "+ToggleOpenQA1Request,YesNo.No);
-//										ThreadSleep(5000);
-//										
-//										if (click(driver, dp.getTextArea(20), ToggleOpenQA1Request, action.BOOLEAN)) {
-//											log(LogStatus.INFO,"Click on text area for "+ToggleOpenQA1Request,YesNo.No);
-//											ThreadSleep(5000);
-//											try {
-//												dp.getTextArea(20).clear();
-//												
-//												 Robot robot = new Robot();  // Robot class throws AWT Exception	
-//										           Thread.sleep(1000); // Thread.sleep throws InterruptedException	
-//										           robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-//										           Thread.sleep(1000);
-//										           robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-//										           Thread.sleep(1000);
-//										           
-//											} catch (Exception e) {
-//												// TODO Auto-generated catch block
-//												e.printStackTrace();
-//											}
-//											if (sendKeys(driver, dp.getTextArea(20), ToggleOpenQA1Request+"s", ToggleOpenQA1Request, action.BOOLEAN)) {
-//												log(LogStatus.INFO,"enter value on textarea "+ToggleOpenQA1Request,YesNo.No);
-//												
-//												ThreadSleep(2000);
-//												 try {
-//													Robot robot = new Robot();  // Robot class throws AWT Exception	
-//													   Thread.sleep(1000); // Thread.sleep throws InterruptedException	
-//													   robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-//													   Thread.sleep(1000);
-//													   robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-//													   Thread.sleep(1000);
-//												} catch (AWTException e) {
-//													// TODO Auto-generated catch block
-//													e.printStackTrace();
-//												} catch (InterruptedException e) {
-//													// TODO Auto-generated catch block
-//													e.printStackTrace();
-//												}
-//												if (ip.toggleEditSaveButton(projectName, toggleBtn, action.BOOLEAN, 30)!=null) {
-//													log(LogStatus.INFO,"Edit Save button verified "+ToggleOpenQA1Request,YesNo.Yes);
-//												} else {
-//													sa.assertTrue(false,"Edit Save button not verified "+ToggleOpenQA1Request);
-//													log(LogStatus.SKIP,"Edit Save button not verified "+ToggleOpenQA1Request,YesNo.Yes);
-//												}
-//												if (ip.toggleEditCancelButton(projectName, toggleBtn, action.BOOLEAN, 30)!=null) {
-//													log(LogStatus.INFO,"Edit Cancel button verified "+ToggleOpenQA1Request,YesNo.Yes);
-//												} else {
-//													sa.assertTrue(false,"Edit Cancel button not verified "+ToggleOpenQA1Request);
-//													log(LogStatus.SKIP,"Edit Cancel button not verified "+ToggleOpenQA1Request,YesNo.Yes);
-//												}
-//												
-//											} else {
-//												sa.assertTrue(false,"Not Able to enter value on textarea "+ToggleOpenQA1Request);
-//												log(LogStatus.SKIP,"Not Able to enter value on textarea "+ToggleOpenQA1Request,YesNo.Yes);
-//											}
-//										} else {
-//											sa.assertTrue(false,"Not Able to Click on text area for "+ToggleOpenQA1Request);
-//											log(LogStatus.SKIP,"Not Able to Click on text area for "+ToggleOpenQA1Request,YesNo.Yes);
-//										}
-//										
-//										
-//									} else {
-//										sa.assertTrue(false,"Not Able to Click on Edit Btn : "+ToggleOpenQA1Request);
-//										log(LogStatus.SKIP,"Not Able to Click on Edit Btn : "+ToggleOpenQA1Request,YesNo.Yes);
-//									}
 									
+									
+									/// edit functinality end
 								}
 								
 							} else {
@@ -730,6 +769,114 @@ public class Module5 extends BaseLib {
 										}
 									}
 									
+									// edit functinality start
+
+									if (i==0) {
+										// Entity
+										appLog.error(">>>>");
+										ele=ip.toggleButton(projectName, toggleBtn, action.BOOLEAN, 30);
+										if (click(driver, ele,"toggle: "+toggleBtn, action.SCROLLANDBOOLEAN)) {
+											if (dp.editButtonToggleSDG(projectName,PageName.Object1Page, ToggleLP1, 2, 10)) {
+												log(LogStatus.INFO,"Click on Edit Btn : "+ToggleLP1,YesNo.No);
+												ThreadSleep(5000);
+												if (click(driver, dp.getcrossInSDGEdit(projectName, 10), "cross", action.BOOLEAN)) {
+													if (sendKeys(driver, ip.getsearchEntitiesTextbox(projectName, 10), ToggleLP1,"textbox", action.BOOLEAN)) {
+														
+														if (click(driver,
+																FindElement(driver,
+																		"//*[@title='"+ToggleLP1+"']//strong[text()='"+ToggleLP1.split(" ")[0]+"']",
+																		"Legal Name List", action.THROWEXCEPTION, 30),
+																ToggleLP1 + "   :   Account Name", action.BOOLEAN)) {
+															appLog.info(ToggleLP1 + "  is present in list.");
+														} else {
+															appLog.error(ToggleLP1 + "  is not present in the list.");
+														}
+													}else {
+														sa.assertTrue(false,"search entities textbox not visible");
+														log(LogStatus.SKIP,"search entities textbox not visible",YesNo.Yes);
+													}
+												}else {
+													sa.assertTrue(false,"cross icon on entities textbox not visible");
+													log(LogStatus.SKIP,"cross icon on entities textbox not visible",YesNo.Yes);
+												}
+												if (mouseHoveAndClickActionUsingSikuli(imagePath, "checkbox")) {
+													log(LogStatus.INFO,"clicked on checkbox",YesNo.Yes);
+														
+												if (ip.toggleEditSaveButton(projectName, toggleBtn, action.BOOLEAN, 30)!=null) {
+													log(LogStatus.INFO,"Edit Save button verified "+ToggleLP1,YesNo.Yes);
+												} else {
+													sa.assertTrue(false,"Edit Save button not verified "+ToggleLP1);
+													log(LogStatus.SKIP,"Edit Save button not verified "+ToggleLP1,YesNo.Yes);
+												}
+												ele=ip.toggleEditCancelButton(projectName, toggleBtn, action.BOOLEAN, 30);
+												if (ele!=null) {
+													click(driver, ele, "cancel", action.BOOLEAN);
+													log(LogStatus.INFO,"Edit Cancel button verified "+ToggleLP1,YesNo.Yes);
+												} else {
+													sa.assertTrue(false,"Edit Cancel button not verified "+ToggleLP1);
+													log(LogStatus.SKIP,"Edit Cancel button not verified "+ToggleLP1,YesNo.Yes);
+												}
+												
+												}else {
+													sa.assertTrue(false,"mouse hover click could not be done on checkbox");
+													log(LogStatus.SKIP,"mouse hover click could not be done on checkbox",YesNo.Yes);
+												}
+											}else {
+												sa.assertTrue(false,"edit button could not be clicked");
+												log(LogStatus.SKIP,"edit button could not be clicked",YesNo.Yes);
+											}
+										}
+										
+									
+									} else if(i==1) {
+										// Deal
+										ele=ip.toggleButton(projectName, toggleBtn, action.BOOLEAN, 30);
+										if (click(driver, ele,"toggle: "+toggleBtn, action.SCROLLANDBOOLEAN)) {
+											if (dp.editButtonToggleSDG(projectName,PageName.Object4Page, ToggleClosedQA1Request, 1, 10)) {
+												log(LogStatus.INFO,"Click on Edit Btn : "+ToggleClosedQA1Request,YesNo.No);
+												ThreadSleep(5000);
+												if (sendKeys(driver, dp.getTextArea(20), ToggleClosedQA1Request+"s", ToggleClosedQA1Request, action.BOOLEAN)) {
+													log(LogStatus.INFO,"enter value on textarea "+ToggleClosedQA1Request,YesNo.No);
+												if (mouseHoveAndClickActionUsingSikuli(imagePath, "checkbox")) {
+													log(LogStatus.INFO,"clicked on checkbox",YesNo.Yes);
+														
+												if (ip.toggleEditSaveButton(projectName, toggleBtn, action.BOOLEAN, 30)!=null) {
+													log(LogStatus.INFO,"Edit Save button verified "+ToggleClosedQA1Request,YesNo.Yes);
+												} else {
+													sa.assertTrue(false,"Edit Save button not verified "+ToggleClosedQA1Request);
+													log(LogStatus.SKIP,"Edit Save button not verified "+ToggleClosedQA1Request,YesNo.Yes);
+												}
+												ele=ip.toggleEditCancelButton(projectName, toggleBtn, action.BOOLEAN, 30);
+												if (ele!=null) {
+													click(driver, ele, "cancel", action.BOOLEAN);
+													log(LogStatus.INFO,"Edit Cancel button verified "+ToggleClosedQA1Request,YesNo.Yes);
+												} else {
+													sa.assertTrue(false,"Edit Cancel button not verified "+ToggleClosedQA1Request);
+													log(LogStatus.SKIP,"Edit Cancel button not verified "+ToggleClosedQA1Request,YesNo.Yes);
+												}
+
+												}else {
+													sa.assertTrue(false,"mouse hover click could not be done on checkbox");
+													log(LogStatus.SKIP,"mouse hover click could not be done on checkbox",YesNo.Yes);
+												}
+												}else {
+													sa.assertTrue(false,"textarea could not be visible");
+													log(LogStatus.SKIP,"textarea could not be visible",YesNo.Yes);
+												}
+											}else {
+												sa.assertTrue(false,"edit button could not be clicked");
+												log(LogStatus.SKIP,"edit button could not be clicked",YesNo.Yes);
+											}
+										}else {
+											sa.assertTrue(false,"toggle button could not be clicked");
+											log(LogStatus.SKIP,"toggle button could not be clicked",YesNo.Yes);
+										}
+									
+									}else{
+										// MI
+									}
+
+									// edit functinality end
 									
 								} else {
 									sa.assertTrue(false,"Not Able to Click on Toggle : "+toggleBtn);

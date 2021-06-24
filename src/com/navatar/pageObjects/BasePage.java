@@ -1292,6 +1292,10 @@ public abstract class BasePage extends BaseLib {
 	 public WebElement getstatusPicklistFrame(int timeOut) {
 			return isDisplayed(driver, statusPicklistFrame, "Visibility", timeOut, "status Picklist Frame");
 	}
+	 @FindBy(xpath="//iframe[contains(@title,'Visualforce Pages')]")
+	 private WebElement visualforcePageFrame;
+	
+	 
 	 /**
 	  * @author Ankit Jaiswal
 	  * @param pageName
@@ -1330,6 +1334,8 @@ public abstract class BasePage extends BaseLib {
 		  ele=isDisplayed(driver, compactLayoutFrame, "Visibility", timeOut, "meeting or activties Frame");
 	  }else if (pageName.toString().equalsIgnoreCase(PageName.ActivityLayoutPage.toString())){
 		  ele=isDisplayed(driver, activityLayoutFrame, "Visibility", timeOut, "meeting or activties Frame");
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.VisualForcePage.toString())){
+		  ele=isDisplayed(driver, visualforcePageFrame, "Visibility", timeOut, "visual force page frame");
 	  }
 	  else if (pageName.toString().equalsIgnoreCase(PageName.MeetingType.toString())){
 		  ele=isDisplayed(driver, meetingTypeFrame, "Visibility", timeOut, "meeting or activties Frame");
@@ -3065,7 +3071,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, scrollBoxforPageGrid, "Visibility", timeOut, "Scroll Box for Page Grid");
 		}
 	
-	@FindBy(xpath="//a[@title='Select List View']")
+	@FindBy(xpath="//*[@title='Select List View']")
 	private WebElement selectListIcon_Lighting;
 
 	/**
@@ -4950,5 +4956,13 @@ public abstract class BasePage extends BaseLib {
 	
 	@FindBy(xpath = "//iframe[@title='dashboard']")
 	private WebElement dashboardFrame;
+	
+	@FindBy(xpath = "//button[@title='Clear Selection']")
+	private WebElement crossInSDGEdit;
+	
+	public WebElement getcrossInSDGEdit(String projectName,int timeOut) {
+		return isDisplayed(driver, crossInSDGEdit, "Visibility", timeOut, "crossInSDGEdit");
+		
+	}
 	
 }

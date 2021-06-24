@@ -599,5 +599,12 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 	
 	
 	}
+	@FindBy(xpath = "//*[text()='Limited Partner']/following-sibling::*//input[contains(@placeholder,'Search Entities')]")
+	private WebElement searchEntitiesTextbox;
+public WebElement getsearchEntitiesTextbox(String projectName,int timeOut) {
 		
+		return isDisplayed(driver, searchEntitiesTextbox, "Visibility", timeOut, "previous Button On Calender");
+	
+	
+	}
 }

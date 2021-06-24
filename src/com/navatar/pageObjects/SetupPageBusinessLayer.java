@@ -2200,5 +2200,11 @@ public boolean dragDropOnPageLayout(String src,String trgt){
 	}
 	return flag;
 }
+public WebElement VFPagePreviewLink(String projectName, String page) {
+	String xpath = "//a[text()='"+page+"']/../preceding-sibling::td//img[contains(@title,'"+page+"')]/..";
+	
+	WebElement ele=FindElement(driver, xpath, "vfpage preview link", action.SCROLLANDBOOLEAN,10);
+	return isDisplayed(driver,ele,"visibility",10,"vfpage preview link");
 
+}
 }

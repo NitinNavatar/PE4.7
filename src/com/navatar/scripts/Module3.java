@@ -54,6 +54,7 @@ import org.openqa.selenium.remote.server.handler.SendKeys;
 import org.openqa.selenium.remote.server.handler.SwitchToWindow;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Screen;
+import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -5673,15 +5674,81 @@ public class Module3 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
-
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		String secondID;
 		String navigationLabel=CSVLabel.Navigation_Label.toString();
 		String navigationLabelValue=NavatarQuickLink.BulkEmail.toString();
 		String urlLabel=CSVLabel.URL.toString();
 		String urlLabelValue="";
 		WebElement ele;
-
-		if (hp.clickOnLinkFromNavatarQuickLink(environment, mode, NavatarQuickLink.BulkEmail)) {
+		String urlBulkEmail="";
+		boolean flag=false;
+		if (hp.clickOnSetUpLink()) {
+			String parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+				ThreadSleep(3000);
+			
+				secondID=driver.getWindowHandle();
+			
+				log(LogStatus.INFO, "Able to switch on new window, so going to update Navigation Label", YesNo.No);
+				ThreadSleep(500);
+				if (sendKeys(driver, setup.getQucikSearchInSetupPage(10), "Visualforce Pages", "quick search", action.BOOLEAN)) {
+					ThreadSleep(3000);
+					if (click(driver, setup.getvisualForcePagesLink(10), "visual force link", action.BOOLEAN)) {
+						switchToFrame(driver,10, setup.getFrame(PageName.VisualForcePage, 10));
+						ele=setup.VFPagePreviewLink(projectName, NavatarQuickLink.Bulk_Email.toString());
+						if (click(driver, ele, "preview link for bulk email", action.SCROLLANDBOOLEAN)) {
+							for (String handle:driver.getWindowHandles()) {
+								if(!handle.equals(secondID) && !handle.equals(parentID)) {
+									driver.switchTo().window(handle);
+									flag=true;
+									break;
+								}
+							}
+							if (!flag) {
+								log(LogStatus.ERROR, "could not switch to third window", YesNo.Yes);
+								Assert.assertTrue(false, "could not switch to third window");
+							}
+							ThreadSleep(3000);
+							urlBulkEmail=getURL(driver, 10);
+							System.err.println(urlBulkEmail);
+							switchToDefaultContent(driver);
+							driver.close();
+							driver.switchTo().window(secondID);
+						}else {
+							sa.assertTrue(false, "preview link of bulk email is not clickable");
+							log(LogStatus.FAIL, "preview link of bulk email is not clickable", YesNo.Yes);
+						}
+					}else {
+						sa.assertTrue(false, "visual force page link is not clickable");
+						log(LogStatus.FAIL, "visual force page link is not clickable", YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false, "search textbox is not visible");
+					log(LogStatus.FAIL, "search textbox is not visible", YesNo.Yes);
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				sa.assertTrue(false, "could not find window to switch");
+				log(LogStatus.FAIL, "could not find window to switch", YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false, "setup link is not clickable, so cannot get bulk email url link");
+			log(LogStatus.FAIL, "setup link is not clickable, so cannot get bulk email url link", YesNo.Yes);
+		}
+		lp.CRMlogout();
+		driver.close();
+		config(browserToLaunch);
+		lp = new LoginPageBusinessLayer(driver);
+		npbl = new NavigationPageBusineesLayer(driver);
+		hp = new HomePageBusineesLayer(driver);
+		setup = new SetupPageBusinessLayer(driver);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		
+		/*if (hp.clickOnLinkFromNavatarQuickLink(environment, mode, NavatarQuickLink.BulkEmail)) {
 			log(LogStatus.INFO, "Clicked On Bulk Email Link with Navatar Quick Link", YesNo.No);
 			switchToFrame(driver, 30, hp.getCreateFundraisingsFrame_Lighting(20));
 			urlLabelValue=getURL(driver, 10);
@@ -5694,16 +5761,16 @@ public class Module3 extends BaseLib {
 		} else {
 			sa.assertTrue(false, "Not Able to Click On Bulk Email Link with Navatar Quick Link");
 			log(LogStatus.SKIP, "Not Able to Click On Bulk Email Link with Navatar Quick Link", YesNo.Yes);
-		}
-
-
+		}*/
+		urlLabelValue=urlBulkEmail;
+		System.err.println(urlLabelValue);
 		String[][] labelWithValue= {{navigationLabel,navigationLabelValue},{urlLabel,urlLabelValue}};
 		if (npbl.createNavigationItem(projectName, labelWithValue, 20)) {
 			log(LogStatus.INFO, "created "+navigationLabelValue, YesNo.No);
 
 			refresh(driver);
 			ThreadSleep(5000);
-			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navatarEdge, action.BOOLEAN, 30)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 				ele=npbl.getNavigationLabel(projectName, navigationLabelValue, action.BOOLEAN, 10);
 				if (click(driver, ele, navigationLabelValue, action.BOOLEAN)) {

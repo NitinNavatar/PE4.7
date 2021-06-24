@@ -560,5 +560,10 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getApplyOneLayoutToAllProfiles(int timeOut) {
 		return isDisplayed(driver, applyOneLayoutToAllProfiles, "Visibility", timeOut, "Select Page Layout");
 	}
-	
+	@FindBy(xpath = "//div[@title='Visualforce Pages']//a")
+	private WebElement visualForcePagesLink;
+
+	public WebElement getvisualForcePagesLink(int timeOut) {
+		return isDisplayed(driver, visualForcePagesLink, "Visibility", timeOut, "Select Page Layout");
+	}
 }

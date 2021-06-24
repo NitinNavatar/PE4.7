@@ -2864,7 +2864,6 @@ public WebElement sdgContactImage(String projectName, String contact, int timeOu
 public boolean clickOnEditButtonOnSDG(String projectName, String contact, String field,int timeOut) {
 	String xpath ="//*[text()='"+contact+"']/../../../../following-sibling::td[contains(@data-label,'"+field+"')]//button";
 	WebElement ele = FindElement(driver, xpath,"edit button for "+field, action.BOOLEAN, timeOut);
-	//ele= isDisplayed(driver, ele, "visibility", timeOut, "edit button for "+field);
 	JavascriptExecutor js = (JavascriptExecutor)driver;
 	js.executeScript("return arguments[0].setAttribute('Styles','display: inline-block;')", ele);
 	click(driver, ele, "edit", action.BOOLEAN);
@@ -3002,7 +3001,8 @@ public WebElement toggleEditSaveButton(String projectName,String btnName,action 
  * @return toggle edit cancel Button webElement
  */
 public WebElement toggleEditCancelButton(String projectName,String btnName,action action,int timeOut) {
-	String xpath = "//button[contains(text(),'"+btnName+"')]/../../../../../../../..//button[text()='Cancel']";
+	String xpath = "//div[contains(@class,'sdgborder')]//button[@title='Cancel' or text()='Cancel']";
+	//String xpath = "//button[contains(text(),'"+btnName+"')]/../../../../../../../..//button[text()='Cancel']";
 	WebElement ele = FindElement(driver, xpath,"Toggle Button : "+btnName, action, timeOut);
 	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btnName);
 	return ele;
@@ -3024,6 +3024,18 @@ public WebElement crossIconForEventField(String projectName, String field, Strin
 	return ele;
 }
 
+public boolean editButtonToggleSDG(String projectName,PageName pageName, String record, int toggleOneOrTwo, int timeOut) {
+	String xpath="";
+	if(pageName == PageName.Object1Page)
+	xpath="(//*[text()='"+record+"']/../../following-sibling::span//button[@title='Edit'])["+toggleOneOrTwo+"]";
+	else if(pageName == PageName.Object4Page)
+		xpath = "(//*[text()='"+record+"']/../following-sibling::span//button[@title='Edit'])["+toggleOneOrTwo+"]";
+	WebElement ele = FindElement(driver, xpath,"edit Button : "+record, action.BOOLEAN, timeOut);
+	JavascriptExecutor js = (JavascriptExecutor)driver;
+	js.executeScript("return arguments[0].setAttribute('Styles','display: inline-block;')", ele);
+	click(driver, ele, "edit", action.BOOLEAN);
+	return true;
+}
 /**
  * @author Azhar Alam
  * @param projectName
