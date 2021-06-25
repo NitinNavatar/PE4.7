@@ -635,7 +635,7 @@ public class Module5 extends BaseLib {
 												sa.assertTrue(false,"cross icon on entities textbox not visible");
 												log(LogStatus.SKIP,"cross icon on entities textbox not visible",YesNo.Yes);
 											}
-											if (mouseHoveAndClickActionUsingSikuli(imagePath, "checkbox")) {
+											if (mouseHoveAndClickAction(imagePath, "checkbox")) {
 												log(LogStatus.INFO,"clicked on checkbox",YesNo.Yes);
 													
 											if (ip.toggleEditSaveButton(projectName, toggleBtn, action.BOOLEAN, 30)!=null) {
@@ -672,7 +672,7 @@ public class Module5 extends BaseLib {
 											ThreadSleep(5000);
 											if (sendKeys(driver, dp.getTextArea(20), ToggleOpenQA1Request+"s", ToggleOpenQA1Request, action.BOOLEAN)) {
 												log(LogStatus.INFO,"enter value on textarea "+ToggleOpenQA1Request,YesNo.No);
-											if (mouseHoveAndClickActionUsingSikuli(imagePath, "checkbox")) {
+											if (mouseHoveAndClickAction(imagePath, "checkbox")) {
 												log(LogStatus.INFO,"clicked on checkbox",YesNo.Yes);
 													
 											if (ip.toggleEditSaveButton(projectName, toggleBtn, action.BOOLEAN, 30)!=null) {
@@ -799,7 +799,7 @@ public class Module5 extends BaseLib {
 													sa.assertTrue(false,"cross icon on entities textbox not visible");
 													log(LogStatus.SKIP,"cross icon on entities textbox not visible",YesNo.Yes);
 												}
-												if (mouseHoveAndClickActionUsingSikuli(imagePath, "checkbox")) {
+												if (mouseHoveAndClickAction(imagePath, "checkbox")) {
 													log(LogStatus.INFO,"clicked on checkbox",YesNo.Yes);
 														
 												if (ip.toggleEditSaveButton(projectName, toggleBtn, action.BOOLEAN, 30)!=null) {
@@ -837,7 +837,7 @@ public class Module5 extends BaseLib {
 												ThreadSleep(5000);
 												if (sendKeys(driver, dp.getTextArea(20), ToggleClosedQA1Request+"s", ToggleClosedQA1Request, action.BOOLEAN)) {
 													log(LogStatus.INFO,"enter value on textarea "+ToggleClosedQA1Request,YesNo.No);
-												if (mouseHoveAndClickActionUsingSikuli(imagePath, "checkbox")) {
+												if (mouseHoveAndClickAction(imagePath, "checkbox")) {
 													log(LogStatus.INFO,"clicked on checkbox",YesNo.Yes);
 														
 												if (ip.toggleEditSaveButton(projectName, toggleBtn, action.BOOLEAN, 30)!=null) {

@@ -2608,7 +2608,7 @@ public class Module4 extends BaseLib{
 						ele=ip.SDGInputTextbox(projectName, EditPageLabel.Title.toString(), 10);
 
 						sendKeys(driver, ele, M4Contact2Title+"a", "title textbox", action.BOOLEAN);
-						if (mouseHoveAndClickActionUsingSikuli(imagePath, "checkbox")) {
+						if (mouseHoveAndClickAction(imagePath, "checkbox")) {
 							ThreadSleep(5000);
 
 							log(LogStatus.INFO, "successfully clicked on checkbox button", YesNo.Yes);
@@ -2639,7 +2639,7 @@ public class Module4 extends BaseLib{
 							ele=ip.SDGInputTextbox(projectName, excelLabel.Email.toString(), 10);
 							sendKeys(driver, ele, M4Contact2Email+"a", "email textbox", action.BOOLEAN);
 
-							if (mouseHoveAndClickActionUsingSikuli(imagePath, "checkbox")) {
+							if (mouseHoveAndClickAction(imagePath, "checkbox")) {
 								ThreadSleep(5000);
 								if (click(driver, ip.getsdgSaveButton(projectName,10), "save", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "successfully clicked on save button", YesNo.No);
