@@ -91,6 +91,14 @@ public class NavigationPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, navigationPopUpHeader, "Visibility", timeOut, "navigation PopUp Header");
 	}
 	
+	/**
+	 * @return the NavigationList
+	 */
+	public List<WebElement> getNavigationList(String projectName,int timeOut) {
+		return FindElements(driver, "//div[contains(@id,'treeview')]//ul//li/span[3]", "Navigation List item");
+	}
+	
+	
 	
 	
 }
