@@ -360,7 +360,7 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 		
 	}
 	
-	@FindBy(xpath="//*[text()='Firm']/following-sibling::*/input")
+	@FindBy(xpath="//*[text()='Legal Name']/following-sibling::*/input")
 	private WebElement legalNameTextBoxLighting;
 	
 	/**
@@ -436,10 +436,10 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 			return isDisplayed(driver, newContactBtn_Lighting, "Visibility", timeOut, "new contact butto Lighting");
 		}
 	
-	@FindBy(xpath="//span[text()='Account Name']/../following-sibling::input")
+	@FindBy(xpath="//*[text()='Account Name']/following-sibling::*//input")
 	private WebElement accountNameMNA;
 	
-	@FindBy(xpath="//span[text()='Legal Name']/../following-sibling::input")
+	@FindBy(xpath="//*[text()='Legal Name']/following-sibling::*//input")
 	private WebElement legalNamePE;
 	
 	@FindBy(xpath="//*[text()='Firm']/following-sibling::*//input")
@@ -452,7 +452,7 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 		
 		if (ProjectName.MNA.toString().equals(projectName)) {
 			return isDisplayed(driver, accountNameMNA, "Visibility", timeOut, "Account Name");
-		} else if (ProjectName.PE.toString().equals(projectName)) {
+		} else if (projectName.contains(ProjectName.PE.toString())) {
 			return isDisplayed(driver, legalNamePE, "Visibility", timeOut, "Legal Name");
 		}else  {
 			return isDisplayed(driver, FirmPEEdge, "Visibility", timeOut, "Firm");

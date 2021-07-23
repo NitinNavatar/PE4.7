@@ -18,7 +18,7 @@ public class DealPage extends BasePageBusinessLayer {
 		// TODO Auto-generated constructor stub
 	}
 
-	@FindBy(xpath="//*[text()='New Request Tracker']")
+	@FindBy(xpath="//*[text()='New Question']")
 	private WebElement newRequestTrackerBtn;
 
 	/**

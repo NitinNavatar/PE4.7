@@ -152,12 +152,12 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, elgDataProviderTextBoxSearchIcon, "Visibility", timeOut, "ELG Data Provider TextBox Search Box Icon");
 	}
 	
-	@FindBy(xpath = "//*[contains(@class,'active uiTab')]//div[@data-label='Navatar Fieldset']/div[@class='actualNode']")
+	@FindBy(xpath = "//div[@data-label='Navatar Fieldset']/div[@class='toolbox']")
 	private WebElement fieldSetCompoentXpath;
 
 	public WebElement getFieldSetCompoentXpath(int timeOut) {
 		scrollDownThroughWebelement(driver, fieldSetCompoentXpath, "");
-		return isDisplayed(driver, fieldSetCompoentXpath, "Visibility", timeOut, "field set component");
+		return fieldSetCompoentXpath;
 	}
 	
 	@FindBy(xpath = "//*[contains(text(),'Image Field  Name')]/following-sibling::div/input")
@@ -224,7 +224,7 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, expandedCheckbox, "Visibility", timeOut, "expandedCheckbox");
 	}
 	
-	@FindBy (xpath = "//h2[text()='Error']/../following-sibling::div//div[@class='error']")
+	@FindBy (xpath = "//*[@data-id='Field Set Name']/div/*/div[@role='alert']")
 	private WebElement noOfRecordsErrorPopup;
 
 	/**

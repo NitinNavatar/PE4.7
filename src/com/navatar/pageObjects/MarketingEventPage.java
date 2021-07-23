@@ -24,7 +24,7 @@ public class MarketingEventPage extends BasePageBusinessLayer {
 
 	
 	
-	@FindBy(xpath="//*[text()='Organizer']/following-sibling::div//input[contains(@placeholder,'Search Entities')]")
+	@FindBy(xpath="//*[text()='Organizer']/following-sibling::div//input")
 	private WebElement organizer;
 
 	/**

@@ -69,13 +69,13 @@ public class ContactsPage extends BasePageBusinessLayer {
 	@FindBy(xpath="//div[@class='requiredInput']//span//input")
 	private WebElement legalName_Classic;
 	
-	@FindBy(xpath="//span[text()='Account Name']/../following-sibling::div//input[@title='Search Accounts']")
+	@FindBy(xpath="//*[text()='Account Name']/following-sibling::*//input[@title='Search Accounts']")
 	private WebElement accountName;
 	
-	@FindBy(xpath="//span[text()='Legal Name']/../following-sibling::div//input[@title='Search Institutions']")
+	@FindBy(xpath="//*[text()='Legal Name']/following-sibling::*//input[contains(@placeholder,'Search Institutions')]")
 	private WebElement legalName;
 	
-	@FindBy(xpath="//*[text()='Firm']/following-sibling::div//input[contains(@placeholder,'Search')]")
+	@FindBy(xpath="//*[text()='Legal Name']/following-sibling::*//input[contains(@placeholder,'Search')]")
 	private WebElement firmName;
 
 	/**
@@ -85,7 +85,7 @@ public class ContactsPage extends BasePageBusinessLayer {
 		
 		if (ProjectName.MNA.toString().equals(projectName)) {
 			return isDisplayed(driver, accountName, "Visibility", timeOut, "Account Name");
-		} else if (ProjectName.PE.toString().equals(projectName)) {
+		} else if (projectName.contains(ProjectName.PE.toString())) {
 			return isDisplayed(driver, legalName, "Visibility", timeOut, "Legal Name");
 		}else{
 			return isDisplayed(driver, firmName, "Visibility", timeOut, "Firm Name");
@@ -149,8 +149,8 @@ public class ContactsPage extends BasePageBusinessLayer {
 		
 			//span[text()='Description']/..//following-sibling::textarea
 			xpath="//*[text()='"+finalLabelName+"']";
-			inputXpath="/following-sibling::*/input";
-			textAreaXpath="/following-sibling::*/textarea";
+			inputXpath="/following-sibling::*//input";
+			textAreaXpath="/following-sibling::*//textarea";
 		
 		
 		if(labelName.equalsIgnoreCase(ContactPageFieldLabelText.Description.toString()) || labelName.equalsIgnoreCase(ContactPageFieldLabelText.Mailing_Street.toString()) || 

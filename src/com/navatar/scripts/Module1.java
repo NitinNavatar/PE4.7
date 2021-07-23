@@ -342,7 +342,6 @@ public class Module1 extends BaseLib {
 		String value="";
 		String type="";
 		String[][] EntityOrAccounts = {{ FS_Ins1,FS_Ins1RecordType ,null}};
-		
 		for (String[] accounts : EntityOrAccounts) {
 			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
 				log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);	
@@ -467,7 +466,7 @@ public class Module1 extends BaseLib {
 				log(LogStatus.INFO,"clicked on created contact : "+FS_Con1_FName+" "+FS_Con1_LName, YesNo.No);
 				ThreadSleep(5000);
 				String[] ss = FS_FieldsName1.split("<break>");
-				String[] ss1 = {FS_Con1_FName+" "+FS_Con1_LName,FS_Ins1,FS_Con1_Email,FS_Con1_Phone};
+				String[] ss1 = {FS_Con1_FName+" "+FS_Con1_LName,"",FS_Con1_Email,FS_Con1_Phone};
 				for(int i=0; i<ss.length; i++) {
 					if(con.verifyFieldSetComponent(ss[i],ss1[i])) {
 						log(LogStatus.PASS, ss[i]+" is verified : "+ss1[i], YesNo.No);
@@ -733,7 +732,7 @@ public class Module1 extends BaseLib {
 				log(LogStatus.INFO,"clicked on created contact : "+FS_Con1_FName+" "+FS_Con1_LName, YesNo.No);
 				ThreadSleep(5000);
 				String[] ss = reverseObjects.split("<break>");
-				String[] ss1 = {FS_Con1_Phone,FS_Con1_Email,FS_Ins1,FS_Con1_FName+" "+FS_Con1_LName};;
+				String[] ss1 = {FS_Con1_Phone,FS_Con1_Email,"",FS_Con1_FName+" "+FS_Con1_LName};;
 				
 				for(int i=0; i<ss.length; i++) {
 					if(con.verifyFieldSetComponent(ss[i],ss1[i])) {
@@ -912,9 +911,10 @@ public class Module1 extends BaseLib {
 				log(LogStatus.INFO,"clicked on created contact : "+FS_Con1_FName+" "+FS_Con1_LName, YesNo.No);
 				ThreadSleep(5000);
 				if(edit.clickOnEditPageLink()) {
-					ThreadSleep(5000);
+					ThreadSleep(10000);
 					switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
 					scrollDownThroughWebelement(driver, edit.getFieldSetCompoentXpath(10), "");
+					ThreadSleep(10000);
 					if(click(driver, edit.getFieldSetCompoentXpath(10), "field set component xpath", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on field set component", YesNo.No);
 						ThreadSleep(2000);
@@ -922,9 +922,10 @@ public class Module1 extends BaseLib {
 						if(sendKeys(driver, edit.getFieldSetNameTextBox(10), "", "field set name text box", action.BOOLEAN)) {
 							log(LogStatus.INFO, "Enter Field Set Name as Blank", YesNo.No);
 							ThreadSleep(2000);
-							if(click(driver, edit.getCustomTabSaveBtn(projectName, 10), "save button", action.BOOLEAN)) {
-								log(LogStatus.INFO, "clicked on save button", YesNo.No);
+//							if(click(driver, edit.getCustomTabSaveBtn(projectName, 10), "save button", action.BOOLEAN)) {
+//								log(LogStatus.INFO, "clicked on save button", YesNo.No);
 								ThreadSleep(3000);
+								switchToDefaultContent(driver);
 								WebElement ele=edit.getnoOfRecordsErrorPopup(projectName, 10);
 								if (ele!=null) {
 									if (ele.getText().trim().equalsIgnoreCase(EditPageErrorMessage.noOfRecordsError)) {
@@ -938,11 +939,11 @@ public class Module1 extends BaseLib {
 									log(LogStatus.ERROR, "error message for no of records is not visible", YesNo.Yes);
 									sa.assertTrue(false, "error message for no of records is not visible");
 								}
-								click(driver, edit.getnoOfRecordsErrorPopupOK(projectName, 10), "ok button", action.BOOLEAN);
-							}else {
-								log(LogStatus.ERROR, "Not able to click on save button so cannot check error message", YesNo.No);
-								sa.assertTrue(false, "Not able to click on save button so cannot check error message");
-							}
+//								click(driver, edit.getnoOfRecordsErrorPopupOK(projectName, 10), "ok button", action.BOOLEAN);
+//							}else {
+//								log(LogStatus.ERROR, "Not able to click on save button so cannot check error message", YesNo.No);
+//								sa.assertTrue(false, "Not able to click on save button so cannot check error message");
+//							}
 						}else {
 							log(LogStatus.ERROR, "Not able to enter field set name as blank so cannot check error message", YesNo.Yes);
 							sa.assertTrue(false, "Not able to enter field set name as blank so cannot check error message");
@@ -1105,7 +1106,7 @@ public class Module1 extends BaseLib {
 			for(String[] objects : labelAndValues) {
 				String[][] valuesandLabel = {{objects[2],objects[3]}};
 				
-				if(setup.addCustomFieldforFormula(environment,mode,object.Entity,ObjectFeatureName.FieldAndRelationShip,objects[0],objects[1], valuesandLabel, null,null)) {
+				if(setup.addCustomFieldforFormula(environment,mode,object.Institution,ObjectFeatureName.FieldAndRelationShip,objects[0],objects[1], valuesandLabel, null,null)) {
 					log(LogStatus.PASS, "Field Object is created for :"+objects[1], YesNo.No);
 				}else {
 					log(LogStatus.PASS, "Field Object is not created for :"+objects[1], YesNo.Yes);

@@ -536,7 +536,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	String xpath="";
 	WebElement ele;
 	String related = relatedTab.toString().replace("_", " ");
-	if (projectName.equalsIgnoreCase(ProjectName.PE.toString()))
+	if (projectName.contains(ProjectName.PE.toString()))
 		xpath="//li[@title='"+related+"']//a";
 	else
 	xpath = "//li//*[@title='"+related+"' or text()='"+related+"']";
@@ -1728,7 +1728,7 @@ public boolean fieldValueVerification(String projectName, PageName pageName,Page
 	
 	if (ProjectName.MNA.toString().equalsIgnoreCase(projectName) && PageLabel.Account_Name.equals(pageLabel)) {
 		label="Account Name";
-	} else if(ProjectName.PE.toString().equalsIgnoreCase(projectName) && PageLabel.Account_Name.equals(pageLabel)){
+	} else if(ProjectName.PE.toString().contains(projectName) && PageLabel.Account_Name.equals(pageLabel)){
 		label="Legal Name";
 	} else if(ProjectName.PEEdge.toString().equalsIgnoreCase(projectName) && PageLabel.Account_Name.equals(pageLabel)){
 		label="Firm";
@@ -1921,7 +1921,7 @@ public WebElement getActivityTimeLineItem(String projectName,PageName pageName,A
 	String xpath="";
 	//WebElement ele;
 	String activity = activityTimeLineItem.toString().replace("_", " ");
-	if (projectName.equalsIgnoreCase(ProjectName.PE.toString()))
+	if (projectName.contains(ProjectName.PE.toString()))
 		xpath="//div[@id='completeDiv' and @class='cActivityTimeline']/..//*[text()='"+activity+"']";
 	else
 		xpath="//div[@id='completeDiv' and @class='cActivityTimeline']/..//*[text()='"+activity+"']";
@@ -1953,7 +1953,7 @@ public WebElement getActivityTimeLineItem2(String projectName,PageName pageName,
 	String xpath="";
 	WebElement ele;
 	String activity = activityTimeLineItem.toString().replace("_", " ");
-	if (projectName.equalsIgnoreCase(ProjectName.PE.toString()))
+	if (projectName.contains(ProjectName.PE.toString()))
 		xpath="//div[@id='completeDiv']/..//*[@title='"+activity+"']";
 	else
 		xpath="//div[@id='completeDiv']/..//*[@title='"+activity+"']";
@@ -2321,7 +2321,7 @@ public WebElement getRelatedTab(String projectName,String relatedTab,int timeOut
 String xpath="";
 WebElement ele;
 String related = relatedTab.toString().replace("_", " ");
-if (projectName.equalsIgnoreCase(ProjectName.PE.toString()))
+if (projectName.contains(ProjectName.PE.toString()))
 	xpath="//li[@title='"+related+"']//a";
 else
 xpath = "//li//*[@title='"+related+"' or text()='"+related+"']";
