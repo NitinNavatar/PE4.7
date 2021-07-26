@@ -564,27 +564,49 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 			navigationField=navigationFieldAndvalue[0];
 			navigationvalue = navigationFieldAndvalue[1];
 			ele =getNavigationField(projectName, navigationField, action, 20);
-			if (sendKeys(driver, ele, navigationvalue, navigationField, action)) {
-				log(LogStatus.INFO, "Able to enter "+navigationField, YesNo.No);
-				
-				if (navigationField.equalsIgnoreCase(CSVLabel.Parent.toString())) {
-					ThreadSleep(10000);
-					if (click(driver,getItemInList(projectName, navigationvalue, action.BOOLEAN, 20),
-							navigationvalue + "   :  Parent Name", action.BOOLEAN)) {
-						log(LogStatus.INFO, navigationvalue+" is available", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, navigationvalue+" is not available", YesNo.Yes);
-						sa.assertTrue(false, navigationvalue+" is not available");
 
-					}	
-				}
-				
-			} else {
-				log(LogStatus.ERROR, "Not Able to enter "+navigationField, YesNo.Yes);
-				sa.assertTrue(false,"Not Able to enter "+navigationField);
+			if (navigationField.equalsIgnoreCase(CSVLabel.Navigation_Type.toString())) {
+
+				if (click(driver, getNavigationTypeLabel(projectName, timeOut), navigationField, action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(2000);
+					appLog.error("Clicked on Deal stage");
+
+					String xpath = "//span[@title='"+navigationvalue+"']";
+					ele = FindElement(driver,xpath, navigationvalue,action.SCROLLANDBOOLEAN, timeOut);
+					ThreadSleep(2000);
+					if (click(driver, ele, navigationvalue, action.SCROLLANDBOOLEAN)) {
+						appLog.info("Selected navigation type : "+navigationvalue);
+					} else {
+						appLog.error("Not able to Select on navigation type : "+navigationvalue);
+					}
+
+				} else {
+					appLog.error("Not able to Click on Deal stage : ");
+				}	
+			}else{
+				if (sendKeys(driver, ele, navigationvalue, navigationField, action)) {
+					log(LogStatus.INFO, "Able to enter "+navigationField, YesNo.No);
+
+					if (navigationField.equalsIgnoreCase(CSVLabel.Parent.toString())) {
+						ThreadSleep(10000);
+						if (click(driver,getItemInList(projectName, navigationvalue, action.BOOLEAN, 20),
+								navigationvalue + "   :  Parent Name", action.BOOLEAN)) {
+							log(LogStatus.INFO, navigationvalue+" is available", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, navigationvalue+" is not available", YesNo.Yes);
+							sa.assertTrue(false, navigationvalue+" is not available");
+
+						}	
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to enter "+navigationField, YesNo.Yes);
+					sa.assertTrue(false,"Not Able to enter "+navigationField);
+				}	
 			}
+
 		}
-		
+
 	}
 	
 	

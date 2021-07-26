@@ -1260,7 +1260,7 @@ public static enum PermissionType{
 	}
 	
 	public static enum CSVLabel{
-		Navigation_Label ,Order,Parent,Action_Object,Action_Record_Type,List_View_Object,List_View_Name,URL,Activities_Button_API_Name;
+		Navigation_Label ,Order,Parent,Action_Object,Action_Record_Type,List_View_Object,List_View_Name,URL,Activities_Button_API_Name, Navigation_Type;
 	}
 
 	public static enum EditPageLabel{
@@ -1352,7 +1352,17 @@ public static enum PermissionType{
 			public String toString() {
 				return "Bulk Commitments";
 			}
-    	};
+    	},Deal_Creation {
+			@Override
+			public String toString() {
+				return "Deal Creation";
+			}
+    	},Individual_Investor_Creation {
+			@Override
+			public String toString() {
+				return "Individual Investor Creation";
+			}
+    	},;
     };
     
     public static enum NewInteractions_DefaultValues{
