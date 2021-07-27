@@ -3070,6 +3070,15 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getScrollBoxforPageGrid(String environment,String mode,int timeOut) {
 		return isDisplayed(driver, scrollBoxforPageGrid, "Visibility", timeOut, "Scroll Box for Page Grid");
 		}
+	@FindBy(xpath="//button[@title='Refresh']")
+	private WebElement refrshActivity;
+
+	/**
+	 * @return the scrollBoxforPageGrid
+	 */
+	public WebElement getrefrshActivity(String projectName,int timeOut) {
+		return isDisplayed(driver, refrshActivity, "Visibility", timeOut, "refrshActivity");
+		}
 	
 	@FindBy(xpath="//*[@title='Select List View']")
 	private WebElement selectListIcon_Lighting;
@@ -4569,8 +4578,8 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getfilterSave(String projectName,int timeOut) {
 		return isDisplayed(driver, filterSave, "Visibility", timeOut, "filterSave");
 	}
-	
-	@FindBy(xpath = "//div[@id='completeDiv' and @class='cActivityTimeline']/..//img")
+	@FindBy(xpath = "//div[contains(@class,'slds-grid primaryFieldRow')]//*[text()='Show more actions']/../..")
+	//@FindBy(xpath = "//div[@id='completeDiv' and @class='cActivityTimeline']/..//img")
 	private WebElement activityLineItemsDropdown;
 	
 	public WebElement getactivityLineItemsDropdown(String projectName,int timeOut) {

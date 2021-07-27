@@ -72,4 +72,26 @@ public class DealPage extends BasePageBusinessLayer {
 		
 	}
 	
+	@FindBy(xpath = "//button[text()='Convert to Portfolio']")
+	private WebElement convertToPortfolio;
+	
+	public WebElement getconvertToPortfolio(int timeOut) {
+		return isDisplayed(driver, convertToPortfolio, "Visibility", timeOut, "convertToPortfolio");
+		
+	}
+	@FindBy(xpath = "//h2[text()='Convert to Portfolio']/../following-sibling::*//article//span[text()='"+DealPageErrorMessage.convertToPortfolio+"']")
+	private WebElement convertToPortfolioMessage;
+	
+	public WebElement getconvertToPortfolioMessage(int timeOut) {
+		return isDisplayed(driver, convertToPortfolioMessage, "Visibility", timeOut, "convertToPortfolio");
+		
+	}
+	@FindBy(xpath = "//button[text()='Next']")
+	private WebElement nextButton;
+	
+	public WebElement getnextButton(int timeOut) {
+		return isDisplayed(driver, nextButton, "Visibility", timeOut, "nextButton");
+		
+	}
+	
 }

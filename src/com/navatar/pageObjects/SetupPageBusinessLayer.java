@@ -223,7 +223,9 @@ public class SetupPageBusinessLayer extends SetupPage {
 								String trgt=sourceANDDestination.get(src);
 								if (PageLabel.Is_Touchpoint.toString().equalsIgnoreCase(src)) {
 									
-								}else {
+								}
+								
+								else {
 									src=src.replace("_", " ");
 								}
 								
@@ -252,7 +254,16 @@ public class SetupPageBusinessLayer extends SetupPage {
 										result.add(src+" is not visible so cannot dragNdrop "+src);
 									}
 									flag = true;
-								} else {
+								} else if(src.split("<break>")[0].contains("Mobile")) {
+									if(click(driver, FindElement(driver, "//div[text()='Mobile & Lightning Actions']", "", action.SCROLLANDBOOLEAN, 30), "", action.SCROLLANDBOOLEAN)){
+										src=src.split("<break>")[1];
+										sendKeys(driver, getquickFindSearch(10), src, src, action.BOOLEAN);
+										targetElement = FindElement(driver, "//div[contains(@id,'item_QuickAction')][text()='"+trgt+"']", "", action.BOOLEAN,20);
+									flag=true;
+									}
+								}
+									
+							else {
 									sendKeys(driver, getquickFindSearch(10), src, src, action.BOOLEAN);
 									targetElement = FindElement(driver, "//span[@class='labelText'][text()='"+trgt+"']", "", action.BOOLEAN,20);
 								}

@@ -1921,10 +1921,18 @@ public WebElement getActivityTimeLineItem(String projectName,PageName pageName,A
 	String xpath="";
 	//WebElement ele;
 	String activity = activityTimeLineItem.toString().replace("_", " ");
-	if (projectName.equalsIgnoreCase(ProjectName.PE.toString()))
-		xpath="//div[@id='completeDiv' and @class='cActivityTimeline']/..//*[text()='"+activity+"']";
-	else
-		xpath="//div[@id='completeDiv' and @class='cActivityTimeline']/..//*[text()='"+activity+"']";
+	
+	if (ActivityTimeLineItem.New_Meeting.equals(activityTimeLineItem) || 
+			ActivityTimeLineItem.New_Task.equals(activityTimeLineItem) ||
+				ActivityTimeLineItem.New_Call.equals(activityTimeLineItem)) {
+		xpath="//div[contains(@class,'slds-grid primaryFieldRow')]//*[text()='"+activity+"']";
+	}else {
+		if (projectName.equalsIgnoreCase(ProjectName.PE.toString()))
+			xpath="//div[@id='completeDiv' and @class='cActivityTimeline']/..//*[text()='"+activity+"']";
+		else
+			xpath="//div[@id='completeDiv' and @class='cActivityTimeline']/..//*[text()='"+activity+"']";	
+	}
+
 	List<WebElement> li=FindElements(driver, xpath, activityTimeLineItem.toString());
 	int i=0;
 	for (WebElement ele:li) {

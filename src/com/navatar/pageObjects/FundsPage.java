@@ -227,7 +227,7 @@ public class FundsPage extends BasePageBusinessLayer {
 
 	}
 	
-	@FindBy(xpath="//*[text()='Company Name']/following-sibling::div//input[contains(@placeholder,'Search Entities')]")
+	@FindBy(xpath="//*[text()='Company Name']/following-sibling::div//input[contains(@placeholder,'Search Institutions')]")
 	private WebElement firmName;
 
 	/**

@@ -55,6 +55,7 @@ public class CommonVariables {
 	public static String Smoke_HSRPipeline3Name,Smoke_HSRPipeline3Stage;
 	public static String Smoke_HSRPipeline4Name,Smoke_HSRPipeline4Stage;
 	public static String Smoke_HSRPipeline5Name,Smoke_HSRPipeline5Stage;
+	public static String Smoke_HSRPipeline6Name,Smoke_HSRPipeline6Stage;
 	
 	public static String Smoke_HSRContact1FName,Smoke_HSRContact1LName,Smoke_HSRContact1EmailID;
 	public static String Smoke_HSRContact2FName,Smoke_HSRContact2LName,Smoke_HSRContact2EmailID;
@@ -456,6 +457,8 @@ public class CommonVariables {
 			Smoke_HSRPipeline4Stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP4", excelLabel.Stage);
 			Smoke_HSRPipeline5Name= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP5", excelLabel.Deal_Name);
 			Smoke_HSRPipeline5Stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP5", excelLabel.Stage);
+			Smoke_HSRPipeline6Name= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP6", excelLabel.Deal_Name);
+			Smoke_HSRPipeline6Stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP6", excelLabel.Stage);
 			
 			// TASK Contact2..............
 			Smoke_TWContact2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON2", excelLabel.Contact_FirstName);
