@@ -1260,7 +1260,7 @@ public static enum PermissionType{
 	}
 	
 	public static enum CSVLabel{
-		Navigation_Label ,Order,Parent,Action_Object,Action_Record_Type,List_View_Object,List_View_Name,URL,Activities_Button_API_Name;
+		Navigation_Label ,Order,Parent,Action_Object,Action_Record_Type,List_View_Object,List_View_Name,URL,Activities_Button_API_Name, Navigation_Type;
 	}
 
 	public static enum EditPageLabel{
@@ -1315,5 +1315,95 @@ public static enum PermissionType{
 	public static enum SDGActionsCreationLabel{
 		Name,Event,Action_Order,Action_Type,Event_Payload;
     };
+    
+    
+    public static enum NavigationMenuItems{
+    	Bulk_Actions {
+			@Override
+			public String toString() {
+				return "Bulk Actions";
+			}
+    	},New_Interactions{
+			@Override
+			public String toString() {
+				return "New Interactions";
+			}
+    	},Create_New{
+			@Override
+			public String toString() {
+				return "Create New";
+			}
+    	};
+    };
+    
+    public static enum BulkActions_DefaultValues{
+    	Bulk_Email {
+			@Override
+			public String toString() {
+				return "Bulk Email";
+			}
+    	},Bulk_Fundraising{
+			@Override
+			public String toString() {
+				return "Bulk Fundraising";
+			}
+    	},Bulk_Commitments{
+			@Override
+			public String toString() {
+				return "Bulk Commitments";
+			}
+    	},Deal_Creation {
+			@Override
+			public String toString() {
+				return "Deal Creation";
+			}
+    	},Individual_Investor_Creation {
+			@Override
+			public String toString() {
+				return "Individual Investor Creation";
+			}
+    	},;
+    };
+    
+    public static enum NewInteractions_DefaultValues{
+    	Call {
+			@Override
+			public String toString() {
+				return "Call";
+			}
+    	},Meeting{
+			@Override
+			public String toString() {
+				return "Meeting";
+			}
+    	},Task{
+			@Override
+			public String toString() {
+				return "Task";
+			}
+    	};
+    };
+    
+    public static enum CreateNew_DefaultValues{
+    	New_Deal {
+			@Override
+			public String toString() {
+				return "New Deal";
+			}
+    	},New_Institution{
+			@Override
+			public String toString() {
+				return "New Institution";
+			}
+    	},New_Contact{
+			@Override
+			public String toString() {
+				return "New Contact";
+			}
+    	};
+    };
+    
+    
+    
     
 }
