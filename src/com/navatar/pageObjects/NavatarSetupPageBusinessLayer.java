@@ -89,6 +89,9 @@ public class NavatarSetupPageBusinessLayer extends NavatarSetupPage implements N
 		case OfficeLocations:
 			sideMenu = "Office Locations";
 			break;
+		case CommitmentCreation:
+			sideMenu = "Commitment Creation";
+			break;
 		default:
 			return false;
 		}
