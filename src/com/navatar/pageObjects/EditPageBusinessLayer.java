@@ -107,7 +107,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 	 * @param fieldSetApiName
 	 * @return true if successfully drag N drop layout on Edit Page
 	 */
-	public boolean dragAndDropLayOutFromEditPage(String projectName,PageName pageName, RelatedTab relatedTab,String DropComponentName, String fieldSetApiName) {
+	public boolean dragAndDropLayOutFromEditPage(String projectName,PageName pageName, RelatedTab relatedTab,String DropComponentName, String fieldSetApiName, String imageFieldName) {
 		boolean flag = false;
 		WebElement ele=null,dropComponentXpath=null,dropLocation=null;
 		if(switchToFrame(driver, 30, getEditPageFrame(projectName,30))) {
@@ -122,29 +122,49 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 					switchToDefaultContent(driver);
 					if(sendKeys(driver,getEditPageSeachTextBox(projectName, 10), DropComponentName,DropComponentName+" component xpath", action.BOOLEAN)) {
 						log(LogStatus.INFO, "Enter component name in search box : "+DropComponentName, YesNo.No);
-						
 						String xpath = "//span[@title='"+DropComponentName+"' or text()='"+DropComponentName+"']";
 						dropComponentXpath =  isDisplayed(driver, FindElement(driver, xpath, "Search Value : "+DropComponentName, action.BOOLEAN, 10), "Visibility", 10, "Search Value : "+DropComponentName);
 						if(dropComponentXpath!=null) {
 //							Actions builder = new Actions(driver);
 //							builder.clickAndHold(dropComponentXpath).build().perform();
 					        switchToFrame(driver, 30, getEditPageFrame(projectName,30));
-					        String dropLocationXpath="(//a[@class='flexipageEditorContainerPlaceholder'])[1]";
-					        dropLocation = FindElement(driver, dropLocationXpath,"header xpath",action.BOOLEAN, 10);
+					        String dropLocationXpath ="";
+					        if(pageName.toString().equalsIgnoreCase(PageName.Object5Page.toString())) {
+					        	dropLocationXpath = "//*[@class='actualNode']//*[@role='tablist']";
+					        	dropLocation = FindElement(driver, dropLocationXpath,"header xpath",action.BOOLEAN, 10);
+							}else {
+					        	dropLocationXpath="(//a[@class='flexipageEditorContainerPlaceholder'])[1]";
+					        	 dropLocation = FindElement(driver, dropLocationXpath,"header xpath",action.BOOLEAN, 10);
+							}
 					    	if (dropLocation!=null) {
 					    		switchToDefaultContent(driver);
                                 Screen screen = new Screen();
                                 try {
-                                
+                                		if(pageName.toString().equalsIgnoreCase(PageName.Object5Page.toString())) {
+                                			screen.dragDrop("\\AutoIT\\FIeldSet.PNG", "\\AutoIT\\AddComponentHereOnMEPage.PNG");
+                                		}else {
 //                                		screen.dropAt("\\AutoIT\\AddComponentHere.PNG");
-                                		screen.dragDrop("\\AutoIT\\FIeldSet.PNG", "\\AutoIT\\AddComponentHere.PNG");
+                                			screen.dragDrop("\\AutoIT\\FIeldSet.PNG", "\\AutoIT\\AddComponentHere.PNG");
+											
+										}
                                 	
                                     ThreadSleep(500);
                                     if(sendKeys(driver, getFieldSetNameTextBox(10), fieldSetApiName, "field set name text box", action.BOOLEAN)) {
                                     	log(LogStatus.INFO, "field set name : "+fieldSetApiName, YesNo.No);
+                                    	
+                                    	if(imageFieldName!=null) {
+                                    		 if(sendKeys(driver, getImageFieldNameTextBox(10), imageFieldName, "image field name text box", action.BOOLEAN)) {
+                                             	log(LogStatus.INFO, "image field set name : "+imageFieldName, YesNo.No);
+                                             	
+                                    		 }else {
+         										log(LogStatus.ERROR, "Not able to enter image field set name : "+imageFieldName+" so cannot add field set", YesNo.Yes);
+         										clickUsingJavaScript(driver, getBackButton(10), "back button", action.BOOLEAN);
+         										return false;
+         									}
+                                    	}
                                     	if(click(driver, getCustomTabSaveBtn(projectName, 10), "save button", action.BOOLEAN)) {
                                     		log(LogStatus.INFO, "clicked on save button", YesNo.No);
-                                    		ThreadSleep(2000);
+                                    		ThreadSleep(7000);
                                     		if(clickUsingJavaScript(driver, getBackButton(10), "back button", action.BOOLEAN)) {
                                     			log(LogStatus.PASS, "clicked on back button", YesNo.No);
                                     			flag=true;
@@ -160,6 +180,9 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
                                 } catch (FindFailed e) {
                                     // TODO Auto-generated catch block
                                     e.printStackTrace();
+                                    log(LogStatus.ERROR, "Drop location is not visible", YesNo.Yes);
+                                    clickUsingJavaScript(driver, getBackButton(10), "back button", action.BOOLEAN);
+										return false;
                                 }
 					    	}else {
 					    		log(LogStatus.ERROR, "Drop location is not visible in list so cannot drag and drop component "+DropComponentName+" in "+relatedTab.toString(), YesNo.Yes);

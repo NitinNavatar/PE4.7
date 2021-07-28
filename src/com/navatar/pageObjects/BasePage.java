@@ -4744,14 +4744,14 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, statusDropDownList, "Visibility", timeOut, "Status ");
 	}
 	
-	@FindBy(xpath = "//*[@data-component-id='DisplayFieldSet']//*[@id='parentDiv']/div")
+	@FindBy(xpath = "//*[@id='parentDiv']/div")
 	private WebElement defaultImageXpath;
 
 	public WebElement getDefaultImageXpath(int timeOut) {
 		return isDisplayed(driver, defaultImageXpath, "Visibility", timeOut, "default image xpath");
 	}
 	
-	@FindBy(xpath = "//*[@role='tabpanel']//*[@data-component-id='DisplayFieldSet']//img")
+	@FindBy(xpath = "//*[contains(@data-component-id,'DisplayFieldSet')]//img")
 	private WebElement uploadedImageRelativeXpath;
 	
 	
