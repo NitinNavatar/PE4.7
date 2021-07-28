@@ -214,15 +214,11 @@ public class CommonVariables {
 	public static String LosAngelesCoverage,LosAngelesCoverageRecordType;
 	public static String NewYorkCoverage,NewYorkCoverageRecordType;
 	
-	public static String M3Ins1,M3Ins1RecordType;
-	public static String M3Ins2,M3Ins2RecordType;
+
 	public static String M3Contact1FName,M3Contact1LName,M3Contact1EmailID,M3Contact1RecordType;
 	public static String M3Fund1,M3Fund1Type,M3Fund1Category,M3Fund1RecordType;
 	public static String M3TestCustomObj1Name,M3TestCustomObj1RecordType;
 	
-	public static String M3Task1Subject,M3Task1dueDate,M3Task1Status,M3Task1Priority,M3Task1Comment;
-	public static String M3Task2Subject,M3Task2dueDate,M3Task2Status,M3Task2Priority,M3Task2Comment;
-	public static String M3Task3Subject,M3Task3dueDate,M3Task3Status,M3Task3Priority,M3Task3Comment,M3Task3MeetingType;
 	
 	
 	public static String[][] newTaskPredefinedValue = {{PageLabel.Subject.toString(),"\"Client Demo Request\""},
@@ -256,6 +252,22 @@ public class CommonVariables {
 	
 	public static String EmailTemplate1_Subject,EmailTemplate1_Body,EmailTemplate1_FolderName,EmailTemplate1_TemplateName,EmailTemplate1_TemplateDescription;
 
+	public static String M3Task1Subject,M3Task1dueDate,M3Task1Status,M3Task1Priority;
+	public static String M3Call1Subject,M3Cal11dueDate,M3Call1Status,M3Cal11Priority;
+	public static String M3Meeting1Subject,M3Meeting1dueDate,M3Meeting1Status,M3Meeting1Priority,M3Meeting1MeetingType;
+	
+	public static String M3Deal1,M3Deal1CompanyName,M3Deal1RecordType,M3Deal1Stage;
+	public static String M3Ins1,M3Ins1RecordType;
+	public static String M3Ins2,M3Ins2RecordType;
+	public static String M3Ins3,M3Ins3RecordType;
+	public static String M3Ins4,M3Ins4RecordType;
+	public static String M3Ins5,M3Ins5RecordType;
+	public static String M3Ins6,M3Ins6RecordType,M3Ins6Parent;
+	public static String M3Ins7,M3Ins7RecordType;
+	public static String M3Ins8,M3Ins8RecordType,M3Ins8Parent;
+	public static String M3Contact2FName,M3Contact2LName,M3Contact2EmailID,M3Contact2RecordType,M3Contact2Title;
+	
+	
 	public CommonVariables(Object obj) {
 		//TODO Auto-generated constructor stub
 		AppListeners.appLog.info("Kindly hold on starting variable intialization........");
@@ -876,11 +888,9 @@ public class CommonVariables {
 			M3Ins2=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS2", excelLabel.Institutions_Name);
 			M3Ins2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS2", excelLabel.Record_Type);
 			
-			M3Contact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON1", excelLabel.Contact_FirstName);
-			M3Contact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON1", excelLabel.Contact_LastName);
-			M3Contact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON1", excelLabel.Contact_EmailId);
-			M3Contact1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON1", excelLabel.Record_Type);
-		
+			
+				
+			
 			M3Fund1=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "M3FUND1", excelLabel.Fund_Name);
 			M3Fund1Type=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "M3FUND1", excelLabel.Fund_Type);
 			M3Fund1Category=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "M3FUND1", excelLabel.Investment_Category);
@@ -889,21 +899,6 @@ public class CommonVariables {
 			M3TestCustomObj1Name=ExcelUtils.readData(phase1DataSheetFilePath, "Test Custom Object", excelLabel.Variable_Name,"M3CSTOBJ", excelLabel.Test_Custom_Object_Name);
 			M3TestCustomObj1RecordType=ExcelUtils.readData(phase1DataSheetFilePath, "Test Custom Object", excelLabel.Variable_Name,"M3CSTOBJ", excelLabel.Record_Type);
 			
-			M3Task1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task1", excelLabel.Subject);
-			M3Task1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task1", excelLabel.Status);
-			M3Task1Priority=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task1", excelLabel.Priority);
-			M3Task1Comment=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task1", excelLabel.Comment);
-			
-			M3Task2Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task2", excelLabel.Subject);
-			M3Task2Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task2", excelLabel.Status);
-			M3Task2Priority=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task2", excelLabel.Priority);
-			M3Task2Comment=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task2", excelLabel.Comment);
-			
-			M3Task3Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task3", excelLabel.Subject);
-			M3Task3Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task3", excelLabel.Status);
-			M3Task3Priority=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task3", excelLabel.Priority);
-			M3Task3Comment=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task3", excelLabel.Comment);
-			M3Task3MeetingType=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3Task3", excelLabel.Meeting_Type);
 			
 		//	newTaskPredefinedValue,LogACallPredefinedValue,newMeetingPredefinedValue;
 			// New Module 3 Data
@@ -920,6 +915,64 @@ public class CommonVariables {
 			EmailTemplate1_FolderName = ExcelUtils.readData(phase1DataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate1", excelLabel.Email_Template_Folder_Label);
 			EmailTemplate1_TemplateName = ExcelUtils.readData(phase1DataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate1", excelLabel.Email_Template_Name);
 			EmailTemplate1_TemplateDescription = ExcelUtils.readData(phase1DataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate1", excelLabel.Description);
+			
+		
+			M3Call1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M3CALL1", excelLabel.Subject);
+			M3Call1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M3CALL1", excelLabel.Status);
+			M3Cal11Priority=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M3CALL1", excelLabel.Priority);
+	
+			M3Task1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3TASK1", excelLabel.Subject);
+			M3Task1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3TASK1", excelLabel.Status);
+			M3Task1Priority=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3TASK1", excelLabel.Priority);
+			
+			M3Meeting1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3MEETING1", excelLabel.Subject);
+			M3Meeting1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3MEETING1", excelLabel.Status);
+			M3Meeting1Priority=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3MEETING1", excelLabel.Priority);
+			M3Meeting1MeetingType=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3MEETING1", excelLabel.Meeting_Type);
+			
+			M3Contact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON1", excelLabel.Contact_FirstName);
+			M3Contact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON1", excelLabel.Contact_LastName);
+			M3Contact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON1", excelLabel.Contact_EmailId);
+			M3Contact1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON1", excelLabel.Record_Type);
+		
+			M3Contact2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON2", excelLabel.Contact_FirstName);
+			M3Contact2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON2", excelLabel.Contact_LastName);
+			M3Contact2EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON2", excelLabel.Contact_EmailId);
+			M3Contact2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON2", excelLabel.Record_Type);
+		
+			
+			M3Ins1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS1", excelLabel.Institutions_Name);
+			M3Ins1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS1", excelLabel.Record_Type);
+			
+			M3Ins2=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS2", excelLabel.Institutions_Name);
+			M3Ins2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS2", excelLabel.Record_Type);
+			
+			M3Ins3=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS3", excelLabel.Institutions_Name);
+			M3Ins3RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS3", excelLabel.Record_Type);
+			
+			M3Ins4=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS4", excelLabel.Institutions_Name);
+			M3Ins4RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS4", excelLabel.Record_Type);
+			
+			M3Ins5=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS5", excelLabel.Institutions_Name);
+			M3Ins5RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS5", excelLabel.Record_Type);
+			
+			M3Ins6=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS6", excelLabel.Institutions_Name);
+			M3Ins6RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS6", excelLabel.Record_Type);
+			M3Ins6Parent=M3Ins4;
+			
+			M3Ins7=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS7", excelLabel.Institutions_Name);
+			M3Ins7RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS7", excelLabel.Record_Type);
+			
+			M3Ins8=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS8", excelLabel.Institutions_Name);
+			M3Ins8RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS8", excelLabel.Record_Type);
+			M3Ins8Parent=M3Ins3;
+			
+			M3Deal1=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M3DEAL1", excelLabel.Deal_Name);
+			M3Deal1CompanyName=M3Ins1;
+			M3Deal1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M3DEAL1", excelLabel.Record_Type);
+			M3Deal1Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M3DEAL1", excelLabel.Stage);
+			
+			
 			
 		}
 		
