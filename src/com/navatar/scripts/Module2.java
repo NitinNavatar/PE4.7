@@ -20,6 +20,7 @@ import com.navatar.generic.SoftAssert;
 import com.navatar.generic.EnumConstants.*;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
+import com.navatar.pageObjects.DealPageBusinessLayer;
 import com.navatar.pageObjects.FundsPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
 import com.navatar.pageObjects.InstitutionsPageBusinessLayer;
@@ -185,10 +186,10 @@ public class Module2 extends BaseLib{
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS2Name, 20)) {
 				scrollThroughOutWindow(driver);
 				ThreadSleep(3000);
-				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task_with_Multiple_Associations , 10);
+				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task , 10);
 				scrollDownThroughWebelement(driver, ele, "new task");
-				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task_with_Multiple_Associations.toString(), action.BOOLEAN)) {
-				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task_with_Multiple_Associations , 10);
+				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task.toString(), action.BOOLEAN)) {
+				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task , 10);
 				scrollDownThroughWebelement(driver, ip.relatedAssociations(projectName).get(0), "related associatons");
 				if (clickUsingJavaScript(driver, ip.getrelatedAssociationsdropdownButton(projectName, 10), "dropdown button for related associations")) {
 					List<String> l=compareMultipleListContainsByTitle(driver, tabs, ip.listOfObjectsInRelatedAssctions(projectName));
@@ -238,6 +239,8 @@ public class Module2 extends BaseLib{
 						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
 					}
 					ThreadSleep(2000);
+					refresh(driver);
+					ThreadSleep(2000);
 					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.Object3Page,ActivityType.Next, TWTask1Subject, SubjectElement.SubjectLink, 10);
 					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
 						String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTask1Subject},
@@ -285,9 +288,9 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS1Name, 20)) {
-				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task_with_Multiple_Associations , 10);
-				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task_with_Multiple_Associations.toString(), action.BOOLEAN)) {
-				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task_with_Multiple_Associations , 10);
+				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task , 10);
+				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task.toString(), action.BOOLEAN)) {
+				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task , 10);
 				scrollDownThroughWebelement(driver, ip.relatedAssociations(projectName).get(0), "related associatons");
 				if (clickUsingJavaScript(driver, ip.getrelatedAssociationsdropdownButton(projectName, 10), "dropdown button for related associations")) {
 					List<String> l=compareMultipleListContainsByTitle(driver, tabs, ip.listOfObjectsInRelatedAssctions(projectName));
@@ -337,6 +340,8 @@ public class Module2 extends BaseLib{
 						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
 					}
 					ThreadSleep(2000);
+					refresh(driver);
+					ThreadSleep(2000);
 					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.Object3Page,ActivityType.Next, TWTask2Subject, SubjectElement.SubjectLink, 10);
 					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
 						String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTask2Subject},
@@ -384,9 +389,9 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS2Name, 20)) {
-				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.Log_a_Call_with_Multiple_Associations , 10);
-				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.Log_a_Call_with_Multiple_Associations.toString(), action.BOOLEAN)) {
-				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.Log_a_Call_with_Multiple_Associations , 10);
+				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Call , 10);
+				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Call.toString(), action.BOOLEAN)) {
+				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Call , 10);
 				scrollDownThroughWebelement(driver, ip.relatedAssociations(projectName).get(0), "related associatons");
 					//3
 					boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 10);		
@@ -413,6 +418,8 @@ public class Module2 extends BaseLib{
 						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
 						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
 					}
+					ThreadSleep(2000);
+					refresh(driver);
 					ThreadSleep(2000);
 					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.Object3Page,ActivityType.Past, TWTask3Subject, SubjectElement.SubjectLink, 10);
 					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
@@ -454,9 +461,9 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS1Name, 20)) {
-				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.Log_a_Call_with_Multiple_Associations , 10);
-				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.Log_a_Call_with_Multiple_Associations.toString(), action.BOOLEAN)) {
-				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.Log_a_Call_with_Multiple_Associations , 10);
+				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Call , 10);
+				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Call.toString(), action.BOOLEAN)) {
+				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Call , 10);
 				scrollDownThroughWebelement(driver, ip.relatedAssociations(projectName).get(0), "related associatons");
 					//3
 					boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact1FName+" "+Smoke_TWContact1LName, action.SCROLLANDBOOLEAN, 10);		
@@ -483,6 +490,8 @@ public class Module2 extends BaseLib{
 						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
 						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
 					}
+					ThreadSleep(2000);
+					refresh(driver);
 					ThreadSleep(2000);
 					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.Object3Page,ActivityType.Past, TWTask4Subject, SubjectElement.SubjectLink, 10);
 					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
@@ -527,9 +536,9 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS2Name, 20)) {
-				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task_with_Multiple_Associations , 10);
-				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task_with_Multiple_Associations.toString(), action.BOOLEAN)) {
-				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task_with_Multiple_Associations , 10);
+				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task , 10);
+				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task.toString(), action.BOOLEAN)) {
+				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task , 10);
 				scrollDownThroughWebelement(driver, ip.relatedAssociations(projectName).get(0), "related associatons");
 				if (clickUsingJavaScript(driver, ip.getrelatedAssociationsdropdownButton(projectName, 10), "dropdown button for related associations")) {
 					List<String> l=compareMultipleListContainsByTitle(driver, tabs, ip.listOfObjectsInRelatedAssctions(projectName));
@@ -588,6 +597,8 @@ public class Module2 extends BaseLib{
 						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
 					}
 					ThreadSleep(2000);
+					refresh(driver);
+					ThreadSleep(2000);
 					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.Object3Page,ActivityType.Next, TWTask5Subject, SubjectElement.SubjectLink, 10);
 					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
 						String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTask5Subject},
@@ -635,9 +646,9 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS2Name, 20)) {
-				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.Log_a_Call_with_Multiple_Associations , 10);
-				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.Log_a_Call_with_Multiple_Associations.toString(), action.BOOLEAN)) {
-				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.Log_a_Call_with_Multiple_Associations , 10);
+				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Call , 10);
+				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Call.toString(), action.BOOLEAN)) {
+				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Call , 10);
 				scrollDownThroughWebelement(driver, ip.relatedAssociations(projectName).get(0), "related associatons");
 				if (clickUsingJavaScript(driver, ip.getrelatedAssociationsdropdownButton(projectName, 10), "dropdown button for related associations")) {
 					List<String> l=compareMultipleListContainsByTitle(driver, tabs, ip.listOfObjectsInRelatedAssctions(projectName));
@@ -696,6 +707,8 @@ public class Module2 extends BaseLib{
 						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
 						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
 					}
+					ThreadSleep(2000);
+					refresh(driver);
 					ThreadSleep(2000);
 					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.Object3Page,ActivityType.Past, TWTask6Subject, SubjectElement.SubjectLink, 10);
 					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
@@ -1406,8 +1419,8 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object2Tab, Smoke_TWContact5FName+" "+Smoke_TWContact5LName, 20)) {
-				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task_with_Multiple_Associations , 10);
-				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task_with_Multiple_Associations.toString(), action.BOOLEAN)) {
+				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task , 10);
+				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task.toString(), action.BOOLEAN)) {
 				if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTaskCR1Subject, "Subject", action.SCROLLANDBOOLEAN)) {
 					if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), "", PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
 						
@@ -1484,7 +1497,7 @@ public class Module2 extends BaseLib{
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS4Name, 20)) {
 				WebElement ele=null;
 				String msg=BasePageErrorMessage.UpcomingTaskMsg(null, Smoke_TWContact5FName+" "+Smoke_TWContact5LName, 0);
-				msg+= " about "+Smoke_TWINS3Name;
+				//msg+= " about "+Smoke_TWINS3Name;
 				lp.verifyActivityAtNextStep2(projectName, PageName.Object1Page, null,TWTaskCR1Subject, msg, DueDate.No_due_date.toString(),false, "",false, "", 10);
 				ele = tp.getElementForActivityTimeLineTask(projectName, PageName.Object1Page,ActivityType.Next, TWTaskCR1Subject, SubjectElement.SubjectLink, 10);
 				if (ele!=null) {
@@ -1545,6 +1558,7 @@ public class Module2 extends BaseLib{
 							if (click(driver, ip.getEditButton(environment,  Mode.Classic.toString(),10), "edit classic", action.BOOLEAN)) {
 								switchToDefaultContent(driver);
 								switchToFrame(driver, 10, sp.getFrame(PageName.ActivityLayoutPage, 10));
+								ThreadSleep(3000);
 								sp.getFieldLabelTextBox(10).sendKeys("Watch list");
 								
 								
@@ -1602,9 +1616,9 @@ public class Module2 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS2Name, 20)) {
-				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task_with_Multiple_Associations , 10);
+				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task , 10);
 				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task_with_Multiple_Associations.toString(), action.BOOLEAN)) {
-					ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task_with_Multiple_Associations , 10);
+					ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task , 10);
 					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTaskUpdateLabelSubject, "Subject", action.SCROLLANDBOOLEAN)) {
 
 						boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object2Tab, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 10);		
@@ -4320,9 +4334,322 @@ public class Module2 extends BaseLib{
 		sa.assertAll();
 	}
 
+	
 	@Parameters({ "projectName"})
 	@Test
-	public void M2HighestStageReachedtc046_PostCondition(String projectName) {
+	public void M2HighestStageReachedtc046_1_VerifyConvertToPortfolio(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		String parentID=null;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentID=switchOnWindow(driver);
+			if (parentID!=null) {
+			List<String> layoutName = new ArrayList<String>();
+			layoutName.add("Pipeline Layout");
+			HashMap<String, String> sourceANDDestination = new HashMap<String, String>();
+			sourceANDDestination.put("Mobile & Lightning<break>"+PageLabel.Convert_to_Portfolio.toString(), PageLabel.New_Task.toString());
+			List<String> abc = sp.DragNDrop("", mode, object.Deal, ObjectFeatureName.pageLayouts, layoutName, sourceANDDestination);
+			ThreadSleep(10000);
+			if (!abc.isEmpty()) {
+				log(LogStatus.FAIL, "field not added/already present 1", YesNo.Yes);
+				sa.assertTrue(false, "field not added/already present 1");
+			}else{
+				log(LogStatus.INFO, "field added/already present 1", YesNo.Yes);
+			}
+			driver.close();
+			driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.FAIL, "could not find new window to switch, so cannot add field", YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch, so cannot add field");
+			}
+		}
+		else {
+			log(LogStatus.FAIL, "could not click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "could not click on setup link");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M2HighestStageReachedtc046_2_VerifyConvertToPortfolio(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		String parentID=null;
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+			if (dp.clickOnAlreadyCreatedItem(projectName, Smoke_HSRPipeline5Name, 10)) {
+				if (click(driver, dp.getconvertToPortfolio(10), "convert to portfolio button", action.BOOLEAN)) {
+					if (dp.getconvertToPortfolioMessage(10)!=null) {
+						log(LogStatus.INFO, "successfully verified convert to portfolio text message", YesNo.No);
+					}else {
+						sa.assertTrue(false,"could not verify convert to portfolio text message");
+						log(LogStatus.SKIP,"could not verify convert to portfolio text message",YesNo.Yes);
+					}
+					if (click(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
+						log(LogStatus.INFO, "successfully clicked next button", YesNo.No);
+						ExcelUtils.writeData(phase1DataSheetFilePath, Stage.Closed.toString(), "Deal", excelLabel.Variable_Name, "HSRPIP5",excelLabel.Updated_Stage);
+
+					}else {
+						sa.assertTrue(false,"not able to click on next button");
+						log(LogStatus.SKIP,"not able to click on next button",YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false,"not able to click on convert to portfolio button");
+					log(LogStatus.SKIP,"not able to click on convert to portfolio button",YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,"not able to click on "+Smoke_HSRPipeline5Name);
+				log(LogStatus.SKIP,"not able to click on "+Smoke_HSRPipeline5Name,YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"not able to click on deal tab");
+			log(LogStatus.SKIP,"not able to click on deal tab",YesNo.Yes);
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+		
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M2HighestStageReachedtc047_ImpactConvertToPortfolio(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		String parentID=null;
+		dealQualityScore=closedScore;totalDealsshown=1;averageDealQualityScore=dealQualityScore/totalDealsshown;
+		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
+				,excelLabel.Deal_Quality_Score.toString()};
+		String labelValues[]={Stage.Closed.toString(),Stage.Closed.toString(),String.valueOf(dealQualityScore)};
+		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
+		};
+		String labelValues1[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
+		String labelValues2[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
+		ExcelUtils.writeData(phase1DataSheetFilePath, Stage.Closed.toString(), "Deal", excelLabel.Variable_Name, "HSRPIP5",excelLabel.Stage);
+		WebElement ele;
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+			if (dp.clickOnAlreadyCreatedItem(projectName, Smoke_HSRPipeline5Name, 10)) {
+				ele=ip.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				if (click(driver, ele, "details tab", action.SCROLLANDBOOLEAN)) {
+					for (int i =0;i<labelName.length;i++) {
+						if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i])) {
+							log(LogStatus.SKIP,"successfully verified "+labelName[i],YesNo.No);
+							
+						}else {
+							sa.assertTrue(false,"Not Able to verify "+labelName[i]);
+							log(LogStatus.SKIP,"Not Able to verify "+labelName[i],YesNo.Yes);
+						}
+
+					}
+				}else {
+					sa.assertTrue(false,"not able to click on details tab");
+					log(LogStatus.SKIP,"not able to click on details tab",YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,"Not Able to click "+Smoke_HSRPipeline1Name);
+				log(LogStatus.SKIP,"Not Able to click "+Smoke_HSRPipeline1Name,YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"not able to click on deal tab");
+			log(LogStatus.SKIP,"not able to click on deal tab",YesNo.Yes);
+		}
+		
+		TabName tabName[]={TabName.Object1Tab,TabName.Object2Tab};
+		String records[]={Smoke_HSRINS5Name,Smoke_HSRContact3FName+" "+Smoke_HSRContact3LName};
+		int j=0;
+		String temp[];
+		for (TabName tab:tabName) {
+			if (lp.clickOnTab(projectName, tab)) {
+				if (fp.clickOnAlreadyCreatedItem(projectName, records[j], 10)){
+					ele=ip.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+					if (click(driver, ele, "details tab", action.SCROLLANDBOOLEAN)) {
+						for (int i =0;i<labelName1.length;i++) {
+							if (ip.fieldValueVerificationOnInstitutionPage(environment,mode,TabName.Object1Tab, labelName1[i],labelValues1[i])) {
+								log(LogStatus.SKIP,"successfully verified "+labelName1[i],YesNo.No);
+								
+							}else {
+								sa.assertTrue(false,"Not Able to verify "+labelName1[i]);
+								log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
+							}
+
+						}
+					}else {
+						sa.assertTrue(false,"not able to click on details tab");
+						log(LogStatus.SKIP,"not able to click on details tab",YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false,"Not Able to click "+records[j]);
+					log(LogStatus.SKIP,"Not Able to click "+records[j],YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,"not able to click on tab "+tab);
+				log(LogStatus.SKIP,"not able to click on tab "+tab,YesNo.Yes);
+			}
+			j++;
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M2HighestStageReachedtc048_CreateDealAssociatedWithInstitution_Action(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword,appName);
+		String pipe,company,stage,sf,sc;
+		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.Object4Tab,YesNo.No);	
+			pipe= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP6", excelLabel.Deal_Name);
+			company= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP6", excelLabel.Company_Name);
+			sf= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP6", excelLabel.Source_Firm);
+			sc= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP6", excelLabel.Source_Contact);
+			stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP6", excelLabel.Stage);
+			String[][] otherLabels = {{excelLabel.Source_Contact.toString(),sc},{excelLabel.Source_Firm.toString(),sf}};
+			refresh(driver);
+			ThreadSleep(3000);
+			if (fp.createDeal(projectName,"",pipe, company, stage,otherLabels, 15)) {
+				log(LogStatus.INFO,"Created Deal : "+pipe,YesNo.No);	
+			} else {
+				sa.assertTrue(false,"Not Able to Create Deal  : "+pipe);
+				log(LogStatus.SKIP,"Not Able to Create Deal  : "+pipe,YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"not able to click on deal tab");
+			log(LogStatus.SKIP,"not able to click on deal tab",YesNo.Yes);
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M2HighestStageReachedtc048_CreateDealAssociatedWithInstitution_Impact(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		dealQualityScore=loiScore;totalDealsshown=2;averageDealQualityScore=(dealQualityScore+closedScore)/totalDealsshown;
+		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
+				,excelLabel.Deal_Quality_Score.toString()};
+		String labelValues[]={Smoke_HSRPipeline6Stage,Smoke_HSRPipeline6Stage,String.valueOf(dealQualityScore)};
+		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
+		};
+		String labelValues1[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
+		String labelValues2[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
+		WebElement ele;
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+			if (dp.clickOnAlreadyCreatedItem(projectName, Smoke_HSRPipeline6Name, 10)) {
+				ele=ip.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				if (click(driver, ele, "details tab", action.SCROLLANDBOOLEAN)) {
+					for (int i =0;i<labelName.length;i++) {
+						if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i])) {
+							log(LogStatus.SKIP,"successfully verified "+labelName[i],YesNo.No);
+							
+						}else {
+							sa.assertTrue(false,"Not Able to verify "+labelName[i]);
+							log(LogStatus.SKIP,"Not Able to verify "+labelName[i],YesNo.Yes);
+						}
+
+					}
+				}else {
+					sa.assertTrue(false,"not able to click on details tab");
+					log(LogStatus.SKIP,"not able to click on details tab",YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,"Not Able to click "+Smoke_HSRPipeline1Name);
+				log(LogStatus.SKIP,"Not Able to click "+Smoke_HSRPipeline1Name,YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"not able to click on deal tab");
+			log(LogStatus.SKIP,"not able to click on deal tab",YesNo.Yes);
+		}
+		
+		TabName tabName[]={TabName.Object1Tab,TabName.Object2Tab};
+		String records[]={Smoke_HSRINS4Name,Smoke_HSRContact3FName+" "+Smoke_HSRContact3LName};
+		int j=0;
+		String temp[];
+		for (TabName tab:tabName) {
+			if (lp.clickOnTab(projectName, tab)) {
+				if (fp.clickOnAlreadyCreatedItem(projectName, records[j], 10)){
+					ele=ip.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+					if (click(driver, ele, "details tab", action.SCROLLANDBOOLEAN)) {
+						if (j==1) {
+							for (int i =0;i<labelName1.length;i++) {
+								if (ip.fieldValueVerificationOnInstitutionPage(environment,mode,TabName.Object1Tab, labelName1[i],labelValues1[i])) {
+									log(LogStatus.SKIP,"successfully verified "+labelName1[i],YesNo.No);
+
+								}else {
+									sa.assertTrue(false,"Not Able to verify "+labelName1[i]);
+									log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
+								}
+
+							}
+						}
+						else {
+							for (int i =0;i<labelName1.length;i++) {
+								if (ip.fieldValueVerificationOnInstitutionPage(environment,mode,TabName.Object1Tab, labelName1[i],labelValues1[i])) {
+
+									sa.assertTrue(false,"Following value present but should not be "+labelName1[i]);
+									log(LogStatus.SKIP,"Following value present but should not be "+labelName1[i],YesNo.Yes);
+								}else {
+									log(LogStatus.SKIP,"successfully verified absence of "+labelName1[i],YesNo.No);
+								}
+
+							}
+						}
+					}else {
+						sa.assertTrue(false,"not able to click on details tab");
+						log(LogStatus.SKIP,"not able to click on details tab",YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false,"Not Able to click "+records[j]);
+					log(LogStatus.SKIP,"Not Able to click "+records[j],YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,"not able to click on tab "+tab);
+				log(LogStatus.SKIP,"not able to click on tab "+tab,YesNo.Yes);
+			}
+			j++;
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M2HighestStageReachedtc049_PostCondition(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -4406,7 +4733,7 @@ public class Module2 extends BaseLib{
 			sa.assertTrue(false,"setup link is not clickable");
 			log(LogStatus.SKIP,"setup link is not clickable",YesNo.Yes);
 		}
-		/*
+		
 		if (home.clickOnSetUpLink()) {
 			parentID=switchOnWindow(driver);
 			if (parentID!=null) {
@@ -4456,7 +4783,7 @@ public class Module2 extends BaseLib{
 		}else {
 			sa.assertTrue(false,"setup link is not clickable");
 			log(LogStatus.SKIP,"setup link is not clickable",YesNo.Yes);
-		}*/
+		}
 		lp.CRMlogout();
 		sa.assertAll();
 	}

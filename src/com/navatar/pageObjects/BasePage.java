@@ -3070,6 +3070,15 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getScrollBoxforPageGrid(String environment,String mode,int timeOut) {
 		return isDisplayed(driver, scrollBoxforPageGrid, "Visibility", timeOut, "Scroll Box for Page Grid");
 		}
+	@FindBy(xpath="//button[@title='Refresh']")
+	private WebElement refrshActivity;
+
+	/**
+	 * @return the scrollBoxforPageGrid
+	 */
+	public WebElement getrefrshActivity(String projectName,int timeOut) {
+		return isDisplayed(driver, refrshActivity, "Visibility", timeOut, "refrshActivity");
+		}
 	
 	@FindBy(xpath="//*[@title='Select List View']")
 	private WebElement selectListIcon_Lighting;
@@ -4569,8 +4578,8 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getfilterSave(String projectName,int timeOut) {
 		return isDisplayed(driver, filterSave, "Visibility", timeOut, "filterSave");
 	}
-	
-	@FindBy(xpath = "//div[@id='completeDiv' and @class='cActivityTimeline']/..//img")
+	@FindBy(xpath = "//div[contains(@class,'slds-grid primaryFieldRow')]//*[text()='Show more actions']/../..")
+	//@FindBy(xpath = "//div[@id='completeDiv' and @class='cActivityTimeline']/..//img")
 	private WebElement activityLineItemsDropdown;
 	
 	public WebElement getactivityLineItemsDropdown(String projectName,int timeOut) {
@@ -4972,5 +4981,97 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, crossInSDGEdit, "Visibility", timeOut, "crossInSDGEdit");
 		
 	}
+	
+
+	/**
+	 * @return the saveButton
+	 */
+	public WebElement getSaveButton(String environment,String mode,int timeOut) {
+		ThreadSleep(2000);
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, saveButtonClassic, "Visibility", timeOut, "Save Button Classic");
+		}else{
+			return isDisplayed(driver, saveButtonLighting, "Visibility", timeOut, "Save Button Lighting");
+		}
+		
+	}
+	
+	@FindBy(xpath="//span[@class='aw-bars-box ']")
+	private WebElement emailProspectSelectProspectsGridScrollBox;
+
+	/**
+	 * @return the emailProspectSelectProspectsGridScrollBox
+	 */
+	public WebElement getEmailProspectSelectProspectsGridScrollBox(int timeOut) {
+		return isDisplayed(driver, emailProspectSelectProspectsGridScrollBox, "Visibility", timeOut, "email prospect select prospect grid scroll box");
+	}
+	
+	@FindBy(xpath="(//div[@class='step_1']//a[@title='Next'])[2]")
+	private WebElement emailProspectStep1NextBtn;
+
+	/**
+	 * @return the emailProspectStep1NextBtn
+	 */
+	public WebElement getEmailProspectStep1NextBtn(int timeOut) {
+		return isDisplayed(driver, emailProspectStep1NextBtn, "Visibility", timeOut, "email prospect steps 1 next button");
+	}
+	
+	@FindBy(xpath="//div[@class='step_2']//a[@title='Next']")
+	private WebElement emailProspectStep2NextBtn;
+
+	/**
+	 * @return the emailProspectStep2NextBtn
+	 */
+	public WebElement getEmailProspectStep2NextBtn(int timeOut) {
+		return isDisplayed(driver, emailProspectStep2NextBtn, "Visibility", timeOut, "email prospect steps 2 nect button");
+	}
+	
+	public WebElement getEmailProspectSendBtn(TopOrBottom topOrBottom, int timeOut) {
+
+
+		WebElement ele=null;
+		String xpath=null;
+
+		if (TopOrBottom.TOP.equals(topOrBottom)) {
+			xpath = "(//div[@class='step_3']//a[@title='Send'])[1]";
+		} else {
+			xpath = "(//div[@class='step_3']//a[@title='Send'])[2]";
+		}
+
+
+		ele = FindElement(driver, xpath, "Send Button : "+topOrBottom, action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "send button : "+topOrBottom);
+	}
+
+	@FindBy(xpath="//a[text()='Finished']")
+	private WebElement emailProspectFinishBtn;
+
+	/**
+	 * @return the emailProspectFinishBtn
+	 */
+	public WebElement getEmailProspectFinishBtn(int timeOut) {
+		return isDisplayed(driver, emailProspectFinishBtn, "Visibility", timeOut, "email prospect finish button");
+	}
+	
+	@FindBy(xpath="//select[contains(@id,'page') and contains(@id,'frm') and contains(@id,'sl1')]")
+	private WebElement emailProspectFolderDropDownList;
+
+	/**
+	 * @return the emailProspectFolderDropDownList
+	 */
+	public WebElement getEmailProspectFolderDropDownList(int timeOut) {
+		return isDisplayed(driver, emailProspectFolderDropDownList, "Visibility", timeOut, "email prospect folder drop downlist");
+	}
+	
+	@FindBy(xpath="(//span[@class='aw-bars-box '])[2]")
+	private WebElement emailProspectStep2CustomEmailtemplateScrollBox;
+
+	/**
+	 * @return the emailProspectStep2CustomEmailtemplateScrollBox
+	 */
+	public WebElement getEmailProspectStep2CustomEmailtemplateScrollBox(int timeOut) {
+		return isDisplayed(driver, emailProspectStep2CustomEmailtemplateScrollBox, "Visibility", timeOut, "email prospect custom email template scroll box");
+	}
+	
 	
 }

@@ -1921,10 +1921,18 @@ public WebElement getActivityTimeLineItem(String projectName,PageName pageName,A
 	String xpath="";
 	//WebElement ele;
 	String activity = activityTimeLineItem.toString().replace("_", " ");
-	if (projectName.contains(ProjectName.PE.toString()))
-		xpath="//div[@id='completeDiv' and @class='cActivityTimeline']/..//*[text()='"+activity+"']";
-	else
-		xpath="//div[@id='completeDiv' and @class='cActivityTimeline']/..//*[text()='"+activity+"']";
+	
+	if (ActivityTimeLineItem.New_Meeting.equals(activityTimeLineItem) || 
+			ActivityTimeLineItem.New_Task.equals(activityTimeLineItem) ||
+				ActivityTimeLineItem.New_Call.equals(activityTimeLineItem)) {
+		xpath="//div[contains(@class,'slds-grid primaryFieldRow')]//*[text()='"+activity+"']";
+	}else {
+		if (projectName.equalsIgnoreCase(ProjectName.PE.toString()))
+			xpath="//div[@id='completeDiv' and @class='cActivityTimeline']/..//*[text()='"+activity+"']";
+		else
+			xpath="//div[@id='completeDiv' and @class='cActivityTimeline']/..//*[text()='"+activity+"']";	
+	}
+
 	List<WebElement> li=FindElements(driver, xpath, activityTimeLineItem.toString());
 	int i=0;
 	for (WebElement ele:li) {
@@ -3172,6 +3180,201 @@ public WebElement getItemInList(String projectName,String itemName,action action
 	WebElement ele = FindElement(driver, xpath, itemName, action, timeOut);
 	return isDisplayed(driver, ele, "Visibility", timeOut, itemName);
 }
+
+/**
+ * @author Ankit Jaiswal
+ * @param TabName
+ * @return true if click on Tab
+ */
+public boolean clickOnTab(String environment, String mode, TabName TabName) {
+	String tabName = null;
+	String suffix = " Tab";
+	boolean flag = false;
+	WebElement ele;
+	switch (TabName) {
+	case ContactTab:
+		tabName = "Contacts";
+		break;
+	case InstituitonsTab:
+		tabName = "Institutions";
+		break;
+	case FundraisingsTab:
+		tabName = "Fundraisings";
+		break;
+	case FundsTab:
+		tabName = "Funds";
+		break;
+	case CommitmentsTab:
+		tabName = "Commitments";
+		break;
+	case PartnershipsTab:
+		tabName = "Partnerships";
+		break;
+	case HomeTab:
+		tabName = "Home";
+		break;
+	case FundDistributions:
+		tabName = "Fund Distributions";
+		break;
+	case InvestorDistributions:
+		tabName = "Investor Distributions";
+		break;
+	case MarketingInitiatives:
+		tabName = "Marketing Initiatives";
+		break;
+	case MarketingProspects:
+		tabName = "Marketing Prospects";
+		break;
+	case NavatarSetup:
+		tabName = "Navatar Setup";
+		break;
+	case Pipelines:
+		tabName = "Pipelines";
+		break;
+	case CapitalCalls:
+		tabName = "Capital Calls";
+		break;
+	case FundDrawdowns:
+		tabName = "Fund Drawdowns";
+		break;
+	case FundraisingContacts:
+		tabName = "Fundraising Contacts";
+		break;
+	case ReportsTab:
+		tabName = "Reports";
+		break;
+	default:
+		return flag;
+	}
+	System.err.println("Passed switch statement");
+	if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+		tabName = tabName + suffix;
+		ele = isDisplayed(driver, FindElement(driver, "//a[contains(@title,'" + tabName + "')]", tabName,
+				action.SCROLLANDBOOLEAN, 10), "visibility", 10, tabName);
+		if (ele != null) {
+			if (click(driver, ele, tabName, action.SCROLLANDBOOLEAN)) {
+				CommonLib.log(LogStatus.PASS, "Tab found", YesNo.No);
+				flag = true;
+			} else {
+
+			}
+		} else {
+			CommonLib.log(LogStatus.INFO, "Going to found tab after clicking on More Icon", YesNo.No);
+			if (click(driver, getMoreTabIcon(environment, mode, 10), "More Icon", action.SCROLLANDBOOLEAN)) {
+				if (click(driver,
+						isDisplayed(driver,
+								FindElement(driver, "//a[contains(@title,'" + tabName + "')]", tabName,
+										action.SCROLLANDBOOLEAN, 10),
+								"visibility", 10, tabName),
+						tabName, action.SCROLLANDBOOLEAN)) {
+					CommonLib.log(LogStatus.INFO, "Tab found on More Icon", YesNo.No);
+					flag = true;
+				}
+			} else {
+
+			}
+		}
+	} else {
+		ele = isDisplayed(driver,
+				FindElement(driver, "//a[contains(@href,'lightning') and contains(@title,'" + tabName + "')]/span/..",
+						tabName, action.SCROLLANDBOOLEAN,30),
+				"visibility", 30, tabName);
+		if (ele != null) {
+			appLog.info("Tab Found");
+			ThreadSleep(5000);
+			if (clickUsingJavaScript(driver, ele, tabName+" :Tab")) {
+				CommonLib.log(LogStatus.INFO, "Tab found", YesNo.No);
+				appLog.info("Clicked on Tab : "+tabName);
+				flag = true;
+			} else {
+				appLog.error("Not Able to Click on Tab : "+tabName);
+			}
+
+		} else {
+			CommonLib.log(LogStatus.INFO, "Going to found tab after clicking on More Icon", YesNo.No);
+			if (click(driver, getMoreTabIcon(environment, mode, 10), "More Icon", action.SCROLLANDBOOLEAN)) {
+				ele = isDisplayed(driver,
+						FindElement(driver,
+								"//a[contains(@href,'lightning')]/span[@class='slds-truncate']/span[contains(text(),'"
+										+ tabName + "')]",
+								tabName, action.SCROLLANDBOOLEAN, 10),
+						"visibility", 10, tabName);
+				if (ele!=null) {
+					if (clickUsingJavaScript(driver, ele, tabName+" :Tab")) {
+						appLog.info("Clicked on Tab on More Icon: "+tabName);
+						CommonLib.log(LogStatus.INFO, "Tab found on More Icon", YesNo.No);
+						flag = true;
+					}	
+				}
+				
+			} else {
+				appLog.error("Not Able to Clicked on Tab on More Icon: "+tabName);
+			}
+
+		}
+	}
+	
+	if (TabName.NavatarSetup.toString().equalsIgnoreCase(TabName.toString())) {
+		NavatarSetupPageBusinessLayer np = new NavatarSetupPageBusinessLayer(driver);
+		
+		if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+		switchToFrame(driver, 10, np.getnavatarSetUpTabFrame_Lighting(environment, 10));
+	}
+		if(FindElement(driver, "(//p[contains(text(),'Deal Creation')])[1]", "Deal Creation", action.BOOLEAN, 60)!=null){
+			
+			appLog.info("Landing Page Verified : " + "Deal Creation");
+			
+			
+			flag = true;
+			
+		}else{
+			appLog.error("Landing Page Not Verified : Deal Creation");
+			flag = false;
+		}
+		switchToDefaultContent(driver);
+	}
+	return flag;
+}
+
+public boolean selectValueFromLookUpWindow(String searchText) {
+	String parentWindow=null;
+	WebElement ele=null;
+	parentWindow=switchOnWindow(driver);
+	if(parentWindow!=null) {
+		switchToFrame(driver, 20, getLookUpSearchFrame(10));
+		if(sendKeys(driver, getLookUpSearchTextBox(30), searchText, "search text box", action.SCROLLANDBOOLEAN)) {
+			if(click(driver, getLookUpSearchGoBtn(20), "go button", action.SCROLLANDBOOLEAN)) {
+				switchToDefaultContent(driver);
+				switchToFrame(driver, 20, getLookUpResultFrame(10));
+				ele=isDisplayed(driver, FindElement(driver, "//a[text()='"+searchText+"']",searchText+" text value", action.SCROLLANDBOOLEAN, 20),"visibility", 20,searchText+" text value");
+				if(ele!=null) {
+					if(!click(driver, ele, searchText+" text value", action.SCROLLANDBOOLEAN)) {
+						appLog.info("clicked on "+searchText+" in lookup pop up");
+					}
+					driver.switchTo().window(parentWindow);
+					return true;
+				}else {
+					appLog.error(searchText+" is not visible in look up popup so cannot select it");
+					driver.close();
+					driver.switchTo().window(parentWindow);
+				}
+			}else {
+				appLog.error("Not able to click on go button so cannot select "+searchText);
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
+		}else {
+			appLog.error("Not able to pass value in search text box : "+searchText+" so cannot select value "+searchText+" from look up");
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}
+	}else {
+		appLog.error("No new window is open so cannot select value "+searchText+" from look up");
+	}
+	return false;
+}
+
+
 
 
 }

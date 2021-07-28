@@ -979,5 +979,102 @@ public class HomePage extends BasePageBusinessLayer {
 	}
 	
 
+	public WebElement getCreateFundraisingBtn(PageName popNameOrPageName, int timeOut) {
+		if(popNameOrPageName.toString().equalsIgnoreCase(PageName.WarningPopUp.toString())) {
+			return isDisplayed(driver, createFundraisingBtnOnWarningPopUp, "Visibility", timeOut, "create fundraising button");
+		}else {
+			return isDisplayed(driver, createFundraisingBtn, "Visibility", timeOut, "create fundraising button");
+		}
+	}
+	
+	@FindBy(xpath="//input[@title='Create Deal']")
+	private WebElement createDealBtn;
+
+	/**
+	 * @return the createDealBtn
+	 */
+	public WebElement getCreateDealBtn(String environment,String mode,int timeOut) {
+		return isDisplayed(driver, createDealBtn, "Visibility", timeOut, "Create Deal Button");
+	}
+	
+	
+	
+	@FindBy(xpath="//div[@class='slds-media__body']//h1//lightning-formatted-text")
+	private WebElement pipeLineNameInViewMode_Lighting;
+
+	/**
+	 * @return the fundNameLabel
+	 */
+	public WebElement getPipelineNameInViewMode(String environment,String mode,int timeOut) {
+		
+			return isDisplayed(driver, pipeLineNameInViewMode_Lighting, "Visibility", timeOut, "Pipe Line Name in View Mode Lighting");
+		
+		
+	}
+
+	@FindBy(xpath="//label[text()='Company Name']/../following-sibling::td/input")
+	private WebElement companyNameTextBox;
+
+	/**
+	 * @return the companyNameTextBox
+	 */
+	public WebElement getCompanyNameTextBox(String environment,String mode,int timeOut) {
+		return isDisplayed(driver, companyNameTextBox, "Visibility", timeOut, "Company Name TextBox");
+	}
+	
+	@FindBy(xpath="//label[text()='Deal Name']/../following-sibling::td/input")
+	private WebElement dealNameTextBox;
+
+	/**
+	 * @return the dealNameTextBox
+	 */
+	public WebElement getDealNameTextBox(String environment,String mode,int timeOut) {
+		return isDisplayed(driver, dealNameTextBox, "Visibility", timeOut, "Deal Name TextBox");
+	}
+	
+	@FindBy(xpath="//select[@id='thePage:theForm:pipelinestage']")
+	private WebElement stageDropDownList;
+
+	/**
+	 * @return the stageDropDownList
+	 */
+	public WebElement getStageDropDownList(String environment,String mode,int timeOut) {
+		return isDisplayed(driver, stageDropDownList, "Visibility", timeOut, "Stage Drop Down List");
+	}
+	
+	@FindBy(xpath="//iframe[@title='Individual Investor Creation']")
+	private WebElement createCommitmentFrame_Lighting;
+
+	/**
+	 * @return the createCommitmentFrame_Lighting
+	 */
+	public WebElement getCreateCommitmentFrame_Lighting(int timeOut) {
+		return isDisplayed(driver, createCommitmentFrame_Lighting, "Visibility", timeOut, "create commitment frame in lighting");
+	
+	}
+	
+	
+	@FindBy(xpath="//a[text()='Copy Mailing Address to Other Address']")
+	private WebElement coptyMailingAddressToOther;
+
+	/**
+	 * @return the coptyMailingAddressToOther
+	 */
+	public WebElement getCoptyMailingAddressToOther(int timeOut) {
+		return isDisplayed(driver, coptyMailingAddressToOther, "Visibility", timeOut, "Copy address to other");
+	}
+	
+	public WebElement getCreateIndiviualInvestorBtn(String environment, String mode, TopOrBottom topOrBottom,int timeOut) {
+		String xpath ;
+		WebElement ele;
+		if (TopOrBottom.TOP.toString().equalsIgnoreCase(topOrBottom.toString())) {
+			xpath = "(//input[@value='Create Individual Investor'])[1]";
+		} else {
+			xpath = "(//input[@value='Create Individual Investor'])[2]";
+		}
+		ele = FindElement(driver, xpath, "create indiviual investor button : "+topOrBottom, action.SCROLLANDBOOLEAN, timeOut);
+				
+		return isDisplayed(driver, ele, "Visibility", timeOut, " create indiviual investor button : "+topOrBottom);
+	}
 }
 
