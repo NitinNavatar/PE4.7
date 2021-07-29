@@ -335,5 +335,21 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return ele;
 	}
 	
+	public WebElement findDeactivateLink(String projectName, String stage) {
+		String xpath = "//th[text()='"+stage+"']/preceding-sibling::td//a[contains(@title,'Deactivate')]";
+		WebElement ele = FindElement(driver, xpath,"deactivate", action.SCROLLANDBOOLEAN, 10);
+		scrollDownThroughWebelement(driver, ele, "deactivate link for "+stage);
+		return isDisplayed(driver, ele, "Visibility", 10, "deactivate "+stage);
+		
+	}
+	
+	public WebElement findActivateLink(String projectName, String stage) {
+		String xpath = "//th[text()='"+stage+"']/preceding-sibling::td//a[contains(@title,'Activate')]";
+		WebElement ele = FindElement(driver, xpath,"Activate", action.SCROLLANDBOOLEAN, 10);
+		scrollDownThroughWebelement(driver, ele, "Activate link for "+stage);
+		return isDisplayed(driver, ele, "Visibility", 10, "Activate "+stage);
+		
+	}
+	
 }
 

@@ -276,12 +276,24 @@ public class SetupPageBusinessLayer extends SetupPage {
 										if(dragNDropField(driver, ele, ele1)) {
 											ThreadSleep(5000);
 											appLog.info("Successfully dragNDrop "+src+" at "+trgt+" location");
+											if (src.equalsIgnoreCase(PageLabel.Convert_to_Portfolio.toString())) {
+												if (FindElement(driver, "//div[contains(@id,'QuickAction')][text()='"+src+"']", "", action.BOOLEAN,20)!=null) {
+													appLog.info("successfully verified drag and drop of "+src);
+												}
+												else {
+													appLog.error("Not able to dragNDrop "+src+" at "+trgt+" location");
+													result.add("Not able to dragNDrop "+src+" at "+trgt+" location");
+												}
+												
+											}
+											else {
 											if (FindElement(driver, "//span[@class='labelText'][text()='"+src+"']", "", action.BOOLEAN,20)!=null) {
 												appLog.info("successfully verified drag and drop of "+src);
 											}
 											else {
 												appLog.error("Not able to dragNDrop "+src+" at "+trgt+" location");
 												result.add("Not able to dragNDrop "+src+" at "+trgt+" location");
+											}
 											}
 											appLog.info("Successfully dragNDrop "+src+" at "+trgt+" location");
 										}else {

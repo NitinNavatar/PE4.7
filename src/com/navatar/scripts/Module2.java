@@ -1812,8 +1812,8 @@ public class Module2 extends BaseLib{
 			List<String> layoutName = new ArrayList<String>();
 			layoutName.add("Company");
 			HashMap<String, String> sourceANDDestination = new HashMap<String, String>();
-			sourceANDDestination.put(PageLabel.Conversion_Date.toString(), PageLabel.Investment_Type.toString());
-			List<String> abc = setup.DragNDrop("", mode, object.Entity, ObjectFeatureName.pageLayouts, layoutName, sourceANDDestination);
+			sourceANDDestination.put(PageLabel.Deal_Conversion_Date.toString(), PageLabel.Investment_Type.toString());
+			List<String> abc = setup.DragNDrop("", mode, object.Institution, ObjectFeatureName.pageLayouts, layoutName, sourceANDDestination);
 			ThreadSleep(10000);
 			if (!abc.isEmpty()) {
 				log(LogStatus.FAIL, "field not added/already present 1", YesNo.Yes);
@@ -1875,7 +1875,7 @@ public class Module2 extends BaseLib{
 		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
 		String mode="Lightning";
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		String labels[]={PageLabel.Status.toString(),PageLabel.Conversion_Date.toString()};
+		String labels[]={PageLabel.Status.toString(),PageLabel.Deal_Conversion_Date.toString()};
 		int i=0;
 		String values1[]={PageLabel.Under_Evaluation.toString().replace("_", " "),todaysDateSingleDigit};
 		String values2[]={PageLabel.Watchlist.toString(),todaysDateSingleDigit};
@@ -1939,7 +1939,7 @@ public class Module2 extends BaseLib{
 		String values3[]={PageLabel.Under_Evaluation.toString(),todaysDateSingleDigit};
 		String values4[]={PageLabel.Portfolio_Company.toString(),todaysDateSingleDigit};
 		
-		String labels[]={PageLabel.Status.toString(),PageLabel.Conversion_Date.toString()};
+		String labels[]={PageLabel.Status.toString(),PageLabel.Deal_Conversion_Date.toString()};
 		int i=0;
 		
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
@@ -2030,8 +2030,8 @@ public class Module2 extends BaseLib{
 		if (home.clickOnSetUpLink()) {
 			parentID=switchOnWindow(driver);
 			if (parentID!=null) {
-				if (sp.searchStandardOrCustomObject(environment, mode,object.Entity )) {
-					if(sp.clickOnObjectFeature(environment, mode,object.Entity, ObjectFeatureName.FieldAndRelationShip)) {
+				if (sp.searchStandardOrCustomObject(environment, mode,object.Institution )) {
+					if(sp.clickOnObjectFeature(environment, mode,object.Institution, ObjectFeatureName.FieldAndRelationShip)) {
 						if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), PageLabel.Status.toString()+Keys.ENTER, "status", action.BOOLEAN)) {
 							if (sp.clickOnAlreadyCreatedLayout(PageLabel.Status.toString())) {
 								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
@@ -2135,7 +2135,7 @@ public class Module2 extends BaseLib{
 		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
 		String status=PageLabel.RenameWatchlist.toString();
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		String labels[]={PageLabel.Status.toString(),PageLabel.Conversion_Date.toString()};
+		String labels[]={PageLabel.Status.toString(),PageLabel.Deal_Conversion_Date.toString()};
 		int i=0;
 		String values1[]={PageLabel.RenameWatchlist.toString(),""};
 		String values2[]={PageLabel.RenameUnder_Evaluation.toString(),todaysDateSingleDigit};
@@ -2194,8 +2194,8 @@ public class Module2 extends BaseLib{
 		if (home.clickOnSetUpLink()) {
 			parentID=switchOnWindow(driver);
 			if (parentID!=null) {
-				if (sp.searchStandardOrCustomObject(environment, mode,object.Entity )) {
-					if(sp.clickOnObjectFeature(environment, mode,object.Entity, ObjectFeatureName.FieldAndRelationShip)) {
+				if (sp.searchStandardOrCustomObject(environment, mode,object.Institution )) {
+					if(sp.clickOnObjectFeature(environment, mode,object.Institution, ObjectFeatureName.FieldAndRelationShip)) {
 						if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), PageLabel.Status.toString()+Keys.ENTER, "status", action.BOOLEAN)) {
 							if (sp.clickOnAlreadyCreatedLayout(PageLabel.Status.toString())) {
 								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
@@ -2287,9 +2287,93 @@ public class Module2 extends BaseLib{
 		sa.assertAll();
 	}
 
+	
 	@Parameters({ "projectName"})
 	@Test
-	public void M2HighestStageReachedtc028_1_Precondition(String projectName) {
+	public void M2ConvDatetc028_1_Precondition(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		WebElement ele=null;
+		String parentID=null;
+		String[] stages={Stage.Deal_Received.toString(),Stage.NDA_Signed.toString(),Stage.IOI.toString(),Stage.Management_Meeting.toString(),Stage.Due_Diligence.toString(),Stage.Parked.toString()};
+		if (home.clickOnSetUpLink()) {
+			parentID=switchOnWindow(driver);
+			if (parentID!=null) {
+				if (sp.searchStandardOrCustomObject(environment, mode,object.Deal )) {
+					if(sp.clickOnObjectFeature(environment, mode,object.Deal, ObjectFeatureName.FieldAndRelationShip)) {
+						if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), excelLabel.Stage.toString()+Keys.ENTER, "status", action.BOOLEAN)) {
+							if (sp.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
+								for (String s:stages) {
+									switchToDefaultContent(driver);
+									switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
+										s=s.replace("_", " ");
+									ele=dp.findDeactivateLink(projectName, s);
+									if (ele!=null) {
+										log(LogStatus.INFO,"successfully found active stage : "+s,YesNo.No);	
+									}else {
+										log(LogStatus.ERROR,"stage is not active, now activating "+s,YesNo.No);	
+										ThreadSleep(5000);
+										
+										ele=dp.findActivateLink(projectName, s);
+										if (click(driver, ele, "activate", action.SCROLLANDBOOLEAN)) {
+											switchToDefaultContent(driver);
+											switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
+											
+											ele=dp.findDeactivateLink(projectName, s);
+											if (ele!=null) {
+												log(LogStatus.INFO,"successfully verified active stage : "+s,YesNo.No);	
+												
+											}
+											else {
+												log(LogStatus.ERROR,"could not activate stage : "+s,YesNo.No);	
+												sa.assertTrue(false,"could not activate stage : "+s);
+											}
+										}else {
+											log(LogStatus.ERROR,"could not click on activate button for stage : "+s,YesNo.No);	
+											sa.assertTrue(false,"could not click on activate button for stage : "+s);
+										}
+									}
+								}
+							}else {
+								log(LogStatus.ERROR,"stage field is not clickable",YesNo.No);	
+								sa.assertTrue(false,"stage field is not clickable");
+							}
+						}else {
+							log(LogStatus.ERROR,"search textbox field is not visible",YesNo.No);	
+							sa.assertTrue(false,"search textbox field is not visible");
+						}
+					}else {
+						log(LogStatus.ERROR,"deal object is not clickable",YesNo.No);	
+						sa.assertTrue(false,"deal object is not clickable");
+					}
+				}else {
+					log(LogStatus.ERROR,"could not search deal object",YesNo.No);	
+					sa.assertTrue(false,"could not search deal object");
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.ERROR,"could not find new window",YesNo.No);	
+				sa.assertTrue(false,"could not find new window");
+			}
+		}else {
+			log(LogStatus.ERROR,"setup link is not clickable",YesNo.No);	
+			sa.assertTrue(false,"setup link is not clickable");
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+				
+	@Parameters({ "projectName"})
+	@Test
+	public void M2HighestStageReachedtc028_2_DataCreation(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -2366,7 +2450,7 @@ public class Module2 extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void M2HighestStageReachedtc028_2_Precondition(String projectName) {
+	public void M2HighestStageReachedtc028_3_DataCreation(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
