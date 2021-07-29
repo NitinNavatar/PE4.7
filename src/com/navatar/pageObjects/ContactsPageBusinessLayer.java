@@ -56,7 +56,10 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 			}else {
 				finalLabelName = labelName.replace("_", " ");
 			}
-		} else {
+		}else if (labelName.equalsIgnoreCase("Profile_Image")) {
+			finalLabelName = labelName;
+		}
+		else {
 			finalLabelName = labelName;
 		}
 		String xpath = "";

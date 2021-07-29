@@ -619,30 +619,31 @@ public class SetupPageBusinessLayer extends SetupPage {
 										if(sendKeys(driver, getFieldLabelTextBox(30), fieldLabelName, "field label name ", action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.PASS, "passed value in field label text box : "+fieldLabelName, YesNo.No);
 
-											
-												
-												if (dataType.equalsIgnoreCase("Picklist")) {
-													xpath = "//label[text()='Enter values, with each value separated by a new line']//preceding-sibling::input[@name='picklistType']";
+
+
+											if (dataType.equalsIgnoreCase("Picklist")) {
+												xpath = "//label[text()='Enter values, with each value separated by a new line']//preceding-sibling::input[@name='picklistType']";
+												ele = FindElement(driver, xpath, "", action.BOOLEAN, 5);
+
+												if(click(driver, ele,"Radio Button", action.SCROLLANDBOOLEAN)) {
+													log(LogStatus.PASS, "Click on radio button", YesNo.No);
+													ThreadSleep(2000);
+
+													xpath = "//textarea[@id='ptext']";
 													ele = FindElement(driver, xpath, "", action.BOOLEAN, 5);
-													
-													if(click(driver, ele,"Radio Button", action.SCROLLANDBOOLEAN)) {
-														log(LogStatus.PASS, "Click on radio button", YesNo.No);
-														ThreadSleep(2000);
-														
-														xpath = "//textarea[@id='ptext']";
-														ele = FindElement(driver, xpath, "", action.BOOLEAN, 5);
-														if(sendKeys(driver, ele, labelsWithValues[0][1],labelsWithValues[0][0]+" "+labelsWithValues[0][1], action.SCROLLANDBOOLEAN)) {
-															log(LogStatus.PASS, "Passed Value in "+labelsWithValues[0][0]+" "+labelsWithValues[0][1], YesNo.No);
-														}else {
-															log(LogStatus.FAIL, "Not able to pass "+labelsWithValues[0][0]+" "+labelsWithValues[0][1],YesNo.Yes);
-														}
-														
+													if(sendKeys(driver, ele, labelsWithValues[0][1],labelsWithValues[0][0]+" "+labelsWithValues[0][1], action.SCROLLANDBOOLEAN)) {
+														log(LogStatus.PASS, "Passed Value in "+labelsWithValues[0][0]+" "+labelsWithValues[0][1], YesNo.No);
 													}else {
-														log(LogStatus.FAIL, "Not Able to Click on radio button",YesNo.Yes);
-															
+														log(LogStatus.FAIL, "Not able to pass "+labelsWithValues[0][0]+" "+labelsWithValues[0][1],YesNo.Yes);
 													}
-												
-												} else {
+
+												}else {
+													log(LogStatus.FAIL, "Not Able to Click on radio button",YesNo.Yes);
+
+												}
+
+											} else {
+												if(labelsWithValues!=null) {
 													for (String[] labelWithValue : labelsWithValues) {
 														xpath = "//label[contains(text(),'"+labelWithValue[0]+"')]/../following-sibling::td//input";
 														ele = FindElement(driver, xpath, labelWithValue[0]+" "+labelWithValue[1], action.BOOLEAN, 5);
@@ -655,10 +656,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 													}
 												}
-					
-												
-											
-											
+											}
 										}
 											if(click(driver, getCustomFieldNextBtn(30),"next button", action.SCROLLANDBOOLEAN)) {
 												log(LogStatus.PASS, "Clicked on Step 2 Next button", YesNo.No);
@@ -668,11 +666,12 @@ public class SetupPageBusinessLayer extends SetupPage {
 													if(click(driver, getCustomFieldNextBtn(30),"next button", action.SCROLLANDBOOLEAN)) {
 														log(LogStatus.PASS, "Clicked on Step 3 Next button", YesNo.No);
 														ThreadSleep(1000);
-														if(true/*click(driver, getCustomFieldNextBtn(30),"next button", action.SCROLLANDBOOLEAN)*/) {
-															log(LogStatus.PASS, "Clicked on Step 4 Next button", YesNo.No);
-															ThreadSleep(1000);
+//														if(click(driver, getCustomFieldNextBtn(30),"next button", action.SCROLLANDBOOLEAN)) {
+//															log(LogStatus.PASS, "Clicked on Step 4 Next button", YesNo.No);
+//															ThreadSleep(1000);
 															if(click(driver, getCustomFieldSaveBtn(30), "save button", action.SCROLLANDBOOLEAN)) {
 																log(LogStatus.PASS, "clicked on save button", YesNo.No);
+																ThreadSleep(5000);
 																switchToDefaultContent(driver);
 																return true;
 																
@@ -680,9 +679,9 @@ public class SetupPageBusinessLayer extends SetupPage {
 																log(LogStatus.FAIL, "Not able to click on save button so cannot create custom field "+objectName, YesNo.Yes);
 															}
 															
-														}else {
-															log(LogStatus.FAIL, "Not able to click on Step 4 next button so cannot create custom field : "+objectName,YesNo.Yes);
-														}
+//														}else {
+//															log(LogStatus.FAIL, "Not able to click on Step 4 next button so cannot create custom field : "+objectName,YesNo.Yes);
+//														}
 														
 													}else {
 														log(LogStatus.FAIL, "Not able to click on Step 3 next button so cannot create custom field : "+objectName,YesNo.Yes);
@@ -772,7 +771,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 									switchToFrame(driver, 20, getEditPageLayoutFrame_Lighting(20));
 									for(int i=0; i<splitedDragComponent.length; i++) {
 										sendKeys(driver, getQuickFindSearchBox(environment, mode, 10), splitedDragComponent[i], "Search Value : "+splitedDragComponent[i], action.BOOLEAN);
-										if(splitedDragComponent[i].equalsIgnoreCase("Highest Stage Reached")) {
+										if(splitedDragComponent[i].equalsIgnoreCase("Highest Stage Reached") || splitedDragComponent[i].equalsIgnoreCase("Total Fund Commitments (mn)") || splitedDragComponent[i].equalsIgnoreCase("Total Co-investment Commitments (mn)")) {
 											String DragComponent=splitedDragComponent[i].split(" ")[0];
 											sourceElement =isDisplayed(driver, FindElement(driver, "//span[starts-with(text(),'"+DragComponent+"')]", "", action.BOOLEAN,10), "visibility",10,splitedDragComponent[i]+" page layout link");
 										}else {
@@ -1073,6 +1072,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 	public boolean deleteFieldSetComponent(object objectName,ObjectFeatureName objectFeatureName,String fieldSetLabel,YesNo removeSomeFields) {
 		boolean flag = false;
 		WebElement ele=null;
+		List<WebElement> fieldSetList= new ArrayList<WebElement>();
 		if(searchStandardOrCustomObject(environment,mode, objectName)) {
 			log(LogStatus.INFO, "click on Object : "+objectName, YesNo.No);
 			ThreadSleep(2000);
@@ -1090,7 +1090,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 								switchToFrame(driver, 20, getEditPageLayoutFrame_Lighting(20));
 								if(removeSomeFields.toString().equalsIgnoreCase(YesNo.Yes.toString())) {
 									xpath="//div[@id='defaultView']/div";
-									List<WebElement> fieldSetList=FindElements(driver, xpath, "all dragged field set list xpath");
+									fieldSetList=FindElements(driver, xpath, "all dragged field set list xpath");
 									if(!fieldSetList.isEmpty()) {
 										for(int i=0; i<fieldSetList.size(); i++) {
 											ThreadSleep(1000);
@@ -1104,11 +1104,13 @@ public class SetupPageBusinessLayer extends SetupPage {
 												log(LogStatus.INFO,"Not able to click on reomve icon of object so cannot remove object from field set component",YesNo.No);
 												return false;
 											}
-										fieldSetList=FindElements(driver, xpath, "all dragged field set list xpath");
-										if(fieldSetList.isEmpty()) {
+										ele = isDisplayed(driver, FindElement(driver, "//div[@id='defaultView']/div[@class='dataview-empty']", "field set label text", action.BOOLEAN, 3), "visibility", 3, "field set label text");
+//											fieldSetList=FindElements(driver, xpath, "all dragged field set list xpath");
+											if(ele!=null) {
 											if(click(driver, getPageLayoutSaveBtn(object.Global_Actions, 10), "page layouts save button", action.SCROLLANDBOOLEAN)) {
 												log(LogStatus.INFO, "Clicked on Save button", YesNo.No);
 												ThreadSleep(5000);
+												flag = true;
 												break;
 
 											}else {
@@ -1119,8 +1121,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 											if(click(driver, getPageLayoutSaveBtn(object.Global_Actions, 10), "page layouts save button", action.SCROLLANDBOOLEAN)) {
 												log(LogStatus.INFO, "Clicked on Save button", YesNo.No);
 												ThreadSleep(5000);
-												return true;
-												
+												switchToDefaultContent(driver);
+												break;
 											}else {
 												log(LogStatus.ERROR, "Not able to click on Save button cannot save pagelayout dragged object or section in field set component "+fieldSetLabel, YesNo.Yes);
 												flag=false;
@@ -1140,6 +1142,9 @@ public class SetupPageBusinessLayer extends SetupPage {
 					}else {
 						log(LogStatus.INFO, "Not able to search created Field Set Label "+fieldSetLabel, YesNo.Yes);
 					}
+					
+					if(ele!=null) 
+						break;
 					switchToDefaultContent(driver);
 				}
 			}else {
