@@ -1,0 +1,18 @@
+Sr. No,NAME,Navigation Type,ORDER__C,PARENT__C,Parents__C ID,Action Object,Quick Create Record Type,Record Type ID,URL__C
+1,Home,New Interactions,5,,,,,,/lightning/page/home
+2,Company,New Interactions,15,Accounts,,Account,Company,,
+3,Fund Manager,New Interactions,30,Accounts,,Account,Fund_Manager,,
+4,Fund Manager’s Fund,New Interactions,10,Accounts,,Account,Fund_Manager_s_Fund,,
+5,Individual Investor,New Interactions,40,Accounts,,Account,Individual_Investor,,
+6,Institution,New Interactions,25,Accounts,,Account,Institution,,
+7,Intermediary,New Interactions,4,Accounts,,Account,Intermediary,,
+8,Limited Partner,New Interactions,45,Accounts,,Account,LimitedPartner,,
+9,Consultant,New Interactions,50,Accounts,,Account,Advisor,,
+10,Lender,New Interactions,55,Accounts,,Account,Lender,,
+11,Contact,New Interactions,25,,,Contact,,,
+12,Fund,New Interactions,-5,,,navpeII__Fund__c,,,
+13,Fundraising,New Interactions,90,,,navpeII__Fundraising__c,,,
+14,Partnership,New Interactions,55,,,navpeII__Partnership__c,,,
+15,Commitment,New Interactions,45,,,navpeII__Commitment__c,,,
+16,Pipelines,New Interactions,35,,, navpeII__Pipeline__c,,,
+17,Reports,New Interactions,50,,,,,,/lightning/o/Report/home?queryScope=mru
