@@ -186,8 +186,8 @@ public class Module1 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
-		String[] tabs= {tabObj1,tabObj2,tabObj3,tabObj4,tabObj8Coverage};
-		TabName[] tab= {TabName.Object1Tab,TabName.Object2Tab,TabName.Object3Tab,TabName.Object4Tab,TabName.Object8Tab};
+		String[] tabs= {tabObj1,tabObj2,tabObj3,tabObj4,tabObj5,tabObj8Coverage};
+		TabName[] tab= {TabName.Object1Tab,TabName.Object2Tab,TabName.Object3Tab,TabName.Object4Tab,TabName.Object5Tab,TabName.Object8Tab};
 		int i=0;
 		for (TabName t:tab) {
 

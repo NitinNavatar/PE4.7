@@ -4823,7 +4823,7 @@ public abstract class BasePage extends BaseLib {
 	}
 	
 	public WebElement getCustomNumberOfImg(String object,String record,int timeOut) {
-		String xpath ="//article[@class='cRelatedListAccordion']//a[text()='"+object+"']/../../../following-sibling::div//a[text()='"+record+"']/../preceding-sibling::div/*/*/*";
+		String xpath ="//article[contains(@class,'RelatedListAccordion')]//a[text()='"+object+"']/../../../following-sibling::div//a[text()='"+record+"']/../preceding-sibling::div/*/*/*";
 		WebElement ele= FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "img for "+object);
 	}
@@ -4941,7 +4941,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, deletePhotoButton, "Visibility", timeOut, "deletePhotoButton");
 		
 	}
-	@FindBy(xpath = "(//*[contains(text(),'Actions')]/../../..//following-sibling::div//button[@title='Reload'])[2]")
+	@FindBy(xpath = "(//*[contains(text(),'Actions')]/../../..//following-sibling::div//button[@title='Reload.'])[2]")
 	private WebElement actionsSDGRefresh;
 	
 	public WebElement getactionsSDGRefresh(String projectName,int timeOut) {

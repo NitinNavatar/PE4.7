@@ -2544,10 +2544,10 @@ public boolean verifyAccordion(String projectName,String recordName,String[] fie
 	String field="";
 	String value="";
 	boolean flag=true;
-	String finalx="",xpath = "//article[@class='cRelatedListAccordion']//a[text()='"+recordName+"']";
+	String finalx="",xpath = "//article[contains(@class,'RelatedListAccordion')]//a[text()='"+recordName+"']";
 	WebElement ele=FindElement(driver, xpath, recordName, action.SCROLLANDBOOLEAN,10);
 	if (isDisplayed(driver, ele, "visibility", timeOut, recordName+" in accordion")!=null) {
-		xpath = "//article[@class='cRelatedListAccordion']//a[text()='"+recordName+"']/following-sibling::ul";
+		xpath = "//article[contains(@class,'RelatedListAccordion')]//a[text()='"+recordName+"']/following-sibling::ul";
 		if (fieldValues!=null) {
 			for (String fieldValue:fieldValues) {
 				field=fieldValue.split(breakSP)[0];
@@ -2582,7 +2582,7 @@ public boolean verifyAccordion(String projectName,String recordName,String[] fie
  */
 public boolean verifyAccordianRecordImage(String projectName, String record, String imgId) {
 	boolean flag=true;
-	String xpath = "//article[@class='cRelatedListAccordion']//a[text()='"+record+"']";
+	String xpath = "//article[contains(@class,'RelatedListAccordion')]//a[text()='"+record+"']";
 	String finalx=xpath +"/../preceding-sibling::div//img";
 	WebElement ele=FindElement(driver, xpath, "accordion record", action.SCROLLANDBOOLEAN, 10);
 	ele=isDisplayed(driver, ele, "visibility", 10, "accordion record profile image");
@@ -2689,7 +2689,7 @@ public boolean updatePhoto(String projectName,String pageName,String uploadImage
  * @return return Accordion Link webElement
  */
 public WebElement returnAccordionLink(String projectName, String object) {
-	String xpath = "//article[@class='cRelatedListAccordion']//a[text()='"+object+"']";
+	String xpath = "//article[contains(@class,'RelatedListAccordion')]//a[text()='"+object+"']";
 	WebElement ele=FindElement(driver, xpath, object + "accordion", action.SCROLLANDBOOLEAN, 10);
 	return isDisplayed(driver, ele, "visibility", 10, object + "accordion");
 	
@@ -2702,7 +2702,7 @@ public WebElement returnAccordionLink(String projectName, String object) {
  * @return return Accordion View Details Link webElement
  */
 public WebElement returnAccordionViewDetailsLink(String projectName, String object) {
-	String xpath = "//article[@class='cRelatedListAccordion']//a[text()='"+object+"']/../../../following-sibling::footer//a[contains(text(),'View')][contains(text(),'Details')]";
+	String xpath = "//article[contains(@class,'RelatedListAccordion')]//a[text()='"+object+"']/../../../following-sibling::footer//a[contains(text(),'View')][contains(text(),'Details')]";
 	WebElement ele=FindElement(driver, xpath, object + "accordion", action.SCROLLANDBOOLEAN, 10);
 	return isDisplayed(driver, ele, "visibility", 10, object + "accordion");
 	

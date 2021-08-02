@@ -84,12 +84,12 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		}else if(finalLabelName.contains(excelLabel.Phone.toString())) {
 			xpath = "//*[@class='test-id__field-label'][starts-with(text(),'"+finalLabelName+"')]/../following-sibling::div/*//a";
 		}
-		if(labelName.equalsIgnoreCase(excelLabel.Region.toString()) || labelName.equalsIgnoreCase(excelLabel.Industry.toString())) {
+		/*if(labelName.equalsIgnoreCase(excelLabel.Region.toString()) || labelName.equalsIgnoreCase(excelLabel.Industry.toString())) {
 			xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
 					+ "']/../following-sibling::div/span//a";
 
-		}
-		else if(labelName.equalsIgnoreCase(excelLabel.Phone.toString())) {
+		}*/
+		if(labelName.equalsIgnoreCase(excelLabel.Phone.toString())) {
 			xpath = "//span[@class='test-id__field-label'][contains(text(),'" + finalLabelName+ "')]/../following-sibling::div/span//a";
 
 		}
@@ -242,15 +242,25 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 										appLog.error("Not able to pass value "+labelValue[i]+" in "+labelNames[i]+" field");
 										BaseLib.sa.assertTrue(false, "Not able to pass value "+labelValue[i]+" in "+labelNames[i]+" field");
 									}
-									if (labelNames[i].equalsIgnoreCase(excelLabel.Region.toString()) || labelNames[i].equalsIgnoreCase(excelLabel.Industry.toString())) {
+									if (labelNames[i].equalsIgnoreCase(excelLabel.Region.toString()) || labelNames[i].equalsIgnoreCase(excelLabel.Sector.toString())) {
+										if (click(driver, FindElement(driver,
+												"//*[text()='"+labelNames[i]+"']/following-sibling::div[@class='slds-form-element__control']//input[@type='text']", 
+												"picklist "+labelNames[i], action.SCROLLANDBOOLEAN , 10), "picklist "+labelNames[i],  action.SCROLLANDBOOLEAN)) {
+											
+										
 										if (click(driver,
-												FindElement(driver,"//*[@title='"+labelValue[i]+"']//strong[text()='"+labelValue[i].split(" ")[0]+"']"
+												FindElement(driver,"//div[contains(@class,'listbox')]//*[@data-value='"+labelValue[i]+"']"
 														,
 														"Legal Name List", action.THROWEXCEPTION, 30),
 												labelNames[i] + "   :   Account Name", action.BOOLEAN)) {
 											appLog.info(labelNames[i] + "  is present in list.");
 										} else {
-											appLog.info(labelNames[i] + "  is not present in the list.");
+											appLog.error("Not able to select "+labelValue[i]+" in "+labelNames[i]+" field");
+											BaseLib.sa.assertTrue(false, "Not able to select "+labelValue[i]+" in "+labelNames[i]+" field");
+										}
+										}else {
+											appLog.error("Not able to select "+labelValue[i]+" in "+labelNames[i]+" field");
+											BaseLib.sa.assertTrue(false, "Not able to select "+labelValue[i]+" in "+labelNames[i]+" field");
 										}
 									}
 								}
