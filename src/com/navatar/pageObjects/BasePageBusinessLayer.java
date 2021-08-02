@@ -3374,6 +3374,79 @@ public boolean selectValueFromLookUpWindow(String searchText) {
 	return false;
 }
 
+/**
+ * @param projectName
+ * @param TabName
+ * @return true if Tab is already selected
+ */
+public boolean getSelectedTab(String projectName,String TabName) {
+	String tabName = null;
+	boolean flag = false;
+	WebElement ele;
+	if (TabName.contains("Entit")) {
+		tabName ="Entities";
+	}else {
+		tabName = TabName;
+	}
+	System.err.println("Passed switch statement");
+	if (tabName!=null) {
+		ele = FindElement(driver, "//a[@title='"+tabName+"']/parent::*[@class='navItem slds-context-bar__item slds-shrink-none slds-is-active']",tabName, action.SCROLLANDBOOLEAN,30);
+		ele = isDisplayed(driver,ele,"visibility", 30, tabName);
+		if (ele != null) {
+			appLog.info("Tab is Already Selected : "+tabName);
+			flag=true;
+		}
+	}
+	return flag;
+}
+
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param alreadyCreated
+ * @param isClick TODO
+ * @param timeout
+ * @param tabName
+ * @return true if able to click on particular item on Particular tab
+ */
+public boolean CheckAlreadyCreatedItem(String projectName,String alreadyCreated, boolean isClick, int timeout) {
+	boolean flag=false;
+	String xpath="";
+	String viewList = null;
+	viewList = "Automation All";
+	WebElement ele, selectListView;
+	ele = null;
+	ThreadSleep(3000);
+	refresh(driver);
+	if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+		ThreadSleep(3000);
+		xpath="//div[@class='listContent']//li/a/span[text()='" + viewList + "']";
+		selectListView = FindElement(driver, xpath,"Select List View : "+viewList, action.SCROLLANDBOOLEAN, 30);
+		if (click(driver, selectListView, "select List View : "+viewList, action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(3000);
+			ThreadSleep(5000);
+		} else {
+			appLog.error("Not able to enter value on Search Box");
+		}
+	} else {
+		appLog.error("Not able to select on Select View List : "+viewList);
+	}
+
+	if (sendKeys(driver, getSearchIcon_Lighting(20), alreadyCreated+"\n", "Search Icon Text",action.SCROLLANDBOOLEAN)) {
+		ThreadSleep(2000);
+		xpath = "//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//*[text()='"+ alreadyCreated + "']";
+		ele=FindElement(driver, xpath,alreadyCreated, action.BOOLEAN, 30);
+		if (ele!=null) {
+			appLog.info("Item Found : " + alreadyCreated);
+			flag=true;
+		} else {
+			appLog.error("Item not Found : " + alreadyCreated);
+		}
+	} else {
+		appLog.error("Not able to click on Select List Icon");
+	}
+	return flag;
+}
 
 
 

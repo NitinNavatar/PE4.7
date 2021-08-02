@@ -5074,4 +5074,35 @@ public abstract class BasePage extends BaseLib {
 	}
 	
 	
+	public WebElement getCustomTabCrossIcon(String projectName,int timeOut) {
+		List<WebElement> eleList = FindElements(driver, "//*[@title='Close this window' or text()='Close this window']", "Cross Icon");
+		for (WebElement webElement : eleList) {
+		webElement=isDisplayed(driver, webElement, "Visibility", 2, "Cross Icon");
+		if (webElement!=null) {
+				return webElement;
+			} else {
+
+			}
+		}
+		return null;
+
+	}
+	
+	
+	public WebElement getCustomTabCancelBtn(String projectName,int timeOut) {
+		List<WebElement> eleList = FindElements(driver, "//*[@title='Cancel' or text()='Cancel']", "Cancel Button");
+		for (WebElement webElement : eleList) {
+		webElement=isDisplayed(driver, webElement, "Visibility", 2, "Cancel Button");
+		if (webElement!=null) {
+				return webElement;
+			} else {
+
+			}
+		}
+		return null;
+
+	}
+	
+	
+	
 }
