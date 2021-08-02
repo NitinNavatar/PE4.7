@@ -174,7 +174,7 @@ public class Module4 extends BaseLib{
 			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object5Tab,YesNo.Yes);
 		}
 		}
-		
+		String deal="",member="",role="";
 		for ( i = 0;i<11;i++) {
 			if (lp.clickOnTab(projectName, TabName.Deal_Team)) {
 
