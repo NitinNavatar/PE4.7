@@ -5103,6 +5103,22 @@ public abstract class BasePage extends BaseLib {
 
 	}
 	
+	@FindBy (xpath = "//*[@class='outPopupBox']//h2")
+	private WebElement popUpHeader;
+	
+	/**
+	 * @return the navigationPopUpHeader
+	 */
+	public WebElement getPopUpHeader(String projectName,int timeOut) {
+		WebElement ele=isDisplayed(driver, popUpHeader, "Visibility", timeOut, "PopUp Header");
+		
+		if(ele==null) {
+			 return isDisplayed(driver, popUpHeader, "Visibility", timeOut, "PopUp Header");
+			
+		}
+		else return ele;
+	}
+	
 	
 	
 }
