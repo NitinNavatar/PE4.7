@@ -233,6 +233,16 @@ public class EditPage extends BasePageBusinessLayer {
 	public WebElement getnoOfRecordsErrorPopup(String projectName,int timeOut) {
 		return isDisplayed(driver, noOfRecordsErrorPopup, "Visibility", timeOut, "noOfRecordsErrorPopup");
 	}
+	
+	@FindBy (xpath = "//div[@class='error']")
+	private WebElement noOfRecordsErrorPopupForAccordion;
+
+	/**
+	 * @return the finishButton2
+	 */
+	public WebElement getnoOfRecordsErrorPopupForAccordion(String projectName,int timeOut) {
+		return isDisplayed(driver, noOfRecordsErrorPopupForAccordion, "Visibility", timeOut, "noOfRecordsErrorPopup");
+	}
 	@FindBy (xpath = "//h2[text()='Error']/../following-sibling::div[contains(@class,'footer')]//button[text()='OK']")
 	private WebElement noOfRecordsErrorPopupOK;
 

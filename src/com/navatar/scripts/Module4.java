@@ -90,7 +90,7 @@ public class Module4 extends BaseLib{
 				phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON"+(i+1), excelLabel.Phone);
 				region=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON"+(i+1), excelLabel.Region);
 				industry=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON"+(i+1), excelLabel.Industry);
-				String[] contactsInfo = {  excelLabel.Phone.toString()+","+excelLabel.Region.toString()+","+excelLabel.Industry.toString(), phone+","+region+","+industry};
+				String[] contactsInfo = {  excelLabel.Phone.toString()+","+excelLabel.Region.toString()+","+excelLabel.Sector.toString(), phone+","+region+","+industry};
 				mailID=	lp.generateRandomEmailId(gmailUserName);
 				ExcelUtils.writeData(phase1DataSheetFilePath, mailID, "Contacts", excelLabel.Variable_Name, "M4CON"+(i+1),excelLabel.Contact_EmailId);
 				System.err.println("field is "+contactsInfo[0]+" value is "+contactsInfo[1]);
@@ -183,8 +183,8 @@ public class Module4 extends BaseLib{
 				member= ExcelUtils.readData(phase1DataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "M4DT"+(i+1), excelLabel.Member);
 				type= ExcelUtils.readData(phase1DataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "M4DT"+(i+1), excelLabel.Type);
 				role= ExcelUtils.readData(phase1DataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "M4DT"+(i+1), excelLabel.Role);
-				String[][] dt = {{PageLabel.Member.toString(),member},{PageLabel.Deal.toString(),deal}
-				,{PageLabel.Team_Member_Role.toString(),role},{PageLabel.Type.toString(),type}};
+				String[][] dt = {{PageLabel.Team_Member.toString(),member},{PageLabel.Deal.toString(),deal}
+				,{PageLabel.Team_Member_Role.toString(),role},{PageLabel.Deal_Contact_Type.toString(),type}};
 
 				if (dtp.createDealTeam(projectName, deal, dt,"M4DT" +(i+1), action.SCROLLANDBOOLEAN, 10)) {
 					log(LogStatus.INFO,"Created deal team for deal : "+deal,YesNo.No);	
@@ -208,9 +208,9 @@ public class Module4 extends BaseLib{
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
-		lp.CRMLogin(superAdminUserName, adminPassword, SDG);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		String fields=SDGLabels.APIName.toString();String values="";
-		if (lp.searchAndClickOnApp(SDG, 30)) {
+		lp.searchAndClickOnApp(SDG, 30);
 			log(LogStatus.INFO,"Able to Click/Search : "+SDG+" going to create custom SDG",YesNo.No);	 
 			ThreadSleep(3000);
 
@@ -245,10 +245,7 @@ public class Module4 extends BaseLib{
 				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.SDGTab,YesNo.Yes);
 			}
 
-		} else {
-			sa.assertTrue(false,"Not Able to Click/Search : "+SDG+" so can not create custom SDG");
-			log(LogStatus.SKIP,"Not Able to Click/Search : "+SDG+" so can not create custom SDG",YesNo.Yes);
-		}
+		
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -260,13 +257,13 @@ public class Module4 extends BaseLib{
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
 		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
-		lp.CRMLogin(superAdminUserName, adminPassword, SDG);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		String fields=SDGLabels.APIName.toString();String values="";
-		if (lp.searchAndClickOnApp(SDG, 30)) {
+		lp.searchAndClickOnApp(SDG, 10);
 			log(LogStatus.INFO,"Able to Click/Search : "+SDG+" going to create custom SDG",YesNo.No);	 
 			ThreadSleep(3000);
 
-			if (lp.clickOnTab(projectName, TabName.SDGTab)) {
+			//if (lp.clickOnTab(projectName, TabName.SDGTab)) {
 				log(LogStatus.INFO,"Click on Tab : "+TabName.SDGTab,YesNo.No);
 
 				String[][] sdgLabels = {{SDGCreationLabel.SDG_Name.toString(),M4Sdg2Name},
@@ -291,15 +288,12 @@ public class Module4 extends BaseLib{
 					log(LogStatus.SKIP,"Not Able to create/verify created SDG : "+M4Sdg2Name,YesNo.Yes);
 				}
 
-			} else {
+			/*} else {
 				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.SDGTab);
 				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.SDGTab,YesNo.Yes);
-			}
+			}*/
 
-		} else {
-			sa.assertTrue(false,"Not Able to Click/Search : "+SDG+" so can not create SDG");
-			log(LogStatus.SKIP,"Not Able to Click/Search : "+SDG+" so can not create SDG",YesNo.Yes);
-		}
+		
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -314,9 +308,9 @@ public class Module4 extends BaseLib{
 		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
 		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
-		lp.CRMLogin(superAdminUserName, adminPassword, SDG);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		String fields=SDGLabels.APIName.toString();String values="";
-		if (lp.searchAndClickOnApp(SDG, 30)) {
+		lp.searchAndClickOnApp(SDG, 10);
 			log(LogStatus.INFO,"Able to Click/Search : "+SDG+" going to create custom SDG",YesNo.No);	 
 			ThreadSleep(3000);
 
@@ -351,10 +345,7 @@ public class Module4 extends BaseLib{
 				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.SDGTab,YesNo.Yes);
 			}
 
-		} else {
-			sa.assertTrue(false,"Not Able to Click/Search : "+SDG+" so can not create SDG");
-			log(LogStatus.SKIP,"Not Able to Click/Search : "+SDG+" so can not create SDG",YesNo.Yes);
-		}
+		
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -368,7 +359,7 @@ public class Module4 extends BaseLib{
 		EditPageBusinessLayer ep = new EditPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		String fieldValues[]={EditPageLabel.Title.toString()+"<break>"+"Contacts",EditPageLabel.Query.toString()+"<break>"+ep.ContactSDGQuery(""),
-				EditPageLabel.Image_Field_API_Name.toString()+"<break>"+"Profile_Image__c",EditPageLabel.Number_of_Records_to_Display.toString()+"<break>6",
+				EditPageLabel.Image_Field_API_Name.toString()+"<break>"+"navpeII__Profile_Image__c",EditPageLabel.Number_of_Records_to_Display.toString()+"<break>6",
 				EditPageLabel.SDG_Name.toString()+"<break>"+M4Sdg1Name,EditPageLabel.Popup_Title.toString()+"<break>"+M4Sdg1Name+"s"
 		};
 		String source= System.getProperty("user.dir")+"\\AutoIT\\EditPage\\rla.png";
@@ -455,7 +446,7 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName,contact , 10)) {
-				ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
+				ele=cp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 				click(driver, ele, "overview tab", action.BOOLEAN);
 				id=cp.updatePhotoInDetailPage(projectName, attachmentPath1);
 				if (id!=null) {
@@ -498,7 +489,7 @@ public class Module4 extends BaseLib{
 		
 		if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M4Contact1FName+" "+M4Contact1LName, 10)) {
-				ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
+				ele=cp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 				click(driver, ele, "overview tab", action.BOOLEAN);
 				id=cp.updatePhotoInDetailPage(projectName,attachmentPath2);
 				if (id!=null) {
@@ -557,7 +548,7 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName,contact , 10)) {
-				ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
+				ele=cp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 				click(driver, ele, "overview tab", action.BOOLEAN);
 				if (cp.deleteImage(projectName, contact)) {
 					log(LogStatus.INFO, "successfully deleted photo", YesNo.No);
@@ -1092,9 +1083,9 @@ public class Module4 extends BaseLib{
 										sa.assertTrue(false, "error message for no of records is not visible");
 									}
 									
-									ele=ep.getnoOfRecordsErrorPopup(projectName, 10);
+									ele=ep.getnoOfRecordsErrorPopupForAccordion(projectName, 10);
 									if (ele!=null) {
-										if (ele.getText().trim().equalsIgnoreCase(EditPageErrorMessage.noOfRecordsError)) {
+										if (ele.getText().trim().equalsIgnoreCase(EditPageErrorMessage.noOfRecordsErrorAccordion)) {
 											log(LogStatus.PASS, "successfully verified error message for no of records", YesNo.No);
 
 										}else {
@@ -1116,7 +1107,7 @@ public class Module4 extends BaseLib{
 										log(LogStatus.ERROR, "not able to save when no of records is "+num, YesNo.Yes);
 										sa.assertTrue(false, "not able to save when no of records is "+num);
 									}
-									ele=ep.getnoOfRecordsErrorPopup(projectName, 5);
+									ele=ep.getnoOfRecordsErrorPopupForAccordion(projectName, 5);
 									if (ele==null) {
 										log(LogStatus.PASS, "successfully verified saving of no of records when "+num, YesNo.No);
 
@@ -1202,7 +1193,7 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		String tab=M4Sdg2Name;
 		String fieldValues[]={EditPageLabel.Title.toString()+"<break>"+tab,EditPageLabel.Query.toString()+"<break>"+ep.DealTeamSDGQuery(""),
-				EditPageLabel.Image_Field_API_Name.toString()+"<break>"+"Member__r.MediumPhotoURL",EditPageLabel.Number_of_Records_to_Display.toString()+"<break>8",
+				EditPageLabel.Image_Field_API_Name.toString()+"<break>"+"navpeII__Team_Member__r.MediumPhotoUrl",EditPageLabel.Number_of_Records_to_Display.toString()+"<break>8",
 				EditPageLabel.SDG_Name.toString()+"<break>"+tab,EditPageLabel.Popup_Title.toString()+"<break>"+tab
 		};
 		String source= System.getProperty("user.dir")+"\\AutoIT\\EditPage\\rla.png";
@@ -1250,7 +1241,7 @@ public class Module4 extends BaseLib{
 		String type=ExcelUtils.readData(phase1DataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "M4DT1", excelLabel.Type);
 		String role=ExcelUtils.readData(phase1DataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "M4DT1", excelLabel.Role);
 
-		String fieldValue[]={PageLabel.Team_Member_Role.toString()+breakSP+M4Contact1Title,PageLabel.Type.toString()+breakSP+M4Contact1Title};
+		String fieldValue[]={PageLabel.Team_Member_Role.toString()+breakSP+M4Contact1Title,PageLabel.Deal_Contact_Type.toString()+breakSP+M4Contact1Title};
 		if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M4Deal1,10)) {
 				for (int i = 0;i<3;i++) {
@@ -1258,7 +1249,7 @@ public class Module4 extends BaseLib{
 					type=ExcelUtils.readData(phase1DataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "M4DT"+(i+1), excelLabel.Type);
 					role=ExcelUtils.readData(phase1DataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "M4DT"+(i+1), excelLabel.Role);
 					fieldValue[0]=PageLabel.Team_Member_Role.toString()+breakSP+role;
-					fieldValue[1]=PageLabel.Type.toString()+breakSP+type;
+					fieldValue[1]=PageLabel.Deal_Contact_Type.toString()+breakSP+type;
 					if (ip.verifyAccordion(projectName, user, fieldValue,10)) {
 						log(LogStatus.INFO, "successfully verified fields and values in accordion", YesNo.No);
 
@@ -1296,8 +1287,8 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName,M4Deal1 , 10)) {
-				ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
-				click(driver, ele, "overview tab", action.BOOLEAN);
+				ele=cp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele, "details tab", action.BOOLEAN);
 				ele=dp.returnAccordionLink(projectName, user);
 				if (click(driver, ele, "accordion header", action.BOOLEAN)) {
 					parentID=switchOnWindow(driver);
@@ -1399,8 +1390,8 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName,M4Deal1 , 10)) {
-				ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
-				String xpath = "//article[@class='cRelatedListAccordion']//a[text()='"+user+"']";
+				ele=cp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				String xpath = "//article[contains(@class,'RelatedListAccordion')]//a[text()='"+user+"']";
 				List<WebElement> li=FindElements(driver, xpath, "list of deal team records");
 				if (li.size()==8) {
 					log(LogStatus.INFO, "successfully verified 8 records found", YesNo.No);
@@ -1547,11 +1538,11 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		String tab=M4Sdg3Name;
 		String fieldValues[]={EditPageLabel.Title.toString()+"<break>"+tab,EditPageLabel.Query.toString()+"<break>"+ep.attendeeQuery,
-				EditPageLabel.Image_Field_API_Name.toString()+"<break>"+"Attendee_Staff__r.MediumPhotoURL",EditPageLabel.Number_of_Records_to_Display.toString()+"<break>8",
+				EditPageLabel.Image_Field_API_Name.toString()+"<break>"+"navpeII__Attendee_Staff__r.MediumPhotoUrl",EditPageLabel.Number_of_Records_to_Display.toString()+"<break>8",
 				EditPageLabel.SDG_Name.toString()+"<break>"+tab,EditPageLabel.Popup_Title.toString()+"<break>"+tab
 		};
 		String source= System.getProperty("user.dir")+"\\AutoIT\\EditPage\\rla.png";
-		String target= System.getProperty("user.dir")+"\\AutoIT\\dealAccordionDrop.png";
+		String target= System.getProperty("user.dir")+"\\AutoIT\\AddComponentHere.png";
 		
 		if (ip.clickOnTab(projectName, TabName.Object5Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M4MarketingEvent1Name, 10)) {
@@ -1647,7 +1638,7 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object5Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName,M4MarketingEvent1Name , 10)) {
-				ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
+				ele=cp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 				click(driver, ele, "overview tab", action.BOOLEAN);
 				ele=dp.returnAccordionLink(projectName, user);
 				if (click(driver, ele, "accordion header", action.BOOLEAN)) {
@@ -1750,8 +1741,8 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object5Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName,M4MarketingEvent1Name , 10)) {
-				ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
-				String xpath = "//article[@class='cRelatedListAccordion']//a[text()='"+user+"']";
+				ele=cp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				String xpath = "//article[contains(@class,'RelatedListAccordion')]//a[text()='"+user+"']";
 				List<WebElement> li=FindElements(driver, xpath, "list of deal team records");
 				if (li.size()==8) {
 					log(LogStatus.INFO, "successfully verified 8 records found", YesNo.No);
@@ -1916,10 +1907,10 @@ public class Module4 extends BaseLib{
 						log(LogStatus.INFO, "successfully reached edit page", YesNo.No);
 						ThreadSleep(4000);
 						switchToFrame(driver, 30, ep.getEditPageFrame(projectName,30));
-						ele=ep.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
+						ele=ep.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 						scrollDownThroughWebelement(driver, ele, "overview");
 						switchToDefaultContent(driver);
-						target=System.getProperty("user.dir")+"\\AutoIT\\entityPageAccDrop.png";
+						target=System.getProperty("user.dir")+"\\AutoIT\\viewdetails.png";
 						if (ep.dragAndDropAccordian(projectName, PageName.Object1Page, "RelatedListAccordion", fieldValues, source, target)) {
 							log(LogStatus.INFO, "successfully added "+tab[i]+" accordion on entity page", YesNo.No);
 
@@ -1971,6 +1962,7 @@ public class Module4 extends BaseLib{
 			}
 			if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 				if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
+					//this method returns an element which has "data-key"
 					ele=ip.getCustomNumberOfImg(tab[i], record[i], 10);
 					String customNo=null;
 					if (ele!=null) {
@@ -2240,7 +2232,7 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName,contact , 10)) {
-				ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
+				ele=cp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 				click(driver, ele, "overview tab", action.BOOLEAN);
 				id=cp.updatePhotoInDetailPage(projectName, attachmentPath1);
 				if (id!=null) {
@@ -2299,7 +2291,7 @@ public class Module4 extends BaseLib{
 		
 		if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, contact, 10)) {
-				ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
+				ele=cp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 				click(driver, ele, "overview tab", action.BOOLEAN);
 				id=cp.updatePhotoInDetailPage(projectName,attachmentPath2);
 				if (id!=null) {
@@ -2378,7 +2370,7 @@ public class Module4 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName,contact , 10)) {
-				ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
+				ele=cp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 				click(driver, ele, "overview tab", action.BOOLEAN);
 				if (cp.deleteImage(projectName, contact)) {
 					log(LogStatus.INFO, "successfully deleted photo", YesNo.No);
@@ -2491,7 +2483,7 @@ public class Module4 extends BaseLib{
 		String attachmentPath= System.getProperty("user.dir")+"\\UploadImages\\JPEGImage.jpg";
 		String fileName=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name,currentlyExecutingTC, excelLabel.File);
 		String imgUrl="";
-		if (click(driver, ele, "upload button", action.BOOLEAN)) {
+		if (click(driver, ele, "upload button", action.BOOLEAN)) {ThreadSleep(5000);
 			if (uploadFileAutoIT(attachmentPath)) {
 				log(LogStatus.INFO, "successfully uploaded file "+attachmentPath, YesNo.No);
 				ThreadSleep(5000);
@@ -2553,7 +2545,7 @@ public class Module4 extends BaseLib{
 					sa.assertTrue(false, "edit button is not clickable");
 				}
 				
-				ele=ip.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
+				ele=ip.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 				if (click(driver, ele, "overview tab", action.SCROLLANDBOOLEAN)) {
 					ele=cp.getimgLink(projectName, 10);
 					if (ele.getAttribute("src").contains(BasePageErrorMessage.defaultPhotoText)) {
@@ -2998,7 +2990,7 @@ public class Module4 extends BaseLib{
 		if (flag) {
 			if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
 				if (ip.clickOnAlreadyCreatedItem(projectName,M4Deal1 , 10)) {
-					ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
+					ele=cp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 					click(driver, ele, "overview tab", action.BOOLEAN);
 					if (ip.verifyAccordianRecordImage(projectName, user, id)) {
 						log(LogStatus.INFO, "successfully verified update photo in accordion", YesNo.No);
@@ -3065,7 +3057,7 @@ public class Module4 extends BaseLib{
 		if (flag) {
 			if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
 				if (ip.clickOnAlreadyCreatedItem(projectName,M4Deal1 , 10)) {
-					ele=cp.getRelatedTab(projectName, RelatedTab.Overview.toString(), 10);
+					ele=cp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 					click(driver, ele, "overview tab", action.BOOLEAN);
 					ele=ip.returnAccordionViewDetailsLink(projectName, dealteamHeader);
 					if (click(driver, ele, "view details link", action.BOOLEAN)) {

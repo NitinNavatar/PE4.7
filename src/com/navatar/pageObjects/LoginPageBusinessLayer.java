@@ -247,7 +247,7 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
                 if(clickUsingJavaScript(driver, getAppNameLabelTextInAppLuncher(appName, 30), "app name label text in app luncher")) {
                     appLog.info("clicked on app Name "+appName);
                     ThreadSleep(5000);
-                    if(getAppNameXpathInLightning(appName, 60)!=null) {
+                    if(getAppNameXpathInLightning(appName, 10)!=null) {
                         appLog.info(appName+" App is open successfully in lightning ");
                         flag =  true;
                     }else {

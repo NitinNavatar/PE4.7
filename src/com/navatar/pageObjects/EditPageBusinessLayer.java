@@ -336,7 +336,6 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 						ThreadSleep(2000);
 						if(clickUsingJavaScript(driver, getBackButton(10), "back button", action.BOOLEAN)) {
 							log(LogStatus.PASS, "clicked on back button", YesNo.No);
-							flag=true;
 						}else {
 							log(LogStatus.ERROR, "Not able to click on back button so cannot back on page ", YesNo.Yes);
 						}
@@ -378,7 +377,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 	 * @return Contact SDG Query
 	 */
 	public String ContactSDGQuery(String fieldName) {
-		return "SELECT Id, Name, Title,"+fieldName+" Industry__c, Region__c,Profile_Image__c FROM Contact WHERE (AccountId = '<<recordId>>') ORDER BY Name ASC";
+		return "SELECT Id, Name, Title,"+fieldName+" navpeII__Sector__c, navpeII__Region__c,navpeII__Profile_Image__c FROM Contact WHERE (AccountId = '<<recordId>>') ORDER BY Name ASC";
 }
 	/**
 	 * @author Akul Bhutani
@@ -386,7 +385,8 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 	 * @return Deal Team SDG Query
 	 */
 	public String DealTeamSDGQuery(String fieldName) {
-		return "SELECT Member__c, Member__r.Name,Member__r.Title,"+fieldName+"Team_Member_Role__c,Type__c,Member__r.MediumPhotoURL FROM Deal_Team__c WHERE ( Pipeline__c = '<<recordId>>' AND (member__c <> null)) ORDER BY Id ASC";
+		return "SELECT navpeII__Team_Member__c,navpeII__Team_Member__r.Name,navpeII__Team_Member__r.Title,navpeII__Deal_Contact_Type__c,"+fieldName+"navpeII__Team_Member_Role__c,navpeII__Team_Member__r.MediumPhotoUrl FROM navpeII__Deal_Team__c WHERE(navpeII__Deal__c = '<<recordId>>' AND (navpeII__Team_Member__c <> null)) ORDER BY Id ASC";
+		//return "SELECT navpeII__Team_Member__c, navpeII__Team_Member__r.Name,navpeII__Team_Member__r.Title,"+fieldName+"navpeII__Team_Member_Role__c,navpeII__Deal_Contact_Type__c,navpeII__Team_Member__r.MediumPhotoUrl FROM navpeII__Deal_Team__c WHERE ( Name = '<<recordId>>' AND (navpeII__Team_Member__c <> null)) ORDER BY Id ASC";
 }
 
 	/**
