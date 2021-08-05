@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
 
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EnumConstants.ContactPagePhotoActions;
@@ -350,6 +351,46 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return isDisplayed(driver, ele, "Visibility", 10, "Activate "+stage);
 		
 	}
+	public String convertToPortfolioBeforeNext(String company) {
+		return "Please click 'Next' to convert "+company+" to a Portfolio Company";
+	}
 	
+	public String convertToPortfolioRepeat(String company) {
+		return company+" is already a Portfolio.";
+	}
+	public String convertToPortfolioAfterNext(String company) {
+		return "Congratulations!" + 
+				""+company+" has been coverted to Portfolio Company successfully.";
+	}
+	
+	
+	
+	public WebElement getconvertToPortfolioMessage(String company,int timeOut) {
+		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//span[text()='"+convertToPortfolioBeforeNext(company)+"']";
+		WebElement ele = FindElement(driver, xpath,"convert to portfolio", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
+		
+	}
+	
+	public WebElement getconvertToPortfolioMessageAfterNext(int timeOut) {
+		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//span[contains(text(),'successfully')]/..";
+		WebElement ele = FindElement(driver, xpath,"convert to portfolio", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
+		
+	}
+	
+	public WebElement getconvertToPortfolioMessageRepeat(int timeOut) {
+		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//span[contains(text(),'already')]/..";
+		WebElement ele = FindElement(driver, xpath,"convert to portfolio", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
+		
+	}
+	
+	public WebElement crossIconForCompanyName(String company,int timeOut) {
+		String xpath="//label[text()='Company Name']/..//input[@placeholder='"+company+"']//following-sibling::*//button";
+		WebElement ele = FindElement(driver, xpath,"cross icon for company", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "cross icon for company");
+
+	}
 }
 

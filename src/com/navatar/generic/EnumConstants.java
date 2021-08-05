@@ -491,6 +491,9 @@ public static enum PermissionType{
 	public static enum SDGLabels{
 		APIName,Override_Label,FieldOrder,Parent_Field_Name,URL,Actions;
 	}
+	public static enum InstRecordType{
+		Portfolio_Company,Company,Parent_Field_Name,URL,Actions;
+	}
 	
 	public static enum AttendeeLabels {
 		Attendee_Staff,Marketing_Event,Status,Notes,Attendee
@@ -886,7 +889,7 @@ public static enum PermissionType{
 				public String toString() {
 					return "New Task with Multiple Associations";
 				}
-			}, Contact_Transfer,Change_Date,Change_Priority,Change_Status,Edit_Comments,New_Attendee,New
+			}, Contact_Transfer,Change_Date,Change_Record_Type,Change_Priority,Change_Status,Edit_Comments,New_Attendee,New
 			};
 		
 	public static enum IndiviualInvestorSectionsName{
