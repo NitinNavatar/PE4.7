@@ -296,6 +296,11 @@ public class EnumConstants {
 			public String toString() {
 				return "Communication Templates";
 		}
+	},Test_Custom_Object{
+		@Override
+		public String toString() {
+			return "Test Custom Object";
+		}
 	}
 	};
 
