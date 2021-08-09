@@ -22,7 +22,7 @@ public interface EditPageErrorMessage {
 	public String query2="SELECT Id, Name, Profile_Image__c FROM navpeII__Pipeline__c  ORDER BY Name ASC";
 	public String image1="navpeII__Profile_Image__c";
 	public String image3="navpeII__Team_Member__r.MediumPhotoUrl";
-	public String AttendeeImage="Attendee_Staff__r.MediumPhotoURL";
+	public String AttendeeImage="navpeII__Attendee_Staff__r.MediumPhotoURL";
 	
 	public String image2="Profile_Image__c";
 	//Navatar SDG Toggles

@@ -79,18 +79,25 @@ public class DealPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, convertToPortfolio, "Visibility", timeOut, "convertToPortfolio");
 		
 	}
-	@FindBy(xpath = "//h2[text()='Convert to Portfolio']/../following-sibling::*//article//span[text()='"+DealPageErrorMessage.convertToPortfolio+"']")
-	private WebElement convertToPortfolioMessage;
 	
-	public WebElement getconvertToPortfolioMessage(int timeOut) {
-		return isDisplayed(driver, convertToPortfolioMessage, "Visibility", timeOut, "convertToPortfolio");
-		
-	}
 	@FindBy(xpath = "//button[text()='Next']")
 	private WebElement nextButton;
 	
 	public WebElement getnextButton(int timeOut) {
 		return isDisplayed(driver, nextButton, "Visibility", timeOut, "nextButton");
+		
+	}
+	@FindBy(xpath = "//button[@title='Finish']")
+	private WebElement finishButton;
+	
+	public WebElement getfinishButton(int timeOut) {
+		return isDisplayed(driver, finishButton, "Visibility", timeOut, "finish Button");
+		
+	}@FindBy(xpath = "//h2[text()='Convert to Portfolio']/ancestor::div//button[@title='Close this window']")
+	private WebElement convertToPortfolioCrossButton;
+	
+	public WebElement getconvertToPortfolioCrossButton(int timeOut) {
+		return isDisplayed(driver, convertToPortfolioCrossButton, "Visibility", timeOut, "cross Button");
 		
 	}
 	

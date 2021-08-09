@@ -25,11 +25,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 import static com.navatar.generic.AppListeners.*;
 public class SetupPageBusinessLayer extends SetupPage {
-
+	Scanner scn = new Scanner(System.in);
 	public SetupPageBusinessLayer(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
@@ -1334,7 +1335,9 @@ public void addRemoveAppSetingData(String projectName,String addRemoveTabName, c
  * @return true if Record Type Setting changed
  */
 public boolean changeRecordTypeSetting(WebDriver driver,String userName,String recordType,int timeOut) {
+	
 	switchToDefaultContent(driver);
+	ThreadSleep(10000);
 	switchToFrame(driver, 20, getSetUpPageIframe(60));
 	boolean flag=false;;
 	String xpath="";
@@ -1344,24 +1347,25 @@ public boolean changeRecordTypeSetting(WebDriver driver,String userName,String r
 	if (click(driver, ele, userName.toString(), action.BOOLEAN)) {
 		log(LogStatus.INFO, "able to click on "+userName, YesNo.No);
 		switchToDefaultContent(driver);
-		ThreadSleep(5000);
-		switchToFrame(driver, 60, getSetUpPageIframe(20));
+		ThreadSleep(10000);
+		switchToFrame(driver, 60, getSetUpPageIframe(60));
 		xpath="//*[text()='Accounts']/following-sibling::*//*[text()='Edit']";
 		ele=FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, timeOut);
 		if (click(driver, ele, "Edit Button", action.BOOLEAN)) {
 			log(LogStatus.INFO, "able to click on edit button for record type settiing", YesNo.No);
 			switchToDefaultContent(driver);
-			ThreadSleep(5000);
-			switchToFrame(driver, 20, getSetUpPageIframe(20));
+			ThreadSleep(10000);
+			switchToFrame(driver, 20, getSetUpPageIframe(60));
 			xpath="//select[@id='p5']";
 			ele=FindElement(driver, xpath, "Record dropdown", action.SCROLLANDBOOLEAN, timeOut);
 			scrollDownThroughWebelement(driver, ele, "Record dropdown");
 			if (selectVisibleTextFromDropDown(driver, ele, recordType, recordType)) {
 				log(LogStatus.INFO, "selected default record Type : "+recordType, YesNo.No);
-
+				ThreadSleep(2000);
 				if (click(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
 						action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
+					ThreadSleep(2000);
 					flag=true;
 				} else {
 					log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);

@@ -2589,7 +2589,7 @@ public class Module4 extends BaseLib{
 		String contact=M4Contact2FName+" "+M4Contact2LName;
 		String parentID=null;
 		boolean flag=true;
-		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1,10)) {
@@ -2811,7 +2811,7 @@ public class Module4 extends BaseLib{
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		int i = 0;
-		String field="Member__r.Name";
+		String field=M4DTField2;
 		if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M4Deal1, 10)) {
 				ele=ip.returnAccordionViewDetailsLink(projectName, dealteamHeader);
@@ -2971,6 +2971,7 @@ public class Module4 extends BaseLib{
 		if (click(driver, ele, "profile link", action.BOOLEAN)) {
 			ele=lp.getProfilePageLink(projectName, AdminUserFirstName+" "+AdminUserLastName, 10);
 			if (click(driver, ele, "profile link", action.BOOLEAN)) {
+				ThreadSleep(3000);
 				id=dp.updatePhotoInUserPage(projectName, attachmentPath);
 				if (id!=null) {
 					log(LogStatus.INFO, "successfully updated photo", YesNo.No);

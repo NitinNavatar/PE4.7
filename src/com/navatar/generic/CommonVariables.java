@@ -13,6 +13,7 @@ import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.scripts.Module5;
 import com.navatar.scripts.Module8;
+import com.navatar.scripts.Module6;
 import com.navatar.scripts.Module1;
 import com.navatar.scripts.Module2;
 import com.navatar.scripts.Module3;
@@ -102,7 +103,7 @@ public class CommonVariables {
 	public static String M4SDGAction1Name,M4SDGAction1Order,M4SDGAction1Type,M4SDGAction1Event,M4SDGAction1EventPayload;
 	public static String M4SDGAction2Name,M4SDGAction2Order,M4SDGAction2Type,M4SDGAction2Event,M4SDGAction2EventPayload;
 	
-	public static String M4Attendee10Status;
+	public static String M4Attendee10Status,M4DTField2;
 	public static String FS_MarketingEvent1Name,FS_MarketingEvent1Date,FS_MarketingEvent1RecordType,FS_MarketingEvent1Organizer;
 	
 
@@ -262,6 +263,8 @@ public class CommonVariables {
 	public static String M3Meeting1Subject,M3Meeting1dueDate,M3Meeting1Status,M3Meeting1Priority,M3Meeting1MeetingType;
 	
 	public static String M3Deal1,M3Deal1CompanyName,M3Deal1RecordType,M3Deal1Stage;
+	public static String M6Ins1,M6Ins2,M6Ins3,M6Ins1RecordType,M6Deal2;
+	
 	public static String M3Ins1,M3Ins1RecordType;
 	public static String M3Ins2,M3Ins2RecordType;
 	public static String M3Ins3,M3Ins3RecordType;
@@ -816,6 +819,7 @@ public class CommonVariables {
 			M4Sdg3ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG3", excelLabel.Parent_Field_Name);
 			M4Ins1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M4INS1", excelLabel.Institutions_Name);
 			M4Deal1=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M4Deal1", excelLabel.Deal_Name);
+			M4DTField2=ExcelUtils.readData(phase1DataSheetFilePath,"Fields",excelLabel.Variable_Name, "DTField2", excelLabel.APIName);
 			
 			
 			M4MarketingEvent1Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME1", excelLabel.Marketing_Event_Name);
@@ -1007,7 +1011,7 @@ public class CommonVariables {
 			
 			
 			
-		}if(obj instanceof Module8){
+		}else if(obj instanceof Module8){
 			
 			M8DealName1=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal1", excelLabel.Deal_Name);
 			M8DealName2=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal2", excelLabel.Deal_Name);
@@ -1019,6 +1023,13 @@ public class CommonVariables {
 			M8CON2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON2", excelLabel.Contact_FirstName);
 			M8CON2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON2", excelLabel.Contact_LastName);
 			M8CON2EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON2", excelLabel.Contact_EmailId);
+		
+		}else if(obj instanceof Module6){
+			M6Ins1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS1", excelLabel.Institutions_Name);
+			M6Ins2=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS2", excelLabel.Institutions_Name);
+			M6Ins3=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS3", excelLabel.Institutions_Name);
+			M6Deal2=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal2", excelLabel.Deal_Name);
+			
 		}
 		
 		 System.err.println("");

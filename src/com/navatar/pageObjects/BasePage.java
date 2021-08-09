@@ -5107,6 +5107,24 @@ public abstract class BasePage extends BaseLib {
 		String xpath="//*[text()='"+labelName+"']/../following-sibling::*//select[@class='slds-select']";
 		WebElement ele = FindElement(driver, xpath, "SDG grid drop down list "+sdgGridName, action.SCROLLANDBOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "SDG grid drop down list "+sdgGridName);
+	
+	}
+	
+	
+	@FindBy (xpath = "//*[@class='outPopupBox']//h2")
+	private WebElement popUpHeader;
+	
+	/**
+	 * @return the navigationPopUpHeader
+	 */
+	public WebElement getPopUpHeader(String projectName,int timeOut) {
+		WebElement ele=isDisplayed(driver, popUpHeader, "Visibility", timeOut, "PopUp Header");
+		
+		if(ele==null) {
+			 return isDisplayed(driver, popUpHeader, "Visibility", timeOut, "PopUp Header");
+			
+		}
+		else return ele;
 	}
 	
 	
