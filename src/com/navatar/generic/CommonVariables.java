@@ -12,6 +12,7 @@ import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.scripts.Module5;
+import com.navatar.scripts.Module8;
 import com.navatar.scripts.Module1;
 import com.navatar.scripts.Module2;
 import com.navatar.scripts.Module3;
@@ -271,6 +272,13 @@ public class CommonVariables {
 	public static String M3Ins8,M3Ins8RecordType,M3Ins8Parent;
 	public static String M3Contact2FName,M3Contact2LName,M3Contact2EmailID,M3Contact2RecordType,M3Contact2Title;
 	
+	
+	// Module 8 variable :
+	
+	public static String M8DealName1,M8DealName2;
+	public static String M8FRName1,M8FRName2;
+	public static String M8CON1FName,M8CON1LName,M8CON1EmailID;
+	public static String M8CON2FName,M8CON2LName,M8CON2EmailID;
 	
 	public CommonVariables(Object obj) {
 		//TODO Auto-generated constructor stub
@@ -999,6 +1007,18 @@ public class CommonVariables {
 			
 			
 			
+		}if(obj instanceof Module8){
+			
+			M8DealName1=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal1", excelLabel.Deal_Name);
+			M8DealName2=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal2", excelLabel.Deal_Name);
+			M8FRName1=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M8FR1", excelLabel.FundRaising_Name);
+			M8FRName2=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M8FR2", excelLabel.FundRaising_Name);
+			M8CON1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON1", excelLabel.Contact_FirstName);
+			M8CON1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON1", excelLabel.Contact_LastName);
+			M8CON1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON1", excelLabel.Contact_EmailId);
+			M8CON2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON2", excelLabel.Contact_FirstName);
+			M8CON2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON2", excelLabel.Contact_LastName);
+			M8CON2EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON2", excelLabel.Contact_EmailId);
 		}
 		
 		 System.err.println("");
