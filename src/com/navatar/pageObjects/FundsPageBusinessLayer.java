@@ -166,7 +166,8 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			if (labelName.equalsIgnoreCase(excelLabel.Deal_Quality_Score.toString()))
 				xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
 				+ "']/../following-sibling::div//lightning-formatted-number";
-	
+			else if(labelName.equalsIgnoreCase(excelLabel.Company_Name.toString()))
+			xpath="//span[@class='test-id__field-label'][text()='"+finalLabelName+"']/../following-sibling::div//a";
 		ele = isDisplayed(driver,
 				FindElement(driver, xpath, labelName + " label text in " + projectName, action.SCROLLANDBOOLEAN, 60),
 				"Visibility", 30, labelName + " label text in " + projectName);
@@ -767,5 +768,10 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		return flag;
 	}
 	
+	public WebElement sourceFirmLink(int timeOut) {
+		String xpath="//span[@class='test-id__field-label'][text()='Source Firm']/../following-sibling::div//a";
+		WebElement ele=FindElement(driver, xpath, "source firm", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "visibility", 10, "source firm link");
+	}
 	
 }

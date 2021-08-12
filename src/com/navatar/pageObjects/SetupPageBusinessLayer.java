@@ -1954,6 +1954,89 @@ public boolean permissionChangeForUserONObject(WebDriver driver,String userName,
 	return flag;
 }
 
+
+public boolean permissionChangeForUserONObject(WebDriver driver,PermissionType pt,String userName,String[][] LabelswithCheck,int timeOut) {
+
+	ThreadSleep(10000);
+	switchToDefaultContent(driver);
+	switchToFrame(driver, 60, getSetUpPageIframe(60));
+	boolean flag=false;;
+	String xpath="";
+	xpath="//th//a[text()='"+userName+"']";
+	WebElement ele=FindElement(driver, xpath,userName, action.SCROLLANDBOOLEAN, timeOut);
+	ele=isDisplayed(driver, ele, "visibility", timeOut, userName);
+	if (click(driver, ele, userName.toString(), action.BOOLEAN)) {
+		log(LogStatus.INFO, "able to click on "+userName, YesNo.No);
+		ThreadSleep(10000);
+		switchToDefaultContent(driver);
+		ThreadSleep(5000);
+		switchToFrame(driver, 60, getSetUpPageIframe(60));
+		xpath="//*[@id='topButtonRow']//input[@name='edit']";
+		ele=FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, timeOut);
+		ThreadSleep(5000);
+		if (click(driver, ele, "Edit Button", action.BOOLEAN)) {
+			log(LogStatus.INFO, "able to click on edit button", YesNo.No);
+			ThreadSleep(10000);
+			switchToDefaultContent(driver);
+			ThreadSleep(5000);
+			switchToFrame(driver, 60, getSetUpPageIframe(60));
+			String OnObject="";
+			String permission = "";
+			for (String[] strings : LabelswithCheck) {
+				OnObject=strings[0];
+				permission=strings[1];
+				xpath="//*[text()='"+OnObject+"']/following-sibling::*//td/input[contains(@title,'"+permission+"')]";
+				ele = FindElement(driver, xpath, OnObject+" with permission "+permission, action.SCROLLANDBOOLEAN, timeOut);
+				if(pt==PermissionType.givePermission) {
+					if (!isSelected(driver, ele, OnObject+" with permission "+permission)) {
+						if (click(driver, ele, OnObject+" with permission "+permission,action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on checkbox "+permission+" for "+OnObject, YesNo.No);
+
+						} else {
+							log(LogStatus.ERROR, "Not Able clicked on checkbox "+permission+" for "+OnObject, YesNo.Yes);
+							sa.assertTrue(false, permission+ " permission not change for "+userName+" on object "+OnObject);
+							log(LogStatus.FAIL,permission+ " permission not change for "+userName+" on object "+OnObject,YesNo.Yes);
+
+						}
+					}
+					else {
+						log(LogStatus.INFO, "already permission present "+OnObject, YesNo.Yes);
+						
+					}
+				}
+				else {
+					if (isSelected(driver, ele, OnObject+" with permission "+permission)) {
+						if (click(driver, ele, OnObject+" with permission "+permission,action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on checkbox "+permission+" for "+OnObject, YesNo.No);
+
+						} else {
+							log(LogStatus.ERROR, "Not Able clicked on checkbox "+permission+" for "+OnObject, YesNo.Yes);
+							sa.assertTrue(false, permission+ " permission not change for "+userName+" on object "+OnObject);
+							log(LogStatus.FAIL,permission+ " permission not change for "+userName+" on object "+OnObject,YesNo.Yes);
+
+						}
+					}
+				}
+			}
+
+			if (click(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
+					action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
+				ThreadSleep(10000);
+				flag=true;
+				ThreadSleep(5000);
+			} else {
+				log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
+			}
+		} else {
+			log(LogStatus.ERROR, "not able to click on edit button", YesNo.Yes);
+		}
+
+	} else {
+		log(LogStatus.ERROR, "Not able to click on "+userName, YesNo.Yes);
+	}
+	return flag;
+}
 /**
  * @author Azhar Alam
  * @param driver
