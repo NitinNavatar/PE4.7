@@ -1430,4 +1430,56 @@ public static enum PermissionType{
 	}
     
     
+    public static enum SDGGridName{
+    	Deals,Fundraising,My_Call_List {
+			@Override
+			public String toString() {
+				return "My Call List";
+			}
+    	}
+    }
+    
+    
+    public static enum CollapseExpandIcon{
+    	Collpase,Expand;
+    	}
+    
+    public static enum SDGGridSideIcons{
+    	Manage_fields{
+			@Override
+			public String toString() {
+				return "Manage fields.";
+			}
+    	},Open_SDG_Record{
+			@Override
+			public String toString() {
+				return "Open SDG record.";
+			}
+    	},Toggle_Filters{
+			@Override
+			public String toString() {
+				return "Toggle Filters.";
+			}
+    	},Reload{
+			@Override
+			public String toString() {
+				return "Reload.";
+			}
+    	}
+    	
+    	
+    }
+    
+    public static enum ActionType{
+    	Page,PageSize
+    }
+    
+    public static enum Operator{
+    	Equals,StartWith{
+			@Override
+			public String toString() {
+				return "Starts with";
+			}
+    	}  
+    }
 }

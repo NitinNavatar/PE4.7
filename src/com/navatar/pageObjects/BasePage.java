@@ -5114,6 +5114,14 @@ public abstract class BasePage extends BaseLib {
 
 	}
 	
+	public WebElement getSDGGridDropDown(SDGGridName sdgGridName , String labelName, int timeOut) {
+		String xpath="//*[text()='"+labelName+"']/../following-sibling::*//select[@class='slds-select']";
+		WebElement ele = FindElement(driver, xpath, "SDG grid drop down list "+sdgGridName, action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "SDG grid drop down list "+sdgGridName);
+	
+	}
+	
+	
 	@FindBy (xpath = "//*[@class='outPopupBox']//h2")
 	private WebElement popUpHeader;
 	
