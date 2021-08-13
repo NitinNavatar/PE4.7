@@ -162,7 +162,7 @@ public class EnumConstants {
 			public String toString() {
 				return "Indication of Interest";
 		}
-		},LOI,Due_Diligence,Parked,Closed,NonDisclosureAgreement{
+		},LOI,Due_Diligence,Parked,Closed,Closed_Updated,NonDisclosureAgreement{
 			@Override
 			public String toString() {
 				return "Non-Disclosure Agreement";
