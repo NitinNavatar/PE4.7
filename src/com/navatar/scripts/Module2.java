@@ -4477,7 +4477,7 @@ public class Module2 extends BaseLib{
 		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
 			if (dp.clickOnAlreadyCreatedItem(projectName, Smoke_HSRPipeline5Name, 10)) {
 				if (click(driver, dp.getconvertToPortfolio(10), "convert to portfolio button", action.BOOLEAN)) {
-					if (dp.getconvertToPortfolioMessage(10)!=null) {
+					if (dp.getconvertToPortfolioMessage(Smoke_HSRINS3Name,10)!=null) {
 						log(LogStatus.INFO, "successfully verified convert to portfolio text message", YesNo.No);
 					}else {
 						sa.assertTrue(false,"could not verify convert to portfolio text message");
@@ -4485,7 +4485,13 @@ public class Module2 extends BaseLib{
 					}
 					if (click(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
 						log(LogStatus.INFO, "successfully clicked next button", YesNo.No);
-						ExcelUtils.writeData(phase1DataSheetFilePath, Stage.Closed.toString(), "Deal", excelLabel.Variable_Name, "HSRPIP5",excelLabel.Updated_Stage);
+						if (click(driver, dp.getfinishButton(10), "finish", action.BOOLEAN)) {
+							log(LogStatus.INFO, "successfully verified finish button after convert to portfolio", YesNo.No);
+							ExcelUtils.writeData(phase1DataSheetFilePath, Stage.Closed.toString(), "Deal", excelLabel.Variable_Name, "HSRPIP5",excelLabel.Updated_Stage);
+						}else {
+							sa.assertTrue(false,"could not verify convert to portfolio as finish button not clicked");
+							log(LogStatus.SKIP,"could not verify convert to portfolio as finish button not clicked",YesNo.Yes);
+						}
 
 					}else {
 						sa.assertTrue(false,"not able to click on next button");

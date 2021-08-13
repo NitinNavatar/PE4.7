@@ -1355,10 +1355,15 @@ public abstract class BasePage extends BaseLib {
 		  ele=isDisplayed(driver, dashboardFrame, "Visibility", timeOut, "Sharing Settings Page frame");
 	  }else if (pageName.toString().equalsIgnoreCase(PageName.AccountReferral.toString())){
 		  ele=isDisplayed(driver,accountReferralFrame , "Visibility", timeOut, "Sharing Settings Page frame");
+
 	  }else if (pageName.toString().equalsIgnoreCase(PageName.CustomNavigationPage.toString())){
 		  ele=isDisplayed(driver,customNavigationFrame , "Visibility", timeOut, "Custom Navigation Frame");
 	  }else if (pageName.toString().equalsIgnoreCase(PageName.NavigationPickListPage.toString())){
 		  ele=isDisplayed(driver,customNavigationFrame , "Visibility", timeOut, "Navigation PickList Page");
+
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.RecordTypePortfolioCompany.toString())){
+		  ele=isDisplayed(driver,RTPortfolioCFrame , "Visibility", timeOut, "RecordTypePortfolioCompany");
+
 	  }
 	  return ele; 
 	 }
@@ -1387,6 +1392,12 @@ public abstract class BasePage extends BaseLib {
 		}
 		
 	}
+	
+	 @FindBy(xpath="//label[text()='Active']/../following-sibling::td//input")
+	 private WebElement activeCheckbox;
+	 public WebElement getactiveCheckbox(int timeOut) {
+			return isDisplayed(driver, activeCheckbox, "Visibility", timeOut, "active Checkbox");
+		}
 	/**
 	 * @param editButton the editButton to set
 	 */
@@ -4991,6 +5002,9 @@ public abstract class BasePage extends BaseLib {
 	
 	@FindBy(xpath = "//iframe[@title='dashboard']")
 	private WebElement dashboardFrame;
+	@FindBy(xpath = "//iframe[contains(@title,'Record Type: Portfolio')]")
+	private WebElement RTPortfolioCFrame;
+	
 	
 	@FindBy(xpath = "//button[@title='Clear Selection']")
 	private WebElement crossInSDGEdit;
@@ -5120,6 +5134,14 @@ public abstract class BasePage extends BaseLib {
 		return null;
 
 	}
+	
+	public WebElement getSDGGridDropDown(SDGGridName sdgGridName , String labelName, int timeOut) {
+		String xpath="//*[text()='"+labelName+"']/../following-sibling::*//select[@class='slds-select']";
+		WebElement ele = FindElement(driver, xpath, "SDG grid drop down list "+sdgGridName, action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "SDG grid drop down list "+sdgGridName);
+	
+	}
+	
 	
 	@FindBy (xpath = "//*[@class='outPopupBox']//h2")
 	private WebElement popUpHeader;

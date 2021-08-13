@@ -3452,6 +3452,27 @@ public boolean CheckAlreadyCreatedItem(String projectName,String alreadyCreated,
 	return flag;
 }
 
+public boolean SearchDealFilterDataOnHomePage(SDGGridName sdgGridName,String labelName,String DealName, Operator operator) {
+	if(selectVisibleTextFromDropDown(driver,getSDGGridDropDown(sdgGridName, labelName, 10), "deal drop down",operator)) {
+		log(LogStatus.PASS, "Select Equals From Deal Drop Down in filter",YesNo.No);
+		ThreadSleep(1000);
+		WebElement ele = FindElement(driver, "//*[text()='"+labelName+"']/../../../following-sibling::div//input", "text box ", action.SCROLLANDBOOLEAN, 10);
+		if(ele!=null) {
+			if(sendKeys(driver, ele, DealName+"\n", labelName+" name text box ", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.PASS, "enter "+labelName+" name :"+DealName, YesNo.No);
+				return true;
+			}else {
+				log(LogStatus.FAIL, "Not able to Enter "+labelName+" name :"+DealName, YesNo.Yes);
+			}
+		}else {
+			log(LogStatus.FAIL, labelName+" Text box is not visible so cannot enter the "+labelName+" name "+DealName, YesNo.No);
+		}
+		
+	}else {
+		log(LogStatus.FAIL, "Not able to Select Equals From Deal Drop Down in filter",YesNo.No);
+	}
+	return false;
+}
 
 
 }

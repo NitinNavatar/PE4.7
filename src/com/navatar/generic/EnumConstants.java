@@ -133,7 +133,7 @@ public class EnumConstants {
 		FundsPage,InstitutionsPage,CommitmentsPage,HomePage,NavatarInvestorManager,ManageFolderPopUp,ManageApprovalsPopUp,ProjectDetailsPoPUp,NavatarInvestorAddOnsPage,NewProjectPopUp,PipelineCustomPage
 		,CompanyPage,CreateFundraisingPage,CreateCommitmentFundType,CreateCommitmentCoInvestmentType,FundraisingPage,PartnershipsPage, DealPage,TaskRayPage, LimitedPartnerPage, BuildStep2Of3,PipelinesPage,NewTaskPage,
 	CRMUserPage,   TaskPage, NewTaskPopUP,TestCustomObjectPage, NewEventPopUp,ActivitiesOrMeetings,SearchActivitiesAttachment,EmailUploadPage,Object1Page,Object1PagePopup,Object2Page,Object3Page,Object4Page,ListEmail,
-	CompactLayout, MeetingType, AddPickListMeetingType,ActivityLayoutPage, SDGPage,Object5Page,AccountCustomFieldStatusPage,MEPageFromCalender,SharingSettingsPage,DashboardDeadDeals,AccountReferral,VisualForcePage, WarningPopUp,CustomNavigationPage,NavigationPickListPage,CallPopUp,MeetingPopUp,TaskPopUp;
+CompactLayout, MeetingType, AddPickListMeetingType,ActivityLayoutPage, SDGPage,Object5Page,AccountCustomFieldStatusPage,MEPageFromCalender,SharingSettingsPage,DashboardDeadDeals,AccountReferral,VisualForcePage, WarningPopUp, RecordTypePortfolioCompany,CustomNavigationPage,NavigationPickListPage,CallPopUp,MeetingPopUp,TaskPopUp;
 
 
 
@@ -495,6 +495,9 @@ public static enum PermissionType{
 	}
 	public static enum SDGLabels{
 		APIName,Override_Label,FieldOrder,Parent_Field_Name,URL,Actions;
+	}
+	public static enum InstRecordType{
+		Portfolio_Company,Portfolio,Company,Parent_Field_Name,URL,Actions;
 	}
 	
 	public static enum AttendeeLabels {
@@ -891,7 +894,7 @@ public static enum PermissionType{
 				public String toString() {
 					return "New Task with Multiple Associations";
 				}
-			}, Contact_Transfer,Change_Date,Change_Priority,Change_Status,Edit_Comments,New_Attendee,New
+			}, Contact_Transfer,Change_Date,Change_Record_Type,Change_Priority,Change_Status,Edit_Comments,New_Attendee,New
 			};
 		
 	public static enum IndiviualInvestorSectionsName{
@@ -1432,4 +1435,56 @@ public static enum PermissionType{
 	}
     
     
+    public static enum SDGGridName{
+    	Deals,Fundraising,My_Call_List {
+			@Override
+			public String toString() {
+				return "My Call List";
+			}
+    	}
+    }
+    
+    
+    public static enum CollapseExpandIcon{
+    	Collpase,Expand;
+    	}
+    
+    public static enum SDGGridSideIcons{
+    	Manage_fields{
+			@Override
+			public String toString() {
+				return "Manage fields.";
+			}
+    	},Open_SDG_Record{
+			@Override
+			public String toString() {
+				return "Open SDG record.";
+			}
+    	},Toggle_Filters{
+			@Override
+			public String toString() {
+				return "Toggle Filters.";
+			}
+    	},Reload{
+			@Override
+			public String toString() {
+				return "Reload.";
+			}
+    	}
+    	
+    	
+    }
+    
+    public static enum ActionType{
+    	Page,PageSize
+    }
+    
+    public static enum Operator{
+    	Equals,StartWith{
+			@Override
+			public String toString() {
+				return "Starts with";
+			}
+    	}  
+    }
 }

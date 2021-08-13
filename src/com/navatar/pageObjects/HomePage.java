@@ -1078,6 +1078,7 @@ public class HomePage extends BasePageBusinessLayer {
 		return isDisplayed(driver, ele, "Visibility", timeOut, " create indiviual investor button : "+topOrBottom);
 	}
 	
+
 	public List<String> getNavigationMenuitem(){
 		
 	List<String> NavigationMenuitem=new LinkedList<String>();
@@ -1093,5 +1094,164 @@ public class HomePage extends BasePageBusinessLayer {
 		return NavigationMenuitem;
 	}
 	
+
+	
+	public WebElement sdgGridHeaderName(SDGGridName sdgGridName, int timeOut) {
+		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName+"']";
+		WebElement ele = FindElement(driver, xpath, "SDG grid header label name "+sdgGridName, action.SCROLLANDBOOLEAN, timeOut);
+		
+		return isDisplayed(driver, ele, "Visibility", timeOut, "SDG grid header label name "+sdgGridName);
+	}
+	
+	public WebElement sdgGridExpandCollpaseIcon(SDGGridName sdgGridName,CollapseExpandIcon collapseExpandIcon, int timeOut) {
+		String a="";
+		if(collapseExpandIcon.toString().equalsIgnoreCase(CollapseExpandIcon.Expand.toString())) {
+			a ="Collapse";
+		}else {
+			a="Expand";
+		}
+		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName+"']/ancestor::div[contains(@class,'sdgborder')]/*[@title='"+a+"']";
+		WebElement ele = FindElement(driver, xpath, "SDG grid "+collapseExpandIcon, action.SCROLLANDBOOLEAN, timeOut);
+		
+		return isDisplayed(driver, ele, "Visibility", timeOut, "SDG grid "+collapseExpandIcon);
+	}
+	
+	public WebElement sdgGridSideIcons(SDGGridName sdgGridName,SDGGridSideIcons sdgGridSideIcons, int timeOut) {
+		
+		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName+"']/../../../following-sibling::div//*[@title='"+sdgGridSideIcons+"']";
+		WebElement ele = FindElement(driver, xpath, "SDG grid side icon "+sdgGridSideIcons, action.SCROLLANDBOOLEAN, timeOut);
+		
+		return isDisplayed(driver, ele, "Visibility", timeOut, "SDG grid side icon "+sdgGridSideIcons);
+	}
+	
+	
+	public List<WebElement> sdgGridHeadersLabelNameList(SDGGridName sdgGridName) {
+		
+		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName+"']/../../../../../following-sibling::div//table/thead/tr/th";
+		List<WebElement> ele = FindElements(driver, xpath, "SDG grid header label name "+sdgGridName);
+		
+		return ele;
+	}
+	
+	public List<WebElement> sdgGridHeadersLabelNameListForSorting(SDGGridName sdgGridName) {
+		
+		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName+"']/../../../../../following-sibling::div//table/thead/tr/th/div";
+		List<WebElement> ele = FindElements(driver, xpath, "SDG grid header label name "+sdgGridName);
+		
+		return ele;
+	}
+	
+	public List<WebElement> sdgGridHeadersDealsGridDealColumnsDataList(int DealsCloumnIndex) {
+		//index start from 2 in Deal SDG grid.
+		
+		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='Deals']/../../../../../following-sibling::div//table/tbody/tr/td["+DealsCloumnIndex+"]";
+		List<WebElement> ele = FindElements(driver, xpath, "SDG grid Deal column data in deals grid ");
+		
+		return ele;
+	}
+	
+	
+	public List<WebElement> sdgGridHeadersDealsNameList() {
+		//index start from 2 in Deal SDG grid.
+		
+		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='Deals']/../../../../../following-sibling::div//table/tbody/tr/td[2]//a";
+		List<WebElement> ele = FindElements(driver, xpath, "SDG grid Deal column data in deals grid ");
+		
+		return ele;
+	}
+	
+	
+	
+	public List<WebElement> sdgGridHeadersFundRaisingsFundraisingColumnsDataList(int DealsCloumnIndex) {
+		
+		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='Fundraising']/../../../../../following-sibling::div//table/tbody/tr/td["+DealsCloumnIndex+"]";
+		List<WebElement> ele = FindElements(driver, xpath, "SDG grid fundraising column data in fundraising grid ");
+		
+		return ele;
+	}
+	
+public List<WebElement> sdgGridHeadersFundRaisingsFundraisingNameList() {
+		
+		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='Fundraising']/../../../../../following-sibling::div//table/tbody/tr/td[2]//a";
+		List<WebElement> ele = FindElements(driver, xpath, "SDG grid fundraising column data in fundraising grid ");
+		
+		return ele;
+	}
+	
+	
+	public List<WebElement> sdgGridHeadersMyCallListNameColumnsDataList(int DealsCloumnIndex) {
+		
+		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='My Call List']/../../../../../following-sibling::div//table/tbody/tr/td["+DealsCloumnIndex+"]";
+		List<WebElement> ele = FindElements(driver, xpath, "SDG grid Name column data in My Call List grid ");
+		
+		return ele;
+	}
+	
+	
+public List<WebElement> sdgGridHeadersMyCallListNameList() {
+		
+		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='My Call List']/../../../../../following-sibling::div//table/tbody/tr/td[2]//a";
+		List<WebElement> ele = FindElements(driver, xpath, "SDG grid Name column data in My Call List grid ");
+		
+		return ele;
+	}
+	
+public List<WebElement> sdgGridHeadersMyCallListNameCallLogList() {
+		
+		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='My Call List']/../../../../../following-sibling::div//table/tbody/tr/td[5]//button";
+		List<WebElement> ele = FindElements(driver, xpath, "SDG grid Call log column data in My Call List grid ");
+		
+		return ele;
+	}
+	
+
+public WebElement sdgGridPageAndPageSizeofDealFundraisingAndMyCallList(SDGGridName sdgGridName,ActionType actionType, int timeOut) {
+	String actions ="";
+	if(actionType.toString().equalsIgnoreCase(ActionType.Page.toString())) {
+		actions = "PagerPage";
+	}else {
+		actions = "PagerSize";
+	}
+	
+	String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName+"']/../../../../../following-sibling::div/div[2]//select[@name='"+actions+"']";
+	WebElement ele = FindElement(driver, xpath, "SDG grid page and page size "+sdgGridName, action.SCROLLANDBOOLEAN, timeOut);
+	
+	return isDisplayed(driver, ele, "Visibility", timeOut, "SDG grid side icon "+sdgGridName);
+}
+
+public WebElement sdgGridListInEditMode(SDGGridName sdgGridName, int timeOut) {
+	
+	
+	String xpath="//div[@data-label='Enhanced Lightning Grid']//*[text()='"+sdgGridName+"']/../../../../../../../../../../div[@class='toolbox']";
+	WebElement ele = FindElement(driver, xpath, "SDG grid in edit mode "+sdgGridName, action.SCROLLANDBOOLEAN, timeOut);
+	
+	return ele;
+}
+
+@FindBy(xpath = "//label[text()='Select Theme']/following-sibling::div//input")
+private WebElement selectThemeinputBoxXpath;
+
+public WebElement getSelectThemeinputBoxButton(int timeOut) {
+	return isDisplayed(driver, selectThemeinputBoxXpath, "Visibility", timeOut, "select theme clear button");
+}
+
+
+
+@FindBy(xpath = "//label[text()='Select Theme']/following-sibling::div//button[@title='Clear Selection']")
+private WebElement selectThemeinputBoxClearButtonXpath;
+
+public WebElement getSelectThemeinputBoxClearButton(int timeOut) {
+	return isDisplayed(driver, selectThemeinputBoxClearButtonXpath, "Visibility", timeOut, "select theme clear button");
+}
+
+public List<WebElement> sdgGridSelectThemeList() {
+	
+	
+	String xpath="//label[text()='Select Theme']/following-sibling::div//*[@role='listbox']//span/span";
+	List<WebElement> ele = FindElements(driver, xpath, "SDG grid select theme list ");
+	
+	return ele;
+}
+
 }
 
