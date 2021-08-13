@@ -768,4 +768,107 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	}
 	
 	
+	public boolean createDealPopUp(String projectName,String dealType, String dealName,String companyName,String stage,String[][] labelswithValues,int timeOut) {
+		WebElement ele;
+		boolean flag = false;
+		String xpath="";
+		//		status="Prospect";
+		//		stage="Prospect";
+		//		dealType="Sell-side Deal";
+		ThreadSleep(2000);
+		
+			if (!dealType.equals("") || !dealType.isEmpty()) {
+				ThreadSleep(2000);
+				ele=getRadioButtonforRecordType(dealType, timeOut);
+				if (click(driver, ele, dealType, action.SCROLLANDBOOLEAN)) {
+					appLog.info(" Selected Deal type : "+dealType);	
+					ThreadSleep(1000);
+					if (click(driver, getContinueOrNextButton(projectName,timeOut), "Continue Button", action.BOOLEAN)) {
+						appLog.info("Clicked on Continue or Nxt Button");	
+						ThreadSleep(1000);
+					}else{
+						appLog.error("Not Able to Click on Continue or Nxt Button");	
+					}
+
+				}else{
+					appLog.error("Not Able to Select Deal type : "+dealType);	
+				}
+			}
+			ele = getLabelTextBox(projectName, PageName.DealPage.toString(), PageLabel.Deal_Name.toString(), timeOut);
+			if (sendKeys(driver,ele, dealName, "Deal Name", action.BOOLEAN)) {
+				appLog.info("Successfully Entered value on Deal Name TextBox : "+dealName);		
+				ThreadSleep(1000);
+				if (sendKeys(driver, getCompanyName(projectName, 60), companyName, "Company Name",
+						action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(1000);
+						if (click(driver,FindElement(driver,"//input[contains(@placeholder,'Search')]/../following-sibling::*//*[@title='"+companyName+"']","Company Name List", action.BOOLEAN, 30),
+								companyName + "   :   Company Name", action.BOOLEAN)) {
+							appLog.info(companyName + "  is present in list.");
+						} else {
+							appLog.info(companyName + "  is not present in the list.");
+							return false;
+						}
+					
+				} else {
+					appLog.error("Not able to enter Company name");
+					return false;
+				}
+				
+				if (click(driver, getDealStage(projectName, timeOut), "Deal Status : "+stage, action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(2000);
+					appLog.error("Clicked on Deal stage");
+
+					xpath="//span[@title='"+stage+"']";
+					WebElement dealStageEle = FindElement(driver,xpath, stage,action.SCROLLANDBOOLEAN, timeOut);
+					ThreadSleep(2000);
+					if (click(driver, dealStageEle, stage, action.SCROLLANDBOOLEAN)) {
+						appLog.info("Selected Deal stage : "+stage);
+					} else {
+						appLog.error("Not able to Select on Deal stage : "+stage);
+					}
+
+				} else {
+					appLog.error("Not able to Click on Deal stage : ");
+				}
+				if(labelswithValues!=null) {
+					for (String[] strings : labelswithValues) {
+						String labelText= strings[0].replace("_", " ");
+						if(labelText.equalsIgnoreCase("Source Contact") || labelText.equalsIgnoreCase("Source Firm")) {
+							if (sendKeys(driver, getSourceFirmAndSourceContactTextBox(labelText, 10), strings[1], labelText+" text box",action.SCROLLANDBOOLEAN)) {
+								ThreadSleep(1000);
+								if (click(driver,FindElement(driver,"//*[text()='"+labelText+"']/..//*[@title='"+strings[1]+"']",strings[1]+" auto suggest drop down list", action.BOOLEAN, 30),
+										strings[1] + "   : auto suggest drop down list", action.BOOLEAN)) {
+									appLog.info(strings[1] + "  is selected from auto suggest drop down list.");
+								} else {
+									appLog.info(strings[1] + "  is not selected from auto suggest drop down list.");
+									return false;
+								}
+								
+							} else {
+								appLog.error("Not able to enter "+labelText+" value "+strings[1]+" in text box so cannot create Deal : "+dealName);
+								return false;
+							}
+						}
+					}
+				}
+				if (click(driver, getCustomTabSaveBtn(projectName,30), "Save Button", action.SCROLLANDBOOLEAN)) {
+					appLog.error("Click on save Button");	
+					flag = true;
+				}else{
+					appLog.error("Not Able to Click on save Button");	
+				}
+
+
+
+			} else {
+				appLog.error("Not Able to Entered value on Deal Name TextBox : "+dealName);	
+			}
+	
+
+
+		return flag;
+	}
+	
+	
+	
 }

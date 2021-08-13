@@ -1107,4 +1107,121 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		
 	}
 
+	public boolean createInstitutionPopUp(String projectName,String environment,String mode,String institutionName,String recordType, String otherLabelFields,String otherLabelValues) {
+		String labelNames[]=null;
+		String labelValue[]=null;
+		if(otherLabelFields!=null && otherLabelValues !=null) {
+			labelNames= otherLabelFields.split(",");
+			labelValue=otherLabelValues.split(",");
+		}
+	//	refresh(driver);
+		ThreadSleep(3000);
+		if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			ThreadSleep(10000);
+
+		}else {
+			if (click(driver, getNewButton(environment,mode,60), "New Button", action.SCROLLANDBOOLEAN)) {
+				appLog.info("clicked on new button");
+			} else {
+				appLog.error("Not able to click on New Button so cannot create institution: " + institutionName);
+				return false;
+			}
+		}
+			if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+				ThreadSleep(2000);
+				if (selectVisibleTextFromDropDown(driver, getRecordTypeOfNewRecordDropDownList(60),
+						"Record type of new record drop down list", recordType)) {
+					appLog.info("selecte institution from record type of new record drop down list");
+				}else{
+					appLog.error("Not Able to selecte institution from record type of new record drop down list");
+					return false;
+				}
+			}else{
+				ThreadSleep(2000);
+				if(click(driver, getRadioButtonforRecordType(recordType, 5), "Radio Button for New Institution", action.SCROLLANDBOOLEAN)){
+					appLog.info("Clicked on radio Button for institution from record type");
+				}else{
+					appLog.info("Not Able to Clicked on radio Button for institution from record type");
+					return false;
+				}
+			}
+
+				if (click(driver, getContinueOrNextBtn(environment,mode,60), "Continue Button", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on continue button");
+					if (sendKeys(driver, getLegalNameTextBox(environment,mode,30), institutionName, "leagl name text box",
+							action.SCROLLANDBOOLEAN)) {
+						appLog.info("passed data in text box: " + institutionName);
+						if(labelNames!=null && labelValue!=null) {
+							for(int i=0; i<labelNames.length; i++) {
+								WebElement ele = getInstitutionPageTextBoxOrRichTextBoxWebElement(environment, mode, labelNames[i].trim(), 30);
+								if(sendKeys(driver, ele, labelValue[i], labelNames[i]+" text box", action.SCROLLANDBOOLEAN)) {
+									appLog.info("passed value "+labelValue[i]+" in "+labelNames[i]+" field");
+									
+
+									if (labelNames[i].toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString()) || labelNames[i].toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Entity.toString())) {
+										
+										ThreadSleep(1000);
+										if (click(driver,
+												FindElement(driver,"//*[@title='"+labelValue[i]+"']//strong[text()='"+labelValue[i].split(" ")[0]+"']",
+														"Legal Name List", action.SCROLLANDBOOLEAN, 30),
+												labelValue[i] + "   :   Legal Name", action.SCROLLANDBOOLEAN)) {
+											appLog.info(labelValue[i] + "  is present in list.");
+										} else {
+											appLog.info(labelValue[i] + "  is not present in the list.");
+											BaseLib.sa.assertTrue(false,labelValue[i] + "  is not present in the list.");
+										}
+									}
+									
+								}else {
+									appLog.error("Not able to pass value "+labelValue[i]+" in "+labelNames[i]+" field");
+									BaseLib.sa.assertTrue(false, "Not able to pass value "+labelValue[i]+" in "+labelNames[i]+" field");
+								}
+							}
+							
+						}
+						if (click(driver, getCustomTabSaveBtn(projectName,30), "save button", action.SCROLLANDBOOLEAN)) {
+							appLog.info("clicked on save button");
+							ThreadSleep(5000);
+//							String	xpath="//span[@class='custom-truncate uiOutputText'][text()='"+institutionName+"']";
+//							WebElement ele = FindElement(driver, xpath, "Header : "+institutionName, action.BOOLEAN, 30);
+							WebElement ele = verifyCreatedItemOnPage(Header.Company, institutionName);
+							if (ele != null) {
+									appLog.info("created institution " + institutionName + " is verified successfully.");
+									appLog.info(institutionName + " is created successfully.");
+									
+									if(labelNames!=null && labelValue!=null ) {
+										for(int i=0; i<labelNames.length; i++) {
+//											
+											if(fieldValueVerificationOnInstitutionPage(environment, mode, null, labelNames[i].replace("_", " ").trim(),labelValue[i])){
+												appLog.info(labelNames[i]+" label value "+labelValue[i]+" is matched successfully.");
+											}else {
+												appLog.info(labelNames[i]+" label value "+labelValue[i]+" is not matched successfully.");
+												BaseLib.sa.assertTrue(false, labelNames[i]+" label value "+labelValue[i]+" is not matched.");
+											}
+										
+										}
+									}
+									return true;
+								
+							} else {
+								appLog.error("Created institution " + institutionName + " is not visible");
+							}
+						} else {
+							appLog.error("Not able to click on save button so cannot create institution: "
+									+ institutionName);
+						}
+					} else {
+						appLog.error("Not able to pass data in legal name text box so cannot create institution: "
+								+ institutionName);
+					}
+				} else {
+					appLog.error(
+							"Not able to click on continue button so cannot create institution: " + institutionName);
+				}
+			
+		
+		return false;
+	}
+
+	
 }

@@ -566,4 +566,65 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getvisualForcePagesLink(int timeOut) {
 		return isDisplayed(driver, visualForcePagesLink, "Visibility", timeOut, "Select Page Layout");
 	}
+	
+	@FindBy(xpath = "//h3[text()='Values']/../following-sibling::td//input[@name='new']")
+	private WebElement valuesNewButton;
+
+	public WebElement getValuesNewButton(int timeOut) {
+		return isDisplayed(driver, valuesNewButton, "Visibility", timeOut, "Values New Button");
+	}
+	
+	@FindBy(xpath = "//*[text()='Add Utility Item']")
+	private WebElement addUtilityItem;
+
+	public WebElement getAddUtilityItem(int timeOut) {
+		return isDisplayed(driver, addUtilityItem, "Visibility", timeOut, "Add Utility Item");
+	}
+	
+	@FindBy(xpath = "//div[@class='paletteSearch']//input")
+	private WebElement searchIconOnUtilityItem;
+
+	public WebElement getSearchIconOnUtilityItem(int timeOut) {
+		return isDisplayed(driver, searchIconOnUtilityItem, "Visibility", timeOut, "Search Icon on Add Utility Item");
+	}
+	
+	@FindBy(xpath = "//div[@class='buttonsDiv']/button//span[text()='Move this utility down the list.']/..")
+	private WebElement moveThisUtilityDownTheList;
+
+	public WebElement getMoveThisUtilityDownTheList(int timeOut) {
+		String xpath = "//div[@class='buttonsDiv']/button//span[text()='Move this utility down the list.']/..";
+		List<WebElement> eleList = FindElements(driver, xpath, "Move this utility down the list.");
+		WebElement ele = null;
+		for (WebElement webElement : eleList) {
+		webElement=isDisplayed(driver, webElement, "Visibility", 2, "Move this utility down the list.");
+		if (webElement!=null) {
+				return webElement;
+			} else {
+
+			}
+		}
+		return ele;
+
+	
+	}
+	
+	public WebElement getRemoveUtilityTheList(int timeOut) {
+		String xpath = "//div[@class='buttonsDiv']/button[3]";
+		List<WebElement> eleList = FindElements(driver, xpath, "Remove");
+		WebElement ele = null;
+		for (WebElement webElement : eleList) {
+		webElement=isDisplayed(driver, webElement, "Visibility", 2, "Remove");
+		if (webElement!=null) {
+				return webElement;
+			} else {
+
+			}
+		}
+		return ele;
+
+	
+	}
+	
+	
+	
 }

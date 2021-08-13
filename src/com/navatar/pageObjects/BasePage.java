@@ -1288,6 +1288,10 @@ public abstract class BasePage extends BaseLib {
 	 private WebElement statusPicklistFrame;
 	 @FindBy(xpath="//iframe[contains(@title,'Sharing Settings ~ Salesforce - Enterprise Edition')]")
 	 private WebElement sharingSettingsFrame;
+	 @FindBy(xpath="//iframe[contains(@title,'Navigation Custom Field: Navigation Type')]")
+	 private WebElement customNavigationFrame;
+	 @FindBy(xpath="//iframe[contains(@title,'Add Picklist Values: Navigation Type')]")
+	 private WebElement NavigationPickListFrame;
 	 
 	 public WebElement getstatusPicklistFrame(int timeOut) {
 			return isDisplayed(driver, statusPicklistFrame, "Visibility", timeOut, "status Picklist Frame");
@@ -1351,6 +1355,10 @@ public abstract class BasePage extends BaseLib {
 		  ele=isDisplayed(driver, dashboardFrame, "Visibility", timeOut, "Sharing Settings Page frame");
 	  }else if (pageName.toString().equalsIgnoreCase(PageName.AccountReferral.toString())){
 		  ele=isDisplayed(driver,accountReferralFrame , "Visibility", timeOut, "Sharing Settings Page frame");
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.CustomNavigationPage.toString())){
+		  ele=isDisplayed(driver,customNavigationFrame , "Visibility", timeOut, "Custom Navigation Frame");
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.NavigationPickListPage.toString())){
+		  ele=isDisplayed(driver,customNavigationFrame , "Visibility", timeOut, "Navigation PickList Page");
 	  }
 	  return ele; 
 	 }
@@ -3919,7 +3927,9 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getDropdownOnTaskPopUp(String projectName,PageName pageName,String label,action action,int timeOut) {
 		String xpath="";
 		label = label.replace("_", " ");
-		if (PageName.TaskPage.toString().equals(pageName.toString()) || PageName.NewEventPopUp.toString().equals(pageName.toString())) {
+		if (PageName.TaskPage.toString().equals(pageName.toString()) || PageName.NewEventPopUp.toString().equals(pageName.toString()))
+				//||PageName.CallPopUp.toString().equals(pageName.toString()) || PageName.Meet.toString().equals(pageName.toString()))
+			{
 			xpath = "//span[text()='"+label+"']/../following-sibling::div//a";
 		} else {
 			 xpath="//label[text()='"+label+"']/following-sibling::div//input";
@@ -4392,7 +4402,15 @@ public abstract class BasePage extends BaseLib {
 		String xpath="//div[@class='changeRecordTypeRow']//span[text()='"+recordType+"']/../..//input";
 		WebElement ele = null;
 		ele=FindElement(driver, xpath, "radio button of record type "+recordType, action.SCROLLANDBOOLEAN,timeOut);
-		return isDisplayed(driver,ele,"visibility",timeOut,"radio button of record type "+recordType);
+		ele=isDisplayed(driver,ele,"visibility",timeOut,"radio button of record type "+recordType);
+		if (ele!=null) {
+			return ele;
+		} else {
+			 xpath="//fieldset//span[contains(text(),'"+recordType+"')]/preceding-sibling::span";
+			ele=FindElement(driver, xpath, "radio button of record type "+recordType, action.SCROLLANDBOOLEAN,timeOut);
+			return isDisplayed(driver,ele,"visibility",timeOut,"radio button of record type "+recordType);
+		}
+		
 	}
 	
 	/**
@@ -5106,19 +5124,37 @@ public abstract class BasePage extends BaseLib {
 	@FindBy (xpath = "//*[@class='outPopupBox']//h2")
 	private WebElement popUpHeader;
 	
+	@FindBy (xpath = "//*[@class='actionBody']//h2")
+	private WebElement popUpHeader1;
+	
 	/**
 	 * @return the navigationPopUpHeader
 	 */
 	public WebElement getPopUpHeader(String projectName,int timeOut) {
-		WebElement ele=isDisplayed(driver, popUpHeader, "Visibility", timeOut, "PopUp Header");
+		WebElement ele=isDisplayed(driver, popUpHeader, "Visibility", 10, "PopUp Header");
 		
 		if(ele==null) {
-			 return isDisplayed(driver, popUpHeader, "Visibility", timeOut, "PopUp Header");
+			 return isDisplayed(driver, popUpHeader1, "Visibility", 10, "PopUp Header");
 			
 		}
 		else return ele;
 	}
 	
+	@FindBy (xpath = "//div[@class='container']//li")
+	private WebElement hitASnagElement;
 	
+	/**
+	 * @return the navigationPopUpHeader
+	 */
+	public WebElement getHitASnagElement(String projectName,int timeOut) {
+		WebElement ele=isDisplayed(driver, hitASnagElement, "Visibility", timeOut, "PopUp Header");
+		return ele;
+	}
+	
+	public WebElement getPopUpHeader1(String projectName,int timeOut) {
+
+		return isDisplayed(driver, popUpHeader1, "Visibility", 10, "PopUp Header");
+
+	}
 	
 }

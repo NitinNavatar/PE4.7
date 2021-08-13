@@ -15,6 +15,7 @@ import com.navatar.scripts.Module5;
 import com.navatar.scripts.Module1;
 import com.navatar.scripts.Module2;
 import com.navatar.scripts.Module3;
+import com.navatar.scripts.Module3New;
 import com.navatar.scripts.Module4;
 
 
@@ -331,8 +332,8 @@ public class CommonVariables {
 			
 			SDG = "Sortable Data Grids";
 			
-			AppDeveloperName="Navatar";
-			AppDescription="Navatar Private Equity app – Lightning View(Edge)";
+			AppDeveloperName=ExcelUtils.readDataFromPropertyFile("AppDeveloperName");
+			AppDescription=ExcelUtils.readDataFromPropertyFile("AppDescription");
 			
 			
 			//****************************************************************	Toggle Variable **********************************************************//
@@ -875,7 +876,7 @@ public class CommonVariables {
 			M4SDGAction2EventPayload=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction2", excelLabel.Event_Payload);
 			M4SDGAction2Type=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction2", excelLabel.Action_Type);
 
-		}else if(obj instanceof Module3){
+		}else if(obj instanceof Module3 || obj instanceof Module3New){
 		
 			energyCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage1", excelLabel.Coverage_Name);
 			energyCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage1", excelLabel.Record_Type);
@@ -946,14 +947,14 @@ public class CommonVariables {
 			M3Call1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M3CALL1", excelLabel.Status);
 			M3Cal11Priority=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M3CALL1", excelLabel.Priority);
 	
-			M3Task1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3TASK1", excelLabel.Subject);
-			M3Task1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3TASK1", excelLabel.Status);
-			M3Task1Priority=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3TASK1", excelLabel.Priority);
+			M3Task1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M3TASK1", excelLabel.Subject);
+			M3Task1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M3TASK1", excelLabel.Status);
+			M3Task1Priority=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M3TASK1", excelLabel.Priority);
 			
-			M3Meeting1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3MEETING1", excelLabel.Subject);
-			M3Meeting1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3MEETING1", excelLabel.Status);
-			M3Meeting1Priority=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3MEETING1", excelLabel.Priority);
-			M3Meeting1MeetingType=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "M3MEETING1", excelLabel.Meeting_Type);
+			M3Meeting1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M3MEETING1", excelLabel.Subject);
+			M3Meeting1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M3MEETING1", excelLabel.Status);
+			M3Meeting1Priority=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M3MEETING1", excelLabel.Priority);
+			M3Meeting1MeetingType=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M3MEETING1", excelLabel.Meeting_Type);
 			
 			M3Contact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON1", excelLabel.Contact_FirstName);
 			M3Contact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON1", excelLabel.Contact_LastName);

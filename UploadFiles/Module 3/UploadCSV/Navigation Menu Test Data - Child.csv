@@ -1,7 +1,7 @@
 Navigation Label,Navigation Type,Order,Parent,Action Object,Action Record Type,List View Object,List View Name,URL
 Company,New Interactions,15,Accounts,Account,Company,,,
 Fund Manager,New Interactions,30,Accounts,Account,Fund_Manager,,,
-Fund Manager’s Fund,New Interactions,10,Accounts,Account,Fund_Manager_s_Fund,,,
+Fund Managers Fund,New Interactions,10,Accounts,Account,Fund_Manager_s_Fund,,,
 Individual Investor,New Interactions,40,Accounts,Account,Individual_Investor,,,
 Institution,New Interactions,25,Accounts,Account,Institution,,,
 Intermediary,New Interactions,4,Accounts,Account,Intermediary,,,
