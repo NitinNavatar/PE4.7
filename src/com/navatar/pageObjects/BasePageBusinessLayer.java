@@ -1243,7 +1243,7 @@ public WebElement getCrossButtonForAlreadySelectedItem(String projectName,PageNa
 	appLog.info(" >>>>>>>>>>>>>>>>   label:"+label);
 	if (label.equalsIgnoreCase(PageLabel.Name.toString()))
 		isMultipleAssociation=true;
-	if (PageLabel.Name.toString().equalsIgnoreCase(label) && PageName.TaskPage.toString().equalsIgnoreCase(pageName.toString()) && isMultipleAssociation) {
+	if (PageName.CallPopUp.toString().equalsIgnoreCase(pageName.toString())||(PageLabel.Name.toString().equalsIgnoreCase(label) && PageName.TaskPage.toString().equalsIgnoreCase(pageName.toString()) && isMultipleAssociation)) {
 		xpath ="//span[text()='"+fieldlabel+"']/../following-sibling::div//li/a/span[text()='"+name+"']/following-sibling::a";	
 	}
 	else if (PageLabel.Related_To.toString().equalsIgnoreCase(label) || PageLabel.Related_Associations.toString().equalsIgnoreCase(label) || isMultipleAssociation) {
@@ -2102,17 +2102,19 @@ public void verifyActivityAtNextStep2(String projectName,PageName pageName,Strin
 		ele = FindElement(driver, assignedToxpath, "Asigned To ", action.SCROLLANDBOOLEAN, 5);
 		if (ele!=null) {
 			log(LogStatus.INFO,"Asigned To verified for subject : "+subject+" For item : "+createdItemValue,YesNo.No);	
+			if (assignedToMsg!=null) {
+				System.err.println(">>>>>>>>>>>>   "+ele.getText().trim());
+				actualValue=ele.getText().trim().replace("\n", " ");
+				System.err.println(">>>>>>>>>>>>   "+actualValue.replace("\n", " "));
+				if (assignedToMsg.equals(actualValue)) {
+					log(LogStatus.INFO,assignedToMsg+" Verified for subject : "+subject+" For item : "+createdItemValue,YesNo.No);
 
-			System.err.println(">>>>>>>>>>>>   "+ele.getText().trim());
-			actualValue=ele.getText().trim().replace("\n", " ");
-			System.err.println(">>>>>>>>>>>>   "+actualValue.replace("\n", " "));
-			if (assignedToMsg.equals(actualValue)) {
-				log(LogStatus.INFO,assignedToMsg+" Verified for subject : "+subject+" For item : "+createdItemValue,YesNo.No);
-
-			}else {
-				sa.assertTrue(false,assignedToMsg+" not Verified for subject : "+subject+" For item : "+createdItemValue+"\nActual  :  "+actualValue+"\nExpected : "+assignedToMsg);
-				log(LogStatus.SKIP,assignedToMsg+" not Verified for subject : "+subject+" For item : "+createdItemValue+"\nActual  :  "+actualValue+"\nExpected : "+assignedToMsg,YesNo.Yes);
+				}else {
+					sa.assertTrue(false,assignedToMsg+" not Verified for subject : "+subject+" For item : "+createdItemValue+"\nActual  :  "+actualValue+"\nExpected : "+assignedToMsg);
+					log(LogStatus.SKIP,assignedToMsg+" not Verified for subject : "+subject+" For item : "+createdItemValue+"\nActual  :  "+actualValue+"\nExpected : "+assignedToMsg,YesNo.Yes);
+				}
 			}
+			
 
 		}else {
 			sa.assertTrue(false,"Asigned To not verified for subject : "+subject+" For item : "+createdItemValue);
@@ -2214,6 +2216,8 @@ public boolean clickOnTab(String projectName,String TabName) {
 	WebElement ele;
 	if (TabName.contains("Entit")) {
 		tabName ="Entities";
+	}else if (TabName.contains("Inst")) {
+		tabName ="Institutions";
 	}else {
 		tabName = TabName;
 	}
@@ -3077,7 +3081,7 @@ public boolean dragNDropUsingScreen(String projectName,String sourceImg,String t
 public boolean isAutomationAllListViewForObject(String projectName,String ObjectName,String viewList, int timeOut) {
 	String xpath="";
 		ThreadSleep(3000);
-		xpath="//span[text()='"+ObjectName+"']/../../../following-sibling::div//span[text()='"+viewList+"']";
+		xpath="//*[text()='"+ObjectName+"']/../../../../following-sibling::*//*[text()='"+viewList+"']";
 		WebElement selectListView = FindElement(driver, xpath,"Select List View : "+viewList+" for "+ObjectName, action.SCROLLANDBOOLEAN, 5);
 		ThreadSleep(3000);
 		if ( selectListView!=null) {

@@ -78,6 +78,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 				appLog.error("Not able to search object in classic : "+objectName);
 			}
 		}else {
+			ThreadSleep(10000);
 			if (objectName==object.Create) {
 				String xpath = "//a[@title='Create Menu']/span[text()='"+objectName.toString()+"']";
 				if (click(driver, FindElement(driver, xpath,objectName.toString(), action.BOOLEAN, 10), "create Custom Object", action.BOOLEAN)) {
@@ -94,7 +95,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 				} else {
 					appLog.error("Not able to click on create icon");
 				}
-			}else if (clickUsingJavaScript(driver, getObjectManager_Lighting(30), "object manager tab", action.SCROLLANDBOOLEAN)) {
+			}else if (click(driver, getObjectManager_Lighting(30), "object manager tab", action.SCROLLANDBOOLEAN)) {
 				appLog.info("clicked on object manager tab");
 				if (objectName==object.Custom_Object) {
 					if(sendKeys(driver, getQuickSearchInObjectManager_Lighting(30), tabCustomObj, "quick search text box in lighting", action.SCROLLANDBOOLEAN)) {
@@ -1337,7 +1338,8 @@ public void addRemoveAppSetingData(String projectName,String addRemoveTabName, c
 public boolean changeRecordTypeSetting(WebDriver driver,String userName,String recordType,int timeOut) {
 	
 	switchToDefaultContent(driver);
-	ThreadSleep(10000);
+	ThreadSleep(20000);
+	scn.nextLine();
 	switchToFrame(driver, 20, getSetUpPageIframe(60));
 	boolean flag=false;;
 	String xpath="";
@@ -1347,7 +1349,8 @@ public boolean changeRecordTypeSetting(WebDriver driver,String userName,String r
 	if (click(driver, ele, userName.toString(), action.BOOLEAN)) {
 		log(LogStatus.INFO, "able to click on "+userName, YesNo.No);
 		switchToDefaultContent(driver);
-		ThreadSleep(10000);
+		ThreadSleep(20000);
+		scn.nextLine();
 		switchToFrame(driver, 60, getSetUpPageIframe(60));
 		xpath="//*[text()='Accounts']/following-sibling::*//*[text()='Edit']";
 		ele=FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, timeOut);
@@ -1355,6 +1358,7 @@ public boolean changeRecordTypeSetting(WebDriver driver,String userName,String r
 			log(LogStatus.INFO, "able to click on edit button for record type settiing", YesNo.No);
 			switchToDefaultContent(driver);
 			ThreadSleep(10000);
+			scn.nextLine();
 			switchToFrame(driver, 20, getSetUpPageIframe(60));
 			xpath="//select[@id='p5']";
 			ele=FindElement(driver, xpath, "Record dropdown", action.SCROLLANDBOOLEAN, timeOut);
@@ -1419,6 +1423,7 @@ public boolean createRecordTypeForObject(String projectName,String[][] labelWith
 	if (click(driver,getRecordTypeNewButton(10), "Record Type New Button", action.SCROLLANDBOOLEAN)) {
 		log(LogStatus.INFO, "Click on Record Type New Button", YesNo.No);
 		ThreadSleep(5000);
+		scn.nextLine();
 		switchToFrame(driver, 20, getSetUpPageIframe(60));
 		for (String[] lv : labelWithValue) {
 			label=lv[0];
@@ -1485,7 +1490,7 @@ public boolean createRecordTypeForObject(String projectName,String[][] labelWith
 			}
 			if (click(driver,  getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.ERROR, "Click on save Button ", YesNo.No);
-				ThreadSleep(5000);
+				ThreadSleep(10000);
 				flag=true;
 			} else {
 				log(LogStatus.ERROR, "Not Able to Click on save Button ", YesNo.Yes);
@@ -1519,13 +1524,15 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 	String label;
 	String value;
 	boolean flag=false;
-	ThreadSleep(5000);
 	switchToDefaultContent(driver);
+	scn.nextLine();
+	ThreadSleep(5000);
 	switchToFrame(driver, 20, getSetUpPageIframe(60));
 	if (click(driver, getEditButton(environment,"Classic",10), "edit", action.SCROLLANDBOOLEAN)) {
 		log(LogStatus.INFO, "Click on edit Button", YesNo.No);
-		ThreadSleep(5000);
 		switchToDefaultContent(driver);
+		ThreadSleep(5000);
+		scn.nextLine();
 		switchToFrame(driver, 20, getSetUpPageIframe(60));
 		for (String[] lv : labelWithValue) {
 			label=lv[0];
@@ -1534,14 +1541,15 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 			ThreadSleep(2000);
 			
 			try {
-				if (isAlertPresent(driver)) {
-					switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
-				}
+				driver.switchTo().alert().accept();
+//				if (isAlertPresent(driver)) {
+//					switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+//				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				try {
-					switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+					driver.switchTo().alert().accept();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -1601,6 +1609,7 @@ public void recordTypeVerification(String[][] labelWithValue) {
 	WebElement ele;
 	ThreadSleep(5000);
 	switchToDefaultContent(driver);
+	scn.nextLine();
 	switchToFrame(driver, 20, getSetUpPageIframe(60));
 	for (String[] labelValue : labelWithValue) {
 		xpath ="//*[text()='"+labelValue[0]+"']/..//following-sibling::td[text()='"+labelValue[1]+"']";
@@ -1905,6 +1914,7 @@ public boolean permissionChangeForUserONObject(WebDriver driver,String userName,
 		ThreadSleep(10000);
 		switchToDefaultContent(driver);
 		ThreadSleep(5000);
+		scn.nextLine();
 		switchToFrame(driver, 60, getSetUpPageIframe(60));
 		xpath="//*[@id='topButtonRow']//input[@name='edit']";
 		ele=FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, timeOut);
@@ -1914,6 +1924,7 @@ public boolean permissionChangeForUserONObject(WebDriver driver,String userName,
 			ThreadSleep(10000);
 			switchToDefaultContent(driver);
 			ThreadSleep(5000);
+			scn.nextLine();
 			switchToFrame(driver, 60, getSetUpPageIframe(60));
 			String OnObject="";
 			String permission = "";
@@ -2345,10 +2356,72 @@ public boolean dragDropOnPageLayout(String src,String trgt){
 	return flag;
 }
 public WebElement VFPagePreviewLink(String projectName, String page) {
-	String xpath = "//a[text()='"+page+"']/../preceding-sibling::td//img[contains(@title,'"+page+"')]/..";
+	String xpath = "//a[text()='"+page+"']/../preceding-sibling::td//img[contains(@title,'Preview')]/..";
 	
 	WebElement ele=FindElement(driver, xpath, "vfpage preview link", action.SCROLLANDBOOLEAN,10);
+	scrollDownThroughWebelement(driver, ele, "vfpage preview link");
+	ThreadSleep(2000);
 	return isDisplayed(driver,ele,"visibility",10,"vfpage preview link");
 
 }
+
+/**
+ * @author Akul Bhutani
+ * @param environment
+ * @param mode
+ * @param objectName
+ * @return true/false
+ * @description this method is used to search object on setup page by entering on textbox and click
+ */
+public boolean searchAndClickOnAddUtilityItem(String environment, String mode, String objectName) {
+	String index="[1]";
+	String o=objectName.toString().replace("_", " ");
+
+		ThreadSleep(3000);
+		if (sendKeys(driver, getSearchIconOnUtilityItem(10), o,o, action.BOOLEAN)) {
+			
+			ThreadSleep(2000);
+			String xpath = "//span//span[text()='"+o+"']";
+			if (click(driver, FindElement(driver, xpath,objectName.toString(), 
+					action.BOOLEAN, 10), objectName.toString(), action.BOOLEAN)) {
+				return true;
+			}
+			else {
+				log(LogStatus.ERROR, "could not click on "+objectName,YesNo.Yes);
+				
+			}
+		}
+		else {
+			log(LogStatus.ERROR, "quick search textbox not visible", YesNo.Yes);
+		}
+	
+	
+	return false;
+}
+
+public boolean ClickAndRemoveUtilityItem(String environment, String mode, String objectName) {
+	String index="[1]";
+	String o=objectName.toString().replace("_", " ");
+
+		ThreadSleep(3000);
+		String xpath = "//span[text()='0']";
+		WebElement ele = FindElement(driver, xpath, o, action.BOOLEAN, 20) ;
+		if (click(driver, ele, o, action.BOOLEAN)) {
+			ThreadSleep(2000);
+			if (click(driver, getRemoveUtilityTheList(20), o+" Remove Button", action.BOOLEAN)) {
+				return true;
+			}
+			else {
+				log(LogStatus.ERROR, "could not click Remove Button on "+o,YesNo.Yes);
+				
+			}
+		}
+		else {
+			log(LogStatus.ERROR, "quick search textbox not visible", YesNo.Yes);
+		}
+	
+	
+	return false;
+}
+
 }

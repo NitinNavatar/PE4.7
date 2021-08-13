@@ -40,7 +40,7 @@ public class NavatarSetupPage extends BasePageBusinessLayer {
 	public WebElement getdocumentTagDropdownValueViewMode(String environment, String mode,int timeOut) {
 		return isDisplayed(driver, documentTagDropdownValueViewMode, "Visibility", timeOut, "documentTagDropdownValueViewMode");
 	}
-	@FindBy(xpath="//div[contains(@id,'RightMenuContentSection')]//div[@class='slds-button-group float_r']//input")
+	@FindBy(xpath="//div[contains(@id,'RightMenuContentSection')]//div[@class='slds-button-group float_r']")
 	private WebElement editButtonforNavatarSetUpSideMenuTab;
 
 	/**
@@ -174,7 +174,16 @@ public class NavatarSetupPage extends BasePageBusinessLayer {
 		String checkboxFor="Enable ";
 		if (NavatarSetupSideMenuTab.ContactTransfer.equals(sideMenuTab)) {
 			checkboxFor=checkboxFor+"Contact Transfer";
-		} else {
+		} else if(NavatarSetupSideMenuTab.BulkEmail.equals(sideMenuTab)) {
+			checkboxFor=checkboxFor+"Bulk Email";
+		}
+		else if(NavatarSetupSideMenuTab.CommitmentCreation.equals(sideMenuTab)) {
+			checkboxFor=checkboxFor+"Commitment Creation";
+		}else if(NavatarSetupSideMenuTab.IndividualInvestorCreation.equals(sideMenuTab)) {
+			checkboxFor=checkboxFor+"Individual Investor Creation";
+		}else if(NavatarSetupSideMenuTab.DealCreation.equals(sideMenuTab)) {
+			checkboxFor=checkboxFor+"Deal Creation";
+		}else {
 			checkboxFor=checkboxFor+"Office Locations";
 		}
 		enableCheckBoxList = FindElements(driver,
@@ -282,7 +291,7 @@ public class NavatarSetupPage extends BasePageBusinessLayer {
 			return isDisplayed(driver, enableCheckBoxList.get(0), "Visibility", timeOut,
 					"Enable CheckBox for Navatar SetUp Side Menu Tab");
 		} else {
-			return isDisplayed(driver, enableCheckBoxList.get(1), "Visibility", timeOut,
+			return isDisplayed(driver, enableCheckBoxList.get(0), "Visibility", timeOut,
 					"Enable CheckBox for Navatar SetUp Side Menu Tab");
 		}
 	}
