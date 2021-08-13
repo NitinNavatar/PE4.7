@@ -362,8 +362,12 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return "Congratulations!" + 
 				""+company+" has been coverted to Portfolio Company successfully.";
 	}
-	
-	
+	public WebElement getCompanyNameOnconvertToPortfolioMessage(int timeOut) {
+		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//p";
+			WebElement ele = FindElement(driver, xpath,"company name convert to portfolio", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "company name convert to portfolio");
+		
+	}
 	
 	public WebElement getconvertToPortfolioMessage(String company,int timeOut) {
 		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//span[text()='"+convertToPortfolioBeforeNext(company)+"']";
@@ -392,5 +396,18 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return isDisplayed(driver, ele, "Visibility", timeOut, "cross icon for company");
 
 	}
-}
+	
+	public WebElement getconvertToPortfolioMessageUnhandledFlow(int timeOut) {
+		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//*[contains(text(),'processing')]/..";
+			WebElement ele = FindElement(driver, xpath,"unhandled flow message", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "unhandled flow message");
+
+	}
+	public WebElement getconvertToPortfolioMessageRecordTypeInvalid(int timeOut) {
+		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//p[contains(text(),'Navatar')]";
+			WebElement ele = FindElement(driver, xpath,"RT invalid", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "RT invalid");
+
+	}
+	}
 

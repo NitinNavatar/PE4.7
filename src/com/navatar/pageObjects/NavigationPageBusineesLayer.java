@@ -314,22 +314,22 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 				System.out.println(">>>>value "+ parentwithChild.get(parent) );
 				xpath="";
 				childs=parentwithChild.get(parent).split(commaSP);
-				for (int i = 0; i < childs.length; i++) {
-					xpath = "//div[contains(@id,'treeview')]//*//*[text()='"+childs[i]+"']";
-					ele = FindElement(driver, xpath, childs[i], action, timeOut);
-					ele = isDisplayed(driver, ele, "Visibility", timeOut, childs[i]);
-					if (ele==null) {
-						log(LogStatus.INFO, "Navigation Link not visible "+childs[i], YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "Navigation Link found "+childs[i]+" hence it is not under parent : "+parent, YesNo.Yes);
-						sa.assertTrue(false,"Navigation Link found "+childs[i]+" hence it is not under parent : "+parent);;
-					}
-				}
-				xpath = "//div[contains(@id,'treeview')]//*//*[text()='"+parent+"']";
+//				for (int i = 0; i < childs.length; i++) {
+//					xpath = "//div[contains(@id,'treeview')]//*//*[text()='"+childs[i]+"']";
+//					ele = FindElement(driver, xpath, childs[i], action, timeOut);
+//					ele = isDisplayed(driver, ele, "Visibility", timeOut, childs[i]);
+//					if (ele==null) {
+//						log(LogStatus.INFO, "Navigation Link not visible "+childs[i], YesNo.No);
+//					} else {
+//						log(LogStatus.ERROR, "Navigation Link found "+childs[i]+" hence it is not under parent : "+parent, YesNo.Yes);
+//						sa.assertTrue(false,"Navigation Link found "+childs[i]+" hence it is not under parent : "+parent);;
+//					}
+//				}
+				xpath = "//div[contains(@id,'treeview')]//*//*[@class='icon expand-icon glyphicon glyphicon-minus']//following-sibling::*[text()='"+parent+"']";
 				ele = FindElement(driver, xpath, parent, action, timeOut);
-				if (click(driver, ele, parent, action)) {
-					log(LogStatus.INFO, "Able to Click on Navigation Label : "+parent+" so going to check child label : "+parentwithChild.get(parent), YesNo.No);
-					ThreadSleep(2000);
+//				if (click(driver, ele, parent, action)) {
+//					log(LogStatus.INFO, "Able to Click on Navigation Label : "+parent+" so going to check child label : "+parentwithChild.get(parent), YesNo.No);
+//					ThreadSleep(2000);
 					for (int i = 0; i < childs.length; i++) {
 						xpath = xpath+"/../following-sibling::*//*[text()='"+childs[i]+"']";;
 						ele = FindElement(driver, xpath, childs[i], action, timeOut);
@@ -342,10 +342,10 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 							//	break;
 						}
 					}
-				} else {
-					log(LogStatus.ERROR, "Not Able to Click on Navigation Label : "+parent+" so cannot check child label : "+parentwithChild.get(parent), YesNo.Yes);
-					sa.assertTrue(false,"Not Able to Click on Navigation Label : "+parent+" so cannot check child label : "+parentwithChild.get(parent));
-				}
+//				} else {
+//					log(LogStatus.ERROR, "Not Able to Click on Navigation Label : "+parent+" so cannot check child label : "+parentwithChild.get(parent), YesNo.Yes);
+//					sa.assertTrue(false,"Not Able to Click on Navigation Label : "+parent+" so cannot check child label : "+parentwithChild.get(parent));
+//				}
 
 
 			}
@@ -624,8 +624,16 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	public WebElement getRadioButtonforRecordTypeAtAccount(String recordType,int timeOut) {
 		String xpath="//span[text()='"+recordType+"']/preceding-sibling::input";
 		WebElement ele = null;
-		ele=FindElement(driver, xpath, "radio button of record type "+recordType, action.SCROLLANDBOOLEAN,timeOut);
-		return isDisplayed(driver,ele,"visibility",timeOut,"radio button of record type "+recordType);
+		ele=FindElement(driver, xpath, "radio button of record type "+recordType, action.SCROLLANDBOOLEAN,10);
+		ele =  isDisplayed(driver,ele,"visibility",10,"radio button of record type "+recordType);
+		if (ele!=null) {
+
+		} else {
+			xpath="//span[text()='"+recordType+"']/..//preceding-sibling::div//input";
+			ele = null;
+			ele=FindElement(driver, xpath, "radio button of record type "+recordType, action.SCROLLANDBOOLEAN,10);
+		}
+		return ele ;
 	}
 	
 	/**
@@ -716,9 +724,17 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	 * @return record Type With Description webElement
 	 */
 	public WebElement getrecordTypeWithDescription(String recordType,String desc,int timeOut) {
-		String xpath ="//*[text()='"+recordType+"']/*[text()='"+desc+"']";
+		String xpath ="//*[text()='"+recordType+"']//*[text()='"+desc+"']";
 		WebElement ele = FindElement(driver, xpath, recordType+" "+desc, action.SCROLLANDBOOLEAN, timeOut);
-		return isDisplayed(driver, ele, "Visibility", timeOut, recordType+" "+desc);
+		ele =isDisplayed(driver, ele, "Visibility", timeOut, recordType+" "+desc);
+		if (ele!=null) {
+			
+		} else {
+			xpath ="//*[text()='"+recordType+"']/..//*[text()='"+desc+"']";
+			ele = FindElement(driver, xpath, recordType+" "+desc, action.SCROLLANDBOOLEAN, timeOut);
+			ele =isDisplayed(driver, ele, "Visibility", timeOut, recordType+" "+desc);
+		}
+		return ele;
 	}
 	
 	/**
@@ -854,6 +870,14 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		return flag;
 	}
 
+	
+	public WebElement getRadioButtonforRecordType(String recordType,int timeOut) {
+		String xpath="";
+		WebElement ele = null;
+		xpath="//span[text()='"+recordType+"']/..//preceding-sibling::div//input";
+		ele=FindElement(driver, xpath, "radio button of record type "+recordType, action.SCROLLANDBOOLEAN,10);
+		return ele ;
+	}
 	
 	
 	

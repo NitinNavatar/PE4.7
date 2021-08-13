@@ -6,13 +6,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.navatar.generic.EnumConstants.PageName;
-import com.navatar.generic.EnumConstants.SearchBasedOnExistingFundsOptions;
 import com.navatar.generic.EnumConstants.TopOrBottom;
 import com.navatar.generic.EnumConstants.action;
 
 import static com.navatar.generic.CommonLib.*;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class HomePage extends BasePageBusinessLayer {
@@ -570,7 +570,7 @@ public class HomePage extends BasePageBusinessLayer {
 		return isDisplayed(driver, placementFeeTextBox, "Visibility", timeOut, "placement fee text box");
 	}
 
-	@FindBy(xpath="//iframe[@title='Commitment Creation']")
+	@FindBy(xpath="//iframe")
 	private WebElement createCommitmentFrame_Lightning;
 
 	/**
@@ -1078,6 +1078,23 @@ public class HomePage extends BasePageBusinessLayer {
 		return isDisplayed(driver, ele, "Visibility", timeOut, " create indiviual investor button : "+topOrBottom);
 	}
 	
+
+	public List<String> getNavigationMenuitem(){
+		
+	List<String> NavigationMenuitem=new LinkedList<String>();
+		 List<WebElement> eleList= FindElements(driver, "///div/button/span[contains(@class,'itemTitle')]", "Navigation Menu Item List");
+		 if (!eleList.isEmpty()) {
+			 for (WebElement webElement : eleList) {
+				 NavigationMenuitem.add(webElement.getText().trim());
+			}
+			
+		} else {
+
+		}
+		return NavigationMenuitem;
+	}
+	
+
 	
 	public WebElement sdgGridHeaderName(SDGGridName sdgGridName, int timeOut) {
 		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName+"']";
@@ -1246,6 +1263,7 @@ public List<WebElement> sdgGridSelectThemeList() {
 }
 
 
+
 	
 
 public List<WebElement> sdgGridSelectVisibleFieldsListInManageFieldPopUp() {
@@ -1289,8 +1307,6 @@ public WebElement sdgGridSideIconsForLightTheme(SDGGridName sdgGridName,SDGGridS
 	WebElement ele = FindElement(driver, xpath, "SDG grid side icon "+sdgGridSideIcons, action.SCROLLANDBOOLEAN, timeOut);
 	return isDisplayed(driver, ele, "Visibility", timeOut, "SDG grid side icon "+sdgGridSideIcons);
 }
-
-
 
 
 }
