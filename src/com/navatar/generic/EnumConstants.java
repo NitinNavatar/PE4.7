@@ -1025,7 +1025,7 @@ public static enum PermissionType{
 	}
 		
 	public static enum Buttons{
-		SaveNext,SaveClose,Cancel,Cross,Delete_Photo,close;	  
+		SaveNext,SaveClose,Cancel,Cross,Delete_Photo,close,Save;	  
 	};
 	
 	public static enum ProjectLabel{
@@ -1290,7 +1290,7 @@ public static enum PermissionType{
 			@Override
 			public String toString() {
 				return "Start Date/Time";
-			}},Title_Highlight_Color,Filter,Onclick_Title,Calendar_Filter_1,Calendar_Filter_2,Calendar_Filter_3;
+			}},Title_Highlight_Color,Filter,Onclick_Title,Calendar_Filter_1,Calendar_Filter_2,Calendar_Filter_3, Deal, Name, Fundraising,Phone;
 	}
 	public static enum ContactPagePhotoActions{
 		Update_Photo,Delete_Photo;
@@ -1465,7 +1465,7 @@ public static enum PermissionType{
 			public String toString() {
 				return "Reload.";
 			}
-    	}
+    	},Side_DropDOwnButtonforLightTheme;
     	
     	
     }
@@ -1480,6 +1480,16 @@ public static enum PermissionType{
 			public String toString() {
 				return "Starts with";
 			}
-    	}  
+    	},Deal_Received{
+			@Override
+			public String toString() {
+				return "Deal Received";
+			}
+    	},Second_Closing{
+			@Override
+			public String toString() {
+				return "2nd Closingd";
+			}
+    	}
     }
 }

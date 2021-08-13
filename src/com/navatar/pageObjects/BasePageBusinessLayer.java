@@ -2887,7 +2887,7 @@ public boolean clickOnEditButtonOnSDG(String projectName, String contact, String
  */
 public WebElement SDGInputTextbox(String projectName, String field, int timeOut) {
 	String xpath ="//input[@name='"+field+"']";
-	WebElement ele = FindElement(driver, xpath,"input textbox "+field, action.BOOLEAN, timeOut);
+	WebElement ele = FindElement(driver, xpath,"input textbox "+field, action.SCROLLANDBOOLEAN, timeOut);
 	return isDisplayed(driver, ele, "visibility", timeOut, "input textbox "+field);
 }
 
@@ -3448,22 +3448,25 @@ public boolean CheckAlreadyCreatedItem(String projectName,String alreadyCreated,
 	return flag;
 }
 
-public boolean SearchDealFilterDataOnHomePage(SDGGridName sdgGridName,String labelName,String DealName, Operator operator) {
+public boolean SearchDealFilterDataOnHomePage(SDGGridName sdgGridName,String labelName,String searchDataName, Operator operator, YesNo wantToDataShearch) {
 	if(selectVisibleTextFromDropDown(driver,getSDGGridDropDown(sdgGridName, labelName, 10), "deal drop down",operator)) {
 		log(LogStatus.PASS, "Select Equals From Deal Drop Down in filter",YesNo.No);
 		ThreadSleep(1000);
-		WebElement ele = FindElement(driver, "//*[text()='"+labelName+"']/../../../following-sibling::div//input", "text box ", action.SCROLLANDBOOLEAN, 10);
-		if(ele!=null) {
-			if(sendKeys(driver, ele, DealName+"\n", labelName+" name text box ", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.PASS, "enter "+labelName+" name :"+DealName, YesNo.No);
-				return true;
+		if(wantToDataShearch.toString().equalsIgnoreCase(YesNo.Yes.toString())) {
+			WebElement ele = FindElement(driver, "//*[text()='"+labelName+"']/../../../following-sibling::div//input", "text box ", action.SCROLLANDBOOLEAN, 10);
+			if(ele!=null) {
+				if(sendKeys(driver, ele, searchDataName+"\n", labelName+" name text box ", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.PASS, "enter "+labelName+" name :"+searchDataName, YesNo.No);
+					return true;
+				}else {
+					log(LogStatus.FAIL, "Not able to Enter "+labelName+" name :"+searchDataName, YesNo.Yes);
+				}
 			}else {
-				log(LogStatus.FAIL, "Not able to Enter "+labelName+" name :"+DealName, YesNo.Yes);
+				log(LogStatus.FAIL, labelName+" Text box is not visible so cannot enter the "+labelName+" name "+searchDataName, YesNo.No);
 			}
 		}else {
-			log(LogStatus.FAIL, labelName+" Text box is not visible so cannot enter the "+labelName+" name "+DealName, YesNo.No);
+			return true;
 		}
-		
 	}else {
 		log(LogStatus.FAIL, "Not able to Select Equals From Deal Drop Down in filter",YesNo.No);
 	}
