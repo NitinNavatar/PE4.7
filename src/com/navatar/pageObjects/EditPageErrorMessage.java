@@ -24,10 +24,16 @@ public interface EditPageErrorMessage {
 	public String image3="navpeII__Team_Member__r.MediumPhotoUrl";
 	public String AttendeeImage="navpeII__Attendee_Staff__r.MediumPhotoURL";
 	
+	
+	
 	public String image2="Profile_Image__c";
 	//Navatar SDG Toggles
 	
 	public String RecordDealsQARequestsClosed="Record_Deals_QA_Requests_Closed";
+	
+	public String EntityUpcomingEventSDG="Record_Entity_Entity's_Upcoming Third Party Events";
+	public String EntityEventInviteeSDG="Record Entity Events Our Event Invitees";
+	
 
 	//Record_Deals_QA_Requests_Closed
 	

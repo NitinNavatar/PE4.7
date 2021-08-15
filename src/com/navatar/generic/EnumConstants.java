@@ -299,7 +299,7 @@ CompactLayout, MeetingType, AddPickListMeetingType,ActivityLayoutPage, SDGPage,O
 	},Test_Custom_Object{
 		@Override
 		public String toString() {
-			return "Test Custom Object";
+			return CommonVariables.tabCustomObj;
 		}
 	},Navigation,navatarEdgeMenu
 	};

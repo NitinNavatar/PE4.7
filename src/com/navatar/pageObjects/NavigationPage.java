@@ -111,6 +111,17 @@ public class NavigationPage extends BasePageBusinessLayer {
 
 	}
 	
-	
+	@FindBy(xpath="//button[@title='Clear Selection']")
+	private WebElement clearSelection;
+
+	/**
+	 * @return the clearSelection
+	 */
+	public WebElement getClearSelection(String projectName,int timeOut) {
+		
+			return isDisplayed(driver, clearSelection, "Visibility", timeOut, "clear Selection");
+		
+
+	}
 }
 

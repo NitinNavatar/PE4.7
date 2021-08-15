@@ -455,7 +455,7 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 		} else if (projectName.contains(ProjectName.PE.toString())) {
 			return isDisplayed(driver, legalNamePE, "Visibility", timeOut, "Legal Name");
 		}else  {
-			return isDisplayed(driver, FirmPEEdge, "Visibility", timeOut, "Firm");
+			return isDisplayed(driver, legalNamePE, "Visibility", timeOut, "Firm");
 		}
 			
 			

@@ -12,6 +12,7 @@ import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.scripts.Module5;
+import com.navatar.scripts.Module5New;
 import com.navatar.scripts.Module8;
 import com.navatar.scripts.Module6;
 import com.navatar.scripts.Module1;
@@ -222,7 +223,6 @@ public class CommonVariables {
 	public static String NewYorkCoverage,NewYorkCoverageRecordType;
 	
 
-	public static String M3Contact1FName,M3Contact1LName,M3Contact1EmailID,M3Contact1RecordType;
 	public static String M3Fund1,M3Fund1Type,M3Fund1Category,M3Fund1RecordType;
 	public static String M3TestCustomObj1Name,M3TestCustomObj1RecordType;
 	
@@ -276,6 +276,11 @@ public class CommonVariables {
 	public static String M3Ins7,M3Ins7RecordType;
 	public static String M3Ins8,M3Ins8RecordType,M3Ins8Parent;
 	public static String M3Contact2FName,M3Contact2LName,M3Contact2EmailID,M3Contact2RecordType,M3Contact2Title;
+	public static String M3Contact1FName,M3Contact1LName,M3Contact1EmailID,M3Contact1RecordType;
+	public static String M3Contact3FName,M3Contact3LName,M3Contact3EmailID,M3Contact3RecordType;
+	
+	// New Module 5 Variable
+	public static String M5Ins1,M5Ins1RecordType;
 	
 	
 	// Module 8 variable :
@@ -352,7 +357,7 @@ public class CommonVariables {
 
 			
 			
-		if(obj instanceof Module5){
+		if(obj instanceof Module5 ||  obj instanceof Module5New){
 			
 			ToggleIns1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Institutions_Name);
 			ToggleIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Record_Type);
@@ -422,6 +427,11 @@ public class CommonVariables {
 			ToggleCheck3RelatedTab=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC3", excelLabel.RelatedTab);
 			ToggleCheck3ToggleButtons=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC3", excelLabel.ToggleButton);
 			ToggleCheck3ColumnName=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC3", excelLabel.Column_Name);
+			
+			/// New Modulew 5
+			
+			M5Ins1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Institutions_Name);
+			M5Ins1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Record_Type);
 			
 			
 		}
@@ -979,6 +989,13 @@ public class CommonVariables {
 			M3Contact2EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON2", excelLabel.Contact_EmailId);
 			M3Contact2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON2", excelLabel.Record_Type);
 		
+			M3Contact3FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON3", excelLabel.Contact_FirstName);
+			M3Contact3LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON3", excelLabel.Contact_LastName);
+			M3Contact3EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON3", excelLabel.Contact_EmailId);
+			M3Contact3RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M3CON3", excelLabel.Record_Type);
+		
+
+			
 			
 			M3Ins1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS1", excelLabel.Institutions_Name);
 			M3Ins1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS1", excelLabel.Record_Type);

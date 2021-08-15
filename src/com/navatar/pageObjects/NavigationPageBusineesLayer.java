@@ -669,13 +669,17 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 							e.printStackTrace();
 						}
 						ThreadSleep(500);
+						if (label.equalsIgnoreCase(CSVLabel.Parent.toString()) && !value.isEmpty() && !value.equals("")) {
+							click(driver,getClearSelection(projectName,20),"Clear Selection", action.BOOLEAN);
+						}
+							ThreadSleep(3000);
 						if (sendKeys(driver, ele, value, label, action.BOOLEAN)) {
 							log(LogStatus.INFO, "Able to enter "+label, YesNo.No);
 							ThreadSleep(500);
 							flag=true;
 							
 							if (label.equalsIgnoreCase(CSVLabel.Parent.toString()) && !value.isEmpty() && !value.equals("")) {
-								ThreadSleep(10000);
+								ThreadSleep(2000);
 								if (click(driver,getItemInList(projectName, value, action.BOOLEAN, 20),
 										value + "   :  Parent Name", action.BOOLEAN)) {
 									log(LogStatus.INFO, value+" is available", YesNo.No);
@@ -879,6 +883,25 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		return ele ;
 	}
 	
-	
+	public WebElement getNavigationLabel1(String projectName,String navigationLabel,action action,int timeOut) {
+		int i=0;
+		String[] nb = navigationLabel.split("/");
+		String xpath = "";
+		WebElement ele=null;
+		for (i = 0; i < nb.length; i++) {
+			
+			if (nb.length>1 && i==0) {
+				xpath = "//div[contains(@id,'treeview')]//*//*[@class='icon expand-icon glyphicon glyphicon-minus']//following-sibling::*[text()='"+nb[i]+"']";
+			}else if (nb.length==1 && i==0) {
+				xpath = "//div[contains(@id,'treeview')]//*//*[text()='"+nb[i]+"']";	
+			} else {
+				xpath=xpath+"/../following-sibling::*/*[text()='"+nb[i]+"']";
+			}
+			
+		}
+		ele = FindElement(driver, xpath, navigationLabel, action, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, navigationLabel);
+
+	}
 	
 }
