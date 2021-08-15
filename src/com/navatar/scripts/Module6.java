@@ -17,7 +17,7 @@ import com.navatar.pageObjects.*;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class Module6 extends BaseLib{
-	public static double dealReceivedScore=1.0,loiScore=5.0;
+	public static double dealReceivedScore=1.0,loiScore=5.0,closedScore=5.0;
 	@Parameters({ "projectName"})
 	@Test
 	public void M6tc001_CreatePrecondition(String projectName) {
@@ -1800,6 +1800,732 @@ public class Module6 extends BaseLib{
 			log(LogStatus.SKIP,"deal tab is not clickable",YesNo.Yes);
 		}
 		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	@Parameters({ "projectName"})
+	@Test
+	public void M6tc014_1_CheckConvertToPortfolioFuncAfterInvactiveClosedDealStage(String projectName) {
+		//alert problem
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String rt=InstRecordType.Portfolio_Company.toString().replace("_", " ");
+		String updateLabel="Portfolio_Company";
+		if (home.clickOnSetUpLink()) {
+			String parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+
+				if(setup.searchStandardOrCustomObject(environment, mode, object.Institution)) {
+					if(setup.clickOnObjectFeature(environment, mode, object.Institution, ObjectFeatureName.recordTypes)) {
+						if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10), rt+Keys.ENTER, "status", action.BOOLEAN)) {
+							if (setup.clickOnAlreadyCreatedLayout(rt)) {
+								switchToFrame(driver, 10, setup.getFrame(PageName.RecordTypePortfolioCompany, 10));
+								if (click(driver, setup.getEditButton(environment,Mode.Classic.toString(),10), "edit", action.BOOLEAN)) {
+									ThreadSleep(2000);
+									switchToDefaultContent(driver);
+									switchToFrame(driver, 10, setup.getFrame(PageName.RecordTypePortfolioCompany, 10));
+									ThreadSleep(2000);
+									//setup.getRecordTypeLabel(projectName,"Record Type Name", 10).sendKeys(updateLabel);
+									//if(sendKeys(driver, setup.getRecordTypeLabel(projectName,"Record Type Name", 10), , "name", action.SCROLLANDBOOLEAN)) {
+									if(!isSelected(driver, setup.getactiveCheckbox(10), "active checkbox")){
+									if (click(driver, setup.getactiveCheckbox(10), "active", action.BOOLEAN)) {
+										log(LogStatus.INFO, "activeCheckbox is now checked",YesNo.No);
+
+									}else {
+										log(LogStatus.FAIL, "activeCheckbox not clickable",YesNo.Yes);
+										sa.assertTrue(false, "activeCheckbox not clickable");
+									}
+									}
+									if (click(driver, setup.getSaveButtonInCustomFields(10), "save", action.SCROLLANDBOOLEAN)) {
+										ThreadSleep(3000);	
+										log(LogStatus.INFO, "save button is clicked",YesNo.No);
+
+										}else {
+											log(LogStatus.FAIL, "save button not clickable",YesNo.Yes);
+											sa.assertTrue(false, "save button not clickable");
+										}
+//									}else {
+//										log(LogStatus.FAIL, "name textbox not visible",YesNo.Yes);
+//										sa.assertTrue(false, "name textbox not visible");
+//									}
+								}else {
+									log(LogStatus.FAIL, "edit button not clickable",YesNo.Yes);
+									sa.assertTrue(false, "edit button not clickable");
+								}
+							}else {
+								log(LogStatus.FAIL, InstRecordType.Portfolio+" not found",YesNo.Yes);
+								sa.assertTrue(false, InstRecordType.Portfolio+" not found");
+							}
+						}else {
+							log(LogStatus.FAIL, "search textbox not found",YesNo.Yes);
+							sa.assertTrue(false, "search textbox not found");
+						}
+					}else {
+						log(LogStatus.FAIL, "record type feature not clickable",YesNo.Yes);
+						sa.assertTrue(false, "record type feature not clickable");
+					}
+				}else {
+					log(LogStatus.FAIL, "institution object is not clickable",YesNo.Yes);
+					sa.assertTrue(false, "institution object is not clickable");
+				}
+				
+				if(setup.searchStandardOrCustomObject(environment, mode, object.Deal)) {
+					if(setup.clickOnObjectFeature(environment, mode, object.Deal, ObjectFeatureName.FieldAndRelationShip)) {
+						if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10), excelLabel.Stage.toString(), "stage", action.BOOLEAN)) {
+							if (setup.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
+								switchToDefaultContent(driver);
+								switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
+								WebElement ele=dp.findDeactivateLink(projectName, Stage.Closed.toString());
+								if (click(driver, ele, "deactivate closed", action.SCROLLANDBOOLEAN)) {
+									ThreadSleep(3000);
+									driver.switchTo().alert().accept();
+									//switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+									switchToDefaultContent(driver);
+									switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
+										
+									ele=dp.findActivateLink(projectName, Stage.Closed.toString());
+									if(ele!=null) {
+										log(LogStatus.INFO, "successfully deactivated closed value", YesNo.No);
+									}else {
+										sa.assertTrue(false,"not able to deactivate closed value");
+										log(LogStatus.SKIP,"not able to deactivate closed value",YesNo.Yes);
+									}
+
+								}else {
+									sa.assertTrue(false,"deactivate link is not clickable");
+									log(LogStatus.SKIP,"deactivate link is not clickable",YesNo.Yes);
+								}
+							}else {
+								sa.assertTrue(false,"stage field link is not clickable");
+								log(LogStatus.SKIP,"stage field link is not clickable",YesNo.Yes);
+							}
+						}else {
+							sa.assertTrue(false,"search textbox is not visible");
+							log(LogStatus.SKIP,"search textbox is not visible",YesNo.Yes);
+						}
+					}else {
+							log(LogStatus.FAIL, "field n relationships feature not clickable",YesNo.Yes);
+							sa.assertTrue(false, "field n relationships feature not clickable");
+						}
+					}else {
+						log(LogStatus.FAIL, "deal object is not clickable",YesNo.Yes);
+						sa.assertTrue(false, "deal object is not clickable");
+					}
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.FAIL, "could not find new window to switch",YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch");
+			}
+		}else {
+			log(LogStatus.FAIL, "setup link is not clickable",YesNo.Yes);
+			sa.assertTrue(false, "setup link is not clickable");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M6tc014_2_CheckConvertToPortfolioFuncAfterInvactiveClosedDealStage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
+		};
+		String labelValues[]={Stage.Closed.toString(),Stage.Closed.toString()};
+
+		
+		if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M6Deal2, 10)) {
+				if (click(driver, dp.getconvertToPortfolio(10),"convert to portfolio button", action.BOOLEAN)) {
+					
+					if (click(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
+						if (dp.getconvertToPortfolioMessageRepeat(10)!=null) {
+							String text=dp.getconvertToPortfolioMessageRepeat(10).getText();
+							if (text.contains(dp.convertToPortfolioRepeat(M6Ins3))) {
+								log(LogStatus.INFO,"successfully verified already portfolio message",YesNo.Yes);
+								
+							}else {
+								sa.assertTrue(false,"could not verify already portfolio message\nExpected: "+text+"\nActual: "+dp.convertToPortfolioRepeat(M6Ins2));
+								log(LogStatus.SKIP,"could not verify already portfolio message\\nExpected: "+text+"\nActual: "+dp.convertToPortfolioRepeat(M6Ins2),YesNo.Yes);
+							}
+						}else {
+							sa.assertTrue(false,"not visible already portfolio message");
+							log(LogStatus.SKIP,"not visible already portfolio message",YesNo.Yes);
+						}
+						if ( dp.getconvertToPortfolioCrossButton(10)!=null) {
+							log(LogStatus.INFO,"successfully verified presence of cross icon",YesNo.Yes);
+							
+						}else {
+							sa.assertTrue(false,"could not verify cross icon presence");
+							log(LogStatus.SKIP,"could not verify cross icon presence",YesNo.Yes);
+						}
+						if (click(driver, dp.getfinishButton(10), "finish", action.BOOLEAN)) {
+							log(LogStatus.INFO, "successfully verified finish button after convert to portfolio", YesNo.No);
+						}else {
+							sa.assertTrue(false,"could not verify convert to portfolio as finish button not clicked");
+							log(LogStatus.SKIP,"could not verify convert to portfolio as finish button not clicked",YesNo.Yes);
+						}
+					}else {
+						sa.assertTrue(false,"next button is not clickable");
+						log(LogStatus.SKIP,"next button is not clickable",YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false,"convertToPortfolio button is not clickable");
+					log(LogStatus.SKIP,"convertToPortfolio button is not clickable",YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,M6Deal2+" deal is not found on deal tab");
+				log(LogStatus.SKIP,M6Deal2+" deal is not found on deal tab",YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"deal tab is not clickable");
+			log(LogStatus.SKIP,"deal tab is not clickable",YesNo.Yes);
+		}
+		
+		if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M6Deal9, 10)) {
+				if (click(driver, dp.getconvertToPortfolio(10),"convert to portfolio button", action.BOOLEAN)) {
+					if (click(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
+						ThreadSleep(3000);
+						refresh(driver);
+						ThreadSleep(2000);
+						String text=dp.getconvertToPortfolioMessageAfterNext(10).getText();
+
+						if (text.contains(dp.convertToPortfolioAfterNext(M6Ins9))) {
+							log(LogStatus.INFO,"successfully verified max character inst name on convert to portfolio message congratulations",YesNo.Yes);
+
+						}else {
+							sa.assertTrue(false,"could not verify convert to portfolio message Expected: "+dp.convertToPortfolioAfterNext(M6Ins9)+"\nactual: "+text);
+							log(LogStatus.SKIP,"could not verify convert to portfolio message Expected: "+dp.convertToPortfolioAfterNext(M6Ins9)+"\nactual: "+text,YesNo.Yes);
+						}
+						if (click(driver, dp.getconvertToPortfolioCrossButton(10), "finish", action.BOOLEAN)) {
+							log(LogStatus.INFO, "clicked on cross button", YesNo.No);
+						}else {
+							sa.assertTrue(false,"could not click on cross button");
+							log(LogStatus.SKIP,"could not click on cross button",YesNo.Yes);
+						}
+						
+					
+
+				for (int i =0;i<labelName.length;i++) {
+					if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i])) {
+						log(LogStatus.SKIP,"successfully verified "+labelName[i],YesNo.No);
+
+					}else {
+						sa.assertTrue(false,"Not Able to verify "+labelName[i]);
+						log(LogStatus.SKIP,"Not Able to verify "+labelName[i],YesNo.Yes);
+					}
+
+				}
+					}else {
+						sa.assertTrue(false,"next button is not clickable");
+						log(LogStatus.SKIP,"next button is not clickable",YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false,"convert to portfolio button is not clickable");
+					log(LogStatus.SKIP,"convert to portfolio button is not clickable",YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,M6Deal9+" deal is not clickable");
+				log(LogStatus.SKIP,M6Deal9+" deal is not clickable",YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"deal tab is not clickable");
+			log(LogStatus.SKIP,"deal tab is not clickable",YesNo.Yes);
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M6tc015_1_CheckConvertToPortfolioFuncAfterRenameClosedDealStage(String projectName) {
+		//alert problem
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String rt=InstRecordType.Portfolio_Company.toString().replace("_", " ");
+		String updateLabel="Portfolio_Company";
+		if (home.clickOnSetUpLink()) {
+			String parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+
+								
+				if(setup.searchStandardOrCustomObject(environment, mode, object.Deal)) {
+					if(setup.clickOnObjectFeature(environment, mode, object.Deal, ObjectFeatureName.FieldAndRelationShip)) {
+						if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10), excelLabel.Stage.toString(), "stage", action.BOOLEAN)) {
+							if (setup.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
+								switchToDefaultContent(driver);
+								switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
+								WebElement ele=dp.findActivateLink(projectName, Stage.Closed.toString());
+								if (click(driver, ele, "activate closed", action.SCROLLANDBOOLEAN)) {
+									ThreadSleep(3000);
+									switchToDefaultContent(driver);
+									switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
+										
+									ele=dp.findDeactivateLink(projectName, Stage.Closed.toString());
+									if(ele!=null) {
+										log(LogStatus.INFO, "successfully activated closed value", YesNo.No);
+									}else {
+										sa.assertTrue(false,"not able to activate closed value");
+										log(LogStatus.SKIP,"not able to activate closed value",YesNo.Yes);
+									}
+									ele=setup.clickOnEditInFrontOfFieldValues(projectName, Stage.Closed.toString());
+									if (click(driver, ele, "closed", action.BOOLEAN)) {
+										switchToDefaultContent(driver);
+										ThreadSleep(3000);
+										switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
+										sendKeys(driver, setup.getFieldLabelTextBox1(10), Stage.Closed_Updated.toString(), "label", action.BOOLEAN);
+											
+
+										if (click(driver, fp.getCustomTabSaveBtn(10), "save", action.BOOLEAN)) {
+											ThreadSleep(3000);
+											switchToDefaultContent(driver);
+											ThreadSleep(3000);
+											switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
+											ele=dp.findDeactivateLink(projectName, Stage.Closed_Updated.toString());
+											
+											if(ele!=null) {
+												log(LogStatus.INFO, "successfully renamed closed value", YesNo.No);
+												if (click(driver, ele, "deactivate link", action.SCROLLANDBOOLEAN)) {
+													ThreadSleep(3000);
+													driver.switchTo().alert().accept();
+													//switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+													switchToDefaultContent(driver);
+													switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
+														
+													ele=dp.findActivateLink(projectName, Stage.Closed_Updated.toString());
+													if(ele!=null) {
+														log(LogStatus.INFO, "successfully deactivated closed value", YesNo.No);
+													}else {
+														sa.assertTrue(false,"not able to deactivate closed value");
+														log(LogStatus.SKIP,"not able to deactivate closed value",YesNo.Yes);
+													}
+												}else {
+													sa.assertTrue(false,"not able to click on deactivate link");
+													log(LogStatus.SKIP,"not able to click on deactivate link",YesNo.Yes);
+												}
+											}else {
+												sa.assertTrue(false,"not able to renamed closed value");
+												log(LogStatus.SKIP,"not able to renamed closed value",YesNo.Yes);
+											}
+										}else {
+											sa.assertTrue(false,"not able to click on save button");
+											log(LogStatus.SKIP,"not able to click on save button",YesNo.Yes);
+										}
+
+									}else {
+										sa.assertTrue(false,"edit button is not clickable");
+										log(LogStatus.SKIP,"edit button is not clickable",YesNo.Yes);
+									}
+								}else {
+									sa.assertTrue(false,"activate link is not clickable");
+									log(LogStatus.SKIP,"activate link is not clickable",YesNo.Yes);
+								}
+							}else {
+								sa.assertTrue(false,"stage field link is not clickable");
+								log(LogStatus.SKIP,"stage field link is not clickable",YesNo.Yes);
+							}
+						}else {
+							sa.assertTrue(false,"search textbox is not visible");
+							log(LogStatus.SKIP,"search textbox is not visible",YesNo.Yes);
+						}
+					}else {
+							log(LogStatus.FAIL, "field n relationships feature not clickable",YesNo.Yes);
+							sa.assertTrue(false, "field n relationships feature not clickable");
+						}
+					}else {
+						log(LogStatus.FAIL, "deal object is not clickable",YesNo.Yes);
+						sa.assertTrue(false, "deal object is not clickable");
+					}
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.FAIL, "could not find new window to switch",YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch");
+			}
+		}else {
+			log(LogStatus.FAIL, "setup link is not clickable",YesNo.Yes);
+			sa.assertTrue(false, "setup link is not clickable");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M6tc015_2_CheckConvertToPortfolioFuncAfterRenameClosedDealStage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
+		};
+		String labelValues[]={Stage.Closed_Updated.toString(),Stage.Closed_Updated.toString()};
+
+		
+		if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M6Deal2, 10)) {
+				if (click(driver, dp.getconvertToPortfolio(10),"convert to portfolio button", action.BOOLEAN)) {
+					
+					if (click(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
+						ThreadSleep(4000);if (dp.getconvertToPortfolioMessageRepeat(10)!=null) {
+							String text=dp.getconvertToPortfolioMessageRepeat(10).getText();
+							if (text.contains(dp.convertToPortfolioRepeat(M6Ins3))) {
+								log(LogStatus.INFO,"successfully verified already portfolio message",YesNo.Yes);
+								
+							}else {
+								sa.assertTrue(false,"could not verify already portfolio message\nExpected: "+text+"\nActual: "+dp.convertToPortfolioRepeat(M6Ins2));
+								log(LogStatus.SKIP,"could not verify already portfolio message\\nExpected: "+text+"\nActual: "+dp.convertToPortfolioRepeat(M6Ins2),YesNo.Yes);
+							}
+						}else {
+							sa.assertTrue(false,"not visible already portfolio message");
+							log(LogStatus.SKIP,"not visible already portfolio message",YesNo.Yes);
+						}
+						if ( dp.getconvertToPortfolioCrossButton(10)!=null) {
+							log(LogStatus.INFO,"successfully verified presence of cross icon",YesNo.Yes);
+							
+						}else {
+							sa.assertTrue(false,"could not verify cross icon presence");
+							log(LogStatus.SKIP,"could not verify cross icon presence",YesNo.Yes);
+						}
+						if (click(driver, dp.getfinishButton(10), "finish", action.BOOLEAN)) {
+							log(LogStatus.INFO, "successfully verified finish button after convert to portfolio", YesNo.No);
+						}else {
+							sa.assertTrue(false,"could not verify convert to portfolio as finish button not clicked");
+							log(LogStatus.SKIP,"could not verify convert to portfolio as finish button not clicked",YesNo.Yes);
+						}
+					}else {
+						sa.assertTrue(false,"next button is not clickable");
+						log(LogStatus.SKIP,"next button is not clickable",YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false,"convertToPortfolio button is not clickable");
+					log(LogStatus.SKIP,"convertToPortfolio button is not clickable",YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,M6Deal2+" deal is not found on deal tab");
+				log(LogStatus.SKIP,M6Deal2+" deal is not found on deal tab",YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"deal tab is not clickable");
+			log(LogStatus.SKIP,"deal tab is not clickable",YesNo.Yes);
+		}
+		
+		if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M6Deal20, 10)) {
+				if (click(driver, dp.getconvertToPortfolio(10),"convert to portfolio button", action.BOOLEAN)) {
+					if (click(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
+						String text=dp.getconvertToPortfolioMessageAfterNext(10).getText();
+
+						if (text.contains(dp.convertToPortfolioAfterNext(M6Ins20))) {
+							log(LogStatus.INFO,"successfully verified max character inst name on convert to portfolio message congratulations",YesNo.Yes);
+
+						}else {
+							sa.assertTrue(false,"could not verify convert to portfolio message Expected: "+dp.convertToPortfolioAfterNext(M6Ins20)+"\nactual: "+text);
+							log(LogStatus.SKIP,"could not verify convert to portfolio message Expected: "+dp.convertToPortfolioAfterNext(M6Ins20)+"\nactual: "+text,YesNo.Yes);
+						}
+						if (click(driver, dp.getconvertToPortfolioCrossButton(10), "finish", action.BOOLEAN)) {
+							log(LogStatus.INFO, "clicked on cross button", YesNo.No);
+						}else {
+							sa.assertTrue(false,"could not click on cross button");
+							log(LogStatus.SKIP,"could not click on cross button",YesNo.Yes);
+						}
+						
+					
+
+				for (int i =0;i<labelName.length;i++) {
+					if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i],false)) {
+						log(LogStatus.SKIP,"successfully verified "+labelName[i],YesNo.No);
+
+					}else {
+						sa.assertTrue(false,"Not Able to verify "+labelName[i]);
+						log(LogStatus.SKIP,"Not Able to verify "+labelName[i],YesNo.Yes);
+					}
+
+				}
+					}else {
+						sa.assertTrue(false,"next button is not clickable");
+						log(LogStatus.SKIP,"next button is not clickable",YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false,"convert to portfolio button is not clickable");
+					log(LogStatus.SKIP,"convert to portfolio button is not clickable",YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,M6Deal20+" deal is not clickable");
+				log(LogStatus.SKIP,M6Deal20+" deal is not clickable",YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"deal tab is not clickable");
+			log(LogStatus.SKIP,"deal tab is not clickable",YesNo.Yes);
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	@Parameters({ "projectName"})
+	@Test
+	public void M6tc016_1_CheckConvertToPortfolioFuncWhenRecordTypeInstitution(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			String parentID = switchOnWindow(driver);
+			if (parentID!=null) {
+
+								
+				if(setup.searchStandardOrCustomObject(environment, mode, object.Deal)) {
+					if(setup.clickOnObjectFeature(environment, mode, object.Deal, ObjectFeatureName.FieldAndRelationShip)) {
+						if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10), excelLabel.Stage.toString(), "stage", action.BOOLEAN)) {
+							if (setup.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
+								switchToDefaultContent(driver);
+								switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
+								WebElement ele=dp.findActivateLink(projectName, Stage.Closed_Updated.toString());
+								if (click(driver, ele, "activate closed", action.SCROLLANDBOOLEAN)) {
+									ThreadSleep(3000);
+									switchToDefaultContent(driver);
+									switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
+										
+									ele=dp.findDeactivateLink(projectName, Stage.Closed_Updated.toString());
+									if(ele!=null) {
+										log(LogStatus.INFO, "successfully activated closedupdated value", YesNo.No);
+									}else {
+										sa.assertTrue(false,"not able to activate closedupdated value");
+										log(LogStatus.SKIP,"not able to activate closedupdated value",YesNo.Yes);
+									}
+									
+								}else {
+									sa.assertTrue(false,"activate link is not clickable");
+									log(LogStatus.SKIP,"activate link is not clickable",YesNo.Yes);
+								}
+							}else {
+								sa.assertTrue(false,"stage field link is not clickable");
+								log(LogStatus.SKIP,"stage field link is not clickable",YesNo.Yes);
+							}
+						}else {
+							sa.assertTrue(false,"search textbox is not visible");
+							log(LogStatus.SKIP,"search textbox is not visible",YesNo.Yes);
+						}
+					}else {
+							log(LogStatus.FAIL, "field n relationships feature not clickable",YesNo.Yes);
+							sa.assertTrue(false, "field n relationships feature not clickable");
+						}
+					}else {
+						log(LogStatus.FAIL, "deal object is not clickable",YesNo.Yes);
+						sa.assertTrue(false, "deal object is not clickable");
+					}
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.FAIL, "could not find new window to switch",YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch");
+			}
+		}else {
+			log(LogStatus.FAIL, "setup link is not clickable",YesNo.Yes);
+			sa.assertTrue(false, "setup link is not clickable");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void M6tc016_2_CheckConvertToPortfolioFuncWhenRecordTypeInstitution(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
+		};
+		String labelValues[]={Stage.Closed.toString(),Stage.Closed_Updated.toString()};
+
+		if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M6Deal1, 10)) {
+				if (click(driver, dp.getconvertToPortfolio(10),"convert to portfolio button", action.BOOLEAN)) {
+					if (click(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
+						String text=dp.getconvertToPortfolioMessageAfterNext(10).getText();
+
+						if (text.contains(dp.convertToPortfolioAfterNext(M6Ins1))) {
+							log(LogStatus.INFO,"successfully verified max character inst name on convert to portfolio message congratulations",YesNo.Yes);
+
+						}else {
+							sa.assertTrue(false,"could not verify convert to portfolio message Expected: "+dp.convertToPortfolioAfterNext(M6Ins1)+"\nactual: "+text);
+							log(LogStatus.SKIP,"could not verify convert to portfolio message Expected: "+dp.convertToPortfolioAfterNext(M6Ins1)+"\nactual: "+text,YesNo.Yes);
+						}
+						if ( dp.getfinishButton(10)!=null) {
+							log(LogStatus.INFO, "successfully verified finish button after convert to portfolio", YesNo.No);
+						}else {
+							sa.assertTrue(false,"could not verify convert to portfolio as finish button not clicked");
+							log(LogStatus.SKIP,"could not verify convert to portfolio as finish button not clicked",YesNo.Yes);
+						}
+						if (click(driver, dp.getconvertToPortfolioCrossButton(10), "finish", action.BOOLEAN)) {
+							log(LogStatus.INFO, "clicked on cross button", YesNo.No);
+						}else {
+							sa.assertTrue(false,"could not click on cross button");
+							log(LogStatus.SKIP,"could not click on cross button",YesNo.Yes);
+						}
+						
+					ThreadSleep(3000);
+					refresh(driver);
+					ThreadSleep(3000);
+				for (int i =0;i<labelName.length;i++) {
+					if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i],false)) {
+						log(LogStatus.SKIP,"successfully verified "+labelName[i],YesNo.No);
+
+					}else {
+						sa.assertTrue(false,"Not Able to verify "+labelName[i]);
+						log(LogStatus.SKIP,"Not Able to verify "+labelName[i],YesNo.Yes);
+					}
+
+				}
+					}else {
+						sa.assertTrue(false,"next button is not clickable");
+						log(LogStatus.SKIP,"next button is not clickable",YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false,"convert to portfolio button is not clickable");
+					log(LogStatus.SKIP,"convert to portfolio button is not clickable",YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,M6Deal20+" deal is not clickable");
+				log(LogStatus.SKIP,M6Deal20+" deal is not clickable",YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"deal tab is not clickable");
+			log(LogStatus.SKIP,"deal tab is not clickable",YesNo.Yes);
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M6tc017_CheckConvertToPortfolioFuncWhenRecordTypeAdvisor(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		int total=1;
+		double avgDealQualityScore=closedScore/total;
+		String labelName1[]={excelLabel.Record_Type.toString(),excelLabel.Status.toString()
+		};
+		String labelValues1[]={InstRecordType.Portfolio_Company.toString(),InstRecordType.Portfolio_Company.toString()};
+		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
+		,excelLabel.Deal_Quality_Score.toString()};
+		String labelValues[]={Stage.Closed.toString(),Stage.Closed_Updated.toString(),String.valueOf(closedScore)};
+		
+		if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M6Deal12, 10)) {
+				if (click(driver, dp.getconvertToPortfolio(10),"convert to portfolio button", action.BOOLEAN)) {
+					if (click(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
+						String text=dp.getconvertToPortfolioMessageAfterNext(10).getText();
+
+						if (text.contains(dp.convertToPortfolioAfterNext(M6Ins12))) {
+							log(LogStatus.INFO,"successfully verified max character inst name on convert to portfolio message congratulations",YesNo.Yes);
+
+						}else {
+							sa.assertTrue(false,"could not verify convert to portfolio message Expected: "+dp.convertToPortfolioAfterNext(M6Ins12)+"\nactual: "+text);
+							log(LogStatus.SKIP,"could not verify convert to portfolio message Expected: "+dp.convertToPortfolioAfterNext(M6Ins12)+"\nactual: "+text,YesNo.Yes);
+						}
+						if ( dp.getfinishButton(10)!=null) {
+							log(LogStatus.INFO, "successfully verified finish button after convert to portfolio", YesNo.No);
+						}else {
+							sa.assertTrue(false,"could not verify convert to portfolio as finish button not clicked");
+							log(LogStatus.SKIP,"could not verify convert to portfolio as finish button not clicked",YesNo.Yes);
+						}
+						if (click(driver, dp.getconvertToPortfolioCrossButton(10), "finish", action.BOOLEAN)) {
+							log(LogStatus.INFO, "clicked on cross button", YesNo.No);
+						}else {
+							sa.assertTrue(false,"could not click on cross button");
+							log(LogStatus.SKIP,"could not click on cross button",YesNo.Yes);
+						}
+						ThreadSleep(3000);
+						refresh(driver);
+						ThreadSleep(3000);
+					for (int i =0;i<labelName.length;i++) {
+						if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i],false)) {
+							log(LogStatus.SKIP,"successfully verified "+labelName[i],YesNo.No);
+
+						}else {
+							sa.assertTrue(false,"Not Able to verify "+labelName[i]);
+							log(LogStatus.SKIP,"Not Able to verify "+labelName[i],YesNo.Yes);
+						}
+
+					}
+					}else {
+						sa.assertTrue(false,"next button is not clickable");
+						log(LogStatus.SKIP,"next button is not clickable",YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false,"convert to portfolio button is not clickable");
+					log(LogStatus.SKIP,"convert to portfolio button is not clickable",YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,M6Deal12+" deal is not clickable");
+				log(LogStatus.SKIP,M6Deal12+" deal is not clickable",YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"deal tab is not clickable");
+			log(LogStatus.SKIP,"deal tab is not clickable",YesNo.Yes);
+		}
+		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M6Ins12, 10)) {
+				for(int i = 0;i<labelName1.length;i++) {
+				if (ip.fieldValueVerificationOnInstitutionPage(environment,mode,TabName.Object1Tab, labelName1[i],labelValues1[i])) {
+					log(LogStatus.SKIP,"successfully verified "+labelName1[i],YesNo.No);
+
+				}else {
+					sa.assertTrue(false,"Not Able to verify "+labelName1[i]);
+					log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
+				}
+				}
+			}
+			else {
+				sa.assertTrue(false,M6Ins12+" is not found on inst page");
+				log(LogStatus.SKIP,M6Ins12+" is not found on inst page",YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"inst tab is not clickable");
+			log(LogStatus.SKIP,"inst tab is not clickable",YesNo.Yes);
+		}
 		lp.CRMlogout();
 		sa.assertAll();
 	}

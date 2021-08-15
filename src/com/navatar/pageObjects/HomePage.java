@@ -1,11 +1,11 @@
 package com.navatar.pageObjects;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.navatar.generic.EnumConstants.PageName;
-import com.navatar.generic.EnumConstants.SearchBasedOnExistingFundsOptions;
 import com.navatar.generic.EnumConstants.TopOrBottom;
 import com.navatar.generic.EnumConstants.action;
 
@@ -1118,7 +1118,7 @@ public class HomePage extends BasePageBusinessLayer {
 	
 	public WebElement sdgGridSideIcons(SDGGridName sdgGridName,SDGGridSideIcons sdgGridSideIcons, int timeOut) {
 		
-		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName+"']/../../../following-sibling::div//*[@title='"+sdgGridSideIcons+"']";
+		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName+"']/../../../following-sibling::div//*[contains(@title,'"+sdgGridSideIcons+"')]";
 		WebElement ele = FindElement(driver, xpath, "SDG grid side icon "+sdgGridSideIcons, action.SCROLLANDBOOLEAN, timeOut);
 		
 		return isDisplayed(driver, ele, "Visibility", timeOut, "SDG grid side icon "+sdgGridSideIcons);
@@ -1195,6 +1195,15 @@ public List<WebElement> sdgGridHeadersMyCallListNameList() {
 		
 		return ele;
 	}
+
+
+public List<WebElement> sdgGridHeadersMyCallListPhoneList() {
+	
+	String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='My Call List']/../../../../../following-sibling::div//table/tbody/tr/td[4]//a";
+	List<WebElement> ele = FindElements(driver, xpath, "SDG grid Name column data in My Call List grid ");
+	
+	return ele;
+}
 	
 public List<WebElement> sdgGridHeadersMyCallListNameCallLogList() {
 		
@@ -1252,6 +1261,53 @@ public List<WebElement> sdgGridSelectThemeList() {
 	
 	return ele;
 }
+
+
+
+	
+
+public List<WebElement> sdgGridSelectVisibleFieldsListInManageFieldPopUp() {
+	
+	
+	String xpath="//ul[@id='allFields']/li/p";
+	List<WebElement> ele = FindElements(driver, xpath, "sdgGridSelectFieldToDisplayInManageFieldPopUp");
+	
+	return ele;
+}
+
+
+public WebElement sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons saveCancelBtn, int timeOut) {
+	
+	
+	String xpath="//footer//*[@title='"+saveCancelBtn+"']";
+	WebElement ele = FindElement(driver, xpath, "SDG grid SelectFieldToDisplay popup  "+saveCancelBtn, action.SCROLLANDBOOLEAN, timeOut);
+	
+	return isDisplayed(driver, ele, "Visibility", timeOut, "SDG grid SelectFieldToDisplay popup  "+saveCancelBtn);
+}
+
+
+public boolean clickOnEditButtonOnSDGGridOnHomePage(String projectName, String dataName, String field,int timeOut) {
+	String xpath ="//td[contains(@data-label,'"+field+"')]//*[text()='"+dataName+"']/../../following-sibling::span/button";
+	WebElement ele = FindElement(driver, xpath,"edit button for "+field, action.SCROLLANDBOOLEAN, timeOut);
+	JavascriptExecutor js = (JavascriptExecutor)driver;
+	js.executeScript("return arguments[0].setAttribute('Styles','display: inline-block;')", ele);
+	click(driver, ele, "edit", action.BOOLEAN);
+	return true;
+}
+
+public WebElement sdgGridSideIconsForLightTheme(SDGGridName sdgGridName,SDGGridSideIcons sdgGridSideIcons, int timeOut) {
+	String xpath="";
+	if(sdgGridSideIcons.toString().equalsIgnoreCase(SDGGridSideIcons.Toggle_Filters.toString())) {
+		xpath="//div[contains(@data-component-id,'navpeII_sdg')]//div/div[contains(@class,'sdgborder')]//a[text()='"+sdgGridName+"']/../../../following-sibling::div//button[contains(@title,'"+sdgGridSideIcons+"')]";
+	}else if(sdgGridSideIcons.toString().equalsIgnoreCase(SDGGridSideIcons.Side_DropDOwnButtonforLightTheme.toString())){
+		xpath="//div[contains(@data-component-id,'navpeII_sdg')]//div/div[contains(@class,'sdgborder')]//a[text()='"+sdgGridName+"']/../../../following-sibling::div//div[@id='mydiv']//button";
+	}else {
+		xpath="//div[contains(@data-component-id,'navpeII_sdg')]//div/div[contains(@class,'sdgborder')]//a[text()='"+sdgGridName+"']/../../../following-sibling::div//div[@id='mydiv']//button/following-sibling::div//a/span[contains(text(),'"+sdgGridSideIcons+"')]";
+	}
+	WebElement ele = FindElement(driver, xpath, "SDG grid side icon "+sdgGridSideIcons, action.SCROLLANDBOOLEAN, timeOut);
+	return isDisplayed(driver, ele, "Visibility", timeOut, "SDG grid side icon "+sdgGridSideIcons);
+}
+
 
 }
 

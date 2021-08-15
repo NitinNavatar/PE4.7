@@ -264,8 +264,8 @@ public class CommonVariables {
 	public static String M3Meeting1Subject,M3Meeting1dueDate,M3Meeting1Status,M3Meeting1Priority,M3Meeting1MeetingType;
 	
 	public static String M3Deal1,M3Deal1CompanyName,M3Deal1RecordType,M3Deal1Stage;
-	public static String M6Ins1,M6Ins2,M6Ins3,M6Ins6,M6Ins11,M6Ins1RecordType;
-	public static String M6Deal2,M6Deal4,M6Deal5,M6Deal6,M6Deal7,M6Deal8,M6Deal8Stage,M6Deal7Stage,M6Deal11,M6Deal20,M6Deal20Stage;
+	public static String M6Ins1,M6Ins2,M6Ins3,M6Ins6,M6Ins9,M6Ins11,M6Ins12,M6Ins13,M6Ins20,M6Ins1RecordType;
+	public static String M6Deal1,M6Deal2,M6Deal4,M6Deal5,M6Deal6,M6Deal7,M6Deal8,M6Deal9,M6Deal8Stage,M6Deal7Stage,M6Deal11,M6Deal12,M6Deal13,M6Deal20,M6Deal20Stage;
 	
 	public static String M3Ins1,M3Ins1RecordType;
 	public static String M3Ins2,M3Ins2RecordType;
@@ -1048,10 +1048,17 @@ public class CommonVariables {
 			M6Ins2=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS2", excelLabel.Institutions_Name);
 			M6Ins3=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS3", excelLabel.Institutions_Name);
 			M6Ins6=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS6", excelLabel.Institutions_Name);
+			M6Ins9=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS9", excelLabel.Institutions_Name);
 			M6Ins11=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS11", excelLabel.Institutions_Name);
+			M6Ins12=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS12", excelLabel.Institutions_Name);
+			M6Ins13=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS13", excelLabel.Institutions_Name);
+			M6Ins20=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS20", excelLabel.Institutions_Name);
+			M6Deal1=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal1", excelLabel.Deal_Name);
 			M6Deal2=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal2", excelLabel.Deal_Name);
 			M6Deal20Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal20", excelLabel.Stage);
 			M6Deal11=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal11", excelLabel.Deal_Name);
+			M6Deal12=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal12", excelLabel.Deal_Name);
+			M6Deal13=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal13", excelLabel.Deal_Name);
 			M6Deal4=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal4", excelLabel.Deal_Name);
 			M6Deal5=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal5", excelLabel.Deal_Name);
 			M6Deal6=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal6", excelLabel.Deal_Name);
@@ -1059,8 +1066,9 @@ public class CommonVariables {
 			M6Deal7Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal7", excelLabel.Stage);
 			M6Deal8=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal8", excelLabel.Deal_Name);
 			M6Deal8Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal8", excelLabel.Stage);
+			M6Deal9=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal9", excelLabel.Deal_Name);
 			
-			M6Deal20=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal20", excelLabel.Deal_Name);
+			M6Deal20=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal19", excelLabel.Deal_Name);
 		}
 		
 		 System.err.println("");
