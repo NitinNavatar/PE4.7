@@ -30,7 +30,7 @@ import java.util.Set;
 
 import static com.navatar.generic.AppListeners.*;
 public class SetupPageBusinessLayer extends SetupPage {
-	Scanner scn = new Scanner(System.in);
+//	Scanner scn = new Scanner(System.in);
 	public SetupPageBusinessLayer(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
@@ -1339,7 +1339,7 @@ public boolean changeRecordTypeSetting(WebDriver driver,String userName,String r
 	
 	switchToDefaultContent(driver);
 	ThreadSleep(20000);
-	scn.nextLine();
+//	scn.nextLine();
 	switchToFrame(driver, 20, getSetUpPageIframe(60));
 	boolean flag=false;;
 	String xpath="";
@@ -1350,7 +1350,7 @@ public boolean changeRecordTypeSetting(WebDriver driver,String userName,String r
 		log(LogStatus.INFO, "able to click on "+userName, YesNo.No);
 		switchToDefaultContent(driver);
 		ThreadSleep(20000);
-		scn.nextLine();
+//		scn.nextLine();
 		switchToFrame(driver, 60, getSetUpPageIframe(60));
 		xpath="//*[text()='Accounts']/following-sibling::*//*[text()='Edit']";
 		ele=FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, timeOut);
@@ -1358,7 +1358,7 @@ public boolean changeRecordTypeSetting(WebDriver driver,String userName,String r
 			log(LogStatus.INFO, "able to click on edit button for record type settiing", YesNo.No);
 			switchToDefaultContent(driver);
 			ThreadSleep(10000);
-			scn.nextLine();
+//			scn.nextLine();
 			switchToFrame(driver, 20, getSetUpPageIframe(60));
 			xpath="//select[@id='p5']";
 			ele=FindElement(driver, xpath, "Record dropdown", action.SCROLLANDBOOLEAN, timeOut);
@@ -1423,7 +1423,7 @@ public boolean createRecordTypeForObject(String projectName,String[][] labelWith
 	if (click(driver,getRecordTypeNewButton(10), "Record Type New Button", action.SCROLLANDBOOLEAN)) {
 		log(LogStatus.INFO, "Click on Record Type New Button", YesNo.No);
 		ThreadSleep(5000);
-		scn.nextLine();
+//		scn.nextLine();
 		switchToFrame(driver, 20, getSetUpPageIframe(60));
 		for (String[] lv : labelWithValue) {
 			label=lv[0];
@@ -1525,14 +1525,14 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 	String value;
 	boolean flag=false;
 	switchToDefaultContent(driver);
-	scn.nextLine();
+//	scn.nextLine();
 	ThreadSleep(5000);
 	switchToFrame(driver, 20, getSetUpPageIframe(60));
 	if (click(driver, getEditButton(environment,"Classic",10), "edit", action.SCROLLANDBOOLEAN)) {
 		log(LogStatus.INFO, "Click on edit Button", YesNo.No);
 		switchToDefaultContent(driver);
 		ThreadSleep(5000);
-		scn.nextLine();
+//		scn.nextLine();
 		switchToFrame(driver, 20, getSetUpPageIframe(60));
 		for (String[] lv : labelWithValue) {
 			label=lv[0];
@@ -1609,7 +1609,7 @@ public void recordTypeVerification(String[][] labelWithValue) {
 	WebElement ele;
 	ThreadSleep(5000);
 	switchToDefaultContent(driver);
-	scn.nextLine();
+//	scn.nextLine();
 	switchToFrame(driver, 20, getSetUpPageIframe(60));
 	for (String[] labelValue : labelWithValue) {
 		xpath ="//*[text()='"+labelValue[0]+"']/..//following-sibling::td[text()='"+labelValue[1]+"']";
@@ -1914,7 +1914,7 @@ public boolean permissionChangeForUserONObject(WebDriver driver,String userName,
 		ThreadSleep(10000);
 		switchToDefaultContent(driver);
 		ThreadSleep(5000);
-		scn.nextLine();
+//		scn.nextLine();
 		switchToFrame(driver, 60, getSetUpPageIframe(60));
 		xpath="//*[@id='topButtonRow']//input[@name='edit']";
 		ele=FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, timeOut);
@@ -1924,7 +1924,7 @@ public boolean permissionChangeForUserONObject(WebDriver driver,String userName,
 			ThreadSleep(10000);
 			switchToDefaultContent(driver);
 			ThreadSleep(5000);
-			scn.nextLine();
+//			scn.nextLine();
 			switchToFrame(driver, 60, getSetUpPageIframe(60));
 			String OnObject="";
 			String permission = "";

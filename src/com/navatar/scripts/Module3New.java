@@ -2,7 +2,6 @@ package com.navatar.scripts;
 
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
-import static com.navatar.generic.SmokeCommonVariables.tabCustomObjField;
 import static com.navatar.pageObjects.NavigationPageBusineesLayer.navigationParentLabelWithChildAndOrder;
 import static com.navatar.pageObjects.NavigationPageBusineesLayer.navigationParentLabelWithChildSorted;
 import static com.navatar.pageObjects.NavigationPageBusineesLayer.navigationParentLabelWithOrder;
@@ -17,7 +16,6 @@ import java.util.Scanner;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
@@ -38,7 +36,6 @@ import com.navatar.generic.EnumConstants.FundraisingContactPageTab;
 import com.navatar.generic.EnumConstants.IndiviualInvestorFieldLabel;
 import com.navatar.generic.EnumConstants.InstitutionPageFieldLabelText;
 import com.navatar.generic.EnumConstants.Mode;
-import com.navatar.generic.EnumConstants.NavatarQuickLink;
 import com.navatar.generic.EnumConstants.NavatarSetupSideMenuTab;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.ObjectName;
@@ -56,7 +53,6 @@ import com.navatar.generic.EnumConstants.TopOrBottom;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.customObjectLabel;
-import com.navatar.generic.EnumConstants.customTabActionType;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.generic.EnumConstants.object;
 import com.navatar.generic.EnumConstants.recordTypeLabel;
@@ -68,11 +64,11 @@ import com.navatar.pageObjects.CustomObjPageBusinessLayer;
 import com.navatar.pageObjects.DataLoaderWizardPageBusinessLayer;
 import com.navatar.pageObjects.DealPageBusinessLayer;
 import com.navatar.pageObjects.EmailMyTemplatesPageBusinessLayer;
+import com.navatar.pageObjects.FundRaisingPageBusinessLayer;
 import com.navatar.pageObjects.FundsPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
 import com.navatar.pageObjects.InstitutionsPageBusinessLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
-import com.navatar.pageObjects.MarketingEventPageBusinessLayer;
 import com.navatar.pageObjects.NavatarSetupPageBusinessLayer;
 import com.navatar.pageObjects.NavigationPageBusineesLayer;
 import com.navatar.pageObjects.ReportsTabBusinessLayer;
@@ -86,7 +82,6 @@ public class Module3New extends BaseLib {
 	
 	String passwordResetLink = null;
 	String navigationMenuName=NavigationMenuItems.New_Interactions.toString();
-//	String contact = M3Contact1FName+" "+M3Contact1LName;
 	public  String NavigationMenuTestData_PEExcel = System.getProperty("user.dir")+"\\UploadFiles\\Module 3\\UploadCSV\\Navigation Menu Test Data - Parent - Child - All.csv";
 	public  String NavigationMenuTestData_PESheet = "asd";
 	String navigationTab="Navigation";
@@ -94,36 +89,14 @@ public class Module3New extends BaseLib {
 	String recordTypeDescription = "Description Record Type";
 	String upDated="Updated";
 	String customNavigationMenu = "Custom Navigation Menu";
-	Scanner scn = new Scanner(System.in);
+//	Scanner scn = new Scanner(System.in);
 	List<String> csvRecords = new ArrayList<String>();
 	
-	// Deal Creation  -- UnCheck
-	// Individual Investor -- UnCheck
-	//Fund Name = ""Balanced Fund"" 
-	//Aman Kumar
-	// 
-	
-	String Smoke_Fund1 = "Balanced Fund";
-	String institue = "Aman Institute";
-	String contact1 = "Aman Kumar";
-	
-	
-	String Smoke_FR1 = "Relaince Fundraising";
-	String Smoke_LP1= "Reliance Digital";
-	String Smoke_P1= "Reliance Partner";
-	
-	String Smoke_PL2CompanyName ="Reliance";
-	String Smoke_PL2Stage ="Due Deligence";
-	
-	String SmokeC7_FName = "Satya";
-	String SmokeC7_LName ="Nadela";
-	
-	//Fundraising NameRelaince Fundraising
-	 
-//	Legal NameBalanced Institution
-	 	 
-//	Fund NameBalanced Fund
-	
+	// Bulk Email Check
+	//Commitment creation Check
+	// Deal Creation Uncheck
+	// Individual Investor uncheck
+	// All Navigation Item should be deleted Except - Bulk Email- Bulk Fundraising - Bulk Commitments  - Call - Meeting - Task - New Deal- New Institution- New Contact
 	
 	@Parameters({ "projectName"})
 	@Test
@@ -138,6 +111,44 @@ public class Module3New extends BaseLib {
 		ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",excelLabel.User_Last_Name);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		boolean flag = false;
+		
+		String addRemoveTabName="";
+		String tab1="";
+		if (tabObj1.equalsIgnoreCase("Entity")){
+			tab1="Entitie";
+		}
+		else{
+			tab1=tabObj1;
+		}
+		addRemoveTabName=tab1+"s,"+tabObj2+"s,"+tabObj3+"s,"+navigationTab+"s,"+dashBoardTab+"s"+"Fundraisings"+"Partnerships";
+		if (lp.addTab_Lighting( addRemoveTabName, 5)) {
+			log(LogStatus.INFO,"Tab added : "+addRemoveTabName,YesNo.No);
+		} else {
+			log(LogStatus.FAIL,"Tab not added : "+addRemoveTabName,YesNo.No);
+			sa.assertTrue(false, "Tab not added : "+addRemoveTabName);
+		}		
+
+		String[] tabs=addRemoveTabName.split(",");
+		String tab="";
+		for (int i = 0; i < tabs.length; i++) {
+			tab = tabs[i];
+			if (lp.clickOnTab(projectName, tab)) {	
+				if (lp.addAutomationAllListView(projectName, tab, 10)) {
+					log(LogStatus.INFO,"list view added on "+tab,YesNo.No);
+				} else {
+					log(LogStatus.FAIL,"list view could not added on "+tab,YesNo.Yes);
+					sa.assertTrue(false, "list view could not added on "+tab);
+				}
+			} else {
+				log(LogStatus.FAIL,"could not click on "+tab,YesNo.Yes);
+				sa.assertTrue(false, "could not click on "+tab);
+			}
+			i++;
+			ThreadSleep(5000);	
+		}
+			
+		
+		
 		for (int i = 0; i < 3; i++) {
 			try {
 				if (home.clickOnSetUpLink()) {
@@ -227,6 +238,142 @@ public class Module3New extends BaseLib {
 
 	@Parameters({ "projectName"})
 	@Test
+	public void M3TC001_12_CreatePreconditionData(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		
+		// Fund 
+		String addRemoveTabName="";
+		String tab1="";
+		if (tabObj1.equalsIgnoreCase("Entity")){
+			tab1="Entitie";
+		}
+		else{
+			tab1=tabObj1;
+		}
+		addRemoveTabName=tab1+"s,"+tabObj2+"s,"+tabObj3+"s,"+navigationTab+"s,"+dashBoardTab+"s"+"Fundraisings"+"Partnerships";
+		if (lp.addTab_Lighting( addRemoveTabName, 5)) {
+			log(LogStatus.INFO,"Tab added : "+addRemoveTabName,YesNo.No);
+		} else {
+			log(LogStatus.FAIL,"Tab not added : "+addRemoveTabName,YesNo.No);
+			sa.assertTrue(false, "Tab not added : "+addRemoveTabName);
+		}
+		
+		if (lp.clickOnTab(projectName, TabName.Object3Tab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.Object3Tab,YesNo.No);	
+			String[] funds = {M3Fund1,M3Fund1Type,M3Fund1RecordType,M3Fund1RecordType};
+			if (fp.createFundPE(projectName, funds[0], funds[3], funds[1], funds[2], null, 15)) {
+				log(LogStatus.INFO,"Created Fund : "+funds[0],YesNo.No);	
+			} else {
+				sa.assertTrue(false,"Not Able to Create Fund : "+funds[0]);
+				log(LogStatus.SKIP,"Not Able to Create Fund  : "+funds[0],YesNo.Yes);
+			}
+
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object3Tab);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object3Tab,YesNo.Yes);
+		}
+		
+		// INS
+		
+		String value="";
+		String type="";
+		String[][] EntityOrAccounts = {{ M3Ins1, M3Ins1RecordType ,null} , { M3Ins10, M3Ins10RecordType ,null}};
+
+		for (String[] accounts : EntityOrAccounts) {
+			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
+				log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);	
+				value = accounts[0];
+				type = accounts[1];
+				if (ip.createEntityOrAccount(projectName, value, type, null, 20)) {
+					log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
+					log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+value+" of record type : "+type,YesNo.Yes);
+				}
+
+
+			} else {
+				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object1Tab);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object1Tab,YesNo.Yes);
+			}
+		}
+		
+		// contact
+		
+		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);	
+			
+			M3Contact1EmailID=	lp.generateRandomEmailId(gmailUserName);
+			ExcelUtils.writeData(phase1DataSheetFilePath, M3Contact1EmailID, "Contacts", excelLabel.Variable_Name, "M3CON1",excelLabel.Contact_EmailId);
+
+			if (cp.createContact(projectName, M3Contact1FName, M3Contact1LName, M3Ins1, M3Contact1EmailID,M3Contact1RecordType, null, null, CreationPage.ContactPage, null)) {
+				log(LogStatus.INFO,"successfully Created Contact : "+M3Contact1FName+" "+M3Contact1LName,YesNo.No);	
+			} else {
+				sa.assertTrue(false,"Not Able to Create Contact : "+M3Contact1FName+" "+M3Contact1LName);
+				log(LogStatus.SKIP,"Not Able to Create Contact: "+M3Contact1FName+" "+M3Contact1LName,YesNo.Yes);
+			}
+
+
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object2Tab);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object2Tab,YesNo.Yes);
+		}
+		
+		// FR
+		FundRaisingPageBusinessLayer fr = new FundRaisingPageBusinessLayer(driver);
+		if(bp.clickOnTab(environment,mode,TabName.FundraisingsTab)) {
+			if(fr.createFundRaising(environment,mode,M3FRName1,M3Fund1,M3Ins1)){
+				appLog.info("fundraising is created : "+M3FRName1);
+			}else {
+				appLog.error("Not able to create fundraising: "+M3FRName1);
+				sa.assertTrue(false, "Not able to create fundraising: "+M3FRName1);
+			}
+		}else {
+			appLog.error("Not able to click on fundraising tab so cannot create fundraising: "+M3FRName1);
+			sa.assertTrue(false,"Not able to click on fundraising tab so cannot create fundraising: "+M3FRName1);
+		}
+		
+		// Limited Partner
+		if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);	
+			
+			if (ip.createInstitution(projectName, environment, mode, M3Ins9,M3Ins9RecordType, InstitutionPageFieldLabelText.Parent_Institution.toString(),M3Ins9Parent)) {
+				log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
+			} else {
+				sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
+				log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+value+" of record type : "+type,YesNo.Yes);
+			}
+			
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object3Tab);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object3Tab,YesNo.Yes);
+		}
+		
+		if(bp.clickOnTab(projectName,TabName.PartnershipsTab)) {
+			if(ins.createPartnership(environment,mode,M3PartnerShip1,M3Fund1)) {
+				appLog.info("partnership is created: "+M3PartnerShip1);
+			}else {
+				appLog.error("Not able to create partnership: "+M3PartnerShip1);
+				sa.assertTrue(false, "Not able to create partnership: "+M3PartnerShip1);
+			}
+		}else {
+			appLog.error("Not able to click on partnership tab so cannot create partnership: "+M3PartnerShip1);
+			sa.assertTrue(false, "Not able to click on partnership tab so cannot create partnership: "+M3PartnerShip1);
+		}
+		
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+		
+	@Parameters({ "projectName"})
+	@Test
 	public void M3Tc002_VerifyTheNavigationMenuItems(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
@@ -313,14 +460,14 @@ public class Module3New extends BaseLib {
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		
+
 		NavatarSetupSideMenuTab[] navatarSetupSideMenuTab = {NavatarSetupSideMenuTab.BulkEmail,NavatarSetupSideMenuTab.CommitmentCreation};
 		NavatarSetupSideMenuTab setupSideMenuTab=null;
 
 		navigationMenuName = NavigationMenuItems.Bulk_Actions.toString();
 		String[] navigationLabel = {BulkActions_DefaultValues.Bulk_Email.toString(),
 				BulkActions_DefaultValues.Bulk_Commitments.toString(),BulkActions_DefaultValues.Bulk_Fundraising.toString()};
-		
+
 		log(LogStatus.INFO, "<<<<<< Going to Uncheck >>>>>>>", YesNo.No);
 		for (int i = 0; i < navatarSetupSideMenuTab.length; i++) {
 			setupSideMenuTab=navatarSetupSideMenuTab[i];
@@ -329,21 +476,22 @@ public class Module3New extends BaseLib {
 				log(LogStatus.INFO, "Clicked on Navatar Setup ", YesNo.No);
 				if (np.clickOnNavatarSetupSideMenusTab(projectName, setupSideMenuTab)) {
 					log(LogStatus.INFO,"Clicked on "+setupSideMenuTab, YesNo.No);
-					if (clickUsingJavaScript(driver, np.getEditButtonforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, 10), "Edit Button for "+setupSideMenuTab, action.BOOLEAN)) {
+					ThreadSleep(10000);
+					if (click(driver, np.getEditButtonforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, 10), "Edit Button for "+setupSideMenuTab, action.BOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Edit Button "+setupSideMenuTab, YesNo.No);
 						ThreadSleep(7000);
-						if (clickUsingJavaScript(driver,np.getEnableCheckBoxforClickNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.Edit, 10),setupSideMenuTab+" CheckBox", action.BOOLEAN)) {
+						if (click(driver,np.getEnableCheckBoxforClickNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.Edit, 10),setupSideMenuTab+" CheckBox", action.BOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Enable "+setupSideMenuTab+" Box Checkbox", YesNo.No);
 							ThreadSleep(2000);
 							if (click(driver, np.getSaveButtonforNavatarSetUpSideMenuTab(projectName, setupSideMenuTab, 10, TopOrBottom.TOP), "Save Button", action.BOOLEAN)) {
 								ThreadSleep(5000);
 								log(LogStatus.INFO, "Clicked on Save Button for : "+setupSideMenuTab, YesNo.No);
-								ThreadSleep(10000);
+								ThreadSleep(20000);
 								if (!isSelected(driver, np.getEnableCheckBoxforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.View, ClickOrCheckEnableDisableCheckBox.Click, 10), "Enabled " +setupSideMenuTab+" CheckBox")) {
 									log(LogStatus.INFO, "Enable "+setupSideMenuTab+" is uncheck and verified ", YesNo.No);
-								
 									// Verification on navigation menu
 									switchToDefaultContent(driver);
+									refresh(driver);
 									if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 										log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 										WebElement ele = npbl.getNavigationLabel(projectName, navigationLabel[i], action.BOOLEAN, 10);
@@ -365,7 +513,7 @@ public class Module3New extends BaseLib {
 										log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot uncheck absenece of "+navigationLabel[i], YesNo.Yes);
 										sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot uncheck absenece of "+navigationLabel[i]);
 									}
-									
+
 								}else {
 									log(LogStatus.FAIL, setupSideMenuTab+" Checkbox should be uncheck", YesNo.Yes);
 									sa.assertTrue(false, setupSideMenuTab+" Checkbox should be uncheck");
@@ -378,7 +526,7 @@ public class Module3New extends BaseLib {
 							sa.assertTrue(false, "Not Able to Click on Enable "+setupSideMenuTab+" Checkbox");
 							log(LogStatus.SKIP, "Not Able to Click on Enable "+setupSideMenuTab+" Checkbox", YesNo.Yes);
 						}
-						refresh(driver);
+
 					}else {
 						sa.assertTrue(false, "edit button is not clickable "+setupSideMenuTab);
 						log(LogStatus.SKIP, "edit button is not clickable "+setupSideMenuTab, YesNo.Yes);
@@ -392,6 +540,7 @@ public class Module3New extends BaseLib {
 				log(LogStatus.SKIP, "navatar setup tab is not clickable so cannot uncheck : "+setupSideMenuTab, YesNo.Yes);
 			}
 			refresh(driver);
+			ThreadSleep(5000);
 		}
 
 		//// CHeck
@@ -404,24 +553,25 @@ public class Module3New extends BaseLib {
 				log(LogStatus.INFO, "Clicked on Navatar Setup ", YesNo.No);
 				if (np.clickOnNavatarSetupSideMenusTab(projectName, setupSideMenuTab)) {
 					log(LogStatus.INFO,"Clicked on "+setupSideMenuTab, YesNo.No);
-					if (clickUsingJavaScript(driver, np.getEditButtonforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, 10), "Edit Button for "+setupSideMenuTab, action.BOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Edit Button "+setupSideMenuTab, YesNo.No);
-						ThreadSleep(2000);
-						if (!isSelected(driver, np.getEnableCheckBoxforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.Edit, ClickOrCheckEnableDisableCheckBox.Click, 10), "Enabled " +setupSideMenuTab+" CheckBox")) {
-							log(LogStatus.INFO, "Enable "+setupSideMenuTab+" is Unchecked going to checked", YesNo.No);
-							if (clickUsingJavaScript(driver,np.getEnableCheckBoxforClickNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.Edit, 10),setupSideMenuTab+" CheckBox", action.BOOLEAN)) {
+					ThreadSleep(10000);
+					if (!isSelected(driver, np.getEnableCheckBoxforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.View, ClickOrCheckEnableDisableCheckBox.Click, 10), "Enabled " +setupSideMenuTab+" CheckBox")) {
+						log(LogStatus.INFO, "Enable "+setupSideMenuTab+" is Unchecked going to checked", YesNo.No);
+						if (click(driver, np.getEditButtonforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, 10), "Edit Button for "+setupSideMenuTab, action.BOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Edit Button "+setupSideMenuTab, YesNo.No);
+							ThreadSleep(20000);
+							if (click(driver,np.getEnableCheckBoxforClickNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.Edit, 10),setupSideMenuTab+" CheckBox", action.BOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Enable "+setupSideMenuTab+" Box Checkbox", YesNo.No);
 								ThreadSleep(2000);
 								if (click(driver, np.getSaveButtonforNavatarSetUpSideMenuTab(projectName, setupSideMenuTab, 10, TopOrBottom.TOP), "Save Button", action.BOOLEAN)) {
 									ThreadSleep(5000);
 									log(LogStatus.INFO, "Clicked on Save Button for : "+setupSideMenuTab, YesNo.No);
-									ThreadSleep(10000);
+									ThreadSleep(20000);
 									if (isSelected(driver, np.getEnableCheckBoxforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.View, ClickOrCheckEnableDisableCheckBox.Click, 10), "Enabled " +setupSideMenuTab+" CheckBox")) {
 										log(LogStatus.INFO, "Enable "+setupSideMenuTab+" is Checked and verified ", YesNo.No);
-									
+
 										// Verification on navigation menu
 										switchToDefaultContent(driver);
-										
+										refresh(driver);
 										if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 											log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 											WebElement ele = npbl.getNavigationLabel(projectName, navigationLabel[i], action.BOOLEAN, 10);
@@ -447,7 +597,7 @@ public class Module3New extends BaseLib {
 											log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabel[i], YesNo.Yes);
 											sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabel[i]);
 										}
-									
+
 									}else {
 										log(LogStatus.FAIL, setupSideMenuTab+" Checkbox should be checked", YesNo.Yes);
 										sa.assertTrue(false, setupSideMenuTab+" Checkbox should be checked");
@@ -462,12 +612,13 @@ public class Module3New extends BaseLib {
 								log(LogStatus.SKIP, "Not Able to Click on Enable "+setupSideMenuTab+" Checkbox", YesNo.Yes);
 							}
 						}else {
-							log(LogStatus.SKIP, setupSideMenuTab+" Checkbox is already checked", YesNo.Yes);
-							sa.assertTrue(false, setupSideMenuTab+" Checkbox is already checked");
+							sa.assertTrue(false, "edit button is not clickable "+setupSideMenuTab);
+							log(LogStatus.SKIP, "edit button is not clickable "+setupSideMenuTab, YesNo.Yes);
 						}
 					}else {
-						sa.assertTrue(false, "edit button is not clickable "+setupSideMenuTab);
-						log(LogStatus.SKIP, "edit button is not clickable "+setupSideMenuTab, YesNo.Yes);
+
+						log(LogStatus.SKIP, setupSideMenuTab+" Checkbox is already checked", YesNo.Yes);
+						sa.assertTrue(false, setupSideMenuTab+" Checkbox is already checked");	
 					}
 				}else {
 					sa.assertTrue(false, setupSideMenuTab+" side menu tab is not clickable");
@@ -507,84 +658,84 @@ public class Module3New extends BaseLib {
 		//// CHeck
 
 		log(LogStatus.INFO, "<<<<<< Going to check >>>>>>>", YesNo.No);
-//		for (int i = 0; i < navatarSetupSideMenuTab.length; i++) {
-//			setupSideMenuTab=navatarSetupSideMenuTab[i];
-//			switchToDefaultContent(driver);
-//			if (ip.clickOnTab(projectName, TabName.NavatarSetup)) {
-//				log(LogStatus.INFO, "Clicked on Navatar Setup ", YesNo.No);
-//				if (np.clickOnNavatarSetupSideMenusTab(projectName, setupSideMenuTab)) {
-//					log(LogStatus.INFO,"Clicked on "+setupSideMenuTab, YesNo.No);
-//					ThreadSleep(10000);
-//					if (clickUsingJavaScript(driver, np.getEditButtonforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, 10), "Edit Button for "+setupSideMenuTab, action.BOOLEAN)) {
-//						log(LogStatus.INFO, "Clicked on Edit Button "+setupSideMenuTab, YesNo.No);
-//						ThreadSleep(10000);
-//						if (!isSelected(driver, np.getEnableCheckBoxforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.Edit, ClickOrCheckEnableDisableCheckBox.Click, 10), "Enabled " +setupSideMenuTab+" CheckBox")) {
-//							log(LogStatus.INFO, "Enable "+setupSideMenuTab+" is Unchecked going to checked", YesNo.No);
-//							ThreadSleep(10000);
-//							if (clickUsingJavaScript(driver,np.getEnableCheckBoxforClickNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.Edit, 10),setupSideMenuTab+" CheckBox", action.BOOLEAN)) {
-//								log(LogStatus.INFO, "Clicked on Enable "+setupSideMenuTab+" Box Checkbox", YesNo.No);
-//								ThreadSleep(10000);
-//								if (click(driver, np.getSaveButtonforNavatarSetUpSideMenuTab(projectName, setupSideMenuTab, 10, TopOrBottom.TOP), "Save Button", action.BOOLEAN)) {
-//									ThreadSleep(5000);
-//									log(LogStatus.INFO, "Clicked on Save Button for : "+setupSideMenuTab, YesNo.No);
-//									ThreadSleep(10000);
-//									if (isSelected(driver, np.getEnableCheckBoxforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.View, ClickOrCheckEnableDisableCheckBox.Click, 10), "Enabled " +setupSideMenuTab+" CheckBox")) {
-//										log(LogStatus.INFO, "Enable "+setupSideMenuTab+" is Checked and verified ", YesNo.No);
-//
-//										// Verification on navigation menu
-//										switchToDefaultContent(driver);
-//
-//										if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
-//											log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-//											WebElement ele = npbl.getNavigationLabel(projectName, navigationLabels[i], action.BOOLEAN, 10);
-//											if (ele==null) {
-//												log(LogStatus.INFO, navigationLabels[i]+" is not present on "+navigationMenuName+" even after enabling "+setupSideMenuTab, YesNo.No);
-//
-//											} else {
-//												log(LogStatus.ERROR, navigationLabels[i]+" should not present on "+navigationMenuName+" even after enabling "+setupSideMenuTab, YesNo.Yes);
-//												sa.assertTrue(false,navigationLabels[i]+" should not present on "+navigationMenuName+"even after enabling "+setupSideMenuTab);
-//
-//											}
-//
-//										} else {
-//											log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot check absenece of "+navigationLabels[i], YesNo.Yes);
-//											sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot check absenece of "+navigationLabels[i]);
-//										}
-//
-//									}else {
-//										log(LogStatus.FAIL, setupSideMenuTab+" Checkbox should be checked", YesNo.Yes);
-//										sa.assertTrue(false, setupSideMenuTab+" Checkbox should be checked");
-//
-//									}
-//								} else {
-//									sa.assertTrue(false, "Not Able to Click on Save Button for : "+setupSideMenuTab);
-//									log(LogStatus.SKIP, "Not Able to Click on Save Button for : "+setupSideMenuTab, YesNo.Yes);
-//								}
-//							} else {
-//								sa.assertTrue(false, "Not Able to Click on Enable "+setupSideMenuTab+" Checkbox");
-//								log(LogStatus.SKIP, "Not Able to Click on Enable "+setupSideMenuTab+" Checkbox", YesNo.Yes);
-//							}
-//						}else {
-//							log(LogStatus.SKIP, setupSideMenuTab+" Checkbox is already checked", YesNo.Yes);
-//							sa.assertTrue(false, setupSideMenuTab+" Checkbox is already checked");
-//						}
-//					}else {
-//						sa.assertTrue(false, "edit button is not clickable "+setupSideMenuTab);
-//						log(LogStatus.SKIP, "edit button is not clickable "+setupSideMenuTab, YesNo.Yes);
-//					}
-//				}else {
-//					sa.assertTrue(false, setupSideMenuTab+" side menu tab is not clickable");
-//					log(LogStatus.SKIP, setupSideMenuTab+" side menu tab is not clickable", YesNo.Yes);
-//				}
-//			}else {
-//				sa.assertTrue(false, "navatar setup tab is not clickable so cannot check : "+setupSideMenuTab);
-//				log(LogStatus.SKIP, "navatar setup tab is not clickable so cannot check : "+setupSideMenuTab, YesNo.Yes);
-//			}
-//			refresh(driver);
-//		}
+		for (int i = 0; i < navatarSetupSideMenuTab.length; i++) {
+			setupSideMenuTab=navatarSetupSideMenuTab[i];
+			switchToDefaultContent(driver);
+			if (ip.clickOnTab(projectName, TabName.NavatarSetup)) {
+				log(LogStatus.INFO, "Clicked on Navatar Setup ", YesNo.No);
+				if (np.clickOnNavatarSetupSideMenusTab(projectName, setupSideMenuTab)) {
+					log(LogStatus.INFO,"Clicked on "+setupSideMenuTab, YesNo.No);
+					ThreadSleep(10000);
+					if (!isSelected(driver, np.getEnableCheckBoxforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.View, ClickOrCheckEnableDisableCheckBox.Click, 10), "Enabled " +setupSideMenuTab+" CheckBox")) {
+						log(LogStatus.INFO, "Enable "+setupSideMenuTab+" is Unchecked going to checked", YesNo.No);
+						ThreadSleep(10000);
+					if (click(driver, np.getEditButtonforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, 10), "Edit Button for "+setupSideMenuTab, action.BOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Edit Button "+setupSideMenuTab, YesNo.No);
+						ThreadSleep(10000);
+							if (click(driver,np.getEnableCheckBoxforClickNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.Edit, 10),setupSideMenuTab+" CheckBox", action.BOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Enable "+setupSideMenuTab+" Box Checkbox", YesNo.No);
+								ThreadSleep(10000);
+								if (click(driver, np.getSaveButtonforNavatarSetUpSideMenuTab(projectName, setupSideMenuTab, 10, TopOrBottom.TOP), "Save Button", action.BOOLEAN)) {
+									ThreadSleep(5000);
+									log(LogStatus.INFO, "Clicked on Save Button for : "+setupSideMenuTab, YesNo.No);
+									ThreadSleep(10000);
+									if (isSelected(driver, np.getEnableCheckBoxforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.View, ClickOrCheckEnableDisableCheckBox.Click, 10), "Enabled " +setupSideMenuTab+" CheckBox")) {
+										log(LogStatus.INFO, "Enable "+setupSideMenuTab+" is Checked and verified ", YesNo.No);
+
+										// Verification on navigation menu
+										switchToDefaultContent(driver);
+
+										if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+											log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+											WebElement ele = npbl.getNavigationLabel(projectName, navigationLabels[i], action.BOOLEAN, 10);
+											if (ele==null) {
+												log(LogStatus.INFO, navigationLabels[i]+" is not present on "+navigationMenuName+" even after enabling "+setupSideMenuTab, YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR, navigationLabels[i]+" should not present on "+navigationMenuName+" even after enabling "+setupSideMenuTab, YesNo.Yes);
+												sa.assertTrue(false,navigationLabels[i]+" should not present on "+navigationMenuName+"even after enabling "+setupSideMenuTab);
+
+											}
+
+										} else {
+											log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot check absenece of "+navigationLabels[i], YesNo.Yes);
+											sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot check absenece of "+navigationLabels[i]);
+										}
+
+									}else {
+										log(LogStatus.FAIL, setupSideMenuTab+" Checkbox should be checked", YesNo.Yes);
+										sa.assertTrue(false, setupSideMenuTab+" Checkbox should be checked");
+
+									}
+								} else {
+									sa.assertTrue(false, "Not Able to Click on Save Button for : "+setupSideMenuTab);
+									log(LogStatus.SKIP, "Not Able to Click on Save Button for : "+setupSideMenuTab, YesNo.Yes);
+								}
+							} else {
+								sa.assertTrue(false, "Not Able to Click on Enable "+setupSideMenuTab+" Checkbox");
+								log(LogStatus.SKIP, "Not Able to Click on Enable "+setupSideMenuTab+" Checkbox", YesNo.Yes);
+							}
+						}else {
+							sa.assertTrue(false, "edit button is not clickable "+setupSideMenuTab);
+							log(LogStatus.SKIP, "edit button is not clickable "+setupSideMenuTab, YesNo.Yes);
+						}
+					}else {
+						log(LogStatus.SKIP, setupSideMenuTab+" Checkbox is already checked", YesNo.Yes);
+						sa.assertTrue(false, setupSideMenuTab+" Checkbox is already checked");
+					}
+				}else {
+					sa.assertTrue(false, setupSideMenuTab+" side menu tab is not clickable");
+					log(LogStatus.SKIP, setupSideMenuTab+" side menu tab is not clickable", YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false, "navatar setup tab is not clickable so cannot check : "+setupSideMenuTab);
+				log(LogStatus.SKIP, "navatar setup tab is not clickable so cannot check : "+setupSideMenuTab, YesNo.Yes);
+			}
+			refresh(driver);
+		}
 
 		// create navigation item 
-		scn.next();
+//		scn.next();
 		String secondID;
 		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -695,79 +846,80 @@ public class Module3New extends BaseLib {
 	//// Uncheck
 
 			log(LogStatus.INFO, "<<<<<< Going to uncheck >>>>>>>", YesNo.No);
-//			for (int i = 0; i < navatarSetupSideMenuTab.length; i++) {
-//				setupSideMenuTab=navatarSetupSideMenuTab[i];
-//				switchToDefaultContent(driver);
-//				if (ip.clickOnTab(projectName, TabName.NavatarSetup)) {
-//					log(LogStatus.INFO, "Clicked on Navatar Setup ", YesNo.No);
-//					if (np.clickOnNavatarSetupSideMenusTab(projectName, setupSideMenuTab)) {
-//						log(LogStatus.INFO,"Clicked on "+setupSideMenuTab, YesNo.No);
-//						if (clickUsingJavaScript(driver, np.getEditButtonforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, 10), "Edit Button for "+setupSideMenuTab, action.BOOLEAN)) {
-//							log(LogStatus.INFO, "Clicked on Edit Button "+setupSideMenuTab, YesNo.No);
-//							ThreadSleep(2000);
-//							if (isSelected(driver, np.getEnableCheckBoxforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.Edit, ClickOrCheckEnableDisableCheckBox.Click, 10), "Enabled " +setupSideMenuTab+" CheckBox")) {
-//								log(LogStatus.INFO, "Enable "+setupSideMenuTab+" is checked going to Unchecked", YesNo.No);
-//								if (clickUsingJavaScript(driver,np.getEnableCheckBoxforClickNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.Edit, 10),setupSideMenuTab+" CheckBox", action.BOOLEAN)) {
-//									log(LogStatus.INFO, "Clicked on Enable "+setupSideMenuTab+" Box Checkbox", YesNo.No);
-//									ThreadSleep(2000);
-//									if (click(driver, np.getSaveButtonforNavatarSetUpSideMenuTab(projectName, setupSideMenuTab, 10, TopOrBottom.TOP), "Save Button", action.BOOLEAN)) {
-//										ThreadSleep(5000);
-//										log(LogStatus.INFO, "Clicked on Save Button for : "+setupSideMenuTab, YesNo.No);
-//										ThreadSleep(10000);
-//										if (!isSelected(driver, np.getEnableCheckBoxforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.View, ClickOrCheckEnableDisableCheckBox.Click, 10), "Enabled " +setupSideMenuTab+" CheckBox")) {
-//											log(LogStatus.INFO, "Enable "+setupSideMenuTab+" is UnChecked and verified ", YesNo.No);
-//
-//											// Verification on navigation menu
-//											switchToDefaultContent(driver);
-//
-//											if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
-//												log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-//												WebElement ele = npbl.getNavigationLabel(projectName, navigationLabels[i], action.BOOLEAN, 10);
-//												if (ele!=null) {
-//													log(LogStatus.INFO, navigationLabels[i]+" is present on "+navigationMenuName+" even after disabling "+setupSideMenuTab+" but after creation from Navigation Tab", YesNo.No);
-//
-//												} else {
-//													log(LogStatus.ERROR, navigationLabels[i]+" should be present on "+navigationMenuName+" even after disabling "+setupSideMenuTab+" but after creation from Navigation Tab", YesNo.Yes);
-//													sa.assertTrue(false,navigationLabels[i]+" should be present on "+navigationMenuName+"even after disabling "+setupSideMenuTab+" but after creation from Navigation Tab");
-//
-//												}
-//
-//											} else {
-//												log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabels[i], YesNo.Yes);
-//												sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabels[i]);
-//											}
-//
-//										}else {
-//											log(LogStatus.FAIL, setupSideMenuTab+" Checkbox should be checked", YesNo.Yes);
-//											sa.assertTrue(false, setupSideMenuTab+" Checkbox should be checked");
-//
-//										}
-//									} else {
-//										sa.assertTrue(false, "Not Able to Click on Save Button for : "+setupSideMenuTab);
-//										log(LogStatus.SKIP, "Not Able to Click on Save Button for : "+setupSideMenuTab, YesNo.Yes);
-//									}
-//								} else {
-//									sa.assertTrue(false, "Not Able to Click on Enable "+setupSideMenuTab+" Checkbox");
-//									log(LogStatus.SKIP, "Not Able to Click on Enable "+setupSideMenuTab+" Checkbox", YesNo.Yes);
-//								}
-//							}else {
-//								log(LogStatus.SKIP, setupSideMenuTab+" Checkbox is already unchecked", YesNo.Yes);
-//								sa.assertTrue(false, setupSideMenuTab+" Checkbox is already unchecked");
-//							}
-//						}else {
-//							sa.assertTrue(false, "edit button is not clickable "+setupSideMenuTab);
-//							log(LogStatus.SKIP, "edit button is not clickable "+setupSideMenuTab, YesNo.Yes);
-//						}
-//					}else {
-//						sa.assertTrue(false, setupSideMenuTab+" side menu tab is not clickable");
-//						log(LogStatus.SKIP, setupSideMenuTab+" side menu tab is not clickable", YesNo.Yes);
-//					}
-//				}else {
-//					sa.assertTrue(false, "navatar setup tab is not clickable so cannot uncheck : "+setupSideMenuTab);
-//					log(LogStatus.SKIP, "navatar setup tab is not clickable so cannot uncheck : "+setupSideMenuTab, YesNo.Yes);
-//				}
-//				refresh(driver);
-//			}
+			for (int i = 0; i < navatarSetupSideMenuTab.length; i++) {
+				setupSideMenuTab=navatarSetupSideMenuTab[i];
+				switchToDefaultContent(driver);
+				if (ip.clickOnTab(projectName, TabName.NavatarSetup)) {
+					log(LogStatus.INFO, "Clicked on Navatar Setup ", YesNo.No);
+					if (np.clickOnNavatarSetupSideMenusTab(projectName, setupSideMenuTab)) {
+						log(LogStatus.INFO,"Clicked on "+setupSideMenuTab, YesNo.No);
+						ThreadSleep(2000);
+						if (isSelected(driver, np.getEnableCheckBoxforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.View, ClickOrCheckEnableDisableCheckBox.Click, 10), "Enabled " +setupSideMenuTab+" CheckBox")) {
+							log(LogStatus.INFO, "Enable "+setupSideMenuTab+" is checked going to Unchecked", YesNo.No);
+						if (click(driver, np.getEditButtonforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, 10), "Edit Button for "+setupSideMenuTab, action.BOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Edit Button "+setupSideMenuTab, YesNo.No);
+								if (click(driver,np.getEnableCheckBoxforClickNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.Edit, 10),setupSideMenuTab+" CheckBox", action.BOOLEAN)) {
+									log(LogStatus.INFO, "Clicked on Enable "+setupSideMenuTab+" Box Checkbox", YesNo.No);
+									ThreadSleep(2000);
+									if (click(driver, np.getSaveButtonforNavatarSetUpSideMenuTab(projectName, setupSideMenuTab, 10, TopOrBottom.TOP), "Save Button", action.BOOLEAN)) {
+										ThreadSleep(5000);
+										log(LogStatus.INFO, "Clicked on Save Button for : "+setupSideMenuTab, YesNo.No);
+										ThreadSleep(10000);
+										if (!isSelected(driver, np.getEnableCheckBoxforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.View, ClickOrCheckEnableDisableCheckBox.Click, 10), "Enabled " +setupSideMenuTab+" CheckBox")) {
+											log(LogStatus.INFO, "Enable "+setupSideMenuTab+" is UnChecked and verified ", YesNo.No);
+
+											// Verification on navigation menu
+											switchToDefaultContent(driver);
+
+											if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+												log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+												WebElement ele = npbl.getNavigationLabel(projectName, navigationLabels[i], action.BOOLEAN, 10);
+												if (ele!=null) {
+													log(LogStatus.INFO, navigationLabels[i]+" is present on "+navigationMenuName+" even after disabling "+setupSideMenuTab+" but after creation from Navigation Tab", YesNo.No);
+
+												} else {
+													log(LogStatus.ERROR, navigationLabels[i]+" should be present on "+navigationMenuName+" even after disabling "+setupSideMenuTab+" but after creation from Navigation Tab", YesNo.Yes);
+													sa.assertTrue(false,navigationLabels[i]+" should be present on "+navigationMenuName+"even after disabling "+setupSideMenuTab+" but after creation from Navigation Tab");
+
+												}
+
+											} else {
+												log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabels[i], YesNo.Yes);
+												sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabels[i]);
+											}
+
+										}else {
+											log(LogStatus.FAIL, setupSideMenuTab+" Checkbox should be checked", YesNo.Yes);
+											sa.assertTrue(false, setupSideMenuTab+" Checkbox should be checked");
+
+										}
+									} else {
+										sa.assertTrue(false, "Not Able to Click on Save Button for : "+setupSideMenuTab);
+										log(LogStatus.SKIP, "Not Able to Click on Save Button for : "+setupSideMenuTab, YesNo.Yes);
+									}
+								} else {
+									sa.assertTrue(false, "Not Able to Click on Enable "+setupSideMenuTab+" Checkbox");
+									log(LogStatus.SKIP, "Not Able to Click on Enable "+setupSideMenuTab+" Checkbox", YesNo.Yes);
+								}
+							}else {
+
+								sa.assertTrue(false, "edit button is not clickable "+setupSideMenuTab);
+								log(LogStatus.SKIP, "edit button is not clickable "+setupSideMenuTab, YesNo.Yes);
+							}
+						}else {
+							log(LogStatus.SKIP, setupSideMenuTab+" Checkbox is already unchecked", YesNo.Yes);
+							sa.assertTrue(false, setupSideMenuTab+" Checkbox is already unchecked");
+						}
+					}else {
+						sa.assertTrue(false, setupSideMenuTab+" side menu tab is not clickable");
+						log(LogStatus.SKIP, setupSideMenuTab+" side menu tab is not clickable", YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false, "navatar setup tab is not clickable so cannot uncheck : "+setupSideMenuTab);
+					log(LogStatus.SKIP, "navatar setup tab is not clickable so cannot uncheck : "+setupSideMenuTab, YesNo.Yes);
+				}
+				refresh(driver);
+			}
 			
 		lp.CRMlogout();
 		sa.assertAll();
@@ -904,16 +1056,16 @@ public class Module3New extends BaseLib {
 						}
 
 					} else if(i==1) {
-						String fr = institue+" - "+Smoke_Fund1;
+						String fr = M3Ins1+" - "+M3Fund1;
 						List<String> contactNamelist= new ArrayList<String>();
-						contactNamelist.add(contact1);
+						contactNamelist.add(M3Contact1FName+" "+M3Contact1LName);
 						List<String> accountlist= new ArrayList<String>();
-						accountlist.add(institue);
+						accountlist.add(M3Ins1);
 
 						switchToFrame(driver, 30, home.getCreateFundraisingsFrame_Lighting(20));
 
-						if(hp.selectFundNameOrCompanyNameOnCreateFundraisings(environment,mode, PopUpName.selectFundPopUp, Smoke_Fund1, null)) {
-							log(LogStatus.INFO, "Select Fund : "+Smoke_Fund1, YesNo.No);
+						if(hp.selectFundNameOrCompanyNameOnCreateFundraisings(environment,mode, PopUpName.selectFundPopUp, M3Fund1, null)) {
+							log(LogStatus.INFO, "Select Fund : "+M3Fund1, YesNo.No);
 							switchToFrame(driver, 30, home.getCreateFundraisingsFrame_Lighting(20));
 
 							if(click(driver, home.getSelectFundNamePopUpContinueBtn(), "continue button", action.SCROLLANDBOOLEAN)) {
@@ -932,7 +1084,6 @@ public class Module3New extends BaseLib {
 													log(LogStatus.INFO, "clicked on create fundraising button", YesNo.No);
 													if(click(driver,home.getCreateFundraisingConfirmationOkBtn(30), "ok button", action.SCROLLANDBOOLEAN)) {
 														log(LogStatus.INFO, "clicked on OK button", YesNo.No);
-														//	ExcelUtils.writeData(smokeFilePath,SmokeINS1+" - "+Smoke_Fund1, "Fundraisings",excelLabel.Variable_Name, "SmokeFR1",excelLabel.FundRaising_Name);
 														switchToDefaultContent(driver);
 														if(home.clickOnTab(environment, mode, TabName.FundraisingsTab)) {
 															log(LogStatus.INFO, "clicked on create fundraising button", YesNo.No);
@@ -985,9 +1136,9 @@ public class Module3New extends BaseLib {
 
 					}else if(i==2){
 						
-						String[][] commitmentInformation= {{Smoke_LP1,"100",Smoke_P1}};
+						String[][] commitmentInformation= {{M3Ins9,"100",M3PartnerShip1}};
 
-						if(hp.selectFundraisingNameOrCommitmentType(environment, mode, Smoke_FR1, null, null, null, CommitmentType.fundraisingName)) {
+						if(hp.selectFundraisingNameOrCommitmentType(environment, mode, M3FRName1, null, null, null, CommitmentType.fundraisingName)) {
 							if(hp.commitmentInfoAndAdditionalInfo(environment, mode, commitmentInformation, null,null,null)) {
 								log(LogStatus.INFO, "All commitment information and additional information is passed successfully", YesNo.Yes);
 								switchToFrame(driver, 30, home.getCreateCommitmentFrame_Lightning(20));
@@ -1015,12 +1166,12 @@ public class Module3New extends BaseLib {
 						}
 					}else if(i==3){
 					
-						if (hp.createNewDealPipeLine(environment, mode, Smoke_PL2CompanyName, Smoke_PL2Stage,null)) {
+						if (hp.createNewDealPipeLine(environment, mode, M3Ins10, "Due Deligence",null)) {
 							appLog.info("VAlue added for mandatory Field for Deal Creation");
 						//	String monthAndYear = getSystemDate("MMM") + " " + getSystemDate("yyyy");
-						//	String expectedPipeLineName = Smoke_PL2CompanyName + " " + "-" + " " + monthAndYear;
+						//	String expectedPipeLineName = M3Ins10 + " " + "-" + " " + monthAndYear;
 
-							if (hp.clickOnCreateDealButtonAndVerifyingLandingPage(environment, mode, Smoke_PL2CompanyName)) {
+							if (hp.clickOnCreateDealButtonAndVerifyingLandingPage(environment, mode, M3Ins10)) {
 								appLog.info("Pipe Line Created and Verifiied : ");
 							} else {
 								sa.assertTrue(false, "Not Able to Click on Create Deal Button or Landing Page Not Verified");
@@ -1035,10 +1186,10 @@ public class Module3New extends BaseLib {
 					}else{
 						//String emailId = lp.generateRandomEmailId();
 						
-						String SmokeINDINV4 = SmokeC7_FName+" "+SmokeC7_LName+" - "+"HNI";
+						String SmokeINDINV4 = M3Contact4FName+" "+M3Contact4LName+" - "+"HNI";
 						String[][] labelNamesAndValue= {
-								{IndiviualInvestorFieldLabel.First_Name.toString(),SmokeC7_FName},
-								{IndiviualInvestorFieldLabel.Last_Name.toString(),SmokeC7_LName}};
+								{IndiviualInvestorFieldLabel.First_Name.toString(),M3Contact4FName},
+								{IndiviualInvestorFieldLabel.Last_Name.toString(),M3Contact4LName}};
 					
 						if(hp.createIndiviualInvestor(environment, mode, labelNamesAndValue, null, TopOrBottom.TOP)) {
 							log(LogStatus.INFO, "Successfully Create Indiviual Investor "+SmokeINDINV4, YesNo.No);
@@ -3211,13 +3362,13 @@ public class Module3New extends BaseLib {
 						if(sp.clickOnObjectFeature("", Mode.Lightning.toString(),object.Test_Custom_Object, ObjectFeatureName.recordTypes)) {
 							ThreadSleep(5000);
 							if (sp.clickOnAlreadyCreatedLayout(recordTypeArray[i])) {
-								scn.nextLine();
+//								scn.nextLine();
 								ThreadSleep(5000);
 								switchToFrame(driver, 20, sp.getSetUpPageIframe(60));
 								if (click(driver, sp.getEditButton(environment,"Classic",10), "edit", action.SCROLLANDBOOLEAN)) {
 									switchToDefaultContent(driver);
 									ThreadSleep(5000);
-									scn.nextLine();
+//									scn.nextLine();
 									switchToFrame(driver, 20, sp.getSetUpPageIframe(60));
 									ele=sp.getRecordTypeLabel(projectName, recordTypeLabel.Active.toString(), 20);
 									if (ele!=null) {
@@ -3356,13 +3507,13 @@ public class Module3New extends BaseLib {
 					if(sp.clickOnObjectFeature("", Mode.Lightning.toString(),object.Institution, ObjectFeatureName.recordTypes)) {
 						ThreadSleep(5000);
 						if (sp.clickOnAlreadyCreatedLayout(recordType)) {
-							scn.nextLine();
+//							scn.nextLine();
 							ThreadSleep(5000);
 							switchToFrame(driver, 20, sp.getSetUpPageIframe(60));
 							if (click(driver, sp.getEditButton(environment,"Classic",10), "edit", action.SCROLLANDBOOLEAN)) {
 								switchToDefaultContent(driver);
 								ThreadSleep(5000);
-								scn.nextLine();
+//								scn.nextLine();
 								switchToFrame(driver, 20, sp.getSetUpPageIframe(60));
 								ele=sp.getRecordTypeLabel(projectName, recordTypeLabel.Active.toString(), 20);
 								if (ele!=null) {
@@ -3677,7 +3828,7 @@ public class Module3New extends BaseLib {
 
 					if (i==0) {
 						M3Contact3EmailID=	lp.generateRandomEmailId(gmailUserName);
-						if (cp.createContactPopUp(projectName, M3Contact3FName, M3Contact3LName, M3Ins2, M3Contact3EmailID,M3Contact3RecordType, null, null, CreationPage.ContactPage, null)) {
+						if (cp.createContactPopUp(projectName, M3Contact3FName, M3Contact3LName, M3Ins1, M3Contact3EmailID,M3Contact3RecordType, null, null, CreationPage.ContactPage, null)) {
 							log(LogStatus.INFO,"successfully Created Contact : "+M3Contact3FName+" "+M3Contact3LName,YesNo.No);	
 							ThreadSleep(2000);
 							String labelValue="";
@@ -4389,258 +4540,5 @@ public class Module3New extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({ "projectName"})
-	@Test
-	public void M3TC001_12_CreatePreconditionData(String projectName) {
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-		DealPageBusinessLayer  dp = new DealPageBusinessLayer(driver);
-		MarketingEventPageBusinessLayer me = new MarketingEventPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
-		String value="";
-		String type="";
-		String[][] EntityOrAccounts = {{ ToggleIns1, ToggleIns1RecordType ,null}};
-		for (String[] accounts : EntityOrAccounts) {
-			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
-				log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);	
-				value = accounts[0];
-				type = accounts[1];
-				if (ip.createEntityOrAccount(projectName, value, type, null, 20)) {
-					log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
-				} else {
-					sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
-					log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+value+" of record type : "+type,YesNo.Yes);
-				}
-
-
-			} else {
-				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object1Tab);
-				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object1Tab,YesNo.Yes);
-			}
-		}
-
-		// scn.nextLine();
-
-		String[][] fundsOrDeals = {{ToggleFund1,ToggleFund1Type,ToggleFund1Category,ToggleFund1RecordType},
-				{ToggleFund2,ToggleFund2Type,ToggleFund2Category,ToggleFund2RecordType}};
-		for (String[] funds : fundsOrDeals) {
-			if (lp.clickOnTab(projectName, TabName.Object3Tab)) {
-				log(LogStatus.INFO,"Click on Tab : "+TabName.Object3Tab,YesNo.No);	
-
-
-				if (fp.createFundPE(projectName, funds[0], funds[3], funds[1], funds[2], null, 15)) {
-					log(LogStatus.INFO,"Created Fund : "+funds[0],YesNo.No);	
-				} else {
-					sa.assertTrue(false,"Not Able to Create Fund : "+funds[0]);
-					log(LogStatus.SKIP,"Not Able to Create Fund  : "+funds[0],YesNo.Yes);
-				}
-
-			} else {
-				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object3Tab);
-				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object3Tab,YesNo.Yes);
-			}
-		}
-
-		// scn.nextLine();
-
-		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
-			log(LogStatus.INFO,"Click on Tab : "+TabName.Object4Tab,YesNo.No);	
-
-
-			if (fp.createDeal(projectName,ToggleDeal1RecordType,ToggleDeal1,ToggleDeal1CompanyName, ToggleDeal1Stage,null, 15)) {
-				log(LogStatus.INFO,"Created Deal : "+ToggleDeal1,YesNo.No);	
-			} else {
-				sa.assertTrue(false,"Not Able to Create Deal  : "+ToggleDeal1);
-				log(LogStatus.SKIP,"Not Able to Create Deal  : "+ToggleDeal1,YesNo.Yes);
-			}
-
-		} else {
-			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object4Tab);
-			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object4Tab,YesNo.Yes);
-		}
-
-		// scn.nextLine();
-		
-		
-		if (lp.clickOnTab(projectName, TabName.Object5Tab)) {
-			log(LogStatus.INFO,"Click on Tab : "+TabName.Object5Tab,YesNo.No);	
-			ToggleMarketingEvent1Date=	previousOrForwardDateAccordingToTimeZone(0, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);;
-			ExcelUtils.writeData(phase1DataSheetFilePath, ToggleMarketingEvent1Date, "MarketingEvent", excelLabel.Variable_Name, "TOGGLEME1",excelLabel.Date);
-			
-			if (me.createMarketingEvent(projectName, ToggleMarketingEvent1Name, ToggleMarketingEvent1RecordType, ToggleMarketingEvent1Date, ToggleMarketingEvent1Organizer, 10)) {
-				log(LogStatus.INFO,"Created Marketing Event : "+ToggleMarketingEvent1Name,YesNo.No);	
-			} else {
-				sa.assertTrue(false,"Not Able to Create Marketing Event  : "+ToggleMarketingEvent1Name);
-				log(LogStatus.SKIP,"Not Able to Create Marketing Event  : "+ToggleMarketingEvent1Name,YesNo.Yes);
-			}
-
-		} else {
-			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object5Tab);
-			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object5Tab,YesNo.Yes);
-		}
-	//	// scn.nextLine();
-		String relatedTab;
-		ToggleOpenQA1RequestedDate=	previousOrForwardDateAccordingToTimeZone(-2, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);;
-		ExcelUtils.writeData(phase1DataSheetFilePath, ToggleOpenQA1RequestedDate, "DealRequestTracker", excelLabel.Variable_Name, "OPENQA1",excelLabel.Date_Requested);
-		
-		ToggleClosedQA1RequestedDate=	previousOrForwardDateAccordingToTimeZone(-5, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);;
-		ExcelUtils.writeData(phase1DataSheetFilePath, ToggleClosedQA1RequestedDate, "DealRequestTracker", excelLabel.Variable_Name, "CLOSEDQA1",excelLabel.Date_Requested);
-		
-		
-		String[][] openRequest = {{PageLabel.Date_Requested.toString(),ToggleOpenQA1RequestedDate}
-								,{PageLabel.Request.toString(),ToggleOpenQA1Request}
-										,{PageLabel.Status.toString(),ToggleOpenQA1Status}};
-		
-		String[][] closeRequest = {{PageLabel.Date_Requested.toString(),ToggleClosedQA1RequestedDate}
-						,{PageLabel.Request.toString(),ToggleClosedQA1Request},{PageLabel.Status.toString(),ToggleClosedQA1Status}};
-		
-		
-		for (int i = 0; i < 2; i++) {
-			if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
-				log(LogStatus.INFO,"Click on Tab : "+TabName.Object4Tab,YesNo.No);	
-
-				if (ip.clickOnAlreadyCreatedItem(projectName, ToggleDeal1, true, 15)) {
-					log(LogStatus.INFO,"Item found: "+ToggleDeal1, YesNo.No);
-					ThreadSleep(2000);
-					
-					relatedTab=ToggleCheck2RelatedTab;
-					if (click(driver, ip.getRelatedTab(projectName, relatedTab, 5), relatedTab.toString(), action.BOOLEAN)) {
-						log(LogStatus.INFO,"Click on Sub Tab : "+relatedTab,YesNo.No);
-						ThreadSleep(2000);
-						if (i==0) {
-						dp.createNewRequest(projectName, ToggleDeal1, openRequest , 10);
-						}else {
-						dp.createNewRequest(projectName, ToggleDeal1, closeRequest , 10);
-						}
-						
-						} else {
-						sa.assertTrue(false,"Not Able to Click on Sub Tab : "+relatedTab);
-						log(LogStatus.SKIP,"Not Able to Click on Sub Tab : "+relatedTab,YesNo.Yes);
-					}
-					
-				}else {
-
-						log(LogStatus.ERROR,"Item not found: "+ToggleDeal1, YesNo.Yes);
-						sa.assertTrue(false,"Item not found: "+ToggleDeal1);
-					}
-			} else {
-				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object4Tab);
-				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object4Tab,YesNo.Yes);
-			}
-		}
-		// scn.nextLine();
-		String[][] attendee1 = {{PageLabel.Attendee_Staff.toString(),AdminUserFirstName+" "+AdminUserLastName}
-									,{PageLabel.Status.toString(),"Invited"}};
-
-		String[][] attendee2 = {{PageLabel.Attendee_Staff.toString(),AdminUserFirstName+" "+AdminUserLastName}
-										,{PageLabel.Status.toString(),"Invited"}};
-		for (int i = 0; i < 2; i++) {
-			if (lp.clickOnTab(projectName, TabName.Object5Tab)) {
-				log(LogStatus.INFO,"Click on Tab : "+TabName.Object5Tab,YesNo.No);	
-
-				if (ip.clickOnAlreadyCreatedItem(projectName, ToggleMarketingEvent1Name, true, 15)) {
-					log(LogStatus.INFO,"Item found: "+ToggleMarketingEvent1Name, YesNo.No);
-					ThreadSleep(2000);
-					
-					relatedTab="Related";
-					if (click(driver, ip.getRelatedTab(projectName, relatedTab, 5), relatedTab.toString(), action.BOOLEAN)) {
-						log(LogStatus.INFO,"Click on Sub Tab : "+relatedTab,YesNo.No);
-						ThreadSleep(2000);
-						if (i==0) {
-						me.createAttendee(projectName, ToggleMarketingEvent1Name, attendee1,action.BOOLEAN , 10);
-						}else {
-						me.createAttendee(projectName, ToggleMarketingEvent1Name, attendee2,action.BOOLEAN , 10);
-						}
-						
-						} else {
-						sa.assertTrue(false,"Not Able to Click on Sub Tab : "+relatedTab);
-						log(LogStatus.SKIP,"Not Able to Click on Sub Tab : "+relatedTab,YesNo.Yes);
-					}
-					
-				}else {
-
-						log(LogStatus.ERROR,"Item not found: "+ToggleMarketingEvent1Name, YesNo.Yes);
-						sa.assertTrue(false,"Item not found: "+ToggleMarketingEvent1Name);
-					}
-			} else {
-				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object5Tab);
-				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object5Tab,YesNo.Yes);
-			}
-		}
-
-		if(bp.clickOnTab(projectName,TabName.Object1Tab)) {
-
-			if(ins.createInstitution(environment, mode, ToggleLP1, "Limited Partner", InstitutionPageFieldLabelText.Parent_Entity.toString(), ToggleIns1)) {
-				appLog.info("limited partner is created: "+ToggleLP1);
-			}else {
-				appLog.error("Not able to create limited partner: "+ToggleLP1);
-				sa.assertTrue(false, "Not able to create limited partner: "+ToggleLP1);
-			}
-		}else {
-			appLog.error("Not able to click on institution tab so cannot create limite partner: "+ToggleLP1);
-			sa.assertTrue(false, "Not able to click on institution tab so cannot create limite partner: "+ToggleLP1);
-		}
-		
-		if(bp.clickOnTab(projectName,TabName.PartnershipsTab)) {
-			if(ins.createPartnership(environment,mode,TogglePartnerShip1,ToggleFund1)) {
-				appLog.info("partnership is created: "+TogglePartnerShip1);
-			}else {
-				appLog.error("Not able to create partnership: "+TogglePartnerShip1);
-				sa.assertTrue(false, "Not able to create partnership: "+TogglePartnerShip1);
-			}
-		}else {
-			appLog.error("Not able to click on partnership tab so cannot create partnership: "+TogglePartnerShip1);
-			sa.assertTrue(false, "Not able to click on partnership tab so cannot create partnership: "+TogglePartnerShip1);
-		}
-	
-		if(bp.clickOnTab(projectName,TabName.PartnershipsTab)) {
-			if(ins.createPartnership(environment,mode,TogglePartnerShip2,ToggleFund2)) {
-				appLog.info("partnership is created: "+TogglePartnerShip2);
-			}else {
-				appLog.error("Not able to create partnership: "+TogglePartnerShip2);
-				sa.assertTrue(false, "Not able to create partnership: "+TogglePartnerShip2);
-			}
-		}else {
-			appLog.error("Not able to click on partnership tab so cannot create partnership: "+TogglePartnerShip2);
-			sa.assertTrue(false, "Not able to click on partnership tab so cannot create partnership: "+TogglePartnerShip2);
-		}
-		
-		if(bp.clickOnTab(projectName,TabName.CommitmentsTab)) {
-
-			if(ins.createCommitment(environment, mode,ToggleLP1,TogglePartnerShip1,"TOGGLECMT1", phase1DataSheetFilePath)) {
-				appLog.info("commitment is created successfully");
-			}else {
-				appLog.error("Not able to create commitment for limited partner: "+ToggleLP1+" and partnership Name: "+TogglePartnerShip1);
-				sa.assertTrue(false, "Not able to create commitment for limited partner: "+ToggleLP1+" and partnership Name: "+TogglePartnerShip1);
-			}
-		}else {
-			appLog.error("Not able to click on commitment tab so cannot create committment for limite partner: "+ToggleLP1+" and partnership Name: "+TogglePartnerShip1);
-			sa.assertTrue(false, "Not able to click on commitment tab so cannot create committment for limite partner: "+ToggleLP1+" and partnership Name: "+TogglePartnerShip1);
-		}
-		
-		if(bp.clickOnTab(projectName,TabName.CommitmentsTab)) {
-
-			if(ins.createCommitment(environment, mode,ToggleLP1,TogglePartnerShip2,"TOGGLECMT2", phase1DataSheetFilePath)) {
-				appLog.info("commitment is created successfully");
-			}else {
-				appLog.error("Not able to create commitment for limited partner: "+ToggleLP1+" and partnership Name: "+TogglePartnerShip2);
-				sa.assertTrue(false, "Not able to create commitment for limited partner: "+ToggleLP1+" and partnership Name: "+TogglePartnerShip2);
-			}
-		}else {
-			appLog.error("Not able to click on commitment tab so cannot create committment for limite partner: "+ToggleLP1+" and partnership Name: "+TogglePartnerShip2);
-			sa.assertTrue(false, "Not able to click on commitment tab so cannot create committment for limite partner: "+ToggleLP1+" and partnership Name: "+TogglePartnerShip2);
-		}
-		
-		
-
-		switchToDefaultContent(driver);
-		lp.CRMlogout();
-		sa.assertAll();
-	}
-	
-	
 }

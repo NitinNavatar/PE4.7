@@ -191,7 +191,7 @@ public class NavatarSetupPage extends BasePageBusinessLayer {
 				"Enable CheckBox for Navatar SetUp Side Menu Tab");
 
 		try {
-			if (EditViewMode.View.toString().equalsIgnoreCase(editviewMode.toString())) {
+			if (EditViewMode.View.toString().equalsIgnoreCase(editviewMode.toString()) && !sideMenuTab.equals(NavatarSetupSideMenuTab.CommitmentCreation)) {
 				return isDisplayed(driver, enableCheckBoxList.get(0), "Visibility", timeOut,
 						"Enable CheckBox for Navatar SetUp Side Menu Tab : "+sideMenuTab);
 			} else {
@@ -287,7 +287,10 @@ public class NavatarSetupPage extends BasePageBusinessLayer {
 				"//span[contains(@class,'primaryPaletteBorder')]/..//input/following-sibling::span",
 				"Enable CheckBox for Click Navatar SetUp Side Menu Tab");
 
-		if (EditViewMode.View.toString().equalsIgnoreCase(editviewMode.toString()) || NavatarSetupSideMenuTab.OfficeLocations.equals(sideMenuTab)) {
+		if (NavatarSetupSideMenuTab.CommitmentCreation.equals(sideMenuTab) || NavatarSetupSideMenuTab.DealCreation.equals(sideMenuTab) || NavatarSetupSideMenuTab.IndividualInvestorCreation.equals(sideMenuTab)) {
+			return isDisplayed(driver, enableCheckBoxList.get(1), "Visibility", timeOut,
+					"Enable CheckBox for Navatar SetUp Side Menu Tab");
+		}else if (EditViewMode.View.toString().equalsIgnoreCase(editviewMode.toString()) || NavatarSetupSideMenuTab.OfficeLocations.equals(sideMenuTab)) {
 			return isDisplayed(driver, enableCheckBoxList.get(0), "Visibility", timeOut,
 					"Enable CheckBox for Navatar SetUp Side Menu Tab");
 		} else {

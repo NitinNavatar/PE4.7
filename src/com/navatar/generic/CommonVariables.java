@@ -17,7 +17,6 @@ import com.navatar.scripts.Module8;
 import com.navatar.scripts.Module6;
 import com.navatar.scripts.Module1;
 import com.navatar.scripts.Module2;
-import com.navatar.scripts.Module3;
 import com.navatar.scripts.Module3New;
 import com.navatar.scripts.Module4;
 
@@ -106,6 +105,7 @@ public class CommonVariables {
 	public static String M4SDGAction2Name,M4SDGAction2Order,M4SDGAction2Type,M4SDGAction2Event,M4SDGAction2EventPayload;
 	
 	public static String M4Attendee10Status,M4DTField2;
+	public static String TechonlogyCoverage,TechonlogyCoverageRecordType;
 	public static String FS_MarketingEvent1Name,FS_MarketingEvent1Date,FS_MarketingEvent1RecordType,FS_MarketingEvent1Organizer;
 	
 
@@ -210,50 +210,11 @@ public class CommonVariables {
 	public static String watchListTitle="Watchlist";
 	public static String dealTitle="Deals";
 	
-	public static String energyCoverage,energyCoverageRecordType;
-	public static String healthCareCoverage,healthCareCoverageRecordType;
-	public static String manufacturingCoverage,manufacturingCoverageRecordType;
-	public static String businessServicesCoverage,businessServicesCoverageRecordType;
-	public static String TechonlogyCoverage,TechonlogyCoverageRecordType;
-	public static String pharmaCoverage,pharmaCoverageRecordType;
 	
-	public static String dublinCoverage,dublinCoverageRecordType;
-	public static String LondonCoverage,LondonCoverageRecordType;
-	public static String LosAngelesCoverage,LosAngelesCoverageRecordType;
-	public static String NewYorkCoverage,NewYorkCoverageRecordType;
+	/// New MOdule 3 Variable :
 	
 
 	public static String M3Fund1,M3Fund1Type,M3Fund1Category,M3Fund1RecordType;
-	public static String M3TestCustomObj1Name,M3TestCustomObj1RecordType;
-	
-	
-	
-	public static String[][] newTaskPredefinedValue = {{PageLabel.Subject.toString(),"\"Client Demo Request\""},
-											{PageLabel.Due_Date.toString(),"(Today() + 2)"},
-												{PageLabel.Status.toString(),"\"Not Started\""},
-												{PageLabel.Priority.toString(),"\"High\""},
-													{PageLabel.Comments.toString(),"\"Test for predefined comments in Events\""}};
-	
-	public static String[][] LogACallPredefinedValue = {{PageLabel.Subject.toString(),"\"Call for Client Demo\""},
-			{PageLabel.Due_Date.toString(),"(Today() - 1)"},
-				{PageLabel.Priority.toString(),"\"Normal\""},
-					{PageLabel.Comments.toString(),"\"Test for predefined comments in Log a call\""}};
-	
-	public static String[][] newMeetingPredefinedValue = {{PageLabel.Subject.toString(),"\"Client Success Meeting\""},
-			{PageLabel.Due_Date.toString(),"(Today() + 2)"},
-				{PageLabel.Status.toString(),"\"Deferred\""},
-				{PageLabel.Priority.toString(),"\"High\""},
-				{PageLabel.Meeting_Type.toString(),"\"Board Meeting\""},
-					{PageLabel.Comments.toString(),"\"Test for predefined comments in Meeting\""}};
-	//,LogACallPredefinedValue,newMeetingPredefinedValue;
-	
-	
-	
-//	/**
-//	 * 
-//	 */
-	
-	/// New MOdule 3 Variable :
 	
 	public static String SmokeReportFolderName,SmokeReportName,SmokeReportType,SmokeReportShow,SmokeReportRange;
 	
@@ -264,8 +225,6 @@ public class CommonVariables {
 	public static String M3Meeting1Subject,M3Meeting1dueDate,M3Meeting1Status,M3Meeting1Priority,M3Meeting1MeetingType;
 	
 	public static String M3Deal1,M3Deal1CompanyName,M3Deal1RecordType,M3Deal1Stage;
-	public static String M6Ins1,M6Ins2,M6Ins3,M6Ins6,M6Ins9,M6Ins11,M6Ins12,M6Ins13,M6Ins20,M6Ins1RecordType;
-	public static String M6Deal1,M6Deal2,M6Deal4,M6Deal5,M6Deal6,M6Deal7,M6Deal8,M6Deal9,M6Deal8Stage,M6Deal7Stage,M6Deal11,M6Deal12,M6Deal13,M6Deal20,M6Deal20Stage;
 	
 	public static String M3Ins1,M3Ins1RecordType;
 	public static String M3Ins2,M3Ins2RecordType;
@@ -275,13 +234,24 @@ public class CommonVariables {
 	public static String M3Ins6,M3Ins6RecordType,M3Ins6Parent;
 	public static String M3Ins7,M3Ins7RecordType;
 	public static String M3Ins8,M3Ins8RecordType,M3Ins8Parent;
+	public static String M3Ins9,M3Ins9RecordType,M3Ins9Parent;
+	public static String M3Ins10,M3Ins10RecordType;
 	public static String M3Contact2FName,M3Contact2LName,M3Contact2EmailID,M3Contact2RecordType,M3Contact2Title;
 	public static String M3Contact1FName,M3Contact1LName,M3Contact1EmailID,M3Contact1RecordType;
 	public static String M3Contact3FName,M3Contact3LName,M3Contact3EmailID,M3Contact3RecordType;
+	public static String M3Contact4FName,M3Contact4LName;
+	public static String M3PartnerShip1;
+	public static String M3FRName1;
+	
+
+	public static String M3TestCustomObj1Name,M3TestCustomObj1RecordType;
 	
 	// New Module 5 Variable
 	public static String M5Ins1,M5Ins1RecordType;
 	
+	// Module 6 Variable
+	public static String M6Ins1,M6Ins2,M6Ins3,M6Ins6,M6Ins9,M6Ins11,M6Ins12,M6Ins13,M6Ins20,M6Ins1RecordType;
+	public static String M6Deal1,M6Deal2,M6Deal4,M6Deal5,M6Deal6,M6Deal7,M6Deal8,M6Deal9,M6Deal8Stage,M6Deal7Stage,M6Deal11,M6Deal12,M6Deal13,M6Deal20,M6Deal20Stage;
 	
 	// Module 8 variable :
 	
@@ -899,58 +869,23 @@ public class CommonVariables {
 			M4SDGAction2EventPayload=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction2", excelLabel.Event_Payload);
 			M4SDGAction2Type=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction2", excelLabel.Action_Type);
 
-		}else if(obj instanceof Module3 || obj instanceof Module3New){
-		
-			energyCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage1", excelLabel.Coverage_Name);
-			energyCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage1", excelLabel.Record_Type);
-			
-			healthCareCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage2", excelLabel.Coverage_Name);
-			healthCareCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage2", excelLabel.Record_Type);
-			
-			manufacturingCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage3", excelLabel.Coverage_Name);
-			manufacturingCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage3", excelLabel.Record_Type);
-			
-			businessServicesCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage4", excelLabel.Coverage_Name);
-			businessServicesCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage4", excelLabel.Record_Type);
-			
 			TechonlogyCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage5", excelLabel.Coverage_Name);
 			TechonlogyCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage5", excelLabel.Record_Type);
 			
-			pharmaCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage6", excelLabel.Coverage_Name);
-			pharmaCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage6", excelLabel.Record_Type);
-	
-			dublinCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region1", excelLabel.Coverage_Name);
-			dublinCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region1", excelLabel.Record_Type);
 			
-			LondonCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region2", excelLabel.Coverage_Name);
-			LondonCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region2", excelLabel.Record_Type);
+		}else if(obj instanceof Module3New){
+		
 			
-			LosAngelesCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region3", excelLabel.Coverage_Name);
-			LosAngelesCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region3", excelLabel.Record_Type);
+			M3TestCustomObj1Name=ExcelUtils.readData(phase1DataSheetFilePath, "Test Custom Object", excelLabel.Variable_Name,"M3CSTOBJ", excelLabel.Test_Custom_Object_Name);
+			M3TestCustomObj1RecordType=ExcelUtils.readData(phase1DataSheetFilePath, "Test Custom Object", excelLabel.Variable_Name,"M3CSTOBJ", excelLabel.Record_Type);
 			
-			NewYorkCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region4", excelLabel.Coverage_Name);
-			NewYorkCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Region4", excelLabel.Record_Type);
-			
-			M3Ins1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS1", excelLabel.Institutions_Name);
-			M3Ins1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS1", excelLabel.Record_Type);
-			
-			M3Ins2=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS2", excelLabel.Institutions_Name);
-			M3Ins2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS2", excelLabel.Record_Type);
-			
-			
-				
 			
 			M3Fund1=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "M3FUND1", excelLabel.Fund_Name);
 			M3Fund1Type=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "M3FUND1", excelLabel.Fund_Type);
 			M3Fund1Category=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "M3FUND1", excelLabel.Investment_Category);
 			M3Fund1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "M3FUND1", excelLabel.Record_Type);
 		
-			M3TestCustomObj1Name=ExcelUtils.readData(phase1DataSheetFilePath, "Test Custom Object", excelLabel.Variable_Name,"M3CSTOBJ", excelLabel.Test_Custom_Object_Name);
-			M3TestCustomObj1RecordType=ExcelUtils.readData(phase1DataSheetFilePath, "Test Custom Object", excelLabel.Variable_Name,"M3CSTOBJ", excelLabel.Record_Type);
 			
-			
-		//	newTaskPredefinedValue,LogACallPredefinedValue,newMeetingPredefinedValue;
-			// New Module 3 Data
 			SmokeReportFolderName=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Report_Folder_Name);
 			SmokeReportName=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Report_Name);	
 			SmokeReportType=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Select_Report_Type);
@@ -1022,6 +957,18 @@ public class CommonVariables {
 			M3Ins8=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS8", excelLabel.Institutions_Name);
 			M3Ins8RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS8", excelLabel.Record_Type);
 			M3Ins8Parent=M3Ins3;
+			
+			M3Ins9=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS9", excelLabel.Institutions_Name);
+			M3Ins9RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS9", excelLabel.Record_Type);
+			M3Ins9Parent=M3Ins1;
+			
+			M3Ins10=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS10", excelLabel.Institutions_Name);
+			M3Ins10RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS10", excelLabel.Record_Type);
+			
+			
+			M3FRName1=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M3FR1", excelLabel.FundRaising_Name);
+			
+			M3PartnerShip1=ExcelUtils.readData(phase1DataSheetFilePath,"Partnerships",excelLabel.Variable_Name, "M3PS1", excelLabel.PartnerShip_Name);
 			
 			M3Deal1=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M3DEAL1", excelLabel.Deal_Name);
 			M3Deal1CompanyName=M3Ins1;
