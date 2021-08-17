@@ -1453,24 +1453,24 @@ public static enum PermissionType{
     	Manage_fields{
 			@Override
 			public String toString() {
-				return "Manage fields.";
+				return "Manage fields";
 			}
     	},Open_SDG_Record{
 			@Override
 			public String toString() {
-				return "Open SDG record.";
+				return "Open SDG record";
 			}
     	},Toggle_Filters{
 			@Override
 			public String toString() {
-				return "Toggle Filters.";
+				return "Toggle Filters";
 			}
     	},Reload{
 			@Override
 			public String toString() {
-				return "Reload.";
+				return "Reload";
 			}
-    	},Side_DropDOwnButtonforLightTheme;
+    	},Side_DropDOwnButtonforLightTheme,Setup;
     	
     	
     }
@@ -1493,7 +1493,7 @@ public static enum PermissionType{
     	},Second_Closing{
 			@Override
 			public String toString() {
-				return "2nd Closingd";
+				return "2nd Closing";
 			}
     	}
     }
