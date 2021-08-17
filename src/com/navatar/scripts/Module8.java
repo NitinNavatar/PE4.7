@@ -5,6 +5,7 @@ import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
@@ -722,7 +723,7 @@ public class Module8 extends BaseLib {
 						log(LogStatus.FAIL, "visible list is not verfied for "+labelName[i], YesNo.Yes);
 						sa.assertTrue(false, "visible list is not verfied for "+labelName[i]);
 					}
-					if(click(driver, ele2[i], "manage field icon", action.SCROLLANDBOOLEAN)) {
+					if(click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Cancel, 10), "cancel button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.PASS, "clicked on cancel button for "+labelName[i], YesNo.No);
 					}else {
 						log(LogStatus.PASS, "Not able to click on cancel button for "+labelName[i], YesNo.No);
@@ -984,7 +985,6 @@ public class Module8 extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-
 	
 	@Parameters({ "projectName"})
 	@Test
@@ -1018,10 +1018,9 @@ public class Module8 extends BaseLib {
 								break;
 							}
 						}else {
-							if(i==themelistwebelement.size()-1) {
 								log(LogStatus.PASS, "Not able to select Ligth Theme for "+sdgGrid[i], YesNo.Yes);
 								sa.assertTrue(false, "Not able to select Ligth Theme for "+sdgGrid[i]);
-							}
+							
 						}
 					}
 				}else {
@@ -1065,25 +1064,56 @@ public class Module8 extends BaseLib {
 		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		ThreadSleep(5000);
-		WebElement[][] ele2 = {{home.sdgGridSideIconsForLightTheme(SDGGridName.Deals,SDGGridSideIcons.Manage_fields,5),home.sdgGridSideIconsForLightTheme(SDGGridName.Deals,SDGGridSideIcons.Open_SDG_Record,5),
-			home.sdgGridSideIconsForLightTheme(SDGGridName.Deals,SDGGridSideIcons.Toggle_Filters,5),home.sdgGridSideIconsForLightTheme(SDGGridName.Deals,SDGGridSideIcons.Reload,5)}
-		,{home.sdgGridSideIconsForLightTheme(SDGGridName.Fundraising,SDGGridSideIcons.Manage_fields,5),home.sdgGridSideIcons(SDGGridName.Fundraising,SDGGridSideIcons.Open_SDG_Record,5),
-			home.sdgGridSideIcons(SDGGridName.Fundraising,SDGGridSideIcons.Toggle_Filters,5),home.sdgGridSideIcons(SDGGridName.Fundraising,SDGGridSideIcons.Reload,5)},
-		{home.sdgGridSideIcons(SDGGridName.My_Call_List,SDGGridSideIcons.Manage_fields,5),home.sdgGridSideIcons(SDGGridName.My_Call_List,SDGGridSideIcons.Open_SDG_Record,5),
-				home.sdgGridSideIcons(SDGGridName.My_Call_List,SDGGridSideIcons.Toggle_Filters,5),home.sdgGridSideIcons(SDGGridName.My_Call_List,SDGGridSideIcons.Reload,5)}};
+		WebElement[] ele2 = {home.sdgGridSideIconsForLightTheme(SDGGridName.Deals, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10),
+				home.sdgGridSideIconsForLightTheme(SDGGridName.Fundraising, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10),
+				home.sdgGridSideIconsForLightTheme(SDGGridName.My_Call_List, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10)};
 		String[] labelName = {"Deal","FundRaising","My Call List"};
-		String[] filterIconName= {"Manage_fields","Open_SDG_Record","Toggle_Filters","Reload"};
+		String[] filterIconName= {"Manage_fields","Setup","Reload"};
+		SDGGridName[] sdgGridNames = {SDGGridName.Deals,SDGGridName.Fundraising,SDGGridName.My_Call_List};
 		int j=0;
-		for (WebElement[] webElements : ele2) {
-			for(int i=0 ;i<webElements.length; i++) {
-				if(webElements[i]!=null) {
-					log(LogStatus.PASS, filterIconName[i]+" is displaying and tool tip is available for "+labelName[j], YesNo.No);
+		for (WebElement webElements : ele2) {
+			if(webElements!=null) {
+				log(LogStatus.PASS, "Drop Down button is displaying for "+labelName[j], YesNo.No);
+				if(click(driver, webElements, "drop down  button of "+labelName[j], action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.PASS, "Clicked on Drop Down button for "+labelName[j], YesNo.No);
+					ThreadSleep(2000);
+					int i=0;
+					WebElement[] ele3 = {home.sdgGridSideIconsForLightTheme(sdgGridNames[j], SDGGridSideIcons.Manage_fields, 10),
+							home.sdgGridSideIconsForLightTheme(sdgGridNames[j], SDGGridSideIcons.Setup, 10),
+							home.sdgGridSideIconsForLightTheme(sdgGridNames[j], SDGGridSideIcons.Reload, 10)};
+					for (WebElement webElements1 : ele3) {
+						if(webElements1!=null) {
+							log(LogStatus.PASS,filterIconName[i]+"Drop Down menu is displaying for "+labelName[j], YesNo.No);
+
+						}else {
+							log(LogStatus.PASS, filterIconName[i]+" Drop Down menu is not displaying for "+labelName[j], YesNo.Yes);
+							sa.assertTrue(false,filterIconName[i]+ "Drop Down menu is not displaying for "+labelName[j]);
+						}
+						i++;
+					}
 				}else {
-					log(LogStatus.PASS, filterIconName[i]+" is displaying and tool tip is not  available for "+labelName[j], YesNo.Yes);
-					sa.assertTrue(false,  filterIconName[i]+" is displaying and tool tip is not available for "+labelName[j]);
+					log(LogStatus.FAIL, "Not able to Click on Drop Down button for "+labelName[j], YesNo.Yes);
+					sa.assertTrue(false, "Not able to Click on Drop Down button for "+labelName[j]);
 				}
+
+			}else {
+				log(LogStatus.PASS, "Drop Down button is not displaying for "+labelName[j], YesNo.Yes);
+				sa.assertTrue(false,"Drop Down button is not displaying for "+labelName[j]);
 			}
 			j++;
+		}
+		int j1=0;
+		WebElement[] ele4 = {home.sdgGridSideIconsForLightTheme(SDGGridName.Deals, SDGGridSideIcons.Toggle_Filters, 10),
+				home.sdgGridSideIconsForLightTheme(SDGGridName.Fundraising, SDGGridSideIcons.Toggle_Filters, 10),
+				home.sdgGridSideIconsForLightTheme(SDGGridName.My_Call_List, SDGGridSideIcons.Toggle_Filters, 10)};
+		for (WebElement webElements : ele4) {
+			if(webElements!=null) {
+				log(LogStatus.PASS, "toggle filter button is displaying for "+labelName[j1], YesNo.No);
+			}else {
+				log(LogStatus.FAIL, "toggle filter button is not displaying for "+labelName[j1], YesNo.Yes);
+				sa.assertTrue(false,"toggle filter is not displaying for "+labelName[j1]);
+			}
+			j1++;
 		}
 		lp.CRMlogout();
 		sa.assertAll();
@@ -1098,53 +1128,70 @@ public class Module8 extends BaseLib {
 		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		ThreadSleep(5000);
-		WebElement[] ele2 = {home.sdgGridSideIcons(SDGGridName.Deals,SDGGridSideIcons.Manage_fields,5)
-				,home.sdgGridSideIcons(SDGGridName.Fundraising,SDGGridSideIcons.Manage_fields,5),
-				home.sdgGridSideIcons(SDGGridName.My_Call_List,SDGGridSideIcons.Manage_fields,5)};
+		
+		WebElement[] ele1 = {home.sdgGridSideIconsForLightTheme(SDGGridName.Deals, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10),
+				home.sdgGridSideIconsForLightTheme(SDGGridName.Fundraising, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10),
+				home.sdgGridSideIconsForLightTheme(SDGGridName.My_Call_List, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10)};
 		String[] labelName = {"Deal","FundRaising","My Call List"};
 		String dealVisibleFieldList ="Deal,Stage,Source Firm,Notes,Source Firm";
 		String FundRaisingVisibleFieldList ="Fundraising,Stage,Closing,Close Date,Potential Investment(M),Status Notes";
 		String MyCallListVisibleFieldList ="Name,Firm,Phone";
-		for(int i=0 ;i<ele2.length; i++) {
-			String list="";
-			if(ele2[i]!=null) {
-				log(LogStatus.PASS, "Manage Field icon is displaying and tool tip is available for "+labelName[i], YesNo.No);
-				ThreadSleep(3000);
-				if(click(driver, ele2[i], "manage field icon", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.PASS, "clicked on manage field icon of "+labelName[i], YesNo.No);
-					List<WebElement> lst = home.sdgGridSelectVisibleFieldsListInManageFieldPopUp();
-					if(i==0) {
-						list=dealVisibleFieldList;
-					}else if (i==1) {
-						list= FundRaisingVisibleFieldList;
+		for(int j=0; j<ele1.length; j++) {
+			if(click(driver, ele1[j], "drop down  button of "+labelName[j], action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.PASS, "Clicked on Drop Down button for "+labelName[j], YesNo.No);
+				WebElement ele2 = null;
+
+				if(j==0) {
+					ele2=home.sdgGridSideIconsForLightTheme(SDGGridName.Deals,SDGGridSideIcons.Manage_fields,5);
+				}else if (j==1) {
+					ele2=home.sdgGridSideIconsForLightTheme(SDGGridName.Fundraising,SDGGridSideIcons.Manage_fields,5);
+				}else {
+					ele2=home.sdgGridSideIconsForLightTheme(SDGGridName.My_Call_List,SDGGridSideIcons.Manage_fields,5);
+				}
+				String list="";
+				if(ele2!=null) {
+					log(LogStatus.PASS, "Manage Field icon is displaying and tool tip is available for "+labelName[j], YesNo.No);
+					ThreadSleep(3000);
+					if(click(driver, ele2, "manage field icon", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.PASS, "clicked on manage field icon of "+labelName[j], YesNo.No);
+						List<WebElement> lst = home.sdgGridSelectVisibleFieldsListInManageFieldPopUp();
+						if(j==0) {
+							list=dealVisibleFieldList;
+						}else if (j==1) {
+							list= FundRaisingVisibleFieldList;
+						}else {
+							list=MyCallListVisibleFieldList;
+						}
+						if(compareMultipleList(driver, list, lst).isEmpty()) {
+							log(LogStatus.PASS, "visible list is verfied for "+labelName[j], YesNo.No);
+						}else {
+							log(LogStatus.FAIL, "visible list is not verfied for "+labelName[j], YesNo.Yes);
+							sa.assertTrue(false, "visible list is not verfied for "+labelName[j]);
+						}
+						if(click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Cancel, 10), "cancel button", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.PASS, "clicked on cancel button for "+labelName[j], YesNo.No);
+						}else {
+							log(LogStatus.PASS, "Not able to click on cancel button for "+labelName[j], YesNo.No);
+							sa.assertTrue(false, "Not able to click on cancel button for "+labelName[j]);
+						}
 					}else {
-						list=MyCallListVisibleFieldList;
-					}
-					if(compareMultipleList(driver, list, lst).isEmpty()) {
-						log(LogStatus.PASS, "visible list is verfied for "+labelName[i], YesNo.No);
-					}else {
-						log(LogStatus.FAIL, "visible list is not verfied for "+labelName[i], YesNo.Yes);
-						sa.assertTrue(false, "visible list is not verfied for "+labelName[i]);
-					}
-					if(click(driver, ele2[i], "manage field icon", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.PASS, "clicked on cancel button for "+labelName[i], YesNo.No);
-					}else {
-						log(LogStatus.PASS, "Not able to click on cancel button for "+labelName[i], YesNo.No);
-						sa.assertTrue(false, "Not able to click on cancel button for "+labelName[i]);
+						log(LogStatus.PASS, "Not able to click on manage field icon of "+labelName[j], YesNo.No);
+						sa.assertTrue(false, "Not able to click on manage field icon of "+labelName[j]);
 					}
 				}else {
-					log(LogStatus.PASS, "Not able to click on manage field icon of "+labelName[i], YesNo.No);
-					sa.assertTrue(false, "Not able to click on manage field icon of "+labelName[i]);
+					log(LogStatus.PASS, "Manage field icon is not displaying so cannot check manage field icon for "+labelName[j], YesNo.Yes);
+					sa.assertTrue(false,  "Manage field icon is not displaying and cannot check manage field icon for "+labelName[j]);
 				}
+
 			}else {
-				log(LogStatus.PASS, "Manage field icon is not displaying so cannot check manage field icon for "+labelName[i], YesNo.Yes);
-				sa.assertTrue(false,  "Manage field icon is not displaying and cannot check manage field icon for "+labelName[i]);
+				log(LogStatus.FAIL, "Not able to Click on Drop Down button for "+labelName[j], YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on Drop Down button for "+labelName[j]);
 			}
+		
 		}
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-
 	
 	@Parameters({ "projectName"})
 	@Test
@@ -1164,7 +1211,7 @@ public class Module8 extends BaseLib {
 		YesNo[] searchData = {YesNo.No,YesNo.No,YesNo.Yes};
 		
 		for(int i=0; i<sdgGridName.length; i++) {
-			if(click(driver, home.sdgGridSideIcons(sdgGridName[i], SDGGridSideIcons.Toggle_Filters, 10), "filter icon", action.SCROLLANDBOOLEAN)) {
+			if(click(driver, home.sdgGridSideIconsForLightTheme(sdgGridName[i], SDGGridSideIcons.Toggle_Filters, 10), "filter icon", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.PASS, "click on filter icon so cannot search My Call List name : "+M8CON1FName+" "+M8CON1LName, YesNo.Yes);
 				if(home.SearchDealFilterDataOnHomePage(sdgGridName[i],dropDownName[i],searchDataName[i], operators[i], searchData[i])) {
 					log(LogStatus.PASS, "Search My Call List Name in filter "+labelName[i], YesNo.No);
@@ -1221,8 +1268,12 @@ public class Module8 extends BaseLib {
 			}
 		}
 		refresh(driver);
+		lst.removeAll(lst);
 		lst =home.sdgGridHeadersDealsGridDealColumnsDataList(3);
 		if(!lst.isEmpty()) {
+			for(int i=lst.size()-1; i>=1; i--) {
+				lst.remove(i);
+			}
 			if(!compareMultipleList(driver,operators[0].toString(), lst).isEmpty()) {
 				log(LogStatus.PASS, "Deal Received is not visible for "+labelName[0], YesNo.No);
 			}else {
@@ -1233,9 +1284,12 @@ public class Module8 extends BaseLib {
 			log(LogStatus.FAIL, "Stage data list is not found so cannot check stage list after refresh in deal SDG", YesNo.Yes);
 			sa.assertTrue(false, "Stage data list is not found so cannot check stage list after refresh filter in deal SDG");
 		}
-		lst = new ArrayList<WebElement>();
+		lst.removeAll(lst);
 		lst =home.sdgGridHeadersFundRaisingsFundraisingColumnsDataList(3);
 		if(!lst.isEmpty()) {
+			for(int i=lst.size()-1; i>=3; i--) {
+				lst.remove(i);
+			}
 			if(!compareMultipleList(driver,operators[1].toString(), lst).isEmpty()) {
 				log(LogStatus.PASS, "2nd closing is not visible for "+labelName[1], YesNo.No);
 			}else {
@@ -1246,10 +1300,13 @@ public class Module8 extends BaseLib {
 			log(LogStatus.FAIL, "2nd closing data list is not found so cannot check 2nd closing list after refresh in Fundraising SDG", YesNo.Yes);
 			sa.assertTrue(false, "2nd closing data data list is not found so cannot check 2nd closing list after refresh in Fundraising SDG");
 		}
-		lst = new ArrayList<WebElement>();
+		lst.removeAll(lst);
 		lst =home.sdgGridHeadersMyCallListNameColumnsDataList(3);
 		if(!lst.isEmpty()) {
-			if(compareMultipleList(driver,"Centri Technology", lst).isEmpty()) {
+			for(int i=lst.size()-1; i>=2; i--) {
+				lst.remove(i);
+			}
+			if(!compareMultipleList(driver,"Centri Technology", lst).isEmpty()) {
 				log(LogStatus.PASS, "Firm filter is not visible for "+labelName[2], YesNo.No);
 			}else {
 				log(LogStatus.FAIL, "Firm filter is visible for "+labelName[2], YesNo.Yes);
@@ -1258,6 +1315,661 @@ public class Module8 extends BaseLib {
 		}else {
 			log(LogStatus.FAIL, "Firm filter data list is not found so cannot check Firm list after refresh in My_Call_List SDG", YesNo.Yes);
 			sa.assertTrue(false, "firm filter data list is not found so cannot check Firm list after refresh in My_Call_List SDG");
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void M8Tc014_verifySetupIconAndTextForLightTheme(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		ThreadSleep(5000);
+		
+		WebElement[] ele1 = {home.sdgGridSideIconsForLightTheme(SDGGridName.Deals, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10),
+				home.sdgGridSideIconsForLightTheme(SDGGridName.Fundraising, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10),
+				home.sdgGridSideIconsForLightTheme(SDGGridName.My_Call_List, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10)};
+		
+		String[] labelName = {"Deal","FundRaising","My Call List"};
+		String[] tagNames= {"MyHome_ActiveDeals_Baseline","IR - Investors - Fundraising Pipeline - Home","Smart_Caller_MY_Home"};
+		for (int i=0; i<ele1.length; i++) {
+			if(click(driver, ele1[i], "drop down  button of "+labelName[i], action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.PASS, "Clicked on Drop Down button for "+labelName[i], YesNo.No);
+				
+				WebElement ele2 = null;
+				if(i==0) {
+					ele2=home.sdgGridSideIconsForLightTheme(SDGGridName.Deals,SDGGridSideIcons.Setup,5);
+				}else if (i==1) {
+					ele2=home.sdgGridSideIconsForLightTheme(SDGGridName.Fundraising,SDGGridSideIcons.Setup,5);
+				}else {
+					ele2=home.sdgGridSideIconsForLightTheme(SDGGridName.My_Call_List,SDGGridSideIcons.Setup,5);
+				}
+				if(ele2!=null) {
+					if(click(driver, ele2, labelName[i]+ " open sdg record ", action.SCROLLANDBOOLEAN)) {
+						String parentid = null;
+						parentid=switchOnWindow(driver);
+						if(parentid!=null) {
+							ThreadSleep(5000);
+							WebElement ele4 = FindElement(driver, "//h1//*[text()='"+tagNames[i]+"']", labelName[i]+" tag name xpath", action.BOOLEAN, 10);
+							if(ele4!=null) {
+								log(LogStatus.PASS, labelName[i]+" tag name is displaying ", YesNo.No);
+							}else {
+								log(LogStatus.PASS, labelName[i]+" tag name is not displaying ", YesNo.No);
+								sa.assertTrue(false, labelName[i]+" tag name is not displaying ");
+							}
+							driver.close();
+							driver.switchTo().window(parentid);
+						}else {
+							log(LogStatus.FAIL,"Not able to switch on open sdg record window of "+labelName[i], YesNo.Yes);
+							sa.assertTrue(false, "Not able to switch on open sdg record window of "+labelName[i]);
+						}
+					}
+				}else {
+					log(LogStatus.FAIL,"Open_SDG_Record  is not visible in SDG Grid "+labelName[i], YesNo.Yes);
+					sa.assertTrue(false, "SDG Grid is not visible in SDG Grid "+labelName[i]);
+				}
+			}else {
+				log(LogStatus.FAIL, "Not able to Click on Drop Down button for "+labelName[i], YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on Drop Down button for "+labelName[i]);
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M8Tc015_verifyReloadIconForLightTheme(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		List<WebElement> lst = new ArrayList<WebElement>();
+		ThreadSleep(5000);
+		
+		WebElement[] ele2 = {home.sdgGridSideIconsForLightTheme(SDGGridName.Deals, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10),
+				home.sdgGridSideIconsForLightTheme(SDGGridName.Fundraising, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10),
+				home.sdgGridSideIconsForLightTheme(SDGGridName.My_Call_List, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10)};
+		
+		
+		String[] labelName = {"Deal","FundRaising","My Call List"};
+		EditPageLabel [] editPageLabel= {EditPageLabel.Deal,EditPageLabel.Fundraising,EditPageLabel.Phone};
+		EditPageLabel[] textBoxName= {EditPageLabel.Name,EditPageLabel.Name,EditPageLabel.Phone};
+		String dealName="";
+		String updatedName="";
+		String imagePath="//AutoIT//CheckBox.PNG";
+		for (int i=0; i<ele2.length; i++) {
+			if(ele2[i]!=null) {
+				if(i==0) {
+					lst = home.sdgGridHeadersDealsNameList();
+					dealName=lst.get(0).getText();
+					updatedName=dealName+"Update";
+				}else if (i==1) {
+					lst = home.sdgGridHeadersFundRaisingsFundraisingNameList();
+					dealName=lst.get(0).getText();
+					updatedName=dealName+"Update";
+				}else {
+					lst = home.sdgGridHeadersMyCallListPhoneList();
+					for(int i1=0; i1<lst.size(); i1++) {
+						if(!lst.get(i1).getText().equals("")) {
+							dealName=lst.get(i).getText();
+							break;
+						}
+					}
+					updatedName=dealName+"12345";
+				}
+				scrollDownThroughWebelement(driver, ele2[i], "");
+				if (home.clickOnEditButtonOnSDGGridOnHomePage(projectName,dealName , editPageLabel[i].toString(), 10)) {
+					ThreadSleep(3000);
+					log(LogStatus.PASS, "mouse over on Deal Name : "+dealName, YesNo.No);
+					
+					WebElement ele=home.SDGInputTextbox(projectName, textBoxName[i].toString(), 10);
+					sendKeys(driver, ele, updatedName, "title textbox", action.BOOLEAN);
+					if (mouseHoveAndClickAction(imagePath, "checkbox")) {
+						ThreadSleep(5000);
+
+						log(LogStatus.INFO, "successfully clicked on checkbox button", YesNo.No);
+
+						if (click(driver, home.getsdgSaveButton(projectName,10), "save", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "successfully clicked on save button", YesNo.No);
+
+						}else {
+							log(LogStatus.ERROR, "could not click on save button", YesNo.Yes);
+							sa.assertTrue(false,"could not click on save button" );
+						}
+						ThreadSleep(5000);
+						if(click(driver, ele2[i], "drop down  button of "+labelName[i], action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.PASS, "Clicked on Drop Down button for "+labelName[i], YesNo.No);
+							WebElement ele1 = null;
+							if(i==0) {
+								ele1=home.sdgGridSideIconsForLightTheme(SDGGridName.Deals,SDGGridSideIcons.Reload,5);
+							}else if (i==1) {
+								ele1=home.sdgGridSideIconsForLightTheme(SDGGridName.Fundraising,SDGGridSideIcons.Reload,5);
+							}else {
+								ele1=home.sdgGridSideIconsForLightTheme(SDGGridName.My_Call_List,SDGGridSideIcons.Reload,5);
+							}
+							if (click(driver,ele1,"relaod icon "+labelName[i], action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "clicked on reload icon "+labelName[i], YesNo.No);
+
+							}else {
+								log(LogStatus.ERROR, "Not able to click on reload icon "+labelName[i], YesNo.Yes);
+								sa.assertTrue(false,"Not able to click on reload icon "+labelName[i]);
+							}
+						}else {
+							log(LogStatus.FAIL, "Not able to Click on Drop Down button for "+labelName[i], YesNo.Yes);
+							sa.assertTrue(false, "Not able to Click on Drop Down button for "+labelName[i]);
+						}
+					}else {
+						log(LogStatus.ERROR, "could not click on checkbox sikuli", YesNo.Yes);
+						sa.assertTrue(false,"could not click on checkbox sikuli" );
+					}
+				
+				}else {
+					log(LogStatus.ERROR, "could not click on edit button : "+dealName, YesNo.Yes);
+					sa.assertTrue(false,"could not click on edit button: "+dealName );
+				}
+				
+			}else {
+				log(LogStatus.FAIL,"Open_SDG_Record  is not visible in SDG Grid "+labelName[i], YesNo.Yes);
+				sa.assertTrue(false, "SDG Grid is not visible in SDG Grid "+labelName[i]);
+			}
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M8Tc016_1_verifyDarkThemeForSDG(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		ThreadSleep(5000);
+		if(edit.clickOnEditPageLink()) {
+			log(LogStatus.PASS, "clicked on edit page on home page", YesNo.No);
+			ThreadSleep(10000);
+			String[] sdgGrid = {"Deal","FundRaising","My Call List"};
+			SDGGridName[] sdgNames = {SDGGridName.Deals,SDGGridName.Fundraising,SDGGridName.My_Call_List};
+			switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
+			for(int i=0; i<sdgNames.length; i++) {
+				WebElement ele= home.sdgGridListInEditMode(sdgNames[i],20);
+				scrollDownThroughWebelement(driver, ele, "");
+				if(click(driver, ele, "sdg grid "+sdgNames[i], action.BOOLEAN)) {
+					log(LogStatus.PASS, "clicked on SDG Grid "+(i+1), YesNo.No);
+					ThreadSleep(5000);
+					switchToDefaultContent(driver);
+					click(driver, home.getSelectThemeinputBoxClearButton(10), "clear button", action.SCROLLANDBOOLEAN);
+					ThreadSleep(1000);
+					List<WebElement> themelistwebelement=home.sdgGridSelectThemeList();
+					for(int i1=0; i1<themelistwebelement.size(); i1++) {
+						if(themelistwebelement.get(i1).getText().equalsIgnoreCase("Dark")) {
+							if(click(driver, themelistwebelement.get(i1), "Light theme xpath", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.PASS, "Select Ligth Theme for "+sdgGrid[i], YesNo.No);
+								break;
+							}
+						}else {
+							log(LogStatus.PASS, "Not able to select Ligth Theme for "+sdgGrid[i], YesNo.Yes);
+							sa.assertTrue(false, "Not able to select Ligth Theme for "+sdgGrid[i]);
+						}
+						
+					}
+				}else {
+					log(LogStatus.PASS, "Not able to click on SDG Grid "+sdgNames[i], YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on SDG Grid "+sdgNames[i]);
+				}
+				if(i!=sdgNames.length-1) {
+					switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
+				}
+			}
+			
+			ThreadSleep(2000);
+			if(click(driver, home.getCustomTabSaveBtn(projectName, 10), "save button", action.BOOLEAN)) {
+        		log(LogStatus.INFO, "clicked on save button", YesNo.No);
+        		ThreadSleep(7000);
+        		if(clickUsingJavaScript(driver, edit.getBackButton(10), "back button", action.BOOLEAN)) {
+        			log(LogStatus.PASS, "clicked on back button", YesNo.No);
+        		}else {
+					log(LogStatus.ERROR, "Not able to click on back button so cannot back on page ", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on back button so cannot back on page ");
+				}
+        	}else {
+				log(LogStatus.ERROR, "Not able to click on save button so select light theme", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on save button so select light theme");
+			}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on edit page so cannot select light theme", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on edit page so cannot select light theme");
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M8Tc016_2_verifyDarkThemeForSDG(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		ThreadSleep(5000);
+		WebElement[] ele2 = {home.sdgGridSideIconsForLightTheme(SDGGridName.Deals, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10),
+				home.sdgGridSideIconsForLightTheme(SDGGridName.Fundraising, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10),
+				home.sdgGridSideIconsForLightTheme(SDGGridName.My_Call_List, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10)};
+		String[] labelName = {"Deal","FundRaising","My Call List"};
+		String[] filterIconName= {"Manage_fields","Setup","Reload"};
+		SDGGridName[] sdgGridNames = {SDGGridName.Deals,SDGGridName.Fundraising,SDGGridName.My_Call_List};
+		int j=0;
+		for (WebElement webElements : ele2) {
+			if(webElements!=null) {
+				log(LogStatus.PASS, "Drop Down button is displaying for "+labelName[j], YesNo.No);
+				if(click(driver, webElements, "drop down  button of "+labelName[j], action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.PASS, "Clicked on Drop Down button for "+labelName[j], YesNo.No);
+					ThreadSleep(2000);
+					int i=0;
+					WebElement[] ele3 = {home.sdgGridSideIconsForLightTheme(sdgGridNames[j], SDGGridSideIcons.Manage_fields, 10),
+							home.sdgGridSideIconsForLightTheme(sdgGridNames[j], SDGGridSideIcons.Setup, 10),
+							home.sdgGridSideIconsForLightTheme(sdgGridNames[j], SDGGridSideIcons.Reload, 10)};
+					for (WebElement webElements1 : ele3) {
+						if(webElements1!=null) {
+							log(LogStatus.PASS,filterIconName[i]+"Drop Down menu is displaying for "+labelName[j], YesNo.No);
+
+						}else {
+							log(LogStatus.PASS, filterIconName[i]+" Drop Down menu is not displaying for "+labelName[j], YesNo.Yes);
+							sa.assertTrue(false,filterIconName[i]+ "Drop Down menu is not displaying for "+labelName[j]);
+						}
+						i++;
+					}
+				}else {
+					log(LogStatus.FAIL, "Not able to Click on Drop Down button for "+labelName[j], YesNo.Yes);
+					sa.assertTrue(false, "Not able to Click on Drop Down button for "+labelName[j]);
+				}
+
+			}else {
+				log(LogStatus.PASS, "Drop Down button is not displaying for "+labelName[j], YesNo.Yes);
+				sa.assertTrue(false,"Drop Down button is not displaying for "+labelName[j]);
+			}
+			j++;
+		}
+		int j1=0;
+		WebElement[] ele4 = {home.sdgGridSideIconsForLightTheme(SDGGridName.Deals, SDGGridSideIcons.Toggle_Filters, 10),
+				home.sdgGridSideIconsForLightTheme(SDGGridName.Fundraising, SDGGridSideIcons.Toggle_Filters, 10),
+				home.sdgGridSideIconsForLightTheme(SDGGridName.My_Call_List, SDGGridSideIcons.Toggle_Filters, 10)};
+		for (WebElement webElements : ele4) {
+			if(webElements!=null) {
+				log(LogStatus.PASS, "toggle filter button is displaying for "+labelName[j1], YesNo.No);
+			}else {
+				log(LogStatus.FAIL, "toggle filter button is not displaying for "+labelName[j1], YesNo.Yes);
+				sa.assertTrue(false,"toggle filter is not displaying for "+labelName[j1]);
+			}
+			j1++;
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M8Tc017_verifywrenchIconForDarkTheme(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		ThreadSleep(5000);
+		
+		WebElement[] ele1 = {home.sdgGridSideIconsForLightTheme(SDGGridName.Deals, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10),
+				home.sdgGridSideIconsForLightTheme(SDGGridName.Fundraising, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10),
+				home.sdgGridSideIconsForLightTheme(SDGGridName.My_Call_List, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10)};
+		String[] labelName = {"Deal","FundRaising","My Call List"};
+		String dealVisibleFieldList ="Deal,Stage,Source Firm,Notes,Source Firm";
+		String FundRaisingVisibleFieldList ="Fundraising,Stage,Closing,Close Date,Potential Investment(M),Status Notes";
+		String MyCallListVisibleFieldList ="Name,Firm,Phone";
+		for(int j=0; j<ele1.length; j++) {
+			if(click(driver, ele1[j], "drop down  button of "+labelName[j], action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.PASS, "Clicked on Drop Down button for "+labelName[j], YesNo.No);
+				WebElement ele2 = null;
+
+				if(j==0) {
+					ele2=home.sdgGridSideIconsForLightTheme(SDGGridName.Deals,SDGGridSideIcons.Manage_fields,5);
+				}else if (j==1) {
+					ele2=home.sdgGridSideIconsForLightTheme(SDGGridName.Fundraising,SDGGridSideIcons.Manage_fields,5);
+				}else {
+					ele2=home.sdgGridSideIconsForLightTheme(SDGGridName.My_Call_List,SDGGridSideIcons.Manage_fields,5);
+				}
+				String list="";
+				if(ele2!=null) {
+					log(LogStatus.PASS, "Manage Field icon is displaying and tool tip is available for "+labelName[j], YesNo.No);
+					ThreadSleep(3000);
+					if(click(driver, ele2, "manage field icon", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.PASS, "clicked on manage field icon of "+labelName[j], YesNo.No);
+						List<WebElement> lst = home.sdgGridSelectVisibleFieldsListInManageFieldPopUp();
+						if(j==0) {
+							list=dealVisibleFieldList;
+						}else if (j==1) {
+							list= FundRaisingVisibleFieldList;
+						}else {
+							list=MyCallListVisibleFieldList;
+						}
+						if(compareMultipleList(driver, list, lst).isEmpty()) {
+							log(LogStatus.PASS, "visible list is verfied for "+labelName[j], YesNo.No);
+						}else {
+							log(LogStatus.FAIL, "visible list is not verfied for "+labelName[j], YesNo.Yes);
+							sa.assertTrue(false, "visible list is not verfied for "+labelName[j]);
+						}
+						if(click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Cancel, 10), "cancel button", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.PASS, "clicked on cancel button for "+labelName[j], YesNo.No);
+						}else {
+							log(LogStatus.PASS, "Not able to click on cancel button for "+labelName[j], YesNo.No);
+							sa.assertTrue(false, "Not able to click on cancel button for "+labelName[j]);
+						}
+					}else {
+						log(LogStatus.PASS, "Not able to click on manage field icon of "+labelName[j], YesNo.No);
+						sa.assertTrue(false, "Not able to click on manage field icon of "+labelName[j]);
+					}
+				}else {
+					log(LogStatus.PASS, "Manage field icon is not displaying so cannot check manage field icon for "+labelName[j], YesNo.Yes);
+					sa.assertTrue(false,  "Manage field icon is not displaying and cannot check manage field icon for "+labelName[j]);
+				}
+
+			}else {
+				log(LogStatus.FAIL, "Not able to Click on Drop Down button for "+labelName[j], YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on Drop Down button for "+labelName[j]);
+			}
+		
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M8Tc018_verifySDGFiltersForDarkTheme(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		List<WebElement> lst = new ArrayList<WebElement>();
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		ThreadSleep(5000);
+		SDGGridName[] sdgGridName = {SDGGridName.Deals,SDGGridName.Fundraising,SDGGridName.My_Call_List};
+		String[] labelName = {"Deal","FundRaising","My Call List"};
+		String [] dropDownName = {"Stage","Closing","Firm"};
+		String [] searchDataName= {null,null,"Centri"};
+		Operator[] operators = {Operator.Deal_Received,Operator.Second_Closing,Operator.StartWith};
+		YesNo[] searchData = {YesNo.No,YesNo.No,YesNo.Yes};
+		
+		for(int i=0; i<sdgGridName.length; i++) {
+			if(click(driver, home.sdgGridSideIconsForLightTheme(sdgGridName[i], SDGGridSideIcons.Toggle_Filters, 10), "filter icon", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.PASS, "click on filter icon so cannot search My Call List name : "+M8CON1FName+" "+M8CON1LName, YesNo.Yes);
+				if(home.SearchDealFilterDataOnHomePage(sdgGridName[i],dropDownName[i],searchDataName[i], operators[i], searchData[i])) {
+					log(LogStatus.PASS, "Search My Call List Name in filter "+labelName[i], YesNo.No);
+					ThreadSleep(3000);
+					if(i==0) {
+						lst =home.sdgGridHeadersDealsGridDealColumnsDataList(3);
+						if(!lst.isEmpty()) {
+							if(compareMultipleList(driver,operators[i].toString(), lst).isEmpty()) {
+								log(LogStatus.PASS, "Deal Received is verfied for "+labelName[i], YesNo.No);
+							}else {
+								log(LogStatus.FAIL, "Deal Received is not verfied for "+labelName[i], YesNo.Yes);
+								sa.assertTrue(false, "Deal Received is not verfied for "+labelName[i]);
+							}
+						}else {
+							log(LogStatus.FAIL, "Stage data list is not found so cannot check stage list after applied filter in deal SDG", YesNo.Yes);
+							sa.assertTrue(false, "Stage data list is not found so cannot check stage list after applied filter in deal SDG");
+						}
+						
+					}else if (i==1) {
+						lst =home.sdgGridHeadersFundRaisingsFundraisingColumnsDataList(4);
+						if(!lst.isEmpty()) {
+							if(compareMultipleList(driver,operators[i].toString(), lst).isEmpty()) {
+								log(LogStatus.PASS, "2nd closing is verfied for "+labelName[i], YesNo.No);
+							}else {
+								log(LogStatus.FAIL, "2nd closing is not verfied for "+labelName[i], YesNo.Yes);
+								sa.assertTrue(false, "2nd closing is not verfied for "+labelName[i]);
+							}
+						}else {
+							log(LogStatus.FAIL, "2nd closing data list is not found so cannot check 2nd closing list after applied filter in Fundraising SDG", YesNo.Yes);
+							sa.assertTrue(false, "2nd closing data data list is not found so cannot check 2nd closing list after applied filter in Fundraising SDG");
+						}
+					}else {
+						lst =home.sdgGridHeadersMyCallListNameColumnsDataList(3);
+						if(!lst.isEmpty()) {
+							if(compareMultipleList(driver,"Centri Technology", lst).isEmpty()) {
+								log(LogStatus.PASS, "Firm filter is verfied for "+labelName[i], YesNo.No);
+							}else {
+								log(LogStatus.FAIL, "Firm filter is not verfied for "+labelName[i], YesNo.Yes);
+								sa.assertTrue(false, "Firm filter is not verfied for "+labelName[i]);
+							}
+						}else {
+							log(LogStatus.FAIL, "Firm filter data list is not found so cannot check Firm list after applied filter in My_Call_List SDG", YesNo.Yes);
+							sa.assertTrue(false, "firm filter data list is not found so cannot check Firm list after applied filter in My_Call_List SDG");
+						}
+					}
+					click(driver, home.sdgGridSideIcons(sdgGridName[i], SDGGridSideIcons.Toggle_Filters, 10), "filter icon", action.SCROLLANDBOOLEAN);
+				}else {
+					log(LogStatus.FAIL, "Not able to Search "+sdgGridName[i]+" in filter "+labelName[i], YesNo.No);
+					sa.assertTrue(false, "Not able to Search "+sdgGridName[i]+" Name in filter "+labelName[i]);
+				}
+			}else {
+				log(LogStatus.FAIL, "Not able to click on filter icon so cannot search "+sdgGridName[i]+" : "+labelName[i], YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on filter icon so cannot search "+sdgGridName[i]+" : "+labelName[i]);
+			}
+		}
+		refresh(driver);
+		lst.removeAll(lst);
+		lst =home.sdgGridHeadersDealsGridDealColumnsDataList(3);
+		if(!lst.isEmpty()) {
+			for(int i=lst.size()-1; i>=1; i--) {
+				lst.remove(i);
+			}
+			if(!compareMultipleList(driver,operators[0].toString(), lst).isEmpty()) {
+				log(LogStatus.PASS, "Deal Received is not visible for "+labelName[0], YesNo.No);
+			}else {
+				log(LogStatus.FAIL, "Deal Received is visible for "+labelName[0], YesNo.Yes);
+				sa.assertTrue(false, "Deal Received is visible for "+labelName[0]);
+			}
+		}else {
+			log(LogStatus.FAIL, "Stage data list is not found so cannot check stage list after refresh in deal SDG", YesNo.Yes);
+			sa.assertTrue(false, "Stage data list is not found so cannot check stage list after refresh filter in deal SDG");
+		}
+		lst.removeAll(lst);
+		lst =home.sdgGridHeadersFundRaisingsFundraisingColumnsDataList(4);
+		if(!lst.isEmpty()) {
+			for(int i=lst.size()-1; i>=3; i--) {
+				lst.remove(i);
+			}
+			if(!compareMultipleList(driver,operators[1].toString(), lst).isEmpty()) {
+				log(LogStatus.PASS, "2nd closing is not visible for "+labelName[1], YesNo.No);
+			}else {
+				log(LogStatus.FAIL, "2nd closing is visible for "+labelName[1], YesNo.Yes);
+				sa.assertTrue(false, "2nd closing is visible for "+labelName[1]);
+			}
+		}else {
+			log(LogStatus.FAIL, "2nd closing data list is not found so cannot check 2nd closing list after refresh in Fundraising SDG", YesNo.Yes);
+			sa.assertTrue(false, "2nd closing data data list is not found so cannot check 2nd closing list after refresh in Fundraising SDG");
+		}
+		lst.removeAll(lst);
+		lst =home.sdgGridHeadersMyCallListNameColumnsDataList(3);
+		if(!lst.isEmpty()) {
+			for(int i=lst.size()-1; i>=2; i--) {
+				lst.remove(i);
+			}
+			if(!compareMultipleList(driver,"Centri Technology", lst).isEmpty()) {
+				log(LogStatus.PASS, "Firm filter is not visible for "+labelName[2], YesNo.No);
+			}else {
+				log(LogStatus.FAIL, "Firm filter is visible for "+labelName[2], YesNo.Yes);
+				sa.assertTrue(false, "Firm filter is visible for "+labelName[2]);
+			}
+		}else {
+			log(LogStatus.FAIL, "Firm filter data list is not found so cannot check Firm list after refresh in My_Call_List SDG", YesNo.Yes);
+			sa.assertTrue(false, "firm filter data list is not found so cannot check Firm list after refresh in My_Call_List SDG");
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M8Tc019_verifySetupIconAndTextForDarkTheme(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		ThreadSleep(5000);
+		
+		WebElement[] ele1 = {home.sdgGridSideIconsForLightTheme(SDGGridName.Deals, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10),
+				home.sdgGridSideIconsForLightTheme(SDGGridName.Fundraising, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10),
+				home.sdgGridSideIconsForLightTheme(SDGGridName.My_Call_List, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10)};
+		
+		String[] labelName = {"Deal","FundRaising","My Call List"};
+		String[] tagNames= {"MyHome_ActiveDeals_Baseline","IR - Investors - Fundraising Pipeline - Home","Smart_Caller_MY_Home"};
+		for (int i=0; i<ele1.length; i++) {
+			if(click(driver, ele1[i], "drop down  button of "+labelName[i], action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.PASS, "Clicked on Drop Down button for "+labelName[i], YesNo.No);
+				
+				WebElement ele2 = null;
+				if(i==0) {
+					ele2=home.sdgGridSideIconsForLightTheme(SDGGridName.Deals,SDGGridSideIcons.Setup,5);
+				}else if (i==1) {
+					ele2=home.sdgGridSideIconsForLightTheme(SDGGridName.Fundraising,SDGGridSideIcons.Setup,5);
+				}else {
+					ele2=home.sdgGridSideIconsForLightTheme(SDGGridName.My_Call_List,SDGGridSideIcons.Setup,5);
+				}
+				if(ele2!=null) {
+					if(click(driver, ele2, labelName[i]+ " open sdg record ", action.SCROLLANDBOOLEAN)) {
+						String parentid = null;
+						parentid=switchOnWindow(driver);
+						if(parentid!=null) {
+							ThreadSleep(5000);
+							WebElement ele4 = FindElement(driver, "//h1//*[text()='"+tagNames[i]+"']", labelName[i]+" tag name xpath", action.BOOLEAN, 10);
+							if(ele4!=null) {
+								log(LogStatus.PASS, labelName[i]+" tag name is displaying ", YesNo.No);
+							}else {
+								log(LogStatus.PASS, labelName[i]+" tag name is not displaying ", YesNo.No);
+								sa.assertTrue(false, labelName[i]+" tag name is not displaying ");
+							}
+							driver.close();
+							driver.switchTo().window(parentid);
+						}else {
+							log(LogStatus.FAIL,"Not able to switch on open sdg record window of "+labelName[i], YesNo.Yes);
+							sa.assertTrue(false, "Not able to switch on open sdg record window of "+labelName[i]);
+						}
+					}
+				}else {
+					log(LogStatus.FAIL,"Open_SDG_Record  is not visible in SDG Grid "+labelName[i], YesNo.Yes);
+					sa.assertTrue(false, "SDG Grid is not visible in SDG Grid "+labelName[i]);
+				}
+			}else {
+				log(LogStatus.FAIL, "Not able to Click on Drop Down button for "+labelName[i], YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on Drop Down button for "+labelName[i]);
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M8Tc020_verifyReloadIconForDarkTheme(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		List<WebElement> lst = new ArrayList<WebElement>();
+		ThreadSleep(5000);
+		
+		WebElement[] ele2 = {home.sdgGridSideIconsForLightTheme(SDGGridName.Deals, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10),
+				home.sdgGridSideIconsForLightTheme(SDGGridName.Fundraising, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10),
+				home.sdgGridSideIconsForLightTheme(SDGGridName.My_Call_List, SDGGridSideIcons.Side_DropDOwnButtonforLightTheme, 10)};
+		
+		
+		String[] labelName = {"Deal","FundRaising","My Call List"};
+		EditPageLabel [] editPageLabel= {EditPageLabel.Deal,EditPageLabel.Fundraising,EditPageLabel.Phone};
+		EditPageLabel[] textBoxName= {EditPageLabel.Name,EditPageLabel.Name,EditPageLabel.Phone};
+		String dealName="";
+		String updatedName="";
+		String imagePath="//AutoIT//CheckBoxForDarkTheme.PNG";
+		for (int i=0; i<ele2.length; i++) {
+			if(ele2[i]!=null) {
+				if(i==0) {
+					lst = home.sdgGridHeadersDealsNameList();
+					dealName=lst.get(0).getText();
+					updatedName=dealName+"Update";
+				}else if (i==1) {
+					lst = home.sdgGridHeadersFundRaisingsFundraisingNameList();
+					dealName=lst.get(0).getText();
+					updatedName=dealName+"Update";
+				}else {
+					lst = home.sdgGridHeadersMyCallListPhoneList();
+					for(int i1=0; i1<lst.size(); i1++) {
+						if(!lst.get(i1).getText().equals("")) {
+							dealName=lst.get(i).getText();
+							break;
+						}
+					}
+					updatedName=dealName+"12345";
+				}
+				scrollDownThroughWebelement(driver, ele2[i], "");
+				if (home.clickOnEditButtonOnSDGGridOnHomePage(projectName,dealName , editPageLabel[i].toString(), 10)) {
+					ThreadSleep(3000);
+					log(LogStatus.PASS, "mouse over on Deal Name : "+dealName, YesNo.No);
+					
+					WebElement ele=home.SDGInputTextbox(projectName, textBoxName[i].toString(), 10);
+					sendKeys(driver, ele, updatedName, "title textbox", action.BOOLEAN);
+					if (mouseHoveAndClickAction(imagePath, "checkbox")) {
+						ThreadSleep(5000);
+
+						log(LogStatus.INFO, "successfully clicked on checkbox button", YesNo.No);
+
+						if (click(driver, home.getsdgSaveButton(projectName,10), "save", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "successfully clicked on save button", YesNo.No);
+
+						}else {
+							log(LogStatus.ERROR, "could not click on save button", YesNo.Yes);
+							sa.assertTrue(false,"could not click on save button" );
+						}
+						ThreadSleep(5000);
+						if(click(driver, ele2[i], "drop down  button of "+labelName[i], action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.PASS, "Clicked on Drop Down button for "+labelName[i], YesNo.No);
+							WebElement ele1 = null;
+							if(i==0) {
+								ele1=home.sdgGridSideIconsForLightTheme(SDGGridName.Deals,SDGGridSideIcons.Reload,5);
+							}else if (i==1) {
+								ele1=home.sdgGridSideIconsForLightTheme(SDGGridName.Fundraising,SDGGridSideIcons.Reload,5);
+							}else {
+								ele1=home.sdgGridSideIconsForLightTheme(SDGGridName.My_Call_List,SDGGridSideIcons.Reload,5);
+							}
+							if (click(driver,ele1,"relaod icon "+labelName[i], action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "clicked on reload icon "+labelName[i], YesNo.No);
+
+							}else {
+								log(LogStatus.ERROR, "Not able to click on reload icon "+labelName[i], YesNo.Yes);
+								sa.assertTrue(false,"Not able to click on reload icon "+labelName[i]);
+							}
+						}else {
+							log(LogStatus.FAIL, "Not able to Click on Drop Down button for "+labelName[i], YesNo.Yes);
+							sa.assertTrue(false, "Not able to Click on Drop Down button for "+labelName[i]);
+						}
+					}else {
+						log(LogStatus.ERROR, "could not click on checkbox sikuli", YesNo.Yes);
+						sa.assertTrue(false,"could not click on checkbox sikuli" );
+					}
+				
+				}else {
+					log(LogStatus.ERROR, "could not click on edit button : "+dealName, YesNo.Yes);
+					sa.assertTrue(false,"could not click on edit button: "+dealName );
+				}
+				
+			}else {
+				log(LogStatus.FAIL,"Open_SDG_Record  is not visible in SDG Grid "+labelName[i], YesNo.Yes);
+				sa.assertTrue(false, "SDG Grid is not visible in SDG Grid "+labelName[i]);
+			}
 		}
 		
 		lp.CRMlogout();
