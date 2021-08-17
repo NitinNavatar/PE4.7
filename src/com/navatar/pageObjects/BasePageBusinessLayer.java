@@ -2345,8 +2345,14 @@ appLog.info("Element Found : "+related);
 }else {
 	appLog.error("Element Not Found : "+related);	
 	appLog.error("Going to check on more "+related);	
-	xpath = "//li//button[@title='More Tabs']";
-	ele = FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut);
+	//xpath = "//li//button[@title='More Tabs']";
+	xpath = "//li//*[contains(text(),'More')]";
+	List<WebElement> eleList = FindElements(driver, xpath, "More");
+	if (!eleList.isEmpty() && eleList.size()>=2) {
+		ele = eleList.get(1);
+	} else {
+		ele = FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut);
+	}
 	click(driver, ele, "More Tab", action.BOOLEAN);
 	ThreadSleep(3000);
 	
