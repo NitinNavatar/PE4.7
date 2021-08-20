@@ -3,6 +3,8 @@
  */
 package com.navatar.pageObjects;
 
+import com.navatar.generic.CommonVariables;
+
 /**
  * @author Ankur Rana
  *
@@ -33,6 +35,14 @@ public interface EditPageErrorMessage {
 	
 	public String EntityUpcomingEventSDG="Record_Entity_Entity's_Upcoming Third Party Events";
 	public String EntityEventInviteeSDG="Record Entity Events Our Event Invitees";
+	
+	public String DealOpenQuestion="Record_Deals_QA_Requests_Open";
+	public String DealClosed="Record_Deals_QA_Requests_Closed";
+	
+	public String MarketingEventThirdPartyEvent=CommonVariables.M5Sdg2Name;
+	public String MarketingEventOurEvent=CommonVariables.M5Sdg3Name;
+	
+	
 	
 
 	//Record_Deals_QA_Requests_Closed
