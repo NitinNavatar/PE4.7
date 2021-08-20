@@ -133,7 +133,7 @@ public class EnumConstants {
 		FundsPage,InstitutionsPage,CommitmentsPage,HomePage,NavatarInvestorManager,ManageFolderPopUp,ManageApprovalsPopUp,ProjectDetailsPoPUp,NavatarInvestorAddOnsPage,NewProjectPopUp,PipelineCustomPage
 		,CompanyPage,CreateFundraisingPage,CreateCommitmentFundType,CreateCommitmentCoInvestmentType,FundraisingPage,PartnershipsPage, DealPage,TaskRayPage, LimitedPartnerPage, BuildStep2Of3,PipelinesPage,NewTaskPage,
 	CRMUserPage,   TaskPage, NewTaskPopUP,TestCustomObjectPage, NewEventPopUp,ActivitiesOrMeetings,SearchActivitiesAttachment,EmailUploadPage,Object1Page,Object1PagePopup,Object2Page,Object3Page,Object4Page,ListEmail,
-CompactLayout, MeetingType, AddPickListMeetingType,ActivityLayoutPage, SDGPage,Object5Page,AccountCustomFieldStatusPage,MEPageFromCalender,SharingSettingsPage,DashboardDeadDeals,AccountReferral,VisualForcePage, WarningPopUp, RecordTypePortfolioCompany,CustomNavigationPage,NavigationPickListPage,CallPopUp,MeetingPopUp,TaskPopUp;
+CompactLayout, MeetingType, AddPickListMeetingType,ActivityLayoutPage, SDGPage,Object5Page,AccountCustomFieldStatusPage,MEPageFromCalender,SharingSettingsPage,DashboardDeadDeals,AccountReferral,VisualForcePage, WarningPopUp, RecordTypePortfolioCompany,CustomNavigationPage,NavigationPickListPage,CallPopUp,MeetingPopUp,ConvertToPortfolioFrame,TaskPopUp;
 
 
 
@@ -332,7 +332,11 @@ CompactLayout, MeetingType, AddPickListMeetingType,ActivityLayoutPage, SDGPage,O
 	@Override
 	public String toString() {
 			return "Fields & Relationships";
-}		
+}},ButtonLinksAndActions{
+	@Override
+	public String toString() {
+			return "Buttons, Links, and Actions";
+}	
 },FieldSets{
 	@Override
 	public String toString() {

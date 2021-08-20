@@ -1175,6 +1175,13 @@ public WebElement clickOnEditInFrontOfFieldValues(String projectName, String sta
 	return ele;
 }
 
+public WebElement clickOnEditInFrontOfFieldValues(String projectName, String status,boolean removeUnderscore) {
+	if(removeUnderscore)status=status.replace("_", " ");
+	String xpath="//th[text()='"+status+"']/preceding-sibling::td//a[contains(@title,'Edit')]";
+	WebElement ele=isDisplayed(driver, FindElement(driver, xpath, "edit", action.SCROLLANDBOOLEAN, 10), "visibility", 10, "edit");
+	return ele;
+}
+
 /**
  * @author Azhar Alam
  * @param driver
@@ -1454,6 +1461,7 @@ public boolean createRecordTypeForObject(String projectName,String[][] labelWith
 		}
 		if (isMakeAvailable) {
 			ele=getMakeAvailableCheckBox(10);
+			if (!isSelected(driver, ele, "make available")) {
 			if (click(driver, ele, "make Available CheckBox", action.BOOLEAN)) {
 				log(LogStatus.INFO, "Click on make Available CheckBox", YesNo.No);	
 				ThreadSleep(1000);
@@ -1463,7 +1471,8 @@ public boolean createRecordTypeForObject(String projectName,String[][] labelWith
 			} else {
 				log(LogStatus.ERROR, "Not Able to Click on make Available CheckBox", YesNo.Yes);
 				sa.assertTrue(false,"Not Able to Click on make Available CheckBox");
-			}	
+			}
+			}
 		}
 
 		if (isMakeDefault) {
@@ -2289,6 +2298,7 @@ public boolean createPageLayout(String projectName,String[][] labelWithValue,Str
 				ThreadSleep(5000);
 				ThreadSleep(5000);
 				switchToFrame(driver, 20, getSetUpPageIframe(60));
+				if ((src!=null) && (trgt!=null)) {
 				if (dragDropOnPageLayout(src, trgt)) {
 					log(LogStatus.INFO, "Able to dragNDrop "+src+" at "+trgt+" location", YesNo.No);
 					flag=true;
@@ -2296,7 +2306,17 @@ public boolean createPageLayout(String projectName,String[][] labelWithValue,Str
 					log(LogStatus.ERROR, "Not able to dragNDrop "+src+" at "+trgt+" location", YesNo.Yes);
 					sa.assertTrue(false,"Not able to dragNDrop "+src+" at "+trgt+" location");
 				}
-			} else {
+				}
+				switchToDefaultContent(driver);
+				switchToFrame(driver, 20, getSetUpPageIframe(60));
+				if (click(driver, getPageLayoutSaveBtn(object.Apps, 10), "save", action.BOOLEAN)) {
+					log(LogStatus.ERROR, "Clicked on page layout save Button ", YesNo.Yes);
+					
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on page layout save Button ", YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on page layout save Button ");
+				}
+				} else {
 				log(LogStatus.ERROR, "Not Able to Click on save Button ", YesNo.Yes);
 				sa.assertTrue(false,"Not Able to Click on save Button ");
 			}

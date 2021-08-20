@@ -633,6 +633,11 @@ public class SetupPage extends BasePageBusinessLayer {
 	
 	}
 	
+	@FindBy(xpath = "//label[text()='Available Record Types']/..//following-sibling::select")
+	private WebElement availableRecordType;
 	
+	public WebElement getavailableRecordType(int timeOut) {
+		return isDisplayed(driver, availableRecordType, "Visibility", timeOut, "availableRecordType");
+	}
 	
 }

@@ -79,7 +79,13 @@ public class DealPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, convertToPortfolio, "Visibility", timeOut, "convertToPortfolio");
 		
 	}
+	@FindBy(xpath = "//button[text()='Convert']")
+	private WebElement convert;
 	
+	public WebElement getconvertButton(int timeOut) {
+		return isDisplayed(driver, convert, "Visibility", timeOut, "convertToPortfolio");
+		
+	}
 	@FindBy(xpath = "//button[text()='Next']")
 	private WebElement nextButton;
 	
@@ -100,5 +106,12 @@ public class DealPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, convertToPortfolioCrossButton, "Visibility", timeOut, "cross Button");
 		
 	}
-	
+
+	public WebElement getconvertToPortfolioCrossButton(String head,int timeOut) {
+		String xpath="//h2[text()='"+head+"']/ancestor::div//button[@title='Close this window']";
+		WebElement ele=FindElement(driver, xpath, "cross",
+				action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "cross Button");
+		
+	}
 }
