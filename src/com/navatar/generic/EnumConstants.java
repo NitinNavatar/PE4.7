@@ -173,7 +173,7 @@ CompactLayout, MeetingType, AddPickListMeetingType,ActivityLayoutPage, SDGPage,O
 			public String toString() {
 				return "Declined/Dead";
 		}
-		};
+		},Prospect,Interested,Sent_PPM,Declined,Verbal_Commitment,Follow_up_Diligence;
 	}
 	public static enum YesNo {
 		Yes,No,YesWinium;
