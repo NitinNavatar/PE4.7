@@ -632,12 +632,22 @@ public class SetupPage extends BasePageBusinessLayer {
 
 	
 	}
+	@FindBy(xpath = "//label[text()='Selected Record Types']/..//following-sibling::select")
+	private WebElement SelectedRecordType;
 	
+	public WebElement getSelectedRecordType(int timeOut) {
+		return isDisplayed(driver, SelectedRecordType, "Visibility", timeOut, "SelectedRecordType");
+	}
 	@FindBy(xpath = "//label[text()='Available Record Types']/..//following-sibling::select")
 	private WebElement availableRecordType;
 	
 	public WebElement getavailableRecordType(int timeOut) {
 		return isDisplayed(driver, availableRecordType, "Visibility", timeOut, "availableRecordType");
+	}@FindBy(xpath = "//select[@id='pageLayoutSelector']")
+	private WebElement pageLayoutSelector;
+	
+	public WebElement getpageLayoutSelector(int timeOut) {
+		return isDisplayed(driver, pageLayoutSelector, "Visibility", timeOut, "pageLayoutSelector");
 	}
 	
 }

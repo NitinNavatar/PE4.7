@@ -2444,4 +2444,15 @@ public boolean ClickAndRemoveUtilityItem(String environment, String mode, String
 	return false;
 }
 
+public int getCountOfColumnRecordType(String projectName, String recordType) {
+	String xpath = "//table[@id='plaHeaderTable']//div[@title='"+recordType+"']/../preceding-sibling::th";
+	List<WebElement> ele = FindElements(driver, xpath, "no of columns before") ;
+	return ele.size();
+}
+
+public WebElement clickOnRecordTypePageLayout(String projectName, String profile, int loc) {
+	String xpath = "//table[@id='plaBodyTable']//td[text()='"+profile+"']/following-sibling::td["+loc+"]";
+	WebElement ele = FindElement(driver, xpath, "payge layout table element", action.BOOLEAN, 20) ;
+	return isDisplayed(driver, ele, "visibility", 10, "record type");
+}
 }

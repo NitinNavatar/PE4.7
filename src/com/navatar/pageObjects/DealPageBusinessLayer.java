@@ -7,6 +7,7 @@ import static com.navatar.generic.CommonVariables.ToggleDeal1;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -439,5 +440,13 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		}
 		return false;
 	}
+	
+	public WebElement selectPathComponent(String projectName, String stage) {
+		String xpath="//span[@class='title slds-path__title'][text()='"+stage+"']";
+		WebElement ele = FindElement(driver, xpath,"path component", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", 10, "path component");
+		
+	}
+	
 	}
 

@@ -607,4 +607,14 @@ public WebElement getsearchEntitiesTextbox(String projectName,int timeOut) {
 	
 	
 	}
+
+@FindBy(xpath = "//*[text()='Last Modified By']/../following-sibling::div//lightning-formatted-text")
+private WebElement lastModifiedTime;
+
+public WebElement getLastModifiedTime(String projectName,int timeOut) {
+	
+	return isDisplayed(driver, lastModifiedTime, "Visibility", timeOut, "lastModifiedTime");
+
+
+}
 }

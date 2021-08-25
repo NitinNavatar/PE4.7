@@ -34,6 +34,7 @@ import static com.navatar.generic.CommonLib.*;
 
 import java.util.Random;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.concurrent.ThreadLocalRandom;
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -42,8 +43,12 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -692,7 +697,9 @@ public String getTabName(String projectName,TabName TabName) {
 	case CommitmentsTab:
 		tabName = "Commitments";
 		break;
-		
+	case FundraisingsTab:
+		tabName = "Fundraisings";
+		break;
 	default:
 		return tabName;
 	}
@@ -3483,5 +3490,26 @@ public boolean SearchDealFilterDataOnHomePage(SDGGridName sdgGridName,String lab
 	return false;
 }
 
-
+public boolean verifyBeforeTimeOrNot(String projectName, String time) {
+	Calendar cal = Calendar.getInstance();
+    
+	 SimpleDateFormat sdf = new SimpleDateFormat("H:mm a");
+	 sdf.setTimeZone(TimeZone.getTimeZone("GMT-7:00"));
+	 sdf.applyPattern("h:mm a");
+	 //System.out.println(sdf.format(Calendar.getInstance().getTime()));  
+	 System.out.println( sdf.format(cal.getTime()) );
+	 Date timecurrent = null,lt2 = null;
+	try {
+		timecurrent = sdf.parse(sdf.format(cal.getTime()));
+		lt2  = sdf.parse(time);
+	} catch (ParseException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		return false;
+	}
+	System.out.println("current time is "+sdf.format(cal.getTime()));
+	System.out.println("time on page is "+time);
+	 System.out.println(timecurrent.after(lt2));
+	 return timecurrent.after(lt2);
+}
 }
