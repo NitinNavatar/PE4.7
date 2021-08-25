@@ -542,7 +542,6 @@ public class Module5New extends BaseLib {
 						 toggles = toggleButtons[i].split(breakSP);
 						switchToFrame(driver, 30, edit.getEditPageFrame(projectName,120));
 						ThreadSleep(10000);
-						scn.nextLine();
 						if (true/*click(driver, ip.getRelatedTab(projectName, relatedTab, 120), relatedTab.toString(), action.BOOLEAN)*/) {
 							log(LogStatus.INFO,"Click on Sub Tab : "+relatedTab,YesNo.No);
 							ThreadSleep(2000);
@@ -987,7 +986,6 @@ public class Module5New extends BaseLib {
 									ThreadSleep(2000);
 									switchToDefaultContent(driver);
 									ThreadSleep(20000);
-									scn.nextLine();
 									String sdgToggles=getValueFromElementUsingJavaScript(driver, edit.getsdgConfigDataProviderTextBox(projectName, 10), "sdg Config Data Provider TextBox");
 									System.err.println(">>>>> + "+sdgToggles);
 									//// scn.nextLine();
@@ -1731,6 +1729,984 @@ public class Module5New extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M5TC010_CreateTwoMoreCustomSDG(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String fields=SDGLabels.APIName.toString();String values="";
+
+		if (lp.searchAndClickOnApp(SDG, 30)) {
+			log(LogStatus.INFO,"Able to Click/Search : "+SDG+" going to create custom SDG",YesNo.No);	 
+			ThreadSleep(3000);
+		} else {
+			sa.assertTrue(false,"Not Able to Click/Search : "+SDG+" so can not create custom SDG");
+			log(LogStatus.SKIP,"Not Able to Click/Search : "+SDG+" so can not create custom SDG",YesNo.Yes);
+		}
+
+		if (lp.clickOnTab(projectName, TabName.SDGTab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.SDGTab,YesNo.No);
+			String[][] sdgLabels = {{SDGCreationLabel.SDG_Name.toString(),M5Sdg4Name},
+					{SDGCreationLabel.SDG_Tag.toString(),M5Sdg4TagName},
+					{SDGCreationLabel.sObjectName.toString(),M5Sdg4ObjectName}};
+
+			if (sdg.createCustomSDG(projectName, M5Sdg4Name, sdgLabels, action.BOOLEAN, 20)) {
+				log(LogStatus.PASS,"create/verify created SDG : "+M5Sdg4Name,YesNo.No);
+				String api=ExcelUtils.readData(phase1DataSheetFilePath,"Fields",excelLabel.Variable_Name, "CField1", excelLabel.APIName);
+				values=api;
+				if (sdg.addFieldOnSDG(projectName,fields,values)) {
+					log(LogStatus.INFO,"Successfully added fields on "+M5Sdg4Name,YesNo.Yes);
+
+				}else {
+					sa.assertTrue(false,"Not Able to add fields on SDG : "+M5Sdg4Name);
+					log(LogStatus.SKIP,"Not Able to add fields on SDG : "+M5Sdg4Name,YesNo.Yes);
+				}
+			} else {
+				sa.assertTrue(false,"Not Able to create/verify created SDG : "+M5Sdg4Name);
+				log(LogStatus.SKIP,"Not Able to create/verify created SDG : "+M5Sdg4Name,YesNo.Yes);
+			}
+
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.SDGTab);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.SDGTab,YesNo.Yes);
+		}
+
+		ThreadSleep(3000);
+		if (lp.searchAndClickOnApp(SDG, 30)) {
+			log(LogStatus.INFO,"Able to Click/Search : "+SDG+" going to create custom SDG",YesNo.No);	 
+			ThreadSleep(3000);
+		} else {
+			sa.assertTrue(false,"Not Able to Click/Search : "+SDG+" so can not create custom SDG");
+			log(LogStatus.SKIP,"Not Able to Click/Search : "+SDG+" so can not create custom SDG",YesNo.Yes);
+		}
+		if (lp.clickOnTab(projectName, TabName.SDGTab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.SDGTab,YesNo.No);
+
+			String[][] sdgLabels = {{SDGCreationLabel.SDG_Name.toString(),M5Sdg5Name},
+					{SDGCreationLabel.SDG_Tag.toString(),M5Sdg5TagName},
+					{SDGCreationLabel.sObjectName.toString(),M5Sdg5ObjectName}};
+
+			if (sdg.createCustomSDG(projectName, M5Sdg5Name, sdgLabels, action.BOOLEAN, 20)) {
+				log(LogStatus.PASS,"create/verify created SDG : "+M5Sdg5Name,YesNo.No);
+				String api=ExcelUtils.readData(phase1DataSheetFilePath,"Fields",excelLabel.Variable_Name, "CField1", excelLabel.APIName);
+				values=api;
+				if (sdg.addFieldOnSDG(projectName,fields,values)) {
+					log(LogStatus.INFO,"Successfully added fields on "+M5Sdg5Name,YesNo.Yes);
+
+				}else {
+					sa.assertTrue(false,"Not Able to add fields on SDG : "+M5Sdg5Name);
+					log(LogStatus.SKIP,"Not Able to add fields on SDG : "+M5Sdg5Name,YesNo.Yes);
+				}
+			} else {
+				sa.assertTrue(false,"Not Able to create/verify created SDG : "+M5Sdg5Name);
+				log(LogStatus.SKIP,"Not Able to create/verify created SDG : "+M5Sdg5Name,YesNo.Yes);
+			}
+
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.SDGTab);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.SDGTab,YesNo.Yes);
+		}
+
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M5TC011_VerifyToAddOneMoreNewToggleButtonOnebyOne(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String customSdgNAME = customObject+M5Sdg4Name;
+		String sdgConfigDataProviderTextBox = M5Sdg4Name+":"+M5Sdg4Name;
+
+		String[] tabNames = {ToggleCheck1TabName,ToggleCheck2TabName,ToggleCheck3TabName};
+		String tabName;
+
+		String[] itemValues = {ToggleCheck1ItemName,ToggleCheck2ItemName,ToggleCheck3ItemName};
+		String itemValue;
+
+		String[] relatedTabs = {ToggleCheck1RelatedTab,ToggleCheck2RelatedTab,ToggleCheck3RelatedTab};
+		String relatedTab;
+
+		String toggleButtons[] = {ToggleCheck1ToggleButtons,ToggleCheck2ToggleButtons,ToggleCheck3ToggleButtons};
+
+		String fileLocation[] = {".\\AutoIT\\EditPage\\OurEventInvitee1.PNG",".\\AutoIT\\EditPage\\Closed1.PNG",".\\AutoIT\\EditPage\\OurEvent1.PNG"};
+
+		boolean flag=false;
+		for (int i = 0; i < tabNames.length; i++) {
+			tabName = tabNames[i];
+			if (lp.clickOnTab(projectName, tabName)) {
+				log(LogStatus.INFO,"Click on Tab : "+tabName,YesNo.No);
+
+				itemValue = itemValues[i];
+				if (ip.clickOnAlreadyCreatedItem(projectName, itemValue, true, 15)) {
+					log(LogStatus.INFO,"Item found: "+itemValue, YesNo.Yes);
+					ThreadSleep(2000);
+
+					if (hp.clickOnEditPageLinkOnSetUpLink()) {
+						log(LogStatus.INFO,"click on Edit Page SetUp Link", YesNo.No);
+						ThreadSleep(1000);	
+						//// scn.nextLine();
+						switchToDefaultContent(driver);
+						switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
+
+						relatedTab=relatedTabs[i];
+						if (click(driver, ip.getRelatedTab(projectName, relatedTab, 5), relatedTab.toString(), action.BOOLEAN)) {
+							log(LogStatus.INFO,"Click on Sub Tab : "+relatedTab,YesNo.No);
+							ThreadSleep(2000);
+
+
+							String[] toggles = toggleButtons[i].split(breakSP);
+							String toggleBtn = "";
+							for (int j = 0; j < 1; j++) {
+								toggleBtn = toggles[j];
+								switchToDefaultContent(driver);
+								ThreadSleep(20000);
+								/////////////////////////////////////////////////////
+								String sValue = EditPageErrorMessage.EnhancedLightningGrid;
+								if (sendKeys(driver, edit.getEditPageSeachTextBox(projectName, 10),sValue,"Search TextBox",action.BOOLEAN)) {
+									ThreadSleep(2000);
+									log(LogStatus.INFO,"send value to Search TextBox : "+sValue,YesNo.No);
+									String psource= fileLocation[i];
+									System.err.println("path of file : "+psource);
+									//	// scn.nextLine();
+									if (edit.dragNDropUsingScreen(projectName, EnhanceLightningGridImg, psource, 20)) {
+										log(LogStatus.INFO,"Able to DragNDrop : "+sValue,YesNo.No);
+										ThreadSleep(2000);
+										try {
+											edit.getElgDataProviderTextBox(projectName, 10).clear();
+										} catch (Exception e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+										ThreadSleep(2000);
+										if (edit.clickOnELGSeachValueLink(projectName, customSdgNAME, 20)) {
+											log(LogStatus.INFO,"Click on ELG Search Vaue Link: "+customSdgNAME,YesNo.No);;
+											ThreadSleep(500);
+										} else {
+											sa.assertTrue(false, "Not Able to Click on ELG Search Vaue Link: "+customSdgNAME);
+											log(LogStatus.SKIP,"Not Able to Click on ELG Search Vaue Link: "+customSdgNAME,YesNo.Yes);
+										}
+										if (sendKeys(driver, edit.getElgTitleTextBox(projectName, 10),M5Sdg4Name,"ELG Title TextBox",action.BOOLEAN)) {
+											ThreadSleep(500);
+											log(LogStatus.INFO,"send value to ELG Title TextBox : "+M5Sdg4Name,YesNo.No);
+										
+
+										} else {
+											sa.assertTrue(false, "Not Able to send value to ELG Title TextBox : "+M5Sdg4Name);
+											log(LogStatus.FAIL,"Not Able to send value to ELG Title TextBox : "+M5Sdg4Name,YesNo.Yes);
+										}
+										
+										//	// scn.nextLine();
+										if (click(driver, edit.getEnableToggleCheckBox(projectName, 10), "Enable Toggle CheckBox", action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO,"click on Enable Toggle CheckBox",YesNo.No);
+										} else {
+
+											sa.assertTrue(false, "Not Able to click on Enable Toggle CheckBox");
+											log(LogStatus.FAIL,"Not Able to click on Enable Toggle CheckBox",YesNo.Yes);
+
+										}
+
+									} else {
+										sa.assertTrue(false, "Not Able to DragNDrop : "+sValue);
+										log(LogStatus.FAIL,"Not Able to DragNDrop : "+sValue,YesNo.Yes);
+									}
+
+								} else {
+									sa.assertTrue(false, "Not Able to send value to Search TextBox : "+sValue);
+									log(LogStatus.FAIL,"Not Able to send value to Search TextBox : "+sValue,YesNo.Yes);
+								}
+
+								switchToDefaultContent(driver);
+								switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
+								if (click(driver, ip.toggleButton(projectName, toggleBtn, action.BOOLEAN, 30), toggleBtn, action.BOOLEAN)) {
+									log(LogStatus.INFO,"Click on Toggle : "+toggleBtn,YesNo.No);
+									ThreadSleep(2000);
+									switchToDefaultContent(driver);
+									if (sendKeysWithoutClearingTextBox(driver, edit.getsdgConfigDataProviderTextBox(projectName, 10),","+sdgConfigDataProviderTextBox,"sdg Config Data Provider TextBox : "+sdgConfigDataProviderTextBox,action.BOOLEAN)) {
+										ThreadSleep(500);
+										log(LogStatus.INFO,"send value to sdg Config Data Provider TextBox : "+sdgConfigDataProviderTextBox,YesNo.No);
+
+
+										if (click(driver, edit.getEditPageSaveButton(projectName, 10),"Edit Page Save Button", action.BOOLEAN)) {
+											log(LogStatus.INFO,"Click on Edit Page Save Button",YesNo.No);
+											ThreadSleep(2000);
+										} else {
+											sa.assertTrue(false, "Not Able to Click on Edit Page Save Button");
+											log(LogStatus.FAIL,"Not Able to Click on Edit Page Save Button",YesNo.Yes);
+										}
+										toggleBtn = M5Sdg4Name ;
+										switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
+										if (ip.toggleButton(projectName, PageName.Object1Page, toggleBtn, action.BOOLEAN, 30)!=null) {
+											log(LogStatus.INFO,"New Toggle Button Added : "+toggleBtn,YesNo.No);
+											ThreadSleep(2000);
+										} else {
+											sa.assertTrue(false, "New Toggle Button Added : "+toggleBtn);
+											log(LogStatus.FAIL,"New Toggle Button Added : "+toggleBtn,YesNo.Yes);
+										}
+
+
+									} else {
+										sa.assertTrue(false, "Not Able to send value to sdg Config Data Provider TextBox : "+sdgConfigDataProviderTextBox);
+										log(LogStatus.FAIL,"Not Able to send value to sdg Config Data Provider TextBox : "+sdgConfigDataProviderTextBox,YesNo.Yes);
+									}
+
+
+
+								} else {
+									sa.assertTrue(false,"Not Able to Click on Toggle : "+toggleBtn);
+									log(LogStatus.SKIP,"Not Able to Click on Toggle : "+toggleBtn,YesNo.Yes);
+								}
+
+							}
+
+						} else {
+							sa.assertTrue(false,"Not Able to Click on Sub Tab : "+relatedTab);
+							log(LogStatus.SKIP,"Not Able to Click on Sub Tab : "+relatedTab,YesNo.Yes);
+						}
+						ThreadSleep(5000);
+						switchToDefaultContent(driver);
+						if (clickUsingJavaScript(driver, edit.getEditPageBackButton(projectName, 10),"Edit Page Back Button", action.BOOLEAN)) {
+							log(LogStatus.INFO,"Click on Edit Page Back Button",YesNo.No);
+							//// scn.nextLine();
+						} else {
+							sa.assertTrue(false, "Not Able to Click on Edit Page Back Button");
+							log(LogStatus.SKIP,"Not Able to Click on Edit Page Back Button",YesNo.Yes);
+						}
+
+
+					} else {
+						log(LogStatus.ERROR,"Not Able to click on Edit Page SetUp Link", YesNo.Yes);
+						sa.assertTrue(false,"Not Able to click on Edit Page SetUp Link");
+					}
+
+
+
+				}else {
+
+					log(LogStatus.ERROR,"Item not found: "+itemValue, YesNo.Yes);
+					sa.assertTrue(false,"Item not found: "+itemValue);
+				}
+				refresh(driver);
+				ThreadSleep(7000);
+			} else {
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabName);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabName,YesNo.Yes);
+			}
+			refresh(driver);
+		}
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M5TC012_VerifyTheNewlyCreatedToggleButton(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+
+
+		String[] tabNames = {ToggleCheck1TabName,ToggleCheck2TabName,ToggleCheck3TabName};
+		String tabName;
+
+		String[] itemValues = {ToggleCheck1ItemName,ToggleCheck2ItemName,ToggleCheck3ItemName};
+		String itemValue;
+
+		String[] relatedTabs = {ToggleCheck1RelatedTab,ToggleCheck2RelatedTab,ToggleCheck3RelatedTab};
+		String relatedTab;
+
+		String toggleButtons[] = {ToggleCheck1ToggleButtons,ToggleCheck2ToggleButtons,ToggleCheck3ToggleButtons};
+		String[] toggles=null;
+		String toggleButton ;
+		WebElement ele = null;
+
+
+		for (int i = 0; i < tabNames.length; i++) {
+			tabName = tabNames[i];
+			if (lp.clickOnTab(projectName, tabName)) {
+				log(LogStatus.INFO,"Click on Tab : "+tabName,YesNo.No);
+				itemValue = itemValues[i];
+				if (ip.clickOnAlreadyCreatedItem(projectName, itemValue, true, 15)) {
+					log(LogStatus.INFO,"Item found: "+itemValue, YesNo.Yes);
+					ThreadSleep(2000);
+					relatedTab=relatedTabs[i];
+					toggles = toggleButtons[i].split(breakSP);
+					if (click(driver, ip.getRelatedTab(projectName,relatedTab, 30), relatedTab, action.BOOLEAN)) {
+						log(LogStatus.INFO,"Click on Sub Tab : "+relatedTab,YesNo.No);
+						ThreadSleep(2000);
+
+						for (int j = 0; j <toggles.length; j++) {
+							toggleButton = toggles[j];
+							ele=ip.toggleButton(projectName, toggleButton, action.BOOLEAN, 30);
+							if (ele!=null) {
+								log(LogStatus.INFO,"Toggle is present : "+toggleButton,YesNo.No);
+								ThreadSleep(2000);
+							} else {
+								sa.assertTrue(false,"Toggle should be present : "+toggleButton);
+								log(LogStatus.SKIP,"Toggle should be present : "+toggleButton,YesNo.Yes);
+							}
+						}
+
+						toggleButton = ActiveDealToggleButton;
+						ele=ip.toggleButton(projectName, toggleButton, action.BOOLEAN, 30);
+						if (ele!=null) {
+							log(LogStatus.INFO,"Toggle is present : "+toggleButton,YesNo.No);
+							ThreadSleep(2000);
+						} else {
+							sa.assertTrue(false,"Toggle should be present : "+toggleButton);
+							log(LogStatus.SKIP,"Toggle should be present : "+toggleButton,YesNo.Yes);
+						}
+
+						if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, 2)!=null) {
+							log(LogStatus.PASS,toggleButton+" is selected by default",YesNo.No);
+						} else {
+							sa.assertTrue(false,toggleButton+" should be selected by default");
+							log(LogStatus.FAIL,toggleButton+" should be selected by default",YesNo.Yes);
+						}
+
+
+						toggleButton = M5Sdg4Name;
+						ele=ip.toggleButton(projectName, toggleButton, action.BOOLEAN, 30);
+						if (ele!=null) {
+							log(LogStatus.INFO,"Toggle is present : "+toggleButton,YesNo.No);
+							ThreadSleep(2000);
+						} else {
+							sa.assertTrue(false,"Toggle should be present : "+toggleButton);
+							log(LogStatus.SKIP,"Toggle should be present : "+toggleButton,YesNo.Yes);
+						}
+
+
+					} else {
+						sa.assertTrue(false,"Not Able to Click on Sub Tab : "+relatedTab);
+						log(LogStatus.SKIP,"Not Able to Click on Sub Tab : "+relatedTab,YesNo.Yes);
+					}
+
+				}else {
+
+					log(LogStatus.ERROR,"Item not found: "+itemValue, YesNo.Yes);
+					sa.assertTrue(false,"Item not found: "+itemValue);
+				}
+			} else {
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabName);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabName,YesNo.Yes);
+			}
+			ThreadSleep(2000);
+			//break;
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M5TC013_VerifyToAddOneMoreNewToggleButtonOnebyOne(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String customSdgNAME = customObject+M5Sdg5Name;
+		String sdgConfigDataProviderTextBox = M5Sdg5Name+":"+M5Sdg5Name;
+
+		String[] tabNames = {ToggleCheck1TabName,ToggleCheck2TabName,ToggleCheck3TabName};
+		String tabName;
+
+		String[] itemValues = {ToggleCheck1ItemName,ToggleCheck2ItemName,ToggleCheck3ItemName};
+		String itemValue;
+
+		String[] relatedTabs = {ToggleCheck1RelatedTab,ToggleCheck2RelatedTab,ToggleCheck3RelatedTab};
+		String relatedTab;
+
+		String toggleButtons[] = {ToggleCheck1ToggleButtons,ToggleCheck2ToggleButtons,ToggleCheck3ToggleButtons};
+
+		String fileLocation[] = {".\\AutoIT\\EditPage\\OurEventInvitee1.PNG",".\\AutoIT\\EditPage\\Closed1.PNG",".\\AutoIT\\EditPage\\OurEvent1.PNG"};
+
+		boolean flag=false;
+		for (int i = 0; i < tabNames.length; i++) {
+			tabName = tabNames[i];
+			if (lp.clickOnTab(projectName, tabName)) {
+				log(LogStatus.INFO,"Click on Tab : "+tabName,YesNo.No);
+
+				itemValue = itemValues[i];
+				if (ip.clickOnAlreadyCreatedItem(projectName, itemValue, true, 15)) {
+					log(LogStatus.INFO,"Item found: "+itemValue, YesNo.Yes);
+					ThreadSleep(2000);
+
+					if (hp.clickOnEditPageLinkOnSetUpLink()) {
+						log(LogStatus.INFO,"click on Edit Page SetUp Link", YesNo.No);
+						ThreadSleep(1000);	
+						//// scn.nextLine();
+						switchToDefaultContent(driver);
+						switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
+
+						relatedTab=relatedTabs[i];
+						if (click(driver, ip.getRelatedTab(projectName, relatedTab, 5), relatedTab.toString(), action.BOOLEAN)) {
+							log(LogStatus.INFO,"Click on Sub Tab : "+relatedTab,YesNo.No);
+							ThreadSleep(2000);
+
+
+							String[] toggles = toggleButtons[i].split(breakSP);
+							String toggleBtn = "";
+							for (int j = 0; j < 1; j++) {
+								toggleBtn = toggles[j];
+								switchToDefaultContent(driver);
+								ThreadSleep(20000);
+								/////////////////////////////////////////////////////
+								String sValue = EditPageErrorMessage.EnhancedLightningGrid;
+								if (sendKeys(driver, edit.getEditPageSeachTextBox(projectName, 10),sValue,"Search TextBox",action.BOOLEAN)) {
+									ThreadSleep(2000);
+									log(LogStatus.INFO,"send value to Search TextBox : "+sValue,YesNo.No);
+									String psource= fileLocation[i];
+									System.err.println("path of file : "+psource);
+									//	// scn.nextLine();
+									if (edit.dragNDropUsingScreen(projectName, EnhanceLightningGridImg, psource, 20)) {
+										log(LogStatus.INFO,"Able to DragNDrop : "+sValue,YesNo.No);
+										ThreadSleep(2000);
+										try {
+											edit.getElgDataProviderTextBox(projectName, 10).clear();
+										} catch (Exception e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+										ThreadSleep(2000);
+										if (edit.clickOnELGSeachValueLink(projectName, customSdgNAME, 20)) {
+											log(LogStatus.INFO,"Click on ELG Search Vaue Link: "+customSdgNAME,YesNo.No);;
+											ThreadSleep(500);
+										} else {
+											sa.assertTrue(false, "Not Able to Click on ELG Search Vaue Link: "+customSdgNAME);
+											log(LogStatus.SKIP,"Not Able to Click on ELG Search Vaue Link: "+customSdgNAME,YesNo.Yes);
+										}
+										if (sendKeys(driver, edit.getElgTitleTextBox(projectName, 10),M5Sdg5Name,"ELG Title TextBox",action.BOOLEAN)) {
+											ThreadSleep(500);
+											log(LogStatus.INFO,"send value to ELG Title TextBox : "+M5Sdg5Name,YesNo.No);
+										
+
+										} else {
+											sa.assertTrue(false, "Not Able to send value to ELG Title TextBox : "+M5Sdg5Name);
+											log(LogStatus.FAIL,"Not Able to send value to ELG Title TextBox : "+M5Sdg5Name,YesNo.Yes);
+										}
+										
+										//	// scn.nextLine();
+										if (click(driver, edit.getEnableToggleCheckBox(projectName, 10), "Enable Toggle CheckBox", action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO,"click on Enable Toggle CheckBox",YesNo.No);
+										} else {
+
+											sa.assertTrue(false, "Not Able to click on Enable Toggle CheckBox");
+											log(LogStatus.FAIL,"Not Able to click on Enable Toggle CheckBox",YesNo.Yes);
+
+										}
+
+									} else {
+										sa.assertTrue(false, "Not Able to DragNDrop : "+sValue);
+										log(LogStatus.FAIL,"Not Able to DragNDrop : "+sValue,YesNo.Yes);
+									}
+
+								} else {
+									sa.assertTrue(false, "Not Able to send value to Search TextBox : "+sValue);
+									log(LogStatus.FAIL,"Not Able to send value to Search TextBox : "+sValue,YesNo.Yes);
+								}
+
+								switchToDefaultContent(driver);
+								switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
+								if (click(driver, ip.toggleButton(projectName, toggleBtn, action.BOOLEAN, 30), toggleBtn, action.BOOLEAN)) {
+									log(LogStatus.INFO,"Click on Toggle : "+toggleBtn,YesNo.No);
+									ThreadSleep(2000);
+									switchToDefaultContent(driver);
+									if (sendKeysWithoutClearingTextBox(driver, edit.getsdgConfigDataProviderTextBox(projectName, 10),","+sdgConfigDataProviderTextBox,"sdg Config Data Provider TextBox : "+sdgConfigDataProviderTextBox,action.BOOLEAN)) {
+										ThreadSleep(500);
+										log(LogStatus.INFO,"send value to sdg Config Data Provider TextBox : "+sdgConfigDataProviderTextBox,YesNo.No);
+
+
+										if (click(driver, edit.getEditPageSaveButton(projectName, 10),"Edit Page Save Button", action.BOOLEAN)) {
+											log(LogStatus.INFO,"Click on Edit Page Save Button",YesNo.No);
+											ThreadSleep(2000);
+										} else {
+											sa.assertTrue(false, "Not Able to Click on Edit Page Save Button");
+											log(LogStatus.FAIL,"Not Able to Click on Edit Page Save Button",YesNo.Yes);
+										}
+										toggleBtn = M5Sdg5Name ;
+										switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
+										if (ip.toggleButton(projectName, PageName.Object1Page, toggleBtn, action.BOOLEAN, 30)!=null) {
+											log(LogStatus.INFO,"New Toggle Button Added : "+toggleBtn,YesNo.No);
+											ThreadSleep(2000);
+										} else {
+											sa.assertTrue(false, "New Toggle Button Added : "+toggleBtn);
+											log(LogStatus.FAIL,"New Toggle Button Added : "+toggleBtn,YesNo.Yes);
+										}
+
+
+									} else {
+										sa.assertTrue(false, "Not Able to send value to sdg Config Data Provider TextBox : "+sdgConfigDataProviderTextBox);
+										log(LogStatus.FAIL,"Not Able to send value to sdg Config Data Provider TextBox : "+sdgConfigDataProviderTextBox,YesNo.Yes);
+									}
+
+
+
+								} else {
+									sa.assertTrue(false,"Not Able to Click on Toggle : "+toggleBtn);
+									log(LogStatus.SKIP,"Not Able to Click on Toggle : "+toggleBtn,YesNo.Yes);
+								}
+
+							}
+
+						} else {
+							sa.assertTrue(false,"Not Able to Click on Sub Tab : "+relatedTab);
+							log(LogStatus.SKIP,"Not Able to Click on Sub Tab : "+relatedTab,YesNo.Yes);
+						}
+						ThreadSleep(5000);
+						switchToDefaultContent(driver);
+						if (clickUsingJavaScript(driver, edit.getEditPageBackButton(projectName, 10),"Edit Page Back Button", action.BOOLEAN)) {
+							log(LogStatus.INFO,"Click on Edit Page Back Button",YesNo.No);
+							//// scn.nextLine();
+						} else {
+							sa.assertTrue(false, "Not Able to Click on Edit Page Back Button");
+							log(LogStatus.SKIP,"Not Able to Click on Edit Page Back Button",YesNo.Yes);
+						}
+
+
+					} else {
+						log(LogStatus.ERROR,"Not Able to click on Edit Page SetUp Link", YesNo.Yes);
+						sa.assertTrue(false,"Not Able to click on Edit Page SetUp Link");
+					}
+
+
+
+				}else {
+
+					log(LogStatus.ERROR,"Item not found: "+itemValue, YesNo.Yes);
+					sa.assertTrue(false,"Item not found: "+itemValue);
+				}
+				refresh(driver);
+				ThreadSleep(7000);
+			} else {
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabName);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabName,YesNo.Yes);
+			}
+			refresh(driver);
+		}
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M5TC014_VerifyTheNewlyCreatedToggleButton(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+
+
+		String[] tabNames = {ToggleCheck1TabName,ToggleCheck2TabName,ToggleCheck3TabName};
+		String tabName;
+
+		String[] itemValues = {ToggleCheck1ItemName,ToggleCheck2ItemName,ToggleCheck3ItemName};
+		String itemValue;
+
+		String[] relatedTabs = {ToggleCheck1RelatedTab,ToggleCheck2RelatedTab,ToggleCheck3RelatedTab};
+		String relatedTab;
+
+		String toggleButtons[] = {ToggleCheck1ToggleButtons,ToggleCheck2ToggleButtons,ToggleCheck3ToggleButtons};
+		String[] toggles=null;
+		String toggleButton ;
+		WebElement ele = null;
+
+
+		for (int i = 0; i < tabNames.length; i++) {
+			tabName = tabNames[i];
+			if (lp.clickOnTab(projectName, tabName)) {
+				log(LogStatus.INFO,"Click on Tab : "+tabName,YesNo.No);
+				itemValue = itemValues[i];
+				if (ip.clickOnAlreadyCreatedItem(projectName, itemValue, true, 15)) {
+					log(LogStatus.INFO,"Item found: "+itemValue, YesNo.Yes);
+					ThreadSleep(2000);
+					relatedTab=relatedTabs[i];
+					toggles = toggleButtons[i].split(breakSP);
+					if (click(driver, ip.getRelatedTab(projectName,relatedTab, 30), relatedTab, action.BOOLEAN)) {
+						log(LogStatus.INFO,"Click on Sub Tab : "+relatedTab,YesNo.No);
+						ThreadSleep(2000);
+
+						for (int j = 0; j <toggles.length; j++) {
+							toggleButton = toggles[j];
+							ele=ip.toggleButton(projectName, toggleButton, action.BOOLEAN, 30);
+							if (ele!=null) {
+								log(LogStatus.INFO,"Toggle is present : "+toggleButton,YesNo.No);
+								ThreadSleep(2000);
+							} else {
+								sa.assertTrue(false,"Toggle should be present : "+toggleButton);
+								log(LogStatus.SKIP,"Toggle should be present : "+toggleButton,YesNo.Yes);
+							}
+						}
+
+						toggleButton = ActiveDealToggleButton;
+						ele=ip.toggleButton(projectName, toggleButton, action.BOOLEAN, 30);
+						if (ele!=null) {
+							log(LogStatus.INFO,"Toggle is present : "+toggleButton,YesNo.No);
+							ThreadSleep(2000);
+						} else {
+							sa.assertTrue(false,"Toggle should be present : "+toggleButton);
+							log(LogStatus.SKIP,"Toggle should be present : "+toggleButton,YesNo.Yes);
+						}
+
+						if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, 2)!=null) {
+							log(LogStatus.PASS,toggleButton+" is selected by default",YesNo.No);
+						} else {
+							sa.assertTrue(false,toggleButton+" should be selected by default");
+							log(LogStatus.FAIL,toggleButton+" should be selected by default",YesNo.Yes);
+						}
+
+
+						toggleButton = M5Sdg4Name;
+						ele=ip.toggleButton(projectName, toggleButton, action.BOOLEAN, 30);
+						if (ele!=null) {
+							log(LogStatus.INFO,"Toggle is present : "+toggleButton,YesNo.No);
+							ThreadSleep(2000);
+						} else {
+							sa.assertTrue(false,"Toggle should be present : "+toggleButton);
+							log(LogStatus.SKIP,"Toggle should be present : "+toggleButton,YesNo.Yes);
+						}
+						
+						toggleButton = M5Sdg5Name;
+						ele=ip.toggleButton(projectName, toggleButton, action.BOOLEAN, 30);
+						if (ele!=null) {
+							log(LogStatus.INFO,"Toggle is present : "+toggleButton,YesNo.No);
+							ThreadSleep(2000);
+						} else {
+							sa.assertTrue(false,"Toggle should be present : "+toggleButton);
+							log(LogStatus.SKIP,"Toggle should be present : "+toggleButton,YesNo.Yes);
+						}
+						
+
+
+					} else {
+						sa.assertTrue(false,"Not Able to Click on Sub Tab : "+relatedTab);
+						log(LogStatus.SKIP,"Not Able to Click on Sub Tab : "+relatedTab,YesNo.Yes);
+					}
+
+				}else {
+
+					log(LogStatus.ERROR,"Item not found: "+itemValue, YesNo.Yes);
+					sa.assertTrue(false,"Item not found: "+itemValue);
+				}
+			} else {
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabName);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabName,YesNo.Yes);
+			}
+			ThreadSleep(2000);
+			//break;
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M5TC0015_1_DeleteTheAllCustomToggleButton_Action(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
+		String[] tabNames = {ToggleCheck1TabName,ToggleCheck2TabName,ToggleCheck3TabName};
+		String tabName;
+
+		String[] itemValues = {ToggleCheck1ItemName,ToggleCheck2ItemName,ToggleCheck3ItemName};
+		String itemValue;
+
+		String[] relatedTabs = {ToggleCheck1RelatedTab,ToggleCheck2RelatedTab,ToggleCheck3RelatedTab};
+		String relatedTab;
+
+		String toggleButtons[] = {ToggleCheck1ToggleButtons,ToggleCheck2ToggleButtons,ToggleCheck3ToggleButtons};
+		String[] sdgToggle=null;
+		String[] setDefaultSdgToggle=null;
+		String toggleValue="";
+
+		for (int i = 0; i < tabNames.length; i++) {
+			tabName = tabNames[i];
+			if (lp.clickOnTab(projectName, tabName)) {
+				log(LogStatus.INFO,"Click on Tab : "+tabName,YesNo.No);
+
+				itemValue = itemValues[i];
+				if (ip.clickOnAlreadyCreatedItem(projectName, itemValue, true, 15)) {
+					log(LogStatus.INFO,"Item found: "+itemValue, YesNo.Yes);
+					ThreadSleep(2000);
+
+					if (hp.clickOnEditPageLinkOnSetUpLink()) {
+						log(LogStatus.INFO,"click on Edit Page SetUp Link", YesNo.No);
+						ThreadSleep(1000);	
+						//// scn.nextLine();
+						switchToDefaultContent(driver);
+						switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
+
+						relatedTab=relatedTabs[i];
+						if (click(driver, ip.getRelatedTab(projectName, relatedTab, 5), relatedTab.toString(), action.BOOLEAN)) {
+							log(LogStatus.INFO,"Click on Sub Tab : "+relatedTab,YesNo.No);
+							ThreadSleep(2000);
+
+							String[] toggles = toggleButtons[i].split(breakSP);
+							String toggleBtn = "";
+							for (int j = 0; j < 1; j++) {
+								toggleBtn = toggles[j];
+								if (click(driver, ip.toggleButton(projectName, toggleBtn, action.BOOLEAN, 30), toggleBtn, action.BOOLEAN)) {
+									log(LogStatus.INFO,"Able to Click on Toggle : "+toggleBtn,YesNo.No);
+									ThreadSleep(2000);
+									switchToDefaultContent(driver);
+									ThreadSleep(20000);
+									String sdgToggles=getValueFromElementUsingJavaScript(driver, edit.getsdgConfigDataProviderTextBox(projectName, 10), "sdg Config Data Provider TextBox");
+									System.err.println(">>>>> + "+sdgToggles);
+									//// scn.nextLine();
+									if (sdgToggles!=null) {
+
+										sdgToggle=sdgToggles.split(commaSP);
+										setDefaultSdgToggle=sdgToggle[1].split(colonSP);
+										toggleValue = setDefaultSdgToggle[1];
+										toggleValue = "";
+										sendKeysWithoutClearingTextBox(driver, edit.getsdgConfigDataProviderTextBox(projectName, 10),sdgToggle[0]+","+sdgToggle[1],"sdg Config Data Provider TextBox : ",action.BOOLEAN);
+										if (sendKeys(driver, edit.getDefaultSDGToggleTextBox(projectName, 10),toggleValue,"Default SDG Toggle TextBox: "+toggleValue,action.BOOLEAN)) {
+											ThreadSleep(500);
+											log(LogStatus.INFO,"send value to Default SDG Toggle TextBox : "+toggleValue,YesNo.No);
+											scn.nextLine();
+											if (click(driver, edit.getEditPageSaveButton(projectName, 10),"Edit Page Save Button", action.BOOLEAN)) {
+												log(LogStatus.INFO,"Click on Edit Page Save Button",YesNo.No);
+												ThreadSleep(5000);
+												switchToDefaultContent(driver);
+												switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
+												toggleBtn = toggles[j];
+												if (ip.toggleSDGButtons(projectName, toggleBtn,ToggleButtonGroup.SDGButton, action.BOOLEAN, 10)!=null) {
+													log(LogStatus.PASS,"After Deleting Custom toggle  "+toggleBtn+" is present",YesNo.No);
+												} else {
+													sa.assertTrue(false,"After Deleting Custom toggle  "+toggleBtn+" should be present");
+													log(LogStatus.FAIL,"After Deleting Custom toggle  "+toggleBtn+" should be present",YesNo.Yes);
+												}
+
+												toggleBtn = toggles[j+1];
+												if (ip.toggleSDGButtons(projectName, toggleBtn,ToggleButtonGroup.SDGButton, action.BOOLEAN, 10)!=null) {
+													log(LogStatus.PASS,"After Deleting Custom toggle  "+toggleBtn+" is present",YesNo.No);
+												} else {
+													sa.assertTrue(false,"After Deleting Custom toggle  "+toggleBtn+" should be present");
+													log(LogStatus.FAIL,"After Deleting Custom toggle  "+toggleBtn+" should be present",YesNo.Yes);
+												}
+
+												toggleBtn = M5Sdg4Name;
+												WebElement ele = ip.toggleButton(projectName, toggleBtn, action.BOOLEAN, 3);
+												if (ele==null) {
+													log(LogStatus.INFO,"Toggle is not be present after delete "+toggleBtn,YesNo.No);
+													ThreadSleep(2000);
+												} else {
+													sa.assertTrue(false,"Toggle should not be present after delete "+toggleBtn);
+													log(LogStatus.SKIP,"Toggle should not be present after delete "+toggleBtn,YesNo.Yes);
+												}
+
+												toggleBtn = M5Sdg5Name;
+												ele = ip.toggleButton(projectName, toggleBtn, action.BOOLEAN, 3);
+												if (ele==null) {
+													log(LogStatus.INFO,"Toggle is not be present after delete "+toggleBtn,YesNo.No);
+													ThreadSleep(2000);
+												} else {
+													sa.assertTrue(false,"Toggle should not be present after delete "+toggleBtn);
+													log(LogStatus.SKIP,"Toggle should not be present after delete "+toggleBtn,YesNo.Yes);
+												}
+
+												toggleBtn = ActiveDealToggleButton;
+												ele = ip.toggleButton(projectName, toggleBtn, action.BOOLEAN, 3);
+												if (ele==null) {
+													log(LogStatus.INFO,"Toggle is not be present after delete "+toggleBtn,YesNo.No);
+													ThreadSleep(2000);
+												} else {
+													sa.assertTrue(false,"Toggle should not be present after delete "+toggleBtn);
+													log(LogStatus.SKIP,"Toggle should not be present after delete "+toggleBtn,YesNo.Yes);
+												}
+												switchToDefaultContent(driver);
+												if (clickUsingJavaScript(driver, edit.getEditPageBackButton(projectName, 10),"Edit Page Back Button", action.BOOLEAN)) {
+													log(LogStatus.INFO,"Click on Edit Page Back Button",YesNo.No);
+													//// scn.nextLine();
+													ThreadSleep(10000);
+												} else {
+													sa.assertTrue(false, "Not Able to Click on Edit Page Back Button");
+													log(LogStatus.SKIP,"Not Able to Click on Edit Page Back Button",YesNo.Yes);
+												}
+											} else {
+												sa.assertTrue(false, "Not Able to Click on Edit Page Save Button");
+												log(LogStatus.FAIL,"Not Able to Click on Edit Page Save Button",YesNo.Yes);
+											}
+
+										} else {
+											sa.assertTrue(false, "Not Able to send value to Default SDG Toggle TextBox : "+toggleValue);
+											log(LogStatus.FAIL,"Not Able to send value to Default SDG Toggle TextBox : "+toggleValue,YesNo.Yes);
+										}
+
+										/////////////////////////////////////////////
+
+
+									} else {
+										sa.assertTrue(false,"Not Able to retrive input value from SDG Config Data Provider TextBox");
+										log(LogStatus.SKIP,"Not Able to retrive input value from SDG Config Data Provider TextBox",YesNo.Yes);
+									}
+
+
+
+
+								} else {
+									sa.assertTrue(false,"Not Able to Click on Toggle : "+toggleBtn);
+									log(LogStatus.SKIP,"Not Able to Click on Toggle : "+toggleBtn,YesNo.Yes);
+								}
+
+							}
+
+						} else {
+							sa.assertTrue(false,"Not Able to Click on Sub Tab : "+relatedTab);
+							log(LogStatus.SKIP,"Not Able to Click on Sub Tab : "+relatedTab,YesNo.Yes);
+						}
+
+					} else {
+						log(LogStatus.ERROR,"Not Able to click on Edit Page SetUp Link", YesNo.Yes);
+						sa.assertTrue(false,"Not Able to click on Edit Page SetUp Link");
+					}
+				}else {
+
+					log(LogStatus.ERROR,"Item not found: "+itemValue, YesNo.Yes);
+					sa.assertTrue(false,"Item not found: "+itemValue);
+				}
+
+			} else {
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabName);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabName,YesNo.Yes);
+			}
+			refresh(driver);
+			ThreadSleep(7000);
+		}
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M5TC0015_2_DeleteTheAllCustomToggleButton_Impact(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+
+
+		String[] tabNames = {ToggleCheck1TabName,ToggleCheck2TabName,ToggleCheck3TabName};
+		String tabName;
+
+		String[] itemValues = {ToggleCheck1ItemName,ToggleCheck2ItemName,ToggleCheck3ItemName};
+		String itemValue;
+
+		String[] relatedTabs = {ToggleCheck1RelatedTab,ToggleCheck2RelatedTab,ToggleCheck3RelatedTab};
+		String relatedTab;
+
+		String toggleButtons[] = {ToggleCheck1ToggleButtons,ToggleCheck2ToggleButtons,ToggleCheck3ToggleButtons};
+		String[] toggles=null;
+		String toggleButton ;
+		WebElement ele = null;
+
+
+		for (int i = 0; i < tabNames.length; i++) {
+			tabName = tabNames[i];
+			if (lp.clickOnTab(projectName, tabName)) {
+				log(LogStatus.INFO,"Click on Tab : "+tabName,YesNo.No);
+				itemValue = itemValues[i];
+				if (ip.clickOnAlreadyCreatedItem(projectName, itemValue, true, 15)) {
+					log(LogStatus.INFO,"Item found: "+itemValue, YesNo.Yes);
+					ThreadSleep(2000);
+					relatedTab=relatedTabs[i];
+					toggles = toggleButtons[i].split(breakSP);
+					if (click(driver, ip.getRelatedTab(projectName,relatedTab, 30), relatedTab, action.BOOLEAN)) {
+						log(LogStatus.INFO,"Click on Sub Tab : "+relatedTab,YesNo.No);
+						ThreadSleep(2000);
+
+						for (int j = 0; j <toggles.length; j++) {
+							toggleButton = toggles[j];
+							ele=ip.toggleButton(projectName, toggleButton, action.BOOLEAN, 30);
+							if (ele!=null) {
+								log(LogStatus.INFO,"After deleting custom toggle , Toggle is present : "+toggleButton,YesNo.No);
+								ThreadSleep(2000);
+							} else {
+								sa.assertTrue(false,"After deleting custom toggle , Toggle should be present : "+toggleButton);
+								log(LogStatus.SKIP,"After deleting custom toggle , Toggle should be present : "+toggleButton,YesNo.Yes);
+							}
+						}
+
+
+						toggleButton = M5Sdg4Name;
+						ele = ip.toggleButton(projectName, toggleButton, action.BOOLEAN, 3);
+						if (ele==null) {
+							log(LogStatus.INFO,"Toggle is not be present after delete "+toggleButton,YesNo.No);
+							ThreadSleep(2000);
+						} else {
+							sa.assertTrue(false,"Toggle should not be present after delete "+toggleButton);
+							log(LogStatus.SKIP,"Toggle should not be present after delete "+toggleButton,YesNo.Yes);
+						}
+
+						toggleButton = M5Sdg5Name;
+						ele = ip.toggleButton(projectName, toggleButton, action.BOOLEAN, 3);
+						if (ele==null) {
+							log(LogStatus.INFO,"Toggle is not be present after delete "+toggleButton,YesNo.No);
+							ThreadSleep(2000);
+						} else {
+							sa.assertTrue(false,"Toggle should not be present after delete "+toggleButton);
+							log(LogStatus.SKIP,"Toggle should not be present after delete "+toggleButton,YesNo.Yes);
+						}
+
+
+						toggleButton = ActiveDealToggleButton;
+						ele = ip.toggleButton(projectName, toggleButton, action.BOOLEAN, 3);
+						if (ele==null) {
+							log(LogStatus.INFO,"Toggle is not be present after delete "+toggleButton,YesNo.No);
+							ThreadSleep(2000);
+						} else {
+							sa.assertTrue(false,"Toggle should not be present after delete "+toggleButton);
+							log(LogStatus.SKIP,"Toggle should not be present after delete "+toggleButton,YesNo.Yes);
+						}
+
+
+
+					} else {
+						sa.assertTrue(false,"Not Able to Click on Sub Tab : "+relatedTab);
+						log(LogStatus.SKIP,"Not Able to Click on Sub Tab : "+relatedTab,YesNo.Yes);
+					}
+
+				}else {
+
+					log(LogStatus.ERROR,"Item not found: "+itemValue, YesNo.Yes);
+					sa.assertTrue(false,"Item not found: "+itemValue);
+				}
+			} else {
+				sa.assertTrue(false,"Not Able to Click on Tab : "+tabName);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabName,YesNo.Yes);
+			}
+			ThreadSleep(2000);
+			//break;
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	
 	
 	
 }
