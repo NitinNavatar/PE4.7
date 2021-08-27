@@ -2337,6 +2337,7 @@ public boolean clickOnAlreadyCreatedItem(String projectName,String alreadyCreate
  * @return Related Tab WebElement
  */
 public WebElement getRelatedTab(String projectName,String relatedTab,int timeOut){
+	ThreadSleep(10000);
 String xpath="";
 WebElement ele;
 String related = relatedTab.toString().replace("_", " ");
@@ -2380,12 +2381,18 @@ return ele;
  * @param toggleTab
  * @param btnName
  * @param action
+ * @param isInside TODO
  * @param timeOut
  * @return toggle SDG Button webElement
  */
-public WebElement toggleSDGButtons(String projectName,String toggleTab,ToggleButtonGroup btnName,action action,int timeOut) {
+public WebElement toggleSDGButtons(String projectName,String toggleTab,ToggleButtonGroup btnName,action action,boolean isInside, int timeOut) {
 	String btname = btnName.toString();
-	String xpath = "//*[contains(text(),'"+toggleTab+"')]/../../..//following-sibling::div//button[@title='"+btname+"']";
+	String xpath="";
+	if (isInside) {
+		 xpath = "//flexipage-tab2//*[contains(text(),'"+toggleTab+"')]/../../..//following-sibling::div//button[@title='"+btname+"']";	
+	} else {
+		 xpath = "//*[contains(text(),'"+toggleTab+"')]/../../..//following-sibling::div//button[@title='"+btname+"']";	
+	}
 	WebElement ele = FindElement(driver, xpath,toggleTab+" >> "+btname, action, timeOut);
 	scrollDownThroughWebelement(driver, ele, "Toggle Button : "+btname);
 	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btname);

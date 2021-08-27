@@ -7,11 +7,8 @@ import static com.navatar.generic.BaseLib.testCasesFilePath;
 import static com.navatar.generic.BaseLib.phase1DataSheetFilePath;
 import static com.navatar.generic.CommonLib.getDateAccToTimeZone;
 import static com.navatar.generic.CommonLib.previousOrForwardDate;
-
-import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.pageObjects.BasePageErrorMessage;
-import com.navatar.scripts.Module5;
 import com.navatar.scripts.Module5New;
 import com.navatar.scripts.Module8;
 import com.navatar.scripts.Module6;
@@ -244,8 +241,9 @@ public class CommonVariables {
 	public static String M3TestCustomObj1Name,M3TestCustomObj1RecordType;
 	
 	// New Module 5 Variable
-	public static String M5Ins1,M5Ins1RecordType;
 	public static String ToggleIns1,ToggleIns1RecordType;
+	public static String ToggleContact1FName,ToggleContact1LName,ToggleContact1Inst,ToggleContact1EmailID,ToggleContact1RecordType;
+	
 	public static String ToggleDeal1,ToggleDeal1CompanyName,ToggleDeal1RecordType,ToggleDeal1Stage;
 	public static String ToggleMarketingEvent1Name,ToggleMarketingEvent1Date,ToggleMarketingEvent1RecordType,ToggleMarketingEvent1Organizer;
 	
@@ -334,7 +332,7 @@ public class CommonVariables {
 
 			
 			
-		if(obj instanceof Module5 ||  obj instanceof Module5New){
+		if(obj instanceof Module5New){
 			
 			
 			ToggleLP1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLELP1", excelLabel.Institutions_Name);
@@ -397,8 +395,6 @@ public class CommonVariables {
 			
 			/// New Modulew 5
 			
-			M5Ins1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Institutions_Name);
-			M5Ins1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Record_Type);
 			
 			M5Sdg1Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.SDG_Name);
 			M5Sdg1TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.SDG_Tag);;
@@ -428,6 +424,15 @@ public class CommonVariables {
 			
 			ToggleIns1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Institutions_Name);
 			ToggleIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Record_Type);
+		
+				
+			 
+			 ToggleContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M5CON1", excelLabel.Contact_FirstName);
+			 ToggleContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M5CON1", excelLabel.Contact_LastName);
+			 ToggleContact1Inst=ToggleIns1;
+			 ToggleContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M5CON1", excelLabel.Contact_EmailId);
+			 ToggleContact1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M5CON1", excelLabel.Record_Type);
+		
 			
 
 			ToggleDeal1=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Deal_Name);
