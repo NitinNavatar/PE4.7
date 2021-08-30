@@ -1160,6 +1160,60 @@ public class HomePage extends BasePageBusinessLayer {
 		return ele;
 	}
 	
+	public WebElement sdgGridSideDealStageColumnDropDownListInEditMode(SDGGridName sdgGridName, int timeOut) {
+		
+		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName+"']/../../../../../following-sibling::div//table/tbody/tr/td[3]//section//input/../div/*";
+		WebElement ele = FindElement(driver, xpath, "deal SDG grid stage drop down list in edit mode", action.SCROLLANDBOOLEAN, timeOut);
+		
+		return isDisplayed(driver, ele, "Visibility", timeOut, "deal SDG grid stage drop down list in edit mode");
+	}
+	
+public WebElement sdgGridSideDealStageColumnUpdateSelecteditemsCheckBox(SDGGridName sdgGridName,int numberOfRecordsUpdating,int columnIndexNumber, int timeOut) {
+		
+		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName+"']/../../../../../following-sibling::div//table/tbody/tr/td["+columnIndexNumber+"]//section/div/*//label/span[text()='Update "+numberOfRecordsUpdating+" selected items']/preceding-sibling::span";
+		WebElement ele = FindElement(driver, xpath, "deal SDG grid stage Update 3 selected items check box in edit mode", action.SCROLLANDBOOLEAN, timeOut);
+		
+		return isDisplayed(driver, ele, "Visibility", timeOut, "deal SDG grid stage Update 3 selected items check box in edit mode");
+	}
+	
+	
+	
+	
+	
+	public List<WebElement> sdgGridHeadersDealsAndFundRaisingStageColumnList(SDGGridName sdgGridName) {
+		//index start from 2 in Deal SDG grid.
+		
+		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName+"']/../../../../../following-sibling::div//table/tbody/tr/td[3]/span/span[@class='slds-truncate']/*";
+		List<WebElement> ele = FindElements(driver, xpath, "SDG grid Stage column data in deals grid ");
+		
+		return ele;
+	}
+	
+	
+	
+	
+	
+	public List<WebElement> sdgGridCheckBoxList(SDGGridName sdgGridName) {
+		//index start from 2 in Deal SDG grid.
+		
+//		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName+"']/../../../../../following-sibling::div//table/tbody/tr/td[1]//div//label/span[1]";
+		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName+"']/../../../../../following-sibling::div//table/tbody/tr/td[1]//div//input";
+		
+		
+		
+		List<WebElement> ele = FindElements(driver, xpath, "SDG grid column Check Box data in grid ");
+		
+		return ele;
+	}
+	
+	public List<WebElement> sdgGridHeadersDealsNameListForToolTip() {
+		
+		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='Deals']/../../../../../following-sibling::div//table/tbody/tr/td[2]//a/..";
+		List<WebElement> ele = FindElements(driver, xpath, "SDG grid Deal column data in deals grid ");
+		
+		return ele;
+	}
+	
 	
 	
 	public List<WebElement> sdgGridHeadersFundRaisingsFundraisingColumnsDataList(int DealsCloumnIndex) {
@@ -1177,6 +1231,31 @@ public List<WebElement> sdgGridHeadersFundRaisingsFundraisingNameList() {
 		
 		return ele;
 	}
+
+public List<WebElement> sdgGridHeadersFundRaisingsFundraisingNameListForToolTip() {
+	
+	String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='Fundraising']/../../../../../following-sibling::div//table/tbody/tr/td[2]//a/..";
+	List<WebElement> ele = FindElements(driver, xpath, "SDG grid fundraising column data in fundraising grid ");
+	
+	return ele;
+}
+
+public List<WebElement> sdgGridHeadersFundRaisingClosingColumnList(SDGGridName sdgGridName) {
+	//index start from 2 in Deal SDG grid.
+	
+	String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName+"']/../../../../../following-sibling::div//table/tbody/tr/td[4]/span/span[@class='slds-truncate']/*";
+	List<WebElement> ele = FindElements(driver, xpath, "SDG grid Stage column data in deals grid ");
+	
+	return ele;
+}
+
+public WebElement sdgGridSideFundRaisingClosingColumnDropDownListInEditMode(SDGGridName sdgGridName, int timeOut) {
+	
+	String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName+"']/../../../../../following-sibling::div//table/tbody/tr/td[4]//section//input/../div/*";
+	WebElement ele = FindElement(driver, xpath, "deal SDG grid stage drop down list in edit mode", action.SCROLLANDBOOLEAN, timeOut);
+	
+	return isDisplayed(driver, ele, "Visibility", timeOut, "deal SDG grid stage drop down list in edit mode");
+}
 	
 	
 	public List<WebElement> sdgGridHeadersMyCallListNameColumnsDataList(int DealsCloumnIndex) {
@@ -1195,6 +1274,33 @@ public List<WebElement> sdgGridHeadersMyCallListNameList() {
 		
 		return ele;
 	}
+
+
+public List<WebElement> sdgGridHeadersCreateButtonList(SDGGridName sdgName, String buttonName) {
+	
+	String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgName+"']/../../../../../following-sibling::div//table/tbody/tr/td//button[text()='"+buttonName+"']";
+	List<WebElement> ele = FindElements(driver, xpath, "SDG grid Name column data in My Call List grid ");
+	
+	return ele;
+}
+
+
+
+public List<WebElement> sdgGridHeadersMyCallListFirmList() {
+	
+	String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='My Call List']/../../../../../following-sibling::div//table/tbody/tr/td[3]//a";
+	List<WebElement> ele = FindElements(driver, xpath, "SDG grid Firm Name column data in My Call List grid ");
+	
+	return ele;
+}
+
+public List<WebElement> sdgGridHeadersMyCallListNameListForToolTip() {
+	
+	String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='My Call List']/../../../../../following-sibling::div//table/tbody/tr/td[2]//a/..";
+	List<WebElement> ele = FindElements(driver, xpath, "SDG grid Firm Name column data in My Call List grid ");
+	
+	return ele;
+}
 
 
 public List<WebElement> sdgGridHeadersMyCallListPhoneList() {
@@ -1279,7 +1385,7 @@ public List<WebElement> sdgGridSelectVisibleFieldsListInManageFieldPopUp() {
 public WebElement sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons saveCancelBtn, int timeOut) {
 	
 	
-	String xpath="//footer//*[@title='"+saveCancelBtn+"']";
+	String xpath="//*//button[@title='"+saveCancelBtn+"' or text()='"+saveCancelBtn+"']";
 	WebElement ele = FindElement(driver, xpath, "SDG grid SelectFieldToDisplay popup  "+saveCancelBtn, action.SCROLLANDBOOLEAN, timeOut);
 	
 	return isDisplayed(driver, ele, "Visibility", timeOut, "SDG grid SelectFieldToDisplay popup  "+saveCancelBtn);
@@ -1287,7 +1393,12 @@ public WebElement sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(But
 
 
 public boolean clickOnEditButtonOnSDGGridOnHomePage(String projectName, String dataName, String field,int timeOut) {
-	String xpath ="//td[contains(@data-label,'"+field+"')]//*[text()='"+dataName+"']/../../following-sibling::span/button";
+	String xpath="";
+	if(field.equalsIgnoreCase("Stage") || field.equalsIgnoreCase("Closing")) {
+		xpath="//td[contains(@data-label,'"+field+"')]//*[text()='"+dataName+"']/../following-sibling::span/button";
+	}else {
+		xpath ="//td[contains(@data-label,'"+field+"')]//*[text()='"+dataName+"']/../../following-sibling::span/button";
+	}
 	WebElement ele = FindElement(driver, xpath,"edit button for "+field, action.SCROLLANDBOOLEAN, timeOut);
 	JavascriptExecutor js = (JavascriptExecutor)driver;
 	js.executeScript("return arguments[0].setAttribute('Styles','display: inline-block;')", ele);
@@ -1300,12 +1411,175 @@ public WebElement sdgGridSideIconsForLightTheme(SDGGridName sdgGridName,SDGGridS
 	if(sdgGridSideIcons.toString().equalsIgnoreCase(SDGGridSideIcons.Toggle_Filters.toString())) {
 		xpath="//div[contains(@data-component-id,'navpeII_sdg')]//div/div[contains(@class,'sdgborder')]//a[text()='"+sdgGridName+"']/../../../following-sibling::div//button[contains(@title,'"+sdgGridSideIcons+"')]";
 	}else if(sdgGridSideIcons.toString().equalsIgnoreCase(SDGGridSideIcons.Side_DropDOwnButtonforLightTheme.toString())){
-		xpath="//div[contains(@data-component-id,'navpeII_sdg')]//div/div[contains(@class,'sdgborder')]//a[text()='"+sdgGridName+"']/../../../following-sibling::div//div[@id='mydiv']//button";
+		xpath="//div[contains(@data-component-id,'navpeII_sdg')]//div/div[contains(@class,'sdgborder')]//a[text()='"+sdgGridName+"']/../../../following-sibling::div//div//span[text()='More options']/..";
 	}else {
-		xpath="//div[contains(@data-component-id,'navpeII_sdg')]//div/div[contains(@class,'sdgborder')]//a[text()='"+sdgGridName+"']/../../../following-sibling::div//div[@id='mydiv']//button/following-sibling::div//a/span[contains(text(),'"+sdgGridSideIcons+"')]";
+		xpath="//div[contains(@data-component-id,'navpeII_sdg')]//div/div[contains(@class,'sdgborder')]//a[text()='"+sdgGridName+"']/../../../following-sibling::div//div//button/following-sibling::div//a/span[contains(text(),'"+sdgGridSideIcons+"')]";
 	}
 	WebElement ele = FindElement(driver, xpath, "SDG grid side icon "+sdgGridSideIcons, action.SCROLLANDBOOLEAN, timeOut);
 	return isDisplayed(driver, ele, "Visibility", timeOut, "SDG grid side icon "+sdgGridSideIcons);
+}
+
+
+public WebElement sdgGridSideIconsForLightTheme(SDGGridName sdgGridName,String sdgGridSideIcons, int timeOut) {
+	String xpath="";
+	if(sdgGridSideIcons.toString().equalsIgnoreCase(SDGGridSideIcons.Toggle_Filters.toString())) {
+		xpath="//div[contains(@data-component-id,'navpeII_sdg')]//div/div[contains(@class,'sdgborder')]//a[text()='"+sdgGridName+"']/../../../following-sibling::div//button[contains(@title,'"+sdgGridSideIcons+"')]";
+	}else if(sdgGridSideIcons.toString().equalsIgnoreCase(SDGGridSideIcons.Side_DropDOwnButtonforLightTheme.toString())){
+		xpath="//div[contains(@data-component-id,'navpeII_sdg')]//div/div[contains(@class,'sdgborder')]//a[text()='"+sdgGridName+"']/../../../following-sibling::div//div//span[text()='More options']/..";
+	}else {
+		xpath="//div[contains(@data-component-id,'navpeII_sdg')]//div/div[contains(@class,'sdgborder')]//a[text()='"+sdgGridName+"']/../../../following-sibling::div//div//button/following-sibling::div//a/span[contains(text(),'"+sdgGridSideIcons+"')]";
+	}
+	WebElement ele = FindElement(driver, xpath, "SDG grid side icon "+sdgGridSideIcons, action.SCROLLANDBOOLEAN, timeOut);
+	return isDisplayed(driver, ele, "Visibility", timeOut, "SDG grid side icon "+sdgGridSideIcons);
+}
+
+
+public WebElement todayTasksAndTodayEventsLabelText(Task taskName, int timeOut) {
+	String xpath="";
+	if(taskName.toString().equalsIgnoreCase(Task.TodayTasks.toString())) {
+		xpath="//h2/span[contains(text(),'Today') and contains(text(),'Tasks')]";
+	}else {
+		xpath="//h2/span[contains(text(),'Today') and contains(text(),'Events')]";
+	}
+	WebElement ele = FindElement(driver, xpath, "text label of "+taskName, action.SCROLLANDBOOLEAN, timeOut);
+	return isDisplayed(driver, ele, "Visibility", timeOut, "text label of "+taskName);
+}
+
+public WebElement todayTasksDownArrow(Task taskName, int timeOut) {
+	String xpath="";
+	xpath="//h2/span[contains(text(),'Today') and contains(text(),'Tasks')]/../../../..//a";
+	WebElement ele = FindElement(driver, xpath, "today tasks down arrow", action.SCROLLANDBOOLEAN, timeOut);
+	if(isDisplayed(driver, ele, "Visibility", timeOut, "today tasks down arrow")!=null) {
+		return ele;
+	}else {
+		xpath="//h2/span[contains(text(),'Today') and contains(text(),'Tasks')]/../../../..//button";
+		ele = FindElement(driver, xpath, "today tasks down arrow", action.SCROLLANDBOOLEAN, 5);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "today tasks down arrow");
+	}
+}
+
+
+public WebElement todayTasksDownArrowListValues(TodayTaskDownArrowValues todayTaskDownArrowValues, int timeOut) {
+	String xpath="";
+	xpath="//div[contains(@class,'uiMenuList--default visible positioned')]//a[text()='"+todayTaskDownArrowValues+"']";
+	WebElement ele = FindElement(driver, xpath, "today tasks down arrow value "+todayTaskDownArrowValues, action.SCROLLANDBOOLEAN, timeOut);
+	return isDisplayed(driver, ele, "Visibility", timeOut, "today tasks down arrow value "+todayTaskDownArrowValues);
+}
+
+
+public WebElement viewAllAndviewClendarLink(Task taskName, ViewAllAndViewCalendarLink viewAllAndViewCalendarLink, int timeOut) {
+	String xpath="";
+	if(taskName.toString().equalsIgnoreCase(Task.TodayTasks.toString())) {
+		xpath="Tasks";
+	}else {
+		xpath="Events";
+	}
+	xpath="//h2/span[contains(text(),'Today') and contains(text(),'"+xpath+"')]/../../../../following-sibling::div/a[@aria-label='"+viewAllAndViewCalendarLink+"']";
+	WebElement ele = FindElement(driver, xpath, taskName+" link "+viewAllAndViewCalendarLink, action.SCROLLANDBOOLEAN, timeOut);
+	return isDisplayed(driver, ele, "Visibility", timeOut, taskName+" link "+viewAllAndViewCalendarLink);
+}
+	
+@FindBy(xpath = "//span[text()='Status']/../following-sibling::div//a")
+private WebElement createTaskStatusDropDown;
+
+public WebElement getCreateTaskStatusDropDown(int timeOut) {
+	return isDisplayed(driver, createTaskStatusDropDown, "Visibility", timeOut, "createTaskStatusDropDown");
+}
+
+public WebElement createTaskDropDownValue(String value, int timeOut) {
+	String xpath="";
+	xpath="//div[contains(@class,'visible positioned')]//a[text()='"+value+"']";
+	WebElement ele = FindElement(driver, xpath, "create task down arrow value "+value, action.SCROLLANDBOOLEAN, timeOut);
+	return isDisplayed(driver, ele, "Visibility", timeOut, "create task down arrow value "+value);
+}
+
+
+public List<WebElement> ctreatedTaskListOnHomePage() {
+	
+	
+	String xpath="//div[@data-aura-class='uiAbstractList']//a/span";
+	List<WebElement> ele = FindElements(driver, xpath, "ctreatedTaskListOnHomePage");
+	
+	return ele;
+}
+
+public List<WebElement> ctreatedTaskAndEventListOnHomePage(Task task) {
+	String xpath="";
+	if(task.toString().equalsIgnoreCase(Task.TodayTasks.toString())) {
+		xpath ="//div[@data-aura-class='uiAbstractList']//li/div/a/div//span[contains(@class,'primaryField')]/a";
+	}else {
+		xpath ="//div[@data-aura-class='uiAbstractList']//li//div[@class='subject columnItem']//a";
+	}
+	List<WebElement> ele = FindElements(driver, xpath, "ctreatedTaskAndEventListOnHomePage");
+	
+	return ele;
+}
+
+
+
+@FindBy(xpath = "//*[text()='All-Day Event']/../following-sibling::input")
+private WebElement allDayEventCheckBox;
+
+public WebElement getAllDayEventCheckBox(int timeOut) {
+	return isDisplayed(driver, allDayEventCheckBox, "Visibility", timeOut, "allDayEventCheckBox");
+}
+
+@FindBy(xpath = "//h1/span[text()='Recently Viewed']")
+private WebElement taskPageRecentView;
+
+public WebElement getTaskPageRecentView(int timeOut) {
+	return isDisplayed(driver, taskPageRecentView, "Visibility", timeOut, "taskPageRecentView");
+}
+
+
+public List<WebElement> CreateEventsListOnViewClendarPage() {
+	
+	
+	String xpath="//h2[text()='All-Day Events']/following-sibling::ul/li";
+	List<WebElement> ele = FindElements(driver, xpath, "ctreatedTaskListOnHomePage");
+	
+	return ele;
+}
+
+@FindBy(xpath = "//h1//div[contains(@class,'slds-page-header__title')]/span")
+private WebElement headerNameText;
+
+public WebElement getHeaderNameText(int timeOut) {
+	return isDisplayed(driver, headerNameText, "Visibility", timeOut, "headerNameText");
+}
+
+
+public WebElement openSDGRecordOrSettingsPageNewBtnInActions(String GridLabelName,String buttonName,int timeOut) {
+	String xpath="//*[text()='"+GridLabelName+"']/../../../following-sibling::div//button[text()='"+buttonName+"']";
+	WebElement ele = FindElement(driver, xpath, "new button", action.SCROLLANDBOOLEAN, timeOut);
+	return isDisplayed(driver, ele, "Visibility", timeOut, "new button");
+}
+
+
+public WebElement openSDGRecordOrSettingsPageActionPopUptextBoxXpath(String labelName,int timeOut) {
+	String xpath="";
+	String finalLabel = labelName.replace("_", " ");
+	if(finalLabel.equalsIgnoreCase("Event Payload")) {
+		xpath="//*[text()='"+finalLabel+"']/following-sibling::*//textarea";
+	}else {
+		xpath="//*[text()='"+finalLabel+"']/following-sibling::*//input";
+	}
+	WebElement ele = FindElement(driver, xpath, "new button", action.SCROLLANDBOOLEAN, timeOut);
+	return isDisplayed(driver, ele, "Visibility", timeOut, "new button");
+}
+
+public WebElement ActionTypeDropDownList(String labelName, int timeOut) {
+	
+	String finalLabel = labelName.replace("_", " ");
+	String xpath="//span[@title='"+finalLabel+"' or text()='"+finalLabel+"']";
+	WebElement ele = FindElement(driver, xpath, "new button", action.SCROLLANDBOOLEAN, timeOut);
+	return isDisplayed(driver, ele, "Visibility", timeOut, "new button");
+}
+
+public WebElement createdButtonEditAndDeleteBtn(String createActionName,String buttonName,int timeOut) {
+	String xpath="//*[text()='"+createActionName+"']/../../../../following-sibling::td[@class='actions']//button[text()='"+buttonName+"']";
+	WebElement ele = FindElement(driver, xpath, "new button", action.SCROLLANDBOOLEAN, timeOut);
+	return isDisplayed(driver, ele, "Visibility", timeOut, "new button");
 }
 
 
