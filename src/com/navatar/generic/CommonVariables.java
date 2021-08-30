@@ -7,11 +7,8 @@ import static com.navatar.generic.BaseLib.testCasesFilePath;
 import static com.navatar.generic.BaseLib.phase1DataSheetFilePath;
 import static com.navatar.generic.CommonLib.getDateAccToTimeZone;
 import static com.navatar.generic.CommonLib.previousOrForwardDate;
-
-import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.pageObjects.BasePageErrorMessage;
-import com.navatar.scripts.Module5;
 import com.navatar.scripts.Module5New;
 import com.navatar.scripts.Module8;
 import com.navatar.scripts.Module6;
@@ -72,7 +69,6 @@ public class CommonVariables {
 	public static String tabCustomObj,tabCustomObjField,tabCustomObjAPIName;
 	public static String tabObj1,tabObj2,tabObj3,tabObj4,tabObj5,tabObj6,tabObj7,tabObj8Coverage;
 	
-	public static String ToggleIns1,ToggleIns1RecordType;
 	public static String ToggleLP1;
 	public static String TogglePartnerShip1;
 	public static String TogglePartnerShip2;
@@ -85,11 +81,9 @@ public class CommonVariables {
 	public static String TWTask1Subject,TWTask2Subject,TWTask3Subject,TWTask4Subject,TWTask5Subject,TWTask6Subject,TWTask8Subject,TWTaskCR1Subject,TWTaskUpdateLabelSubject;
 	public static String ToggleFund1,ToggleFund1Type,ToggleFund1Category,ToggleFund1RecordType;
 	public static String ToggleFund2,ToggleFund2Type,ToggleFund2Category,ToggleFund2RecordType;
-	public static String ToggleDeal1,ToggleDeal1CompanyName,ToggleDeal1RecordType,ToggleDeal1Stage;
 	public static String ToggleOpenQA1ID,ToggleOpenQA1RequestedDate,ToggleOpenQA1Request,ToggleOpenQA1Status;
 	public static String ToggleClosedQA1ID,ToggleClosedQA1RequestedDate,ToggleClosedQA1Request,ToggleClosedQA1Status;
 	
-	public static String ToggleMarketingEvent1Name,ToggleMarketingEvent1Date,ToggleMarketingEvent1RecordType,ToggleMarketingEvent1Organizer;
 	public static String M4MarketingEvent1Name,M4MarketingEvent1Date,M4MarketingEvent1RecordType,M4MarketingEvent1Organizer;
 	public static String M4MarketingEvent2Name,M4MarketingEvent2Date,M4MarketingEvent2RecordType;
 	public static String M4MarketingEvent3Name,M4MarketingEvent3Date,M4MarketingEvent3RecordType;
@@ -247,12 +241,23 @@ public class CommonVariables {
 	public static String M3TestCustomObj1Name,M3TestCustomObj1RecordType;
 	
 	// New Module 5 Variable
-	public static String M5Ins1,M5Ins1RecordType;
+	public static String ToggleIns1,ToggleIns1RecordType;
+	public static String ToggleContact1FName,ToggleContact1LName,ToggleContact1Inst,ToggleContact1EmailID,ToggleContact1RecordType;
+	
+	public static String ToggleDeal1,ToggleDeal1CompanyName,ToggleDeal1RecordType,ToggleDeal1Stage;
+	public static String ToggleMarketingEvent1Name,ToggleMarketingEvent1Date,ToggleMarketingEvent1RecordType,ToggleMarketingEvent1Organizer;
+	
+	public static String M5Sdg1Name,M5Sdg1TagName,M5Sdg1ObjectName,M5Sdg1ParentName;
+	public static String M5Sdg2Name,M5Sdg2TagName,M5Sdg2ObjectName,M5Sdg2ParentName;
+	public static String M5Sdg3Name,M5Sdg3TagName,M5Sdg3ObjectName,M5Sdg3ParentName;
+	public static String M5Sdg4Name,M5Sdg4TagName,M5Sdg4ObjectName,M5Sdg4ParentName;
+	public static String M5Sdg5Name,M5Sdg5TagName,M5Sdg5ObjectName,M5Sdg5ParentName;
+	
 	
 	// Module 6 Variable
-	public static String M6Ins1,M6Ins2,M6Ins3,M6Ins6,M6Ins9,M6Ins11,M6Ins12,M6Ins13,M6Ins20,M6Ins1RecordType;
-	public static String M6Deal1,M6Deal2,M6Deal4,M6Deal5,M6Deal6,M6Deal7,M6Deal8,M6Deal9,M6Deal8Stage,M6Deal7Stage,M6Deal11,M6Deal12,M6Deal13,M6Deal20,M6Deal20Stage;
-	
+	public static String M6Ins1,M6Ins2,M6Ins3,M6Ins6,M6Ins9,M6Ins10,M6Ins11,M6Ins12,M6Ins13,M6Ins14,M6Ins15,M6Ins16,M6Ins17,M6Ins18,M6Ins20,M6Ins21,M6Ins22,M6Ins1RecordType;
+	public static String M6Deal1,M6Deal2,M6Deal3,M6Deal4,M6Deal5,M6Deal6,M6Deal7,M6Deal8,M6Deal9,M6Deal10,M6Deal8Stage,M6Deal7Stage,M6Deal11,M6Deal12,M6Deal13,M6Deal14,M6Deal15,M6Deal16,M6Deal17,M6Deal18,M6Deal20,M6Deal21,M6Deal22,M6Deal20Stage;
+	public static String M6LSCIns1,M6LSCFund1,M6LSCFundraising1;
 	// Module 8 variable :
 	
 	public static String M8DealName1,M8DealName2;
@@ -332,10 +337,8 @@ public class CommonVariables {
 
 			
 			
-		if(obj instanceof Module5 ||  obj instanceof Module5New){
+		if(obj instanceof Module5New){
 			
-			ToggleIns1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Institutions_Name);
-			ToggleIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Record_Type);
 			
 			ToggleLP1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLELP1", excelLabel.Institutions_Name);
 			TogglePartnerShip1=ExcelUtils.readData(phase1DataSheetFilePath,"Partnerships",excelLabel.Variable_Name, "TOGGLEPS1", excelLabel.PartnerShip_Name);
@@ -351,10 +354,6 @@ public class CommonVariables {
 			ToggleFund2Category=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Investment_Category);
 			ToggleFund2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Record_Type);
 			
-			ToggleDeal1=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Deal_Name);
-			ToggleDeal1CompanyName=ToggleIns1;
-			ToggleDeal1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Record_Type);
-			ToggleDeal1Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Stage);
 			
 			Sdg1Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.SDG_Name);
 			Sdg1TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.SDG_Tag);;
@@ -375,10 +374,6 @@ public class CommonVariables {
 			ToggleClosedQA1Status=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Status);
 			
 			
-			ToggleMarketingEvent1Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "TOGGLEME1", excelLabel.Marketing_Event_Name);
-			ToggleMarketingEvent1Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "TOGGLEME1", excelLabel.Date);
-			ToggleMarketingEvent1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "TOGGLEME1", excelLabel.Record_Type);
-			ToggleMarketingEvent1Organizer=ToggleIns1;
 			
 			// ToggleCheck1TabName,ToggleCheck1ItemName,ToggleCheck1RelatedTab,ToggleCheck1ToggleButtons;
 		
@@ -405,8 +400,56 @@ public class CommonVariables {
 			
 			/// New Modulew 5
 			
-			M5Ins1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Institutions_Name);
-			M5Ins1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Record_Type);
+			
+			M5Sdg1Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.SDG_Name);
+			M5Sdg1TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.SDG_Tag);;
+			M5Sdg1ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.sObjectName);
+			M5Sdg1ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.Parent_Field_Name);
+			
+			M5Sdg2Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG2", excelLabel.SDG_Name);
+			M5Sdg2TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG2", excelLabel.SDG_Tag);;
+			M5Sdg2ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG2", excelLabel.sObjectName);
+			M5Sdg2ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG2", excelLabel.Parent_Field_Name);
+			
+			M5Sdg3Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG3", excelLabel.SDG_Name);
+			M5Sdg3TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG3", excelLabel.SDG_Tag);;
+			M5Sdg3ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG3", excelLabel.sObjectName);
+			M5Sdg3ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG3", excelLabel.Parent_Field_Name);
+			
+			M5Sdg4Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG4", excelLabel.SDG_Name);
+			M5Sdg4TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG4", excelLabel.SDG_Tag);;
+			M5Sdg4ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG4", excelLabel.sObjectName);
+			M5Sdg4ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG4", excelLabel.Parent_Field_Name);
+			
+			M5Sdg5Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG5", excelLabel.SDG_Name);
+			M5Sdg5TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG5", excelLabel.SDG_Tag);;
+			M5Sdg5ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG5", excelLabel.sObjectName);
+			M5Sdg5ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG5", excelLabel.Parent_Field_Name);
+			
+			
+			ToggleIns1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Institutions_Name);
+			ToggleIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Record_Type);
+		
+				
+			 
+			 ToggleContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M5CON1", excelLabel.Contact_FirstName);
+			 ToggleContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M5CON1", excelLabel.Contact_LastName);
+			 ToggleContact1Inst=ToggleIns1;
+			 ToggleContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M5CON1", excelLabel.Contact_EmailId);
+			 ToggleContact1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M5CON1", excelLabel.Record_Type);
+		
+			
+
+			ToggleDeal1=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Deal_Name);
+			ToggleDeal1CompanyName=ToggleIns1;
+			ToggleDeal1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Record_Type);
+			ToggleDeal1Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Stage);
+			
+			
+			ToggleMarketingEvent1Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "TOGGLEME1", excelLabel.Marketing_Event_Name);
+			ToggleMarketingEvent1Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "TOGGLEME1", excelLabel.Date);
+			ToggleMarketingEvent1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "TOGGLEME1", excelLabel.Record_Type);
+			ToggleMarketingEvent1Organizer=ToggleIns1;
 			
 			
 		}
@@ -1021,16 +1064,32 @@ public class CommonVariables {
 			M6Ins3=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS3", excelLabel.Institutions_Name);
 			M6Ins6=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS6", excelLabel.Institutions_Name);
 			M6Ins9=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS9", excelLabel.Institutions_Name);
+			M6Ins10=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS10", excelLabel.Institutions_Name);
 			M6Ins11=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS11", excelLabel.Institutions_Name);
 			M6Ins12=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS12", excelLabel.Institutions_Name);
 			M6Ins13=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS13", excelLabel.Institutions_Name);
+			M6Ins14=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS14", excelLabel.Institutions_Name);
+			M6Ins15=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS15", excelLabel.Institutions_Name);
+			M6Ins16=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS16", excelLabel.Institutions_Name);
+			M6Ins17=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS17", excelLabel.Institutions_Name);
+			M6Ins18=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS18", excelLabel.Institutions_Name);
 			M6Ins20=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS20", excelLabel.Institutions_Name);
+			M6Ins21=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS21", excelLabel.Institutions_Name);
+			M6Ins22=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS22", excelLabel.Institutions_Name);
+			M6LSCIns1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6LSCFINS1", excelLabel.Institutions_Name);
 			M6Deal1=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal1", excelLabel.Deal_Name);
 			M6Deal2=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal2", excelLabel.Deal_Name);
 			M6Deal20Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal20", excelLabel.Stage);
+			M6Deal10=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal10", excelLabel.Deal_Name);
 			M6Deal11=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal11", excelLabel.Deal_Name);
 			M6Deal12=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal12", excelLabel.Deal_Name);
 			M6Deal13=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal13", excelLabel.Deal_Name);
+			M6Deal14=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal14", excelLabel.Deal_Name);
+			M6Deal15=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal15", excelLabel.Deal_Name);
+			M6Deal16=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal16", excelLabel.Deal_Name);
+			M6Deal17=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal17", excelLabel.Deal_Name);
+			M6Deal18=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal18", excelLabel.Deal_Name);
+			M6Deal3=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal3", excelLabel.Deal_Name);
 			M6Deal4=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal4", excelLabel.Deal_Name);
 			M6Deal5=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal5", excelLabel.Deal_Name);
 			M6Deal6=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal6", excelLabel.Deal_Name);
@@ -1039,8 +1098,12 @@ public class CommonVariables {
 			M6Deal8=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal8", excelLabel.Deal_Name);
 			M6Deal8Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal8", excelLabel.Stage);
 			M6Deal9=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal9", excelLabel.Deal_Name);
+			M6Deal20=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal20", excelLabel.Deal_Name);
+			M6Deal21=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal21", excelLabel.Deal_Name);
+			M6Deal22=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal22", excelLabel.Deal_Name);
+			M6LSCFund1=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "M6LSCFFUND1", excelLabel.Fund_Name);
+			M6LSCFundraising1=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M6LSCFUNDR1", excelLabel.FundRaising_Name);
 			
-			M6Deal20=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M6Deal19", excelLabel.Deal_Name);
 		}
 		
 		 System.err.println("");

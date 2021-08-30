@@ -34,6 +34,7 @@ import static com.navatar.generic.CommonLib.*;
 
 import java.util.Random;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.concurrent.ThreadLocalRandom;
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -42,8 +43,12 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -692,10 +697,15 @@ public String getTabName(String projectName,TabName TabName) {
 	case CommitmentsTab:
 		tabName = "Commitments";
 		break;
+
 	case InstituitonsTab:
 		tabName = "Institutions";
 		break;
-		
+
+	case FundraisingsTab:
+		tabName = "Fundraisings";
+		break;
+
 	default:
 		return tabName;
 	}
@@ -2340,6 +2350,7 @@ public boolean clickOnAlreadyCreatedItem(String projectName,String alreadyCreate
  * @return Related Tab WebElement
  */
 public WebElement getRelatedTab(String projectName,String relatedTab,int timeOut){
+	ThreadSleep(10000);
 String xpath="";
 WebElement ele;
 String related = relatedTab.toString().replace("_", " ");
@@ -2355,8 +2366,14 @@ appLog.info("Element Found : "+related);
 }else {
 	appLog.error("Element Not Found : "+related);	
 	appLog.error("Going to check on more "+related);	
-	xpath = "//li//button[@title='More Tabs']";
-	ele = FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut);
+	//xpath = "//li//button[@title='More Tabs']";
+	xpath = "//li//*[contains(text(),'More')]";
+	List<WebElement> eleList = FindElements(driver, xpath, "More");
+	if (!eleList.isEmpty() && eleList.size()>=2) {
+		ele = eleList.get(1);
+	} else {
+		ele = FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut);
+	}
 	click(driver, ele, "More Tab", action.BOOLEAN);
 	ThreadSleep(3000);
 	
@@ -2377,12 +2394,18 @@ return ele;
  * @param toggleTab
  * @param btnName
  * @param action
+ * @param isInside TODO
  * @param timeOut
  * @return toggle SDG Button webElement
  */
-public WebElement toggleSDGButtons(String projectName,String toggleTab,ToggleButtonGroup btnName,action action,int timeOut) {
+public WebElement toggleSDGButtons(String projectName,String toggleTab,ToggleButtonGroup btnName,action action,boolean isInside, int timeOut) {
 	String btname = btnName.toString();
-	String xpath = "//*[contains(text(),'"+toggleTab+"')]/../../..//following-sibling::div//button[@title='"+btname+"']";
+	String xpath="";
+	if (isInside) {
+		 xpath = "//flexipage-tab2//*[contains(text(),'"+toggleTab+"')]/../../..//following-sibling::div//button[@title='"+btname+"']";	
+	} else {
+		 xpath = "//*[contains(text(),'"+toggleTab+"')]/../../..//following-sibling::div//button[@title='"+btname+"']";	
+	}
 	WebElement ele = FindElement(driver, xpath,toggleTab+" >> "+btname, action, timeOut);
 	scrollDownThroughWebelement(driver, ele, "Toggle Button : "+btname);
 	ele = isDisplayed(driver, ele, "Visibility", timeOut, "Toggle Button : "+btname);
@@ -3487,11 +3510,36 @@ public boolean SearchDealFilterDataOnHomePage(SDGGridName sdgGridName,String lab
 	return false;
 }
 
+
 public boolean ClickOnCrossButtonForAlreadySelectedItem(String projectName,PageName pageName,String label,boolean isMultipleAssociation,String name,action action,int timeOut) {
 	
 	WebElement ele = getCrossButtonForAlreadySelectedItem(projectName, pageName, label, isMultipleAssociation, name, action, timeOut);
 	boolean flag = clickUsingJavaScript(driver, ele,"Cross Button against : "+name+" For Label : "+label, action);
 	return flag;
+}
+
+
+public boolean verifyBeforeTimeOrNot(String projectName, String time) {
+	Calendar cal = Calendar.getInstance();
+    
+	 SimpleDateFormat sdf = new SimpleDateFormat("H:mm a");
+	 sdf.setTimeZone(TimeZone.getTimeZone("GMT-7:00"));
+	 sdf.applyPattern("h:mm a");
+	 //System.out.println(sdf.format(Calendar.getInstance().getTime()));  
+	 System.out.println( sdf.format(cal.getTime()) );
+	 Date timecurrent = null,lt2 = null;
+	try {
+		timecurrent = sdf.parse(sdf.format(cal.getTime()));
+		lt2  = sdf.parse(time);
+	} catch (ParseException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		return false;
+	}
+	System.out.println("current time is "+sdf.format(cal.getTime()));
+	System.out.println("time on page is "+time);
+	 System.out.println(timecurrent.after(lt2));
+	 return timecurrent.after(lt2);
 }
 
 }

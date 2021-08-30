@@ -540,7 +540,15 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getCustomTabAddBtn(int timeOut) {
 		return isDisplayed(driver, customTabAddBtn, "Visibility", timeOut, "Custom Tab Add Button");
 	}
-	
+	@FindBy(xpath="//a//img[@title='Add']")
+	private WebElement AddBtn;
+
+	/**
+	 * @return the customTabAddBtn
+	 */
+	public WebElement getAddBtn(int timeOut) {
+		return isDisplayed(driver, AddBtn, "Visibility", timeOut, "Custom Tab Add Button");
+	}
 	@FindBy(xpath = "//label[text()='Available Fields']/../following-sibling::select")
 	private WebElement availableFieldsLayout;
 	
@@ -591,6 +599,12 @@ public abstract class BasePage extends BaseLib {
 	
 	public WebElement geteditAssignment(String projectName,int timeOut) {
 		return isDisplayed(driver, editAssignment, "Visibility", timeOut, "editAssignment");
+		
+	}@FindBy(xpath = "//button[text()='Page Layout Assignment']")
+	private WebElement pageLayoutAssignment;
+	
+	public WebElement getpageLayoutAssignment(String projectName,int timeOut) {
+		return isDisplayed(driver, pageLayoutAssignment, "Visibility", timeOut, "editAssignment");
 		
 	}
 	
@@ -1283,7 +1297,9 @@ public abstract class BasePage extends BaseLib {
 	 private WebElement accountLayoutFrame;
 	 @FindBy(xpath="//iframe[contains(@title,'Salesforce - Enterprise Edition')]")
 	 private WebElement pipelineLayoutFrame;
-
+	 @FindBy(xpath="//iframe[contains(@title,'Convert to Portfolio')]")
+	 private WebElement convertToPortfolioFrame;
+	
 	 @FindBy(xpath="//iframe[contains(@title,'Picklist Edit: ')]")
 	 private WebElement statusPicklistFrame;
 	 @FindBy(xpath="//iframe[contains(@title,'Sharing Settings ~ Salesforce - Enterprise Edition')]")
@@ -1363,6 +1379,9 @@ public abstract class BasePage extends BaseLib {
 
 	  }else if (pageName.toString().equalsIgnoreCase(PageName.RecordTypePortfolioCompany.toString())){
 		  ele=isDisplayed(driver,RTPortfolioCFrame , "Visibility", timeOut, "RecordTypePortfolioCompany");
+
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.ConvertToPortfolioFrame.toString())){
+		  ele=isDisplayed(driver,convertToPortfolioFrame , "Visibility", timeOut, "convert to portfolio frame");
 
 	  }
 	  return ele; 

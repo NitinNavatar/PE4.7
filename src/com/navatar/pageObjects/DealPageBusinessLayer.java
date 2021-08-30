@@ -7,6 +7,7 @@ import static com.navatar.generic.CommonVariables.ToggleDeal1;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -382,6 +383,12 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
 		
 	}
+	public WebElement getconvertToPortfolioMessageAfterNext(String head,int timeOut) {
+		String xpath="//h2[text()='"+head+"']/../following-sibling::*//article//span[contains(text(),'successfully')]/..";
+		WebElement ele = FindElement(driver, xpath,"convert to portfolio", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
+		
+	}
 	
 	public WebElement getconvertToPortfolioMessageRepeat(int timeOut) {
 		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//span[contains(text(),'already')]/..";
@@ -389,7 +396,12 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
 		
 	}
-	
+	public WebElement getconvertToPortfolioMessageRepeat(String head,int timeOut) {
+		String xpath="//h2[text()='"+head+"']/../following-sibling::*//article//span[contains(text(),'already')]/..";
+		WebElement ele = FindElement(driver, xpath,"convert to portfolio", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
+		
+	}
 	public WebElement crossIconForCompanyName(String company,int timeOut) {
 		String xpath="//label[text()='Company Name']/..//input[@placeholder='"+company+"']//following-sibling::*//button";
 		WebElement ele = FindElement(driver, xpath,"cross icon for company", action.SCROLLANDBOOLEAN, 10);
@@ -409,5 +421,32 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return isDisplayed(driver, ele, "Visibility", timeOut, "RT invalid");
 
 	}
+	
+	public boolean checkValueOfPathComponentValueOfStage(String expected,int timeOut) {
+		String xpath="//span[@class='current slds-path__stage']/following-sibling::span";
+			WebElement ele = FindElement(driver, xpath,"path component", action.SCROLLANDBOOLEAN, 10);
+		ele=isDisplayed(driver, ele, "Visibility", timeOut, "path component");
+		if (ele!=null) {
+			String stage=ele.getText();
+			if (stage.equalsIgnoreCase(expected)) {
+				log(LogStatus.INFO,"successfully verified stage "+stage,YesNo.No);
+				return true;
+			}
+			else {
+				log(LogStatus.INFO,"could not verify stage on path component\nExpected: "+expected+"\nactual: "+stage,YesNo.No);
+			}
+		}else {
+			log(LogStatus.INFO,"could not find path component",YesNo.No);
+		}
+		return false;
+	}
+	
+	public WebElement selectPathComponent(String projectName, String stage) {
+		String xpath="//span[@class='title slds-path__title'][text()='"+stage+"']";
+		WebElement ele = FindElement(driver, xpath,"path component", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", 10, "path component");
+		
+	}
+	
 	}
 
