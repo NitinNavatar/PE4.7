@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.navatar.generic.ExcelUtils;
+import com.navatar.generic.EnumConstants.action;
 import com.relevantcodes.extentreports.LogStatus;
 
 import static com.navatar.generic.AppListeners.*;
@@ -117,5 +118,10 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage  {
 			return false;
 		}
 		
-	
+		public WebElement getEditBtn(String projectName,String stage,action action,int timeOut) {
+			String xpath = "//a[contains(@title,'Edit')][contains(@title,'"+stage+"')]";
+			WebElement ele = FindElement(driver, xpath,stage, action, timeOut);
+			return ele;
+		}
+		
 }
