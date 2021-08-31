@@ -1375,7 +1375,7 @@ public abstract class BasePage extends BaseLib {
 	  }else if (pageName.toString().equalsIgnoreCase(PageName.CustomNavigationPage.toString())){
 		  ele=isDisplayed(driver,customNavigationFrame , "Visibility", timeOut, "Custom Navigation Frame");
 	  }else if (pageName.toString().equalsIgnoreCase(PageName.NavigationPickListPage.toString())){
-		  ele=isDisplayed(driver,customNavigationFrame , "Visibility", timeOut, "Navigation PickList Page");
+		  ele=isDisplayed(driver,NavigationPickListFrame , "Visibility", timeOut, "Navigation PickList Page");
 
 	  }else if (pageName.toString().equalsIgnoreCase(PageName.RecordTypePortfolioCompany.toString())){
 		  ele=isDisplayed(driver,RTPortfolioCFrame , "Visibility", timeOut, "RecordTypePortfolioCompany");
@@ -3735,7 +3735,7 @@ public abstract class BasePage extends BaseLib {
 	 * @return the newButton
 	 */
 	public WebElement getNewButton(String projectName,int timeOut) {
-		
+			ThreadSleep(5000);
 			return newButtonLighting;	
 		
 		
@@ -4975,6 +4975,16 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, sdgSave, "Visibility", timeOut, "sdgSaveButton");
 		
 	}
+	
+	
+	@FindBy(xpath = "//div[contains(@class,'sdgborder')]//button[@title='Cancel' or text()='Cancel']")
+	private WebElement sdgCancel;
+	
+	public WebElement getsdgCancelButton(String projectName,int timeOut) {
+		return isDisplayed(driver, sdgCancel, "Visibility", timeOut, "sdgCancelbutton");
+		
+	}
+	
 	@FindBy(xpath = "//a[@title='Upload Files']")
 	private WebElement uploadFiles;
 	
@@ -5127,13 +5137,19 @@ public abstract class BasePage extends BaseLib {
 	
 	public WebElement getCustomTabCrossIcon(String projectName,int timeOut) {
 		List<WebElement> eleList = FindElements(driver, "//*[@title='Close this window' or text()='Close this window']", "Cross Icon");
-		for (WebElement webElement : eleList) {
-		webElement=isDisplayed(driver, webElement, "Visibility", 2, "Cross Icon");
-		if (webElement!=null) {
-				return webElement;
-			} else {
+		try {
+			for (int i=eleList.size()-1;i>=0;i++) {
+				WebElement webElement = eleList.get(i);
+				webElement=isDisplayed(driver, webElement, "Visibility", 2, "Cross Icon");
+				if (webElement!=null) {
+					return webElement;
+				} else {
 
+				}
 			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return null;
 		}
 		return null;
 
@@ -5142,13 +5158,19 @@ public abstract class BasePage extends BaseLib {
 	
 	public WebElement getCustomTabCancelBtn(String projectName,int timeOut) {
 		List<WebElement> eleList = FindElements(driver, "//*[@title='Cancel' or text()='Cancel']", "Cancel Button");
-		for (WebElement webElement : eleList) {
-		webElement=isDisplayed(driver, webElement, "Visibility", 2, "Cancel Button");
-		if (webElement!=null) {
-				return webElement;
-			} else {
+		try {
+			for (int i=eleList.size()-1;i>=0;i++) {
+				WebElement webElement = eleList.get(i);
+				webElement=isDisplayed(driver, webElement, "Visibility", 2, "Cross Icon");
+				if (webElement!=null) {
+					return webElement;
+				} else {
 
+				}
 			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return null;
 		}
 		return null;
 

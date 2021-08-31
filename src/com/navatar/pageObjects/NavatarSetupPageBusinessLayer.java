@@ -69,7 +69,7 @@ public class NavatarSetupPageBusinessLayer extends NavatarSetupPage implements N
 	 */
 	public boolean clickOnNavatarSetupSideMenusTab(String projectName,NavatarSetupSideMenuTab Menu) {
 	
-			if(switchToFrame(driver, 60, getnavatarSetUpTabFrame_Lighting(projectName, 60))){
+			if(switchToFrame(driver, 60, getnavatarSetUpTabFrame_Lighting(projectName, 120))){
 				appLog.info("Inside Frame");
 				System.err.println("Inside Frame");
 			}
@@ -104,8 +104,7 @@ public class NavatarSetupPageBusinessLayer extends NavatarSetupPage implements N
 
 		if (click(driver,
 				isDisplayed(driver,
-						FindElement(driver, "//div[@class='ContentStart']//li/a[contains(@title,'" + sideMenu + "')]", sideMenu,
-								action.SCROLLANDBOOLEAN, 30),
+						FindElement(driver, "//div[@class='ContentStart']//li/a[contains(@title,'" + sideMenu + "')]", sideMenu,action.SCROLLANDBOOLEAN, 120),
 						"visibility", 30, sideMenu),
 				sideMenu, action.SCROLLANDBOOLEAN)) {
 			appLog.info("Clicked on " + sideMenu);
@@ -113,7 +112,7 @@ public class NavatarSetupPageBusinessLayer extends NavatarSetupPage implements N
 			refresh(driver);
 			switchToDefaultContent(driver);
 			ThreadSleep(8000);
-			switchToFrame(driver, 5, getnavatarSetUpTabFrame_Lighting(projectName, 10));
+			switchToFrame(driver, 60, getnavatarSetUpTabFrame_Lighting(projectName, 120));
 			flag=true;
 
 		}else{

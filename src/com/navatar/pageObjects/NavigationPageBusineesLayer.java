@@ -904,4 +904,11 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 
 	}
 	
+	public WebElement getCancelButtonForNavigationLabelPopuP(String projectName,action action,int timeOut) {
+		String xpath = "//div[@class='inlineFooter']//*[text()='Cancel']";
+		WebElement ele = FindElement(driver, xpath, "Cancel Buton", action, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "Cancel Buton");
+	}
+	
+	
 }

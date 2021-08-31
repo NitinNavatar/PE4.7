@@ -191,7 +191,7 @@ public class NavatarSetupPage extends BasePageBusinessLayer {
 				"Enable CheckBox for Navatar SetUp Side Menu Tab");
 
 		try {
-			if (EditViewMode.View.toString().equalsIgnoreCase(editviewMode.toString()) && !sideMenuTab.equals(NavatarSetupSideMenuTab.CommitmentCreation)) {
+			if (EditViewMode.View.toString().equalsIgnoreCase(editviewMode.toString())) {
 				return isDisplayed(driver, enableCheckBoxList.get(0), "Visibility", timeOut,
 						"Enable CheckBox for Navatar SetUp Side Menu Tab : "+sideMenuTab);
 			} else {

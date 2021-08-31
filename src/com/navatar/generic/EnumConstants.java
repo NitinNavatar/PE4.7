@@ -41,7 +41,7 @@ public class EnumConstants {
 		, Pipeline_Name, Company_Name, Stage, Source, Source_Firm, Source_Contact, Deal_Type, Employees, Website, Email, Legal_Name, Name, Investment_Size, Log_In_Date, Our_Role, Last_Name,Last_Stage_Change_Date_New, Last_Stage_Change_Date, Highest_Stage_Reached, Age_of_Current_Stage, Date_Stage_Changed, Changed_Stage, Age, First_Stage_Changed, Second_Stage_Changed, Office_Location_Name, State_Province, ZIP, Organization_Name, Primary, Updated_Primary, Start, Related_To, Due_Date,Investment_Likely_Amount,Total_Fundraising_Contacts,Fundraising_Contact_ID,Fundraising,Role, Other_Address,Label,
 		Mailing_Address,Total_Commitments,Commitment_Amount,Partner_Type,Tax_Forms,Final_Commitment_Date,Company,Bank_Name,Placement_Fee,Fund_Investment_Category,Total_CoInvestment_Commitments,Total_Fund_Commitments, Institution_Type, Fund_Preferences, Industry_Preferences, Shipping_Street, Shipping_City, Shipping_State, Shipping_Zip, Shipping_Country, Mobile_Phone, Assistant, Asst_Phone, Phone,Total_Call_Amount_Received, Total_Amount_Called,Total_Amount_Received,Total_Uncalled_Amount,Total_Commitment_Due,Commitment_Called,Called_Due,Preferred_Mode_of_Contact,Percent, 
 		Parent_Field_Name,Override_Label,APIName,FieldOrder,URL,Region,Industry,Attendee_Staff,Marketing_Event,Notes,DTID,Member,File,
-		TotalCommitment, Priority, Project_Type, Project_Name, Task_Name, Status, Fund_InvestmentCategory,Comment, Updated_Priority, Updated_Subject, Updated_Comment,Updated_Stage, Start_Date, End_Date, Data_Type, Field_Label, Length, Decimal_Places, Options, Deal_Name, SDG_Name, sObjectName, SDG_Tag, Object_Name, Field_Set_Label, NameSpace_PreFix, Fields_Name, Toggle_Button, Request, Date_Requested, Request_Tracker_ID, Marketing_Event_Name, Date, TabName, Item, RelatedTab, ToggleButton, Column_Name1, Column_Name2,Field_Type, FieldLabel_SubString, ExtraFieldsName, Column_Name, Navigation_Label_Name, Redirection_Label_Name, Update_Navigation_Label_Name, Updated_Order, Parent, Navigation_Label_With_Parent, List_View_Object, List_View_Name, Action_Object, Coverage_Name,Action_Order,Event,Event_Payload,Action_Type, Sector;
+		TotalCommitment, Priority, Project_Type, Project_Name, Task_Name, Status, Fund_InvestmentCategory,Comment, Updated_Priority, Updated_Subject, Updated_Comment,Updated_Stage, Start_Date, End_Date, Data_Type, Field_Label, Length, Decimal_Places, Options, Deal_Name, SDG_Name, sObjectName, SDG_Tag, Object_Name, Field_Set_Label, NameSpace_PreFix, Fields_Name, Toggle_Button, Request, Date_Requested, Request_Tracker_ID, Marketing_Event_Name, Date, TabName, Item, RelatedTab, ToggleButton, Column_Name1, Column_Name2,Field_Type, FieldLabel_SubString, ExtraFieldsName, Column_Name, Navigation_Label_Name, Redirection_Label_Name, Update_Navigation_Label_Name, Updated_Order, Parent, Navigation_Label_With_Parent, List_View_Object, List_View_Name, Action_Object, Coverage_Name,Action_Order,Event,Event_Payload,Action_Type, Sector, Assigned_To, Location, Event_PayLoad;
 };
 
 	public static enum fileDistributor {
@@ -1029,7 +1029,7 @@ public static enum PermissionType{
 	}
 		
 	public static enum Buttons{
-		SaveNext,SaveClose,Cancel,Cross,Delete_Photo,close,Save;	  
+		SaveNext,SaveClose,Cancel,Cross,Delete_Photo,close,Save,Apply;	  
 	};
 	
 	public static enum ProjectLabel{
@@ -1093,7 +1093,7 @@ public static enum PermissionType{
 					return "Navigation Type";
 				}
 			},
-		Contact_Name, Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places, Values, Is_Touchpoint,Description, Request, Date_Requested, Attendee_Staff, Label, Panel_Width, Panel_Height,Deal,Team_Member_Role,Member, Page_Layout_Name,Organizer,Convert_to_Portfolio, Deal_Contact_Type, Team_Member
+		Contact_Name, Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places, Values, Is_Touchpoint,Description, Request, Date_Requested, Attendee_Staff, Label, Panel_Width, Panel_Height,Deal,Team_Member_Role,Member, Page_Layout_Name,Organizer,Convert_to_Portfolio, Deal_Contact_Type, Team_Member, Location
 
 
 	};
@@ -1299,7 +1299,12 @@ public static enum PermissionType{
 			@Override
 			public String toString() {
 				return "Start Date/Time";
-			}},Title_Highlight_Color,Filter,Onclick_Title,Calendar_Filter_1,Calendar_Filter_2,Calendar_Filter_3, Deal, Name, Fundraising,Phone;
+			}},Title_Highlight_Color,Filter,Onclick_Title,Calendar_Filter_1,Calendar_Filter_2,Calendar_Filter_3, Deal, Name, Fundraising,Phone,Stage,
+			Source_Firm{
+				@Override
+				public String toString() {
+					return "Source Firm";
+				}}, Closing;
 	}
 	public static enum ContactPagePhotoActions{
 		Update_Photo,Delete_Photo;
@@ -1501,4 +1506,47 @@ public static enum PermissionType{
 			}
     	}
     }
+    
+    public static enum Task{
+    	TodayTasks, TodayEvents;
+    }
+    
+    public static enum TodayTaskDownArrowValues{
+    	Today,MyTasks{
+    		@Override
+			public String toString() {
+				return "My Tasks";
+			}
+    	},AllOverdue{
+    		@Override
+			public String toString() {
+				return "All Overdue";
+			}
+    	},CompletedWithinLast7Days{
+    		@Override
+			public String toString() {
+				return "Completed Within Last 7 Days";
+			}
+    	},DelegatedTasks{
+    		@Override
+			public String toString() {
+				return "Delegated Tasks";
+			}
+    	}
+    }
+    
+    public static enum ViewAllAndViewCalendarLink{
+    	viewALl{
+    		@Override
+			public String toString() {
+				return "View All Tasks";
+			}
+    	},ViewCalendar{
+    		@Override
+			public String toString() {
+				return "View Calendar";
+			}
+    	}
+    }
+    
 }

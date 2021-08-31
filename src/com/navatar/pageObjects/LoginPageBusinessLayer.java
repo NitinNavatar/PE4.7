@@ -193,6 +193,7 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 	 */
 	public boolean CRMlogout() {
 		boolean flag = false;
+		switchToDefaultContent(driver);
 		List<WebElement> lst = getUserMenuTab_Lightning();
 		for (int i = 0; i < lst.size(); i++) {
 //			if(isDisplayed(driver, lst.get(i), "visibility", 5, "user menu tab")!=null) {

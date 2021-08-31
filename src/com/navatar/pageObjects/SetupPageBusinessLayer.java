@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
+import org.sikuli.script.Screen;
 
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.EnumConstants.ContactPagePhotoActions;
@@ -563,8 +564,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 	 */
 	public boolean clickOnAlreadyCreatedLayout(String layoutName) {
 		String xpath="//td//a//span[text()='"+layoutName+"']";
-		WebElement ele=FindElement(driver, xpath, layoutName, action.SCROLLANDBOOLEAN, 10);
-		ele=isDisplayed(driver, ele, "visibility", 10, layoutName);
+		WebElement ele=FindElement(driver, xpath, layoutName, action.SCROLLANDBOOLEAN, 60);
+		ele=isDisplayed(driver, ele, "visibility", 30, layoutName);
 		if (click(driver, ele, layoutName, action.SCROLLANDBOOLEAN)) {
 			return true;
 		}
@@ -1194,7 +1195,7 @@ public WebElement clickOnEditInFrontOfFieldValues(String projectName, String sta
 public boolean clickOnEditForApp(WebDriver driver,String appName,String developerName,String description,int timeOut) {
 	boolean flag=false;;
 	String xpath="";
-	xpath="//*[text()='"+appName+"']/../../following-sibling::*//*[text()='"+developerName+"']/../../following-sibling::*//*[text()='"+description+"']/../../following-sibling::*//*[text()='Show Actions']/..";
+	xpath="//*[text()='"+appName+"']/../../following-sibling::*//*[text()='"+developerName+"']/../../following-sibling::*//*[text()='Show Actions']/..";
 	WebElement scrollEle = FindElement(driver, "//div[@class='uiScroller scroller-wrapper scroll-bidirectional native']", "Widget scroll",action.SCROLLANDBOOLEAN, 60);
 	scrollActiveWidget(driver,scrollEle,By.xpath(xpath));
 	ThreadSleep(2000);
@@ -1345,9 +1346,7 @@ public void addRemoveAppSetingData(String projectName,String addRemoveTabName, c
 public boolean changeRecordTypeSetting(WebDriver driver,String userName,String recordType,int timeOut) {
 	
 	switchToDefaultContent(driver);
-	ThreadSleep(20000);
-//	scn.nextLine();
-	switchToFrame(driver, 20, getSetUpPageIframe(60));
+	switchToFrame(driver, 60, getSetUpPageIframe(120));
 	boolean flag=false;;
 	String xpath="";
 	xpath="//th//a[text()='"+userName+"']";
@@ -1355,34 +1354,26 @@ public boolean changeRecordTypeSetting(WebDriver driver,String userName,String r
 	ele=isDisplayed(driver, ele, "visibility", timeOut, userName);
 	if (click(driver, ele, userName.toString(), action.BOOLEAN)) {
 		log(LogStatus.INFO, "able to click on "+userName, YesNo.No);
-		switchToDefaultContent(driver);
-		ThreadSleep(20000);
-//		scn.nextLine();
-		switchToFrame(driver, 60, getSetUpPageIframe(60));
+		switchToFrame(driver, 60, getSetUpPageIframe(120));
 		xpath="//*[text()='Accounts']/following-sibling::*//*[text()='Edit']";
 		ele=FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, timeOut);
 		if (click(driver, ele, "Edit Button", action.BOOLEAN)) {
 			log(LogStatus.INFO, "able to click on edit button for record type settiing", YesNo.No);
-			switchToDefaultContent(driver);
-			ThreadSleep(10000);
-//			scn.nextLine();
-			switchToFrame(driver, 20, getSetUpPageIframe(60));
+			switchToFrame(driver, 60, getSetUpPageIframe(120));
 			xpath="//select[@id='p5']";
 			ele=FindElement(driver, xpath, "Record dropdown", action.SCROLLANDBOOLEAN, timeOut);
 			scrollDownThroughWebelement(driver, ele, "Record dropdown");
+			ThreadSleep(1000);
 			if (selectVisibleTextFromDropDown(driver, ele, recordType, recordType)) {
 				log(LogStatus.INFO, "selected default record Type : "+recordType, YesNo.No);
 				ThreadSleep(2000);
-				if (click(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
-						action.SCROLLANDBOOLEAN)) {
+				if (click(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
-					ThreadSleep(2000);
+					ThreadSleep(10000);
 					flag=true;
 				} else {
 					log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
 				}
-
-				flag=true;
 			} else {
 				log(LogStatus.ERROR, "not able to select default record Type : "+recordType, YesNo.Yes);
 			}
@@ -1425,20 +1416,16 @@ public boolean createRecordTypeForObject(String projectName,String[][] labelWith
 	String label;
 	String value;
 	boolean flag=false;
-
 	switchToDefaultContent(driver);
-	if (click(driver,getRecordTypeNewButton(10), "Record Type New Button", action.SCROLLANDBOOLEAN)) {
+	if (click(driver,getRecordTypeNewButton(120), "Record Type New Button", action.SCROLLANDBOOLEAN)) {
 		log(LogStatus.INFO, "Click on Record Type New Button", YesNo.No);
-		ThreadSleep(5000);
-//		scn.nextLine();
 		switchToFrame(driver, 20, getSetUpPageIframe(60));
 		for (String[] lv : labelWithValue) {
 			label=lv[0];
 			value=lv[1];
-			ele =  getRecordTypeLabel(projectName, label, 20);
+			ele =  getRecordTypeLabel(projectName, label, 60);
 			ThreadSleep(2000);
 			if (label.equals(recordTypeLabel.Active.toString())) {
-
 				if (click(driver, ele, "Active CheckBox", action.BOOLEAN)) {
 					log(LogStatus.INFO, "Click on Active CheckBox", YesNo.No);	
 				} else {
@@ -1446,18 +1433,15 @@ public boolean createRecordTypeForObject(String projectName,String[][] labelWith
 					sa.assertTrue(false,"Not Able to Click on Active CheckBox");
 				}
 			} else {
-
 				if (sendKeys(driver, ele, value, label, action.BOOLEAN)) {
 					log(LogStatus.INFO, "Able to enter "+label, YesNo.No);
-					ThreadSleep(2000);
-					flag=true;
 				} else {
 					log(LogStatus.ERROR, "Not Able to enter "+value+" to label "+label, YesNo.Yes);
 					sa.assertTrue(false,"Not Able to enter "+value+" to label "+label);
 				}
 
 			}
-
+			ThreadSleep(1000);
 		}
 		if (isMakeAvailable) {
 			ele=getMakeAvailableCheckBox(10);
@@ -1465,9 +1449,6 @@ public boolean createRecordTypeForObject(String projectName,String[][] labelWith
 			if (click(driver, ele, "make Available CheckBox", action.BOOLEAN)) {
 				log(LogStatus.INFO, "Click on make Available CheckBox", YesNo.No);	
 				ThreadSleep(1000);
-
-
-
 			} else {
 				log(LogStatus.ERROR, "Not Able to Click on make Available CheckBox", YesNo.Yes);
 				sa.assertTrue(false,"Not Able to Click on make Available CheckBox");
@@ -1488,9 +1469,8 @@ public boolean createRecordTypeForObject(String projectName,String[][] labelWith
 		if(click(driver, getCustomFieldNextBtn2(30),"next button", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.PASS, "Clicked on Next button", YesNo.No);
 			ThreadSleep(1000);		
-
 			if (layOut!=null) {
-				if(selectVisibleTextFromDropDown(driver, getApplyOneLayoutToAllProfiles(10), "Page Layout",layOut)) {
+				if(selectVisibleTextFromDropDown(driver, getApplyOneLayoutToAllProfiles(120), "Page Layout",layOut)) {
 					log(LogStatus.INFO,"Select Existing Page Layout drop down "+layOut,YesNo.No);
 					ThreadSleep(1000);	
 				}else {
@@ -1505,16 +1485,11 @@ public boolean createRecordTypeForObject(String projectName,String[][] labelWith
 				log(LogStatus.ERROR, "Not Able to Click on save Button ", YesNo.Yes);
 				sa.assertTrue(false,"Not Able to Click on save Button ");
 			}
-
 		}else {
 			log(LogStatus.FAIL, "Not able to click on next button so cannot record Type",YesNo.Yes);
 			sa.assertTrue(false,"Not able to click on next button so cannot record Type");
 		}
-
-
-
-
-	} else {
+} else {
 		log(LogStatus.ERROR, "Not Able to Click on Record Type New Button", YesNo.Yes);
 		sa.assertTrue(false,"Not Able to Click on Record Type New Button");
 	}
@@ -1533,35 +1508,25 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 	String label;
 	String value;
 	boolean flag=false;
-	switchToDefaultContent(driver);
-//	scn.nextLine();
-	ThreadSleep(5000);
-	switchToFrame(driver, 20, getSetUpPageIframe(60));
+	switchToDefaultContent(driver);;
+	switchToFrame(driver, 60, getSetUpPageIframe(120));
 	if (click(driver, getEditButton(environment,"Classic",10), "edit", action.SCROLLANDBOOLEAN)) {
 		log(LogStatus.INFO, "Click on edit Button", YesNo.No);
-		switchToDefaultContent(driver);
-		ThreadSleep(5000);
-//		scn.nextLine();
-		switchToFrame(driver, 20, getSetUpPageIframe(60));
+		switchToFrame(driver, 60, getSetUpPageIframe(120));
 		for (String[] lv : labelWithValue) {
 			label=lv[0];
 			value=lv[1];
 			ele =  getRecordTypeLabel(projectName, label, 20);
 			ThreadSleep(2000);
-			
 			try {
-				driver.switchTo().alert().accept();
-//				if (isAlertPresent(driver)) {
-//					switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
-//				}
+				Screen screen = new Screen();
+				screen.click(".\\AutoIT\\AlertOk.PNG");
+				//driver.switchTo().alert().accept();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 				try {
-					driver.switchTo().alert().accept();
+					Screen screen = new Screen();
+					screen.click(".\\AutoIT\\AlertOk.PNG");
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				}
 			}
 			
@@ -1576,8 +1541,6 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 
 				if (sendKeys(driver, ele, value, label, action.BOOLEAN)) {
 					log(LogStatus.INFO, "Able to enter "+label, YesNo.No);
-					ThreadSleep(2000);
-					flag=true;
 				} else {
 					log(LogStatus.ERROR, "Not Able to enter "+value+" to label "+label, YesNo.Yes);
 					sa.assertTrue(false,"Not Able to enter "+value+" to label "+label);
@@ -1586,13 +1549,13 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 				
 
 			}
-
+			ThreadSleep(1000);
 		}
 		
 		if (click(driver,getCreateUserSaveBtn_Lighting(30), "Save Button",action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "clicked on save button", YesNo.No);
 			flag=true;
-			ThreadSleep(5000);
+			ThreadSleep(10000);
 			recordTypeVerification(labelWithValue);
 		} else {
 			log(LogStatus.ERROR, "not able to click on save button", YesNo.Yes);
@@ -1616,10 +1579,8 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 public void recordTypeVerification(String[][] labelWithValue) {
 	String xpath = "";
 	WebElement ele;
-	ThreadSleep(5000);
 	switchToDefaultContent(driver);
-//	scn.nextLine();
-	switchToFrame(driver, 20, getSetUpPageIframe(60));
+	switchToFrame(driver, 60, getSetUpPageIframe(120));
 	for (String[] labelValue : labelWithValue) {
 		xpath ="//*[text()='"+labelValue[0]+"']/..//following-sibling::td[text()='"+labelValue[1]+"']";
 		ele=FindElement(driver, xpath, labelValue[0]+" with Value "+labelValue[1], action.BOOLEAN, 10);
@@ -1629,7 +1590,6 @@ public void recordTypeVerification(String[][] labelWithValue) {
 			log(LogStatus.ERROR, labelValue[0]+" with Value "+labelValue[1]+" not verified", YesNo.Yes);
 			sa.assertTrue(false, labelValue[0]+" with Value "+labelValue[1]+" not verified");
 		}
-		
 	}
 }
 
@@ -1674,8 +1634,7 @@ public boolean createCustomObject(String projectName,String[][] labelWithValue,i
 	String label;
 	String value;
 	boolean flag=false;
-		switchToDefaultContent(driver);
-		switchToFrame(driver, 20, getSetUpPageIframe(60));
+	switchToFrame(driver, 60, getSetUpPageIframe(120));
 		for (String[] lv : labelWithValue) {
 			label=lv[0];
 			value=lv[1];
@@ -1683,8 +1642,7 @@ public boolean createCustomObject(String projectName,String[][] labelWithValue,i
 			ThreadSleep(2000);
 			if (sendKeys(driver, ele, value, label, action.BOOLEAN)) {
 				log(LogStatus.INFO, "Able to enter "+label, YesNo.No);
-				ThreadSleep(2000);
-				flag=true;
+				ThreadSleep(1000);
 			} else {
 				log(LogStatus.ERROR, "Not Able to enter "+value+" to label "+label, YesNo.Yes);
 				sa.assertTrue(false,"Not Able to enter "+value+" to label "+label);
@@ -1693,7 +1651,7 @@ public boolean createCustomObject(String projectName,String[][] labelWithValue,i
 		flag=false;
 		if (click(driver,  getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.ERROR, "Click on save Button ", YesNo.No);
-			ThreadSleep(5000);
+			ThreadSleep(10000);
 			flag=true;
 		} else {
 			log(LogStatus.ERROR, "Not Able to Click on save Button ", YesNo.Yes);
@@ -1719,21 +1677,16 @@ public boolean addObjectToTab(String environment, String mode,String projectName
 	boolean flag=false;
 	if(searchStandardOrCustomObject(environment, mode, objectName)) {
 		log(LogStatus.PASS, "object searched : "+objectName.toString(), YesNo.No);
-		ThreadSleep(5000);
 		switchToDefaultContent(driver);
-		switchToFrame(driver, 20, getSetUpPageIframe(120));
+		switchToFrame(driver, 60, getSetUpPageIframe(120));
 		if (click(driver, getCustomObjectTabNewBtn(120), "New", action.BOOLEAN)) {
-			log(LogStatus.PASS, "clicked on new button ", YesNo.No);
-			ThreadSleep(5000);
-			switchToDefaultContent(driver);
-			switchToFrame(driver, 20, getSetUpPageIframe(120));
+			log(LogStatus.PASS, "clicked on new button ", YesNo.No);;
+			switchToFrame(driver, 60, getSetUpPageIframe(120));
 			if (selectVisibleTextFromDropDown(driver, getObjectDropDown(120), ObjecttoAddedOnTab, ObjecttoAddedOnTab)) {
 				log(LogStatus.INFO, "selected OBJECT : "+ObjecttoAddedOnTab, YesNo.No);
-
 				if (tabStyleSelector(styleType,parentId)) {
 					log(LogStatus.INFO, "selected style : "+styleType, YesNo.No);
 					ThreadSleep(1000);		
-					
 					for (String window : driver.getWindowHandles()) {
 						if (!window.equals(parentId)) {
 							try {
@@ -1747,20 +1700,16 @@ public boolean addObjectToTab(String environment, String mode,String projectName
 					
 					
 					switchToDefaultContent(driver);
-					switchToFrame(driver, 20, getSetUpPageIframe(120));
-					if(click(driver, getCustomFieldNextBtn2(10),"next button", action.SCROLLANDBOOLEAN)) {
+					switchToFrame(driver, 60, getSetUpPageIframe(120));
+					if(click(driver, getCustomFieldNextBtn2(60),"next button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.PASS, "Clicked on Next button", YesNo.No);
-						ThreadSleep(1000);		
-						switchToDefaultContent(driver);
-						switchToFrame(driver, 20, getSetUpPageIframe(120));
+					//	switchToFrame(driver, 20, getSetUpPageIframe(120));
 						if(click(driver, getCustomFieldNextBtn2(120),"next button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.PASS, "Clicked on Next button", YesNo.No);
-							ThreadSleep(1000);			
-							switchToDefaultContent(driver);
-							switchToFrame(driver, 20, getSetUpPageIframe(120));
+					//		switchToFrame(driver, 20, getSetUpPageIframe(120));
 							if (click(driver,  getCustomTabSaveBtn(projectName, 120), "save button", action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.ERROR, "Click on save Button & succeessfully add "+ObjecttoAddedOnTab+" to tab", YesNo.No);
-								ThreadSleep(5000);
+								ThreadSleep(10000);
 								flag = true;
 							} else {
 								log(LogStatus.ERROR, "Not Able to Click on save Button so cannot add add custom object on Tab", YesNo.Yes);
@@ -1910,9 +1859,8 @@ public boolean updateEdgeIcon(String projectName,String attachmentPath,String im
  */
 public boolean permissionChangeForUserONObject(WebDriver driver,String userName,String[][] LabelswithCheck,int timeOut) {
 
-	ThreadSleep(10000);
 	switchToDefaultContent(driver);
-	switchToFrame(driver, 60, getSetUpPageIframe(60));
+	switchToFrame(driver, 60, getSetUpPageIframe(120));
 	boolean flag=false;;
 	String xpath="";
 	xpath="//th//a[text()='"+userName+"']";
@@ -1920,21 +1868,13 @@ public boolean permissionChangeForUserONObject(WebDriver driver,String userName,
 	ele=isDisplayed(driver, ele, "visibility", timeOut, userName);
 	if (click(driver, ele, userName.toString(), action.BOOLEAN)) {
 		log(LogStatus.INFO, "able to click on "+userName, YesNo.No);
-		ThreadSleep(10000);
-		switchToDefaultContent(driver);
-		ThreadSleep(5000);
-//		scn.nextLine();
-		switchToFrame(driver, 60, getSetUpPageIframe(60));
+		switchToFrame(driver, 60, getSetUpPageIframe(120));
 		xpath="//*[@id='topButtonRow']//input[@name='edit']";
 		ele=FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, timeOut);
 		ThreadSleep(5000);
 		if (click(driver, ele, "Edit Button", action.BOOLEAN)) {
 			log(LogStatus.INFO, "able to click on edit button", YesNo.No);
-			ThreadSleep(10000);
-			switchToDefaultContent(driver);
-			ThreadSleep(5000);
-//			scn.nextLine();
-			switchToFrame(driver, 60, getSetUpPageIframe(60));
+			switchToFrame(driver, 60, getSetUpPageIframe(120));
 			String OnObject="";
 			String permission = "";
 			for (String[] strings : LabelswithCheck) {
@@ -1942,7 +1882,6 @@ public boolean permissionChangeForUserONObject(WebDriver driver,String userName,
 				permission=strings[1];
 				xpath="//*[text()='"+OnObject+"']/following-sibling::*//td/input[contains(@title,'"+permission+"')]";
 				ele = FindElement(driver, xpath, OnObject+" with permission "+permission, action.SCROLLANDBOOLEAN, timeOut);
-			//	if (!isSelected(driver, ele, OnObject+" with permission "+permission)) {
 					if (click(driver, ele, OnObject+" with permission "+permission,action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on checkbox "+permission+" for "+OnObject, YesNo.No);
 
@@ -1952,15 +1891,14 @@ public boolean permissionChangeForUserONObject(WebDriver driver,String userName,
 						log(LogStatus.FAIL,permission+ " permission not change for "+userName+" on object "+OnObject,YesNo.Yes);
 
 					}
-			//	}
+			
 			}
 
 			if (click(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
 					action.SCROLLANDBOOLEAN)) {
+				flag=true;
 				log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
 				ThreadSleep(10000);
-				flag=true;
-				ThreadSleep(5000);
 			} else {
 				log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
 			}
@@ -2424,8 +2362,8 @@ public boolean ClickAndRemoveUtilityItem(String environment, String mode, String
 	String o=objectName.toString().replace("_", " ");
 
 		ThreadSleep(3000);
-		String xpath = "//span[text()='0']";
-		WebElement ele = FindElement(driver, xpath, o, action.BOOLEAN, 20) ;
+		String xpath = "//span[text()='"+o+"']";
+		WebElement ele = FindElement(driver, xpath, o, action.BOOLEAN, 60) ;
 		if (click(driver, ele, o, action.BOOLEAN)) {
 			ThreadSleep(2000);
 			if (click(driver, getRemoveUtilityTheList(20), o+" Remove Button", action.BOOLEAN)) {

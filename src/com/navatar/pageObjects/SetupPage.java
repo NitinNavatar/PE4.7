@@ -88,7 +88,7 @@ public class SetupPage extends BasePageBusinessLayer {
 	 * @return the userIframe
 	 */
 	public WebElement getSetUpPageIframe(int timeOut) {
-		ThreadSleep(10000);
+		ThreadSleep(20000);
 		return isDisplayed(driver, setupPageIframe, "Visibility", timeOut, "active users iframe");
 	}
 
