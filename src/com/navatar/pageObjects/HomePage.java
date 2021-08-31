@@ -1050,6 +1050,16 @@ public class HomePage extends BasePageBusinessLayer {
 	 * @return the createCommitmentFrame_Lighting
 	 */
 	public WebElement getCreateCommitmentFrame_Lighting(int timeOut) {
+		ThreadSleep(20000);
+        String xpath ="//iframe";
+        List<WebElement> elelist = FindElements(driver, xpath, "frame");
+        for (WebElement webElement : elelist) {
+            webElement = isDisplayed(driver, webElement, "Visibility", timeOut, "create commitment frame in lighting");;
+            if (webElement!=null) {
+                return webElement;
+            }
+        }
+        
 		return isDisplayed(driver, createCommitmentFrame_Lighting, "Visibility", timeOut, "create commitment frame in lighting");
 	
 	}
@@ -1080,12 +1090,13 @@ public class HomePage extends BasePageBusinessLayer {
 	
 
 	public List<String> getNavigationMenuitem(){
-		
+		ThreadSleep(10000);
 	List<String> NavigationMenuitem=new LinkedList<String>();
-		 List<WebElement> eleList= FindElements(driver, "///div/button/span[contains(@class,'itemTitle')]", "Navigation Menu Item List");
+		 List<WebElement> eleList= FindElements(driver, "//div/button/span[contains(@class,'itemTitle')]", "Navigation Menu Item List");
 		 if (!eleList.isEmpty()) {
 			 for (WebElement webElement : eleList) {
 				 NavigationMenuitem.add(webElement.getText().trim());
+				 System.err.println(webElement.getText().trim());
 			}
 			
 		} else {

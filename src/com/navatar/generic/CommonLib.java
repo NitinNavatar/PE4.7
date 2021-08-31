@@ -1680,6 +1680,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 	}
 		
 	public static void refresh(WebDriver driver){
+		ThreadSleep(1000);
 		driver.navigate().refresh();
 	}
 	
