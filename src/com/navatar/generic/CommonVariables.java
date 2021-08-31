@@ -264,6 +264,11 @@ public class CommonVariables {
 	public static String M8FRName1,M8FRName2;
 	public static String M8CON1FName,M8CON1LName,M8CON1EmailID;
 	public static String M8CON2FName,M8CON2LName,M8CON2EmailID;
+	public static String M8CreateDealButtonName,M8DealEvent,M8DealActionOrder,M8DealActionType,M8DealEventPayLoad;
+	
+	public static String M8CreateFundRaisingButtonName,M8FundRaisingEvent,M8FundRaisingActionOrder,M8FundRaisingActionType,M8FundRaisingEventPayLoad;
+	
+	public static String M8CreateContactButtonName,M8ContactEvent,M8ContactActionOrder,M8ContactActionType,M8ContactEventPayLoad;
 	
 	public CommonVariables(Object obj) {
 		//TODO Auto-generated constructor stub
@@ -1034,6 +1039,26 @@ public class CommonVariables {
 			M8CON2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON2", excelLabel.Contact_FirstName);
 			M8CON2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON2", excelLabel.Contact_LastName);
 			M8CON2EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON2", excelLabel.Contact_EmailId);
+			
+			
+			M8CreateDealButtonName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal3", excelLabel.Deal_Name);
+			M8DealEvent=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal3", excelLabel.Event);
+			M8DealActionOrder=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal3", excelLabel.Action_Order);
+			M8DealActionType=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal3", excelLabel.Action_Type);
+			M8DealEventPayLoad=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal3", excelLabel.Event_PayLoad);
+			
+			M8CreateFundRaisingButtonName=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M8FR3", excelLabel.FundRaising_Name);
+			M8FundRaisingEvent=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M8FR3", excelLabel.Event);
+			M8FundRaisingActionOrder=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M8FR3", excelLabel.Action_Order);
+			M8FundRaisingActionType=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M8FR3", excelLabel.Action_Type);
+			M8FundRaisingEventPayLoad=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M8FR3", excelLabel.Event_PayLoad);
+			
+			M8CreateContactButtonName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON3", excelLabel.Contact_FirstName);
+			M8ContactEvent=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON3", excelLabel.Event);
+			M8ContactActionOrder=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON3", excelLabel.Action_Order);
+			M8ContactActionType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON3", excelLabel.Action_Type);
+			M8ContactEventPayLoad=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON3", excelLabel.Event_PayLoad);
+			
 		
 		}else if(obj instanceof Module6){
 			M6Ins1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS1", excelLabel.Institutions_Name);

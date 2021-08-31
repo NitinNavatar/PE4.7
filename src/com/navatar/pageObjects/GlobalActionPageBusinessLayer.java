@@ -56,13 +56,13 @@ public class GlobalActionPageBusinessLayer extends GlobalActionPage {
 			 xpath="//span[text()='Description']/../following-sibling::div//textarea";	
 		}else 	if (PageLabel.Due_Date.toString().equals(labelFieldTextBox)) {
 			 xpath="//span[text()='"+labelTextBox+"']/../..//input";
+		}else if (PageLabel.Location.toString().equals(labelFieldTextBox)) {
+			 xpath="//span[text()='Location']/../following-sibling::input";
 		}else {
 			 xpath="//label[text()='"+labelTextBox+"']/..//input";		
 		}
-		
-	
 		ele = FindElement(driver, xpath, labelTextBox, action.SCROLLANDBOOLEAN, timeOut);
-		ele =isDisplayed(driver, ele, "Visibility", timeOut, labelTextBox);	
+		ele =isDisplayed(driver, ele, "Visibility", timeOut, labelTextBox);		
 		return ele;
 	}
 	

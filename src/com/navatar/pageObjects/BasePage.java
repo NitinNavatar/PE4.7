@@ -4975,6 +4975,16 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, sdgSave, "Visibility", timeOut, "sdgSaveButton");
 		
 	}
+	
+	
+	@FindBy(xpath = "//div[contains(@class,'sdgborder')]//button[@title='Cancel' or text()='Cancel']")
+	private WebElement sdgCancel;
+	
+	public WebElement getsdgCancelButton(String projectName,int timeOut) {
+		return isDisplayed(driver, sdgCancel, "Visibility", timeOut, "sdgCancelbutton");
+		
+	}
+	
 	@FindBy(xpath = "//a[@title='Upload Files']")
 	private WebElement uploadFiles;
 	

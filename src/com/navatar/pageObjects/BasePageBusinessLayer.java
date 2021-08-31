@@ -697,9 +697,15 @@ public String getTabName(String projectName,TabName TabName) {
 	case CommitmentsTab:
 		tabName = "Commitments";
 		break;
+
+	case InstituitonsTab:
+		tabName = "Institutions";
+		break;
+
 	case FundraisingsTab:
 		tabName = "Fundraisings";
 		break;
+
 	default:
 		return tabName;
 	}
@@ -1248,7 +1254,13 @@ public WebElement getCrossButtonForAlreadySelectedItem(String projectName,PageNa
 	WebElement ele;
 	String fieldlabel=label.replace("_", " ");
 	appLog.info(" >>>>>>>>>>>>>>>>   label:"+label);
-	if (label.equalsIgnoreCase(PageLabel.Name.toString()))
+	if (fieldlabel.equalsIgnoreCase("Assigned To") && PageName.TaskPage.toString().equalsIgnoreCase(pageName.toString()) ) {
+
+		xpath ="//span[text()='"+fieldlabel+"']/../following-sibling::div//li/a/span[text()='"+name+"']/following-sibling::a";
+		ele = FindElement(driver, xpath, "Cross Button For  : "+name+" For Label : "+fieldlabel, action, timeOut);
+		return ele;
+	}
+	if (label.equalsIgnoreCase(PageLabel.Name.toString()) || label.equalsIgnoreCase("Assigned To") )
 		isMultipleAssociation=true;
 	if (PageName.CallPopUp.toString().equalsIgnoreCase(pageName.toString())||(PageLabel.Name.toString().equalsIgnoreCase(label) && PageName.TaskPage.toString().equalsIgnoreCase(pageName.toString()) && isMultipleAssociation)) {
 		xpath ="//span[text()='"+fieldlabel+"']/../following-sibling::div//li/a/span[text()='"+name+"']/following-sibling::a";	
@@ -1256,6 +1268,7 @@ public WebElement getCrossButtonForAlreadySelectedItem(String projectName,PageNa
 	else if (PageLabel.Related_To.toString().equalsIgnoreCase(label) || PageLabel.Related_Associations.toString().equalsIgnoreCase(label) || isMultipleAssociation) {
 		xpath ="//label[text()='"+fieldlabel+"']/..//span[contains(@class,'customPill')]//span[text()='"+name+"']//following-sibling::button";	
 		//label[text()="Name"]/..//span[contains(@class,"customPill")]/span[text()="Davidson Bendt"]/following-sibling::button
+	
 	} else {
 		xpath="//label[text()='"+fieldlabel+"']/..//span[contains(@class,'pillSize')]//span[text()='"+name+"']/..//following-sibling::button";
 	}
@@ -3497,6 +3510,15 @@ public boolean SearchDealFilterDataOnHomePage(SDGGridName sdgGridName,String lab
 	return false;
 }
 
+
+public boolean ClickOnCrossButtonForAlreadySelectedItem(String projectName,PageName pageName,String label,boolean isMultipleAssociation,String name,action action,int timeOut) {
+	
+	WebElement ele = getCrossButtonForAlreadySelectedItem(projectName, pageName, label, isMultipleAssociation, name, action, timeOut);
+	boolean flag = clickUsingJavaScript(driver, ele,"Cross Button against : "+name+" For Label : "+label, action);
+	return flag;
+}
+
+
 public boolean verifyBeforeTimeOrNot(String projectName, String time) {
 	Calendar cal = Calendar.getInstance();
     
@@ -3519,4 +3541,5 @@ public boolean verifyBeforeTimeOrNot(String projectName, String time) {
 	 System.out.println(timecurrent.after(lt2));
 	 return timecurrent.after(lt2);
 }
+
 }
