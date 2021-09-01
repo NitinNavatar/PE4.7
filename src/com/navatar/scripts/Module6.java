@@ -40,7 +40,7 @@ public class Module6 extends BaseLib{
 		String value="";
 		String type="";
 		String status1=null;
-		//for(int i = 13;i<14;i++){
+		//for (int i = 13;i<14;i++) {
 		for (int i = 0;i<20;i++) {
 			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
 				log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);	
@@ -50,6 +50,15 @@ public class Module6 extends BaseLib{
 				if(i==16) {
 					
 					if (ip.createInstitution(projectName, environment, mode, value,type, InstitutionPageFieldLabelText.Parent_Institution.toString(),M6Ins1)) {
+						log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
+					} else {
+						sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
+						log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+value+" of record type : "+type,YesNo.Yes);
+					}
+				
+				} else if(i==13) {
+					
+					if (ip.createInstitution(projectName, environment, mode, value,type, InstitutionPageFieldLabelText.Parent_Institution.toString(),M6Ins13)) {
 						log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
 					} else {
 						sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
@@ -252,6 +261,13 @@ public class Module6 extends BaseLib{
 					}
 
 				}
+				if(dp.checkValueOfPathComponentValueOfStage(Stage.Closed.toString(), 10)) {
+					log(LogStatus.INFO,"stage on path component successfully verified",YesNo.Yes);
+						
+				}else {
+					sa.assertTrue(false,"stage on path component could not be verified");
+					log(LogStatus.SKIP,"stage on path component could not be verified",YesNo.Yes);
+				}
 			}else {
 				log(LogStatus.ERROR, M6Deal2+" deal is not found", YesNo.Yes);
 				sa.assertTrue(false,M6Deal2+" deal is not found" );
@@ -274,6 +290,15 @@ public class Module6 extends BaseLib{
 							log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
 						}
 
+					}
+					String text=ip.getLastModifiedTime(projectName,10).getText().trim();
+					text=text.split(",")[1];
+					if(ip.verifyBeforeTimeOrNot(projectName, text)) {
+						log(LogStatus.INFO,"successfully verified last modified time",YesNo.Yes);
+						
+					}else {
+						sa.assertTrue(false,"could not verify last modified time");
+						log(LogStatus.SKIP,"could not verify last modified time",YesNo.Yes);
 					}
 				}else {
 					sa.assertTrue(false,"not able to click on details tab");
@@ -468,6 +493,16 @@ public class Module6 extends BaseLib{
 							sa.assertTrue(false,"could not verify convert to portfolio as finish button not clicked");
 							log(LogStatus.SKIP,"could not verify convert to portfolio as finish button not clicked",YesNo.Yes);
 						}
+						ThreadSleep(3000);
+						refresh(driver);
+						ThreadSleep(3000);
+						if(dp.checkValueOfPathComponentValueOfStage(Stage.Closed.toString(), 10)) {
+							log(LogStatus.INFO,"stage on path component successfully verified",YesNo.Yes);
+								
+						}else {
+							sa.assertTrue(false,"stage on path component could not be verified");
+							log(LogStatus.SKIP,"stage on path component could not be verified",YesNo.Yes);
+						}
 					}else {
 						sa.assertTrue(false,"could not verify convert to portfolio as finish button not clicked");
 						log(LogStatus.SKIP,"could not verify convert to portfolio as finish button not clicked",YesNo.Yes);
@@ -541,6 +576,15 @@ public class Module6 extends BaseLib{
 								log(LogStatus.SKIP,"not visible already portfolio message",YesNo.Yes);
 							}
 							click(driver, dp.getconvertToPortfolioCrossButton(10), "cross", action.BOOLEAN);
+							for(int j =0;j<2;j++) {
+								if (fp.FieldValueVerificationOnFundPage(projectName, labelName[j],labelValues[j])) {
+									log(LogStatus.SKIP,"successfully verified "+labelName[j],YesNo.No);
+
+								}else {
+									sa.assertTrue(false,"Not Able to verify "+labelName[j]);
+									log(LogStatus.SKIP,"Not Able to verify "+labelName[j],YesNo.Yes);
+								}
+							}
 						}else {
 								sa.assertTrue(false,"next button is not clickable");
 								log(LogStatus.SKIP,"next button is not clickable",YesNo.Yes);
@@ -653,6 +697,13 @@ public class Module6 extends BaseLib{
 											flag=false;
 											sa.assertTrue(false,"Not Able to verify "+labelName1[i]);
 											log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
+										}
+										if(dp.checkValueOfPathComponentValueOfStage(Stage.Closed.toString(), 10)) {
+											log(LogStatus.INFO,"stage on path component successfully verified",YesNo.Yes);
+												
+										}else {
+											sa.assertTrue(false,"stage on path component could not be verified");
+											log(LogStatus.SKIP,"stage on path component could not be verified",YesNo.Yes);
 										}
 									}else {
 										sa.assertTrue(false,"next button is not clickable");
@@ -801,9 +852,9 @@ public class Module6 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		int total=1;
 		double avgDealQualityScore=loiScore/total;
-		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString(),excelLabel.Deal_Quality_Score.toString()
+		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
 		};
-		String labelValues[]={Stage.LOI.toString(),Stage.LOI.toString(),String.valueOf(loiScore)};
+		String labelValues[]={Stage.LOI.toString(),Stage.LOI.toString()};
 		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
 		};
 		String labelValues1[]={String.valueOf(avgDealQualityScore),String.valueOf(total)};
@@ -838,6 +889,15 @@ public class Module6 extends BaseLib{
 						log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
 					}
 					}
+					String text=ip.getLastModifiedTime(projectName,10).getText().trim();
+					text=text.split(",")[1];
+					if(ip.verifyBeforeTimeOrNot(projectName, text)) {
+						log(LogStatus.INFO,"successfully verified last modified time",YesNo.Yes);
+						
+					}else {
+						sa.assertTrue(false,"could not verify last modified time");
+						log(LogStatus.SKIP,"could not verify last modified time",YesNo.Yes);
+					}
 				}else {
 					sa.assertTrue(false,"not able to click on source firm link");
 					log(LogStatus.SKIP,"not able to click on source firm link",YesNo.Yes);
@@ -866,6 +926,9 @@ public class Module6 extends BaseLib{
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
+		};
+		String labelValues[]={Stage.Closed.toString(),Stage.Closed.toString()};
 		int total=1;
 		if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M6Deal11, 10)) {
@@ -900,6 +963,25 @@ public class Module6 extends BaseLib{
 						}else {
 							sa.assertTrue(false,"could not verify convert to portfolio as finish button not clicked");
 							log(LogStatus.SKIP,"could not verify convert to portfolio as finish button not clicked",YesNo.Yes);
+						}
+						ThreadSleep(3000);
+						refresh(driver);
+						ThreadSleep(3000);
+						for (int i =0;i<labelName.length;i++) {
+							if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i])) {
+								log(LogStatus.INFO,"successfully verified "+labelName[i],YesNo.Yes);
+							}else {
+								sa.assertTrue(false,"Not Able to verify "+labelName[i]);
+								log(LogStatus.SKIP,"Not Able to verify "+labelName[i],YesNo.Yes);
+							}
+						
+						}
+						if(dp.checkValueOfPathComponentValueOfStage(Stage.Closed.toString(), 10)) {
+							log(LogStatus.INFO,"stage on path component successfully verified",YesNo.Yes);
+								
+						}else {
+							sa.assertTrue(false,"stage on path component could not be verified");
+							log(LogStatus.SKIP,"stage on path component could not be verified",YesNo.Yes);
 						}
 					}else {
 						sa.assertTrue(false,"next button is not clickable");
