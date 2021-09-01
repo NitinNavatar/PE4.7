@@ -214,7 +214,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 				xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
 				+ "']/../following-sibling::div//lightning-formatted-number";
 			else if(labelName.equalsIgnoreCase(excelLabel.Company_Name.toString()))
-			xpath="//span[@class='test-id__field-label'][text()='"+finalLabelName+"']/../following-sibling::div//a";
+			xpath="//span[@class='test-id__field-label'][text()='"+finalLabelName+"']/../following-sibling::div//a//span";
 		ele = isDisplayed(driver,
 				FindElement(driver, xpath, labelName + " label text in " + projectName, action.SCROLLANDBOOLEAN, 60),
 				"Visibility", 30, labelName + " label text in " + projectName);

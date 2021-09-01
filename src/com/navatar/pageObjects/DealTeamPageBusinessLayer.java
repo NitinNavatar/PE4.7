@@ -45,7 +45,7 @@ public class DealTeamPageBusinessLayer extends DealTeamPage{
 
 				if(PageLabel.Team_Member.toString().equals(reuestData[0]) || PageLabel.Deal.toString().equals(reuestData[0])){
 					if (sendKeys(driver, getListTextbox(projectName,label, timeOut), value, label+" : "+value,action)) {
-						ThreadSleep(1000);
+						ThreadSleep(3000);
 						log(LogStatus.INFO,"Able to send "+value+" to label : "+label,YesNo.Yes);
 						if (click(driver,FindElement(driver,"//span[contains(@class,'listbox')]//*[@title='"+value+"']","ATTENDEE Name List", action, 30),
 								value + "   :   Company Name", action)) {
@@ -69,7 +69,7 @@ public class DealTeamPageBusinessLayer extends DealTeamPage{
 
 						xpath="//span[@title='"+value+"']";
 						ele = FindElement(driver,xpath, value,action, timeOut);
-						ThreadSleep(2000);
+						ThreadSleep(4000);
 						if (click(driver, ele, value, action)) {
 							log(LogStatus.INFO,"Able to select "+value+" to label : "+label,YesNo.No);	
 						} else {
