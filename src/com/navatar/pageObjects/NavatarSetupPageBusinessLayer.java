@@ -15,6 +15,7 @@ import com.navatar.generic.EnumConstants.NavatarSetupSideMenuTab;
 import com.navatar.generic.EnumConstants.NavatarSetupSideMenuTabLayoutSection;
 import com.navatar.generic.EnumConstants.NotApplicable;
 import com.navatar.generic.EnumConstants.TabName;
+import com.navatar.generic.EnumConstants.TopOrBottom;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.relevantcodes.extentreports.LogStatus;
@@ -101,28 +102,17 @@ public class NavatarSetupPageBusinessLayer extends NavatarSetupPage implements N
 		default:
 			return false;
 		}
-
-		if (click(driver,
-				isDisplayed(driver,
-						FindElement(driver, "//div[@class='ContentStart']//li/a[contains(@title,'" + sideMenu + "')]", sideMenu,action.SCROLLANDBOOLEAN, 120),
-						"visibility", 30, sideMenu),
-				sideMenu, action.SCROLLANDBOOLEAN)) {
+		String xpath = "//div[@class='ContentStart']//li/a[contains(@title,'" + sideMenu + "')]";
+		WebElement ele = isDisplayed(driver,FindElement(driver, xpath, sideMenu,action.SCROLLANDBOOLEAN, 120),
+				"visibility", 60, sideMenu);
+		if (click(driver,ele,sideMenu, action.SCROLLANDBOOLEAN)) {
 			appLog.info("Clicked on " + sideMenu);
-			ThreadSleep(8000);
-			refresh(driver);
-			switchToDefaultContent(driver);
-			ThreadSleep(8000);
+			ThreadSleep(10000);
 			switchToFrame(driver, 60, getnavatarSetUpTabFrame_Lighting(projectName, 120));
 			flag=true;
-
 		}else{
 			appLog.error("Not Able to Clicked on : " + sideMenu);	
 		}
-		
-//		if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-//			switchToDefaultContent(driver);
-//		}
-//		
 		return flag;
 	}
 	
@@ -290,6 +280,112 @@ public class NavatarSetupPageBusinessLayer extends NavatarSetupPage implements N
 		}
 		return value;
 	}
+	
+	
+	public boolean EnableOrDisableSettingOnNavatarSetUp(String projectName,NavatarSetupSideMenuTab setupSideMenuTab,boolean isEnabled) {
+		refresh(driver);
+		if (clickOnTab(projectName, TabName.NavatarSetup)) {
+			log(LogStatus.INFO, "Clicked on Navatar Setup ", YesNo.No);
+			if (clickOnNavatarSetupSideMenusTab(projectName, setupSideMenuTab)) {
+				log(LogStatus.INFO, "Clicked on "+setupSideMenuTab, YesNo.No);
+				WebElement ele = getEnableCheckBoxforNavatarSetUpSideMenuTab(projectName, setupSideMenuTab,EditViewMode.View, 30);
+				if (isEnabled) {
+					if (isSelected(driver, ele, setupSideMenuTab.toString())) {
+						log(LogStatus.INFO, "Already Enable : "+setupSideMenuTab, YesNo.No);
+						return true;
+					} 
+				} else {
+					if (!isSelected(driver, ele, setupSideMenuTab.toString())) {
+						log(LogStatus.INFO, "Already Disable : "+setupSideMenuTab, YesNo.No);
+						return true;
+					}
+				}
+				if (click(driver, getEditButtonforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, 10), "Edit Button for "+setupSideMenuTab, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Edit Button "+setupSideMenuTab, YesNo.No);
+				//	switchToFrame(driver, 60, getnavatarSetUpTabFrame_Lighting(projectName, 120));
+					ele = getEnableCheckBoxforNavatarSetUpSideMenuTab(projectName, setupSideMenuTab,EditViewMode.Edit, 30);
+					if (click(driver,ele,setupSideMenuTab+" CheckBox", action.BOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Enable "+setupSideMenuTab+" Box Checkbox", YesNo.No);
+						ThreadSleep(000);
+						if (click(driver, getSaveButtonforNavatarSetUpSideMenuTab(projectName, setupSideMenuTab, 10, TopOrBottom.TOP), "Save Button", action.BOOLEAN)) {
+							ThreadSleep(20000);
+							log(LogStatus.INFO, "Clicked on Save Button for : "+setupSideMenuTab, YesNo.No);
+							//switchToFrame(driver, 60, getnavatarSetUpTabFrame_Lighting(projectName, 120));
+							ele = getEnableCheckBoxforNavatarSetUpSideMenuTab(projectName, setupSideMenuTab,EditViewMode.View, 30);
+							if (isEnabled) {
+								if (isSelected(driver, ele, setupSideMenuTab.toString())) {
+									log(LogStatus.INFO, "Checkbox is Enable : "+setupSideMenuTab, YesNo.No);
+									return true;
+								} 
+							} else {
+								if (!isSelected(driver, ele, setupSideMenuTab.toString())) {
+									log(LogStatus.INFO, "CheckBox is Disable : "+setupSideMenuTab, YesNo.No);
+									return true;
+								}
+							}
+						} else {
+							sa.assertTrue(false, "Not Able to Click on Save Button for : "+setupSideMenuTab);
+							log(LogStatus.SKIP, "Not Able to Click on Save Button for : "+setupSideMenuTab, YesNo.Yes);
+						}
+					} else {
+						sa.assertTrue(false, "Not Able to Click on Enable "+setupSideMenuTab+" Checkbox");
+						log(LogStatus.SKIP, "Not Able to Click on Enable "+setupSideMenuTab+" Checkbox", YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false, "edit button is not clickable "+setupSideMenuTab);
+					log(LogStatus.SKIP, "edit button is not clickable "+setupSideMenuTab, YesNo.Yes);
+				}
+
+			}else {
+				sa.assertTrue(false, "Not Able to click on  : "+setupSideMenuTab);
+				log(LogStatus.SKIP, "Not Able to click on  : "+setupSideMenuTab, YesNo.Yes);
+			}
+
+		}else {
+			sa.assertTrue(false, "navatar setup tab is not clickable so cannot click on  : "+setupSideMenuTab);
+			log(LogStatus.SKIP, "navatar setup tab is not clickable so cannot click on  : "+setupSideMenuTab, YesNo.Yes);
+		}	
+		switchToDefaultContent(driver);
+		return false;
+}
+	
+	public WebElement getEnableCheckBoxforNavatarSetUpSideMenuTab(String projectName,NavatarSetupSideMenuTab sideMenuTab,EditViewMode editViewMode, int timeOut) {
+		ThreadSleep(10000);
+		List<WebElement > enableCheckBoxList = new ArrayList<WebElement>();
+		String checkboxFor="Enable ";
+		if (NavatarSetupSideMenuTab.ContactTransfer.equals(sideMenuTab)) {
+			checkboxFor=checkboxFor+"Contact Transfer";
+		} else if(NavatarSetupSideMenuTab.BulkEmail.equals(sideMenuTab)) {
+			checkboxFor=checkboxFor+"Bulk Email";
+		}
+		else if(NavatarSetupSideMenuTab.CommitmentCreation.equals(sideMenuTab)) {
+			checkboxFor=checkboxFor+"Commitment Creation";
+		}else if(NavatarSetupSideMenuTab.IndividualInvestorCreation.equals(sideMenuTab)) {
+			checkboxFor=checkboxFor+"Individual Investor Creation";
+		}else if(NavatarSetupSideMenuTab.DealCreation.equals(sideMenuTab)) {
+			checkboxFor=checkboxFor+"Deal Creation";
+		}else {
+			checkboxFor=checkboxFor+"Office Locations";
+		}
+		String xpath="";
+		if (EditViewMode.View.equals(editViewMode)) {
+			xpath="//span[contains(@class,'primaryPaletteBorder')][text()='"+checkboxFor+"']/..//input";
+		} else {
+			xpath="//span[contains(@class,'primaryPaletteBorder')][text()='"+checkboxFor+"']/..//input/..";
+		}
+		
+		enableCheckBoxList = FindElements(driver,xpath,
+				"Enable CheckBox for Navatar SetUp Side Menu Tab");
+
+		for (WebElement webElement : enableCheckBoxList) {
+			webElement = isDisplayed(driver, webElement, "Visibility", 20,"Enable CheckBox for Navatar SetUp Side Menu Tab : "+sideMenuTab);
+			if (webElement!=null) {
+				return webElement;
+			}
+		}
+		return null;
+	}
+	
 	
 }
 
