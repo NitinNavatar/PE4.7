@@ -463,7 +463,6 @@ public class Module3New extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarSetupPageBusinessLayer np= new NavatarSetupPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
-		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
 		NavatarSetupSideMenuTab[] navatarSetupSideMenuTab = {NavatarSetupSideMenuTab.BulkEmail,NavatarSetupSideMenuTab.CommitmentCreation};
@@ -480,44 +479,7 @@ public class Module3New extends BaseLib {
 			flag=false;
 			setupSideMenuTab=navatarSetupSideMenuTab[i];
 			switchToDefaultContent(driver);
-			if (ip.clickOnTab(projectName, TabName.NavatarSetup)) {
-				log(LogStatus.INFO, "Clicked on Navatar Setup ", YesNo.No);
-				if (np.clickOnNavatarSetupSideMenusTab(projectName, setupSideMenuTab)) {
-					log(LogStatus.INFO,"Clicked on "+setupSideMenuTab, YesNo.No);
-					ThreadSleep(10000);
-					if (click(driver, np.getEditButtonforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, 10), "Edit Button for "+setupSideMenuTab, action.BOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Edit Button "+setupSideMenuTab, YesNo.No);
-						ThreadSleep(7000);
-						if (click(driver,np.getEnableCheckBoxforClickNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.Edit, 10),setupSideMenuTab+" CheckBox", action.BOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on Enable "+setupSideMenuTab+" Box Checkbox", YesNo.No);
-							ThreadSleep(2000);
-							if (click(driver, np.getSaveButtonforNavatarSetUpSideMenuTab(projectName, setupSideMenuTab, 10, TopOrBottom.TOP), "Save Button", action.BOOLEAN)) {
-								flag=true;
-								log(LogStatus.INFO, "Clicked on Save Button for : "+setupSideMenuTab, YesNo.No);
-								ThreadSleep(20000);
-								
-							} else {
-								sa.assertTrue(false, "Not Able to Click on Save Button for : "+setupSideMenuTab);
-								log(LogStatus.SKIP, "Not Able to Click on Save Button for : "+setupSideMenuTab, YesNo.Yes);
-							}
-						} else {
-							sa.assertTrue(false, "Not Able to Click on Enable "+setupSideMenuTab+" Checkbox");
-							log(LogStatus.SKIP, "Not Able to Click on Enable "+setupSideMenuTab+" Checkbox", YesNo.Yes);
-						}
-
-					}else {
-						sa.assertTrue(false, "edit button is not clickable "+setupSideMenuTab);
-						log(LogStatus.SKIP, "edit button is not clickable "+setupSideMenuTab, YesNo.Yes);
-					}
-				}else {
-					sa.assertTrue(false, setupSideMenuTab+" side menu tab is not clickable");
-					log(LogStatus.SKIP, setupSideMenuTab+" side menu tab is not clickable", YesNo.Yes);
-				}
-			}else {
-				sa.assertTrue(false, "navatar setup tab is not clickable so cannot uncheck : "+setupSideMenuTab);
-				log(LogStatus.SKIP, "navatar setup tab is not clickable so cannot uncheck : "+setupSideMenuTab, YesNo.Yes);
-			}
-			
+			flag=np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, false);
 			if (flag) {
 				switchToDefaultContent(driver);
 				refresh(driver);
@@ -551,56 +513,12 @@ public class Module3New extends BaseLib {
 		}
 
 		//// CHeck
-
 		log(LogStatus.INFO, "<<<<<< Going to check >>>>>>>", YesNo.No);
 		for (int i = 0; i < navatarSetupSideMenuTab.length; i++) {
 			flag=false;
 			setupSideMenuTab=navatarSetupSideMenuTab[i];
 			switchToDefaultContent(driver);
-			if (ip.clickOnTab(projectName, TabName.NavatarSetup)) {
-				log(LogStatus.INFO, "Clicked on Navatar Setup ", YesNo.No);
-				if (np.clickOnNavatarSetupSideMenusTab(projectName, setupSideMenuTab)) {
-					log(LogStatus.INFO,"Clicked on "+setupSideMenuTab, YesNo.No);
-					ThreadSleep(10000);
-					if (!isSelected(driver, np.getEnableCheckBoxforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.View, ClickOrCheckEnableDisableCheckBox.Click, 10), "Enabled " +setupSideMenuTab+" CheckBox")) {
-						log(LogStatus.INFO, "Enable "+setupSideMenuTab+" is Unchecked going to checked", YesNo.No);
-						if (click(driver, np.getEditButtonforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, 10), "Edit Button for "+setupSideMenuTab, action.BOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on Edit Button "+setupSideMenuTab, YesNo.No);
-							ThreadSleep(20000);
-							if (click(driver,np.getEnableCheckBoxforClickNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.Edit, 10),setupSideMenuTab+" CheckBox", action.BOOLEAN)) {
-								log(LogStatus.INFO, "Clicked on Enable "+setupSideMenuTab+" Box Checkbox", YesNo.No);
-								ThreadSleep(2000);
-								if (click(driver, np.getSaveButtonforNavatarSetUpSideMenuTab(projectName, setupSideMenuTab, 10, TopOrBottom.TOP), "Save Button", action.BOOLEAN)) {
-									flag=true;
-									log(LogStatus.INFO, "Clicked on Save Button for : "+setupSideMenuTab, YesNo.No);
-									ThreadSleep(20000);
-									
-								} else {
-									sa.assertTrue(false, "Not Able to Click on Save Button for : "+setupSideMenuTab);
-									log(LogStatus.SKIP, "Not Able to Click on Save Button for : "+setupSideMenuTab, YesNo.Yes);
-								}
-							} else {
-								sa.assertTrue(false, "Not Able to Click on Enable "+setupSideMenuTab+" Checkbox");
-								log(LogStatus.SKIP, "Not Able to Click on Enable "+setupSideMenuTab+" Checkbox", YesNo.Yes);
-							}
-						}else {
-							sa.assertTrue(false, "edit button is not clickable "+setupSideMenuTab);
-							log(LogStatus.SKIP, "edit button is not clickable "+setupSideMenuTab, YesNo.Yes);
-						}
-					}else {
-
-						log(LogStatus.SKIP, setupSideMenuTab+" Checkbox is already checked", YesNo.Yes);
-						sa.assertTrue(false, setupSideMenuTab+" Checkbox is already checked");	
-					}
-				}else {
-					sa.assertTrue(false, setupSideMenuTab+" side menu tab is not clickable");
-					log(LogStatus.SKIP, setupSideMenuTab+" side menu tab is not clickable", YesNo.Yes);
-				}
-			}else {
-				sa.assertTrue(false, "navatar setup tab is not clickable so cannot uncheck : "+setupSideMenuTab);
-				log(LogStatus.SKIP, "navatar setup tab is not clickable so cannot uncheck : "+setupSideMenuTab, YesNo.Yes);
-			}
-			
+			flag=np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, true);;
 			if (flag) {
 				// Verification on navigation menu
 				switchToDefaultContent(driver);
@@ -681,42 +599,7 @@ public class Module3New extends BaseLib {
 			flag=false;
 			setupSideMenuTab=navatarSetupSideMenuTab[i];
 			switchToDefaultContent(driver);
-			if (ip.clickOnTab(projectName, TabName.NavatarSetup)) {
-				log(LogStatus.INFO, "Clicked on Navatar Setup ", YesNo.No);
-				if (np.clickOnNavatarSetupSideMenusTab(projectName, setupSideMenuTab)) {
-					log(LogStatus.INFO,"Clicked on "+setupSideMenuTab, YesNo.No);
-					ThreadSleep(10000);
-					if (click(driver, np.getEditButtonforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, 10), "Edit Button for "+setupSideMenuTab, action.BOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Edit Button "+setupSideMenuTab, YesNo.No);
-						ThreadSleep(10000);
-							if (click(driver,np.getEnableCheckBoxforClickNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.Edit, 10),setupSideMenuTab+" CheckBox", action.BOOLEAN)) {
-								log(LogStatus.INFO, "Clicked on Enable "+setupSideMenuTab+" Box Checkbox", YesNo.No);
-								ThreadSleep(10000);
-								if (click(driver, np.getSaveButtonforNavatarSetUpSideMenuTab(projectName, setupSideMenuTab, 10, TopOrBottom.TOP), "Save Button", action.BOOLEAN)) {
-									flag=true;
-									log(LogStatus.INFO, "Clicked on Save Button for : "+setupSideMenuTab, YesNo.No);
-									ThreadSleep(15000);
-									} else {
-									sa.assertTrue(false, "Not Able to Click on Save Button for : "+setupSideMenuTab);
-									log(LogStatus.SKIP, "Not Able to Click on Save Button for : "+setupSideMenuTab, YesNo.Yes);
-								}
-							} else {
-								sa.assertTrue(false, "Not Able to Click on Enable "+setupSideMenuTab+" Checkbox");
-								log(LogStatus.SKIP, "Not Able to Click on Enable "+setupSideMenuTab+" Checkbox", YesNo.Yes);
-							}
-						}else {
-							sa.assertTrue(false, "edit button is not clickable "+setupSideMenuTab);
-							log(LogStatus.SKIP, "edit button is not clickable "+setupSideMenuTab, YesNo.Yes);
-						}
-				}else {
-					sa.assertTrue(false, setupSideMenuTab+" side menu tab is not clickable");
-					log(LogStatus.SKIP, setupSideMenuTab+" side menu tab is not clickable", YesNo.Yes);
-				}
-			}else {
-				sa.assertTrue(false, "navatar setup tab is not clickable so cannot check : "+setupSideMenuTab);
-				log(LogStatus.SKIP, "navatar setup tab is not clickable so cannot check : "+setupSideMenuTab, YesNo.Yes);
-			}
-
+			flag=np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, true);
 			refresh(driver);
 			switchToDefaultContent(driver);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
@@ -724,7 +607,6 @@ public class Module3New extends BaseLib {
 				WebElement ele = npbl.getNavigationLabel(projectName, navigationLabels[i], action.BOOLEAN, 10);
 				if (ele==null) {
 					log(LogStatus.INFO, navigationLabels[i]+" is not present on "+navigationMenuName+" even after enabling "+setupSideMenuTab, YesNo.No);
-
 				} else {
 					log(LogStatus.ERROR, navigationLabels[i]+" should not present on "+navigationMenuName+" even after enabling "+setupSideMenuTab, YesNo.Yes);
 					sa.assertTrue(false,navigationLabels[i]+" should not present on "+navigationMenuName+"even after enabling "+setupSideMenuTab);
@@ -839,49 +721,13 @@ public class Module3New extends BaseLib {
 			}
 		}
 		
-	//// Uncheck
-
-			log(LogStatus.INFO, "<<<<<< Going to uncheck >>>>>>>", YesNo.No);
+		//// Uncheck
+		log(LogStatus.INFO, "<<<<<< Going to uncheck >>>>>>>", YesNo.No);
 			for (int i = 0; i < navatarSetupSideMenuTab.length; i++) {
 				flag=false;
 				setupSideMenuTab=navatarSetupSideMenuTab[i];
 				switchToDefaultContent(driver);
-				if (ip.clickOnTab(projectName, TabName.NavatarSetup)) {
-					log(LogStatus.INFO, "Clicked on Navatar Setup ", YesNo.No);
-					if (np.clickOnNavatarSetupSideMenusTab(projectName, setupSideMenuTab)) {
-						log(LogStatus.INFO,"Clicked on "+setupSideMenuTab, YesNo.No);
-						ThreadSleep(10000);
-							if (click(driver, np.getEditButtonforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, 10), "Edit Button for "+setupSideMenuTab, action.BOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on Edit Button "+setupSideMenuTab, YesNo.No);
-								if (click(driver,np.getEnableCheckBoxforClickNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, EditViewMode.Edit, 10),setupSideMenuTab+" CheckBox", action.BOOLEAN)) {
-									log(LogStatus.INFO, "Clicked on Enable "+setupSideMenuTab+" Box Checkbox", YesNo.No);
-									ThreadSleep(2000);
-									if (click(driver, np.getSaveButtonforNavatarSetUpSideMenuTab(projectName, setupSideMenuTab, 10, TopOrBottom.TOP), "Save Button", action.BOOLEAN)) {
-										flag=true;
-										log(LogStatus.INFO, "Clicked on Save Button for : "+setupSideMenuTab, YesNo.No);
-										ThreadSleep(15000);
-									} else {
-										sa.assertTrue(false, "Not Able to Click on Save Button for : "+setupSideMenuTab);
-										log(LogStatus.SKIP, "Not Able to Click on Save Button for : "+setupSideMenuTab, YesNo.Yes);
-									}
-								} else {
-									sa.assertTrue(false, "Not Able to Click on Enable "+setupSideMenuTab+" Checkbox");
-									log(LogStatus.SKIP, "Not Able to Click on Enable "+setupSideMenuTab+" Checkbox", YesNo.Yes);
-								}
-							}else {
-
-								sa.assertTrue(false, "edit button is not clickable "+setupSideMenuTab);
-								log(LogStatus.SKIP, "edit button is not clickable "+setupSideMenuTab, YesNo.Yes);
-							}
-						
-					}else {
-						sa.assertTrue(false, setupSideMenuTab+" side menu tab is not clickable");
-						log(LogStatus.SKIP, setupSideMenuTab+" side menu tab is not clickable", YesNo.Yes);
-					}
-				}else {
-					sa.assertTrue(false, "navatar setup tab is not clickable so cannot uncheck : "+setupSideMenuTab);
-					log(LogStatus.SKIP, "navatar setup tab is not clickable so cannot uncheck : "+setupSideMenuTab, YesNo.Yes);
-				}
+				flag=np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, false);
 				refresh(driver);
 				// Verification on navigation menu
 				switchToDefaultContent(driver);
