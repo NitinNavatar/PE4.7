@@ -25,7 +25,7 @@ import com.navatar.scripts.Module4;
 public class CommonVariables {
 //	public static String abc;
 
-	public static String URL,todaysDate,tomorrowsDate,todaysDateSingleDigit,todaysDateNewZealand;
+	public static String URL,todaysDate,tomorrowsDate,todaysDateEurope,todaysDateddmm,todaysDateSingleDigit,todaysDateNewZealand;
 	public static String browserToLaunch;
 	public static String Smoke_TWINS1Name,Smoke_TWINS1RecordType,Smoke_TWINS1Status;
 	public static String Smoke_CDINS1Name,Smoke_CDINS1RecordType,Smoke_CDINS1Status;
@@ -295,8 +295,10 @@ public class CommonVariables {
 		environment=ExcelUtils.readDataFromPropertyFile("Environment");
 		mode=ExcelUtils.readDataFromPropertyFile("Mode");
 		todaysDate=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "MM/dd/YYYY");
+		todaysDateEurope=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M.d.YYYY");
 		todaysDateSingleDigit=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
 		todaysDateNewZealand=getDateAccToTimeZone(BasePageErrorMessage.NewZealandTimeZone, "M/d/YYYY");
+		todaysDateddmm=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "dd/MM/YYYY");
 		
 		tomorrowsDate=previousOrForwardDate(1, "M/d/YYYY");
 		
