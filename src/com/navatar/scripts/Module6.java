@@ -852,9 +852,9 @@ public class Module6 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		int total=1;
 		double avgDealQualityScore=loiScore/total;
-		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
+		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString(),excelLabel.Deal_Quality_Score.toString()
 		};
-		String labelValues[]={Stage.LOI.toString(),Stage.LOI.toString()};
+		String labelValues[]={Stage.LOI.toString(),Stage.LOI.toString(),String.valueOf(loiScore)};
 		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
 		};
 		String labelValues1[]={String.valueOf(avgDealQualityScore),String.valueOf(total)};
