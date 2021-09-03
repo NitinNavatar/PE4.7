@@ -1322,7 +1322,8 @@ public WebElement getLabelTextBoxForNameOrRelatedAssociationOnTask(String projec
 	WebElement ele=null;
 	String xpath="";
 	String labelTextBox = labelFieldTextBox.replace("_", " ");
-	if (PageName.TaskPage.toString().equals(pageName.toString()) || PageName.NewEventPopUp.toString().equals(pageName.toString())) {
+	if (PageName.TaskPage.toString().equals(pageName.toString()) || PageName.NewEventPopUp.toString().equals(pageName.toString()) 
+			|| PageName.GlobalActtion_TaskPOpUp.toString().equals(pageName.toString())) {
 		if (labelFieldTextBox.equalsIgnoreCase(PageLabel.Name.toString()))
 			xpath="//span[text()='"+labelTextBox+"']/..//following-sibling::div//input[@title='Search Contacts']";
 		else
@@ -1348,7 +1349,8 @@ public WebElement getrelatedAssociationsdropdownButton(String projectName,PageNa
 
 	String xpath="";
 	label=label.replace("_", " ");
-	if (PageName.TaskPage.toString().equals(pageName.toString()) || PageName.NewEventPopUp.toString().equals(pageName.toString())) {
+	if (PageName.TaskPage.toString().equals(pageName.toString()) || PageName.NewEventPopUp.toString().equals(pageName.toString())
+			|| PageName.GlobalActtion_TaskPOpUp.toString().equals(pageName.toString())) {
 		xpath ="//span[text()='"+label+"']/../following-sibling::div//div[@class='uiPopupTrigger']//a";
 	} else {
 		xpath ="//label[text()='"+label+"']/..//div[contains(@class,'dropdownButton')]";
@@ -1380,7 +1382,7 @@ public boolean SelectRelatedAssociationsdropdownButton(String projectName,PageNa
 		if (click(driver, ele, "Drop Down Icon For Label : "+label, action)) {
 			appLog.error("Clicked on  Drown Down Icon for LABEL : "+label);	
 			ThreadSleep(2000);
-			if (PageName.TaskPage.toString().equals(pageName.toString()) || PageName.NewEventPopUp.toString().equals(pageName.toString())) {
+			if (PageName.TaskPage.toString().equals(pageName.toString()) || PageName.NewEventPopUp.toString().equals(pageName.toString()) || PageName.GlobalActtion_TaskPOpUp.toString().equals(pageName.toString())) {
 				xpath ="//li//a[@title='"+tab+"']";
 			} else {
 				xpath ="//label[text()='"+label+"']/..//div[contains(@class,'slds-dropdown-trigger')]//div//ul//li//a[text()='"+tab+"']";
@@ -1530,7 +1532,7 @@ public boolean selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnIte
 	boolean flag=false;
 	WebElement ele;
 	
-	if (PageLabel.Related_Associations.toString().equals(label)  || ((PageName.NewEventPopUp.toString().equals(pageName.toString()) || PageName.TaskPage.toString().equals(pageName.toString()) ) && PageLabel.Related_To.toString().equals(label) )) {
+	if (PageLabel.Related_Associations.toString().equals(label)  || ((PageName.NewEventPopUp.toString().equals(pageName.toString()) || PageName.GlobalActtion_TaskPOpUp.toString().equals(pageName.toString()) || PageName.TaskPage.toString().equals(pageName.toString()) ) && PageLabel.Related_To.toString().equals(label) )) {
 		
 		if (SelectRelatedAssociationsdropdownButton(projectName, pageName, label, tabName, action, timOut)) {
 			log(LogStatus.INFO,"Able to Select Drown Down Value : "+getTabName(projectName, tabName)+" For Label "+label,YesNo.No);
