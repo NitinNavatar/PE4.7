@@ -1512,6 +1512,11 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 	switchToFrame(driver, 60, getSetUpPageIframe(120));
 	if (click(driver, getEditButton(environment,"Classic",10), "edit", action.SCROLLANDBOOLEAN)) {
 		log(LogStatus.INFO, "Click on edit Button", YesNo.No);
+		try {
+			Screen screen = new Screen();
+			screen.click(".\\AutoIT\\AlertOk.PNG");
+		} catch (Exception e1) {
+		}
 		switchToFrame(driver, 60, getSetUpPageIframe(120));
 		for (String[] lv : labelWithValue) {
 			label=lv[0];
