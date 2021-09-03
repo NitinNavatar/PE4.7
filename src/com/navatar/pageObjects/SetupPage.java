@@ -88,7 +88,7 @@ public class SetupPage extends BasePageBusinessLayer {
 	 * @return the userIframe
 	 */
 	public WebElement getSetUpPageIframe(int timeOut) {
-		ThreadSleep(10000);
+		ThreadSleep(20000);
 		return isDisplayed(driver, setupPageIframe, "Visibility", timeOut, "active users iframe");
 	}
 
@@ -519,7 +519,14 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, timezoneDropdownList, "Visibility", timeOut, "time zone Dropdown List");
 
 	}
-	
+	@FindBy(xpath = "//*[text()='Locale']/../following-sibling::*//select")
+	private WebElement localeDropdownList;
+
+	public WebElement getLocaleDropdownList(int timeOut) {
+		scrollDownThroughWebelement(driver, localeDropdownList, "time zone Dropdown List");
+		return isDisplayed(driver, localeDropdownList, "Visibility", timeOut, "time zone Dropdown List");
+
+	}
 	@FindBy(xpath = "//input[@title='New Action']")
 	private WebElement newActionBtn;
 

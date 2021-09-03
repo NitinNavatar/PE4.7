@@ -40,7 +40,7 @@ public class Module6 extends BaseLib{
 		String value="";
 		String type="";
 		String status1=null;
-		//for(int i = 13;i<14;i++){
+		//for (int i = 13;i<14;i++) {
 		for (int i = 0;i<20;i++) {
 			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
 				log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);	
@@ -50,6 +50,15 @@ public class Module6 extends BaseLib{
 				if(i==16) {
 					
 					if (ip.createInstitution(projectName, environment, mode, value,type, InstitutionPageFieldLabelText.Parent_Institution.toString(),M6Ins1)) {
+						log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
+					} else {
+						sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
+						log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+value+" of record type : "+type,YesNo.Yes);
+					}
+				
+				} else if(i==13) {
+					
+					if (ip.createInstitution(projectName, environment, mode, value,type, InstitutionPageFieldLabelText.Parent_Institution.toString(),M6Ins13)) {
 						log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
 					} else {
 						sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
@@ -252,6 +261,13 @@ public class Module6 extends BaseLib{
 					}
 
 				}
+				if(dp.checkValueOfPathComponentValueOfStage(Stage.Closed.toString(), 10)) {
+					log(LogStatus.INFO,"stage on path component successfully verified",YesNo.Yes);
+						
+				}else {
+					sa.assertTrue(false,"stage on path component could not be verified");
+					log(LogStatus.SKIP,"stage on path component could not be verified",YesNo.Yes);
+				}
 			}else {
 				log(LogStatus.ERROR, M6Deal2+" deal is not found", YesNo.Yes);
 				sa.assertTrue(false,M6Deal2+" deal is not found" );
@@ -274,6 +290,15 @@ public class Module6 extends BaseLib{
 							log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
 						}
 
+					}
+					String text=ip.getLastModifiedTime(projectName,10).getText().trim();
+					text=text.split(",")[1];
+					if(ip.verifyBeforeTimeOrNot(projectName, text)) {
+						log(LogStatus.INFO,"successfully verified last modified time",YesNo.Yes);
+						
+					}else {
+						sa.assertTrue(false,"could not verify last modified time");
+						log(LogStatus.SKIP,"could not verify last modified time",YesNo.Yes);
 					}
 				}else {
 					sa.assertTrue(false,"not able to click on details tab");
@@ -468,6 +493,16 @@ public class Module6 extends BaseLib{
 							sa.assertTrue(false,"could not verify convert to portfolio as finish button not clicked");
 							log(LogStatus.SKIP,"could not verify convert to portfolio as finish button not clicked",YesNo.Yes);
 						}
+						ThreadSleep(3000);
+						refresh(driver);
+						ThreadSleep(3000);
+						if(dp.checkValueOfPathComponentValueOfStage(Stage.Closed.toString(), 10)) {
+							log(LogStatus.INFO,"stage on path component successfully verified",YesNo.Yes);
+								
+						}else {
+							sa.assertTrue(false,"stage on path component could not be verified");
+							log(LogStatus.SKIP,"stage on path component could not be verified",YesNo.Yes);
+						}
 					}else {
 						sa.assertTrue(false,"could not verify convert to portfolio as finish button not clicked");
 						log(LogStatus.SKIP,"could not verify convert to portfolio as finish button not clicked",YesNo.Yes);
@@ -541,6 +576,15 @@ public class Module6 extends BaseLib{
 								log(LogStatus.SKIP,"not visible already portfolio message",YesNo.Yes);
 							}
 							click(driver, dp.getconvertToPortfolioCrossButton(10), "cross", action.BOOLEAN);
+							for(int j =0;j<2;j++) {
+								if (fp.FieldValueVerificationOnFundPage(projectName, labelName[j],labelValues[j])) {
+									log(LogStatus.SKIP,"successfully verified "+labelName[j],YesNo.No);
+
+								}else {
+									sa.assertTrue(false,"Not Able to verify "+labelName[j]);
+									log(LogStatus.SKIP,"Not Able to verify "+labelName[j],YesNo.Yes);
+								}
+							}
 						}else {
 								sa.assertTrue(false,"next button is not clickable");
 								log(LogStatus.SKIP,"next button is not clickable",YesNo.Yes);
@@ -614,14 +658,6 @@ public class Module6 extends BaseLib{
 									log(LogStatus.SKIP,"could not click on save button",YesNo.Yes);
 								}
 								
-								if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i])) {
-									log(LogStatus.INFO,"successfully verified "+labelName[i],YesNo.Yes);
-								}else {
-									flag=false;
-									sa.assertTrue(false,"Not Able to verify "+labelName[i]);
-									log(LogStatus.SKIP,"Not Able to verify "+labelName[i],YesNo.Yes);
-								}
-								
 								if (click(driver, dp.getconvertToPortfolio(10),"convert to portfolio button", action.BOOLEAN)) {
 									if (click(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
 										String text=dp.getconvertToPortfolioMessageAfterNext(10).getText();
@@ -646,13 +682,22 @@ public class Module6 extends BaseLib{
 											sa.assertTrue(false,"could not verify convert to portfolio as finish button not clicked");
 											log(LogStatus.SKIP,"could not verify convert to portfolio as finish button not clicked",YesNo.Yes);
 										}
-										
+										ThreadSleep(3000);
+										refresh(driver);
+										ThreadSleep(3000);
 										if (fp.FieldValueVerificationOnFundPage(projectName, labelName1[i],labelValues1[i])) {
 											log(LogStatus.INFO,"successfully verified "+labelName1[i],YesNo.Yes);
 										}else {
 											flag=false;
 											sa.assertTrue(false,"Not Able to verify "+labelName1[i]);
 											log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
+										}
+										if(dp.checkValueOfPathComponentValueOfStage(Stage.Closed.toString(), 10)) {
+											log(LogStatus.INFO,"stage on path component successfully verified",YesNo.Yes);
+												
+										}else {
+											sa.assertTrue(false,"stage on path component could not be verified");
+											log(LogStatus.SKIP,"stage on path component could not be verified",YesNo.Yes);
 										}
 									}else {
 										sa.assertTrue(false,"next button is not clickable");
@@ -838,6 +883,23 @@ public class Module6 extends BaseLib{
 						log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
 					}
 					}
+					refresh(driver);
+					ThreadSleep(3000);
+					if (ip.getLastModifiedTime(projectName,10)!=null) {
+						scrollDownThroughWebelement(driver, ip.getLastModifiedTime(projectName,10), "last modified time");
+						String text=ip.getLastModifiedTime(projectName,10).getText().trim();
+						text=text.split(",")[1];
+						if(ip.verifyBeforeTimeOrNot(projectName, text)) {
+							log(LogStatus.INFO,"successfully verified last modified time",YesNo.Yes);
+
+						}else {
+							sa.assertTrue(false,"could not verify last modified time");
+							log(LogStatus.SKIP,"could not verify last modified time",YesNo.Yes);
+						}
+					}else {
+						sa.assertTrue(false,"could not verify last modified time");
+						log(LogStatus.SKIP,"could not verify last modified time",YesNo.Yes);
+					}
 				}else {
 					sa.assertTrue(false,"not able to click on source firm link");
 					log(LogStatus.SKIP,"not able to click on source firm link",YesNo.Yes);
@@ -866,6 +928,9 @@ public class Module6 extends BaseLib{
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
+		};
+		String labelValues[]={Stage.Closed.toString(),Stage.Closed.toString()};
 		int total=1;
 		if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M6Deal11, 10)) {
@@ -900,6 +965,25 @@ public class Module6 extends BaseLib{
 						}else {
 							sa.assertTrue(false,"could not verify convert to portfolio as finish button not clicked");
 							log(LogStatus.SKIP,"could not verify convert to portfolio as finish button not clicked",YesNo.Yes);
+						}
+						ThreadSleep(3000);
+						refresh(driver);
+						ThreadSleep(3000);
+						for (int i =0;i<labelName.length;i++) {
+							if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i])) {
+								log(LogStatus.INFO,"successfully verified "+labelName[i],YesNo.Yes);
+							}else {
+								sa.assertTrue(false,"Not Able to verify "+labelName[i]);
+								log(LogStatus.SKIP,"Not Able to verify "+labelName[i],YesNo.Yes);
+							}
+						
+						}
+						if(dp.checkValueOfPathComponentValueOfStage(Stage.Closed.toString(), 10)) {
+							log(LogStatus.INFO,"stage on path component successfully verified",YesNo.Yes);
+								
+						}else {
+							sa.assertTrue(false,"stage on path component could not be verified");
+							log(LogStatus.SKIP,"stage on path component could not be verified",YesNo.Yes);
 						}
 					}else {
 						sa.assertTrue(false,"next button is not clickable");
@@ -1479,8 +1563,6 @@ public class Module6 extends BaseLib{
 										}
 									}
 									ThreadSleep(2000);
-									//setup.getRecordTypeLabel(projectName,"Record Type Name", 10).sendKeys(updateLabel);
-									//if(sendKeys(driver, setup.getRecordTypeLabel(projectName,"Record Type Name", 10), , "name", action.SCROLLANDBOOLEAN)) {
 										
 									
 									if (click(driver, setup.getSaveButtonInCustomFields(10), "save", action.SCROLLANDBOOLEAN)) {
@@ -1490,10 +1572,6 @@ public class Module6 extends BaseLib{
 											log(LogStatus.FAIL, "save button not clickable",YesNo.Yes);
 											sa.assertTrue(false, "save button not clickable");
 										}
-//									}else {
-//										log(LogStatus.FAIL, "name textbox not visible",YesNo.Yes);
-//										sa.assertTrue(false, "name textbox not visible");
-//									}
 								}else {
 									log(LogStatus.FAIL, "edit button not clickable",YesNo.Yes);
 									sa.assertTrue(false, "edit button not clickable");
@@ -1634,8 +1712,6 @@ public class Module6 extends BaseLib{
 											switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
 										}
 									ThreadSleep(2000);
-									//setup.getRecordTypeLabel(projectName,"Record Type Name", 10).sendKeys(updateLabel);
-									//if(sendKeys(driver, setup.getRecordTypeLabel(projectName,"Record Type Name", 10), , "name", action.SCROLLANDBOOLEAN)) {
 									if (click(driver, setup.getactiveCheckbox(10), "active", action.BOOLEAN)) {
 										log(LogStatus.INFO, "activeCheckbox is clicked",YesNo.No);
 
@@ -1651,10 +1727,6 @@ public class Module6 extends BaseLib{
 											log(LogStatus.FAIL, "save button not clickable",YesNo.Yes);
 											sa.assertTrue(false, "save button not clickable");
 										}
-//									}else {
-//										log(LogStatus.FAIL, "name textbox not visible",YesNo.Yes);
-//										sa.assertTrue(false, "name textbox not visible");
-//									}
 								}else {
 									log(LogStatus.FAIL, "edit button not clickable",YesNo.Yes);
 									sa.assertTrue(false, "edit button not clickable");
@@ -2681,6 +2753,9 @@ public class Module6 extends BaseLib{
 					log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
 				}
 				}
+				ThreadSleep(3000);
+				refresh(driver);
+				ThreadSleep(3000);
 				String text=ip.getLastModifiedTime(projectName,10).getText().trim();
 				text=text.split(",")[1];
 				if(ip.verifyBeforeTimeOrNot(projectName, text)) {
@@ -2803,6 +2878,9 @@ public class Module6 extends BaseLib{
 					log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
 				}
 				}
+				ThreadSleep(3000);
+				refresh(driver);
+				ThreadSleep(3000);
 				String text=ip.getLastModifiedTime(projectName,10).getText().trim();
 				text=text.split(",")[1];
 				if(ip.verifyBeforeTimeOrNot(projectName, text)) {
@@ -2921,6 +2999,9 @@ public class Module6 extends BaseLib{
 					log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
 				}
 				}
+				ThreadSleep(3000);
+				refresh(driver);
+				ThreadSleep(3000);
 				String text=ip.getLastModifiedTime(projectName,10).getText().trim();
 				text=text.split(",")[1];
 				if(ip.verifyBeforeTimeOrNot(projectName, text)) {
@@ -3041,6 +3122,9 @@ public class Module6 extends BaseLib{
 					log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
 				}
 				}
+				ThreadSleep(3000);
+				refresh(driver);
+				ThreadSleep(3000);
 				String text=ip.getLastModifiedTime(projectName,10).getText().trim();
 				text=text.split(",")[1];
 				if(ip.verifyBeforeTimeOrNot(projectName, text)) {
@@ -3162,6 +3246,9 @@ public class Module6 extends BaseLib{
 					log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
 				}
 				}
+				ThreadSleep(3000);
+				refresh(driver);
+				ThreadSleep(3000);
 				String text=ip.getLastModifiedTime(projectName,10).getText().trim();
 				text=text.split(",")[1];
 				if(ip.verifyBeforeTimeOrNot(projectName, text)) {
@@ -3281,6 +3368,9 @@ public class Module6 extends BaseLib{
 					log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
 				}
 				}
+				ThreadSleep(3000);
+				refresh(driver);
+				ThreadSleep(3000);
 				String text=ip.getLastModifiedTime(projectName,10).getText().trim();
 				text=text.split(",")[1];
 				if(ip.verifyBeforeTimeOrNot(projectName, text)) {
@@ -3400,6 +3490,9 @@ public class Module6 extends BaseLib{
 					log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
 				}
 				}
+				ThreadSleep(3000);
+				refresh(driver);
+				ThreadSleep(3000);
 				String text=ip.getLastModifiedTime(projectName,10).getText().trim();
 				text=text.split(",")[1];
 				if(ip.verifyBeforeTimeOrNot(projectName, text)) {
@@ -3991,7 +4084,6 @@ public class Module6 extends BaseLib{
 			}
 		}
 		String pipe,company,stage,rt;
-		//for(int i =13;i<14;i++) {
 		for(int i = 21;i<23;i++) {
 		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object4Tab,YesNo.No);	
@@ -4087,7 +4179,6 @@ public class Module6 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString(),excelLabel.Last_Stage_Change_Date.toString()
 		};
-		//String labelValues[]={"Logged by Reviewer","Logged by Reviewer",todaysDateSingleDigit};
 		String labelValues[]={Stage.LOI.toString(),Stage.LOI.toString(),todaysDateSingleDigit};
 		String labelName1[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString(),excelLabel.Last_Stage_Change_Date.toString()
 		};
@@ -4109,7 +4200,6 @@ public class Module6 extends BaseLib{
 					ThreadSleep(3000);
 					refresh(driver);
 					ThreadSleep(3000);
-					//if(dp.checkValueOfPathComponentValueOfStage("Logged by Reviewer", 10)) {
 					if(dp.checkValueOfPathComponentValueOfStage(Stage.LOI.toString(), 10)) {
 						log(LogStatus.INFO,"stage DD on path component successfully verified",YesNo.Yes);
 
@@ -4456,6 +4546,549 @@ public class Module6 extends BaseLib{
 		}
 		
 		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void M6tc031_DeleteAndRestoreFundraising(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		FundRaisingPageBusinessLayer frp=new FundRaisingPageBusinessLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		WebElement ele;
+		String labelName[]={excelLabel.Stage.toString(),excelLabel.Last_Stage_Change_Date.toString()
+		};
+		String labelValues[]={Stage.Declined.toString(),todaysDateSingleDigit};
+		if (ip.clickOnTab(projectName, TabName.FundraisingsTab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M6LSCFundraising1, 10)) {
+				ThreadSleep(3000);
+				if (ip.clickOnShowMoreActionDownArrow(projectName, PageName.Object5Page, ShowMoreActionDropDownList.Delete, 10)) {
+					ThreadSleep(3000);ele = frp.getDeleteButtonOnDeletePopUp(projectName, 10);
+					if (clickUsingJavaScript(driver,ele, "delete",  action.BOOLEAN)) {
+						appLog.info("Successfully deleted event : "+M6LSCFundraising1);		
+						ThreadSleep(1000);
+
+					}else {
+						log(LogStatus.ERROR, "delete button on popup is not clickable", YesNo.Yes);
+						sa.assertTrue(false,"delete button on popup is not clickable" );
+					}
+				}else {
+					log(LogStatus.ERROR, "delete button is not clickable", YesNo.Yes);
+					sa.assertTrue(false,"delete button is not clickable" );
+				}
+			}else {
+				log(LogStatus.ERROR, M6LSCFundraising1+" fundraising is not found on fundraising tab", YesNo.Yes);
+				sa.assertTrue(false,M6LSCFundraising1+" fundraising is not found on fundraising tab" );
+			}
+		}else {
+			log(LogStatus.ERROR, "fundraising tab is not clickable", YesNo.Yes);
+			sa.assertTrue(false,"fundraising tab is not clickable" );
+		}
+
+		String name=M6LSCFundraising1;
+		TabName tabName =TabName.RecycleBinTab;
+		if (cp.clickOnTab(projectName, tabName)) {
+			log(LogStatus.INFO,"Clicked on Tab : "+tabName+" For : "+name,YesNo.No);
+			ThreadSleep(1000);
+			cp.clickOnAlreadyCreatedItem(projectName, tabName, name, 20);
+			log(LogStatus.INFO,"Clicked on  : "+name+" For : "+tabName,YesNo.No);
+			ThreadSleep(2000);
+
+			ele=cp.getCheckboxOfRestoreItemOnRecycleBin(projectName, name, 10);
+			if (clickUsingJavaScript(driver, ele, "Check box against : "+name, action.BOOLEAN)) {
+				log(LogStatus.INFO,"Click on checkbox for "+name,YesNo.No);
+
+				ThreadSleep(1000);
+				//					scn.nextLine();
+				ele=cp.getRestoreButtonOnRecycleBin(projectName, 10);
+				if (clickUsingJavaScript(driver, ele, "Restore Button : "+name, action.BOOLEAN)) {
+					log(LogStatus.INFO,"Click on Restore Button for "+name,YesNo.No);
+					ThreadSleep(1000);
+
+				} else {
+					sa.assertTrue(false,"Not Able to Click on Restore Button for "+name);
+					log(LogStatus.SKIP,"Not Able to Click on Restore Button for "+name,YesNo.Yes);
+				}
+
+			} else {
+				sa.assertTrue(false,"Not Able to Click on checkbox for "+name);
+				log(LogStatus.SKIP,"Not Able to Click on checkbox for "+name,YesNo.Yes);
+			}
+
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+tabName+" For : "+name);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabName+" For : "+name,YesNo.Yes);
+		}
+		if (ip.clickOnTab(projectName, TabName.FundraisingsTab)) {
+			if (ip.clickOnAlreadyCreatedItem(projectName, M6LSCFundraising1, 10)) {
+
+				for (int i =0;i<labelName.length;i++) {
+					if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i],false)) {
+						log(LogStatus.INFO,"successfully verified "+labelName[i],YesNo.No);
+
+					}else {
+						sa.assertTrue(false,"Not Able to verify "+labelName[i]);
+						log(LogStatus.SKIP,"Not Able to verify "+labelName[i],YesNo.Yes);
+					}
+
+				}
+				if(dp.checkValueOfPathComponentValueOfStage(Stage.Declined.toString(), 10)) {
+					log(LogStatus.INFO,"stage on path component successfully verified",YesNo.Yes);
+
+				}else {
+					sa.assertTrue(false,"stage on path component could not be verified");
+					log(LogStatus.SKIP,"stage on path component could not be verified",YesNo.Yes);
+				}
+			}else {
+				log(LogStatus.ERROR, M6LSCFundraising1+" fundraising is not found on fundraising tab", YesNo.Yes);
+				sa.assertTrue(false,M6LSCFundraising1+" fundraising is not found on fundraising tab" );
+			}
+		}else {
+			log(LogStatus.ERROR, "fundraising tab is not clickable", YesNo.Yes);
+			sa.assertTrue(false,"fundraising tab is not clickable" );
+		}
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	@Parameters({ "projectName"})
+	@Test
+	public void M6tc032_1_ChangeLabelNamesOfStages(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		FundRaisingPageBusinessLayer frp = new FundRaisingPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		WebElement ele=null;
+		String parentID=null;
+		String stage=Stage.Interested.toString();
+		String newstage=Stage.New_Interested.toString().replace("_", " ");
+		if (home.clickOnSetUpLink()) {
+			parentID=switchOnWindow(driver);
+			if (parentID!=null) {
+				if (sp.searchStandardOrCustomObject(environment, mode,object.Fundraising )) {
+					if(sp.clickOnObjectFeature(environment, mode,object.Fundraising, ObjectFeatureName.FieldAndRelationShip)) {
+						if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), excelLabel.Stage.toString()+Keys.ENTER, "status", action.BOOLEAN)) {
+							if (sp.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
+									switchToDefaultContent(driver);
+									switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
+									stage=stage.replace("_", " ");
+									ThreadSleep(3000);ele=frp.getEditBtn(projectName, stage,action.SCROLLANDBOOLEAN,10);
+									if (ele!=null) {
+										log(LogStatus.INFO,"successfully found active stage : "+stage,YesNo.No);	
+									}else {
+										log(LogStatus.ERROR,"could not find active stage"+stage,YesNo.No);	
+										ThreadSleep(5000);
+									}
+										if (click(driver, ele, "edit", action.SCROLLANDBOOLEAN)) {
+											switchToDefaultContent(driver);
+											switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
+											
+											if (sendKeys(driver, sp.getRecordTypeLabel(projectName, "Label", 10), newstage, "label", action.BOOLEAN)){
+												if (click(driver, sp.getSaveButtonInCustomFields(10), "save", action.SCROLLANDBOOLEAN)) {
+													ThreadSleep(3000);	
+													log(LogStatus.INFO, "save button is clicked",YesNo.No);
+
+												}else {
+													log(LogStatus.FAIL, "save button not clickable",YesNo.Yes);
+													sa.assertTrue(false, "save button not clickable");
+												}
+											}else {
+												log(LogStatus.FAIL, "label textbox is not visible",YesNo.Yes);
+												sa.assertTrue(false, "label textbox is not visible");
+											}
+										}else {
+											log(LogStatus.FAIL, "edit button not clickable",YesNo.Yes);
+											sa.assertTrue(false, "edit button not clickable");
+										}
+										}else {
+											log(LogStatus.ERROR,"Stage field is not clickable : ",YesNo.No);	
+											sa.assertTrue(false,"Stage field is not clickable : ");
+										}
+									}else {
+										log(LogStatus.ERROR,"search textbox field is not visible",YesNo.No);	
+										sa.assertTrue(false,"search textbox field is not visible");
+									}
+								}else {
+									log(LogStatus.ERROR,"field and relationships link is not clickable",YesNo.No);	
+									sa.assertTrue(false,"field and relationships link is not clickable");
+								}
+							}else {
+								log(LogStatus.ERROR,"fundraising object is not clickable",YesNo.No);	
+								sa.assertTrue(false,"fundraising object is not clickable");
+							}
+				
+				driver.close();
+				driver.switchTo().window(parentID);
+						}
+			else {
+				log(LogStatus.ERROR,"could not find new window",YesNo.No);	
+				sa.assertTrue(false,"could not find new window");
+			}
+		}else {
+			log(LogStatus.ERROR,"setup link is not clickable",YesNo.No);	
+			sa.assertTrue(false,"setup link is not clickable");
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void M6tc032_2_ChangeLabelNamesOfStages(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		FundRaisingPageBusinessLayer frp = new FundRaisingPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		String labelName[]={excelLabel.Stage.toString(),excelLabel.Last_Stage_Change_Date.toString()
+		};
+		String stage=Stage.New_Interested.toString().replace("_", " ");
+		String labelValues[]={stage,todaysDateSingleDigit};
+		if (lp.clickOnTab(projectName, TabName.FundraisingsTab)) {
+
+			if (lp.clickOnAlreadyCreatedItem(projectName, M6LSCFundraising1, 10)) {
+				
+				if (fp.changeStage(projectName, stage, 10)) {
+					log(LogStatus.INFO, "successfully changed stage to "+stage, YesNo.Yes);
+						
+				}else {
+					log(LogStatus.FAIL, "could not change stage to "+stage, YesNo.Yes);
+					sa.assertTrue(false, "could not change stage to "+stage);
+				}
+				ThreadSleep(3000);
+				refresh(driver);
+				ThreadSleep(3000);
+				for (int i =0;i<labelName.length;i++) {
+					if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i],false)) {
+						log(LogStatus.INFO,"successfully verified "+labelName[i],YesNo.No);
+
+					}else {
+						sa.assertTrue(false,"Not Able to verify "+labelName[i]);
+						log(LogStatus.SKIP,"Not Able to verify "+labelName[i],YesNo.Yes);
+					}
+
+				}
+				if(dp.checkValueOfPathComponentValueOfStage(stage, 10)) {
+					log(LogStatus.INFO,"stage on path component successfully verified "+stage,YesNo.Yes);
+						
+				}else {
+					sa.assertTrue(false,"stage on path component could not be verified "+stage);
+					log(LogStatus.SKIP,"stage on path component could not be verified "+stage,YesNo.Yes);
+				}
+
+			}else {
+				log(LogStatus.FAIL, "could not click on "+M6LSCFundraising1, YesNo.Yes);
+				sa.assertTrue(false, "could not click on "+M6LSCFundraising1);
+			}
+		}else {
+			log(LogStatus.FAIL, "fundraising tab is not clickable", YesNo.Yes);
+			sa.assertTrue(false, "fundraising tab is not clickable");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void M6tc033_1_CreateNewLabelOfStages(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		FundRaisingPageBusinessLayer frp = new FundRaisingPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		WebElement ele=null;
+		String parentID=null;
+		String stage=Stage.New_Stage_Verification.toString();
+		String newstage=Stage.New_Interested.toString().replace("_", " ");
+		if (home.clickOnSetUpLink()) {
+			parentID=switchOnWindow(driver);
+			if (parentID!=null) {
+				if (sp.searchStandardOrCustomObject(environment, mode,object.Fundraising )) {
+					if(sp.clickOnObjectFeature(environment, mode,object.Fundraising, ObjectFeatureName.FieldAndRelationShip)) {
+						if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), excelLabel.Stage.toString()+Keys.ENTER, "status", action.BOOLEAN)) {
+							if (sp.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
+									switchToDefaultContent(driver);
+									switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
+									stage=stage.replace("_", " ");
+									ThreadSleep(3000);
+									ele=sp.getValuesNewButton(10);
+									if (click(driver, ele, "new button", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "click on Values New Button", YesNo.No);
+									switchToDefaultContent(driver);
+									ThreadSleep(20000);
+									switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
+									ThreadSleep(5000);
+									if (sendKeys(driver, dp.getTextArea(20), stage, stage, action.BOOLEAN)) {
+										log(LogStatus.INFO,"enter value on textarea "+stage,YesNo.No);
+										if (click(driver, sp.getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.ERROR, "Click on save Button : ", YesNo.No);
+											ThreadSleep(2000);
+										}else {
+											log(LogStatus.ERROR, "Not Able to Click on save Button : ", YesNo.Yes);
+											sa.assertTrue(false,"Not Able to Click on save Button : ");
+										}
+									}else {
+										sa.assertTrue(false,"Not Able to enter value to textarea ");
+										log(LogStatus.SKIP,"Not Able to enter value to textarea ",YesNo.Yes);
+									}
+									} else {
+										log(LogStatus.ERROR, "new button is not clickable", YesNo.Yes);
+										sa.assertTrue(false, "new button is not clickable");
+									}
+								} else {
+									log(LogStatus.ERROR, "stage field is not clickable", YesNo.Yes);
+									sa.assertTrue(false, "stage field is not clickable");
+								}
+						}else {
+							log(LogStatus.ERROR, "field search textbox is not visible", YesNo.Yes);
+							sa.assertTrue(false, "field search textbox is not visible");
+						}
+					}else {
+						log(LogStatus.ERROR, "fundraising object is not clickable", YesNo.Yes);
+						sa.assertTrue(false, "fundraising object is not clickable");
+					}
+				}else {
+					log(LogStatus.ERROR, "fundraising object is not clickable", YesNo.Yes);
+					sa.assertTrue(false, "fundraising object is not clickable");
+				}
+				ThreadSleep(5000);
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch");
+			}
+		}else {
+			log(LogStatus.ERROR, "setup link is not clickable", YesNo.Yes);
+			sa.assertTrue(false, "setup link is not clickable");
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	@Parameters({ "projectName"})
+	@Test
+	public void M6tc033_2_CreateNewLabelOfStages(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		FundRaisingPageBusinessLayer frp = new FundRaisingPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		String labelName[]={excelLabel.Stage.toString(),excelLabel.Last_Stage_Change_Date.toString()
+		};
+		String stage=Stage.New_Stage_Verification.toString().replace("_", " ");
+		String labelValues[]={stage,todaysDateSingleDigit};
+		if (lp.clickOnTab(projectName, TabName.FundraisingsTab)) {
+
+			if (lp.clickOnAlreadyCreatedItem(projectName, M6LSCFundraising1, 10)) {
+				
+				if (fp.changeStage(projectName, stage, 10)) {
+					log(LogStatus.INFO, "successfully changed stage to "+stage, YesNo.Yes);
+						
+				}else {
+					log(LogStatus.FAIL, "could not change stage to "+stage, YesNo.Yes);
+					sa.assertTrue(false, "could not change stage to "+stage);
+				}
+				ThreadSleep(3000);
+				refresh(driver);
+				ThreadSleep(3000);
+				for (int i =0;i<labelName.length;i++) {
+					if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i],false)) {
+						log(LogStatus.INFO,"successfully verified "+labelName[i],YesNo.No);
+
+					}else {
+						sa.assertTrue(false,"Not Able to verify "+labelName[i]);
+						log(LogStatus.SKIP,"Not Able to verify "+labelName[i],YesNo.Yes);
+					}
+
+				}
+				if(dp.checkValueOfPathComponentValueOfStage(stage, 10)) {
+					log(LogStatus.INFO,"stage on path component successfully verified "+stage,YesNo.Yes);
+						
+				}else {
+					sa.assertTrue(false,"stage on path component could not be verified "+stage);
+					log(LogStatus.SKIP,"stage on path component could not be verified "+stage,YesNo.Yes);
+				}
+
+			}else {
+				log(LogStatus.FAIL, "could not click on "+M6LSCFundraising1, YesNo.Yes);
+				sa.assertTrue(false, "could not click on "+M6LSCFundraising1);
+			}
+		}else {
+			log(LogStatus.FAIL, "fundraising tab is not clickable", YesNo.Yes);
+			sa.assertTrue(false, "fundraising tab is not clickable");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	@Parameters({ "projectName"})
+	@Test
+	public void M6tc034_VerifyNewLocale(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		FundRaisingPageBusinessLayer frp = new FundRaisingPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
+		int i = 0;
+		String labelValues,labelName;
+		String locale[]={"German (Germany)","English (United Kingdom)","English (Australia)","French (France)"};
+		String timezone[]={"(GMT+02:00) Central European Summer Time (Europe/Berlin)","(GMT+01:00) British Summer Time (Europe/London)","(GMT+08:00) Australian Western Standard Time (Australia/Perth)","(GMT+02:00) Central European Summer Time (Europe/Paris)"};
+		for(String t:timezone) {
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String parentID=null;
+		if (home.clickOnSetUpLink("", Mode.Lightning.toString())) {
+			parentID=switchOnWindow(driver);
+			if (parentID!=null) {
+				log(LogStatus.INFO, "Able to switch on new window", YesNo.No);
+				ThreadSleep(3000);
+				refresh(driver);
+				ThreadSleep(3000);
+				if(setup.searchStandardOrCustomObject(environment,mode, object.Users)) {
+					log(LogStatus.INFO, "click on Object : "+object.Users, YesNo.No);
+					ThreadSleep(2000);
+					
+					if(setup.clickOnEditBtnForCRMUser(driver, crmUser1LastName, crmUser1FirstName, 20)) {
+						log(LogStatus.INFO, "Click on edit Button "+crmUser1LastName+","+crmUser1FirstName, YesNo.No);
+						ThreadSleep(2000);
+
+						if (selectVisibleTextFromDropDown(driver, setup.getLocaleDropdownList(10), "locale dropdown",locale[i])) {
+							log(LogStatus.INFO, "selected visbible text from the Timezone dropdown "+locale[i], YesNo.No);
+							ThreadSleep(2000);
+							switchToDefaultContent(driver);
+							ThreadSleep(2000);
+							switchToFrame(driver, 20, setup.getSetUpPageIframe(20));
+							if (selectVisibleTextFromDropDown(driver, setup.gettimezoneDropdownList(10), "timezone dropdown",t)) {
+								log(LogStatus.INFO, "selected visbible text from the Timezone dropdown "+t, YesNo.No);
+								ThreadSleep(2000);
+								
+							if (click(driver, setup.getSaveButton(20), "Save Button",action.SCROLLANDBOOLEAN)) {
+								switchToDefaultContent(driver);
+								ThreadSleep(5000);
+							} else {
+								log(LogStatus.ERROR, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+								sa.assertTrue(false, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName);
+							}
+						} else {
+							log(LogStatus.ERROR, "Not Able to select timezone dropdown for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+							sa.assertTrue(false, "Not Able to select timezone dropdown for  "+crmUser1LastName+","+crmUser1FirstName);
+						}
+						}else {
+							log(LogStatus.ERROR, "Not Able to select locale dropdown for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+							sa.assertTrue(false, "Not Able to select locale dropdown for  "+crmUser1LastName+","+crmUser1FirstName);
+						}
+					}else {
+						log(LogStatus.ERROR, "edit button is not clickable for "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
+						sa.assertTrue(false, "edit button is not clickable for "+crmUser1LastName+","+crmUser1FirstName);
+					}
+					}else {
+						log(LogStatus.ERROR, "users object is not clickable", YesNo.Yes);
+						sa.assertTrue(false, "users object is not clickable");
+					}
+				driver.close();
+				driver.switchTo().window(parentID);
+				}else {
+					log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+					sa.assertTrue(false, "could not find new window to switch");
+				}
+			}else {
+				log(LogStatus.ERROR, "setup link is not clickable", YesNo.Yes);
+				sa.assertTrue(false, "setup link is not clickable");
+			}
+		i++;
+		
+		lp.CRMlogout();
+		
+		driver.close();
+		config(browserToLaunch);
+		lp = new LoginPageBusinessLayer(driver);
+		fp = new FundsPageBusinessLayer(driver);
+		cp = new ContactsPageBusinessLayer(driver);
+		ip = new InstitutionsPageBusinessLayer(driver);
+		dp = new DealPageBusinessLayer(driver);
+		frp = new FundRaisingPageBusinessLayer(driver);
+		home=new HomePageBusineesLayer(driver);
+		String fundr,stage,inst;
+		int j=i+1;
+		labelName=excelLabel.Last_Stage_Change_Date.toString();
+		if(j==1)
+			labelValues=todaysDateEurope;
+		else
+		labelValues=todaysDateddmm;
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		if (lp.clickOnTab(projectName, TabName.FundraisingsTab)) {
+			fundr=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M6LSCFUNDR"+j, excelLabel.FundRaising_Name);
+			stage=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M6LSCFUNDR"+j, excelLabel.Stage);
+			
+			if(frp.createFundRaising(environment,mode,fundr,M6LSCFund1,M6LSCIns1)){
+				appLog.info("fundraising is created : "+fundr);
+				ThreadSleep(3000);
+				if (fp.changeStage(projectName, stage, 10)) {
+					log(LogStatus.INFO, "successfully changed stage to "+stage, YesNo.Yes);
+						
+				}else {
+					log(LogStatus.FAIL, "could not change stage to "+stage, YesNo.Yes);
+					sa.assertTrue(false, "could not change stage to "+stage);
+				}
+				ThreadSleep(3000);
+				refresh(driver);
+				ThreadSleep(3000);
+					if (fp.FieldValueVerificationOnFundPage(projectName, labelName,labelValues,"date")) {
+						log(LogStatus.INFO,"successfully verified "+labelName,YesNo.No);
+
+					}else {
+						sa.assertTrue(false,"Not Able to verify "+todaysDateddmm+" "+labelName);
+						log(LogStatus.SKIP,"Not Able to verify "+todaysDateddmm+" "+labelName,YesNo.Yes);
+					}
+
+			}else {
+				appLog.error("Not able to create fundraising: "+fundr);
+				sa.assertTrue(false, "Not able to create fundraising: "+fundr);
+			}
+		}else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.FundraisingsTab);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.FundraisingsTab,YesNo.Yes);
+		}
+		lp.CRMlogout();
+		driver.close();
+		config(browserToLaunch);
+		lp = new LoginPageBusinessLayer(driver);
+		fp = new FundsPageBusinessLayer(driver);
+		cp = new ContactsPageBusinessLayer(driver);
+		ip = new InstitutionsPageBusinessLayer(driver);
+		dp = new DealPageBusinessLayer(driver);
+		frp = new FundRaisingPageBusinessLayer(driver);
+		home=new HomePageBusineesLayer(driver);
+		}
+		
+		
 		sa.assertAll();
 	}
 }

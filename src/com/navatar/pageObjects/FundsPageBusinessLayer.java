@@ -214,7 +214,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 				xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
 				+ "']/../following-sibling::div//lightning-formatted-number";
 			else if(labelName.equalsIgnoreCase(excelLabel.Company_Name.toString()))
-			xpath="//span[@class='test-id__field-label'][text()='"+finalLabelName+"']/../following-sibling::div//a";
+			xpath="//span[@class='test-id__field-label'][text()='"+finalLabelName+"']/../following-sibling::div//a//span";
 		ele = isDisplayed(driver,
 				FindElement(driver, xpath, labelName + " label text in " + projectName, action.SCROLLANDBOOLEAN, 60),
 				"Visibility", 30, labelName + " label text in " + projectName);
@@ -223,6 +223,51 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			appLog.info("Lable Value is: "+aa);
 			if(labelName.contains("Date")) {
 				if(verifyDate(aa,null, labelName)) {
+					appLog.info("Dtae is verified Successfully");
+					return true;
+				}else {
+					appLog.error(labelName+ " Date is not verified. /t Actual Result: "+aa);
+				}
+			}else {
+				if(aa.contains(labelValue)) {
+					appLog.info(labelValue + " Value is matched successfully.");
+					return true;
+					
+				}else {
+					appLog.error(labelValue + " Value is not matched. Expected: "+labelValue+" /t Actual : "+aa);
+				}
+			}
+		} else {
+			appLog.error(labelName + " Value is not visible so cannot matched  label Value "+labelValue);
+		}
+		return false;
+
+	}
+	public boolean FieldValueVerificationOnFundPage(String projectName,
+			String labelName,String labelValue, String date) {
+		String xpath = "";
+		WebElement ele = null;
+		String finalLabelName=labelName.replace("_", " ");
+		if(labelName.contains(excelLabel.Target_Commitments.toString().replaceAll("_", " "))) {
+			labelName=FundPageFieldLabelText.Target_Commitments.toString();
+		}
+		
+			
+			xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
+					+ "']/../following-sibling::div//lightning-formatted-text";
+			if (labelName.equalsIgnoreCase(excelLabel.Deal_Quality_Score.toString()))
+				xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
+				+ "']/../following-sibling::div//lightning-formatted-number";
+			else if(labelName.equalsIgnoreCase(excelLabel.Company_Name.toString()))
+			xpath="//span[@class='test-id__field-label'][text()='"+finalLabelName+"']/../following-sibling::div//a";
+		ele = isDisplayed(driver,
+				FindElement(driver, xpath, labelName + " label text in " + projectName, action.SCROLLANDBOOLEAN, 60),
+				"Visibility", 30, labelName + " label text in " + projectName);
+		if (ele != null) {
+			String aa = ele.getText().trim();
+			appLog.info("Lable Value is: "+aa);
+			if(labelName.contains("Date")) {
+				if(aa.contains(labelValue)) {
 					appLog.info("Dtae is verified Successfully");
 					return true;
 				}else {

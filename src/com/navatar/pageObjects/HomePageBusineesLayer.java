@@ -754,11 +754,11 @@ public boolean selectFundraisingNameOrCommitmentType(String environment,String m
 	WebElement ele=null;
 	boolean flag=false;
 	if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-		switchToFrame(driver, 30, getCreateCommitmentFrame_Lightning(20));
+		switchToFrame(driver, 60, getCreateCommitmentFrame_Lightning(120));
 		
 	}
 	if(fundraisingName!=null) {
-		if(click(driver, getFundRaisingNameLookUpIcon(20), "fundraising name look up icon", action.SCROLLANDBOOLEAN)) {
+		if(click(driver, getFundRaisingNameLookUpIcon(120), "fundraising name look up icon", action.SCROLLANDBOOLEAN)) {
 			if(selectValueFromLookUpWindow(fundraisingName)) {
 				log(LogStatus.INFO, fundraisingName+" fundraising name is selected", YesNo.No);
 				flag=true;
@@ -770,7 +770,7 @@ public boolean selectFundraisingNameOrCommitmentType(String environment,String m
 		}
 	}else {
 		if(commitmentType.toString().equalsIgnoreCase(CommitmentType.fund.toString())) {
-			if(click(driver, getFundTypeCommitment(20), "fund type text", action.SCROLLANDBOOLEAN)) {
+			if(click(driver, getFundTypeCommitment(120), "fund type text", action.SCROLLANDBOOLEAN)) {
 				if(click(driver, getFundNameLookUpIconOnCreateCommitmentPopUp(20), "fund name look up icon", action.SCROLLANDBOOLEAN)) {
 					if(selectValueFromLookUpWindow(fundName)) {
 						log(LogStatus.INFO, "fund name is selected "+fundName, YesNo.No);
@@ -801,7 +801,7 @@ public boolean selectFundraisingNameOrCommitmentType(String environment,String m
 				log(LogStatus.ERROR, "Not able to click on fund type on create commitment text so cannot select fundName "+fundName+" institutionName "+legalName,YesNo.Yes);
 			}
 		}else {
-			if(click(driver, getCoInvesmentTypeCommitment(20), "co investment type text", action.SCROLLANDBOOLEAN)) {
+			if(click(driver, getCoInvesmentTypeCommitment(120), "co investment type text", action.SCROLLANDBOOLEAN)) {
 				if(companyName!=null) {
 					if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 						switchToFrame(driver, 30, getCreateCommitmentFrame_Lightning(20));
@@ -848,7 +848,7 @@ public boolean selectFundraisingNameOrCommitmentType(String environment,String m
 	}
 	if(flag) {
 		if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-			switchToFrame(driver, 30, getCreateCommitmentFrame_Lightning(20));
+			switchToFrame(driver, 60, getCreateCommitmentFrame_Lightning(120));
 			
 		}
 		List<WebElement> ele1=getCommitmentCreationContinueBtn(2);
@@ -1234,11 +1234,11 @@ public boolean createNewDealPipeLine(String environment, String mode, String com
 	boolean flag = true;
 	
 	
-		switchToFrame(driver, 10, new NavatarSetupPageBusinessLayer(driver).getnavatarSetUpTabFrame_Lighting(environment, 10));
+		switchToFrame(driver, 600, new NavatarSetupPageBusinessLayer(driver).getnavatarSetUpTabFrame_Lighting(environment, 120));
 	
 	
 	WebElement ele = FindElement(driver, "//div[@class='ContentStart']//p[text()='Deal Creation']",
-			"Deal Creation Page", action.SCROLLANDBOOLEAN, 10);
+			"Deal Creation Page", action.SCROLLANDBOOLEAN, 60);
 	if (ele != null) {
 		appLog.info("Deal Creation Page is open");
 
@@ -1247,9 +1247,18 @@ public boolean createNewDealPipeLine(String environment, String mode, String com
 			appLog.info("Entered Value on Company Name Text Box : " + companyName);
 			ThreadSleep(1000);
 			
+			if (selectVisibleTextFromDropDown(driver, getStageDropDownList(environment, mode, 10),
+					"Stage Drop Down List", stage)) {
+				appLog.info("Selected value from Stage Deop down List : " + stage);
+				
+				
+			} else {
+				flag=false;
+				BaseLib.sa.assertTrue(false, "Not Able to Select value from Stage Deop down List : " + stage);
+				appLog.error("Not Able to Select value from Stage Deop down List : " + stage);
+			}
 			
-			
-
+			ThreadSleep(1000);
 			String actualPipeLineName = getValueFromElementUsingJavaScript(driver,getDealNameTextBox(environment, mode, 10), "PipeLine Value");
 			String monthAndYear = getSystemDate("MMM") + " " + getSystemDate("yyyy");
 			String expectedPipeLineName = companyName + " " + "-" + " " + monthAndYear;
@@ -1263,18 +1272,7 @@ public boolean createNewDealPipeLine(String environment, String mode, String com
 				appLog.error("PipeLine Name Value Not Verified - Actual : " + actualPipeLineName + "     Expected : "
 						+ expectedPipeLineName);
 			}
-			ThreadSleep(1000);
 			
-			if (selectVisibleTextFromDropDown(driver, getStageDropDownList(environment, mode, 10),
-					"Stage Drop Down List", stage)) {
-				appLog.info("Selected value from Stage Deop down List : " + stage);
-				
-				
-			} else {
-				flag=false;
-				BaseLib.sa.assertTrue(false, "Not Able to Select value from Stage Deop down List : " + stage);
-				appLog.error("Not Able to Select value from Stage Deop down List : " + stage);
-			}
 
 		} else {
 			flag=false;
@@ -1378,7 +1376,7 @@ public boolean enterValuesInCreateIndiviualInvestor(String environment, String m
 				xpath="//label[contains(text(),'"+label+"')]/../following-sibling::td//input";
 			}
 			
-			ele=FindElement(driver, xpath, label+" text box", action.SCROLLANDBOOLEAN, 20);
+			ele=FindElement(driver, xpath, label+" text box", action.SCROLLANDBOOLEAN, 120);
 			if(ele!=null) {
 				if(sendKeys(driver, ele, labelAndValue[1], label+" text box", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "passed value : "+labelAndValue[1]+" in "+label, YesNo.No);

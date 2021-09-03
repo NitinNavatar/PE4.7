@@ -387,10 +387,16 @@ public class ContactsPage extends BasePageBusinessLayer {
 		
 	}
 	
-	@FindBy(xpath = "//span[text()='Last Touch Point']/../following-sibling::div//span/*/*/*")
+	@FindBy(xpath = "//span[text()='Last Touchpoint']")
+	private WebElement lastTouchPointLabel;
+	
+	//@FindBy(xpath = "//span[text()='Last Touch Point']/../following-sibling::div//span/*/*/*")
+	@FindBy(xpath = "//span[text()='Last Touchpoint']/../following-sibling::div//span/*/*/*")
 	private WebElement lastTouchPointValue;
 	public WebElement getlastTouchPointValue(String projectName,int timeOut) {
 		ThreadSleep(10000);
+		scrollDownThroughWebelement(driver, lastTouchPointLabel, "Last Touch Point Label");
+		ThreadSleep(1000);
 		return lastTouchPointValue;
 	//	return isDisplayed(driver, lastTouchPointValue, "Visibility", timeOut, "last Touch Point Value");
 		
