@@ -658,14 +658,6 @@ public class Module6 extends BaseLib{
 									log(LogStatus.SKIP,"could not click on save button",YesNo.Yes);
 								}
 								
-								if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i])) {
-									log(LogStatus.INFO,"successfully verified "+labelName[i],YesNo.Yes);
-								}else {
-									flag=false;
-									sa.assertTrue(false,"Not Able to verify "+labelName[i]);
-									log(LogStatus.SKIP,"Not Able to verify "+labelName[i],YesNo.Yes);
-								}
-								
 								if (click(driver, dp.getconvertToPortfolio(10),"convert to portfolio button", action.BOOLEAN)) {
 									if (click(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
 										String text=dp.getconvertToPortfolioMessageAfterNext(10).getText();
@@ -690,7 +682,9 @@ public class Module6 extends BaseLib{
 											sa.assertTrue(false,"could not verify convert to portfolio as finish button not clicked");
 											log(LogStatus.SKIP,"could not verify convert to portfolio as finish button not clicked",YesNo.Yes);
 										}
-										
+										ThreadSleep(3000);
+										refresh(driver);
+										ThreadSleep(3000);
 										if (fp.FieldValueVerificationOnFundPage(projectName, labelName1[i],labelValues1[i])) {
 											log(LogStatus.INFO,"successfully verified "+labelName1[i],YesNo.Yes);
 										}else {
@@ -889,11 +883,19 @@ public class Module6 extends BaseLib{
 						log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
 					}
 					}
-					String text=ip.getLastModifiedTime(projectName,10).getText().trim();
-					text=text.split(",")[1];
-					if(ip.verifyBeforeTimeOrNot(projectName, text)) {
-						log(LogStatus.INFO,"successfully verified last modified time",YesNo.Yes);
-						
+					refresh(driver);
+					ThreadSleep(3000);
+					if (ip.getLastModifiedTime(projectName,10)!=null) {
+						scrollDownThroughWebelement(driver, ip.getLastModifiedTime(projectName,10), "last modified time");
+						String text=ip.getLastModifiedTime(projectName,10).getText().trim();
+						text=text.split(",")[1];
+						if(ip.verifyBeforeTimeOrNot(projectName, text)) {
+							log(LogStatus.INFO,"successfully verified last modified time",YesNo.Yes);
+
+						}else {
+							sa.assertTrue(false,"could not verify last modified time");
+							log(LogStatus.SKIP,"could not verify last modified time",YesNo.Yes);
+						}
 					}else {
 						sa.assertTrue(false,"could not verify last modified time");
 						log(LogStatus.SKIP,"could not verify last modified time",YesNo.Yes);
@@ -1561,8 +1563,6 @@ public class Module6 extends BaseLib{
 										}
 									}
 									ThreadSleep(2000);
-									//setup.getRecordTypeLabel(projectName,"Record Type Name", 10).sendKeys(updateLabel);
-									//if(sendKeys(driver, setup.getRecordTypeLabel(projectName,"Record Type Name", 10), , "name", action.SCROLLANDBOOLEAN)) {
 										
 									
 									if (click(driver, setup.getSaveButtonInCustomFields(10), "save", action.SCROLLANDBOOLEAN)) {
@@ -1572,10 +1572,6 @@ public class Module6 extends BaseLib{
 											log(LogStatus.FAIL, "save button not clickable",YesNo.Yes);
 											sa.assertTrue(false, "save button not clickable");
 										}
-//									}else {
-//										log(LogStatus.FAIL, "name textbox not visible",YesNo.Yes);
-//										sa.assertTrue(false, "name textbox not visible");
-//									}
 								}else {
 									log(LogStatus.FAIL, "edit button not clickable",YesNo.Yes);
 									sa.assertTrue(false, "edit button not clickable");
@@ -1716,8 +1712,6 @@ public class Module6 extends BaseLib{
 											switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
 										}
 									ThreadSleep(2000);
-									//setup.getRecordTypeLabel(projectName,"Record Type Name", 10).sendKeys(updateLabel);
-									//if(sendKeys(driver, setup.getRecordTypeLabel(projectName,"Record Type Name", 10), , "name", action.SCROLLANDBOOLEAN)) {
 									if (click(driver, setup.getactiveCheckbox(10), "active", action.BOOLEAN)) {
 										log(LogStatus.INFO, "activeCheckbox is clicked",YesNo.No);
 
@@ -1733,10 +1727,6 @@ public class Module6 extends BaseLib{
 											log(LogStatus.FAIL, "save button not clickable",YesNo.Yes);
 											sa.assertTrue(false, "save button not clickable");
 										}
-//									}else {
-//										log(LogStatus.FAIL, "name textbox not visible",YesNo.Yes);
-//										sa.assertTrue(false, "name textbox not visible");
-//									}
 								}else {
 									log(LogStatus.FAIL, "edit button not clickable",YesNo.Yes);
 									sa.assertTrue(false, "edit button not clickable");
@@ -2763,6 +2753,9 @@ public class Module6 extends BaseLib{
 					log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
 				}
 				}
+				ThreadSleep(3000);
+				refresh(driver);
+				ThreadSleep(3000);
 				String text=ip.getLastModifiedTime(projectName,10).getText().trim();
 				text=text.split(",")[1];
 				if(ip.verifyBeforeTimeOrNot(projectName, text)) {
@@ -2885,6 +2878,9 @@ public class Module6 extends BaseLib{
 					log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
 				}
 				}
+				ThreadSleep(3000);
+				refresh(driver);
+				ThreadSleep(3000);
 				String text=ip.getLastModifiedTime(projectName,10).getText().trim();
 				text=text.split(",")[1];
 				if(ip.verifyBeforeTimeOrNot(projectName, text)) {
@@ -3003,6 +2999,9 @@ public class Module6 extends BaseLib{
 					log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
 				}
 				}
+				ThreadSleep(3000);
+				refresh(driver);
+				ThreadSleep(3000);
 				String text=ip.getLastModifiedTime(projectName,10).getText().trim();
 				text=text.split(",")[1];
 				if(ip.verifyBeforeTimeOrNot(projectName, text)) {
@@ -3123,6 +3122,9 @@ public class Module6 extends BaseLib{
 					log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
 				}
 				}
+				ThreadSleep(3000);
+				refresh(driver);
+				ThreadSleep(3000);
 				String text=ip.getLastModifiedTime(projectName,10).getText().trim();
 				text=text.split(",")[1];
 				if(ip.verifyBeforeTimeOrNot(projectName, text)) {
@@ -3244,6 +3246,9 @@ public class Module6 extends BaseLib{
 					log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
 				}
 				}
+				ThreadSleep(3000);
+				refresh(driver);
+				ThreadSleep(3000);
 				String text=ip.getLastModifiedTime(projectName,10).getText().trim();
 				text=text.split(",")[1];
 				if(ip.verifyBeforeTimeOrNot(projectName, text)) {
@@ -3363,6 +3368,9 @@ public class Module6 extends BaseLib{
 					log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
 				}
 				}
+				ThreadSleep(3000);
+				refresh(driver);
+				ThreadSleep(3000);
 				String text=ip.getLastModifiedTime(projectName,10).getText().trim();
 				text=text.split(",")[1];
 				if(ip.verifyBeforeTimeOrNot(projectName, text)) {
@@ -3482,6 +3490,9 @@ public class Module6 extends BaseLib{
 					log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
 				}
 				}
+				ThreadSleep(3000);
+				refresh(driver);
+				ThreadSleep(3000);
 				String text=ip.getLastModifiedTime(projectName,10).getText().trim();
 				text=text.split(",")[1];
 				if(ip.verifyBeforeTimeOrNot(projectName, text)) {
@@ -4073,7 +4084,6 @@ public class Module6 extends BaseLib{
 			}
 		}
 		String pipe,company,stage,rt;
-		//for(int i =13;i<14;i++) {
 		for(int i = 21;i<23;i++) {
 		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object4Tab,YesNo.No);	
@@ -4169,7 +4179,6 @@ public class Module6 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString(),excelLabel.Last_Stage_Change_Date.toString()
 		};
-		//String labelValues[]={"Logged by Reviewer","Logged by Reviewer",todaysDateSingleDigit};
 		String labelValues[]={Stage.LOI.toString(),Stage.LOI.toString(),todaysDateSingleDigit};
 		String labelName1[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString(),excelLabel.Last_Stage_Change_Date.toString()
 		};
@@ -4191,7 +4200,6 @@ public class Module6 extends BaseLib{
 					ThreadSleep(3000);
 					refresh(driver);
 					ThreadSleep(3000);
-					//if(dp.checkValueOfPathComponentValueOfStage("Logged by Reviewer", 10)) {
 					if(dp.checkValueOfPathComponentValueOfStage(Stage.LOI.toString(), 10)) {
 						log(LogStatus.INFO,"stage DD on path component successfully verified",YesNo.Yes);
 
@@ -4720,18 +4728,7 @@ public class Module6 extends BaseLib{
 								log(LogStatus.ERROR,"fundraising object is not clickable",YesNo.No);	
 								sa.assertTrue(false,"fundraising object is not clickable");
 							}
-				//cannot edit last stage change date field
-				/*String field=excelLabel.Last_Stage_Change_Date.toString().replace("_", " ");
-				if (sp.searchStandardOrCustomObject(environment, mode,object.Fundraising )) {
-					if(sp.clickOnObjectFeature(environment, mode,object.Fundraising, ObjectFeatureName.FieldAndRelationShip)) {
-						if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), field+Keys.ENTER, "status", action.BOOLEAN)) {
-							if (sp.clickOnAlreadyCreatedLayout(field)) {
-									switchToDefaultContent(driver);
-									switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
-							}
-						}
-					}
-				}*/
+				
 				driver.close();
 				driver.switchTo().window(parentID);
 						}
@@ -4963,7 +4960,6 @@ public class Module6 extends BaseLib{
 		int i = 0;
 		String labelValues,labelName;
 		String locale[]={"German (Germany)","English (United Kingdom)","English (Australia)","French (France)"};
-		//String timezone[]={"(GMT+01:00) British Summer Time (Europe/London)","(GMT+08:00) Australian Western Standard Time (Australia/Perth)","(GMT+02:00) Central European Summer Time (Europe/Paris)"};
 		String timezone[]={"(GMT+02:00) Central European Summer Time (Europe/Berlin)","(GMT+01:00) British Summer Time (Europe/London)","(GMT+08:00) Australian Western Standard Time (Australia/Perth)","(GMT+02:00) Central European Summer Time (Europe/Paris)"};
 		for(String t:timezone) {
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
