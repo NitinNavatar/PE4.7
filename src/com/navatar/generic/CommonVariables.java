@@ -282,6 +282,7 @@ public class CommonVariables {
 	
 	public static String M7Task1Subject,M7Task1dueDate,M7Task1Status,M7Task1Priority,M7Task1MeetingType;
 	public static String M7Task2Subject,M7Task2dueDate,M7Task2Status,M7Task2Priority,M7Task2MeetingType;
+	public static String M7Task3Subject,M7Task3dueDate,M7Task3Status,M7Task3Priority,M7Task3MeetingType;
 	
 	public CommonVariables(Object obj) {
 		//TODO Auto-generated constructor stub
@@ -1154,6 +1155,12 @@ public class CommonVariables {
 			M7Task2dueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task2", excelLabel.Due_Date);
 			M7Task2MeetingType=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task2", excelLabel.Meeting_Type);
 
+			M7Task3Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task3", excelLabel.Subject);
+			M7Task3Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task3", excelLabel.Status);
+			M7Task3dueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task3", excelLabel.Due_Date);
+			M7Task3MeetingType=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task3", excelLabel.Meeting_Type);
+
+			
 		}
 
 		System.err.println("");

@@ -796,7 +796,7 @@ public boolean clickOnAlreadyCreatedItem(String projectName, TabName tabName,Str
 		viewList = "All";
 		break;
 	case RecycleBinTab:
-		viewList = "Org Recycle Bin";
+		viewList = "My Recycle Bin";
 		break;
 	case SDGTab:
 		viewList = "All";
@@ -809,11 +809,22 @@ public boolean clickOnAlreadyCreatedItem(String projectName, TabName tabName,Str
 	ele = null;
 
 	refresh(driver);
-	if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
-		ThreadSleep(3000);
-		xpath="//div[@class='listContent']//li/a/span[text()='" + viewList + "']";
-		selectListView = FindElement(driver, xpath,"Select List View : "+viewList, action.SCROLLANDBOOLEAN, 30);
-		if (click(driver, selectListView, "select List View : "+viewList, action.SCROLLANDBOOLEAN)) {
+	if (TabName.RecycleBinTab.equals(tabName)) {
+		
+	} else {
+		if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(3000);
+			xpath="//div[@class='listContent']//li/a/span[text()='" + viewList + "']";
+			selectListView = FindElement(driver, xpath,"Select List View : "+viewList, action.SCROLLANDBOOLEAN, 30);
+			if (click(driver, selectListView, "select List View : "+viewList, action.SCROLLANDBOOLEAN)) {
+			} else {
+				appLog.error("Not able to select on Select View List : "+viewList);
+			}
+		} else {
+			appLog.error("Not able to click on Select List Icon");
+		}
+	}
+	
 			ThreadSleep(3000);
 			ThreadSleep(5000);
 
@@ -834,12 +845,8 @@ public boolean clickOnAlreadyCreatedItem(String projectName, TabName tabName,Str
 			} else {
 				appLog.error("Not able to enter value on Search Box");
 			}
-		} else {
-			appLog.error("Not able to select on Select View List : "+viewList);
-		}
-	} else {
-		appLog.error("Not able to click on Select List Icon");
-	}
+	
+	
 	return flag;
 }
 
@@ -3542,6 +3549,50 @@ public boolean verifyBeforeTimeOrNot(String projectName, String time) {
 	System.out.println("time on page is "+time);
 	 System.out.println(timecurrent.after(lt2));
 	 return timecurrent.after(lt2);
+}
+
+public WebElement getTaskLink(String projectName,String taskName) {
+	WebElement ele = moreStepsBtn(projectName, EnableDisable.Enable, 10);
+	click(driver, ele, "More Steps" ,action.BOOLEAN);
+	ThreadSleep(2000);
+	String xpath= "//a[text()='"+taskName+"']";
+	ele = FindElement(driver, xpath, taskName, action.SCROLLANDBOOLEAN, 20);
+	ele =  isDisplayed(driver, ele, "Visibility", 20, taskName);
+	return ele;
+}
+
+public boolean restoreValueFromRecycleBin(String projectName,String restoreItem){
+	boolean flag=false;
+	TabName tabName = TabName.RecycleBinTab;
+	WebElement ele;
+	if (clickOnTab(projectName, tabName)) {
+		log(LogStatus.INFO,"Clicked on Tab : "+tabName+" For : "+restoreItem,YesNo.No);
+		ThreadSleep(1000);
+		clickOnAlreadyCreatedItem(projectName, tabName, restoreItem, 20);
+		log(LogStatus.INFO,"Clicked on  : "+restoreItem+" For : "+tabName,YesNo.No);
+		ThreadSleep(2000);
+		ele=getCheckboxOfRestoreItemOnRecycleBin(projectName, restoreItem, 10);
+		if (clickUsingJavaScript(driver, ele, "Check box against : "+restoreItem, action.BOOLEAN)) {
+			log(LogStatus.INFO,"Click on checkbox for "+restoreItem,YesNo.No);
+			ThreadSleep(1000);
+			ele=getRestoreButtonOnRecycleBin(projectName, 10);
+			if (clickUsingJavaScript(driver, ele, "Restore Button : "+restoreItem, action.BOOLEAN)) {
+				log(LogStatus.INFO,"Click on Restore Button for "+restoreItem,YesNo.No);
+				ThreadSleep(5000);
+				flag=true;
+			} else {
+				log(LogStatus.SKIP,"Not Able to Click on Restore Button for "+restoreItem,YesNo.Yes);
+			}
+
+		} else {
+			log(LogStatus.SKIP,"Not Able to Click on checkbox for "+restoreItem,YesNo.Yes);
+		}
+
+
+	} else {
+		log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabName+" For : "+restoreItem,YesNo.Yes);
+	}
+	return flag;
 }
 
 }

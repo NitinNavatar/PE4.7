@@ -26,6 +26,7 @@ import com.relevantcodes.extentreports.LogStatus;
 public class Module7 extends BaseLib {
 	String meetingNone = "--None--";
 	String statusCompleted = "Completed";
+	String statusInProgess = "In Progress";
 	
 	@Parameters({ "projectName"})
 	@Test
@@ -428,7 +429,6 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 	
-	
 	@Parameters({ "projectName"})
 	@Test
 	public void M7Tc005_UpdateStatusToCompletedInMultiTaggedTask(String projectName) {
@@ -542,7 +542,613 @@ public class Module7 extends BaseLib {
 		sa.assertAll();
 	}
 	
+	@Parameters({ "projectName"})
+	@Test
+	public void M7Tc006_CreateMultiTaggedTaskforContactTomLathamAndVerifyLastTouchPoint(String projectName) {
+		GlobalActionPageBusinessLayer gp = new GlobalActionPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		boolean flag=false;
+		WebElement ele = null ;
+		String primaryContact=M7Contact2FName+" "+M7Contact2LName;
+		String secondaryContact=M7Contact1FName+" "+M7Contact1LName;
+		M7Task3dueDate=previousOrForwardDate(-5, "M/d/YYYY");;
+		String task = M7Task3Subject;
+		String actualValue=null;
+		String expectedValue = null;
+		String[][] event1 = {
+				{PageLabel.Name.toString(),secondaryContact},
+				{PageLabel.Subject.toString(),task},
+				{PageLabel.Due_Date.toString(),M7Task3dueDate},
+				{PageLabel.Meeting_Type.toString(),M7Task3MeetingType},
+				{PageLabel.Status.toString(),M7Task3Status}};
 
+
+		if (cp.clickOnTab(projectName, tabObj2)) {
+			log(LogStatus.INFO,"Clicked on Tab : "+tabObj2+" For : "+primaryContact,YesNo.No);
+			ThreadSleep(1000);
+			if (cp.clickOnAlreadyCreatedItem(projectName, primaryContact, 30)) {
+				log(LogStatus.INFO,"Clicked on  : "+primaryContact+" For : "+tabObj2,YesNo.No);
+				ThreadSleep(2000);
+				ExcelUtils.writeData(phase1DataSheetFilePath,M7Task3dueDate, "Task1", excelLabel.Variable_Name, "M7Task3", excelLabel.Due_Date);
+				///////////////////////
+				ele = lp.getActivityTimeLineItem(projectName, PageName.Object2Page, ActivityTimeLineItem.New_Task, 10);
+				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task.toString(), action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO,"Clicked on "+ActivityTimeLineItem.New_Task.toString(),  YesNo.Yes);
+					ThreadSleep(1000);
+					ele = lp.getCrossButtonForAlreadySelectedItem(projectName, PageName.Object2Page, PageLabel.Name.toString(), true, primaryContact, action.SCROLLANDBOOLEAN, 10);
+					if (ele!=null) {
+						log(LogStatus.INFO, "successfully verified presence of "+primaryContact+" in name field",YesNo.No);
+					} else {
+						sa.assertTrue(false,"not found "+ primaryContact+" For Label "+PageLabel.Name);
+						log(LogStatus.SKIP,"not found "+ primaryContact+" For Label "+PageLabel.Name,YesNo.Yes);
+
+					}
+					gp.enterValueForTask(projectName, PageName.Object2Page, event1, 20);
+					if (click(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);	
+						ThreadSleep(5000);
+						flag=true;
+
+					}else {
+						sa.assertTrue(false,"Not Able to Click on Save Button For Task : "+task);
+						log(LogStatus.SKIP,"Not Able to Click on Save Button For Task : "+task,YesNo.Yes);	
+					}
+
+				}
+				else {
+					log(LogStatus.ERROR, "not able to click on "+ActivityTimeLineItem.New_Task.toString(), YesNo.Yes);
+					sa.assertTrue(false,"not able to click on "+ActivityTimeLineItem.New_Task.toString() );
+				}
+			
+				ele = lp.getActivityTimeLineItem2(projectName, PageName.Object3Page, ActivityTimeLineItem.Refresh, 10);
+				click(driver, ele, ActivityTimeLineItem.Refresh.toString(), action.BOOLEAN);
+				ThreadSleep(3000);
+				ele=cp.getlastTouchPointValue(projectName, 10);
+				expectedValue = M7Task1dueDate;
+				if (ele!=null) {
+					actualValue=ele.getText().trim();
+					if (cp.verifyDate(expectedValue, actualValue)) {
+						log(LogStatus.INFO,expectedValue+" successfully verified last touch point date For : "+primaryContact, YesNo.No);
+					}
+					else {
+						log(LogStatus.ERROR, "Last touch point value is not matched For : "+primaryContact+" Actual : "+actualValue+" /t Expected : "+expectedValue, YesNo.Yes);
+						sa.assertTrue(false,"last touch point value is not matched For : "+primaryContact+" Actual : "+actualValue+" /t Expected : "+expectedValue );
+					}
+				}else {
+					log(LogStatus.ERROR, expectedValue+" last touch point value is not visible For : "+primaryContact, YesNo.Yes);
+					sa.assertTrue(false,expectedValue+" last touch point value is not visible For : "+primaryContact );
+				}
+			} else {
+				sa.assertTrue(false,"Item Not Found : "+primaryContact+" For : "+tabObj2);
+				log(LogStatus.SKIP,"Item Not Found : "+primaryContact+" For : "+tabObj2,YesNo.Yes);
+			}
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2+" For : "+primaryContact);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2+" For : "+primaryContact,YesNo.Yes);
+		}	
+
+
+		if (cp.clickOnTab(projectName, tabObj2)) {
+			log(LogStatus.INFO,"Clicked on Tab : "+tabObj2+" For : "+secondaryContact,YesNo.No);
+			ThreadSleep(1000);
+			if (cp.clickOnAlreadyCreatedItem(projectName, secondaryContact, 30)) {
+				log(LogStatus.INFO,"Clicked on  : "+secondaryContact+" For : "+tabObj2,YesNo.No);
+				ThreadSleep(2000);
+				ele=cp.getlastTouchPointValue(projectName, 10);
+				expectedValue = M7Task2dueDate;
+				if (ele!=null) {
+					actualValue=ele.getText().trim();
+					if (cp.verifyDate(expectedValue, actualValue)) {
+						log(LogStatus.INFO,expectedValue+" successfully verified last touch point date For : "+secondaryContact, YesNo.No);
+					}
+					else {
+						log(LogStatus.ERROR, "Last touch point value is not matched For : "+secondaryContact+" Actual : "+actualValue+" /t Expected : "+expectedValue, YesNo.Yes);
+						sa.assertTrue(false,"last touch point value is not matched For : "+secondaryContact+" Actual : "+actualValue+" /t Expected : "+expectedValue );
+					}
+				}else {
+					log(LogStatus.ERROR, expectedValue+" last touch point value is not visible For : "+secondaryContact, YesNo.Yes);
+					sa.assertTrue(false,expectedValue+" last touch point value is not visible For : "+secondaryContact );
+				}
+			} else {
+				sa.assertTrue(false,"Item Not Found : "+secondaryContact+" For : "+tabObj2);
+				log(LogStatus.SKIP,"Item Not Found : "+secondaryContact+" For : "+tabObj2,YesNo.Yes);
+			}
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2+" For : "+secondaryContact);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2+" For : "+secondaryContact,YesNo.Yes);
+		}	
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M7Tc007_ChangeTheStausFromCompletedtoInProgressAndVerifyTheImpactOnTheLastTouchPointDate(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp = new TaskPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		boolean flag=false;
+		WebElement ele = null ;
+		String primaryContact=M7Contact3FName+" "+M7Contact3LName;
+		String task = M7Task2Subject;
+
+		PageName pageName = PageName.Object2Page;
+
+		if (cp.clickOnTab(projectName, tabObj2)) {
+			log(LogStatus.INFO,"Clicked on Tab : "+tabObj2+" For : "+primaryContact,YesNo.No);
+			if (cp.clickOnAlreadyCreatedItem(projectName, primaryContact, 30)) {
+				log(LogStatus.INFO,"Clicked on  : "+primaryContact+" For : "+tabObj2,YesNo.No);
+				if (click(driver, lp.getTaskLink(projectName, task), task, action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO,"Click on Task : "+task,YesNo.No);
+					if (click(driver, tp.getEditButton(projectName, 30), task, action.BOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Edit Button For : "+task, YesNo.No);	
+						if (tp.selectDropDownValueonTaskPopUp(projectName, pageName, PageLabel.Status.toString(), statusInProgess, action.BOOLEAN, 10)) {
+							log(LogStatus.INFO, "Selected : "+statusInProgess+" For Label : "+PageLabel.Status.toString(), YesNo.No);	
+							if (clickUsingJavaScript(driver, lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
+								ThreadSleep(5000);
+								flag=true;
+								String[][] fieldsWithValues= {{PageLabel.Status.toString(),statusInProgess}};
+								tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 30);	
+							}else {
+								log(LogStatus.ERROR, "save button is not clickable so task not Updated : "+task, YesNo.Yes);
+								sa.assertTrue(false,"save button is not clickable so task not Updated : "+task );
+							}
+
+						}else {
+							log(LogStatus.ERROR, "Not Able to Select : "+statusInProgess+" For Label : "+PageLabel.Status.toString(), YesNo.Yes);	
+							BaseLib.sa.assertTrue(false, "Not Able to Select : "+statusInProgess+" For Label : "+PageLabel.Status.toString());	
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Not Able to Click on Edit Button For : "+task, YesNo.Yes);
+						sa.assertTrue(false,"Not Able to Click on Edit Button For : "+task);
+					}
+
+				} else {
+					sa.assertTrue(false,"Not Able to Click on Task : "+task);
+					log(LogStatus.SKIP,"Not Able to Click on Task : "+task,YesNo.Yes);
+				}
+
+			} else {
+				sa.assertTrue(false,"Item Not Found : "+primaryContact+" For : "+tabObj2);
+				log(LogStatus.SKIP,"Item Not Found : "+primaryContact+" For : "+tabObj2,YesNo.Yes);
+			}
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2+" For : "+primaryContact);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2+" For : "+primaryContact,YesNo.Yes);
+		}	
+		
+		String actualValue=null;
+		String expectedValue = null;
+		String[] contactNames={M7Contact1FName+" "+M7Contact1LName,M7Contact2FName+" "+M7Contact2LName};
+		String contactName=null;
+		if (flag) {
+			for (int j = 0; j < contactNames.length; j++) {
+				contactName=contactNames[j];
+				if (cp.clickOnTab(projectName, tabObj2)) {
+					log(LogStatus.INFO,"Clicked on Tab : "+tabObj2+" For : "+contactName,YesNo.No);
+					ThreadSleep(1000);
+					if (cp.clickOnAlreadyCreatedItem(projectName, contactName, 30)) {
+						log(LogStatus.INFO,"Clicked on  : "+contactName+" For : "+tabObj2,YesNo.No);
+						ThreadSleep(2000);
+						if (j==0) {
+							expectedValue = M7Task3dueDate;
+						} else {
+							expectedValue = M7Task1dueDate;
+						}
+						ele=cp.getlastTouchPointValue(projectName, 10);
+						if (ele!=null) {
+							actualValue=ele.getText().trim();
+							if (cp.verifyDate(expectedValue, actualValue)) {
+								log(LogStatus.INFO,expectedValue+" successfully verified last touch point date For : "+contactName, YesNo.No);
+							}
+							else {
+								log(LogStatus.ERROR, "Last touch point value is not matched For : "+contactName+" Actual : "+actualValue+" /t Expected : "+expectedValue, YesNo.Yes);
+								sa.assertTrue(false,"last touch point value is not matched For : "+contactName+" Actual : "+actualValue+" /t Expected : "+expectedValue );
+							}
+						}else {
+							log(LogStatus.ERROR, expectedValue+" last touch point value is not visible For : "+contactName, YesNo.Yes);
+							sa.assertTrue(false,expectedValue+" last touch point value is not visible For : "+contactName );
+						}
+						
+					} else {
+						sa.assertTrue(false,"Item Not Found : "+contactName+" For : "+tabObj2);
+						log(LogStatus.SKIP,"Item Not Found : "+contactName+" For : "+tabObj2,YesNo.Yes);
+					}
+				} else {
+					sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2+" For : "+contactName);
+					log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2+" For : "+contactName,YesNo.Yes);
+				}	
+			}
+			
+		} else {
+			sa.assertTrue(false,"Task is not been updated so cannot check Last Touch Point for "+contactName);
+			log(LogStatus.SKIP,"Task is not been updated so cannot check Last Touch Point for "+contactName,YesNo.Yes);
+		}
+		
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M7Tc008_DeleteMATouchpointTask_1AndVerifyImpactOnLastTouchPointInContactPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		boolean flag=false;
+		WebElement ele = null ;
+		String primaryContact=M7Contact2FName+" "+M7Contact2LName;
+		String task = M7Task1Subject;
+		if (cp.clickOnTab(projectName, tabObj2)) {
+			log(LogStatus.INFO,"Clicked on Tab : "+tabObj2+" For : "+primaryContact,YesNo.No);
+			if (cp.clickOnAlreadyCreatedItem(projectName, primaryContact, 30)) {
+				log(LogStatus.INFO,"Clicked on  : "+primaryContact+" For : "+tabObj2,YesNo.No);
+				if (click(driver, lp.getTaskLink(projectName, task), task, action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO,"Click on Task : "+task,YesNo.No);
+					if (click(driver, cp.getDeleteButton(projectName, 20), "Delete Button", action.BOOLEAN)) {
+						log(LogStatus.INFO,"Able to Click on Delete button : "+task,YesNo.No);
+						ThreadSleep(2000);
+						if (click(driver, cp.getDeleteButtonPopUp(projectName, 20), "Delete Button", action.BOOLEAN)) {
+							log(LogStatus.INFO,"Able to Click on Delete button on PopUp : "+task,YesNo.No);
+							ThreadSleep(2000);
+							flag=true;
+						} else {
+							sa.assertTrue(false,"Able to Click on Delete button on PopUp : "+task);
+							log(LogStatus.SKIP,"Able to Click on Delete button on PopUp : "+task,YesNo.Yes);
+						}
+					} else {
+						sa.assertTrue(false,"Not Able to Click on Delete button : "+task);
+						log(LogStatus.SKIP,"Not Able to Click on Delete button : "+task,YesNo.Yes);
+					}
+				} else {
+					sa.assertTrue(false,"Not Able to Click on Task : "+task);
+					log(LogStatus.SKIP,"Not Able to Click on Task : "+task,YesNo.Yes);
+				}
+
+			} else {
+				sa.assertTrue(false,"Item Not Found : "+primaryContact+" For : "+tabObj2);
+				log(LogStatus.SKIP,"Item Not Found : "+primaryContact+" For : "+tabObj2,YesNo.Yes);
+			}
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2+" For : "+primaryContact);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2+" For : "+primaryContact,YesNo.Yes);
+		}	
+
+		String actualValue=null;
+		String expectedValue = null;
+		String[] contactNames={primaryContact};
+		String contactName=null;
+		if (flag) {
+			for (int j = 0; j < contactNames.length; j++) {
+				contactName=contactNames[j];
+				if (cp.clickOnTab(projectName, tabObj2)) {
+					log(LogStatus.INFO,"Clicked on Tab : "+tabObj2+" For : "+contactName,YesNo.No);
+					ThreadSleep(1000);
+					if (cp.clickOnAlreadyCreatedItem(projectName, contactName, 30)) {
+						log(LogStatus.INFO,"Clicked on  : "+contactName+" For : "+tabObj2,YesNo.No);
+						ThreadSleep(2000);
+						expectedValue=M7Task3dueDate;
+						ele=cp.getlastTouchPointValue(projectName, 10);
+						if (ele!=null) {
+							actualValue=ele.getText().trim();
+							if (cp.verifyDate(expectedValue, actualValue)) {
+								log(LogStatus.INFO,expectedValue+" successfully verified last touch point date For : "+contactName, YesNo.No);
+							}
+							else {
+								log(LogStatus.ERROR, "Last touch point value is not matched For : "+contactName+" Actual : "+actualValue+" /t Expected : "+expectedValue, YesNo.Yes);
+								sa.assertTrue(false,"last touch point value is not matched For : "+contactName+" Actual : "+actualValue+" /t Expected : "+expectedValue );
+							}
+						}else {
+							log(LogStatus.ERROR, expectedValue+" last touch point value is not visible For : "+contactName, YesNo.Yes);
+							sa.assertTrue(false,expectedValue+" last touch point value is not visible For : "+contactName );
+						}
+
+					} else {
+						sa.assertTrue(false,"Item Not Found : "+contactName+" For : "+tabObj2);
+						log(LogStatus.SKIP,"Item Not Found : "+contactName+" For : "+tabObj2,YesNo.Yes);
+					}
+				} else {
+					sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2+" For : "+contactName);
+					log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2+" For : "+contactName,YesNo.Yes);
+				}	
+			}
+
+		} else {
+			sa.assertTrue(false,"Task is not been deleted so cannot check Last Touch Point for "+contactName);
+			log(LogStatus.SKIP,"Task is not been deleted so cannot check Last Touch Point for "+contactName,YesNo.Yes);
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M7Tc009_UpdateTheMATouchpointTask_2TaskStatusAndVerifyTheImpact(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp = new TaskPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		boolean flag=false;
+		WebElement ele = null ;
+		String primaryContact=M7Contact3FName+" "+M7Contact3LName;
+		String task = M7Task2Subject;
+
+		PageName pageName = PageName.Object2Page;
+
+		if (cp.clickOnTab(projectName, tabObj2)) {
+			log(LogStatus.INFO,"Clicked on Tab : "+tabObj2+" For : "+primaryContact,YesNo.No);
+			if (cp.clickOnAlreadyCreatedItem(projectName, primaryContact, 30)) {
+				log(LogStatus.INFO,"Clicked on  : "+primaryContact+" For : "+tabObj2,YesNo.No);
+				if (click(driver, lp.getTaskLink(projectName, task), task, action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO,"Click on Task : "+task,YesNo.No);
+					if (click(driver, tp.getEditButton(projectName, 30), task, action.BOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Edit Button For : "+task, YesNo.No);	
+						if (tp.selectDropDownValueonTaskPopUp(projectName, pageName, PageLabel.Status.toString(), statusCompleted, action.BOOLEAN, 10)) {
+							log(LogStatus.INFO, "Selected : "+statusCompleted+" For Label : "+PageLabel.Status.toString(), YesNo.No);	
+							if (clickUsingJavaScript(driver, lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
+								ThreadSleep(5000);
+								flag=true;
+								String[][] fieldsWithValues= {{PageLabel.Status.toString(),statusCompleted}};
+								tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 30);	
+							}else {
+								log(LogStatus.ERROR, "save button is not clickable so task not Updated : "+task, YesNo.Yes);
+								sa.assertTrue(false,"save button is not clickable so task not Updated : "+task );
+							}
+
+						}else {
+							log(LogStatus.ERROR, "Not Able to Select : "+statusCompleted+" For Label : "+PageLabel.Status.toString(), YesNo.Yes);	
+							BaseLib.sa.assertTrue(false, "Not Able to Select : "+statusCompleted+" For Label : "+PageLabel.Status.toString());	
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Not Able to Click on Edit Button For : "+task, YesNo.Yes);
+						sa.assertTrue(false,"Not Able to Click on Edit Button For : "+task);
+					}
+
+				} else {
+					sa.assertTrue(false,"Not Able to Click on Task : "+task);
+					log(LogStatus.SKIP,"Not Able to Click on Task : "+task,YesNo.Yes);
+				}
+
+			} else {
+				sa.assertTrue(false,"Item Not Found : "+primaryContact+" For : "+tabObj2);
+				log(LogStatus.SKIP,"Item Not Found : "+primaryContact+" For : "+tabObj2,YesNo.Yes);
+			}
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2+" For : "+primaryContact);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2+" For : "+primaryContact,YesNo.Yes);
+		}	
+		
+		String actualValue=null;
+		String expectedValue = null;
+		String[] contactNames={M7Contact1FName+" "+M7Contact1LName,M7Contact3FName+" "+M7Contact3LName};
+		String contactName=null;
+		if (flag) {
+			for (int j = 0; j < contactNames.length; j++) {
+				contactName=contactNames[j];
+				if (cp.clickOnTab(projectName, tabObj2)) {
+					log(LogStatus.INFO,"Clicked on Tab : "+tabObj2+" For : "+contactName,YesNo.No);
+					ThreadSleep(1000);
+					if (cp.clickOnAlreadyCreatedItem(projectName, contactName, 30)) {
+						log(LogStatus.INFO,"Clicked on  : "+contactName+" For : "+tabObj2,YesNo.No);
+						ThreadSleep(2000);
+						expectedValue = M7Task2dueDate;
+						ele=cp.getlastTouchPointValue(projectName, 10);
+						if (ele!=null) {
+							actualValue=ele.getText().trim();
+							if (cp.verifyDate(expectedValue, actualValue)) {
+								log(LogStatus.INFO,expectedValue+" successfully verified last touch point date For : "+contactName, YesNo.No);
+							}
+							else {
+								log(LogStatus.ERROR, "Last touch point value is not matched For : "+contactName+" Actual : "+actualValue+" /t Expected : "+expectedValue, YesNo.Yes);
+								sa.assertTrue(false,"last touch point value is not matched For : "+contactName+" Actual : "+actualValue+" /t Expected : "+expectedValue );
+							}
+						}else {
+							log(LogStatus.ERROR, expectedValue+" last touch point value is not visible For : "+contactName, YesNo.Yes);
+							sa.assertTrue(false,expectedValue+" last touch point value is not visible For : "+contactName );
+						}
+						
+					} else {
+						sa.assertTrue(false,"Item Not Found : "+contactName+" For : "+tabObj2);
+						log(LogStatus.SKIP,"Item Not Found : "+contactName+" For : "+tabObj2,YesNo.Yes);
+					}
+				} else {
+					sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2+" For : "+contactName);
+					log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2+" For : "+contactName,YesNo.Yes);
+				}	
+			}
+			
+		} else {
+			sa.assertTrue(false,"Task is not been updated so cannot check Last Touch Point for "+contactName);
+			log(LogStatus.SKIP,"Task is not been updated so cannot check Last Touch Point for "+contactName,YesNo.Yes);
+		}
+		
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M7Tc010_DeleteNewlyUpdatedTaskAndVerifyTheImpactOnLastTouchPointInContactPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		boolean flag=false;
+		WebElement ele = null ;
+		String primaryContact=M7Contact3FName+" "+M7Contact3LName;
+		String task = M7Task2Subject;
+		if (cp.clickOnTab(projectName, tabObj2)) {
+			log(LogStatus.INFO,"Clicked on Tab : "+tabObj2+" For : "+primaryContact,YesNo.No);
+			if (cp.clickOnAlreadyCreatedItem(projectName, primaryContact, 30)) {
+				log(LogStatus.INFO,"Clicked on  : "+primaryContact+" For : "+tabObj2,YesNo.No);
+				if (click(driver, lp.getTaskLink(projectName, task), task, action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO,"Click on Task : "+task,YesNo.No);
+					if (click(driver, cp.getDeleteButton(projectName, 20), "Delete Button", action.BOOLEAN)) {
+						log(LogStatus.INFO,"Able to Click on Delete button : "+task,YesNo.No);
+						ThreadSleep(2000);
+						if (click(driver, cp.getDeleteButtonPopUp(projectName, 20), "Delete Button", action.BOOLEAN)) {
+							log(LogStatus.INFO,"Able to Click on Delete button on PopUp : "+task,YesNo.No);
+							ThreadSleep(2000);
+							flag=true;
+						} else {
+							sa.assertTrue(false,"Able to Click on Delete button on PopUp : "+task);
+							log(LogStatus.SKIP,"Able to Click on Delete button on PopUp : "+task,YesNo.Yes);
+						}
+					} else {
+						sa.assertTrue(false,"Not Able to Click on Delete button : "+task);
+						log(LogStatus.SKIP,"Not Able to Click on Delete button : "+task,YesNo.Yes);
+					}
+				} else {
+					sa.assertTrue(false,"Not Able to Click on Task : "+task);
+					log(LogStatus.SKIP,"Not Able to Click on Task : "+task,YesNo.Yes);
+				}
+
+			} else {
+				sa.assertTrue(false,"Item Not Found : "+primaryContact+" For : "+tabObj2);
+				log(LogStatus.SKIP,"Item Not Found : "+primaryContact+" For : "+tabObj2,YesNo.Yes);
+			}
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2+" For : "+primaryContact);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2+" For : "+primaryContact,YesNo.Yes);
+		}	
+
+		String actualValue=null;
+		String expectedValue = null;
+		String[] contactNames={primaryContact,M7Contact1FName+" "+M7Contact1LName};
+		String contactName=null;
+		if (flag) {
+			for (int j = 0; j < contactNames.length; j++) {
+				contactName=contactNames[j];
+				if (cp.clickOnTab(projectName, tabObj2)) {
+					log(LogStatus.INFO,"Clicked on Tab : "+tabObj2+" For : "+contactName,YesNo.No);
+					ThreadSleep(1000);
+					if (cp.clickOnAlreadyCreatedItem(projectName, contactName, 30)) {
+						log(LogStatus.INFO,"Clicked on  : "+contactName+" For : "+tabObj2,YesNo.No);
+						ThreadSleep(2000);
+						ele=cp.getlastTouchPointValue(projectName, 10);
+						if (ele!=null) {
+							actualValue=ele.getText().trim();
+							if (j==0) {
+								expectedValue="";
+								if (actualValue.isEmpty() || actualValue.equals("")) {
+									log(LogStatus.INFO,"Last Touch Point is Blank for "+contactName, YesNo.No);
+								}
+								else {
+									log(LogStatus.ERROR, "Last Touch Point should be Blank for "+contactName+" Actual Last Touch Point Date : "+actualValue, YesNo.Yes);
+									sa.assertTrue(false,"Last Touch Point should be Blank for "+contactName+" Actual Last Touch Point Date : "+actualValue );
+								}
+							} else {
+								expectedValue=M7Task3dueDate;
+								if (cp.verifyDate(expectedValue, actualValue)) {
+									log(LogStatus.INFO,expectedValue+" successfully verified last touch point date For : "+contactName, YesNo.No);
+								}
+								else {
+									log(LogStatus.ERROR, "Last touch point value is not matched For : "+contactName+" Actual : "+actualValue+" /t Expected : "+expectedValue, YesNo.Yes);
+									sa.assertTrue(false,"last touch point value is not matched For : "+contactName+" Actual : "+actualValue+" /t Expected : "+expectedValue );
+								}
+							}
+						}else {
+							log(LogStatus.ERROR, expectedValue+" last touch point value is not visible For : "+contactName, YesNo.Yes);
+							sa.assertTrue(false,expectedValue+" last touch point value is not visible For : "+contactName );
+						}
+
+					} else {
+						sa.assertTrue(false,"Item Not Found : "+contactName+" For : "+tabObj2);
+						log(LogStatus.SKIP,"Item Not Found : "+contactName+" For : "+tabObj2,YesNo.Yes);
+					}
+				} else {
+					sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2+" For : "+contactName);
+					log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2+" For : "+contactName,YesNo.Yes);
+				}	
+			}
+
+		} else {
+			sa.assertTrue(false,"Task is not been deleted so cannot check Last Touch Point for "+contactName);
+			log(LogStatus.SKIP,"Task is not been deleted so cannot check Last Touch Point for "+contactName,YesNo.Yes);
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M7Tc011_RestoreTheDeletedTaskMATouchpointTask_1AndVerifyTheImpactOnLastTouchPointInContactPage(String projectName) {
+	
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		WebElement ele;
+		boolean flag=false;
+		String restoreItem = M7Task1Subject;
+		if (lp.restoreValueFromRecycleBin(projectName, restoreItem)) {
+			log(LogStatus.INFO,"Able to restore item from Recycle Bin "+restoreItem,YesNo.Yes);
+			flag=true;
+		} else {
+			sa.assertTrue(false,"Not Able to restore item from Recycle Bin "+restoreItem);
+			log(LogStatus.SKIP,"Not Able to restore item from Recycle Bin "+restoreItem,YesNo.Yes);
+	
+		}
+		String actualValue=null;
+		String expectedValue = null;
+		String contactName=M7Contact2FName+" "+M7Contact2LName;
+		if (flag) {
+				if (cp.clickOnTab(projectName, tabObj2)) {
+					log(LogStatus.INFO,"Clicked on Tab : "+tabObj2+" For : "+contactName,YesNo.No);
+					ThreadSleep(1000);
+					if (cp.clickOnAlreadyCreatedItem(projectName, contactName, 30)) {
+						log(LogStatus.INFO,"Clicked on  : "+contactName+" For : "+tabObj2,YesNo.No);
+						ThreadSleep(2000);
+						expectedValue=M7Task1dueDate;
+						ele=cp.getlastTouchPointValue(projectName, 10);
+						if (ele!=null) {
+							actualValue=ele.getText().trim();
+							if (cp.verifyDate(expectedValue, actualValue)) {
+								log(LogStatus.INFO,expectedValue+" successfully verified last touch point date For : "+contactName, YesNo.No);
+							}
+							else {
+								log(LogStatus.ERROR, "Last touch point value is not matched For : "+contactName+" Actual : "+actualValue+" /t Expected : "+expectedValue, YesNo.Yes);
+								sa.assertTrue(false,"last touch point value is not matched For : "+contactName+" Actual : "+actualValue+" /t Expected : "+expectedValue );
+							}
+						}else {
+							log(LogStatus.ERROR, expectedValue+" last touch point value is not visible For : "+contactName, YesNo.Yes);
+							sa.assertTrue(false,expectedValue+" last touch point value is not visible For : "+contactName );
+						}
+
+					} else {
+						sa.assertTrue(false,"Item Not Found : "+contactName+" For : "+tabObj2);
+						log(LogStatus.SKIP,"Item Not Found : "+contactName+" For : "+tabObj2,YesNo.Yes);
+					}
+				} else {
+					sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2+" For : "+contactName);
+					log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2+" For : "+contactName,YesNo.Yes);
+				}	
+			
+
+		} else {
+			sa.assertTrue(false,"Task is not been restored so cannot check Last Touch Point for "+contactName);
+			log(LogStatus.SKIP,"Task is not been restored so cannot check Last Touch Point for "+contactName,YesNo.Yes);
+		}
+		
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
 	
 	
 }
