@@ -3,6 +3,7 @@ package com.navatar.pageObjects;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.internal.MouseAction.Button;
 import org.openqa.selenium.support.FindBy;
 
 import com.navatar.generic.EnumConstants.PageName;
@@ -1383,13 +1384,32 @@ public List<WebElement> sdgGridSelectVisibleFieldsListInManageFieldPopUp() {
 
 
 public WebElement sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons saveCancelBtn, int timeOut) {
-	
-	
-	String xpath="//*//button[@title='"+saveCancelBtn+"' or text()='"+saveCancelBtn+"']";
+	String xpath="";
+	if(saveCancelBtn.toString().equalsIgnoreCase(Buttons.close.toString())) {
+		xpath="(//*[contains(text(),'Select Fields to Display')]/..//button[@title='Close' or text()='Close'])[2]";
+	}else if (saveCancelBtn.toString().equalsIgnoreCase(Buttons.Move_Down.toString()) || saveCancelBtn.toString().equalsIgnoreCase(Buttons.Move_Up.toString()) ||
+			saveCancelBtn.toString().equalsIgnoreCase(Buttons.Add.toString())) {
+		xpath="//button[@title='"+saveCancelBtn+"']";
+	}else {
+		xpath="//*//button[@title='"+saveCancelBtn+"' or text()='"+saveCancelBtn+"']";
+	}
 	WebElement ele = FindElement(driver, xpath, "SDG grid SelectFieldToDisplay popup  "+saveCancelBtn, action.SCROLLANDBOOLEAN, timeOut);
 	
 	return isDisplayed(driver, ele, "Visibility", timeOut, "SDG grid SelectFieldToDisplay popup  "+saveCancelBtn);
 }
+
+
+public WebElement sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp( int timeOut) {
+	String xpath="";
+	xpath="//*[contains(text(),'Field Finder')]/..//select";
+	WebElement ele = FindElement(driver, xpath, "sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp", action.SCROLLANDBOOLEAN, timeOut);
+	
+	return isDisplayed(driver, ele, "Visibility", timeOut, "sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp");
+}
+
+
+
+
 
 
 public boolean clickOnEditButtonOnSDGGridOnHomePage(String projectName, String dataName, String field,int timeOut) {
@@ -1411,7 +1431,11 @@ public WebElement sdgGridSideIconsForLightTheme(SDGGridName sdgGridName,SDGGridS
 	if(sdgGridSideIcons.toString().equalsIgnoreCase(SDGGridSideIcons.Toggle_Filters.toString())) {
 		xpath="//div[contains(@data-component-id,'navpeII_sdg')]//div/div[contains(@class,'sdgborder')]//a[text()='"+sdgGridName+"']/../../../following-sibling::div//button[contains(@title,'"+sdgGridSideIcons+"')]";
 	}else if(sdgGridSideIcons.toString().equalsIgnoreCase(SDGGridSideIcons.Side_DropDOwnButtonforLightTheme.toString())){
+		xpath="//div[contains(@data-component-id,'navpeII_sdg')]//div/div[contains(@class,'sdgborder')]//a[text()='"+sdgGridName+"']/../../../following-sibling::div//span[text()='Show menu']/..";
+	
+	}else if(sdgGridSideIcons.toString().equalsIgnoreCase(SDGGridSideIcons.Side_DropDOwnButtonforStandardTheme.toString())){
 		xpath="//div[contains(@data-component-id,'navpeII_sdg')]//div/div[contains(@class,'sdgborder')]//a[text()='"+sdgGridName+"']/../../../following-sibling::div//div//span[text()='More options']/..";
+	
 	}else {
 		xpath="//div[contains(@data-component-id,'navpeII_sdg')]//div/div[contains(@class,'sdgborder')]//a[text()='"+sdgGridName+"']/../../../following-sibling::div//div//button/following-sibling::div//a/span[contains(text(),'"+sdgGridSideIcons+"')]";
 	}
