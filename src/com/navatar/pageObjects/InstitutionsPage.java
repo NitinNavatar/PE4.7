@@ -41,8 +41,19 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 	 */
 	public WebElement getContinueOrNextBtn(String environment,String mode,int timeOut) {
 		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
-			return isDisplayed(driver, continueBtnClassic, "Visibility", timeOut, "Continue Button Classic");	
+			return isDisplayed(driver, continueBtnClassic, "Visibility", timeOut, "Next Button Classic");	
 		}else{
+			
+			List<WebElement> eleList = FindElements(driver, "//span[text()='Next']", "Next Button");
+			for (WebElement webElement : eleList) {
+			webElement=isDisplayed(driver, webElement, "Visibility", 2, "Next Button lightning");
+			if (webElement!=null) {
+					return webElement;
+				} else {
+
+				}
+			}
+			
 			return isDisplayed(driver, nextBtnLighting, "Visibility", timeOut, "Next Button Lighting");
 		}
 		

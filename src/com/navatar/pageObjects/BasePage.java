@@ -3818,9 +3818,17 @@ public abstract class BasePage extends BaseLib {
 	@FindBy(xpath = "//span[text()='Due Date']/..//following-sibling::div//input")
 	private WebElement dueDateTextBoxInNewTask;
 	
+	@FindBy(xpath = "//label[text()='Due Date']/..//input")
+	private WebElement dueDateTextBoxInNewTask1;
+	
 	public WebElement getdueDateTextBoxInNewTask(String projectName,int timeOut) {
+		WebElement ele = isDisplayed(driver, dueDateTextBoxInNewTask, "Visibility", timeOut, "dueDateTextBoxInNewTask");;
+		if (ele!=null) {
+			return ele;
+		} else {
 
-		return isDisplayed(driver, dueDateTextBoxInNewTask, "Visibility", timeOut, "dueDateTextBoxInNewTask");
+		}
+		return isDisplayed(driver, dueDateTextBoxInNewTask1, "Visibility", timeOut, "dueDateTextBoxInNewTask");
 	}
 	
 	public String returnXpathOfDropdownInTaskPage(String field) {

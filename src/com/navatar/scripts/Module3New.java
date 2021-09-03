@@ -357,8 +357,8 @@ public class Module3New extends BaseLib {
 			}
 			
 		} else {
-			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object3Tab);
-			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object3Tab,YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object1Tab);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object1Tab,YesNo.Yes);
 		}
 		if(bp.clickOnTab(projectName,TabName.PartnershipsTab)) {
 			if(ins.createPartnership(environment,mode,M3PartnerShip1,M3Fund1)) {
