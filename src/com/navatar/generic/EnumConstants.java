@@ -1029,7 +1029,17 @@ public static enum PermissionType{
 	}
 		
 	public static enum Buttons{
-		SaveNext,SaveClose,Cancel,Cross,Delete_Photo,close,Save,Apply;	  
+		SaveNext,SaveClose,Cancel,Cross,Delete_Photo,close,Save,Apply,Move_Up{
+			@Override
+			public String toString() {
+				return "Move up";
+			}
+		},Move_Down{
+			@Override
+			public String toString() {
+				return "Move down";
+			}
+		}, Add
 	};
 	
 	public static enum ProjectLabel{
@@ -1479,7 +1489,7 @@ public static enum PermissionType{
 			public String toString() {
 				return "Reload";
 			}
-    	},Side_DropDOwnButtonforLightTheme,Setup;
+    	},Side_DropDOwnButtonforLightTheme,Setup, Side_DropDOwnButtonforStandardTheme;
     	
     	
     }
