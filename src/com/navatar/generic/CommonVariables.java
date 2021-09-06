@@ -26,7 +26,7 @@ import com.navatar.scripts.Module4;
 public class CommonVariables {
 //	public static String abc;
 
-	public static String URL,todaysDate,tomorrowsDate,todaysDateEurope,todaysDateddmm,todaysDateSingleDigit,todaysDateNewZealand,yesterdaysDate;
+	public static String URL,todaysDate,todaysDate1,tomorrowsDate,todaysDateEurope,todaysDateddmm,todaysDateSingleDigit,todaysDateNewZealand,yesterdaysDate;
 	public static String browserToLaunch;
 	public static String Smoke_TWINS1Name,Smoke_TWINS1RecordType,Smoke_TWINS1Status;
 	public static String Smoke_CDINS1Name,Smoke_CDINS1RecordType,Smoke_CDINS1Status;
@@ -283,6 +283,7 @@ public class CommonVariables {
 	public static String M7Task1Subject,M7Task1dueDate,M7Task1Status,M7Task1Priority,M7Task1MeetingType;
 	public static String M7Task2Subject,M7Task2dueDate,M7Task2Status,M7Task2Priority,M7Task2MeetingType;
 	public static String M7Task3Subject,M7Task3dueDate,M7Task3Status,M7Task3Priority,M7Task3MeetingType;
+	public static String M7Task4Subject,M7Task4dueDate,M7Task4Status,M7Task4Priority,M7Task4MeetingType;
 	
 	public CommonVariables(Object obj) {
 		//TODO Auto-generated constructor stub
@@ -316,6 +317,7 @@ public class CommonVariables {
 
 		tomorrowsDate=previousOrForwardDate(1, "M/d/YYYY");
 		yesterdaysDate=previousOrForwardDate(-1, "M/d/YYYY");
+		todaysDate1=previousOrForwardDate(0, "M/d/YYYY");
 
 		AdminUserFirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_First_Name);
 		AdminUserLastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_Last_Name);
@@ -1159,6 +1161,12 @@ public class CommonVariables {
 			M7Task3Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task3", excelLabel.Status);
 			M7Task3dueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task3", excelLabel.Due_Date);
 			M7Task3MeetingType=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task3", excelLabel.Meeting_Type);
+			
+			M7Task4Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task4", excelLabel.Subject);
+			M7Task4Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task4", excelLabel.Status);
+			M7Task4dueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task4", excelLabel.Due_Date);
+			M7Task4MeetingType=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task4", excelLabel.Meeting_Type);
+			
 
 			
 		}
