@@ -301,7 +301,8 @@ public class CommonVariables {
 	
 
 	public static String M7Event1Subject,M7Event1StartDate,M7Event1StartTime,M7Event1EndDate,M7Event1EndTime;
-	
+	public static String M7Event2Subject,M7Event2StartDate,M7Event2StartTime,M7Event2EndDate,M7Event2EndTime;
+	public static String M7Event3Subject,M7Event3StartDate,M7Event3StartTime,M7Event3EndDate,M7Event3EndTime;
 	
 	public CommonVariables(Object obj) {
 		//TODO Auto-generated constructor stub
@@ -1260,6 +1261,19 @@ public class CommonVariables {
 			M7Event1StartTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event1", excelLabel.Start_Time);
 			M7Event1EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event1", excelLabel.End_Date);
 			M7Event1EndTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event1", excelLabel.End_Time);
+			
+			M7Event2Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event2", excelLabel.Subject);
+			M7Event2StartDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event2", excelLabel.Start_Date);
+			M7Event2StartTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event2", excelLabel.Start_Time);
+			M7Event2EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event2", excelLabel.End_Date);
+			M7Event2EndTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event2", excelLabel.End_Time);
+			
+			M7Event3Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event3", excelLabel.Subject);
+			M7Event3StartDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event3", excelLabel.Start_Date);
+			M7Event3StartTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event3", excelLabel.Start_Time);
+			M7Event3EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event3", excelLabel.End_Date);
+			M7Event3EndTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event3", excelLabel.End_Time);
+			
 			
 		}
 
