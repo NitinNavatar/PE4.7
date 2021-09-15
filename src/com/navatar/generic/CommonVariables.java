@@ -286,6 +286,10 @@ public class CommonVariables {
 	public static String M7Contact9FName,M7Contact9LName,M7Contact9EmailID,M7Contact9RecordType;
 	public static String M7Contact10FName,M7Contact10LName,M7Contact10EmailID,M7Contact10RecordType;
 	public static String M7Contact11FName,M7Contact11LName,M7Contact11EmailID,M7Contact11RecordType;
+	public static String M7Contact12FName,M7Contact12LName,M7Contact12EmailID,M7Contact12RecordType;
+	public static String M7Contact13FName,M7Contact13LName,M7Contact13EmailID,M7Contact13RecordType;
+	public static String M7Contact14FName,M7Contact14LName,M7Contact14EmailID,M7Contact14RecordType;
+	public static String M7Contact15FName,M7Contact15LName,M7Contact15EmailID,M7Contact15RecordType;
 	
 	
 	public static String M7Task1Subject,M7Task1dueDate,M7Task1Status,M7Task1Priority,M7Task1MeetingType;
@@ -298,11 +302,19 @@ public class CommonVariables {
 	public static String M7Task8Subject,M7Task8dueDate,M7Task8Status,M7Task8Priority,M7Task8MeetingType;
 	public static String M7Task9Subject,M7Task9dueDate,M7Task9Status,M7Task9Priority,M7Task9MeetingType;
 	public static String M7Task10Subject,M7Task10dueDate,M7Task10Status,M7Task10Priority,M7Task10MeetingType;
+	public static String M7Task11Subject,M7Task11dueDate,M7Task11Status,M7Task11Priority,M7Task11MeetingType;
+	public static String M7Task12Subject,M7Task12dueDate,M7Task12Status,M7Task12Priority,M7Task12MeetingType;
+	public static String M7Task13Subject,M7Task13dueDate,M7Task13Status,M7Task13Priority,M7Task13MeetingType;
+	public static String M7Task14Subject,M7Task14dueDate,M7Task14Status,M7Task14Priority,M7Task14MeetingType;
 	
 
 	public static String M7Event1Subject,M7Event1StartDate,M7Event1StartTime,M7Event1EndDate,M7Event1EndTime;
 	public static String M7Event2Subject,M7Event2StartDate,M7Event2StartTime,M7Event2EndDate,M7Event2EndTime;
 	public static String M7Event3Subject,M7Event3StartDate,M7Event3StartTime,M7Event3EndDate,M7Event3EndTime;
+	public static String M7Event4Subject,M7Event4StartDate,M7Event4StartTime,M7Event4EndDate,M7Event4EndTime;
+	public static String M7Event5Subject,M7Event5StartDate,M7Event5StartTime,M7Event5EndDate,M7Event5EndTime;
+	public static String M7Event6Subject,M7Event6StartDate,M7Event6StartTime,M7Event6EndDate,M7Event6EndTime;
+	public static String M7Event7Subject,M7Event7StartDate,M7Event7StartTime,M7Event7EndDate,M7Event7EndTime;
 	
 	public CommonVariables(Object obj) {
 		//TODO Auto-generated constructor stub
@@ -1205,6 +1217,26 @@ public class CommonVariables {
 			M7Contact11EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7CON11", excelLabel.Contact_EmailId);
 			M7Contact11RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7CON11", excelLabel.Record_Type);
 
+			M7Contact12FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7CON12", excelLabel.Contact_FirstName);
+			M7Contact12LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7CON12", excelLabel.Contact_LastName);
+			M7Contact12EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7CON12", excelLabel.Contact_EmailId);
+			M7Contact12RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7CON12", excelLabel.Record_Type);
+
+			M7Contact13FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7CON13", excelLabel.Contact_FirstName);
+			M7Contact13LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7CON13", excelLabel.Contact_LastName);
+			M7Contact13EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7CON13", excelLabel.Contact_EmailId);
+			M7Contact13RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7CON13", excelLabel.Record_Type);
+
+			M7Contact14FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7CON14", excelLabel.Contact_FirstName);
+			M7Contact14LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7CON14", excelLabel.Contact_LastName);
+			M7Contact14EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7CON14", excelLabel.Contact_EmailId);
+			M7Contact14RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7CON14", excelLabel.Record_Type);
+
+			M7Contact15FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7CON15", excelLabel.Contact_FirstName);
+			M7Contact15LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7CON15", excelLabel.Contact_LastName);
+			M7Contact15EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7CON15", excelLabel.Contact_EmailId);
+			M7Contact15RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7CON15", excelLabel.Record_Type);
+
 			
 			M7Task1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task1", excelLabel.Subject);
 			M7Task1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task1", excelLabel.Status);
@@ -1255,7 +1287,28 @@ public class CommonVariables {
 			M7Task10Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task10", excelLabel.Status);
 			M7Task10dueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task10", excelLabel.Due_Date);
 			M7Task10MeetingType=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task10", excelLabel.Meeting_Type);
-		
+			
+			M7Task11Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task11", excelLabel.Subject);
+			M7Task11Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task11", excelLabel.Status);
+			M7Task11dueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task11", excelLabel.Due_Date);
+			M7Task11MeetingType=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task11", excelLabel.Meeting_Type);
+			
+			M7Task12Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task12", excelLabel.Subject);
+			M7Task12Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task12", excelLabel.Status);
+			M7Task12dueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task12", excelLabel.Due_Date);
+			M7Task12MeetingType=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task12", excelLabel.Meeting_Type);
+			
+			M7Task13Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task13", excelLabel.Subject);
+			M7Task13Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task13", excelLabel.Status);
+			M7Task13dueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task13", excelLabel.Due_Date);
+			M7Task13MeetingType=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task13", excelLabel.Meeting_Type);
+			
+			M7Task14Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task14", excelLabel.Subject);
+			M7Task14Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task14", excelLabel.Status);
+			M7Task14dueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task14", excelLabel.Due_Date);
+			M7Task14MeetingType=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M7Task14", excelLabel.Meeting_Type);
+
+			
 			M7Event1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event1", excelLabel.Subject);
 			M7Event1StartDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event1", excelLabel.Start_Date);
 			M7Event1StartTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event1", excelLabel.Start_Time);
@@ -1274,6 +1327,29 @@ public class CommonVariables {
 			M7Event3EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event3", excelLabel.End_Date);
 			M7Event3EndTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event3", excelLabel.End_Time);
 			
+			M7Event4Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event4", excelLabel.Subject);
+			M7Event4StartDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event4", excelLabel.Start_Date);
+			M7Event4StartTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event4", excelLabel.Start_Time);
+			M7Event4EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event4", excelLabel.End_Date);
+			M7Event4EndTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event4", excelLabel.End_Time);
+			
+			M7Event5Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event5", excelLabel.Subject);
+			M7Event5StartDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event5", excelLabel.Start_Date);
+			M7Event5StartTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event5", excelLabel.Start_Time);
+			M7Event5EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event5", excelLabel.End_Date);
+			M7Event5EndTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event5", excelLabel.End_Time);
+			
+			M7Event6Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event6", excelLabel.Subject);
+			M7Event6StartDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event6", excelLabel.Start_Date);
+			M7Event6StartTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event6", excelLabel.Start_Time);
+			M7Event6EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event6", excelLabel.End_Date);
+			M7Event6EndTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event6", excelLabel.End_Time);
+			
+			M7Event7Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event7", excelLabel.Subject);
+			M7Event7StartDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event7", excelLabel.Start_Date);
+			M7Event7StartTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event7", excelLabel.Start_Time);
+			M7Event7EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event7", excelLabel.End_Date);
+			M7Event7EndTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event7", excelLabel.End_Time);
 			
 		}
 
