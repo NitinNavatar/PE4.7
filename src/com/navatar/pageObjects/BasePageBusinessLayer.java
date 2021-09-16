@@ -1791,7 +1791,7 @@ public boolean verifyDate(String dateToCheck, String valueOnPage) {
 		String[] values = valueOnPage.split("/");
 		appLog.info("Excel Date : "+dateToCheck);
 		appLog.info("Page Date : "+valueOnPage);
-		if (dates[0].contains(values[0]) && dates[1].contains(values[1]) && dates[2].contains(values[2])) {
+		if (dates[0].contains(values[0]) && dates[1].contains(values[1]) && (dates[2].contains(values[2]) || values[2].contains(dates[2]))) {
 			log(LogStatus.INFO, "Value matched "+dateToCheck+" For Grid Data", YesNo.No);
 			return true;
 		} else {
@@ -3594,5 +3594,24 @@ public boolean restoreValueFromRecycleBin(String projectName,String restoreItem)
 	}
 	return flag;
 }
+
+
+public boolean clickAnyCellonCalender(String projectName){
+	boolean flag=false;
+	if (click(driver, getCalenderIcon(30), "View Calender Icon", action.SCROLLANDBOOLEAN)) {
+		log(LogStatus.INFO,"Click on View Calender Icon",YesNo.No);
+		if (click(driver, getCalenderCellIcon(30), "View Calender Icon", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO,"Click on Calender Cell Icon",YesNo.No);
+			ThreadSleep(5000);
+			flag=true;
+		} else {
+			log(LogStatus.SKIP,"Not Able to Click on Calender Cell Icon",YesNo.Yes);
+		}
+	} else {
+		log(LogStatus.SKIP,"Not Able to Click on View Calender Icon",YesNo.Yes);
+	}
+	return flag;
+}
+
 
 }

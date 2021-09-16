@@ -103,6 +103,7 @@ public class Module3New extends BaseLib {
 	// Fund CReation Popupoen without any rdio button i.e no record type should be selected
 	// Fund and Fund of Funds record type should be deleted
 	// Custom object should not present
+	//Delete Navigation record type & custom navigation from Utility Items.
 	
 	@Parameters({ "projectName"})
 	@Test

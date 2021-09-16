@@ -5228,4 +5228,25 @@ public abstract class BasePage extends BaseLib {
 
 	}
 	
+	@FindBy(xpath="//*[text()='View Calendar']")
+	private WebElement calenderIcon;
+
+	/**
+	 * @return the calenderIcon
+	 */
+	public WebElement getCalenderIcon(int timeOut) {
+		return isDisplayed(driver, calenderIcon, "Visibility", timeOut, "View Calendar");
+	}
+	
+	@FindBy(xpath="//div[@class='eventList']")
+	private WebElement calenderCellIcon;
+
+	/**
+	 * @return the emailProspectFolderDropDownList
+	 */
+	public WebElement getCalenderCellIcon(int timeOut) {
+		return isDisplayed(driver, calenderCellIcon, "Visibility", timeOut, "Calender Cell Icon");
+	}
+	
+	
 }
