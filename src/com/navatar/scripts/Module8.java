@@ -18,13 +18,17 @@ import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.SmokeCommonVariables;
 import com.navatar.generic.EnumConstants.EditPageLabel;
 import com.navatar.generic.EnumConstants.GlobalActionItem;
+import com.navatar.generic.EnumConstants.Mode;
+import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.RelatedTab;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
+import com.navatar.generic.EnumConstants.customObjectLabel;
 import com.navatar.generic.EnumConstants.excelLabel;
+import com.navatar.generic.EnumConstants.object;
 
 import static com.navatar.generic.EnumConstants.*;
 import static com.navatar.generic.SmokeCommonVariables.AdminUserFirstName;
@@ -55,8 +59,10 @@ import com.navatar.pageObjects.CustomObjPageBusinessLayer;
 import com.navatar.pageObjects.EditPageBusinessLayer;
 import com.navatar.pageObjects.GlobalActionPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
+import com.navatar.pageObjects.HomePageErrorMessage;
 import com.navatar.pageObjects.InstitutionsPageBusinessLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
+import com.navatar.pageObjects.NavigationPageBusineesLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.navatar.pageObjects.TaskPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
@@ -3838,5 +3844,1068 @@ public class Module8 extends BaseLib {
 	sa.assertAll();
 	}
 	
+	@Parameters({ "projectName"})
+	@Test
+	public void M8Tc037_verifySaveCancelButtonFunctionality(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		String[][] userAndPassword = {{superAdminUserName,adminPassword},{crmUser1EmailID,adminPassword}};
+		for (String[] userPass : userAndPassword) {
+		lp.CRMLogin(userPass[0], userPass[1]);
+			ThreadSleep(5000);
+		if(click(driver, home.sdgGridSideIcons(SDGGridName.Deals,SDGGridSideIcons.Manage_fields,5), "manage field icon", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.PASS, "clicked on manage field icon of "+SDGGridName.Deals, YesNo.No);
+			List<WebElement> lst = home.sdgGridSelectVisibleFieldsListInManageFieldPopUp();
+			
+			if(userPass[0]== superAdminUserName) {
+				for(int i=0; i<6; i++) {
+					if(i==0) {
+						if(selectVisibleTextFromDropDown(driver, home.sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp(10), "drop down", "Notes")) {
+							log(LogStatus.PASS, "select Notes text from visible field", YesNo.No);
+							ThreadSleep(2000);
+
+							if(click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.close, 10), "Add button", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.PASS, "clicked on close button for "+SDGGridName.Deals, YesNo.No);
+								ThreadSleep(1000);
+
+								lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
+								String headerName="Deal,Stage,Source Firm,Notes,Source Firm,Deal Description";
+								if(compareMultipleList(driver, headerName, lst).isEmpty()) {
+									log(LogStatus.PASS, SDGGridName.Deals+" SDG Grid Header Name is verified ", YesNo.No);
+								}else {
+									log(LogStatus.FAIL,SDGGridName.Deals+" SDG Grid Header Name is not verified ", YesNo.Yes);
+									sa.assertTrue(false, SDGGridName.Deals+" SDG Grid Header Name is not verified ");
+								}
+
+
+							}else {
+								log(LogStatus.PASS, "Not able to click on close button for "+SDGGridName.Deals, YesNo.No);
+								sa.assertTrue(false, "Not able to click on close button for "+SDGGridName.Deals);
+							}
+
+						}else {
+							log(LogStatus.PASS, "Cannot select Deal Description from field finder", YesNo.No);
+							sa.assertTrue(false, "Cannot select Deal Description from field finder");
+						}	
+
+					}
+						
+						if(i==1) {
+
+							if(selectVisibleTextFromDropDown(driver, home.sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp(10), "drop down", "Notes")) {
+								log(LogStatus.PASS, "select Notes text from visible field", YesNo.No);
+								ThreadSleep(2000);
+
+								if(click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Cancel, 10), "Cancel button", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.PASS, "clicked on Cancel button for "+SDGGridName.Deals, YesNo.No);
+									ThreadSleep(1000);
+
+									lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
+									String headerName="Deal,Stage,Source Firm,Notes,Source Firm,Deal Description";
+									if(compareMultipleList(driver, headerName, lst).isEmpty()) {
+										log(LogStatus.PASS, SDGGridName.Deals+" SDG Grid Header Name is verified ", YesNo.No);
+									}else {
+										log(LogStatus.FAIL,SDGGridName.Deals+" SDG Grid Header Name is not verified ", YesNo.Yes);
+										sa.assertTrue(false, SDGGridName.Deals+" SDG Grid Header Name is not verified ");
+									}
+
+								}else {
+									log(LogStatus.PASS, "Not able to click on Cancel button for "+SDGGridName.Deals, YesNo.No);
+									sa.assertTrue(false, "Not able to click on Cancel button for "+SDGGridName.Deals);
+								}
+
+							}else {
+								log(LogStatus.PASS, "Cannot select Deal Description from field finder", YesNo.No);
+								sa.assertTrue(false, "Cannot select Deal Description from field finder");
+							}	
+
+						}
+						
+						
+						if(i==2) {
+
+							if(selectVisibleTextFromDropDown(driver, home.sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp(10), "drop down", "Notes")) {
+								log(LogStatus.PASS, "select Notes text from visible field", YesNo.No);
+								ThreadSleep(2000);
+
+								if(click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Save, 10), "Save button", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.PASS, "clicked on Save button for "+SDGGridName.Deals, YesNo.No);
+									ThreadSleep(1000);
+
+									lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
+									String headerName="Notes";
+									if(!compareMultipleList(driver, headerName, lst).isEmpty()) {
+										log(LogStatus.PASS, SDGGridName.Deals+" SDG Grid Header Name is verified ", YesNo.No);
+									}else {
+										log(LogStatus.FAIL,SDGGridName.Deals+" SDG Grid Header Name is not verified ", YesNo.Yes);
+										sa.assertTrue(false, SDGGridName.Deals+" SDG Grid Header Name is not verified ");
+									}
+
+								}else {
+									log(LogStatus.PASS, "Not able to click on Save button for "+SDGGridName.Deals, YesNo.No);
+									sa.assertTrue(false, "Not able to click on Save button for "+SDGGridName.Deals);
+								}
+
+							}else {
+								log(LogStatus.PASS, "Cannot select Deal Description from field finder", YesNo.No);
+								sa.assertTrue(false, "Cannot select Deal Description from field finder");
+							}	
+
+						}
+						if(i==3) {
+							ThreadSleep(2000);
+							
+							
+							if(click(driver, home.sdgGridVisibleFieldTextInManageFieldPopUp("Source Firm", 10), "Source Firm text", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.PASS, "Remove Source Firm text from visible field", YesNo.No);
+								ThreadSleep(2000);
+
+								if(click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Move_Up, 10), "Save button", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.PASS, "clicked on Save button for "+SDGGridName.Deals, YesNo.No);
+									ThreadSleep(1000);
+									
+									if(click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.close, 10), "close button", action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.PASS, "clicked on close button for "+SDGGridName.Deals, YesNo.No);
+										ThreadSleep(1000);
+										
+										lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
+										
+										List<String> actualResult = new ArrayList<String>();
+										
+										if(!lst.isEmpty()) {
+											for(int i1=0; i1<lst.size(); i1++) {
+												actualResult.add(lst.get(i1).getText().trim());
+											}
+										}
+										String headerName="Deal,Stage,Source Firm,Source Firm,Deal Description";
+										List<String> expctedResult =createListOutOfString(headerName);
+										
+										if(compareList( expctedResult, actualResult)) {
+											log(LogStatus.PASS, SDGGridName.Deals+" SDG Grid Header Name is verified ", YesNo.No);
+										}else {
+											log(LogStatus.FAIL,SDGGridName.Deals+" SDG Grid Header Name is not verified ", YesNo.Yes);
+											sa.assertTrue(false, SDGGridName.Deals+" SDG Grid Header Name is not verified ");
+										}
+										
+									}else {
+										log(LogStatus.PASS, "Not able to click on close button for "+SDGGridName.Deals, YesNo.No);
+										sa.assertTrue(false, "Not able to click on close button for "+SDGGridName.Deals);
+									}
+
+								}else {
+									log(LogStatus.PASS, "Not able to click on move up button for "+SDGGridName.Deals, YesNo.No);
+									sa.assertTrue(false, "Not able to click on move up button for "+SDGGridName.Deals);
+								}
+
+							}else {
+								log(LogStatus.PASS, "Cannot select Source Firm from visible field finder", YesNo.No);
+								sa.assertTrue(false, "Cannot select Source Firm from visible field finder");
+							}	
+
+
+						}
+						if(i==4) {
+							ThreadSleep(2000);
+							if(click(driver, home.sdgGridVisibleFieldTextInManageFieldPopUp("Source Firm", 10), "Source Firm text", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.PASS, "Remove Source Firm text from visible field", YesNo.No);
+								ThreadSleep(2000);
+
+								if(click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Move_Down, 10), "Save button", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.PASS, "clicked on move down button for "+SDGGridName.Deals, YesNo.No);
+									ThreadSleep(1000);
+									
+									if(click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Cancel, 10), "close button", action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.PASS, "clicked on cancel button for "+SDGGridName.Deals, YesNo.No);
+										ThreadSleep(1000);
+										
+										lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
+										
+										List<String> actualResult = new ArrayList<String>();
+										
+										if(!lst.isEmpty()) {
+											for(int i1=0; i1<lst.size(); i1++) {
+												actualResult.add(lst.get(i1).getText().trim());
+											}
+										}
+										String headerName="Deal,Stage,Source Firm,Source Firm,Deal Description";
+										List<String> expctedResult =createListOutOfString(headerName);
+										
+										if(compareList( expctedResult, actualResult)) {
+											log(LogStatus.PASS, SDGGridName.Deals+" SDG Grid Header Name is verified ", YesNo.No);
+										}else {
+											log(LogStatus.FAIL,SDGGridName.Deals+" SDG Grid Header Name is not verified ", YesNo.Yes);
+											sa.assertTrue(false, SDGGridName.Deals+" SDG Grid Header Name is not verified ");
+										}
+										
+									}else {
+										log(LogStatus.PASS, "Not able to click on cancel button for "+SDGGridName.Deals, YesNo.No);
+										sa.assertTrue(false, "Not able to click on cancel button for "+SDGGridName.Deals);
+									}
+
+								}else {
+									log(LogStatus.PASS, "Not able to click on move down button for "+SDGGridName.Deals, YesNo.No);
+									sa.assertTrue(false, "Not able to click on move down button for "+SDGGridName.Deals);
+								}
+
+							}else {
+								log(LogStatus.PASS, "Cannot select Source Firm from visible field finder", YesNo.No);
+								sa.assertTrue(false, "Cannot select Source Firm from visible field finder");
+							}	
+
+
+						}
+						
+						if(i==5) {
+							ThreadSleep(2000);
+							if(click(driver, home.sdgGridVisibleFieldTextInManageFieldPopUp("Source Firm", 10), "Source Firm text", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.PASS, "Remove Source Firm text from visible field", YesNo.No);
+								ThreadSleep(2000);
+
+								if(click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Move_Up, 10), "Save button", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.PASS, "clicked on Save button for "+SDGGridName.Deals, YesNo.No);
+									ThreadSleep(1000);
+									
+									if(click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Save, 10), "close button", action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.PASS, "clicked on save button for "+SDGGridName.Deals, YesNo.No);
+										ThreadSleep(1000);
+										
+										lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
+										
+										List<String> actualResult = new ArrayList<String>();
+										
+										if(!lst.isEmpty()) {
+											for(int i1=0; i1<lst.size(); i1++) {
+												actualResult.add(lst.get(i1).getText().trim());
+											}
+										}
+										String headerName="Deal,Source Firm,Stage,Source Firm,Deal Description";
+										List<String> expctedResult =createListOutOfString(headerName);
+										if(compareList( expctedResult, actualResult)) {
+											log(LogStatus.PASS, SDGGridName.Deals+" SDG Grid Header Name is verified ", YesNo.No);
+										}else {
+											log(LogStatus.FAIL,SDGGridName.Deals+" SDG Grid Header Name is not verified ", YesNo.Yes);
+											sa.assertTrue(false, SDGGridName.Deals+" SDG Grid Header Name is not verified ");
+										}
+										
+									}else {
+										log(LogStatus.PASS, "Not able to click on save button for "+SDGGridName.Deals, YesNo.No);
+										sa.assertTrue(false, "Not able to click on save button for "+SDGGridName.Deals);
+									}
+
+								}else {
+									log(LogStatus.PASS, "Not able to click on move up button for "+SDGGridName.Deals, YesNo.No);
+									sa.assertTrue(false, "Not able to click on move up button for "+SDGGridName.Deals);
+								}
+
+							}else {
+								log(LogStatus.PASS, "Cannot select Source Firm from visible field finder", YesNo.No);
+								sa.assertTrue(false, "Cannot select Source Firm from visible field finder");
+							}	
+
+
+						}
+						
+					
+				}
+			}else {
+				lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
+				
+				List<String> actualResult = new ArrayList<String>();
+				
+				if(!lst.isEmpty()) {
+					for(int i1=0; i1<lst.size(); i1++) {
+						actualResult.add(lst.get(i1).getText().trim());
+					}
+				}
+				String headerName="Deal,Source Firm,Stage,Source Firm,Deal Description";
+				List<String> expctedResult =createListOutOfString(headerName);
+				if(compareList( expctedResult, actualResult)) {
+					log(LogStatus.PASS, SDGGridName.Deals+" SDG Grid Header Name is verified ", YesNo.No);
+				}else {
+					log(LogStatus.FAIL,SDGGridName.Deals+" SDG Grid Header Name is not verified ", YesNo.Yes);
+					sa.assertTrue(false, SDGGridName.Deals+" SDG Grid Header Name is not verified ");
+				}
+				
+				if(click(driver, home.sdgGridVisibleFieldTextInManageFieldPopUp("Source Firm", 10), "Source Firm text", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.PASS, "Remove Source Firm text from visible field", YesNo.No);
+					ThreadSleep(2000);
+
+					if(click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Move_Down, 10), "Save button", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.PASS, "clicked on Move_Down button for "+SDGGridName.Deals, YesNo.No);
+						ThreadSleep(1000);
+						
+						if(click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Save, 10), "close button", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.PASS, "clicked on save button for "+SDGGridName.Deals, YesNo.No);
+							ThreadSleep(1000);
+							
+							lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
+							
+							actualResult = new ArrayList<String>();
+							
+							if(!lst.isEmpty()) {
+								for(int i1=0; i1<lst.size(); i1++) {
+									actualResult.add(lst.get(i1).getText().trim());
+								}
+							}
+							headerName="Deal,Stage,Source Firm,Source Firm,Deal Description";
+							expctedResult =createListOutOfString(headerName);
+							if(compareList( expctedResult, actualResult)) {
+								log(LogStatus.PASS, SDGGridName.Deals+" SDG Grid Header Name is verified for user after change the position", YesNo.No);
+							}else {
+								log(LogStatus.FAIL,SDGGridName.Deals+" SDG Grid Header Name is not verified for user after change the position", YesNo.Yes);
+								sa.assertTrue(false, SDGGridName.Deals+" SDG Grid Header Name is not verified for user after change the position");
+							}
+						}else {
+							log(LogStatus.PASS, "Not able to click on save button for "+SDGGridName.Deals, YesNo.No);
+							sa.assertTrue(false, "Not able to click on save button for "+SDGGridName.Deals);
+						}
+
+					}else {
+						log(LogStatus.PASS, "Not able to click on Move_Down button for "+SDGGridName.Deals, YesNo.No);
+						sa.assertTrue(false, "Not able to click on Move_Down button for "+SDGGridName.Deals);
+					}
+
+				}else {
+					log(LogStatus.PASS, "Cannot select Source Firm from visible field finder", YesNo.No);
+					sa.assertTrue(false, "Cannot select Source Firm from visible field finder");
+				}
+			}
+		}else {
+			log(LogStatus.PASS, "Not able to click on manage field icon of "+SDGGridName.Deals, YesNo.No);
+			sa.assertTrue(false, "Not able to click on manage field icon of "+SDGGridName.Deals);
+		}
+		lp.CRMlogout();
+		closeBrowser();
+		config(ExcelUtils.readDataFromPropertyFile("Browser"));
+		lp = new LoginPageBusinessLayer(driver);
+	}
+	sa.assertAll();
+	}
 	
+	@Parameters({ "projectName"})
+	@Test
+	public void M8Tc038_verifyAddButtonFunctionality(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		String[][] userAndPassword = {{superAdminUserName,adminPassword},{crmUser1EmailID,adminPassword}};
+		for (String[] userPass : userAndPassword) {
+		lp.CRMLogin(userPass[0], userPass[1]);
+			ThreadSleep(5000);
+		if(click(driver, home.sdgGridSideIcons(SDGGridName.Deals,SDGGridSideIcons.Manage_fields,5), "manage field icon", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.PASS, "clicked on manage field icon of "+SDGGridName.Deals, YesNo.No);
+			List<WebElement> lst = home.sdgGridSelectVisibleFieldsListInManageFieldPopUp();
+			
+			if(userPass[0]== superAdminUserName) {
+				for(int i=0; i<2; i++) {
+					if(i==0) {
+						if(selectVisibleTextFromDropDown(driver, home.sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp(10), "drop down", "Deal Keywords")) {
+							log(LogStatus.PASS, "select Deal Keywords text from visible field", YesNo.No);
+							ThreadSleep(2000);
+							click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Add, 10), "Add button", action.SCROLLANDBOOLEAN);
+
+
+							if(selectVisibleTextFromDropDown(driver, home.sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp(10), "drop down", "Deal Quality Score")) {
+								log(LogStatus.PASS, "select Deal Quality Score text from visible field", YesNo.No);
+								ThreadSleep(2000);
+
+								click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Add, 10), "Add button", action.SCROLLANDBOOLEAN);
+
+
+								if(selectVisibleTextFromDropDown(driver, home.sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp(10), "drop down", "EBITDA")) {
+									log(LogStatus.PASS, "select EBITDA text from visible field", YesNo.No);
+									ThreadSleep(2000);
+									click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Add, 10), "Add button", action.SCROLLANDBOOLEAN);
+
+
+									if(click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Save, 10), "Add button", action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.PASS, "clicked on save button for "+SDGGridName.Deals, YesNo.No);
+										ThreadSleep(1000);
+
+										lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
+										String headerName="Deal Keywords,Deal Quality Score,EBITDA";
+										if(compareMultipleList(driver, headerName, lst).isEmpty()) {
+											log(LogStatus.PASS, SDGGridName.Deals+" SDG Grid Header Name is verified ", YesNo.No);
+										}else {
+											log(LogStatus.FAIL,SDGGridName.Deals+" SDG Grid Header Name is not verified ", YesNo.Yes);
+											sa.assertTrue(false, SDGGridName.Deals+" SDG Grid Header Name is not verified ");
+										}
+									}else {
+										log(LogStatus.PASS, "Not able to click on save button for "+SDGGridName.Deals, YesNo.No);
+										sa.assertTrue(false, "Not able to click on save button for "+SDGGridName.Deals);
+									}
+
+								}else {
+									log(LogStatus.PASS, "Cannot select EBITDA from field finder", YesNo.No);
+									sa.assertTrue(false, "Cannot select EBITDA from field finder");
+								}	
+
+							}else {
+								log(LogStatus.PASS, "Cannot select Deal Description from field finder", YesNo.No);
+								sa.assertTrue(false, "Cannot select Deal Description from field finder");
+							}	
+						}else {
+							log(LogStatus.PASS, "Cannot select Deal Keywords from field finder", YesNo.No);
+							sa.assertTrue(false, "Cannot select Deal Keywords from field finder");
+						}	
+
+					}
+					
+					
+					if(i==1) {
+						if(selectVisibleTextFromDropDown(driver, home.sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp(10), "drop down", "Company Name-->Institution")) {
+							log(LogStatus.PASS, "select Deal Keywords text from visible field", YesNo.No);
+							ThreadSleep(2000);
+							if(selectVisibleTextFromDropDown(driver, home.sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp(10), "drop down", "Bank Name")) {
+								log(LogStatus.PASS, "select Deal Quality Score text from visible field", YesNo.No);
+								ThreadSleep(2000);
+								if(click(driver,home.sdgGridFieldFinderRemoveSelectedFieldRemoveButtonInManageFieldPopUp("Bank Name",10), "Bank Name remove button", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.PASS, "clicked on remove button for "+SDGGridName.Deals, YesNo.No);
+									ThreadSleep(1000);
+									
+									click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.close, 10), "close button", action.SCROLLANDBOOLEAN);
+									
+								}else {
+									log(LogStatus.PASS, "Not able to click on remove button for "+SDGGridName.Deals, YesNo.No);
+									sa.assertTrue(false, "Not able to click on remove button for "+SDGGridName.Deals);
+								}
+							}else {
+								log(LogStatus.PASS, "Cannot select Bank Name from field finder", YesNo.No);
+								sa.assertTrue(false, "Cannot select Bank Name from field finder");
+							}	
+						}else {
+							log(LogStatus.PASS, "Cannot select Bank Name from field finder", YesNo.No);
+							sa.assertTrue(false, "Cannot select Bank Name from field finder");
+						}	
+
+					}
+					
+					if(i==2) {
+
+						if(selectVisibleTextFromDropDown(driver, home.sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp(10), "drop down", "Company Name-->Institution")) {
+							log(LogStatus.PASS, "select Deal Keywords text from visible field", YesNo.No);
+							ThreadSleep(2000);
+							if(selectVisibleTextFromDropDown(driver, home.sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp(10), "drop down", "Bank Name")) {
+								log(LogStatus.PASS, "select Deal Quality Score text from visible field", YesNo.No);
+								ThreadSleep(2000);
+
+								click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Add, 10), "Add button", action.SCROLLANDBOOLEAN);
+
+								if(click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Save, 10), "Add button", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.PASS, "clicked on save button for "+SDGGridName.Deals, YesNo.No);
+									ThreadSleep(1000);
+
+									lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
+									String headerName="Bank Name";
+									if(compareMultipleList(driver, headerName, lst).isEmpty()) {
+										log(LogStatus.PASS, SDGGridName.Deals+" SDG Grid Header Name is verified ", YesNo.No);
+									}else {
+										log(LogStatus.FAIL,SDGGridName.Deals+" SDG Grid Header Name is not verified ", YesNo.Yes);
+										sa.assertTrue(false, SDGGridName.Deals+" SDG Grid Header Name is not verified ");
+									}
+								}else {
+									log(LogStatus.PASS, "Not able to click on save button for "+SDGGridName.Deals, YesNo.No);
+									sa.assertTrue(false, "Not able to click on save button for "+SDGGridName.Deals);
+								}
+							}else {
+								log(LogStatus.PASS, "Cannot select Deal Description from field finder", YesNo.No);
+								sa.assertTrue(false, "Cannot select Deal Description from field finder");
+							}	
+						}else {
+							log(LogStatus.PASS, "Cannot select Deal Keywords from field finder", YesNo.No);
+							sa.assertTrue(false, "Cannot select Deal Keywords from field finder");
+						}	
+
+					}
+				}
+			}else {
+				lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
+				List<String> actualResult = new ArrayList<String>();
+				if(!lst.isEmpty()) {
+					for(int i1=0; i1<lst.size(); i1++) {
+						actualResult.add(lst.get(i1).getText().trim());
+					}
+				}
+				String headerName="Bank Name";
+				List<String> expctedResult =createListOutOfString(headerName);
+				if(compareList( expctedResult, actualResult)) {
+					log(LogStatus.PASS, SDGGridName.Deals+" SDG Grid Header Name is verified for user", YesNo.No);
+				}else {
+					log(LogStatus.FAIL,SDGGridName.Deals+" SDG Grid Header Name is not verified for user", YesNo.Yes);
+					sa.assertTrue(false, SDGGridName.Deals+" SDG Grid Header Name is not verified for user");
+				}
+			}
+		}else {
+			log(LogStatus.PASS, "Not able to click on manage field icon of "+SDGGridName.Deals, YesNo.No);
+			sa.assertTrue(false, "Not able to click on manage field icon of "+SDGGridName.Deals);
+		}
+		lp.CRMlogout();
+		closeBrowser();
+		config(ExcelUtils.readDataFromPropertyFile("Browser"));
+		lp = new LoginPageBusinessLayer(driver);
+	}
+	sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M1Tc039_1_createFieldsForCustomObject(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentWindow = null;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create Fields Objects for custom object Marketing Event");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create Fields Objects for custom object Marketing Event",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create Fields Objects for custom object Marketing Event");
+			}
+			ThreadSleep(3000);
+			String[][] labelAndValues= {{M8_Object1FieldName,M8_Object1,null,null},
+					{M8_Object2FieldName,M8_Object2,null,null},
+					{M8_Object3FieldName,M8_Object3,null,null},
+					{M8_Object4FieldName,M8_Object4,null,null}};
+			for(String[] objects : labelAndValues) {
+				
+				String [][] valuesandLabel = {{objects[2],objects[3]}};
+				
+				
+				
+				if(setup.addCustomFieldforFormula(environment,mode,object.Deal,ObjectFeatureName.FieldAndRelationShip,objects[0],objects[1], valuesandLabel, null,null)) {
+					log(LogStatus.PASS, "Field Object is created for :"+objects[1], YesNo.No);
+				}else {
+					log(LogStatus.PASS, "Field Object is not created for :"+objects[1], YesNo.Yes);
+					sa.assertTrue(false, "Field Object is not created for :"+objects[1]);
+				}
+			}
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot create Fields Objects for custom object Marketing Event", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot create Fields Objects for custom object Marketing Event");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M8Tc039_2_verifyAddCustomFunctionality(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		String[][] userAndPassword = {{superAdminUserName,adminPassword},{crmUser1EmailID,adminPassword}};
+		for (String[] userPass : userAndPassword) {
+		lp.CRMLogin(userPass[0], userPass[1]);
+			ThreadSleep(5000);
+		if(click(driver, home.sdgGridSideIcons(SDGGridName.Deals,SDGGridSideIcons.Manage_fields,5), "manage field icon", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.PASS, "clicked on manage field icon of "+SDGGridName.Deals, YesNo.No);
+			List<WebElement> lst = home.sdgGridSelectVisibleFieldsListInManageFieldPopUp();
+			
+			if(userPass[0]== superAdminUserName) {
+				for(int i=0; i<1; i++) {
+					if(i==0) {
+						if(selectVisibleTextFromDropDown(driver, home.sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp(10), "drop down", M8_Object1)) {
+							log(LogStatus.PASS, "select "+M8_Object1+" text from visible field", YesNo.No);
+							ThreadSleep(2000);
+							click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Add, 10), "Add button", action.SCROLLANDBOOLEAN);
+							
+							
+							if(selectVisibleTextFromDropDown(driver, home.sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp(10), "drop down", M8_Object2)) {
+								log(LogStatus.PASS, "select "+M8_Object2+" text from visible field", YesNo.No);
+								ThreadSleep(2000);
+								
+								click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Add, 10), "Add button", action.SCROLLANDBOOLEAN);
+								
+								
+								if(selectVisibleTextFromDropDown(driver, home.sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp(10), "drop down", M8_Object3)) {
+									log(LogStatus.PASS, "select "+M8_Object3+" text from visible field", YesNo.No);
+									ThreadSleep(2000);
+									click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Add, 10), "Add button", action.SCROLLANDBOOLEAN);
+									
+									
+									if(click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Save, 10), "save button", action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.PASS, "clicked on save button for "+SDGGridName.Deals, YesNo.No);
+										ThreadSleep(1000);
+
+										lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
+										String headerName=M8_Object1+","+M8_Object2+","+M8_Object3;
+										if(compareMultipleList(driver, headerName, lst).isEmpty()) {
+											log(LogStatus.PASS, SDGGridName.Deals+" SDG Grid Header Name is verified ", YesNo.No);
+										}else {
+											log(LogStatus.FAIL,SDGGridName.Deals+" SDG Grid Header Name is not verified ", YesNo.Yes);
+											sa.assertTrue(false, SDGGridName.Deals+" SDG Grid Header Name is not verified ");
+										}
+									}else {
+										log(LogStatus.PASS, "Not able to click on save button for "+SDGGridName.Deals, YesNo.No);
+										sa.assertTrue(false, "Not able to click on save button for "+SDGGridName.Deals);
+									}
+									
+								}else {
+									log(LogStatus.PASS, "Cannot select "+M8_Object3+" from field finder", YesNo.No);
+									sa.assertTrue(false, "Cannot select "+M8_Object3+" from field finder");
+								}	
+								
+							}else {
+								log(LogStatus.PASS, "Cannot select "+M8_Object2+" from field finder", YesNo.No);
+								sa.assertTrue(false, "Cannot select "+M8_Object2+" from field finder");
+							}	
+						}else {
+							log(LogStatus.PASS, "Cannot select "+M8_Object1+" from field finder", YesNo.No);
+							sa.assertTrue(false, "Cannot select "+M8_Object1+" from field finder");
+						}	
+
+					}
+				}
+			}else {
+				lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
+				List<String> actualResult = new ArrayList<String>();
+				if(!lst.isEmpty()) {
+					for(int i1=0; i1<lst.size(); i1++) {
+						actualResult.add(lst.get(i1).getText().trim());
+					}
+				}
+				String headerName=M8_Object1+","+M8_Object2+","+M8_Object3;
+				List<String> expctedResult =createListOutOfString(headerName);
+				if(compareList( expctedResult, actualResult)) {
+					log(LogStatus.PASS, SDGGridName.Deals+" SDG Grid Header Name is verified for user", YesNo.No);
+				}else {
+					log(LogStatus.FAIL,SDGGridName.Deals+" SDG Grid Header Name is not verified for user", YesNo.Yes);
+					sa.assertTrue(false, SDGGridName.Deals+" SDG Grid Header Name is not verified for user");
+				}
+			}
+		}else {
+			log(LogStatus.PASS, "Not able to click on manage field icon of "+SDGGridName.Deals, YesNo.No);
+			sa.assertTrue(false, "Not able to click on manage field icon of "+SDGGridName.Deals);
+		}
+		lp.CRMlogout();
+		closeBrowser();
+		config(ExcelUtils.readDataFromPropertyFile("Browser"));
+		lp = new LoginPageBusinessLayer(driver);
+	}
+	sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M8Tc040_1_removeEditPermissionOfPEStandardUser(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp = new SetupPageBusinessLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		
+		/////////////////////////////////////////////////////
+		String[] userNames= {"PE Standard User"};
+		
+		String a ="Sortable Data Grids";
+		String b ="Sortable Data Grid Actions";
+		String c ="Sortable Data Grid Fields";
+		String d ="Sortable Data Grid Preferences";
+		
+		String permission="Read";
+		for (String userName : userNames) {
+			switchToDefaultContent(driver);
+			if (home.clickOnSetUpLink()) {
+				String parentID = switchOnWindow(driver);
+				if (parentID!=null) {
+					log(LogStatus.INFO, "Able to switch on new window, so going to remove "+permission+" for "+a+" "+b+" "+c+" "+d, YesNo.No);
+					ThreadSleep(500);
+					if(setup.searchStandardOrCustomObject(environment,mode, object.Profiles)) {
+						log(LogStatus.INFO, "click on Object : "+object.Profiles, YesNo.No);
+						ThreadSleep(2000);
+						if (setup.permissionChangeForUserONObject(driver, userName, new String[][]{{a,permission},{b,permission},{c,permission},{d,permission}}, 20)) {
+							log(LogStatus.PASS,permission+ " permission change for "+userName+" on object "+a+" "+b+" "+c+" "+d,YesNo.No);
+						} else {
+							sa.assertTrue(false, permission+ " permission not change for "+userName+" on object "+a+" "+b+" "+c+" "+d);
+							log(LogStatus.FAIL,permission+ " permission not change for "+userName+" on object "+a+" "+b+" "+c+" "+d,YesNo.Yes);
+						}
+					}else {
+						log(LogStatus.ERROR, "Not able to search/click on "+object.Profiles, YesNo.Yes);
+						sa.assertTrue(false, "Not able to search/click on "+object.Profiles);
+					}
+					driver.close();
+					driver.switchTo().window(parentID);
+				}else {
+					log(LogStatus.FAIL, "could not find new window to switch, so cannot to remove "+permission+" for "+a+" "+b+" "+c+" "+d, YesNo.Yes);
+					sa.assertTrue(false, "could not find new window to switch, to remove "+permission+" for "+a+" "+b+" "+c+" "+d);
+				}
+
+			}else {
+				log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on setup link");	
+			}
+		}
+		
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M8Tc040_2_checkErrorMsgAfterRemoveEditPermissionOfPEStandardUser(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID,adminPassword);
+		ThreadSleep(5000);
+		if(click(driver, home.sdgGridSideIcons(SDGGridName.Deals,SDGGridSideIcons.Manage_fields,5), "manage field icon", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.PASS, "clicked on manage field icon of "+SDGGridName.Deals, YesNo.No);
+			List<WebElement> lst = home.sdgGridSelectVisibleFieldsListInManageFieldPopUp();
+			for(int i=0; i<1; i++) {
+				if(i==0) {
+					if(selectVisibleTextFromDropDown(driver, home.sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp(10), "drop down", "Deal Type")) {
+						log(LogStatus.PASS, "select Deal Type text from visible field", YesNo.No);
+						ThreadSleep(2000);
+						click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Add, 10), "Add button", action.SCROLLANDBOOLEAN);
+
+						if(click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Save, 10), "save button", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.PASS, "clicked on save button for "+SDGGridName.Deals, YesNo.No);
+							ThreadSleep(1000);
+							WebElement ele = home.getSelectFieldPopUpErrorMsg(10);
+							if(ele!=null) {
+								if(ele.getText().trim().equalsIgnoreCase(HomePageErrorMessage.selectFieldPopUpErrorMessage)) {
+									log(LogStatus.PASS, "Error Message is verified "+HomePageErrorMessage.selectFieldPopUpErrorMessage, YesNo.No);
+								}else {
+									log(LogStatus.PASS, "Error Message is not verified "+HomePageErrorMessage.selectFieldPopUpErrorMessage, YesNo.Yes);
+									sa.assertTrue(false, "Error Message is not verified "+HomePageErrorMessage.selectFieldPopUpErrorMessage);
+								}
+							}else {
+								log(LogStatus.PASS, "error message is not displaying "+SDGGridName.Deals, YesNo.No);
+								sa.assertTrue(false, "error message is not displaying "+SDGGridName.Deals);
+							}
+							click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.close, 10), "close button", action.SCROLLANDBOOLEAN);
+						}else {
+							log(LogStatus.PASS, "Not able to click on save button for "+SDGGridName.Deals, YesNo.No);
+							sa.assertTrue(false, "Not able to click on save button for "+SDGGridName.Deals);
+						}
+					}else {
+						log(LogStatus.PASS, "Cannot select Deal Type from field finder", YesNo.No);
+						sa.assertTrue(false, "Cannot select Deal Type from field finder");
+					}	
+				}
+			}
+		}else {
+			log(LogStatus.PASS, "Not able to click on manage field icon of "+SDGGridName.Deals, YesNo.No);
+			sa.assertTrue(false, "Not able to click on manage field icon of "+SDGGridName.Deals);
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M8Tc041_1_AddEditPermissionOfPEStandardUser(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp = new SetupPageBusinessLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		String[] userNames= {"PE Standard User"};
+		String a ="Sortable Data Grids";
+		String b ="Sortable Data Grid Actions";
+		String c ="Sortable Data Grid Fields";
+		String d ="Sortable Data Grid Preferences";
+		
+		String permission="Edit";
+		for (String userName : userNames) {
+			switchToDefaultContent(driver);
+			if (home.clickOnSetUpLink()) {
+				String parentID = switchOnWindow(driver);
+				if (parentID!=null) {
+					log(LogStatus.INFO, "Able to switch on new window, so going to add "+permission+" for "+a+" "+b+" "+c+" "+d, YesNo.No);
+					ThreadSleep(500);
+					if(setup.searchStandardOrCustomObject(environment,mode, object.Profiles)) {
+						log(LogStatus.INFO, "click on Object : "+object.Profiles, YesNo.No);
+						ThreadSleep(2000);
+						if (setup.permissionChangeForUserONObject(driver, userName, new String[][]{{a,permission},{b,permission},{c,permission},{d,permission}}, 20)) {
+							log(LogStatus.PASS,permission+ " permission change for "+userName+" on object "+a+" "+b+" "+c+" "+d,YesNo.No);
+						} else {
+							sa.assertTrue(false, permission+ " permission not change for "+userName+" on object "+a+" "+b+" "+c+" "+d);
+							log(LogStatus.FAIL,permission+ " permission not change for "+userName+" on object "+a+" "+b+" "+c+" "+d,YesNo.Yes);
+						}
+					}else {
+						log(LogStatus.ERROR, "Not able to search/click on "+object.Profiles, YesNo.Yes);
+						sa.assertTrue(false, "Not able to search/click on "+object.Profiles);
+					}
+					driver.close();
+					driver.switchTo().window(parentID);
+				}else {
+					log(LogStatus.FAIL, "could not find new window to switch, so cannot to add "+permission+" for "+a+" "+b+" "+c+" "+d, YesNo.Yes);
+					sa.assertTrue(false, "could not find new window to switch, to add "+permission+" for "+a+" "+b+" "+c+" "+d);
+				}
+
+			}else {
+				log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on setup link");	
+			}
+		}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M8Tc041_2_addFieldAfterAddEditPermissionOfPEStandardUser(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID,adminPassword);
+		ThreadSleep(5000);
+		if(click(driver, home.sdgGridSideIcons(SDGGridName.Deals,SDGGridSideIcons.Manage_fields,5), "manage field icon", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.PASS, "clicked on manage field icon of "+SDGGridName.Deals, YesNo.No);
+			List<WebElement> lst = home.sdgGridSelectVisibleFieldsListInManageFieldPopUp();
+			for(int i=0; i<1; i++) {
+				if(i==0) {
+					if(selectVisibleTextFromDropDown(driver, home.sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp(10), "drop down", "Deal Type")) {
+						log(LogStatus.PASS, "select Deal Type text from visible field", YesNo.No);
+						ThreadSleep(2000);
+						click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Add, 10), "Add button", action.SCROLLANDBOOLEAN);
+
+						if(click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Save, 10), "save button", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.PASS, "clicked on save button for "+SDGGridName.Deals, YesNo.No);
+							ThreadSleep(1000);
+							lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
+							String headerName="Deal Type";
+							if(compareMultipleList(driver, headerName, lst).isEmpty()) {
+								log(LogStatus.PASS, SDGGridName.Deals+" SDG Grid Header Name is verified ", YesNo.No);
+							}else {
+								log(LogStatus.FAIL,SDGGridName.Deals+" SDG Grid Header Name is not verified ", YesNo.Yes);
+								sa.assertTrue(false, SDGGridName.Deals+" SDG Grid Header Name is not verified ");
+							}
+						}else {
+							log(LogStatus.PASS, "Not able to click on save button for "+SDGGridName.Deals, YesNo.No);
+							sa.assertTrue(false, "Not able to click on save button for "+SDGGridName.Deals);
+						}
+					}else {
+						log(LogStatus.PASS, "Cannot select Deal Type from field finder", YesNo.No);
+						sa.assertTrue(false, "Cannot select Deal Type from field finder");
+					}	
+				}
+			}
+		}else {
+			log(LogStatus.PASS, "Not able to click on manage field icon of "+SDGGridName.Deals, YesNo.No);
+			sa.assertTrue(false, "Not able to click on manage field icon of "+SDGGridName.Deals);
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M1Tc042_1_createFieldsForCustomObjectWithMaxChar(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentWindow = null;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create Fields Objects for custom object ");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create Fields Objects for custom object ",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create Fields Objects for custom object ");
+			}
+			ThreadSleep(3000);
+			String[][] labelAndValues = { /* {M8_Object5FieldName,M8_Object5,null,null}, */
+					{M8_Object6FieldName,M8_Object6,"Related To","Institution"}};
+			for(String[] objects : labelAndValues) {
+				
+				String [][] valuesandLabel = {{objects[2],objects[3]}};
+				
+				
+				
+				if(setup.addCustomFieldforFormula(environment,mode,object.Deal,ObjectFeatureName.FieldAndRelationShip,objects[0],objects[1], valuesandLabel, null,null)) {
+					log(LogStatus.PASS, "Field Object is created for :"+objects[1], YesNo.No);
+				}else {
+					log(LogStatus.PASS, "Field Object is not created for :"+objects[1], YesNo.Yes);
+					sa.assertTrue(false, "Field Object is not created for :"+objects[1]);
+				}
+			}
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot create Fields Objects for custom object", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot create Fields Objects for custom object ");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M1Tc042_2_verifycreatedFieldsForCustomObjectWithMaxChar(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		String[][] userAndPassword = {{superAdminUserName,adminPassword},{crmUser1EmailID,adminPassword}};
+		for (String[] userPass : userAndPassword) {
+		lp.CRMLogin(userPass[0], userPass[1]);
+			ThreadSleep(5000);
+		if(click(driver, home.sdgGridSideIcons(SDGGridName.Deals,SDGGridSideIcons.Manage_fields,5), "manage field icon", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.PASS, "clicked on manage field icon of "+SDGGridName.Deals, YesNo.No);
+			List<WebElement> lst = home.sdgGridSelectVisibleFieldsListInManageFieldPopUp();
+			
+			if(userPass[0]== superAdminUserName) {
+				for(int i=0; i<1; i++) {
+					if(i==0) {
+						if(selectVisibleTextFromDropDown(driver, home.sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp(10), "drop down", "Deal sample Dependent test new field1234-->Institution")) {
+							log(LogStatus.PASS, "select Deal sample Dependent test new field1234-->Institution text from visible field", YesNo.No);
+							ThreadSleep(2000);
+							
+							if(selectVisibleTextFromDropDown(driver, home.sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp(10), "drop down", "Bank Name")) {
+								log(LogStatus.PASS, "select Bank Name text from visible field", YesNo.No);
+								ThreadSleep(2000);
+								
+								if(home.sdgGridVisibleFieldRemoveInManageFieldPopUp("Bank Name", 10) !=null) {
+									log(LogStatus.PASS, "Bank Name is visible in field finder", YesNo.No);
+									ThreadSleep(2000);
+									
+									click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Add, 10), "Add button", action.SCROLLANDBOOLEAN);
+
+									if(click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Save, 10), "Add button", action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.PASS, "clicked on save button for "+SDGGridName.Deals, YesNo.No);
+										ThreadSleep(1000);
+
+										lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
+										String headerName="Bank Name";
+										if(compareMultipleList(driver, headerName, lst).isEmpty()) {
+											log(LogStatus.PASS, SDGGridName.Deals+" SDG Grid Header Name is verified ", YesNo.No);
+										}else {
+											log(LogStatus.FAIL,SDGGridName.Deals+" SDG Grid Header Name is not verified ", YesNo.Yes);
+											sa.assertTrue(false, SDGGridName.Deals+" SDG Grid Header Name is not verified ");
+										}
+									}else {
+										log(LogStatus.PASS, "Not able to click on save button for "+SDGGridName.Deals, YesNo.No);
+										sa.assertTrue(false, "Not able to click on save button for "+SDGGridName.Deals);
+									}
+								}else {
+									log(LogStatus.PASS, "Cannot visible Bank Name from field finder", YesNo.No);
+									sa.assertTrue(false, "Cannot visible Bank Name from field finder");
+								}
+							}else {
+								log(LogStatus.PASS, "Cannot select Deal sample Dependent test new field1234-->Institution from field finder", YesNo.No);
+								sa.assertTrue(false, "Cannot select Deal sample Dependent test new field1234-->Institution from field finder");
+							}	
+						}else {
+							log(LogStatus.PASS, "Cannot select Deal sample Dependent test new field1234-->Institution from field finder", YesNo.No);
+							sa.assertTrue(false, "Cannot select Deal sample Dependent test new field1234-->Institution from field finder");
+						}	
+
+					}
+				}
+			}else {
+				lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
+				List<String> actualResult = new ArrayList<String>();
+				if(!lst.isEmpty()) {
+					for(int i1=0; i1<lst.size(); i1++) {
+						actualResult.add(lst.get(i1).getText().trim());
+					}
+				}
+				String headerName="Bank Name";
+				List<String> expctedResult =createListOutOfString(headerName);
+				if(compareList( expctedResult, actualResult)) {
+					log(LogStatus.PASS, SDGGridName.Deals+" SDG Grid Header Name is verified for user", YesNo.No);
+				}else {
+					log(LogStatus.FAIL,SDGGridName.Deals+" SDG Grid Header Name is not verified for user", YesNo.Yes);
+					sa.assertTrue(false, SDGGridName.Deals+" SDG Grid Header Name is not verified for user");
+				}
+			}
+		}else {
+			log(LogStatus.PASS, "Not able to click on manage field icon of "+SDGGridName.Deals, YesNo.No);
+			sa.assertTrue(false, "Not able to click on manage field icon of "+SDGGridName.Deals);
+		}
+		lp.CRMlogout();
+		closeBrowser();
+		config(ExcelUtils.readDataFromPropertyFile("Browser"));
+		lp = new LoginPageBusinessLayer(driver);
+	}
+	sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M1Tc043_verifyAddDuplicateFieldAndCheckErrorMsg(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		String[][] userAndPassword = {{superAdminUserName,adminPassword},{crmUser1EmailID,adminPassword}};
+		String fieldName ="Deal sample Dependent test new field1234";
+		for (String[] userPass : userAndPassword) {
+			lp.CRMLogin(userPass[0], userPass[1]);
+			ThreadSleep(5000);
+			if(click(driver, home.sdgGridSideIcons(SDGGridName.Deals,SDGGridSideIcons.Manage_fields,5), "manage field icon", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.PASS, "clicked on manage field icon of "+SDGGridName.Deals, YesNo.No);
+				
+				if(selectVisibleTextFromDropDown(driver, home.sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp(10), "drop down", fieldName)) {
+					log(LogStatus.PASS, "select "+fieldName+" text from visible field", YesNo.No);
+					ThreadSleep(2000);
+
+					click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Add, 10), "Add button", action.SCROLLANDBOOLEAN);
+					ThreadSleep(1000);
+
+					if(selectVisibleTextFromDropDown(driver, home.sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp(10), "drop down", fieldName)) {
+						log(LogStatus.PASS, "select "+fieldName+" text from visible field", YesNo.No);
+						ThreadSleep(2000);
+
+						click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Add, 10), "Add button", action.SCROLLANDBOOLEAN);
+
+						WebElement ele = home.getToastErroMsg(10);
+						if(ele!=null) {
+							if(ele.getText().trim().equalsIgnoreCase(HomePageErrorMessage.FieldPopUpToastErrorMessage(fieldName))) {
+								log(LogStatus.PASS, "Error Message is verified "+HomePageErrorMessage.selectFieldPopUpErrorMessage, YesNo.No);
+							}else {
+								log(LogStatus.PASS, "Error Message is not verified "+HomePageErrorMessage.selectFieldPopUpErrorMessage, YesNo.Yes);
+								sa.assertTrue(false, "Error Message is not verified "+HomePageErrorMessage.selectFieldPopUpErrorMessage);
+							}
+						}else {
+							log(LogStatus.PASS, "error message is not displaying "+SDGGridName.Deals, YesNo.No);
+							sa.assertTrue(false, "error message is not displaying "+SDGGridName.Deals);
+						}
+						click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.close, 10), "close button", action.SCROLLANDBOOLEAN);
+					}else {
+						log(LogStatus.PASS, "Cannot select again "+fieldName+" from field finder", YesNo.No);
+						sa.assertTrue(false, "Cannot select again "+fieldName+" from field finder");
+					}	
+
+
+
+				}else {
+					log(LogStatus.PASS, "Cannot select "+fieldName+" from field finder", YesNo.No);
+					sa.assertTrue(false, "Cannot select "+fieldName+" from field finder");
+				}	
+			}else {
+				log(LogStatus.PASS, "Not able to click on manage field icon of "+SDGGridName.Deals, YesNo.No);
+				sa.assertTrue(false, "Not able to click on manage field icon of "+SDGGridName.Deals);
+			}
+			lp.CRMlogout();
+			closeBrowser();
+			config(ExcelUtils.readDataFromPropertyFile("Browser"));
+			lp = new LoginPageBusinessLayer(driver);
+		}
+		sa.assertAll();
+	}
+
 }

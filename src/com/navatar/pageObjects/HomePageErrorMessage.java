@@ -42,5 +42,12 @@ public abstract class HomePageErrorMessage {
 	public static String InsufficientPermissionErrorMsgOnCreateCommitmentPage1 ="Please select the fundraising associated with the";
 	public static String InsufficientPermissionErrorMsgOnCreateCommitmentPage2 ="Co-Investment Fund defined in Co-Investment settings.";
 	
+	public static String selectFieldPopUpErrorMessage ="You do not have permission to edit this information. Please contact your Navatar Administrator.";
+	
+	
+	public static String FieldPopUpToastErrorMessage(String selectFieldName) {
+		return  "'"+selectFieldName+"' field already added.";
+	}
+	
 	
 }

@@ -618,11 +618,47 @@ public class SetupPageBusinessLayer extends SetupPage {
 									log(LogStatus.PASS,dataType+" : data type radio button ",YesNo.No);
 									if(click(driver, getCustomFieldNextBtn(30),"next button", action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.PASS, "Clicked on Step 1 Next button", YesNo.No);
+										ThreadSleep(5000);
+										if(dataType.equalsIgnoreCase("Lookup Relationship")) {
+											String relatedTovalue="";
+											if(labelsWithValues[0][1]!=null) {
+												for(String[] objects : labelsWithValues) {
+													System.err.println(objects[0]);
+													if(objects[0]=="Related To") {
+														System.err.println(objects[1]);
+														relatedTovalue= objects[1];
+														break;
+													}
+												}
+												if(!relatedTovalue.isEmpty()) {
+													if(selectVisibleTextFromDropDown(driver, getRelatedToDropDownList(10), "getRelatedToDropDownList", relatedTovalue)) {
+														log(LogStatus.PASS, "select related to drop down value : "+relatedTovalue, YesNo.No);
+														if(click(driver, getCustomFieldNextBtn(30),"next button", action.SCROLLANDBOOLEAN)) {
+															log(LogStatus.PASS, "Clicked on Step 1 Next button", YesNo.No);
+															ThreadSleep(1000);
+															
+															
+														}else {
+															log(LogStatus.FAIL, "Not able to select to next button so cannot create  object "+fieldLabelName, YesNo.Yes);
+															return false;
+														}
+													}else {
+														log(LogStatus.FAIL, "Not able to select to related drop down value : "+relatedTovalue, YesNo.Yes);
+														return false;
+													}
+												}else {
+													log(LogStatus.FAIL, "drop down value is not present for look relation object so cannot create look object "+fieldLabelName,YesNo.Yes);
+													return false;
+												}
+											}else {
+												log(LogStatus.FAIL, "related to drop down value is not present for look relation object so cannot create look object "+fieldLabelName,YesNo.Yes);
+												return false;
+											}
+											
+										}
 										ThreadSleep(1000);
 										if(sendKeys(driver, getFieldLabelTextBox(30), fieldLabelName, "field label name ", action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.PASS, "passed value in field label text box : "+fieldLabelName, YesNo.No);
-
-
 
 											if (dataType.equalsIgnoreCase("Picklist")) {
 												xpath = "//label[text()='Enter values, with each value separated by a new line']//preceding-sibling::input[@name='picklistType']";
@@ -646,7 +682,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 												}
 
 											} else {
-												if(labelsWithValues!=null) {
+												if(labelsWithValues[0][1]!=null || labelsWithValues[0][1] == "Length") {
 													for (String[] labelWithValue : labelsWithValues) {
 														xpath = "//label[contains(text(),'"+labelWithValue[0]+"')]/../following-sibling::td//input";
 														ele = FindElement(driver, xpath, labelWithValue[0]+" "+labelWithValue[1], action.BOOLEAN, 5);
@@ -672,6 +708,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 //														if(click(driver, getCustomFieldNextBtn(30),"next button", action.SCROLLANDBOOLEAN)) {
 //															log(LogStatus.PASS, "Clicked on Step 4 Next button", YesNo.No);
 //															ThreadSleep(1000);
+															click(driver, getCustomFieldNextBtn(10),"next button", action.SCROLLANDBOOLEAN);
+															ThreadSleep(1000);
 															if(click(driver, getCustomFieldSaveBtn(30), "save button", action.SCROLLANDBOOLEAN)) {
 																log(LogStatus.PASS, "clicked on save button", YesNo.No);
 																ThreadSleep(5000);
@@ -1887,7 +1925,7 @@ public boolean permissionChangeForUserONObject(WebDriver driver,String userName,
 				permission=strings[1];
 				xpath="//*[text()='"+OnObject+"']/following-sibling::*//td/input[contains(@title,'"+permission+"')]";
 				ele = FindElement(driver, xpath, OnObject+" with permission "+permission, action.SCROLLANDBOOLEAN, timeOut);
-					if (click(driver, ele, OnObject+" with permission "+permission,action.SCROLLANDBOOLEAN)) {
+					if (clickUsingJavaScript(driver, ele, OnObject+" with permission "+permission,action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on checkbox "+permission+" for "+OnObject, YesNo.No);
 
 					} else {
@@ -1898,7 +1936,8 @@ public boolean permissionChangeForUserONObject(WebDriver driver,String userName,
 					}
 			
 			}
-
+			Scanner scn = new Scanner(System.in);
+			scn.nextLine();
 			if (click(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
 					action.SCROLLANDBOOLEAN)) {
 				flag=true;
