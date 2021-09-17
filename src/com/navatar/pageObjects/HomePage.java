@@ -1523,11 +1523,18 @@ public WebElement todayTasksDownArrow(Task taskName, int timeOut) {
 
 public WebElement todayTasksDownArrowListValues(TodayTaskDownArrowValues todayTaskDownArrowValues, int timeOut) {
 	String xpath="";
-	xpath="//div[contains(@class,'uiMenuList--default visible positioned')]//a[text()='"+todayTaskDownArrowValues+"']";
+	xpath="//div[contains(@class,'uiMenuList')]//a[text()='"+todayTaskDownArrowValues+"']";
 	WebElement ele = FindElement(driver, xpath, "today tasks down arrow value "+todayTaskDownArrowValues, action.SCROLLANDBOOLEAN, timeOut);
 	return isDisplayed(driver, ele, "Visibility", timeOut, "today tasks down arrow value "+todayTaskDownArrowValues);
 }
 
+public WebElement taskHeaderDownArrow(String todayTaskDownArrowValues, int timeOut) {
+	String xpath="";
+	xpath="//div[contains(@class,'uiMenuList')]//a[text()='"+todayTaskDownArrowValues+"']";
+	xpath="//h2/span[contains(text(),'"+todayTaskDownArrowValues+"')]/../../../..//a";
+	WebElement ele = FindElement(driver, xpath, "Header Arrow "+todayTaskDownArrowValues, action.SCROLLANDBOOLEAN, timeOut);
+	return isDisplayed(driver, ele, "Visibility", timeOut, "Header Arrow "+todayTaskDownArrowValues);
+}
 
 public WebElement viewAllAndviewClendarLink(Task taskName, ViewAllAndViewCalendarLink viewAllAndViewCalendarLink, int timeOut) {
 	String xpath="";
@@ -1644,6 +1651,12 @@ public WebElement createdButtonEditAndDeleteBtn(String createActionName,String b
 	return isDisplayed(driver, ele, "Visibility", timeOut, "new button");
 }
 
+@FindBy(xpath = "//h2/../../following-sibling::div")
+private WebElement arrowIconView;
+
+public WebElement getArrowIconView(int timeOut) {
+	return isDisplayed(driver, arrowIconView, "Visibility", timeOut, "Select a view of your tasks");
+}
 @FindBy(xpath = "(//div[contains(@class,'slds-theme_error')]//h2)[2]")
 private WebElement selectFieldPopUpErrorMsg;
 
@@ -1657,7 +1670,6 @@ private WebElement toastErroMsg;
 public WebElement getToastErroMsg(int timeOut) {
 	return isDisplayed(driver, toastErroMsg, "Visibility", timeOut, "toastErroMsg");
 }
-
 
 }
 
