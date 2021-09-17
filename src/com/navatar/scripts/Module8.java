@@ -2964,10 +2964,107 @@ public class Module8 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		List<WebElement> lst = new ArrayList<WebElement>();
 		ThreadSleep(5000);
-		
-		
+		List<WebElement> eleList=null;
+		List<String> expectedList = new ArrayList<String>();
+		List<String> actualList = new ArrayList<String>();
+		TodayTaskDownArrowValues defaultValue;
+		WebElement ele;
+		String expectedValue = "selected";
+		String[] headers = {"","My Tasks","All Overdue Tasks","Completed Tasks","Delegated Tasks"};
+		TodayTaskDownArrowValues[] value = {TodayTaskDownArrowValues.Today,TodayTaskDownArrowValues.MyTasks,TodayTaskDownArrowValues.AllOverdue,TodayTaskDownArrowValues.CompletedWithinLast7Days,TodayTaskDownArrowValues.DelegatedTasks};
+
+		for (int i = 0; i < value.length; i++) {
+			defaultValue = value[i];
+			ele=home.getArrowIconView(30);
+			if (click(driver, ele, "Select a view of your tasks Arrow Icon for "+defaultValue, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on Select a view of your tasks Arrow Icon for "+defaultValue, YesNo.Yes);
+			}else{
+				log(LogStatus.SKIP, "Not able to Click on Select a view of your tasks Arrow Icon for "+defaultValue, YesNo.Yes);
+				sa.assertTrue(false,  "Not able to Click on Select a view of your tasks Arrow Icon for "+defaultValue);	
+			}
+			if (i==0) {
+				//TodayTaskDownArrowValues.Today
+				ele = home.todayTasksDownArrowListValues(defaultValue, 10);
+				if(ele!=null) {
+					log(LogStatus.PASS, defaultValue+" is displaying in today tasks list", YesNo.No);
+					String actualValue = ele.getAttribute("class");
+					if (expectedValue.equals(actualValue)) {
+						log(LogStatus.INFO,defaultValue+" is selected by default", YesNo.No);
+					}
+					else {
+						log(LogStatus.ERROR, defaultValue+" should be selected by default", YesNo.Yes);
+						sa.assertTrue(false,defaultValue+" should be selected by default");
+					}
+					expectedList.add(M8CallSubject);
+					expectedList.add(M8SendLetterSubject);
+					expectedList.add(M8SendQuoteSubject);
+					expectedList.add(M8OtherSubject);
+					expectedList.add(M8Einstein5Subject);
+					expectedList.add(M8Einstein6Subject);
+					expectedList.add(M8Einstein7Subject);
+					expectedList.add(M8Einstein8Subject);
+					expectedList.add(M8Einstein9Subject);
+					expectedList.add(M8Einstein10Subject);
+				}else {
+					log(LogStatus.FAIL, defaultValue+" is not displaying in today tasks list", YesNo.Yes);
+					sa.assertTrue(false, defaultValue+" is not displaying in today tasks list");
+				}
+
+			}else if(i==1){
+				expectedList.add(M8CallSubject);
+				expectedList.add(M8SendLetterSubject);
+				expectedList.add(M8SendQuoteSubject);
+				expectedList.add(M8OtherSubject);
+				expectedList.add(M8Einstein5Subject);
+				expectedList.add(M8Einstein11Subject);
+				expectedList.add(M8Einstein12Subject);
+				expectedList.add(M8Einstein13Subject);
+				expectedList.add(M8Einstein14Subject);
+			}else if(i==2){
+				expectedList.add(M8Einstein11Subject);
+				expectedList.add(M8Einstein12Subject);
+			}else if(i==3){
+				expectedList.add(M8Einstein13Subject);
+				expectedList.add(M8Einstein14Subject);
+			}else{
+				expectedList.add(M8Einstein6Subject);
+				expectedList.add(M8Einstein7Subject);
+				expectedList.add(M8Einstein8Subject);
+				expectedList.add(M8Einstein9Subject);
+				expectedList.add(M8Einstein10Subject);
+			}
+
+			ele = home.todayTasksDownArrowListValues(defaultValue, 30);
+			if (click(driver, ele, defaultValue.toString(), action.BOOLEAN)) {
+				log(LogStatus.INFO, "click on "+defaultValue, YesNo.Yes);
+				ele=home.taskHeaderDownArrow(headers[i], 30);
+				if(ele!=null) {
+					log(LogStatus.PASS, headers[i]+" is displaying in section Header", YesNo.No);
+				}else {
+					log(LogStatus.FAIL, headers[i]+" is not displaying in section Header", YesNo.Yes);
+					sa.assertTrue(false, headers[i]+" is not displaying in section Header");
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to click on "+defaultValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to click on "+defaultValue);
+			}
+
+			eleList = home.ctreatedTaskAndEventListOnHomePage(Task.TodayTasks);
+			for (WebElement webElement : eleList) {
+				actualList.add(webElement.getText().trim());
+			}
+			if (expectedList.containsAll(actualList)) {
+				log(LogStatus.INFO, defaultValue+" data verified Actual : "+actualList, YesNo.Yes);
+			} else {
+				log(LogStatus.FAIL, defaultValue+" data not verified Actual : "+actualList+" Expected : "+expectedList, YesNo.Yes);
+				sa.assertTrue(false, defaultValue+" data not verified Actual : "+actualList+" Expected : "+expectedList);
+			}
+			refresh(driver);
+			ThreadSleep(5000);
+			expectedList.clear();
+			actualList.clear();
+		}
 		lp.CRMlogout();
 		sa.assertAll();
 	}
