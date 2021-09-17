@@ -1419,6 +1419,33 @@ public WebElement sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPop
 }
 
 
+public WebElement sdgGridVisibleFieldRemoveInManageFieldPopUp(String visibleFieldName,int timeOut) {
+	String xpath="";
+	xpath="//*[contains(text(),'Visible Fields')]/../div//ul/li/p[text()='"+visibleFieldName+"']/following-sibling::button[@title='Remove']";
+	WebElement ele = FindElement(driver, xpath, "sdgGridVisibleFieldRemoveInManageFieldPopUp", action.SCROLLANDBOOLEAN, timeOut);
+	
+	return isDisplayed(driver, ele, "Visibility", timeOut, "sdgGridVisibleFieldRemoveInManageFieldPopUp");
+}
+
+
+public WebElement sdgGridVisibleFieldTextInManageFieldPopUp(String visibleFieldName,int timeOut) {
+	String xpath="";
+	xpath="//*[contains(text(),'Visible Fields')]/../div//ul/li/p[text()='"+visibleFieldName+"']";
+	WebElement ele = FindElement(driver, xpath, "sdgGridVisibleFieldTextInManageFieldPopUp", action.SCROLLANDBOOLEAN, timeOut);
+	
+	return isDisplayed(driver, ele, "Visibility", timeOut, "sdgGridVisibleFieldTextInManageFieldPopUp");
+}
+
+
+public WebElement sdgGridFieldFinderRemoveSelectedFieldRemoveButtonInManageFieldPopUp(String selectedFieldName,int timeOut) {
+	String xpath="";
+	xpath="//a[text()='"+selectedFieldName+"']//button";
+	WebElement ele = FindElement(driver, xpath, "sdgGridFieldFinderRemoveSelectedFieldRemoveButtonInManageFieldPopUp", action.SCROLLANDBOOLEAN, timeOut);
+	
+	return isDisplayed(driver, ele, "Visibility", timeOut, "sdgGridFieldFinderRemoveSelectedFieldRemoveButtonInManageFieldPopUp");
+}
+
+
 
 
 
@@ -1629,6 +1656,19 @@ private WebElement arrowIconView;
 
 public WebElement getArrowIconView(int timeOut) {
 	return isDisplayed(driver, arrowIconView, "Visibility", timeOut, "Select a view of your tasks");
+}
+@FindBy(xpath = "(//div[contains(@class,'slds-theme_error')]//h2)[2]")
+private WebElement selectFieldPopUpErrorMsg;
+
+public WebElement getSelectFieldPopUpErrorMsg(int timeOut) {
+	return isDisplayed(driver, selectFieldPopUpErrorMsg, "Visibility", timeOut, "new button");
+}
+
+@FindBy(xpath = "//*[@class='toastMessage forceActionsText']")
+private WebElement toastErroMsg;
+
+public WebElement getToastErroMsg(int timeOut) {
+	return isDisplayed(driver, toastErroMsg, "Visibility", timeOut, "toastErroMsg");
 }
 
 }

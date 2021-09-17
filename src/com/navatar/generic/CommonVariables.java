@@ -334,6 +334,14 @@ public class CommonVariables {
 	public static String M7Event6Subject,M7Event6StartDate,M7Event6StartTime,M7Event6EndDate,M7Event6EndTime;
 	public static String M7Event7Subject,M7Event7StartDate,M7Event7StartTime,M7Event7EndDate,M7Event7EndTime;
 	
+	
+	//Module 8 
+	public static String M8_Object1,M8_Object2,M8_Object3,M8_Object4,M8_Object5,M8_Object6;
+	
+	public static String M8_Object1FieldName,M8_Object2FieldName,M8_Object3FieldName,M8_Object4FieldName,M8_Object5FieldName,M8_Object6FieldName;
+	
+	
+	
 	public CommonVariables(Object obj) {
 		//TODO Auto-generated constructor stub
 		AppListeners.appLog.info("Kindly hold on starting variable intialization........");
@@ -1126,7 +1134,26 @@ public class CommonVariables {
 			M8ContactActionOrder=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON3", excelLabel.Action_Order);
 			M8ContactActionType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON3", excelLabel.Action_Type);
 			M8ContactEventPayLoad=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON3", excelLabel.Event_PayLoad);
-
+			
+			
+			M8_Object1=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field1", excelLabel.Field_Label);
+			M8_Object1FieldName=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field1", excelLabel.Field_Type);
+			
+			M8_Object2=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field2", excelLabel.Field_Label);
+			M8_Object2FieldName=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field2", excelLabel.Field_Type);
+			
+			M8_Object3=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field3", excelLabel.Field_Label);
+			M8_Object3FieldName=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field3", excelLabel.Field_Type);
+			
+			M8_Object4=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field4", excelLabel.Field_Label);
+			M8_Object4FieldName=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field4", excelLabel.Field_Type);
+			
+			M8_Object5=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field5", excelLabel.Field_Label);
+			M8_Object5FieldName=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field5", excelLabel.Field_Type);
+			
+			M8_Object6=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field6", excelLabel.Field_Label);
+			M8_Object6FieldName=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field6", excelLabel.Field_Type);
+			
 
 			M8CallSubject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task1", excelLabel.Subject);
 			M8SendLetterSubject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task2", excelLabel.Subject);

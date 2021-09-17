@@ -206,6 +206,14 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getFieldLabelTextBox(int timeOut) {
 		return isDisplayed(driver, fieldLabelTextBox, "Visibility", timeOut, "field label text box");
 	}
+	
+	
+	@FindBy(id="DomainEnumOrId")
+	private WebElement relatedToDropDownList;
+
+	public WebElement getRelatedToDropDownList(int timeOut) {
+		return isDisplayed(driver, relatedToDropDownList, "Visibility", timeOut, "relatedToDropDownList");
+	}
 
 	@FindBy(xpath = "//div[@class='pbTopButtons']//input[@name='save']")
 	private WebElement customFieldSaveBtn;
