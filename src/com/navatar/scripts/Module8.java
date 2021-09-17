@@ -22,6 +22,7 @@ import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.PageName;
+import com.navatar.generic.EnumConstants.PermissionType;
 import com.navatar.generic.EnumConstants.RelatedTab;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
@@ -4322,16 +4323,9 @@ public class Module8 extends BaseLib {
 					}
 				}
 			}else {
-				lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
-				List<String> actualResult = new ArrayList<String>();
-				if(!lst.isEmpty()) {
-					for(int i1=0; i1<lst.size(); i1++) {
-						actualResult.add(lst.get(i1).getText().trim());
-					}
-				}
+				
 				String headerName="Bank Name";
-				List<String> expctedResult =createListOutOfString(headerName);
-				if(compareList( expctedResult, actualResult)) {
+				if(compareMultipleList(driver, headerName, home.sdgGridHeadersLabelNameList(SDGGridName.Deals)).isEmpty()) {
 					log(LogStatus.PASS, SDGGridName.Deals+" SDG Grid Header Name is verified for user", YesNo.No);
 				}else {
 					log(LogStatus.FAIL,SDGGridName.Deals+" SDG Grid Header Name is not verified for user", YesNo.Yes);
@@ -4469,15 +4463,8 @@ public class Module8 extends BaseLib {
 				}
 			}else {
 				lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
-				List<String> actualResult = new ArrayList<String>();
-				if(!lst.isEmpty()) {
-					for(int i1=0; i1<lst.size(); i1++) {
-						actualResult.add(lst.get(i1).getText().trim());
-					}
-				}
 				String headerName=M8_Object1+","+M8_Object2+","+M8_Object3;
-				List<String> expctedResult =createListOutOfString(headerName);
-				if(compareList( expctedResult, actualResult)) {
+				if(compareMultipleList(driver, headerName, lst).isEmpty()) {
 					log(LogStatus.PASS, SDGGridName.Deals+" SDG Grid Header Name is verified for user", YesNo.No);
 				}else {
 					log(LogStatus.FAIL,SDGGridName.Deals+" SDG Grid Header Name is not verified for user", YesNo.Yes);
@@ -4709,7 +4696,7 @@ public class Module8 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void M1Tc042_1_createFieldsForCustomObjectWithMaxChar(String projectName) {
+	public void M8Tc042_1_createFieldsForCustomObjectWithMaxChar(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -4726,7 +4713,7 @@ public class Module8 extends BaseLib {
 				exit("No new window is open after click on setup link in lighting mode so cannot create Fields Objects for custom object ");
 			}
 			ThreadSleep(3000);
-			String[][] labelAndValues = { /* {M8_Object5FieldName,M8_Object5,null,null}, */
+			String[][] labelAndValues = {{M8_Object5FieldName,M8_Object5,null,null},
 					{M8_Object6FieldName,M8_Object6,"Related To","Institution"}};
 			for(String[] objects : labelAndValues) {
 				
@@ -4754,7 +4741,7 @@ public class Module8 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void M1Tc042_2_verifycreatedFieldsForCustomObjectWithMaxChar(String projectName) {
+	public void M8Tc042_2_verifycreatedFieldsForCustomObjectWithMaxChar(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -4816,16 +4803,10 @@ public class Module8 extends BaseLib {
 					}
 				}
 			}else {
-				lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
-				List<String> actualResult = new ArrayList<String>();
-				if(!lst.isEmpty()) {
-					for(int i1=0; i1<lst.size(); i1++) {
-						actualResult.add(lst.get(i1).getText().trim());
-					}
-				}
 				String headerName="Bank Name";
-				List<String> expctedResult =createListOutOfString(headerName);
-				if(compareList( expctedResult, actualResult)) {
+				lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
+				if(compareMultipleList(driver, headerName, lst).isEmpty()) {
+				
 					log(LogStatus.PASS, SDGGridName.Deals+" SDG Grid Header Name is verified for user", YesNo.No);
 				}else {
 					log(LogStatus.FAIL,SDGGridName.Deals+" SDG Grid Header Name is not verified for user", YesNo.Yes);
@@ -4846,7 +4827,7 @@ public class Module8 extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void M1Tc043_verifyAddDuplicateFieldAndCheckErrorMsg(String projectName) {
+	public void M8Tc043_verifyAddDuplicateFieldAndCheckErrorMsg(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -4905,6 +4886,215 @@ public class Module8 extends BaseLib {
 			config(ExcelUtils.readDataFromPropertyFile("Browser"));
 			lp = new LoginPageBusinessLayer(driver);
 		}
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M8Tc044_1_renameCreatedStandardObjectAndCheckImpact(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentWindow = null;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot update Fields Objects for custom object ");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot update Fields Objects for custom object ",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot update Fields Objects for custom object ");
+			}
+			ThreadSleep(3000);
+			if(setup.updateCreatedCustomFieldforFormula(environment,mode,object.Deal,ObjectFeatureName.FieldAndRelationShip,"Source Firm","New Source Firm")) {
+				log(LogStatus.PASS, "Update Field Object name for created object for : New Source Firm", YesNo.No);
+			}else {
+				log(LogStatus.PASS, "Source Firm Field Object name is not udated : New Source Firm", YesNo.Yes);
+				sa.assertTrue(false, "Source Firm Field Object name is not created for : New Source Firm");
+			}
+			
+			
+			ThreadSleep(3000);
+			if(setup.updateCreatedCustomFieldforFormula(environment,mode,object.Deal,ObjectFeatureName.FieldAndRelationShip,"Deal sample 1","Deal sample 1 New")) {
+				log(LogStatus.PASS, "Update Field Object name for created object for : Deal sample 1 New", YesNo.No);
+			}else {
+				log(LogStatus.PASS, "Source Firm Field Object name is not udated : Deal sample 1 New", YesNo.Yes);
+				sa.assertTrue(false, "Source Firm Field Object name is not created for : Deal sample 1 New");
+			}
+			
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot create Fields Objects for custom object", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot create Fields Objects for custom object ");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M8Tc044_2_verifyRenameObjectInDealSDGGrid(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID,adminPassword);
+		ThreadSleep(5000);
+		if(click(driver, home.sdgGridSideIcons(SDGGridName.Deals,SDGGridSideIcons.Manage_fields,5), "manage field icon", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.PASS, "clicked on manage field icon of "+SDGGridName.Deals, YesNo.No);
+			List<WebElement> lst = home.sdgGridSelectVisibleFieldsListInManageFieldPopUp();
+			for(int i=0; i<1; i++) {
+				if(i==0) {
+					if(selectVisibleTextFromDropDown(driver, home.sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp(10), "drop down", "Deal sample 1 new")) {
+						log(LogStatus.PASS, "select Deal sample 1 new text from visible field", YesNo.No);
+						ThreadSleep(2000);
+						click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Add, 10), "Add button", action.SCROLLANDBOOLEAN);
+
+						if(click(driver,home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(Buttons.Save, 10), "save button", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.PASS, "clicked on save button for "+SDGGridName.Deals, YesNo.No);
+							ThreadSleep(1000);
+							
+						}else {
+							log(LogStatus.PASS, "Not able to click on save button for "+SDGGridName.Deals, YesNo.No);
+							sa.assertTrue(false, "Not able to click on save button for "+SDGGridName.Deals);
+						}
+					}else {
+						log(LogStatus.PASS, "Cannot select Deal sample 1 new from field finder", YesNo.No);
+						sa.assertTrue(false, "Cannot select Deal sample 1 new from field finder");
+					}	
+				}
+			}
+		}else {
+			log(LogStatus.PASS, "Not able to click on manage field icon of "+SDGGridName.Deals, YesNo.No);
+			sa.assertTrue(false, "Not able to click on manage field icon of "+SDGGridName.Deals);
+		}
+		
+		String headerName="New source firm,Deal sample 1 new";
+		List<WebElement> lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
+		if(compareMultipleList(driver, headerName, lst).isEmpty()) {
+		
+			log(LogStatus.PASS, SDGGridName.Deals+" SDG Grid Header Name is verified for user", YesNo.No);
+		}else {
+			log(LogStatus.FAIL,SDGGridName.Deals+" SDG Grid Header Name is not verified for user", YesNo.Yes);
+			sa.assertTrue(false, SDGGridName.Deals+" SDG Grid Header Name is not verified for user");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M1Tc045_1_removeObjectPermissionFromObject(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
+		String parentWindow = null;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot remove permission of  Field Set Component");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot remove permission of create Field Set Component",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot remove permission of create Field Set Component");
+			}
+			ThreadSleep(3000);
+			if(setup.giveAndRemoveObjectPermissionFromObjectManager(object.Deal,ObjectFeatureName.FieldAndRelationShip,PermissionType.removePermission,"New Source Firm","PE Standard User")) {
+				log(LogStatus.PASS,"Remove Permission of New Source Firm from Deal Object", YesNo.No);
+				
+			}else {
+				log(LogStatus.ERROR,"Not able to Remove Permission of New Source Firm from Deal Object", YesNo.Yes);
+				sa.assertTrue(false, "Not able to Remove Permission of New Source Firm from Deal Object");
+			}
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot remove permission on New Source Firm from Deal Object", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot remove permission on New Source Firm from Deal Object");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M8Tc045_2_verifyObjectVisibilityAfterRemoveObjectPermission(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		lp.CRMLogin(crmUser1EmailID,adminPassword);
+		String headerName="New source firm";
+		List<WebElement> lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
+		if(!compareMultipleList(driver, headerName, lst).isEmpty()) {
+			log(LogStatus.PASS, SDGGridName.Deals+" SDG Grid Header Name is verified for user", YesNo.No);
+		}else {
+			log(LogStatus.FAIL,SDGGridName.Deals+" SDG Grid Header Name is not verified for user", YesNo.Yes);
+			sa.assertTrue(false, SDGGridName.Deals+" SDG Grid Header Name is not verified for user");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M1Tc045_3_giveObjectPermissionFromObject(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
+		String parentWindow = null;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot remove permission of  Field Set Component");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot remove permission of create Field Set Component",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot remove permission of create Field Set Component");
+			}
+			ThreadSleep(3000);
+			if(setup.giveAndRemoveObjectPermissionFromObjectManager(object.Deal,ObjectFeatureName.FieldAndRelationShip,PermissionType.removePermission,"New Source Firm","PE Standard User")) {
+				log(LogStatus.PASS,"Add Permission of New Source Firm from Deal Object", YesNo.No);
+				
+			}else {
+				log(LogStatus.ERROR,"Not able to Add Permission of New Source Firm from Deal Object", YesNo.Yes);
+				sa.assertTrue(false, "Not able to Add Permission of New Source Firm from Deal Object");
+			}
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}else {
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot add permission on New Source Firm from Deal Object", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot add permission on New Source Firm from Deal Object");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M8Tc045_4_verifyObjectVisibilityAfterAddingObjectPermission(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		lp.CRMLogin(crmUser1EmailID,adminPassword);
+		String headerName="New source firm";
+		List<WebElement> lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
+		if(compareMultipleList(driver, headerName, lst).isEmpty()) {
+			log(LogStatus.PASS, SDGGridName.Deals+" SDG Grid Header Name is verified for user", YesNo.No);
+		}else {
+			log(LogStatus.FAIL,SDGGridName.Deals+" SDG Grid Header Name is not verified for user", YesNo.Yes);
+			sa.assertTrue(false, SDGGridName.Deals+" SDG Grid Header Name is not verified for user");
+		}
+		lp.CRMlogout();
 		sa.assertAll();
 	}
 

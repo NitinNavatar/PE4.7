@@ -665,4 +665,11 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, pageLayoutSelector, "Visibility", timeOut, "pageLayoutSelector");
 	}
 	
+	@FindBy(xpath = "//td//input[contains(@title,'Edit')]")
+	private WebElement editButtonOfCreatedFieldAndRelationShip;
+
+	public WebElement getEditButtonOfCreatedFieldAndRelationShip(int timeOut) {
+		return isDisplayed(driver, editButtonOfCreatedFieldAndRelationShip, "Visibility", timeOut, "editButtonOfCreatedFieldAndRelationShip");
+	}
+	
 }

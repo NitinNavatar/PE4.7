@@ -2,6 +2,7 @@ package com.navatar.pageObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -2437,4 +2438,131 @@ public WebElement clickOnRecordTypePageLayout(String projectName, String profile
 	WebElement ele = FindElement(driver, xpath, "payge layout table element", action.BOOLEAN, 20) ;
 	return isDisplayed(driver, ele, "visibility", 10, "record type");
 }
+
+
+public boolean updateCreatedCustomFieldforFormula(String environment, String mode,object objectName, ObjectFeatureName objectLeftSideActions,String fieldLabelName,String updatedFieldName) {
+	WebElement ele=null;
+	 tabCustomObj=tabCustomObj;
+	if(searchStandardOrCustomObject(environment, mode, objectName)) {
+		log(LogStatus.PASS, "object searched : "+objectName.toString(), YesNo.No);
+		ThreadSleep(5000);
+		String xpath="//div[@data-aura-class='uiScroller']//a[text()='"+objectName.toString()+"']";
+		if (objectName==object.Custom_Object) {
+			xpath="//div[@data-aura-class='uiScroller']//a[text()='"+tabCustomObj.toString()+"']";
+		}else {
+			 xpath="//div[@data-aura-class='uiScroller']//a[text()='"+objectName.toString()+"']";
+		}
+		
+		ele=FindElement(driver, xpath,objectName.toString()+" xpath", action.SCROLLANDBOOLEAN,30);
+		if(ele!=null) {
+			if(click(driver, ele, objectName.toString()+" xpath ", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.PASS, "clicked on object Name "+objectName, YesNo.No);
+				ThreadSleep(5000);
+				xpath="//div[@id='setupComponent']/div[@class='setupcontent']//ul/li/a[@data-list='"+objectLeftSideActions+"']";
+				ele=FindElement(driver, xpath,objectLeftSideActions+" xpath", action.SCROLLANDBOOLEAN,20);
+				if(click(driver, ele, objectLeftSideActions+" xpath ", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.PASS, "clicked on object side action :  "+objectLeftSideActions, YesNo.No);
+					ThreadSleep(5000);
+					if(click(driver, getCustomFieldNewButton(30),"new button", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.PASS, "clicked on new button", YesNo.No);
+						ThreadSleep(1000);
+						if(switchToFrame(driver, 30, getNewCustomFieldFrame(objectName.toString(),30))) {
+							ThreadSleep(1000);
+							
+							if (sendKeys(driver, getsearchTextboxFieldsAndRelationships(10), fieldLabelName+Keys.ENTER, "search text box", action.BOOLEAN)) {
+								log(LogStatus.PASS, "search "+fieldLabelName, YesNo.No);
+								
+								xpath= "//span[text()='"+fieldLabelName+"']/..";
+								ele=FindElement(driver, xpath,fieldLabelName+" xpath", action.SCROLLANDBOOLEAN,20);
+								if(click(driver, ele, fieldLabelName+" xpath ", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.PASS, "clicked on object name :  "+fieldLabelName, YesNo.No);
+									ThreadSleep(5000);
+									if(click(driver, getEditButtonOfCreatedFieldAndRelationShip(10), fieldLabelName+" edit button ", action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.PASS, "clicked on edit button of object name :  "+fieldLabelName, YesNo.No);
+										ThreadSleep(5000);
+										
+										ThreadSleep(1000);
+										if(sendKeys(driver, getFieldLabelTextBox(30), updatedFieldName, "field label name ", action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.PASS, "passed value in field label text box : "+updatedFieldName, YesNo.No);
+											
+											if(click(driver, getCustomFieldNextBtn(30),"next button", action.SCROLLANDBOOLEAN)) {
+												log(LogStatus.PASS, "Clicked on Step 2 Next button", YesNo.No);
+												ThreadSleep(2000);
+//											if(sendKeys(driver, getFormulaTextBox(30), formulaText,"formula text area", action.SCROLLANDBOOLEAN)) {
+//													log(LogStatus.PASS, "Passed Value in formula Text Box "+formulaText, YesNo.No);
+													if(click(driver, getCustomFieldNextBtn(30),"next button", action.SCROLLANDBOOLEAN)) {
+														log(LogStatus.PASS, "Clicked on Step 3 Next button", YesNo.No);
+														ThreadSleep(1000);
+//														if(click(driver, getCustomFieldNextBtn(30),"next button", action.SCROLLANDBOOLEAN)) {
+//															log(LogStatus.PASS, "Clicked on Step 4 Next button", YesNo.No);
+//															ThreadSleep(1000);
+															click(driver, getCustomFieldNextBtn(10),"next button", action.SCROLLANDBOOLEAN);
+															ThreadSleep(1000);
+															if(click(driver, getCustomFieldSaveBtn(30), "save button", action.SCROLLANDBOOLEAN)) {
+																log(LogStatus.PASS, "clicked on save button", YesNo.No);
+																ThreadSleep(5000);
+																switchToDefaultContent(driver);
+																return true;
+																
+															}else {
+																log(LogStatus.FAIL, "Not able to click on save button so cannot create custom field "+objectName, YesNo.Yes);
+															}
+															
+//														}else {
+//															log(LogStatus.FAIL, "Not able to click on Step 4 next button so cannot create custom field : "+objectName,YesNo.Yes);
+//														}
+														
+													}else {
+														log(LogStatus.FAIL, "Not able to click on Step 3 next button so cannot update custom field : "+updatedFieldName,YesNo.Yes);
+													}
+//											}else {
+//												log(LogStatus.FAIL, "Not able to click on Step 2 next button so cannot create custom field : "+objectName,YesNo.Yes);
+//											}
+										}else {
+											log(LogStatus.FAIL, "Not able to enter value in field label text box : "+fieldLabelName+" so cannot update custom field "+updatedFieldName, YesNo.Yes);
+										}
+											
+											
+										}else {
+											log(LogStatus.PASS, "not able to click on update field name of object name "+fieldLabelName, YesNo.Yes);
+										}
+									}else {
+										log(LogStatus.PASS, "not able to click on edit button of object name "+fieldLabelName, YesNo.Yes);
+									}
+									
+									
+								}else {
+									log(LogStatus.PASS, "not able to click on object name "+fieldLabelName, YesNo.Yes);
+								}
+							}else {
+								log(LogStatus.PASS, "not able to search "+fieldLabelName, YesNo.Yes);
+							}
+							
+						}else {
+							log(LogStatus.FAIL, "Not able to switch in "+objectName+" new object frame so cannot add custom object", YesNo.Yes);
+						}
+					}else {
+						log(LogStatus.FAIL, "Not able to click on New button so cannot add custom field in "+objectName.toString(), YesNo.Yes);
+					}
+					
+				}else {
+					log(LogStatus.FAIL, "Not able to click on object side action "+objectLeftSideActions+" so cannot add custom object ", YesNo.Yes);
+				}
+				
+			}else {
+				log(LogStatus.FAIL, "Not able to click on object Name "+objectName+" so cannot add custom object ", YesNo.Yes);
+			}
+		}else {
+			log(LogStatus.FAIL, "Not able to found object : "+objectName.toString()+" so cannot add custom object", YesNo.Yes);
+		}
+	}else {
+		log(LogStatus.FAIL, "Not able to search object "+objectName.toString()+" so cannot add custom object", YesNo.Yes);
+	}
+	switchToDefaultContent(driver);
+	return false;
+}
+
+
+
+
 }
