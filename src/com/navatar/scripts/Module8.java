@@ -3081,9 +3081,85 @@ public class Module8 extends BaseLib {
 	public void M8Tc028_updateAndDeleteTaskAndEvents(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		GlobalActionPageBusinessLayer gp = new GlobalActionPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp = new TaskPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		List<WebElement> lst = new ArrayList<WebElement>();
 		ThreadSleep(5000);
+		String[] taskAndEvent={M8Einstein11Subject,M8EinsteinEvent10Subject};
+		String t="";
+		String update=" update";
+		String upadtedTask="";
+		for (int i = 0; i < taskAndEvent.length; i++) {
+			t=taskAndEvent[i];
+			upadtedTask=t+update;
+			if (click(driver, home.createdtaskOnHomePage(t), t, action.BOOLEAN)) {
+				log(LogStatus.PASS, "able to Clicked on "+t+" so going to update it to "+update, YesNo.No);
+				if (click(driver, tp.getEditButton(projectName, 30), t, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Edit Button For : "+t, YesNo.No);	
+					try {
+						gp.getLabelTextBoxForTask(projectName, PageName.TaskPage, PageLabel.Subject.toString(),20).clear();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					ThreadSleep(2000);
+					if (sendKeys(driver, gp.getLabelTextBoxForTask(projectName, PageName.TaskPage, PageLabel.Subject.toString(),20), update, "Subject", action.BOOLEAN)) {
+						log(LogStatus.INFO, "Value Entered to Due Date "+upadtedTask, YesNo.No);	
+						ThreadSleep(10000);
+						if (clickUsingJavaScript(driver, lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO,"successfully Updated task : "+t,  YesNo.No);
+							ThreadSleep(5000);
+							String[][] fieldsWithValues= {{PageLabel.Subject.toString(),upadtedTask}};
+							tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 30);
+							lp.clickOnTab(projectName, TabName.HomeTab);
+							if (click(driver, home.createdtaskOnHomePage(upadtedTask), upadtedTask, action.BOOLEAN)) {
+								log(LogStatus.PASS, "Task/Event Updated "+upadtedTask+" so going to delete it ", YesNo.No);
+								if (click(driver, cp.getDeleteButton(projectName, 20), "Delete Button", action.BOOLEAN)) {
+									log(LogStatus.INFO,"Able to Click on Delete button : "+upadtedTask,YesNo.No);
+									ThreadSleep(2000);
+									if (click(driver, cp.getDeleteButtonPopUp(projectName, 20), "Delete Button", action.BOOLEAN)) {
+										log(LogStatus.INFO,"Able to Click on Delete button on PopUp : "+upadtedTask,YesNo.No);
+										ThreadSleep(2000);
+										lp.clickOnTab(projectName, TabName.HomeTab);
+										if (home.createdtaskOnHomePage(upadtedTask)==null) {
+											log(LogStatus.PASS,"Task/Event deleted "+upadtedTask,YesNo.Yes);
+										} else {
+											sa.assertTrue(false,"Task/Event not deleted "+upadtedTask);
+											log(LogStatus.SKIP,"Task/Event not deleted "+upadtedTask,YesNo.Yes);
+										}
+									} else {
+										sa.assertTrue(false,"Not Able to Click on Delete button on PopUp : "+upadtedTask);
+										log(LogStatus.SKIP,"Not Able to Click on Delete button on PopUp : "+upadtedTask,YesNo.Yes);
+									}
+								} else {
+									sa.assertTrue(false,"Not Able to Click on Delete button : "+upadtedTask);
+									log(LogStatus.SKIP,"Not Able to Click on Delete button : "+upadtedTask,YesNo.Yes);
+								}
+								
+							}else {
+								log(LogStatus.FAIL, "Task/Event has not been Updated "+upadtedTask+" so cannot delete it ", YesNo.Yes);
+								sa.assertTrue(false, "Task/Event has not been Updated "+upadtedTask+" so cannot delete it ");
+							}
+						}else {
+							log(LogStatus.ERROR, "save button is not clickable so task not Updated : "+t, YesNo.Yes);
+							sa.assertTrue(false,"save button is not clickable so task not Updated : "+t );
+						}
+					}else {
+						log(LogStatus.ERROR, "Not Able to Entered Value to Due Date "+M7Task8dueDate, YesNo.Yes);	
+						BaseLib.sa.assertTrue(false, "Not Able to Entered Value to Due Date "+M7Task8dueDate);	
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on Edit Button For : "+t, YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on Edit Button For : "+t);
+				}
+			}else {
+				log(LogStatus.FAIL, "Not able to Clicked on "+t+" so cannot update it to "+upadtedTask, YesNo.Yes);
+				sa.assertTrue(false, "Not able to Clicked on "+t+" so cannot update it to "+upadtedTask);
+			}
+		}
 		
 		
 		lp.CRMlogout();

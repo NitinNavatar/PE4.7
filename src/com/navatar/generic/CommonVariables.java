@@ -285,6 +285,7 @@ public class CommonVariables {
 	public static String M8Einstein12Subject;
 	public static String M8Einstein13Subject;
 	public static String M8Einstein14Subject;
+	public static String M8EinsteinEvent10Subject;
 	// Module 7 
 	
 	public static String M7Ins1,M7Ins1RecordType;
@@ -1170,6 +1171,7 @@ public class CommonVariables {
 			M8Einstein13Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task13", excelLabel.Subject);
 			M8Einstein14Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task14", excelLabel.Subject);
 			
+			M8EinsteinEvent10Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M8Event10", excelLabel.Subject);
 			
 		}else if(obj instanceof Module6){
 			M6Ins1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS1", excelLabel.Institutions_Name);
