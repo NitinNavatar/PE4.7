@@ -131,8 +131,6 @@ public class Module7 extends BaseLib {
 		if (gp.clickOnGlobalActionAndEnterValue(projectName, GlobalActionItem.New_Task, event1)) {
 			log(LogStatus.INFO,"Able to Enter Value for : "+task,YesNo.No);
 			ExcelUtils.writeData(phase1DataSheetFilePath,M7Task1dueDate, "Task1", excelLabel.Variable_Name, "M7Task1", excelLabel.Due_Date);
-			//String relatedValue="";
-			//gp.enterValueOnRelatedTo(projectName, PageName.GlobalActtion_TaskPOpUp, TabName.InstituitonsTab, relatedValue);
 			if (click(driver, gp.getSaveButtonForEvent(projectName, 10), "Save Button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);		
 				flag=true;
@@ -6695,7 +6693,7 @@ public class Module7 extends BaseLib {
 				{PageLabel.Name.toString(),secondaryContact},
 				{PageLabel.Subject.toString(),task},
 				{PageLabel.Due_Date.toString(),M7Task16dueDate},
-				{PageLabel.Meeting_Type.toString(),meetingNone},
+				{PageLabel.Meeting_Type.toString(),M7Task16MeetingType},
 				{PageLabel.Status.toString(),M7Task16Status}};
 
 		
@@ -6989,7 +6987,7 @@ public class Module7 extends BaseLib {
 					if (cp.clickOnAlreadyCreatedItem(projectName, contactName, 30)) {
 						log(LogStatus.INFO,"Clicked on  : "+contactName+" For : "+tabObj2,YesNo.No);
 						ThreadSleep(2000);
-						expectedValue = M7Task15dueDate;
+						expectedValue = M7Task16dueDate;
 						ele=cp.getlastTouchPointValue(projectName, 10);
 						if (ele!=null) {
 							actualValue=ele.getText().trim();
@@ -7045,7 +7043,8 @@ public class Module7 extends BaseLib {
 		String[][] event1 = {
 				{PageLabel.Subject.toString(),task},
 				{PageLabel.Due_Date.toString(),M7Task17dueDate},
-				{PageLabel.Status.toString(),M7Task17Status}};
+				{PageLabel.Status.toString(),M7Task17Status},
+				{PageLabel.Meeting_Type.toString(),M7Task17MeetingType}};
 
 
 		if (cp.clickOnTab(projectName, tabObj2)) {
@@ -7117,7 +7116,9 @@ public class Module7 extends BaseLib {
 		 task = M7Task18Subject;
 		String[][] event11 = {
 				{PageLabel.Subject.toString(),task},
-				{PageLabel.Due_Date.toString(),M7Task18dueDate}};
+				{PageLabel.Due_Date.toString(),M7Task18dueDate},
+				{PageLabel.Status.toString(),M7Task18Status},
+				{PageLabel.Meeting_Type.toString(),M7Task18MeetingType}};
 
 
 		if (cp.clickOnTab(projectName, tabObj2)) {

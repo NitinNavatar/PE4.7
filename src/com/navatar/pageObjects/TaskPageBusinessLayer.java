@@ -1,12 +1,14 @@
 package com.navatar.pageObjects;
 
 import static com.navatar.generic.CommonLib.*;
+import static com.navatar.generic.CommonVariables.M7Task1dueDate;
 import static com.navatar.generic.SmokeCommonVariables.Smoke_STDTask1Subject;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.navatar.generic.BaseLib;
+import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.PageName;
@@ -14,6 +16,7 @@ import com.navatar.generic.EnumConstants.PopUpName;
 import com.navatar.generic.EnumConstants.TaskRayProjectButtons;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
+import com.navatar.generic.EnumConstants.excelLabel;
 import com.relevantcodes.extentreports.LogStatus;
 
 import com.relevantcodes.extentreports.LogStatus;
@@ -256,5 +259,82 @@ public class TaskPageBusinessLayer extends TaskPage {
 		
 	}
 	
+	/**@author Akul Bhutani
+	 * @param projectName
+	 * @param pageName
+	 * @param fieldsWithValues
+	 * @param action
+	 * @param timeOut
+	 * @return true/false
+	 * @description this is used to verify fields present on task page
+	 */
+	public boolean fieldVerificationForTaskInViewMode1(String projectName,PageName pageName,String[][] fieldsWithValues,action action,int timeOut) {
+		refresh(driver);
+		String label;
+		String value;
+		String actualValue="";
+		WebElement ele;
+		boolean flag=false;
+		for (String[] fieldWithValue : fieldsWithValues) {
+			value=fieldWithValue[1];
+			label= fieldWithValue[0];
+			if(label.equalsIgnoreCase(PageLabel.Related_Associations.toString()) || label.equalsIgnoreCase(PageLabel.Related_Contacts.toString()))
+				ThreadSleep(10000);
+				switchToFrame(driver, 10, getFrame(PageName.TaskPage, 30));
+			ele = getLabelForTaskInViewMode( projectName, pageName, label,action, timeOut);
+			label= fieldWithValue[0].replace("_", " ");
+			
+			if (ele!=null) {
+				if (fieldWithValue[0].equalsIgnoreCase(PageLabel.Watchlist.toString())||fieldWithValue[0].equalsIgnoreCase(PageLabel.Watch_list.toString()))
+					actualValue=ele.getAttribute("alt");
+				else
+					actualValue=ele.getText().trim();
+				if (value==null || value.equals("")){
+					flag=actualValue.equals(value);
+				} else {
+					if (fieldWithValue[0].equalsIgnoreCase(PageLabel.Due_Date.toString())) {
+						flag=verifyDate(value, actualValue);
+					}else if(fieldWithValue[0].equalsIgnoreCase(PageLabel.Comments.toString())||fieldWithValue[0].equalsIgnoreCase(PageLabel.Watchlist.toString())||(fieldWithValue[0].equalsIgnoreCase(PageLabel.Watch_list.toString()))){
+						flag=actualValue.equals(value);	
+					}else{
+						flag=actualValue.contains(value);	
+					}
+				
+				}
+			} 
+			switchToDefaultContent(driver);
+		}
+		return flag;
+	}
 	
+	public boolean EditEnterDueDateAndSave(String projectName,String task,String dueDate){
+		boolean flag=false;
+		TaskPageBusinessLayer tp = new TaskPageBusinessLayer(driver);
+		if (click(driver, tp.getEditButton(projectName, 30), task, action.BOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on Edit Button For : "+task, YesNo.No);	
+				if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), dueDate, "Due Date", action.BOOLEAN)) {
+					log(LogStatus.INFO, "Value Entered to Due Date "+dueDate, YesNo.No);	
+					ThreadSleep(2000);
+					if (clickUsingJavaScript(driver, getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
+						ThreadSleep(5000);
+						flag=true;
+						String[][] fieldsWithValues= {{PageLabel.Due_Date.toString(),dueDate}};
+						flag=tp.fieldVerificationForTaskInViewMode1(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 30);
+						if (flag) {
+							
+						}else{
+							flag=tp.fieldVerificationForTaskInViewMode1(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 30);
+						}
+					}else {
+						log(LogStatus.ERROR, "save button is not clickable so task not Updated : "+task, YesNo.Yes);
+					}
+				}else {
+					log(LogStatus.ERROR, "Not Able to Entered Value to Due Date "+dueDate, YesNo.Yes);	
+				}
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on Edit Button For : "+task, YesNo.Yes);
+		}
+		return flag;
+	}
 }
