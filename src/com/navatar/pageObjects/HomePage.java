@@ -1671,5 +1671,11 @@ public WebElement getToastErroMsg(int timeOut) {
 	return isDisplayed(driver, toastErroMsg, "Visibility", timeOut, "toastErroMsg");
 }
 
+public WebElement createdtaskOnHomePage(String task) {
+	String xpath="//div[@data-aura-class='uiAbstractList']//a/span[text()='"+task+"']";
+	WebElement ele = FindElement(driver, xpath, task, action.BOOLEAN, 20);
+	ele = isDisplayed(driver, ele, "Visibility", 10, task);;
+	return ele;
+}
 }
 
