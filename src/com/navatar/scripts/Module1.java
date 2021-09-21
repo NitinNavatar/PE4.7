@@ -146,6 +146,8 @@ public class Module1 extends BaseLib {
 	public void M1Tc001_2_Prerequisite(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentWindow=null;
 		String[][] userAndPassword = {{superAdminUserName,adminPassword},{crmUser1EmailID,adminPassword}};
 		for (String[] userPass : userAndPassword) {
 			lp.CRMLogin(userPass[0], userPass[1], appName);
@@ -159,16 +161,51 @@ public class Module1 extends BaseLib {
 			else{
 				tab1=tabObj1;
 			}
-			addRemoveTabName=tab1+"s,"+tabObj2+"s,"+tabObj3+"s,"+tabObj4+"s,"+"Tasks"+",Recycle Bin"+",Navatar Setup"+",Partnerships"+",Commitments,Coverages,Deal Team";
+			addRemoveTabName=tab1+"s,"+tabObj2+"s,"+tabObj3+"s,"+tabObj4+"s,"+"Tasks"+",Recycle Bin"+",Navatar Setup"+",Coverages,Deal Team";
 			if (lp.addTab_Lighting( addRemoveTabName, 5)) {
 				log(LogStatus.INFO,"Tab added : "+addRemoveTabName,YesNo.No);
 			} else {
 				log(LogStatus.FAIL,"Tab not added : "+addRemoveTabName,YesNo.No);
 				sa.assertTrue(false, "Tab not added : "+addRemoveTabName);
 			}		
-
-
-
+			
+			if(userPass[0]== superAdminUserName) {
+				if (home.clickOnSetUpLink()) {
+					parentWindow = switchOnWindow(driver);
+					if (parentWindow == null) {
+						sa.assertTrue(false,
+								"No new window is open after click on setup link in lighting mode so cannot create Fields object Entity for object");
+						log(LogStatus.SKIP,
+								"No new window is open after click on setup link in lighting mode so cannot create Fields object Entity for object",
+								YesNo.Yes);
+						exit("No new window is open after click on setup link in lighting mode so cannot create Fields object Entity for object");
+					}
+					ThreadSleep(3000);
+					object[] obj = {object.Institution,object.Deal,object.Marketing_Event};
+					int j=0;
+					String[][] labelAndValues= {
+					{FC_FieldType32,FC_FieldLabelName32,null,null},{FC_FieldType33,FC_FieldLabelName33,null,null},{FC_FieldType34,FC_FieldLabelName34,null,null}};
+					
+					
+					for(String[] objects : labelAndValues) {
+						String[][] valuesandLabel = {{objects[2],objects[3]}};
+						
+						if(setup.addCustomFieldforFormula(environment,mode,obj[j],ObjectFeatureName.FieldAndRelationShip,objects[0],objects[1], valuesandLabel, null,null)) {
+							log(LogStatus.PASS, "Field Object is created for :"+objects[1], YesNo.No);
+						}else {
+							log(LogStatus.PASS, "Field Object is not created for :"+objects[1], YesNo.Yes);
+							
+						}
+						j++;
+					}
+					switchToDefaultContent(driver);
+					driver.close();
+					driver.switchTo().window(parentWindow);
+				}else {
+					log(LogStatus.ERROR, "Not able to click on setup link so cannot create Fields object Entity for object", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on setup link so cannot create Fields object Entity for object");
+				}
+			}
 			ThreadSleep(5000);
 			lp.CRMlogout();
 			closeBrowser();

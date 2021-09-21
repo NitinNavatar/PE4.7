@@ -1163,6 +1163,19 @@ public class HomePage extends BasePageBusinessLayer {
 	}
 	
 	
+	public List<WebElement> sdgGridHeadersDealsGridDealStageColumn(SDGGridName sdgGridName,String columnName) {
+		//index start from 2 in Deal SDG grid.
+		
+		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName+"']/../../../../../following-sibling::div//table/tbody/tr/td[@data-label='"+columnName+"']";
+		List<WebElement> ele = FindElements(driver, xpath, "SDG grid column data of "+columnName);
+		
+		return ele;
+	}
+	
+	
+	
+	
+	
 	public List<WebElement> sdgGridHeadersDealsNameList() {
 		//index start from 2 in Deal SDG grid.
 		
@@ -1374,7 +1387,7 @@ public WebElement getSelectThemeinputBoxClearButton(int timeOut) {
 public List<WebElement> sdgGridSelectThemeList() {
 	
 	
-	String xpath="//label[text()='Select Theme']/following-sibling::div//*[@role='listbox']//span/span";
+	String xpath="//label[text()='Select Theme']/following-sibling::div//*[contains(@data-value,'key')]/span/span";
 	List<WebElement> ele = FindElements(driver, xpath, "SDG grid select theme list ");
 	
 	return ele;
@@ -1402,7 +1415,7 @@ public WebElement sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(But
 			saveCancelBtn.toString().equalsIgnoreCase(Buttons.Add.toString())) {
 		xpath="//button[@title='"+saveCancelBtn+"']";
 	}else {
-		xpath="//*//button[@title='"+saveCancelBtn+"' or text()='"+saveCancelBtn+"']";
+		xpath="//h2[text()='Select Fields to Display ']/../..//button[@title='"+saveCancelBtn+"' or text()='"+saveCancelBtn+"']";
 	}
 	WebElement ele = FindElement(driver, xpath, "SDG grid SelectFieldToDisplay popup  "+saveCancelBtn, action.SCROLLANDBOOLEAN, timeOut);
 	

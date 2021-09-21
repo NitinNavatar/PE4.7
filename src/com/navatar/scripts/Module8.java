@@ -802,6 +802,7 @@ public class Module8 extends BaseLib {
 		SDGGridName[] sdgGridName = {SDGGridName.Deals,SDGGridName.Fundraising,SDGGridName.My_Call_List};
 		String[] labelName = {"Deal","FundRaising","My Call List"};
 		String [] dropDownName = {"Stage","Closing","Firm"};
+		String [] headerName = {"Stage: ","Closing: ","Firm: "};
 		String [] searchDataName= {null,null,"Centri"};
 		Operator[] operators = {Operator.Deal_Received,Operator.Second_Closing,Operator.StartWith};
 		YesNo[] searchData = {YesNo.No,YesNo.No,YesNo.Yes};
@@ -813,7 +814,7 @@ public class Module8 extends BaseLib {
 					log(LogStatus.PASS, "Search My Call List Name in filter "+labelName[i], YesNo.No);
 					ThreadSleep(3000);
 					if(i==0) {
-						lst =home.sdgGridHeadersDealsGridDealColumnsDataList(3);
+						lst =home.sdgGridHeadersDealsGridDealStageColumn(sdgGridName[i],headerName[i]);
 						if(!lst.isEmpty()) {
 							if(compareMultipleList(driver,operators[i].toString(), lst).isEmpty()) {
 								log(LogStatus.PASS, "Deal Received is verfied for "+labelName[i], YesNo.No);
@@ -827,7 +828,7 @@ public class Module8 extends BaseLib {
 						}
 						
 					}else if (i==1) {
-						lst =home.sdgGridHeadersFundRaisingsFundraisingColumnsDataList(3);
+						lst =home.sdgGridHeadersDealsGridDealStageColumn(sdgGridName[i],headerName[i]);
 						if(!lst.isEmpty()) {
 							if(compareMultipleList(driver,operators[i].toString(), lst).isEmpty()) {
 								log(LogStatus.PASS, "2nd closing is verfied for "+labelName[i], YesNo.No);
@@ -840,7 +841,7 @@ public class Module8 extends BaseLib {
 							sa.assertTrue(false, "2nd closing data data list is not found so cannot check 2nd closing list after applied filter in Fundraising SDG");
 						}
 					}else {
-						lst =home.sdgGridHeadersMyCallListNameColumnsDataList(3);
+						lst =home.sdgGridHeadersDealsGridDealStageColumn(sdgGridName[i],headerName[i]);
 						if(!lst.isEmpty()) {
 							if(compareMultipleList(driver,"Centri Technology", lst).isEmpty()) {
 								log(LogStatus.PASS, "Firm filter is verfied for "+labelName[i], YesNo.No);
@@ -864,7 +865,7 @@ public class Module8 extends BaseLib {
 			}
 		}
 		refresh(driver);
-		lst =home.sdgGridHeadersDealsGridDealColumnsDataList(3);
+		lst =home.sdgGridHeadersDealsGridDealStageColumn(sdgGridName[0],headerName[0]);
 		if(!lst.isEmpty()) {
 			if(!compareMultipleList(driver,operators[0].toString(), lst).isEmpty()) {
 				log(LogStatus.PASS, "Deal Received is not visible for "+labelName[0], YesNo.No);
@@ -877,7 +878,7 @@ public class Module8 extends BaseLib {
 			sa.assertTrue(false, "Stage data list is not found so cannot check stage list after refresh filter in deal SDG");
 		}
 		lst = new ArrayList<WebElement>();
-		lst =home.sdgGridHeadersFundRaisingsFundraisingColumnsDataList(3);
+		lst =home.sdgGridHeadersDealsGridDealStageColumn(sdgGridName[1],headerName[1]);
 		if(!lst.isEmpty()) {
 			if(!compareMultipleList(driver,operators[1].toString(), lst).isEmpty()) {
 				log(LogStatus.PASS, "2nd closing is not visible for "+labelName[1], YesNo.No);
@@ -890,7 +891,7 @@ public class Module8 extends BaseLib {
 			sa.assertTrue(false, "2nd closing data data list is not found so cannot check 2nd closing list after refresh in Fundraising SDG");
 		}
 		lst = new ArrayList<WebElement>();
-		lst =home.sdgGridHeadersMyCallListNameColumnsDataList(3);
+		lst =home.sdgGridHeadersDealsGridDealStageColumn(sdgGridName[2],headerName[2]);
 		if(!lst.isEmpty()) {
 			if(compareMultipleList(driver,"Centri Technology", lst).isEmpty()) {
 				log(LogStatus.PASS, "Firm filter is not visible for "+labelName[2], YesNo.No);
@@ -995,7 +996,7 @@ public class Module8 extends BaseLib {
 
 						log(LogStatus.INFO, "successfully clicked on checkbox button", YesNo.No);
 
-						if (click(driver, home.getsdgSaveButton(projectName,10), "save", action.SCROLLANDBOOLEAN)) {
+						if (clickUsingJavaScript(driver, home.getsdgSaveButton(projectName,10), "save", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "successfully clicked on save button", YesNo.No);
 
 						}else {
@@ -1252,6 +1253,7 @@ public class Module8 extends BaseLib {
 		ThreadSleep(5000);
 		SDGGridName[] sdgGridName = {SDGGridName.Deals,SDGGridName.Fundraising,SDGGridName.My_Call_List};
 		String[] labelName = {"Deal","FundRaising","My Call List"};
+		String [] headerName = {"Stage: ","Closing: ","Firm: "};
 		String [] dropDownName = {"Stage","Closing","Firm"};
 		String [] searchDataName= {null,null,"Centri"};
 		Operator[] operators = {Operator.Deal_Received,Operator.Second_Closing,Operator.StartWith};
@@ -1264,7 +1266,7 @@ public class Module8 extends BaseLib {
 					log(LogStatus.PASS, "Search My Call List Name in filter "+labelName[i], YesNo.No);
 					ThreadSleep(3000);
 					if(i==0) {
-						lst =home.sdgGridHeadersDealsGridDealColumnsDataList(3);
+						lst =home.sdgGridHeadersDealsGridDealStageColumn(sdgGridName[i],headerName[i]);
 						if(!lst.isEmpty()) {
 							if(compareMultipleList(driver,operators[i].toString(), lst).isEmpty()) {
 								log(LogStatus.PASS, "Deal Received is verfied for "+labelName[i], YesNo.No);
@@ -1278,7 +1280,7 @@ public class Module8 extends BaseLib {
 						}
 						
 					}else if (i==1) {
-						lst =home.sdgGridHeadersFundRaisingsFundraisingColumnsDataList(3);
+						lst =home.sdgGridHeadersDealsGridDealStageColumn(sdgGridName[i],headerName[i]);
 						if(!lst.isEmpty()) {
 							if(compareMultipleList(driver,operators[i].toString(), lst).isEmpty()) {
 								log(LogStatus.PASS, "2nd closing is verfied for "+labelName[i], YesNo.No);
@@ -1291,7 +1293,7 @@ public class Module8 extends BaseLib {
 							sa.assertTrue(false, "2nd closing data data list is not found so cannot check 2nd closing list after applied filter in Fundraising SDG");
 						}
 					}else {
-						lst =home.sdgGridHeadersMyCallListNameColumnsDataList(3);
+						lst =home.sdgGridHeadersDealsGridDealStageColumn(sdgGridName[i],headerName[i]);
 						if(!lst.isEmpty()) {
 							if(compareMultipleList(driver,"Centri Technology", lst).isEmpty()) {
 								log(LogStatus.PASS, "Firm filter is verfied for "+labelName[i], YesNo.No);
@@ -1316,7 +1318,7 @@ public class Module8 extends BaseLib {
 		}
 		refresh(driver);
 		lst.removeAll(lst);
-		lst =home.sdgGridHeadersDealsGridDealColumnsDataList(3);
+		lst =home.sdgGridHeadersDealsGridDealStageColumn(sdgGridName[0],headerName[0]);
 		if(!lst.isEmpty()) {
 			for(int i=lst.size()-1; i>=1; i--) {
 				lst.remove(i);
@@ -1332,7 +1334,7 @@ public class Module8 extends BaseLib {
 			sa.assertTrue(false, "Stage data list is not found so cannot check stage list after refresh filter in deal SDG");
 		}
 		lst.removeAll(lst);
-		lst =home.sdgGridHeadersFundRaisingsFundraisingColumnsDataList(3);
+		lst =home.sdgGridHeadersDealsGridDealStageColumn(sdgGridName[1],headerName[1]);
 		if(!lst.isEmpty()) {
 			for(int i=lst.size()-1; i>=3; i--) {
 				lst.remove(i);
@@ -1348,7 +1350,7 @@ public class Module8 extends BaseLib {
 			sa.assertTrue(false, "2nd closing data data list is not found so cannot check 2nd closing list after refresh in Fundraising SDG");
 		}
 		lst.removeAll(lst);
-		lst =home.sdgGridHeadersMyCallListNameColumnsDataList(3);
+		lst =home.sdgGridHeadersDealsGridDealStageColumn(sdgGridName[2],headerName[2]);
 		if(!lst.isEmpty()) {
 			for(int i=lst.size()-1; i>=2; i--) {
 				lst.remove(i);
@@ -1479,7 +1481,7 @@ public class Module8 extends BaseLib {
 
 						log(LogStatus.INFO, "successfully clicked on checkbox button", YesNo.No);
 
-						if (click(driver, home.getsdgSaveButton(projectName,10), "save", action.SCROLLANDBOOLEAN)) {
+						if (clickUsingJavaScript(driver, home.getsdgSaveButton(projectName,10), "save", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "successfully clicked on save button", YesNo.No);
 
 						}else {
@@ -1974,7 +1976,7 @@ public class Module8 extends BaseLib {
 
 						log(LogStatus.INFO, "successfully clicked on checkbox button", YesNo.No);
 
-						if (click(driver, home.getsdgSaveButton(projectName,10), "save", action.SCROLLANDBOOLEAN)) {
+						if (clickUsingJavaScript(driver, home.getsdgSaveButton(projectName,10), "save", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "successfully clicked on save button", YesNo.No);
 
 						}else {
@@ -2134,7 +2136,7 @@ public class Module8 extends BaseLib {
 
 					log(LogStatus.INFO, "successfully clicked on checkbox button", YesNo.No);
 
-					if (click(driver, home.getsdgSaveButton(projectName,10), "save", action.SCROLLANDBOOLEAN)) {
+					if (clickUsingJavaScript(driver, home.getsdgSaveButton(projectName,10), "save", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "successfully clicked on save button", YesNo.No);
 						ThreadSleep(7000);
 						if(click(driver, home.sdgGridSideIcons(sdgGridName[i], SDGGridSideIcons.Toggle_Filters, 10), "filter icon", action.SCROLLANDBOOLEAN)) {
