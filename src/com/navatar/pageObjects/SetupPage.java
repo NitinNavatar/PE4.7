@@ -672,4 +672,19 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, editButtonOfCreatedFieldAndRelationShip, "Visibility", timeOut, "editButtonOfCreatedFieldAndRelationShip");
 	}
 	
+	
+	@FindBy(xpath = "//input[@value=' Clone ' or  title='Clone']")
+	private WebElement cloneButton;
+
+	public WebElement getCloneButton(int timeOut) {
+		return isDisplayed(driver, cloneButton, "Visibility", timeOut, "cloneButton");
+	}
+	
+	@FindBy(id ="newProfileName")
+	private WebElement profileNameTextBox;
+
+	public WebElement getProfileNameTextBox(int timeOut) {
+		return isDisplayed(driver, profileNameTextBox, "Visibility", timeOut, "profileNameTextBox");
+	}
+	
 }
