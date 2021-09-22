@@ -310,31 +310,36 @@ public class TaskPageBusinessLayer extends TaskPage {
 	public boolean EditEnterDueDateAndSave(String projectName,String task,String dueDate){
 		boolean flag=false;
 		TaskPageBusinessLayer tp = new TaskPageBusinessLayer(driver);
-		if (click(driver, tp.getEditButton(projectName, 30), task, action.BOOLEAN)) {
-			log(LogStatus.INFO, "Clicked on Edit Button For : "+task, YesNo.No);	
-				if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), dueDate, "Due Date", action.BOOLEAN)) {
-					log(LogStatus.INFO, "Value Entered to Due Date "+dueDate, YesNo.No);	
-					ThreadSleep(2000);
-					if (clickUsingJavaScript(driver, getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
-						ThreadSleep(5000);
-						flag=true;
-						String[][] fieldsWithValues= {{PageLabel.Due_Date.toString(),dueDate}};
-						flag=tp.fieldVerificationForTaskInViewMode1(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 30);
-						if (flag) {
-							
-						}else{
+		GlobalActionPageBusinessLayer gp = new GlobalActionPageBusinessLayer(driver);
+		for (int j = 0; j < 2; j++) {
+			if (click(driver, tp.getEditButton(projectName, 30), task, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Edit Button For : "+task, YesNo.No);	
+					if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), dueDate, "Due Date", action.BOOLEAN)) {
+						log(LogStatus.INFO, "Value Entered to Due Date "+dueDate, YesNo.No);	
+						ThreadSleep(2000);
+						click(driver, gp.getLabelTextBoxForGobalAction(projectName, GlobalActionItem.New_Task, PageLabel.Subject.toString(), 5), "", action.BOOLEAN);
+						ThreadSleep(2000);
+						if (clickUsingJavaScript(driver, getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
+							ThreadSleep(5000);
+							flag=true;
+							String[][] fieldsWithValues= {{PageLabel.Due_Date.toString(),dueDate}};
 							flag=tp.fieldVerificationForTaskInViewMode1(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 30);
+							if (flag) {
+								return flag;
+							}else{
+							}
+						}else {
+							log(LogStatus.ERROR, "save button is not clickable so task not Updated : "+task, YesNo.Yes);
 						}
 					}else {
-						log(LogStatus.ERROR, "save button is not clickable so task not Updated : "+task, YesNo.Yes);
+						log(LogStatus.ERROR, "Not Able to Entered Value to Due Date "+dueDate, YesNo.Yes);	
 					}
-				}else {
-					log(LogStatus.ERROR, "Not Able to Entered Value to Due Date "+dueDate, YesNo.Yes);	
-				}
-		} else {
-			log(LogStatus.ERROR, "Not Able to Click on Edit Button For : "+task, YesNo.Yes);
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on Edit Button For : "+task, YesNo.Yes);
+			}
 		}
+		
 		return flag;
 	}
 }
