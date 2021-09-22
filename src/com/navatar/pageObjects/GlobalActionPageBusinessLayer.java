@@ -129,6 +129,9 @@ public class GlobalActionPageBusinessLayer extends GlobalActionPage {
 					log(LogStatus.ERROR,"Not Able to Select "+value+" For Label "+label,YesNo.Yes);
 
 				}
+			}else if(PageLabel.All_Day_Event.toString().equals(label)) {
+				HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
+				click(driver, hp.getAllDayEventCheckBox(10), "all day event check box", action.SCROLLANDBOOLEAN);
 			}
 		}
 		return flag;

@@ -4606,7 +4606,6 @@ public class Module7 extends BaseLib {
 		String task = M7Event5Subject;
 		String[][] Event5 = {{PageLabel.Subject.toString(),task},
 				{PageLabel.Name.toString(),primaryContact},
-				{PageLabel.Start_Date.toString(),M7Event5StartDate},
 				{PageLabel.Related_To.toString(),M7Ins1},
 				{PageLabel.All_Day_Event.toString(),"true"}};
 
