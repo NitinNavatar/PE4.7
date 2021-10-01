@@ -5248,5 +5248,18 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, calenderCellIcon, "Visibility", timeOut, "Calender Cell Icon");
 	}
 	
+	@FindBy(xpath="//*[contains(text(),' New ')]/../following-sibling::footer/*[@title='Save' or text()='Save']")
+	private WebElement taskNewSaveBtn;
+
+	public WebElement getTaskSaveBtn(String projectName,int timeOut) {
+		return isDisplayed(driver, taskNewSaveBtn, "Visibility", timeOut, "New Task Save Button");
+	}
+	
+	@FindBy(xpath="//*[contains(text(),' Edit') ]/../following-sibling::footer/*[@title='Save' or text()='Save']")
+	private WebElement taskEditSaveBtn;
+	
+	public WebElement geTaskEditSaveBtn(String projectName,int timeOut) {
+		return isDisplayed(driver, taskEditSaveBtn, "Visibility", timeOut, "Edit Task Save Button");
+	}
 	
 }

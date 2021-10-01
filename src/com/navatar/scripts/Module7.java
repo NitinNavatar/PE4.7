@@ -237,7 +237,7 @@ public class Module7 extends BaseLib {
 
 						}
 						
-						if (click(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
+						if (clickUsingJavaScript(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);	
 							ThreadSleep(5000);
 							flag=true;
@@ -585,7 +585,7 @@ public class Module7 extends BaseLib {
 
 					}
 					gp.enterValueForTask(projectName, PageName.Object2Page, event1, 20);
-					if (click(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
+					if (clickUsingJavaScript(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);	
 						ThreadSleep(5000);
 						flag=true;
@@ -1166,29 +1166,15 @@ public class Module7 extends BaseLib {
 				ele=tp.getTaskNameLinkInSideMMenu(projectName, task, 30);
 				if (click(driver, ele, task, action.BOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on "+task+" on Task SideMenu", YesNo.No);	
-					if (click(driver, tp.getEditButton(projectName, 30), task, action.BOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Edit Button For : "+task, YesNo.No);	
-							if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), M7Task1dueDate, "Due Date", action.BOOLEAN)) {
-								log(LogStatus.INFO, "Value Entered to Due Date "+M7Task1dueDate, YesNo.No);	
-								ThreadSleep(2000);
-								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
-									ExcelUtils.writeData(phase1DataSheetFilePath,M7Task1dueDate, "Task1", excelLabel.Variable_Name, "M7Task1", excelLabel.Due_Date);
-									log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
-									ThreadSleep(5000);
-									flag=true;
-									String[][] fieldsWithValues= {{PageLabel.Due_Date.toString(),M7Task1dueDate}};
-									tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 30);	
-								}else {
-									log(LogStatus.ERROR, "save button is not clickable so task not Updated : "+task, YesNo.Yes);
-									sa.assertTrue(false,"save button is not clickable so task not Updated : "+task );
-								}
-							}else {
-								log(LogStatus.ERROR, "Not Able to Entered Value to Due Date "+M7Task1dueDate, YesNo.Yes);	
-								BaseLib.sa.assertTrue(false, "Not Able to Entered Value to Due Date "+M7Task1dueDate);	
-							}
+					String date = M7Task1dueDate;
+					if (tp.EditEnterDueDateAndSave(projectName, task, date)) {
+						log(LogStatus.INFO, "Value Entered & saved to Due Date "+date, YesNo.No);	
+						ThreadSleep(2000);	
+						ExcelUtils.writeData(phase1DataSheetFilePath,date, "Task1", excelLabel.Variable_Name, "M7Task1", excelLabel.Due_Date);
+						flag=true;
 					} else {
-						log(LogStatus.ERROR, "Not Able to Click on Edit Button For : "+task, YesNo.Yes);
-						sa.assertTrue(false,"Not Able to Click on Edit Button For : "+task);
+						log(LogStatus.ERROR, "Not Able to Entered & save Value to Due Date "+date, YesNo.Yes);	
+						sa.assertTrue(false, "Not Able to Entered Value to Due Date "+date);
 					}
 				} else {
 					log(LogStatus.ERROR, "Not Able to Click on "+task+" on Task SideMenu", YesNo.Yes);
@@ -1385,7 +1371,7 @@ public class Module7 extends BaseLib {
 
 					}
 					gp.enterValueForTask(projectName, PageName.Object2Page, event1, 20);
-					if (click(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
+					if (clickUsingJavaScript(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);	
 						ThreadSleep(5000);
 						flag=true;
@@ -1485,33 +1471,16 @@ public class Module7 extends BaseLib {
 				log(LogStatus.INFO,"Clicked on  : "+primaryContact+" For : "+tabObj2,YesNo.No);
 				if (click(driver, lp.getTaskLink(projectName, task), task, action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO,"Click on Task : "+task,YesNo.No);
-					if (click(driver, tp.getEditButton(projectName, 30), task, action.BOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Edit Button For : "+task, YesNo.No);	
-						if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), M7Task4dueDate, "Due Date", action.BOOLEAN)) {
-							log(LogStatus.INFO, "Value Entered to Due Date "+M7Task4dueDate, YesNo.No);	
-							ThreadSleep(2000);
-							if (clickUsingJavaScript(driver, lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
-								ThreadSleep(5000);
-								ExcelUtils.writeData(phase1DataSheetFilePath,M7Task4dueDate, "Task1", excelLabel.Variable_Name, "M7Task4", excelLabel.Due_Date);
-								flag=true;
-								String[][] fieldsWithValues= {{PageLabel.Due_Date.toString(),M7Task4dueDate}};
-								tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 30);	
-							}else {
-								log(LogStatus.ERROR, "save button is not clickable so task not Updated : "+task, YesNo.Yes);
-								sa.assertTrue(false,"save button is not clickable so task not Updated : "+task );
-							}
-
-						}else {
-							log(LogStatus.ERROR, "Not Able to Entered Value to Due Date "+M7Task4dueDate, YesNo.Yes);	
-							BaseLib.sa.assertTrue(false, "Not Able to Entered Value to Due Date "+M7Task4dueDate);	
-						}
-
+					String date = M7Task4dueDate;
+					if (tp.EditEnterDueDateAndSave(projectName, task, date)) {
+						log(LogStatus.INFO, "Value Entered & saved to Due Date "+date, YesNo.No);	
+						ThreadSleep(2000);	
+						ExcelUtils.writeData(phase1DataSheetFilePath,date, "Task1", excelLabel.Variable_Name, "M7Task4", excelLabel.Due_Date);
+						flag=true;
 					} else {
-						log(LogStatus.ERROR, "Not Able to Click on Edit Button For : "+task, YesNo.Yes);
-						sa.assertTrue(false,"Not Able to Click on Edit Button For : "+task);
+						log(LogStatus.ERROR, "Not Able to Entered & save Value to Due Date "+date, YesNo.Yes);	
+						sa.assertTrue(false, "Not Able to Entered Value to Due Date "+date);
 					}
-
 				} else {
 					sa.assertTrue(false,"Not Able to Click on Task : "+task);
 					log(LogStatus.SKIP,"Not Able to Click on Task : "+task,YesNo.Yes);
@@ -1597,33 +1566,16 @@ public class Module7 extends BaseLib {
 				log(LogStatus.INFO,"Clicked on  : "+primaryContact+" For : "+tabObj2,YesNo.No);
 				if (click(driver, lp.getTaskLink(projectName, task), task, action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO,"Click on Task : "+task,YesNo.No);
-					if (click(driver, tp.getEditButton(projectName, 30), task, action.BOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Edit Button For : "+task, YesNo.No);	
-						if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), M7Task4dueDate, "Due Date", action.BOOLEAN)) {
-							log(LogStatus.INFO, "Value Entered to Due Date "+M7Task4dueDate, YesNo.No);	
-							ThreadSleep(2000);
-							if (clickUsingJavaScript(driver, lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
-								ThreadSleep(5000);
-								ExcelUtils.writeData(phase1DataSheetFilePath,M7Task4dueDate, "Task1", excelLabel.Variable_Name, "M7Task4", excelLabel.Due_Date);
-								flag=true;
-								String[][] fieldsWithValues= {{PageLabel.Due_Date.toString(),M7Task4dueDate}};
-								tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 30);	
-							}else {
-								log(LogStatus.ERROR, "save button is not clickable so task not Updated : "+task, YesNo.Yes);
-								sa.assertTrue(false,"save button is not clickable so task not Updated : "+task );
-							}
-
-						}else {
-							log(LogStatus.ERROR, "Not Able to Entered Value to Due Date "+M7Task4dueDate, YesNo.Yes);	
-							BaseLib.sa.assertTrue(false, "Not Able to Entered Value to Due Date "+M7Task4dueDate);	
-						}
-
+					String date = M7Task4dueDate;
+					if (tp.EditEnterDueDateAndSave(projectName, task, date)) {
+						log(LogStatus.INFO, "Value Entered & saved to Due Date "+date, YesNo.No);	
+						ThreadSleep(2000);	
+						ExcelUtils.writeData(phase1DataSheetFilePath,date, "Task1", excelLabel.Variable_Name, "M7Task4", excelLabel.Due_Date);
+						flag=true;
 					} else {
-						log(LogStatus.ERROR, "Not Able to Click on Edit Button For : "+task, YesNo.Yes);
-						sa.assertTrue(false,"Not Able to Click on Edit Button For : "+task);
+						log(LogStatus.ERROR, "Not Able to Entered & save Value to Due Date "+date, YesNo.Yes);	
+						sa.assertTrue(false, "Not Able to Entered Value to Due Date "+date);
 					}
-
 				} else {
 					sa.assertTrue(false,"Not Able to Click on Task : "+task);
 					log(LogStatus.SKIP,"Not Able to Click on Task : "+task,YesNo.Yes);
@@ -1874,7 +1826,7 @@ public class Module7 extends BaseLib {
 
 						}
 						
-						if (click(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
+						if (clickUsingJavaScript(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);	
 							ThreadSleep(5000);
 							flag=true;
@@ -2210,7 +2162,7 @@ public class Module7 extends BaseLib {
 						
 						gp.enterValueForTask(projectName, PageName.Object2Page, event1, 20);
 						
-						if (click(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
+						if (clickUsingJavaScript(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);	
 							ThreadSleep(5000);
 							flag=true;
@@ -2797,29 +2749,15 @@ public class Module7 extends BaseLib {
 				ele=tp.getTaskNameLinkInSideMMenu(projectName, task, 30);
 				if (click(driver, ele, task, action.BOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on "+task+" on Task SideMenu", YesNo.No);	
-					if (click(driver, tp.getEditButton(projectName, 30), task, action.BOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Edit Button For : "+task, YesNo.No);	
-							if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), M7Task5dueDate, "Due Date", action.BOOLEAN)) {
-								log(LogStatus.INFO, "Value Entered to Due Date "+M7Task5dueDate, YesNo.No);	
-								ThreadSleep(2000);
-								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
-									ExcelUtils.writeData(phase1DataSheetFilePath,M7Task5dueDate, "Task1", excelLabel.Variable_Name, "M7Task5", excelLabel.Due_Date);
-									log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
-									ThreadSleep(5000);
-									flag=true;
-									String[][] fieldsWithValues= {{PageLabel.Due_Date.toString(),M7Task5dueDate}};
-									tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 30);	
-								}else {
-									log(LogStatus.ERROR, "save button is not clickable so task not Updated : "+task, YesNo.Yes);
-									sa.assertTrue(false,"save button is not clickable so task not Updated : "+task );
-								}
-							}else {
-								log(LogStatus.ERROR, "Not Able to Entered Value to Due Date "+M7Task5dueDate, YesNo.Yes);	
-								BaseLib.sa.assertTrue(false, "Not Able to Entered Value to Due Date "+M7Task5dueDate);	
-							}
+					String date = M7Task5dueDate;
+					if (tp.EditEnterDueDateAndSave(projectName, task, date)) {
+						log(LogStatus.INFO, "Value Entered & saved to Due Date "+date, YesNo.No);	
+						ThreadSleep(2000);	
+						ExcelUtils.writeData(phase1DataSheetFilePath,date, "Task1", excelLabel.Variable_Name, "M7Task5", excelLabel.Due_Date);
+						flag=true;
 					} else {
-						log(LogStatus.ERROR, "Not Able to Click on Edit Button For : "+task, YesNo.Yes);
-						sa.assertTrue(false,"Not Able to Click on Edit Button For : "+task);
+						log(LogStatus.ERROR, "Not Able to Entered & save Value to Due Date "+date, YesNo.Yes);	
+						sa.assertTrue(false, "Not Able to Entered Value to Due Date "+date);
 					}
 				} else {
 					log(LogStatus.ERROR, "Not Able to Click on "+task+" on Task SideMenu", YesNo.Yes);
@@ -3015,7 +2953,7 @@ public class Module7 extends BaseLib {
 
 					}
 					gp.enterValueForTask(projectName, PageName.Object2Page, event1, 20);
-					if (click(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
+					if (clickUsingJavaScript(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);	
 						ThreadSleep(5000);
 						flag=true;
@@ -3115,33 +3053,15 @@ public class Module7 extends BaseLib {
 				log(LogStatus.INFO,"Clicked on  : "+primaryContact+" For : "+tabObj2,YesNo.No);
 				if (click(driver, lp.getTaskLink(projectName, task), task, action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO,"Click on Task : "+task,YesNo.No);
-					if (click(driver, tp.getEditButton(projectName, 30), task, action.BOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Edit Button For : "+task, YesNo.No);	
-						if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), M7Task8dueDate, "Due Date", action.BOOLEAN)) {
-							log(LogStatus.INFO, "Value Entered to Due Date "+M7Task8dueDate, YesNo.No);	
-							ThreadSleep(2000);
-							if (clickUsingJavaScript(driver, lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
-								ThreadSleep(5000);
-								ExcelUtils.writeData(phase1DataSheetFilePath,M7Task8dueDate, "Task1", excelLabel.Variable_Name, "M7Task8", excelLabel.Due_Date);
-								flag=true;
-								String[][] fieldsWithValues= {{PageLabel.Due_Date.toString(),M7Task8dueDate}};
-								tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 30);	
-							}else {
-								log(LogStatus.ERROR, "save button is not clickable so task not Updated : "+task, YesNo.Yes);
-								sa.assertTrue(false,"save button is not clickable so task not Updated : "+task );
-							}
-
-						}else {
-							log(LogStatus.ERROR, "Not Able to Entered Value to Due Date "+M7Task8dueDate, YesNo.Yes);	
-							BaseLib.sa.assertTrue(false, "Not Able to Entered Value to Due Date "+M7Task8dueDate);	
-						}
-
+					if (tp.EditEnterDueDateAndSave(projectName, task, M7Task8dueDate)) {
+						log(LogStatus.INFO, "Value Entered & saved to Due Date "+M7Task8dueDate, YesNo.No);	
+						ThreadSleep(2000);	
+						ExcelUtils.writeData(phase1DataSheetFilePath,M7Task8dueDate, "Task1", excelLabel.Variable_Name, "M7Task8", excelLabel.Due_Date);
+						flag=true;
 					} else {
-						log(LogStatus.ERROR, "Not Able to Click on Edit Button For : "+task, YesNo.Yes);
-						sa.assertTrue(false,"Not Able to Click on Edit Button For : "+task);
+						log(LogStatus.ERROR, "Not Able to Entered & save Value to Due Date "+M7Task8dueDate, YesNo.Yes);	
+						sa.assertTrue(false, "Not Able to Entered Value to Due Date "+M7Task8dueDate);
 					}
-
 				} else {
 					sa.assertTrue(false,"Not Able to Click on Task : "+task);
 					log(LogStatus.SKIP,"Not Able to Click on Task : "+task,YesNo.Yes);
@@ -3227,34 +3147,17 @@ public class Module7 extends BaseLib {
 				log(LogStatus.INFO,"Clicked on  : "+primaryContact+" For : "+tabObj2,YesNo.No);
 				if (click(driver, lp.getTaskLink(projectName, task), task, action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO,"Click on Task : "+task,YesNo.No);
-					if (click(driver, tp.getEditButton(projectName, 30), task, action.BOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Edit Button For : "+task, YesNo.No);	
-						if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), M7Task8dueDate, "Due Date", action.BOOLEAN)) {
-							log(LogStatus.INFO, "Value Entered to Due Date "+M7Task8dueDate, YesNo.No);	
-							ThreadSleep(2000);
-							if (clickUsingJavaScript(driver, lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
-								ThreadSleep(5000);
-								ExcelUtils.writeData(phase1DataSheetFilePath,M7Task8dueDate, "Task1", excelLabel.Variable_Name, "M7Task8", excelLabel.Due_Date);
-								flag=true;
-								String[][] fieldsWithValues= {{PageLabel.Due_Date.toString(),M7Task8dueDate}};
-								tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 30);	
-							}else {
-								log(LogStatus.ERROR, "save button is not clickable so task not Updated : "+task, YesNo.Yes);
-								sa.assertTrue(false,"save button is not clickable so task not Updated : "+task );
-							}
-
-						}else {
-							log(LogStatus.ERROR, "Not Able to Entered Value to Due Date "+M7Task8dueDate, YesNo.Yes);	
-							BaseLib.sa.assertTrue(false, "Not Able to Entered Value to Due Date "+M7Task8dueDate);	
-						}
-
+					String date = M7Task8dueDate;
+					if (tp.EditEnterDueDateAndSave(projectName, task, date)) {
+						log(LogStatus.INFO, "Value Entered & saved to Due Date "+date, YesNo.No);	
+						ThreadSleep(2000);	
+						ExcelUtils.writeData(phase1DataSheetFilePath,date, "Task1", excelLabel.Variable_Name, "M7Task8", excelLabel.Due_Date);
+						flag=true;
 					} else {
-						log(LogStatus.ERROR, "Not Able to Click on Edit Button For : "+task, YesNo.Yes);
-						sa.assertTrue(false,"Not Able to Click on Edit Button For : "+task);
+						log(LogStatus.ERROR, "Not Able to Entered & save Value to Due Date "+date, YesNo.Yes);	
+						sa.assertTrue(false, "Not Able to Entered Value to Due Date "+date);
 					}
-
-				} else {
+			} else {
 					sa.assertTrue(false,"Not Able to Click on Task : "+task);
 					log(LogStatus.SKIP,"Not Able to Click on Task : "+task,YesNo.Yes);
 				}
@@ -3281,7 +3184,11 @@ public class Module7 extends BaseLib {
 					if (cp.clickOnAlreadyCreatedItem(projectName, contactName, 30)) {
 						log(LogStatus.INFO,"Clicked on  : "+contactName+" For : "+tabObj2,YesNo.No);
 						ThreadSleep(2000);
-						expectedValue = M7Task8dueDate;
+						if (j==0) {
+							expectedValue = M7Task8dueDate;	
+						} else {
+							expectedValue = M7Task6dueDate;
+						}
 						ele=cp.getlastTouchPointValue(projectName, 10);
 						if (ele!=null) {
 							actualValue=ele.getText().trim();
@@ -3377,7 +3284,7 @@ public class Module7 extends BaseLib {
 
 					}
 					gp.enterValueForTask(projectName, PageName.Object2Page, event1, 20);
-					if (click(driver, lp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
+					if (clickUsingJavaScript(driver, lp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);	
 						ThreadSleep(5000);
 						refresh(driver);
@@ -3449,7 +3356,7 @@ public class Module7 extends BaseLib {
 
 					}
 					gp.enterValueForTask(projectName, PageName.Object2Page, event11, 20);
-					if (click(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
+					if (clickUsingJavaScript(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);	
 						ThreadSleep(5000);
 						refresh(driver);
@@ -3855,7 +3762,7 @@ public class Module7 extends BaseLib {
 		if (lp.clickAnyCellonCalender(projectName)) {
 			log(LogStatus.INFO,"Able to click on Calendar/Event Link",YesNo.No);
 			gp.enterValueForNewEvent(projectName, GlobalActionItem.New_Event, Event2, 10);
-			if (click(driver, gp.getCustomTabSaveBtn(projectName, 10), "Save Button", action.SCROLLANDBOOLEAN)) {
+			if (clickUsingJavaScript(driver, gp.getCustomTabSaveBtn(projectName, 10), "Save Button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);	
 				ExcelUtils.writeData(phase1DataSheetFilePath,M7Event2StartDate, "Events", excelLabel.Variable_Name, "M7Event2", excelLabel.Start_Date);
 				ExcelUtils.writeData(phase1DataSheetFilePath,M7Event2EndDate, "Events", excelLabel.Variable_Name, "M7Event2", excelLabel.End_Date);
@@ -3932,15 +3839,15 @@ public class Module7 extends BaseLib {
 		M7Event3EndDate=previousOrForwardDate(-3, "M/d/YYYY");;
 		String task = M7Event3Subject;
 		String[][] Event3 = {{PageLabel.Subject.toString(),task},
-				{PageLabel.Name.toString(),primaryContact},
-				{PageLabel.Name.toString(),secondaryContact},
 				{PageLabel.Start_Date.toString(),M7Event3StartDate},
-				{PageLabel.End_Date.toString(),M7Event3EndDate}};
+				{PageLabel.End_Date.toString(),M7Event3EndDate},
+				{PageLabel.Name.toString(),primaryContact},
+				{PageLabel.Name.toString(),secondaryContact}};
 		
 		if (lp.clickAnyCellonCalender(projectName)) {
 			log(LogStatus.INFO,"Able to click on Calendar/Event Link",YesNo.No);
 			gp.enterValueForNewEvent(projectName, GlobalActionItem.New_Event, Event3, 10);
-			if (click(driver, gp.getCustomTabSaveBtn(projectName, 10), "Save Button", action.SCROLLANDBOOLEAN)) {
+			if (clickUsingJavaScript(driver, gp.getCustomTabSaveBtn(projectName, 10), "Save Button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);	
 				ExcelUtils.writeData(phase1DataSheetFilePath,M7Event3StartDate, "Events", excelLabel.Variable_Name, "M7Event3", excelLabel.Start_Date);
 				ExcelUtils.writeData(phase1DataSheetFilePath,M7Event3EndDate, "Events", excelLabel.Variable_Name, "M7Event3", excelLabel.End_Date);
@@ -4031,6 +3938,8 @@ public class Module7 extends BaseLib {
 						log(LogStatus.INFO, "Clicked on Edit Button For : "+task, YesNo.No);	
 						if (sendKeys(driver, gp.getLabelTextBoxForGobalAction(projectName, GlobalActionItem.New_Event, PageLabel.End_Date.toString(),20), M7Event3EndDate, "Due Date", action.BOOLEAN)) {
 							log(LogStatus.INFO, "Value Entered to Due Date "+M7Event3EndDate, YesNo.No);	
+							ele=gp.getLabelTextBoxForGobalAction(projectName, GlobalActionItem.New_Event, PageLabel.Subject.toString(),20);
+							click(driver, ele, "", action.BOOLEAN);
 							ThreadSleep(2000);
 							if (clickUsingJavaScript(driver, lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
@@ -4231,6 +4140,8 @@ public class Module7 extends BaseLib {
 						log(LogStatus.INFO, "Clicked on Edit Button For : "+task, YesNo.No);	
 						if (sendKeys(driver, gp.getLabelTextBoxForGobalAction(projectName, GlobalActionItem.New_Event, PageLabel.End_Date.toString(),20), M7Event3EndDate, "Due Date", action.BOOLEAN)) {
 							log(LogStatus.INFO, "Value Entered to Due Date "+M7Event3EndDate, YesNo.No);	
+							ele=gp.getLabelTextBoxForGobalAction(projectName, GlobalActionItem.New_Event, PageLabel.Subject.toString(),20);
+							click(driver, ele, "", action.BOOLEAN);
 							ThreadSleep(2000);
 							if (clickUsingJavaScript(driver, lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
@@ -4514,6 +4425,8 @@ public class Module7 extends BaseLib {
 						sendKeys(driver, gp.getLabelTextBoxForGobalAction(projectName, GlobalActionItem.New_Event, PageLabel.End_Time.toString(),20), "11:30 PM", "End Time", action.BOOLEAN);
 						if (sendKeys(driver, gp.getLabelTextBoxForGobalAction(projectName, GlobalActionItem.New_Event, PageLabel.End_Date.toString(),20), M7Event1EndDate, "End Date", action.BOOLEAN)) {
 							log(LogStatus.INFO, "Value Entered to Due Date "+M7Event1EndDate, YesNo.No);	
+							ele=gp.getLabelTextBoxForGobalAction(projectName, GlobalActionItem.New_Event, PageLabel.Subject.toString(),20);
+							click(driver, ele, "", action.BOOLEAN);
 							ThreadSleep(2000);
 							if (clickUsingJavaScript(driver, lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
@@ -4608,10 +4521,10 @@ public class Module7 extends BaseLib {
 		M7Event4EndDate=previousOrForwardDate(7, "M/d/YYYY");
 		String task = M7Event4Subject;
 		String[][] Event4 = {{PageLabel.Subject.toString(),task},
-				{PageLabel.Name.toString(),primaryContact},
-				{PageLabel.Name.toString(),secondaryContact},
 				{PageLabel.Start_Date.toString(),M7Event4StartDate},
-				{PageLabel.End_Date.toString(),M7Event4EndDate}};
+				{PageLabel.End_Date.toString(),M7Event4EndDate},
+				{PageLabel.Name.toString(),primaryContact},
+				{PageLabel.Name.toString(),secondaryContact}};
 
 		if (gp.clickOnGlobalActionAndEnterValue(projectName, GlobalActionItem.New_Event, Event4)) {
 			log(LogStatus.INFO,"Able to Enter Value for : "+task,YesNo.No);
@@ -4693,7 +4606,6 @@ public class Module7 extends BaseLib {
 		String task = M7Event5Subject;
 		String[][] Event5 = {{PageLabel.Subject.toString(),task},
 				{PageLabel.Name.toString(),primaryContact},
-				{PageLabel.Start_Date.toString(),M7Event5StartDate},
 				{PageLabel.Related_To.toString(),M7Ins1},
 				{PageLabel.All_Day_Event.toString(),"true"}};
 
@@ -4791,7 +4703,7 @@ public class Module7 extends BaseLib {
 
 						}
 						gp.enterValueForTask(projectName, PageName.Object2Page, event1, 20);
-						if (click(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
+						if (clickUsingJavaScript(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);	
 							ThreadSleep(5000);
 							flag=true;
@@ -4851,9 +4763,9 @@ public class Module7 extends BaseLib {
 		M7Event6EndDate=previousOrForwardDate(-7, "M/d/YYYY");;
 		String task = M7Event6Subject;
 		String[][] Event6 = {{PageLabel.Subject.toString(),task},
-				{PageLabel.Name.toString(),primaryContact},
 				{PageLabel.Start_Date.toString(),M7Event6StartDate},
-				{PageLabel.End_Date.toString(),M7Event6EndDate}};
+				{PageLabel.End_Date.toString(),M7Event6EndDate},
+				{PageLabel.Name.toString(),primaryContact}};
 
 		if (gp.clickOnGlobalActionAndEnterValue(projectName, GlobalActionItem.New_Event, Event6)) {
 			log(LogStatus.INFO,"Able to Enter Value for : "+task,YesNo.No);
@@ -5043,7 +4955,7 @@ public class Module7 extends BaseLib {
 
 						}
 						gp.enterValueForTask(projectName, PageName.Object2Page, event1, 20);
-						if (click(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
+						if (clickUsingJavaScript(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);	
 							ThreadSleep(5000);
 							flag=true;
@@ -5103,9 +5015,9 @@ public class Module7 extends BaseLib {
 		M7Event7EndDate=previousOrForwardDate(0, "M/d/YYYY");;
 		String task = M7Event7Subject;
 		String[][] Event7 = {{PageLabel.Subject.toString(),task},
-				{PageLabel.Name.toString(),primaryContact},
 				{PageLabel.Start_Date.toString(),M7Event7StartDate},
-				{PageLabel.End_Date.toString(),M7Event7EndDate}};
+				{PageLabel.End_Date.toString(),M7Event7EndDate},
+				{PageLabel.Name.toString(),primaryContact}};
 
 		if (gp.clickOnGlobalActionAndEnterValue(projectName, GlobalActionItem.New_Event, Event7)) {
 			log(LogStatus.INFO,"Able to Enter Value for : "+task,YesNo.No);
@@ -5369,7 +5281,7 @@ public class Module7 extends BaseLib {
 
 						}
 						gp.enterValueForTask(projectName, PageName.Object2Page, event1, 20);
-						if (click(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
+						if (clickUsingJavaScript(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);	
 							ThreadSleep(5000);
 							flag=true;
@@ -5471,7 +5383,7 @@ public class Module7 extends BaseLib {
 
 						}
 						
-						if (click(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
+						if (clickUsingJavaScript(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);	
 							ThreadSleep(5000);
 							flag=true;
@@ -5817,7 +5729,7 @@ public class Module7 extends BaseLib {
 						
 						gp.enterValueForTask(projectName, PageName.Object2Page, event1, 20);
 						
-						if (click(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
+						if (clickUsingJavaScript(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);	
 							ThreadSleep(5000);
 							flag=true;
@@ -6077,12 +5989,13 @@ public class Module7 extends BaseLib {
 						ele=cp.getlastTouchPointValue(projectName, 10);
 						if (ele!=null) {
 							actualValue=ele.getText().trim();
-							if (actualValue.isEmpty() || actualValue.equals("")) {
-								log(LogStatus.INFO,"Last Touch Point is Blank for "+contactName, YesNo.No);
+							expectedValue = M7Task15dueDate;
+							if (cp.verifyDate(expectedValue, actualValue)) {
+								log(LogStatus.INFO,expectedValue+" successfully verified last touch point date For : "+contactName, YesNo.No);
 							}
 							else {
-								log(LogStatus.ERROR, "Last Touch Point should be Blank for "+contactName+" Actual Last Touch Point Date : "+actualValue, YesNo.Yes);
-								sa.assertTrue(false,"Last Touch Point should be Blank for "+contactName+" Actual Last Touch Point Date : "+actualValue );
+								log(LogStatus.ERROR, "Last touch point value is not matched For : "+contactName+" Actual : "+actualValue+" /t Expected : "+expectedValue, YesNo.Yes);
+								sa.assertTrue(false,"last touch point value is not matched For : "+contactName+" Actual : "+actualValue+" /t Expected : "+expectedValue );
 							}
 						}else {
 							log(LogStatus.ERROR, expectedValue+" last touch point value is not visible For : "+contactName, YesNo.Yes);
@@ -6408,30 +6321,17 @@ public class Module7 extends BaseLib {
 				ele=tp.getTaskNameLinkInSideMMenu(projectName, task, 30);
 				if (click(driver, ele, task, action.BOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on "+task+" on Task SideMenu", YesNo.No);	
-					if (click(driver, tp.getEditButton(projectName, 30), task, action.BOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Edit Button For : "+task, YesNo.No);	
-							if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), M7Task13dueDate, "Due Date", action.BOOLEAN)) {
-								log(LogStatus.INFO, "Value Entered to Due Date "+M7Task13dueDate, YesNo.No);	
-								ThreadSleep(2000);
-								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
-									ExcelUtils.writeData(phase1DataSheetFilePath,M7Task13dueDate, "Task1", excelLabel.Variable_Name, "M7Task13", excelLabel.Due_Date);
-									log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
-									ThreadSleep(5000);
-									flag=true;
-									String[][] fieldsWithValues= {{PageLabel.Due_Date.toString(),M7Task13dueDate}};
-									tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 30);	
-								}else {
-									log(LogStatus.ERROR, "save button is not clickable so task not Updated : "+task, YesNo.Yes);
-									sa.assertTrue(false,"save button is not clickable so task not Updated : "+task );
-								}
-							}else {
-								log(LogStatus.ERROR, "Not Able to Entered Value to Due Date "+M7Task13dueDate, YesNo.Yes);	
-								BaseLib.sa.assertTrue(false, "Not Able to Entered Value to Due Date "+M7Task13dueDate);	
-							}
+					String date = M7Task13dueDate;
+					if (tp.EditEnterDueDateAndSave(projectName, task, date)) {
+						log(LogStatus.INFO, "Value Entered & saved to Due Date "+date, YesNo.No);	
+						ThreadSleep(2000);	
+						ExcelUtils.writeData(phase1DataSheetFilePath,date, "Task1", excelLabel.Variable_Name, "M7Task13", excelLabel.Due_Date);
+						flag=true;
 					} else {
-						log(LogStatus.ERROR, "Not Able to Click on Edit Button For : "+task, YesNo.Yes);
-						sa.assertTrue(false,"Not Able to Click on Edit Button For : "+task);
+						log(LogStatus.ERROR, "Not Able to Entered & save Value to Due Date "+date, YesNo.Yes);	
+						sa.assertTrue(false, "Not Able to Entered Value to Due Date "+date);
 					}
+					
 				} else {
 					log(LogStatus.ERROR, "Not Able to Click on "+task+" on Task SideMenu", YesNo.Yes);
 					sa.assertTrue(false,"Not Able to Click on "+task+" on Task SideMenu");
@@ -6626,7 +6526,7 @@ public class Module7 extends BaseLib {
 
 						}
 						gp.enterValueForTask(projectName, PageName.Object2Page, event1, 20);
-						if (click(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
+						if (clickUsingJavaScript(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);	
 							ThreadSleep(5000);
 							flag=true;
@@ -6728,33 +6628,16 @@ public class Module7 extends BaseLib {
 				log(LogStatus.INFO,"Clicked on  : "+primaryContact+" For : "+tabObj2,YesNo.No);
 				if (click(driver, lp.getTaskLink(projectName, task), task, action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO,"Click on Task : "+task,YesNo.No);
-					if (click(driver, tp.getEditButton(projectName, 30), task, action.BOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Edit Button For : "+task, YesNo.No);	
-						if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), M7Task16dueDate, "Due Date", action.BOOLEAN)) {
-							log(LogStatus.INFO, "Value Entered to Due Date "+M7Task16dueDate, YesNo.No);	
-							ThreadSleep(2000);
-							if (clickUsingJavaScript(driver, lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
-								ThreadSleep(5000);
-								ExcelUtils.writeData(phase1DataSheetFilePath,M7Task16dueDate, "Task1", excelLabel.Variable_Name, "M7Task16", excelLabel.Due_Date);
-								flag=true;
-								String[][] fieldsWithValues= {{PageLabel.Due_Date.toString(),M7Task16dueDate}};
-								tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 30);	
-							}else {
-								log(LogStatus.ERROR, "save button is not clickable so task not Updated : "+task, YesNo.Yes);
-								sa.assertTrue(false,"save button is not clickable so task not Updated : "+task );
-							}
-
-						}else {
-							log(LogStatus.ERROR, "Not Able to Entered Value to Due Date "+M7Task16dueDate, YesNo.Yes);	
-							BaseLib.sa.assertTrue(false, "Not Able to Entered Value to Due Date "+M7Task16dueDate);	
-						}
-
+					String date = M7Task16dueDate;
+					if (tp.EditEnterDueDateAndSave(projectName, task, date)) {
+						log(LogStatus.INFO, "Value Entered & saved to Due Date "+date, YesNo.No);	
+						ThreadSleep(2000);	
+						ExcelUtils.writeData(phase1DataSheetFilePath,date, "Task1", excelLabel.Variable_Name, "M7Task16", excelLabel.Due_Date);
+						flag=true;
 					} else {
-						log(LogStatus.ERROR, "Not Able to Click on Edit Button For : "+task, YesNo.Yes);
-						sa.assertTrue(false,"Not Able to Click on Edit Button For : "+task);
+						log(LogStatus.ERROR, "Not Able to Entered & save Value to Due Date "+date, YesNo.Yes);	
+						sa.assertTrue(false, "Not Able to Entered Value to Due Date "+date);
 					}
-
 				} else {
 					sa.assertTrue(false,"Not Able to Click on Task : "+task);
 					log(LogStatus.SKIP,"Not Able to Click on Task : "+task,YesNo.Yes);
@@ -6840,33 +6723,16 @@ public class Module7 extends BaseLib {
 				log(LogStatus.INFO,"Clicked on  : "+primaryContact+" For : "+tabObj2,YesNo.No);
 				if (click(driver, lp.getTaskLink(projectName, task), task, action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO,"Click on Task : "+task,YesNo.No);
-					if (click(driver, tp.getEditButton(projectName, 30), task, action.BOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Edit Button For : "+task, YesNo.No);	
-						if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), M7Task16dueDate, "Due Date", action.BOOLEAN)) {
-							log(LogStatus.INFO, "Value Entered to Due Date "+M7Task16dueDate, YesNo.No);	
-							ThreadSleep(2000);
-							if (clickUsingJavaScript(driver, lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
-								ThreadSleep(5000);
-								ExcelUtils.writeData(phase1DataSheetFilePath,M7Task16dueDate, "Task1", excelLabel.Variable_Name, "M7Task16", excelLabel.Due_Date);
-								flag=true;
-								String[][] fieldsWithValues= {{PageLabel.Due_Date.toString(),M7Task16dueDate}};
-								tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 30);	
-							}else {
-								log(LogStatus.ERROR, "save button is not clickable so task not Updated : "+task, YesNo.Yes);
-								sa.assertTrue(false,"save button is not clickable so task not Updated : "+task );
-							}
-
-						}else {
-							log(LogStatus.ERROR, "Not Able to Entered Value to Due Date "+M7Task16dueDate, YesNo.Yes);	
-							BaseLib.sa.assertTrue(false, "Not Able to Entered Value to Due Date "+M7Task16dueDate);	
-						}
-
+					String date = M7Task16dueDate;
+					if (tp.EditEnterDueDateAndSave(projectName, task, date)) {
+						log(LogStatus.INFO, "Value Entered & saved to Due Date "+date, YesNo.No);	
+						ThreadSleep(2000);	
+						ExcelUtils.writeData(phase1DataSheetFilePath,date, "Task1", excelLabel.Variable_Name, "M7Task16", excelLabel.Due_Date);
+						flag=true;
 					} else {
-						log(LogStatus.ERROR, "Not Able to Click on Edit Button For : "+task, YesNo.Yes);
-						sa.assertTrue(false,"Not Able to Click on Edit Button For : "+task);
+						log(LogStatus.ERROR, "Not Able to Entered & save Value to Due Date "+date, YesNo.Yes);	
+						sa.assertTrue(false, "Not Able to Entered Value to Due Date "+date);
 					}
-
 				} else {
 					sa.assertTrue(false,"Not Able to Click on Task : "+task);
 					log(LogStatus.SKIP,"Not Able to Click on Task : "+task,YesNo.Yes);
@@ -6975,7 +6841,7 @@ public class Module7 extends BaseLib {
 
 					}
 					gp.enterValueForTask(projectName, PageName.Object2Page, event1, 20);
-					if (click(driver, lp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
+					if (clickUsingJavaScript(driver, lp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);	
 						ThreadSleep(5000);
 						refresh(driver);
@@ -6995,7 +6861,7 @@ public class Module7 extends BaseLib {
 				click(driver, ele, ActivityTimeLineItem.Refresh.toString(), action.BOOLEAN);
 				ThreadSleep(3000);
 				ele=cp.getlastTouchPointValue(projectName, 10);
-				expectedValue = previousOrForwardDate(0, "M/d/YYYY");
+				expectedValue = M7Task17dueDate;
 				if (ele!=null) {
 					actualValue=ele.getText().trim();
 					if (cp.verifyDate(expectedValue, actualValue)) {
@@ -7049,7 +6915,7 @@ public class Module7 extends BaseLib {
 
 					}
 					gp.enterValueForTask(projectName, PageName.Object2Page, event11, 20);
-					if (click(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
+					if (clickUsingJavaScript(driver, gp.getCustomTabSaveBtn(projectName, 2), "Save Button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);	
 						ThreadSleep(5000);
 						refresh(driver);
