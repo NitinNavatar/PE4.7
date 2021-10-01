@@ -1385,9 +1385,9 @@ public WebElement getSelectThemeinputBoxClearButton(int timeOut) {
 }
 
 public List<WebElement> sdgGridSelectThemeList() {
+		
+	String xpath="//label[text()='Select Theme']/following-sibling::div//lightning-base-combobox-item//span[@class='slds-media__body']";
 	
-	
-	String xpath="//label[text()='Select Theme']/following-sibling::div//*[contains(@data-value,'key')]/span/span";
 	List<WebElement> ele = FindElements(driver, xpath, "SDG grid select theme list ");
 	
 	return ele;
@@ -1402,6 +1402,16 @@ public List<WebElement> sdgGridSelectVisibleFieldsListInManageFieldPopUp() {
 	
 	String xpath="//ul[@id='allFields']/li/p";
 	List<WebElement> ele = FindElements(driver, xpath, "sdgGridSelectFieldToDisplayInManageFieldPopUp");
+	
+	return ele;
+}
+
+public List<WebElement> sdgGridSelectFieldFinderListInManageFieldPopUp() {
+	
+	
+	String xpath="//*[contains(text(),'Field Finder')]/..//select//option";
+	List<WebElement> ele = FindElements(driver, xpath, "sdgGridSelectFieldFinderListInManageFieldPopUp");
+	ele.remove(0);
 	
 	return ele;
 }
@@ -1475,6 +1485,15 @@ public boolean clickOnEditButtonOnSDGGridOnHomePage(String projectName, String d
 	js.executeScript("return arguments[0].setAttribute('Styles','display: inline-block;')", ele);
 	click(driver, ele, "edit", action.BOOLEAN);
 	return true;
+}
+
+public boolean clickOnCheckboxOnSDGGridOnHomePage(String projectName, String dataName, String field,int timeOut) {
+	String xpath="";
+	
+		xpath ="//td[contains(@data-label,'"+field+"')]//*[text()='"+dataName+"']/../../../../..//lightning-input[contains(@class,'checkrow')]";
+	WebElement ele = FindElement(driver, xpath,"edit button for "+field, action.SCROLLANDBOOLEAN, timeOut);
+	boolean f = click(driver, ele, "checkbox button", action.BOOLEAN);
+	return f;
 }
 
 public WebElement sdgGridSideIconsForLightTheme(SDGGridName sdgGridName,SDGGridSideIcons sdgGridSideIcons, int timeOut) {
@@ -1670,7 +1689,7 @@ private WebElement arrowIconView;
 public WebElement getArrowIconView(int timeOut) {
 	return isDisplayed(driver, arrowIconView, "Visibility", timeOut, "Select a view of your tasks");
 }
-@FindBy(xpath = "(//div[contains(@class,'slds-theme_error')]//h2)[2]")
+@FindBy(xpath = "(//div[contains(@class,'slds-theme_error')]//h2)[1]")
 private WebElement selectFieldPopUpErrorMsg;
 
 public WebElement getSelectFieldPopUpErrorMsg(int timeOut) {

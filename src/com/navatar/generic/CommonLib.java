@@ -1027,6 +1027,32 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 			return false;
 		}
 	}
+	public static boolean sendKeysUsingActionClassWithoutClear(WebDriver driver, WebElement element, String value, String elementName,
+			action action) {
+		Actions act=new Actions(driver);
+		try {
+			if (element != null) {
+				if(action==CommonLib.action.SCROLLANDTHROWEXCEPTION || action==CommonLib.action.SCROLLANDBOOLEAN)
+				scrollDownThroughWebelement(driver, element, elementName);
+				
+				act.moveToElement(element).sendKeys(value).build().perform();;
+				AppListeners.appLog.info("Passed value to element: " + elementName + "\nPassed Value: " + value);
+				return true;
+			} else {
+				AppListeners.appLog.info(elementName + " Text box is not present on this page.");
+				if (action == CommonLib.action.THROWEXCEPTION || action == CommonLib.action.SCROLLANDTHROWEXCEPTION)
+					throw new AppException(elementName + " Text box is not present on this page.");
+				return false;
+			}
+		} catch (Exception e) {
+//			AppListeners.appLog.info("Cannot enter text in " + elementName + "\nReason: " + e.getMessage());
+			errorMessage="Cannot enter text in " + elementName + "\nReason: " + e.getMessage();
+			failedMethod(e);
+			if (action == CommonLib.action.THROWEXCEPTION || action == CommonLib.action.SCROLLANDTHROWEXCEPTION)
+				throw new AppException("Cannot enter text in ." + elementName + "\nReason: " + e.getMessage());
+			return false;
+		}
+	}
 	
 	public static boolean sendKeysAndPressEnter(WebDriver driver, WebElement element, String value, String elementName,
 			action action) {
@@ -2523,6 +2549,23 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
         ThreadSleep(500);
         ac.release(ele).click().build().perform();
         appLog.info("successfully clicked ele using actions class");
+        }
+        catch(Exception e) {
+            log(LogStatus.ERROR, e.toString(), YesNo.Yes);
+            return false;
+        }
+        return true;
+    }
+	
+	public static boolean doubleClickUsingAction(WebDriver driver,WebElement ele) {
+
+        Actions ac = new Actions(driver);
+        try {
+        	
+        ac.moveToElement(ele).build().perform();
+        ThreadSleep(500);
+        ac.doubleClick().build().perform();
+        appLog.info("successfully  double clicked on ele using actions class");
         }
         catch(Exception e) {
             log(LogStatus.ERROR, e.toString(), YesNo.Yes);

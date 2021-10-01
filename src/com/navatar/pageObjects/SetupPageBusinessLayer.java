@@ -6,6 +6,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.DoubleClickAction;
 import org.openqa.selenium.support.PageFactory;
 import org.sikuli.script.Screen;
 
@@ -50,8 +51,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 		String index="[1]";
 		String o=objectName.toString().replace("_", " ");
 		if (objectName==object.Global_Actions || objectName==object.Activity_Setting || objectName==object.App_Manager
-				|| objectName==object.Lightning_App_Builder || objectName==object.Profiles || objectName==object.Tabs ||  objectName==object.Users||  objectName==object.Sharing_Settings) {
-			if (objectName==object.Global_Actions || objectName==object.Tabs ||  objectName==object.Users) {
+				|| objectName==object.Lightning_App_Builder || objectName==object.Profiles ||objectName==object.Override || objectName==object.Tabs ||  objectName==object.Users||  objectName==object.Sharing_Settings) {
+			if (objectName==object.Global_Actions|| objectName==object.Tabs ||  objectName==object.Users) {
 				index="[2]";	
 			}
 			ThreadSleep(3000);
@@ -882,7 +883,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 				log(LogStatus.INFO, "Clicked on feature : "+objectFeatureName, YesNo.No);
 				ThreadSleep(1000);
 				if(sendKeys(driver, getQuickSearchInObjectManager_Lighting(10), fieldLabel, "search text box", action.BOOLEAN)) {
-					String xpath="//a[contains(@href,'/Contact/FieldsAndRelationships')]/span[text()='"+fieldLabel+"']";
+					String xpath="//span[text()='"+fieldLabel+"']/..";
 					ele = isDisplayed(driver, FindElement(driver, xpath, "field set label text", action.BOOLEAN, 3), "visibility", 3, "field set label text");
 					if(ele!=null) {
 						if(click(driver, ele, "field label text link", action.BOOLEAN)) {
@@ -896,7 +897,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 								if(selectVisibleTextFromDropDown(driver, getFieldAccessbilityDropDown(10), "field accessbility drop down",fieldLabel)) {
 									log(LogStatus.INFO,"select field label accessbility drop down "+fieldLabel,YesNo.No);
 									ThreadSleep(1000);
-									if(clickUsingJavaScript(driver, getfieldAccessOptionLink(fieldLabel,profileName,10),"profile link name", action.SCROLLANDBOOLEAN)) {
+									if(clickUsingJavaScript(driver, getfieldAccessOptionLink(profileName,10),"profile link name", action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.INFO,"clicked on "+profileName+" link",YesNo.No);
 										ThreadSleep(5000);
 										switchToFrame(driver, 20, getFieldAndRelationShipFrame(20));
@@ -941,6 +942,84 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return flag;
 	}
 
+	/**
+	 * @author Ravi Kumar
+	 * @param objectName
+	 * @param objectFeatureName
+	 * @param permissionType
+	 * @param fieldLabel
+	 * @param oldFieldLabel
+	 * @param profileName
+	 * @return true if able to give/Remove Object Permission From Object Manager
+	 */
+	public boolean giveAndRemoveObjectPermissionFromObjectManager(object objectName,ObjectFeatureName objectFeatureName,PermissionType permissionType, String fieldLabel,String oldFieldLabel, String profileName) {
+		boolean flag = false;
+		WebElement ele=null;
+		if(searchStandardOrCustomObject(environment,mode, objectName)) {
+			log(LogStatus.INFO, "click on Object : "+objectName, YesNo.No);
+			ThreadSleep(2000);
+			if(clickOnObjectFeature(environment,mode, objectName, objectFeatureName)) {
+				log(LogStatus.INFO, "Clicked on feature : "+objectFeatureName, YesNo.No);
+				ThreadSleep(1000);
+				if(sendKeys(driver, getQuickSearchInObjectManager_Lighting(10), fieldLabel, "search text box", action.BOOLEAN)) {
+					String xpath="//span[text()='"+fieldLabel+"']/..";
+					ele = isDisplayed(driver, FindElement(driver, xpath, "field set label text", action.BOOLEAN, 3), "visibility", 3, "field set label text");
+					if(ele!=null) {
+						if(click(driver, ele, "field label text link", action.BOOLEAN)) {
+							log(LogStatus.INFO, "clicked on field label "+fieldLabel, YesNo.No);
+							switchToFrame(driver, 20, getFieldAndRelationShipFrame(20));
+							ThreadSleep(1000);
+							if(click(driver, getObjectEditOrSetFieldSecurityOrViewFieldAccessbilityBtn("View Field Accessibility", 10), "view field accessbility button xpath", action.BOOLEAN)) {
+								log(LogStatus.INFO, "clicked on view field accessbility of field label : "+fieldLabel, YesNo.No);
+								switchToFrame(driver, 20, getFieldAndRelationShipFrame(20));
+								ThreadSleep(1000);
+								if(selectVisibleTextFromDropDown(driver, getFieldAccessbilityDropDown(10), "field accessbility drop down",oldFieldLabel)) {
+									log(LogStatus.INFO,"select field label accessbility drop down "+oldFieldLabel,YesNo.No);
+									ThreadSleep(1000);
+									if(clickUsingJavaScript(driver, getfieldAccessOptionLink(profileName,10),"profile link name", action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.INFO,"clicked on "+profileName+" link",YesNo.No);
+										ThreadSleep(5000);
+										switchToFrame(driver, 20, getFieldAndRelationShipFrame(20));
+										if(click(driver, getFieldLevelSecurityVisibleCheckBox(10), "check box", action.BOOLEAN)) {
+											log(LogStatus.INFO,"Clicked on field level security check box", YesNo.No);
+											if(click(driver, getViewAccessbilityDropDownSaveButton(10), "save button", action.BOOLEAN)) {
+												log(LogStatus.INFO,"save button",YesNo.No);
+												return true;
+												
+											}else {
+												log(LogStatus.ERROR,"Not able to click on save button field accessbility of field label "+fieldLabel+" in object "+objectName+" so cannot "+permissionType,YesNo.Yes);
+											}
+										}else {
+											log(LogStatus.ERROR,"Not able to click on visible field accessbility of field label "+fieldLabel+" in object "+objectName+" so cannot "+permissionType,YesNo.Yes);
+										}
+									}else {
+										log(LogStatus.ERROR," Not able to click on profile link from view field accessbility of field label "+fieldLabel+" in object "+objectName+" so cannot "+permissionType,YesNo.Yes);
+									}
+								}else {
+									log(LogStatus.ERROR,"Not able to select value from view field accessbility of field label "+fieldLabel+" in object "+objectName+" so cannot "+permissionType,YesNo.Yes);
+								}
+							}else {
+								log(LogStatus.ERROR,"Not able to click on view field accessbility of field label "+fieldLabel+" in object "+objectName+" so cannot "+permissionType,YesNo.Yes);
+							}
+						}else {
+							log(LogStatus.ERROR,"Not able to click on field label "+fieldLabel+" in object "+objectName+" so cannot "+permissionType,YesNo.Yes);
+						}
+					}else {
+						log(LogStatus.ERROR,"Search field label "+fieldLabel+" is not found in object "+objectName+" so cannot "+permissionType,YesNo.Yes);	
+					}
+				}else {
+					log(LogStatus.ERROR,"Not able to search field label "+fieldLabel+" in object "+objectName+" so cannot "+permissionType,YesNo.Yes);
+				}
+
+			}else {
+				log(LogStatus.FAIL, "Not able to found object : "+objectName.toString()+" so cannot "+permissionType, YesNo.Yes);
+			}
+		}else {
+			log(LogStatus.FAIL, "Not able to search object "+objectName.toString()+" so cannot "+permissionType, YesNo.Yes);
+		}
+
+		return flag;
+	}
 	/**
 	 * @author Ankit Jaiswal
 	 * @param objectName
@@ -1908,9 +1987,10 @@ public boolean permissionChangeForUserONObject(WebDriver driver,String userName,
 	boolean flag=false;;
 	String xpath="";
 	xpath="//th//a[text()='"+userName+"']";
+	ThreadSleep(2000);
 	WebElement ele=FindElement(driver, xpath,userName, action.SCROLLANDBOOLEAN, timeOut);
 	ele=isDisplayed(driver, ele, "visibility", timeOut, userName);
-	if (click(driver, ele, userName.toString(), action.BOOLEAN)) {
+	if (clickUsingJavaScript(driver, ele, userName.toString(), action.BOOLEAN)) {
 		log(LogStatus.INFO, "able to click on "+userName, YesNo.No);
 		switchToFrame(driver, 60, getSetUpPageIframe(120));
 		xpath="//*[@id='topButtonRow']//input[@name='edit']";
@@ -1937,8 +2017,7 @@ public boolean permissionChangeForUserONObject(WebDriver driver,String userName,
 					}
 			
 			}
-			Scanner scn = new Scanner(System.in);
-			scn.nextLine();
+			
 			if (click(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
 					action.SCROLLANDBOOLEAN)) {
 				flag=true;
@@ -2441,6 +2520,7 @@ public WebElement clickOnRecordTypePageLayout(String projectName, String profile
 
 
 public boolean updateCreatedCustomFieldforFormula(String environment, String mode,object objectName, ObjectFeatureName objectLeftSideActions,String fieldLabelName,String updatedFieldName) {
+	
 	WebElement ele=null;
 	 tabCustomObj=tabCustomObj;
 	if(searchStandardOrCustomObject(environment, mode, objectName)) {
@@ -2463,73 +2543,50 @@ public boolean updateCreatedCustomFieldforFormula(String environment, String mod
 				if(click(driver, ele, objectLeftSideActions+" xpath ", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.PASS, "clicked on object side action :  "+objectLeftSideActions, YesNo.No);
 					ThreadSleep(5000);
-					if(click(driver, getCustomFieldNewButton(30),"new button", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.PASS, "clicked on new button", YesNo.No);
-						ThreadSleep(1000);
-						if(switchToFrame(driver, 30, getNewCustomFieldFrame(objectName.toString(),30))) {
-							ThreadSleep(1000);
 							
 							if (sendKeys(driver, getsearchTextboxFieldsAndRelationships(10), fieldLabelName+Keys.ENTER, "search text box", action.BOOLEAN)) {
 								log(LogStatus.PASS, "search "+fieldLabelName, YesNo.No);
-								
+								ThreadSleep(2000);
 								xpath= "//span[text()='"+fieldLabelName+"']/..";
 								ele=FindElement(driver, xpath,fieldLabelName+" xpath", action.SCROLLANDBOOLEAN,20);
-								if(click(driver, ele, fieldLabelName+" xpath ", action.SCROLLANDBOOLEAN)) {
+								ThreadSleep(2000);
+								if(clickUsingJavaScript(driver, ele, fieldLabelName+" xpath ", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.PASS, "clicked on object name :  "+fieldLabelName, YesNo.No);
 									ThreadSleep(5000);
-									if(click(driver, getEditButtonOfCreatedFieldAndRelationShip(10), fieldLabelName+" edit button ", action.SCROLLANDBOOLEAN)) {
+									if(switchToFrame(driver, 30, getSetUpPageIframe(60))) {
+										ThreadSleep(1000);
+									
+										if(click(driver, getEditButtonOfCreatedFieldAndRelationShip(10), fieldLabelName+" edit button ", action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.PASS, "clicked on edit button of object name :  "+fieldLabelName, YesNo.No);
 										ThreadSleep(5000);
+										switchToFrame(driver, 30, getSetUpPageIframe(60));
+										ThreadSleep(2000);
+										JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;  
+										// set the text
+										jsExecutor.executeScript("arguments[0].value='"+updatedFieldName+"'", getFieldLabelTextBox(30));  
 										
-										ThreadSleep(1000);
-										if(sendKeys(driver, getFieldLabelTextBox(30), updatedFieldName, "field label name ", action.SCROLLANDBOOLEAN)) {
-											log(LogStatus.PASS, "passed value in field label text box : "+updatedFieldName, YesNo.No);
+											log(LogStatus.PASS, "passed value in field label using Java script in text box : "+updatedFieldName, YesNo.No);
+											ThreadSleep(2000);
+//											
+											if(click(driver, getViewAccessbilityDropDownSaveButton(30), "save button for custom field", action.BOOLEAN)) {
+												log(LogStatus.PASS, "clicked on save button", YesNo.No);
+												ThreadSleep(5000);
+												
+												return true;
+												
+											}else {
+												log(LogStatus.FAIL, "Not able to click on save button so cannot create custom field "+objectName, YesNo.Yes);
+											}
+										
 											
-											if(click(driver, getCustomFieldNextBtn(30),"next button", action.SCROLLANDBOOLEAN)) {
-												log(LogStatus.PASS, "Clicked on Step 2 Next button", YesNo.No);
-												ThreadSleep(2000);
-//											if(sendKeys(driver, getFormulaTextBox(30), formulaText,"formula text area", action.SCROLLANDBOOLEAN)) {
-//													log(LogStatus.PASS, "Passed Value in formula Text Box "+formulaText, YesNo.No);
-													if(click(driver, getCustomFieldNextBtn(30),"next button", action.SCROLLANDBOOLEAN)) {
-														log(LogStatus.PASS, "Clicked on Step 3 Next button", YesNo.No);
-														ThreadSleep(1000);
-//														if(click(driver, getCustomFieldNextBtn(30),"next button", action.SCROLLANDBOOLEAN)) {
-//															log(LogStatus.PASS, "Clicked on Step 4 Next button", YesNo.No);
-//															ThreadSleep(1000);
-															click(driver, getCustomFieldNextBtn(10),"next button", action.SCROLLANDBOOLEAN);
-															ThreadSleep(1000);
-															if(click(driver, getCustomFieldSaveBtn(30), "save button", action.SCROLLANDBOOLEAN)) {
-																log(LogStatus.PASS, "clicked on save button", YesNo.No);
-																ThreadSleep(5000);
-																switchToDefaultContent(driver);
-																return true;
-																
-															}else {
-																log(LogStatus.FAIL, "Not able to click on save button so cannot create custom field "+objectName, YesNo.Yes);
-															}
-															
-//														}else {
-//															log(LogStatus.FAIL, "Not able to click on Step 4 next button so cannot create custom field : "+objectName,YesNo.Yes);
-//														}
-														
-													}else {
-														log(LogStatus.FAIL, "Not able to click on Step 3 next button so cannot update custom field : "+updatedFieldName,YesNo.Yes);
-													}
-//											}else {
-//												log(LogStatus.FAIL, "Not able to click on Step 2 next button so cannot create custom field : "+objectName,YesNo.Yes);
-//											}
-										}else {
-											log(LogStatus.FAIL, "Not able to enter value in field label text box : "+fieldLabelName+" so cannot update custom field "+updatedFieldName, YesNo.Yes);
-										}
-											
-											
-										}else {
-											log(LogStatus.PASS, "not able to click on update field name of object name "+fieldLabelName, YesNo.Yes);
-										}
+
 									}else {
 										log(LogStatus.PASS, "not able to click on edit button of object name "+fieldLabelName, YesNo.Yes);
 									}
 									
+									}else {
+										log(LogStatus.FAIL, "Not able to switch in setup page frame so cannot on edit button of obejct", YesNo.Yes);
+									}							
 									
 								}else {
 									log(LogStatus.PASS, "not able to click on object name "+fieldLabelName, YesNo.Yes);
@@ -2538,13 +2595,6 @@ public boolean updateCreatedCustomFieldforFormula(String environment, String mod
 								log(LogStatus.PASS, "not able to search "+fieldLabelName, YesNo.Yes);
 							}
 							
-						}else {
-							log(LogStatus.FAIL, "Not able to switch in "+objectName+" new object frame so cannot add custom object", YesNo.Yes);
-						}
-					}else {
-						log(LogStatus.FAIL, "Not able to click on New button so cannot add custom field in "+objectName.toString(), YesNo.Yes);
-					}
-					
 				}else {
 					log(LogStatus.FAIL, "Not able to click on object side action "+objectLeftSideActions+" so cannot add custom object ", YesNo.Yes);
 				}
@@ -2562,7 +2612,64 @@ public boolean updateCreatedCustomFieldforFormula(String environment, String mod
 	return false;
 }
 
-
+public boolean updateFieldLabelInOverridePage(WebDriver driver,String fieldName,String UpdatedfieldName,action action){
+	SetupPageBusinessLayer  setup = new SetupPageBusinessLayer(driver);
+	WebElement ele;
+	WebElement ele2;
+	String fieldLabelOverride ="//div[text()='"+fieldName+"']/../following-sibling::td[1]";
+	String masterFieldLabel ="//div[text()='"+fieldName+"']";
+	
+	ThreadSleep(2000);
+	boolean status=false;
+	
+	while(!setup.getOverrideSetupFieldNextBtn(20).getAttribute("class").contains("disabled")){
+		ele = FindElement(driver, fieldLabelOverride, fieldName, action.SCROLLANDBOOLEAN, 10);
+		ele2=FindElement(driver, masterFieldLabel, "", action.SCROLLANDBOOLEAN, 10);
+		ThreadSleep(1000);
+		if(status){
+			break;
+			
+		}
+		
+		
+		
+		if(ele2!=null){
+			ThreadSleep(2000);
+			if(doubleClickUsingAction(driver, ele)){
+				log(LogStatus.INFO, "going for edit override field label of field:"+fieldName, YesNo.No);
+				ThreadSleep(2000);
+				Actions ac=new Actions(driver);
+				ac.moveToElement(ele).sendKeys(UpdatedfieldName).sendKeys(Keys.ENTER).build().perform();;
+				log(LogStatus.INFO, "Pass value:"+UpdatedfieldName+" to override field label of field:"+fieldName, YesNo.No);
+					ThreadSleep(2000);					
+					if(click(driver, setup.getPageLayoutSaveBtn(object.Global_Actions, 10), Buttons.Save.toString(), action.SCROLLANDBOOLEAN)){
+						log(LogStatus.INFO, "Successfully click on override save button", YesNo.No);
+						status=true;
+						return true;
+					}else{
+						log(LogStatus.FAIL, "Not able to  click on save button name so cannot update field name"+fieldName, YesNo.Yes);
+						sa.assertTrue(false,"Not able to  click on fsave button so cannot update field name"+fieldName);
+						
+					}
+			
+			}else{
+				log(LogStatus.FAIL, "Not able to double click on field name so cannot update field name"+fieldName, YesNo.Yes);
+				sa.assertTrue(false,"Not able to double click on field name so cannot update field name"+fieldName);
+			}
+			
+			
+		}else{
+			click(driver, setup.getOverrideSetupFieldNextBtn(20), "override field next button", action.SCROLLANDBOOLEAN);
+			log(LogStatus.INFO, "Successfully click on override next button going to find field label:"+fieldName+" on next page", YesNo.No);
+			
+		}
+		
+	}
+	
+	switchToDefaultContent(driver);
+	return false;
+	
+}
 
 
 }

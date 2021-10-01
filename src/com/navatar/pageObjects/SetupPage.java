@@ -171,6 +171,25 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getCustomFieldNextBtn(int timeOut) {
 		return isDisplayed(driver, customFieldNextBtn, "Visibility", timeOut, "custom field next button");
 	}
+	
+	@FindBy(xpath = "//input[@id='pageNumField']")
+	private WebElement currentPageNo;
+
+	public WebElement getCurrentPageInput(int timeOut) {
+		return isDisplayed(driver, currentPageNo, "Visibility", timeOut, "current selected page input box");
+	}
+	@FindBy(xpath = "//div[@id='totalPages']")
+	private WebElement totalPageNo;
+
+	public WebElement getTotalPagesCount(int timeOut) {
+		return isDisplayed(driver, totalPageNo, "Visibility", timeOut, "total no of page");
+	}
+	@FindBy(xpath = "//table[@id='nextBtn']")
+	private WebElement overrideSetupFieldNextBtn;
+
+	public WebElement getOverrideSetupFieldNextBtn(int timeOut) {
+		return isDisplayed(driver, overrideSetupFieldNextBtn, "Visibility", timeOut, "override field next button");
+	}
 
 	@FindBy(xpath="//input[@id='quickfind']")
 	private WebElement quickFindSearchBox;
@@ -296,8 +315,8 @@ public class SetupPage extends BasePageBusinessLayer {
 	}
 
 
-	public WebElement getfieldAccessOptionLink(String fieldLabel, String profileName, int timeOut) {
-		String xpath="//div[contains(@id,'"+fieldLabel+"') and contains(@style,'block')]//th[text()='"+profileName+"']/following-sibling::td/a";
+	public WebElement getfieldAccessOptionLink( String profileName, int timeOut) {
+		String xpath="//div[contains(@style,'block')]//th[text()='"+profileName+"']/following-sibling::td[1]//a";
 		WebElement ele= FindElement(driver, xpath,profileName+" link xpath", action.SCROLLANDBOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "visibility", timeOut,profileName+" link xpath");
 	}
@@ -680,11 +699,32 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, cloneButton, "Visibility", timeOut, "cloneButton");
 	}
 	
-	@FindBy(id ="newProfileName")
+	@FindBy(xpath="//input[@id='newProfileName']")
 	private WebElement profileNameTextBox;
 
 	public WebElement getProfileNameTextBox(int timeOut) {
 		return isDisplayed(driver, profileNameTextBox, "Visibility", timeOut, "profileNameTextBox");
 	}
 	
+	@FindBy(xpath="//select[contains(@id,'setupEntSelect')]")
+	private WebElement setupComponentDropdown;
+	
+	public WebElement getOverrideSetupComponentDropdown(int timeOut){
+		
+		scrollDownThroughWebelement(driver, setupComponentDropdown, "setup component dropdown ");
+		return isDisplayed(driver, setupComponentDropdown, "Visibility", timeOut, "setup component dropdown ");
+
+		
+	}
+	
+	@FindBy(xpath="//select[contains(@id,'assocEntSelect')]")
+	private WebElement objectDropdown;
+	
+	public WebElement getOverrideObjectDropdown(int timeOut){
+		
+		scrollDownThroughWebelement(driver, objectDropdown, "override object dropdown");
+		return isDisplayed(driver, objectDropdown, "Visibility", timeOut, "override object dropdown");
+
+		
+	}
 }

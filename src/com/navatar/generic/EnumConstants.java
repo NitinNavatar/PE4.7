@@ -290,7 +290,7 @@ CompactLayout, MeetingType, AddPickListMeetingType,ActivityLayoutPage, SDGPage,O
 			public String toString() {
 				return "Lightning App Builder";
 			}
-		}, Profiles, Custom_Object, Tabs, Create, Flows, Users,Sharing_Settings,Institution
+		}, Profiles, Custom_Object, Tabs, Create, Flows,Override, Users,Sharing_Settings,Institution
 		,CommunicationTemplates{
 			@Override
 			public String toString() {
