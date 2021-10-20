@@ -3382,6 +3382,10 @@ public boolean clickOnTab(String environment, String mode, TabName TabName) {
 	return flag;
 }
 
+/**
+ * @param searchText
+ * @return true if able to select value from Lookup window
+ */
 public boolean selectValueFromLookUpWindow(String searchText) {
 	String parentWindow=null;
 	WebElement ele=null;
@@ -3494,6 +3498,15 @@ public boolean CheckAlreadyCreatedItem(String projectName,String alreadyCreated,
 	return flag;
 }
 
+/**
+ * @author Azhar Alam
+ * @param sdgGridName
+ * @param labelName
+ * @param searchDataName
+ * @param operator
+ * @param wantToDataShearch
+ * @return
+ */
 public boolean SearchDealFilterDataOnHomePage(SDGGridName sdgGridName,String labelName,String searchDataName, Operator operator, YesNo wantToDataShearch) {
 	if(selectVisibleTextFromDropDown(driver,getSDGGridDropDown(sdgGridName, labelName, 10), "deal drop down",operator)) {
 		log(LogStatus.PASS, "Select Equals From Deal Drop Down in filter",YesNo.No);
@@ -3520,6 +3533,17 @@ public boolean SearchDealFilterDataOnHomePage(SDGGridName sdgGridName,String lab
 }
 
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param pageName
+ * @param label
+ * @param isMultipleAssociation
+ * @param name
+ * @param action
+ * @param timeOut
+ * @return boolean 
+ */
 public boolean ClickOnCrossButtonForAlreadySelectedItem(String projectName,PageName pageName,String label,boolean isMultipleAssociation,String name,action action,int timeOut) {
 	
 	WebElement ele = getCrossButtonForAlreadySelectedItem(projectName, pageName, label, isMultipleAssociation, name, action, timeOut);
@@ -3528,6 +3552,12 @@ public boolean ClickOnCrossButtonForAlreadySelectedItem(String projectName,PageN
 }
 
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param time
+ * @return boolean value
+ */
 public boolean verifyBeforeTimeOrNot(String projectName, String time) {
 	Calendar cal = Calendar.getInstance();
     
@@ -3551,6 +3581,12 @@ public boolean verifyBeforeTimeOrNot(String projectName, String time) {
 	 return timecurrent.after(lt2);
 }
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param taskName
+ * @return WebElement
+ */
 public WebElement getTaskLink(String projectName,String taskName) {
 	WebElement ele = moreStepsBtn(projectName, EnableDisable.Enable, 10);
 	click(driver, ele, "More Steps" ,action.BOOLEAN);
@@ -3561,6 +3597,12 @@ public WebElement getTaskLink(String projectName,String taskName) {
 	return ele;
 }
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param restoreItem
+ * @return true if able to restore deleted item from recycle bin
+ */
 public boolean restoreValueFromRecycleBin(String projectName,String restoreItem){
 	boolean flag=false;
 	TabName tabName = TabName.RecycleBinTab;
@@ -3596,6 +3638,11 @@ public boolean restoreValueFromRecycleBin(String projectName,String restoreItem)
 }
 
 
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @return true if able to click on Calender Cell
+ */
 public boolean clickAnyCellonCalender(String projectName){
 	boolean flag=false;
 	if (click(driver, getCalenderIcon(30), "View Calender Icon", action.SCROLLANDBOOLEAN)) {

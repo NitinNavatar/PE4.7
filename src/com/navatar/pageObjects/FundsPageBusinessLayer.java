@@ -628,7 +628,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	 * @param labelswithValues
 	 * @param timeOut
 	 * @return true/false
-	 * @description this is used to create a deal in MNA
+	 * @description this method is used to create custom sdg
 	 */
 	public boolean createCustomSDG(String projectName,String sdgName, String sdgTag,String sObjectName,String stage,String[][] labelswithValues,int timeOut) {
 		WebElement ele;
@@ -866,6 +866,16 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		return isDisplayed(driver, ele, "visibility", 10, "source firm link");
 	}
 	
+	/**
+	 * @param projectName
+	 * @param dealType
+	 * @param dealName
+	 * @param companyName
+	 * @param stage
+	 * @param labelswithValues
+	 * @param timeOut
+	 * @return true if able to create Deal other Page rathewr than Deal Page New Button
+	 */
 	public boolean createDealPopUp(String projectName,String dealType, String dealName,String companyName,String stage,String[][] labelswithValues,int timeOut) {
 		WebElement ele;
 		boolean flag = false;
