@@ -521,5 +521,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		
 	}
 	
+	
+
 	}
 

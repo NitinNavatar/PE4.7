@@ -595,6 +595,15 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 								appLog.error("Not able to enter "+labelText+" value "+strings[1]+" in text box so cannot create Deal : "+dealName);
 								return false;
 							}
+						}else if(labelText.equalsIgnoreCase("Pipeline Comments")){
+							if (sendKeys(driver, FindElement(driver, "//*[text()='Pipeline Comments']/following-sibling::div/textarea", labelText, action.SCROLLANDBOOLEAN, 30),strings[1],labelText,action.SCROLLANDBOOLEAN)) {
+								appLog.info(strings[1] + "  is passed to pipeline comment input box.");
+								
+							} else {
+								appLog.error("Not able to enter "+labelText+" value "+strings[1]+" in text box so cannot create Deal : "+dealName);
+								return false;
+							}
+							
 						}
 					}
 				}
