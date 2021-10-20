@@ -130,4 +130,70 @@ public class DealPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, markAsCurrentStage, "Visibility", timeOut, "markStageAsCompleteButton");
 		
 	}
+	@FindBy(xpath = "//div[@title='New']")
+	private WebElement NewButton;
+	
+	public WebElement getDealNewButton(int timeOut) {
+		return isDisplayed(driver, NewButton, "Visibility", timeOut, "New deal button");
+		
+	}
+	@FindBy(xpath = "//input[@name='Name']")
+	private WebElement dealNameInput;
+	
+	public WebElement getNewDealPopupDealNameInput(int timeOut) {
+		return isDisplayed(driver, dealNameInput, "Visibility", timeOut, " deal name input");
+		
+	}
+	
+	@FindBy(xpath="(//div[@class='requiredInput']//span[@class='lookupInput']//input)[2]")
+	private WebElement company_Classic;
+	
+	@FindBy(xpath="//*[text()='Company Name']/following-sibling::div//input[@title='Search Institutions' or contains(@placeholder,'Search Institutions')]")
+	private WebElement company_Lighting;
+
+	/**
+	 * @return the legalName
+	 */
+	public WebElement getDealCompanyName(String environment,String mode,int timeOut) {
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, company_Classic, "Visibility", timeOut, "company Name Classic");
+		}else{
+			return isDisplayed(driver, company_Lighting, "Visibility", timeOut, "company Name Lighting");
+		}
+	
+	} 
+	
+	@FindBy(xpath="//*[text()='Stage']/following-sibling::div//input")
+	private WebElement stageDropdown;
+	
+	public WebElement getStage(int timeOut){
+		
+		return isDisplayed(driver, stageDropdown, "Visibility", timeOut, " stage input");
+	}
+	
+	@FindBy(xpath="//*[text()='New Source Firm']/following-sibling::div//input[@title='Search Institutions' or contains(@placeholder,'Search Institutions')]")
+	private WebElement newSourcefirm;
+	
+	public WebElement getNewSourceFirm(int timeOut){
+		
+		return isDisplayed(driver, newSourcefirm, "Visibility", timeOut, " Source firm input");
+	}
+	
+	@FindBy(xpath="//*[text()='Pipeline Comments']/following-sibling::div/textarea")
+	private WebElement pipelineComments;
+	
+	public WebElement getPipelineComments(int timeOut){
+		
+		return isDisplayed(driver, pipelineComments, "Visibility", timeOut, "pipeline comments input");
+	}
+	
+	@FindBy(xpath="//button[@name='SaveEdit']")
+	private WebElement saveButton;
+	
+	public WebElement getSaveButton(int timeOut){
+		
+		return isDisplayed(driver, saveButton, "Visibility", timeOut, "save button ");
+	}
+	
+	
 }

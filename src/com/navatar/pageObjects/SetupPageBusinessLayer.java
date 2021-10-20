@@ -559,6 +559,43 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return false;
 	}
 	
+	public boolean checkInstalledPackageVersion(String packageVersion,int timeout){
+		if(sendKeys(driver,getQucikSearchInSetupPage(timeout),"Installed package","quick search text box in setup page", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "passed value in serach text box installed package ", YesNo.No);
+			
+		}else {
+			log(LogStatus.INFO, "Not able to search installed package in search text box so cannot click on installed package link in lightning", YesNo.Yes);
+			return false;
+		}
+	if (click(driver, getInstalledPackageLink(timeout), "Installed Package link", action.SCROLLANDBOOLEAN)) {
+		log(LogStatus.INFO,"clicked on installed package link", YesNo.No);
+			switchToFrame(driver, timeout, getSetUpPageIframe(60));
+			
+			String version=getText(driver,getInstalledPackageVersion(), "", action.SCROLLANDBOOLEAN);
+			if(version!=null){
+				
+				if(version.trim().equals(packageVersion.trim())){
+					log(LogStatus.PASS, "Installed pacakge verison:"+packageVersion+" is matched successfully", YesNo.No);
+					return true;
+				}else{
+					log(LogStatus.FAIL, "Installed pacakge verison:"+packageVersion+" is  not matched: Expected"+packageVersion+" Actual:"+version, YesNo.No);
+					return false;
+				}
+				
+			}else{
+				
+				log(LogStatus.FAIL, "Not able to get text of installed package version ", YesNo.No);
+				return false;
+			}
+		
+			
+	}else{
+		log(LogStatus.INFO, "Not able to clicked on installed package link", YesNo.Yes);
+		return false;
+	}
+	
+	}
+	
 	/**
 	 * @author Ankit Jaiswal
 	 * @param layoutName

@@ -66,6 +66,17 @@ public class ContactsPage extends BasePageBusinessLayer {
 	
 		
 	}
+	
+	public WebElement getcontactTier(String projectName,int timeOut) {
+		
+		WebElement	tierInput=FindElement(driver, "//*[text()='Tier']/..//input", "tier drodown", action.SCROLLANDBOOLEAN, timeOut);
+		
+		return isDisplayed(driver, tierInput, "Visibility", timeOut, "Contact tier");
+
+	
+}
+
+	
 	@FindBy(xpath="//div[@class='requiredInput']//span//input")
 	private WebElement legalName_Classic;
 	

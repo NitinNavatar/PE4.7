@@ -142,11 +142,12 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 	 * @param otherLabelValues
 	 * @param creationPage
 	 * @param title TODO
+	 * @param tier TODO
 	 * @return true/false
 	 * @description This is used to create new contact with given arguments
 	 */
 	public boolean createContact(String projectName, String contactFirstName, String contactLastName,
-			String legalName, String emailID, String recordType,String otherLabelFields,String otherLabelValues, CreationPage creationPage, String title) {
+			String legalName, String emailID, String recordType,String otherLabelFields,String otherLabelValues, CreationPage creationPage, String title, String tier) {
 		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
 		String labelNames[]=null;
 		String labelValue[]=null;
@@ -275,6 +276,28 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 								BaseLib.sa.assertTrue(false,"could not pass value "+title+" to title" );
 							}
 							}
+							if(tier!=null){
+								
+								if(click(driver, getcontactTier(projectName, 30), "contact tier dropdown", action.SCROLLANDBOOLEAN)){
+									log(LogStatus.INFO, "clicked contact tier dropdown", YesNo.No);
+									ThreadSleep(2000);
+									String xpath="//*[text()='Tier']/..//input/../following-sibling::div//span[@title='"+tier+"']/../..";
+									WebElement dropdownValue=FindElement(driver, xpath, "", action.BOOLEAN, 30);
+									if(click(driver, dropdownValue, "", action.BOOLEAN)){
+										log(LogStatus.INFO, "Selected tier :"+tier+" value in teir dropdown", YesNo.No);
+										
+										
+									}else{
+										log(LogStatus.INFO, "Not able to Select tier :"+tier+" value in teir dropdown", YesNo.Yes);
+										BaseLib.sa.assertTrue(false,"Not able to Select tier :"+tier+" value in teir dropdown" );
+									}
+									
+								}else{
+									log(LogStatus.INFO, "Not able to clicked contact tier dropdown", YesNo.Yes);
+									BaseLib.sa.assertTrue(false,"Not able to clicked contact tier dropdown" );
+									
+								}
+							}
 							if (click(driver, getNavigationTabSaveBtn(projectName, 60), "Save Button",
 									action.SCROLLANDBOOLEAN)) {
 								appLog.info("Clicked on save button");
@@ -358,6 +381,9 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 			}
 		return false;
 	}
+	
+
+	
 	
 	/**@author Azhar Alam
 	 * @param projectName

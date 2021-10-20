@@ -1395,5 +1395,66 @@ public boolean enterValuesInCreateIndiviualInvestor(String environment, String m
 	
 }
 
+public boolean verifyAddedTabsInHomepage(String tabs,String mode){
+	
+	List<String> result;
+	List<WebElement> allTabs=getAllAddedTabList(mode);
+
+	if(!allTabs.isEmpty()){
+		ThreadSleep(3000);
+		result=compareMultipleList(driver, tabs, allTabs);
+		if(result.isEmpty()){
+	
+			log(LogStatus.PASS, "all homepage added tab successfully verified", YesNo.No);
+			return true;
+		}else{
+	
+			log(LogStatus.FAIL,"all homepage added tab is not verified rsult:"+result, YesNo.No);
+			return false;
+		}
+		
+	}else{
+		log(LogStatus.FAIL, "Not abel to get the list of added tabs size:"+allTabs.size(), YesNo.No);
+		return false;
+	}
+	
+}
+
+	public boolean verifyHomepageAppLogo(String AppName){
+	
+	if(getAppLogoHeaer(30).isDisplayed()){
+		log(LogStatus.FAIL, "App logo is  visible on homepae", YesNo.No);
+		ThreadSleep(2000);
+		String text=getAppLogoHeaer(30).getText().trim();
+		if(text.equalsIgnoreCase(AppName.trim())){
+			log(LogStatus.PASS, "App logo is successfuly verified on homepage", YesNo.No);
+			return true;
+		}else{
+			log(LogStatus.FAIL, "App logo is not verifid on homepae", YesNo.No);
+			return false;
+		}
+		
+	}else{
+		log(LogStatus.FAIL, "App logo is not displayed on homepae", YesNo.No);
+		return false;
+		
+	}
+	
+}
+
+	public boolean verifyTodaayTaskandTodayEventSectionVisibleOnHomepage(int timeOut){
+		
+		boolean status =getTodayTaskSection(timeOut).isDisplayed();
+		boolean status1 =getTodayEventSection(timeOut).isDisplayed();
+		
+		if(status && status1){
+			
+			log(LogStatus.PASS, "Today task and  today event section is visibile on homepage", YesNo.No);
+			return true;
+		}else{
+			log(LogStatus.FAIL, "Today task and today event section is not visibile on homepage", YesNo.Yes);
+			return false;
+		}
+	}
 
 }

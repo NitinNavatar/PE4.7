@@ -102,6 +102,14 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, createUserSaveBtn_Lighting, "Visibility", timeOut, " save button in lighting");
 	}
 
+	@FindBy(xpath="//h3[text()='Installed Packages']/../../../../../..//*[contains(text(),'Navatar PE ')]/../..//td[4]")
+	private WebElement installedPackageVersionNo;
+	
+	public WebElement getInstalledPackageVersion(){
+		
+		return isDisplayed(driver, installedPackageVersionNo, "Visibility", 20, "install paa=ckage verison");
+		
+	}
 	@FindBy(id = "ImportedPackage_font")
 	private WebElement installedPackageLink_Classic;
 

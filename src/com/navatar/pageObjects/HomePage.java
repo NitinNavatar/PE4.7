@@ -904,7 +904,15 @@ public class HomePage extends BasePageBusinessLayer {
 	}
 	
 	
-	
+	public WebElement getTodayTaskSection(int timeOut){
+		
+		return FindElement(driver, "//div[@class='narrow homeHomeCard runtime_sales_activitiesTodayTaskContainer']", "Today task section", action.SCROLLANDBOOLEAN, timeOut);
+	}
+
+	public WebElement getTodayEventSection(int timeOut){
+		
+		return FindElement(driver, "//div[@class='narrow homeHomeCard homeEventContainer']", "Today Event section", action.SCROLLANDBOOLEAN, timeOut);
+	}
 	
 	@FindBy(xpath="//div[@id='wrenchpopup1wrenchCMF']//button[@title='Cancel']")
 	private WebElement CreateFundraisingwrenchIconCancelBtn;
@@ -1106,7 +1114,10 @@ public class HomePage extends BasePageBusinessLayer {
 		return NavigationMenuitem;
 	}
 	
-
+	public List<WebElement> sdgGridFirstRowData(SDGGridName sdgGridName){
+	String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='Fundraising']/../../../../../..//tbody//tr[1]//td[@data-aura-class='navpeIISdgDatagridCell']";
+	return FindElements(driver, xpath, sdgGridName+" grid first row data");
+}
 	
 	public WebElement sdgGridHeaderName(SDGGridName sdgGridName, int timeOut) {
 		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName+"']";
@@ -1708,6 +1719,25 @@ public WebElement createdtaskOnHomePage(String task) {
 	WebElement ele = FindElement(driver, xpath, task, action.BOOLEAN, 20);
 	ele = isDisplayed(driver, ele, "Visibility", 10, task);;
 	return ele;
+}
+
+public List<WebElement> getAllAddedTabList(String mode){
+	String xpath;
+	if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+		
+		xpath ="//ul[@id='tabBar']/li/a";
+	}else{
+		xpath="//*[@class='slds-grid slds-has-flexi-truncate navUL']//one-app-nav-bar-item-root/a/span";
+	}
+	return FindElements(driver, xpath, "Homepage tabs list");
+	
+}
+
+@FindBy(xpath="//*[@class='appName slds-context-bar__label-action slds-context-bar__app-name']/span")
+private WebElement applogo;
+public WebElement getAppLogoHeaer(int timeout){
+	
+	return isDisplayed(driver, applogo, "Visibility", timeout, " homepage app logo");
 }
 }
 

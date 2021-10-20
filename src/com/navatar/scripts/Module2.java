@@ -104,7 +104,7 @@ public class Module2 extends BaseLib{
 				mailID=	lp.generateRandomEmailId(gmailUserName);
 				ExcelUtils.writeData(phase1DataSheetFilePath, mailID, "Contacts", excelLabel.Variable_Name, "TWCON"+i,excelLabel.Contact_EmailId);
 
-				if (cp.createContact(projectName, fname, lname, ins, mailID,recType, null, null, CreationPage.ContactPage, title)) {
+				if (cp.createContact(projectName, fname, lname, ins, mailID,recType, null, null, CreationPage.ContactPage, title, null)) {
 					log(LogStatus.INFO,"successfully Created Contact : "+fname+" "+lname,YesNo.No);	
 				} else {
 					sa.assertTrue(false,"Not Able to Create Contact : "+fname+" "+lname);
@@ -2408,7 +2408,7 @@ public class Module2 extends BaseLib{
 				mailID=	lp.generateRandomEmailId(gmailUserName);
 				ExcelUtils.writeData(phase1DataSheetFilePath, mailID, "Contacts", excelLabel.Variable_Name, "HSRCON"+(i+1),excelLabel.Contact_EmailId);
 
-				if (cp.createContact(projectName, fn, ln, ins, mailID,"", null, null, CreationPage.ContactPage, null)) {
+				if (cp.createContact(projectName, fn, ln, ins, mailID,"", null, null, CreationPage.ContactPage, null, null)) {
 					log(LogStatus.INFO,"successfully Created Contact : "+fn+" "+ln,YesNo.No);	
 				} else {
 					sa.assertTrue(false,"Not Able to Create Contact : "+fn+" "+ln);

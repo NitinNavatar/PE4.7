@@ -317,7 +317,7 @@ public class Module5New extends BaseLib {
 			ToggleContact1EmailID=	lp.generateRandomEmailId(gmailUserName);
 			ExcelUtils.writeData(phase1DataSheetFilePath, ToggleContact1EmailID, "Contacts", excelLabel.Variable_Name, "M5CON1",excelLabel.Contact_EmailId);
 
-			if (cp.createContact(projectName, ToggleContact1FName, ToggleContact1LName, ToggleContact1Inst, ToggleContact1EmailID,ToggleContact1RecordType, null, null, CreationPage.ContactPage, null)) {
+			if (cp.createContact(projectName, ToggleContact1FName, ToggleContact1LName, ToggleContact1Inst, ToggleContact1EmailID,ToggleContact1RecordType, null, null, CreationPage.ContactPage, null, null)) {
 				log(LogStatus.INFO,"successfully Created Contact : "+ToggleContact1FName+" "+ToggleContact1LName,YesNo.No);	
 			} else {
 				sa.assertTrue(false,"Not Able to Create Contact : "+ToggleContact1FName+" "+ToggleContact1LName);
