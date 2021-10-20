@@ -337,6 +337,11 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return ele;
 	}
 	
+	/**
+	 * @param projectName
+	 * @param stage
+	 * @return WebElement
+	 */
 	public WebElement findDeactivateLink(String projectName, String stage) {
 		String xpath = "//th[text()='"+stage+"']/preceding-sibling::td//a[contains(@title,'Deactivate')]";
 		WebElement ele = FindElement(driver, xpath,"deactivate", action.SCROLLANDBOOLEAN, 10);
@@ -345,6 +350,11 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		
 	}
 	
+	/**
+	 * @param projectName
+	 * @param stage
+	 * @return WebElement
+	 */
 	public WebElement findActivateLink(String projectName, String stage) {
 		String xpath = "//th[text()='"+stage+"']/preceding-sibling::td//a[contains(@title,'Activate')]";
 		WebElement ele = FindElement(driver, xpath,"Activate", action.SCROLLANDBOOLEAN, 10);
@@ -352,17 +362,33 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return isDisplayed(driver, ele, "Visibility", 10, "Activate "+stage);
 		
 	}
+	/**
+	 * @param company
+	 * @return String
+	 */
 	public String convertToPortfolioBeforeNext(String company) {
 		return "Please click 'Next' to convert "+company+" to a Portfolio Company";
 	}
 	
+	/**
+	 * @param company
+	 * @return String
+	 */
 	public String convertToPortfolioRepeat(String company) {
 		return company+" is already a Portfolio.";
 	}
+	/**
+	 * @param company
+	 * @return String
+	 */
 	public String convertToPortfolioAfterNext(String company) {
 		return "Congratulations!" + 
 				""+company+" has been coverted to Portfolio Company successfully.";
 	}
+	/**
+	 * @param timeOut
+	 * @return WebElement
+	 */
 	public WebElement getCompanyNameOnconvertToPortfolioMessage(int timeOut) {
 		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//p";
 			WebElement ele = FindElement(driver, xpath,"company name convert to portfolio", action.SCROLLANDBOOLEAN, 10);
@@ -370,6 +396,11 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		
 	}
 	
+	/**
+	 * @param company
+	 * @param timeOut
+	 * @return WebElement
+	 */
 	public WebElement getconvertToPortfolioMessage(String company,int timeOut) {
 		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//span[text()='"+convertToPortfolioBeforeNext(company)+"']";
 		WebElement ele = FindElement(driver, xpath,"convert to portfolio", action.SCROLLANDBOOLEAN, 10);
@@ -377,12 +408,21 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		
 	}
 	
+	/**
+	 * @param timeOut
+	 * @return WebElement
+	 */
 	public WebElement getconvertToPortfolioMessageAfterNext(int timeOut) {
 		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//span[contains(text(),'successfully')]/..";
 		WebElement ele = FindElement(driver, xpath,"convert to portfolio", action.SCROLLANDBOOLEAN, 10);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
 		
 	}
+	/**
+	 * @param head
+	 * @param timeOut
+	 * @return WebElement
+	 */
 	public WebElement getconvertToPortfolioMessageAfterNext(String head,int timeOut) {
 		String xpath="//h2[text()='"+head+"']/../following-sibling::*//article//span[contains(text(),'successfully')]/..";
 		WebElement ele = FindElement(driver, xpath,"convert to portfolio", action.SCROLLANDBOOLEAN, 10);
@@ -390,18 +430,33 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		
 	}
 	
+	/**
+	 * @param timeOut
+	 * @return WebElement
+	 */
 	public WebElement getconvertToPortfolioMessageRepeat(int timeOut) {
 		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//span[contains(text(),'already')]/..";
 		WebElement ele = FindElement(driver, xpath,"convert to portfolio", action.SCROLLANDBOOLEAN, 10);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
 		
 	}
+	
+	/**
+	 * @param head
+	 * @param timeOut
+	 * @return WebElement
+	 */
 	public WebElement getconvertToPortfolioMessageRepeat(String head,int timeOut) {
 		String xpath="//h2[text()='"+head+"']/../following-sibling::*//article//span[contains(text(),'already')]/..";
 		WebElement ele = FindElement(driver, xpath,"convert to portfolio", action.SCROLLANDBOOLEAN, 10);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
 		
 	}
+	/**
+	 * @param company
+	 * @param timeOut
+	 * @return WebElement
+	 */
 	public WebElement crossIconForCompanyName(String company,int timeOut) {
 		String xpath="//label[text()='Company Name']/..//input[@placeholder='"+company+"']//following-sibling::*//button";
 		WebElement ele = FindElement(driver, xpath,"cross icon for company", action.SCROLLANDBOOLEAN, 10);
@@ -409,12 +464,20 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 
 	}
 	
+	/**
+	 * @param timeOut
+	 * @return WebElement
+	 */
 	public WebElement getconvertToPortfolioMessageUnhandledFlow(int timeOut) {
 		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//*[contains(text(),'processing')]/..";
 			WebElement ele = FindElement(driver, xpath,"unhandled flow message", action.SCROLLANDBOOLEAN, 10);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "unhandled flow message");
 
 	}
+	/**
+	 * @param timeOut
+	 * @return WebElement
+	 */
 	public WebElement getconvertToPortfolioMessageRecordTypeInvalid(int timeOut) {
 		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//p[contains(text(),'Navatar')]";
 			WebElement ele = FindElement(driver, xpath,"RT invalid", action.SCROLLANDBOOLEAN, 10);
@@ -422,6 +485,11 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 
 	}
 	
+	/**
+	 * @param expected
+	 * @param timeOut
+	 * @return boolean
+	 */
 	public boolean checkValueOfPathComponentValueOfStage(String expected,int timeOut) {
 		String xpath="//span[@class='current slds-path__stage']/following-sibling::span";
 			WebElement ele = FindElement(driver, xpath,"path component", action.SCROLLANDBOOLEAN, 10);
@@ -441,6 +509,11 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return false;
 	}
 	
+	/**
+	 * @param projectName
+	 * @param stage
+	 * @return WebElement
+	 */
 	public WebElement selectPathComponent(String projectName, String stage) {
 		String xpath="//span[@class='title slds-path__title'][text()='"+stage+"']";
 		WebElement ele = FindElement(driver, xpath,"path component", action.SCROLLANDBOOLEAN, 10);

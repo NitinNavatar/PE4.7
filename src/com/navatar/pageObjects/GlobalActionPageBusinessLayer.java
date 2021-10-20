@@ -138,6 +138,12 @@ public class GlobalActionPageBusinessLayer extends GlobalActionPage {
 
 	}
 
+	/**
+	 * @param projectName
+	 * @param globalActionItem
+	 * @param labelsWithValue
+	 * @return true if able to click on Global action and enter value
+	 */
 	public boolean clickOnGlobalActionAndEnterValue(String projectName,GlobalActionItem globalActionItem,String[][] labelsWithValue){
 		
 		if (click(driver,getGlobalActionIcon(projectName, 60), "Global Action Related item", action.BOOLEAN)) {
@@ -159,6 +165,13 @@ public class GlobalActionPageBusinessLayer extends GlobalActionPage {
 		return true;
 	}
 	
+	/**
+	 * @param projectName
+	 * @param pageName
+	 * @param tabName
+	 * @param relatedValue
+	 * @return boolean
+	 */
 	public boolean enterValueOnRelatedTo(String projectName,PageName pageName,TabName tabName,String relatedValue){
 		boolean flag=false;
 		clickUsingJavaScript(driver, getrelatedAssociationsdropdownButton(projectName, pageName,PageLabel.Related_To.toString(), action.BOOLEAN, 10),"dropdown button", action.BOOLEAN);
@@ -174,6 +187,13 @@ public class GlobalActionPageBusinessLayer extends GlobalActionPage {
 		
 	}
 	
+	/**
+	 * @param projectName
+	 * @param pageName
+	 * @param labelsWithValues
+	 * @param timeOut
+	 * @return boolean
+	 */
 	public boolean enterValueForTask(String projectName,PageName pageName,String[][] labelsWithValues,int timeOut) {
 
 		boolean flag=true;
@@ -236,7 +256,14 @@ public class GlobalActionPageBusinessLayer extends GlobalActionPage {
 	}
 	
 	
-public WebElement getLabelTextBoxForTask(String projectName,PageName pageName,String labelFieldTextBox,int timeOut) {
+	/**
+	 * @param projectName
+	 * @param pageName
+	 * @param labelFieldTextBox
+	 * @param timeOut
+	 * @return WebElement
+	 */
+	public WebElement getLabelTextBoxForTask(String projectName,PageName pageName,String labelFieldTextBox,int timeOut) {
 		
 		WebElement ele=null;
 		String labelTextBox = labelFieldTextBox.replace("_", " ");

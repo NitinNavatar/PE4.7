@@ -671,6 +671,19 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		return false;
 	}
 	
+	/**
+	 * @param projectName
+	 * @param contactFirstName
+	 * @param contactLastName
+	 * @param legalName
+	 * @param emailID
+	 * @param recordType
+	 * @param otherLabelFields
+	 * @param otherLabelValues
+	 * @param creationPage
+	 * @param title
+	 * @return true if able create contact from other Page rather than contact page New Button
+	 */
 	public boolean createContactPopUp(String projectName, String contactFirstName, String contactLastName,
 			String legalName, String emailID, String recordType,String otherLabelFields,String otherLabelValues, CreationPage creationPage, String title) {
 		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
