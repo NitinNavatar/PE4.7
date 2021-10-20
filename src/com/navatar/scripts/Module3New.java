@@ -335,7 +335,7 @@ public class Module3New extends BaseLib {
 		// FR
 		FundRaisingPageBusinessLayer fr = new FundRaisingPageBusinessLayer(driver);
 		if(bp.clickOnTab(environment,mode,TabName.FundraisingsTab)) {
-			if(fr.createFundRaising(environment,mode,M3FRName1,M3Fund1,M3Ins1)){
+			if(fr.createFundRaising(environment,mode,M3FRName1,M3Fund1,M3Ins1, null, null, null, null)){
 				appLog.info("fundraising is created : "+M3FRName1);
 			}else {
 				appLog.error("Not able to create fundraising: "+M3FRName1);

@@ -1115,7 +1115,7 @@ public class HomePage extends BasePageBusinessLayer {
 	}
 	
 	public List<WebElement> sdgGridFirstRowData(SDGGridName sdgGridName){
-	String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='Fundraising']/../../../../../..//tbody//tr[1]//td[@data-aura-class='navpeIISdgDatagridCell']";
+	String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName+"']/../../../../../..//tbody//tr[1]//td[@data-aura-class='navpeIISdgDatagridCell']";
 	return FindElements(driver, xpath, sdgGridName+" grid first row data");
 }
 	

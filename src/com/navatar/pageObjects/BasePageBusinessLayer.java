@@ -3289,6 +3289,9 @@ public boolean clickOnTab(String environment, String mode, TabName TabName) {
 	case ReportsTab:
 		tabName = "Reports";
 		break;
+	case DealTab:
+		tabName = "Deals";
+		break;
 	default:
 		return flag;
 	}

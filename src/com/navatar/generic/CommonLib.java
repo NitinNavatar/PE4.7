@@ -55,6 +55,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Month;
@@ -68,6 +69,7 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
@@ -2462,6 +2464,20 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		System.out.println("Change US Number Formate >>>>> "+number);
 		return s;
 	}
+	
+	/**
+	 * @author Ravi Kumar
+	 * @param number
+	 * @return String
+	 */
+	public static String changeNumberIntoUSDollarFormat(String number) {
+		int amount=Integer.valueOf(number);
+		String s=NumberFormat.getCurrencyInstance(new Locale("en", "US")).format(amount);
+		System.out.println("Change US Number Formate >>>>> "+number+"into :"+s);
+		return s;
+	}
+	
+	
 	
 	public static List<String> compareMultipleListContainsByTitle(WebDriver driver,String filesName, List<WebElement> listOfFileName) {
 		List<String> result = new ArrayList<String>();

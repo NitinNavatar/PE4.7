@@ -4311,7 +4311,7 @@ public class Module6 extends BaseLib{
 		}
 		if (lp.clickOnTab(projectName, TabName.FundraisingsTab)) {
 
-			if(frp.createFundRaising(environment,mode,M6LSCFundraising1,M6LSCFund1,M6LSCIns1)){
+			if(frp.createFundRaising(environment,mode,M6LSCFundraising1,M6LSCFund1,M6LSCIns1, null, null, null, null)){
 				appLog.info("fundraising is created : "+M6LSCFundraising1);
 			}else {
 				appLog.error("Not able to create fundraising: "+M6LSCFundraising1);
@@ -5047,7 +5047,7 @@ public class Module6 extends BaseLib{
 			fundr=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M6LSCFUNDR"+j, excelLabel.FundRaising_Name);
 			stage=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M6LSCFUNDR"+j, excelLabel.Stage);
 			
-			if(frp.createFundRaising(environment,mode,fundr,M6LSCFund1,M6LSCIns1)){
+			if(frp.createFundRaising(environment,mode,fundr,M6LSCFund1,M6LSCIns1, null, null, null, null)){
 				appLog.info("fundraising is created : "+fundr);
 				ThreadSleep(3000);
 				if (fp.changeStage(projectName, stage, 10)) {

@@ -20,18 +20,25 @@ import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
+import com.navatar.generic.EnumConstants.BulkActions_DefaultValues;
 import com.navatar.generic.EnumConstants.Buttons;
 import com.navatar.generic.EnumConstants.CollapseExpandIcon;
+import com.navatar.generic.EnumConstants.CreateNew_DefaultValues;
 import com.navatar.generic.EnumConstants.CreationPage;
 import com.navatar.generic.EnumConstants.Environment;
 import com.navatar.generic.EnumConstants.GlobalActionItem;
 import com.navatar.generic.EnumConstants.Mode;
+import com.navatar.generic.EnumConstants.NavatarSetupSideMenuTab;
+import com.navatar.generic.EnumConstants.NavigationMenuItems;
+import com.navatar.generic.EnumConstants.NewInteractions_DefaultValues;
 import com.navatar.generic.EnumConstants.Operator;
 import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.SDGGridName;
 import com.navatar.generic.EnumConstants.SDGGridSideIcons;
 import com.navatar.generic.EnumConstants.TabName;
+import com.navatar.generic.EnumConstants.Task;
+import com.navatar.generic.EnumConstants.ViewAllAndViewCalendarLink;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
@@ -44,10 +51,14 @@ import com.navatar.pageObjects.GlobalActionPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
 import com.navatar.pageObjects.InstitutionsPageBusinessLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
+import com.navatar.pageObjects.NavatarSetupPageBusinessLayer;
+import com.navatar.pageObjects.NavigationPageBusineesLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class PECloudSmoke extends BaseLib{
+	
+	String navigationMenuName=NavigationMenuItems.New_Interactions.toString();
 	
 	@Parameters({ "projectName"})
 	@Test
@@ -332,15 +343,17 @@ public class PECloudSmoke extends BaseLib{
 			}
 		}
 		
+		
+		ThreadSleep(2000);
 		// contact
 		
-				if (lp.clickOnTab(projectName, TabName.ContactTab)) {
+				if (bp.clickOnTab(environment,mode, TabName.ContactTab)) {
 					log(LogStatus.INFO,"Click on Tab : "+TabName.ContactTab,YesNo.No);	
 					
 					SMOKCon1ContactEmail=	lp.generateRandomEmailId(gmailUserName);
 					ExcelUtils.writeData(phase1DataSheetFilePath, SMOKCon1ContactEmail, "Contacts", excelLabel.Variable_Name, "SMOKCON1",excelLabel.Contact_EmailId);
 
-					if (cp.createContact(projectName, SMOKCon1FirstName, SMOKCon1LastName, SMOKCon1InstitutionName, SMOKCon1ContactEmail,null, null, null, CreationPage.ContactPage, null,SMOKCon1Tier)) {
+					if (cp.createContact(projectName, SMOKCon1FirstName, SMOKCon1LastName, SMOKCon1InstitutionName, SMOKCon1ContactEmail,"", null, null, CreationPage.ContactPage, null,SMOKCon1Tier)) {
 						log(LogStatus.INFO,"successfully Created Contact : "+SMOKCon1FirstName+" "+SMOKCon1LastName,YesNo.No);	
 					} else {
 						sa.assertTrue(false,"Not Able to Create Contact : "+SMOKCon1FirstName+" "+SMOKCon1LastName);
@@ -353,12 +366,15 @@ public class PECloudSmoke extends BaseLib{
 					log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.ContactTab,YesNo.Yes);
 				}
 				
+				
+				ThreadSleep(2000);
+				
 			//deal	
 				String[][] otherlabel={{excelLabel.Source_Firm.toString(),SMOKDeal1SourceFirm},{excelLabel.Pipeline_Comments.toString(),SMOKDeal1PipelineComments}};
-				if(lp.clickOnTab(projectName, TabName.DealTab)){
+				if(bp.clickOnTab(environment,mode, TabName.DealTab)){
 					log(LogStatus.INFO,"Click on Tab : "+TabName.DealTab,YesNo.No);
 					
-					if(fp.createDeal(projectName, null, SMOKDeal1DealName, SMOKDeal1CompanyName, SMOKDeal1Stage, otherlabel, 30)){
+					if(fp.createDeal(projectName, "", SMOKDeal1DealName, SMOKDeal1CompanyName, SMOKDeal1Stage, otherlabel, 30)){
 						
 						log(LogStatus.INFO,"successfully Created deal : "+SMOKDeal1DealName,YesNo.No);	
 
@@ -374,11 +390,28 @@ public class PECloudSmoke extends BaseLib{
 					log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.DealTab,YesNo.Yes);
 				}
 				
+				ThreadSleep(2000);
+				//fund
+				if (bp.clickOnTab(environment,mode, TabName.FundsTab)) {
+					log(LogStatus.INFO,"Click on Tab : "+TabName.FundsTab,YesNo.No);	
+					if (fp.createFundPE(projectName,SMOKFund1FundName,"",SMOKFund1FundType,SMOKFund1InvestmentCategory, null, 15)) {
+						log(LogStatus.INFO,"Created Fund : "+SMOKFund1FundName,YesNo.No);	
+					} else {
+						sa.assertTrue(false,"Not Able to Create Fund : "+SMOKFund1FundName);
+						log(LogStatus.SKIP,"Not Able to Create Fund  : "+SMOKFund1FundName,YesNo.Yes);
+					}
+
+				} else {
+					sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.FundsTab);
+					log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.FundsTab,YesNo.Yes);
+				}
+				
+				ThreadSleep(2000);
 				
 				// FR
 				
 				if(bp.clickOnTab(environment,mode,TabName.FundraisingsTab)) {
-					if(fr.createFundRaising(environment,mode,SMOKFR1FundraisingName,SMOKFR1FundName,SMOKFR1InstitutionName)){
+					if(fr.createFundRaising(environment,mode,SMOKFR1FundraisingName,SMOKFR1FundName,SMOKFR1InstitutionName, SMOKFR1Closing, SMOKFR1Satge, SMOKFR1InvestmentLikelyAmountMN, SMOKFR1Note)){
 						appLog.info("fundraising is created : "+SMOKFR1FundraisingName);
 					}else {
 						appLog.error("Not able to create fundraising: "+SMOKFR1FundraisingName);
@@ -388,12 +421,13 @@ public class PECloudSmoke extends BaseLib{
 					appLog.error("Not able to click on fundraising tab so cannot create fundraising: "+SMOKFR1FundraisingName);
 					sa.assertTrue(false,"Not able to click on fundraising tab so cannot create fundraising: "+SMOKFR1FundraisingName);
 				}
+				ThreadSleep(2000);
 				
 				//task
-				SMOKTask1DueDate=previousOrForwardMonthAccordingToTimeZone(-90, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);
+				SMOKTask1DueDate=previousOrForwardDateAccordingToTimeZone(-92, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);
 				String task = SMOKTask1Subject;
 				String[][] taskData = {{PageLabel.Subject.toString(),task},
-						{PageLabel.Due_Date.toString(),M7Task1dueDate},
+						{PageLabel.Due_Date.toString(),SMOKTask1DueDate},
 						{PageLabel.Name.toString(),SMOKTask1Name},
 						{PageLabel.Status.toString(),SMOKTask1Status}};
 				
@@ -434,7 +468,7 @@ public class PECloudSmoke extends BaseLib{
 			if (home.SearchDealFilterDataOnHomePage(SDGGridName.Deals, "Deal", SMOKDeal1DealName, Operator.Equals,
 					YesNo.Yes)) {
 				log(LogStatus.PASS, "Search Deal Name in filter " + SMOKDeal1DealName, YesNo.No);
-				ThreadSleep(3000);
+				ThreadSleep(7000);
 				
 				List<WebElement> all =home.sdgGridFirstRowData(SDGGridName.Deals);
 				if(compareMultipleList(driver, labelName, all).isEmpty()){
@@ -454,16 +488,16 @@ public class PECloudSmoke extends BaseLib{
 					YesNo.Yes);
 			sa.assertTrue(false, "Not able to click on filter icon so cannot search deal name : " + SMOKDeal1DealName);
 		}
-
 		
-		 labelName = SMOKFR1FundraisingName+","+SMOKFR1Satge+","+SMOKFR1Closing+","+SMOKFR1InvestmentLikelyAmountMN+","+SMOKFR1Note;
+		String changedInvestmentAmount=changeNumberIntoUSDollarFormat(SMOKFR1InvestmentLikelyAmountMN);
+		 labelName = SMOKFR1FundraisingName+","+SMOKFR1Satge+","+SMOKFR1Closing+","+(changedInvestmentAmount)+","+SMOKFR1Note;
 		if (click(driver, home.sdgGridSideIcons(SDGGridName.Fundraising, SDGGridSideIcons.Toggle_Filters, 10),
 				"filter icon", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.PASS, "click on filter icon so cannot search FundRaising name : " + SMOKFR1FundraisingName, YesNo.Yes);
 			if (home.SearchDealFilterDataOnHomePage(SDGGridName.Fundraising, "Fundraising", SMOKFR1FundraisingName, Operator.Equals,
 					YesNo.Yes)) {
 				log(LogStatus.PASS, "Search FundRaising Name in filter " + SMOKFR1FundraisingName, YesNo.No);
-				ThreadSleep(3000);
+				ThreadSleep(7000);
 				
 				List<WebElement> all =home.sdgGridFirstRowData(SDGGridName.Fundraising);
 				if(compareMultipleList(driver, labelName, all).isEmpty()){
@@ -484,7 +518,7 @@ public class PECloudSmoke extends BaseLib{
 		}
 
 		
-		 labelName = SMOKCon1FirstName+" "+SMOKCon1LastName+","+SMOKCon1InstitutionName+","+SMOKCon1Phone;
+		 labelName = SMOKCon1FirstName+" "+SMOKCon1LastName+","+SMOKCon1InstitutionName;
 		if (click(driver, home.sdgGridSideIcons(SDGGridName.My_Call_List, SDGGridSideIcons.Toggle_Filters, 10),
 				"filter icon", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.PASS,
@@ -493,7 +527,7 @@ public class PECloudSmoke extends BaseLib{
 			if (home.SearchDealFilterDataOnHomePage(SDGGridName.My_Call_List, "Name", SMOKCon1FirstName + " " + SMOKCon1LastName,
 					Operator.Equals, YesNo.Yes)) {
 				log(LogStatus.PASS, "Search My Call List Name in filter " + SMOKCon1FirstName + " " + SMOKCon1LastName, YesNo.No);
-				ThreadSleep(3000);
+				ThreadSleep(5000);
 
 				List<WebElement> all =home.sdgGridFirstRowData(SDGGridName.My_Call_List);
 				if(compareMultipleList(driver, labelName, all).isEmpty()){
@@ -515,6 +549,9 @@ public class PECloudSmoke extends BaseLib{
 			sa.assertTrue(false, "Not able to click on filter icon so cannot search My Call List name : " + SMOKCon1FirstName
 					+ " " + SMOKCon1LastName);
 		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
 		
 	}
 	
@@ -598,29 +635,29 @@ public class PECloudSmoke extends BaseLib{
 									home.sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(
 											Buttons.Save, 10),
 									"Add button", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.PASS, "clicked on save button for " + SDGGridName.Deals,
+								log(LogStatus.PASS, "clicked on save button for " + SDGGridName.Fundraising,
 										YesNo.No);
 								ThreadSleep(5000);
 
-								lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
+								lst = home.sdgGridHeadersLabelNameList(SDGGridName.Fundraising);
 								String headerName = "Fund Name";
 								if (compareMultipleList(driver, headerName, lst).isEmpty()) {
 									log(LogStatus.PASS,
-											SDGGridName.Deals + " SDG Grid Header Name is verified ",
+											SDGGridName.Fundraising + " SDG Grid Header Name is verified ",
 											YesNo.No);
 								} else {
 									log(LogStatus.FAIL,
-											SDGGridName.Deals + " SDG Grid Header Name is not verified ",
+											SDGGridName.Fundraising + " SDG Grid Header Name is not verified ",
 											YesNo.Yes);
 									sa.assertTrue(false,
-											SDGGridName.Deals + " SDG Grid Header Name is not verified ");
+											SDGGridName.Fundraising + " SDG Grid Header Name is not verified ");
 								}
 							} else {
 								log(LogStatus.PASS,
-										"Not able to click on save button for " + SDGGridName.Deals,
+										"Not able to click on save button for " + SDGGridName.Fundraising,
 										YesNo.No);
 								sa.assertTrue(false,
-										"Not able to click on save button for " + SDGGridName.Deals);
+										"Not able to click on save button for " + SDGGridName.Fundraising);
 							}
 						} else {
 							log(LogStatus.PASS, "Cannot select Fund Name from field finder", YesNo.No);
@@ -639,7 +676,7 @@ public class PECloudSmoke extends BaseLib{
 
 					if (click(driver, home.sdgGridSideIcons(SDGGridName.My_Call_List, SDGGridSideIcons.Manage_fields, 5),
 							"manage field icon", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.PASS, "clicked on manage field icon of " + SDGGridName.Deals, YesNo.No);
+						log(LogStatus.PASS, "clicked on manage field icon of " + SDGGridName.My_Call_List, YesNo.No);
 						ThreadSleep(2000);
 
 
@@ -658,23 +695,23 @@ public class PECloudSmoke extends BaseLib{
 										YesNo.No);
 								ThreadSleep(5000);
 
-								lst = home.sdgGridHeadersLabelNameList(SDGGridName.Deals);
+								lst = home.sdgGridHeadersLabelNameList(SDGGridName.My_Call_List);
 								String headerName = "Email";
 								if (compareMultipleList(driver, headerName, lst).isEmpty()) {
 									log(LogStatus.PASS,
-											SDGGridName.Deals + " SDG Grid Header Name is verified ", YesNo.No);
+											SDGGridName.My_Call_List + " SDG Grid Header Name is verified ", YesNo.No);
 								} else {
 									log(LogStatus.FAIL,
-											SDGGridName.Deals + " SDG Grid Header Name is not verified ",
+											SDGGridName.My_Call_List + " SDG Grid Header Name is not verified ",
 											YesNo.Yes);
 									sa.assertTrue(false,
-											SDGGridName.Deals + " SDG Grid Header Name is not verified ");
+											SDGGridName.My_Call_List + " SDG Grid Header Name is not verified ");
 								}
 							} else {
-								log(LogStatus.PASS, "Not able to click on save button for " + SDGGridName.Deals,
+								log(LogStatus.PASS, "Not able to click on save button for " + SDGGridName.My_Call_List,
 										YesNo.No);
 								sa.assertTrue(false,
-										"Not able to click on save button for " + SDGGridName.Deals);
+										"Not able to click on save button for " + SDGGridName.My_Call_List);
 							}
 
 						} else {
@@ -683,10 +720,10 @@ public class PECloudSmoke extends BaseLib{
 						}
 					}else{
 
-						log(LogStatus.PASS, "Not able to click on manage field  for " + SDGGridName.Deals,
+						log(LogStatus.PASS, "Not able to click on manage field  for " + SDGGridName.My_Call_List,
 								YesNo.No);
 						sa.assertTrue(false,
-								"Not able to click on manage field  for " + SDGGridName.Deals);
+								"Not able to click on manage field  for " + SDGGridName.My_Call_List);
 					}
 
 				}
@@ -932,10 +969,277 @@ public class PECloudSmoke extends BaseLib{
 	@Test
 	public void smokeTc009_verifyCreateDataForTodaysTaskAndTodaysEvent(String projectName){
 		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		
 		
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		
+		home.clickOnTab(projectName, TabName.HomeTab);	
+		ThreadSleep(5000);
+		List<WebElement> name = home.ctreatedTaskAndEventListOnHomePage(Task.TodayTasks);
+		
+			if (compareMultipleList(driver, SMOKTask2Subject.toString(), name).isEmpty()) {
+				log(LogStatus.PASS, "task is displaying in today task section", YesNo.No);
+			} else {
+				log(LogStatus.PASS, "task is not displaying in today task section", YesNo.No);
+				sa.assertTrue(false, "task is not displaying in today task section");
+			}
+			home.clickOnTab(projectName, TabName.HomeTab);
+		
+			ThreadSleep(5000);
+		if(click(driver, home.viewAllAndviewClendarLink(Task.TodayTasks, ViewAllAndViewCalendarLink.viewALl, 30), "Task view all link", action.BOOLEAN)){
+			
+			log(LogStatus.PASS, "click on view all link of tassk section", YesNo.No);
+			if (home.getHeaderNameText(10) != null) {
+				log(LogStatus.PASS, "task object is opened", YesNo.No);
+			} else {
+				log(LogStatus.PASS, "task object is not opened", YesNo.No);
+				sa.assertTrue(false, "task object is not opened");
+			}
+			
+		}else{
+			
+			log(LogStatus.PASS, "Not able to click on view all link of tassk section", YesNo.No);
+			sa.assertTrue(false, "Not able to click on view all link of tassk section");
+		}
+		home.clickOnTab(projectName, TabName.HomeTab);
+		ThreadSleep(5000);
+		
+		List<WebElement> name2 = home.ctreatedTaskAndEventListOnHomePage(Task.TodayEvents);
+		
+			if (compareMultipleList(driver, SMOKEvent1Subject.toString(), name2).isEmpty()) {
+				log(LogStatus.PASS, "event is displaying in event section on homepage", YesNo.No);
+			} else {
+				log(LogStatus.PASS, "event is not displaying in event section on homepage", YesNo.No);
+				sa.assertTrue(false, "event is not displaying in event section on homepage");
+			}
+
+			home.clickOnTab(projectName, TabName.HomeTab);
+			ThreadSleep(5000);
+		
+		if(click(driver, home.viewAllAndviewClendarLink(Task.TodayEvents, ViewAllAndViewCalendarLink.ViewCalendar, 10), "Event view calendar link", action.BOOLEAN)){
+			
+			log(LogStatus.PASS, "click on view calendar link of event section", YesNo.No);
+			
+		}else{
+			
+			log(LogStatus.PASS, "Not able to click on view calendar link of event section", YesNo.No);
+			sa.assertTrue(false, "Not able to click on view calendar link of event section");
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
 	}
 	
+	@Parameters("projectName")
+	@Test
+	public void smokeTC010_verifyNavigationMenuOnHomepage(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		String filesName = "";
+
+		// Verification on navigation menu
+		navigationMenuName = NavigationMenuItems.Bulk_Actions.toString();
+
+		filesName=BulkActions_DefaultValues.Bulk_Email.toString()+","+
+				BulkActions_DefaultValues.Bulk_Fundraising.toString()+","+
+				BulkActions_DefaultValues.Bulk_Commitments.toString();
+
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+			List<String> abc = compareMultipleList(driver, filesName, npbl.getNavigationList(projectName, 10));
+			if (abc.isEmpty()) {
+				log(LogStatus.INFO, "items verified "+filesName+" on "+navigationMenuName, YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "items not verified "+filesName+" on "+navigationMenuName, YesNo.Yes);
+				sa.assertTrue(false,"items not verified "+filesName+" on "+navigationMenuName);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName);
+		}
+		refresh(driver);
+
+		navigationMenuName = NavigationMenuItems.New_Interactions.toString();
+
+		filesName=NewInteractions_DefaultValues.Call.toString()+","+
+				NewInteractions_DefaultValues.Meeting.toString()+","+
+				NewInteractions_DefaultValues.Task.toString();
+
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+			List<String> abc = compareMultipleList(driver, filesName, npbl.getNavigationList(projectName, 10));
+			if (abc.isEmpty()) {
+				log(LogStatus.INFO, "items verified "+filesName+" on "+navigationMenuName, YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "items not verified "+filesName+" on "+navigationMenuName, YesNo.Yes);
+				sa.assertTrue(false,"items not verified "+filesName+" on "+navigationMenuName);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName);
+		}
+
+		refresh(driver);
+
+
+		navigationMenuName = NavigationMenuItems.Create_New.toString();
+
+		filesName=CreateNew_DefaultValues.New_Deal.toString()+","+
+				CreateNew_DefaultValues.New_Institution.toString()+","+
+				CreateNew_DefaultValues.New_Contact.toString();
+
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+			List<String> abc = compareMultipleList(driver, filesName, npbl.getNavigationList(projectName, 10));
+			if (abc.isEmpty()) {
+				log(LogStatus.INFO, "items verified "+filesName+" on "+navigationMenuName, YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "items not verified "+filesName+" on "+navigationMenuName, YesNo.Yes);
+				sa.assertTrue(false,"items not verified "+filesName+" on "+navigationMenuName);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName, YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName);
+		}
+
+		refresh(driver);
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+		
+	}
+
+	@Parameters("projectName")
+	@Test
+	public void smokeTc011_enableDisableCheckboxOfBulkAction(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavatarSetupPageBusinessLayer np= new NavatarSetupPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		String[][] userAndPassword = { { superAdminUserName, adminPassword }, { crmUser1EmailID, adminPassword } };
+
+		//lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
+		NavatarSetupSideMenuTab[] navatarSetupSideMenuTab = {NavatarSetupSideMenuTab.CommitmentCreation};
+		NavatarSetupSideMenuTab setupSideMenuTab=null;
+
+		navigationMenuName = NavigationMenuItems.Bulk_Actions.toString();
+		String[] navigationLabel = {BulkActions_DefaultValues.Bulk_Email.toString(),
+				BulkActions_DefaultValues.Bulk_Commitments.toString(),BulkActions_DefaultValues.Bulk_Fundraising.toString()};
+		
+		boolean flag=false;
+
+		for (String[] userPass : userAndPassword) {
+			
+			lp.CRMLogin(userPass[0], userPass[1]);
+		log(LogStatus.INFO, "<<<<<< Going to Uncheck >>>>>>>", YesNo.No);
+		for (int i = 0; i < navatarSetupSideMenuTab.length; i++) {
+			flag=false;
+			setupSideMenuTab=navatarSetupSideMenuTab[i];
+			switchToDefaultContent(driver);
+			flag=np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, false);
+			if (flag) {
+				switchToDefaultContent(driver);
+				refresh(driver);
+				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+					log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+					WebElement ele = npbl.getNavigationLabel(projectName, navigationLabel[1], action.BOOLEAN, 10);
+					if (ele==null) {
+						log(LogStatus.INFO, navigationLabel[1]+" is not present on "+navigationMenuName+" after uncheck "+setupSideMenuTab, YesNo.No);
+					} else {
+						log(LogStatus.ERROR, navigationLabel[1]+" should not present on "+navigationMenuName+" after uncheck "+setupSideMenuTab, YesNo.Yes);
+						sa.assertTrue(false,navigationLabel[1]+" should not present on "+navigationMenuName+" after uncheck "+setupSideMenuTab);
+					}
+					ele = npbl.getNavigationLabel(projectName, navigationLabel[0], action.BOOLEAN, 10);
+					if (ele!=null) {
+						log(LogStatus.INFO, navigationLabel[0]+" is present on "+navigationMenuName, YesNo.No);
+					} else {
+						log(LogStatus.ERROR, navigationLabel[0]+" should be present on "+navigationMenuName, YesNo.Yes);
+						sa.assertTrue(false,navigationLabel[0]+" should be present on "+navigationMenuName);
+
+					}
+					if (ele!=null) {
+						log(LogStatus.INFO, navigationLabel[2]+" is present on "+navigationMenuName, YesNo.No);
+					} else {
+						log(LogStatus.ERROR, navigationLabel[2]+" should be present on "+navigationMenuName, YesNo.Yes);
+						sa.assertTrue(false,navigationLabel[2]+" should be present on "+navigationMenuName);
+
+					}
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot uncheck absenece of "+navigationLabel[i], YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot uncheck absenece of "+navigationLabel[i]);
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to disable "+setupSideMenuTab+" so cannot uncheck absenece of "+navigationLabel[i]+" on "+navigationMenuName, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to disable "+setupSideMenuTab+" so cannot uncheck absenece of "+navigationLabel[i]+" on "+navigationMenuName);
+			}
+			refresh(driver);
+			ThreadSleep(5000);
+		}
+
+		//// CHeck
+		log(LogStatus.INFO, "<<<<<< Going to check >>>>>>>", YesNo.No);
+		for (int i = 0; i < navatarSetupSideMenuTab.length; i++) {
+			flag=false;
+			setupSideMenuTab=navatarSetupSideMenuTab[i];
+			switchToDefaultContent(driver);
+			flag=np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, true);;
+			if (flag) {
+				// Verification on navigation menu
+				switchToDefaultContent(driver);
+				refresh(driver);
+				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+					log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+					WebElement ele = npbl.getNavigationLabel(projectName, navigationLabel[i], action.BOOLEAN, 10);
+					if (ele!=null) {
+						log(LogStatus.INFO, navigationLabel[i]+" is  present on "+navigationMenuName+" after check "+setupSideMenuTab, YesNo.No);
+
+					} else {
+						log(LogStatus.ERROR, navigationLabel[i]+" should be present on "+navigationMenuName+" after check "+setupSideMenuTab, YesNo.Yes);
+						sa.assertTrue(false,navigationLabel[i]+" should be present on "+navigationMenuName+" after check "+setupSideMenuTab);
+
+					}
+
+					ele = npbl.getNavigationLabel(projectName, navigationLabel[2], action.BOOLEAN, 10);
+					if (ele!=null) {
+						log(LogStatus.INFO, navigationLabel[i]+" is present on "+navigationMenuName, YesNo.No);
+
+					} else {
+						log(LogStatus.ERROR, navigationLabel[i]+" should be present on "+navigationMenuName, YesNo.Yes);
+						sa.assertTrue(false,navigationLabel[i]+" should be present on "+navigationMenuName);
+
+					}
+					
+					ele = npbl.getNavigationLabel(projectName, navigationLabel[2], action.BOOLEAN, 10);
+					if (ele!=null) {
+						log(LogStatus.INFO, navigationLabel[2]+" is present on "+navigationMenuName, YesNo.No);
+					} else {
+						log(LogStatus.ERROR, navigationLabel[2]+" should be present on "+navigationMenuName, YesNo.Yes);
+						sa.assertTrue(false,navigationLabel[2]+" should be present on "+navigationMenuName);
+
+					}
+					
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabel[i], YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabel[i]);
+				}	
+			} else {
+				log(LogStatus.ERROR, "Not Able to Enable "+setupSideMenuTab+" so cannot uncheck presence of "+navigationLabel[i]+" on "+navigationMenuName, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Enable "+setupSideMenuTab+" so cannot uncheck presence of "+navigationLabel[i]+" on "+navigationMenuName);
+			
+			}
+			refresh(driver);
+			ThreadSleep(5000);
+		}
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 }
 	
 
