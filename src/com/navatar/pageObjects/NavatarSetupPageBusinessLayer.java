@@ -286,7 +286,9 @@ public class NavatarSetupPageBusinessLayer extends NavatarSetupPage implements N
 		refresh(driver);
 		if (clickOnTab(projectName, TabName.NavatarSetup)) {
 			log(LogStatus.INFO, "Clicked on Navatar Setup ", YesNo.No);
+			ThreadSleep(3000);
 			if (clickOnNavatarSetupSideMenusTab(projectName, setupSideMenuTab)) {
+				ThreadSleep(5000);
 				log(LogStatus.INFO, "Clicked on "+setupSideMenuTab, YesNo.No);
 				WebElement ele = getEnableCheckBoxforNavatarSetUpSideMenuTab(projectName, setupSideMenuTab,EditViewMode.View, 30);
 				if (isEnabled) {
@@ -302,21 +304,26 @@ public class NavatarSetupPageBusinessLayer extends NavatarSetupPage implements N
 				}
 				if (click(driver, getEditButtonforNavatarSetUpSideMenuTab(projectName,setupSideMenuTab, 10), "Edit Button for "+setupSideMenuTab, action.BOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on Edit Button "+setupSideMenuTab, YesNo.No);
+					ThreadSleep(5000);
 				//	switchToFrame(driver, 60, getnavatarSetUpTabFrame_Lighting(projectName, 120));
 					ele = getEnableCheckBoxforNavatarSetUpSideMenuTab(projectName, setupSideMenuTab,EditViewMode.Edit, 30);
-					if (click(driver,ele,setupSideMenuTab+" CheckBox", action.BOOLEAN)) {
+					if (clickUsingJavaScript(driver,ele,setupSideMenuTab+" CheckBox", action.BOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Enable "+setupSideMenuTab+" Box Checkbox", YesNo.No);
-						ThreadSleep(000);
+						ThreadSleep(3000);
 						if (click(driver, getSaveButtonforNavatarSetUpSideMenuTab(projectName, setupSideMenuTab, 10, TopOrBottom.TOP), "Save Button", action.BOOLEAN)) {
 							ThreadSleep(20000);
 							log(LogStatus.INFO, "Clicked on Save Button for : "+setupSideMenuTab, YesNo.No);
-							//switchToFrame(driver, 60, getnavatarSetUpTabFrame_Lighting(projectName, 120));
+							
 							ele = getEnableCheckBoxforNavatarSetUpSideMenuTab(projectName, setupSideMenuTab,EditViewMode.View, 30);
+							ThreadSleep(3000);
 							if (isEnabled) {
 								if (isSelected(driver, ele, setupSideMenuTab.toString())) {
 									log(LogStatus.INFO, "Checkbox is Enable : "+setupSideMenuTab, YesNo.No);
 									return true;
-								} 
+								}else{
+									log(LogStatus.INFO, "Not able to Enable Checkbox : "+setupSideMenuTab, YesNo.No);
+									
+								}
 							} else {
 								if (!isSelected(driver, ele, setupSideMenuTab.toString())) {
 									log(LogStatus.INFO, "CheckBox is Disable : "+setupSideMenuTab, YesNo.No);
@@ -371,7 +378,7 @@ public class NavatarSetupPageBusinessLayer extends NavatarSetupPage implements N
 		if (EditViewMode.View.equals(editViewMode)) {
 			xpath="//span[contains(@class,'primaryPaletteBorder')][text()='"+checkboxFor+"']/..//input";
 		} else {
-			xpath="//span[contains(@class,'primaryPaletteBorder')][text()='"+checkboxFor+"']/..//input/..";
+			xpath="//span[contains(@class,'primaryPaletteBorder')][text()='"+checkboxFor+"']/..//input";
 		}
 		
 		enableCheckBoxList = FindElements(driver,xpath,
