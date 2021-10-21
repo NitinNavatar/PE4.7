@@ -42,9 +42,13 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage  {
 		 * @param fundraisingName
 		 * @param fundName
 		 * @param legalName
+		 * @param closing TODO
+		 * @param stage TODO
+		 * @param investmentLikelyAmount TODO
+		 * @param statusNote TODO
 		 * @return true if able to create FundRaising
 		 */
-		public boolean createFundRaising(String environment,String mode,String fundraisingName, String fundName, String legalName) {
+		public boolean createFundRaising(String environment,String mode,String fundraisingName, String fundName, String legalName, String closing, String stage, String investmentLikelyAmount, String statusNote) {
 			refresh(driver);
 			ThreadSleep(5000);
 			if (click(driver, getNewButton(environment,mode,60), "New Button", action.SCROLLANDBOOLEAN)) {
@@ -78,6 +82,69 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage  {
 								} else {
 									appLog.info(legalName + "  is not present in the list.");
 								}
+							}
+							
+							if(!closing.equals("")||closing!=null){
+								if (click(driver,
+										FindElement(driver,
+												"//*[text()='Closing']/..//input",
+												"Clsoing input", action.THROWEXCEPTION, 30),
+										"Clsoing input", action.BOOLEAN)) {
+									appLog.info("Click on closing input");
+									ThreadSleep(2000);
+									click(driver,FindElement(driver,"//*[text()='Closing']/..//input/../..//*[@data-value='"+closing+"']","Clsoing list", action.THROWEXCEPTION, 30),
+											"Clsoing list", action.BOOLEAN) ;
+										appLog.info("Click on closing list item:"+closing);
+									
+									
+								} else {
+									appLog.info("Not able to Click on closing input");
+								}
+								
+							}
+							
+							
+							if(!stage.equals("")||stage!=null){
+								if (click(driver,
+										FindElement(driver,
+												"//*[text()='Stage']/..//input",
+												"Stage input", action.THROWEXCEPTION, 30),
+										"Stage input", action.BOOLEAN)) {
+									appLog.info("Click on stage input");
+									ThreadSleep(2000);
+									click(driver,FindElement(driver,"//*[text()='Stage']/..//input/../..//*[@data-value='"+stage+"']","stage list", action.THROWEXCEPTION, 30),
+											"stage list", action.BOOLEAN) ;
+										appLog.info("Click on stage list item:"+stage);
+									
+									
+								} else {
+									appLog.info("Not able to Click on stage input");
+								}
+								
+							}
+							
+							if(!investmentLikelyAmount.equals("")||investmentLikelyAmount!=null){
+								WebElement ele=FindElement(driver, "//input[@name='navpeII__Investment_Likely_Amount_USD_mn__c']", "investment likely amount input box", action.BOOLEAN, 20);
+								if (sendKeys(driver, ele, investmentLikelyAmount, "investment likely amount input box", action.BOOLEAN)) {
+									appLog.info("Enter investment likley amount:"+investmentLikelyAmount);
+			
+									
+								} else {
+									appLog.info("Not able to Enter investment likley amount:"+investmentLikelyAmount);
+								}
+								
+							}
+							
+							if(!statusNote.equals("")||statusNote!=null){
+								WebElement ele=FindElement(driver, "//*[text()='Status Notes']/..//textarea", "status note", action.BOOLEAN, 20);
+								if (sendKeys(driver, ele, statusNote, "status note", action.BOOLEAN)) {
+									appLog.info("Enter status note:"+statusNote);
+			
+									
+								} else {
+									appLog.info("not able to Enter status note:"+statusNote);
+								}
+								
 							}
 							if (click(driver, getCustomTabSaveBtn("",60), "Save Button", action.SCROLLANDBOOLEAN)) {
 								ThreadSleep(500);
