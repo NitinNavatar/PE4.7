@@ -1409,9 +1409,6 @@ public class PECloudSmoke extends BaseLib{
 
 		lp.CRMLogin(superAdminUserName, adminPassword);
 
-		// Create Contact Custom Report with Contact ID
-		//String[] splitedReportFolderName = removeNumbersFromString(SmokeReportFolderName);
-		
 		if (report.createCustomReportOrDashboardFolder(environment, SmokeReport2FolderName,
 				ReportDashboardFolderType.ReportFolder, FolderAccess.ReadOnly)) {
 

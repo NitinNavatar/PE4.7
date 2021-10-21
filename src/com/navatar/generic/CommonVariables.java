@@ -12,6 +12,7 @@ import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.scripts.Module5New;
 import com.navatar.scripts.Module8;
 import com.navatar.scripts.PECloudSmoke;
+import com.navatar.scripts.PECloudSmoke2;
 import com.navatar.scripts.Module6;
 import com.navatar.scripts.Module7;
 import com.navatar.scripts.Module1;
@@ -357,6 +358,15 @@ public class CommonVariables {
 	public static String SMOKIns7InsName,SMOKIns7RecordType;
 	public static String SMOKIns8InsName,SMOKIns8RecordType;
 	public static String SMOKIns9InsName,SMOKIns9RecordType;
+	
+	public static String SmokeCTIns,SmokeCTInsRecordType;
+	public static String SmokeCTIns1,SmokeCTIns1RecordType;
+	public static String SmokeCTIns2,SmokeCTIns2RecordType;
+	public static String SmokeCTContact1FName,SmokeCTContact1LName,SmokeCTContact1Inst,SmokeCTContact1EmailID,SmokeCTContact1RecordType;
+	public static String SmokeCTTask1Subject,SmokeCTTask1dueDate,SmokeCTTask1Status,SmokeCTTask1Priority,SmokeCTTask1MeetingType;
+	public static String SmokeCTLogACall1Subject,SmokeCTLogACall1dueDate,SmokeCTLogACall1Status,SmokeCTLogACall1Priority,SmokeCTLogACall1MeetingType,SmokeCTLogACall1Comment;
+	public static String SmokeCTEvent1Subject,SmokeCTEvent1StartDate,SmokeCTEvent1StartTime,SmokeCTEvent1EndDate,SmokeCTEvent1EndTime,SmokeCTEvent1Location;
+	
 	
 	//contactt
 	public static String SMOKCon1FirstName,SMOKCon1LastName,SMOKCon1InstitutionName,SMOKCon1ContactEmail,SMOKCon1Phone,SMOKCon1Tier;
@@ -1494,7 +1504,7 @@ public class CommonVariables {
 			M7Event7EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event7", excelLabel.End_Date);
 			M7Event7EndTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event7", excelLabel.End_Time);
 			
-		}else if(obj instanceof PECloudSmoke){
+		}else if(obj instanceof PECloudSmoke || obj instanceof PECloudSmoke2){
 		
 			SMOKIns1InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS1", excelLabel.Institutions_Name);
 			SMOKIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS1", excelLabel.Record_Type);
@@ -1504,6 +1514,7 @@ public class CommonVariables {
 
 			SMOKIns3InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS3", excelLabel.Institutions_Name);
 			SMOKIns3RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS3", excelLabel.Record_Type);
+
 
 			SMOKIns4InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS4", excelLabel.Institutions_Name);
 			SMOKIns4RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS4", excelLabel.Record_Type);
@@ -1527,6 +1538,44 @@ public class CommonVariables {
 			
 			
 			
+			////////////////////CT
+			
+			SmokeCTIns=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS", excelLabel.Institutions_Name);
+			SmokeCTInsRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS", excelLabel.Record_Type);
+
+			SmokeCTIns1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS1", excelLabel.Institutions_Name);
+			SmokeCTIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS1", excelLabel.Record_Type);
+
+			SmokeCTIns2=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS2", excelLabel.Institutions_Name);
+			SmokeCTIns2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS2", excelLabel.Record_Type);
+
+			
+			SmokeCTContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON1", excelLabel.Contact_FirstName);
+			SmokeCTContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON1", excelLabel.Contact_LastName);
+			SmokeCTContact1Inst=SmokeCTIns;
+			SmokeCTContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON1", excelLabel.Contact_EmailId);
+			SmokeCTContact1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON1", excelLabel.Record_Type);
+
+			SmokeCTTask1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTTask1", excelLabel.Subject);
+			SmokeCTTask1Priority=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTTask1", excelLabel.Priority);
+			SmokeCTTask1dueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTTask1", excelLabel.Due_Date);
+			
+			SmokeCTLogACall1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall1", excelLabel.Subject);
+			SmokeCTLogACall1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall1", excelLabel.Status);
+			SmokeCTLogACall1dueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall1", excelLabel.Due_Date);
+			SmokeCTLogACall1MeetingType=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall1", excelLabel.Meeting_Type);
+			SmokeCTLogACall1Comment=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall1", excelLabel.Comment);
+
+			SmokeCTEvent1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent1", excelLabel.Subject);
+			SmokeCTEvent1StartDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent1", excelLabel.Start_Date);
+			SmokeCTEvent1StartTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent1", excelLabel.Start_Time);
+			SmokeCTEvent1EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent1", excelLabel.End_Date);
+			SmokeCTEvent1EndTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent1", excelLabel.End_Time);
+			SmokeCTEvent1Location=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent1", excelLabel.Location);
+
+			
+			///////////////////////
+
 			//con
 			SMOKCon1FirstName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON1", excelLabel.Contact_FirstName);
 			SMOKCon1LastName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON1", excelLabel.Contact_LastName);

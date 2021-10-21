@@ -393,6 +393,87 @@ public class NavatarSetupPageBusinessLayer extends NavatarSetupPage implements N
 		return null;
 	}
 	
+	public WebElement getEnableCheckBoxforNavatarSetUpSideMenuTab(String environment, String mode,
+			NavatarSetupSideMenuTab sideMenuTab, EditViewMode editviewMode, ClickOrCheckEnableDisableCheckBox clickOrCheckEnableDisableCheckBox, int timeOut) {
+		List<WebElement > enableCheckBoxList = new ArrayList<WebElement>();
+		enableCheckBoxList = FindElements(driver,
+				"//span[contains(@class,'primaryPaletteBorder')]/..//input",
+				"Enable CheckBox for Navatar SetUp Side Menu Tab");
+
+		if(sideMenuTab.toString().equalsIgnoreCase(NavatarSetupSideMenuTab.PipelineStageLog.toString()) ||
+				sideMenuTab.toString().equalsIgnoreCase(NavatarSetupSideMenuTab.OfficeLocations.toString())){
+			return isDisplayed(driver, enableCheckBoxList.get(0), "Visibility", timeOut,
+					"Enable CheckBox for Navatar SetUp Side Menu Tab");	
+		}
+		if (editviewMode.toString().equalsIgnoreCase(EditViewMode.View.toString())) {
+
+			if(sideMenuTab.toString().equalsIgnoreCase(NavatarSetupSideMenuTab.IndividualInvestorCreation.toString())) {
+				if(clickOrCheckEnableDisableCheckBox.toString().equalsIgnoreCase(ClickOrCheckEnableDisableCheckBox.Click.toString())) {
+					enableCheckBoxList.clear();
+					enableCheckBoxList = FindElements(driver,
+							"//span[contains(@class,'primaryPaletteBorder')]/..//input/following-sibling::span",
+							"Enable CheckBox for Navatar SetUp Side Menu Tab");
+					if(!enableCheckBoxList.isEmpty()) {
+						return isDisplayed(driver, enableCheckBoxList.get(1), "Visibility", timeOut,
+								"Enable CheckBox for Navatar SetUp Side Menu Tab");
+						
+					}else {
+						return null;
+					}
+					
+				}else {
+					if(!enableCheckBoxList.isEmpty()) {
+						return isDisplayed(driver, enableCheckBoxList.get(0), "Visibility", timeOut,
+								"Enable CheckBox for Navatar SetUp Side Menu Tab");
+					}else {
+						return null;
+					}
+				}
+
+			}else{
+				return isDisplayed(driver, enableCheckBoxList.get(0), "Visibility", timeOut,
+						"Enable CheckBox for Navatar SetUp Side Menu Tab");
+			}
+
+
+		} else {
+			if(sideMenuTab.toString().equalsIgnoreCase(NavatarSetupSideMenuTab.IndividualInvestorCreation.toString())) {
+				if(sideMenuTab.toString().equalsIgnoreCase(NavatarSetupSideMenuTab.IndividualInvestorCreation.toString())) {
+					if(clickOrCheckEnableDisableCheckBox.toString().equalsIgnoreCase(ClickOrCheckEnableDisableCheckBox.Click.toString())) {
+						enableCheckBoxList.clear();
+						enableCheckBoxList = FindElements(driver,
+								"//span[contains(@class,'primaryPaletteBorder')]/..//input/following-sibling::span",
+								"Enable CheckBox for Navatar SetUp Side Menu Tab");
+						if(!enableCheckBoxList.isEmpty()) {
+							return isDisplayed(driver, enableCheckBoxList.get(1), "Visibility", timeOut,
+									"Enable CheckBox for Navatar SetUp Side Menu Tab");
+							
+						}else {
+							return null;
+						}
+						
+					}else {
+						return isDisplayed(driver, enableCheckBoxList.get(0), "Visibility", timeOut,
+								"Enable CheckBox for Navatar SetUp Side Menu Tab");
+					}
+
+				}else{
+					return isDisplayed(driver, enableCheckBoxList.get(0), "Visibility", timeOut,
+							"Enable CheckBox for Navatar SetUp Side Menu Tab");
+				}
+				
+			}else{
+				return isDisplayed(driver, enableCheckBoxList.get(1), "Visibility", timeOut,
+						"Enable CheckBox for Navatar SetUp Side Menu Tab");
+			}
+		}
+			
+			
+			
+			
+			
+
+	}
 	
 }
 
