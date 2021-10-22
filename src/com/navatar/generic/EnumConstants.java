@@ -356,7 +356,7 @@ public static enum PermissionType{
 
 //*************************************************************** Pages Field Labels*********************************************//
 	public static enum InstitutionPageFieldLabelText {
-		Street,Referral_Source_Description,Legal_Name,Description,
+		Street,Referral_Source_Description,Legal_Name,Description,Phone,
 		Shipping_State{
 			@Override
 			public String toString() {

@@ -10,9 +10,14 @@ import static com.navatar.generic.SmokeCommonVariables.crmUser1LastName;
 import static com.navatar.generic.SmokeCommonVariables.dayAfterTomorrowsDate;
 import static com.navatar.generic.SmokeCommonVariables.superAdminUserName;
 import static com.navatar.generic.SmokeCommonVariables.todaysDate;
+import static com.navatar.pageObjects.NavigationPageBusineesLayer.navigationParentLabelWithChildAndOrder;
+import static com.navatar.pageObjects.NavigationPageBusineesLayer.navigationParentLabelWithChildSorted;
+import static com.navatar.pageObjects.NavigationPageBusineesLayer.navigationParentLabelWithOrder;
+import static com.navatar.pageObjects.NavigationPageBusineesLayer.sortByValue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
@@ -20,18 +25,22 @@ import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
+import com.navatar.generic.EnumConstants.ActivityTimeLineItem;
 import com.navatar.generic.EnumConstants.BulkActions_DefaultValues;
 import com.navatar.generic.EnumConstants.Buttons;
+import com.navatar.generic.EnumConstants.CSVLabel;
 import com.navatar.generic.EnumConstants.CollapseExpandIcon;
 import com.navatar.generic.EnumConstants.CommitmentType;
 import com.navatar.generic.EnumConstants.CreateNew_DefaultValues;
 import com.navatar.generic.EnumConstants.CreationPage;
 import com.navatar.generic.EnumConstants.EmailTemplateType;
+import com.navatar.generic.EnumConstants.EnableDisable;
 import com.navatar.generic.EnumConstants.Environment;
 import com.navatar.generic.EnumConstants.FolderAccess;
 import com.navatar.generic.EnumConstants.FundraisingContactPageTab;
 import com.navatar.generic.EnumConstants.GlobalActionItem;
 import com.navatar.generic.EnumConstants.IndiviualInvestorFieldLabel;
+import com.navatar.generic.EnumConstants.InstitutionPageFieldLabelText;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.NavatarSetupSideMenuTab;
 import com.navatar.generic.EnumConstants.NavigationMenuItems;
@@ -68,11 +77,13 @@ import com.navatar.pageObjects.NavatarSetupPageBusinessLayer;
 import com.navatar.pageObjects.NavigationPageBusineesLayer;
 import com.navatar.pageObjects.ReportsTabBusinessLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
+import com.navatar.pageObjects.TaskPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class PECloudSmoke extends BaseLib{
 	
 	String navigationMenuName=NavigationMenuItems.New_Interactions.toString();
+	String navigationTab="Navigation";
 	
 	@Parameters({ "projectName"})
 	@Test
@@ -245,7 +256,7 @@ public class PECloudSmoke extends BaseLib{
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		LoginPageBusinessLayer lp= new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
-		String tabs	=tabObj1+"s,"+tabObj2+"s,"+tabObj3+"s,"+tabObj4+"s,"+"Marketing Event"+","+"Fundraisings"+",Maketing Inititatives"+",Navatar Setup"+",Reports,Dashboard";
+		String tabs	=tabObj1+"s,"+tabObj2+"s,"+tabObj3+"s,"+tabObj4+"s,"+"Marketing Event"+","+"Fundraisings"+",Maketing Inititatives"+",Navatar Setup"+",Reports,Dashboard"+",Navigation";
 
 		if(mode.equalsIgnoreCase(Mode.Lightning.toString())){
 			
@@ -1606,6 +1617,369 @@ public class PECloudSmoke extends BaseLib{
 
 	
 		}
+
+	@Parameters("projectName")
+	@Test
+	public void smokeTC014_verifyNewInteractionNavigationMenu(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp = new TaskPageBusinessLayer(driver);
+		NavigationPageBusineesLayer  npbl = new NavigationPageBusineesLayer(driver) ;
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		navigationMenuName = NavigationMenuItems.New_Interactions.toString();
+
+		String[]  newInteractionsNavigationLinks = {NewInteractions_DefaultValues.Call.toString(),
+				NewInteractions_DefaultValues.Meeting.toString(),
+				NewInteractions_DefaultValues.Task.toString()};
+		int i=0;
+		boolean flag = false;
+		String adminUerName = crmUser1FirstName+" "+crmUser1LastName;
+		String subject ="";
+		String dueDate=previousOrForwardDateAccordingToTimeZone(2, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);
+		String contactNAme= SMOKCon1FirstName+" "+SMOKCon1LastName;
+		String[][] dropDownLabelWithValues = new String[3][];
+
+		for (i=2;i<newInteractionsNavigationLinks.length;i++) {
+			String newInteractionsNavigationLink=newInteractionsNavigationLinks[i];
+			flag=false;
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+navigationMenuName+" Going to click on : "+newInteractionsNavigationLink+" for creation ", YesNo.No);
+
+				WebElement ele = npbl.getNavigationLabel(projectName, newInteractionsNavigationLink, action.BOOLEAN, 10);
+				if (ele!=null && click(driver, ele, newInteractionsNavigationLink, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on "+newInteractionsNavigationLink+" so going for creation", YesNo.No);
+					flag = true;
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+newInteractionsNavigationLink+" so cannot create data related to this ", YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+newInteractionsNavigationLink+" so cannot create data related to this ");
+
+				}
+				flag=true;
+				if (flag) {
+
+					ele=cp.getCrossButtonForAlreadySelectedItem(projectName, PageName.CallPopUp, PageLabel.Assigned_To.toString(),false, adminUerName, action.SCROLLANDBOOLEAN, 20);
+					if (ele!=null) {
+						log(LogStatus.INFO, adminUerName+" Found For Label "+PageLabel.Assigned_To.toString(),YesNo.No);	
+					} else {
+						sa.assertTrue(false,adminUerName+" not Found For Label "+PageLabel.Assigned_To.toString());
+						log(LogStatus.ERROR, adminUerName+" not Found For Label "+PageLabel.Assigned_To.toString(),YesNo.Yes);
+
+					}
+
+					if (i==0) {
+						subject =SMOKTask3Subject;
+						ExcelUtils.writeData(phase1DataSheetFilePath,dueDate, "Task1", excelLabel.Variable_Name, "SMOKTask3", excelLabel.Due_Date);
+						dropDownLabelWithValues=null;
+
+					} else if(i==1) {
+
+						subject =SMOKTask4Subject;
+						
+						ExcelUtils.writeData(phase1DataSheetFilePath,dueDate, "Task1", excelLabel.Variable_Name, "SMOKTask4", excelLabel.Due_Date);
+
+						dropDownLabelWithValues=null;
+
+					}else{
+						subject =SMOKTask5Subject;
+						ExcelUtils.writeData(phase1DataSheetFilePath,dueDate, "Task1", excelLabel.Variable_Name, "SMOKTask5", excelLabel.Due_Date);
+						dropDownLabelWithValues=null;
+					}
+
+					if (tp.enteringSubjectAndSelectDropDownValuesonTaskPopUp(projectName, PageName.TaskPage, subject, dropDownLabelWithValues, action.SCROLLANDBOOLEAN, 10)) {
+						log(LogStatus.INFO, "Entered value to Subject Text Box ", YesNo.No);
+						ThreadSleep(1000);
+
+						if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), dueDate, PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Entered value to Due Date Text Box", YesNo.No);
+							ThreadSleep(1000);
+						}else {
+							log(LogStatus.ERROR, "Not able to enter value on duedate textbox "+newInteractionsNavigationLink, YesNo.Yes);
+							sa.assertTrue(false,"Not able to enter value on duedate textbox "+newInteractionsNavigationLink );
+						}
+
+						flag = cp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Name.toString(), TabName.TaskTab, contactNAme, action.SCROLLANDBOOLEAN, 10);		
+						if (flag) {
+							ele=cp.getCrossButtonForAlreadySelectedItem(projectName, PageName.TaskPage, PageLabel.Name.toString(),true, contactNAme, action.SCROLLANDBOOLEAN, 5);
+							if (ele!=null) {
+								log(LogStatus.INFO, contactNAme+" Found For Label "+PageLabel.Name.toString()+" at "+newInteractionsNavigationLink,YesNo.No);	
+							} else {
+								sa.assertTrue(false,contactNAme+" not Found For Label "+PageLabel.Name.toString()+" at "+newInteractionsNavigationLink);
+								log(LogStatus.ERROR, contactNAme+" not Found For Label "+PageLabel.Name.toString()+" at "+newInteractionsNavigationLink,YesNo.Yes);
+							}
+						} else {
+							sa.assertTrue(false,"Not Able to Select "+contactNAme+" For Label "+PageLabel.Name);
+							log(LogStatus.SKIP,"Not Able to Select "+contactNAme+" For Label "+PageLabel.Name,YesNo.Yes);
+
+						}
+						if (clickUsingJavaScript(driver, tp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO,"successfully created : "+subject+" for "+newInteractionsNavigationLink,  YesNo.No);
+							ExcelUtils.writeData(phase1DataSheetFilePath,dueDate, "Task1", excelLabel.Variable_Name, "M3CALL1", excelLabel.Due_Date);
+							ele = tp.getCreatedConfirmationMsg(projectName, 15);
+							if (ele!=null) {
+								String actualValue = ele.getText().trim();
+								String expectedValue=tp.taskCreatesMsg(projectName, subject);
+								if (expectedValue.contains(actualValue)) {
+									log(LogStatus.INFO,expectedValue+" matched FOR Confirmation Msg", YesNo.No);
+								} else {
+									log(LogStatus.ERROR,"Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg", YesNo.Yes);
+									BaseLib.sa.assertTrue(false, "Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg");
+								}
+							} else {
+								sa.assertTrue(false,"Created Task Msg Ele not Found");
+								log(LogStatus.SKIP,"Created Task Msg Ele not Found",YesNo.Yes);
+							}
+							String[][] fieldsWithValues= {
+									{PageLabel.Subject.toString(),subject},
+									{PageLabel.Due_Date.toString(),dueDate},
+									{PageLabel.Name.toString(),contactNAme},
+									{PageLabel.Assigned_To.toString(),adminUerName}};
+							tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
+						}
+						else {
+							log(LogStatus.ERROR, "Save Button is not visible so could not be create "+newInteractionsNavigationLink, YesNo.Yes);
+							sa.assertTrue(false,"Save Button is not visible so could not be create "+newInteractionsNavigationLink );
+						}
+
+
+					}else {
+						log(LogStatus.ERROR, "Subject textbox is not visible so could not be create "+newInteractionsNavigationLink, YesNo.Yes);
+						sa.assertTrue(false,"Subject textbox is not visible so could not be create "+newInteractionsNavigationLink );
+					}
+
+
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot click on : "+newInteractionsNavigationLink+" for creation ", YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot click on : "+newInteractionsNavigationLink+" for creation ");
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+
+	}
+
+	@Parameters("projectName")
+	@Test
+	public void smokeTC015_verifyCreateNewNavigationMenu(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		NavigationPageBusineesLayer  npbl = new NavigationPageBusineesLayer(driver) ;
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		navigationMenuName = NavigationMenuItems.Create_New.toString();
+
+		String[]  createNewNavigationLinks = {CreateNew_DefaultValues.New_Deal.toString(),
+				CreateNew_DefaultValues.New_Institution.toString(),
+				CreateNew_DefaultValues.New_Contact.toString()};
+		int i=0;
+		boolean flag = false;
+		WebElement ele=null;
+		for (i=1;i<createNewNavigationLinks.length;i++) {
+			String createNewNavigationLink=createNewNavigationLinks[i];
+			flag=false;
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+navigationMenuName+" Going to click on : "+createNewNavigationLink+" for creation ", YesNo.No);
+
+				 ele = npbl.getNavigationLabel(projectName, createNewNavigationLink, action.BOOLEAN, 10);
+				if (ele!=null && click(driver, ele, createNewNavigationLink, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on "+createNewNavigationLink+" so going for creation", YesNo.No);
+					flag = true;
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+createNewNavigationLink+" so cannot create data related to this ", YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+createNewNavigationLink+" so cannot create data related to this ");
+
+				}
+
+				if (flag) {
+
+					if (i==0) {
+						
+						if (fp.createDealPopUp(projectName,"",SMOKDeal8DealName,SMOKDeal8CompanyName, SMOKDeal8Stage,null, 15)) {
+							log(LogStatus.INFO,"Created Deal : "+SMOKDeal8DealName+" through "+createNewNavigationLink,YesNo.No);	
+						} else {
+							sa.assertTrue(false,"Not Able to Create Deal  : "+SMOKDeal8DealName+" through "+createNewNavigationLink);
+							log(LogStatus.SKIP,"Not Able to Create Deal  : "+SMOKDeal8DealName+" through "+createNewNavigationLink,YesNo.Yes);
+						}
+						
+					} else if(i==1) {
+						
+						 if (ip.createInstitutionPopUp(projectName, environment, mode, SMOKIns10InsName,SMOKIns10RecordType, InstitutionPageFieldLabelText.Phone.toString(),SMOKIns10Phone)) {
+								log(LogStatus.INFO,"successfully Created Account/Entity : "+SMOKIns10InsName+" of record type : "+SMOKIns10RecordType,YesNo.No);	
+							} else {
+								sa.assertTrue(false,"Not Able to Create Account/Entity : "+SMOKIns10InsName+" of record type : "+SMOKIns10RecordType);
+								log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+SMOKIns10InsName+" of record type : "+SMOKIns10RecordType,YesNo.Yes);
+							}
+						 
+					}else{
+
+						if (cp.createContactPopUp(projectName, SMOKCon8FirstName, SMOKCon8LastName, SMOKCon8InstitutionName, "","", null, null, CreationPage.ContactPage, null)) {
+							log(LogStatus.INFO,"successfully Created Contact : "+SMOKCon8FirstName+" "+SMOKCon8LastName,YesNo.No);	
+						} else {
+							sa.assertTrue(false,"Not Able to Create Contact : "+SMOKCon8FirstName+" "+SMOKCon8LastName);
+							log(LogStatus.SKIP,"Not Able to Create Contact: "+SMOKCon8FirstName+" "+SMOKCon8LastName,YesNo.Yes);
+						}
+						
+						 
+					}
+
+					
+				}
+				npbl.clickOnNavatarEdgeLink(projectName, navigationMenuName, action.BOOLEAN, 30);
+				ThreadSleep(5000);
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot click on : "+createNewNavigationLink+" for creation ", YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot click on : "+createNewNavigationLink+" for creation ");
+			}
+			refresh(driver);
+			ThreadSleep(5000);
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+
+	}
+
+	@Parameters("projectName")
+	@Test
+	public void smokeTC016_verifyNavigationLinkAndCreateCustomLink(String projectName){
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavatarSetupPageBusinessLayer np= new NavatarSetupPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		NavatarSetupSideMenuTab[] navatarSetupSideMenuTab = {NavatarSetupSideMenuTab.IndividualInvestorCreation};
+		NavatarSetupSideMenuTab setupSideMenuTab=null;
+
+		lp.CRMLogin(superAdminUserName, adminPassword );
+		
+		String navigationLabel1=CSVLabel.Navigation_Label.toString();
+		String orderLabel=CSVLabel.Order.toString();
+		String orderLabelValue="4";
+		String urlLabel=CSVLabel.URL.toString();
+		String urlValue="/apex/navpeII__IndividualInvestor?retURL=/lightning/page/home";
+		String navigationTypeLabel=CSVLabel.Navigation_Type.toString();
+		String navigationTypeValue=navigationMenuName;
+		boolean flag=false;
+
+		navigationMenuName = NavigationMenuItems.Bulk_Actions.toString();
+		String[] navigationLabel = {BulkActions_DefaultValues.Individual_Investor_Creation.toString()};
+	
+
+			setupSideMenuTab=navatarSetupSideMenuTab[0];
+			ThreadSleep(5000);
+			log(LogStatus.INFO, "<<<<<< Going to check >>>>>>>", YesNo.No);
+			
+				np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, true);
+				switchToDefaultContent(driver);
+				ThreadSleep(3000);
+				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+					log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+					WebElement ele = npbl.getNavigationLabel(projectName, navigationLabel[0], action.BOOLEAN, 10);
+					if (ele==null) {
+						log(LogStatus.INFO, navigationLabel[0]+" is not present on "+navigationMenuName+" after uncheck "+setupSideMenuTab, YesNo.No);
+					} else {
+						log(LogStatus.ERROR, navigationLabel[0]+" should not present on "+navigationMenuName+" after uncheck "+setupSideMenuTab, YesNo.Yes);
+						sa.assertTrue(false,navigationLabel[0]+" should not present on "+navigationMenuName+" after uncheck "+setupSideMenuTab);
+					}					
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot uncheck absenece of "+navigationLabel[0], YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot uncheck absenece of "+navigationLabel[0]);
+				}
+			
+			refresh(driver);
+			ThreadSleep(5000);
+			setupSideMenuTab=navatarSetupSideMenuTab[0];
+			log(LogStatus.INFO, "<<<<<< Going to UnCheck >>>>>>>", YesNo.No);
+			
+			if(np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, false)){
+				switchToDefaultContent(driver);
+				
+				lp.CRMlogout();
+				lp.CRMLogin(crmUser1EmailID, adminPassword );
+				ThreadSleep(5000);
+				// Verification on navigation menu
+				
+				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+					log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+					WebElement ele = npbl.getNavigationLabel(projectName, navigationLabel[0], action.BOOLEAN, 10);
+					if (ele==null) {
+						log(LogStatus.INFO, navigationLabel[0]+" is not present on "+navigationMenuName+" after uncheck "+setupSideMenuTab, YesNo.No);
+					} else {
+						log(LogStatus.ERROR, navigationLabel[0]+" should not present on "+navigationMenuName+" after uncheck "+setupSideMenuTab, YesNo.Yes);
+						sa.assertTrue(false,navigationLabel[0]+" should not present on "+navigationMenuName+" after uncheck "+setupSideMenuTab);
+					}
+					
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabel[0], YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabel[0]);
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to disable "+setupSideMenuTab+" so cannot uncheck absenece of "+navigationLabel[0]+" on "+navigationMenuName, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to disable "+setupSideMenuTab+" so cannot uncheck absenece of "+navigationLabel[0]+" on "+navigationMenuName);
+			}
+
+
+				String[][] labelWithValue= {{navigationLabel1,navigationLabel[0]},
+						{orderLabel,orderLabelValue},
+						{urlLabel,urlValue},
+						{navigationTypeLabel,navigationTypeValue}};
+
+				if (npbl.createNavigationItem(projectName, labelWithValue, 20)) {
+					log(LogStatus.INFO, "created "+navigationLabel[0], YesNo.No);
+					flag=true;
+				} else {
+					log(LogStatus.ERROR, "Not Able to create navigation item "+navigationLabel[0], YesNo.Yes);
+					sa.assertTrue(false, "Not Able to create navigation item  "+navigationLabel[0]);
+
+				}
+
+			if(flag){
+				
+				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+					log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+					WebElement ele2 = npbl.getNavigationLabel(projectName, navigationLabel[1], action.BOOLEAN, 10);
+					
+					ele2 = npbl.getNavigationLabel(projectName, navigationLabel[0], action.BOOLEAN, 10);
+					if (ele2!=null) {
+						log(LogStatus.INFO, navigationLabel[0]+" is present on "+navigationMenuName, YesNo.No);
+					} else {
+						log(LogStatus.ERROR, navigationLabel[0]+" should be present on "+navigationMenuName, YesNo.Yes);
+						sa.assertTrue(false,navigationLabel[0]+" should be present on "+navigationMenuName);
+
+					}
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot uncheck presence of "+navigationLabel[0], YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot uncheck presence of "+navigationLabel[0]);
+				}
+			}
+
+			np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, true);
+			switchToDefaultContent(driver);
+			ThreadSleep(3000);
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+				WebElement ele3 = npbl.getNavigationLabel(projectName, navigationLabel[0], action.BOOLEAN, 10);
+				if (ele3!=null) {
+					log(LogStatus.INFO, navigationLabel[0]+" is present on "+navigationMenuName, YesNo.No);
+				} else {
+					log(LogStatus.ERROR, navigationLabel[0]+" should be present on "+navigationMenuName, YesNo.Yes);
+					sa.assertTrue(false,navigationLabel[0]+" should be present on "+navigationMenuName);
+
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot uncheck presence of "+navigationLabel[0], YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot uncheck presence of "+navigationLabel[1]);
+			}				
+			
+
+		lp.CRMlogout();
+		sa.assertAll();
+		closeBrowser();
+	}
+
+	
 }
 	
 

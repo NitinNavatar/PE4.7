@@ -358,6 +358,7 @@ public class CommonVariables {
 	public static String SMOKIns7InsName,SMOKIns7RecordType;
 	public static String SMOKIns8InsName,SMOKIns8RecordType;
 	public static String SMOKIns9InsName,SMOKIns9RecordType;
+	public static String SMOKIns10InsName,SMOKIns10RecordType,SMOKIns10Phone;
 	
 	public static String SmokeCTIns,SmokeCTInsRecordType;
 	public static String SmokeCTIns1,SmokeCTIns1RecordType;
@@ -370,12 +371,14 @@ public class CommonVariables {
 	
 	//contactt
 	public static String SMOKCon1FirstName,SMOKCon1LastName,SMOKCon1InstitutionName,SMOKCon1ContactEmail,SMOKCon1Phone,SMOKCon1Tier;
-	public static String SMOKCon2FirstName,SMOKCon2LastName,SMOKCon2InstitutionName,SMOKCon2ContactEmail,SMOKCon2Phone;
-	public static String SMOKCon3FirstName,SMOKCon3LastName,SMOKCon3InstitutionName,SMOKCon3ContactEmail,SMOKCon3Phone;
-	public static String SMOKCon4FirstName,SMOKCon4LastName,SMOKCon4InstitutionName,SMOKCon4ContactEmail,SMOKCon4Phone;
-	public static String SMOKCon5FirstName,SMOKCon5LastName,SMOKCon5InstitutionName,SMOKCon5ContactEmail,SMOKCon5Phone;
-	public static String SMOKCon6FirstName,SMOKCon6LastName,SMOKCon6InstitutionName,SMOKCon6ContactEmail,SMOKCon6Phone;
-	public static String SMOKCon7FirstName,SMOKCon7LastName,SMOKCon7InstitutionName,SMOKCon7ContactEmail,SMOKCon7Phone;
+	public static String SMOKCon2FirstName,SMOKCon2LastName,SMOKCon2InstitutionName,SMOKCon2ContactEmail,SMOKCon2Phone,SMOKCon2Tier;
+	public static String SMOKCon3FirstName,SMOKCon3LastName,SMOKCon3InstitutionName,SMOKCon3ContactEmail,SMOKCon3Phone,SMOKCon3Tier;
+	public static String SMOKCon4FirstName,SMOKCon4LastName,SMOKCon4InstitutionName,SMOKCon4ContactEmail,SMOKCon4Phone,SMOKCon4Tier;
+	public static String SMOKCon5FirstName,SMOKCon5LastName,SMOKCon5InstitutionName,SMOKCon5ContactEmail,SMOKCon5Phone,SMOKCon5Tier;
+	public static String SMOKCon6FirstName,SMOKCon6LastName,SMOKCon6InstitutionName,SMOKCon6ContactEmail,SMOKCon6Phone,SMOKCon6Tier;
+	public static String SMOKCon7FirstName,SMOKCon7LastName,SMOKCon7InstitutionName,SMOKCon7ContactEmail,SMOKCon7Phone,SMOKCon7Tier;
+	public static String SMOKCon8FirstName,SMOKCon8LastName,SMOKCon8InstitutionName,SMOKCon8ContactEmail,SMOKCon8Phone,SMOKCon8Tier;
+
 	
 	//deal
 	public static String SMOKDeal1DealName,SMOKDeal1CompanyName,SMOKDeal1Stage,SMOKDeal1SourceContact,SMOKDeal1SourceFirm,SMOKDeal1PipelineComments;
@@ -385,6 +388,8 @@ public class CommonVariables {
 	public static String SMOKDeal5DealName,SMOKDeal5CompanyName,SMOKDeal5Stage,SMOKDeal5SourceContact,SMOKDeal5SourceFirm,SMOKDeal5LogInDate;
 	public static String SMOKDeal6DealName,SMOKDeal6CompanyName,SMOKDeal6Stage,SMOKDeal6SourceContact,SMOKDeal6SourceFirm,SMOKDeal6LogInDate;
 	public static String SMOKDeal7DealName,SMOKDeal7CompanyName,SMOKDeal7Stage,SMOKDeal7SourceContact,SMOKDeal7SourceFirm,SMOKDeal7LogInDate;
+	public static String SMOKDeal8DealName,SMOKDeal8CompanyName,SMOKDeal8Stage,SMOKDeal8SourceContact,SMOKDeal8SourceFirm,SMOKDeal8LogInDate;
+
 	
 	//fund
 	public static String SMOKFund1FundName,SMOKFund1FundType,SMOKFund1InvestmentCategory,SMOKFund1VintageYear,SMOKFund11stClosingDate;
@@ -399,10 +404,14 @@ public class CommonVariables {
 	//task
 	public static String SMOKTask1Status,SMOKTask1Subject,SMOKTask1Name,SMOKTask1DueDate;
 	public static String SMOKTask2Status,SMOKTask2Subject,SMOKTask2Name,SMOKTask2DueDate;
+	public static String SMOKTask3Status,SMOKTask3Subject,SMOKTask3Name,SMOKTask3DueDate;
+	public static String SMOKTask4Status,SMOKTask4Subject,SMOKTask4Name,SMOKTask4DueDate;
+	public static String SMOKTask5Status,SMOKTask5Subject,SMOKTask5Name,SMOKTask5DueDate;
 	
 	//event
 	
 	public static String SMOKEvent1StartDate,SMOKEvent1Subject,SMOKEvent1Name,SMOKEvent1EndDate;
+	public static String SMOKEvent2StartDate,SMOKEvent2Subject,SMOKEvent2Name,SMOKEvent2EndDate;
 	
 	
 	
@@ -1533,6 +1542,10 @@ public class CommonVariables {
 
 			SMOKIns9InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS9", excelLabel.Institutions_Name);
 			SMOKIns9RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS9", excelLabel.Record_Type);
+			
+			SMOKIns10InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS10", excelLabel.Institutions_Name);
+			SMOKIns10RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS10", excelLabel.Record_Type);
+			SMOKIns10Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS10", excelLabel.Phone);
 
 			
 			
@@ -1587,31 +1600,49 @@ public class CommonVariables {
 			SMOKCon2LastName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON2", excelLabel.Contact_LastName);
 			SMOKCon2InstitutionName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON2", excelLabel.Institutions_Name);
 			SMOKCon2Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON2", excelLabel.Phone);
+			SMOKCon2Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON2", excelLabel.Contact_Tier);
 
+			
 			SMOKCon3FirstName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON3", excelLabel.Contact_FirstName);
 			SMOKCon3LastName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON3", excelLabel.Contact_LastName);
 			SMOKCon3InstitutionName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON3", excelLabel.Institutions_Name);
 			SMOKCon3Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON3", excelLabel.Phone);
+			SMOKCon3Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON3", excelLabel.Contact_Tier);
+
 			
 			SMOKCon4FirstName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON4", excelLabel.Contact_FirstName);
 			SMOKCon4LastName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON4", excelLabel.Contact_LastName);
 			SMOKCon4InstitutionName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON4", excelLabel.Institutions_Name);
 			SMOKCon4Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON4", excelLabel.Phone);
+			SMOKCon4Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON4", excelLabel.Contact_Tier);
+
 			
 			SMOKCon5FirstName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON5", excelLabel.Contact_FirstName);
 			SMOKCon5LastName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON5", excelLabel.Contact_LastName);
 			SMOKCon5InstitutionName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON5", excelLabel.Institutions_Name);
 			SMOKCon5Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON5", excelLabel.Phone);
+			SMOKCon5Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON5", excelLabel.Contact_Tier);
+
 			
 			SMOKCon6FirstName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON6", excelLabel.Contact_FirstName);
 			SMOKCon6LastName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON6", excelLabel.Contact_LastName);
 			SMOKCon6InstitutionName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON6", excelLabel.Institutions_Name);
 			SMOKCon6Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON6", excelLabel.Phone);
+			SMOKCon6Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON6", excelLabel.Contact_Tier);
+
 			
 			SMOKCon7FirstName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON7", excelLabel.Contact_FirstName);
 			SMOKCon7LastName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON7", excelLabel.Contact_LastName);
 			SMOKCon7InstitutionName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON7", excelLabel.Institutions_Name);
 			SMOKCon7Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON7", excelLabel.Phone);
+			SMOKCon7Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON7", excelLabel.Contact_Tier);
+
+			SMOKCon8FirstName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON8", excelLabel.Contact_FirstName);
+			SMOKCon8LastName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON8", excelLabel.Contact_LastName);
+			SMOKCon8InstitutionName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON8", excelLabel.Institutions_Name);
+			SMOKCon8Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON8", excelLabel.Phone);
+			SMOKCon8Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON8", excelLabel.Contact_Tier);
+
 			
 			//deal
 			SMOKDeal1DealName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal1", excelLabel.Deal_Name);
@@ -1656,6 +1687,12 @@ public class CommonVariables {
 			SMOKDeal7Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal7", excelLabel.Stage);
 			SMOKDeal7LogInDate=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal7", excelLabel.Log_In_Date);
 
+			SMOKDeal8DealName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal8", excelLabel.Deal_Name);
+			SMOKDeal8CompanyName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal8", excelLabel.Company_Name);
+			SMOKDeal8SourceFirm=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal8", excelLabel.Source_Firm);
+			SMOKDeal8Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal8", excelLabel.Stage);
+			SMOKDeal8LogInDate=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal8", excelLabel.Log_In_Date);
+
 			
 			//fund
 			SMOKFund1FundName=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund1", excelLabel.Fund_Name);
@@ -1692,12 +1729,33 @@ public class CommonVariables {
 			SMOKTask2Name=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask2", excelLabel.Name);
 			SMOKTask2DueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask2", excelLabel.Due_Date);
 
+			SMOKTask3Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask3", excelLabel.Status);
+			SMOKTask3Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask3", excelLabel.Subject);
+			SMOKTask3Name=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask3", excelLabel.Name);
+			SMOKTask3DueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask3", excelLabel.Due_Date);
+
+			SMOKTask4Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask4", excelLabel.Status);
+			SMOKTask4Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask4", excelLabel.Subject);
+			SMOKTask4Name=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask4", excelLabel.Name);
+			SMOKTask4DueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask4", excelLabel.Due_Date);
+
+			SMOKTask5Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask5", excelLabel.Status);
+			SMOKTask5Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask5", excelLabel.Subject);
+			SMOKTask5Name=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask5", excelLabel.Name);
+			SMOKTask5DueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask5", excelLabel.Due_Date);
+
+
 
 			//event
 			SMOKEvent1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent1", excelLabel.Subject);
 			SMOKEvent1StartDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent1", excelLabel.Start_Date);
 			SMOKEvent1Name=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent1", excelLabel.Name);
 			SMOKEvent1EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent1", excelLabel.End_Date);
+
+			SMOKEvent2Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent2", excelLabel.Subject);
+			SMOKEvent2StartDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent2", excelLabel.Start_Date);
+			SMOKEvent2Name=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent2", excelLabel.Name);
+			SMOKEvent2EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent2", excelLabel.End_Date);
 
 			
 
