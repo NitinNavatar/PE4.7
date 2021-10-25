@@ -186,7 +186,7 @@ public class PECloudSmoke2 extends BaseLib{
 				log(LogStatus.INFO,"Click on Tab : "+tabObj1,YesNo.No);	
 				value = accounts[0];
 				type = accounts[1];
-				if (ip.createEntityOrAccount(projectName, value, type, null, 20)) {
+				if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
 					log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
 				} else {
 					sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);

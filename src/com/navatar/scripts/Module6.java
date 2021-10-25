@@ -67,7 +67,7 @@ public class Module6 extends BaseLib{
 				
 				}
 				else {
-					if (ip.createEntityOrAccount(projectName, value, type,null, 20)) {
+					if (ip.createEntityOrAccount(projectName, mode, value,type, null, null, 20)) {
 						log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
 					} else {
 						sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
@@ -4070,7 +4070,7 @@ public class Module6 extends BaseLib{
 				
 				value=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS"+i, excelLabel.Institutions_Name);
 				type=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS"+i, excelLabel.Record_Type);
-					if (ip.createEntityOrAccount(projectName, value, type,null, 20)) {
+					if (ip.createEntityOrAccount(projectName, mode, value,type, null, null, 20)) {
 						log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
 					} else {
 						sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
@@ -4279,7 +4279,7 @@ public class Module6 extends BaseLib{
 
 			value=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6LSCFINS1", excelLabel.Institutions_Name);
 			type=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6LSCFINS1", excelLabel.Record_Type);
-			if (ip.createEntityOrAccount(projectName, value, type,null, 20)) {
+			if (ip.createEntityOrAccount(projectName, mode, value,type, null, null, 20)) {
 				log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
 			} else {
 				sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);

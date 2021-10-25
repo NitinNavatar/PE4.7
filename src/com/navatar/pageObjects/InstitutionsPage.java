@@ -126,6 +126,25 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 		}
 	}
 	
+	
+	@FindBy(xpath="//*[text()='Entity Type']/..//input")
+	private WebElement entityTypeDropdownLighting;
+	
+	@FindBy(xpath="//*[text()='Entity Type']/../..//select")
+	private WebElement entityTypeDropdownClassic;
+
+
+	/**
+	 * @return the entity type text bx
+	 */
+	public WebElement getEntityTypeDropdown(String mode,int timeOut) {
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, entityTypeDropdownClassic, "Visibility", timeOut, "Entity type dropdown Classic");
+		}else{
+			return isDisplayed(driver, entityTypeDropdownLighting, "Visibility", timeOut, "Entity type dropdown Lightning");
+		}
+	}
+	
 	public WebElement getInstitutionPageTextBoxOrRichTextBoxWebElement(String environment,String mode, String labelName, int timeOut) {
 		WebElement ele=null;
 		String xpath ="",inputXpath="", textAreaXpath="",finalXpath="",finalLabelName="";
@@ -628,4 +647,16 @@ public WebElement getLastModifiedTime(String projectName,int timeOut) {
 
 
 }
+
+	
+	public List<WebElement> getAllInstituitionRecrdTypeList(String mode,int timeOut){
+		String xpath;
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			xpath ="//select[@name='p3']/option";
+			
+		}else{
+		 xpath="//div[@class='changeRecordTypeOptionRightColumn']/span";
+		}
+		return FindElements(driver, xpath,"institution record type list ");
+	}
 }

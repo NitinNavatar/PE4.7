@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 import com.navatar.generic.BaseLib;
+import com.navatar.generic.CommonVariables;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.RecordType;
@@ -42,14 +43,16 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 	
 	/**@author Azhar Alam
 	 * @param projectName
+	 * @param mode TODO
 	 * @param institutionName
 	 * @param recordType
+	 * @param entityType TODO
 	 * @param labelsWithValues
 	 * @param timeOut
 	 * @return true/false
 	 * @description this method is used to create single entity if pe and account if mna
 	 */
-	public boolean createEntityOrAccount(String projectName,String institutionName,String recordType, String[][] labelsWithValues,int timeOut) {
+	public boolean createEntityOrAccount(String projectName,String mode,String institutionName, String recordType,String entityType, String[][] labelsWithValues, int timeOut) {
 		boolean flag=false;
 		refresh(driver);
 		ThreadSleep(3000);
@@ -70,6 +73,33 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 						}
 					}else{
 						appLog.error("Not Able to Clicked on radio Button for record type : "+recordType);
+						return false;
+					}
+					
+				}
+				
+
+				if (!entityType.equals("") ||entityType!=null) {
+					WebElement ele;
+					ThreadSleep(2000);
+					if(click(driver, getEntityTypeDropdown(mode, timeOut), "entity dropdown", action.SCROLLANDBOOLEAN)){
+						appLog.info("click on entity dropdown");
+						
+						String xpath = "//*[text()='Entity Type']/..//input/../..//span[text()='"+entityType+"'][@title='"+entityType+"']/../..";
+						ele=FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, timeOut);
+						ThreadSleep(2000);
+						if(clickUsingJavaScript(driver, ele, entityType+" entity type")){
+							appLog.info("click on entity dropdown value:"+entityType);
+						
+						}else{
+							
+							appLog.error("Not Able to click on entity dropdown value:"+entityType);
+							return false;
+						}
+						
+						
+					}else{
+						appLog.error("Not Able to click on entity dropdown");
 						return false;
 					}
 					

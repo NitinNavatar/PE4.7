@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.logging.Logs;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
@@ -354,7 +355,7 @@ public class PECloudSmoke extends BaseLib{
 				log(LogStatus.INFO,"Click on Tab : "+TabName.InstituitonsTab,YesNo.No);	
 				value = accounts[0];
 				type = accounts[1];
-				if (ip.createEntityOrAccount(projectName, value, type, null, 20)) {
+				if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
 					log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
 				} else {
 					sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
@@ -1284,7 +1285,7 @@ public class PECloudSmoke extends BaseLib{
 				log(LogStatus.INFO,"Click on Tab : "+TabName.InstituitonsTab,YesNo.No);	
 				value = accounts[0];
 				type = accounts[1];
-				if (ip.createEntityOrAccount(projectName, value, type, null, 20)) {
+				if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
 					log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
 				} else {
 					sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
@@ -1979,6 +1980,174 @@ public class PECloudSmoke extends BaseLib{
 		closeBrowser();
 	}
 
+	@Parameters("projectName")
+	@Test
+	public void smokeTC017_verifyAllInstituionRecordType(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp= new BasePageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		String recordType ="Institution,Advisor,Company,Fund Manager,Fund Manager’s Fund,Individual Investor,Intermediary,"
+				+ "Lender,Limited Partner,Portfolio Company";
+		
+		ThreadSleep(5000);
+		if(bp.clickOnTab(projectName, mode, TabName.InstituitonsTab)){
+			log(LogStatus.PASS,	"click on institution tab", YesNo.No);
+			
+			if(clickUsingJavaScript(driver, ip.getNewButton(environment, mode, 60), "new button")){
+				
+				log(LogStatus.PASS,	"click on new button", YesNo.No);
+				ThreadSleep(3000);
+				List<WebElement> lst=ip.getAllInstituitionRecrdTypeList(mode,30);
+				if(compareMultipleList(driver, recordType, lst).isEmpty()){
+					log(LogStatus.PASS,	"All Institution record type is verified", YesNo.No);
+				}else{
+					
+					log(LogStatus.FAIL,	"All Institution record type is not  matched", YesNo.Yes);
+					sa.assertTrue(false,"All Institution record type is not  matched");
+				}
+				
+				
+			}else{
+				log(LogStatus.FAIL,	"not able to click on new button", YesNo.Yes);
+				sa.assertTrue(false,"not able to click on new button");
+			}
+		}else{
+			
+			log(LogStatus.FAIL,	"not able to click on institution tab", YesNo.Yes);
+			sa.assertTrue(false,"not able to click on institution tab");
+		}
+		
+		lp.CRMlogout();
+		closeBrowser();
+	}
+
+	@Parameters("projectName")
+	@Test
+	public void smokeTC018_verifyListViewOnInstituionObject(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp= new BasePageBusinessLayer(driver);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		
+		String selectListLink ="All Companies,All Institutions,Automation All,Limited Partners,Recently Viewed,All Fund Manager's Funds,All Fund Managers,"
+				+ "All Intermediaries,All Investors,All Limited Partners,My Institutions,My Call List,New Last Week,New This Week"
+				+ ",Portfolio Companies,Recently Viewed Institutions,Top LPs,Watchlist";
+		
+		ThreadSleep(5000);
+		if(bp.clickOnTab(projectName, mode, TabName.InstituitonsTab)){
+			log(LogStatus.PASS,	"click on institution tab", YesNo.No);
+			
+			if (click(driver, bp.getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(3000);
+				List<WebElement> lst=bp.getAllLinkOfSelectListIconOption(mode,TabName.InstituitonsTab.toString(), 30);
+				if(compareMultipleList(driver, selectListLink, lst).isEmpty()){
+					log(LogStatus.PASS,	"All link of select list icon  is verified", YesNo.No);
+				}else{
+					
+					log(LogStatus.FAIL,	"All link of select list icon  is not verified", YesNo.Yes);
+					sa.assertTrue(false,"All link of select list icon  is not verified");
+				}
+				
+			} else {
+				appLog.error("Not able to click on Select List Icon");
+			}
+		}else{
+			
+			log(LogStatus.FAIL,	"not able to click on institution tab", YesNo.Yes);
+			sa.assertTrue(false,"not able to click on institution tab");
+		}
+		
+		lp.CRMlogout();
+		closeBrowser();
+	}
+	
+	@Parameters("projectName")
+	@Test
+	public void smokeTC019_createDataAllRecordTypeInstitution(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp= new FundsPageBusinessLayer(driver);
+		FundRaisingPageBusinessLayer fr = new FundRaisingPageBusinessLayer(driver);
+		GlobalActionPageBusinessLayer gp=new GlobalActionPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		
+		
+		String value="";
+		String type="";
+		String entityType="";
+		String status="";
+		String parent="";
+		
+		String[][] EntityOrAccounts = {{ SMOKIns11InsName, SMOKIns11RecordType ,SMOKIns11Status,SMOKIns11ParentInstitution,SMOKIns11EntityType} ,
+										{ SMOKIns12InsName, SMOKIns12RecordType ,SMOKIns12Status,SMOKIns12ParentInstitution,SMOKIns12EntityType},
+										{ SMOKIns13InsName, SMOKIns13RecordType ,SMOKIns13Status,SMOKIns13ParentInstitution,SMOKIns13EntityType},
+										{ SMOKIns14InsName, SMOKIns14RecordType ,SMOKIns14Status,SMOKIns14ParentInstitution,SMOKIns14EntityType},
+										{ SMOKIns15InsName, SMOKIns15RecordType ,SMOKIns15Status,SMOKIns15ParentInstitution,SMOKIns15EntityType},
+										{ SMOKIns16InsName, SMOKIns16RecordType ,SMOKIns16Status,SMOKIns16ParentInstitution,SMOKIns16EntityType},
+										{ SMOKIns17InsName, SMOKIns17RecordType ,SMOKIns17Status,SMOKIns17ParentInstitution,SMOKIns17EntityType},
+										{ SMOKIns18InsName, SMOKIns18RecordType ,SMOKIns18Status,SMOKIns18ParentInstitution,SMOKIns18EntityType},
+										{ SMOKIns19InsName, SMOKIns19RecordType ,SMOKIns19Status,SMOKIns19ParentInstitution,SMOKIns19EntityType},
+										{ SMOKIns20InsName, SMOKIns20RecordType ,SMOKIns20Status,SMOKIns20ParentInstitution,SMOKIns20EntityType}};
+
+		//ins
+		for (int i=0;i<=10;i++) {
+			if (lp.clickOnTab(projectName, TabName.InstituitonsTab)) {
+				log(LogStatus.INFO,"Click on Tab : "+TabName.InstituitonsTab,YesNo.No);	
+				String[] accounts =EntityOrAccounts[i];
+				value = accounts[0];
+				type = accounts[1];
+				
+				if(i==0||i==2||i==6){
+					
+					entityType=accounts[4];
+					if (ip.createEntityOrAccount(projectName, mode, value, type, entityType, null, 20)) {
+						log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
+					} else {
+						sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
+						log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+value+" of record type : "+type,YesNo.Yes);
+					}
+
+				}
+				
+				if(i==3||i==4||i==5||i==8){
+					
+					parent=accounts[3];
+					if (ip.createInstitution(projectName, environment, mode, value,type, InstitutionPageFieldLabelText.Parent_Institution.toString(),parent)) {
+						log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
+					} else {
+						sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
+						log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+value+" of record type : "+type,YesNo.Yes);
+					}
+
+					
+				}
+				if(i==1||i==9){
+					status=accounts[2];
+				if (ip.createEntityOrAccount(projectName, mode, value, type, null, new String[][]{{"Status",status}}, 20)) {
+					log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
+					log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+value+" of record type : "+type,YesNo.Yes);
+				}
+
+				}
+			} else {
+				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object1Tab);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object1Tab,YesNo.Yes);
+			}
+		}
+		
+		lp.CRMlogout();
+		closeBrowser();
+		
+	}
 	
 }
 	

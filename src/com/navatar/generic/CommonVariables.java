@@ -349,16 +349,26 @@ public class CommonVariables {
 	// PE CLoud Smoke variable
 	
 	//ins
-	public static String SMOKIns1InsName,SMOKIns1RecordType;
-	public static String SMOKIns2InsName,SMOKIns2RecordType;
-	public static String SMOKIns3InsName,SMOKIns3RecordType;
-	public static String SMOKIns4InsName,SMOKIns4RecordType;
-	public static String SMOKIns5InsName,SMOKIns5RecordType;
-	public static String SMOKIns6InsName,SMOKIns6RecordType;
-	public static String SMOKIns7InsName,SMOKIns7RecordType;
-	public static String SMOKIns8InsName,SMOKIns8RecordType;
-	public static String SMOKIns9InsName,SMOKIns9RecordType;
+	public static String SMOKIns1InsName,SMOKIns1RecordType,SMOKIns1Phone;
+	public static String SMOKIns2InsName,SMOKIns2RecordType,SMOKIns2Phone;
+	public static String SMOKIns3InsName,SMOKIns3RecordType,SMOKIns3Phone;
+	public static String SMOKIns4InsName,SMOKIns4RecordType,SMOKIns4Phone;
+	public static String SMOKIns5InsName,SMOKIns5RecordType,SMOKIns5Phone;
+	public static String SMOKIns6InsName,SMOKIns6RecordType,SMOKIns6Phone;
+	public static String SMOKIns7InsName,SMOKIns7RecordType,SMOKIns7Phone;
+	public static String SMOKIns8InsName,SMOKIns8RecordType,SMOKIns8Phone;
+	public static String SMOKIns9InsName,SMOKIns9RecordType,SMOKIns9Phone;
 	public static String SMOKIns10InsName,SMOKIns10RecordType,SMOKIns10Phone;
+	public static String SMOKIns11InsName,SMOKIns11RecordType,SMOKIns11Phone,SMOKIns11ParentInstitution,SMOKIns11Status,SMOKIns11EntityType;
+	public static String SMOKIns12InsName,SMOKIns12RecordType,SMOKIns12Phone,SMOKIns12ParentInstitution,SMOKIns12Status,SMOKIns12EntityType;
+	public static String SMOKIns13InsName,SMOKIns13RecordType,SMOKIns13Phone,SMOKIns13ParentInstitution,SMOKIns13Status,SMOKIns13EntityType;
+	public static String SMOKIns14InsName,SMOKIns14RecordType,SMOKIns14Phone,SMOKIns14ParentInstitution,SMOKIns14Status,SMOKIns14EntityType;
+	public static String SMOKIns15InsName,SMOKIns15RecordType,SMOKIns15Phone,SMOKIns15ParentInstitution,SMOKIns15Status,SMOKIns15EntityType;
+	public static String SMOKIns16InsName,SMOKIns16RecordType,SMOKIns16Phone,SMOKIns16ParentInstitution,SMOKIns16Status,SMOKIns16EntityType;
+	public static String SMOKIns17InsName,SMOKIns17RecordType,SMOKIns17Phone,SMOKIns17ParentInstitution,SMOKIns17Status,SMOKIns17EntityType;
+	public static String SMOKIns18InsName,SMOKIns18RecordType,SMOKIns18Phone,SMOKIns18ParentInstitution,SMOKIns18Status,SMOKIns18EntityType;
+	public static String SMOKIns19InsName,SMOKIns19RecordType,SMOKIns19Phone,SMOKIns19ParentInstitution,SMOKIns19Status,SMOKIns19EntityType;
+	public static String SMOKIns20InsName,SMOKIns20RecordType,SMOKIns20Phone,SMOKIns20ParentInstitution,SMOKIns20Status,SMOKIns20EntityType;
 	
 	public static String SmokeCTIns,SmokeCTInsRecordType;
 	public static String SmokeCTIns1,SmokeCTIns1RecordType;
@@ -1546,6 +1556,86 @@ public class CommonVariables {
 			SMOKIns10InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS10", excelLabel.Institutions_Name);
 			SMOKIns10RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS10", excelLabel.Record_Type);
 			SMOKIns10Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS10", excelLabel.Phone);
+
+			SMOKIns11InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS11", excelLabel.Institutions_Name);
+			SMOKIns11RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS11", excelLabel.Record_Type);
+			SMOKIns11Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS11", excelLabel.Phone);
+			SMOKIns11Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS11", excelLabel.Status);
+			SMOKIns11EntityType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS11", excelLabel.Entity_Type);
+			SMOKIns11ParentInstitution=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS11", excelLabel.Parent_Institution);
+
+			
+			SMOKIns12InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS12", excelLabel.Institutions_Name);
+			SMOKIns12RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS12", excelLabel.Record_Type);
+			SMOKIns12Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS12", excelLabel.Phone);
+			SMOKIns12Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS12", excelLabel.Status);
+			SMOKIns12EntityType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS12", excelLabel.Entity_Type);
+			SMOKIns12ParentInstitution=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS12", excelLabel.Parent_Institution);
+
+
+			SMOKIns13InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS13", excelLabel.Institutions_Name);
+			SMOKIns13RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS13", excelLabel.Record_Type);
+			SMOKIns13Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS13", excelLabel.Phone);
+			SMOKIns13Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS13", excelLabel.Status);
+			SMOKIns13EntityType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS13", excelLabel.Entity_Type);
+			SMOKIns13ParentInstitution=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS13", excelLabel.Parent_Institution);
+
+
+			SMOKIns14InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS14", excelLabel.Institutions_Name);
+			SMOKIns14RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS14", excelLabel.Record_Type);
+			SMOKIns14Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS14", excelLabel.Phone);
+			SMOKIns14Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS14", excelLabel.Status);
+			SMOKIns14EntityType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS14", excelLabel.Entity_Type);
+			SMOKIns14ParentInstitution=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS14", excelLabel.Parent_Institution);
+
+
+			SMOKIns15InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS15", excelLabel.Institutions_Name);
+			SMOKIns15RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS15", excelLabel.Record_Type);
+			SMOKIns15Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS15", excelLabel.Phone);
+			SMOKIns15Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS15", excelLabel.Status);
+			SMOKIns15EntityType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS15", excelLabel.Entity_Type);
+			SMOKIns15ParentInstitution=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS15", excelLabel.Parent_Institution);
+
+
+			SMOKIns16InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS16", excelLabel.Institutions_Name);
+			SMOKIns16RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS16", excelLabel.Record_Type);
+			SMOKIns16Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS16", excelLabel.Phone);
+			SMOKIns16Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS16", excelLabel.Status);
+			SMOKIns16EntityType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS16", excelLabel.Entity_Type);
+			SMOKIns16ParentInstitution=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS16", excelLabel.Parent_Institution);
+
+
+			SMOKIns17InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS17", excelLabel.Institutions_Name);
+			SMOKIns17RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS17", excelLabel.Record_Type);
+			SMOKIns17Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS17", excelLabel.Phone);
+			SMOKIns17Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS17", excelLabel.Status);
+			SMOKIns17EntityType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS17", excelLabel.Entity_Type);
+			SMOKIns17ParentInstitution=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS17", excelLabel.Parent_Institution);
+
+
+			SMOKIns18InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS18", excelLabel.Institutions_Name);
+			SMOKIns18RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS18", excelLabel.Record_Type);
+			SMOKIns18Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS18", excelLabel.Phone);
+			SMOKIns18Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS18", excelLabel.Status);
+			SMOKIns18EntityType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS18", excelLabel.Entity_Type);
+			SMOKIns18ParentInstitution=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS18", excelLabel.Parent_Institution);
+
+
+			SMOKIns19InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS19", excelLabel.Institutions_Name);
+			SMOKIns19RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS19", excelLabel.Record_Type);
+			SMOKIns19Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS19", excelLabel.Phone);
+			SMOKIns19Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS19", excelLabel.Status);
+			SMOKIns19EntityType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS19", excelLabel.Entity_Type);
+			SMOKIns19ParentInstitution=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS19", excelLabel.Parent_Institution);
+
+
+			SMOKIns20InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS20", excelLabel.Institutions_Name);
+			SMOKIns20RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS20", excelLabel.Record_Type);
+			SMOKIns20Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS20", excelLabel.Phone);
+			SMOKIns20Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS20", excelLabel.Status);
+			SMOKIns20EntityType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS20", excelLabel.Entity_Type);
+			SMOKIns20ParentInstitution=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS20", excelLabel.Parent_Institution);
+
 
 			
 			
