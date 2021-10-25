@@ -521,6 +521,33 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		
 	}
 	
+	/**
+	 * @param projectName
+	 * @param stage
+	 * @return WebElement
+	 */
+	public WebElement getStagePath(String stage, String stageVale) {
+		String xpath="";
+		if (DealStage.Completed.toString().equals(stage)) {
+			xpath ="//*[@class='complete slds-path__stage']/following-sibling::span[text()='"+stageVale+"']";
+		} else if (DealStage.Current.toString().equals(stage)){
+			xpath ="//*[@class='current slds-path__stage']/following-sibling::span[text()='"+stageVale+"']";
+		}else if (DealStage.Ahead.toString().equals(stage)){
+			xpath ="//*[@class='ahead slds-path__stage']/following-sibling::span[text()='"+stageVale+"']";
+		}
+	
+		WebElement ele = FindElement(driver, xpath,stage+" : "+stageVale, action.SCROLLANDBOOLEAN, 60);
+		return isDisplayed(driver, ele, "Visibility", 30, stage+" : "+stageVale);
+		
+	}
+	
+	public WebElement getconvertToPortfolioMessage1(String msg,int timeOut) {
+		msg=convertingPortfoliaMsg;
+		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//*[text()='"+msg+"']";
+		WebElement ele = FindElement(driver, xpath,msg, action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", timeOut, msg);
+		
+	}
 	
 
 	}

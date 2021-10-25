@@ -157,7 +157,12 @@ CompactLayout, MeetingType, AddPickListMeetingType,ActivityLayoutPage, SDGPage,O
 	}
 	
 	public static enum Stage {
-		NDA_Signed,Deal_Received,Management_Meeting,IOI,IndicationOfInterest{
+		NDA_Signed,Deal_Received,Management_Meeting{
+			@Override
+			public String toString() {
+				return "Management Meeting";
+		}
+		},IOI,IndicationOfInterest{
 			@Override
 			public String toString() {
 				return "Indication of Interest";
@@ -1068,7 +1073,7 @@ public static enum PermissionType{
 			public String toString() {
 				return "Tasks: Completed";
 			}
-		},Company,Contact 
+		},Company,Contact, Institution 
 	};
 	
 	public static enum ProjectName{
@@ -1559,4 +1564,7 @@ public static enum PermissionType{
     	}
     }
     
+    public static enum DealStage{
+    	Ahead, Completed,Current;
+    }
 }

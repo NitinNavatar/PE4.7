@@ -3663,5 +3663,35 @@ public boolean clickAnyCellonCalender(String projectName){
 	return flag;
 }
 
+public WebElement getElementAtPage(String projectName,String labelName,String labelValue,action action,int timeOut){
+	labelName=labelName.toString().replace("_", " ");
+	String xpath = "//*[text()='"+labelName+"']/../following-sibling::div//*[text()='"+labelValue+"']";
+	WebElement ele = FindElement(driver, xpath, labelName+" with "+labelValue, action, timeOut);
+	scrollDownThroughWebelement(driver, ele, labelName+" with "+labelValue);
+	return isDisplayed(driver, ele, "visibility", timeOut, labelName+" with "+labelValue);
+
+}
+
+public WebElement verifyCreatedItemOnPage(String header,String itemName)
+{
+	WebElement ele;
+	String xpath ="";
+	String head =header.toString().replace("_", " ");
+	ThreadSleep(3000);
+	xpath="(//*[contains(text(),'"+header+"')]/following-sibling::*//*[text()='"+itemName+"'])[1]";
+	 ele = FindElement(driver, xpath, "Header : "+itemName, action.BOOLEAN, 30);
+	// ele = isDisplayed(driver, ele, "Visibility", 10, head+" : "+itemName);
+	return ele;
+}
+
+
+public WebElement getViewListElement(String viewList)
+{
+	String xpath ="";
+	xpath="//div[@class='listContent']//li/a/span[text()='" + viewList + "']";
+	WebElement selectListView = FindElement(driver, xpath,"Select List View : "+viewList, action.SCROLLANDBOOLEAN, 5);
+	return selectListView;
+}
+
 
 }
