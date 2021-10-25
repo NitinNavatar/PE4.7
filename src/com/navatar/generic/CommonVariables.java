@@ -11,7 +11,6 @@ import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.scripts.Module5New;
 import com.navatar.scripts.Module8;
-import com.navatar.scripts.PECloudSmoke;
 import com.navatar.scripts.PECloudSmoke2;
 import com.navatar.scripts.Module6;
 import com.navatar.scripts.Module7;
@@ -28,6 +27,9 @@ import com.navatar.scripts.Module4;
 public class CommonVariables {
 //	public static String abc;
 
+	public static double dealReceivedScore=1.0,NDASignedScore=1.0,managementMeetingScore=3.0,ioiScore=3.0,loiScore=5.0;
+ 	public static double dueDiligenceScore=5.0,closedScore=5.0,declinedDeadScore=5.0,parkedScore=5.0;
+ 	
 	public static String URL,todaysDate,todaysDate1,tomorrowsDate,todaysDateEurope,todaysDateddmm,todaysDateSingleDigit,todaysDateNewZealand,yesterdaysDate;
 	public static String browserToLaunch;
 	public static String Smoke_TWINS1Name,Smoke_TWINS1RecordType,Smoke_TWINS1Status;
@@ -423,6 +425,15 @@ public class CommonVariables {
 	public static String SMOKEvent1StartDate,SMOKEvent1Subject,SMOKEvent1Name,SMOKEvent1EndDate;
 	public static String SMOKEvent2StartDate,SMOKEvent2Subject,SMOKEvent2Name,SMOKEvent2EndDate;
 	
+	public static String SmokeDealIns1,SmokeDealIns1RecordType;
+ 	public static String SmokeDealIns2,SmokeDealIns2RecordType;
+ 	public static String SmokeDealContact1FName,SmokeDealContact1LName,SmokeDealContact1Inst,SmokeDealContact1EmailID,SmokeDealContact1RecordType;
+ 	public static String SmokeDeal1,SmokeDeal1CompanyName,SmokeDeal1RecordType,SmokeDeal1Stage;
+ 	
+ 	public static String SmokePFIns1,SmokePFIns1RecordType;
+ 	public static String SmokePFIns2,SmokePFIns2RecordType;
+ 	public static String SmokePFContact1FName,SmokePFContact1LName,SmokePFContact1Inst,SmokePFContact1EmailID,SmokePFContact1RecordType;
+ 	public static String SmokeDeal2,SmokeDeal2CompanyName,SmokeDeal2RecordType,SmokeDeal2Stage;
 	
 	
 	
@@ -1523,7 +1534,7 @@ public class CommonVariables {
 			M7Event7EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event7", excelLabel.End_Date);
 			M7Event7EndTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event7", excelLabel.End_Time);
 			
-		}else if(obj instanceof PECloudSmoke || obj instanceof PECloudSmoke2){
+		}else if(obj instanceof PECloudSmoke2){
 		
 			SMOKIns1InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS1", excelLabel.Institutions_Name);
 			SMOKIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS1", excelLabel.Record_Type);
@@ -1848,6 +1859,43 @@ public class CommonVariables {
 			SMOKEvent2EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent2", excelLabel.End_Date);
 
 			
+			SmokeDealIns1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEDEALINS1", excelLabel.Institutions_Name);
+ 			SmokeDealIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEDEALINS1", excelLabel.Record_Type);
+ 
+ 			SmokeDealIns2=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEDEALINS2", excelLabel.Institutions_Name);
+ 			SmokeDealIns2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEDEALINS2", excelLabel.Record_Type);
+ 
+ 			SmokePFIns1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEPFINS1", excelLabel.Institutions_Name);
+ 			SmokePFIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEPFINS1", excelLabel.Record_Type);
+ 
+ 			SmokePFIns2=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEPFINS2", excelLabel.Institutions_Name);
+ 			SmokePFIns2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEPFINS2", excelLabel.Record_Type);
+ 
+ 			
+ 			SmokeDealContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEDEALCON1", excelLabel.Contact_FirstName);
+ 			SmokeDealContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEDEALCON1", excelLabel.Contact_LastName);
+ 			SmokeDealContact1Inst=SmokeDealIns2;
+ 			SmokeDealContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEDEALCON1", excelLabel.Contact_EmailId);
+ 			SmokeDealContact1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEDEALCON1", excelLabel.Record_Type);
+ 
+ 			SmokePFContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEPFCON1", excelLabel.Contact_FirstName);
+ 			SmokePFContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEPFCON1", excelLabel.Contact_LastName);
+ 			SmokePFContact1Inst=SmokePFIns2;
+ 			SmokePFContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEPFCON1", excelLabel.Contact_EmailId);
+ 			SmokePFContact1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEPFCON1", excelLabel.Record_Type);
+ 
+ 			
+ 			SmokeDeal1=SmokeDealIns1+ "1121";
+ 			SmokeDeal1CompanyName=SmokeDealIns1;
+ 			SmokeDeal1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKEDEAL1", excelLabel.Record_Type);
+ 			SmokeDeal1Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKEDEAL1", excelLabel.Stage);
+ 
+ 			
+ 			SmokeDeal2=SmokePFIns1+ "2222";
+ 			SmokeDeal2CompanyName=SmokePFIns1;
+ 			SmokeDeal2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKEDEAL2", excelLabel.Record_Type);
+ 			SmokeDeal2Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKEDEAL2", excelLabel.Stage);
+ 
 
 
 		}
