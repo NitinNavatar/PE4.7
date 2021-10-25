@@ -61,7 +61,7 @@ public class Module2 extends BaseLib{
 				value = accounts[0];
 				type = accounts[1];
 				status1=accounts[2];
-				if (ip.createEntityOrAccount(projectName, value, type, new String[][] {{PageLabel.Status.toString(),status1}}, 20)) {
+				if (ip.createEntityOrAccount(projectName, mode, value, type, null, new String[][] {{PageLabel.Status.toString(),status1}}, 20)) {
 					log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
 				} else {
 					sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
@@ -1849,7 +1849,7 @@ public class Module2 extends BaseLib{
 		
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
-			if (ip.createEntityOrAccount(projectName, Smoke_CDINS1Name, Smoke_CDINS1RecordType, new String[][] {{PageLabel.Status.toString(),Smoke_CDINS1Status}}, 10)) {
+			if (ip.createEntityOrAccount(projectName, mode, Smoke_CDINS1Name, Smoke_CDINS1RecordType, null, new String[][] {{PageLabel.Status.toString(),Smoke_CDINS1Status}}, 10)) {
 				log(LogStatus.INFO,"successfully Created Account/Entity : "+Smoke_CDINS1Name+" of record type : "+Smoke_CDINS1RecordType,YesNo.No);	
 			} else {
 				sa.assertTrue(false,"Not Able to Create Account/Entity : "+Smoke_CDINS1Name+" of record type : "+Smoke_CDINS1RecordType);
@@ -1943,7 +1943,7 @@ public class Module2 extends BaseLib{
 		int i=0;
 		
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
-			if (ip.createEntityOrAccount(projectName, Smoke_CDINS2Name, Smoke_CDINS2RecordType, new String[][] {{PageLabel.Status.toString(),Smoke_CDINS2Status}}, 10)) {
+			if (ip.createEntityOrAccount(projectName, mode, Smoke_CDINS2Name, Smoke_CDINS2RecordType, null, new String[][] {{PageLabel.Status.toString(),Smoke_CDINS2Status}}, 10)) {
 				log(LogStatus.INFO,"successfully Created Account/Entity : "+Smoke_CDINS1Name+" of record type : "+Smoke_CDINS1RecordType,YesNo.No);	
 				for (String s:labels) {
 					if (ip.fieldValueVerificationOnInstitutionPage("", mode, TabName.Object1Tab, s, values1[i])) {
@@ -2141,7 +2141,7 @@ public class Module2 extends BaseLib{
 		String values2[]={PageLabel.RenameUnder_Evaluation.toString(),todaysDateSingleDigit};
 		
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
-			if (ip.createEntityOrAccount(projectName, Smoke_CDINS3Name, Smoke_CDINS3RecordType, new String[][] {{PageLabel.Status.toString(),status}}, 10)) {
+			if (ip.createEntityOrAccount(projectName, mode, Smoke_CDINS3Name, Smoke_CDINS3RecordType, null, new String[][] {{PageLabel.Status.toString(),status}}, 10)) {
 				log(LogStatus.INFO,"successfully Created Account/Entity : "+Smoke_CDINS3Name+" of record type : "+Smoke_CDINS3RecordType,YesNo.No);	
 				for (String s:labels) {
 					if (ip.fieldValueVerificationOnInstitutionPage("", mode, TabName.Object1Tab, s, values1[i])) {
@@ -2387,7 +2387,7 @@ public class Module2 extends BaseLib{
 				ins=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS"+(i+1), excelLabel.Institutions_Name);
 				rt=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS"+(i+1), excelLabel.Record_Type);
 
-				if (ip.createEntityOrAccount(projectName, ins, rt, null, 10)) {
+				if (ip.createEntityOrAccount(projectName, mode, ins, rt, null, null, 10)) {
 					log(LogStatus.INFO,"successfully Created Account/Entity : "+ins+" of record type : "+rt,YesNo.No);	
 				}else {
 					log(LogStatus.ERROR,"could not create account: "+ins,YesNo.No);	

@@ -1056,6 +1056,33 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		}
 	}
 	
+	public static boolean sendKeysUsingJavaScript(WebDriver driver, WebElement element, String value, String elementName,
+			action action) {
+		JavascriptExecutor js=  (JavascriptExecutor) driver;
+		try {
+			if (element != null) {
+				if(action==CommonLib.action.SCROLLANDTHROWEXCEPTION || action==CommonLib.action.SCROLLANDBOOLEAN)
+				scrollDownThroughWebelement(driver, element, elementName);
+				
+				js.executeScript("arguments[0].value='"+ value +"';", element);
+				AppListeners.appLog.info("Passed value to element: " + elementName + "\nPassed Value: " + value);
+				return true;
+			} else {
+				AppListeners.appLog.info(elementName + " Text box is not present on this page.");
+				if (action == CommonLib.action.THROWEXCEPTION || action == CommonLib.action.SCROLLANDTHROWEXCEPTION)
+					throw new AppException(elementName + " Text box is not present on this page.");
+				return false;
+			}
+		} catch (Exception e) {
+//			AppListeners.appLog.info("Cannot enter text in " + elementName + "\nReason: " + e.getMessage());
+			errorMessage="Cannot enter text in " + elementName + "\nReason: " + e.getMessage();
+			failedMethod(e);
+			if (action == CommonLib.action.THROWEXCEPTION || action == CommonLib.action.SCROLLANDTHROWEXCEPTION)
+				throw new AppException("Cannot enter text in ." + elementName + "\nReason: " + e.getMessage());
+			return false;
+		}
+	}
+	
 	public static boolean sendKeysAndPressEnter(WebDriver driver, WebElement element, String value, String elementName,
 			action action) {
 		try {

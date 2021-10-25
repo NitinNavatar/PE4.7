@@ -713,7 +713,9 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 			//refresh(driver);
 			ThreadSleep(3000);
 				ThreadSleep(5000);
+				
 				clickUsingJavaScript(driver, getNewButton(projectName, 60), "new button");
+				
 				if (!recordType.equals("") || !recordType.isEmpty()) {
 						ThreadSleep(2000);
 						if(click(driver, getRadioButtonforRecordType(recordType, 5), "Radio Button for : "+recordType, action.SCROLLANDBOOLEAN)){

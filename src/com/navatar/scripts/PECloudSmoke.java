@@ -10,23 +10,38 @@ import static com.navatar.generic.SmokeCommonVariables.crmUser1LastName;
 import static com.navatar.generic.SmokeCommonVariables.dayAfterTomorrowsDate;
 import static com.navatar.generic.SmokeCommonVariables.superAdminUserName;
 import static com.navatar.generic.SmokeCommonVariables.todaysDate;
+import static com.navatar.pageObjects.NavigationPageBusineesLayer.navigationParentLabelWithChildAndOrder;
+import static com.navatar.pageObjects.NavigationPageBusineesLayer.navigationParentLabelWithChildSorted;
+import static com.navatar.pageObjects.NavigationPageBusineesLayer.navigationParentLabelWithOrder;
+import static com.navatar.pageObjects.NavigationPageBusineesLayer.sortByValue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.logging.Logs;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
+import com.navatar.generic.EnumConstants.ActivityTimeLineItem;
 import com.navatar.generic.EnumConstants.BulkActions_DefaultValues;
 import com.navatar.generic.EnumConstants.Buttons;
+import com.navatar.generic.EnumConstants.CSVLabel;
 import com.navatar.generic.EnumConstants.CollapseExpandIcon;
+import com.navatar.generic.EnumConstants.CommitmentType;
 import com.navatar.generic.EnumConstants.CreateNew_DefaultValues;
 import com.navatar.generic.EnumConstants.CreationPage;
+import com.navatar.generic.EnumConstants.EmailTemplateType;
+import com.navatar.generic.EnumConstants.EnableDisable;
 import com.navatar.generic.EnumConstants.Environment;
+import com.navatar.generic.EnumConstants.FolderAccess;
+import com.navatar.generic.EnumConstants.FundraisingContactPageTab;
 import com.navatar.generic.EnumConstants.GlobalActionItem;
+import com.navatar.generic.EnumConstants.IndiviualInvestorFieldLabel;
+import com.navatar.generic.EnumConstants.InstitutionPageFieldLabelText;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.NavatarSetupSideMenuTab;
 import com.navatar.generic.EnumConstants.NavigationMenuItems;
@@ -34,17 +49,25 @@ import com.navatar.generic.EnumConstants.NewInteractions_DefaultValues;
 import com.navatar.generic.EnumConstants.Operator;
 import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.PageName;
+import com.navatar.generic.EnumConstants.PopUpName;
+import com.navatar.generic.EnumConstants.ReportDashboardFolderType;
+import com.navatar.generic.EnumConstants.ReportField;
+import com.navatar.generic.EnumConstants.ReportFormatName;
 import com.navatar.generic.EnumConstants.SDGGridName;
 import com.navatar.generic.EnumConstants.SDGGridSideIcons;
+import com.navatar.generic.EnumConstants.SearchBasedOnExistingFundsOptions;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.Task;
+import com.navatar.generic.EnumConstants.TopOrBottom;
 import com.navatar.generic.EnumConstants.ViewAllAndViewCalendarLink;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
+import com.navatar.generic.EnumConstants.searchContactInEmailProspectGrid;
 import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
 import com.navatar.pageObjects.CustomObjPageBusinessLayer;
+import com.navatar.pageObjects.EmailMyTemplatesPageBusinessLayer;
 import com.navatar.pageObjects.FundRaisingPageBusinessLayer;
 import com.navatar.pageObjects.FundsPageBusinessLayer;
 import com.navatar.pageObjects.GlobalActionPageBusinessLayer;
@@ -53,12 +76,15 @@ import com.navatar.pageObjects.InstitutionsPageBusinessLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
 import com.navatar.pageObjects.NavatarSetupPageBusinessLayer;
 import com.navatar.pageObjects.NavigationPageBusineesLayer;
+import com.navatar.pageObjects.ReportsTabBusinessLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
+import com.navatar.pageObjects.TaskPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class PECloudSmoke extends BaseLib{
 	
 	String navigationMenuName=NavigationMenuItems.New_Interactions.toString();
+	String navigationTab="Navigation";
 	
 	@Parameters({ "projectName"})
 	@Test
@@ -231,7 +257,7 @@ public class PECloudSmoke extends BaseLib{
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		LoginPageBusinessLayer lp= new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
-		String tabs	=tabObj1+"s,"+tabObj2+"s,"+tabObj3+"s,"+tabObj4+"s,"+"Marketing Event"+","+"Fundraisings"+",Maketing Inititatives"+",Navatar Setup"+",Reports,Dashboard";
+		String tabs	=tabObj1+"s,"+tabObj2+"s,"+tabObj3+"s,"+tabObj4+"s,"+"Marketing Event"+","+"Fundraisings"+",Maketing Inititatives"+",Navatar Setup"+",Reports,Dashboard"+",Navigation";
 
 		if(mode.equalsIgnoreCase(Mode.Lightning.toString())){
 			
@@ -329,7 +355,7 @@ public class PECloudSmoke extends BaseLib{
 				log(LogStatus.INFO,"Click on Tab : "+TabName.InstituitonsTab,YesNo.No);	
 				value = accounts[0];
 				type = accounts[1];
-				if (ip.createEntityOrAccount(projectName, value, type, null, 20)) {
+				if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
 					log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
 				} else {
 					sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
@@ -964,7 +990,6 @@ public class PECloudSmoke extends BaseLib{
 
 	}
 	
-	
 	@Parameters("projectName")
 	@Test
 	public void smokeTc009_verifyCreateDataForTodaysTaskAndTodaysEvent(String projectName){
@@ -1120,31 +1145,26 @@ public class PECloudSmoke extends BaseLib{
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarSetupPageBusinessLayer np= new NavatarSetupPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
-		String[][] userAndPassword = { { superAdminUserName, adminPassword }, { crmUser1EmailID, adminPassword } };
-
-		//lp.CRMLogin(superAdminUserName, adminPassword, appName);
-
 		NavatarSetupSideMenuTab[] navatarSetupSideMenuTab = {NavatarSetupSideMenuTab.CommitmentCreation};
 		NavatarSetupSideMenuTab setupSideMenuTab=null;
 
+		lp.CRMLogin(superAdminUserName, adminPassword );
 		navigationMenuName = NavigationMenuItems.Bulk_Actions.toString();
 		String[] navigationLabel = {BulkActions_DefaultValues.Bulk_Email.toString(),
 				BulkActions_DefaultValues.Bulk_Commitments.toString(),BulkActions_DefaultValues.Bulk_Fundraising.toString()};
-		
-		boolean flag=false;
+	
 
-		for (String[] userPass : userAndPassword) {
+			setupSideMenuTab=navatarSetupSideMenuTab[0];
+			ThreadSleep(5000);
+			log(LogStatus.INFO, "<<<<<< Going to Uncheck >>>>>>>", YesNo.No);
 			
-			lp.CRMLogin(userPass[0], userPass[1]);
-		log(LogStatus.INFO, "<<<<<< Going to Uncheck >>>>>>>", YesNo.No);
-		for (int i = 0; i < navatarSetupSideMenuTab.length; i++) {
-			flag=false;
-			setupSideMenuTab=navatarSetupSideMenuTab[i];
-			switchToDefaultContent(driver);
-			flag=np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, false);
-			if (flag) {
+			if (np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, false)){
 				switchToDefaultContent(driver);
-				refresh(driver);
+				
+				lp.CRMlogout();
+				ThreadSleep(5000);
+				lp.CRMLogin(crmUser1EmailID, adminPassword );
+				ThreadSleep(5000);
 				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 					log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 					WebElement ele = npbl.getNavigationLabel(projectName, navigationLabel[1], action.BOOLEAN, 10);
@@ -1170,47 +1190,50 @@ public class PECloudSmoke extends BaseLib{
 
 					}
 				} else {
-					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot uncheck absenece of "+navigationLabel[i], YesNo.Yes);
-					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot uncheck absenece of "+navigationLabel[i]);
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot uncheck absenece of "+navigationLabel[1], YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot uncheck absenece of "+navigationLabel[1]);
 				}
 			} else {
-				log(LogStatus.ERROR, "Not Able to disable "+setupSideMenuTab+" so cannot uncheck absenece of "+navigationLabel[i]+" on "+navigationMenuName, YesNo.Yes);
-				sa.assertTrue(false,"Not Able to disable "+setupSideMenuTab+" so cannot uncheck absenece of "+navigationLabel[i]+" on "+navigationMenuName);
+				log(LogStatus.ERROR, "Not Able to disable "+setupSideMenuTab+" so cannot uncheck absenece of "+navigationLabel[1]+" on "+navigationMenuName, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to disable "+setupSideMenuTab+" so cannot uncheck absenece of "+navigationLabel[1]+" on "+navigationMenuName);
 			}
 			refresh(driver);
 			ThreadSleep(5000);
-		}
-
-		//// CHeck
-		log(LogStatus.INFO, "<<<<<< Going to check >>>>>>>", YesNo.No);
-		for (int i = 0; i < navatarSetupSideMenuTab.length; i++) {
-			flag=false;
-			setupSideMenuTab=navatarSetupSideMenuTab[i];
-			switchToDefaultContent(driver);
-			flag=np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, true);;
-			if (flag) {
-				// Verification on navigation menu
+			lp.CRMlogout();
+			ThreadSleep(5000);
+			lp.CRMLogin(superAdminUserName, adminPassword );
+			
+			setupSideMenuTab=navatarSetupSideMenuTab[0];
+			ThreadSleep(5000);
+			log(LogStatus.INFO, "<<<<<< Going to Check >>>>>>>", YesNo.No);
+			
+			np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, true);
 				switchToDefaultContent(driver);
-				refresh(driver);
+				
+				lp.CRMlogout();
+				lp.CRMLogin(crmUser1EmailID, adminPassword );
+				ThreadSleep(5000);
+				// Verification on navigation menu
+				
 				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
 					log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-					WebElement ele = npbl.getNavigationLabel(projectName, navigationLabel[i], action.BOOLEAN, 10);
+					WebElement ele = npbl.getNavigationLabel(projectName, navigationLabel[1], action.BOOLEAN, 10);
 					if (ele!=null) {
-						log(LogStatus.INFO, navigationLabel[i]+" is  present on "+navigationMenuName+" after check "+setupSideMenuTab, YesNo.No);
+						log(LogStatus.INFO, navigationLabel[1]+" is  present on "+navigationMenuName+" after check "+setupSideMenuTab, YesNo.No);
 
 					} else {
-						log(LogStatus.ERROR, navigationLabel[i]+" should be present on "+navigationMenuName+" after check "+setupSideMenuTab, YesNo.Yes);
-						sa.assertTrue(false,navigationLabel[i]+" should be present on "+navigationMenuName+" after check "+setupSideMenuTab);
+						log(LogStatus.ERROR, navigationLabel[1]+" should be present on "+navigationMenuName+" after check "+setupSideMenuTab, YesNo.Yes);
+						sa.assertTrue(false,navigationLabel[1]+" should be present on "+navigationMenuName+" after check "+setupSideMenuTab);
 
 					}
 
-					ele = npbl.getNavigationLabel(projectName, navigationLabel[2], action.BOOLEAN, 10);
+					ele = npbl.getNavigationLabel(projectName, navigationLabel[0], action.BOOLEAN, 10);
 					if (ele!=null) {
-						log(LogStatus.INFO, navigationLabel[i]+" is present on "+navigationMenuName, YesNo.No);
+						log(LogStatus.INFO, navigationLabel[0]+" is present on "+navigationMenuName, YesNo.No);
 
 					} else {
-						log(LogStatus.ERROR, navigationLabel[i]+" should be present on "+navigationMenuName, YesNo.Yes);
-						sa.assertTrue(false,navigationLabel[i]+" should be present on "+navigationMenuName);
+						log(LogStatus.ERROR, navigationLabel[0]+" should be present on "+navigationMenuName, YesNo.Yes);
+						sa.assertTrue(false,navigationLabel[0]+" should be present on "+navigationMenuName);
 
 					}
 					
@@ -1224,22 +1247,908 @@ public class PECloudSmoke extends BaseLib{
 					}
 					
 				} else {
-					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabel[i], YesNo.Yes);
-					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabel[i]);
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabel[1], YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabel[1]);
 				}	
-			} else {
-				log(LogStatus.ERROR, "Not Able to Enable "+setupSideMenuTab+" so cannot uncheck presence of "+navigationLabel[i]+" on "+navigationMenuName, YesNo.Yes);
-				sa.assertTrue(false,"Not Able to Enable "+setupSideMenuTab+" so cannot uncheck presence of "+navigationLabel[i]+" on "+navigationMenuName);
 			
-			}
 			refresh(driver);
 			ThreadSleep(5000);
+		
+		
+
+		lp.CRMlogout();
+		sa.assertAll();
+		closeBrowser();
+	}
+
+	@Parameters("projectName")
+	//@Test		// need to discuss which deal comapny name should be select to create deal
+	public void smokeTc012_createDataForBulkAction(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp= new FundsPageBusinessLayer(driver);
+		FundRaisingPageBusinessLayer fr = new FundRaisingPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		
+		
+		String value="";
+		String type="";
+		String[][] EntityOrAccounts = {{ SMOKIns4InsName, SMOKIns4RecordType ,null} ,{ SMOKIns5InsName, SMOKIns5RecordType ,null},{ SMOKIns6InsName, SMOKIns6RecordType ,null},
+			{ SMOKIns7InsName, SMOKIns7RecordType ,null},{ SMOKIns8InsName, SMOKIns8RecordType ,null},{ SMOKIns9InsName, SMOKIns9RecordType ,null}};
+
+		//ins
+		for (String[] accounts : EntityOrAccounts) {
+			if (lp.clickOnTab(projectName, TabName.InstituitonsTab)) {
+				log(LogStatus.INFO,"Click on Tab : "+TabName.InstituitonsTab,YesNo.No);	
+				value = accounts[0];
+				type = accounts[1];
+				if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
+					log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
+					log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+value+" of record type : "+type,YesNo.Yes);
+				}
+
+
+			} else {
+				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.InstituitonsTab);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.InstituitonsTab,YesNo.Yes);
+			}
 		}
+		
+		String firstName="";
+		String lastName="";
+		String legalName="";
+		String email="";
+		String[][] contacts = {{ SMOKCon2FirstName, SMOKCon2LastName ,SMOKCon2InstitutionName,SMOKCon2ContactEmail} ,
+							{ SMOKCon3FirstName, SMOKCon3LastName ,SMOKCon3InstitutionName,SMOKCon3ContactEmail},
+							{ SMOKCon4FirstName, SMOKCon4LastName ,SMOKCon4InstitutionName,SMOKCon4ContactEmail},
+							{ SMOKCon5FirstName, SMOKCon5LastName ,SMOKCon5InstitutionName,SMOKCon5ContactEmail},
+							{ SMOKCon6FirstName, SMOKCon6LastName ,SMOKCon6InstitutionName,SMOKCon6ContactEmail},
+							{ SMOKCon7FirstName, SMOKCon7LastName ,SMOKCon7InstitutionName,SMOKCon7ContactEmail}};
+
+		ThreadSleep(2000);
+		// contact
+		for (String[] contact : contacts) {
+				if (bp.clickOnTab(environment,mode, TabName.ContactTab)) {
+					log(LogStatus.INFO,"Click on Tab : "+TabName.ContactTab,YesNo.No);	
+					firstName = contact[0];
+					lastName = contact[1];
+					legalName=contact[2];
+					email=contact[3];
+					
+					if (cp.createContact(projectName, firstName, lastName, legalName, email,"", null, null, CreationPage.ContactPage, null,null)) {
+						log(LogStatus.INFO,"successfully Created Contact : "+firstName+" "+lastName,YesNo.No);	
+					} else {
+						sa.assertTrue(false,"Not Able to Create Contact : "+firstName+" "+lastName);
+						log(LogStatus.SKIP,"Not Able to Create Contact: "+firstName+" "+lastName,YesNo.Yes);
+					}
+
+
+				} else {
+					sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.ContactTab);
+					log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.ContactTab,YesNo.Yes);
+				}
+				
+		}
+				ThreadSleep(2000);
+				String dealName="";
+				String stage="";
+				String sourceContact="";
+				String sourceFirm="";
+				String[][] deals = {{ SMOKCon2FirstName, SMOKCon2LastName ,SMOKCon2InstitutionName,SMOKCon2ContactEmail} ,
+									{ SMOKCon3FirstName, SMOKCon3LastName ,SMOKCon3InstitutionName,SMOKCon3ContactEmail},
+									{ SMOKCon4FirstName, SMOKCon4LastName ,SMOKCon4InstitutionName,SMOKCon4ContactEmail},
+									{ SMOKCon5FirstName, SMOKCon5LastName ,SMOKCon5InstitutionName,SMOKCon5ContactEmail},
+									{ SMOKCon6FirstName, SMOKCon6LastName ,SMOKCon6InstitutionName,SMOKCon6ContactEmail},
+									{ SMOKCon7FirstName, SMOKCon7LastName ,SMOKCon7InstitutionName,SMOKCon7ContactEmail}};
+
+			//deal	
+				for (String[] deal : deals) {
+				if(bp.clickOnTab(environment,mode, TabName.DealTab)){
+					log(LogStatus.INFO,"Click on Tab : "+TabName.DealTab,YesNo.No);
+					dealName = deal[0];
+					stage = deal[1];
+					sourceContact=deal[2];
+					sourceFirm=deal[3];
+					String[][] otherlabel={{excelLabel.Source_Firm.toString(),sourceFirm},{excelLabel.Source_Contact.toString(),sourceContact}};
+
+					if(fp.createDeal(projectName, "", dealName, "", stage, otherlabel, 30)){
+						
+						log(LogStatus.INFO,"successfully Created deal : "+dealName,YesNo.No);	
+
+					}else{
+						
+						sa.assertTrue(false,"Not Able to Create deal : "+dealName);
+						log(LogStatus.SKIP,"Not Able to Create deal : "+dealName,YesNo.Yes);
+					}
+					
+				}else{
+					
+					sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.DealTab);
+					log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.DealTab,YesNo.Yes);
+				}
+				}
+				ThreadSleep(2000);
+				//fund
+				if (bp.clickOnTab(environment,mode, TabName.FundsTab)) {
+					log(LogStatus.INFO,"Click on Tab : "+TabName.FundsTab,YesNo.No);	
+					if (fp.createFundPE(projectName,SMOKFund2FundName,"",SMOKFund2FundType,SMOKFund2InvestmentCategory, null, 15)) {
+						log(LogStatus.INFO,"Created Fund : "+SMOKFund2FundName,YesNo.No);	
+					} else {
+						sa.assertTrue(false,"Not Able to Create Fund : "+SMOKFund2FundName);
+						log(LogStatus.SKIP,"Not Able to Create Fund  : "+SMOKFund2FundName,YesNo.Yes);
+					}
+
+				} else {
+					sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.FundsTab);
+					log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.FundsTab,YesNo.Yes);
+				}
+				
+				ThreadSleep(2000);
+				
+				// FR
+				
+				if(bp.clickOnTab(environment,mode,TabName.FundraisingsTab)) {
+					if(fr.createFundRaising(environment,mode,SMOKFR2FundraisingName,SMOKFR2FundName,SMOKFR2InstitutionName, null, null, null, null)){
+						appLog.info("fundraising is created : "+SMOKFR2FundraisingName);
+					}else {
+						appLog.error("Not able to create fundraising: "+SMOKFR2FundraisingName);
+						sa.assertTrue(false, "Not able to create fundraising: "+SMOKFR2FundraisingName);
+					}
+				}else {
+					appLog.error("Not able to click on fundraising tab so cannot create fundraising: "+SMOKFR2FundraisingName);
+					sa.assertTrue(false,"Not able to click on fundraising tab so cannot create fundraising: "+SMOKFR2FundraisingName);
+				}
+				
+				lp.CRMlogout();
+				sa.assertAll();
+				closeBrowser();
+	
+				
+	}
+	
+	@Parameters("projectName")
+	@Test
+	public void smokeTc013_verifyBulkActioMenu(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		ReportsTabBusinessLayer report = new ReportsTabBusinessLayer(driver);
+
+		lp.CRMLogin(superAdminUserName, adminPassword);
+
+		if (report.createCustomReportOrDashboardFolder(environment, SmokeReport2FolderName,
+				ReportDashboardFolderType.ReportFolder, FolderAccess.ReadOnly)) {
+
+			String[] splitedReportName = removeNumbersFromString(SmokeReport2Name);
+			SmokeReport2Name = splitedReportName[0] + lp.generateRandomNumber();
+
+			ExcelUtils.writeData(phase1DataSheetFilePath, SmokeReport2FolderName, "Report", excelLabel.Variable_Name, "SmokeReport2",
+					excelLabel.Report_Folder_Name);
+			if (report.createCustomReportForFolder(environment, mode, SmokeReportFolderName,ReportFormatName.Null,SmokeReportName,
+					SmokeReport2Name, SmokeReport2Type, ReportField.ContactID, SmokeReport2Show, null, SmokeReport2Range, null, null)) {
+				appLog.info("Custom Report is created succesdfully : " + SmokeReport2Name);
+				ExcelUtils.writeData(phase1DataSheetFilePath, SmokeReport2Name, "Report", excelLabel.Variable_Name, "SmokeReport2",
+						excelLabel.Report_Name);
+			} else {
+				appLog.error("Not able to create Custom Report : " + SmokeReport2Name);
+				sa.assertTrue(false, "Not able to create Custom Report : " + SmokeReport2Name);
+				log(LogStatus.ERROR, "Not able to create Custom Report : " + SmokeReport2Name, YesNo.Yes);
+			}
+			switchToDefaultContent(driver);
+	
+		
+		}
+		home.switchToLighting();
+
+		// Verification on navigation menu
+		navigationMenuName = NavigationMenuItems.Bulk_Actions.toString();
+		NavigationPageBusineesLayer  npbl = new NavigationPageBusineesLayer(driver) ;
+		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
+
+		String[]  BulkActionNavigationLinks = {BulkActions_DefaultValues.Bulk_Email.toString(),
+				BulkActions_DefaultValues.Bulk_Fundraising.toString(),
+				BulkActions_DefaultValues.Bulk_Commitments.toString()};
+			
+		int i=0;
+		boolean flag = false;
+		for (i=0;i<BulkActionNavigationLinks.length;i++) {
+			String bulkActionNavigationLink=BulkActionNavigationLinks[i];
+			flag=false;
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+navigationMenuName+" Going to click on : "+bulkActionNavigationLink+" for creation ", YesNo.No);
+
+				WebElement ele = npbl.getNavigationLabel(projectName, bulkActionNavigationLink, action.BOOLEAN, 10);
+				if (ele!=null && click(driver, ele, bulkActionNavigationLink, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on "+bulkActionNavigationLink+" so going for creation", YesNo.No);
+					flag = true;
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+bulkActionNavigationLink+" so cannot create data related to this ", YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+bulkActionNavigationLink+" so cannot create data related to this ");
+
+				}
+				flag=true;
+				if (flag) {
+					if (i==0) {
+						String reportName=SmokeReport2Name;
+						String templateName=SmokeReport2FolderName;
+						String fname=SMOKCon2FirstName;
+						String lname = SMOKCon2LastName;
+						String folderName="Capital Call Notice";
+						String emailTemplateName = "Capital Call Notice";
+						if (hp.VerifyBulkEmailFunctionality(environment, mode, reportName, templateName, fname, lname, lname, searchContactInEmailProspectGrid.Yes, folderName, emailTemplateName)) {
+							log(LogStatus.INFO, bulkActionNavigationLink+" functionality is verified succesfuly ", YesNo.No);
+
+						} else {
+							log(LogStatus.ERROR, bulkActionNavigationLink+" functionality not verified ", YesNo.Yes);
+							sa.assertTrue(false,bulkActionNavigationLink+" functionality not verified ");
+
+						}
+
+					} else if(i==1) {
+						String fr = SMOKIns4InsName+" - "+SMOKFund2FundName;
+						List<String> contactNamelist= new ArrayList<String>();
+						contactNamelist.add(SMOKCon2FirstName+" "+SMOKCon2LastName);
+						List<String> accountlist= new ArrayList<String>();
+						accountlist.add(SMOKIns4InsName);
+
+						switchToFrame(driver, 60, home.getCreateFundraisingsFrame_Lighting(120));
+
+						if(hp.selectFundNameOrCompanyNameOnCreateFundraisings(environment,mode, PopUpName.selectFundPopUp, SMOKFund2FundName, null)) {
+							log(LogStatus.INFO, "Select Fund : "+SMOKFund2FundName, YesNo.No);
+							switchToFrame(driver, 30, home.getCreateFundraisingsFrame_Lighting(20));
+
+							if(click(driver, home.getSelectFundNamePopUpContinueBtn(), "continue button", action.SCROLLANDBOOLEAN)) {
+								ThreadSleep(3000);
+								if(click(driver, home.getSearchBasedOnAccountsAndContactsTab(30), "Search Based On Accounts And Contacts Tab", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "click on Search Based On Accounts And Contacts Tab", YesNo.No);
+									ThreadSleep(3000);
+									if(hp.applyFilterOnSearchBasedOnAccountsandContacts( FundraisingContactPageTab.SearchBasedOnAccountsAndContacts, SearchBasedOnExistingFundsOptions.AllContacts, environment,mode, null, "Contact:Legal Name", "not equal to", "", null)) {
+										log(LogStatus.INFO, "apply filter logic", YesNo.No);
+
+										if(hp.selectInvestorsContactFromCreateFundRaising(contactNamelist,accountlist).isEmpty()) {
+											log(LogStatus.INFO, "contact name is selected successfully",YesNo.No);
+											if(click(driver, hp.getAddToFundraisingListBtn(30), "Add To Fundraising List Button", action.SCROLLANDBOOLEAN)) {
+												log(LogStatus.INFO, "click on Add To Fundraising List", YesNo.No);
+												if(click(driver, hp.getCreateFundraisingBtn(PageName.CreateFundraisingPage, 30), "create fundraising button", action.SCROLLANDBOOLEAN)) {
+													log(LogStatus.INFO, "clicked on create fundraising button", YesNo.No);
+													if(click(driver,home.getCreateFundraisingConfirmationOkBtn(30), "ok button", action.SCROLLANDBOOLEAN)) {
+														log(LogStatus.INFO, "clicked on OK button", YesNo.No);
+														switchToDefaultContent(driver);
+														if(home.clickOnTab(environment, mode, TabName.FundraisingsTab)) {
+															log(LogStatus.INFO, "clicked on create fundraising button", YesNo.No);
+															if(hp.clickOnAlreadyCreatedItem(projectName, fr,false, 120)) {
+																log(LogStatus.INFO, "succescfuly found fundraising"+fr, YesNo.No);
+															}else {
+																log(LogStatus.ERROR, "Not able to found fundraising"+fr, YesNo.Yes);
+																sa.assertTrue(false,  "Not able to found fundraising"+fr);
+															}
+														}else {
+															log(LogStatus.ERROR, "Not able to click on fundraising tab so not check created "+fr, YesNo.Yes);
+															sa.assertTrue(false,"Not able to click on fundraising tab so not check created "+fr);
+														}
+
+													}else {
+														log(LogStatus.ERROR, "Not able to click on OK button so cannot get contact id and verify contact details on  created fundraising", YesNo.Yes);
+														sa.assertTrue(false, "Not able to click on OK button so cannot get contact id and verify contact details on  created fundraising");
+													} 
+												}else {
+													log(LogStatus.ERROR, "Not able to click on create fundraising button so cannot create fundraisings", YesNo.Yes);
+													sa.assertTrue(false, "Not able to click on create fundraising button so cannot create fundraisings");
+												}
+											}else {
+												log(LogStatus.ERROR, "Not able to click on Add To Fundraising List Button so cannot create fundraising", YesNo.Yes);
+												sa.assertTrue(false, "Not able to click on Add To Fundraising List Button so cannot create fundraising");
+											}
+										}else {
+											log(LogStatus.ERROR, " Not able to select Contact Name from select investor grid so cannot create fundraising", YesNo.Yes);
+											sa.assertTrue(false, " Not able to select Contact Name from select investor grid so cannot create fundraising");
+										}
+									}else {
+										log(LogStatus.ERROR, "Not able to apply filter logic so cannot verify create fundraising page", YesNo.Yes);
+										sa.assertTrue(false, "Not able to apply filter logic so cannot verify create fundraising page");
+									}
+								}else {
+									log(LogStatus.ERROR, "Not able to click on Search Based On Accounts And Contacts Tab so cannot verify create fundraising page", YesNo.Yes);
+									sa.assertTrue(false, "Not able to click on Search Based On Accounts And Contacts Tab so cannot verify create fundraising page");
+								}
+							}else {
+								log(LogStatus.ERROR, "Not able to click on select fund continue button so cannot create fundraising", YesNo.Yes);
+								sa.assertTrue(false, "Not able to click on select fund continue button so cannot create fundraising");
+							}
+
+
+
+						}else {
+							log(LogStatus.ERROR, "Not able to click on select fund Name from lookup popup", YesNo.Yes);
+							sa.assertTrue(false, "Not able to click on select fund Name from lookup popup");
+						}
+
+					}else {
+						
+						String limitedPartner="Test Limited partner-1";
+						String partnership="Test partnership-1";
+						
+						String[][] commitmentInformation= {{limitedPartner,"200000",partnership},{limitedPartner,"300000",partnership}};
+
+						if(hp.selectFundraisingNameOrCommitmentType(environment, mode, SMOKFR2FundName, null, null, null, CommitmentType.fundraisingName)) {
+							if(hp.commitmentInfoAndAdditionalInfo(environment, mode, commitmentInformation, null,null,null)) {
+								log(LogStatus.INFO, "All commitment information and additional information is passed successfully", YesNo.Yes);
+								switchToFrame(driver, 30, home.getCreateCommitmentFrame_Lightning(20));
+								//home.writeTotalAmountInExcelSheet(smokeFilePath, "SmokeFund1", "Funds")
+								if(click(driver, home.getCreateCommitmentBtn(20, TopOrBottom.BOTTOM), "create commitment button", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "click on create commitment button", YesNo.No);
+									ThreadSleep(2000);
+									if(click(driver, home.getCreateCommitmentOkBtn(30), "OK button", action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.INFO, "clicked on commitment OK button", YesNo.No);
+									}else {
+										log(LogStatus.ERROR, "Not able to click on commitment OK button", YesNo.Yes);
+										sa.assertTrue(false, "Not able to click on commitment OK button");
+									}
+								}else {
+									log(LogStatus.ERROR, "Not able to click on create commitment button so cannot create commitment", YesNo.Yes);
+									sa.assertTrue(false, "Not able to click on create commitment button so cannot create commitment");
+								}
+							}else {
+								log(LogStatus.ERROR, "All commitment information and additional information is not passed so cannot create commitment", YesNo.Yes);
+								sa.assertTrue(false, "All commitment information and additional information is not passed so cannot create commitment");
+							}
+						}else {
+							log(LogStatus.ERROR, "Not able to select fundraising name from commitment creation pop up so cannot create commitment",YesNo.Yes);
+							sa.assertTrue(false,  "Not able to select fundraising name from commitment creation pop up so cannot create commitment");
+						}
+					
+					}
+				}
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot click on : "+bulkActionNavigationLink+" for creation ", YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot click on : "+bulkActionNavigationLink+" for creation ");
+				}
+				
+				refresh(driver);
+			
 		}
 
 		lp.CRMlogout();
 		sa.assertAll();
+
+	
+		}
+
+	@Parameters("projectName")
+	@Test
+	public void smokeTC014_verifyNewInteractionNavigationMenu(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp = new TaskPageBusinessLayer(driver);
+		NavigationPageBusineesLayer  npbl = new NavigationPageBusineesLayer(driver) ;
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		navigationMenuName = NavigationMenuItems.New_Interactions.toString();
+
+		String[]  newInteractionsNavigationLinks = {NewInteractions_DefaultValues.Call.toString(),
+				NewInteractions_DefaultValues.Meeting.toString(),
+				NewInteractions_DefaultValues.Task.toString()};
+		int i=0;
+		boolean flag = false;
+		String adminUerName = crmUser1FirstName+" "+crmUser1LastName;
+		String subject ="";
+		String dueDate=previousOrForwardDateAccordingToTimeZone(2, "M/d/YYYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);
+		String contactNAme= SMOKCon1FirstName+" "+SMOKCon1LastName;
+		String[][] dropDownLabelWithValues = new String[3][];
+
+		for (i=2;i<newInteractionsNavigationLinks.length;i++) {
+			String newInteractionsNavigationLink=newInteractionsNavigationLinks[i];
+			flag=false;
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+navigationMenuName+" Going to click on : "+newInteractionsNavigationLink+" for creation ", YesNo.No);
+
+				WebElement ele = npbl.getNavigationLabel(projectName, newInteractionsNavigationLink, action.BOOLEAN, 10);
+				if (ele!=null && click(driver, ele, newInteractionsNavigationLink, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on "+newInteractionsNavigationLink+" so going for creation", YesNo.No);
+					flag = true;
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+newInteractionsNavigationLink+" so cannot create data related to this ", YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+newInteractionsNavigationLink+" so cannot create data related to this ");
+
+				}
+				flag=true;
+				if (flag) {
+
+					ele=cp.getCrossButtonForAlreadySelectedItem(projectName, PageName.CallPopUp, PageLabel.Assigned_To.toString(),false, adminUerName, action.SCROLLANDBOOLEAN, 20);
+					if (ele!=null) {
+						log(LogStatus.INFO, adminUerName+" Found For Label "+PageLabel.Assigned_To.toString(),YesNo.No);	
+					} else {
+						sa.assertTrue(false,adminUerName+" not Found For Label "+PageLabel.Assigned_To.toString());
+						log(LogStatus.ERROR, adminUerName+" not Found For Label "+PageLabel.Assigned_To.toString(),YesNo.Yes);
+
+					}
+
+					if (i==0) {
+						subject =SMOKTask3Subject;
+						ExcelUtils.writeData(phase1DataSheetFilePath,dueDate, "Task1", excelLabel.Variable_Name, "SMOKTask3", excelLabel.Due_Date);
+						dropDownLabelWithValues=null;
+
+					} else if(i==1) {
+
+						subject =SMOKTask4Subject;
+						
+						ExcelUtils.writeData(phase1DataSheetFilePath,dueDate, "Task1", excelLabel.Variable_Name, "SMOKTask4", excelLabel.Due_Date);
+
+						dropDownLabelWithValues=null;
+
+					}else{
+						subject =SMOKTask5Subject;
+						ExcelUtils.writeData(phase1DataSheetFilePath,dueDate, "Task1", excelLabel.Variable_Name, "SMOKTask5", excelLabel.Due_Date);
+						dropDownLabelWithValues=null;
+					}
+
+					if (tp.enteringSubjectAndSelectDropDownValuesonTaskPopUp(projectName, PageName.TaskPage, subject, dropDownLabelWithValues, action.SCROLLANDBOOLEAN, 10)) {
+						log(LogStatus.INFO, "Entered value to Subject Text Box ", YesNo.No);
+						ThreadSleep(1000);
+
+						if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), dueDate, PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Entered value to Due Date Text Box", YesNo.No);
+							ThreadSleep(1000);
+						}else {
+							log(LogStatus.ERROR, "Not able to enter value on duedate textbox "+newInteractionsNavigationLink, YesNo.Yes);
+							sa.assertTrue(false,"Not able to enter value on duedate textbox "+newInteractionsNavigationLink );
+						}
+
+						flag = cp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Name.toString(), TabName.TaskTab, contactNAme, action.SCROLLANDBOOLEAN, 10);		
+						if (flag) {
+							ele=cp.getCrossButtonForAlreadySelectedItem(projectName, PageName.TaskPage, PageLabel.Name.toString(),true, contactNAme, action.SCROLLANDBOOLEAN, 5);
+							if (ele!=null) {
+								log(LogStatus.INFO, contactNAme+" Found For Label "+PageLabel.Name.toString()+" at "+newInteractionsNavigationLink,YesNo.No);	
+							} else {
+								sa.assertTrue(false,contactNAme+" not Found For Label "+PageLabel.Name.toString()+" at "+newInteractionsNavigationLink);
+								log(LogStatus.ERROR, contactNAme+" not Found For Label "+PageLabel.Name.toString()+" at "+newInteractionsNavigationLink,YesNo.Yes);
+							}
+						} else {
+							sa.assertTrue(false,"Not Able to Select "+contactNAme+" For Label "+PageLabel.Name);
+							log(LogStatus.SKIP,"Not Able to Select "+contactNAme+" For Label "+PageLabel.Name,YesNo.Yes);
+
+						}
+						if (clickUsingJavaScript(driver, tp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO,"successfully created : "+subject+" for "+newInteractionsNavigationLink,  YesNo.No);
+							ExcelUtils.writeData(phase1DataSheetFilePath,dueDate, "Task1", excelLabel.Variable_Name, "M3CALL1", excelLabel.Due_Date);
+							ele = tp.getCreatedConfirmationMsg(projectName, 15);
+							if (ele!=null) {
+								String actualValue = ele.getText().trim();
+								String expectedValue=tp.taskCreatesMsg(projectName, subject);
+								if (expectedValue.contains(actualValue)) {
+									log(LogStatus.INFO,expectedValue+" matched FOR Confirmation Msg", YesNo.No);
+								} else {
+									log(LogStatus.ERROR,"Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg", YesNo.Yes);
+									BaseLib.sa.assertTrue(false, "Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg");
+								}
+							} else {
+								sa.assertTrue(false,"Created Task Msg Ele not Found");
+								log(LogStatus.SKIP,"Created Task Msg Ele not Found",YesNo.Yes);
+							}
+							String[][] fieldsWithValues= {
+									{PageLabel.Subject.toString(),subject},
+									{PageLabel.Due_Date.toString(),dueDate},
+									{PageLabel.Name.toString(),contactNAme},
+									{PageLabel.Assigned_To.toString(),adminUerName}};
+							tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
+						}
+						else {
+							log(LogStatus.ERROR, "Save Button is not visible so could not be create "+newInteractionsNavigationLink, YesNo.Yes);
+							sa.assertTrue(false,"Save Button is not visible so could not be create "+newInteractionsNavigationLink );
+						}
+
+
+					}else {
+						log(LogStatus.ERROR, "Subject textbox is not visible so could not be create "+newInteractionsNavigationLink, YesNo.Yes);
+						sa.assertTrue(false,"Subject textbox is not visible so could not be create "+newInteractionsNavigationLink );
+					}
+
+
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot click on : "+newInteractionsNavigationLink+" for creation ", YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot click on : "+newInteractionsNavigationLink+" for creation ");
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+
 	}
+
+	@Parameters("projectName")
+	@Test
+	public void smokeTC015_verifyCreateNewNavigationMenu(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		NavigationPageBusineesLayer  npbl = new NavigationPageBusineesLayer(driver) ;
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		navigationMenuName = NavigationMenuItems.Create_New.toString();
+
+		String[]  createNewNavigationLinks = {CreateNew_DefaultValues.New_Deal.toString(),
+				CreateNew_DefaultValues.New_Institution.toString(),
+				CreateNew_DefaultValues.New_Contact.toString()};
+		int i=0;
+		boolean flag = false;
+		WebElement ele=null;
+		for (i=1;i<createNewNavigationLinks.length;i++) {
+			String createNewNavigationLink=createNewNavigationLinks[i];
+			flag=false;
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+navigationMenuName+" Going to click on : "+createNewNavigationLink+" for creation ", YesNo.No);
+
+				 ele = npbl.getNavigationLabel(projectName, createNewNavigationLink, action.BOOLEAN, 10);
+				if (ele!=null && click(driver, ele, createNewNavigationLink, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on "+createNewNavigationLink+" so going for creation", YesNo.No);
+					flag = true;
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+createNewNavigationLink+" so cannot create data related to this ", YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+createNewNavigationLink+" so cannot create data related to this ");
+
+				}
+
+				if (flag) {
+
+					if (i==0) {
+						
+						if (fp.createDealPopUp(projectName,"",SMOKDeal8DealName,SMOKDeal8CompanyName, SMOKDeal8Stage,null, 15)) {
+							log(LogStatus.INFO,"Created Deal : "+SMOKDeal8DealName+" through "+createNewNavigationLink,YesNo.No);	
+						} else {
+							sa.assertTrue(false,"Not Able to Create Deal  : "+SMOKDeal8DealName+" through "+createNewNavigationLink);
+							log(LogStatus.SKIP,"Not Able to Create Deal  : "+SMOKDeal8DealName+" through "+createNewNavigationLink,YesNo.Yes);
+						}
+						
+					} else if(i==1) {
+						
+						 if (ip.createInstitutionPopUp(projectName, environment, mode, SMOKIns10InsName,SMOKIns10RecordType, InstitutionPageFieldLabelText.Phone.toString(),SMOKIns10Phone)) {
+								log(LogStatus.INFO,"successfully Created Account/Entity : "+SMOKIns10InsName+" of record type : "+SMOKIns10RecordType,YesNo.No);	
+							} else {
+								sa.assertTrue(false,"Not Able to Create Account/Entity : "+SMOKIns10InsName+" of record type : "+SMOKIns10RecordType);
+								log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+SMOKIns10InsName+" of record type : "+SMOKIns10RecordType,YesNo.Yes);
+							}
+						 
+					}else{
+
+						if (cp.createContactPopUp(projectName, SMOKCon8FirstName, SMOKCon8LastName, SMOKCon8InstitutionName, "","", null, null, CreationPage.ContactPage, null)) {
+							log(LogStatus.INFO,"successfully Created Contact : "+SMOKCon8FirstName+" "+SMOKCon8LastName,YesNo.No);	
+						} else {
+							sa.assertTrue(false,"Not Able to Create Contact : "+SMOKCon8FirstName+" "+SMOKCon8LastName);
+							log(LogStatus.SKIP,"Not Able to Create Contact: "+SMOKCon8FirstName+" "+SMOKCon8LastName,YesNo.Yes);
+						}
+						
+						 
+					}
+
+					
+				}
+				npbl.clickOnNavatarEdgeLink(projectName, navigationMenuName, action.BOOLEAN, 30);
+				ThreadSleep(5000);
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot click on : "+createNewNavigationLink+" for creation ", YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot click on : "+createNewNavigationLink+" for creation ");
+			}
+			refresh(driver);
+			ThreadSleep(5000);
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+
+	}
+
+	@Parameters("projectName")
+	@Test
+	public void smokeTC016_verifyNavigationLinkAndCreateCustomLink(String projectName){
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		NavatarSetupPageBusinessLayer np= new NavatarSetupPageBusinessLayer(driver);
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		NavatarSetupSideMenuTab[] navatarSetupSideMenuTab = {NavatarSetupSideMenuTab.IndividualInvestorCreation};
+		NavatarSetupSideMenuTab setupSideMenuTab=null;
+
+		lp.CRMLogin(superAdminUserName, adminPassword );
+		
+		String navigationLabel1=CSVLabel.Navigation_Label.toString();
+		String orderLabel=CSVLabel.Order.toString();
+		String orderLabelValue="4";
+		String urlLabel=CSVLabel.URL.toString();
+		String urlValue="/apex/navpeII__IndividualInvestor?retURL=/lightning/page/home";
+		String navigationTypeLabel=CSVLabel.Navigation_Type.toString();
+		String navigationTypeValue=navigationMenuName;
+		boolean flag=false;
+
+		navigationMenuName = NavigationMenuItems.Bulk_Actions.toString();
+		String[] navigationLabel = {BulkActions_DefaultValues.Individual_Investor_Creation.toString()};
+	
+
+			setupSideMenuTab=navatarSetupSideMenuTab[0];
+			ThreadSleep(5000);
+			log(LogStatus.INFO, "<<<<<< Going to check >>>>>>>", YesNo.No);
+			
+				np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, true);
+				switchToDefaultContent(driver);
+				ThreadSleep(3000);
+				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+					log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+					WebElement ele = npbl.getNavigationLabel(projectName, navigationLabel[0], action.BOOLEAN, 10);
+					if (ele==null) {
+						log(LogStatus.INFO, navigationLabel[0]+" is not present on "+navigationMenuName+" after uncheck "+setupSideMenuTab, YesNo.No);
+					} else {
+						log(LogStatus.ERROR, navigationLabel[0]+" should not present on "+navigationMenuName+" after uncheck "+setupSideMenuTab, YesNo.Yes);
+						sa.assertTrue(false,navigationLabel[0]+" should not present on "+navigationMenuName+" after uncheck "+setupSideMenuTab);
+					}					
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot uncheck absenece of "+navigationLabel[0], YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot uncheck absenece of "+navigationLabel[0]);
+				}
+			
+			refresh(driver);
+			ThreadSleep(5000);
+			setupSideMenuTab=navatarSetupSideMenuTab[0];
+			log(LogStatus.INFO, "<<<<<< Going to UnCheck >>>>>>>", YesNo.No);
+			
+			if(np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, false)){
+				switchToDefaultContent(driver);
+				
+				lp.CRMlogout();
+				lp.CRMLogin(crmUser1EmailID, adminPassword );
+				ThreadSleep(5000);
+				// Verification on navigation menu
+				
+				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+					log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+					WebElement ele = npbl.getNavigationLabel(projectName, navigationLabel[0], action.BOOLEAN, 10);
+					if (ele==null) {
+						log(LogStatus.INFO, navigationLabel[0]+" is not present on "+navigationMenuName+" after uncheck "+setupSideMenuTab, YesNo.No);
+					} else {
+						log(LogStatus.ERROR, navigationLabel[0]+" should not present on "+navigationMenuName+" after uncheck "+setupSideMenuTab, YesNo.Yes);
+						sa.assertTrue(false,navigationLabel[0]+" should not present on "+navigationMenuName+" after uncheck "+setupSideMenuTab);
+					}
+					
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabel[0], YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabel[0]);
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to disable "+setupSideMenuTab+" so cannot uncheck absenece of "+navigationLabel[0]+" on "+navigationMenuName, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to disable "+setupSideMenuTab+" so cannot uncheck absenece of "+navigationLabel[0]+" on "+navigationMenuName);
+			}
+
+
+				String[][] labelWithValue= {{navigationLabel1,navigationLabel[0]},
+						{orderLabel,orderLabelValue},
+						{urlLabel,urlValue},
+						{navigationTypeLabel,navigationTypeValue}};
+
+				if (npbl.createNavigationItem(projectName, labelWithValue, 20)) {
+					log(LogStatus.INFO, "created "+navigationLabel[0], YesNo.No);
+					flag=true;
+				} else {
+					log(LogStatus.ERROR, "Not Able to create navigation item "+navigationLabel[0], YesNo.Yes);
+					sa.assertTrue(false, "Not Able to create navigation item  "+navigationLabel[0]);
+
+				}
+
+			if(flag){
+				
+				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+					log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+					WebElement ele2 = npbl.getNavigationLabel(projectName, navigationLabel[1], action.BOOLEAN, 10);
+					
+					ele2 = npbl.getNavigationLabel(projectName, navigationLabel[0], action.BOOLEAN, 10);
+					if (ele2!=null) {
+						log(LogStatus.INFO, navigationLabel[0]+" is present on "+navigationMenuName, YesNo.No);
+					} else {
+						log(LogStatus.ERROR, navigationLabel[0]+" should be present on "+navigationMenuName, YesNo.Yes);
+						sa.assertTrue(false,navigationLabel[0]+" should be present on "+navigationMenuName);
+
+					}
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot uncheck presence of "+navigationLabel[0], YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot uncheck presence of "+navigationLabel[0]);
+				}
+			}
+
+			np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, true);
+			switchToDefaultContent(driver);
+			ThreadSleep(3000);
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+				WebElement ele3 = npbl.getNavigationLabel(projectName, navigationLabel[0], action.BOOLEAN, 10);
+				if (ele3!=null) {
+					log(LogStatus.INFO, navigationLabel[0]+" is present on "+navigationMenuName, YesNo.No);
+				} else {
+					log(LogStatus.ERROR, navigationLabel[0]+" should be present on "+navigationMenuName, YesNo.Yes);
+					sa.assertTrue(false,navigationLabel[0]+" should be present on "+navigationMenuName);
+
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot uncheck presence of "+navigationLabel[0], YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot uncheck presence of "+navigationLabel[1]);
+			}				
+			
+
+		lp.CRMlogout();
+		sa.assertAll();
+		closeBrowser();
+	}
+
+	@Parameters("projectName")
+	@Test
+	public void smokeTC017_verifyAllInstituionRecordType(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp= new BasePageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		String recordType ="Institution,Advisor,Company,Fund Manager,Fund Manager’s Fund,Individual Investor,Intermediary,"
+				+ "Lender,Limited Partner,Portfolio Company";
+		
+		ThreadSleep(5000);
+		if(bp.clickOnTab(projectName, mode, TabName.InstituitonsTab)){
+			log(LogStatus.PASS,	"click on institution tab", YesNo.No);
+			
+			if(clickUsingJavaScript(driver, ip.getNewButton(environment, mode, 60), "new button")){
+				
+				log(LogStatus.PASS,	"click on new button", YesNo.No);
+				ThreadSleep(3000);
+				List<WebElement> lst=ip.getAllInstituitionRecrdTypeList(mode,30);
+				if(compareMultipleList(driver, recordType, lst).isEmpty()){
+					log(LogStatus.PASS,	"All Institution record type is verified", YesNo.No);
+				}else{
+					
+					log(LogStatus.FAIL,	"All Institution record type is not  matched", YesNo.Yes);
+					sa.assertTrue(false,"All Institution record type is not  matched");
+				}
+				
+				
+			}else{
+				log(LogStatus.FAIL,	"not able to click on new button", YesNo.Yes);
+				sa.assertTrue(false,"not able to click on new button");
+			}
+		}else{
+			
+			log(LogStatus.FAIL,	"not able to click on institution tab", YesNo.Yes);
+			sa.assertTrue(false,"not able to click on institution tab");
+		}
+		
+		lp.CRMlogout();
+		closeBrowser();
+	}
+
+	@Parameters("projectName")
+	@Test
+	public void smokeTC018_verifyListViewOnInstituionObject(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp= new BasePageBusinessLayer(driver);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		
+		String selectListLink ="All Companies,All Institutions,Automation All,Limited Partners,Recently Viewed,All Fund Manager's Funds,All Fund Managers,"
+				+ "All Intermediaries,All Investors,All Limited Partners,My Institutions,My Call List,New Last Week,New This Week"
+				+ ",Portfolio Companies,Recently Viewed Institutions,Top LPs,Watchlist";
+		
+		ThreadSleep(5000);
+		if(bp.clickOnTab(projectName, mode, TabName.InstituitonsTab)){
+			log(LogStatus.PASS,	"click on institution tab", YesNo.No);
+			
+			if (click(driver, bp.getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(3000);
+				List<WebElement> lst=bp.getAllLinkOfSelectListIconOption(mode,TabName.InstituitonsTab.toString(), 30);
+				if(compareMultipleList(driver, selectListLink, lst).isEmpty()){
+					log(LogStatus.PASS,	"All link of select list icon  is verified", YesNo.No);
+				}else{
+					
+					log(LogStatus.FAIL,	"All link of select list icon  is not verified", YesNo.Yes);
+					sa.assertTrue(false,"All link of select list icon  is not verified");
+				}
+				
+			} else {
+				appLog.error("Not able to click on Select List Icon");
+			}
+		}else{
+			
+			log(LogStatus.FAIL,	"not able to click on institution tab", YesNo.Yes);
+			sa.assertTrue(false,"not able to click on institution tab");
+		}
+		
+		lp.CRMlogout();
+		closeBrowser();
+	}
+	
+	@Parameters("projectName")
+	@Test
+	public void smokeTC019_createDataAllRecordTypeInstitution(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp= new FundsPageBusinessLayer(driver);
+		FundRaisingPageBusinessLayer fr = new FundRaisingPageBusinessLayer(driver);
+		GlobalActionPageBusinessLayer gp=new GlobalActionPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		
+		
+		String value="";
+		String type="";
+		String entityType="";
+		String status="";
+		String parent="";
+		
+		String[][] EntityOrAccounts = {{ SMOKIns11InsName, SMOKIns11RecordType ,SMOKIns11Status,SMOKIns11ParentInstitution,SMOKIns11EntityType} ,
+										{ SMOKIns12InsName, SMOKIns12RecordType ,SMOKIns12Status,SMOKIns12ParentInstitution,SMOKIns12EntityType},
+										{ SMOKIns13InsName, SMOKIns13RecordType ,SMOKIns13Status,SMOKIns13ParentInstitution,SMOKIns13EntityType},
+										{ SMOKIns14InsName, SMOKIns14RecordType ,SMOKIns14Status,SMOKIns14ParentInstitution,SMOKIns14EntityType},
+										{ SMOKIns15InsName, SMOKIns15RecordType ,SMOKIns15Status,SMOKIns15ParentInstitution,SMOKIns15EntityType},
+										{ SMOKIns16InsName, SMOKIns16RecordType ,SMOKIns16Status,SMOKIns16ParentInstitution,SMOKIns16EntityType},
+										{ SMOKIns17InsName, SMOKIns17RecordType ,SMOKIns17Status,SMOKIns17ParentInstitution,SMOKIns17EntityType},
+										{ SMOKIns18InsName, SMOKIns18RecordType ,SMOKIns18Status,SMOKIns18ParentInstitution,SMOKIns18EntityType},
+										{ SMOKIns19InsName, SMOKIns19RecordType ,SMOKIns19Status,SMOKIns19ParentInstitution,SMOKIns19EntityType},
+										{ SMOKIns20InsName, SMOKIns20RecordType ,SMOKIns20Status,SMOKIns20ParentInstitution,SMOKIns20EntityType}};
+
+		//ins
+		for (int i=0;i<=10;i++) {
+			if (lp.clickOnTab(projectName, TabName.InstituitonsTab)) {
+				log(LogStatus.INFO,"Click on Tab : "+TabName.InstituitonsTab,YesNo.No);	
+				String[] accounts =EntityOrAccounts[i];
+				value = accounts[0];
+				type = accounts[1];
+				
+				if(i==0||i==2||i==6){
+					
+					entityType=accounts[4];
+					if (ip.createEntityOrAccount(projectName, mode, value, type, entityType, null, 20)) {
+						log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
+					} else {
+						sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
+						log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+value+" of record type : "+type,YesNo.Yes);
+					}
+
+				}
+				
+				if(i==3||i==4||i==5||i==8){
+					
+					parent=accounts[3];
+					if (ip.createInstitution(projectName, environment, mode, value,type, InstitutionPageFieldLabelText.Parent_Institution.toString(),parent)) {
+						log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
+					} else {
+						sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
+						log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+value+" of record type : "+type,YesNo.Yes);
+					}
+
+					
+				}
+				if(i==1||i==9){
+					status=accounts[2];
+				if (ip.createEntityOrAccount(projectName, mode, value, type, null, new String[][]{{"Status",status}}, 20)) {
+					log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
+					log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+value+" of record type : "+type,YesNo.Yes);
+				}
+
+				}
+			} else {
+				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object1Tab);
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object1Tab,YesNo.Yes);
+			}
+		}
+		
+		lp.CRMlogout();
+		closeBrowser();
+		
+	}
+	
 }
 	
 
