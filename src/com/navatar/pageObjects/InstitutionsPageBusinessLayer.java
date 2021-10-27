@@ -1254,4 +1254,12 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 	}
 
 	
+	public WebElement getDetailPageFieldLabel(String projectName,String fieldName,int timeOut){
+		
+		String xpath = "//*[@class='test-id__field-label'][text()='"+fieldName+"']";
+		
+		return isDisplayed(driver, FindElement(driver, xpath, fieldName, action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, fieldName);
+		
+	}
+	
 }

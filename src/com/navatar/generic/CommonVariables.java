@@ -11,6 +11,7 @@ import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.scripts.Module5New;
 import com.navatar.scripts.Module8;
+import com.navatar.scripts.PECloudSmoke;
 import com.navatar.scripts.PECloudSmoke2;
 import com.navatar.scripts.Module6;
 import com.navatar.scripts.Module7;
@@ -1534,7 +1535,7 @@ public class CommonVariables {
 			M7Event7EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event7", excelLabel.End_Date);
 			M7Event7EndTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event7", excelLabel.End_Time);
 			
-		}else if(obj instanceof PECloudSmoke2){
+		}else if(obj instanceof PECloudSmoke2||obj instanceof PECloudSmoke){
 		
 			SMOKIns1InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS1", excelLabel.Institutions_Name);
 			SMOKIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS1", excelLabel.Record_Type);

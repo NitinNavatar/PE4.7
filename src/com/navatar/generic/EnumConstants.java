@@ -903,7 +903,8 @@ public static enum PermissionType{
 				public String toString() {
 					return "New Task with Multiple Associations";
 				}
-			}, Contact_Transfer,Change_Date,Change_Record_Type,Change_Priority,Change_Status,Edit_Comments,New_Attendee,New
+			}, Contact_Transfer,Change_Date,Change_Record_Type,Change_Priority,Change_Status,Edit_Comments,New_Attendee,New,New_Affiliation,New_Contact
+		 ,New_Fundraising,New_Advisor,New_Deal,New_Investor
 			};
 		
 	public static enum IndiviualInvestorSectionsName{
@@ -1052,7 +1053,13 @@ public static enum PermissionType{
 	};
 	
 	public static enum RelatedTab{
-		Related,Details,Tasks,Meetings,Activities,Documents,Box,Investment,
+		Related,Details,Tasks,Meetings,Activities,Documents,Box,Investment,Contacts,Consultants,Fundraising,Investors
+		,Co_Investments{
+			@Override
+			public String toString() {
+				return "Co-Investments";
+			}
+		},Deals,Files,
 		QandA{
 			@Override
 			public String toString() {

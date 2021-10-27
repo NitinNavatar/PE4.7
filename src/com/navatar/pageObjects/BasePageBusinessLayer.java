@@ -1943,6 +1943,42 @@ public boolean changeFilterInListView(String projectName,String tabObj, int time
  * @param pageName
  * @param activityTimeLineItem
  * @param timeOut
+ * @return activity timeline box
+ */
+public WebElement getActivityTimeLineBox(int timeOut){
+
+	String xpath="";
+	//WebElement ele;
+WebElement element= null;;
+	xpath="//div[@id='completeDiv' and @class='cActivityTimeline']";
+	List<WebElement> eles=FindElements(driver, xpath,"");
+	
+	for(WebElement ele:eles){
+		ele = isDisplayed(driver, ele  , "visiblity", 10,"activity timeline box");
+		if (ele!=null) {
+			appLog.info("Element Found : activity timeline box");
+			element= ele;
+		}else{
+			appLog.info("Element Not  Found :activity timeline box ");
+			continue;
+			
+		}
+	}
+	return element;
+	
+		
+		
+			
+}
+	
+
+
+
+/**
+ * @param projectName
+ * @param pageName
+ * @param activityTimeLineItem
+ * @param timeOut
  * @return getActivityTimeLineItem
  */
 public WebElement getActivityTimeLineItem(String projectName,PageName pageName,ActivityTimeLineItem activityTimeLineItem,int timeOut){

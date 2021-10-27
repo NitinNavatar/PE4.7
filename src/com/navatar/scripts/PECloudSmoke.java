@@ -2021,7 +2021,7 @@ public class PECloudSmoke extends BaseLib{
 		}
 		
 		lp.CRMlogout();
-		closeBrowser();
+		sa.assertAll();
 	}
 
 	@Parameters("projectName")
@@ -2033,7 +2033,7 @@ public class PECloudSmoke extends BaseLib{
 		
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		
-		String selectListLink ="All Companies,All Institutions,Automation All,Limited Partners,Recently Viewed,All Fund Manager's Funds,All Fund Managers,"
+		String selectListLink ="All Companies,All Institutions,Automation All,Limited Partners,All Fund Manager's Funds,All Fund Managers,"
 				+ "All Intermediaries,All Investors,All Limited Partners,My Institutions,My Call List,New Last Week,New This Week"
 				+ ",Portfolio Companies,Recently Viewed Institutions,Top LPs,Watchlist";
 		
@@ -2042,8 +2042,8 @@ public class PECloudSmoke extends BaseLib{
 			log(LogStatus.PASS,	"click on institution tab", YesNo.No);
 			
 			if (click(driver, bp.getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
-				ThreadSleep(3000);
-				List<WebElement> lst=bp.getAllLinkOfSelectListIconOption(mode,TabName.InstituitonsTab.toString(), 30);
+				ThreadSleep(5000);
+				List<WebElement> lst=bp.getAllLinkOfSelectListIconOption(mode,"Institutions", 30);
 				if(compareMultipleList(driver, selectListLink, lst).isEmpty()){
 					log(LogStatus.PASS,	"All link of select list icon  is verified", YesNo.No);
 				}else{
@@ -2062,7 +2062,7 @@ public class PECloudSmoke extends BaseLib{
 		}
 		
 		lp.CRMlogout();
-		closeBrowser();
+		sa.assertAll();
 	}
 	
 	@Parameters("projectName")
@@ -2071,19 +2071,13 @@ public class PECloudSmoke extends BaseLib{
 		
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
-		FundsPageBusinessLayer fp= new FundsPageBusinessLayer(driver);
-		FundRaisingPageBusinessLayer fr = new FundRaisingPageBusinessLayer(driver);
-		GlobalActionPageBusinessLayer gp=new GlobalActionPageBusinessLayer(driver);
-		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		
 		
 		String value="";
 		String type="";
-		String entityType="";
-		String status="";
-		String parent="";
+		String entityType=null;
+		String status=null;
+		String parent=null;
 		
 		String[][] EntityOrAccounts = {{ SMOKIns11InsName, SMOKIns11RecordType ,SMOKIns11Status,SMOKIns11ParentInstitution,SMOKIns11EntityType} ,
 										{ SMOKIns12InsName, SMOKIns12RecordType ,SMOKIns12Status,SMOKIns12ParentInstitution,SMOKIns12EntityType},
@@ -2130,7 +2124,7 @@ public class PECloudSmoke extends BaseLib{
 				}
 				if(i==1||i==9){
 					status=accounts[2];
-				if (ip.createEntityOrAccount(projectName, mode, value, type, null, new String[][]{{"Status",status}}, 20)) {
+				if (ip.createEntityOrAccount(projectName, mode, value, type, "", new String[][]{{"Status",status}}, 20)) {
 					log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
 				} else {
 					sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
@@ -2145,8 +2139,330 @@ public class PECloudSmoke extends BaseLib{
 		}
 		
 		lp.CRMlogout();
-		closeBrowser();
+		sa.assertAll();
 		
+	}
+	
+	@Parameters("projectName")
+	@Test
+	public void smokeTc020_verifyInstitutionRecordTypePage(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		NavigationPageBusineesLayer np = new NavigationPageBusineesLayer(driver);
+		
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		WebElement ele;
+		String tab;
+		ThreadSleep(5000);
+		
+		if(bp.clickOnTab(projectName, TabName.InstituitonsTab)){
+			log(LogStatus.INFO, "click on"+TabName.InstituitonsTab, YesNo.No);
+			
+			if(bp.clickOnAlreadyCreatedItem(projectName, SMOKIns11InsName, 30)){
+				
+				log(LogStatus.INFO, "click on created institution "+SMOKIns11InsName, YesNo.No);
+
+				// details page related tab verification
+				String[] relatedTabs = {RelatedTab.Details.toString(),RelatedTab.Contacts.toString(),RelatedTab.Consultants.toString(),RelatedTab.Fundraising.toString(),RelatedTab.Co_Investments.toString()
+						,RelatedTab.Deals.toString(),RelatedTab.Events.toString(),RelatedTab.Files.toString()};
+				
+				for (int i = 0; i < relatedTabs.length; i++) {
+				tab = relatedTabs[i];
+				ele=ip.getRelatedTab(projectName, tab, 10);
+				if (ele!=null) {
+				log(LogStatus.INFO,"Related Tab "+tab+" present at institutions detail page",YesNo.No);
+				} else {
+				sa.assertTrue(false,"Related Tab "+tab+" sholud be present at institutions detail page");
+				log(LogStatus.SKIP,"Related Tab "+tab+" sholud be present at institutions detail page",YesNo.Yes);
+				}
+				}
+				
+				ThreadSleep(2000);
+				
+				
+				// Buttons
+				np.clickOnShowMoreDropdownOnly(projectName);
+				ShowMoreActionDropDownList[] buttons={
+						ShowMoreActionDropDownList.New_Affiliation,
+						ShowMoreActionDropDownList.New_Advisor,
+						ShowMoreActionDropDownList.New_Fundraising,
+						ShowMoreActionDropDownList.New_Contact};
+				
+				ShowMoreActionDropDownList button=null;
+				for (int i = 0; i < buttons.length; i++) {
+				button=buttons[i];
+				ele = np.actionDropdownElement(projectName, button, 10);
+				if (ele!=null) {
+				log(LogStatus.INFO,"Button "+button+" is present at instituion record type page",YesNo.No);
+				} else {
+				sa.assertTrue(false,"Button "+button+" sholud be present at instituion record type page");
+				log(LogStatus.SKIP,"Button "+button+" sholud be present at instituion record type page",YesNo.Yes);
+				}
+				}
+
+
+				
+				// compact layout field visibiltiy verification
+				
+				String[] relatedField = {"Website",
+										"Institution Type",
+										"Phone",
+										"Total Fund Commitments (mn)",
+										"Total Co-investment Commitments (mn)"};
+				String field;
+				
+				for (int i = 0; i < relatedField.length; i++) {
+				field = relatedField[i];
+				ele=ip.getDetailPageFieldLabel(projectName, field, 20);
+				if (ele!=null) {
+				log(LogStatus.INFO,"Related field "+field+" present  at institutions detail page",YesNo.No);
+				} else {
+				sa.assertTrue(false,"Related field "+field+" sholud be present at institutions detail page");
+				log(LogStatus.SKIP,"Related field "+field+" sholud be present at institutions detail page",YesNo.Yes);
+				}
+				}
+				
+				// activity timeline visibility
+				WebElement activityTimeline=ip.getActivityTimeLineBox(30);
+				
+				if(activityTimeline!=null){
+					log(LogStatus.INFO,"Activity timeline is present in institution page",YesNo.No);
+					
+				}else{
+					
+					sa.assertTrue(false,"Activity timeline is not present in institution page");
+					log(LogStatus.FAIL,"Activity timeline is not present in institution page",YesNo.Yes);
+				}
+				
+			}else{
+				sa.assertTrue(false,"Not able to click on created institution "+SMOKIns11InsName);
+				log(LogStatus.FAIL,"Not able to click on created institution "+SMOKIns11InsName,YesNo.Yes);
+			}
+			
+			
+		}else{
+			sa.assertTrue(false,"Not able to click on"+TabName.InstituitonsTab);
+			log(LogStatus.FAIL,"Not able to click on"+TabName.InstituitonsTab,YesNo.Yes);
+			
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters("projectName")
+	@Test
+	public void smokeTc021_verifyCompanyRecordTypePage(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		NavigationPageBusineesLayer np = new NavigationPageBusineesLayer(driver);
+		
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		WebElement ele;
+		String tab;
+		ThreadSleep(5000);
+		
+		if(bp.clickOnTab(projectName, TabName.InstituitonsTab)){
+			log(LogStatus.INFO, "click on"+TabName.InstituitonsTab, YesNo.No);
+			
+			if(bp.clickOnAlreadyCreatedItem(projectName, SMOKIns12InsName, 30)){
+				
+				log(LogStatus.INFO, "click on created institution "+SMOKIns12InsName, YesNo.No);
+
+				// details page related tab verification
+				String[] relatedTabs = {RelatedTab.Details.toString(),RelatedTab.Contacts.toString(),RelatedTab.Investors.toString()
+						,RelatedTab.Deals.toString(),RelatedTab.Events.toString(),RelatedTab.Files.toString()};
+				
+				for (int i = 0; i < relatedTabs.length; i++) {
+				tab = relatedTabs[i];
+				ele=ip.getRelatedTab(projectName, tab, 10);
+				if (ele!=null) {
+				log(LogStatus.INFO,"Related Tab "+tab+" present at institutions detail page",YesNo.No);
+				} else {
+				sa.assertTrue(false,"Related Tab "+tab+" sholud be present at institutions detail page");
+				log(LogStatus.SKIP,"Related Tab "+tab+" sholud be present at institutions detail page",YesNo.Yes);
+				}
+				}
+				
+				ThreadSleep(2000);
+				
+				
+				// Buttons
+				np.clickOnShowMoreDropdownOnly(projectName);
+				ShowMoreActionDropDownList[] buttons={ShowMoreActionDropDownList.New_Affiliation,ShowMoreActionDropDownList.New_Deal,ShowMoreActionDropDownList.New_Investor
+				,ShowMoreActionDropDownList.New_Contact};
+				ShowMoreActionDropDownList button=null;
+				for (int i = 0; i < buttons.length; i++) {
+				button=buttons[i];
+				ele = np.actionDropdownElement(projectName, button, 10);
+				if (ele!=null) {
+				log(LogStatus.INFO,"Button "+button+" is present at instituion record type page",YesNo.No);
+				} else {
+				sa.assertTrue(false,"Button "+button+" sholud be present at instituion record type page");
+				log(LogStatus.SKIP,"Button "+button+" sholud be present at instituion record type page",YesNo.Yes);
+				}
+				}
+
+
+				
+				// compact layout field visibiltiy verification
+				
+				String[] relatedField = {"Website",
+										"Status",
+										"Phone",
+										"Sector",
+										"Region"};
+				String field;
+				
+				for (int i = 0; i < relatedField.length; i++) {
+				field = relatedField[i];
+				ele=ip.getDetailPageFieldLabel(projectName, field, 20);
+				if (ele!=null) {
+				log(LogStatus.INFO,"Related field "+field+" present at institutions detail page",YesNo.No);
+				} else {
+				sa.assertTrue(false,"Related field "+field+" sholud be present at institutions detail page");
+				log(LogStatus.SKIP,"Related field "+field+" sholud be present at institutions detail page",YesNo.Yes);
+				}
+				}
+				
+				// activity timeline visibility
+				WebElement activityTimeline=ip.getActivityTimeLineBox(30);
+				
+				if(activityTimeline!=null){
+					log(LogStatus.INFO,"Activity timeline is present in institution page",YesNo.No);
+					
+				}else{
+					
+					sa.assertTrue(false,"Activity timeline is not present in institution page");
+					log(LogStatus.FAIL,"Activity timeline is not present in institution page",YesNo.Yes);
+				}
+				
+			}else{
+				sa.assertTrue(false,"Not able to click on created institution "+SMOKIns12InsName);
+				log(LogStatus.FAIL,"Not able to click on created institution "+SMOKIns12InsName,YesNo.Yes);
+			}
+			
+			
+		}else{
+			sa.assertTrue(false,"Not able to click on"+TabName.InstituitonsTab);
+			log(LogStatus.FAIL,"Not able to click on"+TabName.InstituitonsTab,YesNo.Yes);
+			
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters("projectName")
+	@Test
+	public void smokeTc022_verifyIndividualInvestorRecordTypePage(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		NavigationPageBusineesLayer np = new NavigationPageBusineesLayer(driver);
+		
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		WebElement ele;
+		String tab;
+		ThreadSleep(5000);
+		
+		if(bp.clickOnTab(projectName, TabName.InstituitonsTab)){
+			log(LogStatus.INFO, "click on"+TabName.InstituitonsTab, YesNo.No);
+			
+			if(bp.clickOnAlreadyCreatedItem(projectName, SMOKIns13InsName, 30)){
+				
+				log(LogStatus.INFO, "click on created institution "+SMOKIns13InsName, YesNo.No);
+
+				// details page related tab verification
+				String[] relatedTabs = {RelatedTab.Details.toString(),RelatedTab.Contacts.toString(),RelatedTab.Fundraising.toString()
+						,RelatedTab.Co_Investments.toString(),RelatedTab.Consultants.toString(),RelatedTab.Deals.toString(),RelatedTab.Events.toString(),RelatedTab.Files.toString()};
+				
+				for (int i = 0; i < relatedTabs.length; i++) {
+				tab = relatedTabs[i];
+				ele=ip.getRelatedTab(projectName, tab, 10);
+				if (ele!=null) {
+				log(LogStatus.INFO,"Related Tab "+tab+" present at institutions detail page",YesNo.No);
+				} else {
+				sa.assertTrue(false,"Related Tab "+tab+" sholud be present at institutions detail page");
+				log(LogStatus.SKIP,"Related Tab "+tab+" sholud be present at institutions detail page",YesNo.Yes);
+				}
+				}
+				
+				ThreadSleep(2000);
+				
+				
+				// Buttons
+				np.clickOnShowMoreDropdownOnly(projectName);
+				ShowMoreActionDropDownList[] buttons={ShowMoreActionDropDownList.New_Fundraising,ShowMoreActionDropDownList.New_Advisor
+				,ShowMoreActionDropDownList.New_Contact};
+				ShowMoreActionDropDownList button=null;
+				for (int i = 0; i < buttons.length; i++) {
+				button=buttons[i];
+				ele = np.actionDropdownElement(projectName, button, 10);
+				if (ele!=null) {
+				log(LogStatus.INFO,"Button "+button+" is present at instituion record type page",YesNo.No);
+				} else {
+				sa.assertTrue(false,"Button "+button+" sholud be present at instituion record type page");
+				log(LogStatus.SKIP,"Button "+button+" sholud be present at instituion record type page",YesNo.Yes);
+				}
+				}
+
+
+				
+				// compact layout field visibiltiy verification
+				
+				String[] relatedField = {"Total Fund Commitments (mn)",
+										"Total Co-investment Commitments (mn)",
+										"Phone",
+										"Sector",
+										"Region"};
+				String field;
+				
+				for (int i = 0; i < relatedField.length; i++) {
+				field = relatedField[i];
+				ele=ip.getDetailPageFieldLabel(projectName, field, 20);
+				if (ele!=null) {
+				log(LogStatus.INFO,"Related field "+field+" present at institutions detail page",YesNo.No);
+				} else {
+				sa.assertTrue(false,"Related field "+field+" sholud be present at institutions detail page");
+				log(LogStatus.SKIP,"Related field "+field+" sholud be present at institutions detail page",YesNo.Yes);
+				}
+				}
+				
+				// activity timeline visibility
+				WebElement activityTimeline=ip.getActivityTimeLineBox(30);
+				
+				if(activityTimeline!=null){
+					log(LogStatus.INFO,"Activity timeline is present in institution page",YesNo.No);
+					
+				}else{
+					
+					sa.assertTrue(false,"Activity timeline is not present in institution page");
+					log(LogStatus.FAIL,"Activity timeline is not present in institution page",YesNo.Yes);
+				}
+				
+			}else{
+				sa.assertTrue(false,"Not able to click on created institution "+SMOKIns12InsName);
+				log(LogStatus.FAIL,"Not able to click on created institution "+SMOKIns12InsName,YesNo.Yes);
+			}
+			
+			
+		}else{
+			sa.assertTrue(false,"Not able to click on"+TabName.InstituitonsTab);
+			log(LogStatus.FAIL,"Not able to click on"+TabName.InstituitonsTab,YesNo.Yes);
+			
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
 	}
 	
 }
