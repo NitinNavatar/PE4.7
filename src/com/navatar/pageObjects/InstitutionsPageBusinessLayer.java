@@ -79,35 +79,36 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 				}
 				
 
-				if (!entityType.equals("") ||entityType!=null) {
-					WebElement ele;
-					ThreadSleep(2000);
-					if(click(driver, getEntityTypeDropdown(mode, timeOut), "entity dropdown", action.SCROLLANDBOOLEAN)){
-						appLog.info("click on entity dropdown");
-						
-						String xpath = "//*[text()='Entity Type']/..//input/../..//span[text()='"+entityType+"'][@title='"+entityType+"']/../..";
-						ele=FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, timeOut);
-						ThreadSleep(2000);
-						if(clickUsingJavaScript(driver, ele, entityType+" entity type")){
-							appLog.info("click on entity dropdown value:"+entityType);
-						
-						}else{
-							
-							appLog.error("Not Able to click on entity dropdown value:"+entityType);
-							return false;
-						}
-						
-						
-					}else{
-						appLog.error("Not Able to click on entity dropdown");
-						return false;
-					}
-					
-				}
+				
 				
 				if (sendKeys(driver, getLegalName(projectName,timeOut), institutionName, "leagl name text box",action.SCROLLANDBOOLEAN)) {
 					appLog.info("passed data in text box: " + institutionName);
 					
+					if (entityType!=null) {
+						WebElement ele;
+						ThreadSleep(2000);
+						if(click(driver, getEntityTypeDropdown(mode, timeOut), "entity dropdown", action.SCROLLANDBOOLEAN)){
+							appLog.info("click on entity dropdown");
+							
+							String xpath = "//*[text()='Entity Type']/..//input/../..//span[text()='"+entityType+"'][@title='"+entityType+"']/../..";
+							ele=FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, timeOut);
+							ThreadSleep(2000);
+							if(clickUsingJavaScript(driver, ele, entityType+" entity type")){
+								appLog.info("click on entity dropdown value:"+entityType);
+							
+							}else{
+								
+								appLog.error("Not Able to click on entity dropdown value:"+entityType);
+								return false;
+							}
+							
+							
+						}else{
+							appLog.error("Not Able to click on entity dropdown");
+							return false;
+						}
+						
+					}
 					FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 					if (labelsWithValues!=null) {
 						for (String[] strings : labelsWithValues) {
@@ -1261,5 +1262,6 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		return isDisplayed(driver, FindElement(driver, xpath, fieldName, action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, fieldName);
 		
 	}
+	
 	
 }

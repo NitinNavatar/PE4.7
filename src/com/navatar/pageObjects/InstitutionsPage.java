@@ -659,4 +659,27 @@ public WebElement getLastModifiedTime(String projectName,int timeOut) {
 		}
 		return FindElements(driver, xpath,"institution record type list ");
 	}
+
+public WebElement getHighlightPanelFieldLabel(String projectName,String fieldName,int timeOut){
+		
+		WebElement element = null;
+		String xpath = "//div[@class='secondaryFields']//*[@title='"+fieldName+"']";
+		
+		List<WebElement> list= FindElements(driver, xpath, "Highlight panel element");
+		for(WebElement ele:list){
+			
+			element=isDisplayed(driver, ele, "visibility", timeOut, fieldName);
+			
+			if(element!=null){
+						
+				return element;
+			}else{
+				
+			}
+			
+		}
+		
+		return null;
+	}
+	
 }

@@ -467,9 +467,9 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		WebElement ele=null;
 		boolean flag = true;
 		refresh(driver);
-		ThreadSleep(2000);
+		ThreadSleep(5000);
 		xpath="(//span[contains(text(),'more actions')])[1]/..";
-		ele=FindElement(driver, xpath, "show more action down arrow", action.SCROLLANDBOOLEAN, 30);
+		ele=isDisplayed(driver, FindElement(driver, xpath, "show more action down arrow", action.SCROLLANDBOOLEAN, 30),"Visibility", 30,"show more action down arrow", action.SCROLLANDBOOLEAN);
 		if(click(driver, ele, "show more action on ", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "clicked on show more actions icon", YesNo.No);
 		}
