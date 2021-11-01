@@ -2062,6 +2062,7 @@ public WebElement getElementForActivityTimeLineTask(String projectName,PageName 
 	}
 	
 	String nextStepsXpath = "//div[@class='"+type+"']/following-sibling::div[@class='activity-timeline'][1]";
+	
 	String subjectXpath = nextStepsXpath+"//*[@title='"+subject+"']";
 
 	String eleXpath = "";
@@ -2078,8 +2079,11 @@ public WebElement getElementForActivityTimeLineTask(String projectName,PageName 
 		eleXpath=subjectXpath+"/following-sibling::div//*[@title='attachment']";
 	}else if(subjectElement==SubjectElement.StrikedText) {
 		eleXpath=subjectXpath;
-	}
-	else {
+	}else if (subjectElement==SubjectElement.NextGrid) {
+		eleXpath=nextStepsXpath;
+	}else if (subjectElement==SubjectElement.PastGrid) {
+		eleXpath=nextStepsXpath;
+	}else {
 		eleXpath=subjectXpath+"//a";
 	}
 	ele = FindElement(driver, eleXpath, subjectElement+" For : "+subject, action.SCROLLANDBOOLEAN, timeOut);
@@ -3729,6 +3733,117 @@ public WebElement getViewListElement(String viewList)
 	WebElement selectListView = FindElement(driver, xpath,"Select List View : "+viewList, action.SCROLLANDBOOLEAN, 5);
 	return selectListView;
 }
+
+
+public WebElement getRelatedListItem(String relatedList,int i)
+{
+	String xpath ="";
+	xpath="//h"+i;
+	xpath=xpath+"//*[contains(text(),'"+relatedList+"')]";
+	WebElement selectListView = FindElement(driver, xpath,relatedList, action.SCROLLANDBOOLEAN, 5);
+	return selectListView;
+}
+
+public boolean createItem(String projectName,String navigationTab,String[][] labelWithValue,int timeOut) {
+	boolean flag=false;
+	if (clickOnTab(projectName, navigationTab)) {
+		log(LogStatus.INFO, "Click on Tab : "+navigationTab, YesNo.No);
+		
+		String[] viewLists = {"All","Recently Viewed"};
+		click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN);
+		for (String viewList : viewLists) {
+			WebElement ele = getViewListElement(viewList);;
+			if (ele!=null) {
+				log(LogStatus.INFO, viewList+" is present on "+navigationTab , YesNo.No);
+			} else {
+				log(LogStatus.ERROR, viewList+" should be present on "+navigationTab, YesNo.Yes);
+				sa.assertTrue(false,  viewList+" should be present on "+navigationTab);
+			}	
+		}
+					
+		if(clickUsingJavaScript(driver, getNewButton(projectName, 10), "new button")) {
+			log(LogStatus.INFO, "Click on new button going to create ", YesNo.No);
+			enteringValueForCreationPopUp(projectName, labelWithValue, action.BOOLEAN, timeOut);
+			if (click(driver,  getNavigationTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.ERROR, "Click on save Button ", YesNo.No);
+				ThreadSleep(5000);
+				flag=true;
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on save Button ", YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on save Button ");
+			}
+			
+		}else {
+			log(LogStatus.ERROR, "Not Able to Click on new button so cannot create", YesNo.Yes);
+			sa.assertTrue(false, "Not Able to Click on new button so cannot create");
+
+		}
+	} else {
+		log(LogStatus.ERROR, "Not Able to Click on Tab : "+navigationTab, YesNo.Yes);
+		sa.assertTrue(false,"Not Able to Click on Tab : "+navigationTab);
+	}
+	return flag;
+}
+
+public void enteringValueForCreationPopUp(String projectName,String[][] navigationFieldWithValues,action action,int timeOut) {
+	String navigationField;
+	String navigationvalue;
+	WebElement ele;
+	for (String[] navigationFieldAndvalue : navigationFieldWithValues) {
+		navigationField=navigationFieldAndvalue[0];
+		navigationvalue = navigationFieldAndvalue[1];
+		 if (navigationField.equalsIgnoreCase(excelLabel.Role.toString())) {
+			 ele = getDropdownOnCreationPopUp(projectName, PageName.Financing, navigationField, action.BOOLEAN, timeOut);
+			 if (click(driver,ele,navigationField+" with value "+navigationvalue, action.BOOLEAN)) {
+				 log(LogStatus.INFO, "Click on "+navigationField, YesNo.No);
+				 if (SelectDropDownValue(projectName, PageName.Financing, navigationField, navigationvalue, action, timeOut)) {
+					 log(LogStatus.INFO, "Selected "+navigationvalue+" for "+navigationField, YesNo.No);
+				 } else {
+					 log(LogStatus.ERROR, "Not Able to Select "+navigationvalue+" for "+navigationField, YesNo.Yes);
+					 sa.assertTrue(false, "Not Able to Select "+navigationvalue+" for "+navigationField);
+
+				 }
+
+			 } else {
+					log(LogStatus.ERROR, "Not ABle to Click on "+navigationField , YesNo.Yes);
+					sa.assertTrue(false, "Not ABle to Click on "+navigationField);
+
+				}
+		}else{
+			ele =getCreationLabelField(projectName, navigationField, action, 20);
+			if (sendKeys(driver, ele, navigationvalue, navigationField, action)) {
+				log(LogStatus.INFO, "Able to enter "+navigationField, YesNo.No);
+
+				if (navigationField.equalsIgnoreCase(excelLabel.Fundraising.toString()) || navigationField.equalsIgnoreCase(excelLabel.Contact.toString())) {
+					ThreadSleep(10000);
+					if (click(driver,getItemInList(projectName, navigationvalue, action.BOOLEAN, 20),
+							navigationvalue + "   :  Parent Name", action.BOOLEAN)) {
+						log(LogStatus.INFO, navigationvalue+" is available", YesNo.No);
+					} else {
+						log(LogStatus.ERROR, navigationvalue+" is not available", YesNo.Yes);
+						sa.assertTrue(false, navigationvalue+" is not available");
+
+					}	
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to enter "+navigationField, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to enter "+navigationField);
+			}	
+		}
+
+	}
+
+}
+
+public WebElement getCreationLabelField(String projectName,String navigationField,action action,int timeOut) {
+	navigationField=navigationField.replace("_", " ");
+	String xpath = "//*[text()='"+navigationField+"']/following-sibling::div//input";
+	WebElement ele = FindElement(driver, xpath, navigationField, action, timeOut);
+	scrollDownThroughWebelement(driver, ele, navigationField);
+	return isDisplayed(driver, ele, "Visibility", timeOut, navigationField);
+}
+
 
 
 }

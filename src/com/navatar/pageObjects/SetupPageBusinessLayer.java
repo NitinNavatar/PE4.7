@@ -2709,4 +2709,12 @@ public boolean updateFieldLabelInOverridePage(WebDriver driver,String fieldName,
 }
 
 
+public WebElement getValuesElementAtFieldRelationShip(String projectName, String value) {
+	String xpath = "//h3[text()='Values']//ancestor::div/following-sibling::div//table//td[text()='"+value+"']";
+	WebElement ele = FindElement(driver, xpath, "PickList Value : "+value, action.BOOLEAN, 20) ;
+	return isDisplayed(driver, ele, "visibility", 10, "PickList Value : "+value);
+}
+
+
+
 }
