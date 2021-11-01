@@ -391,6 +391,7 @@ public class CommonVariables {
 	public static String SMOKCon6FirstName,SMOKCon6LastName,SMOKCon6InstitutionName,SMOKCon6ContactEmail,SMOKCon6Phone,SMOKCon6Tier;
 	public static String SMOKCon7FirstName,SMOKCon7LastName,SMOKCon7InstitutionName,SMOKCon7ContactEmail,SMOKCon7Phone,SMOKCon7Tier;
 	public static String SMOKCon8FirstName,SMOKCon8LastName,SMOKCon8InstitutionName,SMOKCon8ContactEmail,SMOKCon8Phone,SMOKCon8Tier;
+	public static String SMOKCon9FirstName,SMOKCon9LastName,SMOKCon9InstitutionName,SMOKCon9ContactEmail,SMOKCon9Phone,SMOKCon9Tier;
 
 	
 	//deal
@@ -1744,6 +1745,12 @@ public class CommonVariables {
 			SMOKCon8InstitutionName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON8", excelLabel.Institutions_Name);
 			SMOKCon8Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON8", excelLabel.Phone);
 			SMOKCon8Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON8", excelLabel.Contact_Tier);
+
+			SMOKCon9FirstName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON9", excelLabel.Contact_FirstName);
+			SMOKCon9LastName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON9", excelLabel.Contact_LastName);
+			SMOKCon9InstitutionName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON9", excelLabel.Institutions_Name);
+			SMOKCon9Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON9", excelLabel.Phone);
+			SMOKCon9Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON9", excelLabel.Contact_Tier);
 
 			
 			//deal
