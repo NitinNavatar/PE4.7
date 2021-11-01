@@ -3479,7 +3479,45 @@ public class PECloudSmoke extends BaseLib{
 		sa.assertAll();
 	}
 
-	
+	@Parameters("projectName")
+	@Test
+	public void smokeTC031_verifyListViewOnContactObject(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp= new BasePageBusinessLayer(driver);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		
+		String selectListLink ="All Contacts,Automation All,Birthdays This Month,Key Intermediaries,My Call List,My Contacts,New Last Week,"
+				+ "New This Week,Recently Viewed Contacts,Tier 1 Intermediaries to Call,Top Bankers";
+		
+		ThreadSleep(5000);
+		if(bp.clickOnTab(projectName, mode, TabName.ContactTab)){
+			log(LogStatus.PASS,	"click on contacts tab", YesNo.No);
+			
+			if (click(driver, bp.getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(5000);
+				List<WebElement> lst=bp.getAllLinkOfSelectListIconOption(mode,"Contacts", 30);
+				if(compareMultipleList(driver, selectListLink, lst).isEmpty()){
+					log(LogStatus.PASS,	"All link of select list icon  is verified", YesNo.No);
+				}else{
+					
+					log(LogStatus.FAIL,	"All link of select list icon  is not verified", YesNo.Yes);
+					sa.assertTrue(false,"All link of select list icon  is not verified");
+				}
+				
+			} else {
+				appLog.error("Not able to click on Select List Icon");
+			}
+		}else{
+			
+			log(LogStatus.FAIL,	"not able to click on contact tab", YesNo.Yes);
+			sa.assertTrue(false,"not able to click on contact tab");
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 	
 }
 	
