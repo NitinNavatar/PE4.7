@@ -893,7 +893,7 @@ public static enum PermissionType{
 		};
 	
 	public static enum ShowMoreActionDropDownList{
-		 New_Task,Edit, Delete, New_Meeting,LogCaLLWithMultiple{
+		 New_Task,New_Call,Edit, Delete, New_Meeting,LogCaLLWithMultiple{
 				@Override
 				public String toString() {
 					return "Log a Call with Multiple Associations";
@@ -903,7 +903,10 @@ public static enum PermissionType{
 				public String toString() {
 					return "New Task with Multiple Associations";
 				}
-			}, Contact_Transfer,Change_Date,Change_Record_Type,Change_Priority,Change_Status,Edit_Comments,New_Attendee,New, Create_Distribution, Create_Drawdown, New_Partnership, New_Fundraising, Bulk_Fundraising, New_Fundraising_Contact, Create_Commitments, Clone, Printable_View
+			}, Contact_Transfer,Change_Date,Change_Record_Type,Change_Priority,Change_Status,Edit_Comments,New_Attendee
+		 ,New, Create_Distribution, Create_Drawdown, New_Partnership, New_Fundraising, Bulk_Fundraising, New_Fundraising_Contact, Create_Commitments, Clone, Printable_View,
+		 New_Affiliation,New_Client,New_Contact ,New_Commitment,New_Advisor,New_Deal,New_Investor
+
 			};
 		
 	public static enum IndiviualInvestorSectionsName{
@@ -1052,13 +1055,19 @@ public static enum PermissionType{
 	};
 	
 	public static enum RelatedTab{
-		Related,Details,Tasks,Meetings,Activities,Documents,Box,Investment,
+		Related,Details,Tasks,Meetings,Activities,Documents,Box,Referrals,Clients,Investment,Contacts,Consultants,Fundraising,Investors
+		,Co_Investments{
+			@Override
+			public String toString() {
+				return "Co-Investments";
+			}
+		},Deals,Files,
 		QandA{
 			@Override
 			public String toString() {
 				return "Q&A";
 			}
-		}, Overview,Events, Fundraising, Fund_Management, Fund_Investments, Files, Fundraising_Contacts;	  
+		}, Overview,Events, Fund_Management, Fund_Investments, Fundraising_Contacts;	  
 	};
 	
 	public static enum Header{
