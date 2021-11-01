@@ -84,67 +84,87 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage  {
 								}
 							}
 							
-							if(!closing.equals("")||closing!=null){
-								if (click(driver,
-										FindElement(driver,
-												"//*[text()='Closing']/..//input",
-												"Clsoing input", action.THROWEXCEPTION, 30),
-										"Clsoing input", action.BOOLEAN)) {
-									appLog.info("Click on closing input");
-									ThreadSleep(2000);
-									click(driver,FindElement(driver,"//*[text()='Closing']/..//input/../..//*[@data-value='"+closing+"']","Clsoing list", action.THROWEXCEPTION, 30),
-											"Clsoing list", action.BOOLEAN) ;
-										appLog.info("Click on closing list item:"+closing);
+							try {
+								if(!closing.equals("")||closing!=null){
+									if (click(driver,
+											FindElement(driver,
+													"//*[text()='Closing']/..//input",
+													"Clsoing input", action.THROWEXCEPTION, 30),
+											"Clsoing input", action.BOOLEAN)) {
+										appLog.info("Click on closing input");
+										ThreadSleep(2000);
+										click(driver,FindElement(driver,"//*[text()='Closing']/..//input/../..//*[@data-value='"+closing+"']","Clsoing list", action.THROWEXCEPTION, 30),
+												"Clsoing list", action.BOOLEAN) ;
+											appLog.info("Click on closing list item:"+closing);
+										
+										
+									} else {
+										appLog.info("Not able to Click on closing input");
+									}
 									
-									
-								} else {
-									appLog.info("Not able to Click on closing input");
 								}
-								
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
 							
 							
-							if(!stage.equals("")||stage!=null){
-								if (click(driver,
-										FindElement(driver,
-												"//*[text()='Stage']/..//input",
-												"Stage input", action.THROWEXCEPTION, 30),
-										"Stage input", action.BOOLEAN)) {
-									appLog.info("Click on stage input");
-									ThreadSleep(2000);
-									click(driver,FindElement(driver,"//*[text()='Stage']/..//input/../..//*[@data-value='"+stage+"']","stage list", action.THROWEXCEPTION, 30),
-											"stage list", action.BOOLEAN) ;
-										appLog.info("Click on stage list item:"+stage);
+							try {
+								if(!stage.equals("")||stage!=null){
+									if (click(driver,
+											FindElement(driver,
+													"//*[text()='Stage']/..//input",
+													"Stage input", action.THROWEXCEPTION, 30),
+											"Stage input", action.BOOLEAN)) {
+										appLog.info("Click on stage input");
+										ThreadSleep(2000);
+										click(driver,FindElement(driver,"//*[text()='Stage']/..//input/../..//*[@data-value='"+stage+"']","stage list", action.THROWEXCEPTION, 30),
+												"stage list", action.BOOLEAN) ;
+											appLog.info("Click on stage list item:"+stage);
+										
+										
+									} else {
+										appLog.info("Not able to Click on stage input");
+									}
 									
-									
-								} else {
-									appLog.info("Not able to Click on stage input");
 								}
-								
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
 							
-							if(!investmentLikelyAmount.equals("")||investmentLikelyAmount!=null){
-								WebElement ele=FindElement(driver, "//input[@name='navpeII__Investment_Likely_Amount_USD_mn__c']", "investment likely amount input box", action.BOOLEAN, 20);
-								if (sendKeys(driver, ele, investmentLikelyAmount, "investment likely amount input box", action.BOOLEAN)) {
-									appLog.info("Enter investment likley amount:"+investmentLikelyAmount);
-			
+							try {
+								if(!investmentLikelyAmount.equals("")||investmentLikelyAmount!=null){
+									WebElement ele=FindElement(driver, "//input[@name='navpeII__Investment_Likely_Amount_USD_mn__c']", "investment likely amount input box", action.BOOLEAN, 20);
+									if (sendKeys(driver, ele, investmentLikelyAmount, "investment likely amount input box", action.BOOLEAN)) {
+										appLog.info("Enter investment likley amount:"+investmentLikelyAmount);
+
+										
+									} else {
+										appLog.info("Not able to Enter investment likley amount:"+investmentLikelyAmount);
+									}
 									
-								} else {
-									appLog.info("Not able to Enter investment likley amount:"+investmentLikelyAmount);
 								}
-								
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
 							
-							if(!statusNote.equals("")||statusNote!=null){
-								WebElement ele=FindElement(driver, "//*[text()='Status Notes']/..//textarea", "status note", action.BOOLEAN, 20);
-								if (sendKeys(driver, ele, statusNote, "status note", action.BOOLEAN)) {
-									appLog.info("Enter status note:"+statusNote);
-			
+							try {
+								if(!statusNote.equals("")||statusNote!=null){
+									WebElement ele=FindElement(driver, "//*[text()='Status Notes']/..//textarea", "status note", action.BOOLEAN, 20);
+									if (sendKeys(driver, ele, statusNote, "status note", action.BOOLEAN)) {
+										appLog.info("Enter status note:"+statusNote);
+
+										
+									} else {
+										appLog.info("not able to Enter status note:"+statusNote);
+									}
 									
-								} else {
-									appLog.info("not able to Enter status note:"+statusNote);
 								}
-								
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
 							if (click(driver, getCustomTabSaveBtn("",60), "Save Button", action.SCROLLANDBOOLEAN)) {
 								ThreadSleep(500);

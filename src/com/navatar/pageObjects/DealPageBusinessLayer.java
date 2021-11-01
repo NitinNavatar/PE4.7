@@ -367,7 +367,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	 * @return String
 	 */
 	public String convertToPortfolioBeforeNext(String company) {
-		return "Please click 'Next' to convert "+company+" to a Portfolio Company";
+		return "Please click 'Next' to convert "+company+" to a Portfolio, else click Close icon to Cancel. ";
 	}
 	
 	/**
@@ -528,6 +528,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	 */
 	public WebElement getStagePath(String stage, String stageVale) {
 		String xpath="";
+		stageVale=stageVale.replace("_", " ");
 		if (DealStage.Completed.toString().equals(stage)) {
 			xpath ="//*[@class='complete slds-path__stage']/following-sibling::span[text()='"+stageVale+"']";
 		} else if (DealStage.Current.toString().equals(stage)){

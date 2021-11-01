@@ -1739,5 +1739,21 @@ public WebElement getAppLogoHeaer(int timeout){
 	
 	return isDisplayed(driver, applogo, "Visibility", timeout, " homepage app logo");
 }
+
+public boolean selectInvestorsContactFromCreateFundRaising(int numberofContact){
+	String xpath;
+	boolean flag=true;
+	xpath="//span[@id='Select_from_Search_Results-view-box-middle']//span/div/a/../../preceding-sibling::span/span/span[1]";
+	List<WebElement> ele = FindElements(driver, xpath, "Check Box Add Fund Raising");
+	for (int i = 0; i < numberofContact; i++) {
+		if (click(driver, ele.get(i), "", action.BOOLEAN)) {
+			
+		} else {
+			flag=false;
+		}
+	}
+	return flag;
+}
+
 }
 

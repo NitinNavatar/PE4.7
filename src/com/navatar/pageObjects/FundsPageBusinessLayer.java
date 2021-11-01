@@ -986,6 +986,10 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		return flag;
 	}
 	
-	
+	public WebElement highLightFundLabel(String label,int timeOut) {
+		String xpath="//div[@class='highlights slds-clearfix slds-page-header slds-page-header_record-home fixed-position']//div/p[text()='"+label+"']";
+		WebElement ele=FindElement(driver, xpath, label, action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "visibility", timeOut, label);
+	}
 	
 }

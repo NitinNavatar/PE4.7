@@ -1308,6 +1308,12 @@ public abstract class BasePage extends BaseLib {
 	 private WebElement customNavigationFrame;
 	 @FindBy(xpath="//iframe[contains(@title,'Add Picklist Values: Navigation Type')]")
 	 private WebElement NavigationPickListFrame;
+	 @FindBy(xpath="//iframe[contains(@title,'Affiliation Custom Field: Role ~ Salesforce - Enterprise Edition')]")
+	 private WebElement affiliationFrame;
+	 @FindBy(xpath="//iframe[contains(@title,'Fundraising Contact Custom Field: Role ~ Salesforce - Enterprise Edition')]")
+	 private WebElement fundRaisingFrame;
+	 @FindBy(xpath="//iframe[contains(@title,'Financing Custom Field: Lender Status ~ Salesforce - Enterprise Edition')]")
+	 private WebElement financingFrame;
 	 
 	 public WebElement getstatusPicklistFrame(int timeOut) {
 			return isDisplayed(driver, statusPicklistFrame, "Visibility", timeOut, "status Picklist Frame");
@@ -1382,6 +1388,15 @@ public abstract class BasePage extends BaseLib {
 
 	  }else if (pageName.toString().equalsIgnoreCase(PageName.ConvertToPortfolioFrame.toString())){
 		  ele=isDisplayed(driver,convertToPortfolioFrame , "Visibility", timeOut, "convert to portfolio frame");
+
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.AffiliationPage.toString())){
+		  ele=isDisplayed(driver,affiliationFrame , "Visibility", timeOut, "affiliation Frame");
+
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.Fundraising_ContactPage.toString())){
+		  ele=isDisplayed(driver,fundRaisingFrame , "Visibility", timeOut, "FR Contact Frame");
+
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.Financing.toString())){
+		  ele=isDisplayed(driver,financingFrame , "Visibility", timeOut, "Financing Frame");
 
 	  }
 	  return ele; 
@@ -3205,11 +3220,11 @@ public abstract class BasePage extends BaseLib {
 		WebElement ele=null;
 		String xpath="";
 		if(mode.toString().equalsIgnoreCase(Mode.Lightning.toString())) {
-			xpath="a";
+			xpath="button";
 		}else {
 			xpath="input";
 		}
-		return isDisplayed(driver, FindElement(driver, "//"+xpath+"[@title='Create Fundraisings']", "Create Fundraising button on "+pageName, action.SCROLLANDBOOLEAN,timeOut), "Visibility",timeOut, "Create Fundraising button on "+pageName);
+		return isDisplayed(driver, FindElement(driver, "//"+xpath+"[text()='Bulk Fundraising' or @title='Bulk Fundraising']", "Create Fundraising button on "+pageName, action.SCROLLANDBOOLEAN,timeOut), "Visibility",timeOut, "Create Fundraising button on "+pageName);
 	}
 	
 	
@@ -5273,4 +5288,27 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, taskEditSaveBtn, "Visibility", timeOut, "Edit Task Save Button");
 	}
 	
+	@FindBy(xpath="//*[@name='secondaryFields']//p")
+	private WebElement secondaryField;
+	
+	public WebElement getSecondaryField(String projectName,int timeOut) {
+		return isDisplayed(driver, secondaryField, "Visibility", timeOut, "Secondary Field");
+	}
+	
+	
+	public WebElement getDropdownOnCreationPopUp(String projectName,PageName pageName,String label,action action,int timeOut) {
+		String xpath="";
+		label = label.replace("_", " ");
+		xpath="//label[text()='"+label+"']/following-sibling::div//input";
+		WebElement ele =  FindElement(driver, xpath,label ,action, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "Drop Down : "+label);
+	}
+	
+	@FindBy(xpath = "//button[@title='Move selection to Chosen']")
+	private WebElement addButtonMultipleBox_Lightning;
+
+	public WebElement getAddButtonMultipleBox(int timeOut) {
+		return isDisplayed(driver, addButtonMultipleBox_Lightning, "Visibility", timeOut, "addButtonMultipleBox Select Box Mode Lightning");
+
+	}
 }
