@@ -437,8 +437,14 @@ public class CommonVariables {
  	public static String SmokePFContact1FName,SmokePFContact1LName,SmokePFContact1Inst,SmokePFContact1EmailID,SmokePFContact1RecordType;
  	public static String SmokeDeal2,SmokeDeal2CompanyName,SmokeDeal2RecordType,SmokeDeal2Stage;
  	public static String SmokeFR1,SmokeFR1Fund,SmokeFR1LegalName,SmokeFR1Stage;
+ 	
+ 	// partnership
+ 	
+ 	public static String SMOKPartnership1Name,SMOKPartnership1FundName;
 	
-	
+	// commitment
+ 	public static String SMOKCommitment1LimitedPartner,SMOKCommitment1PartnershipName,SMOKCommitment1CommitmentAmount,SMOKCommitment1FinalCommitmentDate;
+
 	
 	public CommonVariables(Object obj) {
 		//TODO Auto-generated constructor stub
@@ -1917,6 +1923,14 @@ public class CommonVariables {
 			SmokeFR1Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKEFR1", excelLabel.Stage);
 			
 
+			SMOKPartnership1Name=ExcelUtils.readData(phase1DataSheetFilePath,"Partnerships",excelLabel.Variable_Name, "SMOKPARTNERSHIP1", excelLabel.PartnerShip_Name);
+			SMOKPartnership1FundName=ExcelUtils.readData(phase1DataSheetFilePath,"Partnerships",excelLabel.Variable_Name, "SMOKPARTNERSHIP1", excelLabel.Fund_Name);
+			
+			SMOKCommitment1LimitedPartner=ExcelUtils.readData(phase1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "SMOKCOMM1", excelLabel.Limited_Partner);
+			SMOKCommitment1PartnershipName=ExcelUtils.readData(phase1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "SMOKCOMM1", excelLabel.PartnerShip_Name);
+			SMOKCommitment1FinalCommitmentDate=ExcelUtils.readData(phase1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "SMOKCOMM1", excelLabel.Final_Commitment_Date);
+			SMOKCommitment1CommitmentAmount=ExcelUtils.readData(phase1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "SMOKCOMM1", excelLabel.Commitment_Amount);
+		
 		}
 
 		System.err.println("");
