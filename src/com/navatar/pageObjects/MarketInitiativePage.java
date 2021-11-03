@@ -15,12 +15,12 @@ import static com.navatar.generic.CommonLib.*;
  * @author Parul Singh
  *
  */
-public class FinancialPerformancePage extends BasePageBusinessLayer {
+public class MarketInitiativePage extends BasePageBusinessLayer {
 
 	/**
 	 * @param driver
 	 */
-	public FinancialPerformancePage(WebDriver driver) {
+	public MarketInitiativePage(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
 		PageFactory.initElements(driver, this);
