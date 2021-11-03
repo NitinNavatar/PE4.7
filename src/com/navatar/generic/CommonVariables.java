@@ -447,7 +447,7 @@ public class CommonVariables {
 	// commitment
  	public static String SMOKCommitment1LimitedPartner,SMOKCommitment1PartnershipName,SMOKCommitment1CommitmentAmount,SMOKCommitment1CommitmentId,SMOKCommitment1FinalCommitmentDate;
 
-	
+	public static String SmokeMI1;
 	public CommonVariables(Object obj) {
 		//TODO Auto-generated constructor stub
 		AppListeners.appLog.info("Kindly hold on starting variable intialization........");
@@ -1940,6 +1940,10 @@ public class CommonVariables {
 			SMOKCommitment1CommitmentAmount=ExcelUtils.readData(phase1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "SMOKCOMM1", excelLabel.Commitment_Amount);
 			SMOKCommitment1CommitmentId=ExcelUtils.readData(phase1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "SMOKCOMM1", excelLabel.Commitment_ID);
 
+
+		
+			SmokeMI1=ExcelUtils.readData(phase1DataSheetFilePath,"MI",excelLabel.Variable_Name, "SmokeMI1", excelLabel.Marketing_InitiativeName);
+			
 		}
 
 		System.err.println("");
