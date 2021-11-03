@@ -906,7 +906,7 @@ public static enum PermissionType{
 
 			}, Contact_Transfer,Change_Date,Change_Record_Type,Change_Priority,Change_Status,Edit_Comments,New_Attendee
 		 ,New, New_Referral,New_Financing,Create_Distribution, Create_Drawdown, New_Partnership, New_Fundraising, Bulk_Fundraising, New_Fundraising_Contact, 
-		 Create_Commitments, Clone, Printable_View,
+		 Create_Commitments, Clone,Change_Owner,Sharing,Sharing_Hierarchy, Printable_View,
 		 New_Affiliation,New_Client,New_Contact ,New_Commitment,New_Advisor,New_Deal,New_Investor
 
 			};
