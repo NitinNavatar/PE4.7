@@ -3142,6 +3142,8 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getSelectListIcon(int timeOut) {
 		return isDisplayed(driver, selectListIcon_Lighting, "Visibility", timeOut, "Select List Icon");
 		}
+	
+	
 	/* return all links of select list icon option list*/
 	public List<WebElement> getAllLinkOfSelectListIconOption(String mode,String tabName,int timeOut) {
 		String xpath;
@@ -3150,7 +3152,7 @@ public abstract class BasePage extends BaseLib {
 			xpath="//select[@id='fcf'][@title='View:']/option";
 		}else{
 			
-			xpath="//ul[@aria-label='"+tabName+" | List Views']/li/a";
+			xpath="//ul[@aria-label='"+tabName+" | List Views']/li/a/span";
 		}
 		return FindElements(driver, xpath, "Select list icon link");
 		}

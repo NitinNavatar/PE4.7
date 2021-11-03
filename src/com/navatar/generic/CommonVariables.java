@@ -392,6 +392,8 @@ public class CommonVariables {
 	public static String SMOKCon7FirstName,SMOKCon7LastName,SMOKCon7InstitutionName,SMOKCon7ContactEmail,SMOKCon7Phone,SMOKCon7Tier;
 	public static String SMOKCon8FirstName,SMOKCon8LastName,SMOKCon8InstitutionName,SMOKCon8ContactEmail,SMOKCon8Phone,SMOKCon8Tier;
 	public static String SMOKCon9FirstName,SMOKCon9LastName,SMOKCon9InstitutionName,SMOKCon9ContactEmail,SMOKCon9Phone,SMOKCon9Tier;
+	public static String SMOKCon10FirstName,SMOKCon10LastName,SMOKCon10InstitutionName,SMOKCon10ContactEmail,SMOKCon10Phone,SMOKCon10Tier;
+
 
 	
 	//deal
@@ -443,7 +445,7 @@ public class CommonVariables {
  	public static String SMOKPartnership1Name,SMOKPartnership1FundName;
 	
 	// commitment
- 	public static String SMOKCommitment1LimitedPartner,SMOKCommitment1PartnershipName,SMOKCommitment1CommitmentAmount,SMOKCommitment1FinalCommitmentDate;
+ 	public static String SMOKCommitment1LimitedPartner,SMOKCommitment1PartnershipName,SMOKCommitment1CommitmentAmount,SMOKCommitment1CommitmentId,SMOKCommitment1FinalCommitmentDate;
 
 	
 	public CommonVariables(Object obj) {
@@ -1759,6 +1761,12 @@ public class CommonVariables {
 			SMOKCon9Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON9", excelLabel.Phone);
 			SMOKCon9Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON9", excelLabel.Contact_Tier);
 
+			SMOKCon10FirstName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON10", excelLabel.Contact_FirstName);
+			SMOKCon10LastName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON10", excelLabel.Contact_LastName);
+			SMOKCon10InstitutionName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON10", excelLabel.Institutions_Name);
+			SMOKCon10Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON10", excelLabel.Phone);
+			SMOKCon10Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON10", excelLabel.Contact_Tier);
+
 			
 			//deal
 			SMOKDeal1DealName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal1", excelLabel.Deal_Name);
@@ -1930,7 +1938,8 @@ public class CommonVariables {
 			SMOKCommitment1PartnershipName=ExcelUtils.readData(phase1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "SMOKCOMM1", excelLabel.PartnerShip_Name);
 			SMOKCommitment1FinalCommitmentDate=ExcelUtils.readData(phase1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "SMOKCOMM1", excelLabel.Final_Commitment_Date);
 			SMOKCommitment1CommitmentAmount=ExcelUtils.readData(phase1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "SMOKCOMM1", excelLabel.Commitment_Amount);
-		
+			SMOKCommitment1CommitmentId=ExcelUtils.readData(phase1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "SMOKCOMM1", excelLabel.Commitment_ID);
+
 		}
 
 		System.err.println("");

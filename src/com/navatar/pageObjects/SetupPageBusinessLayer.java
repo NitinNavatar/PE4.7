@@ -1754,6 +1754,31 @@ public void recordTypeVerification(String[][] labelWithValue) {
 }
 
 /**
+ * @author Ravi Kumar
+ * @param labelWithValue
+ */
+public boolean verifyFieldLabelWithDataType(String[] labelValue) {
+	
+	boolean flag=false;
+	String xpath = "";
+	WebElement ele;
+	
+		xpath ="//*[text()='"+labelValue[0]+"']/../../..//td//span[text()='"+labelValue[1]+"']";
+		ele=FindElement(driver, xpath, labelValue[0]+" with data type "+labelValue[1], action.BOOLEAN, 10);
+		if (ele!=null) {
+			flag=true;
+			log(LogStatus.PASS, "Field label "+labelValue[0]+" with data type "+labelValue[1]+" verified", YesNo.No);	
+		} else {
+			//result.add("Field label "+labelValue[0]+" with data type "+labelValue[1]+" not verified");
+			log(LogStatus.ERROR, "Field label "+labelValue[0]+" with data type "+labelValue[1]+" not verified", YesNo.Yes);
+			sa.assertTrue(false, "Field label "+labelValue[0]+" with data type "+labelValue[1]+" not verified");
+		}
+	
+	return flag;
+}
+
+
+/**
  * @author Azhar Alam
  * @param projectName
  * @param field

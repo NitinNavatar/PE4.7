@@ -1958,16 +1958,61 @@ WebElement element= null;;
 		if (ele!=null) {
 			appLog.info("Element Found : activity timeline box");
 			element= ele;
-		}else{
-			appLog.info("Element Not  Found :activity timeline box ");
-			continue;
-			
 		}
 	}
-	return element;
+	return element;	
+			
+}
 	
-		
-		
+/**
+ * @param projectName
+ * @param pageName
+ * @param activity
+ * @param timeOut
+ * @return activity  box
+ */
+public WebElement getActivityBox(int timeOut){
+
+	String xpath="";
+	//WebElement ele;
+WebElement element= null;;
+	xpath="//*[@title='Activity' and @data-label='Activity']/../../..";
+	List<WebElement> eles=FindElements(driver, xpath,"");
+	
+	for(WebElement ele:eles){
+		ele = isDisplayed(driver, ele  , "visiblity", 10,"activity  box");
+		if (ele!=null) {
+			appLog.info("Element Found : activity  box");
+			element= ele;
+		}
+	}
+	return element;	
+			
+}
+	
+/**
+ * @param projectName
+ * @param pageName
+ * @param activity
+ * @param timeOut
+ * @return activity  box
+ */
+public WebElement getActivityTimelineGridOnRelatedTab(int timeOut){
+
+	String xpath="";
+	//WebElement ele;
+WebElement element= null;;
+	xpath="//div[@class='slds-card-wrapper activityPanel']";
+	List<WebElement> eles=FindElements(driver, xpath,"");
+	
+	for(WebElement ele:eles){
+		ele = isDisplayed(driver, ele  , "visiblity", 10,"activity grid on related tab ");
+		if (ele!=null) {
+			appLog.info("Element Found : activity grid on related tab ");
+			element= ele;
+		}
+	}
+	return element;	
 			
 }
 	

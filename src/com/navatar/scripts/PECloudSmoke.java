@@ -19,7 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.logging.Logs;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -46,6 +48,7 @@ import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.NavatarSetupSideMenuTab;
 import com.navatar.generic.EnumConstants.NavigationMenuItems;
 import com.navatar.generic.EnumConstants.NewInteractions_DefaultValues;
+import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.Operator;
 import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.PageName;
@@ -65,10 +68,12 @@ import com.navatar.generic.EnumConstants.ViewAllAndViewCalendarLink;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
+import com.navatar.generic.EnumConstants.object;
 import com.navatar.generic.EnumConstants.searchContactInEmailProspectGrid;
 import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.CommitmentsPageBusinessLayer;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
+import com.navatar.pageObjects.CorrespondenceListPageBusinessLayer;
 import com.navatar.pageObjects.CustomObjPageBusinessLayer;
 import com.navatar.pageObjects.EmailMyTemplatesPageBusinessLayer;
 import com.navatar.pageObjects.FinancingPageBusinessLayer;
@@ -3530,7 +3535,6 @@ public class PECloudSmoke extends BaseLib{
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FinancingPageBusinessLayer fin = new FinancingPageBusinessLayer(driver);
 		PartnershipsPageBusinessLayer prt = new PartnershipsPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		NavigationPageBusineesLayer np = new NavigationPageBusineesLayer(driver);
 		
 		WebElement ele;
@@ -3585,23 +3589,22 @@ public class PECloudSmoke extends BaseLib{
 				log(LogStatus.SKIP,"HighLight should not be present at partnership",YesNo.Yes);
 			}
 			
-			// activity timeline visibility
-						WebElement activityTimeline=ip.getActivityTimeLineBox(30);
-						
-						if(activityTimeline!=null){
-							log(LogStatus.INFO,"Activity timeline is present in partnership page",YesNo.No);
-							
-						}else{
-							
-							sa.assertTrue(false,"Activity timeline is not present in partnership page");
-							log(LogStatus.FAIL,"Activity timeline is not present in partnership page",YesNo.Yes);
-						}
-						
-						
-						
-						
-			click(driver, ele=lp.getRelatedTab(projectName, RelatedTab.Related.toString(), 10), tab, action.BOOLEAN);
+			if(click(driver, ele=lp.getRelatedTab(projectName, RelatedTab.Related.toString(), 10), tab, action.BOOLEAN)){
+				log(LogStatus.INFO," clicked on related tab on partnership",YesNo.No);
 
+			// activity timeline visibility
+				WebElement activityTimeline=prt.getActivityBox(30);
+						
+				if(activityTimeline!=null){
+					log(LogStatus.INFO,"Activity timeline is present in partnership page",YesNo.No);
+							
+				}else{
+							
+					sa.assertTrue(false,"Activity timeline is not present in partnership page");
+					log(LogStatus.FAIL,"Activity timeline is not present in partnership page",YesNo.Yes);
+				}
+											
+						
 			
 			String[] relatedgrid = {"Commitments","Transfers made to Partnership","Files","Standard Activity Timeline"};
 			int k=0;
@@ -3620,7 +3623,11 @@ public class PECloudSmoke extends BaseLib{
 					log(LogStatus.SKIP,"At Related Tab "+tab+" sholud be present at partnership",YesNo.Yes);
 				}
 			}
-			
+			}else{
+				
+				sa.assertTrue(false,"Not able to click on related tab on partnership");
+				log(LogStatus.SKIP,"Not able to click on related tab on partnership",YesNo.Yes);
+			}
 			
 		} else {
 			sa.assertTrue(false,"Not able to create partnership");
@@ -3678,11 +3685,12 @@ public class PECloudSmoke extends BaseLib{
 		sa.assertAll();
 	}
 
+	@Parameters("projectName")
+	@Test
 	public void SmokeTc034_verifyTheTabsRelatedListButtonsAndHighlightPanelOnTheCommitmentPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FinancingPageBusinessLayer fin = new FinancingPageBusinessLayer(driver);
 		CommitmentsPageBusinessLayer commit = new CommitmentsPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		NavigationPageBusineesLayer np = new NavigationPageBusineesLayer(driver);
 		
 		WebElement ele;
@@ -3696,6 +3704,9 @@ public class PECloudSmoke extends BaseLib{
 		if (commit.createCommitment(projectName, SMOKCommitment1LimitedPartner, SMOKCommitment1PartnershipName, SMOKCommitment1FinalCommitmentDate, SMOKCommitment1CommitmentAmount, null, null)) {
 			log(LogStatus.INFO,"Able to create commitment",YesNo.No);
 			
+			ThreadSleep(2000);
+			String commitmentId=commit.getCommitmentIdInViewMode(environment, mode, 30).getText();
+			ExcelUtils.writeData(phase1DataSheetFilePath, commitmentId, "Commitments", excelLabel.Variable_Name,"SMOKCOMM1" , excelLabel.Commitment_ID);
 			
 			ThreadSleep(2000);
 			String[] relatedTabs = {RelatedTab.Details.toString(),RelatedTab.Related.toString()};
@@ -3719,7 +3730,7 @@ public class PECloudSmoke extends BaseLib{
 													,ShowMoreActionDropDownList.Sharing
 													,ShowMoreActionDropDownList.Sharing_Hierarchy,
 													ShowMoreActionDropDownList.Printable_View};
-						
+			
 			ShowMoreActionDropDownList button=null;
 			for (int i = 0; i < buttons.length; i++) {
 				button=buttons[i];		
@@ -3740,22 +3751,25 @@ public class PECloudSmoke extends BaseLib{
 				log(LogStatus.SKIP,"HighLight should not be present at commitement",YesNo.Yes);
 			}
 			
+			if(click(driver, ele=lp.getRelatedTab(projectName, RelatedTab.Related.toString(), 10), tab, action.BOOLEAN)){
+				log(LogStatus.INFO," clicked on related tab on commitement",YesNo.No);
+
+			
 			// activity timeline visibility
-						WebElement activityTimeline=ip.getActivityTimeLineBox(30);
+						WebElement activityTimeline=commit.getActivityTimelineGridOnRelatedTab(30);
 						
 						if(activityTimeline!=null){
-							log(LogStatus.INFO,"Activity timeline is present in commitement page",YesNo.No);
+							log(LogStatus.INFO,"Activity timeline is present in related tab on commitement page",YesNo.No);
 							
 						}else{
 							
-							sa.assertTrue(false,"Activity timeline is not present in commitement page");
-							log(LogStatus.FAIL,"Activity timeline is not present in commitement page",YesNo.Yes);
+							sa.assertTrue(false,"Activity timeline is not present in related tab on commitement page");
+							log(LogStatus.FAIL,"Activity timeline is not present in related tab on commitement page",YesNo.Yes);
 						}
 						
 						
 						
 			
-			click(driver, ele=lp.getRelatedTab(projectName, RelatedTab.Related.toString(), 10), tab, action.BOOLEAN);
 
 			
 			String[] relatedgrid = {"Agreements/Amendments","Transferred Amount from Commitment","Transfer that created Commitment",
@@ -3776,7 +3790,11 @@ public class PECloudSmoke extends BaseLib{
 					log(LogStatus.SKIP,"At Related Tab "+tab+" sholud be present at commitement",YesNo.Yes);
 				}
 			}
-			
+			}else{
+				
+				sa.assertTrue(false,"Not able to  clicked on related tab on commitement");
+				log(LogStatus.SKIP,"Not able to  clicked on related tab on commitement",YesNo.Yes);
+			}
 			
 		} else {
 			sa.assertTrue(false,"Not able to create commitement");
@@ -3828,6 +3846,228 @@ public class PECloudSmoke extends BaseLib{
 			
 			log(LogStatus.FAIL,	"not able to click on partnerships tab", YesNo.Yes);
 			sa.assertTrue(false,"not able to click on partnerships tab");
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	public void SmokeTc036_VerifyPickListValuesForCommitmentField(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		if (home.clickOnSetUpLink()) {
+			String parentID = switchOnWindow(driver);
+			SetupPageBusinessLayer sp = new SetupPageBusinessLayer(driver);
+			if (parentID!=null) {
+				if (sp.searchStandardOrCustomObject(environment, mode,object.Commitment )) {
+					log(LogStatus.INFO,"Searched & Clicked on "+object.Commitment,YesNo.No);	
+					if(sp.clickOnObjectFeature(environment, mode,object.Commitment, ObjectFeatureName.FieldAndRelationShip)) {
+						log(LogStatus.INFO, "object feature "+ObjectFeatureName.FieldAndRelationShip+" is clickable", YesNo.No);
+						
+						String[][] fieldLabel = {{PageLabel.Tax_Forms.toString(),"Picklist"},{PageLabel.Partner_Type.toString(),"Picklist"}};
+						for (int i = 0; i < fieldLabel.length; i++) {
+							String field = fieldLabel[i][0];
+						if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), field+Keys.ENTER,field+"type", action.BOOLEAN)) {
+							log(LogStatus.INFO,field+" is searching",YesNo.No);
+							
+							if (sp.verifyFieldLabelWithDataType(fieldLabel[i])) {
+								
+									log(LogStatus.INFO,"Value picklist"+field+" present at commitment",YesNo.No);	
+								} else {
+									sa.assertTrue(false,"Value picklist"+field+" sholud be present at commitment");
+									log(LogStatus.SKIP,"Value picklist"+field+" sholud be present at commitment",YesNo.Yes);
+								}
+								
+						
+							
+						
+						}else {
+							log(LogStatus.ERROR,field+" search is not visible",YesNo.Yes);	
+							sa.assertTrue(false,field+" search is not visible" );
+						}
+						}
+					}else {
+						log(LogStatus.ERROR, "object feature "+ObjectFeatureName.FieldAndRelationShip+" is not clickable", YesNo.Yes);
+						sa.assertTrue(false, "object feature "+ObjectFeatureName.FieldAndRelationShip+" is not clickable");
+					}
+				}else {
+					log(LogStatus.ERROR, "commitment object could not be found in object manager", YesNo.Yes);
+					sa.assertTrue(false, "commitment object could not be found in object manager");
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch");
+			}
+		}else {
+			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "could not click on setup link");
+		}
+
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	public void SmokeTc037_verifyTheTabsRelatedListButtonsAndHighlightPanelOnTheCorrespondenceListPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FinancingPageBusinessLayer fin = new FinancingPageBusinessLayer(driver);
+		CorrespondenceListPageBusinessLayer cl = new CorrespondenceListPageBusinessLayer(driver);
+		NavigationPageBusineesLayer np = new NavigationPageBusineesLayer(driver);
+		
+		WebElement ele;
+		String tab="";
+		List<String> list=new ArrayList<>();
+		list.add("Capital Calls");
+		list.add("Distribution Notices");
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		
+		if(lp.clickOnTab(projectName, TabName.Correspondence_Lists)){
+			log(LogStatus.INFO,"clicked on correspondence list tab",YesNo.No);
+
+		ThreadSleep(5000);
+		if (cl.createNewCorrList(projectName,mode,environment, SMOKCon10FirstName, SMOKCon10LastName, SMOKCommitment1CommitmentId, list)) {
+			log(LogStatus.INFO,"Able to create correspondence list",YesNo.No);
+			
+			
+			ThreadSleep(2000);
+			String[] relatedTabs = {RelatedTab.Details.toString(),RelatedTab.Related.toString()};
+			for (int i = 0; i < relatedTabs.length; i++) {
+				tab = relatedTabs[i];
+				ele=lp.getRelatedTab(projectName, tab, 10);
+				if (ele!=null) {
+					log(LogStatus.INFO,"Related Tab "+tab+" present at correspondence list",YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Related Tab "+tab+" sholud be present at correspondence list");
+					log(LogStatus.SKIP,"Related Tab "+tab+" sholud be present at correspondence list",YesNo.Yes);
+				}
+			}
+			
+			// Buttons
+			np.clickOnShowMoreDropdownOnly(projectName);
+			ShowMoreActionDropDownList[] buttons={ShowMoreActionDropDownList.Edit 
+													,ShowMoreActionDropDownList.Delete
+													,ShowMoreActionDropDownList.Clone
+													,ShowMoreActionDropDownList.Change_Owner,
+													ShowMoreActionDropDownList.Printable_View};
+			
+			ShowMoreActionDropDownList button=null;
+			for (int i = 0; i < buttons.length; i++) {
+				button=buttons[i];		
+				ele =  np.actionDropdownElement(projectName, button, 10);
+					if (ele!=null) {
+						log(LogStatus.INFO,"Button "+button+" is present at correspondence list",YesNo.No);	
+					} else {
+						sa.assertTrue(false,"Button "+button+" sholud be present at correspondence list");
+						log(LogStatus.SKIP,"Button "+button+" sholud be present at correspondence list",YesNo.Yes);
+					}
+							
+					}
+			
+			if (fin.getSecondaryField(projectName, 10)==null) {
+				log(LogStatus.INFO,"HighLight is not present at correspondence list",YesNo.No);
+			} else {
+				sa.assertTrue(false,"HighLight should not be present at correspondence list");
+				log(LogStatus.SKIP,"HighLight should not be present at correspondence list",YesNo.Yes);
+			}
+			
+			if(click(driver, ele=lp.getRelatedTab(projectName, RelatedTab.Related.toString(), 10), tab, action.BOOLEAN)){
+				log(LogStatus.INFO," clicked on related tab on commitement",YesNo.No);
+
+			
+			// activity timeline visibility
+						WebElement activityTimeline=cl.getActivityBox(30);
+						
+						if(activityTimeline!=null){
+							log(LogStatus.INFO,"Activity timeline is present in related tab on correspondence list page",YesNo.No);
+							
+						}else{
+							
+							sa.assertTrue(false,"Activity timeline is not present in related tab on correspondence list page");
+							log(LogStatus.FAIL,"Activity timeline is not present in related tab on correspondence list page",YesNo.Yes);
+						}
+						
+						
+						
+			
+
+			
+			String[] relatedgrid = {"Files","Standard Activity Time"};
+			int k=0;
+			for (int i = 0; i < relatedgrid.length; i++) {
+				tab = relatedgrid[i];
+				if (i==2) {
+					k=2;
+				} else {
+					k=2;
+				}
+				ele=lp.getRelatedListItem(tab, k);
+				if (ele!=null) {
+					log(LogStatus.INFO,"At Related Tab "+tab+" present at correspondence list",YesNo.No);	
+				} else {
+					sa.assertTrue(false,"At Related Tab "+tab+" sholud be present at correspondence list");
+					log(LogStatus.SKIP,"At Related Tab "+tab+" sholud be present at correspondence list",YesNo.Yes);
+				}
+			}
+			}else{
+				
+				sa.assertTrue(false,"Not able to  clicked on related tab on correspondence list");
+				log(LogStatus.SKIP,"Not able to  clicked on related tab on correspondence list",YesNo.Yes);
+			}
+			
+		} else {
+			sa.assertTrue(false,"Not able to create correspondence list");
+			log(LogStatus.SKIP,"Not able to create correspondence list",YesNo.Yes);
+		}
+		}else{
+			
+			sa.assertTrue(false,"Not able to click on correspondence list tab");
+			log(LogStatus.SKIP,"Not able to click on correspondence list tab",YesNo.Yes);
+		}
+		
+		
+		
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters("projectName")
+	@Test
+	public void smokeTC038_verifyListViewOnCorrespondenceListPage(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp= new BasePageBusinessLayer(driver);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		
+		String selectListLink ="All,Recently Viewed";
+		
+		ThreadSleep(5000);
+		if(bp.clickOnTab(projectName, mode, TabName.Correspondence_Lists)){
+			log(LogStatus.PASS,	"click on correspondence list", YesNo.No);
+			
+			if (click(driver, bp.getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(5000);
+				List<WebElement> lst=bp.getAllLinkOfSelectListIconOption(mode,"Correspondence Lists", 30);
+				if(compareMultipleList(driver, selectListLink, lst).isEmpty()){
+					log(LogStatus.PASS,	"All link of select list icon  is verified", YesNo.No);
+				}else{
+					
+					log(LogStatus.FAIL,	"All link of select list icon  is not verified", YesNo.Yes);
+					sa.assertTrue(false,"All link of select list icon  is not verified");
+				}
+				
+			} else {
+				appLog.error("Not able to click on Select List Icon");
+			}
+		}else{
+			
+			log(LogStatus.FAIL,	"not able to click on correspondence list tab", YesNo.Yes);
+			sa.assertTrue(false,"not able to click on correspondence list tab");
 		}
 		
 		lp.CRMlogout();
