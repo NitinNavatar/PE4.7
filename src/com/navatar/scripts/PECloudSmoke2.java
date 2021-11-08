@@ -37,6 +37,7 @@ import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.columnName;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.generic.EnumConstants.object;
+import com.navatar.pageObjects.AdvisorPageBusinessLayer;
 import com.navatar.pageObjects.AffiliationPageBusinessLayer;
 import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.ContactTransferTabBusinessLayer;
@@ -53,6 +54,7 @@ import com.navatar.pageObjects.InstitutionsPageBusinessLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
 import com.navatar.pageObjects.MarketInitiativePageBusinessLayer;
 import com.navatar.pageObjects.MarketingEventPageBusinessLayer;
+import com.navatar.pageObjects.MarketingProspectPageBusinessLayer;
 import com.navatar.pageObjects.NavatarSetupPageBusinessLayer;
 import com.navatar.pageObjects.NavigationPageBusineesLayer;
 import com.navatar.pageObjects.SDGPageBusinessLayer;
@@ -2541,6 +2543,242 @@ public class PECloudSmoke2 extends BaseLib{
 		
 		
 		
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void SmokeTc096_VerifyTheTabsRelatedListButtonsAndHighlightPanelOnTheMarketingProspectPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		MarketingProspectPageBusinessLayer fin = new MarketingProspectPageBusinessLayer(driver);
+		NavigationPageBusineesLayer np = new NavigationPageBusineesLayer(driver);
+		WebElement ele;
+		String tab="";
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		String[][] labelWithValue = {{excelLabel.Marketing_Initiative.toString(),SmokeMI1},
+				{excelLabel.Status.toString(),"Follow Up Call Made"} ,
+				{excelLabel.Contact.toString(),SMOKCon1FirstName+" "+SMOKCon1LastName}};
+		if (fin.createMPItem(projectName,"", labelWithValue, 10)) {
+			log(LogStatus.INFO,"Able to create Marketing Prospect",YesNo.No);
+			
+			if (fin.getSecondaryField(projectName, 10)==null) {
+				log(LogStatus.INFO,"HighLight is not present at Marketing Prospect",YesNo.No);
+			} else {
+				sa.assertTrue(false,"HighLight should not be present at Marketing Prospect");
+				log(LogStatus.SKIP,"HighLight should not be present at Marketing Prospect",YesNo.Yes);
+			}
+			// Buttons
+			np.clickOnShowMoreDropdownOnly(projectName);
+			ShowMoreActionDropDownList[] buttons={ShowMoreActionDropDownList.Edit 
+					,ShowMoreActionDropDownList.Delete
+					,ShowMoreActionDropDownList.Clone,
+					ShowMoreActionDropDownList.Printable_View 
+					,ShowMoreActionDropDownList.Sharing
+					,ShowMoreActionDropDownList.Sharing_Hierarchy};
+			
+			ShowMoreActionDropDownList button=null;
+			for (int i = 0; i < buttons.length; i++) {
+				button=buttons[i];		
+				ele =  np.actionDropdownElement(projectName, button, 10);
+				if (ele!=null) {
+					log(LogStatus.INFO,"Button "+button+" is present at Marketing Prospect",YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Button "+button+" sholud be present at Marketing Prospect");
+					log(LogStatus.SKIP,"Button "+button+" sholud be present at Marketing Prospect",YesNo.Yes);
+				}
+				
+			}
+			
+			String[] relatedTabs = {RelatedTab.Details.toString(),RelatedTab.Related.toString()};
+			for (int i = 0; i < relatedTabs.length; i++) {
+				tab = relatedTabs[i];
+				ele=lp.getRelatedTab(projectName, tab, 10);
+				if (ele!=null) {
+					log(LogStatus.INFO,"Related Tab "+tab+" present at Marketing Prospect",YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Related Tab "+tab+" sholud be present at Marketing Prospect");
+					log(LogStatus.SKIP,"Related Tab "+tab+" sholud be present at Marketing Prospect",YesNo.Yes);
+				}
+				click(driver, ele, tab, action.BOOLEAN);
+			}
+			
+			
+			String[] relatedgrid = {"Notes & Attachments","Files","Upcoming & Overdue"};
+			int k=0;
+			for (int i = 0; i < relatedgrid.length; i++) {
+				tab = relatedgrid[i];
+				if (i==3) {
+					k=3;
+				} else {
+					k=2;
+				}
+				ele=lp.getRelatedListItem(tab, k);
+				if (ele!=null) {
+					log(LogStatus.INFO,"At Related Tab "+tab+" present at Marketing Prospect",YesNo.No);	
+				} else {
+					sa.assertTrue(false,"At Related Tab "+tab+" sholud be present at Marketing Prospect");
+					log(LogStatus.SKIP,"At Related Tab "+tab+" sholud be present at Marketing Prospect",YesNo.Yes);
+				}
+			}
+			
+			
+			
+		} else {
+			sa.assertTrue(false,"Not able to create Marketing Prospect");
+			log(LogStatus.SKIP,"Not able to create Marketing Prospect",YesNo.Yes);
+		}
+		
+		
+		
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void SmokeTc097_VerifyTheTabsRelatedListButtonsAndHighlightPanelOnTheAdvisorPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		AdvisorPageBusinessLayer fin = new AdvisorPageBusinessLayer(driver);
+		NavigationPageBusineesLayer np = new NavigationPageBusineesLayer(driver);
+		WebElement ele;
+		String tab="";
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		String[][] labelWithValue = {{excelLabel.Advisor.toString(),SMOKIns11InsName},
+				{excelLabel.Client.toString(),SMOKIns12InsName} ,
+				{excelLabel.Role.toString(),"Advisor"}};
+		if (fin.createAdvisorItem(projectName,"", labelWithValue, 10)) {
+			log(LogStatus.INFO,"Able to create Advisor",YesNo.No);
+			
+			if (fin.getSecondaryField(projectName, 10)==null) {
+				log(LogStatus.INFO,"HighLight is not present at Advisor",YesNo.No);
+			} else {
+				sa.assertTrue(false,"HighLight should not be present at Advisor");
+				log(LogStatus.SKIP,"HighLight should not be present at Advisor",YesNo.Yes);
+			}
+			// Buttons
+			np.clickOnShowMoreDropdownOnly(projectName);
+			ShowMoreActionDropDownList[] buttons={ShowMoreActionDropDownList.Edit 
+					,ShowMoreActionDropDownList.Delete
+					,ShowMoreActionDropDownList.Clone,
+					ShowMoreActionDropDownList.Printable_View ,
+					ShowMoreActionDropDownList.Change_Owner 
+					,ShowMoreActionDropDownList.Sharing
+					,ShowMoreActionDropDownList.Sharing_Hierarchy};
+			
+			ShowMoreActionDropDownList button=null;
+			for (int i = 0; i < buttons.length; i++) {
+				button=buttons[i];		
+				ele =  np.actionDropdownElement(projectName, button, 10);
+				if (ele!=null) {
+					log(LogStatus.INFO,"Button "+button+" is present at Advisor",YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Button "+button+" sholud be present at Advisor");
+					log(LogStatus.SKIP,"Button "+button+" sholud be present at Advisor",YesNo.Yes);
+				}
+				
+			}
+			
+			String[] relatedTabs = {RelatedTab.Details.toString(),RelatedTab.Related.toString()};
+			for (int i = 0; i < relatedTabs.length; i++) {
+				tab = relatedTabs[i];
+				ele=lp.getRelatedTab(projectName, tab, 10);
+				if (ele!=null) {
+					log(LogStatus.INFO,"Related Tab "+tab+" present at Advisor",YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Related Tab "+tab+" sholud be present at Advisor");
+					log(LogStatus.SKIP,"Related Tab "+tab+" sholud be present at Advisor",YesNo.Yes);
+				}
+				click(driver, ele, tab, action.BOOLEAN);
+			}
+			
+			
+			String[] relatedgrid = {"Files","Upcoming & Overdue"};
+			int k=0;
+			for (int i = 0; i < relatedgrid.length; i++) {
+				tab = relatedgrid[i];
+				if (i==3) {
+					k=3;
+				} else {
+					k=2;
+				}
+				ele=lp.getRelatedListItem(tab, k);
+				if (ele!=null) {
+					log(LogStatus.INFO,"At Related Tab "+tab+" present at Advisor",YesNo.No);	
+				} else {
+					sa.assertTrue(false,"At Related Tab "+tab+" sholud be present at Advisor");
+					log(LogStatus.SKIP,"At Related Tab "+tab+" sholud be present at Advisor",YesNo.Yes);
+				}
+			}
+			
+			
+			
+		} else {
+			sa.assertTrue(false,"Not able to create Advisor");
+			log(LogStatus.SKIP,"Not able to create Advisor",YesNo.Yes);
+		}
+		
+		
+		
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void SmokeTc098_VerifyThePickListValueFieldsOnTheAdvisorsObject(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword);
+		if (home.clickOnSetUpLink()) {
+			String parentID = switchOnWindow(driver);
+			SetupPageBusinessLayer sp = new SetupPageBusinessLayer(driver);
+			if (parentID!=null) {
+				if (sp.searchStandardOrCustomObject(environment, mode,object.Advisor )) {
+					log(LogStatus.INFO,"Searched & Clicked on "+object.Advisor,YesNo.No);	
+					if(sp.clickOnObjectFeature(environment, mode,object.Advisor, ObjectFeatureName.FieldAndRelationShip)) {
+						log(LogStatus.INFO, "object feature "+ObjectFeatureName.FieldAndRelationShip+" is clickable", YesNo.No);
+						if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), PageLabel.Role.toString()+Keys.ENTER, "Advisor Type", action.BOOLEAN)) {
+							log(LogStatus.INFO,PageLabel.Role.toString()+" is clickable",YesNo.No);
+							String[] roleValues = {"Reverse Role","Role"};
+							for (int i = 0; i < roleValues.length; i++) {
+								String role = roleValues[i];
+								String xpath = "//td//a//span[text()='"+role+"']/../../following-sibling::td//*[text()='Picklist']";
+								WebElement ele = FindElement(driver, xpath, role, action.BOOLEAN, 20);
+								if (ele!=null) {
+									log(LogStatus.INFO,"Value picklist"+role+" present at Advisor",YesNo.No);	
+								} else {
+									sa.assertTrue(false,"Value picklist"+role+" sholud be present at Advisor");
+									log(LogStatus.SKIP,"Value picklist"+role+" sholud be present at Advisor",YesNo.Yes);
+								}
+							}
+
+						}else {
+							log(LogStatus.ERROR,PageLabel.Role.toString()+" search is not visible",YesNo.Yes);	
+							sa.assertTrue(false,PageLabel.Role.toString()+" search is not visible" );
+						}
+					}else {
+						log(LogStatus.ERROR, "object feature "+ObjectFeatureName.FieldAndRelationShip+" is not clickable", YesNo.Yes);
+						sa.assertTrue(false, "object feature "+ObjectFeatureName.FieldAndRelationShip+" is not clickable");
+					}
+				}else {
+					log(LogStatus.ERROR, "Advisor object could not be found in object manager", YesNo.Yes);
+					sa.assertTrue(false, "Advisor object could not be found in object manager");
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch");
+			}
+		}else {
+			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "could not click on setup link");
+		}
+
 		switchToDefaultContent(driver);
 		lp.CRMlogout();
 		sa.assertAll();
