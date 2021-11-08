@@ -411,6 +411,7 @@ public class CommonVariables {
 	public static String SMOKFund1FundName,SMOKFund1FundType,SMOKFund1InvestmentCategory,SMOKFund1VintageYear,SMOKFund11stClosingDate;
 	public static String SMOKFund2FundName,SMOKFund2FundType,SMOKFund2InvestmentCategory,SMOKFund2VintageYear;
 	public static String SmokeFund3,SmokeFund3Type,SmokeFund3Category,SmokeFund3RecordType;
+	public static String SMOKFund3FundName,SMOKFund3FundType,SMOKFund3InvestmentCategory,SMOKFund3VintageYear;
 
 	
 	//FR
@@ -1828,6 +1829,11 @@ public class CommonVariables {
 			SMOKFund2FundType=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund2", excelLabel.Fund_Type);
 			SMOKFund2VintageYear=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund2", excelLabel.Vintage_Year);
 			SMOKFund2InvestmentCategory=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund2", excelLabel.Investment_Category);
+
+			SMOKFund3FundName=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund3", excelLabel.Fund_Name);
+			SMOKFund3FundType=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund3", excelLabel.Fund_Type);
+			SMOKFund3VintageYear=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund3", excelLabel.Vintage_Year);
+			SMOKFund3InvestmentCategory=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund3", excelLabel.Investment_Category);
 
 			//FR
 			SMOKFR1FundraisingName=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKFR1", excelLabel.FundRaising_Name);

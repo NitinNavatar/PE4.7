@@ -623,6 +623,109 @@ public boolean clickOnTab(String projectName,TabName TabName) {
 
 	return flag;
 }
+public boolean clickOnAlreadyCreated_Lighting(String environment, String mode, TabName tabName,
+		String alreadyCreated, int timeout) {
+
+	String viewList = null;
+	switch (tabName) {
+	case ContactTab:
+		viewList = "All Contacts";
+		break;
+	case InstituitonsTab:
+		viewList = "All Institutions";
+		break;
+	case CompaniesTab:
+		viewList = "All Companies";
+		break;
+	case LimitedPartner:
+		viewList = "All Limited Partners";
+		break;
+	case FundraisingsTab:
+		viewList = "All";
+		break;
+	case FundsTab:
+		viewList = "All";
+		break;
+	case CommitmentsTab:
+		viewList = "All";
+		break;
+	case PartnershipsTab:
+		viewList = "All";
+		break;
+	case FundDistributions:
+		viewList = "All";
+		break;
+	case InvestorDistributions:
+		viewList = "All";
+		break;
+	case MarketingInitiatives:
+		viewList = "All";
+		break;
+	case MarketingProspects:
+		viewList = "Marketing Prospects";
+		break;
+	case Pipelines:
+		viewList = "All";
+		break;
+	case CapitalCalls:
+		viewList = "All";
+		break;
+	case FundDrawdowns:
+		viewList = "All";
+		break;
+	case FundraisingContacts:
+		viewList = "All";
+		break;
+	default:
+		return false;
+	}
+	System.err.println("Passed switch statement");
+	WebElement ele, selectListView;
+	ele = null;
+	if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+		ThreadSleep(3000);
+		selectListView = FindElement(driver, "//div[@class='listContent']//li/a/span[text()='" + viewList + "']",
+				"Select List View", action.SCROLLANDBOOLEAN, 30);
+		if (click(driver, selectListView, "select List View", action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(3000);
+			if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+				refresh(driver);
+				ThreadSleep(5000);
+			}
+			if (sendKeys(driver, getSearchIcon_Lighting(20), alreadyCreated+"\n", "Search Icon Text",
+					action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(5000);
+				ele = FindElement(driver,
+						"//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//a[text()='"
+								+ alreadyCreated + "']",
+						alreadyCreated, action.BOOLEAN, 30);
+				ThreadSleep(2000);
+				if (click(driver, ele, alreadyCreated, action.BOOLEAN)) {
+					ThreadSleep(3000);
+					return true;
+				} else {
+					appLog.error("Not able to Click on Already Created : " + alreadyCreated);
+				}
+			} else {
+				appLog.error("Not able to enter value on Search Box");
+			}
+		} else {
+			appLog.error("Not able to select on Select View List");
+		}
+	} else {
+		appLog.error("Not able to click on Select List Icon");
+	}
+	return false;
+}
+public static String convertNumberAccordingToFormatWithoutCurrencySymbol(String number,String format){
+
+	double d = Double.parseDouble(number);
+	DecimalFormat myFormatter = new DecimalFormat(format);
+	String output = myFormatter.format(d);
+	System.err.println(" outpurttt >>>> "+output);
+	return output;
+
+}
 
 /**
  * @param projectName
@@ -889,6 +992,49 @@ public boolean clickOnAlreadyCreatedItem(String projectName,String alreadyCreate
 				}
 			} else {
 				appLog.error("Not able to enter value on Search Box");
+			}
+		} else {
+			appLog.error("Not able to select on Select View List : "+viewList);
+		}
+	} else {
+		appLog.error("Not able to click on Select List Icon");
+	}
+	return flag;
+}
+
+/**
+ * @param projectName
+ * @param alreadyCreated
+ * @param timeout
+ * @return true if able to click on first item on Particular tab
+ */
+public boolean clickOnAlreadyCreatedFirstItem(String projectName,int timeout) {
+	boolean flag=false;
+	String xpath="";
+	String viewList = null;
+	viewList = "All";
+	WebElement ele, selectListView;
+	ele = null;
+
+	refresh(driver);
+	if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+		ThreadSleep(3000);
+		xpath="//div[@class='listContent']//li/a/span[text()='" + viewList + "']";
+		selectListView = FindElement(driver, xpath,"Select List View : "+viewList, action.SCROLLANDBOOLEAN, 30);
+		if (click(driver, selectListView, "select List View : "+viewList, action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(5000);
+
+			xpath = "//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//a";
+				ele = FindElement(driver,xpath,"First elelment of row", action.BOOLEAN, 30);
+				ThreadSleep(2000);
+
+				if (click(driver, ele, "first item", action.BOOLEAN)) {
+					ThreadSleep(3000);
+					click(driver, getPagePopUp(projectName,5), "Page PopUp", action.BOOLEAN);
+					flag=true;
+				
+			} else {
+				appLog.error("Not able to click on created first item");
 			}
 		} else {
 			appLog.error("Not able to select on Select View List : "+viewList);
@@ -3377,6 +3523,9 @@ public boolean clickOnTab(String environment, String mode, TabName TabName) {
 		break;
 	case DealTab:
 		tabName = "Deals";
+		break;
+	case Correspondence_Lists:
+		tabName = "Correspondence Lists";
 		break;
 	default:
 		return flag;

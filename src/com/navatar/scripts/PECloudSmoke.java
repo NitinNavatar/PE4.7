@@ -77,6 +77,8 @@ import com.navatar.pageObjects.CorrespondenceListPageBusinessLayer;
 import com.navatar.pageObjects.CustomObjPageBusinessLayer;
 import com.navatar.pageObjects.EmailMyTemplatesPageBusinessLayer;
 import com.navatar.pageObjects.FinancingPageBusinessLayer;
+import com.navatar.pageObjects.FundDistributionsPageBusinessLayer;
+import com.navatar.pageObjects.FundDrawdownsPageBusinessLayer;
 import com.navatar.pageObjects.FundRaisingPageBusinessLayer;
 import com.navatar.pageObjects.FundsPageBusinessLayer;
 import com.navatar.pageObjects.GlobalActionPageBusinessLayer;
@@ -3531,7 +3533,7 @@ public class PECloudSmoke extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void SmokeTc032_verifyTheTabsRelatedListButtonsAndHighlightPanelOnThePartnershipPage(String projectName) {
+	public void smokeTc032_verifyTheTabsRelatedListButtonsAndHighlightPanelOnThePartnershipPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FinancingPageBusinessLayer fin = new FinancingPageBusinessLayer(driver);
 		PartnershipsPageBusinessLayer prt = new PartnershipsPageBusinessLayer(driver);
@@ -3687,7 +3689,7 @@ public class PECloudSmoke extends BaseLib{
 
 	@Parameters("projectName")
 	@Test
-	public void SmokeTc034_verifyTheTabsRelatedListButtonsAndHighlightPanelOnTheCommitmentPage(String projectName) {
+	public void smokeTc034_verifyTheTabsRelatedListButtonsAndHighlightPanelOnTheCommitmentPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FinancingPageBusinessLayer fin = new FinancingPageBusinessLayer(driver);
 		CommitmentsPageBusinessLayer commit = new CommitmentsPageBusinessLayer(driver);
@@ -3851,8 +3853,10 @@ public class PECloudSmoke extends BaseLib{
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-
-	public void SmokeTc036_VerifyPickListValuesForCommitmentField(String projectName) {
+	
+	@Parameters("projectName")
+	@Test
+	public void smokeTc036_VerifyPickListValuesForCommitmentField(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
@@ -3911,7 +3915,9 @@ public class PECloudSmoke extends BaseLib{
 		sa.assertAll();
 	}
 	
-	public void SmokeTc037_verifyTheTabsRelatedListButtonsAndHighlightPanelOnTheCorrespondenceListPage(String projectName) {
+	@Parameters("projectName")
+	@Test
+	public void smokeTc037_verifyTheTabsRelatedListButtonsAndHighlightPanelOnTheCorrespondenceListPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FinancingPageBusinessLayer fin = new FinancingPageBusinessLayer(driver);
 		CorrespondenceListPageBusinessLayer cl = new CorrespondenceListPageBusinessLayer(driver);
@@ -4074,6 +4080,390 @@ public class PECloudSmoke extends BaseLib{
 		sa.assertAll();
 	}
 
+	@Parameters("projectName")
+	@Test
+	public void smokeTc039_verifyTheTabsRelatedListButtonsAndHighlightPanelOnTheFundDistributionPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
+		FundDistributionsPageBusinessLayer fd = new FundDistributionsPageBusinessLayer(driver);
+		NavigationPageBusineesLayer np = new NavigationPageBusineesLayer(driver);
+		
+		WebElement ele;
+		String tab="";
+		
+		String capitalReturn = ExcelUtils.readData(phase1DataSheetFilePath,"FundDistribution", excelLabel.Variable_Name, "FD1", excelLabel.CapitalReturn);
+		String dividends = ExcelUtils.readData(phase1DataSheetFilePath,"FundDistribution", excelLabel.Variable_Name, "FD1", excelLabel.Dividends);
+		String date = todaysDate;
+			ExcelUtils.writeData(phase1DataSheetFilePath,date,"FundDistribution", excelLabel.Variable_Name, "FD1", excelLabel.DueDate);
+
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		
+		if(lp.clickOnTab(projectName,mode, TabName.FundDistributions)){
+			log(LogStatus.INFO,"clicked on fund distributions tab",YesNo.No);
+
+		ThreadSleep(5000);
+		if (fd.createNewDistribution(projectName, mode, SMOKFund3FundName, capitalReturn, dividends, todaysDate, 30)) {
+			log(LogStatus.INFO,"Able to create fund distributions",YesNo.No);
+			
+			if(bp.clickOnTab(projectName,mode ,TabName.FundDistributions)){
+				log(LogStatus.INFO,"clicked on fund distributions tab",YesNo.No);
+				
+				if(bp.clickOnAlreadyCreatedFirstItem(projectName, 30)){
+					log(LogStatus.INFO,"clicked on already created first item",YesNo.No);
+
+				}else{
+					
+					log(LogStatus.INFO,"not able to clicked on already created first item",YesNo.No);
+					sa.assertTrue(false,"not able to clicked on already created first item");
+
+				}
+			
+			ThreadSleep(2000);
+			String[] relatedTabs = {RelatedTab.Details.toString(),RelatedTab.Related.toString()};
+			for (int i = 0; i < relatedTabs.length; i++) {
+				tab = relatedTabs[i];
+				ele=lp.getRelatedTab(projectName, tab, 10);
+				if (ele!=null) {
+					log(LogStatus.INFO,"Related Tab "+tab+" present at fund distributions",YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Related Tab "+tab+" sholud be present at fund distributions");
+					log(LogStatus.SKIP,"Related Tab "+tab+" sholud be present at fund distributions",YesNo.Yes);
+				}
+			}
+			
+			// Buttons
+			np.clickOnShowMoreDropdownOnly(projectName);
+			ShowMoreActionDropDownList[] buttons={ShowMoreActionDropDownList.Edit 
+													,ShowMoreActionDropDownList.Delete
+													,ShowMoreActionDropDownList.Clone
+													,ShowMoreActionDropDownList.Change_Owner,
+													ShowMoreActionDropDownList.Printable_View,
+													ShowMoreActionDropDownList.Sharing,
+													ShowMoreActionDropDownList.Sharing_Hierarchy,
+													ShowMoreActionDropDownList.Send_Distribution_Notice,
+													};
+			
+			ShowMoreActionDropDownList button=null;
+			for (int i = 0; i < buttons.length; i++) {
+				button=buttons[i];		
+				ele =  np.actionDropdownElement(projectName, button, 10);
+					if (ele!=null) {
+						log(LogStatus.INFO,"Button "+button+" is present at fund distributions",YesNo.No);	
+					} else {
+						sa.assertTrue(false,"Button "+button+" sholud be present at fund distributions");
+						log(LogStatus.SKIP,"Button "+button+" sholud be present at fund distributions",YesNo.Yes);
+					}
+							
+					}
+			
+			if (fd.getSecondaryField(projectName, 10)==null) {
+				log(LogStatus.INFO,"HighLight is not present at fund distributions",YesNo.No);
+			} else {
+				sa.assertTrue(false,"HighLight should not be present at fund distributions");
+				log(LogStatus.SKIP,"HighLight should not be present at fund distributions",YesNo.Yes);
+			}
+			
+			if(click(driver, ele=lp.getRelatedTab(projectName, RelatedTab.Related.toString(), 10), tab, action.BOOLEAN)){
+				log(LogStatus.INFO," clicked on related tab on commitement",YesNo.No);
+
+			
+			// activity timeline visibility
+						WebElement activityTimeline=fd.getActivityTimelineGridOnRelatedTab(30);
+						
+						if(activityTimeline!=null){
+							log(LogStatus.INFO,"Activity timeline is present in related tab on fund distributions page",YesNo.No);
+							
+						}else{
+							
+							sa.assertTrue(false,"Activity timeline is not present in related tab on fund distributions page");
+							log(LogStatus.FAIL,"Activity timeline is not present in related tab on fund distributions page",YesNo.Yes);
+						}
+						
+						
+						
+			
+
+			
+			String[] relatedgrid = {"Investor Distributions","Notes & Attachments","Files","Standard Activity Time"};
+			int k=0;
+			for (int i = 0; i < relatedgrid.length; i++) {
+				tab = relatedgrid[i];
+				if (i==2) {
+					k=2;
+				} else {
+					k=2;
+				}
+				ele=lp.getRelatedListItem(tab, k);
+				if (ele!=null) {
+					log(LogStatus.INFO,"At Related Tab "+tab+" present at fund distributions",YesNo.No);	
+				} else {
+					sa.assertTrue(false,"At Related Tab "+tab+" sholud be present at fund distributions");
+					log(LogStatus.SKIP,"At Related Tab "+tab+" sholud be present at fund distributions",YesNo.Yes);
+				}
+			}
+			}else{
+				
+				sa.assertTrue(false,"Not able to  clicked on related tab on fund distributions");
+				log(LogStatus.SKIP,"Not able to  clicked on related tab on fund distributions",YesNo.Yes);
+			}
+			}else{
+				sa.assertTrue(false,"Not able to click on fund distributions tab");
+				log(LogStatus.SKIP,"Not able to click on fund distributions tab",YesNo.Yes);
+			}
+			
+		} else {
+			sa.assertTrue(false,"Not able to create fund distributions");
+			log(LogStatus.SKIP,"Not able to create fund distributions",YesNo.Yes);
+		}
+		
+		
+		}else{
+			
+			sa.assertTrue(false,"Not able to click on fund distributions tab");
+			log(LogStatus.SKIP,"Not able to click on fund distributions tab",YesNo.Yes);
+		}
+		
+		
+		
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters("projectName")
+	@Test
+	public void smokeTC040_verifyListViewOnFundDistributionPage(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp= new BasePageBusinessLayer(driver);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		
+		String selectListLink ="All,Recently Viewed";
+		
+		ThreadSleep(5000);
+		if(bp.clickOnTab(projectName, mode, TabName.FundDistributions)){
+			log(LogStatus.PASS,	"click on Fund Distributions tab", YesNo.No);
+			
+			if (click(driver, bp.getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(5000);
+				List<WebElement> lst=bp.getAllLinkOfSelectListIconOption(mode,"Fund Distributions", 30);
+				if(compareMultipleList(driver, selectListLink, lst).isEmpty()){
+					log(LogStatus.PASS,	"All link of select list icon  is verified", YesNo.No);
+				}else{
+					
+					log(LogStatus.FAIL,	"All link of select list icon  is not verified", YesNo.Yes);
+					sa.assertTrue(false,"All link of select list icon  is not verified");
+				}
+				
+			} else {
+				appLog.error("Not able to click on Select List Icon");
+			}
+		}else{
+			
+			log(LogStatus.FAIL,	"not able to click on Fund Distributions tab", YesNo.Yes);
+			sa.assertTrue(false,"not able to click on Fund Distributions tab");
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters("projectName")
+	@Test
+	public void smokeTc041_verifyTheTabsRelatedListButtonsAndHighlightPanelOnTheFundDrawdownPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer base=new BasePageBusinessLayer(driver);
+		FundDrawdownsPageBusinessLayer fd = new FundDrawdownsPageBusinessLayer(driver);
+		NavigationPageBusineesLayer np = new NavigationPageBusineesLayer(driver);
+		
+		WebElement ele;
+		String tab="";
+		
+		String capitalAmount = ExcelUtils.readData(phase1DataSheetFilePath,"FundDrawdown", excelLabel.Variable_Name, "DD1", excelLabel.CallAmount);
+		String fundName = ExcelUtils.readData(phase1DataSheetFilePath,"FundDrawdown", excelLabel.Variable_Name, "DD1", excelLabel.Fund_Name);
+
+		String callDate = todaysDate;
+		String dueDate = tomorrowsDate;
+		ExcelUtils.writeData(phase1DataSheetFilePath,callDate,"FundDrawdown", excelLabel.Variable_Name, "DD1", excelLabel.CallDate);
+		ExcelUtils.writeData(phase1DataSheetFilePath,dueDate,"FundDrawdown", excelLabel.Variable_Name, "DD1", excelLabel.DueDate);
+
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		
+		if(lp.clickOnTab(projectName, mode,TabName.FundDrawdowns)){
+			log(LogStatus.INFO,"clicked on fund drawdown tab",YesNo.No);
+
+		ThreadSleep(5000);
+		if (fd.createNewDrawdown(projectName, mode, fundName, capitalAmount, callDate, dueDate, 30)) {
+			log(LogStatus.INFO,"Able to create fund distributions",YesNo.No);
+			
+			if(lp.clickOnTab(projectName,mode ,TabName.FundDrawdowns)){
+				log(LogStatus.INFO,"clicked on fund drawdown tab",YesNo.No);
+				
+				if(base.clickOnAlreadyCreatedFirstItem(projectName, 30)){
+					log(LogStatus.INFO,"clicked on already created first item",YesNo.No);
+
+				}else{
+					
+					log(LogStatus.INFO,"not able to clicked on already created first item",YesNo.No);
+					sa.assertTrue(false,"not able to clicked on already created first item");
+
+				}
+			
+			ThreadSleep(2000);
+			String[] relatedTabs = {RelatedTab.Details.toString(),RelatedTab.Related.toString()};
+			for (int i = 0; i < relatedTabs.length; i++) {
+				tab = relatedTabs[i];
+				ele=lp.getRelatedTab(projectName, tab, 10);
+				if (ele!=null) {
+					log(LogStatus.INFO,"Related Tab "+tab+" present at fund drawdown",YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Related Tab "+tab+" sholud be present at fund drawdown");
+					log(LogStatus.SKIP,"Related Tab "+tab+" sholud be present at fund drawdown",YesNo.Yes);
+				}
+			}
+			
+			// Buttons
+			np.clickOnShowMoreDropdownOnly(projectName);
+			ShowMoreActionDropDownList[] buttons={ShowMoreActionDropDownList.Edit 
+													,ShowMoreActionDropDownList.Delete
+													,ShowMoreActionDropDownList.Change_Owner,
+													ShowMoreActionDropDownList.Printable_View,
+													ShowMoreActionDropDownList.Sharing,
+													ShowMoreActionDropDownList.Sharing_Hierarchy,
+													ShowMoreActionDropDownList.Send_Capital_Call_Notices,
+													};
+			
+			ShowMoreActionDropDownList button=null;
+			for (int i = 0; i < buttons.length; i++) {
+				button=buttons[i];	
+				
+				ele =  np.actionDropdownElement(projectName, button, 10);
+					if (ele!=null) {
+						log(LogStatus.INFO,"Button "+button+" is present at fund drawdown",YesNo.No);	
+					} else {
+						sa.assertTrue(false,"Button "+button+" sholud be present at fund drawdown");
+						log(LogStatus.SKIP,"Button "+button+" sholud be present at fund drawdown",YesNo.Yes);
+					}
+							
+					}
+			
+			if (fd.getSecondaryField(projectName, 10)==null) {
+				log(LogStatus.INFO,"HighLight is not present at fund drawdown",YesNo.No);
+			} else {
+				sa.assertTrue(false,"HighLight should not be present at fund drawdown");
+				log(LogStatus.SKIP,"HighLight should not be present at fund drawdown",YesNo.Yes);
+			}
+			
+			if(click(driver, ele=lp.getRelatedTab(projectName, RelatedTab.Related.toString(), 10), tab, action.BOOLEAN)){
+				log(LogStatus.INFO," clicked on related tab on commitement",YesNo.No);
+
+			
+			// activity timeline visibility
+						WebElement activityTimeline=fd.getActivityTimelineGridOnRelatedTab(30);
+						
+						if(activityTimeline!=null){
+							log(LogStatus.INFO,"Activity timeline is present in related tab on fund drawdown page",YesNo.No);
+							
+						}else{
+							
+							sa.assertTrue(false,"Activity timeline is not present in related tab on fund drawdown page");
+							log(LogStatus.FAIL,"Activity timeline is not present in related tab on fund drawdown page",YesNo.Yes);
+						}
+						
+						
+						
+			
+
+			
+			String[] relatedgrid = {"Capital Calls","Notes & Attachments","Files","Standard Activity Time"};
+			int k=0;
+			for (int i = 0; i < relatedgrid.length; i++) {
+				tab = relatedgrid[i];
+				if (i==2) {
+					k=2;
+				} else {
+					k=2;
+				}
+				ele=lp.getRelatedListItem(tab, k);
+				if (ele!=null) {
+					log(LogStatus.INFO,"At Related Tab "+tab+" present at fund drawdown",YesNo.No);	
+				} else {
+					sa.assertTrue(false,"At Related Tab "+tab+" sholud be present at fund drawdown");
+					log(LogStatus.SKIP,"At Related Tab "+tab+" sholud be present at fund drawdown",YesNo.Yes);
+				}
+			}
+			}else{
+				
+				sa.assertTrue(false,"Not able to  clicked on related tab on fund drawdown");
+				log(LogStatus.SKIP,"Not able to  clicked on related tab on fund drawdown",YesNo.Yes);
+			}
+			}else{
+				sa.assertTrue(false,"Not able to click on fund drawdown tab");
+				log(LogStatus.SKIP,"Not able to click on fund drawdown tab",YesNo.Yes);
+			}
+			
+		} else {
+			sa.assertTrue(false,"Not able to create fund drawdown");
+			log(LogStatus.SKIP,"Not able to create fund drawdown",YesNo.Yes);
+		}
+		
+		
+		}else{
+			
+			sa.assertTrue(false,"Not able to click on fund drawdown tab");
+			log(LogStatus.SKIP,"Not able to click on fund drawdown tab",YesNo.Yes);
+		}
+		
+		
+		
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters("projectName")
+	@Test
+	public void smokeTC042_verifyListViewOnFundDrawdownPage(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp= new BasePageBusinessLayer(driver);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		
+		String selectListLink ="All,Recently Viewed";
+		
+		ThreadSleep(5000);
+		if(bp.clickOnTab(projectName, mode, TabName.FundDrawdowns)){
+			log(LogStatus.PASS,	"click on Fund drawdown tab", YesNo.No);
+			
+			if (click(driver, bp.getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(5000);
+				List<WebElement> lst=bp.getAllLinkOfSelectListIconOption(mode,"Fund Drawdown", 30);
+				if(compareMultipleList(driver, selectListLink, lst).isEmpty()){
+					log(LogStatus.PASS,	"All link of select list icon  is verified", YesNo.No);
+				}else{
+					
+					log(LogStatus.FAIL,	"All link of select list icon  is not verified", YesNo.Yes);
+					sa.assertTrue(false,"All link of select list icon  is not verified");
+				}
+				
+			} else {
+				appLog.error("Not able to click on Select List Icon");
+			}
+		}else{
+			
+			log(LogStatus.FAIL,	"not able to click on Fund drawdown tab", YesNo.Yes);
+			sa.assertTrue(false,"not able to click on Fund drawdown tab");
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	
 	
 }
 	
