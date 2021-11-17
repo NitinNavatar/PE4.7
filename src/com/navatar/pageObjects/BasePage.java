@@ -16,7 +16,6 @@ import com.navatar.generic.EnumConstants.*;
 import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.CommonLib.*;
 
-import java.nio.channels.InterruptedByTimeoutException;
 import java.util.Iterator;
 import java.util.List;
 /**
@@ -5313,4 +5312,16 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, addButtonMultipleBox_Lightning, "Visibility", timeOut, "addButtonMultipleBox Select Box Mode Lightning");
 
 	}
+	
+	public WebElement getHeaderSectionGrid(String sectionName,action action,int timeOut) {
+		String xpath2= "//*[@class='test-id__section-header-title slds-truncate' and text()='"+sectionName+"']/../..//button";
+		WebElement element = FindElement(driver, xpath2, "Section :"+sectionName ,action, timeOut);
+		return isDisplayed(driver, element, "Visibility", timeOut, "Section :"+sectionName );
+	}
+	
+	public List<WebElement> getFieldLabelsOfSection(String sectionName,action action,int timeOut) {
+		String xpath = "//*[@class='test-id__section-header-title slds-truncate' and text()='" + sectionName+"']/../../..//*[@class='test-id__field-label']";
+		return FindElements(driver, xpath, "label field of section:"+sectionName);
+	}
+	
 }

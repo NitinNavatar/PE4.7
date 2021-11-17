@@ -14,13 +14,13 @@ public class EnumConstants {
 	}
 
 	public static enum excelLabel {
-		Variable_Name,Institutions_Name,Contact_FirstName,Contact_LastName,Contact_EmailId, Contact_password_updated,Registered,Fund_Name,FundRaising_Name,
+		Variable_Name,Institutions_Name,Contact_FirstName,Contact_LastName,Contact_EmailId, Contact_password_updated,Registered,Fund_Name,FundRaising_Name,AgreementAmendmentID,AgreementAmendmentNumber,
 		Limited_Partner,PartnerShip_Name,Commitment_ID,User_First_Name,User_Last_Name,User_Email,User_Profile,User_License,Fund_Type,Firm_Name,UploadedFileInternal,UploadedFileShared,UploadedFileStandard,UploadedFileCommon,UpdatedFileCommon,UpdatedFileInternal,UpdatedFileShared,UpdatedFileStandard,TestCases_Name ,Alert_Count,AllDocument_Count,
 		Folder_Template_Name,Fund_Contact,Fund_Phone,Fund_Email,Firm_Description,ContactNew_fName, ContactNew_lName, Contact_Title, Contact_Phone, Facebook, Mailing_Street, Linkedin, Institution_Type_MyProfile, Industry_Dropdown_myprofile, FundType_myprofile, IndustrySelectBox_myprofile,Investment_Category, GeoFocus_myprofile, Firm_Description_Firmprofile, Billing_street_Firmprofile,
 		Billing_city_firmprofile, Billing_state_firmprofile, Billing_country_firmprofile, Industries_selectbox, FundType_selectbox, Geofocus_selectbox, Industry_dropdown, InstType_dropdown, Min_investment, Max_investment, AUM,Contact_updated_firmname,
 		Folder_Description,Fund_Size,Fund_VintageYear,Fund_Description,Disclaimer_Name,Disclaimer_Description,StandardPath,CommonPath,SharedPath,InternalPath,MyProfile_FName,MyProfile_LName,Updated_FirmName,Updated_FirstName,Updated_LastName,Title,Business_Phone,Mailing_City,Mailing_State,Mailing_Zip,Mailing_Country,Firm_Contact,KeyWord_For_Search,AllFirms_Count,OnlineImportPath,AdvisorInvolvementID,FOLDER_NAME,INVALID_FOLDER_NAME,
 		TargetRegistrationURL,TargetLoginURL,Watermarking,UpdateInstitution_NameFormManageInvestor,UpdatedLimitedPartner_NameFormManageInvestor,HomePageAlertCount,FundsPageALertCount,ContactPageALertCount,BillingZip,UpdateFund_NameFromUpdateInfoIWR,UpdateFund_NameFromUpdateInfoFR,ContactName,FundName,Module_Name,Execute,Statistics,FRW_Value,INV_Value,FRW_DocumentsName,
-		INV_DocumentsName,Updated_InstitutionName_From_InvestorSide,Activity_Count,Viewed_Or_DownloadedAnyFile,Account_Name,Logo_Name,Contact_Access,ContactUpdatedEmailID, Path, DrawdownID, CapitalCalllID, CapitalAmount,ManagementFee, OtherFee, CallAmount, CallDate, DueDate, CallAmountReceived,ReceivedDate, AmountDue,CapitalReturn,Dividends,RealizedGain,OtherProceeds,TotalDistributions,FundDistributionID,InvestorDistributionID,Capital_Returned_Recallable,
+		INV_DocumentsName,Updated_InstitutionName_From_InvestorSide,Activity_Count,Viewed_Or_DownloadedAnyFile,Account_Name,Logo_Name,Contact_Access,ContactUpdatedEmailID, Path, DrawdownID, CapitalCalllID, CapitalAmount,ManagementFee, OtherFee, InvestmentAmount,CallAmount, CallDate, DueDate, CallAmountReceived,ReceivedDate, AmountDue,CapitalReturn,Dividends,RealizedGain,OtherProceeds,TotalDistributions,FundDistributionID,InvestorDistributionID,Capital_Returned_Recallable,
 		Capital_Returned_NonRecallable,Start_Time,End_Time,Test_Custom_Object_Name,Average_Deal_Quality_Score,Total_Deals_Shown,Deal_Quality_Score,Meeting_Type,Item_ID {
 				@Override
 			    public String toString() {
@@ -40,8 +40,8 @@ public class EnumConstants {
 		}
 		, Pipeline_Name, Company_Name, Stage, Source, Source_Firm, Source_Contact, Deal_Type, Employees, Website, Email, Legal_Name, Name, Investment_Size, Log_In_Date, Our_Role, Last_Name,Last_Stage_Change_Date_New, Last_Stage_Change_Date, Highest_Stage_Reached, Age_of_Current_Stage, Date_Stage_Changed, Changed_Stage, Age, First_Stage_Changed, Second_Stage_Changed, Office_Location_Name, State_Province, ZIP, Organization_Name, Primary, Updated_Primary, Start, Related_To, Due_Date,Investment_Likely_Amount,Closing,Total_Fundraising_Contacts,Fundraising_Contact_ID,Fundraising,Role, Other_Address,Label,
 		Mailing_Address,Total_Commitments,Commitment_Amount,Partner_Type,Tax_Forms,Final_Commitment_Date,Company,Bank_Name,Placement_Fee,Fund_Investment_Category,Total_CoInvestment_Commitments,Total_Fund_Commitments, Institution_Type, Fund_Preferences, Industry_Preferences, Shipping_Street, Shipping_City, Shipping_State, Shipping_Zip, Shipping_Country, Mobile_Phone, Assistant, Asst_Phone, Phone,Total_Call_Amount_Received, Total_Amount_Called,Total_Amount_Received,Total_Uncalled_Amount,Total_Commitment_Due,Commitment_Called,Called_Due,Preferred_Mode_of_Contact,Percent,Contact_Tier,Pipeline_Comments,
-		Parent_Field_Name,Override_Label,APIName,FieldOrder,URL,Region,Industry,Attendee_Staff,Marketing_Event,Notes,DTID,Member,File,
-		TotalCommitment, Priority, Project_Type, Project_Name, Task_Name, Status, Fund_InvestmentCategory,Comment, Updated_Priority, Updated_Subject, Updated_Comment,Updated_Stage, Start_Date, End_Date, Data_Type, Field_Label, Length, Decimal_Places, Options, Deal_Name, SDG_Name, sObjectName, SDG_Tag, Object_Name, Field_Set_Label, NameSpace_PreFix, Fields_Name, Toggle_Button, Request, Date_Requested, Request_Tracker_ID, Marketing_Event_Name, Date, TabName, Item, RelatedTab, ToggleButton, Column_Name1, Column_Name2,Field_Type, FieldLabel_SubString, ExtraFieldsName, Column_Name, Navigation_Label_Name, Redirection_Label_Name, Update_Navigation_Label_Name, Updated_Order,Parent_Institution,Entity_Type, Parent, Navigation_Label_With_Parent, List_View_Object, List_View_Name, Action_Object, Coverage_Name,Action_Order,Event,Event_Payload,Action_Type, Sector, Assigned_To, Location, Event_PayLoad, Institution, Contact, Type_Of_Debt, Amount, Frequency, Fiscal_Year_end, Marketing_Initiative, Client, Advisor;
+		Parent_Field_Name,Override_Label,APIName,FieldOrder,URL,Region,Industry,Attendee_Staff,Marketing_Event,Notes,DTID,Member,File,EffectiveDate,ReceiptDate,
+		TotalCommitment, Priority, Project_Type, Project_Name, Task_Name, Status, Fund_InvestmentCategory,FundInvestmentID,Comment, Updated_Priority, Updated_Subject, Updated_Comment,Updated_Stage, Start_Date, End_Date, Data_Type, Field_Label, Length, Decimal_Places, Options, Deal_Name, SDG_Name, sObjectName, SDG_Tag, Object_Name, Field_Set_Label, NameSpace_PreFix, Fields_Name, Toggle_Button, Request, Date_Requested, Request_Tracker_ID, Marketing_Event_Name, Date, TabName, Item, RelatedTab, ToggleButton, Column_Name1, Column_Name2,Field_Type, FieldLabel_SubString, ExtraFieldsName, Column_Name, Navigation_Label_Name, Redirection_Label_Name, Update_Navigation_Label_Name, Updated_Order,Parent_Institution,Entity_Type, Parent, Navigation_Label_With_Parent, List_View_Object, List_View_Name, Action_Object, Coverage_Name,Action_Order,Event,Event_Payload,Action_Type, Sector, Assigned_To, Location, Event_PayLoad, Institution, Contact, Type_Of_Debt, Amount, Frequency, Fiscal_Year_end, Marketing_Initiative, Client, Advisor;
 };
 
 	public static enum fileDistributor {
@@ -103,8 +103,14 @@ public class EnumConstants {
 	public static enum TabName {
 		InstituitonsTab, FundraisingsTab, FundsTab, NIMTab, CommitmentsTab, PartnershipsTab, 
 		NavatarInvestorAddOns, CurrentInvesment, PotentialInvesment, RecentActivities, AllDocuments, HomeTab, 
-		FolderTemplate, FundDistributions, InvestorDistributions, MarketingInitiatives, MarketingProspects, 
-		NavatarSetup, Pipelines, FundDrawdowns, CapitalCalls, FundraisingContacts, LimitedPartne, ReportsTab, 
+		FolderTemplate, FundDistributions, FundOfFundsTransactions,InvestorDistributions, MarketingInitiatives, MarketingProspects,AgreementsAmendments{
+			@Override
+			public String toString() {
+				return "Agreements/Amendments";
+		}
+		}
+		, 
+		NavatarSetup, Pipelines, FundDrawdowns,FundInvestments,CapitalCalls, FundraisingContacts, LimitedPartne, ReportsTab, 
 		Correspondence_Lists,LimitedPartner,CompaniesTab, TaskRayTab,TaskRay,TestCustomObjectTab, TaskTab,
 		Other,Object1Tab,Object2Tab,Object3Tab,Object4Tab,RecycleBinTab,SDGTab,DealTab, Object5Tab,Object6Tab,AttendeeTab,Object7Tab,Entities,Deals,Marketing_Events,Deal_Team, Object8Tab, ContactTab;
 	}
@@ -1583,4 +1589,6 @@ public static enum PermissionType{
     public static enum DealStage{
     	Ahead, Completed,Current;
     }
+    
+  
 }

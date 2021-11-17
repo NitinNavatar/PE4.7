@@ -28,15 +28,15 @@ import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.relevantcodes.extentreports.LogStatus;
 import com.navatar.generic.SoftAssert;
-public class FundDistributionsPageBusinessLayer extends FundDistributionsPage {
+public class FOFTransactionPageBusinessLayer extends FundDistributionsPage {
 
-	public FundDistributionsPageBusinessLayer(WebDriver driver) {
+	public FOFTransactionPageBusinessLayer(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
 	}
 	
 	
-	public boolean createNewDistribution(String projectName,String mode,String fundName,String capitalReturn,String dividend,String date , int timeOut){
+	public boolean createNewFOFTransaction(String projectName,String mode,String fundName,String fundManagersFundName,String transactionType,String date ,String[][] otherlabel, int timeOut){
 		boolean flag = true;
 		WebElement ele;
 		FundsPage fund=new FundsPage(driver);
@@ -46,10 +46,12 @@ public class FundDistributionsPageBusinessLayer extends FundDistributionsPage {
 			
 		
 		
-		switchToFrame(driver, timeOut, getaccessibilityTitleFrame_Lighting(60));
+		///switchToFrame(driver, timeOut, getaccessibilityTitleFrame_Lighting(60));
 		ThreadSleep(2000);
 		if(sendKeys(driver, getSelectFundNameInputBox(timeOut), fundName, "select fund name input box", action.BOOLEAN)){
 			
+			String xpath1="";
+			ele = isDisplayed(driver, FindElement(driver, xpath1, "", action.BOOLEAN, timeOut), "Visibility", timeOut, "");
 			if(click(driver, getCreateDistributionButton(timeOut), "create distribution button", action.BOOLEAN)){
 				ThreadSleep(2000);
 				switchToDefaultContent(driver);
@@ -59,8 +61,8 @@ public class FundDistributionsPageBusinessLayer extends FundDistributionsPage {
 					switchToFrame(driver, timeOut, getEmailingFrame_Lighting(60));
 				}
 
-				sendKeys(driver, getCapitalReturn( 30),capitalReturn, "capitalReturn", action.SCROLLANDBOOLEAN);
-				sendKeys(driver,getDividends( 30),dividend, "dividends", action.SCROLLANDBOOLEAN);
+				sendKeys(driver, getCapitalReturn( 30),fundManagersFundName, "capitalReturn", action.SCROLLANDBOOLEAN);
+				sendKeys(driver,getDividends( 30),transactionType, "dividends", action.SCROLLANDBOOLEAN);
 				sendKeys(driver, getDistributionDate(30),date , "distribution date", action.BOOLEAN);
 				if (click(driver, getSetupInvestorDist(30), "setup investor distribution sbutton", action.SCROLLANDBOOLEAN)) {
 					ThreadSleep(2000);

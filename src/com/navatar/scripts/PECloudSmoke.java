@@ -25,6 +25,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.logging.Logs;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+
+import com.navatar.generic.AppListeners;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
@@ -70,6 +72,7 @@ import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.generic.EnumConstants.object;
 import com.navatar.generic.EnumConstants.searchContactInEmailProspectGrid;
+import com.navatar.pageObjects.AgreementAmendmentPageBusinessLayer;
 import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.CommitmentsPageBusinessLayer;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
@@ -79,6 +82,7 @@ import com.navatar.pageObjects.EmailMyTemplatesPageBusinessLayer;
 import com.navatar.pageObjects.FinancingPageBusinessLayer;
 import com.navatar.pageObjects.FundDistributionsPageBusinessLayer;
 import com.navatar.pageObjects.FundDrawdownsPageBusinessLayer;
+import com.navatar.pageObjects.FundInvestmentPageBusinessLayer;
 import com.navatar.pageObjects.FundRaisingPageBusinessLayer;
 import com.navatar.pageObjects.FundsPageBusinessLayer;
 import com.navatar.pageObjects.GlobalActionPageBusinessLayer;
@@ -4463,6 +4467,553 @@ public class PECloudSmoke extends BaseLib{
 		sa.assertAll();
 	}
 
+	@Parameters("projectName")
+	@Test
+	public void smokeTc043_verifyTheTabsRelatedListButtonsAndHighlightPanelOnTheFundInvestmentPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundInvestmentPageBusinessLayer fi = new FundInvestmentPageBusinessLayer(driver);
+		NavigationPageBusineesLayer np = new NavigationPageBusineesLayer(driver);
+		
+		WebElement ele;
+		String tab="";
+		
+		String company = ExcelUtils.readData(phase1DataSheetFilePath,"FundInvestment", excelLabel.Variable_Name, "FI1", excelLabel.Company);
+		String fundName = ExcelUtils.readData(phase1DataSheetFilePath,"FundInvestment", excelLabel.Variable_Name, "FI1", excelLabel.Fund_Name);
+		String investmentAmount = ExcelUtils.readData(phase1DataSheetFilePath,"FundInvestment", excelLabel.Variable_Name, "FI1", excelLabel.InvestmentAmount);
+
+		String date = tomorrowsDate;
+		ExcelUtils.writeData(phase1DataSheetFilePath,date,"FundInvestment", excelLabel.Variable_Name, "FI1", excelLabel.Date);
+
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		ThreadSleep(5000);
+		if(fi.clickOnTab(projectName, mode,TabName.FundInvestments)){
+			log(LogStatus.INFO,"clicked on fund investment tab",YesNo.No);
+
+		ThreadSleep(5000);
+		if (fi.createFundInvestment(projectName, mode, fundName, company, investmentAmount, date, 30)) {
+			log(LogStatus.INFO,"successfully create fund investment",YesNo.No);
+			
+			ThreadSleep(2000);
+			String[] relatedTabs = {RelatedTab.Details.toString(),RelatedTab.Related.toString()};
+			for (int i = 0; i < relatedTabs.length; i++) {
+				tab = relatedTabs[i];
+				ele=lp.getRelatedTab(projectName, tab, 10);
+				if (ele!=null) {
+					log(LogStatus.INFO,"Related Tab "+tab+" present at fund investment",YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Related Tab "+tab+" sholud be present at fund investment");
+					log(LogStatus.SKIP,"Related Tab "+tab+" sholud be present at fund investment",YesNo.Yes);
+				}
+			}
+			
+			// Buttons
+			np.clickOnShowMoreDropdownOnly(projectName);
+			ShowMoreActionDropDownList[] buttons={ShowMoreActionDropDownList.Edit 
+													,ShowMoreActionDropDownList.Delete
+													,ShowMoreActionDropDownList.Change_Owner,
+													ShowMoreActionDropDownList.Clone,
+													ShowMoreActionDropDownList.Printable_View,
+													ShowMoreActionDropDownList.Sharing,
+													ShowMoreActionDropDownList.Sharing_Hierarchy,
+													ShowMoreActionDropDownList.Send_Capital_Call_Notices,
+													};
+			
+			ShowMoreActionDropDownList button=null;
+			for (int i = 0; i < buttons.length; i++) {
+				button=buttons[i];	
+				
+				ele =  np.actionDropdownElement(projectName, button, 10);
+					if (ele!=null) {
+						log(LogStatus.INFO,"Button "+button+" is present at fund investment",YesNo.No);	
+					} else {
+						sa.assertTrue(false,"Button "+button+" sholud be present at fund investment");
+						log(LogStatus.SKIP,"Button "+button+" sholud be present at fund investment",YesNo.Yes);
+					}
+							
+					}
+			
+			if (fi.getSecondaryField(projectName, 10)==null) {
+				log(LogStatus.INFO,"HighLight is not present at fund v",YesNo.No);
+			} else {
+				sa.assertTrue(false,"HighLight should not be present at fund investment");
+				log(LogStatus.SKIP,"HighLight should not be present at fund investment",YesNo.Yes);
+			}
+			
+			if(click(driver, ele=lp.getRelatedTab(projectName, RelatedTab.Related.toString(), 10), tab, action.BOOLEAN)){
+				log(LogStatus.INFO," clicked on related tab on commitement",YesNo.No);
+
+			
+			// activity timeline visibility
+						WebElement activityTimeline=fi.getActivityTimelineGridOnRelatedTab(30);
+						
+						if(activityTimeline!=null){
+							log(LogStatus.INFO,"Activity timeline is present in related tab on fund investment page",YesNo.No);
+							
+						}else{
+							
+							sa.assertTrue(false,"Activity timeline is not present in related tab on fund investment page");
+							log(LogStatus.FAIL,"Activity timeline is not present in related tab on fund investment page",YesNo.Yes);
+						}
+						
+						
+						
+			
+
+			
+			String[] relatedgrid = {"Notes & Attachments","Files","Standard Activity Time"};
+			int k=0;
+			for (int i = 0; i < relatedgrid.length; i++) {
+				tab = relatedgrid[i];
+				if (i==2) {
+					k=2;
+				} else {
+					k=2;
+				}
+				ele=lp.getRelatedListItem(tab, k);
+				if (ele!=null) {
+					log(LogStatus.INFO,"At Related Tab "+tab+" present at fund investment",YesNo.No);	
+				} else {
+					sa.assertTrue(false,"At Related Tab "+tab+" sholud be present at fund investment");
+					log(LogStatus.SKIP,"At Related Tab "+tab+" sholud be present at fund investment",YesNo.Yes);
+				}
+			}
+			}else{
+				
+				sa.assertTrue(false,"Not able to  clicked on related tab on fund investment");
+				log(LogStatus.SKIP,"Not able to  clicked on related tab on fund investment",YesNo.Yes);
+			}
+
+			
+		} else {
+			sa.assertTrue(false,"Not able to create fund investment");
+			log(LogStatus.SKIP,"Not able to create fund investment",YesNo.Yes);
+		}
+		
+		
+		}else{
+			
+			sa.assertTrue(false,"Not able to click on fund investment tab");
+			log(LogStatus.SKIP,"Not able to click on fund investment tab",YesNo.Yes);
+		}
+		
+		
+		
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters("projectName")
+	@Test
+	public void smokeTC044_verifyListViewOnFundInvestmentPage(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp= new BasePageBusinessLayer(driver);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		
+		String selectListLink ="All,Recently Viewed";
+		
+		ThreadSleep(5000);
+		if(bp.clickOnTab(projectName, mode, TabName.FundInvestments)){
+			log(LogStatus.PASS,	"click on Fund investment tab", YesNo.No);
+			
+			if (click(driver, bp.getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(5000);
+				List<WebElement> lst=bp.getAllLinkOfSelectListIconOption(mode,"Fund Investments", 30);
+				if(compareMultipleList(driver, selectListLink, lst).isEmpty()){
+					log(LogStatus.PASS,	"All link of select list icon  is verified", YesNo.No);
+				}else{
+					
+					log(LogStatus.FAIL,	"All link of select list icon  is not verified", YesNo.Yes);
+					sa.assertTrue(false,"All link of select list icon  is not verified");
+				}
+				
+			} else {
+				appLog.error("Not able to click on Select List Icon");
+			}
+		}else{
+			
+			log(LogStatus.FAIL,	"not able to click on Fund investment tab", YesNo.Yes);
+			sa.assertTrue(false,"not able to click on Fund investment tab");
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters("projectName")
+	@Test
+	public void smokeTc045_verifyTheTabsRelatedListButtonsAndHighlightPanelOnTheAgreemenAmendmentPage(String projectName) {
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		AgreementAmendmentPageBusinessLayer aa = new AgreementAmendmentPageBusinessLayer(driver);
+		NavigationPageBusineesLayer np = new NavigationPageBusineesLayer(driver);
+		
+		WebElement ele;
+		String tab="";
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		String recordType = ExcelUtils.readData(phase1DataSheetFilePath,"AgreementsAmendments", excelLabel.Variable_Name, "AA1", excelLabel.Record_Type);
+		String agreementAmendmentNumber = ExcelUtils.readData(phase1DataSheetFilePath,"AgreementsAmendments", excelLabel.Variable_Name, "AA1", excelLabel.AgreementAmendmentNumber);
+		String commitment = SMOKCommitment1CommitmentId;
+		String effectiveDate = todaysDate;
+		String receiptDate = tomorrowsDate;
+		ExcelUtils.writeData(phase1DataSheetFilePath,effectiveDate,"AgreementsAmendments", excelLabel.Variable_Name, "AA1", excelLabel.EffectiveDate);
+		ExcelUtils.writeData(phase1DataSheetFilePath,receiptDate,"AgreementsAmendments", excelLabel.Variable_Name, "AA1", excelLabel.ReceiptDate);
+		ExcelUtils.writeData(phase1DataSheetFilePath,commitment,"AgreementsAmendments", excelLabel.Variable_Name, "AA1", excelLabel.Commitment_ID);
+
+		
+		
+		ThreadSleep(5000);
+		if(aa.clickOnTab(projectName,mode,TabName.AgreementsAmendments)){
+			log(LogStatus.INFO,"clicked on Agreements/Amendments tab",YesNo.No);
+
+		ThreadSleep(5000);
+		if (aa.createAgreementAmendment(projectName, recordType, agreementAmendmentNumber, commitment, effectiveDate, receiptDate, 30)) {
+			log(LogStatus.INFO,"successfully create Agreements/Amendments",YesNo.No);
+			
+			ThreadSleep(2000);
+			String[] relatedTabs = {RelatedTab.Details.toString(),RelatedTab.Related.toString()};
+			for (int i = 0; i < relatedTabs.length; i++) {
+				tab = relatedTabs[i];
+				ele=lp.getRelatedTab(projectName, tab, 10);
+				if (ele!=null) {
+					log(LogStatus.INFO,"Related Tab "+tab+" present at Agreements/Amendments",YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Related Tab "+tab+" sholud be present at Agreements/Amendments");
+					log(LogStatus.SKIP,"Related Tab "+tab+" sholud be present at Agreements/Amendments",YesNo.Yes);
+				}
+			}
+			
+			// Buttons
+			np.clickOnShowMoreDropdownOnly(projectName);
+			ShowMoreActionDropDownList[] buttons={ShowMoreActionDropDownList.Edit 
+													,ShowMoreActionDropDownList.Delete
+													,ShowMoreActionDropDownList.Change_Record_Type,
+													ShowMoreActionDropDownList.Clone,
+													ShowMoreActionDropDownList.Printable_View
+													};
+			
+			ShowMoreActionDropDownList button=null;
+			for (int i = 0; i < buttons.length; i++) {
+				button=buttons[i];	
+				
+				ele =  np.actionDropdownElement(projectName, button, 10);
+					if (ele!=null) {
+						log(LogStatus.INFO,"Button "+button+" is present at Agreements/Amendments",YesNo.No);	
+					} else {
+						sa.assertTrue(false,"Button "+button+" sholud be present at Agreements/Amendments");
+						log(LogStatus.SKIP,"Button "+button+" sholud be present at Agreements/Amendments",YesNo.Yes);
+					}
+							
+					}
+			
+			if (aa.getSecondaryField(projectName, 10)==null) {
+				log(LogStatus.INFO,"HighLight is not present at Agreements/Amendments",YesNo.No);
+			} else {
+				sa.assertTrue(false,"HighLight should not be present at Agreements/Amendments");
+				log(LogStatus.SKIP,"HighLight should not be present at Agreements/Amendments",YesNo.Yes);
+			}
+			
+			if(click(driver, ele=lp.getRelatedTab(projectName, RelatedTab.Related.toString(), 10), tab, action.BOOLEAN)){
+				log(LogStatus.INFO," clicked on related tab on commitement",YesNo.No);
+
+			
+			// activity timeline visibility
+						WebElement activityTimeline=aa.getActivityTimelineGridOnRelatedTab(30);
+						
+						if(activityTimeline!=null){
+							log(LogStatus.INFO,"Activity timeline is present in related tab on Agreements/Amendments page",YesNo.No);
+							
+						}else{
+							
+							sa.assertTrue(false,"Activity timeline is not present in related tab on Agreements/Amendments page");
+							log(LogStatus.FAIL,"Activity timeline is not present in related tab on Agreements/Amendments page",YesNo.Yes);
+						}
+						
+	
+			String[] relatedgrid = {"Notes & Attachments","Files","Standard Activity Time"};
+			int k=0;
+			for (int i = 0; i < relatedgrid.length; i++) {
+				tab = relatedgrid[i];
+				if (i==2) {
+					k=2;
+				} else {
+					k=2;
+				}
+				ele=lp.getRelatedListItem(tab, k);
+				if (ele!=null) {
+					log(LogStatus.INFO,"At Related Tab "+tab+" present at Agreements/Amendments",YesNo.No);	
+				} else {
+					sa.assertTrue(false,"At Related Tab "+tab+" sholud be present at Agreements/Amendments");
+					log(LogStatus.SKIP,"At Related Tab "+tab+" sholud be present at Agreements/Amendments",YesNo.Yes);
+				}
+			}
+			}else{
+				
+				sa.assertTrue(false,"Not able to  clicked on related tab on Agreements/Amendments");
+				log(LogStatus.SKIP,"Not able to  clicked on related tab on Agreements/Amendments",YesNo.Yes);
+			}
+
+			
+		} else {
+			sa.assertTrue(false,"Not able to create Agreements/Amendments");
+			log(LogStatus.SKIP,"Not able to create Agreements/Amendments",YesNo.Yes);
+		}
+		
+		
+		}else{
+			
+			sa.assertTrue(false,"Not able to click on Agreements/Amendments tab");
+			log(LogStatus.SKIP,"Not able to click on Agreements/Amendments tab",YesNo.Yes);
+		}
+		
+		
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters("projectName")
+	@Test
+	public void smokeTC046_verifyListViewOnAgreementsAmendmentsPage(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp= new BasePageBusinessLayer(driver);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		
+		String selectListLink ="All,Recently Viewed";
+		
+		ThreadSleep(5000);
+		if(bp.clickOnTab(projectName, mode, TabName.AgreementsAmendments)){
+			log(LogStatus.PASS,	"click on Agreements/Amendments tab", YesNo.No);
+			
+			if (click(driver, bp.getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(5000);
+				List<WebElement> lst=bp.getAllLinkOfSelectListIconOption(mode,"Agreements/Amendments", 30);
+				if(compareMultipleList(driver, selectListLink, lst).isEmpty()){
+					log(LogStatus.PASS,	"All link of select list icon  is verified", YesNo.No);
+				}else{
+					
+					log(LogStatus.FAIL,	"All link of select list icon  is not verified", YesNo.Yes);
+					sa.assertTrue(false,"All link of select list icon  is not verified");
+				}
+				
+			} else {
+				appLog.error("Not able to click on Select List Icon");
+			}
+		}else{
+			
+			log(LogStatus.FAIL,	"not able to click on Agreements/Amendments tab", YesNo.Yes);
+			sa.assertTrue(false,"not able to click on Agreements/Amendments tab");
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void smokeTc047_createFundRecordForFOFTransaction(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		
+		// Fund 
+		if (lp.clickOnTab(projectName, TabName.Object3Tab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.Object3Tab,YesNo.No);	
+			String[] funds = {SmokeFund4,SmokeFund4Type,SmokeFund4Category};
+			if (fp.createFundPE(projectName, funds[0], "", funds[1], funds[2], null, 15)) {
+				log(LogStatus.INFO,"Created Fund : "+funds[0],YesNo.No);	
+				
+			} else {
+				sa.assertTrue(false,"Not Able to Create Fund : "+funds[0]);
+				log(LogStatus.SKIP,"Not Able to Create Fund  : "+funds[0],YesNo.Yes);
+			}
+
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object3Tab);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object3Tab,YesNo.Yes);
+		}	
+		
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+				
+	@Parameters("projectName")
+	@Test
+	public void smokeTc048_verifyTheTabsRelatedListButtonsAndHighlightPanelOnTheFOFTransactionPage(String projectName) {
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		AgreementAmendmentPageBusinessLayer aa = new AgreementAmendmentPageBusinessLayer(driver);
+		NavigationPageBusineesLayer np = new NavigationPageBusineesLayer(driver);
+		
+		WebElement ele;
+		String tab="";
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		String recordType = ExcelUtils.readData(phase1DataSheetFilePath,"AgreementsAmendments", excelLabel.Variable_Name, "AA1", excelLabel.Record_Type);
+		String agreementAmendmentNumber = ExcelUtils.readData(phase1DataSheetFilePath,"AgreementsAmendments", excelLabel.Variable_Name, "AA1", excelLabel.AgreementAmendmentNumber);
+		String commitment = SMOKCommitment1CommitmentId;
+		String effectiveDate = todaysDate;
+		String receiptDate = tomorrowsDate;
+		ExcelUtils.writeData(phase1DataSheetFilePath,effectiveDate,"AgreementsAmendments", excelLabel.Variable_Name, "AA1", excelLabel.EffectiveDate);
+		ExcelUtils.writeData(phase1DataSheetFilePath,receiptDate,"AgreementsAmendments", excelLabel.Variable_Name, "AA1", excelLabel.ReceiptDate);
+		ExcelUtils.writeData(phase1DataSheetFilePath,commitment,"AgreementsAmendments", excelLabel.Variable_Name, "AA1", excelLabel.Commitment_ID);
+
+		
+		
+		ThreadSleep(5000);
+		if(aa.clickOnTab(projectName,mode,TabName.FundOfFundsTransactions)){
+			log(LogStatus.INFO,"clicked on fund of funds transactions tab",YesNo.No);
+
+		ThreadSleep(5000);
+		if (aa.createAgreementAmendment(projectName, recordType, agreementAmendmentNumber, commitment, effectiveDate, receiptDate, 30)) {
+			log(LogStatus.INFO,"successfully create fund of funds transactions",YesNo.No);
+			
+			ThreadSleep(2000);
+			String[] relatedTabs = {RelatedTab.Details.toString(),RelatedTab.Related.toString()};
+			for (int i = 0; i < relatedTabs.length; i++) {
+				tab = relatedTabs[i];
+				ele=lp.getRelatedTab(projectName, tab, 10);
+				if (ele!=null) {
+					log(LogStatus.INFO,"Related Tab "+tab+" present at fund of funds transactions",YesNo.No);	
+				} else {
+					sa.assertTrue(false,"Related Tab "+tab+" sholud be present at fund of funds transactions");
+					log(LogStatus.SKIP,"Related Tab "+tab+" sholud be present at fund of funds transactions",YesNo.Yes);
+				}
+			}
+			
+			// Buttons
+			np.clickOnShowMoreDropdownOnly(projectName);
+			ShowMoreActionDropDownList[] buttons={ShowMoreActionDropDownList.Edit 
+													,ShowMoreActionDropDownList.Delete
+													,ShowMoreActionDropDownList.Change_Record_Type,
+													ShowMoreActionDropDownList.Clone,
+													ShowMoreActionDropDownList.Printable_View
+													};
+			
+			ShowMoreActionDropDownList button=null;
+			for (int i = 0; i < buttons.length; i++) {
+				button=buttons[i];	
+				
+				ele =  np.actionDropdownElement(projectName, button, 10);
+					if (ele!=null) {
+						log(LogStatus.INFO,"Button "+button+" is present at Agreements/Amendments",YesNo.No);	
+					} else {
+						sa.assertTrue(false,"Button "+button+" sholud be present at Agreements/Amendments");
+						log(LogStatus.SKIP,"Button "+button+" sholud be present at Agreements/Amendments",YesNo.Yes);
+					}
+							
+					}
+			
+			if (aa.getSecondaryField(projectName, 10)==null) {
+				log(LogStatus.INFO,"HighLight is not present at Agreements/Amendments",YesNo.No);
+			} else {
+				sa.assertTrue(false,"HighLight should not be present at Agreements/Amendments");
+				log(LogStatus.SKIP,"HighLight should not be present at Agreements/Amendments",YesNo.Yes);
+			}
+			
+			if(click(driver, ele=lp.getRelatedTab(projectName, RelatedTab.Related.toString(), 10), tab, action.BOOLEAN)){
+				log(LogStatus.INFO," clicked on related tab on commitement",YesNo.No);
+
+			
+			// activity timeline visibility
+						WebElement activityTimeline=aa.getActivityTimelineGridOnRelatedTab(30);
+						
+						if(activityTimeline!=null){
+							log(LogStatus.INFO,"Activity timeline is present in related tab on Agreements/Amendments page",YesNo.No);
+							
+						}else{
+							
+							sa.assertTrue(false,"Activity timeline is not present in related tab on Agreements/Amendments page");
+							log(LogStatus.FAIL,"Activity timeline is not present in related tab on Agreements/Amendments page",YesNo.Yes);
+						}
+						
+	
+			String[] relatedgrid = {"Notes & Attachments","Files","Standard Activity Time"};
+			int k=0;
+			for (int i = 0; i < relatedgrid.length; i++) {
+				tab = relatedgrid[i];
+				if (i==2) {
+					k=2;
+				} else {
+					k=2;
+				}
+				ele=lp.getRelatedListItem(tab, k);
+				if (ele!=null) {
+					log(LogStatus.INFO,"At Related Tab "+tab+" present at Agreements/Amendments",YesNo.No);	
+				} else {
+					sa.assertTrue(false,"At Related Tab "+tab+" sholud be present at Agreements/Amendments");
+					log(LogStatus.SKIP,"At Related Tab "+tab+" sholud be present at Agreements/Amendments",YesNo.Yes);
+				}
+			}
+			}else{
+				
+				sa.assertTrue(false,"Not able to  clicked on related tab on Agreements/Amendments");
+				log(LogStatus.SKIP,"Not able to  clicked on related tab on Agreements/Amendments",YesNo.Yes);
+			}
+
+			
+		} else {
+			sa.assertTrue(false,"Not able to create Agreements/Amendments");
+			log(LogStatus.SKIP,"Not able to create Agreements/Amendments",YesNo.Yes);
+		}
+		
+		
+		}else{
+			
+			sa.assertTrue(false,"Not able to click on Agreements/Amendments tab");
+			log(LogStatus.SKIP,"Not able to click on Agreements/Amendments tab",YesNo.Yes);
+		}
+		
+		
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters("projectName")
+	@Test
+	public void smokeTC049_verifyListViewOnFOFTransactionPage(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp= new BasePageBusinessLayer(driver);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		
+		String selectListLink ="All,Recently Viewed";
+		
+		ThreadSleep(5000);
+		if(bp.clickOnTab(projectName, mode, TabName.AgreementsAmendments)){
+			log(LogStatus.PASS,	"click on Agreements/Amendments tab", YesNo.No);
+			
+			if (click(driver, bp.getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(5000);
+				List<WebElement> lst=bp.getAllLinkOfSelectListIconOption(mode,"Agreements/Amendments", 30);
+				if(compareMultipleList(driver, selectListLink, lst).isEmpty()){
+					log(LogStatus.PASS,	"All link of select list icon  is verified", YesNo.No);
+				}else{
+					
+					log(LogStatus.FAIL,	"All link of select list icon  is not verified", YesNo.Yes);
+					sa.assertTrue(false,"All link of select list icon  is not verified");
+				}
+				
+			} else {
+				appLog.error("Not able to click on Select List Icon");
+			}
+		}else{
+			
+			log(LogStatus.FAIL,	"not able to click on Agreements/Amendments tab", YesNo.Yes);
+			sa.assertTrue(false,"not able to click on Agreements/Amendments tab");
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 	
 	
 }

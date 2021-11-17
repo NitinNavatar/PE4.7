@@ -7,6 +7,7 @@ import static com.navatar.generic.BaseLib.testCasesFilePath;
 import static com.navatar.generic.BaseLib.phase1DataSheetFilePath;
 import static com.navatar.generic.CommonLib.getDateAccToTimeZone;
 import static com.navatar.generic.CommonLib.previousOrForwardDate;
+
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.scripts.Module5New;
@@ -30,6 +31,8 @@ public class CommonVariables {
 
 	public static double dealReceivedScore=1.0,NDASignedScore=1.0,managementMeetingScore=3.0,ioiScore=3.0,loiScore=5.0;
  	public static double dueDiligenceScore=5.0,closedScore=5.0,declinedDeadScore=5.0,parkedScore=5.0;
+ 	
+ 	
  	
 	public static String URL,todaysDate,todaysDate1,tomorrowsDate,todaysDateEurope,todaysDateddmm,todaysDateSingleDigit,todaysDateNewZealand,yesterdaysDate;
 	public static String browserToLaunch;
@@ -411,6 +414,8 @@ public class CommonVariables {
 	public static String SMOKFund1FundName,SMOKFund1FundType,SMOKFund1InvestmentCategory,SMOKFund1VintageYear,SMOKFund11stClosingDate;
 	public static String SMOKFund2FundName,SMOKFund2FundType,SMOKFund2InvestmentCategory,SMOKFund2VintageYear;
 	public static String SmokeFund3,SmokeFund3Type,SmokeFund3Category,SmokeFund3RecordType;
+	public static String SmokeFund4,SmokeFund4Type,SmokeFund4Category,SmokeFund4RecordType;
+
 	public static String SMOKFund3FundName,SMOKFund3FundType,SMOKFund3InvestmentCategory,SMOKFund3VintageYear;
 
 	
@@ -440,6 +445,15 @@ public class CommonVariables {
  	public static String SmokePFContact1FName,SmokePFContact1LName,SmokePFContact1Inst,SmokePFContact1EmailID,SmokePFContact1RecordType;
  	public static String SmokeDeal2,SmokeDeal2CompanyName,SmokeDeal2RecordType,SmokeDeal2Stage;
  	public static String SmokeFR1,SmokeFR1Fund,SmokeFR1LegalName,SmokeFR1Stage;
+ 	
+ 	
+ 	//FSTG field label
+ 	
+ 	public static String FSTG1ObjectName,FSTG1RecordName,FSTG1SectionAndField;
+ 	public static String FSTG2ObjectName,FSTG2RecordName,FSTG2SectionAndField;
+ 	public static String FSTG3ObjectName,FSTG3RecordName,FSTG3SectionAndField;
+ 	public static String FSTG4ObjectName,FSTG4RecordName,FSTG4SectionAndField;
+
  	
  	// partnership
  	
@@ -517,231 +531,11 @@ public class CommonVariables {
 
 
 		//****************************************************************	Toggle Variable **********************************************************//
-
-
-
-		if(obj instanceof Module5New){
-
-
-			ToggleLP1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLELP1", excelLabel.Institutions_Name);
-			TogglePartnerShip1=ExcelUtils.readData(phase1DataSheetFilePath,"Partnerships",excelLabel.Variable_Name, "TOGGLEPS1", excelLabel.PartnerShip_Name);
-			TogglePartnerShip2=ExcelUtils.readData(phase1DataSheetFilePath,"Partnerships",excelLabel.Variable_Name, "TOGGLEPS2", excelLabel.PartnerShip_Name);
-
-			ToggleFund1=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND1", excelLabel.Fund_Name);
-			ToggleFund1Type=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND1", excelLabel.Fund_Type);
-			ToggleFund1Category=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND1", excelLabel.Investment_Category);
-			ToggleFund1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND1", excelLabel.Record_Type);
-
-			ToggleFund2=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Fund_Name);
-			ToggleFund2Type=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Fund_Type);
-			ToggleFund2Category=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Investment_Category);
-			ToggleFund2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Record_Type);
-
-
-			Sdg1Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.SDG_Name);
-			Sdg1TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.SDG_Tag);;
-			Sdg1ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.sObjectName);
-
-			ActiveDealToggleButton = "Active Deals with All Stages !@#$%^&*() @#$%^&*Deals";
-
-			// ToggleOpenQA1ID,ToggleOpenQA1RequestedDate,ToggleOpenQA1Request,ToggleOpenQA1Status;
-
-			ToggleOpenQA1ID=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Request_Tracker_ID);
-			ToggleOpenQA1RequestedDate=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Date_Requested);;
-			ToggleOpenQA1Request=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Request);
-			ToggleOpenQA1Status=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Status);
-
-			ToggleClosedQA1ID=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Request_Tracker_ID);
-			ToggleClosedQA1RequestedDate=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Date_Requested);;
-			ToggleClosedQA1Request=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Request);
-			ToggleClosedQA1Status=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Status);
-
-
-
-			// ToggleCheck1TabName,ToggleCheck1ItemName,ToggleCheck1RelatedTab,ToggleCheck1ToggleButtons;
-
-			ToggleCheck1TabName=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC1", excelLabel.TabName);
-			ToggleCheck1ItemName=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC1", excelLabel.Item);;
-			ToggleCheck1RelatedTab=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC1", excelLabel.RelatedTab);
-			ToggleCheck1ToggleButtons=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC1", excelLabel.ToggleButton);
-			ToggleCheck1ColumnName=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC1", excelLabel.Column_Name);
-
-			//ToggleCheck1ColumnName1,ToggleCheck1ColumnName2
-
-			ToggleCheck2TabName=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC2", excelLabel.TabName);
-			ToggleCheck2ItemName=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC2", excelLabel.Item);;
-			ToggleCheck2RelatedTab=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC2", excelLabel.RelatedTab);
-			ToggleCheck2ToggleButtons=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC2", excelLabel.ToggleButton);
-			ToggleCheck2ColumnName=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC2", excelLabel.Column_Name);
-
-
-			ToggleCheck3TabName=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC3", excelLabel.TabName);
-			ToggleCheck3ItemName=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC3", excelLabel.Item);;
-			ToggleCheck3RelatedTab=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC3", excelLabel.RelatedTab);
-			ToggleCheck3ToggleButtons=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC3", excelLabel.ToggleButton);
-			ToggleCheck3ColumnName=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC3", excelLabel.Column_Name);
-
-			/// New Modulew 5
-
-
-			M5Sdg1Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.SDG_Name);
-			M5Sdg1TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.SDG_Tag);;
-			M5Sdg1ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.sObjectName);
-			M5Sdg1ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.Parent_Field_Name);
-
-			M5Sdg2Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG2", excelLabel.SDG_Name);
-			M5Sdg2TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG2", excelLabel.SDG_Tag);;
-			M5Sdg2ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG2", excelLabel.sObjectName);
-			M5Sdg2ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG2", excelLabel.Parent_Field_Name);
-
-			M5Sdg3Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG3", excelLabel.SDG_Name);
-			M5Sdg3TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG3", excelLabel.SDG_Tag);;
-			M5Sdg3ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG3", excelLabel.sObjectName);
-			M5Sdg3ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG3", excelLabel.Parent_Field_Name);
-
-			M5Sdg4Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG4", excelLabel.SDG_Name);
-			M5Sdg4TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG4", excelLabel.SDG_Tag);;
-			M5Sdg4ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG4", excelLabel.sObjectName);
-			M5Sdg4ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG4", excelLabel.Parent_Field_Name);
-
-			M5Sdg5Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG5", excelLabel.SDG_Name);
-			M5Sdg5TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG5", excelLabel.SDG_Tag);;
-			M5Sdg5ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG5", excelLabel.sObjectName);
-			M5Sdg5ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG5", excelLabel.Parent_Field_Name);
-
-
-			ToggleIns1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Institutions_Name);
-			ToggleIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Record_Type);
-
-
-
-			ToggleContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M5CON1", excelLabel.Contact_FirstName);
-			ToggleContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M5CON1", excelLabel.Contact_LastName);
-			ToggleContact1Inst=ToggleIns1;
-			ToggleContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M5CON1", excelLabel.Contact_EmailId);
-			ToggleContact1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M5CON1", excelLabel.Record_Type);
-
-
-
-			ToggleDeal1=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Deal_Name);
-			ToggleDeal1CompanyName=ToggleIns1;
-			ToggleDeal1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Record_Type);
-			ToggleDeal1Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Stage);
-
-
-			ToggleMarketingEvent1Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "TOGGLEME1", excelLabel.Marketing_Event_Name);
-			ToggleMarketingEvent1Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "TOGGLEME1", excelLabel.Date);
-			ToggleMarketingEvent1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "TOGGLEME1", excelLabel.Record_Type);
-			ToggleMarketingEvent1Organizer=ToggleIns1;
-
-
-		}
-
-		else if(obj instanceof Module2){
-			Smoke_TWINS1Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS1", excelLabel.Institutions_Name);
-			Smoke_TWINS1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS1", excelLabel.Record_Type);
-			Smoke_TWINS1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS1", excelLabel.Status);
-			Smoke_CDINS1Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS1", excelLabel.Institutions_Name);
-			Smoke_CDINS1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS1", excelLabel.Record_Type);
-			Smoke_CDINS1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS1", excelLabel.Status);
-			Smoke_CDINS2Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS2", excelLabel.Status);
-
-			// TASK INS2..............
-			Smoke_TWINS2Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS2", excelLabel.Institutions_Name);
-			Smoke_TWINS2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS2", excelLabel.Record_Type);
-			Smoke_TWINS2Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS2", excelLabel.Status);
-			Smoke_CDINS2Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS2", excelLabel.Institutions_Name);
-			Smoke_CDINS2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS2", excelLabel.Record_Type);
-			Smoke_CDINS3Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS3", excelLabel.Institutions_Name);
-			Smoke_CDINS3RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS3", excelLabel.Record_Type);
-
-			// TASK INS3..............
-			Smoke_TWINS3Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS3", excelLabel.Institutions_Name);
-			Smoke_TWINS3RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS3", excelLabel.Record_Type);
-			Smoke_TWINS3Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS3", excelLabel.Status);
-
-			// TASK INS4..............
-			Smoke_TWINS4Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS4", excelLabel.Institutions_Name);
-			Smoke_TWINS4RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS4", excelLabel.Record_Type);
-			Smoke_TWINS4Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS4", excelLabel.Status);
-
-			Smoke_HSRINS1Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS1", excelLabel.Institutions_Name);
-			Smoke_HSRINS1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS1", excelLabel.Record_Type);
-
-			Smoke_HSRINS2Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS2", excelLabel.Institutions_Name);
-			Smoke_HSRINS2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS2", excelLabel.Record_Type);
-
-			Smoke_HSRINS3Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS3", excelLabel.Institutions_Name);
-			Smoke_HSRINS3RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS3", excelLabel.Record_Type);
-
-			Smoke_HSRINS4Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS4", excelLabel.Institutions_Name);
-			Smoke_HSRINS4RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS4", excelLabel.Record_Type);
-
-			Smoke_HSRINS5Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS5", excelLabel.Institutions_Name);
-			Smoke_HSRINS5RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRIN15", excelLabel.Record_Type);
-
-			// TASK Contact1..............
-			Smoke_TWContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON1", excelLabel.Contact_FirstName);
-			Smoke_TWContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON1", excelLabel.Contact_LastName);
-			Smoke_TWContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON1", excelLabel.Contact_EmailId);
-			Smoke_TWContact1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON1", excelLabel.Record_Type);
-			Smoke_HSRContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON1", excelLabel.Contact_FirstName);
-			Smoke_HSRContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON1", excelLabel.Contact_LastName);
-			Smoke_HSRContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON1", excelLabel.Contact_EmailId);
-			Smoke_HSRContact2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON2", excelLabel.Contact_FirstName);
-			Smoke_HSRContact2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON2", excelLabel.Contact_LastName);
-			Smoke_HSRContact2EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON2", excelLabel.Contact_EmailId);
-			Smoke_HSRContact3FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON3", excelLabel.Contact_FirstName);
-			Smoke_HSRContact3LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON3", excelLabel.Contact_LastName);
-			Smoke_HSRContact3EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON3", excelLabel.Contact_EmailId);
-			Smoke_HSRPipeline1Name= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP1", excelLabel.Deal_Name);
-			Smoke_HSRPipeline1Stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP1", excelLabel.Stage);
-			Smoke_HSRPipeline2Name= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP2", excelLabel.Deal_Name);
-			Smoke_HSRPipeline2Stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP2", excelLabel.Stage);
-			Smoke_HSRPipeline3Name= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP3", excelLabel.Deal_Name);
-			Smoke_HSRPipeline3Stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP3", excelLabel.Stage);
-			Smoke_HSRPipeline4Name= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP4", excelLabel.Deal_Name);
-			Smoke_HSRPipeline4Stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP4", excelLabel.Stage);
-			Smoke_HSRPipeline5Name= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP5", excelLabel.Deal_Name);
-			Smoke_HSRPipeline5Stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP5", excelLabel.Stage);
-			Smoke_HSRPipeline6Name= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP6", excelLabel.Deal_Name);
-			Smoke_HSRPipeline6Stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP6", excelLabel.Stage);
-
-			// TASK Contact2..............
-			Smoke_TWContact2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON2", excelLabel.Contact_FirstName);
-			Smoke_TWContact2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON2", excelLabel.Contact_LastName);
-			Smoke_TWContact2EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON2", excelLabel.Contact_EmailId);
-			Smoke_TWContact2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON2", excelLabel.Record_Type);
-
-			// TASK Contact3..............
-			Smoke_TWContact3FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON3", excelLabel.Contact_FirstName);
-			Smoke_TWContact3LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON3", excelLabel.Contact_LastName);
-			Smoke_TWContact3EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON3", excelLabel.Contact_EmailId);
-			Smoke_TWContact3RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON3", excelLabel.Record_Type);
-
-			// TASK Contact4..............
-			Smoke_TWContact4FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON4", excelLabel.Contact_FirstName);
-			Smoke_TWContact4LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON4", excelLabel.Contact_LastName);
-			Smoke_TWContact4EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON4", excelLabel.Contact_EmailId);
-			Smoke_TWContact4RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON4", excelLabel.Record_Type);
-
-			// TASK Contact5..............
-			Smoke_TWContact5FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON5", excelLabel.Contact_FirstName);
-			Smoke_TWContact5LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON5", excelLabel.Contact_LastName);
-			Smoke_TWContact5EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON5", excelLabel.Contact_EmailId);
-			Smoke_TWContact5RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON5", excelLabel.Record_Type);
-			TWTask1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask1", excelLabel.Subject);
-			TWTask2Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask2", excelLabel.Subject);
-			TWTask3Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask3", excelLabel.Subject);
-			TWTask4Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask4", excelLabel.Subject);
-			TWTask5Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask5", excelLabel.Subject);
-			TWTask6Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask6", excelLabel.Subject);
-			TWTask8Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask7", excelLabel.Subject);
-			TWTaskCR1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask8", excelLabel.Subject);
-			TWTaskUpdateLabelSubject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask9", excelLabel.Subject);
-
-		}else if(obj instanceof Module1){
-
+		
+		switch (obj.getClass().getSimpleName()) {
+		
+		case "Module1":
+			
 			ToggleOpenQA1ID=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Request_Tracker_ID);
 			ToggleOpenQA1RequestedDate=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Date_Requested);;
 			ToggleOpenQA1Request=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Request);
@@ -1015,98 +809,117 @@ public class CommonVariables {
 			FS_MarketingEvent1Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "ME1", excelLabel.Date);
 			FS_MarketingEvent1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "ME1", excelLabel.Record_Type);
 			FS_MarketingEvent1Organizer=FS_Ins2;
+			break;
+			
+		
+			
+		case "Module2" :
+			
+			Smoke_TWINS1Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS1", excelLabel.Institutions_Name);
+			Smoke_TWINS1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS1", excelLabel.Record_Type);
+			Smoke_TWINS1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS1", excelLabel.Status);
+			Smoke_CDINS1Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS1", excelLabel.Institutions_Name);
+			Smoke_CDINS1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS1", excelLabel.Record_Type);
+			Smoke_CDINS1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS1", excelLabel.Status);
+			Smoke_CDINS2Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS2", excelLabel.Status);
 
-		} else if(obj instanceof Module4){
+			// TASK INS2..............
+			Smoke_TWINS2Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS2", excelLabel.Institutions_Name);
+			Smoke_TWINS2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS2", excelLabel.Record_Type);
+			Smoke_TWINS2Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS2", excelLabel.Status);
+			Smoke_CDINS2Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS2", excelLabel.Institutions_Name);
+			Smoke_CDINS2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS2", excelLabel.Record_Type);
+			Smoke_CDINS3Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS3", excelLabel.Institutions_Name);
+			Smoke_CDINS3RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS3", excelLabel.Record_Type);
 
-			M4Sdg1Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG1", excelLabel.SDG_Name);
-			M4Sdg1TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG1", excelLabel.SDG_Tag);;
-			M4Sdg1ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG1", excelLabel.sObjectName);
-			M4Sdg1ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG1", excelLabel.Parent_Field_Name);
-			M4Sdg2Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG2", excelLabel.SDG_Name);
-			M4Sdg2TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG2", excelLabel.SDG_Tag);;
-			M4Sdg2ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG2", excelLabel.sObjectName);
-			M4Sdg2ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG2", excelLabel.Parent_Field_Name);
-			M4Sdg3Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG3", excelLabel.SDG_Name);
-			M4Sdg3TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG3", excelLabel.SDG_Tag);;
-			M4Sdg3ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG3", excelLabel.sObjectName);
-			M4Sdg3ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG3", excelLabel.Parent_Field_Name);
-			M4Ins1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M4INS1", excelLabel.Institutions_Name);
-			M4Deal1=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M4Deal1", excelLabel.Deal_Name);
-			M4DTField2=ExcelUtils.readData(phase1DataSheetFilePath,"Fields",excelLabel.Variable_Name, "DTField2", excelLabel.APIName);
+			// TASK INS3..............
+			Smoke_TWINS3Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS3", excelLabel.Institutions_Name);
+			Smoke_TWINS3RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS3", excelLabel.Record_Type);
+			Smoke_TWINS3Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS3", excelLabel.Status);
 
+			// TASK INS4..............
+			Smoke_TWINS4Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS4", excelLabel.Institutions_Name);
+			Smoke_TWINS4RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS4", excelLabel.Record_Type);
+			Smoke_TWINS4Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS4", excelLabel.Status);
 
-			M4MarketingEvent1Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME1", excelLabel.Marketing_Event_Name);
-			M4MarketingEvent1Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME1", excelLabel.Date);
-			M4MarketingEvent1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME1", excelLabel.Record_Type);
-			M4MarketingEvent1Organizer=M4Ins1;
-			M4MarketingEvent2Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME2", excelLabel.Marketing_Event_Name);
-			M4MarketingEvent2Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME2", excelLabel.Date);
-			M4MarketingEvent2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME2", excelLabel.Record_Type);
-			M4MarketingEvent3Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME3", excelLabel.Marketing_Event_Name);
-			M4MarketingEvent3Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME3", excelLabel.Date);
-			M4MarketingEvent3RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME3", excelLabel.Record_Type);
-			M4MarketingEvent4Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME4", excelLabel.Marketing_Event_Name);
-			M4MarketingEvent4Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME4", excelLabel.Date);
-			M4MarketingEvent4RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME4", excelLabel.Record_Type);
-			M4MarketingEvent5Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME5", excelLabel.Marketing_Event_Name);
-			M4MarketingEvent5Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME5", excelLabel.Date);
-			M4MarketingEvent5RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME5", excelLabel.Record_Type);
-			M4MarketingEvent6Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME6", excelLabel.Marketing_Event_Name);
-			M4MarketingEvent6Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME6", excelLabel.Date);
-			M4MarketingEvent6RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME6", excelLabel.Record_Type);
-			M4MarketingEvent11Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME11", excelLabel.Marketing_Event_Name);
-			M4MarketingEvent12Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME12", excelLabel.Marketing_Event_Name);
-			M4MarketingEvent13Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME13", excelLabel.Marketing_Event_Name);
-			M4MarketingEvent14Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME14", excelLabel.Marketing_Event_Name);
-			M4MarketingEvent15Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME15", excelLabel.Marketing_Event_Name);
-			M4MarketingEvent16Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME16", excelLabel.Marketing_Event_Name);
-			M4MarketingEvent17Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME17", excelLabel.Marketing_Event_Name);
-			M4MarketingEvent18Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME18", excelLabel.Marketing_Event_Name);
-			M4MarketingEvent19Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME19", excelLabel.Marketing_Event_Name);
-			M4MarketingEvent20Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME20", excelLabel.Marketing_Event_Name);
-			M4MarketingEvent20RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME20", excelLabel.Record_Type);
-			M4MarketingEvent20Organizer=M4Ins1;
-			M4MarketingEvent21Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME21", excelLabel.Marketing_Event_Name);
-			M4MarketingEvent21RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME21", excelLabel.Record_Type);
-			M4MarketingEvent21Organizer=M4Ins1;
-			M4Attendee10Status=ExcelUtils.readData(phase1DataSheetFilePath,"Attendees",excelLabel.Variable_Name, "M4Att10", excelLabel.Status);
+			Smoke_HSRINS1Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS1", excelLabel.Institutions_Name);
+			Smoke_HSRINS1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS1", excelLabel.Record_Type);
 
-			M4Contact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Contact_FirstName);
-			M4Contact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Contact_LastName);
-			M4Contact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Contact_EmailId);
-			M4Contact1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Record_Type);
-			M4Contact1Title=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Title);
-			M4Contact2Title=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON2", excelLabel.Title);
-			M4Contact2Email=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON2", excelLabel.Contact_EmailId);
+			Smoke_HSRINS2Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS2", excelLabel.Institutions_Name);
+			Smoke_HSRINS2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS2", excelLabel.Record_Type);
 
-			M4Contact2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON2", excelLabel.Contact_FirstName);
-			M4Contact2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON2", excelLabel.Contact_LastName);
-			M4Contact8FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON8", excelLabel.Contact_FirstName);
-			M4Contact8LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON8", excelLabel.Contact_LastName);
-			M4Contact8Title=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON8", excelLabel.Title);
+			Smoke_HSRINS3Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS3", excelLabel.Institutions_Name);
+			Smoke_HSRINS3RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS3", excelLabel.Record_Type);
 
+			Smoke_HSRINS4Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS4", excelLabel.Institutions_Name);
+			Smoke_HSRINS4RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS4", excelLabel.Record_Type);
 
-			M4Contact2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON2", excelLabel.Contact_FirstName);
-			M4Contact2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON2", excelLabel.Contact_LastName);
+			Smoke_HSRINS5Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS5", excelLabel.Institutions_Name);
+			Smoke_HSRINS5RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRIN15", excelLabel.Record_Type);
 
-			M4SDGAction1Name=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction1", excelLabel.Name);
-			M4SDGAction1Order=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction1", excelLabel.Action_Order);
-			M4SDGAction1Event=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction1", excelLabel.Event);
-			M4SDGAction1EventPayload=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction1", excelLabel.Event_Payload);
-			M4SDGAction1Type=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction1", excelLabel.Action_Type);
-			M4SDGAction2Name=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction2", excelLabel.Name);
-			M4SDGAction2Order=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction2", excelLabel.Action_Order);
-			M4SDGAction2Event=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction2", excelLabel.Event);
-			M4SDGAction2EventPayload=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction2", excelLabel.Event_Payload);
-			M4SDGAction2Type=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction2", excelLabel.Action_Type);
+			// TASK Contact1..............
+			Smoke_TWContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON1", excelLabel.Contact_FirstName);
+			Smoke_TWContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON1", excelLabel.Contact_LastName);
+			Smoke_TWContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON1", excelLabel.Contact_EmailId);
+			Smoke_TWContact1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON1", excelLabel.Record_Type);
+			Smoke_HSRContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON1", excelLabel.Contact_FirstName);
+			Smoke_HSRContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON1", excelLabel.Contact_LastName);
+			Smoke_HSRContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON1", excelLabel.Contact_EmailId);
+			Smoke_HSRContact2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON2", excelLabel.Contact_FirstName);
+			Smoke_HSRContact2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON2", excelLabel.Contact_LastName);
+			Smoke_HSRContact2EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON2", excelLabel.Contact_EmailId);
+			Smoke_HSRContact3FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON3", excelLabel.Contact_FirstName);
+			Smoke_HSRContact3LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON3", excelLabel.Contact_LastName);
+			Smoke_HSRContact3EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "HSRCON3", excelLabel.Contact_EmailId);
+			Smoke_HSRPipeline1Name= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP1", excelLabel.Deal_Name);
+			Smoke_HSRPipeline1Stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP1", excelLabel.Stage);
+			Smoke_HSRPipeline2Name= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP2", excelLabel.Deal_Name);
+			Smoke_HSRPipeline2Stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP2", excelLabel.Stage);
+			Smoke_HSRPipeline3Name= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP3", excelLabel.Deal_Name);
+			Smoke_HSRPipeline3Stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP3", excelLabel.Stage);
+			Smoke_HSRPipeline4Name= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP4", excelLabel.Deal_Name);
+			Smoke_HSRPipeline4Stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP4", excelLabel.Stage);
+			Smoke_HSRPipeline5Name= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP5", excelLabel.Deal_Name);
+			Smoke_HSRPipeline5Stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP5", excelLabel.Stage);
+			Smoke_HSRPipeline6Name= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP6", excelLabel.Deal_Name);
+			Smoke_HSRPipeline6Stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "HSRPIP6", excelLabel.Stage);
 
-			TechonlogyCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage5", excelLabel.Coverage_Name);
-			TechonlogyCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage5", excelLabel.Record_Type);
+			// TASK Contact2..............
+			Smoke_TWContact2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON2", excelLabel.Contact_FirstName);
+			Smoke_TWContact2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON2", excelLabel.Contact_LastName);
+			Smoke_TWContact2EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON2", excelLabel.Contact_EmailId);
+			Smoke_TWContact2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON2", excelLabel.Record_Type);
 
+			// TASK Contact3..............
+			Smoke_TWContact3FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON3", excelLabel.Contact_FirstName);
+			Smoke_TWContact3LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON3", excelLabel.Contact_LastName);
+			Smoke_TWContact3EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON3", excelLabel.Contact_EmailId);
+			Smoke_TWContact3RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON3", excelLabel.Record_Type);
 
-		}else if(obj instanceof Module3New){
+			// TASK Contact4..............
+			Smoke_TWContact4FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON4", excelLabel.Contact_FirstName);
+			Smoke_TWContact4LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON4", excelLabel.Contact_LastName);
+			Smoke_TWContact4EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON4", excelLabel.Contact_EmailId);
+			Smoke_TWContact4RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON4", excelLabel.Record_Type);
 
+			// TASK Contact5..............
+			Smoke_TWContact5FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON5", excelLabel.Contact_FirstName);
+			Smoke_TWContact5LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON5", excelLabel.Contact_LastName);
+			Smoke_TWContact5EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON5", excelLabel.Contact_EmailId);
+			Smoke_TWContact5RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON5", excelLabel.Record_Type);
+			TWTask1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask1", excelLabel.Subject);
+			TWTask2Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask2", excelLabel.Subject);
+			TWTask3Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask3", excelLabel.Subject);
+			TWTask4Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask4", excelLabel.Subject);
+			TWTask5Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask5", excelLabel.Subject);
+			TWTask6Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask6", excelLabel.Subject);
+			TWTask8Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask7", excelLabel.Subject);
+			TWTaskCR1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask8", excelLabel.Subject);
+			TWTaskUpdateLabelSubject=ExcelUtils.readData(phase1DataSheetFilePath,"Task",excelLabel.Variable_Name, "TWTask9", excelLabel.Subject);
 
+			break;
+			
+		case "Module3New" :
 			M3TestCustomObj1Name=ExcelUtils.readData(phase1DataSheetFilePath, "Test Custom Object", excelLabel.Variable_Name,"M3CSTOBJ", excelLabel.Test_Custom_Object_Name);
 			M3TestCustomObj1RecordType=ExcelUtils.readData(phase1DataSheetFilePath, "Test Custom Object", excelLabel.Variable_Name,"M3CSTOBJ", excelLabel.Record_Type);
 
@@ -1213,79 +1026,215 @@ public class CommonVariables {
 			M3Deal1CompanyName=M3Ins1;
 			M3Deal1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M3DEAL1", excelLabel.Record_Type);
 			M3Deal1Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M3DEAL1", excelLabel.Stage);
+			
+			break;
+			
+		case "Module4" :
+			
+			M4Sdg1Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG1", excelLabel.SDG_Name);
+			M4Sdg1TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG1", excelLabel.SDG_Tag);;
+			M4Sdg1ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG1", excelLabel.sObjectName);
+			M4Sdg1ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG1", excelLabel.Parent_Field_Name);
+			M4Sdg2Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG2", excelLabel.SDG_Name);
+			M4Sdg2TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG2", excelLabel.SDG_Tag);;
+			M4Sdg2ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG2", excelLabel.sObjectName);
+			M4Sdg2ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG2", excelLabel.Parent_Field_Name);
+			M4Sdg3Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG3", excelLabel.SDG_Name);
+			M4Sdg3TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG3", excelLabel.SDG_Tag);;
+			M4Sdg3ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG3", excelLabel.sObjectName);
+			M4Sdg3ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "M4SDG3", excelLabel.Parent_Field_Name);
+			M4Ins1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M4INS1", excelLabel.Institutions_Name);
+			M4Deal1=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M4Deal1", excelLabel.Deal_Name);
+			M4DTField2=ExcelUtils.readData(phase1DataSheetFilePath,"Fields",excelLabel.Variable_Name, "DTField2", excelLabel.APIName);
+
+
+			M4MarketingEvent1Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME1", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent1Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME1", excelLabel.Date);
+			M4MarketingEvent1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME1", excelLabel.Record_Type);
+			M4MarketingEvent1Organizer=M4Ins1;
+			M4MarketingEvent2Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME2", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent2Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME2", excelLabel.Date);
+			M4MarketingEvent2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME2", excelLabel.Record_Type);
+			M4MarketingEvent3Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME3", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent3Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME3", excelLabel.Date);
+			M4MarketingEvent3RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME3", excelLabel.Record_Type);
+			M4MarketingEvent4Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME4", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent4Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME4", excelLabel.Date);
+			M4MarketingEvent4RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME4", excelLabel.Record_Type);
+			M4MarketingEvent5Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME5", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent5Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME5", excelLabel.Date);
+			M4MarketingEvent5RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME5", excelLabel.Record_Type);
+			M4MarketingEvent6Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME6", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent6Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME6", excelLabel.Date);
+			M4MarketingEvent6RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME6", excelLabel.Record_Type);
+			M4MarketingEvent11Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME11", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent12Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME12", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent13Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME13", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent14Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME14", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent15Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME15", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent16Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME16", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent17Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME17", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent18Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME18", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent19Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME19", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent20Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME20", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent20RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME20", excelLabel.Record_Type);
+			M4MarketingEvent20Organizer=M4Ins1;
+			M4MarketingEvent21Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME21", excelLabel.Marketing_Event_Name);
+			M4MarketingEvent21RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "M4ME21", excelLabel.Record_Type);
+			M4MarketingEvent21Organizer=M4Ins1;
+			M4Attendee10Status=ExcelUtils.readData(phase1DataSheetFilePath,"Attendees",excelLabel.Variable_Name, "M4Att10", excelLabel.Status);
+
+			M4Contact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Contact_FirstName);
+			M4Contact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Contact_LastName);
+			M4Contact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Contact_EmailId);
+			M4Contact1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Record_Type);
+			M4Contact1Title=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON1", excelLabel.Title);
+			M4Contact2Title=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON2", excelLabel.Title);
+			M4Contact2Email=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON2", excelLabel.Contact_EmailId);
+
+			M4Contact2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON2", excelLabel.Contact_FirstName);
+			M4Contact2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON2", excelLabel.Contact_LastName);
+			M4Contact8FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON8", excelLabel.Contact_FirstName);
+			M4Contact8LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON8", excelLabel.Contact_LastName);
+			M4Contact8Title=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON8", excelLabel.Title);
+
+
+			M4Contact2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON2", excelLabel.Contact_FirstName);
+			M4Contact2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M4CON2", excelLabel.Contact_LastName);
+
+			M4SDGAction1Name=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction1", excelLabel.Name);
+			M4SDGAction1Order=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction1", excelLabel.Action_Order);
+			M4SDGAction1Event=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction1", excelLabel.Event);
+			M4SDGAction1EventPayload=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction1", excelLabel.Event_Payload);
+			M4SDGAction1Type=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction1", excelLabel.Action_Type);
+			M4SDGAction2Name=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction2", excelLabel.Name);
+			M4SDGAction2Order=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction2", excelLabel.Action_Order);
+			M4SDGAction2Event=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction2", excelLabel.Event);
+			M4SDGAction2EventPayload=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction2", excelLabel.Event_Payload);
+			M4SDGAction2Type=ExcelUtils.readData(phase1DataSheetFilePath,"SDGActions",excelLabel.Variable_Name, "SDGAction2", excelLabel.Action_Type);
+
+			TechonlogyCoverage=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage5", excelLabel.Coverage_Name);
+			TechonlogyCoverageRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Coverages",excelLabel.Variable_Name, "Coverage5", excelLabel.Record_Type);
+
+			break;
+			
+		case "Module5New" :
+			
+			ToggleLP1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLELP1", excelLabel.Institutions_Name);
+			TogglePartnerShip1=ExcelUtils.readData(phase1DataSheetFilePath,"Partnerships",excelLabel.Variable_Name, "TOGGLEPS1", excelLabel.PartnerShip_Name);
+			TogglePartnerShip2=ExcelUtils.readData(phase1DataSheetFilePath,"Partnerships",excelLabel.Variable_Name, "TOGGLEPS2", excelLabel.PartnerShip_Name);
+
+			ToggleFund1=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND1", excelLabel.Fund_Name);
+			ToggleFund1Type=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND1", excelLabel.Fund_Type);
+			ToggleFund1Category=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND1", excelLabel.Investment_Category);
+			ToggleFund1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND1", excelLabel.Record_Type);
+
+			ToggleFund2=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Fund_Name);
+			ToggleFund2Type=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Fund_Type);
+			ToggleFund2Category=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Investment_Category);
+			ToggleFund2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "TOGGLEFUND2", excelLabel.Record_Type);
+
+
+			Sdg1Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.SDG_Name);
+			Sdg1TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.SDG_Tag);;
+			Sdg1ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.sObjectName);
+
+			ActiveDealToggleButton = "Active Deals with All Stages !@#$%^&*() @#$%^&*Deals";
+
+			// ToggleOpenQA1ID,ToggleOpenQA1RequestedDate,ToggleOpenQA1Request,ToggleOpenQA1Status;
+
+			ToggleOpenQA1ID=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Request_Tracker_ID);
+			ToggleOpenQA1RequestedDate=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Date_Requested);;
+			ToggleOpenQA1Request=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Request);
+			ToggleOpenQA1Status=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Status);
+
+			ToggleClosedQA1ID=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Request_Tracker_ID);
+			ToggleClosedQA1RequestedDate=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Date_Requested);;
+			ToggleClosedQA1Request=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Request);
+			ToggleClosedQA1Status=ExcelUtils.readData(phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "CLOSEDQA1", excelLabel.Status);
 
 
 
-		}else if(obj instanceof Module8){
+			// ToggleCheck1TabName,ToggleCheck1ItemName,ToggleCheck1RelatedTab,ToggleCheck1ToggleButtons;
 
-			M8DealName1=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal1", excelLabel.Deal_Name);
-			M8DealName2=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal2", excelLabel.Deal_Name);
-			M8FRName1=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M8FR1", excelLabel.FundRaising_Name);
-			M8FRName2=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M8FR2", excelLabel.FundRaising_Name);
-			M8CON1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON1", excelLabel.Contact_FirstName);
-			M8CON1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON1", excelLabel.Contact_LastName);
-			M8CON1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON1", excelLabel.Contact_EmailId);
-			M8CON2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON2", excelLabel.Contact_FirstName);
-			M8CON2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON2", excelLabel.Contact_LastName);
-			M8CON2EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON2", excelLabel.Contact_EmailId);
+			ToggleCheck1TabName=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC1", excelLabel.TabName);
+			ToggleCheck1ItemName=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC1", excelLabel.Item);;
+			ToggleCheck1RelatedTab=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC1", excelLabel.RelatedTab);
+			ToggleCheck1ToggleButtons=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC1", excelLabel.ToggleButton);
+			ToggleCheck1ColumnName=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC1", excelLabel.Column_Name);
+
+			//ToggleCheck1ColumnName1,ToggleCheck1ColumnName2
+
+			ToggleCheck2TabName=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC2", excelLabel.TabName);
+			ToggleCheck2ItemName=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC2", excelLabel.Item);;
+			ToggleCheck2RelatedTab=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC2", excelLabel.RelatedTab);
+			ToggleCheck2ToggleButtons=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC2", excelLabel.ToggleButton);
+			ToggleCheck2ColumnName=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC2", excelLabel.Column_Name);
 
 
-			M8CreateDealButtonName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal3", excelLabel.Deal_Name);
-			M8DealEvent=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal3", excelLabel.Event);
-			M8DealActionOrder=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal3", excelLabel.Action_Order);
-			M8DealActionType=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal3", excelLabel.Action_Type);
-			M8DealEventPayLoad=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal3", excelLabel.Event_PayLoad);
+			ToggleCheck3TabName=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC3", excelLabel.TabName);
+			ToggleCheck3ItemName=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC3", excelLabel.Item);;
+			ToggleCheck3RelatedTab=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC3", excelLabel.RelatedTab);
+			ToggleCheck3ToggleButtons=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC3", excelLabel.ToggleButton);
+			ToggleCheck3ColumnName=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "TBC3", excelLabel.Column_Name);
 
-			M8CreateFundRaisingButtonName=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M8FR3", excelLabel.FundRaising_Name);
-			M8FundRaisingEvent=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M8FR3", excelLabel.Event);
-			M8FundRaisingActionOrder=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M8FR3", excelLabel.Action_Order);
-			M8FundRaisingActionType=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M8FR3", excelLabel.Action_Type);
-			M8FundRaisingEventPayLoad=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M8FR3", excelLabel.Event_PayLoad);
+			/// New Modulew 5
 
-			M8CreateContactButtonName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON3", excelLabel.Contact_FirstName);
-			M8ContactEvent=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON3", excelLabel.Event);
-			M8ContactActionOrder=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON3", excelLabel.Action_Order);
-			M8ContactActionType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON3", excelLabel.Action_Type);
-			M8ContactEventPayLoad=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON3", excelLabel.Event_PayLoad);
-			
-			
-			M8_Object1=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field1", excelLabel.Field_Label);
-			M8_Object1FieldName=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field1", excelLabel.Field_Type);
-			
-			M8_Object2=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field2", excelLabel.Field_Label);
-			M8_Object2FieldName=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field2", excelLabel.Field_Type);
-			
-			M8_Object3=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field3", excelLabel.Field_Label);
-			M8_Object3FieldName=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field3", excelLabel.Field_Type);
-			
-			M8_Object4=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field4", excelLabel.Field_Label);
-			M8_Object4FieldName=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field4", excelLabel.Field_Type);
-			
-			M8_Object5=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field5", excelLabel.Field_Label);
-			M8_Object5FieldName=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field5", excelLabel.Field_Type);
-			
-			M8_Object6=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field6", excelLabel.Field_Label);
-			M8_Object6FieldName=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field6", excelLabel.Field_Type);
-			
 
-			M8CallSubject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task1", excelLabel.Subject);
-			M8SendLetterSubject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task2", excelLabel.Subject);
-			M8SendQuoteSubject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task3", excelLabel.Subject);
-			M8OtherSubject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task4", excelLabel.Subject);
-			M8Einstein5Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task5", excelLabel.Subject);
-			M8Einstein6Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task6", excelLabel.Subject);
-			M8Einstein7Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task7", excelLabel.Subject);
-			M8Einstein8Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task8", excelLabel.Subject);
-			M8Einstein9Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task9", excelLabel.Subject);
-			M8Einstein10Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task10", excelLabel.Subject);
-			M8Einstein11Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task11", excelLabel.Subject);
-			M8Einstein12Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task12", excelLabel.Subject);
-			M8Einstein13Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task13", excelLabel.Subject);
-			M8Einstein14Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task14", excelLabel.Subject);
+			M5Sdg1Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.SDG_Name);
+			M5Sdg1TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.SDG_Tag);;
+			M5Sdg1ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.sObjectName);
+			M5Sdg1ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG1", excelLabel.Parent_Field_Name);
+
+			M5Sdg2Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG2", excelLabel.SDG_Name);
+			M5Sdg2TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG2", excelLabel.SDG_Tag);;
+			M5Sdg2ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG2", excelLabel.sObjectName);
+			M5Sdg2ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG2", excelLabel.Parent_Field_Name);
+
+			M5Sdg3Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG3", excelLabel.SDG_Name);
+			M5Sdg3TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG3", excelLabel.SDG_Tag);;
+			M5Sdg3ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG3", excelLabel.sObjectName);
+			M5Sdg3ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG3", excelLabel.Parent_Field_Name);
+
+			M5Sdg4Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG4", excelLabel.SDG_Name);
+			M5Sdg4TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG4", excelLabel.SDG_Tag);;
+			M5Sdg4ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG4", excelLabel.sObjectName);
+			M5Sdg4ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG4", excelLabel.Parent_Field_Name);
+
+			M5Sdg5Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG5", excelLabel.SDG_Name);
+			M5Sdg5TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG5", excelLabel.SDG_Tag);;
+			M5Sdg5ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG5", excelLabel.sObjectName);
+			M5Sdg5ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "TOGGLESDG5", excelLabel.Parent_Field_Name);
+
+
+			ToggleIns1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Institutions_Name);
+			ToggleIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TOGGLEINS1", excelLabel.Record_Type);
+
+
+
+			ToggleContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M5CON1", excelLabel.Contact_FirstName);
+			ToggleContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M5CON1", excelLabel.Contact_LastName);
+			ToggleContact1Inst=ToggleIns1;
+			ToggleContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M5CON1", excelLabel.Contact_EmailId);
+			ToggleContact1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M5CON1", excelLabel.Record_Type);
+
+
+
+			ToggleDeal1=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Deal_Name);
+			ToggleDeal1CompanyName=ToggleIns1;
+			ToggleDeal1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Record_Type);
+			ToggleDeal1Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "TOGGLEDEAL1", excelLabel.Stage);
+
+
+			ToggleMarketingEvent1Name=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "TOGGLEME1", excelLabel.Marketing_Event_Name);
+			ToggleMarketingEvent1Date=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "TOGGLEME1", excelLabel.Date);
+			ToggleMarketingEvent1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"MarketingEvent",excelLabel.Variable_Name, "TOGGLEME1", excelLabel.Record_Type);
+			ToggleMarketingEvent1Organizer=ToggleIns1;
 			
-			M8EinsteinEvent10Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M8Event10", excelLabel.Subject);
+			break;
 			
-		}else if(obj instanceof Module6){
+		case "Module6" :
+			
 			M6Ins1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS1", excelLabel.Institutions_Name);
 			M6Ins2=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS2", excelLabel.Institutions_Name);
 			M6Ins3=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M6INS3", excelLabel.Institutions_Name);
@@ -1331,9 +1280,9 @@ public class CommonVariables {
 			M6LSCFund1=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "M6LSCFFUND1", excelLabel.Fund_Name);
 			M6LSCFundraising1=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M6LSCFUNDR1", excelLabel.FundRaising_Name);
 
-		}else if(obj instanceof Module7){
-
-
+			break;
+			
+		case "Module7" :
 			M7Ins1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M7INS1", excelLabel.Institutions_Name);
 			M7Ins1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M7INS1", excelLabel.Record_Type);
 
@@ -1546,8 +1495,82 @@ public class CommonVariables {
 			M7Event7EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event7", excelLabel.End_Date);
 			M7Event7EndTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7Event7", excelLabel.End_Time);
 		
-		}else if(obj instanceof PECloudSmoke2||obj instanceof PECloudSmoke){
-		
+			break;
+			
+		case "Module8" :
+			
+			M8DealName1=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal1", excelLabel.Deal_Name);
+			M8DealName2=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal2", excelLabel.Deal_Name);
+			M8FRName1=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M8FR1", excelLabel.FundRaising_Name);
+			M8FRName2=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M8FR2", excelLabel.FundRaising_Name);
+			M8CON1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON1", excelLabel.Contact_FirstName);
+			M8CON1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON1", excelLabel.Contact_LastName);
+			M8CON1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON1", excelLabel.Contact_EmailId);
+			M8CON2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON2", excelLabel.Contact_FirstName);
+			M8CON2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON2", excelLabel.Contact_LastName);
+			M8CON2EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON2", excelLabel.Contact_EmailId);
+
+
+			M8CreateDealButtonName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal3", excelLabel.Deal_Name);
+			M8DealEvent=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal3", excelLabel.Event);
+			M8DealActionOrder=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal3", excelLabel.Action_Order);
+			M8DealActionType=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal3", excelLabel.Action_Type);
+			M8DealEventPayLoad=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M8Deal3", excelLabel.Event_PayLoad);
+
+			M8CreateFundRaisingButtonName=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M8FR3", excelLabel.FundRaising_Name);
+			M8FundRaisingEvent=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M8FR3", excelLabel.Event);
+			M8FundRaisingActionOrder=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M8FR3", excelLabel.Action_Order);
+			M8FundRaisingActionType=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M8FR3", excelLabel.Action_Type);
+			M8FundRaisingEventPayLoad=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M8FR3", excelLabel.Event_PayLoad);
+
+			M8CreateContactButtonName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON3", excelLabel.Contact_FirstName);
+			M8ContactEvent=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON3", excelLabel.Event);
+			M8ContactActionOrder=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON3", excelLabel.Action_Order);
+			M8ContactActionType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON3", excelLabel.Action_Type);
+			M8ContactEventPayLoad=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M8CON3", excelLabel.Event_PayLoad);
+			
+			
+			M8_Object1=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field1", excelLabel.Field_Label);
+			M8_Object1FieldName=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field1", excelLabel.Field_Type);
+			
+			M8_Object2=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field2", excelLabel.Field_Label);
+			M8_Object2FieldName=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field2", excelLabel.Field_Type);
+			
+			M8_Object3=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field3", excelLabel.Field_Label);
+			M8_Object3FieldName=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field3", excelLabel.Field_Type);
+			
+			M8_Object4=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field4", excelLabel.Field_Label);
+			M8_Object4FieldName=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field4", excelLabel.Field_Type);
+			
+			M8_Object5=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field5", excelLabel.Field_Label);
+			M8_Object5FieldName=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field5", excelLabel.Field_Type);
+			
+			M8_Object6=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field6", excelLabel.Field_Label);
+			M8_Object6FieldName=ExcelUtils.readData(phase1DataSheetFilePath,"FieldComponent",excelLabel.Variable_Name, "M8Field6", excelLabel.Field_Type);
+			
+
+			M8CallSubject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task1", excelLabel.Subject);
+			M8SendLetterSubject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task2", excelLabel.Subject);
+			M8SendQuoteSubject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task3", excelLabel.Subject);
+			M8OtherSubject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task4", excelLabel.Subject);
+			M8Einstein5Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task5", excelLabel.Subject);
+			M8Einstein6Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task6", excelLabel.Subject);
+			M8Einstein7Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task7", excelLabel.Subject);
+			M8Einstein8Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task8", excelLabel.Subject);
+			M8Einstein9Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task9", excelLabel.Subject);
+			M8Einstein10Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task10", excelLabel.Subject);
+			M8Einstein11Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task11", excelLabel.Subject);
+			M8Einstein12Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task12", excelLabel.Subject);
+			M8Einstein13Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task13", excelLabel.Subject);
+			M8Einstein14Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "M8Task14", excelLabel.Subject);
+			
+			M8EinsteinEvent10Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M8Event10", excelLabel.Subject);
+			
+			break;
+
+		case "PECloudSmoke"  :
+		case "PECloudSmoke2" :
+			
 			SMOKIns1InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS1", excelLabel.Institutions_Name);
 			SMOKIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS1", excelLabel.Record_Type);
 
@@ -1931,6 +1954,12 @@ public class CommonVariables {
 			SmokeFund3Category=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFUND3", excelLabel.Investment_Category);
 			SmokeFund3RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFUND3", excelLabel.Record_Type);
 
+			SmokeFund4=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFUND4", excelLabel.Fund_Name);
+			SmokeFund4Type=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFUND4", excelLabel.Fund_Type);
+			SmokeFund4Category=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFUND4", excelLabel.Investment_Category);
+			SmokeFund4RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFUND4", excelLabel.Record_Type);
+
+			
 			SmokeFR1=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKEFR1", excelLabel.FundRaising_Name);
 			SmokeFR1Fund=SmokeFund3;
 			SmokeFR1LegalName=SmokeCTIns;
@@ -1950,11 +1979,41 @@ public class CommonVariables {
 		
 			SmokeMI1=ExcelUtils.readData(phase1DataSheetFilePath,"MI",excelLabel.Variable_Name, "SmokeMI1", excelLabel.Marketing_InitiativeName);
 			
-		}
+			
+			
+			
+			break;
+		
+		case "FSTG":
+			
+			//FSTG variabel
+			 FSTG1ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGVerifyField",excelLabel.Variable_Name, "FieldVar1", excelLabel.Object_Name);
+			 FSTG1RecordName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGVerifyField",excelLabel.Variable_Name, "FieldVar1", excelLabel.Item);
+			 FSTG1SectionAndField=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGVerifyField",excelLabel.Variable_Name, "FieldVar1", excelLabel.Fields_Name);
 
+		
+			 FSTG2ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGVerifyField",excelLabel.Variable_Name, "FieldVar2", excelLabel.Object_Name);
+			 FSTG2RecordName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGVerifyField",excelLabel.Variable_Name, "FieldVar2", excelLabel.Item);
+			 FSTG2SectionAndField=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGVerifyField",excelLabel.Variable_Name, "FieldVar2", excelLabel.Fields_Name);
+
+			
+			 FSTG3ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGVerifyField",excelLabel.Variable_Name, "FieldVar3", excelLabel.Object_Name);
+			 FSTG3RecordName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGVerifyField",excelLabel.Variable_Name, "FieldVar3", excelLabel.Item);
+			 FSTG3SectionAndField=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGVerifyField",excelLabel.Variable_Name, "FieldVar3", excelLabel.Fields_Name);
+
+			
+			 FSTG4ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGVerifyField",excelLabel.Variable_Name, "FieldVar4", excelLabel.Object_Name);
+			 FSTG4RecordName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGVerifyField",excelLabel.Variable_Name, "FieldVar4", excelLabel.Item);
+			 FSTG4SectionAndField=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGVerifyField",excelLabel.Variable_Name, "FieldVar4", excelLabel.Fields_Name);
+
+		default:
+			break;
+		}
+		
 		System.err.println("");
 		AppListeners.appLog.info("Done with intialization. Enjoy the show.\nTotal Time Taken: "+((System.currentTimeMillis()-StartTime)/1000)+" seconds.");
 
+		
 	}
 	
 }
