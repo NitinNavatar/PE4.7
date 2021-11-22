@@ -4396,7 +4396,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				
 				List<String> filterName=new ArrayList<>();
 
-				 for(int i=0;i<listView.length-1;i++) {
+				 for(int i=0;i<=listView.length;i++) {
 					 
 					String[] list= listView[i].split("<filter>");
 					 
