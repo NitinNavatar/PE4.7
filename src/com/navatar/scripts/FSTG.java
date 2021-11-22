@@ -184,4 +184,30 @@ public class FSTG extends BaseLib {
 	}
 
 	
+	@Parameters("projectName")
+	@Test
+	public void fstg005_verifyListViewAndFilter(String projectName){
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp= new BasePageBusinessLayer(driver);
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		
+		
+		
+		//String a=SmokeDeal2Stage;
+		if(bp.verifyObjectListViewAndFilterCondition(projectName,mode, FSTGListView2ObjectName, FSTGListView2ItemName, FSTGListView2FilterValue, 30).isEmpty()) {
+			
+			log(LogStatus.PASS, "Successfully veriefied list view and filter of object:"+FSTGListView2ObjectName, YesNo.No);
+			
+		}else {
+			log(LogStatus.PASS, "not veriefied list view and filter of object:"+FSTGListView2ObjectName, YesNo.No);
+
+			sa.assertTrue(false, "not veriefied list view and filter of object:"+FSTGListView2ObjectName);
+		}
+		
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 }

@@ -4294,5 +4294,214 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return result;
 	}
+	
+	public boolean openObjectFromAppLauchner(String objectName,int timeOut) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+
+		boolean flag= false;
+		if(click(driver, lp.getAppLuncherXpath(timeOut), "App launcher icon", action.BOOLEAN)) {
+			  
+			  AppListeners.appLog.info(" click on app launcher icon");
+			  ThreadSleep(1000);
+			  if(sendKeys(driver, lp.getSearchAppTextBoxInAppLuncher(timeOut), objectName, "Search box in app launcher", action.BOOLEAN)) {
+				  AppListeners.appLog.info("entered value in app launcher search box value:"+objectName);
+				  ThreadSleep(3000);
+				  if(clickUsingJavaScript(driver, lp.getAppNameLabelTextInAppLuncher(objectName, timeOut), objectName+":app label in app launcher", action.BOOLEAN)) {
+					AppListeners.appLog.info("click on label in app launcher"+objectName);
+
+					  ThreadSleep(5000);
+					  String pageName=getPageHeaderName(timeOut).getText();
+					  if(pageName.equals(objectName)) {
+						  AppListeners.appLog.info(objectName +" page successfully loaded");
+						  flag =true;
+						  
+					  }else {
+						  
+						  AppListeners.appLog.info(objectName +" page not loaded");
+							return false;
+					  }
+					  				  
+				  }else {
+					  
+					  AppListeners.appLog.info("Not able tp click on label in app launcher"+objectName);
+						return false;
+				  }				  
+			  }else {
+				  
+				  AppListeners.appLog.info("Not able to entered value in app launcher search box value:"+objectName);
+					return false;
+			  }
+			 
+		  }else {
+			  
+			  AppListeners.appLog.info("Not able to click on app launcher icon");
+				return false;			  
+		  }
+		return flag;
+	}
+
+	public List<String> verifyObjectListViewAndFilterCondition(String projectName,String mode,String objectName,String selectListLink,String filterList,int timeOut){
+		List<String> result = new ArrayList<>();
+		
+		 if(openObjectFromAppLauchner(objectName, timeOut)) {
+			 AppListeners.appLog.info("Object page successfully open:"+objectName);
+
+			 if(click(driver, getSelectListIcon(timeOut), "selet list icon", action.BOOLEAN)) {
+				 
+				 	AppListeners.appLog.info("Click on select list icon on:"+objectName);
+					 ThreadSleep(2000);
+
+				 if(getSelectListIcon(timeOut).getAttribute("aria-expanded").contains("true")) {
+					 
+					 	AppListeners.appLog.info("after clicking select list icon is in expand mode on:"+objectName);
+
+					 ThreadSleep(3000);
+						List<WebElement> lst= getAllLinkOfSelectListIconOption(mode,objectName, 30);
+						if(compareMultipleList(driver, selectListLink, lst).isEmpty()){
+							log(LogStatus.PASS,	"", YesNo.No);
+						 	AppListeners.appLog.info("All link of select list icon  is verified on:"+objectName);
+						 	
+						 	click(driver, getSelectListIcon(timeOut), "selet list icon", action.BOOLEAN);
+							 ThreadSleep(2000);
+						 	 if(getSelectListIcon(timeOut).getAttribute("aria-expanded").contains("false")) {
+								 	AppListeners.appLog.info("after verifying list view and clicking on select list icon is not in expand mode on:"+objectName);
+
+						 	 }else {
+								 AppListeners.appLog.info("after verifying list view and clicking on select list icon should not be in expand mode on:"+objectName);
+	 
+						 	 }
+
+						}else{
+							
+							AppListeners.appLog.info("All link of select list icon is not verified on "+objectName);
+							result.add("All link of select list icon  is not verified on "+objectName);
+						}
+					 
+					 
+				 }else {
+					 
+					 AppListeners.appLog.info("after clicking select list icon is should be in expand mode on:"+objectName);
+						result.add("after clicking select list icon is should be in expand mode on:"+objectName);
+				 }
+					 
+				 
+			 }else {
+				 
+				 AppListeners.appLog.info("Not able to click on select list icon on:"+objectName);
+					result.add("Not able to click on select list icon on:"+objectName);
+			 }
+			 
+			 
+			 String[] listView=filterList.split("<break>");
+				
+				List<String> filterName=new ArrayList<>();
+
+				 for(int i=0;i<listView.length-1;i++) {
+					 
+					String[] list= listView[i].split("<filter>");
+					 
+					 String listViewValue=list[0];
+					 String[] filtersValue=list[1].split("#");
+					 
+					 if(click(driver, getSelectListIcon(timeOut), "select list icon", action.BOOLEAN)) {
+						 
+						 	AppListeners.appLog.info("Click on select list icon on:"+objectName);
+							 ThreadSleep(2000);
+
+						 if(getSelectListIcon(timeOut).getAttribute("aria-expanded").contains("true")) {
+							 
+							 	AppListeners.appLog.info("after clicking select list icon is in expand mode on:"+objectName);
+							 	
+							 	if(click(driver, getSelectListLabelLink(listViewValue, timeOut),listViewValue+": label",action.BOOLEAN)) {
+								 	AppListeners.appLog.info("click on select list label:"+listViewValue);
+
+
+							 		if(filterList!=null||!filterList.isBlank()|!filterList.equals("")) {
+									 	AppListeners.appLog.info("going to verify filters");
+
+									 	if(getFilterButton(timeOut).getAttribute("aria-pressed").contains("false")) {
+									 		
+									 		if(click(driver, getFilterButton(timeOut), "filter button", action.BOOLEAN)) {
+											 	AppListeners.appLog.info("click on fiter button on"+objectName);
+									 		}else {
+
+								 				 AppListeners.appLog.info("Not able to click on fiter button on"+objectName);
+												 result.add("Not able to click on fiter button on"+objectName);
+								 			}
+
+
+									 	}else {
+									 		
+										 	AppListeners.appLog.info("filter panel is already open");
+
+									 	}
+							 			
+							 				List<WebElement> lst= getListOfFilterPanelValue(timeOut);
+
+							 					for(WebElement element:lst) {
+
+							 						String value=element.getText().replaceAll("\\s+", "");
+												 	AppListeners.appLog.info("fetch vlaue is :"+value);
+							 						filterName.add(value);
+							 						
+
+							 					}
+							 					System.out.println("Filter Value list:"+filterName);
+							 					
+ 							 					for(int j=0;j<filterName.size();j++) {
+							 						
+							 						if(filterName.get(j).equalsIgnoreCase(filtersValue[j].replaceAll("\\s+", ""))) {
+													 	AppListeners.appLog.info(filterName.get(j)+":Filter value is verified with:"+filtersValue[j]);
+
+
+								 					}else {
+								 						 AppListeners.appLog.info(filterName.get(j)+": Filter value is not verified with: "+filtersValue[j]);
+								 						 result.add(filterName.get(j)+"Filter value is not verified with:"+filtersValue[j]);
+
+								 					}
+							 					}
+							 					filterName.clear();
+							 					System.out.println("Filter Value list:"+filterName);
+							 					
+							 				}else {
+							 					 AppListeners.appLog.info("Filter value is not present in filter panel size:"+filterName.size());
+												 result.add("Filter value is not present in filter panel size:"+filterName.size());
+
+							 				}
+							 			
+							 	
+							 	}else {
+							 		
+							 		 AppListeners.appLog.info("Not able to click on select list label:"+listViewValue);
+									 result.add("Not able to click on select list label:"+listViewValue);
+							 	}
+							 	
+
+						 }else {
+
+							 AppListeners.appLog.info("after clicking select list icon is should be in expand mode on:"+objectName);
+							 result.add("after clicking select list icon is should be in expand mode on:"+objectName);
+						 }
+
+
+					 }else {
+
+						 AppListeners.appLog.info("Not able to click on select list icon on:"+objectName);
+						 result.add("Not able to click on select list icon on:"+objectName);
+					 }
+					 
+				 }
+			 
+		 }else {
+			 
+			 	AppListeners.appLog.info("Unable to open Object page :"+objectName);
+				result.add("Unable to open Object page :"+objectName);
+			 
+		 }
+		 
+		 
+		
+		return result;
+	}
 
 }

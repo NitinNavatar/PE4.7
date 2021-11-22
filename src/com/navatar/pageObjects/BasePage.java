@@ -3132,7 +3132,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, refrshActivity, "Visibility", timeOut, "refrshActivity");
 		}
 	
-	@FindBy(xpath="//*[@title='Select List View']")
+	@FindBy(xpath="//button[@title='Select List View']")
 	private WebElement selectListIcon_Lighting;
 
 	/**
@@ -3141,6 +3141,19 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getSelectListIcon(int timeOut) {
 		return isDisplayed(driver, selectListIcon_Lighting, "Visibility", timeOut, "Select List Icon");
 		}
+	
+	
+	
+	
+	/**
+	 * @return the select list label
+	 */
+	public WebElement getSelectListLabelLink(String labelName,int timeOut) {
+		String xpath="//li[contains(@class,'slds-dropdown__item has-icon--left')]//span[text()='"+labelName+"']/..";
+		WebElement ele=FindElement(driver, xpath, "select list label", action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "Select List label");
+		}
+	
 	
 	
 	/* return all links of select list icon option list*/
@@ -5323,5 +5336,36 @@ public abstract class BasePage extends BaseLib {
 		String xpath = "//*[@class='test-id__section-header-title slds-truncate' and text()='" + sectionName+"']/../../..//*[@class='test-id__field-label']";
 		return FindElements(driver, xpath, "label field of section:"+sectionName);
 	}
+	
+	@FindBy(xpath="//nav[@aria-label='Breadcrumbs']//span")
+	private WebElement pageHeaderName;
+	
+	public WebElement getPageHeaderName(int timeOut) {
+		
+		return isDisplayed(driver, pageHeaderName, "Visibility", timeOut, "Page header name");
+		
+	}
+	
+	@FindBy(xpath="//*[@class='listViewManagerHeaderButton filterButton']//button")
+	private WebElement filterButton;
+	
+	public WebElement getFilterButton(int timeOut) {
+		
+		return isDisplayed(driver, filterButton, "Visibility", timeOut, "filter button");
+		
+	}
+	
+	
+
+	public List<WebElement> getListOfFilterPanelValue(int timeOut) {
+		
+		return FindElements(driver, "//div[@class='slds-panel__body panelBody']//li/div", "Filter value");
+		
+	}
+	
+	
+	
+	
+	
 	
 }

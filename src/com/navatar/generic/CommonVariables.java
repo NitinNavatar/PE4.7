@@ -453,6 +453,21 @@ public class CommonVariables {
  	public static String FSTG2ObjectName,FSTG2RecordName,FSTG2SectionAndField;
  	public static String FSTG3ObjectName,FSTG3RecordName,FSTG3SectionAndField;
  	public static String FSTG4ObjectName,FSTG4RecordName,FSTG4SectionAndField;
+ 	
+ 	//FSTG list view and filter var
+ 	
+ 	public static String FSTGListView1ObjectName,FSTGListView1ItemName,FSTGListView1FilterValue;
+ 	public static String FSTGListView2ObjectName,FSTGListView2ItemName,FSTGListView2FilterValue;
+ 	public static String FSTGListView3ObjectName,FSTGListView3ItemName,FSTGListView3FilterValue;
+ 	public static String FSTGListView4ObjectName,FSTGListView4ItemName,FSTGListView4FilterValue;
+ 	public static String FSTGListView5ObjectName,FSTGListView5ItemName,FSTGListView5FilterValue;
+ 	public static String FSTGListView6ObjectName,FSTGListView6ItemName,FSTGListView6FilterValue;
+ 	public static String FSTGListView7ObjectName,FSTGListView7ItemName,FSTGListView7FilterValue;
+ 	public static String FSTGListView8ObjectName,FSTGListView8ItemName,FSTGListView8FilterValue;
+ 	public static String FSTGListView9ObjectName,FSTGListView9ItemName,FSTGListView9FilterValue;
+ 	public static String FSTGListView10ObjectName,FSTGListView10ItemName,FSTGListView10FilterValue;
+ 	public static String FSTGListView11bjectName,FSTGListView11ItemName,FSTGListView11FilterValue;
+
 
  	
  	// partnership
@@ -2005,7 +2020,32 @@ public class CommonVariables {
 			 FSTG4ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGVerifyField",excelLabel.Variable_Name, "FieldVar4", excelLabel.Object_Name);
 			 FSTG4RecordName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGVerifyField",excelLabel.Variable_Name, "FieldVar4", excelLabel.Item);
 			 FSTG4SectionAndField=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGVerifyField",excelLabel.Variable_Name, "FieldVar4", excelLabel.Fields_Name);
+			 
+			 
+			 // list view and filter variable
+			 
+			 FSTGListView1ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGListView",excelLabel.Variable_Name, "ListView1", excelLabel.Object_Name);
+			 FSTGListView1ItemName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGListView",excelLabel.Variable_Name, "ListView1", excelLabel.Select_List_Item);
+			 FSTGListView1FilterValue=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGListView",excelLabel.Variable_Name, "ListView1", excelLabel.Filter_Value);
 
+			 FSTGListView2ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGListView",excelLabel.Variable_Name, "ListView2", excelLabel.Object_Name);
+			 FSTGListView2ItemName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGListView",excelLabel.Variable_Name, "ListView2", excelLabel.Select_List_Item);
+			 FSTGListView2FilterValue=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGListView",excelLabel.Variable_Name, "ListView2", excelLabel.Filter_Value);
+
+			 FSTGListView3ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGListView",excelLabel.Variable_Name, "ListView3", excelLabel.Object_Name);
+			 FSTGListView3ItemName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGListView",excelLabel.Variable_Name, "ListView3", excelLabel.Select_List_Item);
+			 FSTGListView3FilterValue=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGListView",excelLabel.Variable_Name, "ListView3", excelLabel.Filter_Value);
+
+			 FSTGListView4ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGListView",excelLabel.Variable_Name, "ListView4", excelLabel.Object_Name);
+			 FSTGListView4ItemName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGListView",excelLabel.Variable_Name, "ListView4", excelLabel.Select_List_Item);
+			 FSTGListView4FilterValue=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGListView",excelLabel.Variable_Name, "ListView4", excelLabel.Filter_Value);
+
+			 FSTGListView5ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGListView",excelLabel.Variable_Name, "ListView5", excelLabel.Object_Name);
+			 FSTGListView5ItemName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGListView",excelLabel.Variable_Name, "ListView5", excelLabel.Select_List_Item);
+			 FSTGListView5FilterValue=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGListView",excelLabel.Variable_Name, "ListView5", excelLabel.Filter_Value);
+
+			 
+			 
 		default:
 			break;
 		}
