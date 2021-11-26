@@ -10,6 +10,7 @@ import org.openqa.selenium.interactions.DoubleClickAction;
 import org.openqa.selenium.support.PageFactory;
 import org.sikuli.script.Screen;
 
+import com.navatar.generic.AppListeners;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.EnumConstants.ContactPagePhotoActions;
 import com.navatar.generic.EnumConstants.LookUpIcon;
@@ -25,6 +26,7 @@ import com.relevantcodes.extentreports.LogStatus;
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -49,7 +51,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 	 */
 	public boolean searchStandardOrCustomObject(String environment, String mode, object objectName) {
 		String index="[1]";
-		String o=objectName.toString().replace("_", " ");
+		String o=objectName.toString().replaceAll("_", " ");
 		if (objectName==object.Global_Actions || objectName==object.Activity_Setting || objectName==object.App_Manager
 				|| objectName==object.Lightning_App_Builder || objectName==object.Profiles ||objectName==object.Override || objectName==object.Tabs ||  objectName==object.Users||  objectName==object.Sharing_Settings) {
 			if (objectName==object.Global_Actions|| objectName==object.Tabs ||  objectName==object.Users) {
@@ -109,13 +111,13 @@ public class SetupPageBusinessLayer extends SetupPage {
 					}
 				}
 				if(sendKeys(driver, getQuickSearchInObjectManager_Lighting(30), objectName.toString(), "quick search text box in lighting", action.SCROLLANDBOOLEAN)) {
-					appLog.info("passed value in quick search text box: "+ objectName);
+					appLog.info("passed value in quick search text box: "+ objectName.toString());
 					return true;
 				}else {
-					appLog.error("Not able to search object in lighting : "+objectName);
+					appLog.error("Not able to search object in lighting : "+objectName.toString());
 				}
 			} else {
-				appLog.error("Not able to click on object manager tab so cannot search object: "+objectName);
+				appLog.error("Not able to click on object manager tab so cannot search object: "+objectName.toString());
 			}
 	}
 		return false;
@@ -613,6 +615,208 @@ public class SetupPageBusinessLayer extends SetupPage {
 		}
 		return false;
 	}
+	
+	/** @author Ravi Kumar
+	 * @param layoutName
+	 * @param timeout
+	 * @return true if able to open already created page layout
+	 */
+	public boolean openAlreadyCreatedPageLayout(String layoutName,ObjectFeatureName objectFeatureName,int timeOut) {
+		boolean flag =false;
+		WebElement ele;
+		ele=isDisplayed(driver, FindElement(driver, "//a[contains(text(),'"+objectFeatureName+"')]", "", action.BOOLEAN,20), "visibility",20,objectFeatureName+" feature link");
+
+		if(ele!=null) {
+			
+			if(click(driver, ele, objectFeatureName+" object feature link", action.SCROLLANDBOOLEAN)) {
+				ele=null;
+			if(sendKeys(driver, getQuickSearchInObjectManager_Lighting(timeOut), layoutName, layoutName+" page layout", action.BOOLEAN)) {
+				log(LogStatus.PASS, "entered page layout name in quick search"+layoutName, YesNo.Yes);
+
+				String xpath="//td//a//span[text()='"+layoutName+"']";
+				 ele=FindElement(driver, xpath, layoutName, action.SCROLLANDBOOLEAN, timeOut);
+				ele=isDisplayed(driver, ele, "visibility", timeOut, layoutName);
+			
+			
+				if (click(driver, ele, layoutName, action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.PASS, "clicked on page layout:"+layoutName, YesNo.Yes);
+					flag=true;
+				}
+				else {
+					log(LogStatus.ERROR, "could not click on layout :"+layoutName, YesNo.Yes);
+					return flag;
+				}
+			
+			}else {
+				log(LogStatus.FAIL, "cannot search page layout name in quick search"+layoutName, YesNo.Yes);
+				return flag;
+			
+			}
+			
+			}else {
+				appLog.error("Not able to click on object feature "+objectFeatureName);
+			}
+
+		}else {
+			
+			appLog.error(" object feature "+objectFeatureName+" is not visible so cannot click on it");
+			return flag;
+		
+		}
+			
+		
+		return flag;
+	}
+	
+	/** @author Ravi Kumar
+	 * @param layoutName
+	 * @param timeout
+	 * @return empty list if all field matched in  page layout
+	 */
+	public List<String> verifyFieldsAvailabilityOnPageLayout(String fieldsAndPageLayout,int timeOut) {
+		List<String> result = new ArrayList<>();
+		
+		String layoutName="";
+		String fieldName="";
+		String[] allFieldsAndLayout=fieldsAndPageLayout.split("<break>");
+		String [] fieldsAndLayout ;
+		String [] allFields;
+		
+		
+		
+		for(int a=0;a<allFieldsAndLayout.length;a++) {
+			fieldsAndLayout=allFieldsAndLayout[a].trim().split("<pl>");
+			layoutName=fieldsAndLayout[0];
+			allFields=fieldsAndLayout[1].split("#");
+			
+			if(openAlreadyCreatedPageLayout(layoutName,ObjectFeatureName.pageLayouts, 60)) {
+			log(LogStatus.PASS, "Successfully Open page layout :"+layoutName, YesNo.No);
+			
+			ThreadSleep(5000);
+			switchToFrame(driver, 60, getSetUpPageIframe(120));
+
+			for(int i=0;i<allFields.length;i++) {
+
+				fieldName=allFields[i];
+				
+				if(sendKeysAndPressEnter(driver, getQuickFindInPageLayout_Lighting(timeOut), fieldName, fieldName+" field", action.BOOLEAN)) {
+					ThreadSleep(1000);
+					List<WebElement> lst = getFieldsInPageLayoutList();
+					List<WebElement> lst2 = FindElements(driver, "//div[@id='fieldTrough']//div[contains(@class,'item')]/span", "");
+					int size=lst.size();
+					for(int b=0;b<size;b++) {
+						String at =lst.get(b).getAttribute("class");
+						String at2=lst2.get(b).getText().replace("...", "");
+											
+						if(fieldName.contains(at2)){
+							
+							log(LogStatus.PASS, fieldName+" field successfully found in the page layout :"+layoutName, YesNo.No);
+
+							if(at.contains("used")) {
+
+								log(LogStatus.PASS, fieldName+" is enable/present in the page layout :"+layoutName, YesNo.No);
+
+							}else {
+								log(LogStatus.FAIL, fieldName+" Field not enable in the page layout :"+layoutName, YesNo.No);
+								result.add(fieldName+" Field not enable in the page layout :"+layoutName);
+								
+							}
+							break;
+							
+						}else {
+							if(b==size-1) {
+								
+								log(LogStatus.FAIL, fieldName+" field  not found in the page layout :"+layoutName, YesNo.No);
+								result.add(fieldName+" field not found in the page layout :"+layoutName);
+								
+								
+							}
+							
+						}
+						
+						
+						
+					}
+					
+					
+					
+					
+				}else {
+					log(LogStatus.FAIL, "Not able to search field: "+fieldName+" in quick find input", YesNo.No);
+					result.add( "Not able to search field: "+fieldName+" in quick find input");
+
+				}
+				
+			}
+
+		
+			}else {
+			log(LogStatus.FAIL, "Not able to Open page layout :"+layoutName, YesNo.No);
+			result.add("Not able to Open page layout :"+layoutName);
+			
+		
+			}
+			switchToDefaultContent(driver);
+
+		}
+		return result;
+	}
+	
+	/** @author Ravi Kumar
+	 * @param compactLayoutName
+	 * @param timeout
+	 * @return empty list if all compact layout matched
+	 */
+	public List<String> verifyFieldsAvailabilityOnCompactLayout(String fieldsAndPageLayout,int timeOut) {
+		List<String> result = new ArrayList<>();
+		
+		String compactLayoutName="";
+		String[] allFieldsAndLayout=fieldsAndPageLayout.split("<break>");
+		String [] fieldsAndLayout ;
+		String [] allFields;
+		
+		
+		
+		for(int a=0;a<allFieldsAndLayout.length;a++) {
+			fieldsAndLayout=allFieldsAndLayout[a].trim().split("<cl>");
+			compactLayoutName=fieldsAndLayout[0];
+			allFields=fieldsAndLayout[1].split("#");
+			
+			if(openAlreadyCreatedPageLayout(compactLayoutName,ObjectFeatureName.compactLayouts, 60)) {
+			log(LogStatus.PASS, "Successfully Open compact layout :"+compactLayoutName, YesNo.No);
+			
+			ThreadSleep(5000);
+			switchToFrame(driver, 60, getSetUpPageIframe(120));
+
+			String fileName = Arrays.toString(allFields).strip().replace("[", "").replace("]", "");
+			
+
+			List<WebElement> lst = getFieldsListInCompactLayout();
+			List<String> result2 = compareMultipleList(driver, fileName, lst);
+
+			if(result2.isEmpty()) {
+				log(LogStatus.FAIL, "All Files: "+fileName+" Is matched successfully in compact layout: "+compactLayoutName, YesNo.No);
+
+				
+			}else {
+				
+				log(LogStatus.FAIL, "Files: "+result2+" are not matched in compact layout: "+compactLayoutName, YesNo.No);
+				result.add("Files: "+result2+" are not matched in compact layout: "+compactLayoutName);
+				
+			}
+					
+			}else {
+			log(LogStatus.FAIL, "Not able to Open compact layout :"+compactLayoutName, YesNo.No);
+			result.add("Not able to Open compact layout :"+compactLayoutName);
+			
+		
+			}
+			switchToDefaultContent(driver);
+
+		}
+		return result;
+	}
+	
 	
 	/**
 	 * @author ANKIT JAISWAL

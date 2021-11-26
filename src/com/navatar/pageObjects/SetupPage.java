@@ -1,5 +1,6 @@
 package com.navatar.pageObjects;
 
+import org.bridj.cpp.std.list;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,6 +14,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 import static com.navatar.generic.CommonLib.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -52,7 +54,29 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, quickSearchInObjectManager_Lighting, "Visibility", timeOut, "quick search in object manager in lighting");
 	}
 
+	public List<WebElement> getFieldsInPageLayoutList(){
+		
+		
+		return FindElements(driver, "//div[@id='fieldTrough']//div[contains(@class,'item')]", "page layout field item");
+	}
+	
+	public List<WebElement> getFieldsListInCompactLayout(){
+		
+		
+		return FindElements(driver, "//*[@class='compactLayoutFields']/li", "Compact layout field item");
+	}
 
+	@FindBy(xpath="//input[@id='quickfind']")
+	private WebElement quickFindInPageLayout_Lighting;
+
+	/**
+	 * @return the quickSearchInObjectManager_Lighting
+	 */
+	public WebElement getQuickFindInPageLayout_Lighting(int timeOut) {
+		return isDisplayed(driver, quickFindInPageLayout_Lighting, "Visibility", timeOut, "quick find in page layout in lighting");
+	}
+
+	
 	@FindBy(xpath="//iframe[contains(@title,'Salesforce - Enterprise Edition')]")
 	private WebElement editPageLayoutFrame_Lighting;
 

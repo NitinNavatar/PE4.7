@@ -460,15 +460,43 @@ public class CommonVariables {
  	public static String FSTGListView2ObjectName,FSTGListView2ItemName,FSTGListView2FilterValue;
  	public static String FSTGListView3ObjectName,FSTGListView3ItemName,FSTGListView3FilterValue;
  	public static String FSTGListView4ObjectName,FSTGListView4ItemName,FSTGListView4FilterValue;
- 	public static String FSTGListView5ObjectName,FSTGListView5ItemName,FSTGListView5FilterValue;
- 	public static String FSTGListView6ObjectName,FSTGListView6ItemName,FSTGListView6FilterValue;
- 	public static String FSTGListView7ObjectName,FSTGListView7ItemName,FSTGListView7FilterValue;
- 	public static String FSTGListView8ObjectName,FSTGListView8ItemName,FSTGListView8FilterValue;
- 	public static String FSTGListView9ObjectName,FSTGListView9ItemName,FSTGListView9FilterValue;
- 	public static String FSTGListView10ObjectName,FSTGListView10ItemName,FSTGListView10FilterValue;
- 	public static String FSTGListView11bjectName,FSTGListView11ItemName,FSTGListView11FilterValue;
+
+ 	
+ 	//FSTG page layout field var
+ 	
+ 	public static String FSTG_PLField1PageLayoutFields;
+ 	public static String FSTG_PLField2PageLayoutFields;
+ 	public static String FSTG_PLField3PageLayoutFields;
+ 	public static String FSTG_PLField4PageLayoutFields;
+ 	public static String FSTG_PLField5PageLayoutFields;
+ 	public static String FSTG_PLField6PageLayoutFields;
+ 	public static String FSTG_PLField7PageLayoutFields;
+ 	public static String FSTG_PLField8PageLayoutFields;
+ 	public static String FSTG_PLField9PageLayoutFields;
+ 	public static String FSTG_PLField10PageLayoutFields;
+ 	public static String FSTG_PLField11PageLayoutFields;
+ 	public static String FSTG_PLField12PageLayoutFields;
+ 	public static String FSTG_PLField13PageLayoutFields;
+ 	public static String FSTG_PLField14PageLayoutFields;
+ 	public static String FSTG_PLField15PageLayoutFields;
+ 	public static String FSTG_PLField16PageLayoutFields;
+ 	public static String FSTG_PLField17PageLayoutFields;
+ 	public static String FSTG_PLField18PageLayoutFields;
+ 	public static String FSTG_PLField19PageLayoutFields;
+ 	public static String FSTG_PLField20PageLayoutFields;
+ 	public static String FSTG_PLField21PageLayoutFields;
+ 	public static String FSTG_PLField22PageLayoutFields;
+ 	
+ 	
+ 	// FSTG compact layout variable
+ 	public static String FSTG_CLField1CompactLayoutFields;
+ 	public static String FSTG_CLField2CompactLayoutFields;
+ 	public static String FSTG_CLField3CompactLayoutFields;
+ 	public static String FSTG_CLField4CompactLayoutFields;
+ 	public static String FSTG_CLField5CompactLayoutFields;
 
 
+ 	
  	
  	// partnership
  	
@@ -2040,9 +2068,59 @@ public class CommonVariables {
 			 FSTGListView4ItemName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGListView",excelLabel.Variable_Name, "ListView4", excelLabel.Select_List_Item);
 			 FSTGListView4FilterValue=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGListView",excelLabel.Variable_Name, "ListView4", excelLabel.Filter_Value);
 
-			 FSTGListView5ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGListView",excelLabel.Variable_Name, "ListView5", excelLabel.Object_Name);
-			 FSTGListView5ItemName=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGListView",excelLabel.Variable_Name, "ListView5", excelLabel.Select_List_Item);
-			 FSTGListView5FilterValue=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGListView",excelLabel.Variable_Name, "ListView5", excelLabel.Filter_Value);
+			// field in page layout
+			 
+			 FSTG_PLField1PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar1", excelLabel.Fields_Name);
+
+			 FSTG_PLField2PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar2", excelLabel.Fields_Name);
+
+			 FSTG_PLField3PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar3", excelLabel.Fields_Name);
+
+			 FSTG_PLField4PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar4", excelLabel.Fields_Name);
+
+			 FSTG_PLField5PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar5", excelLabel.Fields_Name);
+
+			 FSTG_PLField6PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar6", excelLabel.Fields_Name);
+
+			 FSTG_PLField7PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar7", excelLabel.Fields_Name);
+
+			 FSTG_PLField8PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar8", excelLabel.Fields_Name);
+
+			 FSTG_PLField9PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar9", excelLabel.Fields_Name);
+
+			 FSTG_PLField10PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar10", excelLabel.Fields_Name);
+
+			 FSTG_PLField11PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar11", excelLabel.Fields_Name);
+
+			 FSTG_PLField12PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar12", excelLabel.Fields_Name);
+
+			 FSTG_PLField13PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar13", excelLabel.Fields_Name);
+
+			 FSTG_PLField14PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar14", excelLabel.Fields_Name);
+
+			 FSTG_PLField15PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar15", excelLabel.Fields_Name);
+
+			 FSTG_PLField16PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar16", excelLabel.Fields_Name);
+
+			 FSTG_PLField17PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar17", excelLabel.Fields_Name);
+
+			 FSTG_PLField18PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar18", excelLabel.Fields_Name);
+
+			 FSTG_PLField19PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar19", excelLabel.Fields_Name);
+
+			 FSTG_PLField20PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar20", excelLabel.Fields_Name);
+
+			 FSTG_PLField21PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar21", excelLabel.Fields_Name);
+
+			 FSTG_PLField22PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar22", excelLabel.Fields_Name);
+
+			 // FSTG compact layout
+			 
+			 FSTG_CLField1CompactLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGCompactLayoutField",excelLabel.Variable_Name, "FieldVar1", excelLabel.Fields_Name);
+			 FSTG_CLField2CompactLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGCompactLayoutField",excelLabel.Variable_Name, "FieldVar2", excelLabel.Fields_Name);
+			 FSTG_CLField3CompactLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGCompactLayoutField",excelLabel.Variable_Name, "FieldVar3", excelLabel.Fields_Name);
+			 FSTG_CLField4CompactLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGCompactLayoutField",excelLabel.Variable_Name, "FieldVar4", excelLabel.Fields_Name);
+			 FSTG_CLField5CompactLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGCompactLayoutField",excelLabel.Variable_Name, "FieldVar5", excelLabel.Fields_Name);
 
 			 
 			 

@@ -1757,14 +1757,14 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 						for (int j = 0; j < listofFileName.size(); j++) {
 							scrollDownThroughWebelement(driver, listofFileName.get(j), "");
 							ThreadSleep(500);
-							AppListeners.appLog.info("Comparing:>>" + fileName[i] + ">>With:>>" + listofFileName.get(j).getText().trim());
-							if (fileName[i].equalsIgnoreCase(listofFileName.get(j).getText().trim())) {
-								AppListeners.appLog.info(fileName[i] + " is matched successfully");
+							AppListeners.appLog.info("Comparing:>>" + fileName[i].trim() + ">>With:>>" + listofFileName.get(j).getText().trim());
+							if (fileName[i].trim().equalsIgnoreCase(listofFileName.get(j).getText().trim())) {
+								AppListeners.appLog.info(fileName[i].trim() + " is matched successfully");
 								countFiles++;
 								break;
 							} else if (j == listofFileName.size() - 1) {
-								AppListeners.appLog.info(fileName[i] + " is not matched.");
-								result.add(fileName[i] + " is not matched.");
+								AppListeners.appLog.info(fileName[i].trim() + " is not matched.");
+								result.add(fileName[i].trim() + " is not matched.");
 							}
 						}
 					}					
