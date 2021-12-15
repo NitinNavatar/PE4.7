@@ -982,7 +982,7 @@ public class FSTG extends BaseLib {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		String parentID = null;
 		lp.CRMLogin(superAdminUserName, adminPassword);
-		object tab = object.Deal;
+		object tab = object.Pipeline;
 		
 		if(home.clickOnSetUpLink()) {
 			log(LogStatus.PASS, "Click on setup link", YesNo.No);

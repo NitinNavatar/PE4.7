@@ -788,7 +788,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 			ThreadSleep(5000);
 			switchToFrame(driver, 60, getSetUpPageIframe(120));
 
-			String fileName = Arrays.toString(allFields).strip().replace("[", "").replace("]", "");
+			String fileName = Arrays.toString(allFields).replace("[", "").replace("]", "");
 			
 
 			List<WebElement> lst = getFieldsListInCompactLayout();

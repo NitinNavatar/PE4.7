@@ -4416,7 +4416,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								 	AppListeners.appLog.info("click on select list label:"+listViewValue);
 
 
-							 		if(filterList!=null||!filterList.isBlank()|!filterList.equals("")) {
+							 		if(filterList!=null||!filterList.isEmpty()|!filterList.equals("")) {
 									 	AppListeners.appLog.info("going to verify filters");
 
 									 	if(getFilterButton(timeOut).getAttribute("aria-pressed").contains("false")) {
