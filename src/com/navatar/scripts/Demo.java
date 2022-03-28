@@ -1,7 +1,13 @@
 package com.navatar.scripts;
 
+import static com.navatar.generic.AppListeners.appLog;
+import static com.navatar.generic.BaseLib.phase1DataSheetFilePath;
 import static com.navatar.generic.CommonLib.*;
+import static com.navatar.generic.CommonVariables.FS_Object6;
+import static com.navatar.generic.CommonVariables.SMOKDeal1InvestmentSize;
+import static com.navatar.generic.CommonVariables.SMOKDeal2InvestmentSize;
 import static com.navatar.generic.ExcelUtils.readAllDataForAColumn;
+import static com.navatar.generic.SmokeCommonVariables.crmUser1FirstName;
 import static com.navatar.generic.SmokeCommonVariables.todaysDate;
 import static com.navatar.pageObjects.NavigationPageBusineesLayer.navigationParentLabelWithOrder;
 import static com.navatar.pageObjects.NavigationPageBusineesLayer.navigationParentLabelWithChildAndOrder;
@@ -20,6 +26,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -36,13 +43,23 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import org.openqa.selenium.WebElement;
+
+import com.navatar.generic.BaseLib;
+import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
+import com.navatar.generic.EnumConstants.YesNo;
+import com.navatar.generic.EnumConstants.action;
+import com.navatar.generic.EnumConstants.excelLabel;
+import com.navatar.generic.EnumConstants.object;
+import com.navatar.pageObjects.LoginPageBusinessLayer;
 import com.navatar.pageObjects.NavigationPageBusineesLayer;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
+import com.relevantcodes.extentreports.LogStatus;
 
-public class Demo {
+public class Demo extends BaseLib {
 	Scanner scn = new Scanner(System.in);
 	static String breakSP = "<break>";
 	String columnSP = "<column>";
@@ -54,173 +71,64 @@ public class Demo {
 	public static  String NavigationMenuTestData_PESheet = "asd";
 	public static Scanner x;
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-//		Demo  dm = new Demo();
-//		Map<String, Integer> map = new LinkedHashMap<String, Integer>();  
-//		Map<String, String> childMap = new LinkedHashMap<String, String>();  
-//		System.err.println(NavigationMenuTestData_PEExcel+" >>>>>>>>>>>>><<<<<<<<<<<< "+NavigationMenuTestData_PESheet);
-//		List<String> csvRecords = ExcelUtils.readAllDataFromCSVFileIntoList(NavigationMenuTestData_PEExcel, false);
-//		
-//		for (String string : csvRecords) {
-//			System.err.println(string);	
-//		}
-//		Map<String, Integer> navigationParentLabelWithOrder = navigationParentLabelWithOrder(csvRecords);
-//		Set<String> abc = navigationParentLabelWithOrder.keySet();
-//		for (String string : abc) {
-//			System.err.println("Set : "+string);
-//		}
-////		for (int i = 0; i < abc.size(); i++) {
-////			//System.err.println("Set : "+abc);
-////		}
-//		for ( String key : navigationParentLabelWithOrder.keySet() ) {
-//		    System.out.println(">>>> "+ key );
-//		    System.out.println(">>>>value "+ navigationParentLabelWithOrder.get(key) );
-//		}
-//		System.err.println(">>>>>>> : "+navigationParentLabelWithOrder.keySet());
-//		System.out.println(navigationParentLabelWithOrder);
-//		System.err.println(sortByValue(true, navigationParentLabelWithOrder));
-//		Map<String, String> navigationParentLabelWithChildAndOrder = navigationParentLabelWithChildAndOrder(csvRecords);
-//		System.out.println(navigationParentLabelWithChildAndOrder);
-//		Map<String, String> navigationParentLabelWithChildSorted = navigationParentLabelWithChildSorted(navigationParentLabelWithChildAndOrder);
-//		System.err.println(navigationParentLabelWithChildSorted);
-		
-		/////////////////////////////////
-//		try {
-//			
-//			CSVReader products = new CSVReader(new FileReader(new File(NavigationMenuTestData_PEExcel)));
-//			List<String[]> abc = null;
-//			while (products.readNext()!=null) {
-//				abc = products.readAll();
-//			}
-//			for (String[] strings : abc) {
-//				
-//				for (int i = 0; i < strings.length; i++) {
-//					System.err.print(strings[i]+">");
-//					
-//				}
-//				System.err.println(" ");
-//			}
-//			String tempFile="temp11.txt";
-//			String tmvalue="";
-//			File oldFile = new File(NavigationMenuTestData_PEExcel);
-//			File newFile = new File(tempFile);
-//			FileWriter fw = new FileWriter(tempFile,true);
-//			BufferedWriter bw = new BufferedWriter(fw);
-//			PrintWriter pw  = new PrintWriter(bw);
-//			 x= new Scanner(new File(NavigationMenuTestData_PEExcel));
-//			 x.useDelimiter("[,\n]");
-//			 while (x.hasNext()) {
-//				 tmvalue=x.next();
-//				 System.out.println("tmvalue"+tmvalue);
-//				 if (tmvalue.equalsIgnoreCase("Reports")) {
-//					 pw.print("Alam");
-//				} else {
-//
-//				}
-//				
-//				
-//			}
-//			 x.close();
-//			 pw.flush();
-//			 pw.close();
-//			 oldFile.delete();
-//			 File dump = new File(NavigationMenuTestData_PEExcel);
-//			 newFile.renameTo(dump);
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-		
-		////////////////////////////////////
-		
-//		
-//		try {
-//			File inputFile = new File(NavigationMenuTestData_PEExcel);
-//
-//			// Read existing file
-//			CSVReader reader = new CSVReader(new FileReader(inputFile));
-//			List<String[]> csvBody = reader.readAll();
-//			System.err.println("csvBody: "+csvBody.size());
-//			// get CSV row column and replace with by using row and column
-//			for(int i=0; i<csvBody.size(); i++){
-//			    String[] strArray = csvBody.get(i);
-//			    System.err.println("strArray: "+strArray.length);
-//			    for(int j=0; j<strArray.length; j++){
-//			        if(strArray[j].equalsIgnoreCase("Reports1111")){ //String to be replaced
-//			            csvBody.get(i)[j] = "Reports"; //Target replacement
-//			        }
-//			    }
-//			}
-//			reader.close();
-//
-//			// Write to CSV file which is open
-//			CSVWriter writer = new CSVWriter(new FileWriter(inputFile));
-//			writer.writeAll(csvBody);
-//			writer.flush();
-//			writer.close();
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (CsvException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//int l =ExcelUtils.getColumnNumberFromCSVFileBasedOnLabel(NavigationMenuTestData_PEExcel, "URL");
-//System.err.println(l);
-//int m=ExcelUtils.getRowNumberFromCSVFileBasedOnLabelAndValue(NavigationMenuTestData_PEExcel, "Navigation Label", "Reports");
-//System.err.println(m);
-//String value = ExcelUtils.readDataFromCSVFile(NavigationMenuTestData_PEExcel, "Order", "35", "Action Record Type");
-//System.err.println(value);
-//ExcelUtils.writeDataOnCSVFile(NavigationMenuTestData_PEExcel, "Azhar", "Navigation Label", "Contact", "URL");
-	
-//		try {
-//			CSVReader reader2 = new CSVReader(new FileReader(NavigationMenuTestData_PEExcel));
-//			List<String[]> allElements = reader2.readAll();
-//			allElements.remove(1);
-//			FileWriter sw = new FileWriter(NavigationMenuTestData_PEExcel);
-//			CSVWriter writer = new CSVWriter(sw);
-//			writer.writeAll(allElements);
-//			writer.close();
-			
-//			String csv = NavigationMenuTestData_PEExcel;
-//		      CSVWriter writer = new CSVWriter(new FileWriter(csv, true));
-//
-//		      String [] record = "3,David,Feezor,USA,40".split(",");
-//
-//		      writer.writeNext(record);
-//
-//		      writer.close();
-			
-//			List<String[]> abc = ExcelUtils.readAllDataFromCSVFile(NavigationMenuTestData_PEExcel);
-//			for (String[] strings : abc) {
-//				for (int i = 0; i < strings.length; i++) {
-//					System.err.print(strings[i]+" ");
-//				}
-//				System.err.print("\n");
-//			}
-			List<String> jgh = ExcelUtils.readAllDataFromCSVFileIntoList(NavigationMenuTestData_PEExcel, false);
-			for (String string : jgh) {
-				if (string.contains("Home")) {
-					System.err.println("pass : "+string);
-				} else {
-
-				}
-			}
-
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-		
+	public static void main(String[] args) throws ParseException {
+		String[] toggles=null;
+		String SmokeACDContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Contact_FirstName);
+		String SmokeACDContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Contact_LastName);
+		String SmokeACDContact1Inst=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Institutions_Name);;
+		String SmokeACDContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Contact_EmailId);
+		String SmokeACDContact1Title=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Title);
+		String SmokeACDContact1Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Phone);
+		System.out.println(SmokeACDContact1FName);
+		System.out.println(SmokeACDContact1LName);
+		System.out.println(SmokeACDContact1Inst);
+		System.out.println(SmokeACDContact1EmailID);
+		System.out.println(SmokeACDContact1Title);
+		System.out.println(SmokeACDContact1Phone);
 	}
 
+	public  void testDemo(){
+		config(ExcelUtils.readDataFromPropertyFile("Browser"));
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		String passwordResetLink=null;
+		try {
+			passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
+					ExcelUtils.readDataFromPropertyFile("gmailUserName"),
+					ExcelUtils.readDataFromPropertyFile("gmailPassword"));
+		} catch (InterruptedException e2) {
+			e2.printStackTrace();
+		}
+		appLog.info("ResetLinkIs: " + passwordResetLink);
+		driver.get(passwordResetLink);
+		if (lp.setNewPassword()) {
+			appLog.info("Password is set successfully for CRM User1: " + crmUser1FirstName + " "   );
+		} else {
+			appLog.info("Password is not set for CRM User1: " + crmUser1FirstName + " " );
+			sa.assertTrue(false, "Password is not set for CRM User1: " + crmUser1FirstName + " "  );
+			log(LogStatus.ERROR, "Password is not set for CRM User1: " + crmUser1FirstName + " "  ,
+					YesNo.Yes);
+		}
+
+	}
+	public static String getDaysDifferenceOfTwoDates(String startDate, String endDate,String format)  {   
+		long days_difference = 0;
+		long time_difference =0;
+        SimpleDateFormat obj = new SimpleDateFormat(format); 
+        obj.format(startDate);
+        obj.format(endDate);
+        try {   
+            Date date1 = obj.parse(startDate);   
+            Date date2 = obj.parse(endDate);   
+             time_difference = date2.getTime() - date1.getTime();  
+             days_difference = (time_difference / (1000*60*60*24)) % 365;   
+ 
+        }catch(ParseException excep){
+        	  excep.printStackTrace(); 
+        	
+        }
+        
+        return String.valueOf(days_difference);
+    }
 
 	//method to add elements in the HashMap  
 
