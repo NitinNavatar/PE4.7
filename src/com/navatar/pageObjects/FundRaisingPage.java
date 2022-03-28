@@ -307,7 +307,7 @@ public class FundRaisingPage extends BasePage {
 	@FindBy(xpath="(//div[@class='requiredInput']//span[@class='lookupInput']//input)[2]")
 	private WebElement legalName_Classic;
 	
-	@FindBy(xpath="//*[text()='Legal Name']/following-sibling::div//input[@title='Search Institutions' or contains(@placeholder,'Search Institutions')]")
+	@FindBy(xpath="//*[text()='Legal Name']/following-sibling::div//input[@title='Search' or contains(@placeholder,'Search')]")
 	private WebElement legalName_Lighting;
 
 	/**

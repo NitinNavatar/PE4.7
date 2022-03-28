@@ -1444,6 +1444,11 @@ public WebElement sdgGridSelectFieldToDisplaySaveCancelBtnInManageFieldPopUp(But
 }
 
 
+public WebElement getNavigationMenuLinkIcon(String navigationMenu,int timeOut){
+	
+	String xpath ="//div[@class='flexipagePage']//span[text()='"+navigationMenu+"']/preceding-sibling::lightning-icon";
+	return isDisplayed(driver, FindElement(driver, xpath, "Navigation menu lcon", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "Navigation menu lcon");
+}
 public WebElement sdgGridSelectFieldToDisplayFieldFinderDropDownInManageFieldPopUp( int timeOut) {
 	String xpath="";
 	xpath="//*[contains(text(),'Field Finder')]/..//select";
@@ -1482,26 +1487,22 @@ public WebElement sdgGridFieldFinderRemoveSelectedFieldRemoveButtonInManageField
 
 
 
-
-
 public boolean clickOnEditButtonOnSDGGridOnHomePage(String projectName, String dataName, String field,int timeOut) {
-	String xpath="";
-	if(field.equalsIgnoreCase("Stage") || field.equalsIgnoreCase("Closing")) {
-		xpath="//td[contains(@data-label,'"+field+"')]//*[text()='"+dataName+"']/../following-sibling::span/button";
-	}else {
-		xpath ="//td[contains(@data-label,'"+field+"')]//*[text()='"+dataName+"']/../../following-sibling::span/button";
-	}
+	
+	 String xpath ="//*[text()='"+dataName+"']/ancestor::tr//td[contains(@data-label,'"+field.replaceAll("_", " ")+"')]";
+	
 	WebElement ele = FindElement(driver, xpath,"edit button for "+field, action.SCROLLANDBOOLEAN, timeOut);
 	JavascriptExecutor js = (JavascriptExecutor)driver;
 	js.executeScript("return arguments[0].setAttribute('Styles','display: inline-block;')", ele);
-	click(driver, ele, "edit", action.BOOLEAN);
+	ThreadSleep(2000);
+	doubleClickUsingAction(driver, ele);
 	return true;
 }
 
 public boolean clickOnCheckboxOnSDGGridOnHomePage(String projectName, String dataName, String field,int timeOut) {
 	String xpath="";
 	
-		xpath ="//td[contains(@data-label,'"+field+"')]//*[text()='"+dataName+"']/../../../../..//lightning-input[contains(@class,'checkrow')]";
+		xpath ="//*[text()='"+dataName+"']//ancestor::tr//lightning-input[contains(@class,'checkrow')]";
 	WebElement ele = FindElement(driver, xpath,"edit button for "+field, action.SCROLLANDBOOLEAN, timeOut);
 	boolean f = click(driver, ele, "checkbox button", action.BOOLEAN);
 	return f;
@@ -1727,7 +1728,7 @@ public List<WebElement> getAllAddedTabList(String mode){
 		
 		xpath ="//ul[@id='tabBar']/li/a";
 	}else{
-		xpath="//*[@class='slds-grid slds-has-flexi-truncate navUL']//one-app-nav-bar-item-root/a/span";
+		xpath="//*[@class='slds-grid slds-has-flexi-truncate navUL']//one-app-nav-bar-item-root/a";
 	}
 	return FindElements(driver, xpath, "Homepage tabs list");
 	

@@ -366,24 +366,28 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	 * @param company
 	 * @return String
 	 */
-	public String convertToPortfolioBeforeNext(String company) {
-		return "Please click 'Next' to convert "+company+" to a Portfolio, else click Close icon to Cancel. ";
+	public String convertToPortfolioBeforeNextPart1() {
+		return "Please click 'Next' to convert ";
 	}
 	
+	public String convertToPortfolioBeforeNextPart2() {
+		return "to a Portfolio Company.";
+	}
+	
+	 
 	/**
 	 * @param company
 	 * @return String
 	 */
 	public String convertToPortfolioRepeat(String company) {
-		return company+" is already a Portfolio.";
+		return company+" is already a Portfolio Company.";
 	}
 	/**
 	 * @param company
 	 * @return String
 	 */
 	public String convertToPortfolioAfterNext(String company) {
-		return "Congratulations!" + 
-				""+company+" has been coverted to Portfolio Company successfully.";
+		return "has been converted to Portfolio Company successfully.";
 	}
 	/**
 	 * @param timeOut
@@ -402,7 +406,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	 * @return WebElement
 	 */
 	public WebElement getconvertToPortfolioMessage(String company,int timeOut) {
-		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//span[text()='"+convertToPortfolioBeforeNext(company)+"']";
+		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//span[text()='"+convertToPortfolioBeforeNextPart1()+"']/../span[text()='"+company+" ']/../span[text()='"+convertToPortfolioBeforeNextPart2()+"']";
 		WebElement ele = FindElement(driver, xpath,"convert to portfolio", action.SCROLLANDBOOLEAN, 10);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
 		

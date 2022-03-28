@@ -93,7 +93,7 @@ public class DealPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, nextButton, "Visibility", timeOut, "nextButton");
 		
 	}
-	@FindBy(xpath = "//button[@title='Finish']")
+	@FindBy(xpath = "//button[@title='Finish' or contains(@class,'FINISH') or contains(@class,'Finish')]")
 	private WebElement finishButton;
 	
 	public WebElement getfinishButton(int timeOut) {
@@ -127,7 +127,7 @@ public class DealPage extends BasePageBusinessLayer {
 	private WebElement markAsCurrentStage;
 	
 	public WebElement getmarkAsCurrentStage(int timeOut) {
-		return isDisplayed(driver, markAsCurrentStage, "Visibility", timeOut, "markStageAsCompleteButton");
+		return isDisplayed(driver, markAsCurrentStage, "Visibility", timeOut, "markStageAsCurrentButton");
 		
 	}
 	@FindBy(xpath = "//div[@title='New']")

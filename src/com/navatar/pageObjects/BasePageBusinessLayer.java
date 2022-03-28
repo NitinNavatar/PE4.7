@@ -546,15 +546,26 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 */
 	public WebElement getRelatedTab(String projectName, PageName pageName, RelatedTab relatedTab, int timeOut) {
 		String xpath = "";
-		WebElement ele;
+		WebElement ele=null;
 		String related = relatedTab.toString().replace("_", " ");
 		if (projectName.contains(ProjectName.PE.toString()))
 			xpath = "//li[@title='" + related + "']//a";
 		else
 			xpath = "//li//*[@title='" + related + "' or text()='" + related + "']";
 		xpath = "//li//*[@title='" + related + "' or text()='" + related + "']";
-		ele = isDisplayed(driver, FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut),
-				"visiblity", 30, relatedTab.toString());
+		
+		List<WebElement> list = FindElements(driver, xpath, "");
+		
+		for(WebElement element:list){
+			ele=isDisplayed(driver, element,"visiblity", 30, relatedTab.toString());
+			if(ele!=null){
+				ele=element;
+				break;
+			}else{
+				appLog.info("Element not visible going to check in another iteration : " );
+			}
+		}
+		
 		if (ele != null) {
 			appLog.info("Element Found : " + related);
 		} else {
@@ -566,9 +577,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			ThreadSleep(3000);
 
 			xpath = "//a/span[text()='" + related + "']";
-			ele = isDisplayed(driver,
-					FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut), "visiblity",
-					30, relatedTab.toString());
+			List<WebElement> list2 = FindElements(driver, xpath, "");
+			
+			for(WebElement element:list2){
+				ele=isDisplayed(driver, element,"visiblity", 30, relatedTab.toString());
+				if(ele!=null){
+					ele=element;
+					break;
+				}else{
+					appLog.info("Element not visible going to check in another iteration : " );
+				}
+			}
 
 		}
 		return ele;
@@ -577,6 +596,55 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 ////////////////////////////////////////////////  Activity Association ///////////////////////////////////////////////////////////////////
 
+	
+	public WebElement getComponentNoDataToDisplayMessage(String componentTab ,int timeOut){
+		WebElement ele=null;
+		
+		String xpath ="//p[text()='No data to display.']/ancestor::div//li[@title='"+componentTab.replaceAll("_", " ")+"']";
+		
+		ele=isDisplayed(driver, FindElement(driver, xpath, "No data to display message of tab:", action.BOOLEAN, timeOut),"visiblity", 30, "No data to display message of tab:"+componentTab);
+			
+		
+		return ele;
+	}
+	
+	public WebElement getHyperLinkAtConnectionComponent(String contactName){
+		WebElement ele=null;
+		String xpath ="//a[text()='"+contactName+"']//ancestor::div[@class='slds-grid slds-wrap']/*/div[contains(@class,'ColumnFooter')]//a";
+		List<WebElement> list = FindElements(driver, xpath, "");
+		
+		for(WebElement element:list){
+			ele=isDisplayed(driver, element,"visiblity", 30, "Connection hyperlink"+contactName);
+			if(ele!=null){
+				ele=element;
+				break;
+			}else{
+				appLog.info("Element not visible going to check in another iteration : " );
+			}
+		}
+		
+		return ele;
+	}
+	
+	public List<WebElement> getComponentInsAndContactNameLinkList(){
+		List<WebElement> ele=new ArrayList<>();
+		WebElement ele2=null;
+		String xpath ="//div[@class='slds-is-relative cls_relativePos']//a";
+		ThreadSleep(5000);
+		List<WebElement> list = FindElements(driver, xpath, "");
+		
+		for(WebElement element:list){
+			ele2=isDisplayed(driver, element,"visiblity", 5, "No data to display message of tab:");
+			if(ele!=null){
+				ele.add(element);
+			}else{
+				appLog.info("Element not visible going to check in another iteration : " );
+			}
+		}
+		
+		return ele;
+	}
+	
 	/**
 	 * @param projectName
 	 * @param TabName
@@ -809,7 +877,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			break;
 
 		case InstituitonsTab:
-			tabName = "Institutions";
+			tabName = "Firms";
 			break;
 
 		case FundraisingsTab:
@@ -864,7 +932,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			if (ProjectName.MNA.toString().equals(projectName)) {
 				viewList = "All Accounts";
 			} else {
-				viewList = "All Institutions";
+				viewList = "All Firms";
 			}
 			break;
 
@@ -873,6 +941,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			break;
 		case CompaniesTab:
 			viewList = "All Companies";
+			break;
+		case Navigation:
+			viewList = "All";
+			break;
+		case ContactTab:
+			viewList = "All";
 			break;
 		case FundsTab:
 			viewList = "All";
@@ -971,7 +1045,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		boolean flag = false;
 		String xpath = "";
 		String viewList = null;
-		viewList = "Automation All";
+		viewList = "All";
 		WebElement ele, selectListView;
 		ele = null;
 
@@ -2015,6 +2089,25 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return false;
 	}
 
+	public String getDaysDifferenceOfTwoDates(String startDate, String endDate,String format)  {   
+		long days_difference = 0;
+		long time_difference =0;
+        SimpleDateFormat obj = new SimpleDateFormat(format);   
+        try {   
+            Date date1 = obj.parse(startDate);   
+            Date date2 = obj.parse(endDate);   
+             time_difference = date2.getTime() - date1.getTime();  
+             days_difference = (time_difference / (1000*60*60*24)) % 365;   
+ 
+        }catch(ParseException excep){
+        	  excep.printStackTrace(); 
+        	
+        }
+        
+        return String.valueOf(days_difference);
+    }
+
+
 	/**
 	 * @param projectName
 	 * @param tabObj
@@ -2023,7 +2116,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 * @description this method is used to add list view to page if automation all
 	 *              is not present
 	 */
-	public boolean addAutomationAllListView(String projectName, String tabObj, int timeOut) {
+ 	public boolean addAutomationAllListView(String projectName, String tabObj, int timeOut) {
 		String viewList = "Automation All", xpath = "";
 		if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
 			ThreadSleep(3000);
@@ -2752,10 +2845,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String btname = btnName.toString();
 		String xpath = "";
 		if (isInside) {
-			xpath = "//flexipage-tab2//*[contains(text(),'" + toggleTab
-					+ "')]/../../..//following-sibling::div//button[@title='" + btname + "']";
+			xpath = "//*[contains(text(),'" + toggleTab
+					+ "')]/ancestor::article//button[@title='" + btname + "']";
 		} else {
-			xpath = "//*[contains(text(),'" + toggleTab + "')]/../../..//following-sibling::div//button[@title='"
+			xpath = "//*[contains(text(),'" + toggleTab + "')]/ancestor::article//button[@title='"
 					+ btname + "']";
 		}
 		WebElement ele = FindElement(driver, xpath, toggleTab + " >> " + btname, action, timeOut);
@@ -2937,17 +3030,24 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String value = "";
 		boolean flag = true;
 		String finalx = "",
-				xpath = "//article[contains(@class,'RelatedListAccordion')]//a[text()='" + recordName + "']";
+				xpath = "//article[contains(@class,'RelatedListAccordion')]";
 		WebElement ele = FindElement(driver, xpath, recordName, action.SCROLLANDBOOLEAN, 10);
 		if (isDisplayed(driver, ele, "visibility", timeOut, recordName + " in accordion") != null) {
-			xpath = "//article[contains(@class,'RelatedListAccordion')]//a[text()='" + recordName
-					+ "']/following-sibling::ul";
+			xpath = "//article[contains(@class,'RelatedListAccordion')]";
 			if (fieldValues != null) {
 				for (String fieldValue : fieldValues) {
 					field = fieldValue.split(breakSP)[0];
 					value = fieldValue.split(breakSP)[1];
 					field = field.replace("_", " ");
+					
+				if(field.equalsIgnoreCase(PageLabel.Name.toString())){
+					
+					finalx = xpath + "//a[text()='" + value + "']";
+
+				}else{
 					finalx = xpath + "//li//div[@title='" + field + "']/following-sibling::div[@title='" + value + "']";
+
+				}
 					ele = FindElement(driver, finalx, field + " and " + value, action.SCROLLANDBOOLEAN, 10);
 					ele = isDisplayed(driver, ele, "visibility", 10, field + " and " + value);
 					if (ele != null) {
@@ -3301,7 +3401,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 * @return SDG input TextBox webElement
 	 */
 	public WebElement SDGInputTextbox(String projectName, String field, int timeOut) {
-		String xpath = "//input[@name='" + field + "']";
+		String xpath = "//input[contains(@name,'" + field + "')]";
 		WebElement ele = FindElement(driver, xpath, "input textbox " + field, action.SCROLLANDBOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "visibility", timeOut, "input textbox " + field);
 	}
@@ -3675,6 +3775,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case AgreementsAmendments:
 			tabName = "Agreements/Amendments";
 			break;
+		case TaskTab:
+			tabName = "Tasks";
+			break;
 		default:
 			return flag;
 		}
@@ -3930,6 +4033,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return false;
 	}
+
 
 	/**
 	 * @author Azhar Alam

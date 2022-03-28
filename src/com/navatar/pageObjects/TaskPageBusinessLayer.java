@@ -4,6 +4,8 @@ import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.M7Task1dueDate;
 import static com.navatar.generic.SmokeCommonVariables.Smoke_STDTask1Subject;
 
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -334,6 +336,57 @@ public class TaskPageBusinessLayer extends TaskPage {
 						}
 					}else {
 						log(LogStatus.ERROR, "Not Able to Entered Value to Due Date "+dueDate, YesNo.Yes);	
+					}
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on Edit Button For : "+task, YesNo.Yes);
+			}
+		}
+		
+		return flag;
+	}
+	public boolean EditEnterNameAndSave(String projectName,String task,String Name,boolean removeOtherName){
+		boolean flag=false;
+		TaskPageBusinessLayer tp = new TaskPageBusinessLayer(driver);
+		GlobalActionPageBusinessLayer gp = new GlobalActionPageBusinessLayer(driver);
+		for (int j = 0; j < 2; j++) {
+			if (click(driver, tp.getEditButton(projectName, 30), task, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Edit Button For : "+task, YesNo.No);
+				
+				if(removeOtherName){
+					int i=0;
+				List<WebElement> list=	tp.getCrossIconOfSelectedItem(excelLabel.Name.toString(), 30);
+					for(WebElement ele:list){
+						i++;
+						click(driver, ele, "delete icon", action.BOOLEAN);
+						log(LogStatus.INFO, "Remove conatct name from name field:"+i, YesNo.No);
+
+					}
+					
+				}
+				ThreadSleep(2000);
+				click(driver, FindElement(driver, "//span[text()='Name']/ancestor::label/following-sibling::div", "", action.BOOLEAN, 30), "", action.BOOLEAN);
+				ThreadSleep(2000);
+					if (sendKeys(driver, tp.getnameTextBoxInNewTask(projectName, 30), Name, "Name Text box", action.BOOLEAN)) {
+						log(LogStatus.INFO, "Value Entered to Name "+Name, YesNo.No);	
+						ThreadSleep(2000);
+						WebElement ele = FindElement(driver, "//div[@title='"+Name+"']", "", action.BOOLEAN, 30);
+						clickUsingJavaScript(driver, ele, "", action.BOOLEAN);
+						ThreadSleep(2000);
+						if (clickUsingJavaScript(driver, getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
+							ThreadSleep(5000);
+							flag=true;
+							String[][] fieldsWithValues= {{PageLabel.Name.toString(),Name}};
+							flag=tp.fieldVerificationForTaskInViewMode1(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 30);
+							if (flag) {
+								return flag;
+							}else{
+							}
+						}else {
+							log(LogStatus.ERROR, "save button is not clickable so task not Updated : "+task, YesNo.Yes);
+						}
+					}else {
+						log(LogStatus.ERROR, "Not Able to Entered Value to name "+Name, YesNo.Yes);	
 					}
 			} else {
 				log(LogStatus.ERROR, "Not Able to Click on Edit Button For : "+task, YesNo.Yes);

@@ -78,7 +78,7 @@ public class FundsPage extends BasePageBusinessLayer {
 	@FindBy(xpath="//div[@class='requiredInput']//select")
 	private WebElement fundType_Classic;
 	
-	@FindBy(xpath="//*[text()='Fund Type']/following-sibling::div[@class='slds-form-element__control']//input[@type='text']")
+	@FindBy(xpath="//*[text()='Fund Type']/following-sibling::div//button")
 	private WebElement fundType_Lighting;
 
 	/**
@@ -93,7 +93,7 @@ public class FundsPage extends BasePageBusinessLayer {
 	
 
 	
-	@FindBy(xpath="//*[text()='Investment Category']/following-sibling::div//input[@type='text']")
+	@FindBy(xpath="//*[text()='Investment Category']/following-sibling::div//button")
 	private WebElement investmentCategory_Lighting;
 
 	/**
@@ -200,7 +200,7 @@ public class FundsPage extends BasePageBusinessLayer {
 	}
 	
 	
-	@FindBy(xpath="//*[text()='Status']/..//div//input")
+	@FindBy(xpath="//*[text()='Status']/..//div//button")
 	private WebElement dealStatusDropDownList;
 
 	/**
@@ -214,7 +214,7 @@ public class FundsPage extends BasePageBusinessLayer {
 	}
 	
 
-	@FindBy(xpath="//*[text()='Stage']/..//div//input")
+	@FindBy(xpath="//*[text()='Stage']/..//div//button")
 	private WebElement dealStageDropDownList;
 
 	/**
@@ -227,7 +227,7 @@ public class FundsPage extends BasePageBusinessLayer {
 
 	}
 	
-	@FindBy(xpath="//*[text()='Company Name']/following-sibling::div//input[contains(@placeholder,'Search Institutions')]")
+	@FindBy(xpath="//*[text()='Company']/following-sibling::div//input[contains(@placeholder,'Search Firms')]")
 	private WebElement firmName;
 
 	/**

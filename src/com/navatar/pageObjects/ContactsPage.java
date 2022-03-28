@@ -69,7 +69,7 @@ public class ContactsPage extends BasePageBusinessLayer {
 	
 	public WebElement getcontactTier(String projectName,int timeOut) {
 		
-		WebElement	tierInput=FindElement(driver, "//*[text()='Tier']/..//input", "tier drodown", action.SCROLLANDBOOLEAN, timeOut);
+		WebElement	tierInput=FindElement(driver, "//*[text()='Tier']/..//button", "tier drodown", action.SCROLLANDBOOLEAN, timeOut);
 		
 		return isDisplayed(driver, tierInput, "Visibility", timeOut, "Contact tier");
 
@@ -83,7 +83,7 @@ public class ContactsPage extends BasePageBusinessLayer {
 	@FindBy(xpath="//*[text()='Account Name']/following-sibling::*//input[@title='Search Accounts']")
 	private WebElement accountName;
 	
-	@FindBy(xpath="//*[text()='Legal Name']/following-sibling::div//input[contains(@placeholder,'Search Institutions')]")
+	@FindBy(xpath="//*[text()='Legal Name']/following-sibling::div//input[contains(@placeholder,'Search')]")
 	private WebElement legalName;
 	
 	@FindBy(xpath="//*[text()='Legal Name']/following-sibling::*//input[contains(@placeholder,'Search')]")
@@ -97,7 +97,7 @@ public class ContactsPage extends BasePageBusinessLayer {
 		if (ProjectName.MNA.toString().equals(projectName)) {
 			return isDisplayed(driver, accountName, "Visibility", timeOut, "Account Name");
 		} else if (projectName.contains(ProjectName.PE.toString())) {
-			return isDisplayed(driver, legalName, "Visibility", timeOut, "Legal Name");
+			return isDisplayed(driver, firmName, "Visibility", timeOut, "Legal Name");
 		}else{
 			return isDisplayed(driver, firmName, "Visibility", timeOut, "Firm Name");
 		}
@@ -402,15 +402,16 @@ public class ContactsPage extends BasePageBusinessLayer {
 	private WebElement lastTouchPointLabel;
 	
 	//@FindBy(xpath = "//span[text()='Last Touch Point']/../following-sibling::div//span/*/*/*")
-	@FindBy(xpath = "//span[text()='Last Touchpoint']/../following-sibling::div//span/*/*/*")
-	private WebElement lastTouchPointValue;
+	
 	public WebElement getlastTouchPointValue(String projectName,int timeOut) {
-		ThreadSleep(10000);
-		scrollDownThroughWebelement(driver, lastTouchPointLabel, "Last Touch Point Label");
-		ThreadSleep(1000);
-		return lastTouchPointValue;
-	//	return isDisplayed(driver, lastTouchPointValue, "Visibility", timeOut, "last Touch Point Value");
+
+		return FindElement(driver, "//div[contains(@class,'windowViewMode-normal')]//*[text()='Last Touchpoint']/../following-sibling::div//lightning-formatted-text", "", action.SCROLLANDBOOLEAN, timeOut);
 		
+	}
+	
+	
+	public WebElement getNextTouchPointDateValue(String projectName,int timeOut) {
+		return FindElement(driver, "//div[contains(@class,'windowViewMode-normal')]//span[text()='Next Touchpoint Date']/../following-sibling::div//lightning-formatted-text", "", action.SCROLLANDBOOLEAN, timeOut);
 	}
 	
 	@FindBy(xpath = "//span[text()='Is_Touchpoint']/../following-sibling::div//img")

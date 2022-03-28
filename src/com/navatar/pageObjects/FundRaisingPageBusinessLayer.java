@@ -88,12 +88,12 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage  {
 								if(!closing.equals("")||closing!=null){
 									if (click(driver,
 											FindElement(driver,
-													"//*[text()='Closing']/..//input",
+													"//*[text()='Closing']/..//button",
 													"Clsoing input", action.THROWEXCEPTION, 30),
 											"Clsoing input", action.BOOLEAN)) {
 										appLog.info("Click on closing input");
 										ThreadSleep(2000);
-										click(driver,FindElement(driver,"//*[text()='Closing']/..//input/../..//*[@data-value='"+closing+"']","Clsoing list", action.THROWEXCEPTION, 30),
+										click(driver,FindElement(driver,"//*[text()='Closing']/..//following-sibling::div//span[text()='"+closing+"']","Clsoing list", action.THROWEXCEPTION, 30),
 												"Clsoing list", action.BOOLEAN) ;
 											appLog.info("Click on closing list item:"+closing);
 										
@@ -113,12 +113,12 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage  {
 								if(!stage.equals("")||stage!=null){
 									if (click(driver,
 											FindElement(driver,
-													"//*[text()='Stage']/..//input",
+													"//*[text()='Stage']/..//button",
 													"Stage input", action.THROWEXCEPTION, 30),
 											"Stage input", action.BOOLEAN)) {
 										appLog.info("Click on stage input");
 										ThreadSleep(2000);
-										click(driver,FindElement(driver,"//*[text()='Stage']/..//input/../..//*[@data-value='"+stage+"']","stage list", action.THROWEXCEPTION, 30),
+										click(driver,FindElement(driver,"//*[text()='"+stage+"']","stage list", action.THROWEXCEPTION, 30),
 												"stage list", action.BOOLEAN) ;
 											appLog.info("Click on stage list item:"+stage);
 										

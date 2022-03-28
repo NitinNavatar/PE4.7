@@ -21,6 +21,7 @@ import com.navatar.generic.EnumConstants.ContactPageFieldLabelText;
 import com.navatar.generic.EnumConstants.LimitedPartnerPageFieldLabelText;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.RecordType;
+import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
@@ -207,16 +208,16 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 					action.BOOLEAN)) {
 				if (sendKeys(driver, getContactLastName(projectName, 60), contactLastName, "Contact Last Name",
 						action.BOOLEAN)) {
-					
+					ThreadSleep(2000);
 					if(creationPage.toString().equalsIgnoreCase(CreationPage.AccountPage.toString())) {
 						
 					}else {
 						if (sendKeys(driver, getLegalName(projectName, 60), legalName, "Account Name",
 								action.SCROLLANDBOOLEAN)) {
-								ThreadSleep(1000);
+								ThreadSleep(2000);
 								if (click(driver,
 										FindElement(driver,
-												"//*[@title='"+legalName+"']//strong[text()='"+legalName.split(" ")[0]+"']",
+												"//*[text()='Legal Name']/..//*[@title='"+legalName+"']",
 												"Legal Name List", action.THROWEXCEPTION, 30),
 										legalName + "   :   Account Name", action.BOOLEAN)) {
 									appLog.info(legalName + "  is present in list.");
@@ -230,6 +231,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 							return false;
 						}
 					}
+					ThreadSleep(2000);
 					ele = getLabelTextBox(projectName, PageName.Object2Page.toString(),PageLabel.Email.toString(), 10);
 					
 						if (sendKeys(driver,ele, emailID, "Email ID",
@@ -281,7 +283,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 								if(click(driver, getcontactTier(projectName, 30), "contact tier dropdown", action.SCROLLANDBOOLEAN)){
 									log(LogStatus.INFO, "clicked contact tier dropdown", YesNo.No);
 									ThreadSleep(2000);
-									String xpath="//*[text()='Tier']/..//input/../following-sibling::div//span[@title='"+tier+"']/../..";
+									String xpath="//span[@title='"+tier+"']/../..";
 									WebElement dropdownValue=FindElement(driver, xpath, "", action.BOOLEAN, 30);
 									if(click(driver, dropdownValue, "", action.BOOLEAN)){
 										log(LogStatus.INFO, "Selected tier :"+tier+" value in teir dropdown", YesNo.No);
@@ -383,6 +385,57 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 	}
 	
 
+	/**@author Ravi Kumar
+	 * @param projectName
+	 * @param contactFirstName
+	 * @param contactLastName
+	 * @description This is used to create new contact with given arguments
+	 */
+	public boolean UpdateContactTier(String projectName, PageName pageName, String tier) {
+		
+		if(clickOnShowMoreActionDownArrow(projectName, pageName, ShowMoreActionDropDownList.Edit, 30)){
+			log(LogStatus.INFO, "clicked on edit button", YesNo.No);
+
+			ThreadSleep(2000);
+			if (click(driver, getcontactTier(projectName, 30), "contact tier dropdown", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "clicked contact tier dropdown", YesNo.No);
+				ThreadSleep(2000);
+				String xpath = "//span[@title='" + tier + "']/../..";
+				WebElement dropdownValue = FindElement(driver, xpath, "", action.BOOLEAN, 30);
+				if (click(driver, dropdownValue, "", action.BOOLEAN)) {
+					log(LogStatus.INFO, "Selected tier :" + tier + " value in teir dropdown", YesNo.No);
+
+				} else {
+					log(LogStatus.INFO, "Not able to Select tier :" + tier + " value in teir dropdown", YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not able to Select tier :" + tier + " value in teir dropdown");
+				}
+
+			} else {
+				log(LogStatus.INFO, "Not able to clicked contact tier dropdown", YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to clicked contact tier dropdown");
+
+			}
+
+			if (click(driver, getNavigationTabSaveBtn(projectName, 60), "Save Button", action.SCROLLANDBOOLEAN)) {
+				appLog.info("Clicked on save button");
+				ThreadSleep(3000);
+				if (getNavigationTabSaveBtn(projectName, 5) != null) {
+					click(driver, getNavigationTabSaveBtn(projectName, 60), "save", action.BOOLEAN);
+				}
+				return true;
+			} else {
+				appLog.info("Not able to click on save button");
+			}
+
+		}else{
+			
+			log(LogStatus.INFO, "Not able to clicked on edit button so cannot update tier ", YesNo.Yes);
+			BaseLib.sa.assertTrue(false, "Not able to clicked on edit button so cannot update tier ");
+		}
+		
+						
+		return false;
+	}
 	
 	
 	/**@author Azhar Alam

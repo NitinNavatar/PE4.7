@@ -390,7 +390,7 @@ public abstract class BasePage extends BaseLib {
 	
 	
 	
-	@FindBy(xpath = "//a[contains(@title,'Manage Licenses')]")
+	@FindBy(xpath = "//a[contains(@title,'Manage Licenses')][contains(@title,'PE')]")
 	private WebElement manageLicensesLink;
 
 	/**
@@ -653,7 +653,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, navatarInvestorManagerTab, "Visibility", timeOut, "Navatar Investor Manager Tab");
 	}
 
-	@FindBy(xpath="(//div[contains(@class,'uiTooltip')])[7]")
+	@FindBy(xpath="//button[contains(@class,'userProfile')]/div")
 	private WebElement salesForceLightingIcon;
 
 	/**
@@ -3132,7 +3132,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, refrshActivity, "Visibility", timeOut, "refrshActivity");
 		}
 	
-	@FindBy(xpath="//button[@title='Select List View']")
+	@FindBy(xpath="//button[@title='Select a List View']")
 	private WebElement selectListIcon_Lighting;
 
 	/**
@@ -3847,7 +3847,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, createNewTaskSubjectTextbox, "Visibility", timeOut, "createNewTaskSubjectTextbox");
 	}
 	*/
-	@FindBy(xpath = "//label[text()='Name']/..//span//input")
+	@FindBy(xpath = "//span[text()='Name']/ancestor::label/following-sibling::div//input")
 	private WebElement nameTextBoxInNewTask;
 	
 	public WebElement getnameTextBoxInNewTask(String projectName,int timeOut) {
@@ -4338,6 +4338,11 @@ public abstract class BasePage extends BaseLib {
 	return isDisplayed(driver, editButton_Lighting, "Visibility", timeOut, "Edit Button Lighting");	
 	}
 	
+	public List<WebElement> getCrossIconOfSelectedItem(String label,int timeOut){
+		
+		String xpath="//span[text()='"+label+"']/ancestor::label/following-sibling::div//li//a[@class='deleteAction']";
+		return FindElements(driver, xpath, "delete icon cross icon");
+	}
 	public List<WebElement> getDropdownListOnSearchActivitiesAttachmentSettings(String projectName,int timeOut) {
 		String xpath = "//td[@class='td2']//select[contains(@name,'page:form:advancefilterid')]";
 		return FindElements(driver, xpath, "dropdown list");

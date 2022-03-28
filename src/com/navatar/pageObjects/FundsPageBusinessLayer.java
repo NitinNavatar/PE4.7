@@ -166,8 +166,13 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			if (labelName.equalsIgnoreCase(excelLabel.Deal_Quality_Score.toString()))
 				xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
 				+ "']/../following-sibling::div//lightning-formatted-number";
-			else if(labelName.equalsIgnoreCase(excelLabel.Company_Name.toString()))
-			xpath="//span[@class='test-id__field-label'][text()='"+finalLabelName+"']/../following-sibling::div//a";
+			else if(labelName.equalsIgnoreCase(excelLabel.Company_Name.toString())){
+				xpath="//span[@class='test-id__field-label']/../..//[text()='"+finalLabelName+"']/ancestor::a";
+
+			}else if(labelName.equalsIgnoreCase(excelLabel.Record_Type.toString())){
+				xpath = "//span[@class='test-id__field-label'][text()='"+finalLabelName+"']/../following-sibling::div//div[contains(@class,'recordTypeName')]/span";
+			}
+			
 		ele = isDisplayed(driver,
 				FindElement(driver, xpath, labelName + " label text in " + projectName, action.SCROLLANDBOOLEAN, 60),
 				"Visibility", 30, labelName + " label text in " + projectName);
@@ -337,7 +342,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 				appLog.info("Enter value on Fund Name Text Box : "+fundName);
 				if (click(driver, getFundType(projectName, 60), "Fund Type ", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on Fund Type");
-					xpath="//span[@title='"+fundType+"']/../..";
+					xpath="//*[text()='Fund Type']/following-sibling::div//span[@title='"+fundType+"']/../..";
 					WebElement fundTypeEle = FindElement(driver,xpath, fundType,action.SCROLLANDBOOLEAN, 10);
 					ThreadSleep(500);
 					if (click(driver, fundTypeEle, fundType, action.SCROLLANDBOOLEAN)) {
@@ -345,13 +350,32 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 
 						if (click(driver, getInvestmentCategory(projectName, 60), "Investment Category",
 								action.SCROLLANDBOOLEAN)) {
+							ThreadSleep(1000);
 							appLog.info("clicked on Investment category");
-							xpath="//label[text()='Investment Category']/following-sibling::div//span[@title='"+investmentCategory+"']/../..";
+							xpath="//*[text()='Investment Category']/following-sibling::div//span[@title='"+investmentCategory+"']/../..";
 							WebElement InvsCatgEle = FindElement(driver,xpath,investmentCategory, action.SCROLLANDBOOLEAN, 10);
 							ThreadSleep(500);
 							if (click(driver, InvsCatgEle, investmentCategory, action.SCROLLANDBOOLEAN)) {
 								appLog.info("Select Investment Category : "+investmentCategory);
 
+								if(labelswithValues!=null&&labelswithValues.equals("")){
+									for(String[] labelAndValue:labelswithValues){
+										
+										String label =labelAndValue[0].replaceAll("_", " ");
+										String value = labelAndValue[1];
+										xpath="//*[text()='"+label+"']/following-sibling::div//input";
+										ele = FindElement(driver, xpath, "Field : "+label, action.BOOLEAN, 30);
+										if (sendKeys(driver, ele, value, "Fund Name", action.BOOLEAN)) {
+											ThreadSleep(500);
+											appLog.info("Enter value on field:"+label+" Text Box : "+value);
+										}else{
+											
+											appLog.error("Not able to Enter value on field:"+label+" Text Box : "+value);
+
+										}
+									}
+									
+								}
 								if (click(driver, getCustomTabSaveBtn(projectName,60), "Save Button", action.BOOLEAN)) {
 									ThreadSleep(500);
 									appLog.info("click on save button");
@@ -595,8 +619,18 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 								appLog.error("Not able to enter "+labelText+" value "+strings[1]+" in text box so cannot create Deal : "+dealName);
 								return false;
 							}
-						}else if(labelText.equalsIgnoreCase("Pipeline Comments")){
-							if (sendKeys(driver, FindElement(driver, "//*[text()='Pipeline Comments']/following-sibling::div/textarea", labelText, action.SCROLLANDBOOLEAN, 30),strings[1],labelText,action.SCROLLANDBOOLEAN)) {
+						}else if(labelText.equalsIgnoreCase("Pipeline Comments") || labelText.equalsIgnoreCase("Deal Description")){
+							
+							if (sendKeys(driver, FindElement(driver, "//*[text()='"+labelText+"']/following-sibling::div//textarea", labelText, action.SCROLLANDBOOLEAN, 30),strings[1],labelText,action.SCROLLANDBOOLEAN)) {
+								appLog.info(strings[1] + "  is passed to pipeline comment input box.");
+								
+							} else {
+								appLog.error("Not able to enter "+labelText+" value "+strings[1]+" in text box so cannot create Deal : "+dealName);
+								return false;
+							}
+						
+					}else {
+							if (sendKeys(driver, FindElement(driver, "//*[text()='"+labelText+"']/following-sibling::div//input", labelText, action.SCROLLANDBOOLEAN, 30),strings[1],labelText,action.SCROLLANDBOOLEAN)) {
 								appLog.info(strings[1] + "  is passed to pipeline comment input box.");
 								
 							} else {

@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.ReportDashboardFolderType;
+import com.navatar.generic.EnumConstants.ReportField;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.object;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
@@ -154,7 +155,7 @@ public class ReportsTabBusinessLayer extends ReportsTab{
 	}
 	
 	public boolean createCustomReportForFolder(String environment, String mode, String folderName,ReportFormatName reportFormatName,
-			String reportName, String reportDescription, String reportType, ReportField reportField, String showValue,
+			String reportName, String reportDescription, String reportType, ReportField[] reportField, String showValue,
 			String dateField, String rangeValue, String fromDate, String toDate) {
 		boolean flag=true;
 		if (switchToClassic()) {
@@ -220,6 +221,8 @@ public class ReportsTabBusinessLayer extends ReportsTab{
 									}
 								}
 								if (reportField!=null) {
+									for(ReportField report:reportField){
+										ThreadSleep(2000);
 									if (sendKeys(driver, getSearchBox_Classic(environment, 30), reportField.toString(),
 											"search : " + reportField.toString(), action.SCROLLANDBOOLEAN)) {
 										appLog.info("Entered value on Search Box for report Field : " + reportField);
@@ -240,6 +243,7 @@ public class ReportsTabBusinessLayer extends ReportsTab{
 
 									} else {
 										appLog.error("Not Able to enter value on search box for field : " + reportField);
+									}
 									}
 								}
 								else {

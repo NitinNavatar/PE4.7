@@ -6,12 +6,14 @@ import org.openqa.selenium.interactions.Actions;
 
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonVariables;
+import com.navatar.generic.EnumConstants.ContactPageFieldLabelText;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.RecordType;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
+import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.SoftAssert;
 import com.relevantcodes.extentreports.LogStatus;
@@ -453,7 +455,10 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 					xpath="//span[text()='Address']/../following-sibling::div//a[contains(@title,'"+labelValue+"')]";
 				}
 				
-			}else {
+			}else if(labelName.equalsIgnoreCase("Deal Conversion Date") || labelName.equalsIgnoreCase("Conversion Date")){
+				
+				xpath="//span[text()='Deal Conversion Date']/../following-sibling::div//lightning-formatted-text";
+		}else {
 				
 				if (labelName.equalsIgnoreCase(excelLabel.Phone.toString()) || labelName.equalsIgnoreCase(excelLabel.Fax.toString())) {
 					xpath = "//span[text()='"+finalLabelName+"']/../following-sibling::div//*[contains(text(),'"+labelValue+"') or contains(text(),'"+changeNumberIntoUSFormat(labelValue)+"')]";	
@@ -484,8 +489,17 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 						}
 
 					}
+			List<WebElement> list =new ArrayList<>();
 			
-			ele = 		FindElement(driver, xpath, finalLabelName + " label text with  " + labelValue, action.SCROLLANDBOOLEAN, 10);
+			list = FindElements(driver, xpath, "");
+			for(WebElement element:list){
+				
+				element=isDisplayed(driver,element,"Visibility", 10, "");
+				if(element!=null){
+					ele =element;
+					break;
+				}
+			}
 			scrollDownThroughWebelement(driver, ele, finalLabelName + " label text with  " + labelValue);
 			ele = 	isDisplayed(driver,ele,"Visibility", 10, finalLabelName + " label text with  " + labelValue);
 			if (ele != null) {
@@ -565,7 +579,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		status=status.replace("_", " ");
 		if (clickOnShowMoreActionDownArrow(projectName, PageName.Object1Page, ShowMoreActionDropDownList.Edit, 10)) {
 			if (click(driver, fp.getDealStatus(projectName, 10), "Status : "+status, action.SCROLLANDBOOLEAN)) {
-				ThreadSleep(2000);
+				ThreadSleep(5000);
 				appLog.error("Clicked on Deal Status");
 				
 				String xpath="//span[@title='"+status+"']";
@@ -1122,7 +1136,52 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 			return flag;
 	}
 	
+	 
+	public boolean verifyFieldSetComponent(String labelName, String value) {
+		String finalLabelName="";
+		if(labelName.contains("_")) {
+			 finalLabelName = labelName.replace("_", " ");
+		}else {
+			 finalLabelName = labelName;
+		}
+		String xpath="//*[@class='navpeIIDisplayFieldSet']//*[contains(text(),'"+finalLabelName+"')]/following-sibling::div/*";
+		
+		WebElement ele = FindElement(driver, xpath, finalLabelName + " label text", action.SCROLLANDBOOLEAN, 5);
+		if (ele != null) {
+			String aa = ele.getText().trim();
+			appLog.info("<<<<<<<<     "+finalLabelName+ " : Lable Value is: "+aa+"      >>>>>>>>>>>");
 
+			if (aa.isEmpty()) {
+				appLog.error(finalLabelName + " Value is Empty label Value "+value);
+				if(value.isEmpty() && aa.isEmpty()) {
+					return true;
+				}else {
+					return false;
+				}
+			}
+			if (labelName.equalsIgnoreCase(excelLabel.Phone.toString()) || labelName.equalsIgnoreCase(excelLabel.Fax.toString())||
+					labelName.equalsIgnoreCase(ContactPageFieldLabelText.Mobile.toString()) ||
+					labelName.equalsIgnoreCase(excelLabel.Asst_Phone.toString())) {
+
+				if(aa.contains(value) || aa.contains(changeNumberIntoUSFormat(value))) {
+					appLog.info(value + " Value is matched successfully.");
+					return true;
+
+				}
+			}else if(aa.contains(value)) {
+				appLog.info(value + " Value is matched successfully.");
+				return true;
+
+			}else {
+				appLog.info(value + " Value is not matched. Expected: "+value+" /t Actual : "+aa);
+			}
+		} else {
+			appLog.error(finalLabelName + " Value is not visible so cannot matched  label Value "+value);
+		}
+		return false;
+		
+	}
+	
 	/**
 	 * @author Akul Bhutani
 	 * @param projectName

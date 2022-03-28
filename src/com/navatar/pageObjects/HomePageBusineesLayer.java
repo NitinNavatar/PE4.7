@@ -1396,13 +1396,16 @@ public boolean enterValuesInCreateIndiviualInvestor(String environment, String m
 }
 
 public boolean verifyAddedTabsInHomepage(String tabs,String mode){
-	
 	List<String> result;
 	List<WebElement> allTabs=getAllAddedTabList(mode);
 
+	ThreadSleep(2000);
 	if(!allTabs.isEmpty()){
 		ThreadSleep(3000);
-		result=compareMultipleList(driver, tabs, allTabs);
+		
+		//result=compareMultipleList(driver, tabs, allTabs);
+		result=compareMultipleListOnBasisOfTitle(driver, tabs, allTabs);
+
 		if(result.isEmpty()){
 	
 			log(LogStatus.PASS, "all homepage added tab successfully verified", YesNo.No);

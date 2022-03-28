@@ -18,7 +18,7 @@ import static com.navatar.generic.BaseLib.*;
 
 public class SmokeCommonVariables {
 	
-	public static String appName;
+	public static String appName,appVersion;
 	public static String superAdminUserName,superAdminRegistered,adminPassword;
 	public static String AdminUserFirstName,AdminUserLastName,AdminUserEmailID;
 	public static String crmUser1FirstName,crmUser1LastName,crmUser1EmailID,crmUserProfile,crmUserLience;
@@ -166,6 +166,7 @@ public class SmokeCommonVariables {
 		long StartTime = System.currentTimeMillis();
 		//if(obj instanceof SmokeTestCases){
 			appName=ExcelUtils.readDataFromPropertyFile("AppName");
+			appVersion=ExcelUtils.readDataFromPropertyFile("AppVersion");
 			tabCustomObj=ExcelUtils.readDataFromPropertyFile("CustomTabName");
 			tabObj1=ExcelUtils.readDataFromPropertyFile("Object1");
 			tabObj2=ExcelUtils.readDataFromPropertyFile("Object2");

@@ -36,6 +36,9 @@ public interface EditPageErrorMessage {
 	public String EntityUpcomingEventSDG="Record_Entity_Entity's_Upcoming Third Party Events";
 	public String EntityEventInviteeSDG="Record Entity Events Our Event Invitees";
 	
+	public String EntityContactListSDG="Record_Accounts_ContactList";
+	public String EntityAffiliationAllRolesListSDG="Record_Affiliation_List_All_Roles_Account";
+	
 	public String DealOpenQuestion="Record_Deals_QA_Requests_Open";
 	public String DealClosed="Record_Deals_QA_Requests_Closed";
 	

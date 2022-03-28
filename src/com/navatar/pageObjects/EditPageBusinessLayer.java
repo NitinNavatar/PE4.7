@@ -338,18 +338,22 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 							log(LogStatus.PASS, "clicked on back button", YesNo.No);
 						}else {
 							log(LogStatus.ERROR, "Not able to click on back button so cannot back on page ", YesNo.Yes);
+							flag=false;
 						}
 					}else {
 						log(LogStatus.ERROR, "Not able to click on save button so cannot create accordion : ", YesNo.No);
 					}
 				}else {
 								 log(LogStatus.ERROR, "Drop location is not visible in list so cannot drag and drop component "+DropComponentName, YesNo.Yes);
-							 }
+								 flag=false;			 
+				}
 			}else {
 				log(LogStatus.ERROR, "Not able to search on component so cannot drag and drop component "+DropComponentName, YesNo.Yes);
+				flag=false;
 			}
 		}else {
 			log(LogStatus.ERROR, "Cannot switch in edit page iframe cannot drag and drop component "+DropComponentName, YesNo.Yes);
+			flag=false;
 		}
 		switchToDefaultContent(driver);
 		return flag;
@@ -378,6 +382,15 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 	 */
 	public String ContactSDGQuery(String fieldName) {
 		return "SELECT Id, Name, Title,"+fieldName+" navpeII__Sector__c, navpeII__Region__c,navpeII__Profile_Image__c FROM Contact WHERE (AccountId = '<<recordId>>') ORDER BY Name ASC";
+}
+	
+	/**
+	 * @author Akul Bhutani
+	 * @param fieldName
+	 * @return Contact SDG Query
+	 */
+	public String InstitutionSDGQuery(String fieldName) {
+		return "SELECT Id, Name, Title, Email, Phone"+fieldName+" FROM Contact WHERE (AccountId = '<<recordId>>') ORDER BY Name ASC";
 }
 	/**
 	 * @author Akul Bhutani

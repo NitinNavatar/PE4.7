@@ -427,12 +427,18 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	 */
 	public WebElement getNavigationField(String projectName,String navigationField,action action,int timeOut) {
 		navigationField=navigationField.replace("_", " ");
+		String xpath ="";
 		if (navigationField.equalsIgnoreCase(CSVLabel.Parent.toString())) {
-			String xpath = "//*[text()='Parent']/following-sibling::*//*//button";
+			 xpath = "//*[text()='Parent']/following-sibling::*//*//button";
 			WebElement ele = FindElement(driver, xpath, navigationField, action, 5);	
 			click(driver, ele, "PARENT Cross icon", action.BOOLEAN);
+		}else if(navigationField.equalsIgnoreCase(CSVLabel.Navigation_Type.toString())){
+			xpath= "//*[text()='"+navigationField+"']/following-sibling::div//button";
+
+		}else{
+			xpath= "//*[text()='"+navigationField+"']/following-sibling::div//input";
+
 		}
-		String xpath = "//*[text()='"+navigationField+"']/following-sibling::div//input";
 		WebElement ele = FindElement(driver, xpath, navigationField, action, timeOut);
 		scrollDownThroughWebelement(driver, ele, navigationField);
 		return isDisplayed(driver, ele, "Visibility", timeOut, navigationField);
@@ -579,7 +585,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 					ThreadSleep(2000);
 					appLog.error("Clicked on Deal stage");
 
-					String xpath = "//span[@title='"+navigationvalue+"']";
+					String xpath = "//*[text()='Navigation Type']/following-sibling::div//*[@title='"+navigationvalue+"']";
 					ele = FindElement(driver,xpath, navigationvalue,action.SCROLLANDBOOLEAN, timeOut);
 					ThreadSleep(2000);
 					if (click(driver, ele, navigationvalue, action.SCROLLANDBOOLEAN)) {

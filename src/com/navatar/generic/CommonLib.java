@@ -1674,12 +1674,13 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		for(int i=0; i < len ; i++){
 			char character = xpath.charAt(i);
 			if(String.valueOf(character).equalsIgnoreCase("'")){
-				if(xpath.charAt(i-1)=='=' || xpath.charAt(i-1)==',' || xpath.charAt(i+1)==')'|| xpath.charAt(i+1)==' ' || xpath.charAt(i+1)==']' || (xpath.charAt(i+1)==' ' && xpath.charAt(i+2)=='o')){
+				if(xpath.charAt(i-1)=='=' || xpath.charAt(i-1)==',' || xpath.charAt(i+1)==')'|| (xpath.charAt(i+1)==' '&&xpath.charAt(i+2)==' ' )|| xpath.charAt(i+1)==']' || (xpath.charAt(i+1)==' ' && xpath.charAt(i+2)=='o')){
 					str.setCharAt(i, '\"');
 				}
 			}
 		}
-		appLog.info("Original Xpath: "+xpath+"\tString builder: "+str);
+		//appLog.info("Original Xpath: "+xpath+"\tString builder: "+str);
+		System.out.println("Original Xpath: "+xpath+"\tString builder: "+str);
 		return String.valueOf(str);
 	}
 	
@@ -1748,6 +1749,56 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 	public static List<String> compareMultipleList(WebDriver driver,String filesName, List<WebElement> listOfFileName) {
 		List<String> result = new ArrayList<String>();
 		String[] fileName = filesName.split(",");
+		List<WebElement> listofFileName=listOfFileName;
+		int countFiles = 0;
+		try {
+			if (fileName.length != 0) {
+				if(!listofFileName.isEmpty()) {
+					for (int i = 0; i < fileName.length; i++) {
+						for (int j = 0; j < listofFileName.size(); j++) {
+							scrollDownThroughWebelement(driver, listofFileName.get(j), "");
+							ThreadSleep(500);
+							AppListeners.appLog.info("Comparing:>>" + fileName[i].trim() + ">>With:>>" + listofFileName.get(j).getText().trim());
+							if (fileName[i].trim().equalsIgnoreCase(listofFileName.get(j).getText().trim())) {
+								AppListeners.appLog.info(fileName[i].trim() + " is matched successfully");
+								countFiles++;
+								break;
+							} else if (j == listofFileName.size() - 1) {
+								AppListeners.appLog.info(fileName[i].trim() + " is not matched.");
+								result.add(fileName[i].trim() + " is not matched.");
+							}
+						}
+					}					
+				}else {
+					AppListeners.appLog.error("list of webelement is empty so cannot compare name: "+filesName);
+					result.add("list of webelement is empty so cannot compare name: "+filesName);
+				}
+				if (fileName.length == countFiles) {
+					AppListeners.appLog.info("All the files are matched.");
+
+				} else {
+					AppListeners.appLog.info("Files are not matched.");
+					result.add("Files are not matched.");
+				}
+			} else {
+				AppListeners.appLog.info("No Data In Excel Cell.");
+				result.add("No Data In Excel Cell.");
+			}
+		} catch (Exception e) {
+			AppListeners.appLog.info("There are no file to compare.");
+			result.add("There are no file to compare.");
+		}
+		return result;
+	}	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param filesName
+	 * @param listOfFileName
+	 * @return empty list of String if all data is matched other wise return list of false data list
+	 */
+	public static List<String> compareMultipleListSepratedByBreak(WebDriver driver,String filesName, List<WebElement> listOfFileName) {
+		List<String> result = new ArrayList<String>();
+		String[] fileName = filesName.split("<break>");
 		List<WebElement> listofFileName=listOfFileName;
 		int countFiles = 0;
 		try {

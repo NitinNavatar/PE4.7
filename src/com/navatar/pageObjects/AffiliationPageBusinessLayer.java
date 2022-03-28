@@ -41,18 +41,6 @@ public class AffiliationPageBusinessLayer extends AffiliationPage  {
 		boolean flag=false;
 		if (clickOnTab(projectName, navigationTab)) {
 			log(LogStatus.INFO, "Click on Tab : "+navigationTab, YesNo.No);
-			
-			String[] viewLists = {"All","Recently Viewed"};
-			click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN);
-			for (String viewList : viewLists) {
-				WebElement ele = getViewListElement(viewList);;
-				if (ele!=null) {
-					log(LogStatus.INFO, viewList+" is present on "+navigationTab , YesNo.No);
-				} else {
-					log(LogStatus.ERROR, viewList+" should be present on "+navigationTab, YesNo.Yes);
-					sa.assertTrue(false,  viewList+" should be present on "+navigationTab);
-				}	
-			}
 						
 			if(clickUsingJavaScript(driver, getNewButton(projectName, 10), "new button")) {
 				log(LogStatus.INFO, "Click on new button going to create ", YesNo.No);
