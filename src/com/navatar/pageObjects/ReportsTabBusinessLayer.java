@@ -223,13 +223,14 @@ public class ReportsTabBusinessLayer extends ReportsTab{
 								if (reportField!=null) {
 									for(ReportField report:reportField){
 										ThreadSleep(2000);
-									if (sendKeys(driver, getSearchBox_Classic(environment, 30), reportField.toString(),
-											"search : " + reportField.toString(), action.SCROLLANDBOOLEAN)) {
-										appLog.info("Entered value on Search Box for report Field : " + reportField);
+									String value=	report.toString().replaceAll("_", " ");
+									if (sendKeys(driver, getSearchBox_Classic(environment, 30), value,
+											"search : " + value, action.SCROLLANDBOOLEAN)) {
+										appLog.info("Entered value on Search Box for report Field : " + value);
 										ThreadSleep(2000);
 										WebElement dragEle = FindElement(driver,
-												"//div[@id='fieldsTree']//span[text()='" + reportField + "']",
-												"Drag Field : " + reportField.toString(), action.SCROLLANDBOOLEAN, 10);
+												"//div[@id='fieldsTree']//span[text()='" + value + "']",
+												"Drag Field : " + value.toString(), action.SCROLLANDBOOLEAN, 10);
 										WebElement dropLocation = FindElement(driver,
 												"//div[@id='previewPanelGrid']//tr//td//div[text()='Salutation']",
 												"Drop Location Salutation", action.SCROLLANDBOOLEAN, 10);
@@ -242,7 +243,7 @@ public class ReportsTabBusinessLayer extends ReportsTab{
 										}
 
 									} else {
-										appLog.error("Not Able to enter value on search box for field : " + reportField);
+										appLog.error("Not Able to enter value on search box for field : " + value);
 									}
 									}
 								}

@@ -2,39 +2,23 @@ package com.navatar.scripts;
 
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
-import static com.navatar.generic.ExcelUtils.readAllDataForAColumn;
 import static com.navatar.generic.SmokeCommonVariables.Smoke_TaskSTD1Subject;
 import static com.navatar.generic.SmokeCommonVariables.adminPassword;
 import static com.navatar.generic.SmokeCommonVariables.crmUser1EmailID;
 import static com.navatar.generic.SmokeCommonVariables.crmUser1FirstName;
 import static com.navatar.generic.SmokeCommonVariables.crmUser1LastName;
-import static com.navatar.generic.SmokeCommonVariables.dayAfterTomorrowsDate;
 import static com.navatar.generic.SmokeCommonVariables.superAdminUserName;
 import static com.navatar.generic.SmokeCommonVariables.todaysDate;
-import static com.navatar.pageObjects.NavigationPageBusineesLayer.navigationParentLabelWithChildAndOrder;
-import static com.navatar.pageObjects.NavigationPageBusineesLayer.navigationParentLabelWithChildSorted;
-import static com.navatar.pageObjects.NavigationPageBusineesLayer.navigationParentLabelWithOrder;
-import static com.navatar.pageObjects.NavigationPageBusineesLayer.sortByValue;
-
-import java.time.zone.ZoneOffsetTransitionRule.TimeDefinition;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
 
-import org.apache.poi.ss.formula.DataValidationEvaluator.OperatorEnum;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.logging.Logs;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import com.navatar.generic.AppListeners;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
-import com.navatar.generic.EnumConstants.ActivityTimeLineItem;
 import com.navatar.generic.EnumConstants.ActivityType;
 import com.navatar.generic.EnumConstants.BulkActions_DefaultValues;
 import com.navatar.generic.EnumConstants.Buttons;
@@ -47,14 +31,11 @@ import com.navatar.generic.EnumConstants.CreationPage;
 import com.navatar.generic.EnumConstants.DealStage;
 import com.navatar.generic.EnumConstants.EditPageLabel;
 import com.navatar.generic.EnumConstants.EditViewMode;
-import com.navatar.generic.EnumConstants.EmailTemplateType;
-import com.navatar.generic.EnumConstants.EnableDisable;
 import com.navatar.generic.EnumConstants.Environment;
 import com.navatar.generic.EnumConstants.Fields;
 import com.navatar.generic.EnumConstants.FolderAccess;
 import com.navatar.generic.EnumConstants.FundraisingContactPageTab;
 import com.navatar.generic.EnumConstants.GlobalActionItem;
-import com.navatar.generic.EnumConstants.IndiviualInvestorFieldLabel;
 import com.navatar.generic.EnumConstants.InstitutionPageFieldLabelText;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.NavatarSetupSideMenuTab;
@@ -88,22 +69,13 @@ import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.generic.EnumConstants.object;
 import com.navatar.generic.EnumConstants.searchContactInEmailProspectGrid;
 import com.navatar.pageObjects.AffiliationPageBusinessLayer;
-import com.navatar.pageObjects.AgreementAmendmentPageBusinessLayer;
 import com.navatar.pageObjects.BasePageBusinessLayer;
-import com.navatar.pageObjects.CommitmentsPageBusinessLayer;
 import com.navatar.pageObjects.ContactTransferTabBusinessLayer;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
-import com.navatar.pageObjects.CorrespondenceListPageBusinessLayer;
-import com.navatar.pageObjects.CustomObjPageBusinessLayer;
 import com.navatar.pageObjects.DealPageBusinessLayer;
-import com.navatar.pageObjects.DealPageErrorMessage;
 import com.navatar.pageObjects.EditPageBusinessLayer;
 import com.navatar.pageObjects.EditPageErrorMessage;
-import com.navatar.pageObjects.EmailMyTemplatesPageBusinessLayer;
-import com.navatar.pageObjects.FinancingPageBusinessLayer;
-import com.navatar.pageObjects.FundDistributionsPageBusinessLayer;
-import com.navatar.pageObjects.FundDrawdownsPageBusinessLayer;
-import com.navatar.pageObjects.FundInvestmentPageBusinessLayer;
+
 import com.navatar.pageObjects.FundRaisingPageBusinessLayer;
 import com.navatar.pageObjects.FundsPageBusinessLayer;
 import com.navatar.pageObjects.GlobalActionPageBusinessLayer;
@@ -112,7 +84,6 @@ import com.navatar.pageObjects.InstitutionsPageBusinessLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
 import com.navatar.pageObjects.NavatarSetupPageBusinessLayer;
 import com.navatar.pageObjects.NavigationPageBusineesLayer;
-import com.navatar.pageObjects.PartnershipsPageBusinessLayer;
 import com.navatar.pageObjects.ReportsTabBusinessLayer;
 import com.navatar.pageObjects.SDGPageBusinessLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
@@ -1688,44 +1659,6 @@ public class PECloudSmoke extends BaseLib{
 				
 		}
 				ThreadSleep(2000);
-				String dealName="";
-				String stage="";
-				String sourceContact="";
-				String sourceFirm="";
-				String[][] deals = {{ SMOKDeal3DealName, SMOKDeal3Stage ,SMOKDeal3SourceFirm,SMOKDeal3SourceContact,SMOKDeal3LogInDate} ,
-									{ SMOKDeal4DealName, SMOKDeal4Stage ,SMOKDeal4SourceFirm,SMOKDeal4SourceContact,SMOKDeal4LogInDate},
-									{ SMOKDeal5DealName, SMOKDeal5Stage ,SMOKDeal5SourceFirm,SMOKDeal5SourceContact,SMOKDeal5LogInDate},
-									{ SMOKDeal6DealName, SMOKDeal6Stage ,SMOKDeal6SourceFirm,SMOKDeal6SourceContact,SMOKDeal6LogInDate},
-									{ SMOKDeal7DealName, SMOKDeal7Stage ,SMOKDeal7SourceFirm,SMOKDeal7SourceContact,SMOKDeal7LogInDate}};
-
-			//deal	
-				for (String[] deal : deals) {
-				if(bp.clickOnTab(environment,mode, TabName.DealTab)){
-					log(LogStatus.INFO,"Click on Tab : "+TabName.DealTab,YesNo.No);
-					dealName = deal[0];
-					stage = deal[1];
-					sourceContact=deal[2];
-					sourceFirm=deal[3];
-					String[][] otherlabel={{excelLabel.Source_Firm.toString(),sourceFirm},{excelLabel.Source_Contact.toString(),sourceContact}
-										,{excelLabel.Log_In_Date.toString(),todaysDate}};
-
-					if(fp.createDeal(projectName, "", dealName, "", stage, otherlabel, 30)){
-						
-						log(LogStatus.INFO,"successfully Created deal : "+dealName,YesNo.No);	
-
-					}else{
-						
-						sa.assertTrue(false,"Not Able to Create deal : "+dealName);
-						log(LogStatus.SKIP,"Not Able to Create deal : "+dealName,YesNo.Yes);
-					}
-					
-				}else{
-					
-					sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.DealTab);
-					log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.DealTab,YesNo.Yes);
-				}
-				}
-				ThreadSleep(2000);
 				
 				String[][] labelWithValue ={{excelLabel.Vintage_Year.toString(),SMOKFund2VintageYear}};
 				//fund
@@ -2124,14 +2057,17 @@ public class PECloudSmoke extends BaseLib{
 		ReportsTabBusinessLayer report = new ReportsTabBusinessLayer(driver);
 
 		lp.CRMLogin(superAdminUserName, adminPassword);
-
+		String[] splitedReportFolderName = removeNumbersFromString(SmokeReport2FolderName);
+		SmokeReport2FolderName = splitedReportFolderName[0] + lp.generateRandomNumber();
 		if (report.createCustomReportOrDashboardFolder(environment, SmokeReport2FolderName,
 				ReportDashboardFolderType.ReportFolder, FolderAccess.ReadOnly)) {
 
+			ExcelUtils.writeData(phase1DataSheetFilePath, SmokeReport2FolderName, "Report", excelLabel.Variable_Name, "SmokeReport2",
+					excelLabel.Report_Folder_Name);
 			String[] splitedReportName = removeNumbersFromString(SmokeReport2Name);
 			SmokeReport2Name = splitedReportName[0] + lp.generateRandomNumber();
 
-			ReportField[] field={ReportField.ContactID};
+			ReportField[] field={ReportField.ContactID,ReportField.Phone,ReportField.Email,ReportField.Contact_Full_Name};
 			
 			ExcelUtils.writeData(phase1DataSheetFilePath, SmokeReport2Name, "Report", excelLabel.Variable_Name, "SmokeReport2",
 					excelLabel.Report_Name);
@@ -2177,6 +2113,7 @@ public class PECloudSmoke extends BaseLib{
 					sa.assertTrue(false,"Not Able to Click on "+bulkActionNavigationLink+" so cannot create data related to this ");
 
 				}
+				ThreadSleep(5000);
 				if (flag) {
 					if (i==0) {
 						String reportName=SmokeReport2Name;
@@ -2200,9 +2137,10 @@ public class PECloudSmoke extends BaseLib{
 						contactNamelist.add(SMOKCon2FirstName+" "+SMOKCon2LastName);
 						List<String> accountlist= new ArrayList<String>();
 						accountlist.add(SMOKIns4InsName);
+						ThreadSleep(5000);
+						switchToFrame(driver, 30, home.getCreateFundraisingsFrame_Lighting(60));
 
-						switchToFrame(driver, 60, home.getCreateFundraisingsFrame_Lighting(120));
-
+						ThreadSleep(5000);
 						if(hp.selectFundNameOrCompanyNameOnCreateFundraisings(environment,mode, PopUpName.selectFundPopUp, SMOKFund2FundName, null)) {
 							log(LogStatus.INFO, "Select Fund : "+SMOKFund2FundName, YesNo.No);
 							switchToFrame(driver, 30, home.getCreateFundraisingsFrame_Lighting(20));
@@ -2280,8 +2218,8 @@ public class PECloudSmoke extends BaseLib{
 						String futureDate=previousOrForwardDateAccordingToTimeZone(20, "M/d/YYY", BasePageBusinessLayer.AmericaLosAngelesTimeZone);
 						
 						String[][] commitmentInformation= {{limitedPartner,"200000",partnership,todaysDate},{limitedPartner,"300000",partnership,futureDate}};
-
-						if(hp.selectFundraisingNameOrCommitmentType(environment, mode, SMOKFR2FundName, null, null, null, CommitmentType.fundraisingName)) {
+						ThreadSleep(5000);
+						if(hp.selectFundraisingNameOrCommitmentType(environment, mode, SMOKFR2FundraisingName, null, null, null, CommitmentType.fundraisingName)) {
 							if(hp.commitmentInfoAndAdditionalInfo(environment, mode, commitmentInformation, null,null,null)) {
 								log(LogStatus.INFO, "All commitment information and additional information is passed successfully", YesNo.Yes);
 								switchToFrame(driver, 30, home.getCreateCommitmentFrame_Lightning(20));
@@ -2396,14 +2334,20 @@ public class PECloudSmoke extends BaseLib{
 					if (tp.enteringSubjectAndSelectDropDownValuesonTaskPopUp(projectName, PageName.TaskPage, subject, dropDownLabelWithValues, action.SCROLLANDBOOLEAN, 10)) {
 						log(LogStatus.INFO, "Entered value to Subject Text Box ", YesNo.No);
 						ThreadSleep(1000);
+						
+						if(i==1){
+							log(LogStatus.INFO, "start date and end date alreday Entered in meeting task", YesNo.No);
 
-						if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), dueDate, PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Entered value to Due Date Text Box", YesNo.No);
-							ThreadSleep(1000);
-						}else {
-							log(LogStatus.ERROR, "Not able to enter value on duedate textbox "+newInteractionsNavigationLink, YesNo.Yes);
-							sa.assertTrue(false,"Not able to enter value on duedate textbox "+newInteractionsNavigationLink );
+						}else{
+							if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), dueDate, PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Entered value to Due Date Text Box", YesNo.No);
+								ThreadSleep(1000);
+							}else {
+								log(LogStatus.ERROR, "Not able to enter value on duedate textbox "+newInteractionsNavigationLink, YesNo.Yes);
+								sa.assertTrue(false,"Not able to enter value on duedate textbox "+newInteractionsNavigationLink );
+							}
 						}
+						
 
 						flag = cp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Name.toString(), TabName.TaskTab, contactNAme, action.SCROLLANDBOOLEAN, 10);		
 						if (flag) {
@@ -2426,7 +2370,7 @@ public class PECloudSmoke extends BaseLib{
 							if (ele!=null) {
 								String actualValue = ele.getText().trim();
 								String expectedValue=tp.taskCreatesMsg(projectName, subject);
-								if (expectedValue.contains(actualValue)) {
+								if (expectedValue.contains(actualValue)||actualValue.contains(SMOKTask4Subject)) {
 									log(LogStatus.INFO,expectedValue+" matched FOR Confirmation Msg", YesNo.No);
 								} else {
 									log(LogStatus.ERROR,"Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg", YesNo.Yes);
@@ -2436,12 +2380,23 @@ public class PECloudSmoke extends BaseLib{
 								sa.assertTrue(false,"Created Task Msg Ele not Found");
 								log(LogStatus.SKIP,"Created Task Msg Ele not Found",YesNo.Yes);
 							}
+							if(i==1){
+								
+								String[][] fieldsWithValues= {
+										{PageLabel.Subject.toString(),subject},
+										{PageLabel.Name.toString(),contactNAme},
+										{PageLabel.Assigned_To.toString(),adminUerName}};
+								tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
+
+							}else{
 							String[][] fieldsWithValues= {
 									{PageLabel.Subject.toString(),subject},
 									{PageLabel.Due_Date.toString(),dueDate},
 									{PageLabel.Name.toString(),contactNAme},
 									{PageLabel.Assigned_To.toString(),adminUerName}};
 							tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
+
+							}
 						}
 						else {
 							log(LogStatus.ERROR, "Save Button is not visible so could not be create "+newInteractionsNavigationLink, YesNo.Yes);
@@ -2553,7 +2508,6 @@ public class PECloudSmoke extends BaseLib{
 	@Test
 	public void SmokeTc013_1_AddContactTransferButtonOnTheContactPage(String projectName) {
 
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		ContactTransferTabBusinessLayer ctt = new ContactTransferTabBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavatarSetupPageBusinessLayer np= new NavatarSetupPageBusinessLayer(driver);
@@ -2605,7 +2559,7 @@ public class PECloudSmoke extends BaseLib{
 					}
 					ThreadSleep(5000);
 					String selectKeepActivitiesValue = keepActivitiesDefaultValue;
-					if (selectVisibleTextFromDropDown(driver,ctt.getIncludeActivitiesSelectList(environment, mode, EditViewMode.Edit, 10),selectKeepActivitiesValue, selectKeepActivitiesValue)) {
+					if (selectVisibleTextFromDropDown(driver,ctt.getKeepActivitiesAtSelectList(environment, mode, EditViewMode.Edit, 10),selectKeepActivitiesValue, selectKeepActivitiesValue)) {
 						log(LogStatus.INFO, "Selected Keep Activities related to : " + selectKeepActivitiesValue,YesNo.No);
 					} else {
 						sa.assertTrue(false,"Not Able to Select Keep Activities related to : " + selectKeepActivitiesValue);
@@ -2635,7 +2589,7 @@ public class PECloudSmoke extends BaseLib{
 						ThreadSleep(10000);
 
 						keepActivitiesDefaultValue = "Old Institution Only";
-						defaultvalue = getSelectedOptionOfDropDown(driver,ctt.getKeepActivitiesAtSelectList(environment, mode, EditViewMode.Edit, 10),keepActivitiesDefaultValue, "Text");
+						defaultvalue = getSelectedOptionOfDropDown(driver,ctt.getKeepActivitiesAtSelectList(environment, mode, EditViewMode.View, 10),keepActivitiesDefaultValue, "Text");
 						if (keepActivitiesDefaultValue.equalsIgnoreCase(defaultvalue)) {
 							log(LogStatus.INFO, "Keep Activities Default Value Matched: " + defaultvalue, YesNo.No);
 						} else {
@@ -2644,7 +2598,7 @@ public class PECloudSmoke extends BaseLib{
 						}
 						ThreadSleep(5000);
 						includeActivities = "Contact Only";
-						defaultvalue = getSelectedOptionOfDropDown(driver,ctt.getIncludeActivitiesSelectList(environment, mode, EditViewMode.Edit, 10),
+						defaultvalue = getSelectedOptionOfDropDown(driver,ctt.getIncludeActivitiesSelectList(environment, mode, EditViewMode.View, 10),
 								includeActivities, "Text");
 						if (includeActivities.equalsIgnoreCase(defaultvalue)) {
 							log(LogStatus.INFO, "Include Activities Related to Default Value Matched: " + defaultvalue,YesNo.No);
@@ -2689,8 +2643,8 @@ public class PECloudSmoke extends BaseLib{
 		String value="";
 		String type="";
 		String[][] EntityOrAccounts = {{ SmokeCTIns, SmokeCTInsRecordType ,null},
-				{ SmokeCTIns1, SmokeCTIns1RecordType ,null},
-				{ SmokeCTIns2, SmokeCTIns2RecordType ,null}};
+				{ SmokeCTIns1, SmokeCTIns1RecordType ,null}
+				};
 		for (String[] accounts : EntityOrAccounts) {
 			if (lp.clickOnTab(projectName, tabObj1)) {
 				log(LogStatus.INFO,"Click on Tab : "+tabObj1,YesNo.No);	
@@ -2712,13 +2666,13 @@ public class PECloudSmoke extends BaseLib{
 
 		if (lp.clickOnTab(projectName, tabObj2)) {
 			log(LogStatus.INFO,"Click on Tab : "+tabObj2,YesNo.No);	
-			SmokeCTContact1EmailID=	lp.generateRandomEmailId(gmailUserName);
-			ExcelUtils.writeData(phase1DataSheetFilePath, SmokeCTContact1EmailID, "Contacts", excelLabel.Variable_Name, "SMOKECTCON1",excelLabel.Contact_EmailId);
-			if (cp.createContact(projectName, SmokeCTContact1FName, SmokeCTContact1LName, SmokeCTContact1Inst, SmokeCTContact1EmailID,SmokeCTContact1RecordType, null, null, CreationPage.ContactPage, null, null)) {
-				log(LogStatus.INFO,"successfully Created Contact : "+SmokeCTContact1FName+" "+SmokeCTContact1LName,YesNo.No);	
+			SmokeCTContactEmailID=	lp.generateRandomEmailId(gmailUserName);
+			ExcelUtils.writeData(phase1DataSheetFilePath, SmokeCTContactEmailID, "Contacts", excelLabel.Variable_Name, "SMOKECTCON",excelLabel.Contact_EmailId);
+			if (cp.createContact(projectName, SmokeCTContactFName, SmokeCTContactLName, SmokeCTContactInst, SmokeCTContactEmailID,SmokeCTContactRecordType, null, null, CreationPage.ContactPage, null, null)) {
+				log(LogStatus.INFO,"successfully Created Contact : "+SmokeCTContactFName+" "+SmokeCTContactLName,YesNo.No);	
 			} else {
-				sa.assertTrue(false,"Not Able to Create Contact : "+SmokeCTContact1FName+" "+SmokeCTContact1LName);
-				log(LogStatus.SKIP,"Not Able to Create Contact: "+SmokeCTContact1FName+" "+SmokeCTContact1LName,YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Create Contact : "+SmokeCTContactFName+" "+SmokeCTContactLName);
+				log(LogStatus.SKIP,"Not Able to Create Contact: "+SmokeCTContactFName+" "+SmokeCTContactLName,YesNo.Yes);
 			}
 		} else {
 			sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2);
@@ -2728,13 +2682,11 @@ public class PECloudSmoke extends BaseLib{
 		if (lp.clickOnTab(projectName, tabObj2)) {
 			log(LogStatus.INFO,"Click on Tab : "+tabObj2,YesNo.No);
 			
-			if(lp.clickOnAlreadyCreatedItem(projectName, TabName.ContactTab, SmokeCTContact1FName+" "+SmokeCTContact1LName, 30)){
+			if(lp.clickOnAlreadyCreatedItem(projectName, TabName.ContactTab, SmokeCTContactFName+" "+SmokeCTContactLName, 30)){
 				
-				log(LogStatus.INFO,"click on Created Contact : "+SmokeCTContact1FName+" "+SmokeCTContact1LName,YesNo.No);	
+				log(LogStatus.INFO,"click on Created Contact : "+SmokeCTContactFName+" "+SmokeCTContactLName,YesNo.No);	
 				ThreadSleep(3000);
-				WebElement ele =FindElement(driver, "//div[@role='menu']//span[text()='Contact Transfer']", "contact transfer button", action.BOOLEAN, 30);
-
-				if(ele!=null){
+				if(lp.verifyPresenceOfActionButtonOfShowMoreActionDownArrow(projectName, PageName.ContactPage, ShowMoreActionDropDownList.Contact_Transfer, 30)){
 					log(LogStatus.INFO,"Contact transfer button is present on contact detail page",YesNo.No);	
 
 				}else{
@@ -2743,8 +2695,8 @@ public class PECloudSmoke extends BaseLib{
 				}
 			}else{
 				
-				sa.assertTrue(false,"Not Able to click on Create Contact : "+SmokeCTContact1FName+" "+SmokeCTContact1LName);
-				log(LogStatus.SKIP,"Not Able to click on created Contact: "+SmokeCTContact1FName+" "+SmokeCTContact1LName,YesNo.Yes);
+				sa.assertTrue(false,"Not Able to click on Create Contact : "+SmokeCTContactFName+" "+SmokeCTContactLName);
+				log(LogStatus.SKIP,"Not Able to click on created Contact: "+SmokeCTContactFName+" "+SmokeCTContactLName,YesNo.Yes);
 			}
 		} else {
 			sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2);
@@ -2764,19 +2716,19 @@ public class PECloudSmoke extends BaseLib{
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		WebElement ele =null;
-		String contactName=SmokeCTContact1FName+" "+SmokeCTContact1LName;
+		String contactName=SmokeCTContactFName+" "+SmokeCTContactLName;
 		SmokeCTTask1dueDate=todaysDate;
 		String task = SmokeCTTask1Subject;
 		String[][] task1 = {{PageLabel.Subject.toString(),task},
 				{PageLabel.Name.toString(),contactName},
-				{PageLabel.Related_To.toString(),SmokeCTContact1Inst},
+				{PageLabel.Related_To.toString(),SmokeCTContactInst},
 				{PageLabel.Due_Date.toString(),SmokeCTTask1dueDate},
 				{PageLabel.Priority.toString(),SmokeCTTask1Priority}};
 		
 		if(lp.clickOnTab(contactName, mode, TabName.ContactTab)){
 			log(LogStatus.INFO,"Click on Tab : "+tabObj2,YesNo.No);
 			if(lp.clickOnAlreadyCreatedItem(projectName, TabName.ContactTab, contactName, 30)){
-				log(LogStatus.INFO,"click on Created Contact : "+SmokeCTContact1FName+" "+SmokeCTContact1LName,YesNo.No);	
+				log(LogStatus.INFO,"click on Created Contact : "+SmokeCTContactFName+" "+SmokeCTContactLName,YesNo.No);	
 				ThreadSleep(3000);
 				ele=lp.getActivityTimelineGridOnRelatedTab(30);
 				if(ele!=null){
@@ -2811,11 +2763,11 @@ public class PECloudSmoke extends BaseLib{
 		}
 
 
-		SmokeCTEvent1StartDate=todaysDate1;
-		SmokeCTEvent1EndDate=todaysDate1;
+		SmokeCTEvent1StartDate=tomorrowsDate;
+		SmokeCTEvent1EndDate=tomorrowsDate;
 		task = SmokeCTEvent1Subject;
 		String[][] event1 = {{PageLabel.Subject.toString(),task},
-				{PageLabel.Name.toString(),contactName},{PageLabel.Related_To.toString(),SmokeCTContact1Inst},
+				{PageLabel.Name.toString(),contactName},{PageLabel.Related_To.toString(),SmokeCTContactInst},
 				{PageLabel.Start_Date.toString(),SmokeCTEvent1StartDate},
 				{PageLabel.End_Date.toString(),SmokeCTEvent1EndDate},
 				{PageLabel.Location.toString(),SmokeCTEvent1Location}};
@@ -2839,7 +2791,7 @@ public class PECloudSmoke extends BaseLib{
 
 		task = SmokeCTLogACall1Subject;
 		String[][] logACall = {{PageLabel.Subject.toString(),task},
-				{PageLabel.Name.toString(),contactName},{PageLabel.Related_To.toString(),SmokeCTContact1Inst},
+				{PageLabel.Name.toString(),contactName},{PageLabel.Related_To.toString(),SmokeCTContactInst},
 				{PageLabel.Comments.toString(),SmokeCTLogACall1Comment}};
 
 		if (gp.clickOnGlobalActionAndEnterValue(projectName, GlobalActionItem.Log_a_Call, logACall)) {
@@ -2870,7 +2822,7 @@ public class PECloudSmoke extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		WebElement ele = null ;
 		String task="";
-		String secondaryContact=SmokeCTContact1FName+" "+SmokeCTContact1LName;
+		String secondaryContact=SmokeCTContactFName+" "+SmokeCTContactLName;
 			
 			if (cp.clickOnTab(projectName, tabObj2)) {
 				log(LogStatus.INFO,"Clicked on Tab : "+tabObj2+" For : "+secondaryContact,YesNo.No);
@@ -2931,7 +2883,7 @@ public class PECloudSmoke extends BaseLib{
 		appLog.info("Login with User");
 		appLog.info("Going on Contact Tab");
 		TabName tabName = TabName.Object2Tab;
-		String navatarCTCon1= SmokeCTContact1FName+" "+SmokeCTContact1LName;
+		String navatarCTCon1= SmokeCTContactFName+" "+SmokeCTContactLName;
 		if (bp.clickOnTab(projectName, tabName)) {
 			if (cp.clickOnAlreadyCreatedItem(projectName, tabName, navatarCTCon1, 20)) {
 				log(LogStatus.INFO, "Click on Created Contact : " + navatarCTCon1, YesNo.No);
@@ -2988,7 +2940,7 @@ public class PECloudSmoke extends BaseLib{
 		TabName tabName =TabName.Object1Tab;
 		String ctAccount ;
 		String ctAccount1 = SmokeCTIns;
-		String ctAccount2 = SmokeCTIns2;
+		String ctAccount2 = SmokeCTIns1;
 		for (int j = 0; j < 2; j++) {
 
 			if (j==0) {
@@ -3068,9 +3020,9 @@ public class PECloudSmoke extends BaseLib{
 					log(LogStatus.INFO, "Clicked on Edit Button", YesNo.No);
 
 					String keepActivitiesDefaultValue = "Do not move Activities";
-
+					ThreadSleep(5000);
 					String selectKeepActivitiesValue = keepActivitiesDefaultValue;
-					if (selectVisibleTextFromDropDown(driver,ctt.getIncludeActivitiesSelectList(environment, mode, EditViewMode.Edit, 10),selectKeepActivitiesValue, selectKeepActivitiesValue)) {
+					if (selectVisibleTextFromDropDown(driver,ctt.getKeepActivitiesAtSelectList(environment, mode, EditViewMode.Edit, 10),selectKeepActivitiesValue, selectKeepActivitiesValue)) {
 						log(LogStatus.INFO, "Selected Keep Activities related to : " + selectKeepActivitiesValue,YesNo.No);
 					} else {
 						sa.assertTrue(false,"Not Able to Select Keep Activities related to : " + selectKeepActivitiesValue);
@@ -3101,7 +3053,7 @@ public class PECloudSmoke extends BaseLib{
 						ThreadSleep(10000);
 
 						keepActivitiesDefaultValue = "Do not move Activities";
-						defaultvalue = getSelectedOptionOfDropDown(driver,ctt.getKeepActivitiesAtSelectList(environment, mode, EditViewMode.Edit, 10),keepActivitiesDefaultValue, "Text");
+						defaultvalue = getSelectedOptionOfDropDown(driver,ctt.getKeepActivitiesAtSelectList(environment, mode, EditViewMode.View, 10),keepActivitiesDefaultValue, "Text");
 						if (keepActivitiesDefaultValue.equalsIgnoreCase(defaultvalue)) {
 							log(LogStatus.INFO, "Keep Activities Default Value Matched: " + defaultvalue, YesNo.No);
 						} else {
@@ -3110,7 +3062,7 @@ public class PECloudSmoke extends BaseLib{
 						}
 
 						includeActivities = "Contact Only";
-						defaultvalue = getSelectedOptionOfDropDown(driver,ctt.getIncludeActivitiesSelectList(environment, mode, EditViewMode.Edit, 10),
+						defaultvalue = getSelectedOptionOfDropDown(driver,ctt.getIncludeActivitiesSelectList(environment, mode, EditViewMode.View, 10),
 								includeActivities, "Text");
 						if (includeActivities.equalsIgnoreCase(defaultvalue)) {
 							log(LogStatus.INFO, "Include Activities Related to Default Value Matched: " + defaultvalue,YesNo.No);
@@ -3159,8 +3111,8 @@ public class PECloudSmoke extends BaseLib{
 
 		String value="";
 		String type="";
-		String[][] EntityOrAccounts = {{ SmokeCTIns4, SmokeCTIns4RecordType ,null},
-				{ SmokeCTIns5, SmokeCTIns5RecordType ,null}};
+		String[][] EntityOrAccounts = {{ SmokeCTIns3, SmokeCTIns3RecordType ,null},
+				{ SmokeCTIns4, SmokeCTIns4RecordType ,null}};
 		
 		for (String[] accounts : EntityOrAccounts) {
 			if (lp.clickOnTab(projectName, tabObj1)) {
@@ -3203,11 +3155,12 @@ public class PECloudSmoke extends BaseLib{
 
 	}
 
+	@Parameters({ "projectName"})
+	@Test
 	public void SmokeTc017_1_CreateSomeActivityAndVerifyTheActivitytimelineOnTestContact2RelatedPage(String projectName) {
 		GlobalActionPageBusinessLayer gp = new GlobalActionPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		WebElement ele =null;
 		String contactName=SmokeCTContact2FName+" "+SmokeCTContact2LName;
 		SmokeCTTask2dueDate=todaysDate;
 		ExcelUtils.writeData(phase1DataSheetFilePath,SmokeCTTask2dueDate, "Task1", excelLabel.Variable_Name, "SmokeCTTask2", excelLabel.Due_Date);
@@ -3249,8 +3202,8 @@ public class PECloudSmoke extends BaseLib{
 		}
 
 
-		SmokeCTEvent2StartDate=todaysDate1;
-		SmokeCTEvent2EndDate=todaysDate1;
+		SmokeCTEvent2StartDate=tomorrowsDate;
+		SmokeCTEvent2EndDate=tomorrowsDate;
 		task = SmokeCTEvent2Subject;
 		String[][] event1 = {{PageLabel.Subject.toString(),task},
 				{PageLabel.Name.toString(),contactName},{PageLabel.Related_To.toString(),SmokeCTContact2Inst},
@@ -3359,6 +3312,8 @@ public class PECloudSmoke extends BaseLib{
 		sa.assertAll();
 	}
 	
+	@Parameters({ "projectName"})
+	@Test
 	public void SmokeTc018_1_VerifyTheContactTransferButton_Action(String projectName) {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -3375,12 +3330,12 @@ public class PECloudSmoke extends BaseLib{
 				if (cp.clickOnShowMoreActionDownArrow(projectName, PageName.Object2Page, ShowMoreActionDropDownList.Contact_Transfer, 10)) {
 					log(LogStatus.INFO, "Clicked on Contact Transfer", YesNo.No);	
 
-					if (cp.enteringValueforLegalNameOnContactTransferPage(projectName, SmokeCTIns5, 10)) {
+					if (cp.enteringValueforLegalNameOnContactTransferPage(projectName, SmokeCTIns4, 10)) {
 						log(LogStatus.PASS, "Able to Transfer Contact", YesNo.No);
 						ThreadSleep(2000);
 						refresh(driver);
 
-						if (cp.fieldValueVerification(projectName, PageName.Object2Page, PageLabel.Account_Name, SmokeCTIns5, 5)) {
+						if (cp.fieldValueVerification(projectName, PageName.Object2Page, PageLabel.Account_Name, SmokeCTIns4, 5)) {
 							log(LogStatus.PASS, "Label Verified after contact Transfer", YesNo.Yes);	
 							ThreadSleep(2000);
 						} else {
@@ -3423,8 +3378,8 @@ public class PECloudSmoke extends BaseLib{
 		WebElement ele ;
 		TabName tabName =TabName.Object1Tab;
 		String ctAccount ;
-		String ctAccount1 = SmokeCTIns4;
-		String ctAccount2 = SmokeCTIns5;
+		String ctAccount1 = SmokeCTIns3;
+		String ctAccount2 = SmokeCTIns4;
 		for (int j = 0; j < 2; j++) {
 
 			if (j==0) {
@@ -4470,7 +4425,6 @@ public class PECloudSmoke extends BaseLib{
 	public void SmokeTc025_2_ChangeTheFundraisingStageagAndVerifyTheImpactOnTheLastStageChangeDate(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
-		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String label="";
 		String value="";
@@ -4521,9 +4475,6 @@ public class PECloudSmoke extends BaseLib{
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
-		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
-		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
 		String value="";
@@ -4746,7 +4697,6 @@ public class PECloudSmoke extends BaseLib{
 		GlobalActionPageBusinessLayer gp = new GlobalActionPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		WebElement ele =null;
 		String task = "";
 		
 		SmokeWLTask1dueDate=todaysDate;
@@ -4863,11 +4813,9 @@ public class PECloudSmoke extends BaseLib{
 	@Parameters({ "projectName"})
 	@Test
 	public void SmokeTc029_UpdateWatchlistAndVerifyContact(String projectName) {
-		GlobalActionPageBusinessLayer gp = new GlobalActionPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		WebElement ele =null;
 		String task = SmokeWLTask1Subject;
 		
 		if(tp.clickOnTab(projectName, mode, TabName.TaskTab)){
@@ -4961,7 +4909,6 @@ public class PECloudSmoke extends BaseLib{
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		WebElement ele =null;
 		String contactName=SmokeLTPContact1FName+" "+SmokeLTPContact1LName;
 		String contactName2=SmokeLTPContact2FName+" "+SmokeLTPContact2LName;
 
@@ -5101,7 +5048,6 @@ public class PECloudSmoke extends BaseLib{
 	@Parameters({"projectName"})
 	@Test
 	public void SmokeTc033_UpdateTierAndVerifyLastTouchPointAndNextTouchPointAtContactPage(String projectName) {
-		GlobalActionPageBusinessLayer gp = new GlobalActionPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -6353,7 +6299,6 @@ public class PECloudSmoke extends BaseLib{
 	public void SmokeTC042_CreateContactAndCustomSDG(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		String fields=SDGLabels.APIName.toString();String values="";

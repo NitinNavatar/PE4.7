@@ -503,7 +503,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		String AcctOrLegalName="";
 		if (ProjectName.MNA.toString().equalsIgnoreCase(projectName)) {
 			AcctOrLegalName="Account Name";
-		}else if (ProjectName.PE.toString().contains(projectName)) {
+		}else if (projectName.contains(ProjectName.PE.toString())) {
 			AcctOrLegalName="Legal Name";
 		} else {
 			AcctOrLegalName="Firm";

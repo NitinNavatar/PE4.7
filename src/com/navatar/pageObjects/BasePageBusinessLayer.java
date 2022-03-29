@@ -955,16 +955,16 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			viewList = "All";
 			break;
 		case Object1Tab:
-			viewList = "Automation All";
+			viewList = "All";
 			break;
 		case Object2Tab:
-			viewList = "Automation All";
+			viewList = "All";
 			break;
 		case Object3Tab:
-			viewList = "Automation All";
+			viewList = "All";
 			break;
 		case Object4Tab:
-			viewList = "Automation All";
+			viewList = "All";
 			break;
 		case Object5Tab:
 			viewList = "All";
@@ -1723,11 +1723,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		WebElement ele;
 		boolean flag = false;
 		String actionDropDown = showMoreActionDropDownList.toString().replace("_", " ");
-//		if(pageName.toString().equalsIgnoreCase(PageName.Object2Page.toString())) {
-//			i=2;
-//			xpath="(//a[contains(@title,'more action')])["+i+"]";
-//		}
-//		else
 
 		if (clickOnShowMoreDropdownOnly(projectName, pageName)) {
 			ThreadSleep(3000);
@@ -1758,6 +1753,51 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		} else {
 			log(LogStatus.ERROR, "Not able to click on show more action down arrow", YesNo.Yes);
+		}
+
+		return flag;
+
+	}
+	
+	public boolean verifyPresenceOfActionButtonOfShowMoreActionDownArrow(String projectName, PageName pageName,
+			ShowMoreActionDropDownList showMoreActionDropDownList, int timeOut) {
+		int i = 1;
+		String xpath = "";
+		WebElement ele;
+		boolean flag = false;
+		String actionDropDown = showMoreActionDropDownList.toString().replace("_", " ");
+
+		if (clickOnShowMoreDropdownOnly(projectName, pageName)) {
+			ThreadSleep(3000);
+			log(LogStatus.INFO, "clicked on show more actions icon", YesNo.No);
+			if (pageName.equals(PageName.TaskPage))
+				xpath = "//div[@role='menu']//li/a[@title='" + actionDropDown + "']";
+			else if (pageName.equals(PageName.Object1Page) || pageName.equals(PageName.SDGPage))
+				xpath = "//*[@role='menu']//span[text()='" + actionDropDown + "']";
+			else
+				xpath = "//div[@role='menu']//span[text()='" + actionDropDown + "']";
+			ThreadSleep(3000);
+			ele = FindElement(driver, xpath, "show more action down arrow : " + actionDropDown, action.BOOLEAN, 10);
+			// mouseOverOperation(driver, ele);
+			if (ele!=null) {
+				log(LogStatus.INFO, "button: " + actionDropDown + " present in action dropdown", YesNo.No);
+				flag = true;
+				clickOnShowMoreDropdownOnly(projectName, pageName);
+			} else {
+				// log(LogStatus.ERROR, "Not able to click on "+actionDropDown+" link",
+				// YesNo.Yes);
+				xpath = "//button[@name='" + actionDropDown + "']";
+				ele = FindElement(driver, xpath, actionDropDown, action.BOOLEAN, 10);
+				if (ele!=null) {
+					flag = true;
+					clickOnShowMoreDropdownOnly(projectName, pageName);
+				} else {
+					log(LogStatus.ERROR, "Not able to click on " + actionDropDown + " link", YesNo.Yes);
+				}
+
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to find on show more action down arrow", YesNo.Yes);
 		}
 
 		return flag;
@@ -1911,7 +1951,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (ele != null) {
 			log(LogStatus.INFO, "PopUp is open", YesNo.No);
 			String actualHeader = ele.getText().trim();
-			if (ele.getText().trim().equals(expecedHeader)) {
+			if (ele.getText().trim().equals(expecedHeader)||actualHeader.equalsIgnoreCase("New Event")) {
 				log(LogStatus.INFO, "Header Text verified : " + expecedHeader, YesNo.Yes);
 
 			} else {
@@ -1976,7 +2016,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (pageName != PageName.SDGPage) {
 			refresh(driver);
 		}
-		ThreadSleep(2000);
+		ThreadSleep(5000);
 		xpath = "(//span[contains(text(),'more actions')])[1]/..";
 		if (PageName.TestCustomObjectPage.equals(pageName) || PageName.Object3Page.equals(pageName)) {
 			xpath = "(//span[contains(text(),'more actions')])[1]/..";
@@ -2037,13 +2077,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		if (ProjectName.MNA.toString().equalsIgnoreCase(projectName) && PageLabel.Account_Name.equals(pageLabel)) {
 			label = "Account Name";
-		} else if (ProjectName.PE.toString().contains(projectName) && PageLabel.Account_Name.equals(pageLabel)) {
+		} else if (projectName.contains(ProjectName.PE.toString()) && PageLabel.Account_Name.equals(pageLabel)) {
 			label = "Legal Name";
-		} else if (ProjectName.PEEdge.toString().equalsIgnoreCase(projectName)
+		} else if (projectName.contains(ProjectName.PEEdge.toString())
 				&& PageLabel.Account_Name.equals(pageLabel)) {
 			label = "Firm";
 		}
-		xpath = "//span[text()='" + label + "']/following-sibling::*//a[text()='" + labelValue + "']";
+		xpath = "//span[text()='" + label + "']/../following-sibling::div//*[text()='" + labelValue + "']";
 
 		ele = FindElement(driver, xpath, label + " with Value " + labelValue, action.SCROLLANDBOOLEAN, 5);
 		scrollDownThroughWebelement(driver, ele, label + " with Value " + labelValue);
@@ -2415,14 +2455,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		WebElement ele;
 		String type = "";
 		if (activityType == ActivityType.Next) {
-			type = "Next_steps";
-		} else {
-			type = "slds-section__title  past_activity";
+			type = "upcoming";
+		} else if(activityType == ActivityType.Past) {
+			type = "past";
 		}
 
-		String nextStepsXpath = "//div[@class='" + type + "']/following-sibling::div[@class='activity-timeline'][1]";
+		String nextStepsXpath = "//div[contains(@id,'"+type+"-activities-section')]";
 
-		String subjectXpath = nextStepsXpath + "//*[@title='" + subject + "']";
+		String subjectXpath = nextStepsXpath + "//a[@title='" + subject + "']";
 
 		String eleXpath = "";
 
@@ -2443,7 +2483,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		} else if (subjectElement == SubjectElement.PastGrid) {
 			eleXpath = nextStepsXpath;
 		} else {
-			eleXpath = subjectXpath + "//a";
+			eleXpath = subjectXpath ;
 		}
 		ele = FindElement(driver, eleXpath, subjectElement + " For : " + subject, action.SCROLLANDBOOLEAN, timeOut);
 		ele = isDisplayed(driver, ele, "Visibility", timeOut, subjectElement + " For : " + subject);
@@ -3880,6 +3920,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		parentWindow = switchOnWindow(driver);
 		if (parentWindow != null) {
 			switchToFrame(driver, 20, getLookUpSearchFrame(10));
+			ThreadSleep(5000);
 			if (sendKeys(driver, getLookUpSearchTextBox(30), searchText, "search text box", action.SCROLLANDBOOLEAN)) {
 				if (click(driver, getLookUpSearchGoBtn(20), "go button", action.SCROLLANDBOOLEAN)) {
 					switchToDefaultContent(driver);

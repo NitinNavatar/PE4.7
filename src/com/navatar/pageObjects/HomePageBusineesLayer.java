@@ -216,7 +216,7 @@ public boolean verifyLandingPageAfterClickingOnNavatarSetUpPage(String environme
 
 public boolean clickOnTemplateForReportOnBulkEmail(String environment,String mode,String reportName,String templateName) {
 	WebElement ele;
-	String xpath="//span[contains(@id,'extd')][text()='"+reportName+"']/../../following-sibling::ul//span[text()='"+templateName+"']";
+	String xpath ="//span[text()='"+templateName+"']/ancestor::ul//span[contains(@id,'extd')][text()='"+reportName+"']";
 	ele=FindElement(driver, xpath,reportName+" : "+templateName,action.SCROLLANDBOOLEAN,10);
 
 	if(click(driver, ele, reportName+" : "+templateName, action.SCROLLANDBOOLEAN)) {
@@ -754,9 +754,10 @@ public boolean selectFundraisingNameOrCommitmentType(String environment,String m
 	WebElement ele=null;
 	boolean flag=false;
 	if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-		switchToFrame(driver, 60, getCreateCommitmentFrame_Lightning(120));
+		switchToFrame(driver, 30, getCreateCommitmentFrame_Lightning(60));
 		
 	}
+	ThreadSleep(5000);
 	if(fundraisingName!=null) {
 		if(click(driver, getFundRaisingNameLookUpIcon(120), "fundraising name look up icon", action.SCROLLANDBOOLEAN)) {
 			if(selectValueFromLookUpWindow(fundraisingName)) {

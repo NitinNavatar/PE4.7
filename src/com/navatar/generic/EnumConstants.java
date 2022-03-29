@@ -662,7 +662,7 @@ public static enum PermissionType{
 			public String toString() {
 				return "Contact ID";
 			}
-		}
+		},Email,Phone,Contact_Full_Name
 	};
 	
 	public static enum FolderAccess{

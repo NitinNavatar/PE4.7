@@ -386,11 +386,9 @@ public class CommonVariables {
 	public static String SmokeCTIns2,SmokeCTIns2RecordType;
 	public static String SmokeCTIns3,SmokeCTIns3RecordType;
 	public static String SmokeCTIns4,SmokeCTIns4RecordType;
-	public static String SmokeCTIns5,SmokeCTIns5RecordType;
-
 	
-	
-	public static String SmokeCTContact1FName,SmokeCTContact1LName,SmokeCTContact1Inst,SmokeCTContact1EmailID,SmokeCTContact1RecordType;
+	public static String SmokeCTContactFName,SmokeCTContactLName,SmokeCTContactInst,SmokeCTContactEmailID,SmokeCTContactRecordType;	
+	//public static String SmokeCTContact1FName,SmokeCTContact1LName,SmokeCTContact1Inst,SmokeCTContact1EmailID,SmokeCTContact1RecordType;
 	public static String SmokeCTContact2FName,SmokeCTContact2LName,SmokeCTContact2Inst,SmokeCTContact2EmailID,SmokeCTContact2RecordType;
 	
 	public static String SmokeCTTask1Subject,SmokeCTTask1dueDate,SmokeCTTask1Status,SmokeCTTask1Priority,SmokeCTTask1MeetingType;
@@ -1052,12 +1050,7 @@ public class CommonVariables {
 			SmokeReportShow=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Show);
 			SmokeReportRange=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Range);
 
-			SmokeReport2FolderName=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport2", excelLabel.Report_Folder_Name);
-			SmokeReport2Name=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport2", excelLabel.Report_Name);	
-			SmokeReport2Type=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport2", excelLabel.Select_Report_Type);
-			SmokeReport2Show=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport2", excelLabel.Show);
-			SmokeReport2Range=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport2", excelLabel.Range);
-
+			
 			//**********************************************************Email Template ******************************************************/
 
 			EmailTemplate1_Subject = ExcelUtils.readData(phase1DataSheetFilePath, "CustomEmailFolder", excelLabel.Variable_Name,"EmailTemplate1", excelLabel.Subject);
@@ -1822,11 +1815,9 @@ public class CommonVariables {
 			SmokeCTIns3RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS3", excelLabel.Record_Type);
 
 			SmokeCTIns4=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS4", excelLabel.Institutions_Name);
-			SmokeCTIns5RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS4", excelLabel.Record_Type);
+			SmokeCTIns4RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS4", excelLabel.Record_Type);
 
-			SmokeCTIns5=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS5", excelLabel.Institutions_Name);
-			SmokeCTIns5RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS5", excelLabel.Record_Type);
-
+			
 			SmokeLTPIns1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKELTPINS1", excelLabel.Institutions_Name);
 			SmokeLTPIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKELTPINS1", excelLabel.Record_Type);
 
@@ -1880,15 +1871,15 @@ public class CommonVariables {
 			SmokeCCContact3LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECCCON3", excelLabel.Contact_LastName);
 			SmokeCCContact3Inst=SmokeCCIns1;
 			
-			SmokeCTContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON2", excelLabel.Contact_FirstName);
-			SmokeCTContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON2", excelLabel.Contact_LastName);
-			SmokeCTContact1Inst=SmokeCTIns;
-			SmokeCTContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON2", excelLabel.Contact_EmailId);
-			SmokeCTContact1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON2", excelLabel.Record_Type);
+			SmokeCTContactFName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON", excelLabel.Contact_FirstName);
+			SmokeCTContactLName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON", excelLabel.Contact_LastName);
+			SmokeCTContactInst=SmokeCTIns;
+			SmokeCTContactEmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON", excelLabel.Contact_EmailId);
+			SmokeCTContactRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON", excelLabel.Record_Type);
 
 			SmokeCTContact2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON2", excelLabel.Contact_FirstName);
 			SmokeCTContact2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON2", excelLabel.Contact_LastName);
-			SmokeCTContact2Inst=SmokeCTIns4;
+			SmokeCTContact2Inst=SmokeCTIns3;
 			SmokeCTContact2EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON2", excelLabel.Contact_EmailId);
 			SmokeCTContact2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON2", excelLabel.Record_Type);
 
@@ -2188,6 +2179,11 @@ public class CommonVariables {
 			SMOKTask5Name=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask5", excelLabel.Name);
 			SMOKTask5DueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask5", excelLabel.Due_Date);
 
+			SmokeReport2FolderName=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport2", excelLabel.Report_Folder_Name);
+			SmokeReport2Name=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport2", excelLabel.Report_Name);	
+			SmokeReport2Type=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport2", excelLabel.Select_Report_Type);
+			SmokeReport2Show=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport2", excelLabel.Show);
+			SmokeReport2Range=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport2", excelLabel.Range);
 
 
 			//event
