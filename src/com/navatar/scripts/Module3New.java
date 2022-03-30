@@ -767,13 +767,14 @@ public class Module3New extends BaseLib {
 		if (report.createCustomReportOrDashboardFolder(environment, SmokeReportFolderName,
 				ReportDashboardFolderType.ReportFolder, FolderAccess.ReadOnly)) {
 
+			ReportField[] field =	{ReportField.ContactID};
 			String[] splitedReportName = removeNumbersFromString(SmokeReportName);
 			SmokeReportName = splitedReportName[0] + lp.generateRandomNumber();
 
 			ExcelUtils.writeData(phase1DataSheetFilePath, SmokeReportFolderName, "Report", excelLabel.Variable_Name, "SmokeReport1",
 					excelLabel.Report_Folder_Name);
 			if (report.createCustomReportForFolder(environment, mode, SmokeReportFolderName,ReportFormatName.Null,SmokeReportName,
-					SmokeReportName, SmokeReportType, ReportField.ContactID, SmokeReportShow, null, SmokeReportRange, null, null)) {
+					SmokeReportName, SmokeReportType, field, SmokeReportShow, null, SmokeReportRange, null, null)) {
 				appLog.info("Custom Report is created succesdfully : " + SmokeReportName);
 				ExcelUtils.writeData(phase1DataSheetFilePath, SmokeReportName, "Report", excelLabel.Variable_Name, "SmokeReport1",
 						excelLabel.Report_Name);
