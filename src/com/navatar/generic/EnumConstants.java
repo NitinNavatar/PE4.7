@@ -1155,7 +1155,7 @@ public static enum PermissionType{
 			public String toString() {
 				return "Firm";
 			}
-		}
+		},Deal
 	};
 	
 	public static enum ProjectName{
