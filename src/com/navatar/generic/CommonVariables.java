@@ -50,6 +50,10 @@ public class CommonVariables {
 	public static String M2_HSRINS5Name,M2_HSRINS5RecordType,M2_HSRDINS5Status;
 	public static String M2_HSRINS6Name,M2_HSRINS6RecordType,M2_HSRDINS6Status;
 	public static String M2_HSRINS7Name,M2_HSRINS7RecordType,M2_HSRDINS7Status;
+	public static String M2_HSRINS8Name,M2_HSRINS8RecordType,M2_HSRDINS8Status;
+	public static String M2_HSRINS9Name,M2_HSRINS9RecordType,M2_HSRDINS9Status;
+	public static String M2_DQSINS1Name,M2_DQSINS1RecordType,M2_DQSDINS1Status;
+	public static String M2_DQSINS2Name,M2_DQSINS2RecordType,M2_DQSDINS2Status;
 
 	public static double averageDealQualityScore,dealQualityScore;
 	public static int totalDealsshown;
@@ -64,13 +68,14 @@ public class CommonVariables {
 	public static String M2_HSRPipeline1Name,M2_HSRPipeline1Stage,M2_HSRPipeline1SourceFirm,M2_HSRPipeline1SourceContact,M2_HSRPipeline1Company;
 	public static String M2_HSRPipeline2Name,M2_HSRPipeline2Stage,M2_HSRPipeline2SourceFirm,M2_HSRPipeline2SourceContact,M2_HSRPipeline2Company;
 	public static String M2_HSRPipeline3Name,M2_HSRPipeline3Stage,M2_HSRPipeline3SourceFirm,M2_HSRPipeline3SourceContact,M2_HSRPipeline3Company;
-	public static String Smoke_HSRPipeline4Name,Smoke_HSRPipeline4Stage;
-	public static String Smoke_HSRPipeline5Name,Smoke_HSRPipeline5Stage;
-	public static String Smoke_HSRPipeline6Name,Smoke_HSRPipeline6Stage;
+	public static String M2_HSRPipeline4Name,M2_HSRPipeline4Stage,M2_HSRPipeline4SourceFirm,M2_HSRPipeline4SourceContact,M2_HSRPipeline4Company;
+	public static String M2_HSRPipeline5Name,M2_HSRPipeline5Stage,M2_HSRPipeline5SourceFirm,M2_HSRPipeline5SourceContact,M2_HSRPipeline5Company;
 	
 	public static String M2_HSRContact1FName,M2_HSRContact1LName,M2_HSRContact1Ins,M2_HSRContact1EmailID;
 	public static String M2_HSRContact2FName,M2_HSRContact2LName,M2_HSRContact2Ins,M2_HSRContact2EmailID;
 	public static String M2_HSRContact3FName,M2_HSRContact3LName,M2_HSRContact3Ins,M2_HSRContact3EmailID;
+	public static String M2_DQSContact1FName,M2_DQSContact1LName,M2_DQSContact1Ins,M2_DQSContact1EmailID;
+
 	public static String superAdminUserName,superAdminRegistered,adminPassword;
 	public static String AdminUserFirstName,AdminUserLastName,AdminUserEmailID;
 	public static String crmUser1FirstName,crmUser1LastName,crmUser1EmailID,crmUserProfile,crmUserLience;
@@ -965,38 +970,58 @@ public class CommonVariables {
 			M2_HSRINS2Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M2HSRINS2", excelLabel.Institutions_Name);
 			M2_HSRINS2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M2HSRINS2", excelLabel.Record_Type);
 
-			M2_HSRINS3Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS3", excelLabel.Institutions_Name);
-			M2_HSRINS3RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS3", excelLabel.Record_Type);
+			M2_HSRINS3Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M2HSRINS3", excelLabel.Institutions_Name);
+			M2_HSRINS3RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M2HSRINS3", excelLabel.Record_Type);
 
-			M2_HSRINS4Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS4", excelLabel.Institutions_Name);
-			M2_HSRINS4RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS4", excelLabel.Record_Type);
+			M2_HSRINS4Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M2HSRINS4", excelLabel.Institutions_Name);
+			M2_HSRINS4RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M2HSRINS4", excelLabel.Record_Type);
 
-			M2_HSRINS5Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS5", excelLabel.Institutions_Name);
-			M2_HSRINS5RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRIN15", excelLabel.Record_Type);
+			M2_HSRINS5Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M2HSRINS5", excelLabel.Institutions_Name);
+			M2_HSRINS5RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M2HSRIN15", excelLabel.Record_Type);
 
-			M2_HSRINS6Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS6", excelLabel.Institutions_Name);
-			M2_HSRINS6RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRIN16", excelLabel.Record_Type);
+			M2_HSRINS6Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M2HSRINS6", excelLabel.Institutions_Name);
+			M2_HSRINS6RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M2HSRINS6", excelLabel.Record_Type);
 
-			M2_HSRINS7Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS7", excelLabel.Institutions_Name);
-			M2_HSRINS7RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "HSRINS7", excelLabel.Record_Type);
+			M2_HSRINS7Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M2HSRINS7", excelLabel.Institutions_Name);
+			M2_HSRINS7RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M2HSRINS7", excelLabel.Record_Type);
+
+			M2_HSRINS8Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M2HSRINS8", excelLabel.Institutions_Name);
+			M2_HSRINS8RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M2HSRINS8", excelLabel.Record_Type);
+
+			M2_HSRINS9Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M2HSRINS9", excelLabel.Institutions_Name);
+			M2_HSRINS9RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M2HSRINS9", excelLabel.Record_Type);
+
+			M2_DQSINS1Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M2DQSINS1", excelLabel.Institutions_Name);
+			M2_DQSINS1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M2DQSINS1", excelLabel.Record_Type);
+
+			M2_DQSINS2Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M2DQSINS2", excelLabel.Institutions_Name);
+			M2_DQSINS2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M2DQSINS2", excelLabel.Record_Type);
 
 			// TASK Contact1..............
 			Smoke_TWContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON1", excelLabel.Contact_FirstName);
 			Smoke_TWContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON1", excelLabel.Contact_LastName);
 			Smoke_TWContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON1", excelLabel.Contact_EmailId);
 			Smoke_TWContact1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "TWCON1", excelLabel.Record_Type);
+			
 			M2_HSRContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M2HSRCON1", excelLabel.Contact_FirstName);
 			M2_HSRContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M2HSRCON1", excelLabel.Contact_LastName);
 			M2_HSRContact1Ins=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M2HSRCON1", excelLabel.Institutions_Name);
 			M2_HSRContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M2HSRCON1", excelLabel.Contact_EmailId);
+			
 			M2_HSRContact2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M2HSRCON2", excelLabel.Contact_FirstName);
 			M2_HSRContact2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M2HSRCON2", excelLabel.Contact_LastName);
 			M2_HSRContact2Ins=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M2HSRCON2", excelLabel.Institutions_Name);
 			M2_HSRContact2EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M2HSRCON2", excelLabel.Contact_EmailId);
+			
 			M2_HSRContact3FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M2HSRCON3", excelLabel.Contact_FirstName);
 			M2_HSRContact3LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M2HSRCON3", excelLabel.Contact_LastName);
 			M2_HSRContact3Ins=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M2HSRCON3", excelLabel.Institutions_Name);
 			M2_HSRContact3EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M2HSRCON3", excelLabel.Contact_EmailId);
+			
+			M2_DQSContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M2DQSCON1", excelLabel.Contact_FirstName);
+			M2_DQSContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M2DQSCON1", excelLabel.Contact_LastName);
+			M2_DQSContact1Ins=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M2DQSCON1", excelLabel.Institutions_Name);
+			M2_DQSContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M2DQSCON1", excelLabel.Contact_EmailId);
 			
 			M2_HSRPipeline1Name= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M2HSRPIP1", excelLabel.Deal_Name);
 			M2_HSRPipeline1Stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M2HSRPIP1", excelLabel.Stage);
@@ -1016,6 +1041,17 @@ public class CommonVariables {
 			M2_HSRPipeline3SourceContact= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M2HSRPIP3", excelLabel.Source_Contact);
 			M2_HSRPipeline3Company= M2_HSRINS5Name;
 
+			M2_HSRPipeline4Name= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M2HSRPIP4", excelLabel.Deal_Name);
+			M2_HSRPipeline4Stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M2HSRPIP4", excelLabel.Stage);
+			M2_HSRPipeline4SourceFirm= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M2HSRPIP4", excelLabel.Source_Firm);
+			M2_HSRPipeline4SourceContact= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M2HSRPIP4", excelLabel.Source_Contact);
+			M2_HSRPipeline4Company= M2_HSRINS6Name;
+
+			M2_HSRPipeline5Name= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M2HSRPIP5", excelLabel.Deal_Name);
+			M2_HSRPipeline5Stage= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M2HSRPIP5", excelLabel.Stage);
+			M2_HSRPipeline5SourceFirm= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M2HSRPIP5", excelLabel.Source_Firm);
+			M2_HSRPipeline5SourceContact= ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "M2HSRPIP5", excelLabel.Source_Contact);
+			M2_HSRPipeline5Company= M2_HSRINS7Name;
 
 			
 			// TASK Contact2..............
