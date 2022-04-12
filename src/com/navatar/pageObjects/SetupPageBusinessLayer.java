@@ -388,7 +388,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 											appLog.info("select user profile from drop downlist: " + userProfile);
 											if(click(driver, getSalesforceCRMContentUserCheckBox(60), "Salesforce CRM Content User check Box",
 													action.SCROLLANDBOOLEAN)){
-													if (click(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
+													ThreadSleep(2000);	
+													if (clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
 															action.SCROLLANDBOOLEAN)) {
 														appLog.info("clicked on save button");
 														appLog.info("CRM User is created successfully: " + userfirstname

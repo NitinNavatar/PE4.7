@@ -163,10 +163,10 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		
 			
 			xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
-					+ "']/../following-sibling::div//lightning-formatted-text";
+					+ "']/../following-sibling::div//*[contains(@class,'field-value')]";
 			if (labelName.equalsIgnoreCase(excelLabel.Deal_Quality_Score.toString()))
 				xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
-				+ "']/../following-sibling::div//lightning-formatted-number";
+				+ "']/../following-sibling::div//*[contains(@class,'field-value')]";
 			else if(labelName.equalsIgnoreCase(excelLabel.Company_Name.toString())){
 				xpath="//span[@class='test-id__field-label']/../..//[text()='"+finalLabelName+"']/ancestor::a";
 

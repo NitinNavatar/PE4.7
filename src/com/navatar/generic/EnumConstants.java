@@ -1179,7 +1179,7 @@ public static enum PermissionType{
 			return "Rename-Under Evaluation";
 
 
-		}},Watchlist, Profile_Image,Industry,Watch_list,Deal_Conversion_Date,Portfolio_Company,Related_Associations,Name, Subject, Due_Date, New_Task, Related_To, Comments, Edit, Assigned_To, Start_Date, End_Date, End_Time, Start_Time, Type, 
+		}},Watchlist,Highest_Stage_Reached,Deal_Quality_Score,Average_Deal_Quality_Score,Total_Deals_Shown, Profile_Image,Industry,Watch_list,Deal_Conversion_Date,Portfolio_Company,Related_Associations,Name, Subject, Due_Date, New_Task, Related_To, Comments, Edit, Assigned_To, Start_Date, End_Date, End_Time, Start_Time, Type, 
 		Date{
 			@Override
 			public String toString() {
