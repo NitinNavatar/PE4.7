@@ -39,7 +39,6 @@ public class Module2 extends BaseLib{
 	//postcondition:
 	//ioi, nda signed revert
 	//watch list rename to watchlist
-
 	
 	// Highest Stage Reached
 	
@@ -4333,18 +4332,13 @@ public class Module2 extends BaseLib{
 			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.DealTab,YesNo.Yes);
 		}
 	
-		totalDealsshown=1;
+		
 		dealQualityScore=1;
-		String instDealCount="2";
-
 		
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString(),excelLabel.Deal_Quality_Score.toString()};
-		String labelName1[]={excelLabel.Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()};
+		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()};
 		
 		String labelValues[]={Stage.NonDisclosureAgreement.toString(),Stage.NonDisclosureAgreement.toString(),String.valueOf(dealQualityScore)};
-		String labelValues1[]={String.valueOf("3"),String.valueOf(instDealCount)};
-		String labelValues2[]={String.valueOf(dealQualityScore),String.valueOf(totalDealsshown)};
-
 		String temp[];
 		
 		TabName tabName[]={TabName.Object1Tab,TabName.Object2Tab};
@@ -4382,10 +4376,17 @@ public class Module2 extends BaseLib{
 				if (fp.clickOnAlreadyCreatedItem(projectName, records[j], 10)){
 					ele=ip.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 					if (click(driver, ele, "details tab", action.SCROLLANDBOOLEAN)) {
-						if (j==0)
+						if (j==0) {
+							totalDealsshown=2;
+							averageDealQualityScore=(loiScore+dealQualityScore)/totalDealsshown;
+							String labelValues1[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
 							temp=labelValues1;
-						else
+						}else {
+							totalDealsshown=1;
+							averageDealQualityScore=dealQualityScore/totalDealsshown;
+							String labelValues2[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
 							temp=labelValues2;
+						}
 						for (int i =0;i<labelName1.length;i++) {
 							if (ip.fieldValueVerificationOnInstitutionPage(environment,mode,TabName.Object1Tab, labelName1[i],temp[i])) {
 								log(LogStatus.SKIP,"successfully verified "+labelName1[i],YesNo.No);
@@ -4524,14 +4525,15 @@ public class Module2 extends BaseLib{
 	
 		totalDealsshown=1;
 		dealQualityScore=5;
+		averageDealQualityScore=dealQualityScore/totalDealsshown;
 
 		
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString(),excelLabel.Deal_Quality_Score.toString()};
-		String labelName1[]={excelLabel.Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()};
+		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()};
 		
 		String labelValues[]={Stage.LOI.toString(),Stage.LOI.toString(),String.valueOf(dealQualityScore)};
-		String labelValues1[]={String.valueOf(dealQualityScore),String.valueOf(totalDealsshown)};
-		String labelValues2[]={String.valueOf(dealQualityScore),String.valueOf(totalDealsshown)};
+		String labelValues1[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
+		String labelValues2[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
 
 		String temp[];
 		
@@ -4661,7 +4663,7 @@ public class Module2 extends BaseLib{
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
 				,excelLabel.Deal_Quality_Score.toString()};
 		String labelValues[]={Stage.Closed.toString(),Stage.Closed.toString(),String.valueOf(dealQualityScore)};
-		String labelName1[]={excelLabel.Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
+		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
 		};
 		String labelValues1[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
 		ExcelUtils.writeData(phase1DataSheetFilePath, Stage.Closed.toString(), "Deal", excelLabel.Variable_Name, "M2DQSPIP5",excelLabel.Stage);
@@ -4765,10 +4767,11 @@ public class Module2 extends BaseLib{
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		dealQualityScore=5;
 		totalDealsshown=2;
+		averageDealQualityScore=dealQualityScore/totalDealsshown;
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
 				,excelLabel.Deal_Quality_Score.toString()};
 		String labelValues[]={Stage.LOI.toString(),Stage.LOI.toString(),String.valueOf(dealQualityScore)};
-		String labelName1[]={excelLabel.Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
+		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
 		};
 		String labelValues1[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
 		WebElement ele;
