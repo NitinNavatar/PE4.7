@@ -3820,6 +3820,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case TaskTab:
 			tabName = "Tasks";
 			break;
+			
+		case Object1Tab:
+			tabName = "Firms";
+			break;
+		case Object2Tab:
+			tabName = "Contacts";
+			break;
 		default:
 			return flag;
 		}

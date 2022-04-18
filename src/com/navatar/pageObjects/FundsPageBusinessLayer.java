@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.navatar.generic.BaseLib;
+import com.navatar.generic.EnumConstants.Header;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.PageName;
@@ -162,10 +163,10 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		
 			
 			xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
-					+ "']/../following-sibling::div//lightning-formatted-text";
+					+ "']/../following-sibling::div//*[contains(@class,'field-value')]";
 			if (labelName.equalsIgnoreCase(excelLabel.Deal_Quality_Score.toString()))
 				xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
-				+ "']/../following-sibling::div//lightning-formatted-number";
+				+ "']/../following-sibling::div//*[contains(@class,'field-value')]";
 			else if(labelName.equalsIgnoreCase(excelLabel.Company_Name.toString())){
 				xpath="//span[@class='test-id__field-label']/../..//[text()='"+finalLabelName+"']/ancestor::a";
 
@@ -642,8 +643,22 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 					}
 				}
 				if (click(driver, getCustomTabSaveBtn(projectName,30), "Save Button", action.SCROLLANDBOOLEAN)) {
-					appLog.error("Click on save Button");	
-					flag = true;
+					appLog.error("Click on save Button");
+					
+					ThreadSleep(3000);
+					String str = getText(driver, verifyCreatedItemOnPage(Header.Deal, dealName), "Deal Name header Label Text",action.SCROLLANDBOOLEAN);
+					if (str != null) {
+						if (str.contains(dealName)) {
+							appLog.info("created Deal " + dealName + " is verified successfully.");
+							appLog.info(dealName + " is created successfully.");
+							flag=true;
+						} else {
+							appLog.error("Created  " + dealName + " is not matched with " + str);
+						}
+					} else {
+						appLog.error("Created  " + dealName + " is not visible");
+					}
+	
 				}else{
 					appLog.error("Not Able to Click on save Button");	
 				}
