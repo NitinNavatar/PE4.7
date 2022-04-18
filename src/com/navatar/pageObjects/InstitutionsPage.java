@@ -172,7 +172,7 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 			inputXpath="/following-sibling::div/input";
 			textAreaXpath="/following-sibling::div/textarea";
 			if(labelName.toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString())) {
-				xpath="//*[contains(text(),'Parent Institution')]";
+				xpath="//*[contains(text(),'Parent Firm')]";
 				inputXpath="/following-sibling::div//input[contains(@placeholder,'Search')]";
 			}
 			else if(labelName.toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Entity.toString()))

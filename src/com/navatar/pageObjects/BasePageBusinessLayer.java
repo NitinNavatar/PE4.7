@@ -2717,7 +2717,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			tabName = "Entities";
 		} else if (TabName.contains("Inst")) {
 			tabName = "Institutions";
-		} else {
+		} else if (TabName.contains("Fund")) {
+			tabName = "Funds";
+		}else {
 			tabName = TabName;
 		}
 		System.err.println("Passed switch statement");
@@ -2775,7 +2777,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		boolean flag = false;
 		String xpath = "";
 		String viewList = null;
-		viewList = "Automation All";
+		viewList = "All";
 		WebElement ele, selectListView;
 		ele = null;
 		ThreadSleep(3000);
@@ -3637,7 +3639,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			int timeOut) {
 		String xpath = "";
 		ThreadSleep(3000);
-		xpath = "//*[text()='" + ObjectName + "']/../../../../following-sibling::*//*[text()='" + viewList + "']";
+		xpath = "//*[text()='" + ObjectName + "']/../../../following-sibling::*//*[text()='" + viewList + "']";
 		WebElement selectListView = FindElement(driver, xpath, "Select List View : " + viewList + " for " + ObjectName,
 				action.SCROLLANDBOOLEAN, 5);
 		ThreadSleep(3000);
@@ -3998,7 +4000,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		boolean flag = false;
 		String xpath = "";
 		String viewList = null;
-		viewList = "Automation All";
+		viewList = "All";
 		WebElement ele, selectListView;
 		ele = null;
 		ThreadSleep(3000);

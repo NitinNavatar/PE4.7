@@ -243,7 +243,6 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 			xpath = "//div[@class='flexipagePage']//h2[text()='"+searchValue+"']/..//preceding-sibling::div";
 			ele1 = FindElement(driver, xpath, searchValue+" image", action, timeOut);
 			ele1 = isDisplayed(driver, ele, "Visibility", timeOut, searchValue+" Image");
-			
 			if (ele!=null && ele1!=null && getNavatarQuickLinkMinimize_Lighting(projectName, timeOut)!=null) {
 				log(LogStatus.INFO, "Image , Header and minimize icon Verified after click on "+searchValue, YesNo.No);	
 				flag=true;
@@ -257,7 +256,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		}
 		return flag;
 	}
-
+	
 	
 	
 	/**
@@ -429,9 +428,9 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		navigationField=navigationField.replace("_", " ");
 		String xpath ="";
 		if (navigationField.equalsIgnoreCase(CSVLabel.Parent.toString())) {
-			 xpath = "//*[text()='Parent']/following-sibling::*//*//button";
+			 xpath = "//*[text()='"+navigationField+"']/following-sibling::div//input";
 			WebElement ele = FindElement(driver, xpath, navigationField, action, 5);	
-			click(driver, ele, "PARENT Cross icon", action.BOOLEAN);
+			click(driver, ele, "PARENT Cross icon", action);
 		}else if(navigationField.equalsIgnoreCase(CSVLabel.Navigation_Type.toString())){
 			xpath= "//*[text()='"+navigationField+"']/following-sibling::div//button";
 
@@ -583,7 +582,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 
 				if (click(driver, getNavigationTypeLabel(projectName, timeOut), navigationField, action.SCROLLANDBOOLEAN)) {
 					ThreadSleep(2000);
-					appLog.error("Clicked on Deal stage");
+					appLog.error("Clicked on Navigation Type");
 
 					String xpath = "//*[text()='Navigation Type']/following-sibling::div//*[@title='"+navigationvalue+"']";
 					ele = FindElement(driver,xpath, navigationvalue,action.SCROLLANDBOOLEAN, timeOut);

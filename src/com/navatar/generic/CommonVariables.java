@@ -246,6 +246,10 @@ public class CommonVariables {
 	public static String M3Ins8,M3Ins8RecordType,M3Ins8Parent;
 	public static String M3Ins9,M3Ins9RecordType,M3Ins9Parent;
 	public static String M3Ins10,M3Ins10RecordType;
+	public static String M3Ins11,M3Ins11RecordType;
+	public static String M3Ins12,M3Ins12RecordType;
+	public static String M3Ins13,M3Ins13RecordType;
+	public static String M3Ins14,M3Ins14RecordType;
 	public static String M3Contact2FName,M3Contact2LName,M3Contact2EmailID,M3Contact2RecordType,M3Contact2Title;
 	public static String M3Contact1FName,M3Contact1LName,M3Contact1EmailID,M3Contact1RecordType;
 	public static String M3Contact3FName,M3Contact3LName,M3Contact3EmailID,M3Contact3RecordType;
@@ -1126,6 +1130,17 @@ public class CommonVariables {
 			M3Ins10=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS10", excelLabel.Institutions_Name);
 			M3Ins10RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS10", excelLabel.Record_Type);
 
+			M3Ins11=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS11", excelLabel.Institutions_Name);
+			M3Ins11RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS11", excelLabel.Record_Type);
+			
+			M3Ins12=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS12", excelLabel.Institutions_Name);
+			M3Ins12RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS12", excelLabel.Record_Type);
+			
+			M3Ins13=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS13", excelLabel.Institutions_Name);
+			M3Ins13RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS13", excelLabel.Record_Type);
+			
+			M3Ins14=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS14", excelLabel.Institutions_Name);
+			M3Ins14RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M3INS14", excelLabel.Record_Type);
 
 			M3FRName1=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "M3FR1", excelLabel.FundRaising_Name);
 
