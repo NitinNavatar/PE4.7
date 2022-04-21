@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.DoubleClickAction;
 import org.openqa.selenium.support.PageFactory;
+import org.sikuli.script.FindFailed;
 import org.sikuli.script.Screen;
 
 import com.navatar.generic.AppListeners;
@@ -1703,7 +1704,7 @@ public void addRemoveAppSetingData(String projectName,String addRemoveTabName, c
  * @param timeOut
  * @return true if Record Type Setting changed
  */
-public boolean changeRecordTypeSetting(WebDriver driver,String userName,String recordType,int timeOut) {
+public boolean changeRecordTypeSetting(WebDriver driver,String userName,String recordType,int timeOut ) {
 	
 	switchToDefaultContent(driver);
 	switchToFrame(driver, 60, getSetUpPageIframe(120));
@@ -1715,7 +1716,7 @@ public boolean changeRecordTypeSetting(WebDriver driver,String userName,String r
 	if (click(driver, ele, userName.toString(), action.BOOLEAN)) {
 		log(LogStatus.INFO, "able to click on "+userName, YesNo.No);
 		switchToFrame(driver, 60, getSetUpPageIframe(120));
-		xpath="//*[text()='Accounts']/following-sibling::*//*[text()='Edit']";
+		xpath="//*[text()='Accounts']/..//a[text()='Edit']";
 		ele=FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, timeOut);
 		if (click(driver, ele, "Edit Button", action.BOOLEAN)) {
 			log(LogStatus.INFO, "able to click on edit button for record type settiing", YesNo.No);
@@ -1873,8 +1874,12 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 	if (click(driver, getEditButton(environment,"Classic",10), "edit", action.SCROLLANDBOOLEAN)) {
 		log(LogStatus.INFO, "Click on edit Button", YesNo.No);
 		try {
-			Screen screen = new Screen();
-			screen.click(".\\AutoIT\\AlertOk.PNG");
+			if(isAlertPresent(driver)) {
+				Screen screen = new Screen();
+				screen.click(".\\AutoIT\\AlertOk.PNG");
+				
+			}
+			
 		} catch (Exception e1) {
 		}
 		switchToFrame(driver, 60, getSetUpPageIframe(120));
@@ -1884,13 +1889,18 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 			ele =  getRecordTypeLabel(projectName, label, 20);
 			ThreadSleep(2000);
 			try {
-				Screen screen = new Screen();
-				screen.click(".\\AutoIT\\AlertOk.PNG");
-				//driver.switchTo().alert().accept();
-			} catch (Exception e) {
-				try {
+				if(isAlertPresent(driver)) {
 					Screen screen = new Screen();
 					screen.click(".\\AutoIT\\AlertOk.PNG");
+					
+				}
+			} catch (Exception e) {
+				try {
+					if(isAlertPresent(driver)) {
+						Screen screen = new Screen();
+						screen.click(".\\AutoIT\\AlertOk.PNG");
+						
+					}
 				} catch (Exception e1) {
 				}
 			}
@@ -1906,6 +1916,17 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 
 				if (sendKeys(driver, ele, value, label, action.BOOLEAN)) {
 					log(LogStatus.INFO, "Able to enter "+label, YesNo.No);
+					
+						
+						try {
+							Screen screen = new Screen();
+							screen.click(".\\AutoIT\\AlertOk.PNG");
+						} catch (FindFailed e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+					
 				} else {
 					log(LogStatus.ERROR, "Not Able to enter "+value+" to label "+label, YesNo.Yes);
 					sa.assertTrue(false,"Not Able to enter "+value+" to label "+label);
@@ -2069,6 +2090,7 @@ public boolean addObjectToTab(String environment, String mode,String projectName
 		log(LogStatus.PASS, "object searched : "+objectName.toString(), YesNo.No);
 		switchToDefaultContent(driver);
 		switchToFrame(driver, 60, getSetUpPageIframe(120));
+		ThreadSleep(2000);
 		if (click(driver, getCustomObjectTabNewBtn(120), "New", action.BOOLEAN)) {
 			log(LogStatus.PASS, "clicked on new button ", YesNo.No);;
 			switchToFrame(driver, 60, getSetUpPageIframe(120));

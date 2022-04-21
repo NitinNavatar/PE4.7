@@ -98,7 +98,7 @@ public class NavigationPage extends BasePageBusinessLayer {
 		return FindElements(driver, "//div[contains(@id,'treeview')]//ul//li/span[3]", "Navigation List item");
 	}
 	
-	@FindBy(xpath="//*[text()='Navigation Type']/..//div//Button")
+	@FindBy(xpath="//*[text()='Navigation Type']/..//div//button")
 	private WebElement navigationTypeLabel;
 
 	/**
@@ -106,7 +106,7 @@ public class NavigationPage extends BasePageBusinessLayer {
 	 */
 	public WebElement getNavigationTypeLabel(String projectName,int timeOut) {
 		
-			return isDisplayed(driver, navigationTypeLabel, "Visibility", timeOut, "Navigation TYpe Label");
+			return isDisplayed(driver, navigationTypeLabel,  "Visibility", timeOut, "Navigation TYpe Label");
 		
 
 	}

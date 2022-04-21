@@ -112,51 +112,53 @@ public class Module3New extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		boolean flag = false;
-		
-		String addRemoveTabName="";
-		String tab1="";
-		if (tabObj1.equalsIgnoreCase("Entity")){
-			tab1="Entitie";
-		}
-		else{
-			tab1=tabObj1;
-		}
-		addRemoveTabName=tab1+"s,"+tabObj2+"s,"+tabObj3+"s,"+navigationTab+","+dashBoardTab+","+"Fundraisings,"+"Partnerships";
-		if (lp.addTab_Lighting( addRemoveTabName, 5)) {
-			log(LogStatus.INFO,"Tab added : "+addRemoveTabName,YesNo.No);
-		} else {
-			log(LogStatus.FAIL,"Tab not added : "+addRemoveTabName,YesNo.No);
-			sa.assertTrue(false, "Tab not added : "+addRemoveTabName);
-		}		
 
-		addRemoveTabName=tab1+"s,"+tabObj2+"s,"+tabObj3+"s,"+navigationTab+","+"Fundraisings,"+"Partnerships";
-		String[] tabs=addRemoveTabName.split(",");
-		String tab="";
+		boolean flag = false;
+
+		String addRemoveTabName = "";
+		String tab1 = "";
+		if (tabObj1.equalsIgnoreCase("Entity")) {
+			tab1 = "Entitie";
+		} else {
+			tab1 = tabObj1;
+		}
+		addRemoveTabName = tab1 + "s," + tabObj2 + "s," + tabObj3 + "s," + navigationTab + "," + dashBoardTab + ","
+				+ "Fundraisings," + "Partnerships";
+		if (lp.addTab_Lighting(addRemoveTabName, 5)) {
+			log(LogStatus.INFO, "Tab added : " + addRemoveTabName, YesNo.No);
+		} else {
+			log(LogStatus.FAIL, "Tab not added : " + addRemoveTabName, YesNo.No);
+			sa.assertTrue(false, "Tab not added : " + addRemoveTabName);
+		}
+
+		addRemoveTabName = tab1 + "s," + tabObj2 + "s," + tabObj3 + "s," + navigationTab + "," + "Fundraisings,"
+				+ "Partnerships";
+		String[] tabs = addRemoveTabName.split(",");
+		String tab = "";
 		for (int i = 0; i < tabs.length; i++) {
 			tab = tabs[i];
-			if (lp.clickOnTab(projectName, tab)) {	
+			if (lp.clickOnTab(projectName, tab)) {
 				if (lp.addAutomationAllListView(projectName, tab, 10)) {
-					log(LogStatus.INFO,"list view added on "+tab,YesNo.No);
+					log(LogStatus.INFO, "list view added on " + tab, YesNo.No);
 				} else {
-					log(LogStatus.FAIL,"list view could not added on "+tab,YesNo.Yes);
-					sa.assertTrue(false, "list view could not added on "+tab);
+					log(LogStatus.FAIL, "list view could not added on " + tab, YesNo.Yes);
+					sa.assertTrue(false, "list view could not added on " + tab);
 				}
 			} else {
-				log(LogStatus.FAIL,"could not click on "+tab,YesNo.Yes);
-				sa.assertTrue(false, "could not click on "+tab);
+				log(LogStatus.FAIL, "could not click on " + tab, YesNo.Yes);
+				sa.assertTrue(false, "could not click on " + tab);
 			}
 			i++;
-			ThreadSleep(5000);	
+			ThreadSleep(5000);
 		}
-			
-		
-		
+
 		String parentWindow = null;
 		String[] splitedUserLastName = removeNumbersFromString(crmUser1LastName);
 		String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
 		String emailId = lp.generateRandomEmailId(gmailUserName);
-		ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",excelLabel.User_Last_Name);
+		ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",
+				excelLabel.User_Last_Name);
+
 		for (int i = 0; i < 3; i++) {
 			try {
 				if (home.clickOnSetUpLink()) {
@@ -170,13 +172,14 @@ public class Module3New extends BaseLib {
 								YesNo.Yes);
 						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
 					}
-					if (setup.createPEUser( crmUser1FirstName, UserLastName, emailId, crmUserLience,
-							crmUserProfile)) {
-						log(LogStatus.INFO, "CRM User is created Successfully: " + crmUser1FirstName + " " + UserLastName, YesNo.No);
+					if (setup.createPEUser(crmUser1FirstName, UserLastName, emailId, crmUserLience, crmUserProfile)) {
+						log(LogStatus.INFO,
+								"CRM User is created Successfully: " + crmUser1FirstName + " " + UserLastName,
+								YesNo.No);
 						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User1",
 								excelLabel.User_Email);
-						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",
-								excelLabel.User_Last_Name);
+						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name,
+								"User1", excelLabel.User_Last_Name);
 						flag = true;
 						break;
 
@@ -185,15 +188,14 @@ public class Module3New extends BaseLib {
 					driver.switchTo().window(parentWindow);
 
 				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
+			} catch (Exception e) { // TODO Auto-generated catch block
 				log(LogStatus.INFO, "could not find setup link, trying again..", YesNo.No);
 			}
 
 		}
 		if (flag) {
-			
-			if(!environment.equalsIgnoreCase(Environment.Sandbox.toString())) {
+
+			if (!environment.equalsIgnoreCase(Environment.Sandbox.toString())) {
 				if (setup.installedPackages(crmUser1FirstName, UserLastName)) {
 					appLog.info("PE Package is installed Successfully in CRM User: " + crmUser1FirstName + " "
 							+ UserLastName);
@@ -208,9 +210,8 @@ public class Module3New extends BaseLib {
 							YesNo.Yes);
 				}
 			}
-			
 
-		}else{
+		} else {
 
 			log(LogStatus.ERROR, "could not click on setup link, test case fail", YesNo.Yes);
 			sa.assertTrue(false, "could not click on setup link, test case fail");
@@ -221,7 +222,7 @@ public class Module3New extends BaseLib {
 		closeBrowser();
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
-		String passwordResetLink=null;
+		String passwordResetLink = null;
 		try {
 			passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
 					ExcelUtils.readDataFromPropertyFile("gmailUserName"),
@@ -233,7 +234,7 @@ public class Module3New extends BaseLib {
 		appLog.info("ResetLinkIs: " + passwordResetLink);
 		driver.get(passwordResetLink);
 		if (lp.setNewPassword()) {
-			appLog.info("Password is set successfully for CRM User1: " + crmUser1FirstName + " " + UserLastName );
+			appLog.info("Password is set successfully for CRM User1: " + crmUser1FirstName + " " + UserLastName);
 		} else {
 			appLog.info("Password is not set for CRM User1: " + crmUser1FirstName + " " + UserLastName);
 			sa.assertTrue(false, "Password is not set for CRM User1: " + crmUser1FirstName + " " + UserLastName);
@@ -456,121 +457,146 @@ public class Module3New extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-
+	
 	@Parameters({ "projectName"})
 	@Test
 	public void M3Tc003_VerifyImpactOnGlobalActionByDoingAllAvailableLinksToGetDisableFromNavatarSetup(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		NavatarSetupPageBusinessLayer np= new NavatarSetupPageBusinessLayer(driver);
+		NavatarSetupPageBusinessLayer np = new NavatarSetupPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
-		NavatarSetupSideMenuTab[] navatarSetupSideMenuTab = {NavatarSetupSideMenuTab.BulkEmail,NavatarSetupSideMenuTab.CommitmentCreation};
-		NavatarSetupSideMenuTab setupSideMenuTab=null;
+		NavatarSetupSideMenuTab[] navatarSetupSideMenuTab = { NavatarSetupSideMenuTab.BulkEmail,
+				NavatarSetupSideMenuTab.CommitmentCreation };
+		NavatarSetupSideMenuTab setupSideMenuTab = null;
 
 		navigationMenuName = NavigationMenuItems.Bulk_Actions.toString();
-		String[] navigationLabel = {BulkActions_DefaultValues.Bulk_Email.toString(),
-				BulkActions_DefaultValues.Bulk_Commitments.toString(),BulkActions_DefaultValues.Bulk_Fundraising.toString()};
-		
-		boolean flag=false;
+		String[] navigationLabel = { BulkActions_DefaultValues.Bulk_Email.toString(),
+				BulkActions_DefaultValues.Bulk_Commitments.toString(),
+				BulkActions_DefaultValues.Bulk_Fundraising.toString() };
+
+		boolean flag = false;
 
 		log(LogStatus.INFO, "<<<<<< Going to Uncheck >>>>>>>", YesNo.No);
 		for (int i = 0; i < navatarSetupSideMenuTab.length; i++) {
-			flag=false;
-			setupSideMenuTab=navatarSetupSideMenuTab[i];
+			flag = false;
+			setupSideMenuTab = navatarSetupSideMenuTab[i];
 			switchToDefaultContent(driver);
-			flag=np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, false);
+			flag = np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, false);
 			if (flag) {
 				switchToDefaultContent(driver);
 				refresh(driver);
 				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
-					log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+					log(LogStatus.INFO, "Able to Click on " + navigationMenuName, YesNo.No);
 					WebElement ele = npbl.getNavigationLabel(projectName, navigationLabel[i], action.BOOLEAN, 10);
-					if (ele==null) {
-						log(LogStatus.INFO, navigationLabel[i]+" is not present on "+navigationMenuName+" after uncheck "+setupSideMenuTab, YesNo.No);
+					if (ele == null) {
+						log(LogStatus.INFO, navigationLabel[i] + " is not present on " + navigationMenuName
+								+ " after uncheck " + setupSideMenuTab, YesNo.No);
 					} else {
-						log(LogStatus.ERROR, navigationLabel[i]+" should not present on "+navigationMenuName+" after uncheck "+setupSideMenuTab, YesNo.Yes);
-						sa.assertTrue(false,navigationLabel[i]+" should not present on "+navigationMenuName+" after uncheck "+setupSideMenuTab);
+						log(LogStatus.ERROR, navigationLabel[i] + " should not present on " + navigationMenuName
+								+ " after uncheck " + setupSideMenuTab, YesNo.Yes);
+						sa.assertTrue(false, navigationLabel[i] + " should not present on " + navigationMenuName
+								+ " after uncheck " + setupSideMenuTab);
 					}
 					ele = npbl.getNavigationLabel(projectName, navigationLabel[2], action.BOOLEAN, 10);
-					if (ele!=null) {
-						log(LogStatus.INFO, navigationLabel[2]+" is present on "+navigationMenuName, YesNo.No);
+					if (ele != null) {
+						log(LogStatus.INFO, navigationLabel[2] + " is present on " + navigationMenuName, YesNo.No);
 					} else {
-						log(LogStatus.ERROR, navigationLabel[2]+" should be present on "+navigationMenuName, YesNo.Yes);
-						sa.assertTrue(false,navigationLabel[2]+" should be present on "+navigationMenuName);
+						log(LogStatus.ERROR, navigationLabel[2] + " should be present on " + navigationMenuName,
+								YesNo.Yes);
+						sa.assertTrue(false, navigationLabel[2] + " should be present on " + navigationMenuName);
 
 					}
 				} else {
-					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot uncheck absenece of "+navigationLabel[i], YesNo.Yes);
-					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot uncheck absenece of "+navigationLabel[i]);
+					log(LogStatus.ERROR, "Not Able to Click on " + navigationMenuName
+							+ " so cannot uncheck absenece of " + navigationLabel[i], YesNo.Yes);
+					sa.assertTrue(false, "Not Able to Click on " + navigationMenuName
+							+ " so cannot uncheck absenece of " + navigationLabel[i]);
 				}
 			} else {
-				log(LogStatus.ERROR, "Not Able to disable "+setupSideMenuTab+" so cannot uncheck absenece of "+navigationLabel[i]+" on "+navigationMenuName, YesNo.Yes);
-				sa.assertTrue(false,"Not Able to disable "+setupSideMenuTab+" so cannot uncheck absenece of "+navigationLabel[i]+" on "+navigationMenuName);
+				log(LogStatus.ERROR, "Not Able to disable " + setupSideMenuTab + " so cannot uncheck absenece of "
+						+ navigationLabel[i] + " on " + navigationMenuName, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to disable " + setupSideMenuTab + " so cannot uncheck absenece of "
+						+ navigationLabel[i] + " on " + navigationMenuName);
 			}
 			refresh(driver);
 			ThreadSleep(5000);
 		}
 
-		//// CHeck
-		log(LogStatus.INFO, "<<<<<< Going to check >>>>>>>", YesNo.No);
+		
+		flag = np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, false);
+
+		//// CHeck log(LogStatus.INFO, "<<<<<< Going to check >>>>>>>", YesNo.No);
 		for (int i = 0; i < navatarSetupSideMenuTab.length; i++) {
-			flag=false;
-			setupSideMenuTab=navatarSetupSideMenuTab[i];
+			flag = false;
+			setupSideMenuTab = navatarSetupSideMenuTab[i];
 			switchToDefaultContent(driver);
-			flag=np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, true);;
-			if (flag) {
-				// Verification on navigation menu
+			flag = np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, true);
+			;
+			if (flag) { // Verification on navigation menu
 				switchToDefaultContent(driver);
 				refresh(driver);
 				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
-					log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+					log(LogStatus.INFO, "Able to Click on " + navigationMenuName, YesNo.No);
 					WebElement ele = npbl.getNavigationLabel(projectName, navigationLabel[i], action.BOOLEAN, 10);
-					if (ele!=null) {
-						log(LogStatus.INFO, navigationLabel[i]+" is  present on "+navigationMenuName+" after check "+setupSideMenuTab, YesNo.No);
+					if (ele != null) {
+						log(LogStatus.INFO, navigationLabel[i] + " is  present on " + navigationMenuName
+								+ " after check " + setupSideMenuTab, YesNo.No);
 
 					} else {
-						log(LogStatus.ERROR, navigationLabel[i]+" should be present on "+navigationMenuName+" after check "+setupSideMenuTab, YesNo.Yes);
-						sa.assertTrue(false,navigationLabel[i]+" should be present on "+navigationMenuName+" after check "+setupSideMenuTab);
+						log(LogStatus.ERROR, navigationLabel[i] + " should be present on " + navigationMenuName
+								+ " after check " + setupSideMenuTab, YesNo.Yes);
+						sa.assertTrue(false, navigationLabel[i] + " should be present on " + navigationMenuName
+								+ " after check " + setupSideMenuTab);
 
 					}
 
 					ele = npbl.getNavigationLabel(projectName, navigationLabel[2], action.BOOLEAN, 10);
-					if (ele!=null) {
-						log(LogStatus.INFO, navigationLabel[i]+" is present on "+navigationMenuName, YesNo.No);
+					if (ele != null) {
+						log(LogStatus.INFO, navigationLabel[i] + " is present on " + navigationMenuName, YesNo.No);
 
 					} else {
-						log(LogStatus.ERROR, navigationLabel[i]+" should be present on "+navigationMenuName, YesNo.Yes);
-						sa.assertTrue(false,navigationLabel[i]+" should be present on "+navigationMenuName);
+						log(LogStatus.ERROR, navigationLabel[i] + " should be present on " + navigationMenuName,
+								YesNo.Yes);
+						sa.assertTrue(false, navigationLabel[i] + " should be present on " + navigationMenuName);
 
 					}
-					
+
 					ele = npbl.getNavigationLabel(projectName, navigationLabel[2], action.BOOLEAN, 10);
-					if (ele!=null) {
-						log(LogStatus.INFO, navigationLabel[2]+" is present on "+navigationMenuName, YesNo.No);
+					if (ele != null) {
+						log(LogStatus.INFO, navigationLabel[2] + " is present on " + navigationMenuName, YesNo.No);
 					} else {
-						log(LogStatus.ERROR, navigationLabel[2]+" should be present on "+navigationMenuName, YesNo.Yes);
-						sa.assertTrue(false,navigationLabel[2]+" should be present on "+navigationMenuName);
+						log(LogStatus.ERROR, navigationLabel[2] + " should be present on " + navigationMenuName,
+								YesNo.Yes);
+						sa.assertTrue(false, navigationLabel[2] + " should be present on " + navigationMenuName);
 
 					}
-					
+
 				} else {
-					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabel[i], YesNo.Yes);
-					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabel[i]);
-				}	
+					log(LogStatus.ERROR, "Not Able to Click on " + navigationMenuName + " so cannot check presence of "
+							+ navigationLabel[i], YesNo.Yes);
+					sa.assertTrue(false, "Not Able to Click on " + navigationMenuName + " so cannot check presence of "
+							+ navigationLabel[i]);
+				}
 			} else {
-				log(LogStatus.ERROR, "Not Able to Enable "+setupSideMenuTab+" so cannot uncheck presence of "+navigationLabel[i]+" on "+navigationMenuName, YesNo.Yes);
-				sa.assertTrue(false,"Not Able to Enable "+setupSideMenuTab+" so cannot uncheck presence of "+navigationLabel[i]+" on "+navigationMenuName);
-			
+				log(LogStatus.ERROR, "Not Able to Enable " + setupSideMenuTab + " so cannot uncheck presence of "
+						+ navigationLabel[i] + " on " + navigationMenuName, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to Enable " + setupSideMenuTab + " so cannot uncheck presence of "
+						+ navigationLabel[i] + " on " + navigationMenuName);
+
 			}
 			refresh(driver);
 			ThreadSleep(5000);
 		}
 
-		lp.CRMlogout();
-		sa.assertAll();
-	}
+		refresh(driver);
+		ThreadSleep(5000);
+		
+	lp.CRMlogout();
+		
+		}
 	
 	@Parameters({ "projectName"})
 	@Test
@@ -636,6 +662,40 @@ public class Module3New extends BaseLib {
 			String orderLabelValue=String.valueOf(i+4);
 			String urlLabelValue="";
 			String navigationTypeLabelValue=navigationMenuName;
+			
+			String[][] labelWithValue= {{navigationLabel,navigationLabelValue},{orderLabel,orderLabelValue},
+					{urlLabel,urlLabelValue},{navigationTypeLabel,navigationTypeLabelValue}};
+			
+			if (npbl.createNavigationItem(projectName, labelWithValue, 20)) {
+				log(LogStatus.INFO, "created "+navigationLabelValue, YesNo.No);
+				switchToDefaultContent(driver);
+				refresh(driver);
+				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+					log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+					WebElement ele = npbl.getNavigationLabel(projectName, navigationLabels[i], action.BOOLEAN, 10);
+					if (ele!=null) {
+						log(LogStatus.INFO, navigationLabels[i]+" is  present on "+navigationMenuName+" after creation", YesNo.No);
+
+					} else {
+						log(LogStatus.ERROR, navigationLabels[i]+" should be present on "+navigationMenuName+" after creation", YesNo.Yes);
+						sa.assertTrue(false,navigationLabels[i]+" should be present on "+navigationMenuName+" after creation");
+
+					}
+					
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabels[i]+" after creation", YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabels[i]+" after creation");
+				}
+				
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to create "+navigationLabelValue, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to create "+navigationLabelValue);
+
+			}
+		}
+		for (int i = 0; i < navigationLabels.length; i++) {
+			String urlLabelValue="";
 			flag=false;
 			 if (hp.clickOnSetUpLink()) {
 				 String parentID = switchOnWindow(driver);
@@ -690,36 +750,42 @@ public class Module3New extends BaseLib {
 			
 			/////////////////////////////
 			
-			String[][] labelWithValue= {{navigationLabel,navigationLabelValue},{orderLabel,orderLabelValue},
-					{urlLabel,urlLabelValue},{navigationTypeLabel,navigationTypeLabelValue}};
-			
-			if (npbl.createNavigationItem(projectName, labelWithValue, 20)) {
-				log(LogStatus.INFO, "created "+navigationLabelValue, YesNo.No);
-				switchToDefaultContent(driver);
-				refresh(driver);
-				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
-					log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-					WebElement ele = npbl.getNavigationLabel(projectName, navigationLabels[i], action.BOOLEAN, 10);
-					if (ele!=null) {
-						log(LogStatus.INFO, navigationLabels[i]+" is  present on "+navigationMenuName+" after creation", YesNo.No);
-
-					} else {
-						log(LogStatus.ERROR, navigationLabels[i]+" should be present on "+navigationMenuName+" after creation", YesNo.Yes);
-						sa.assertTrue(false,navigationLabels[i]+" should be present on "+navigationMenuName+" after creation");
-
-					}
-					
-				} else {
-					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabels[i]+" after creation", YesNo.Yes);
-					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabels[i]+" after creation");
-				}
-				
-
-			} else {
-				log(LogStatus.ERROR, "Not Able to create "+navigationLabelValue, YesNo.Yes);
-				sa.assertTrue(false, "Not Able to create "+navigationLabelValue);
-
-			}
+			/*
+			 * String[][] labelWithValue=
+			 * {{navigationLabel,navigationLabelValue},{orderLabel,orderLabelValue},
+			 * {urlLabel,urlLabelValue},{navigationTypeLabel,navigationTypeLabelValue}};
+			 * 
+			 * if (npbl.createNavigationItem(projectName, labelWithValue, 20)) {
+			 * log(LogStatus.INFO, "created "+navigationLabelValue, YesNo.No);
+			 * switchToDefaultContent(driver); refresh(driver); if
+			 * (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName,
+			 * action.BOOLEAN, 30)) { log(LogStatus.INFO,
+			 * "Able to Click on "+navigationMenuName, YesNo.No); WebElement ele =
+			 * npbl.getNavigationLabel(projectName, navigationLabels[i], action.BOOLEAN,
+			 * 10); if (ele!=null) { log(LogStatus.INFO,
+			 * navigationLabels[i]+" is  present on "+navigationMenuName+" after creation",
+			 * YesNo.No);
+			 * 
+			 * } else { log(LogStatus.ERROR, navigationLabels[i]+" should be present on "
+			 * +navigationMenuName+" after creation", YesNo.Yes);
+			 * sa.assertTrue(false,navigationLabels[i]+" should be present on "
+			 * +navigationMenuName+" after creation");
+			 * 
+			 * }
+			 * 
+			 * } else { log(LogStatus.ERROR,
+			 * "Not Able to Click on "+navigationMenuName+" so cannot check presence of "
+			 * +navigationLabels[i]+" after creation", YesNo.Yes);
+			 * sa.assertTrue(false,"Not Able to Click on "
+			 * +navigationMenuName+" so cannot check presence of "+navigationLabels[i]
+			 * +" after creation"); }
+			 * 
+			 * 
+			 * } else { log(LogStatus.ERROR, "Not Able to create "+navigationLabelValue,
+			 * YesNo.Yes); sa.assertTrue(false, "Not Able to create "+navigationLabelValue);
+			 * 
+			 * }
+			 */
 		}
 		
 		//// Uncheck
@@ -746,6 +812,33 @@ public class Module3New extends BaseLib {
 					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabels[i]);
 				}
 			}
+		
+			//// CHeck
+
+			log(LogStatus.INFO, "<<<<<< Going to check >>>>>>>", YesNo.No);
+			for (int i = 0; i < navatarSetupSideMenuTab.length; i++) {
+				flag=false;
+				setupSideMenuTab=navatarSetupSideMenuTab[i];
+				switchToDefaultContent(driver);
+				flag=np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, true);
+				refresh(driver);
+				switchToDefaultContent(driver);
+				if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+					log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+					WebElement ele = npbl.getNavigationLabel(projectName, navigationLabels[i], action.BOOLEAN, 10);
+					if (ele==null) {
+						log(LogStatus.INFO, navigationLabels[i]+" is not present on "+navigationMenuName+" even after enabling "+setupSideMenuTab, YesNo.No);
+					} else {
+						log(LogStatus.ERROR, navigationLabels[i]+" should not present on "+navigationMenuName+" even after enabling "+setupSideMenuTab, YesNo.Yes);
+						sa.assertTrue(false,navigationLabels[i]+" should not present on "+navigationMenuName+"even after enabling "+setupSideMenuTab);
+
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot check absenece of "+navigationLabels[i], YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot check absenece of "+navigationLabels[i]);
+				}}
+				
 			
 		lp.CRMlogout();
 		sa.assertAll();
@@ -762,22 +855,24 @@ public class Module3New extends BaseLib {
 		lp.CRMLogin(superAdminUserName, adminPassword);
 
 		// Create Contact Custom Report with Contact ID
+		
 		String[] splitedReportFolderName = removeNumbersFromString(SmokeReportFolderName);
 		SmokeReportFolderName = splitedReportFolderName[0] + lp.generateRandomNumber();
 		if (report.createCustomReportOrDashboardFolder(environment, SmokeReportFolderName,
 				ReportDashboardFolderType.ReportFolder, FolderAccess.ReadOnly)) {
 
-			ReportField[] field =	{ReportField.ContactID};
+			ReportField[] field = { ReportField.ContactID };
 			String[] splitedReportName = removeNumbersFromString(SmokeReportName);
 			SmokeReportName = splitedReportName[0] + lp.generateRandomNumber();
 
-			ExcelUtils.writeData(phase1DataSheetFilePath, SmokeReportFolderName, "Report", excelLabel.Variable_Name, "SmokeReport1",
-					excelLabel.Report_Folder_Name);
-			if (report.createCustomReportForFolder(environment, mode, SmokeReportFolderName,ReportFormatName.Null,SmokeReportName,
-					SmokeReportName, SmokeReportType, field, SmokeReportShow, null, SmokeReportRange, null, null)) {
+			ExcelUtils.writeData(phase1DataSheetFilePath, SmokeReportFolderName, "Report", excelLabel.Variable_Name,
+					"SmokeReport1", excelLabel.Report_Folder_Name);
+			if (report.createCustomReportForFolder(environment, mode, SmokeReportFolderName, ReportFormatName.Null,
+					SmokeReportName, SmokeReportName, SmokeReportType, field, SmokeReportShow, null, SmokeReportRange,
+					null, null)) {
 				appLog.info("Custom Report is created succesdfully : " + SmokeReportName);
-				ExcelUtils.writeData(phase1DataSheetFilePath, SmokeReportName, "Report", excelLabel.Variable_Name, "SmokeReport1",
-						excelLabel.Report_Name);
+				ExcelUtils.writeData(phase1DataSheetFilePath, SmokeReportName, "Report", excelLabel.Variable_Name,
+						"SmokeReport1", excelLabel.Report_Name);
 			} else {
 				appLog.error("Not able to create Custom Report : " + SmokeReportName);
 				sa.assertTrue(false, "Not able to create Custom Report : " + SmokeReportName);
@@ -786,14 +881,15 @@ public class Module3New extends BaseLib {
 			switchToDefaultContent(driver);
 			home.clickOnSetUpLink(environment, Mode.Classic.toString());
 			if (home.clickOnTab(environment, Mode.Classic.toString(), TabName.HomeTab)) {
-				SmokeReportName="R2"+SmokeReportName;
-				if (report.createCustomReportForFolder(environment, mode, SmokeReportFolderName,ReportFormatName.Null,SmokeReportName,
-						SmokeReportName, SmokeReportType, null, SmokeReportShow, null, SmokeReportRange, null, null)) {
-					appLog.info("Custom Report is created succesdfully : R2"+SmokeReportName);
+				SmokeReportName = "R2" + SmokeReportName;
+				if (report.createCustomReportForFolder(environment, mode, SmokeReportFolderName, ReportFormatName.Null,
+						SmokeReportName, SmokeReportName, SmokeReportType, null, SmokeReportShow, null,
+						SmokeReportRange, null, null)) {
+					appLog.info("Custom Report is created succesdfully : R2" + SmokeReportName);
 				} else {
-					appLog.error("Not able to create Custom Report : R2"+ SmokeReportName);
-					sa.assertTrue(false, "Not able to create Custom Report : R2"+SmokeReportName);
-					log(LogStatus.ERROR, "Not able to create Custom Report : R2"+SmokeReportName, YesNo.Yes);
+					appLog.error("Not able to create Custom Report : R2" + SmokeReportName);
+					sa.assertTrue(false, "Not able to create Custom Report : R2" + SmokeReportName);
+					log(LogStatus.ERROR, "Not able to create Custom Report : R2" + SmokeReportName, YesNo.Yes);
 				}
 			}
 		} else {
@@ -805,19 +901,21 @@ public class Module3New extends BaseLib {
 		if (home.clickOnSetUpLink(environment, Mode.Classic.toString())) {
 			String[] splitedEmailTemplateFolderName = removeNumbersFromString(EmailTemplate1_FolderName);
 			EmailTemplate1_FolderName = splitedEmailTemplateFolderName[0] + lp.generateRandomNumber();
-			if (emailtemplate.createCustomEmailFolder(environment, Mode.Classic.toString(), EmailTemplate1_FolderName, FolderAccess.ReadWrite)) {
-				log(LogStatus.PASS, "Email Template Folder is created : "+EmailTemplate1_FolderName, YesNo.No);
-				ExcelUtils.writeData(phase1DataSheetFilePath, EmailTemplate1_FolderName, "CustomEmailFolder", excelLabel.Variable_Name, "EmailTemplate1",
-						excelLabel.Email_Template_Folder_Label);
+			if (emailtemplate.createCustomEmailFolder(environment, Mode.Classic.toString(), EmailTemplate1_FolderName,
+					FolderAccess.ReadWrite)) {
+				log(LogStatus.PASS, "Email Template Folder is created : " + EmailTemplate1_FolderName, YesNo.No);
+				ExcelUtils.writeData(phase1DataSheetFilePath, EmailTemplate1_FolderName, "CustomEmailFolder",
+						excelLabel.Variable_Name, "EmailTemplate1", excelLabel.Email_Template_Folder_Label);
 				ThreadSleep(2000);
 				String[] splitedEmailTemplateName = removeNumbersFromString(EmailTemplate1_TemplateName);
 				EmailTemplate1_TemplateName = splitedEmailTemplateName[0] + lp.generateRandomNumber();
-				if (emailtemplate.createCustomEmailTemplate(environment, Mode.Classic.toString(), EmailTemplate1_FolderName, EmailTemplateType.Text,
-						EmailTemplate1_TemplateName, EmailTemplate1_TemplateDescription, EmailTemplate1_Subject, EmailTemplate1_Body)) {
+				if (emailtemplate.createCustomEmailTemplate(environment, Mode.Classic.toString(),
+						EmailTemplate1_FolderName, EmailTemplateType.Text, EmailTemplate1_TemplateName,
+						EmailTemplate1_TemplateDescription, EmailTemplate1_Subject, EmailTemplate1_Body)) {
 					appLog.info("EMail Template is created :" + EmailTemplate1_TemplateName);
 
-					ExcelUtils.writeData(phase1DataSheetFilePath, EmailTemplate1_TemplateName, "CustomEmailFolder", excelLabel.Variable_Name, "EmailTemplate1",
-							excelLabel.Email_Template_Name);
+					ExcelUtils.writeData(phase1DataSheetFilePath, EmailTemplate1_TemplateName, "CustomEmailFolder",
+							excelLabel.Variable_Name, "EmailTemplate1", excelLabel.Email_Template_Name);
 
 				} else {
 					appLog.error("EMail Template is not created :" + EmailTemplate1_TemplateName);
@@ -868,8 +966,8 @@ public class Module3New extends BaseLib {
 				flag=true;
 				if (flag) {
 					if (i==0) {
-						String reportName="Public Reports";
-						String templateName="Test 123";
+						String reportName="CustomReport68182";
+						String templateName="CustomReport68182";
 						String fname=M3Contact1FName;
 						String lname = M3Contact1LName;
 						String folderName=EmailTemplate1_FolderName;
@@ -1246,6 +1344,10 @@ public class Module3New extends BaseLib {
 				CreateNew_DefaultValues.New_Institution.toString(),
 				CreateNew_DefaultValues.New_Institution.toString(),
 				CreateNew_DefaultValues.New_Institution.toString(),
+				CreateNew_DefaultValues.New_Institution.toString(),
+				CreateNew_DefaultValues.New_Institution.toString(),
+				CreateNew_DefaultValues.New_Institution.toString(),
+				CreateNew_DefaultValues.New_Institution.toString(),
 				CreateNew_DefaultValues.New_Institution.toString()
 				};
 		int i=0;
@@ -1269,54 +1371,78 @@ public class Module3New extends BaseLib {
 
 				if (flag) {
 
-					if (i==0) {
-						
-						if (fp.createDealPopUp(projectName,M3Deal1RecordType,M3Deal1,M3Deal1CompanyName, M3Deal1Stage,null, 15)) {
-							log(LogStatus.INFO,"Created Deal : "+M3Deal1+" through "+createNewNavigationLink,YesNo.No);	
-						} else {
-							sa.assertTrue(false,"Not Able to Create Deal  : "+" through "+createNewNavigationLink);
-							log(LogStatus.SKIP,"Not Able to Create Deal  : "+" through "+createNewNavigationLink,YesNo.Yes);
-						}
-						
-					} else if(i==1) {
-						
-						
-						M3Contact2EmailID=	lp.generateRandomEmailId(gmailUserName);
-						ExcelUtils.writeData(phase1DataSheetFilePath, M3Contact2EmailID, "Contacts", excelLabel.Variable_Name, "M3CON2",excelLabel.Contact_EmailId);
+					if (i == 0) {
 
-						if (cp.createContactPopUp(projectName, M3Contact2FName, M3Contact2LName, M3Ins1, M3Contact2EmailID,M3Contact2RecordType, null, null, CreationPage.ContactPage, null)) {
-							log(LogStatus.INFO,"successfully Created Contact : "+M3Contact2FName+" "+M3Contact2LName,YesNo.No);	
+						if (fp.createDealPopUp(projectName, M3Deal1RecordType, M3Deal1, M3Deal1CompanyName,
+								M3Deal1Stage, null, 15)) {
+							log(LogStatus.INFO, "Created Deal : " + M3Deal1 + " through " + createNewNavigationLink,
+									YesNo.No);
 						} else {
-							sa.assertTrue(false,"Not Able to Create Contact : "+M3Contact2FName+" "+M3Contact2LName);
-							log(LogStatus.SKIP,"Not Able to Create Contact: "+M3Contact2FName+" "+M3Contact2LName,YesNo.Yes);
-						}
-						
-					}else{
-						String value="";
-						String type="";
-						String parent=null;
-						 if (i==2) {
-							value=M3Ins3;
-							type=M3Ins3RecordType;
-						} else if(i==3) {
-							value=M3Ins4;
-							type=M3Ins4RecordType;
-						}else if(i==4) {
-							value=M3Ins5;
-							type=M3Ins5RecordType;
-						} else if(i==5) {
-							value=M3Ins6;
-							type=M3Ins6RecordType;
-							parent=M3Ins6Parent;
-						}else if(i==6) {
-							value=M3Ins7;
-							type=M3Ins7RecordType;
-						}else if(i==7) {
-							value=M3Ins8;
-							type=M3Ins8RecordType;
-							parent=M3Ins8Parent;
+							sa.assertTrue(false, "Not Able to Create Deal  : " + " through " + createNewNavigationLink);
+							log(LogStatus.SKIP, "Not Able to Create Deal  : " + " through " + createNewNavigationLink,
+									YesNo.Yes);
 						}
 
+					} else if (i == 1) {
+
+						M3Contact2EmailID = lp.generateRandomEmailId(gmailUserName);
+						ExcelUtils.writeData(phase1DataSheetFilePath, M3Contact2EmailID, "Contacts",
+								excelLabel.Variable_Name, "M3CON2", excelLabel.Contact_EmailId);
+
+						if (cp.createContactPopUp(projectName, M3Contact2FName, M3Contact2LName, M3Ins1,
+								M3Contact2EmailID, M3Contact2RecordType, null, null, CreationPage.ContactPage, null)) {
+							log(LogStatus.INFO,
+									"successfully Created Contact : " + M3Contact2FName + " " + M3Contact2LName,
+									YesNo.No);
+						} else {
+							sa.assertTrue(false,
+									"Not Able to Create Contact : " + M3Contact2FName + " " + M3Contact2LName);
+							log(LogStatus.SKIP,
+									"Not Able to Create Contact: " + M3Contact2FName + " " + M3Contact2LName,
+									YesNo.Yes);
+						}
+
+					} else {
+						String value = "";
+						String type = "";
+						String parent = null;
+						
+						if (i == 2) {
+							value = M3Ins3;
+							type = M3Ins3RecordType;
+						} else if (i == 3) {
+							value = M3Ins4;
+							type = M3Ins4RecordType;
+						} else if (i == 4) {
+							value = M3Ins5;
+							type = M3Ins5RecordType;
+
+						} else if (i == 5) {
+							value = M3Ins6;
+							type = M3Ins6RecordType;
+							parent = M3Ins6Parent;
+						} else if (i == 6) {
+							value = M3Ins7;
+							type = M3Ins7RecordType;
+						} else if (i == 7) {
+							value = M3Ins8;
+							type = M3Ins8RecordType;
+							parent = M3Ins8Parent;
+						} else
+
+						 if(i==8) {
+						value=M3Ins11;
+							type=M3Ins11RecordType;
+					}	else if(i==9) {
+						value=M3Ins12;
+						type=M3Ins12RecordType;
+					}else if(i==10) {
+						value=M3Ins13;
+						type=M3Ins13RecordType;
+					}else if(i==11) {
+						value=M3Ins14;
+						type=M3Ins14RecordType;
+					}
 						 
 						 if (ip.createInstitutionPopUp(projectName, environment, mode, value,type, InstitutionPageFieldLabelText.Parent_Institution.toString(),parent)) {
 								log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
@@ -1954,7 +2080,7 @@ public class Module3New extends BaseLib {
 		String navigationLabel=CSVLabel.Navigation_Label.toString();
 		String navigationLabelValue=dashBoardTab;
 		String orderLabel=CSVLabel.Order.toString();
-		String orderLabelValue="46";
+		String orderLabelValue="45";
 		String urlLabel=CSVLabel.URL.toString();
 		String urlValue=link;
 		String navigationTypeLabel=CSVLabel.Navigation_Type.toString();
@@ -2151,6 +2277,7 @@ public class Module3New extends BaseLib {
 		////////////////////////////////
 		String[] userNames= {"PE Standard User","System Administrator"};
 		String recordType="Company";
+	
 		for (String userName : userNames) {
 			switchToDefaultContent(driver);
 			if (home.clickOnSetUpLink()) {
@@ -2161,7 +2288,7 @@ public class Module3New extends BaseLib {
 					if(setup.searchStandardOrCustomObject(environment,mode, object.Profiles)) {
 						log(LogStatus.INFO, "click on Object : "+object.Profiles, YesNo.No);
 						ThreadSleep(2000);
-						if (setup.changeRecordTypeSetting(driver, userName, recordType, 60)) {
+						if (setup.changeRecordTypeSetting(driver, userName, recordType, 60 )) {
 							log(LogStatus.PASS,recordType+" is selected for "+userName,YesNo.No);
 						} else {
 							sa.assertTrue(false, recordType+" is not selected for "+userName);
@@ -2215,7 +2342,7 @@ public class Module3New extends BaseLib {
 					log(LogStatus.ERROR, recordType+" radio button not present", YesNo.Yes);
 					sa.assertTrue(false, recordType+" radio button not present");
 				}
-				String expecedHeader="New Institution";
+				String expecedHeader="New Firm";
 				String actualHeader="";
 				ele=npbl.getPopUpHeader1(projectName, 10);
 				if (ele!=null) {
@@ -2253,46 +2380,55 @@ public class Module3New extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		
 		lp.CRMLogin(superAdminUserName, adminPassword);
-		String recordTypeList=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Record_Type);
-		String recordTypeArray[] =recordTypeList.split(breakSP);
-		String[][] fundRecordType = {{recordTypeLabel.Record_Type_Label.toString(),recordTypeArray[0]},
-				{recordTypeLabel.Description.toString(),recordTypeArray[0]+recordTypeDescription},
-				{recordTypeLabel.Active.toString(),""}};
+		String recordTypeList = ExcelUtils.readData(phase1DataSheetFilePath, "FilePath", excelLabel.TestCases_Name,
+				currentlyExecutingTC, excelLabel.Record_Type);
+		String recordTypeArray[] = recordTypeList.split(breakSP);
+		String[][] fundRecordType = { { recordTypeLabel.Record_Type_Label.toString(), recordTypeArray[0] },
+				{ recordTypeLabel.Description.toString(), recordTypeArray[0] + recordTypeDescription },
+				{ recordTypeLabel.Active.toString(), "" } };
 
-		String[][] ffrecordType = {{recordTypeLabel.Record_Type_Label.toString(),recordTypeArray[1]},
-				{recordTypeLabel.Description.toString(),recordTypeArray[1]+recordTypeDescription},
-				{recordTypeLabel.Active.toString(),""}};
+		String[][] ffrecordType = { { recordTypeLabel.Record_Type_Label.toString(), recordTypeArray[1] },
+				{ recordTypeLabel.Description.toString(), recordTypeArray[1] + recordTypeDescription },
+				{ recordTypeLabel.Active.toString(), "" } };
 
-		boolean isMakeAvailable=true;
-		boolean isMakeDefault =true;
-		boolean flag=false;
+		boolean isMakeAvailable = true;
+		boolean isMakeDefault = true;
+		boolean flag = false;
 		for (int i = 0; i < recordTypeArray.length; i++) {
 			if (home.clickOnSetUpLink()) {
-				flag=false;
+				flag = false;
 				String parentID = switchOnWindow(driver);
 				SetupPageBusinessLayer sp = new SetupPageBusinessLayer(driver);
-				if (parentID!=null) {
-					if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(),object.Fund )) {
-						if(sp.clickOnObjectFeature("", Mode.Lightning.toString(),object.Fund, ObjectFeatureName.recordTypes)) {
-							if (i==0) {
-								flag=sp.createRecordTypeForObject(projectName, fundRecordType, isMakeAvailable, isMakeDefault,null, 10);	
+				if (parentID != null) {
+					if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(), object.Fund)) {
+						if (sp.clickOnObjectFeature("", Mode.Lightning.toString(), object.Fund,
+								ObjectFeatureName.recordTypes)) {
+							if (i == 0) {
+								flag = sp.createRecordTypeForObject(projectName, fundRecordType, isMakeAvailable,
+										isMakeDefault, null, 10);
 							} else {
-								isMakeDefault=false;
-								flag=sp.createRecordTypeForObject(projectName, ffrecordType, isMakeAvailable, isMakeDefault,null, 10);
+								isMakeDefault = false;
+								flag = sp.createRecordTypeForObject(projectName, ffrecordType, isMakeAvailable,
+										isMakeDefault, null, 10);
 							}
 							if (flag) {
-								log(LogStatus.ERROR, "Created Record Type : "+recordTypeArray[i], YesNo.No);
+								log(LogStatus.ERROR, "Created Record Type : " + recordTypeArray[i], YesNo.No);
 							} else {
-								log(LogStatus.ERROR, "Not Able to Create Record Type : "+recordTypeArray[i], YesNo.Yes);
-								sa.assertTrue(false,"Not Able to Create Record Type : "+recordTypeArray[i]);
+								log(LogStatus.ERROR, "Not Able to Create Record Type : " + recordTypeArray[i],
+										YesNo.Yes);
+								sa.assertTrue(false, "Not Able to Create Record Type : " + recordTypeArray[i]);
 							}
 
-						}else {
-							log(LogStatus.ERROR, "object feature "+ObjectFeatureName.recordTypes+" is not clickable", YesNo.Yes);
-							sa.assertTrue(false, "object feature "+ObjectFeatureName.recordTypes+" is not clickable");
+						} else {
+							log(LogStatus.ERROR,
+									"object feature " + ObjectFeatureName.recordTypes + " is not clickable", YesNo.Yes);
+							sa.assertTrue(false,
+									"object feature " + ObjectFeatureName.recordTypes + " is not clickable");
 						}
-					}else {
+					} else {
 						log(LogStatus.ERROR, "Fund object could not be found in object manager", YesNo.Yes);
 						sa.assertTrue(false, "Fund object could not be found in object manager");
 					}
@@ -2300,11 +2436,11 @@ public class Module3New extends BaseLib {
 					driver.switchTo().window(parentID);
 					switchToDefaultContent(driver);
 					refresh(driver);
-				}else {
+				} else {
 					log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
 					sa.assertTrue(false, "could not find new window to switch");
 				}
-			}else {
+			} else {
 				log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
 				sa.assertTrue(false, "could not click on setup link");
 			}
@@ -2314,8 +2450,7 @@ public class Module3New extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-	
-	@Parameters({ "projectName"})
+		@Parameters({ "projectName"})
 	@Test
 	public void M3Tc020_VerifyQuickCreateObjectWhenRecordHasMultipleRecordTypes(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -2697,32 +2832,36 @@ public class Module3New extends BaseLib {
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		String customObject=tabCustomObj+"s";
 		/////////////////////////////////////////////////////
-		boolean flag=false;
+		
+		boolean flag = false;
 		if (home.clickOnSetUpLink()) {
-			flag=false;
+			flag = false;
 			String parentID = switchOnWindow(driver);
-			if (parentID!=null) {
-				if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(),object.Create )) {
-					log(LogStatus.INFO, "Click on Create/Custom object so going to create : "+customObject, YesNo.No);
-					String[][] labelWithValue= {{customObjectLabel.Label.toString(),tabCustomObj},{customObjectLabel.Plural_Label.toString(),customObject}};
-					if(sp.createCustomObject(projectName, labelWithValue, 10)) {
-						log(LogStatus.INFO, "Custom Object Created : "+customObject, YesNo.No);
-						flag=true;
-					}else {
-						log(LogStatus.ERROR, "Not Able to Create : "+customObject, YesNo.Yes);
-						sa.assertTrue(false, "Not Able to Create : "+customObject);
+			if (parentID != null) {
+				if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(), object.Create)) {
+					log(LogStatus.INFO, "Click on Create/Custom object so going to create : " + customObject, YesNo.No);
+					String[][] labelWithValue = { { customObjectLabel.Label.toString(), tabCustomObj },
+							{ customObjectLabel.Plural_Label.toString(), customObject } };
+					if (sp.createCustomObject(projectName, labelWithValue, 10)) {
+						log(LogStatus.INFO, "Custom Object Created : " + customObject, YesNo.No);
+						flag = true;
+					} else {
+						log(LogStatus.ERROR, "Not Able to Create : " + customObject, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Create : " + customObject);
 					}
-				}else {
-					log(LogStatus.ERROR, "Not Able to Click on Create/Custom object so cannot create : "+customObject, YesNo.Yes);
-					sa.assertTrue(false, "Not Able to Click on Create/Custom object so cannot create : "+customObject);
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on Create/Custom object so cannot create : " + customObject,
+							YesNo.Yes);
+					sa.assertTrue(false,
+							"Not Able to Click on Create/Custom object so cannot create : " + customObject);
 				}
 				driver.close();
 				driver.switchTo().window(parentID);
-			}else {
+			} else {
 				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
 				sa.assertTrue(false, "could not find new window to switch");
 			}
-		}else {
+		} else {
 			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
 			sa.assertTrue(false, "could not click on setup link");
 		}
@@ -3280,8 +3419,8 @@ public class Module3New extends BaseLib {
 			String parentID = switchOnWindow(driver);
 			SetupPageBusinessLayer sp = new SetupPageBusinessLayer(driver);
 			if (parentID!=null) {
-				if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(),object.Institution )) {
-					if(sp.clickOnObjectFeature("", Mode.Lightning.toString(),object.Institution, ObjectFeatureName.recordTypes)) {
+				if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(),object.Firm )) {
+					if(sp.clickOnObjectFeature("", Mode.Lightning.toString(),object.Firm, ObjectFeatureName.recordTypes)) {
 						if (sp.clickOnAlreadyCreatedLayout(recordType)) {
 							switchToFrame(driver, 60, sp.getSetUpPageIframe(120));
 							if (click(driver, sp.getEditButton(environment,"Classic",10), "edit", action.SCROLLANDBOOLEAN)) {

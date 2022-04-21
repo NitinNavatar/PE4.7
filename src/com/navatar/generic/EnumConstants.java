@@ -445,7 +445,12 @@ public static enum PermissionType{
 			public String toString() {
 				return "Shipping Zip/Postal Code";
 			};
-		},Parent_Institution,Parent_Entity;
+		},Parent_Institution{
+			@Override
+			public String toString() {
+				return "Parent Firm";
+			};
+		},Parent_Entity;
 		
 	}
 	
