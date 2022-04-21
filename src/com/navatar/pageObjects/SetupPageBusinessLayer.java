@@ -471,7 +471,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 					ThreadSleep(10000);
 					switchToFrame(driver, 30, getSetUpPageIframe(30));
 					ThreadSleep(5000);
-				if (click(driver, getAddUsersbutton(60), "Add Users link", action.BOOLEAN)) {
+				if (clickUsingJavaScript(driver, getAddUsersbutton(60), "Add Users link", action.BOOLEAN)) {
 					log(LogStatus.INFO,"clicked on add users button", YesNo.No);
 						switchToDefaultContent(driver);
 						switchToFrame(driver, 30, getInstalledPackageParentFrame_Lighting(20));

@@ -5,6 +5,7 @@ import static com.navatar.generic.AppListeners.appLog;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -59,6 +60,87 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		return isDisplayed(driver, ele, "Visibility", timeOut, "Search Value : "+searchValue);
 	}
 	
+	/**
+	 * @author Ravi Kumar
+	 * @param tabToBeAdded
+	 * @param timeOut
+	 * @return true if all Tab added successfully
+	 */
+	public List<String> addRelatedTabOnEditPage_Lighting(String projectName,String tabToBeAdded,String typeoftab, int timeOut) {
+
+		switchToFrame(driver, 20, 	getEditPageFrame(projectName, timeOut));
+		List<String> result = new ArrayList<String>();
+		String splitedTabs =  typeoftab;
+		ThreadSleep(5000);
+		if (clickUsingJavaScript(driver, getRelatedTabBar(timeOut), "All Tab Button", action.SCROLLANDBOOLEAN)) {
+			appLog.info("clicked on all tabs icon");
+			ThreadSleep(3000);
+			switchToDefaultContent(driver);
+			if (click(driver, getAddTabEditPageLink(timeOut), "Add a Tab Link", action.SCROLLANDBOOLEAN)) {
+				appLog.info("clicked on add a tab link");
+				List<WebElement> element=getAlreadyAddedTabListEditPage(timeOut);
+				if (click(driver, getAlreadyAddedTabListEditPage(timeOut).get(element.size()-1), "Add a Tab Link", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on added tab link");
+					ThreadSleep(3000);
+						if (selectVisibleTextFromDropDown(driver, getTabLabelDropdownOnEditPage(timeOut), "Available Tab List",
+								splitedTabs)) {
+							appLog.info(splitedTabs + " is selected successfully in available tabs");
+							
+							if(splitedTabs.equalsIgnoreCase("Custom")) {
+								ThreadSleep(2000);
+								if (sendKeysAndPressEnter(driver, getTabLabelInputOnEditPage(timeOut), tabToBeAdded, "tab label input box", action.BOOLEAN)) {
+									appLog.error("enter tab label name:"+tabToBeAdded);
+									ThreadSleep(2000);
+									if (clickUsingJavaScript(driver, getTabLabelDoneButtonOnEditPage(timeOut), "tab label done button",
+											action.SCROLLANDBOOLEAN)) {
+										appLog.error("clicked on tab label done button");
+									} else {
+										result.add("Not able to clicked on tab label done button");
+										appLog.error("Not able to clicked on tab label done button");
+									}
+								} else {
+									result.add("Not able enter tab label name:"+tabToBeAdded);
+									appLog.error("Not able enter tab label name:"+tabToBeAdded);
+								}
+							}else {
+								ThreadSleep(5000);
+								if (clickUsingJavaScript(driver, getTabLabelDoneButtonOnEditPage(timeOut), "tab label done button",
+										action.SCROLLANDBOOLEAN)) {
+									appLog.error("clicked on tab label done button");
+								} else {
+									result.add("Not able to clicked on tab label done button");
+									appLog.error("Not able to clicked on tab label done button");
+								}
+							}
+							
+					
+				}else {
+					result.add(splitedTabs + " is not selected  in available tabs");
+					appLog.error(splitedTabs + " is not selected  in available tabs");
+				}
+					ThreadSleep(5000);
+				if (click(driver, getSaveButtonOnEditPage(60), "Custom Tab Save Button", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on save button");
+
+				} else {
+					result.add("Not able to click on save button so cannot save custom tabs");
+					appLog.error("Not able to click on save button so cannot save custom tabs");
+				}
+
+			} else {
+				result.add("Not able to click on add a tab link so cannot add custom tabs");
+				appLog.error("Not able to click on add a tab link so cannot add custom tabs");
+			}
+			} else {
+				result.add("Not able to click on add a tab link so cannot add custom tabs");
+				appLog.error("Not able to click on add a tab link so cannot add custom tabs");
+			}
+		} else {
+			result.add("Not able to click on all tabs icon so cannot add custom tabs");
+			appLog.error("Not able to click on all tabs icon so cannot add custom tabs");
+		}
+		return result;
+	}
 	
 	/**
 	 * @author Azhar Alam

@@ -115,7 +115,14 @@ public class EnumConstants {
 				return "Firms";
 		}
 		
-		}, FundraisingsTab, FundsTab,Navigation, NIMTab, CommitmentsTab, PartnershipsTab, 
+		}, FundraisingsTab, FundsTab,Navigation, NIMTab, CommitmentsTab, PartnershipsTab,QandA{
+			
+			@Override
+			public String toString() {
+				return "Q&A";
+		}
+		
+		}, 
 		NavatarInvestorAddOns, CurrentInvesment, PotentialInvesment, RecentActivities, AllDocuments, HomeTab, 
 		FolderTemplate, FundDistributions, FundOfFundsTransactions,InvestorDistributions, MarketingInitiatives, MarketingProspects,Affiliations,AgreementsAmendments{
 			@Override
@@ -126,7 +133,7 @@ public class EnumConstants {
 		, 
 		NavatarSetup, Pipelines, FundDrawdowns,FundInvestments,CapitalCalls, FundraisingContacts, LimitedPartne, ReportsTab, 
 		Correspondence_Lists,LimitedPartner,CompaniesTab, TaskRayTab,TaskRay,TestCustomObjectTab, TaskTab,
-		Other,Object1Tab,Object2Tab,Object3Tab,Object4Tab,RecycleBinTab,SDGTab,DealTab, Object5Tab,Object6Tab,AttendeeTab,Object7Tab,Entities,Deals,Marketing_Events,Deal_Team, Object8Tab, ContactTab;
+		Other,Object1Tab,Object2Tab,Object3Tab,Object4Tab,RecycleBinTab,SDGTab,DealTab, Object5Tab,Object6Tab,AttendeeTab,Object7Tab,Entities,Deals,Marketing_Events,Events,Deal_Team, Object8Tab, ContactTab;
 	}
 	
 	public static enum Mode{

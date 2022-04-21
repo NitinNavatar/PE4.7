@@ -536,6 +536,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return flag;
 	}
+	
+	
 
 	/**
 	 * @param projectName
@@ -2885,11 +2887,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String btname = btnName.toString();
 		String xpath = "";
 		if (isInside) {
-			xpath = "//*[contains(text(),'" + toggleTab
-					+ "')]/ancestor::article//button[@title='" + btname + "']";
+			xpath = "//button[text()='"+toggleTab+"' or @title='"+toggleTab+"']";
 		} else {
-			xpath = "//*[contains(text(),'" + toggleTab + "')]/ancestor::article//button[@title='"
-					+ btname + "']";
+			xpath = "//button[text()='"+toggleTab+"' or @title='"+toggleTab+"']";
 		}
 		WebElement ele = FindElement(driver, xpath, toggleTab + " >> " + btname, action, timeOut);
 		scrollDownThroughWebelement(driver, ele, "Toggle Button : " + btname);

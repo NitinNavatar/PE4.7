@@ -13,6 +13,7 @@ import com.navatar.generic.EnumConstants.excelLabel;
 
 import static com.navatar.generic.CommonLib.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EditPage extends BasePageBusinessLayer {
@@ -262,4 +263,64 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, calendarOnEditPage, "Visibility", timeOut, "calendarOnEditPage");
 	}
 	
+	@FindBy(xpath="//button[contains(@class,'addTab')]")
+	private WebElement addTabLink;
+
+	/**
+	 * @return the addTabLink
+	 */
+	public WebElement getAddTabEditPageLink(int timeOut) {
+		return isDisplayed(driver, addTabLink, "Visibility", timeOut, "Add a Tab Link");
+	}
+	
+	
+	/**
+	 * @return the addTabLink
+	 */
+	public List<WebElement> getAlreadyAddedTabListEditPage(int timeOut) {
+		String xpath = "//div[@class='visualEditorSortableList']//li";
+		List<WebElement> list = new ArrayList<WebElement>();
+
+		list = FindElements(driver, xpath, "already added tab list on edit page");
+		return list;
+	}
+	
+	@FindBy(xpath="//section[@class='visualEditorComponentPropertiesEditorSection']//select")
+	private WebElement tablabelDropdownEditPage;
+
+	/**
+	 * @return the addTabLink
+	 */
+	public WebElement getTabLabelDropdownOnEditPage(int timeOut) {
+		return isDisplayed(driver, tablabelDropdownEditPage, "Visibility", timeOut, "Add a Tab Link");
+	}
+	
+	@FindBy(xpath="//section[@class='visualEditorComponentPropertiesEditorSection']//input")
+	private WebElement tablabelInputEditPage;
+
+	/**
+	 * @return the addTabLink
+	 */
+	public WebElement getTabLabelInputOnEditPage(int timeOut) {
+		return isDisplayed(driver, tablabelInputEditPage, "Visibility", timeOut, "Add a Tab Link");
+	}
+	
+	@FindBy(xpath="//button[contains(@class,'ItemAttributesEditorDone')]")
+	private WebElement tablabelDoneButtonOnEditPage;
+
+	/**
+	 * @return the donebutton
+	 */
+	public WebElement getTabLabelDoneButtonOnEditPage(int timeOut) {
+		return isDisplayed(driver, tablabelDoneButtonOnEditPage, "Visibility", timeOut, "Add a Tab Link");
+	}
+	@FindBy(xpath="//button[contains(@class,'save')]")
+	private WebElement saveButtonEditpage;
+
+	/**
+	 * @return the donebutton
+	 */
+	public WebElement getSaveButtonOnEditPage(int timeOut) {
+		return isDisplayed(driver, saveButtonEditpage, "Visibility", timeOut, "Add a Tab Link");
+	}
 }
