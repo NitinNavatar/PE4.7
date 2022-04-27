@@ -1244,7 +1244,12 @@ public static enum PermissionType{
 		ContactOnly,ContactAndInstitution,ContactInstitutionAndCustomObject;
 	}
 	public static enum ActivityTimeLineItem{
-        New_Meeting,New_Call,Log_a_Call_with_Multiple_Associations,New_Task_with_Multiple_Associations, Expand_All,Refresh,Collapse_All, Filter, New_Task;     
+        New_Meeting,New_Call{
+            @Override
+            public String toString() {
+                return "Log a Call";
+            }
+        },Add,Log_a_Call_with_Multiple_Associations,New_Task_with_Multiple_Associations, Expand_All,Refresh,Collapse_All, Filter, New_Task;     
     }
 	public static enum DueDate{
         No_due_date{

@@ -4587,7 +4587,7 @@ public abstract class BasePage extends BaseLib {
 	}
 	
 	
-	@FindBy(xpath="//span[@title='Delete' or text()='Delete']")
+	@FindBy(xpath="//button[@title='Delete' or text()='Delete']")
 	private WebElement deleteButtonPopUp;
 	
 	/**

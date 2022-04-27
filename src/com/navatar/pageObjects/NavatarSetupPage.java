@@ -282,21 +282,35 @@ public class NavatarSetupPage extends BasePageBusinessLayer {
 	 */
 	public WebElement getEnableCheckBoxforClickNavatarSetUpSideMenuTab(String project,
 			NavatarSetupSideMenuTab sideMenuTab, EditViewMode editviewMode, int timeOut) {
-
+		WebElement ele =null;
 		List<WebElement> enableCheckBoxList = FindElements(driver,
 				"//span[contains(@class,'primaryPaletteBorder')]/..//input/following-sibling::span",
 				"Enable CheckBox for Click Navatar SetUp Side Menu Tab");
 
-		if (NavatarSetupSideMenuTab.CommitmentCreation.equals(sideMenuTab) || NavatarSetupSideMenuTab.DealCreation.equals(sideMenuTab) || NavatarSetupSideMenuTab.IndividualInvestorCreation.equals(sideMenuTab)) {
-			return isDisplayed(driver, enableCheckBoxList.get(1), "Visibility", timeOut,
-					"Enable CheckBox for Navatar SetUp Side Menu Tab");
-		}else if (EditViewMode.View.toString().equalsIgnoreCase(editviewMode.toString()) || NavatarSetupSideMenuTab.OfficeLocations.equals(sideMenuTab)) {
-			return isDisplayed(driver, enableCheckBoxList.get(0), "Visibility", timeOut,
-					"Enable CheckBox for Navatar SetUp Side Menu Tab");
-		} else {
-			return isDisplayed(driver, enableCheckBoxList.get(0), "Visibility", timeOut,
-					"Enable CheckBox for Navatar SetUp Side Menu Tab");
+//		if (NavatarSetupSideMenuTab.CommitmentCreation.equals(sideMenuTab) || NavatarSetupSideMenuTab.DealCreation.equals(sideMenuTab) || NavatarSetupSideMenuTab.IndividualInvestorCreation.equals(sideMenuTab)) {
+//			return isDisplayed(driver, enableCheckBoxList.get(1), "Visibility", timeOut,
+//					"Enable CheckBox for Navatar SetUp Side Menu Tab");
+//		}else if (EditViewMode.View.toString().equalsIgnoreCase(editviewMode.toString()) || NavatarSetupSideMenuTab.OfficeLocations.equals(sideMenuTab)) {
+//			return isDisplayed(driver, enableCheckBoxList.get(0), "Visibility", timeOut,
+//					"Enable CheckBox for Navatar SetUp Side Menu Tab");
+//		} else {
+//			return isDisplayed(driver, enableCheckBoxList.get(0), "Visibility", timeOut,
+//					"Enable CheckBox for Navatar SetUp Side Menu Tab");
+//		}
+		
+		
+		for(WebElement element:enableCheckBoxList) {
+			
+			element =isDisplayed(driver, element, "Visibility", timeOut,"Enable CheckBox for Navatar SetUp Side Menu Tab");
+			
+			if(element!=null) {
+				ele= element;
+				break;
+			}
 		}
+		
+		return ele;
+		
 	}
 	
 	@FindBy(xpath="//div[@id='errConInvstmnt']")
