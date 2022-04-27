@@ -5033,6 +5033,53 @@ public class Module2 extends BaseLib{
 			log(LogStatus.SKIP,"setup link is not clickable",YesNo.Yes);
 		}
 		
+		String updateLabel= PageLabel.Watchlist.toString();
+		if (home.clickOnSetUpLink()) {
+			parentID=switchOnWindow(driver);
+			if (parentID!=null) {
+				if (sp.searchStandardOrCustomObject(environment, mode,object.Override)){
+					log(LogStatus.INFO, "click on Object : " +object.valueOf("Override"), YesNo.No);
+					ThreadSleep(2000);				
+					switchToFrame(driver, 30, sp.getSetUpPageIframe(60));
+					ThreadSleep(5000);	
+					if(selectVisibleTextFromDropDown(driver, sp.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
+						log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
+						ThreadSleep(5000);	
+						
+						if(selectVisibleTextFromDropDown(driver, sp.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Activity.toString())){
+							log(LogStatus.INFO, "Select "+PageLabel.Activity.toString()+" text in object dropdown in override setup page", YesNo.No);
+							ThreadSleep(5000);
+							if(sp.updateFieldLabelInOverridePage(driver, PageLabel.Watch_list.toString(), updateLabel, action.SCROLLANDBOOLEAN)){
+								log(LogStatus.INFO, "Field label: "+PageLabel.Watch_list.toString()+" successfully update to "+updateLabel, YesNo.No);
+								
+							}else{
+								log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Watch_list.toString()+" successfully update to "+updateLabel, YesNo.Yes);
+								sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Watch_list.toString()+" to "+updateLabel);	
+							}
+						}else{
+							log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Activity.toString()+" in  object dropdown in override page", YesNo.Yes);
+							sa.assertTrue(false, "Not able to select text: "+PageLabel.Activity.toString()+" in  object dropdown in override page");
+						}
+					}else{
+						log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
+						sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
+					}
+				
+			}else{
+				
+				log(LogStatus.PASS, "Not able to click on Object : " + object.valueOf("Override"), YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on Object : " + object.valueOf("Override"));
+			}
+				driver.close();
+				driver.switchTo().window(parentID);
+			}else {
+				sa.assertTrue(false,"new window is not found, so cannot change watchlist label");
+				log(LogStatus.SKIP,"new window is not found, so cannot change watchlist label",YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"setup link is not clickable");
+			log(LogStatus.SKIP,"setup link is not clickable",YesNo.Yes);
+		}
 		
 		lp.CRMlogout();
 		sa.assertAll();
