@@ -2331,12 +2331,13 @@ public boolean permissionChangeForUserONObject(WebDriver driver,PermissionType p
 	ThreadSleep(10000);
 	switchToDefaultContent(driver);
 	switchToFrame(driver, 60, getSetUpPageIframe(60));
+	ThreadSleep(5000);
 	boolean flag=false;;
 	String xpath="";
 	xpath="//th//a[text()='"+userName+"']";
 	WebElement ele=FindElement(driver, xpath,userName, action.SCROLLANDBOOLEAN, timeOut);
 	ele=isDisplayed(driver, ele, "visibility", timeOut, userName);
-	if (click(driver, ele, userName.toString(), action.BOOLEAN)) {
+	if (clickUsingJavaScript(driver, ele, userName.toString(), action.BOOLEAN)) {
 		log(LogStatus.INFO, "able to click on "+userName, YesNo.No);
 		ThreadSleep(10000);
 		switchToDefaultContent(driver);
@@ -2345,7 +2346,7 @@ public boolean permissionChangeForUserONObject(WebDriver driver,PermissionType p
 		xpath="//*[@id='topButtonRow']//input[@name='edit']";
 		ele=FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, timeOut);
 		ThreadSleep(5000);
-		if (click(driver, ele, "Edit Button", action.BOOLEAN)) {
+		if (clickUsingJavaScript(driver, ele, "Edit Button", action.BOOLEAN)) {
 			log(LogStatus.INFO, "able to click on edit button", YesNo.No);
 			ThreadSleep(10000);
 			switchToDefaultContent(driver);

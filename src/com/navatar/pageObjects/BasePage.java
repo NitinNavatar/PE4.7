@@ -3,6 +3,7 @@
  */
 package com.navatar.pageObjects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -4671,6 +4672,11 @@ public abstract class BasePage extends BaseLib {
 	
 	public WebElement getdoneButtonListView(String projectName,int timeOut) {
 		return isDisplayed(driver, doneButtonListView, "Visibility", timeOut, "doneButtonListView");
+	}
+	
+	
+	public WebElement getdoneButton(String projectName,int timeOut) {
+		return driver.findElement(By.xpath("//div[@class='modal-footer slds-modal__footer']//button[@type='submit']"));
 	}
 	
 	@FindBy(xpath = "//div[contains(@class,'SecondaryDisplayManager')]//button[text()='Save']")

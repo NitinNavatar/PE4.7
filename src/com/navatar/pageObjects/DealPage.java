@@ -11,6 +11,8 @@ import com.navatar.generic.EnumConstants.action;
 
 import static com.navatar.generic.CommonLib.*;
 
+import java.util.List;
+
 public class DealPage extends BasePageBusinessLayer {
 
 	public DealPage(WebDriver driver) {
@@ -99,12 +101,24 @@ public class DealPage extends BasePageBusinessLayer {
 	public WebElement getfinishButton(int timeOut) {
 		return isDisplayed(driver, finishButton, "Visibility", timeOut, "finish Button");
 		
-	}@FindBy(xpath = "//h2[text()='Convert to Portfolio']/ancestor::div//button[@title='Close this window']")
-	private WebElement convertToPortfolioCrossButton;
+	}
+
 	
 	public WebElement getconvertToPortfolioCrossButton(int timeOut) {
-		return isDisplayed(driver, convertToPortfolioCrossButton, "Visibility", timeOut, "cross Button");
+		String xpath="//h2[text()='Convert to Portfolio']/ancestor::div//button[@title='Close this window']";
+		WebElement ele=null;
+		List<WebElement> list = FindElements(driver, xpath, "cross Button");
+		for(WebElement element:list) {
 		
+			element=isDisplayed(driver, element, "Visibility", timeOut, "cross Button");
+			if(element!=null) {
+				ele=element;
+				break;
+			}
+			
+		}
+		
+		return ele;
 	}
 
 	public WebElement getconvertToPortfolioCrossButton(String head,int timeOut) {

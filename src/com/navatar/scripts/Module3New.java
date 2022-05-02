@@ -2,6 +2,8 @@ package com.navatar.scripts;
 
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
+import static com.navatar.generic.SmokeCommonVariables.adminPassword;
+import static com.navatar.generic.SmokeCommonVariables.crmUser1EmailID;
 import static com.navatar.pageObjects.NavigationPageBusineesLayer.navigationParentLabelWithChildAndOrder;
 import static com.navatar.pageObjects.NavigationPageBusineesLayer.navigationParentLabelWithChildSorted;
 import static com.navatar.pageObjects.NavigationPageBusineesLayer.navigationParentLabelWithOrder;
@@ -524,8 +526,43 @@ public class Module3New extends BaseLib {
 			refresh(driver);
 			ThreadSleep(5000);
 		}
+		lp.CRMlogout();
+		ThreadSleep(5000);
+		lp.CRMLogin(crmUser1EmailID, adminPassword );
+		ThreadSleep(5000);
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+			WebElement ele = npbl.getNavigationLabel(projectName, navigationLabel[1], action.BOOLEAN, 10);
+			if (ele==null) {
+				log(LogStatus.INFO, navigationLabel[1]+" is not present on "+navigationMenuName+" after uncheck "+setupSideMenuTab, YesNo.No);
+			} else {
+				log(LogStatus.ERROR, navigationLabel[1]+" should not present on "+navigationMenuName+" after uncheck "+setupSideMenuTab, YesNo.Yes);
+				sa.assertTrue(false,navigationLabel[1]+" should not present on "+navigationMenuName+" after uncheck "+setupSideMenuTab);
+			}
+			ele = npbl.getNavigationLabel(projectName, navigationLabel[0], action.BOOLEAN, 10);
+			if (ele!=null) {
+				log(LogStatus.INFO, navigationLabel[0]+" is present on "+navigationMenuName, YesNo.No);
+			} else {
+				log(LogStatus.ERROR, navigationLabel[0]+" should be present on "+navigationMenuName, YesNo.Yes);
+				sa.assertTrue(false,navigationLabel[0]+" should be present on "+navigationMenuName);
 
-		
+			}
+			if (ele!=null) {
+				log(LogStatus.INFO, navigationLabel[2]+" is present on "+navigationMenuName, YesNo.No);
+			} else {
+				log(LogStatus.ERROR, navigationLabel[2]+" should be present on "+navigationMenuName, YesNo.Yes);
+				sa.assertTrue(false,navigationLabel[2]+" should be present on "+navigationMenuName);
+
+			}
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot uncheck absenece of "+navigationLabel[1], YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot uncheck absenece of "+navigationLabel[1]);
+		}
+	
+	ThreadSleep(5000);
+	lp.CRMlogout();
+	
+	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		flag = np.EnableOrDisableSettingOnNavatarSetUp(projectName, setupSideMenuTab, false);
 
 		//// CHeck log(LogStatus.INFO, "<<<<<< Going to check >>>>>>>", YesNo.No);
@@ -595,7 +632,52 @@ public class Module3New extends BaseLib {
 		ThreadSleep(5000);
 		
 	lp.CRMlogout();
+	lp.CRMLogin(crmUser1EmailID, adminPassword );
+	ThreadSleep(5000);
+	// Verification on navigation menu
+	
+	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+		WebElement ele = npbl.getNavigationLabel(projectName, navigationLabel[1], action.BOOLEAN, 10);
+		if (ele!=null) {
+			log(LogStatus.INFO, navigationLabel[1]+" is  present on "+navigationMenuName+" after check "+setupSideMenuTab, YesNo.No);
+
+		} else {
+			log(LogStatus.ERROR, navigationLabel[1]+" should be present on "+navigationMenuName+" after check "+setupSideMenuTab, YesNo.Yes);
+			sa.assertTrue(false,navigationLabel[1]+" should be present on "+navigationMenuName+" after check "+setupSideMenuTab);
+
+		}
+
+		ele = npbl.getNavigationLabel(projectName, navigationLabel[0], action.BOOLEAN, 10);
+		if (ele!=null) {
+			log(LogStatus.INFO, navigationLabel[0]+" is present on "+navigationMenuName, YesNo.No);
+
+		} else {
+			log(LogStatus.ERROR, navigationLabel[0]+" should be present on "+navigationMenuName, YesNo.Yes);
+			sa.assertTrue(false,navigationLabel[0]+" should be present on "+navigationMenuName);
+
+		}
 		
+		ele = npbl.getNavigationLabel(projectName, navigationLabel[2], action.BOOLEAN, 10);
+		if (ele!=null) {
+			log(LogStatus.INFO, navigationLabel[2]+" is present on "+navigationMenuName, YesNo.No);
+		} else {
+			log(LogStatus.ERROR, navigationLabel[2]+" should be present on "+navigationMenuName, YesNo.Yes);
+			sa.assertTrue(false,navigationLabel[2]+" should be present on "+navigationMenuName);
+
+		}
+		
+	} else {
+		log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabel[1], YesNo.Yes);
+		sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabel[1]);
+	}	
+
+refresh(driver);
+ThreadSleep(5000);
+
+
+
+lp.CRMlogout();	
 		}
 	
 	@Parameters({ "projectName"})

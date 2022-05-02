@@ -462,7 +462,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	 * @return WebElement
 	 */
 	public WebElement crossIconForCompanyName(String company,int timeOut) {
-		String xpath="//label[text()='Company Name']/..//input[@placeholder='"+company+"']//following-sibling::*//button";
+		String xpath="//label[text()='Company']/..//input[@placeholder='"+company+"']//following-sibling::*//button";
 		WebElement ele = FindElement(driver, xpath,"cross icon for company", action.SCROLLANDBOOLEAN, 10);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "cross icon for company");
 
@@ -483,7 +483,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	 * @return WebElement
 	 */
 	public WebElement getconvertToPortfolioMessageRecordTypeInvalid(int timeOut) {
-		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//p[contains(text(),'Navatar')]";
+		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//p";
 			WebElement ele = FindElement(driver, xpath,"RT invalid", action.SCROLLANDBOOLEAN, 10);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "RT invalid");
 
