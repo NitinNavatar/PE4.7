@@ -236,6 +236,18 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, relatedListRecordPageSetting, "Visibility", timeOut, "relatedListRecordPageSetting");
 	}
 	
+	@FindBy(xpath = "//h2[text()='Tabs']/..//div[@class='uiTabBar']")
+	private WebElement relatedTabBar;
+	
+	
+
+	/**
+	 * @return the relatedListRecordPageSetting
+	 */
+	public WebElement getRelatedTabBar(int timeOut) {
+		return isDisplayed(driver, relatedTabBar, "Visibility", timeOut, "related tab list nav bar");
+	}
+	
 	@FindBy(xpath = "//img[@alt='Select Activity Timeline']")
 	private WebElement activityTimelineRecordPageSetting;
 	
@@ -4576,7 +4588,7 @@ public abstract class BasePage extends BaseLib {
 	}
 	
 	
-	@FindBy(xpath="//span[@title='Delete' or text()='Delete']")
+	@FindBy(xpath="//button[@title='Delete' or text()='Delete']")
 	private WebElement deleteButtonPopUp;
 	
 	/**

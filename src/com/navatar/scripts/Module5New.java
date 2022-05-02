@@ -104,14 +104,12 @@ import static com.navatar.generic.CommonLib.*;
 
 public class Module5New extends BaseLib {
 	String passwordResetLink = null;
-
-//	Scanner scn = new Scanner(System.in);
 	String breakSP = "<break>";
 	String columnSP = "<column>";
 	String commaSP = ",";
 	String colonSP = ":";
 	String emptyString="";
-	String EnhanceLightningGridImg = ".\\AutoIT\\EditPage\\EnhanceLightningGrid.PNG";
+	String EnhanceLightningGridImg = ".\\AutoIT\\EditPage\\NavatarSDG.PNG";
 	
 	@Parameters({ "projectName"})
 	@Test
@@ -245,6 +243,7 @@ public class Module5New extends BaseLib {
 
 		}
 		sa.assertAll();
+		lp.CRMlogout();
 	}
 
 	@Parameters({ "projectName"})
@@ -253,8 +252,8 @@ public class Module5New extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
-		String[] tabs= {tabObj1,tabObj2,tabObj5,tabObj4};
-		TabName[] tab= {TabName.Object1Tab,TabName.Object5Tab,TabName.Object3Tab,TabName.Object4Tab};
+		String[] tabs= {tabObj1,tabObj2,tabObj5,tabObj3,tabObj4};
+		TabName[] tab= {TabName.Object1Tab,TabName.Object2Tab,TabName.Object5Tab,TabName.Object3Tab,TabName.Object4Tab};
 		int i=0;
 		for (TabName t:tab) {
 
@@ -369,6 +368,67 @@ public class Module5New extends BaseLib {
 		
 	}
 
+	@Parameters({ "projectName"})
+	@Test
+	public void M5Tc001_5_AddTabInRecordPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
+		EditPageBusinessLayer edit=new EditPageBusinessLayer(driver);
+		
+		lp.CRMLogin(superAdminUserName,adminPassword);
+		TabName[] tabs= {TabName.InstituitonsTab,TabName.Deals};
+		String[] relatedtabs = {TabName.Events.toString(),TabName.QandA.toString()};
+		String[] data = {ToggleIns1,ToggleDeal1};
+
+		for(int i=0;i<tabs.length;i++) {
+		if(lp.clickOnTab(projectName, tabs[i])) {
+			log(LogStatus.INFO,"Click on Tab : "+tabs[i],YesNo.No);
+
+			if(lp.clickOnAlreadyCreatedItem(projectName, data[i], 30)) {
+				
+				log(LogStatus.INFO,"Click on Tab : "+tabs[i],YesNo.No);
+				
+				if (hp.clickOnEditPageLinkOnSetUpLink()) {	
+					log(LogStatus.INFO,"click on Edit Page SetUp Link", YesNo.No);
+					ThreadSleep(5000);
+
+					if(edit.addRelatedTabOnEditPage_Lighting(projectName, relatedtabs[i], "Custom", 30).isEmpty()) {
+						log(LogStatus.ERROR,"able to add related tab :"+relatedtabs[i], YesNo.Yes);
+						
+					}else {
+						log(LogStatus.ERROR,"Not able to add related tab :"+relatedtabs[i], YesNo.Yes);
+						sa.assertTrue(false,"Not able to add related tab :"+relatedtabs[i]);
+					}
+					ThreadSleep(5000);
+					if (clickUsingJavaScript(driver, edit.getEditPageBackButton(projectName, 10),"Edit Page Back Button", action.BOOLEAN)) {
+						log(LogStatus.INFO,"Click on Edit Page Back Button",YesNo.No);
+						ThreadSleep(5000);
+					} else {
+						sa.assertTrue(false, "Not Able to Click on Edit Page Back Button");
+						log(LogStatus.SKIP,"Not Able to Click on Edit Page Back Button",YesNo.Yes);
+					}
+					
+				} else {
+					log(LogStatus.ERROR,"Not Able to click on Edit Page SetUp Link", YesNo.Yes);
+					sa.assertTrue(false,"Not Able to click on Edit Page SetUp Link");
+				}
+			}else {
+				
+				log(LogStatus.SKIP,"Not Able to click on item:"+data,YesNo.Yes);
+				sa.assertTrue(false,"Not Able to click on item:"+data);
+			}
+			
+		}else {
+			log(LogStatus.SKIP,"Not Able to click on tab:"+tabs[i],YesNo.Yes);
+			sa.assertTrue(false,"Not Able to click on tab:"+tabs[i]);
+			
+		}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+		
+	}
+	
 	@Parameters({ "projectName"})
 	@Test
 	public void M5Tc002_1_CreateMarketingEventSDG(String projectName) {
@@ -497,20 +557,20 @@ public class Module5New extends BaseLib {
 		String dataProviderNameTitle = "";
 		String sdgName="";
 
-		String[] tabNames = {ToggleCheck3TabName};
+		String[] tabNames = {ToggleCheck1TabName,ToggleCheck2TabName,ToggleCheck3TabName};
 		String tabName;
 
-		String[] itemValues = {ToggleCheck3ItemName};
+		String[] itemValues = {ToggleCheck1ItemName,ToggleCheck2ItemName,ToggleCheck3ItemName};
 		String itemValue;
 
-		String[] relatedTabs = {ToggleCheck3RelatedTab};
+		String[] relatedTabs = {ToggleCheck1RelatedTab,ToggleCheck2RelatedTab,ToggleCheck3RelatedTab};
 		String relatedTab;
 
-		String toggleButtons[] = {ToggleCheck3ToggleButtons};
+		String toggleButtons[] = {ToggleCheck1ToggleButtons,ToggleCheck2ToggleButtons,ToggleCheck3ToggleButtons};
 
-		String fileLocation[] = {".\\AutoIT\\EditPage\\MECreatedBy.PNG"};
+		String fileLocation[] = {".\\AutoIT\\EditPage\\EventTab.PNG",".\\AutoIT\\EditPage\\EventTab.PNG",".\\AutoIT\\EditPage\\MECreatedBy.PNG"};
 
-		String EnhanceLightningGridImg = ".\\AutoIT\\EditPage\\EnhanceLightningGrid.PNG";
+		String EnhanceLightningGridImg = ".\\AutoIT\\EditPage\\NavatarSDG.PNG";
 
 		for (int i = 0; i < tabNames.length; i++) {
 			tabName = tabNames[i];
@@ -535,17 +595,32 @@ public class Module5New extends BaseLib {
 							for (int j = 0; j < 2; j++) {
 								toggleBtn = toggles[j];
 								//CustomObject:Test_Third_Party_Event1
-								if (j==0) {
-									sdgName=M5Sdg2Name;
-								} else {
-									sdgName=M5Sdg3Name;
+								if(i==0) {
+									if (j==0) {
+										sdgName="Record_Entity_Entity's_Upcoming Third Party Events";
+									} else {
+										sdgName="Record Entity Events Our Event Invitees";
+									}
+								}else if(i==1) {
+									if (j==0) {
+										sdgName="Record_Deals_QA_Requests_Open";
+									} else {
+										sdgName="Record_Deals_QA_Requests_Closed";
+									}
+								}else {
+									if (j==0) {
+										sdgName=M5Sdg2Name;
+									} else {
+										sdgName=M5Sdg3Name;
+									}
 								}
+								
 								dataProviderName = customObject+sdgName;
 								dataProviderNameTitle = toggleBtn;
 								switchToDefaultContent(driver);
 								ThreadSleep(20000);
 								/////////////////////////////////////////////////////
-								String sValue = EditPageErrorMessage.EnhancedLightningGrid;
+								String sValue = EditPageErrorMessage.NavatarSDG;
 								if (sendKeys(driver, edit.getEditPageSeachTextBox(projectName, 10),sValue,"Search TextBox",action.BOOLEAN)) {
 									ThreadSleep(2000);
 									log(LogStatus.INFO,"send value to Search TextBox : "+sValue,YesNo.No);
@@ -823,7 +898,7 @@ public class Module5New extends BaseLib {
 											log(LogStatus.SKIP,"Toggle should be present : "+toggleButton,YesNo.Yes);
 										}
 										
-										if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 30)!=null) {
+										if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 30).getAttribute("class").contains("brand")) {
 											log(LogStatus.PASS,"After Save "+toggleButton+" is selected by default",YesNo.No);
 										} else {
 											sa.assertTrue(false,"After Save "+toggleButton+" should be selected by default");
@@ -841,7 +916,7 @@ public class Module5New extends BaseLib {
 											log(LogStatus.SKIP,"Toggle should be present : "+toggleButton,YesNo.Yes);
 										}
 										
-										if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 2)==null) {
+										if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 2).getAttribute("class").contains("neutral")) {
 											log(LogStatus.PASS,"After Save "+toggleButton+" is not selected by default",YesNo.No);
 										} else {
 											sa.assertTrue(false,"After Save "+toggleButton+" should not be selected by default");
@@ -942,7 +1017,7 @@ public class Module5New extends BaseLib {
 									log(LogStatus.SKIP,"Toggle should be present : "+toggleButton,YesNo.Yes);
 								}
 								
-								if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 30)!=null) {
+								if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 30).getAttribute("class").contains("brand")) {
 									log(LogStatus.PASS,toggleButton+" is selected by default",YesNo.No);
 								} else {
 									sa.assertTrue(false,toggleButton+" should be selected by default");
@@ -960,7 +1035,7 @@ public class Module5New extends BaseLib {
 									log(LogStatus.SKIP,"Toggle should be present : "+toggleButton,YesNo.Yes);
 								}
 								
-								if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 2)==null) {
+								if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 2).getAttribute("class").contains("neutral")) {
 									log(LogStatus.PASS,toggleButton+" is not selected by default",YesNo.No);
 								} else {
 									sa.assertTrue(false,toggleButton+" should not be selected by default");
@@ -1074,7 +1149,7 @@ public class Module5New extends BaseLib {
 												ThreadSleep(5000);
 												switchToDefaultContent(driver);
 												switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
-												if (ip.toggleSDGButtons(projectName, toggleBtn,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 10)==null) {
+												if (ip.toggleSDGButtons(projectName, toggleBtn,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 10).getAttribute("class").contains("neutral")) {
 													log(LogStatus.PASS,"After Save "+toggleBtn+" is not selected ",YesNo.No);
 												} else {
 													sa.assertTrue(false,"After Save "+toggleBtn+" should not be selected ");
@@ -1082,7 +1157,7 @@ public class Module5New extends BaseLib {
 												}
 
 												toggleBtn = toggles[j+1];
-												if (ip.toggleSDGButtons(projectName, toggleBtn,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 10)!=null) {
+												if (ip.toggleSDGButtons(projectName, toggleBtn,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 10).getAttribute("class").contains("brand")) {
 													log(LogStatus.PASS,"After Save "+toggleBtn+" is selected ",YesNo.No);
 												} else {
 													sa.assertTrue(false,"After Save "+toggleBtn+" should be selected ");
@@ -1204,7 +1279,7 @@ public class Module5New extends BaseLib {
 									log(LogStatus.SKIP,"Toggle should be present : "+toggleButton,YesNo.Yes);
 								}
 								
-								if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 30)!=null) {
+								if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 30).getAttribute("class").contains("brand")) {
 									log(LogStatus.PASS,toggleButton+" is selected by default after changing setting",YesNo.No);
 								} else {
 									sa.assertTrue(false,toggleButton+" should be selected by default after changing setting");
@@ -1222,7 +1297,7 @@ public class Module5New extends BaseLib {
 									log(LogStatus.SKIP,"Toggle should be present : "+toggleButton,YesNo.Yes);
 								}
 								
-								if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 2)==null) {
+								if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 2).getAttribute("class").contains("neutral")) {
 									log(LogStatus.PASS,toggleButton+" is not selected by default after changing setting",YesNo.No);
 								} else {
 									sa.assertTrue(false,toggleButton+" should not be selected by default after changing setting");
@@ -1232,7 +1307,7 @@ public class Module5New extends BaseLib {
 							} else {
 								click(driver, ele,"toggle: "+toggleButton, action.SCROLLANDBOOLEAN);
 								ThreadSleep(3000);
-								if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 10)!=null) {
+								if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 10).getAttribute("class").contains("brand")) {
 									log(LogStatus.PASS,"After click "+toggleButton+" is visible",YesNo.No);
 								} else {
 									sa.assertTrue(false,"After click "+toggleButton+" should be visible");
@@ -1507,7 +1582,7 @@ public class Module5New extends BaseLib {
 									log(LogStatus.SKIP,"Toggle should be present : "+toggleButton,YesNo.Yes);
 								}
 								
-								if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 30)!=null) {
+								if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 30).getAttribute("class").contains("brand")) {
 									log(LogStatus.PASS,toggleButton+" is selected by default after changing setting",YesNo.No);
 								} else {
 									sa.assertTrue(false,toggleButton+" should be selected by default after changing setting");
@@ -1525,7 +1600,7 @@ public class Module5New extends BaseLib {
 									log(LogStatus.SKIP,"Toggle should be present : "+toggleButton,YesNo.Yes);
 								}
 								
-								if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 2)==null) {
+								if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 2).getAttribute("class").contains("neutral")) {
 									log(LogStatus.PASS,toggleButton+" is not selected by default after changing setting",YesNo.No);
 								} else {
 									sa.assertTrue(false,toggleButton+" should not be selected by default after changing setting");
@@ -1641,7 +1716,7 @@ public class Module5New extends BaseLib {
 											log(LogStatus.INFO,"Click on Edit Page Save Button",YesNo.No);;
 											ThreadSleep(5000);
 											switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
-											if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 10)!=null) {
+											if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 10).getAttribute("class").contains("brand")) {
 												log(LogStatus.PASS,"After Save "+toggleButton+" is selected ",YesNo.No);
 											} else {
 												sa.assertTrue(false,"After Save "+toggleButton+" should be selected ");
@@ -1655,7 +1730,7 @@ public class Module5New extends BaseLib {
 												if (click(driver, ip.getRelatedTab(projectName,relatedTab, 30), relatedTab, action.BOOLEAN)) {
 													log(LogStatus.INFO,"Click on Sub Tab : "+relatedTab,YesNo.No);
 													ThreadSleep(2000);
-													if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 10)!=null) {
+													if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 10).getAttribute("class").contains("brand")) {
 														log(LogStatus.PASS,"After Save "+toggleButton+" is selected ",YesNo.No);
 													} else {
 														sa.assertTrue(false,"After Save "+toggleButton+" should be selected ");
@@ -1760,7 +1835,7 @@ public class Module5New extends BaseLib {
 							log(LogStatus.SKIP,"Toggle should be present : "+toggleButton,YesNo.Yes);
 						}
 
-						if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 30)!=null) {
+						if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, true, 30).getAttribute("class").contains("brand")) {
 							log(LogStatus.PASS,toggleButton+" is selected by default after changing setting",YesNo.No);
 						} else {
 							sa.assertTrue(false,toggleButton+" should be selected by default after changing setting");
@@ -1829,7 +1904,7 @@ public class Module5New extends BaseLib {
 //								click(driver, ele,"sdg: "+toggleButton, action.BOOLEAN);
 								ThreadSleep(30000);
 								if (i==2) {
-									outSideContainerLocation = ".\\AutoIT\\EditPage\\DropdownIcon.PNG";
+									//outSideContainerLocation = ".\\AutoIT\\EditPage\\DropdownIcon.PNG";
 								}
 								if (edit.dragNDropUsingScreen(projectName, customSDGFileLocation, outSideContainerLocation, 20)) {
 									log(LogStatus.INFO,"Able to DragNDrop Custom SDG to Outside container",YesNo.No);
@@ -2116,7 +2191,7 @@ public class Module5New extends BaseLib {
 								switchToDefaultContent(driver);
 								ThreadSleep(20000);
 								/////////////////////////////////////////////////////
-								String sValue = EditPageErrorMessage.EnhancedLightningGrid;
+								String sValue = EditPageErrorMessage.NavatarSDG;
 								if (sendKeys(driver, edit.getEditPageSeachTextBox(projectName, 10),sValue,"Search TextBox",action.BOOLEAN)) {
 									ThreadSleep(2000);
 									log(LogStatus.INFO,"send value to Search TextBox : "+sValue,YesNo.No);
@@ -2321,7 +2396,7 @@ public class Module5New extends BaseLib {
 							log(LogStatus.SKIP,"Toggle should be present : "+toggleButton,YesNo.Yes);
 						}
 
-						if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, false, 2)!=null) {
+						if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, false, 2).getAttribute("class").contains("brand")) {
 							log(LogStatus.PASS,toggleButton+" is selected by default",YesNo.No);
 						} else {
 							sa.assertTrue(false,toggleButton+" should be selected by default");
@@ -2395,21 +2470,21 @@ public class Module5New extends BaseLib {
 
 				itemValue = itemValues[i];
 				if (ip.clickOnAlreadyCreatedItem(projectName, itemValue, true, 15)) {
-					log(LogStatus.INFO,"Item found: "+itemValue, YesNo.Yes);
+					log(LogStatus.INFO, "Item found: " + itemValue, YesNo.Yes);
 					ThreadSleep(2000);
 
 					if (hp.clickOnEditPageLinkOnSetUpLink()) {
-						log(LogStatus.INFO,"click on Edit Page SetUp Link", YesNo.No);
-						ThreadSleep(1000);	
+						log(LogStatus.INFO, "click on Edit Page SetUp Link", YesNo.No);
+						ThreadSleep(1000);
 						//// scn.nextLine();
 						switchToDefaultContent(driver);
-						switchToFrame(driver, 60, edit.getEditPageFrame(projectName,200));
+						switchToFrame(driver, 60, edit.getEditPageFrame(projectName, 200));
 
-						relatedTab=relatedTabs[i];
-						if (clickUsingJavaScript(driver, ip.getRelatedTab(projectName, relatedTab, 200), relatedTab.toString(), action.BOOLEAN)) {
-							log(LogStatus.INFO,"Click on Sub Tab : "+relatedTab,YesNo.No);
+						relatedTab = relatedTabs[i];
+						if (clickUsingJavaScript(driver, ip.getRelatedTab(projectName, relatedTab, 200),
+								relatedTab.toString(), action.BOOLEAN)) {
+							log(LogStatus.INFO, "Click on Sub Tab : " + relatedTab, YesNo.No);
 							ThreadSleep(2000);
-
 
 							String[] toggles = toggleButtons[i].split(breakSP);
 							String toggleBtn = "";
@@ -2418,21 +2493,22 @@ public class Module5New extends BaseLib {
 								switchToDefaultContent(driver);
 								ThreadSleep(20000);
 								/////////////////////////////////////////////////////
-								String sValue = EditPageErrorMessage.EnhancedLightningGrid;
-								if (sendKeys(driver, edit.getEditPageSeachTextBox(projectName, 10),sValue,"Search TextBox",action.BOOLEAN)) {
+								String sValue = EditPageErrorMessage.NavatarSDG;
+								if (sendKeys(driver, edit.getEditPageSeachTextBox(projectName, 10), sValue,
+										"Search TextBox", action.BOOLEAN)) {
 									ThreadSleep(2000);
-									log(LogStatus.INFO,"send value to Search TextBox : "+sValue,YesNo.No);
-									String psource= fileLocation[i];
-									System.err.println("path of file : "+psource);
+									log(LogStatus.INFO, "send value to Search TextBox : " + sValue, YesNo.No);
+									String psource = fileLocation[i];
+									System.err.println("path of file : " + psource);
 									switchToDefaultContent(driver);
-									switchToFrame(driver, 20, edit.getEditPageFrame(projectName,20));
+									switchToFrame(driver, 20, edit.getEditPageFrame(projectName, 20));
 									toggleBtn = toggles[j];
 									WebElement ele = ip.toggleButton(projectName, toggleBtn, action.BOOLEAN, 30);
 									scrollDownThroughWebelement(driver, ele, toggleBtn);
 									switchToDefaultContent(driver);
-									//	// scn.nextLine();
+									// // scn.nextLine();
 									if (edit.dragNDropUsingScreen(projectName, EnhanceLightningGridImg, psource, 20)) {
-										log(LogStatus.INFO,"Able to DragNDrop : "+sValue,YesNo.No);
+										log(LogStatus.INFO, "Able to DragNDrop : " + sValue, YesNo.No);
 										ThreadSleep(2000);
 										try {
 											edit.getElgDataProviderTextBox(projectName, 10).clear();
@@ -2442,117 +2518,137 @@ public class Module5New extends BaseLib {
 										}
 										ThreadSleep(2000);
 										if (edit.clickOnELGSeachValueLink(projectName, customSdgNAME, 20)) {
-											log(LogStatus.INFO,"Click on ELG Search Vaue Link: "+customSdgNAME,YesNo.No);;
+											log(LogStatus.INFO, "Click on ELG Search Vaue Link: " + customSdgNAME,
+													YesNo.No);
+											;
 											ThreadSleep(500);
 										} else {
-											sa.assertTrue(false, "Not Able to Click on ELG Search Vaue Link: "+customSdgNAME);
-											log(LogStatus.SKIP,"Not Able to Click on ELG Search Vaue Link: "+customSdgNAME,YesNo.Yes);
+											sa.assertTrue(false,
+													"Not Able to Click on ELG Search Vaue Link: " + customSdgNAME);
+											log(LogStatus.SKIP,
+													"Not Able to Click on ELG Search Vaue Link: " + customSdgNAME,
+													YesNo.Yes);
 										}
-										if (sendKeys(driver, edit.getElgTitleTextBox(projectName, 10),M5Sdg5Name,"ELG Title TextBox",action.BOOLEAN)) {
+										if (sendKeys(driver, edit.getElgTitleTextBox(projectName, 10), M5Sdg5Name,
+												"ELG Title TextBox", action.BOOLEAN)) {
 											ThreadSleep(500);
-											log(LogStatus.INFO,"send value to ELG Title TextBox : "+M5Sdg5Name,YesNo.No);
-										
+											log(LogStatus.INFO, "send value to ELG Title TextBox : " + M5Sdg5Name,
+													YesNo.No);
 
 										} else {
-											sa.assertTrue(false, "Not Able to send value to ELG Title TextBox : "+M5Sdg5Name);
-											log(LogStatus.FAIL,"Not Able to send value to ELG Title TextBox : "+M5Sdg5Name,YesNo.Yes);
+											sa.assertTrue(false,
+													"Not Able to send value to ELG Title TextBox : " + M5Sdg5Name);
+											log(LogStatus.FAIL,
+													"Not Able to send value to ELG Title TextBox : " + M5Sdg5Name,
+													YesNo.Yes);
 										}
-										
-										//	// scn.nextLine();
-										if (click(driver, edit.getEnableToggleCheckBox(projectName, 10), "Enable Toggle CheckBox", action.SCROLLANDBOOLEAN)) {
-											log(LogStatus.INFO,"click on Enable Toggle CheckBox",YesNo.No);
+
+										// // scn.nextLine();
+										if (click(driver, edit.getEnableToggleCheckBox(projectName, 10),
+												"Enable Toggle CheckBox", action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "click on Enable Toggle CheckBox", YesNo.No);
 										} else {
 
 											sa.assertTrue(false, "Not Able to click on Enable Toggle CheckBox");
-											log(LogStatus.FAIL,"Not Able to click on Enable Toggle CheckBox",YesNo.Yes);
+											log(LogStatus.FAIL, "Not Able to click on Enable Toggle CheckBox",
+													YesNo.Yes);
 
 										}
 
 									} else {
-										sa.assertTrue(false, "Not Able to DragNDrop : "+sValue);
-										log(LogStatus.FAIL,"Not Able to DragNDrop : "+sValue,YesNo.Yes);
+										sa.assertTrue(false, "Not Able to DragNDrop : " + sValue);
+										log(LogStatus.FAIL, "Not Able to DragNDrop : " + sValue, YesNo.Yes);
 									}
 
 								} else {
-									sa.assertTrue(false, "Not Able to send value to Search TextBox : "+sValue);
-									log(LogStatus.FAIL,"Not Able to send value to Search TextBox : "+sValue,YesNo.Yes);
+									sa.assertTrue(false, "Not Able to send value to Search TextBox : " + sValue);
+									log(LogStatus.FAIL, "Not Able to send value to Search TextBox : " + sValue,
+											YesNo.Yes);
 								}
 
 								switchToDefaultContent(driver);
-								switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
-								if (click(driver, ip.toggleButton(projectName, toggleBtn, action.BOOLEAN, 30), toggleBtn, action.BOOLEAN)) {
-									log(LogStatus.INFO,"Click on Toggle : "+toggleBtn,YesNo.No);
+								switchToFrame(driver, 30, edit.getEditPageFrame(projectName, 30));
+								if (click(driver, ip.toggleButton(projectName, toggleBtn, action.BOOLEAN, 30),
+										toggleBtn, action.BOOLEAN)) {
+									log(LogStatus.INFO, "Click on Toggle : " + toggleBtn, YesNo.No);
 									ThreadSleep(2000);
 									switchToDefaultContent(driver);
-									if (sendKeysWithoutClearingTextBox(driver, edit.getsdgConfigDataProviderTextBox(projectName, 10),","+sdgConfigDataProviderTextBox,"sdg Config Data Provider TextBox : "+sdgConfigDataProviderTextBox,action.BOOLEAN)) {
+									if (sendKeysWithoutClearingTextBox(driver,
+											edit.getsdgConfigDataProviderTextBox(projectName, 10),
+											"," + sdgConfigDataProviderTextBox,
+											"sdg Config Data Provider TextBox : " + sdgConfigDataProviderTextBox,
+											action.BOOLEAN)) {
 										ThreadSleep(500);
-										log(LogStatus.INFO,"send value to sdg Config Data Provider TextBox : "+sdgConfigDataProviderTextBox,YesNo.No);
+										log(LogStatus.INFO, "send value to sdg Config Data Provider TextBox : "
+												+ sdgConfigDataProviderTextBox, YesNo.No);
 
-
-										if (click(driver, edit.getEditPageSaveButton(projectName, 10),"Edit Page Save Button", action.BOOLEAN)) {
-											log(LogStatus.INFO,"Click on Edit Page Save Button",YesNo.No);
+										if (click(driver, edit.getEditPageSaveButton(projectName, 10),
+												"Edit Page Save Button", action.BOOLEAN)) {
+											log(LogStatus.INFO, "Click on Edit Page Save Button", YesNo.No);
 											ThreadSleep(2000);
 										} else {
 											sa.assertTrue(false, "Not Able to Click on Edit Page Save Button");
-											log(LogStatus.FAIL,"Not Able to Click on Edit Page Save Button",YesNo.Yes);
+											log(LogStatus.FAIL, "Not Able to Click on Edit Page Save Button",
+													YesNo.Yes);
 										}
-										toggleBtn = M5Sdg5Name ;
-										switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
-										if (ip.toggleButton(projectName, PageName.Object1Page, toggleBtn, action.BOOLEAN, 30)!=null) {
-											log(LogStatus.INFO,"New Toggle Button Added : "+toggleBtn,YesNo.No);
+										toggleBtn = M5Sdg5Name;
+										switchToFrame(driver, 30, edit.getEditPageFrame(projectName, 30));
+										if (ip.toggleButton(projectName, PageName.Object1Page, toggleBtn,
+												action.BOOLEAN, 30) != null) {
+											log(LogStatus.INFO, "New Toggle Button Added : " + toggleBtn, YesNo.No);
 											ThreadSleep(2000);
 										} else {
-											sa.assertTrue(false, "New Toggle Button Added : "+toggleBtn);
-											log(LogStatus.FAIL,"New Toggle Button Added : "+toggleBtn,YesNo.Yes);
+											sa.assertTrue(false, "New Toggle Button Added : " + toggleBtn);
+											log(LogStatus.FAIL, "New Toggle Button Added : " + toggleBtn, YesNo.Yes);
 										}
 
-
 									} else {
-										sa.assertTrue(false, "Not Able to send value to sdg Config Data Provider TextBox : "+sdgConfigDataProviderTextBox);
-										log(LogStatus.FAIL,"Not Able to send value to sdg Config Data Provider TextBox : "+sdgConfigDataProviderTextBox,YesNo.Yes);
+										sa.assertTrue(false,
+												"Not Able to send value to sdg Config Data Provider TextBox : "
+														+ sdgConfigDataProviderTextBox);
+										log(LogStatus.FAIL,
+												"Not Able to send value to sdg Config Data Provider TextBox : "
+														+ sdgConfigDataProviderTextBox,
+												YesNo.Yes);
 									}
 
-
-
 								} else {
-									sa.assertTrue(false,"Not Able to Click on Toggle : "+toggleBtn);
-									log(LogStatus.SKIP,"Not Able to Click on Toggle : "+toggleBtn,YesNo.Yes);
+									sa.assertTrue(false, "Not Able to Click on Toggle : " + toggleBtn);
+									log(LogStatus.SKIP, "Not Able to Click on Toggle : " + toggleBtn, YesNo.Yes);
 								}
 
 							}
 
 						} else {
-							sa.assertTrue(false,"Not Able to Click on Sub Tab : "+relatedTab);
-							log(LogStatus.SKIP,"Not Able to Click on Sub Tab : "+relatedTab,YesNo.Yes);
+							sa.assertTrue(false, "Not Able to Click on Sub Tab : " + relatedTab);
+							log(LogStatus.SKIP, "Not Able to Click on Sub Tab : " + relatedTab, YesNo.Yes);
 						}
 						ThreadSleep(5000);
 						switchToDefaultContent(driver);
-						if (clickUsingJavaScript(driver, edit.getEditPageBackButton(projectName, 10),"Edit Page Back Button", action.BOOLEAN)) {
-							log(LogStatus.INFO,"Click on Edit Page Back Button",YesNo.No);
+						if (clickUsingJavaScript(driver, edit.getEditPageBackButton(projectName, 10),
+								"Edit Page Back Button", action.BOOLEAN)) {
+							log(LogStatus.INFO, "Click on Edit Page Back Button", YesNo.No);
 							//// scn.nextLine();
 						} else {
 							sa.assertTrue(false, "Not Able to Click on Edit Page Back Button");
-							log(LogStatus.SKIP,"Not Able to Click on Edit Page Back Button",YesNo.Yes);
+							log(LogStatus.SKIP, "Not Able to Click on Edit Page Back Button", YesNo.Yes);
 						}
 
-
 					} else {
-						log(LogStatus.ERROR,"Not Able to click on Edit Page SetUp Link", YesNo.Yes);
-						sa.assertTrue(false,"Not Able to click on Edit Page SetUp Link");
+						log(LogStatus.ERROR, "Not Able to click on Edit Page SetUp Link", YesNo.Yes);
+						sa.assertTrue(false, "Not Able to click on Edit Page SetUp Link");
 					}
 
+				} else {
 
-
-				}else {
-
-					log(LogStatus.ERROR,"Item not found: "+itemValue, YesNo.Yes);
-					sa.assertTrue(false,"Item not found: "+itemValue);
+					log(LogStatus.ERROR, "Item not found: " + itemValue, YesNo.Yes);
+					sa.assertTrue(false, "Item not found: " + itemValue);
 				}
 				refresh(driver);
 				ThreadSleep(7000);
 			} else {
-				sa.assertTrue(false,"Not Able to Click on Tab : "+tabName);
-				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabName,YesNo.Yes);
+				sa.assertTrue(false, "Not Able to Click on Tab : " + tabName);
+				log(LogStatus.SKIP, "Not Able to Click on Tab : " + tabName, YesNo.Yes);
 			}
 			refresh(driver);
 		}
@@ -2622,7 +2718,7 @@ public class Module5New extends BaseLib {
 							log(LogStatus.SKIP,"Toggle should be present : "+toggleButton,YesNo.Yes);
 						}
 
-						if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, false, 2)!=null) {
+						if (ip.toggleSDGButtons(projectName, toggleButton,ToggleButtonGroup.SDGButton, action.BOOLEAN, false, 2).getAttribute("class").contains("brand")) {
 							log(LogStatus.PASS,toggleButton+" is selected by default",YesNo.No);
 						} else {
 							sa.assertTrue(false,toggleButton+" should be selected by default");
@@ -2676,7 +2772,7 @@ public class Module5New extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void M5Tc0015_1_DeleteTheAllCustomToggleButton_Action(String projectName) {
+	public void M5Tc015_1_DeleteTheAllCustomToggleButton_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
@@ -2870,7 +2966,7 @@ public class Module5New extends BaseLib {
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void M5Tc0015_2_DeleteTheAllCustomToggleButton_Impact(String projectName) {
+	public void M5Tc015_2_DeleteTheAllCustomToggleButton_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 

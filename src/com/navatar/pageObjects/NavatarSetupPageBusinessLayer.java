@@ -109,6 +109,7 @@ public class NavatarSetupPageBusinessLayer extends NavatarSetupPage implements N
 			appLog.info("Clicked on " + sideMenu);
 			ThreadSleep(10000);
 			switchToFrame(driver, 60, getnavatarSetUpTabFrame_Lighting(projectName, 120));
+			ThreadSleep(5000);
 			flag=true;
 		}else{
 			appLog.error("Not Able to Clicked on : " + sideMenu);	

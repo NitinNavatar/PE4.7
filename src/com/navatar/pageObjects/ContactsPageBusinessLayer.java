@@ -307,6 +307,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 								if (getNavigationTabSaveBtn(projectName, 5)!=null) {
 									click(driver, getNavigationTabSaveBtn(projectName, 60), "save", action.BOOLEAN);
 								}
+								ThreadSleep(3000);
 								if(creationPage.toString().equalsIgnoreCase(CreationPage.AccountPage.toString())) {
 										if(clickOnGridSection_Lightning(projectName,RelatedList.Contacts, 30)) {
 											ele = isDisplayed(driver, FindElement(driver, "//*[text()='Contact']/following-sibling::*//*[text()='"+contactFirstName+" "+contactLastName+"']", "Contact Name Text", action.SCROLLANDBOOLEAN, 30), "visibility", 20, "");

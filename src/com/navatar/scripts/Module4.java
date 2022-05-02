@@ -905,7 +905,7 @@ public class Module4 extends BaseLib{
 		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
 			if (ip.clickOnAlreadyCreatedItem(projectName, M4Contact1FName+" "+M4Contact1LName,10)) {
-				ip.clickOnShowMoreDropdownOnly(projectName, PageName.Object2Page);
+				ip.clickOnShowMoreDropdownOnly(projectName, PageName.Object2Page,"'");
 				ele = ip.actionDropdownElement(projectName, ShowMoreActionDropDownList.Edit, 10);
 
 				if (click(driver, ele, ShowMoreActionDropDownList.Edit.toString(), action.BOOLEAN)) {

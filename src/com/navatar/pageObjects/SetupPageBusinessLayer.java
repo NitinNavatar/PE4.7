@@ -472,7 +472,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 					ThreadSleep(10000);
 					switchToFrame(driver, 30, getSetUpPageIframe(30));
 					ThreadSleep(5000);
-				if (click(driver, getAddUsersbutton(60), "Add Users link", action.BOOLEAN)) {
+				if (clickUsingJavaScript(driver, getAddUsersbutton(60), "Add Users link", action.BOOLEAN)) {
 					log(LogStatus.INFO,"clicked on add users button", YesNo.No);
 						switchToDefaultContent(driver);
 						switchToFrame(driver, 30, getInstalledPackageParentFrame_Lighting(20));
@@ -2902,7 +2902,7 @@ public boolean updateCreatedCustomFieldforFormula(String environment, String mod
 	return false;
 }
 
-public boolean updateFieldLabelInOverridePage(WebDriver driver,String fieldName,String UpdatedfieldName,action action){
+public boolean updateFieldLabelInOverridePage(WebDriver driver,String fieldName,String UpdatedfieldName,action action){	
 	SetupPageBusinessLayer  setup = new SetupPageBusinessLayer(driver);
 	WebElement ele;
 	WebElement ele2;
@@ -2911,19 +2911,22 @@ public boolean updateFieldLabelInOverridePage(WebDriver driver,String fieldName,
 	
 	ThreadSleep(2000);
 	boolean status=false;
+	int count =10;
+	ele2=FindElement(driver, masterFieldLabel, "", action.SCROLLANDBOOLEAN, 10);
 	
-	while(!setup.getOverrideSetupFieldNextBtn(20).getAttribute("class").contains("disabled")){
-		ele = FindElement(driver, fieldLabelOverride, fieldName, action.SCROLLANDBOOLEAN, 10);
+	while(!setup.getOverrideSetupFieldNextBtn(20).getAttribute("class").contains("disabled")&& ele2==null && count<5){
+		click(driver, setup.getOverrideSetupFieldNextBtn(20), "override field next button", action.SCROLLANDBOOLEAN);
+		log(LogStatus.INFO, "Successfully click on override next button going to find field label:"+fieldName+" on next page", YesNo.No);
 		ele2=FindElement(driver, masterFieldLabel, "", action.SCROLLANDBOOLEAN, 10);
-		ThreadSleep(1000);
-		if(status){
-			break;
-			
-		}
+		count++;
+	}
 		
 		
+	
+	
 		
 		if(ele2!=null){
+			ele = FindElement(driver, fieldLabelOverride, fieldName, action.SCROLLANDBOOLEAN, 10);
 			ThreadSleep(2000);
 			if(doubleClickUsingAction(driver, ele)){
 				log(LogStatus.INFO, "going for edit override field label of field:"+fieldName, YesNo.No);
@@ -2949,12 +2952,11 @@ public boolean updateFieldLabelInOverridePage(WebDriver driver,String fieldName,
 			
 			
 		}else{
-			click(driver, setup.getOverrideSetupFieldNextBtn(20), "override field next button", action.SCROLLANDBOOLEAN);
 			log(LogStatus.INFO, "Successfully click on override next button going to find field label:"+fieldName+" on next page", YesNo.No);
 			
 		}
 		
-	}
+	
 	
 	switchToDefaultContent(driver);
 	return false;

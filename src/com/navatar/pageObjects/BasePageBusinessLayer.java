@@ -536,6 +536,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return flag;
 	}
+	
+	
 
 	/**
 	 * @param projectName
@@ -1593,7 +1595,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			else
 				xpath = "//span[text()='" + labelTextBox + "']/..//following-sibling::div//input";
 		} else {
-			xpath = "//label[text()='" + labelTextBox + "']/..//span//input";
+			xpath ="//span[text()='" + labelTextBox + "']/ancestor::div//input[@title='Search Contacts']";
 		}
 
 		ele = FindElement(driver, xpath, labelTextBox, action, timeOut);
@@ -1724,7 +1726,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		boolean flag = false;
 		String actionDropDown = showMoreActionDropDownList.toString().replace("_", " ");
 
-		if (clickOnShowMoreDropdownOnly(projectName, pageName)) {
+		if (clickOnShowMoreDropdownOnly(projectName, pageName,actionDropDown)) {
 			ThreadSleep(3000);
 			log(LogStatus.INFO, "clicked on show more actions icon", YesNo.No);
 			if (pageName.equals(PageName.TaskPage))
@@ -1767,7 +1769,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		boolean flag = false;
 		String actionDropDown = showMoreActionDropDownList.toString().replace("_", " ");
 
-		if (clickOnShowMoreDropdownOnly(projectName, pageName)) {
+		if (clickOnShowMoreDropdownOnly(projectName, pageName,actionDropDown)) {
 			ThreadSleep(3000);
 			log(LogStatus.INFO, "clicked on show more actions icon", YesNo.No);
 			if (pageName.equals(PageName.TaskPage))
@@ -1782,7 +1784,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			if (ele!=null) {
 				log(LogStatus.INFO, "button: " + actionDropDown + " present in action dropdown", YesNo.No);
 				flag = true;
-				clickOnShowMoreDropdownOnly(projectName, pageName);
+				clickOnShowMoreDropdownOnly(projectName, pageName,actionDropDown);
 			} else {
 				// log(LogStatus.ERROR, "Not able to click on "+actionDropDown+" link",
 				// YesNo.Yes);
@@ -1790,7 +1792,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				ele = FindElement(driver, xpath, actionDropDown, action.BOOLEAN, 10);
 				if (ele!=null) {
 					flag = true;
-					clickOnShowMoreDropdownOnly(projectName, pageName);
+					clickOnShowMoreDropdownOnly(projectName, pageName,actionDropDown);
 				} else {
 					log(LogStatus.ERROR, "Not able to click on " + actionDropDown + " link", YesNo.Yes);
 				}
@@ -1826,8 +1828,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					+ "']";
 		} else {
 			// Need to write ofr copy if same
-			xpath = "//label[text()='" + labelFieldTextBox + "']/..//following-sibling::ul//li//span[@title='" + name
-					+ "']";
+			xpath = "//span[text()='"+labelFieldTextBox+"']/ancestor::div//*[@title='"+name+"']";
 		}
 
 		ele = FindElement(driver, xpath, labelFieldTextBox, action, timeOut);
@@ -1875,7 +1876,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ThreadSleep(2000);
 		if (sendKeys(driver, ele, textValue, "Related To Text Label", action)) {
 			log(LogStatus.INFO, "Enter Value to Related To Text Box : " + textValue, YesNo.No);
-			ThreadSleep(1000);
+			ThreadSleep(2000);
 
 			ele = getContactNameOrRelatedAssociationNameOnTask(projectName, pageName, label, textValue, action, timOut);
 			if (clickUsingJavaScript(driver, ele, "Selected " + textValue + " From Label : " + label, action)) {
@@ -2008,7 +2009,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 * @param pageName
 	 * @return true if able to click o Show more action Icon
 	 */
-	public boolean clickOnShowMoreDropdownOnly(String projectName, PageName pageName) {
+	public boolean clickOnShowMoreDropdownOnly(String projectName, PageName pageName,String field) {
 		String xpath = "";
 		int i = 1;
 		WebElement ele = null;
@@ -2017,14 +2018,18 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			refresh(driver);
 		}
 		ThreadSleep(5000);
-		xpath = "(//span[contains(text(),'more actions')])[1]/..";
+		xpath = "//div[contains(@class,'ViewMode-normal')]//*[contains(@class,'actionsContainer')]//span[text()='Show more actions']/ancestor::button";
 		if (PageName.TestCustomObjectPage.equals(pageName) || PageName.Object3Page.equals(pageName)) {
 			xpath = "(//span[contains(text(),'more actions')])[1]/..";
-		} else if (PageName.TaskPage.equals(pageName)) {
-			xpath = "//a[@title='Show one more action']";
 		} else if (PageName.SDGPage.equals(pageName)) {
 			xpath = "(//span[contains(text(),'More options')])[1]/..";
+		}else if (PageName.TaskPage.equals(pageName)&&field.equalsIgnoreCase("New Task")) {
+			xpath = "//a[@title='Show one more action']";
+		
+		}else if (PageName.TaskPage.equals(pageName)) {
+			xpath = "//div[contains(@class,'ViewMode-normal')]//*[contains(@class,'actionsContainer')]//span[text()='Show more actions']/ancestor::a";
 		}
+		
 		ele = FindElement(driver, xpath, "show more action down arrow", action.SCROLLANDBOOLEAN, 30);
 		if (click(driver, ele, "show more action on " + pageName.toString(), action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "clicked on show more actions icon", YesNo.No);
@@ -2378,7 +2383,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 */
 	public WebElement getActivityTimeLineItem(String projectName, PageName pageName,
 			ActivityTimeLineItem activityTimeLineItem, int timeOut) {
-		clickUsingJavaScript(driver, getactivityLineItemsDropdown(projectName, 10), "dropdown", action.BOOLEAN);
+		//clickUsingJavaScript(driver, getactivityLineItemsDropdown(projectName, 10), "dropdown", action.BOOLEAN);
 
 		String xpath = "";
 		// WebElement ele;
@@ -2387,12 +2392,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (ActivityTimeLineItem.New_Meeting.equals(activityTimeLineItem)
 				|| ActivityTimeLineItem.New_Task.equals(activityTimeLineItem)
 				|| ActivityTimeLineItem.New_Call.equals(activityTimeLineItem)) {
-			xpath = "//div[contains(@class,'slds-grid primaryFieldRow')]//*[text()='" + activity + "']";
+			xpath = "//div[contains(@class,'ViewMode-normal')]//div[@class='slds-card-wrapper activityPanel']//*[ text()='" + activity + "']";
 		} else {
 			if (projectName.equalsIgnoreCase(ProjectName.PE.toString()))
 				xpath = "//div[@id='completeDiv' and @class='cActivityTimeline']/..//*[text()='" + activity + "']";
 			else
-				xpath = "//div[@id='completeDiv' and @class='cActivityTimeline']/..//*[text()='" + activity + "']";
+				xpath = "//div[contains(@class,'ViewMode-normal')]//div[@class='slds-card-wrapper activityPanel']//*[ text()='"+activity+ "']";
 		}
 
 		List<WebElement> li = FindElements(driver, xpath, activityTimeLineItem.toString());
@@ -2554,10 +2559,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		dueDate = getDateValueAccording(dueDate, AmericaLosAngelesTimeZone);
 		String actualValue = "";
 
-		String nextStepsXpath = "//div[@class='Next_steps']/following-sibling::div[@class='activity-timeline'][1]";
-		String subjectXpath = nextStepsXpath + "//*[@title='" + subject + "']";
+		String nextStepsXpath = "//div[@class='standardTimelineUpcomingActivities']";
+		String subjectXpath = nextStepsXpath + "//a[@title='" + subject + "']";
 
-		String dateXpath = subjectXpath + "/..//following-sibling::*//*[contains(text(),'" + dueDate + "')]";
+		String dateXpath = subjectXpath + "/ancestor::li//*[contains(text(),'" + dueDate + "')]";
 		ele = FindElement(driver, dateXpath, dueDate.toString(), action.SCROLLANDBOOLEAN, 20);
 
 		// Due DATE
@@ -2887,11 +2892,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String btname = btnName.toString();
 		String xpath = "";
 		if (isInside) {
-			xpath = "//*[contains(text(),'" + toggleTab
-					+ "')]/ancestor::article//button[@title='" + btname + "']";
+			xpath = "//button[text()='"+toggleTab+"' or @title='"+toggleTab+"']";
 		} else {
-			xpath = "//*[contains(text(),'" + toggleTab + "')]/ancestor::article//button[@title='"
-					+ btname + "']";
+			xpath = "//button[text()='"+toggleTab+"' or @title='"+toggleTab+"']";
 		}
 		WebElement ele = FindElement(driver, xpath, toggleTab + " >> " + btname, action, timeOut);
 		scrollDownThroughWebelement(driver, ele, "Toggle Button : " + btname);
