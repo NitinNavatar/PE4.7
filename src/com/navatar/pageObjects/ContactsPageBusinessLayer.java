@@ -438,6 +438,48 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		return false;
 	}
 	
+	public boolean UpdateLegalName(String projectName, PageName pageName, String legalName) {
+		
+		if(clickOnShowMoreActionDownArrow(projectName, pageName, ShowMoreActionDropDownList.Edit, 30)){
+			log(LogStatus.INFO, "clicked on edit button", YesNo.No);
+
+			ThreadSleep(2000);
+			if (sendKeys(driver, getLegalName(projectName, 60), legalName, "Account Name",
+					action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(2000);
+					if (click(driver,
+							FindElement(driver,
+									"//*[text()='Legal Name']/..//*[@title='"+legalName+"']",
+									"Legal Name List", action.THROWEXCEPTION, 30),
+							legalName + "   :   Account Name", action.BOOLEAN)) {
+						appLog.info(legalName + "  is present in list.");
+					} else {
+						appLog.info(legalName + "  is not present in the list.");
+						return false;
+					}
+				
+			} else {
+				appLog.error("Not able to enter legal name");
+				return false;
+			}
+		}
+
+			if (click(driver, getNavigationTabSaveBtn(projectName, 60), "Save Button", action.SCROLLANDBOOLEAN)) {
+				appLog.info("Clicked on save button");
+				ThreadSleep(3000);
+				if (getNavigationTabSaveBtn(projectName, 5) != null) {
+					click(driver, getNavigationTabSaveBtn(projectName, 60), "save", action.BOOLEAN);
+				}
+				return true;
+			} else {
+				appLog.info("Not able to click on save button");
+			log(LogStatus.INFO, "Not able to clicked on edit button so cannot Account Name ", YesNo.Yes);
+			BaseLib.sa.assertTrue(false, "Not able to clicked on edit button so cannot Account Name ");
+		}
+		
+						
+		return false;
+	}
 	
 	/**@author Azhar Alam
 	 * @param projectName

@@ -22,6 +22,7 @@ import com.navatar.generic.EnumConstants.*;
 import com.navatar.pageObjects.*;
 import com.relevantcodes.extentreports.LogStatus;
 
+
 public class Module6 extends BaseLib{
 	public static double dealReceivedScore=1.0,loiScore=5.0,closedScore=5.0;
 	@Parameters({ "projectName"})
@@ -1231,6 +1232,7 @@ public class Module6 extends BaseLib{
 				if (click(driver, dp.getconvertToPortfolio(10),"convert to portfolio button", action.BOOLEAN)) {
 					
 					if (click(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
+						ThreadSleep(2000);
 						if (dp.getconvertToPortfolioMessageRepeat(10)!=null) {
 							String text=dp.getconvertToPortfolioMessageRepeat(10).getText();
 							if (text.contains(dp.convertToPortfolioRepeat(M6Ins3))) {
@@ -1278,7 +1280,7 @@ public class Module6 extends BaseLib{
 			if (ip.clickOnAlreadyCreatedItem(projectName, M6Deal5, 10)) {
 				if (click(driver, dp.getconvertToPortfolio(10),"convert to portfolio button", action.BOOLEAN)) {
 					if (click(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
-						
+						ThreadSleep(2000);
 						if (dp.getconvertToPortfolioMessageUnhandledFlow(10)!=null) {
 							if (dp.getconvertToPortfolioMessageUnhandledFlow(10).getText().contains(dp.unhandledError)) {
 								log(LogStatus.INFO,"successfully verified unhandled flow message",YesNo.Yes);
@@ -1372,8 +1374,8 @@ public class Module6 extends BaseLib{
 			String parentID = switchOnWindow(driver);
 			if (parentID!=null) {
 
-				if(setup.searchStandardOrCustomObject(environment, mode, object.Institution)) {
-					if(setup.clickOnObjectFeature(environment, mode, object.Institution, ObjectFeatureName.recordTypes)) {
+				if(setup.searchStandardOrCustomObject(environment, mode, object.Firm)) {
+					if(setup.clickOnObjectFeature(environment, mode, object.Firm, ObjectFeatureName.recordTypes)) {
 						if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10), rt+Keys.ENTER, "status", action.BOOLEAN)) {
 							if (setup.clickOnAlreadyCreatedLayout(rt)) {
 								switchToFrame(driver, 10, setup.getFrame(PageName.RecordTypePortfolioCompany, 10));
@@ -1441,6 +1443,7 @@ public class Module6 extends BaseLib{
 					
 					if (click(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
 						if (dp.getconvertToPortfolioMessageRepeat(10)!=null) {
+							
 							String text=dp.getconvertToPortfolioMessageRepeat(10).getText();
 							if (text.contains(dp.convertToPortfolioRepeat(M6Ins3))) {
 								log(LogStatus.INFO,"successfully verified already portfolio message",YesNo.Yes);
@@ -1487,6 +1490,7 @@ public class Module6 extends BaseLib{
 				if (click(driver, dp.getconvertToPortfolio(10),"convert to portfolio button", action.BOOLEAN)) {
 
 					if (click(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
+						
 						String text=dp.getconvertToPortfolioMessageAfterNext(10).getText();
 
 						if (text.contains(dp.convertToPortfolioAfterNext(M6Ins6))) {
@@ -1546,17 +1550,20 @@ public class Module6 extends BaseLib{
 			String parentID = switchOnWindow(driver);
 			if (parentID!=null) {
 
-				if(setup.searchStandardOrCustomObject(environment, mode, object.Institution)) {
-					if(setup.clickOnObjectFeature(environment, mode, object.Institution, ObjectFeatureName.recordTypes)) {
+				if(setup.searchStandardOrCustomObject(environment, mode, object.Firm)) {
+					if(setup.clickOnObjectFeature(environment, mode, object.Firm, ObjectFeatureName.recordTypes)) {
 						if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10), InstRecordType.Portfolio.toString()+Keys.ENTER, "status", action.BOOLEAN)) {
 							if (setup.clickOnAlreadyCreatedLayout(InstRecordType.Portfolio.toString())) {
 								switchToFrame(driver, 10, setup.getFrame(PageName.RecordTypePortfolioCompany, 10));
 								if (click(driver, setup.getEditButton(environment,Mode.Classic.toString(),10), "edit", action.BOOLEAN)) {
 									switchToDefaultContent(driver);
-									switchToFrame(driver, 10, setup.getFrame(PageName.RecordTypePortfolioCompany, 10));
 									ThreadSleep(2000);
+									switchToFrame(driver, 10, setup.getFrame(PageName.RecordTypePortfolioCompany, 10));
+									ThreadSleep(5000);
 									setup.getRecordTypeLabel(projectName, "Record Type Label", 10).sendKeys(rt);
-									switchToAlertAndAcceptOrDecline(driver, 20, action.ACCEPT);
+		
+									ThreadSleep(2000);switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
+									
 									if (sendKeys(driver, setup.getRecordTypeLabel(projectName, "Record Type Label", 10), rt, "label", action.BOOLEAN)){
 										if (sendKeysWithoutClearingTextBox(driver, setup.getRecordTypeLabel(projectName, "Record Type Name", 10), updateLabel, "label", action.BOOLEAN)){
 											switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
@@ -1698,8 +1705,8 @@ public class Module6 extends BaseLib{
 			String parentID = switchOnWindow(driver);
 			if (parentID!=null) {
 
-				if(setup.searchStandardOrCustomObject(environment, mode, object.Institution)) {
-					if(setup.clickOnObjectFeature(environment, mode, object.Institution, ObjectFeatureName.recordTypes)) {
+				if(setup.searchStandardOrCustomObject(environment, mode, object.Firm)) {
+					if(setup.clickOnObjectFeature(environment, mode, object.Firm, ObjectFeatureName.recordTypes)) {
 						if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10), rt+Keys.ENTER, "status", action.BOOLEAN)) {
 							if (setup.clickOnAlreadyCreatedLayout(rt)) {
 								switchToFrame(driver, 10, setup.getFrame(PageName.RecordTypePortfolioCompany, 10));
@@ -1709,6 +1716,7 @@ public class Module6 extends BaseLib{
 									switchToFrame(driver, 10, setup.getFrame(PageName.RecordTypePortfolioCompany, 10));
 									ThreadSleep(2000);
 										if (sendKeys(driver, setup.getRecordTypeLabel(projectName, "Record Type Name", 10), updateLabel, "label", action.BOOLEAN)){
+											ThreadSleep(2000);
 											switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
 										}
 									ThreadSleep(2000);
@@ -1782,6 +1790,7 @@ public class Module6 extends BaseLib{
 				if (click(driver, dp.getconvertToPortfolio(10),"convert to portfolio button", action.BOOLEAN)) {
 					
 					if (click(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
+						ThreadSleep(2000);
 						if (dp.getconvertToPortfolioMessageRepeat(10)!=null) {
 							String text=dp.getconvertToPortfolioMessageRepeat(10).getText();
 							if (text.contains(dp.convertToPortfolioRepeat(M6Ins3))) {
@@ -1829,7 +1838,7 @@ public class Module6 extends BaseLib{
 			if (ip.clickOnAlreadyCreatedItem(projectName, M6Deal8, 10)) {
 				if (click(driver, dp.getconvertToPortfolio(10),"convert to portfolio button", action.BOOLEAN)) {
 					if (click(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
-						
+						ThreadSleep(2000);
 						if (dp.getconvertToPortfolioMessageUnhandledFlow(10)!=null) {
 							if (dp.getconvertToPortfolioMessageUnhandledFlow(10).getText().contains(dp.unhandledError)) {
 								log(LogStatus.INFO,"successfully verified unhandled flow message",YesNo.Yes);
@@ -1900,8 +1909,8 @@ public class Module6 extends BaseLib{
 			String parentID = switchOnWindow(driver);
 			if (parentID!=null) {
 
-				if(setup.searchStandardOrCustomObject(environment, mode, object.Institution)) {
-					if(setup.clickOnObjectFeature(environment, mode, object.Institution, ObjectFeatureName.recordTypes)) {
+				if(setup.searchStandardOrCustomObject(environment, mode, object.Firm)) {
+					if(setup.clickOnObjectFeature(environment, mode, object.Firm, ObjectFeatureName.recordTypes)) {
 						if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10), rt+Keys.ENTER, "status", action.BOOLEAN)) {
 							if (setup.clickOnAlreadyCreatedLayout(rt)) {
 								switchToFrame(driver, 10, setup.getFrame(PageName.RecordTypePortfolioCompany, 10));
@@ -1913,7 +1922,7 @@ public class Module6 extends BaseLib{
 									//setup.getRecordTypeLabel(projectName,"Record Type Name", 10).sendKeys(updateLabel);
 									//if(sendKeys(driver, setup.getRecordTypeLabel(projectName,"Record Type Name", 10), , "name", action.SCROLLANDBOOLEAN)) {
 									if(!isSelected(driver, setup.getactiveCheckbox(10), "active checkbox")){
-									if (click(driver, setup.getactiveCheckbox(10), "active", action.BOOLEAN)) {
+									if (clickUsingJavaScript(driver, setup.getactiveCheckbox(10), "active", action.BOOLEAN)) {
 										log(LogStatus.INFO, "activeCheckbox is now checked",YesNo.No);
 
 									}else {
@@ -1954,8 +1963,8 @@ public class Module6 extends BaseLib{
 					sa.assertTrue(false, "institution object is not clickable");
 				}
 				ThreadSleep(500);
-				if(setup.searchStandardOrCustomObject(environment,mode, object.Profiles)) {
-					log(LogStatus.INFO, "click on Object : "+object.Profiles, YesNo.No);
+				if(setup.searchStandardOrCustomObject(environment,mode, object.Deal)) {
+					log(LogStatus.INFO, "click on Object : "+object.Deal, YesNo.No);
 					ThreadSleep(2000);
 					switchToDefaultContent(driver);
 					switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
@@ -2091,6 +2100,7 @@ public class Module6 extends BaseLib{
 				if (click(driver, dp.getconvertToPortfolio(10),"convert to portfolio button", action.BOOLEAN)) {
 					
 					if (click(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
+						ThreadSleep(3000);
 						if (dp.getconvertToPortfolioMessageRepeat(10)!=null) {
 							String text=dp.getconvertToPortfolioMessageRepeat(10).getText();
 							if (text.contains(dp.convertToPortfolioRepeat(M6Ins3))) {
@@ -2212,11 +2222,14 @@ public class Module6 extends BaseLib{
 						if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10), excelLabel.Stage.toString(), "stage", action.BOOLEAN)) {
 							if (setup.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
 								switchToDefaultContent(driver);
+								ThreadSleep(3000);
 								switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
 								WebElement ele=dp.findActivateLink(projectName, Stage.Closed.toString());
-								if (click(driver, ele, "activate closed", action.SCROLLANDBOOLEAN)) {
+								
+								if (clickUsingJavaScript(driver, ele, "activate closed", action.SCROLLANDBOOLEAN)) {
 									ThreadSleep(3000);
 									switchToDefaultContent(driver);
+									ThreadSleep(5000);
 									switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
 										
 									ele=dp.findDeactivateLink(projectName, Stage.Closed.toString());
@@ -2227,7 +2240,7 @@ public class Module6 extends BaseLib{
 										log(LogStatus.SKIP,"not able to activate closed value",YesNo.Yes);
 									}
 									ele=setup.clickOnEditInFrontOfFieldValues(projectName, Stage.Closed.toString());
-									if (click(driver, ele, "closed", action.BOOLEAN)) {
+									if (clickUsingJavaScript(driver, ele, "closed", action.BOOLEAN)) {
 										switchToDefaultContent(driver);
 										ThreadSleep(3000);
 										switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
@@ -2243,10 +2256,10 @@ public class Module6 extends BaseLib{
 											
 											if(ele!=null) {
 												log(LogStatus.INFO, "successfully renamed closed value", YesNo.No);
-												if (click(driver, ele, "deactivate link", action.SCROLLANDBOOLEAN)) {
-													ThreadSleep(3000);
-													driver.switchTo().alert().accept();
-													//switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+												if (clickUsingActionClass(driver, ele)) {
+													
+													//driver.switchTo().alert().accept();
+													switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
 													switchToDefaultContent(driver);
 													switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
 														
@@ -2445,11 +2458,13 @@ public class Module6 extends BaseLib{
 						if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10), excelLabel.Stage.toString(), "stage", action.BOOLEAN)) {
 							if (setup.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
 								switchToDefaultContent(driver);
+								ThreadSleep(3000);
 								switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
 								WebElement ele=dp.findActivateLink(projectName, Stage.Closed_Updated.toString());
 								if (click(driver, ele, "activate closed", action.SCROLLANDBOOLEAN)) {
 									ThreadSleep(3000);
 									switchToDefaultContent(driver);
+									ThreadSleep(3000);
 									switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
 										
 									ele=dp.findDeactivateLink(projectName, Stage.Closed_Updated.toString());
@@ -2611,6 +2626,7 @@ public class Module6 extends BaseLib{
 									switchToDefaultContent(driver);
 									ThreadSleep(3000);
 									switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
+									ThreadSleep(3000);
 									sendKeys(driver, setup.getFieldLabelTextBox1(10), Stage.Closed.toString(), "label", action.BOOLEAN);
 
 
@@ -2826,6 +2842,7 @@ public class Module6 extends BaseLib{
 							sa.assertTrue(false,"could not verify convert to portfolio as cross button not clicked");
 							log(LogStatus.SKIP,"could not verify convert to portfolio as cross button not clicked",YesNo.Yes);
 						}
+						ThreadSleep(3000);
 						if (click(driver, dp.getfinishButton(10), "finish", action.BOOLEAN)) {
 							log(LogStatus.INFO, "clicked on finish button", YesNo.No);
 						}else {
@@ -4261,6 +4278,85 @@ public class Module6 extends BaseLib{
 		lp.CRMlogout();
 		sa.assertAll();
 	}
+	
+	@Parameters({ "projectName"})
+	@Test
+public void M6tc026_1_VerifyPathComponent(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString(),excelLabel.Last_Stage_Change_Date.toString()
+		};
+		String labelValues[]={Stage.Closed.toString(),Stage.Closed.toString(),todaysDateSingleDigit};
+		String labelName1[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString(),excelLabel.Last_Stage_Change_Date.toString()
+		};
+		String labelValues1[]={Stage.Due_Diligence.toString(),Stage.Due_Diligence.toString(),todaysDateSingleDigit};
+		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.Object4Tab,YesNo.No);	
+			if (ip.clickOnAlreadyCreatedItem(projectName, M6Deal3, 10)) {
+				WebElement ele;
+				if(dp.checkValueOfPathComponentValueOfStage(Stage.Closed.toString(), 10)) {
+					log(LogStatus.INFO,"stage Closed on path component successfully verified",YesNo.Yes);
+
+				}else {
+					sa.assertTrue(false,"stage Closed on path component could not be verified");
+					log(LogStatus.SKIP,"stage Closed on path component could not be verified",YesNo.Yes);
+				}
+				ele=dp.getmarkStageAsCompleteButton(10);
+				if (click(driver, ele, "mark stage as complete", action.BOOLEAN)) {
+					ThreadSleep(3000);
+					refresh(driver);
+					ThreadSleep(3000);
+					if(dp.checkValueOfPathComponentValueOfStage(Stage.Closed.toString(), 10)) {
+						log(LogStatus.INFO,"stage DD on path component successfully verified",YesNo.Yes);
+
+					}else {
+						sa.assertTrue(false,"stage DD on path component could not be verified");
+						log(LogStatus.SKIP,"stage DD on path component could not be verified",YesNo.Yes);
+					}
+  ele=dp.selectPathComponent(projectName, Stage.Due_Diligence.toString());
+				if (click(driver, ele,"stage Due_Diligence" , action.BOOLEAN)) {
+					ele=dp.getmarkAsCurrentStage(10);
+					if (click(driver, ele,"mark as current stage" , action.BOOLEAN)) {
+						ThreadSleep(3000);
+						refresh(driver);
+						ThreadSleep(3000);
+						for (int i =0;i<labelName.length;i++) {
+							if (fp.FieldValueVerificationOnFundPage(projectName, labelName1[i],labelValues1[i],false)) {
+								log(LogStatus.SKIP,"successfully verified "+labelName1[i],YesNo.No);
+
+							}else {
+								sa.assertTrue(false,"Not Able to verify "+labelName1[i]);
+								log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
+							}
+
+						}
+					}else {
+						sa.assertTrue(false,"mark as curent stage btuton is not clickable");
+						log(LogStatus.SKIP,"mark as curent stage btuton is not clickable",YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false,"stage closed button is not clickable");
+					log(LogStatus.SKIP,"stage closed button is not clickable",YesNo.Yes);
+				}
+			}
+			else {
+				sa.assertTrue(false,M6Deal3+" deal is not clickable");
+				log(LogStatus.SKIP,M6Deal3+" deal is not clickable",YesNo.Yes);
+			}
+		}else {
+			sa.assertTrue(false,"deal tab is not clickable");
+			log(LogStatus.SKIP,"deal tab is not clickable",YesNo.Yes);
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}}
 	@Parameters({ "projectName"})
 	@Test
 	public void M6tc027_LastStageChangedFundriaisingPrecondition(String projectName) {
@@ -4406,6 +4502,7 @@ public class Module6 extends BaseLib{
 					}
 
 				}
+				ThreadSleep(2000);
 				if(dp.checkValueOfPathComponentValueOfStage(stage.replace("_", " "), 10)) {
 					log(LogStatus.INFO,"stage on path component successfully verified "+stage,YesNo.Yes);
 						
@@ -4466,6 +4563,7 @@ public class Module6 extends BaseLib{
 					}
 
 				}
+				ThreadSleep(2000);
 				if(dp.checkValueOfPathComponentValueOfStage(stage.replace("_", " "), 10)) {
 					log(LogStatus.INFO,"stage on path component successfully verified "+stage,YesNo.Yes);
 						
@@ -4513,8 +4611,18 @@ public class Module6 extends BaseLib{
 					ele=dp.selectPathComponent(projectName, stage);
 				if (click(driver, ele,"stage "+stage , action.BOOLEAN)) {
 					ele=dp.getmarkAsCurrentStage(10);
-					if (click(driver, ele,"mark as current stage" , action.BOOLEAN)) {
+					if (clickUsingJavaScript(driver, ele,"")) {
+						log(LogStatus.SKIP,"Able to click on mark as current stage",YesNo.Yes);
+
 						ThreadSleep(3000);
+						if(clickUsingActionClass(driver, frp.getdoneButton(projectName,20))) {
+							log(LogStatus.SKIP,"Able to click on  popup done button",YesNo.Yes);
+
+							
+						}else {
+							sa.assertTrue(false,"not Able to click on popup done button");
+							log(LogStatus.SKIP,"not Able to click on popup done button",YesNo.Yes);
+						}
 						refresh(driver);
 						ThreadSleep(3000);
 						for (int i =0;i<labelName.length;i++) {
@@ -4693,6 +4801,7 @@ public class Module6 extends BaseLib{
 									}
 										if (click(driver, ele, "edit", action.SCROLLANDBOOLEAN)) {
 											switchToDefaultContent(driver);
+											ThreadSleep(3000);
 											switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
 											
 											if (sendKeys(driver, sp.getRecordTypeLabel(projectName, "Label", 10), newstage, "label", action.BOOLEAN)){

@@ -4018,14 +4018,20 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getDropdownOnTaskPopUp(String projectName,PageName pageName,String label,action action,int timeOut) {
 		String xpath="";
 		label = label.replace("_", " ");
-		if (PageName.TaskPage.toString().equals(pageName.toString()) || PageName.NewEventPopUp.toString().equals(pageName.toString()))
-				//||PageName.CallPopUp.toString().equals(pageName.toString()) || PageName.Meet.toString().equals(pageName.toString()))
-			{
-			xpath = "//span[text()='"+label+"']/../following-sibling::div//a";
+		if (PageName.TaskPage.toString().equals(pageName.toString())
+				|| PageName.NewEventPopUp.toString().equals(pageName.toString()))
+		// ||PageName.CallPopUp.toString().equals(pageName.toString()) ||
+		// PageName.Meet.toString().equals(pageName.toString()))
+		{
+			xpath = "//span[text()='" + label + "']/../following-sibling::div//a";
+
+		} else if (PageName.Object2Page.toString().equals(pageName.toString())) {
+			xpath = "//span[text()='" + label + "']/../following-sibling::div//a";
+
 		} else {
-			 xpath="//label[text()='"+label+"']/following-sibling::div//input";
+			xpath = "//label[text()='" + label + "']/following-sibling::div//input";
 		}
-		
+
 		WebElement ele =  FindElement(driver, xpath,label ,action, timeOut);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "Drop Down : "+label);
 	}
@@ -4537,14 +4543,27 @@ public abstract class BasePage extends BaseLib {
 	@FindBy(xpath = "//frame[@title='Results']")
 	private WebElement emailUploadPageFrame;
 	
-	@FindBy(xpath="//*[@title='Delete' or text()='Delete']")
-	private WebElement deleteButton1;
 	
 	/**
 	 * @return the addFilterLogicLink
 	 */
 	public WebElement getDeleteButton(String projectName,int timeOut) {
-		return isDisplayed(driver, deleteButton1, "Visibility", timeOut, "Delete Button");
+		WebElement ele=null;
+		
+	String xpath="//*[@title='Delete' or text()='Delete']";
+	List<WebElement> list= FindElements(driver, xpath, "Delete Button");
+	
+	for(WebElement element:list) {
+		ele=isDisplayed(driver, element, "Visibility", timeOut, "Delete Button");
+		if(ele!=null) {
+			
+			ele=element;
+			break;
+		}
+		
+		
+	}
+		return ele;
 	}
 	
 	@FindBy(xpath = "//input[@title='Clone']")
@@ -4587,17 +4606,29 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, editName, "Visibility", timeOut, "Edit Name");
 	}
 	
-	
-	@FindBy(xpath="//button[@title='Delete' or text()='Delete']")
-	private WebElement deleteButtonPopUp;
+
 	
 	/**
 	 * @return the addFilterLogicLink
 	 */
 	public WebElement getDeleteButtonPopUp(String projectName,int timeOut) {
-		return isDisplayed(driver, deleteButtonPopUp, "Visibility", timeOut, "Delete Button PopUp");
+		WebElement ele=null;
+		
+		String xpath="//button[@title='Delete' or text()='Delete']";
+		List<WebElement> list= FindElements(driver, xpath, "Delete Button PopUp");
+		
+		for(WebElement element:list) {
+		ele =isDisplayed(driver, element, "Visibility", timeOut, "Delete Button PopUp");
+        if(ele!=null) {
+			
+			ele=element;
+			break;
+		}
+		
+		
 	}
-	
+		return ele;
+	}
 
 	@FindBy(xpath="//h2[contains(text(),'Delete')]/../following-sibling::div//*[@title='Delete']")
 	private WebElement deleteButtonOnDeletePopUp;
