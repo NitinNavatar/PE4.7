@@ -437,13 +437,25 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 						
 		return false;
 	}
-	
+	/**@author Sahil Bansal
+	 * @param projectName
+	 * @param pageName
+	 * @param legalName
+	 * @description This is used to update legal name of contact
+	 */
 	public boolean UpdateLegalName(String projectName, PageName pageName, String legalName) {
 		
 		if(clickOnShowMoreActionDownArrow(projectName, pageName, ShowMoreActionDropDownList.Edit, 30)){
 			log(LogStatus.INFO, "clicked on edit button", YesNo.No);
-
-			ThreadSleep(2000);
+			if (click(driver, getLegalCrossIcon(projectName, 60), "Legal Cross Icon", action.SCROLLANDBOOLEAN)) {
+				appLog.info("Clicked on Legal Cross icon");
+				ThreadSleep(3000);
+			} else {
+				appLog.info("Not able to click on Cross Icon button");
+			log(LogStatus.INFO, "Not able to clicked on edit button so cannot Account Name ", YesNo.Yes);
+			BaseLib.sa.assertTrue(false, "Not able to clicked on edit button so cannot Account Name ");
+		}
+		
 			if (sendKeys(driver, getLegalName(projectName, 60), legalName, "Account Name",
 					action.SCROLLANDBOOLEAN)) {
 					ThreadSleep(2000);

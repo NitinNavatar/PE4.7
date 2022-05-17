@@ -439,6 +439,8 @@ public class CommonVariables {
 		public static String M7NEvent10Subject,M7NEvent10StartDate,M7NEvent10StartTime,M7NEvent10EndDate,M7NEvent10EndTime,M7NEvent10Name;
 		public static String M7NEvent11Subject,M7NEvent11StartDate,M7NEvent11StartTime,M7NEvent11EndDate,M7NEvent11EndTime,M7NEvent11Name;
 		public static String M7NEvent12Subject,M7NEvent12StartDate,M7NEvent12StartTime,M7NEvent12EndDate,M7NEvent12EndTime,M7NEvent12Name;
+		public static String M7NEvent13Subject,M7NEvent13StartDate,M7NEvent13StartTime,M7NEvent13EndDate,M7NEvent13EndTime,M7NEvent13Name;
+		public static String M7NEvent14Subject,M7NEvent14StartDate,M7NEvent14StartTime,M7NEvent14EndDate,M7NEvent14EndTime,M7NEvent14Name;
 		
 		//Module 8 
 	public static String M8_Object1,M8_Object2,M8_Object3,M8_Object4,M8_Object5,M8_Object6;
@@ -2100,6 +2102,20 @@ public class CommonVariables {
 			M7NEvent12EndTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7NEvent12", excelLabel.End_Time);
 			M7NEvent12Name=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7NEvent12", excelLabel.Name);
 		
+		
+			M7NEvent13Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7NEvent13", excelLabel.Subject);
+			M7NEvent13StartDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7NEvent13", excelLabel.Start_Date);
+			M7NEvent13StartTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7NEvent13", excelLabel.Start_Time);
+			M7NEvent13EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7NEvent13", excelLabel.End_Date);
+			M7NEvent13EndTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7NEvent13", excelLabel.End_Time);
+			M7NEvent13Name=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7NEvent13", excelLabel.Name);
+		
+			M7NEvent14Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7NEvent14", excelLabel.Subject);
+			M7NEvent14StartDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7NEvent14", excelLabel.Start_Date);
+			M7NEvent14StartTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7NEvent14", excelLabel.Start_Time);
+			M7NEvent14EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7NEvent14", excelLabel.End_Date);
+			M7NEvent14EndTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7NEvent14", excelLabel.End_Time);
+			M7NEvent14Name=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "M7NEvent14", excelLabel.Name);
 		
 		
 		case "Module8" :
