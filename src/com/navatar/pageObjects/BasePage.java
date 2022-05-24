@@ -3,6 +3,7 @@
  */
 package com.navatar.pageObjects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,7 +17,6 @@ import com.navatar.generic.EnumConstants.*;
 import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.CommonLib.*;
 
-import java.nio.channels.InterruptedByTimeoutException;
 import java.util.Iterator;
 import java.util.List;
 /**
@@ -236,6 +236,18 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, relatedListRecordPageSetting, "Visibility", timeOut, "relatedListRecordPageSetting");
 	}
 	
+	@FindBy(xpath = "//h2[text()='Tabs']/..//div[@class='uiTabBar']")
+	private WebElement relatedTabBar;
+	
+	
+
+	/**
+	 * @return the relatedListRecordPageSetting
+	 */
+	public WebElement getRelatedTabBar(int timeOut) {
+		return isDisplayed(driver, relatedTabBar, "Visibility", timeOut, "related tab list nav bar");
+	}
+	
 	@FindBy(xpath = "//img[@alt='Select Activity Timeline']")
 	private WebElement activityTimelineRecordPageSetting;
 	
@@ -391,7 +403,7 @@ public abstract class BasePage extends BaseLib {
 	
 	
 	
-	@FindBy(xpath = "//a[contains(@title,'Manage Licenses')]")
+	@FindBy(xpath = "//a[contains(@title,'Manage Licenses')][contains(@title,'PE')]")
 	private WebElement manageLicensesLink;
 
 	/**
@@ -540,7 +552,15 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getCustomTabAddBtn(int timeOut) {
 		return isDisplayed(driver, customTabAddBtn, "Visibility", timeOut, "Custom Tab Add Button");
 	}
-	
+	@FindBy(xpath="//a//img[@title='Add']")
+	private WebElement AddBtn;
+
+	/**
+	 * @return the customTabAddBtn
+	 */
+	public WebElement getAddBtn(int timeOut) {
+		return isDisplayed(driver, AddBtn, "Visibility", timeOut, "Custom Tab Add Button");
+	}
 	@FindBy(xpath = "//label[text()='Available Fields']/../following-sibling::select")
 	private WebElement availableFieldsLayout;
 	
@@ -592,6 +612,12 @@ public abstract class BasePage extends BaseLib {
 	public WebElement geteditAssignment(String projectName,int timeOut) {
 		return isDisplayed(driver, editAssignment, "Visibility", timeOut, "editAssignment");
 		
+	}@FindBy(xpath = "//button[text()='Page Layout Assignment']")
+	private WebElement pageLayoutAssignment;
+	
+	public WebElement getpageLayoutAssignment(String projectName,int timeOut) {
+		return isDisplayed(driver, pageLayoutAssignment, "Visibility", timeOut, "editAssignment");
+		
 	}
 	
 	@FindBy(xpath = "//select[@id='defaultCompactLayoutSelector']")
@@ -640,7 +666,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, navatarInvestorManagerTab, "Visibility", timeOut, "Navatar Investor Manager Tab");
 	}
 
-	@FindBy(xpath="(//div[contains(@class,'uiTooltip')])[7]")
+	@FindBy(xpath="//button[contains(@class,'userProfile')]/div")
 	private WebElement salesForceLightingIcon;
 
 	/**
@@ -1283,11 +1309,23 @@ public abstract class BasePage extends BaseLib {
 	 private WebElement accountLayoutFrame;
 	 @FindBy(xpath="//iframe[contains(@title,'Salesforce - Enterprise Edition')]")
 	 private WebElement pipelineLayoutFrame;
-
+	 @FindBy(xpath="//iframe[contains(@title,'Convert to Portfolio')]")
+	 private WebElement convertToPortfolioFrame;
+	
 	 @FindBy(xpath="//iframe[contains(@title,'Picklist Edit: ')]")
 	 private WebElement statusPicklistFrame;
 	 @FindBy(xpath="//iframe[contains(@title,'Sharing Settings ~ Salesforce - Enterprise Edition')]")
 	 private WebElement sharingSettingsFrame;
+	 @FindBy(xpath="//iframe[contains(@title,'Navigation Custom Field: Navigation Type')]")
+	 private WebElement customNavigationFrame;
+	 @FindBy(xpath="//iframe[contains(@title,'Add Picklist Values: Navigation Type')]")
+	 private WebElement NavigationPickListFrame;
+	 @FindBy(xpath="//iframe[contains(@title,'Affiliation Custom Field: Role ~ Salesforce - Enterprise Edition')]")
+	 private WebElement affiliationFrame;
+	 @FindBy(xpath="//iframe[contains(@title,'Fundraising Contact Custom Field: Role ~ Salesforce - Enterprise Edition')]")
+	 private WebElement fundRaisingFrame;
+	 @FindBy(xpath="//iframe[contains(@title,'Financing Custom Field: Lender Status ~ Salesforce - Enterprise Edition')]")
+	 private WebElement financingFrame;
 	 
 	 public WebElement getstatusPicklistFrame(int timeOut) {
 			return isDisplayed(driver, statusPicklistFrame, "Visibility", timeOut, "status Picklist Frame");
@@ -1351,6 +1389,27 @@ public abstract class BasePage extends BaseLib {
 		  ele=isDisplayed(driver, dashboardFrame, "Visibility", timeOut, "Sharing Settings Page frame");
 	  }else if (pageName.toString().equalsIgnoreCase(PageName.AccountReferral.toString())){
 		  ele=isDisplayed(driver,accountReferralFrame , "Visibility", timeOut, "Sharing Settings Page frame");
+
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.CustomNavigationPage.toString())){
+		  ele=isDisplayed(driver,customNavigationFrame , "Visibility", timeOut, "Custom Navigation Frame");
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.NavigationPickListPage.toString())){
+		  ele=isDisplayed(driver,NavigationPickListFrame , "Visibility", timeOut, "Navigation PickList Page");
+
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.RecordTypePortfolioCompany.toString())){
+		  ele=isDisplayed(driver,RTPortfolioCFrame , "Visibility", timeOut, "RecordTypePortfolioCompany");
+
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.ConvertToPortfolioFrame.toString())){
+		  ele=isDisplayed(driver,convertToPortfolioFrame , "Visibility", timeOut, "convert to portfolio frame");
+
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.AffiliationPage.toString())){
+		  ele=isDisplayed(driver,affiliationFrame , "Visibility", timeOut, "affiliation Frame");
+
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.Fundraising_ContactPage.toString())){
+		  ele=isDisplayed(driver,fundRaisingFrame , "Visibility", timeOut, "FR Contact Frame");
+
+	  }else if (pageName.toString().equalsIgnoreCase(PageName.Financing.toString())){
+		  ele=isDisplayed(driver,financingFrame , "Visibility", timeOut, "Financing Frame");
+
 	  }
 	  return ele; 
 	 }
@@ -1379,6 +1438,12 @@ public abstract class BasePage extends BaseLib {
 		}
 		
 	}
+	
+	 @FindBy(xpath="//label[text()='Active']/../following-sibling::td//input")
+	 private WebElement activeCheckbox;
+	 public WebElement getactiveCheckbox(int timeOut) {
+			return isDisplayed(driver, activeCheckbox, "Visibility", timeOut, "active Checkbox");
+		}
 	/**
 	 * @param editButton the editButton to set
 	 */
@@ -3070,8 +3135,17 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getScrollBoxforPageGrid(String environment,String mode,int timeOut) {
 		return isDisplayed(driver, scrollBoxforPageGrid, "Visibility", timeOut, "Scroll Box for Page Grid");
 		}
+	@FindBy(xpath="//button[@title='Refresh']")
+	private WebElement refrshActivity;
+
+	/**
+	 * @return the scrollBoxforPageGrid
+	 */
+	public WebElement getrefrshActivity(String projectName,int timeOut) {
+		return isDisplayed(driver, refrshActivity, "Visibility", timeOut, "refrshActivity");
+		}
 	
-	@FindBy(xpath="//*[@title='Select List View']")
+	@FindBy(xpath="//button[@title='Select a List View']")
 	private WebElement selectListIcon_Lighting;
 
 	/**
@@ -3081,6 +3155,32 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, selectListIcon_Lighting, "Visibility", timeOut, "Select List Icon");
 		}
 	
+	
+	
+	
+	/**
+	 * @return the select list label
+	 */
+	public WebElement getSelectListLabelLink(String labelName,int timeOut) {
+		String xpath="//li[contains(@class,'slds-dropdown__item has-icon--left')]//span[text()='"+labelName+"']/..";
+		WebElement ele=FindElement(driver, xpath, "select list label", action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "Select List label");
+		}
+	
+	
+	
+	/* return all links of select list icon option list*/
+	public List<WebElement> getAllLinkOfSelectListIconOption(String mode,String tabName,int timeOut) {
+		String xpath;
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			
+			xpath="//select[@id='fcf'][@title='View:']/option";
+		}else{
+			
+			xpath="//ul[@aria-label='"+tabName+" | List Views']/li/a/span";
+		}
+		return FindElements(driver, xpath, "Select list icon link");
+		}
 	
 	@FindBy(xpath="//input[contains(@name,'search-input')]")
 	private WebElement searchIcon_Lighting;
@@ -3147,11 +3247,11 @@ public abstract class BasePage extends BaseLib {
 		WebElement ele=null;
 		String xpath="";
 		if(mode.toString().equalsIgnoreCase(Mode.Lightning.toString())) {
-			xpath="a";
+			xpath="button";
 		}else {
 			xpath="input";
 		}
-		return isDisplayed(driver, FindElement(driver, "//"+xpath+"[@title='Create Fundraisings']", "Create Fundraising button on "+pageName, action.SCROLLANDBOOLEAN,timeOut), "Visibility",timeOut, "Create Fundraising button on "+pageName);
+		return isDisplayed(driver, FindElement(driver, "//"+xpath+"[text()='Bulk Fundraising' or @title='Bulk Fundraising']", "Create Fundraising button on "+pageName, action.SCROLLANDBOOLEAN,timeOut), "Visibility",timeOut, "Create Fundraising button on "+pageName);
 	}
 	
 	
@@ -3688,7 +3788,7 @@ public abstract class BasePage extends BaseLib {
 	 * @return the newButton
 	 */
 	public WebElement getNewButton(String projectName,int timeOut) {
-		
+			ThreadSleep(5000);
 			return newButtonLighting;	
 		
 		
@@ -3760,7 +3860,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, createNewTaskSubjectTextbox, "Visibility", timeOut, "createNewTaskSubjectTextbox");
 	}
 	*/
-	@FindBy(xpath = "//label[text()='Name']/..//span//input")
+	@FindBy(xpath = "//span[text()='Name']/ancestor::label/following-sibling::div//input")
 	private WebElement nameTextBoxInNewTask;
 	
 	public WebElement getnameTextBoxInNewTask(String projectName,int timeOut) {
@@ -3771,9 +3871,17 @@ public abstract class BasePage extends BaseLib {
 	@FindBy(xpath = "//span[text()='Due Date']/..//following-sibling::div//input")
 	private WebElement dueDateTextBoxInNewTask;
 	
+	@FindBy(xpath = "//label[text()='Due Date']/..//input")
+	private WebElement dueDateTextBoxInNewTask1;
+	
 	public WebElement getdueDateTextBoxInNewTask(String projectName,int timeOut) {
+		WebElement ele = isDisplayed(driver, dueDateTextBoxInNewTask, "Visibility", timeOut, "dueDateTextBoxInNewTask");;
+		if (ele!=null) {
+			return ele;
+		} else {
 
-		return isDisplayed(driver, dueDateTextBoxInNewTask, "Visibility", timeOut, "dueDateTextBoxInNewTask");
+		}
+		return isDisplayed(driver, dueDateTextBoxInNewTask1, "Visibility", timeOut, "dueDateTextBoxInNewTask");
 	}
 	
 	public String returnXpathOfDropdownInTaskPage(String field) {
@@ -3910,12 +4018,20 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getDropdownOnTaskPopUp(String projectName,PageName pageName,String label,action action,int timeOut) {
 		String xpath="";
 		label = label.replace("_", " ");
-		if (PageName.TaskPage.toString().equals(pageName.toString()) || PageName.NewEventPopUp.toString().equals(pageName.toString())) {
-			xpath = "//span[text()='"+label+"']/../following-sibling::div//a";
+		if (PageName.TaskPage.toString().equals(pageName.toString())
+				|| PageName.NewEventPopUp.toString().equals(pageName.toString()))
+		// ||PageName.CallPopUp.toString().equals(pageName.toString()) ||
+		// PageName.Meet.toString().equals(pageName.toString()))
+		{
+			xpath = "//span[text()='" + label + "']/../following-sibling::div//a";
+
+		} else if (PageName.Object2Page.toString().equals(pageName.toString())) {
+			xpath = "//span[text()='" + label + "']/../following-sibling::div//a";
+
 		} else {
-			 xpath="//label[text()='"+label+"']/following-sibling::div//input";
+			xpath = "//label[text()='" + label + "']/following-sibling::div//input";
 		}
-		
+
 		WebElement ele =  FindElement(driver, xpath,label ,action, timeOut);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "Drop Down : "+label);
 	}
@@ -4241,6 +4357,11 @@ public abstract class BasePage extends BaseLib {
 	return isDisplayed(driver, editButton_Lighting, "Visibility", timeOut, "Edit Button Lighting");	
 	}
 	
+	public List<WebElement> getCrossIconOfSelectedItem(String label,int timeOut){
+		
+		String xpath="//span[text()='"+label+"']/ancestor::label/following-sibling::div//li//a[@class='deleteAction']";
+		return FindElements(driver, xpath, "delete icon cross icon");
+	}
 	public List<WebElement> getDropdownListOnSearchActivitiesAttachmentSettings(String projectName,int timeOut) {
 		String xpath = "//td[@class='td2']//select[contains(@name,'page:form:advancefilterid')]";
 		return FindElements(driver, xpath, "dropdown list");
@@ -4383,7 +4504,15 @@ public abstract class BasePage extends BaseLib {
 		String xpath="//div[@class='changeRecordTypeRow']//span[text()='"+recordType+"']/../..//input";
 		WebElement ele = null;
 		ele=FindElement(driver, xpath, "radio button of record type "+recordType, action.SCROLLANDBOOLEAN,timeOut);
-		return isDisplayed(driver,ele,"visibility",timeOut,"radio button of record type "+recordType);
+		ele=isDisplayed(driver,ele,"visibility",timeOut,"radio button of record type "+recordType);
+		if (ele!=null) {
+			return ele;
+		} else {
+			 xpath="//fieldset//span[contains(text(),'"+recordType+"')]/preceding-sibling::span";
+			ele=FindElement(driver, xpath, "radio button of record type "+recordType, action.SCROLLANDBOOLEAN,timeOut);
+			return isDisplayed(driver,ele,"visibility",timeOut,"radio button of record type "+recordType);
+		}
+		
 	}
 	
 	/**
@@ -4414,14 +4543,27 @@ public abstract class BasePage extends BaseLib {
 	@FindBy(xpath = "//frame[@title='Results']")
 	private WebElement emailUploadPageFrame;
 	
-	@FindBy(xpath="//*[@title='Delete' or text()='Delete']")
-	private WebElement deleteButton1;
 	
 	/**
 	 * @return the addFilterLogicLink
 	 */
 	public WebElement getDeleteButton(String projectName,int timeOut) {
-		return isDisplayed(driver, deleteButton1, "Visibility", timeOut, "Delete Button");
+		WebElement ele=null;
+		
+	String xpath="//*[@title='Delete' or text()='Delete']";
+	List<WebElement> list= FindElements(driver, xpath, "Delete Button");
+	
+	for(WebElement element:list) {
+		ele=isDisplayed(driver, element, "Visibility", timeOut, "Delete Button");
+		if(ele!=null) {
+			
+			ele=element;
+			break;
+		}
+		
+		
+	}
+		return ele;
 	}
 	
 	@FindBy(xpath = "//input[@title='Clone']")
@@ -4464,17 +4606,29 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, editName, "Visibility", timeOut, "Edit Name");
 	}
 	
-	
-	@FindBy(xpath="//span[@title='Delete' or text()='Delete']")
-	private WebElement deleteButtonPopUp;
+
 	
 	/**
 	 * @return the addFilterLogicLink
 	 */
 	public WebElement getDeleteButtonPopUp(String projectName,int timeOut) {
-		return isDisplayed(driver, deleteButtonPopUp, "Visibility", timeOut, "Delete Button PopUp");
+		WebElement ele=null;
+		
+		String xpath="//button[@title='Delete' or text()='Delete']";
+		List<WebElement> list= FindElements(driver, xpath, "Delete Button PopUp");
+		
+		for(WebElement element:list) {
+		ele =isDisplayed(driver, element, "Visibility", timeOut, "Delete Button PopUp");
+        if(ele!=null) {
+			
+			ele=element;
+			break;
+		}
+		
+		
 	}
-	
+		return ele;
+	}
 
 	@FindBy(xpath="//h2[contains(text(),'Delete')]/../following-sibling::div//*[@title='Delete']")
 	private WebElement deleteButtonOnDeletePopUp;
@@ -4563,14 +4717,19 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, doneButtonListView, "Visibility", timeOut, "doneButtonListView");
 	}
 	
+	
+	public WebElement getdoneButton(String projectName,int timeOut) {
+		return driver.findElement(By.xpath("//div[@class='modal-footer slds-modal__footer']//button[@type='submit']"));
+	}
+	
 	@FindBy(xpath = "//div[contains(@class,'SecondaryDisplayManager')]//button[text()='Save']")
 	private WebElement filterSave;
 	
 	public WebElement getfilterSave(String projectName,int timeOut) {
 		return isDisplayed(driver, filterSave, "Visibility", timeOut, "filterSave");
 	}
-	
-	@FindBy(xpath = "//div[@id='completeDiv' and @class='cActivityTimeline']/..//img")
+	@FindBy(xpath = "//div[contains(@class,'slds-grid primaryFieldRow')]//*[text()='Show more actions']/../..")
+	//@FindBy(xpath = "//div[@id='completeDiv' and @class='cActivityTimeline']/..//img")
 	private WebElement activityLineItemsDropdown;
 	
 	public WebElement getactivityLineItemsDropdown(String projectName,int timeOut) {
@@ -4744,14 +4903,14 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, statusDropDownList, "Visibility", timeOut, "Status ");
 	}
 	
-	@FindBy(xpath = "//*[@data-component-id='DisplayFieldSet']//*[@id='parentDiv']/div")
+	@FindBy(xpath = "//*[@id='parentDiv']/div")
 	private WebElement defaultImageXpath;
 
 	public WebElement getDefaultImageXpath(int timeOut) {
 		return isDisplayed(driver, defaultImageXpath, "Visibility", timeOut, "default image xpath");
 	}
 	
-	@FindBy(xpath = "//*[@role='tabpanel']//*[@data-component-id='DisplayFieldSet']//img")
+	@FindBy(xpath = "//*[contains(@data-component-id,'DisplayFieldSet')]//img")
 	private WebElement uploadedImageRelativeXpath;
 	
 	
@@ -4814,7 +4973,7 @@ public abstract class BasePage extends BaseLib {
 	}
 	
 	public WebElement getCustomNumberOfImg(String object,String record,int timeOut) {
-		String xpath ="//article[@class='cRelatedListAccordion']//a[text()='"+object+"']/../../../following-sibling::div//a[text()='"+record+"']/../preceding-sibling::div/*/*/*";
+		String xpath ="//article[contains(@class,'RelatedListAccordion')]//a[text()='"+object+"']/../../../following-sibling::div//a[text()='"+record+"']/../preceding-sibling::div/*/*/*";
 		WebElement ele= FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "img for "+object);
 	}
@@ -4918,6 +5077,16 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, sdgSave, "Visibility", timeOut, "sdgSaveButton");
 		
 	}
+	
+	
+	@FindBy(xpath = "//div[contains(@class,'sdgborder')]//button[@title='Cancel' or text()='Cancel']")
+	private WebElement sdgCancel;
+	
+	public WebElement getsdgCancelButton(String projectName,int timeOut) {
+		return isDisplayed(driver, sdgCancel, "Visibility", timeOut, "sdgCancelbutton");
+		
+	}
+	
 	@FindBy(xpath = "//a[@title='Upload Files']")
 	private WebElement uploadFiles;
 	
@@ -4932,7 +5101,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, deletePhotoButton, "Visibility", timeOut, "deletePhotoButton");
 		
 	}
-	@FindBy(xpath = "(//*[contains(text(),'Actions')]/../../..//following-sibling::div//button[@title='Reload'])[2]")
+	@FindBy(xpath = "(//*[contains(text(),'Actions')]/../../..//following-sibling::div//button[@title='Reload.'])[2]")
 	private WebElement actionsSDGRefresh;
 	
 	public WebElement getactionsSDGRefresh(String projectName,int timeOut) {
@@ -4964,6 +5133,9 @@ public abstract class BasePage extends BaseLib {
 	
 	@FindBy(xpath = "//iframe[@title='dashboard']")
 	private WebElement dashboardFrame;
+	@FindBy(xpath = "//iframe[contains(@title,'Record Type: Portfolio')]")
+	private WebElement RTPortfolioCFrame;
+	
 	
 	@FindBy(xpath = "//button[@title='Clear Selection']")
 	private WebElement crossInSDGEdit;
@@ -4972,5 +5144,282 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, crossInSDGEdit, "Visibility", timeOut, "crossInSDGEdit");
 		
 	}
+	
+
+	/**
+	 * @return the saveButton
+	 */
+	public WebElement getSaveButton(String environment,String mode,int timeOut) {
+		ThreadSleep(2000);
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, saveButtonClassic, "Visibility", timeOut, "Save Button Classic");
+		}else{
+			return isDisplayed(driver, saveButtonLighting, "Visibility", timeOut, "Save Button Lighting");
+		}
+		
+	}
+	
+	@FindBy(xpath="//span[@class='aw-bars-box ']")
+	private WebElement emailProspectSelectProspectsGridScrollBox;
+
+	/**
+	 * @return the emailProspectSelectProspectsGridScrollBox
+	 */
+	public WebElement getEmailProspectSelectProspectsGridScrollBox(int timeOut) {
+		return isDisplayed(driver, emailProspectSelectProspectsGridScrollBox, "Visibility", timeOut, "email prospect select prospect grid scroll box");
+	}
+	
+	@FindBy(xpath="(//div[@class='step_1']//a[@title='Next'])[2]")
+	private WebElement emailProspectStep1NextBtn;
+
+	/**
+	 * @return the emailProspectStep1NextBtn
+	 */
+	public WebElement getEmailProspectStep1NextBtn(int timeOut) {
+		return isDisplayed(driver, emailProspectStep1NextBtn, "Visibility", timeOut, "email prospect steps 1 next button");
+	}
+	
+	@FindBy(xpath="//div[@class='step_2']//a[@title='Next']")
+	private WebElement emailProspectStep2NextBtn;
+
+	/**
+	 * @return the emailProspectStep2NextBtn
+	 */
+	public WebElement getEmailProspectStep2NextBtn(int timeOut) {
+		return isDisplayed(driver, emailProspectStep2NextBtn, "Visibility", timeOut, "email prospect steps 2 nect button");
+	}
+	
+	public WebElement getEmailProspectSendBtn(TopOrBottom topOrBottom, int timeOut) {
+
+
+		WebElement ele=null;
+		String xpath=null;
+
+		if (TopOrBottom.TOP.equals(topOrBottom)) {
+			xpath = "(//div[@class='step_3']//a[@title='Send'])[1]";
+		} else {
+			xpath = "(//div[@class='step_3']//a[@title='Send'])[2]";
+		}
+
+
+		ele = FindElement(driver, xpath, "Send Button : "+topOrBottom, action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "send button : "+topOrBottom);
+	}
+
+	@FindBy(xpath="//a[text()='Finished']")
+	private WebElement emailProspectFinishBtn;
+
+	/**
+	 * @return the emailProspectFinishBtn
+	 */
+	public WebElement getEmailProspectFinishBtn(int timeOut) {
+		return isDisplayed(driver, emailProspectFinishBtn, "Visibility", timeOut, "email prospect finish button");
+	}
+	
+	@FindBy(xpath="//select[contains(@id,'page') and contains(@id,'frm') and contains(@id,'sl1')]")
+	private WebElement emailProspectFolderDropDownList;
+
+	/**
+	 * @return the emailProspectFolderDropDownList
+	 */
+	public WebElement getEmailProspectFolderDropDownList(int timeOut) {
+		return isDisplayed(driver, emailProspectFolderDropDownList, "Visibility", timeOut, "email prospect folder drop downlist");
+	}
+	
+	@FindBy(xpath="(//span[@class='aw-bars-box '])[2]")
+	private WebElement emailProspectStep2CustomEmailtemplateScrollBox;
+
+	/**
+	 * @return the emailProspectStep2CustomEmailtemplateScrollBox
+	 */
+	public WebElement getEmailProspectStep2CustomEmailtemplateScrollBox(int timeOut) {
+		return isDisplayed(driver, emailProspectStep2CustomEmailtemplateScrollBox, "Visibility", timeOut, "email prospect custom email template scroll box");
+	}
+	
+	
+	public WebElement getCustomTabCrossIcon(String projectName,int timeOut) {
+		List<WebElement> eleList = FindElements(driver, "//*[@title='Close this window' or text()='Close this window']", "Cross Icon");
+		try {
+			for (int i=eleList.size()-1;i>=0;i++) {
+				WebElement webElement = eleList.get(i);
+				webElement=isDisplayed(driver, webElement, "Visibility", 2, "Cross Icon");
+				if (webElement!=null) {
+					return webElement;
+				} else {
+
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return null;
+		}
+		return null;
+
+	}
+	
+	
+	public WebElement getCustomTabCancelBtn(String projectName,int timeOut) {
+		List<WebElement> eleList = FindElements(driver, "//*[@title='Cancel' or text()='Cancel']", "Cancel Button");
+		try {
+			for (int i=eleList.size()-1;i>=0;i++) {
+				WebElement webElement = eleList.get(i);
+				webElement=isDisplayed(driver, webElement, "Visibility", 2, "Cross Icon");
+				if (webElement!=null) {
+					return webElement;
+				} else {
+
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return null;
+		}
+		return null;
+
+	}
+	
+	public WebElement getSDGGridDropDown(SDGGridName sdgGridName , String labelName, int timeOut) {
+		String xpath="//*[text()='"+labelName+"']/../following-sibling::*//select[@class='slds-select']";
+		WebElement ele = FindElement(driver, xpath, "SDG grid drop down list "+sdgGridName, action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "SDG grid drop down list "+sdgGridName);
+	
+	}
+	
+	
+	@FindBy (xpath = "//*[@class='outPopupBox']//h2")
+	private WebElement popUpHeader;
+	
+	@FindBy (xpath = "//*[@class='actionBody']//h2")
+	private WebElement popUpHeader1;
+	
+	/**
+	 * @return the navigationPopUpHeader
+	 */
+	public WebElement getPopUpHeader(String projectName,int timeOut) {
+		WebElement ele=isDisplayed(driver, popUpHeader, "Visibility", 10, "PopUp Header");
+		
+		if(ele==null) {
+			 return isDisplayed(driver, popUpHeader1, "Visibility", 10, "PopUp Header");
+			
+		}
+		else return ele;
+	}
+	
+	@FindBy (xpath = "//div[@class='container']//li")
+	private WebElement hitASnagElement;
+	
+	/**
+	 * @return the navigationPopUpHeader
+	 */
+	public WebElement getHitASnagElement(String projectName,int timeOut) {
+		WebElement ele=isDisplayed(driver, hitASnagElement, "Visibility", timeOut, "PopUp Header");
+		return ele;
+	}
+	
+	public WebElement getPopUpHeader1(String projectName,int timeOut) {
+
+		return isDisplayed(driver, popUpHeader1, "Visibility", 10, "PopUp Header");
+
+	}
+	
+	@FindBy(xpath="//*[text()='View Calendar']")
+	private WebElement calenderIcon;
+
+	/**
+	 * @return the calenderIcon
+	 */
+	public WebElement getCalenderIcon(int timeOut) {
+		return isDisplayed(driver, calenderIcon, "Visibility", timeOut, "View Calendar");
+	}
+	
+	@FindBy(xpath="//div[@class='eventList']")
+	private WebElement calenderCellIcon;
+
+	/**
+	 * @return the emailProspectFolderDropDownList
+	 */
+	public WebElement getCalenderCellIcon(int timeOut) {
+		return isDisplayed(driver, calenderCellIcon, "Visibility", timeOut, "Calender Cell Icon");
+	}
+	
+	@FindBy(xpath="//*[contains(text(),' New ')]/../following-sibling::footer/*[@title='Save' or text()='Save']")
+	private WebElement taskNewSaveBtn;
+
+	public WebElement getTaskSaveBtn(String projectName,int timeOut) {
+		return isDisplayed(driver, taskNewSaveBtn, "Visibility", timeOut, "New Task Save Button");
+	}
+	
+	@FindBy(xpath="//*[contains(text(),' Edit') ]/../following-sibling::footer/*[@title='Save' or text()='Save']")
+	private WebElement taskEditSaveBtn;
+	
+	public WebElement geTaskEditSaveBtn(String projectName,int timeOut) {
+		return isDisplayed(driver, taskEditSaveBtn, "Visibility", timeOut, "Edit Task Save Button");
+	}
+	
+	@FindBy(xpath="//*[@name='secondaryFields']//p")
+	private WebElement secondaryField;
+	
+	public WebElement getSecondaryField(String projectName,int timeOut) {
+		return isDisplayed(driver, secondaryField, "Visibility", timeOut, "Secondary Field");
+	}
+	
+	
+	public WebElement getDropdownOnCreationPopUp(String projectName,PageName pageName,String label,action action,int timeOut) {
+		String xpath="";
+		label = label.replace("_", " ");
+		xpath="//label[text()='"+label+"']/following-sibling::div//input";
+		WebElement ele =  FindElement(driver, xpath,label ,action, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "Drop Down : "+label);
+	}
+	
+	@FindBy(xpath = "//button[@title='Move selection to Chosen']")
+	private WebElement addButtonMultipleBox_Lightning;
+
+	public WebElement getAddButtonMultipleBox(int timeOut) {
+		return isDisplayed(driver, addButtonMultipleBox_Lightning, "Visibility", timeOut, "addButtonMultipleBox Select Box Mode Lightning");
+
+	}
+	
+	public WebElement getHeaderSectionGrid(String sectionName,action action,int timeOut) {
+		String xpath2= "//*[@class='test-id__section-header-title slds-truncate' and text()='"+sectionName+"']/../..//button";
+		WebElement element = FindElement(driver, xpath2, "Section :"+sectionName ,action, timeOut);
+		return isDisplayed(driver, element, "Visibility", timeOut, "Section :"+sectionName );
+	}
+	
+	public List<WebElement> getFieldLabelsOfSection(String sectionName,action action,int timeOut) {
+		String xpath = "//*[@class='test-id__section-header-title slds-truncate' and text()='" + sectionName+"']/../../..//*[@class='test-id__field-label']";
+		return FindElements(driver, xpath, "label field of section:"+sectionName);
+	}
+	
+	@FindBy(xpath="//nav[@aria-label='Breadcrumbs']//span")
+	private WebElement pageHeaderName;
+	
+	public WebElement getPageHeaderName(int timeOut) {
+		
+		return isDisplayed(driver, pageHeaderName, "Visibility", timeOut, "Page header name");
+		
+	}
+	
+	@FindBy(xpath="//*[@class='listViewManagerHeaderButton filterButton']//button")
+	private WebElement filterButton;
+	
+	public WebElement getFilterButton(int timeOut) {
+		
+		return isDisplayed(driver, filterButton, "Visibility", timeOut, "filter button");
+		
+	}
+	
+	
+
+	public List<WebElement> getListOfFilterPanelValue(int timeOut) {
+		
+		return FindElements(driver, "//div[@class='slds-panel__body panelBody']//li/div", "Filter value");
+		
+	}
+	
+	
+	
+	
+	
 	
 }

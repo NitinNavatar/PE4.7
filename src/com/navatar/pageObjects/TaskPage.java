@@ -93,4 +93,15 @@ public class TaskPage extends BasePageBusinessLayer {
 		//return isDisplayed(driver, relatedContactsLabel, "Visibility", timeOut, "Related Contact Label");
 	}
 	
+	@FindBy(xpath = "//div[contains(@class,'hint')]//ul[contains(@class,'error')]")
+	 private WebElement DaysErrorMsg;
+	
+	/**
+	 * @return the taskPoUpEditHeader
+	 */
+	public WebElement get14DaysErrorMsg(String projectName,int timeOut) {
+		
+		return isDisplayed(driver, DaysErrorMsg, "Visibility", timeOut, "14DaysErrorMsg");
+	}
+	
 }

@@ -66,16 +66,27 @@ public class ContactsPage extends BasePageBusinessLayer {
 	
 		
 	}
+	
+	public WebElement getcontactTier(String projectName,int timeOut) {
+		
+		WebElement	tierInput=FindElement(driver, "//*[text()='Tier']/..//button", "tier drodown", action.SCROLLANDBOOLEAN, timeOut);
+		
+		return isDisplayed(driver, tierInput, "Visibility", timeOut, "Contact tier");
+
+	
+}
+
+	
 	@FindBy(xpath="//div[@class='requiredInput']//span//input")
 	private WebElement legalName_Classic;
 	
-	@FindBy(xpath="//span[text()='Account Name']/../following-sibling::div//input[@title='Search Accounts']")
+	@FindBy(xpath="//*[text()='Account Name']/following-sibling::*//input[@title='Search Accounts']")
 	private WebElement accountName;
 	
-	@FindBy(xpath="//span[text()='Legal Name']/../following-sibling::div//input[@title='Search Institutions']")
+	@FindBy(xpath="//*[text()='Legal Name']/following-sibling::div//input")
 	private WebElement legalName;
 	
-	@FindBy(xpath="//*[text()='Firm']/following-sibling::div//input[contains(@placeholder,'Search')]")
+	@FindBy(xpath="//*[text()='Legal Name']/following-sibling::*//input[contains(@placeholder,'Search')]")
 	private WebElement firmName;
 
 	/**
@@ -85,8 +96,8 @@ public class ContactsPage extends BasePageBusinessLayer {
 		
 		if (ProjectName.MNA.toString().equals(projectName)) {
 			return isDisplayed(driver, accountName, "Visibility", timeOut, "Account Name");
-		} else if (ProjectName.PE.toString().equals(projectName)) {
-			return isDisplayed(driver, legalName, "Visibility", timeOut, "Legal Name");
+		} else if (projectName.contains(ProjectName.PE.toString())) {
+			return isDisplayed(driver, firmName, "Visibility", timeOut, "Legal Name");
 		}else{
 			return isDisplayed(driver, firmName, "Visibility", timeOut, "Firm Name");
 		}
@@ -94,7 +105,12 @@ public class ContactsPage extends BasePageBusinessLayer {
 		
 	
 	} 
+	@FindBy(xpath = "//label[text()='Legal Name']/following-sibling::div//button")
+	private WebElement LegalCrossIcon;
 	
+	public WebElement getLegalCrossIcon(String projectName,int timeOut) {
+     return isDisplayed(driver, LegalCrossIcon, "Visibility", timeOut, "LegalCrossIcon");
+	}
 	
 	@FindBy(xpath="//table[@class='detailList']//input[@name='con15']")
 	private WebElement emailId_Clasic;
@@ -149,8 +165,8 @@ public class ContactsPage extends BasePageBusinessLayer {
 		
 			//span[text()='Description']/..//following-sibling::textarea
 			xpath="//*[text()='"+finalLabelName+"']";
-			inputXpath="/following-sibling::*/input";
-			textAreaXpath="/following-sibling::*/textarea";
+			inputXpath="/following-sibling::*//input";
+			textAreaXpath="/following-sibling::*//textarea";
 		
 		
 		if(labelName.equalsIgnoreCase(ContactPageFieldLabelText.Description.toString()) || labelName.equalsIgnoreCase(ContactPageFieldLabelText.Mailing_Street.toString()) || 
@@ -387,13 +403,20 @@ public class ContactsPage extends BasePageBusinessLayer {
 		
 	}
 	
-	@FindBy(xpath = "//span[text()='Last Touch Point']/../following-sibling::div//span/*/*/*")
-	private WebElement lastTouchPointValue;
+	@FindBy(xpath = "//span[text()='Last Touchpoint']")
+	private WebElement lastTouchPointLabel;
+	
+	//@FindBy(xpath = "//span[text()='Last Touch Point']/../following-sibling::div//span/*/*/*")
+	
 	public WebElement getlastTouchPointValue(String projectName,int timeOut) {
-		ThreadSleep(10000);
-		return lastTouchPointValue;
-	//	return isDisplayed(driver, lastTouchPointValue, "Visibility", timeOut, "last Touch Point Value");
+
+		return FindElement(driver, "//div[contains(@class,'windowViewMode-normal')]//*[text()='Last Touchpoint']/../following-sibling::div//lightning-formatted-text", "", action.SCROLLANDBOOLEAN, timeOut);
 		
+	}
+	
+	
+	public WebElement getNextTouchPointDateValue(String projectName,int timeOut) {
+		return FindElement(driver, "//div[contains(@class,'windowViewMode-normal')]//span[text()='Next Touchpoint Date']/../following-sibling::div//lightning-formatted-text", "", action.SCROLLANDBOOLEAN, timeOut);
 	}
 	
 	@FindBy(xpath = "//span[text()='Is_Touchpoint']/../following-sibling::div//img")

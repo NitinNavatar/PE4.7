@@ -55,6 +55,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Month;
@@ -68,6 +69,7 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
@@ -249,7 +251,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		try {
 			xpath = locator.toString().split("->")[1].split(": ")[1].substring(0, locator.toString().split("->")[1].split(": ")[1].length()-1).trim();
 		} catch (Exception e){
-			System.out.println("exception aa gya");
+			System.out.println("getting exception while switching in iframe");
 			xpath = "ABC";
 		}
 		for(int i = 0 ; i < 2 ; i++)
@@ -1027,6 +1029,59 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 			return false;
 		}
 	}
+	public static boolean sendKeysUsingActionClassWithoutClear(WebDriver driver, WebElement element, String value, String elementName,
+			action action) {
+		Actions act=new Actions(driver);
+		try {
+			if (element != null) {
+				if(action==CommonLib.action.SCROLLANDTHROWEXCEPTION || action==CommonLib.action.SCROLLANDBOOLEAN)
+				scrollDownThroughWebelement(driver, element, elementName);
+				
+				act.moveToElement(element).sendKeys(value).build().perform();;
+				AppListeners.appLog.info("Passed value to element: " + elementName + "\nPassed Value: " + value);
+				return true;
+			} else {
+				AppListeners.appLog.info(elementName + " Text box is not present on this page.");
+				if (action == CommonLib.action.THROWEXCEPTION || action == CommonLib.action.SCROLLANDTHROWEXCEPTION)
+					throw new AppException(elementName + " Text box is not present on this page.");
+				return false;
+			}
+		} catch (Exception e) {
+//			AppListeners.appLog.info("Cannot enter text in " + elementName + "\nReason: " + e.getMessage());
+			errorMessage="Cannot enter text in " + elementName + "\nReason: " + e.getMessage();
+			failedMethod(e);
+			if (action == CommonLib.action.THROWEXCEPTION || action == CommonLib.action.SCROLLANDTHROWEXCEPTION)
+				throw new AppException("Cannot enter text in ." + elementName + "\nReason: " + e.getMessage());
+			return false;
+		}
+	}
+	
+	public static boolean sendKeysUsingJavaScript(WebDriver driver, WebElement element, String value, String elementName,
+			action action) {
+		JavascriptExecutor js=  (JavascriptExecutor) driver;
+		try {
+			if (element != null) {
+				if(action==CommonLib.action.SCROLLANDTHROWEXCEPTION || action==CommonLib.action.SCROLLANDBOOLEAN)
+				scrollDownThroughWebelement(driver, element, elementName);
+				
+				js.executeScript("arguments[0].value='"+ value +"';", element);
+				AppListeners.appLog.info("Passed value to element: " + elementName + "\nPassed Value: " + value);
+				return true;
+			} else {
+				AppListeners.appLog.info(elementName + " Text box is not present on this page.");
+				if (action == CommonLib.action.THROWEXCEPTION || action == CommonLib.action.SCROLLANDTHROWEXCEPTION)
+					throw new AppException(elementName + " Text box is not present on this page.");
+				return false;
+			}
+		} catch (Exception e) {
+//			AppListeners.appLog.info("Cannot enter text in " + elementName + "\nReason: " + e.getMessage());
+			errorMessage="Cannot enter text in " + elementName + "\nReason: " + e.getMessage();
+			failedMethod(e);
+			if (action == CommonLib.action.THROWEXCEPTION || action == CommonLib.action.SCROLLANDTHROWEXCEPTION)
+				throw new AppException("Cannot enter text in ." + elementName + "\nReason: " + e.getMessage());
+			return false;
+		}
+	}
 	
 	public static boolean sendKeysAndPressEnter(WebDriver driver, WebElement element, String value, String elementName,
 			action action) {
@@ -1619,12 +1674,13 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		for(int i=0; i < len ; i++){
 			char character = xpath.charAt(i);
 			if(String.valueOf(character).equalsIgnoreCase("'")){
-				if(xpath.charAt(i-1)=='=' || xpath.charAt(i-1)==',' || xpath.charAt(i+1)==')' || xpath.charAt(i+1)==']' || (xpath.charAt(i+1)==' ' && xpath.charAt(i+2)=='o')){
+				if(xpath.charAt(i-1)=='=' || xpath.charAt(i-1)==',' || xpath.charAt(i+1)==')'|| (xpath.charAt(i+1)==' '&&xpath.charAt(i+2)==' ' )|| xpath.charAt(i+1)==']' || (xpath.charAt(i+1)==' ' && xpath.charAt(i+2)=='o')){
 					str.setCharAt(i, '\"');
 				}
 			}
 		}
-		appLog.info("Original Xpath: "+xpath+"\tString builder: "+str);
+		//appLog.info("Original Xpath: "+xpath+"\tString builder: "+str);
+		System.out.println("Original Xpath: "+xpath+"\tString builder: "+str);
 		return String.valueOf(str);
 	}
 	
@@ -1680,6 +1736,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 	}
 		
 	public static void refresh(WebDriver driver){
+		ThreadSleep(1000);
 		driver.navigate().refresh();
 	}
 	
@@ -1701,14 +1758,64 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 						for (int j = 0; j < listofFileName.size(); j++) {
 							scrollDownThroughWebelement(driver, listofFileName.get(j), "");
 							ThreadSleep(500);
-							AppListeners.appLog.info("Comparing:>>" + fileName[i] + ">>With:>>" + listofFileName.get(j).getText().trim());
-							if (fileName[i].equalsIgnoreCase(listofFileName.get(j).getText().trim())) {
-								AppListeners.appLog.info(fileName[i] + " is matched successfully");
+							AppListeners.appLog.info("Comparing:>>" + fileName[i].trim() + ">>With:>>" + listofFileName.get(j).getText().trim());
+							if (fileName[i].trim().equalsIgnoreCase(listofFileName.get(j).getText().trim())) {
+								AppListeners.appLog.info(fileName[i].trim() + " is matched successfully");
 								countFiles++;
 								break;
 							} else if (j == listofFileName.size() - 1) {
-								AppListeners.appLog.info(fileName[i] + " is not matched.");
-								result.add(fileName[i] + " is not matched.");
+								AppListeners.appLog.info(fileName[i].trim() + " is not matched.");
+								result.add(fileName[i].trim() + " is not matched.");
+							}
+						}
+					}					
+				}else {
+					AppListeners.appLog.error("list of webelement is empty so cannot compare name: "+filesName);
+					result.add("list of webelement is empty so cannot compare name: "+filesName);
+				}
+				if (fileName.length == countFiles) {
+					AppListeners.appLog.info("All the files are matched.");
+
+				} else {
+					AppListeners.appLog.info("Files are not matched.");
+					result.add("Files are not matched.");
+				}
+			} else {
+				AppListeners.appLog.info("No Data In Excel Cell.");
+				result.add("No Data In Excel Cell.");
+			}
+		} catch (Exception e) {
+			AppListeners.appLog.info("There are no file to compare.");
+			result.add("There are no file to compare.");
+		}
+		return result;
+	}	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param filesName
+	 * @param listOfFileName
+	 * @return empty list of String if all data is matched other wise return list of false data list
+	 */
+	public static List<String> compareMultipleListSepratedByBreak(WebDriver driver,String filesName, List<WebElement> listOfFileName) {
+		List<String> result = new ArrayList<String>();
+		String[] fileName = filesName.split("<break>");
+		List<WebElement> listofFileName=listOfFileName;
+		int countFiles = 0;
+		try {
+			if (fileName.length != 0) {
+				if(!listofFileName.isEmpty()) {
+					for (int i = 0; i < fileName.length; i++) {
+						for (int j = 0; j < listofFileName.size(); j++) {
+							scrollDownThroughWebelement(driver, listofFileName.get(j), "");
+							ThreadSleep(500);
+							AppListeners.appLog.info("Comparing:>>" + fileName[i].trim() + ">>With:>>" + listofFileName.get(j).getText().trim());
+							if (fileName[i].trim().equalsIgnoreCase(listofFileName.get(j).getText().trim())) {
+								AppListeners.appLog.info(fileName[i].trim() + " is matched successfully");
+								countFiles++;
+								break;
+							} else if (j == listofFileName.size() - 1) {
+								AppListeners.appLog.info(fileName[i].trim() + " is not matched.");
+								result.add(fileName[i].trim() + " is not matched.");
 							}
 						}
 					}					
@@ -2436,6 +2543,20 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		return s;
 	}
 	
+	/**
+	 * @author Ravi Kumar
+	 * @param number
+	 * @return String
+	 */
+	public static String changeNumberIntoUSDollarFormat(String number) {
+		int amount=Integer.valueOf(number);
+		String s=NumberFormat.getCurrencyInstance(new Locale("en", "US")).format(amount);
+		System.out.println("Change US Number Formate >>>>> "+number+"into :"+s);
+		return s;
+	}
+	
+	
+	
 	public static List<String> compareMultipleListContainsByTitle(WebDriver driver,String filesName, List<WebElement> listOfFileName) {
 		List<String> result = new ArrayList<String>();
 		String[] fileName = filesName.split(",");
@@ -2522,6 +2643,23 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
         ThreadSleep(500);
         ac.release(ele).click().build().perform();
         appLog.info("successfully clicked ele using actions class");
+        }
+        catch(Exception e) {
+            log(LogStatus.ERROR, e.toString(), YesNo.Yes);
+            return false;
+        }
+        return true;
+    }
+	
+	public static boolean doubleClickUsingAction(WebDriver driver,WebElement ele) {
+
+        Actions ac = new Actions(driver);
+        try {
+        	
+        ac.moveToElement(ele).build().perform();
+        ThreadSleep(500);
+        ac.doubleClick().build().perform();
+        appLog.info("successfully  double clicked on ele using actions class");
         }
         catch(Exception e) {
             log(LogStatus.ERROR, e.toString(), YesNo.Yes);
@@ -2751,5 +2889,15 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 			}
 			return false;
 		}
+		
+		/**
+		 * @author ANKIT JAISWAL
+		 * @param ls1
+		 * @param ls2
+		 * @return
+		 */
+		public static boolean compareList(List ls1, List ls2){
+		    return ls1.containsAll(ls2) && ls1.size() == ls2.size() ? true :false;
+		     }
 		
 }

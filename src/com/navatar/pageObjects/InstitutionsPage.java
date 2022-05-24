@@ -41,8 +41,19 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 	 */
 	public WebElement getContinueOrNextBtn(String environment,String mode,int timeOut) {
 		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
-			return isDisplayed(driver, continueBtnClassic, "Visibility", timeOut, "Continue Button Classic");	
+			return isDisplayed(driver, continueBtnClassic, "Visibility", timeOut, "Next Button Classic");	
 		}else{
+			
+			List<WebElement> eleList = FindElements(driver, "//span[text()='Next']", "Next Button");
+			for (WebElement webElement : eleList) {
+			webElement=isDisplayed(driver, webElement, "Visibility", 2, "Next Button lightning");
+			if (webElement!=null) {
+					return webElement;
+				} else {
+
+				}
+			}
+			
 			return isDisplayed(driver, nextBtnLighting, "Visibility", timeOut, "Next Button Lighting");
 		}
 		
@@ -115,6 +126,25 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 		}
 	}
 	
+	
+	@FindBy(xpath="//*[text()='Entity Type']/..//input")
+	private WebElement entityTypeDropdownLighting;
+	
+	@FindBy(xpath="//*[text()='Entity Type']/../..//select")
+	private WebElement entityTypeDropdownClassic;
+
+
+	/**
+	 * @return the entity type text bx
+	 */
+	public WebElement getEntityTypeDropdown(String mode,int timeOut) {
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			return isDisplayed(driver, entityTypeDropdownClassic, "Visibility", timeOut, "Entity type dropdown Classic");
+		}else{
+			return isDisplayed(driver, entityTypeDropdownLighting, "Visibility", timeOut, "Entity type dropdown Lightning");
+		}
+	}
+	
 	public WebElement getInstitutionPageTextBoxOrRichTextBoxWebElement(String environment,String mode, String labelName, int timeOut) {
 		WebElement ele=null;
 		String xpath ="",inputXpath="", textAreaXpath="",finalXpath="",finalLabelName="";
@@ -142,7 +172,7 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 			inputXpath="/following-sibling::div/input";
 			textAreaXpath="/following-sibling::div/textarea";
 			if(labelName.toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Institution.toString())) {
-				xpath="//*[contains(text(),'Parent Institution')]";
+				xpath="//*[contains(text(),'Parent Firm')]";
 				inputXpath="/following-sibling::div//input[contains(@placeholder,'Search')]";
 			}
 			else if(labelName.toString().equalsIgnoreCase(InstitutionPageFieldLabelText.Parent_Entity.toString()))
@@ -360,7 +390,7 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 		
 	}
 	
-	@FindBy(xpath="//*[text()='Firm']/following-sibling::*/input")
+	@FindBy(xpath="//*[text()='Legal Name']/following-sibling::*/input")
 	private WebElement legalNameTextBoxLighting;
 	
 	/**
@@ -436,10 +466,10 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 			return isDisplayed(driver, newContactBtn_Lighting, "Visibility", timeOut, "new contact butto Lighting");
 		}
 	
-	@FindBy(xpath="//span[text()='Account Name']/../following-sibling::input")
+	@FindBy(xpath="//*[text()='Account Name']/following-sibling::*//input")
 	private WebElement accountNameMNA;
 	
-	@FindBy(xpath="//span[text()='Legal Name']/../following-sibling::input")
+	@FindBy(xpath="//*[text()='Legal Name']/following-sibling::*//input")
 	private WebElement legalNamePE;
 	
 	@FindBy(xpath="//*[text()='Firm']/following-sibling::*//input")
@@ -452,10 +482,10 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 		
 		if (ProjectName.MNA.toString().equals(projectName)) {
 			return isDisplayed(driver, accountNameMNA, "Visibility", timeOut, "Account Name");
-		} else if (ProjectName.PE.toString().equals(projectName)) {
+		} else if (projectName.contains(ProjectName.PE.toString())) {
 			return isDisplayed(driver, legalNamePE, "Visibility", timeOut, "Legal Name");
 		}else  {
-			return isDisplayed(driver, FirmPEEdge, "Visibility", timeOut, "Firm");
+			return isDisplayed(driver, legalNamePE, "Visibility", timeOut, "Firm");
 		}
 			
 			
@@ -607,4 +637,49 @@ public WebElement getsearchEntitiesTextbox(String projectName,int timeOut) {
 	
 	
 	}
+
+@FindBy(xpath = "//*[text()='Last Modified By']/../following-sibling::div//lightning-formatted-text")
+private WebElement lastModifiedTime;
+
+public WebElement getLastModifiedTime(String projectName,int timeOut) {
+	
+	return isDisplayed(driver, lastModifiedTime, "Visibility", timeOut, "lastModifiedTime");
+
+
+}
+
+	
+	public List<WebElement> getAllInstituitionRecrdTypeList(String mode,int timeOut){
+		String xpath;
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			xpath ="//select[@name='p3']/option";
+			
+		}else{
+		 xpath="//div[@class='changeRecordTypeOptionRightColumn']/span";
+		}
+		return FindElements(driver, xpath,"institution record type list ");
+	}
+
+public WebElement getHighlightPanelFieldLabel(String projectName,String fieldName,int timeOut){
+		
+		WebElement element = null;
+		String xpath = "//div[@class='secondaryFields']//*[@title='"+fieldName+"']";
+		
+		List<WebElement> list= FindElements(driver, xpath, "Highlight panel element");
+		for(WebElement ele:list){
+			
+			element=isDisplayed(driver, ele, "visibility", timeOut, fieldName);
+			
+			if(element!=null){
+						
+				return element;
+			}else{
+				
+			}
+			
+		}
+		
+		return null;
+	}
+	
 }

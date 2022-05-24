@@ -1,5 +1,6 @@
 package com.navatar.pageObjects;
 
+import org.bridj.cpp.std.list;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,6 +14,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 import static com.navatar.generic.CommonLib.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -52,7 +54,29 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, quickSearchInObjectManager_Lighting, "Visibility", timeOut, "quick search in object manager in lighting");
 	}
 
+	public List<WebElement> getFieldsInPageLayoutList(){
+		
+		
+		return FindElements(driver, "//div[@id='fieldTrough']//div[contains(@class,'item')]", "page layout field item");
+	}
+	
+	public List<WebElement> getFieldsListInCompactLayout(){
+		
+		
+		return FindElements(driver, "//*[@class='compactLayoutFields']/li", "Compact layout field item");
+	}
 
+	@FindBy(xpath="//input[@id='quickfind']")
+	private WebElement quickFindInPageLayout_Lighting;
+
+	/**
+	 * @return the quickSearchInObjectManager_Lighting
+	 */
+	public WebElement getQuickFindInPageLayout_Lighting(int timeOut) {
+		return isDisplayed(driver, quickFindInPageLayout_Lighting, "Visibility", timeOut, "quick find in page layout in lighting");
+	}
+
+	
 	@FindBy(xpath="//iframe[contains(@title,'Salesforce - Enterprise Edition')]")
 	private WebElement editPageLayoutFrame_Lighting;
 
@@ -88,7 +112,7 @@ public class SetupPage extends BasePageBusinessLayer {
 	 * @return the userIframe
 	 */
 	public WebElement getSetUpPageIframe(int timeOut) {
-		ThreadSleep(10000);
+		ThreadSleep(20000);
 		return isDisplayed(driver, setupPageIframe, "Visibility", timeOut, "active users iframe");
 	}
 
@@ -102,6 +126,14 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, createUserSaveBtn_Lighting, "Visibility", timeOut, " save button in lighting");
 	}
 
+	@FindBy(xpath="//h3[text()='Installed Packages']/../../../../../..//*[contains(text(),'Navatar PE ')]/../..//td[4]")
+	private WebElement installedPackageVersionNo;
+	
+	public WebElement getInstalledPackageVersion(){
+		
+		return isDisplayed(driver, installedPackageVersionNo, "Visibility", 20, "install paa=ckage verison");
+		
+	}
 	@FindBy(id = "ImportedPackage_font")
 	private WebElement installedPackageLink_Classic;
 
@@ -171,6 +203,25 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getCustomFieldNextBtn(int timeOut) {
 		return isDisplayed(driver, customFieldNextBtn, "Visibility", timeOut, "custom field next button");
 	}
+	
+	@FindBy(xpath = "//input[@id='pageNumField']")
+	private WebElement currentPageNo;
+
+	public WebElement getCurrentPageInput(int timeOut) {
+		return isDisplayed(driver, currentPageNo, "Visibility", timeOut, "current selected page input box");
+	}
+	@FindBy(xpath = "//div[@id='totalPages']")
+	private WebElement totalPageNo;
+
+	public WebElement getTotalPagesCount(int timeOut) {
+		return isDisplayed(driver, totalPageNo, "Visibility", timeOut, "total no of page");
+	}
+	@FindBy(xpath = "//table[@id='nextBtn']")
+	private WebElement overrideSetupFieldNextBtn;
+
+	public WebElement getOverrideSetupFieldNextBtn(int timeOut) {
+		return isDisplayed(driver, overrideSetupFieldNextBtn, "Visibility", timeOut, "override field next button");
+	}
 
 	@FindBy(xpath="//input[@id='quickfind']")
 	private WebElement quickFindSearchBox;
@@ -188,7 +239,15 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getFieldLabelTextBox1(int timeOut) {
 		return isDisplayed(driver, fieldLabelTextBox1, "Visibility", timeOut, "field label text box");
 	}
+	@FindBy(xpath = "//*[text()='Record Type Label']/../following-sibling::td//input")
+	private WebElement recordTypeLabelTextBox1;
 
+	@FindBy(xpath = "//*[text()='Record Type Name']/../following-sibling::td//input")
+	private WebElement recordTypeNameTextBox1;
+
+	public WebElement getrecordTypeNameTextBox1(int timeOut) {
+		return isDisplayed(driver, recordTypeNameTextBox1, "Visibility", timeOut, "field label text box");
+	}
 	@FindBy(xpath = "//*[text()='API Name']/following-sibling::td//input")
 	private WebElement apiLabelTextBox;
 
@@ -197,6 +256,14 @@ public class SetupPage extends BasePageBusinessLayer {
 	}
 	public WebElement getFieldLabelTextBox(int timeOut) {
 		return isDisplayed(driver, fieldLabelTextBox, "Visibility", timeOut, "field label text box");
+	}
+	
+	
+	@FindBy(id="DomainEnumOrId")
+	private WebElement relatedToDropDownList;
+
+	public WebElement getRelatedToDropDownList(int timeOut) {
+		return isDisplayed(driver, relatedToDropDownList, "Visibility", timeOut, "relatedToDropDownList");
 	}
 
 	@FindBy(xpath = "//div[@class='pbTopButtons']//input[@name='save']")
@@ -280,8 +347,8 @@ public class SetupPage extends BasePageBusinessLayer {
 	}
 
 
-	public WebElement getfieldAccessOptionLink(String fieldLabel, String profileName, int timeOut) {
-		String xpath="//div[contains(@id,'"+fieldLabel+"') and contains(@style,'block')]//th[text()='"+profileName+"']/following-sibling::td/a";
+	public WebElement getfieldAccessOptionLink( String profileName, int timeOut) {
+		String xpath="//div[contains(@style,'block')]//th[text()='"+profileName+"']/following-sibling::td[1]//a";
 		WebElement ele= FindElement(driver, xpath,profileName+" link xpath", action.SCROLLANDBOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "visibility", timeOut,profileName+" link xpath");
 	}
@@ -511,7 +578,14 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, timezoneDropdownList, "Visibility", timeOut, "time zone Dropdown List");
 
 	}
-	
+	@FindBy(xpath = "//*[text()='Locale']/../following-sibling::*//select")
+	private WebElement localeDropdownList;
+
+	public WebElement getLocaleDropdownList(int timeOut) {
+		scrollDownThroughWebelement(driver, localeDropdownList, "time zone Dropdown List");
+		return isDisplayed(driver, localeDropdownList, "Visibility", timeOut, "time zone Dropdown List");
+
+	}
 	@FindBy(xpath = "//input[@title='New Action']")
 	private WebElement newActionBtn;
 
@@ -565,5 +639,124 @@ public class SetupPage extends BasePageBusinessLayer {
 
 	public WebElement getvisualForcePagesLink(int timeOut) {
 		return isDisplayed(driver, visualForcePagesLink, "Visibility", timeOut, "Select Page Layout");
+	}
+	
+	@FindBy(xpath = "//h3[text()='Values']/../following-sibling::td//input[@name='new']")
+	private WebElement valuesNewButton;
+
+	public WebElement getValuesNewButton(int timeOut) {
+		return isDisplayed(driver, valuesNewButton, "Visibility", timeOut, "Values New Button");
+	}
+	
+	@FindBy(xpath = "//*[text()='Add Utility Item']")
+	private WebElement addUtilityItem;
+
+	public WebElement getAddUtilityItem(int timeOut) {
+		return isDisplayed(driver, addUtilityItem, "Visibility", timeOut, "Add Utility Item");
+	}
+	
+	@FindBy(xpath = "//div[@class='paletteSearch']//input")
+	private WebElement searchIconOnUtilityItem;
+
+	public WebElement getSearchIconOnUtilityItem(int timeOut) {
+		return isDisplayed(driver, searchIconOnUtilityItem, "Visibility", timeOut, "Search Icon on Add Utility Item");
+	}
+	
+	@FindBy(xpath = "//div[@class='buttonsDiv']/button//span[text()='Move this utility down the list.']/..")
+	private WebElement moveThisUtilityDownTheList;
+
+	public WebElement getMoveThisUtilityDownTheList(int timeOut) {
+		String xpath = "//div[@class='buttonsDiv']/button//span[text()='Move this utility down the list.']/..";
+		List<WebElement> eleList = FindElements(driver, xpath, "Move this utility down the list.");
+		WebElement ele = null;
+		for (WebElement webElement : eleList) {
+		webElement=isDisplayed(driver, webElement, "Visibility", 2, "Move this utility down the list.");
+		if (webElement!=null) {
+				return webElement;
+			} else {
+
+			}
+		}
+		return ele;
+
+	
+	}
+	
+	public WebElement getRemoveUtilityTheList(int timeOut) {
+		String xpath = "//div[@class='buttonsDiv']/button[3]";
+		List<WebElement> eleList = FindElements(driver, xpath, "Remove");
+		WebElement ele = null;
+		for (WebElement webElement : eleList) {
+		webElement=isDisplayed(driver, webElement, "Visibility", 2, "Remove");
+		if (webElement!=null) {
+				return webElement;
+			} else {
+
+			}
+		}
+		return ele;
+
+	
+	}
+	@FindBy(xpath = "//label[text()='Selected Record Types']/..//following-sibling::select")
+	private WebElement SelectedRecordType;
+	
+	public WebElement getSelectedRecordType(int timeOut) {
+		return isDisplayed(driver, SelectedRecordType, "Visibility", timeOut, "SelectedRecordType");
+	}
+	@FindBy(xpath = "//label[text()='Available Record Types']/..//following-sibling::select")
+	private WebElement availableRecordType;
+	
+	public WebElement getavailableRecordType(int timeOut) {
+		return isDisplayed(driver, availableRecordType, "Visibility", timeOut, "availableRecordType");
+	}@FindBy(xpath = "//select[@id='pageLayoutSelector']")
+	private WebElement pageLayoutSelector;
+	
+	public WebElement getpageLayoutSelector(int timeOut) {
+		return isDisplayed(driver, pageLayoutSelector, "Visibility", timeOut, "pageLayoutSelector");
+	}
+	
+	@FindBy(xpath = "//td//input[contains(@title,'Edit')]")
+	private WebElement editButtonOfCreatedFieldAndRelationShip;
+
+	public WebElement getEditButtonOfCreatedFieldAndRelationShip(int timeOut) {
+		return isDisplayed(driver, editButtonOfCreatedFieldAndRelationShip, "Visibility", timeOut, "editButtonOfCreatedFieldAndRelationShip");
+	}
+	
+	
+	@FindBy(xpath = "//input[@value=' Clone ' or  title='Clone']")
+	private WebElement cloneButton;
+
+	public WebElement getCloneButton(int timeOut) {
+		return isDisplayed(driver, cloneButton, "Visibility", timeOut, "cloneButton");
+	}
+	
+	@FindBy(xpath="//input[@id='newProfileName']")
+	private WebElement profileNameTextBox;
+
+	public WebElement getProfileNameTextBox(int timeOut) {
+		return isDisplayed(driver, profileNameTextBox, "Visibility", timeOut, "profileNameTextBox");
+	}
+	
+	@FindBy(xpath="//select[contains(@id,'setupEntSelect')]")
+	private WebElement setupComponentDropdown;
+	
+	public WebElement getOverrideSetupComponentDropdown(int timeOut){
+		
+		scrollDownThroughWebelement(driver, setupComponentDropdown, "setup component dropdown ");
+		return isDisplayed(driver, setupComponentDropdown, "Visibility", timeOut, "setup component dropdown ");
+
+		
+	}
+	
+	@FindBy(xpath="//select[contains(@id,'assocEntSelect')]")
+	private WebElement objectDropdown;
+	
+	public WebElement getOverrideObjectDropdown(int timeOut){
+		
+		scrollDownThroughWebelement(driver, objectDropdown, "override object dropdown");
+		return isDisplayed(driver, objectDropdown, "Visibility", timeOut, "override object dropdown");
+
+		
 	}
 }

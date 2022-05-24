@@ -34,7 +34,7 @@ public class SDGPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, fieldSelectDropdown, "Visibility", timeOut, "field select dropdown");
 	}
 	
-	@FindBy(xpath = "//a[text()='Fields']/../../../following-sibling::*//button[text()='New']")
+	@FindBy(xpath = "//span[contains(@title,'Fields')]/ancestor::article//button[text()='New']")
 	private WebElement fieldNewButton;
 	public WebElement getFieldNewButton(String projectName,int timeOut) {
 		return isDisplayed(driver, fieldNewButton, "Visibility", timeOut, "fieldNewButton");

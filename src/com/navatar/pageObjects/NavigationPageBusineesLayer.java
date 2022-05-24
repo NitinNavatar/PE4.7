@@ -61,8 +61,8 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		for (String abc2 : csvRecords) {
 			csvRecords2=abc2.split(commaSP);
 			navigationLabel2=csvRecords2[0].trim().replace("\"", "");
-			parent2=csvRecords2[2].trim().replace("\"", "");
-			order2=csvRecords2[1].trim().replace("\"", "");
+			parent2=csvRecords2[3].trim().replace("\"", "");
+			order2=csvRecords2[2].trim().replace("\"", "");
 			System.err.println("Parent : "+parent2);
 			System.err.println("order2 : "+order2);
 			int i=0;
@@ -107,8 +107,8 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		for (String abc2 : csvRecords) {
 			csvRecords2=abc2.split(commaSP);
 			navigationLabel2=csvRecords2[0].trim().replace("\"", "");;
-			parent2=csvRecords2[2].trim().replace("\"", "");
-			order2=csvRecords2[1].trim().replace("\"", "");
+			parent2=csvRecords2[3].trim().replace("\"", "");
+			order2=csvRecords2[2].trim().replace("\"", "");
 			int i=0;
 
 			if (parent2.isEmpty() || parent2.equals(" ") ||parent2.equals("") || parent2.equalsIgnoreCase(emptyType) || parent2.equalsIgnoreCase(emptyType1)) {
@@ -232,16 +232,23 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		verifyingNavigationMenuLink(projectName, null, null, action, timeOut);
 		String xpath = "//div[@class='flexipagePage']//span[text()='"+searchValue+"']";
 		WebElement ele = FindElement(driver, xpath, searchValue, action, timeOut);
+		WebElement ele1=null;
 		if (click(driver, ele, searchValue, action)) {
 			log(LogStatus.INFO, "able to click on "+searchValue, YesNo.No);	
+			flag=true;
 			xpath = "//div[@class='flexipagePage']//h2[text()='"+searchValue+"']";
-			ele = FindElement(driver, xpath, searchValue, action, timeOut);
+			ele = FindElement(driver, xpath, searchValue+" header", action, timeOut);
 			ele = isDisplayed(driver, ele, "Visibility", timeOut, searchValue+" Header");
-			if (ele!=null && getNavatarQuickLinkMinimize_Lighting(projectName, timeOut)!=null) {
-				log(LogStatus.INFO, "Header and minimize icon Verified after click on "+searchValue, YesNo.No);	
+			
+			xpath = "//div[@class='flexipagePage']//h2[text()='"+searchValue+"']/..//preceding-sibling::div";
+			ele1 = FindElement(driver, xpath, searchValue+" image", action, timeOut);
+			ele1 = isDisplayed(driver, ele, "Visibility", timeOut, searchValue+" Image");
+			if (ele!=null && ele1!=null && getNavatarQuickLinkMinimize_Lighting(projectName, timeOut)!=null) {
+				log(LogStatus.INFO, "Image , Header and minimize icon Verified after click on "+searchValue, YesNo.No);	
 				flag=true;
 			} else {
-				log(LogStatus.ERROR, "Header and minimize icon Not Verified after click on "+searchValue, YesNo.No);	
+				log(LogStatus.ERROR, "Image , Header and minimize icon Not Verified after click on "+searchValue, YesNo.No);
+				sa.assertTrue(false, "Image , Header and minimize icon Not Verified after click on "+searchValue);
 			}
 			
 		} else {
@@ -249,7 +256,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		}
 		return flag;
 	}
-
+	
 	
 	
 	/**
@@ -274,7 +281,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 				String parentLabel = (String) iterator.next();
 				System.err.println("parentLabel>>>>>>>>> : "+parentLabel);
 				if (k==0) {
-					xpath = "//div[@id='treeview12']//*//*[text()='"+parentLabel+"']";
+					xpath = "//div[contains(@id,'treeview')]//*//*[text()='"+parentLabel+"']";
 					ele = FindElement(driver, xpath, parentLabel, action, timeOut);
 					if (ele!=null) {
 						log(LogStatus.INFO, "1st Navigation Link Find "+parentLabel, YesNo.No);
@@ -306,22 +313,22 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 				System.out.println(">>>>value "+ parentwithChild.get(parent) );
 				xpath="";
 				childs=parentwithChild.get(parent).split(commaSP);
-				for (int i = 0; i < childs.length; i++) {
-					xpath = "//div[@id='treeview12']//*//*[text()='"+childs[i]+"']";
-					ele = FindElement(driver, xpath, childs[i], action, timeOut);
-					ele = isDisplayed(driver, ele, "Visibility", timeOut, childs[i]);
-					if (ele==null) {
-						log(LogStatus.INFO, "Navigation Link not visible "+childs[i], YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "Navigation Link found "+childs[i]+" hence it is not under parent : "+parent, YesNo.Yes);
-						sa.assertTrue(false,"Navigation Link found "+childs[i]+" hence it is not under parent : "+parent);;
-					}
-				}
-				xpath = "//div[@id='treeview12']//*//*[text()='"+parent+"']";
+//				for (int i = 0; i < childs.length; i++) {
+//					xpath = "//div[contains(@id,'treeview')]//*//*[text()='"+childs[i]+"']";
+//					ele = FindElement(driver, xpath, childs[i], action, timeOut);
+//					ele = isDisplayed(driver, ele, "Visibility", timeOut, childs[i]);
+//					if (ele==null) {
+//						log(LogStatus.INFO, "Navigation Link not visible "+childs[i], YesNo.No);
+//					} else {
+//						log(LogStatus.ERROR, "Navigation Link found "+childs[i]+" hence it is not under parent : "+parent, YesNo.Yes);
+//						sa.assertTrue(false,"Navigation Link found "+childs[i]+" hence it is not under parent : "+parent);;
+//					}
+//				}
+				xpath = "//div[contains(@id,'treeview')]//*//*[@class='icon expand-icon glyphicon glyphicon-minus']//following-sibling::*[text()='"+parent+"']";
 				ele = FindElement(driver, xpath, parent, action, timeOut);
-				if (click(driver, ele, parent, action)) {
-					log(LogStatus.INFO, "Able to Click on Navigation Label : "+parent+" so going to check child label : "+parentwithChild.get(parent), YesNo.No);
-					ThreadSleep(2000);
+//				if (click(driver, ele, parent, action)) {
+//					log(LogStatus.INFO, "Able to Click on Navigation Label : "+parent+" so going to check child label : "+parentwithChild.get(parent), YesNo.No);
+//					ThreadSleep(2000);
 					for (int i = 0; i < childs.length; i++) {
 						xpath = xpath+"/../following-sibling::*//*[text()='"+childs[i]+"']";;
 						ele = FindElement(driver, xpath, childs[i], action, timeOut);
@@ -334,10 +341,10 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 							//	break;
 						}
 					}
-				} else {
-					log(LogStatus.ERROR, "Not Able to Click on Navigation Label : "+parent+" so cannot check child label : "+parentwithChild.get(parent), YesNo.Yes);
-					sa.assertTrue(false,"Not Able to Click on Navigation Label : "+parent+" so cannot check child label : "+parentwithChild.get(parent));
-				}
+//				} else {
+//					log(LogStatus.ERROR, "Not Able to Click on Navigation Label : "+parent+" so cannot check child label : "+parentwithChild.get(parent), YesNo.Yes);
+//					sa.assertTrue(false,"Not Able to Click on Navigation Label : "+parent+" so cannot check child label : "+parentwithChild.get(parent));
+//				}
 
 
 			}
@@ -377,7 +384,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		WebElement ele=null;
 		for (i = 0; i < nb.length; i++) {
 			if (i==0) {
-				xpath = "//div[@id='treeview12']//*//*[text()='"+nb[i]+"']";	
+				xpath = "//div[contains(@id,'treeview')]//*//*[text()='"+nb[i]+"']";	
 				ele = FindElement(driver, xpath, nb[i], action, timeOut);
 				
 			} else {
@@ -419,12 +426,18 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	 */
 	public WebElement getNavigationField(String projectName,String navigationField,action action,int timeOut) {
 		navigationField=navigationField.replace("_", " ");
+		String xpath ="";
 		if (navigationField.equalsIgnoreCase(CSVLabel.Parent.toString())) {
-			String xpath = "//*[text()='Parent']/following-sibling::*//*//button";
+			 xpath = "//*[text()='"+navigationField+"']/following-sibling::div//input";
 			WebElement ele = FindElement(driver, xpath, navigationField, action, 5);	
-			click(driver, ele, "PARENT Cross icon", action.BOOLEAN);
+			click(driver, ele, "PARENT Cross icon", action);
+		}else if(navigationField.equalsIgnoreCase(CSVLabel.Navigation_Type.toString())){
+			xpath= "//*[text()='"+navigationField+"']/following-sibling::div//button";
+
+		}else{
+			xpath= "//*[text()='"+navigationField+"']/following-sibling::div//input";
+
 		}
-		String xpath = "//*[text()='"+navigationField+"']/following-sibling::div//input";
 		WebElement ele = FindElement(driver, xpath, navigationField, action, timeOut);
 		scrollDownThroughWebelement(driver, ele, navigationField);
 		return isDisplayed(driver, ele, "Visibility", timeOut, navigationField);
@@ -459,9 +472,9 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		WebElement ele=null;
 		boolean flag = true;
 		refresh(driver);
-		ThreadSleep(2000);
+		ThreadSleep(5000);
 		xpath="(//span[contains(text(),'more actions')])[1]/..";
-		ele=FindElement(driver, xpath, "show more action down arrow", action.SCROLLANDBOOLEAN, 30);
+		ele=isDisplayed(driver, FindElement(driver, xpath, "show more action down arrow", action.SCROLLANDBOOLEAN, 30),"Visibility", 30,"show more action down arrow", action.SCROLLANDBOOLEAN);
 		if(click(driver, ele, "show more action on ", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "clicked on show more actions icon", YesNo.No);
 		}
@@ -564,27 +577,49 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 			navigationField=navigationFieldAndvalue[0];
 			navigationvalue = navigationFieldAndvalue[1];
 			ele =getNavigationField(projectName, navigationField, action, 20);
-			if (sendKeys(driver, ele, navigationvalue, navigationField, action)) {
-				log(LogStatus.INFO, "Able to enter "+navigationField, YesNo.No);
-				
-				if (navigationField.equalsIgnoreCase(CSVLabel.Parent.toString())) {
-					ThreadSleep(10000);
-					if (click(driver,getItemInList(projectName, navigationvalue, action.BOOLEAN, 20),
-							navigationvalue + "   :  Parent Name", action.BOOLEAN)) {
-						log(LogStatus.INFO, navigationvalue+" is available", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, navigationvalue+" is not available", YesNo.Yes);
-						sa.assertTrue(false, navigationvalue+" is not available");
 
-					}	
-				}
-				
-			} else {
-				log(LogStatus.ERROR, "Not Able to enter "+navigationField, YesNo.Yes);
-				sa.assertTrue(false,"Not Able to enter "+navigationField);
+			if (navigationField.equalsIgnoreCase(CSVLabel.Navigation_Type.toString())) {
+
+				if (click(driver, getNavigationTypeLabel(projectName, timeOut), navigationField, action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(2000);
+					appLog.error("Clicked on Navigation Type");
+
+					String xpath = "//*[text()='Navigation Type']/following-sibling::div//*[@title='"+navigationvalue+"']";
+					ele = FindElement(driver,xpath, navigationvalue,action.SCROLLANDBOOLEAN, timeOut);
+					ThreadSleep(2000);
+					if (click(driver, ele, navigationvalue, action.SCROLLANDBOOLEAN)) {
+						appLog.info("Selected navigation type : "+navigationvalue);
+					} else {
+						appLog.error("Not able to Select on navigation type : "+navigationvalue);
+					}
+
+				} else {
+					appLog.error("Not able to Click on Deal stage : ");
+				}	
+			}else{
+				if (sendKeys(driver, ele, navigationvalue, navigationField, action)) {
+					log(LogStatus.INFO, "Able to enter "+navigationField, YesNo.No);
+
+					if (navigationField.equalsIgnoreCase(CSVLabel.Parent.toString())) {
+						ThreadSleep(10000);
+						if (click(driver,getItemInList(projectName, navigationvalue, action.BOOLEAN, 20),
+								navigationvalue + "   :  Parent Name", action.BOOLEAN)) {
+							log(LogStatus.INFO, navigationvalue+" is available", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, navigationvalue+" is not available", YesNo.Yes);
+							sa.assertTrue(false, navigationvalue+" is not available");
+
+						}	
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to enter "+navigationField, YesNo.Yes);
+					sa.assertTrue(false,"Not Able to enter "+navigationField);
+				}	
 			}
+
 		}
-		
+
 	}
 	
 	
@@ -594,8 +629,16 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	public WebElement getRadioButtonforRecordTypeAtAccount(String recordType,int timeOut) {
 		String xpath="//span[text()='"+recordType+"']/preceding-sibling::input";
 		WebElement ele = null;
-		ele=FindElement(driver, xpath, "radio button of record type "+recordType, action.SCROLLANDBOOLEAN,timeOut);
-		return isDisplayed(driver,ele,"visibility",timeOut,"radio button of record type "+recordType);
+		ele=FindElement(driver, xpath, "radio button of record type "+recordType, action.SCROLLANDBOOLEAN,10);
+		ele =  isDisplayed(driver,ele,"visibility",10,"radio button of record type "+recordType);
+		if (ele!=null) {
+
+		} else {
+			xpath="//span[text()='"+recordType+"']/..//preceding-sibling::div//input";
+			ele = null;
+			ele=FindElement(driver, xpath, "radio button of record type "+recordType, action.SCROLLANDBOOLEAN,10);
+		}
+		return ele ;
 	}
 	
 	/**
@@ -619,7 +662,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 				clickOnShowMoreDropdownOnly(projectName);
 				ele =  actionDropdownElement(projectName, ShowMoreActionDropDownList.Edit, 10);
 				if (click(driver, ele, ShowMoreActionDropDownList.Edit.toString(), action.BOOLEAN)) {
-					log(LogStatus.INFO, "Not Able to Click on Edit Button : "+labelValue, YesNo.No);
+					log(LogStatus.INFO, "Able to Click on Edit Button : "+labelValue, YesNo.No);
 					for (String[] lv : labelWithValue) {
 						label=lv[0];
 						value=lv[1];
@@ -631,13 +674,17 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 							e.printStackTrace();
 						}
 						ThreadSleep(500);
+						if (label.equalsIgnoreCase(CSVLabel.Parent.toString()) && !value.isEmpty() && !value.equals("")) {
+							click(driver,getClearSelection(projectName,20),"Clear Selection", action.BOOLEAN);
+						}
+							ThreadSleep(3000);
 						if (sendKeys(driver, ele, value, label, action.BOOLEAN)) {
 							log(LogStatus.INFO, "Able to enter "+label, YesNo.No);
 							ThreadSleep(500);
 							flag=true;
 							
 							if (label.equalsIgnoreCase(CSVLabel.Parent.toString()) && !value.isEmpty() && !value.equals("")) {
-								ThreadSleep(10000);
+								ThreadSleep(2000);
 								if (click(driver,getItemInList(projectName, value, action.BOOLEAN, 20),
 										value + "   :  Parent Name", action.BOOLEAN)) {
 									log(LogStatus.INFO, value+" is available", YesNo.No);
@@ -686,9 +733,17 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	 * @return record Type With Description webElement
 	 */
 	public WebElement getrecordTypeWithDescription(String recordType,String desc,int timeOut) {
-		String xpath ="//*[text()='"+recordType+"']/*[text()='"+desc+"']";
+		String xpath ="//*[text()='"+recordType+"']//*[text()='"+desc+"']";
 		WebElement ele = FindElement(driver, xpath, recordType+" "+desc, action.SCROLLANDBOOLEAN, timeOut);
-		return isDisplayed(driver, ele, "Visibility", timeOut, recordType+" "+desc);
+		ele =isDisplayed(driver, ele, "Visibility", timeOut, recordType+" "+desc);
+		if (ele!=null) {
+			
+		} else {
+			xpath ="//*[text()='"+recordType+"']/..//*[text()='"+desc+"']";
+			ele = FindElement(driver, xpath, recordType+" "+desc, action.SCROLLANDBOOLEAN, timeOut);
+			ele =isDisplayed(driver, ele, "Visibility", timeOut, recordType+" "+desc);
+		}
+		return ele;
 	}
 	
 	/**
@@ -738,7 +793,7 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 	 */
 	public WebElement getNavigationLabel(String projectName,String parentLabel,String childNavigationLabel,action action,int timeOut) {
 		click(driver, getNavigationLabel(projectName, parentLabel, action, timeOut), parentLabel, action);
-		String xpath = "//div[@id='treeview12']//*//*[text()='"+parentLabel+"']";
+		String xpath = "//div[contains(@id,'treeview')]//*//*[text()='"+parentLabel+"']";
 		int i=0;
 		String[] nb = childNavigationLabel.split("<break>");
 		for (i = 0; i < nb.length; i++) {
@@ -803,7 +858,62 @@ public class NavigationPageBusineesLayer extends NavigationPage {
 		return ele;
 	}
 	
+	/**
+	 * @param projectName
+	 * @param searchValue
+	 * @param action
+	 * @param timeOut
+	 * @return true if able to click on Navatar Edge
+	 */
+	public boolean clickOnNavatarEdgeLink(String projectName,String searchValue,action action,int timeOut) {
+		boolean flag=false;;
+		verifyingNavigationMenuLink(projectName, null, null, action, timeOut);
+		String xpath = "//div[@class='flexipagePage']//span[text()='"+searchValue+"']";
+		WebElement ele = FindElement(driver, xpath, searchValue, action, timeOut);
+		if (click(driver, ele, searchValue, action)) {
+			log(LogStatus.INFO, "able to click on "+searchValue, YesNo.No);	
+			flag=true;
+		} else {
+			log(LogStatus.ERROR, "Not able to click on "+searchValue, YesNo.No);
+		}
+		return flag;
+	}
+
 	
+	public WebElement getRadioButtonforRecordType(String recordType,int timeOut) {
+		String xpath="";
+		WebElement ele = null;
+		xpath="//span[text()='"+recordType+"']/..//preceding-sibling::div//input";
+		ele=FindElement(driver, xpath, "radio button of record type "+recordType, action.SCROLLANDBOOLEAN,10);
+		return ele ;
+	}
+	
+	public WebElement getNavigationLabel1(String projectName,String navigationLabel,action action,int timeOut) {
+		int i=0;
+		String[] nb = navigationLabel.split("/");
+		String xpath = "";
+		WebElement ele=null;
+		for (i = 0; i < nb.length; i++) {
+			
+			if (nb.length>1 && i==0) {
+				xpath = "//div[contains(@id,'treeview')]//*//*[@class='icon expand-icon glyphicon glyphicon-minus']//following-sibling::*[text()='"+nb[i]+"']";
+			}else if (nb.length==1 && i==0) {
+				xpath = "//div[contains(@id,'treeview')]//*//*[text()='"+nb[i]+"']";	
+			} else {
+				xpath=xpath+"/../following-sibling::*/*[text()='"+nb[i]+"']";
+			}
+			
+		}
+		ele = FindElement(driver, xpath, navigationLabel, action, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, navigationLabel);
+
+	}
+	
+	public WebElement getCancelButtonForNavigationLabelPopuP(String projectName,action action,int timeOut) {
+		String xpath = "//div[@class='inlineFooter']//*[text()='Cancel']";
+		WebElement ele = FindElement(driver, xpath, "Cancel Buton", action, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "Cancel Buton");
+	}
 	
 	
 }

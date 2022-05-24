@@ -7,9 +7,11 @@ import static com.navatar.generic.CommonVariables.ToggleDeal1;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
 
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EnumConstants.ContactPagePhotoActions;
@@ -335,5 +337,223 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return ele;
 	}
 	
-}
+	/**
+	 * @param projectName
+	 * @param stage
+	 * @return WebElement
+	 */
+	public WebElement findDeactivateLink(String projectName, String stage) {
+		String xpath = "//th[text()='"+stage+"']/preceding-sibling::td//a[contains(@title,'Deactivate')]";
+		WebElement ele = FindElement(driver, xpath,"deactivate", action.SCROLLANDBOOLEAN, 10);
+		scrollDownThroughWebelement(driver, ele, "deactivate link for "+stage);
+		return isDisplayed(driver, ele, "Visibility", 10, "deactivate "+stage);
+		
+	}
+	
+	/**
+	 * @param projectName
+	 * @param stage
+	 * @return WebElement
+	 */
+	public WebElement findActivateLink(String projectName, String stage) {
+		String xpath = "//th[text()='"+stage+"']/preceding-sibling::td//a[contains(@title,'Activate')]";
+		WebElement ele = FindElement(driver, xpath,"Activate", action.SCROLLANDBOOLEAN, 10);
+		scrollDownThroughWebelement(driver, ele, "Activate link for "+stage);
+		return isDisplayed(driver, ele, "Visibility", 10, "Activate "+stage);
+		
+	}
+	/**
+	 * @param company
+	 * @return String
+	 */
+	public String convertToPortfolioBeforeNextPart1() {
+		return "Please click 'Next' to convert ";
+	}
+	
+	public String convertToPortfolioBeforeNextPart2() {
+		return "to a Portfolio Company.";
+	}
+	
+	 
+	/**
+	 * @param company
+	 * @return String
+	 */
+	public String convertToPortfolioRepeat(String company) {
+		return company+" is already a Portfolio Company.";
+	}
+	/**
+	 * @param company
+	 * @return String
+	 */
+	public String convertToPortfolioAfterNext(String company) {
+		return "has been converted to Portfolio Company successfully.";
+	}
+	/**
+	 * @param timeOut
+	 * @return WebElement
+	 */
+	public WebElement getCompanyNameOnconvertToPortfolioMessage(int timeOut) {
+		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//p";
+			WebElement ele = FindElement(driver, xpath,"company name convert to portfolio", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "company name convert to portfolio");
+		
+	}
+	
+	/**
+	 * @param company
+	 * @param timeOut
+	 * @return WebElement
+	 */
+	public WebElement getconvertToPortfolioMessage(String company,int timeOut) {
+		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//span[text()='"+convertToPortfolioBeforeNextPart1()+"']/../span[text()='"+company+" ']/../span[text()='"+convertToPortfolioBeforeNextPart2()+"']";
+		WebElement ele = FindElement(driver, xpath,"convert to portfolio", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
+		
+	}
+	
+	/**
+	 * @param timeOut
+	 * @return WebElement
+	 */
+	public WebElement getconvertToPortfolioMessageAfterNext(int timeOut) {
+		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//span[contains(text(),'successfully')]/..";
+		WebElement ele = FindElement(driver, xpath,"convert to portfolio", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
+		
+	}
+	/**
+	 * @param head
+	 * @param timeOut
+	 * @return WebElement
+	 */
+	public WebElement getconvertToPortfolioMessageAfterNext(String head,int timeOut) {
+		String xpath="//h2[text()='"+head+"']/../following-sibling::*//article//span[contains(text(),'successfully')]/..";
+		WebElement ele = FindElement(driver, xpath,"convert to portfolio", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
+		
+	}
+	
+	/**
+	 * @param timeOut
+	 * @return WebElement
+	 */
+	public WebElement getconvertToPortfolioMessageRepeat(int timeOut) {
+		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//span[contains(text(),'already')]/..";
+		WebElement ele = FindElement(driver, xpath,"convert to portfolio", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
+		
+	}
+	
+	/**
+	 * @param head
+	 * @param timeOut
+	 * @return WebElement
+	 */
+	public WebElement getconvertToPortfolioMessageRepeat(String head,int timeOut) {
+		String xpath="//h2[text()='"+head+"']/../following-sibling::*//article//span[contains(text(),'already')]/..";
+		WebElement ele = FindElement(driver, xpath,"convert to portfolio", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
+		
+	}
+	/**
+	 * @param company
+	 * @param timeOut
+	 * @return WebElement
+	 */
+	public WebElement crossIconForCompanyName(String company,int timeOut) {
+		String xpath="//label[text()='Company']/..//input[@placeholder='"+company+"']//following-sibling::*//button";
+		WebElement ele = FindElement(driver, xpath,"cross icon for company", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "cross icon for company");
+
+	}
+	
+	/**
+	 * @param timeOut
+	 * @return WebElement
+	 */
+	public WebElement getconvertToPortfolioMessageUnhandledFlow(int timeOut) {
+		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//*[contains(text(),'processing')]/..";
+			WebElement ele = FindElement(driver, xpath,"unhandled flow message", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "unhandled flow message");
+
+	}
+	/**
+	 * @param timeOut
+	 * @return WebElement
+	 */
+	public WebElement getconvertToPortfolioMessageRecordTypeInvalid(int timeOut) {
+		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//p";
+			WebElement ele = FindElement(driver, xpath,"RT invalid", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "RT invalid");
+
+	}
+	
+	/**
+	 * @param expected
+	 * @param timeOut
+	 * @return boolean
+	 */
+	public boolean checkValueOfPathComponentValueOfStage(String expected,int timeOut) {
+		String xpath="//span[@class='current slds-path__stage']/following-sibling::span";
+			WebElement ele = FindElement(driver, xpath,"path component", action.SCROLLANDBOOLEAN, 10);
+		ele=isDisplayed(driver, ele, "Visibility", timeOut, "path component");
+		if (ele!=null) {
+			String stage=ele.getText();
+			if (stage.equalsIgnoreCase(expected)) {
+				log(LogStatus.INFO,"successfully verified stage "+stage,YesNo.No);
+				return true;
+			}
+			else {
+				log(LogStatus.INFO,"could not verify stage on path component\nExpected: "+expected+"\nactual: "+stage,YesNo.No);
+			}
+		}else {
+			log(LogStatus.INFO,"could not find path component",YesNo.No);
+		}
+		return false;
+	}
+	
+	/**
+	 * @param projectName
+	 * @param stage
+	 * @return WebElement
+	 */
+	public WebElement selectPathComponent(String projectName, String stage) {
+		String xpath="//span[@class='title slds-path__title'][text()='"+stage+"']";
+		WebElement ele = FindElement(driver, xpath,"path component", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", 10, "path component");
+		
+	}
+	
+	/**
+	 * @param projectName
+	 * @param stage
+	 * @return WebElement
+	 */
+	public WebElement getStagePath(String stage, String stageVale) {
+		String xpath="";
+		stageVale=stageVale.replace("_", " ");
+		if (DealStage.Completed.toString().equals(stage)) {
+			xpath ="//*[@class='complete slds-path__stage']/following-sibling::span[text()='"+stageVale+"']";
+		} else if (DealStage.Current.toString().equals(stage)){
+			xpath ="//*[@class='current slds-path__stage']/following-sibling::span[text()='"+stageVale+"']";
+		}else if (DealStage.Ahead.toString().equals(stage)){
+			xpath ="//*[@class='ahead slds-path__stage']/following-sibling::span[text()='"+stageVale+"']";
+		}
+	
+		WebElement ele = FindElement(driver, xpath,stage+" : "+stageVale, action.SCROLLANDBOOLEAN, 60);
+		return isDisplayed(driver, ele, "Visibility", 30, stage+" : "+stageVale);
+		
+	}
+	
+	public WebElement getconvertToPortfolioMessage1(String msg,int timeOut) {
+		msg=convertingPortfoliaMsg;
+		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//*[text()='"+msg+"']";
+		WebElement ele = FindElement(driver, xpath,msg, action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "Visibility", timeOut, msg);
+		
+	}
+	
+
+	}
 

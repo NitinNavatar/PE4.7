@@ -14,13 +14,13 @@ public class EnumConstants {
 	}
 
 	public static enum excelLabel {
-		Variable_Name,Institutions_Name,Contact_FirstName,Contact_LastName,Contact_EmailId, Contact_password_updated,Registered,Fund_Name,FundRaising_Name,
+		Variable_Name,Institutions_Name,Contact_FirstName,Contact_LastName,Contact_EmailId, Contact_password_updated,Registered,Fund_Name,FundRaising_Name,AgreementAmendmentID,AgreementAmendmentNumber,
 		Limited_Partner,PartnerShip_Name,Commitment_ID,User_First_Name,User_Last_Name,User_Email,User_Profile,User_License,Fund_Type,Firm_Name,UploadedFileInternal,UploadedFileShared,UploadedFileStandard,UploadedFileCommon,UpdatedFileCommon,UpdatedFileInternal,UpdatedFileShared,UpdatedFileStandard,TestCases_Name ,Alert_Count,AllDocument_Count,
 		Folder_Template_Name,Fund_Contact,Fund_Phone,Fund_Email,Firm_Description,ContactNew_fName, ContactNew_lName, Contact_Title, Contact_Phone, Facebook, Mailing_Street, Linkedin, Institution_Type_MyProfile, Industry_Dropdown_myprofile, FundType_myprofile, IndustrySelectBox_myprofile,Investment_Category, GeoFocus_myprofile, Firm_Description_Firmprofile, Billing_street_Firmprofile,
 		Billing_city_firmprofile, Billing_state_firmprofile, Billing_country_firmprofile, Industries_selectbox, FundType_selectbox, Geofocus_selectbox, Industry_dropdown, InstType_dropdown, Min_investment, Max_investment, AUM,Contact_updated_firmname,
 		Folder_Description,Fund_Size,Fund_VintageYear,Fund_Description,Disclaimer_Name,Disclaimer_Description,StandardPath,CommonPath,SharedPath,InternalPath,MyProfile_FName,MyProfile_LName,Updated_FirmName,Updated_FirstName,Updated_LastName,Title,Business_Phone,Mailing_City,Mailing_State,Mailing_Zip,Mailing_Country,Firm_Contact,KeyWord_For_Search,AllFirms_Count,OnlineImportPath,AdvisorInvolvementID,FOLDER_NAME,INVALID_FOLDER_NAME,
 		TargetRegistrationURL,TargetLoginURL,Watermarking,UpdateInstitution_NameFormManageInvestor,UpdatedLimitedPartner_NameFormManageInvestor,HomePageAlertCount,FundsPageALertCount,ContactPageALertCount,BillingZip,UpdateFund_NameFromUpdateInfoIWR,UpdateFund_NameFromUpdateInfoFR,ContactName,FundName,Module_Name,Execute,Statistics,FRW_Value,INV_Value,FRW_DocumentsName,
-		INV_DocumentsName,Updated_InstitutionName_From_InvestorSide,Activity_Count,Viewed_Or_DownloadedAnyFile,Account_Name,Logo_Name,Contact_Access,ContactUpdatedEmailID, Path, DrawdownID, CapitalCalllID, CapitalAmount,ManagementFee, OtherFee, CallAmount, CallDate, DueDate, CallAmountReceived,ReceivedDate, AmountDue,CapitalReturn,Dividends,RealizedGain,OtherProceeds,TotalDistributions,FundDistributionID,InvestorDistributionID,Capital_Returned_Recallable,
+		INV_DocumentsName,Updated_InstitutionName_From_InvestorSide,Activity_Count,Viewed_Or_DownloadedAnyFile,Account_Name,Logo_Name,Contact_Access,ContactUpdatedEmailID, Path, DrawdownID, CapitalCalllID, CapitalAmount,ManagementFee, OtherFee, InvestmentAmount,CallAmount, CallDate, DueDate, CallAmountReceived,ReceivedDate, AmountDue,CapitalReturn,Dividends,RealizedGain,OtherProceeds,TotalDistributions,FundDistributionID,InvestorDistributionID,Capital_Returned_Recallable,
 		Capital_Returned_NonRecallable,Start_Time,End_Time,Test_Custom_Object_Name,Average_Deal_Quality_Score,Total_Deals_Shown,Deal_Quality_Score,Meeting_Type,Item_ID {
 				@Override
 			    public String toString() {
@@ -38,10 +38,18 @@ public class EnumConstants {
 				return "1st Closing Date";
 			}
 		}
-		, Pipeline_Name, Company_Name, Stage, Source, Source_Firm, Source_Contact, Deal_Type, Employees, Website, Email, Legal_Name, Name, Investment_Size, Log_In_Date, Our_Role, Last_Name, Last_Stage_Change_Date, Highest_Stage_Reached, Age_of_Current_Stage, Date_Stage_Changed, Changed_Stage, Age, First_Stage_Changed, Second_Stage_Changed, Office_Location_Name, State_Province, ZIP, Organization_Name, Primary, Updated_Primary, Start, Related_To, Due_Date,Investment_Likely_Amount,Total_Fundraising_Contacts,Fundraising_Contact_ID,Fundraising,Role, Other_Address,Label,
-		Mailing_Address,Total_Commitments,Commitment_Amount,Partner_Type,Tax_Forms,Final_Commitment_Date,Company,Bank_Name,Placement_Fee,Fund_Investment_Category,Total_CoInvestment_Commitments,Total_Fund_Commitments, Institution_Type, Fund_Preferences, Industry_Preferences, Shipping_Street, Shipping_City, Shipping_State, Shipping_Zip, Shipping_Country, Mobile_Phone, Assistant, Asst_Phone, Phone,Total_Call_Amount_Received, Total_Amount_Called,Total_Amount_Received,Total_Uncalled_Amount,Total_Commitment_Due,Commitment_Called,Called_Due,Preferred_Mode_of_Contact,Percent, 
-		Parent_Field_Name,Override_Label,APIName,FieldOrder,URL,Region,Industry,Attendee_Staff,Marketing_Event,Notes,DTID,Member,File,
-		TotalCommitment, Priority, Project_Type, Project_Name, Task_Name, Status, Fund_InvestmentCategory,Comment, Updated_Priority, Updated_Subject, Updated_Comment, Start_Date, End_Date, Data_Type, Field_Label, Length, Decimal_Places, Options, Deal_Name, SDG_Name, sObjectName, SDG_Tag, Object_Name, Field_Set_Label, NameSpace_PreFix, Fields_Name, Toggle_Button, Request, Date_Requested, Request_Tracker_ID, Marketing_Event_Name, Date, TabName, Item, RelatedTab, ToggleButton, Column_Name1, Column_Name2,Field_Type, FieldLabel_SubString, ExtraFieldsName, Column_Name, Navigation_Label_Name, Redirection_Label_Name, Update_Navigation_Label_Name, Updated_Order, Parent, Navigation_Label_With_Parent, List_View_Object, List_View_Name, Action_Object, Coverage_Name,Action_Order,Event,Event_Payload,Action_Type;
+		, Pipeline_Name, Company_Name
+			
+		, Stage, Source, Source_Firm, Source_Contact, Deal_Type, Employees, Website, Email, Legal_Name, Name, Investment_Size,Updated_Investment_Size, Log_In_Date{
+			@Override
+			public String toString() {
+				return "Date Received";
+			}
+		}
+		, Our_Role, Last_Name,Last_Stage_Change_Date_New, Last_Stage_Change_Date, Highest_Stage_Reached, Age_of_Current_Stage, Date_Stage_Changed, Changed_Stage, Age, First_Stage_Changed, Second_Stage_Changed, Office_Location_Name, State_Province, ZIP, Organization_Name, Primary, Updated_Primary, Start, Related_To, Due_Date,Investment_Likely_Amount,Closing,Total_Fundraising_Contacts,Fundraising_Contact_ID,Fundraising,Role, Other_Address,Label,
+		Mailing_Address,Total_Commitments,Commitment_Amount,Partner_Type,Tax_Forms,Final_Commitment_Date,Company,Bank_Name,Placement_Fee,Fund_Investment_Category,Total_CoInvestment_Commitments,Total_Fund_Commitments, Institution_Type, Fund_Preferences, Industry_Preferences, Shipping_Street, Shipping_City, Shipping_State, Shipping_Zip, Shipping_Country, Mobile_Phone, Assistant, Asst_Phone, Phone,Total_Call_Amount_Received, Total_Amount_Called,Total_Amount_Received,Total_Uncalled_Amount,Total_Commitment_Due,Commitment_Called,Called_Due,Preferred_Mode_of_Contact,Percent,Contact_Tier,Pipeline_Comments,
+		Parent_Field_Name,Override_Label,APIName,FieldOrder,URL,Region,Industry,Attendee_Staff,Marketing_Event,Notes,DTID,Member,File,EffectiveDate,ReceiptDate,
+		TotalCommitment, Priority, Project_Type, Project_Name, Task_Name, Status, Fund_InvestmentCategory,FundInvestmentID,Comment, Updated_Priority, Updated_Subject, Updated_Comment,Updated_Stage, Start_Date, End_Date, Data_Type, Field_Label, Length, Decimal_Places, Options, Deal_Name, SDG_Name, sObjectName, SDG_Tag, Object_Name, Field_Set_Label, NameSpace_PreFix, Page_Layout,Fields_Name, Toggle_Button, Request, Date_Requested, Request_Tracker_ID, Marketing_Event_Name, Date, TabName, Item,Filter_Value,Select_List_Item, RelatedTab, ToggleButton, Column_Name1, Column_Name2,Field_Type, FieldLabel_SubString, ExtraFieldsName, Column_Name, Navigation_Label_Name, Redirection_Label_Name, Update_Navigation_Label_Name, Updated_Order,Parent_Institution,Entity_Type, Parent, Navigation_Label_With_Parent, List_View_Object, List_View_Name, Action_Object, Coverage_Name,Action_Order,Event,Event_Payload,Action_Type, Sector, Assigned_To, Location, Event_PayLoad, Institution,Firm, Contact, Type_Of_Debt, Amount, Frequency, Fiscal_Year_end, Marketing_Initiative, Client, Advisor;
 };
 
 	public static enum fileDistributor {
@@ -101,11 +109,31 @@ public class EnumConstants {
 	}
 
 	public static enum TabName {
-		InstituitonsTab, FundraisingsTab, FundsTab, NIMTab, CommitmentsTab, PartnershipsTab, 
+		InstituitonsTab{
+			@Override
+			public String toString() {
+				return "Firms";
+		}
+		
+		}, FundraisingsTab, FundsTab,Navigation, NIMTab, CommitmentsTab, PartnershipsTab,QandA{
+			
+			@Override
+			public String toString() {
+				return "Q&A";
+		}
+		
+		}, 
 		NavatarInvestorAddOns, CurrentInvesment, PotentialInvesment, RecentActivities, AllDocuments, HomeTab, 
-		FolderTemplate, FundDistributions, InvestorDistributions, MarketingInitiatives, MarketingProspects, 
-		NavatarSetup, Pipelines, FundDrawdowns, CapitalCalls, FundraisingContacts, LimitedPartne, ReportsTab, LimitedPartner,CompaniesTab, TaskRayTab,TaskRay,TestCustomObjectTab, TaskTab,
-		Other,Object1Tab,Object2Tab,Object3Tab,Object4Tab,RecycleBinTab,SDGTab,DealTab, Object5Tab,Object6Tab,AttendeeTab,Object7Tab,Entities,Deals,Marketing_Events,Deal_Team, Object8Tab;
+		FolderTemplate, FundDistributions, FundOfFundsTransactions,InvestorDistributions, MarketingInitiatives, MarketingProspects,Affiliations,AgreementsAmendments{
+			@Override
+			public String toString() {
+				return "Agreements/Amendments";
+		}
+		}
+		, 
+		NavatarSetup, Pipelines, FundDrawdowns,FundInvestments,CapitalCalls, FundraisingContacts, LimitedPartne, ReportsTab, 
+		Correspondence_Lists,LimitedPartner,CompaniesTab, TaskRayTab,TaskRay,TestCustomObjectTab, TaskTab,
+		Other,Object1Tab,Object2Tab,Object3Tab,Object4Tab,RecycleBinTab,SDGTab,DealTab, Object5Tab,Object6Tab,AttendeeTab,Object7Tab,Entities,Deals,Marketing_Events,Events,Deal_Team, Object8Tab, ContactTab;
 	}
 	
 	public static enum Mode{
@@ -130,10 +158,10 @@ public class EnumConstants {
 	
 	
 	public static enum PageName{
-		FundsPage,InstitutionsPage,CommitmentsPage,HomePage,NavatarInvestorManager,ManageFolderPopUp,ManageApprovalsPopUp,ProjectDetailsPoPUp,NavatarInvestorAddOnsPage,NewProjectPopUp,PipelineCustomPage
+		FundsPage,InstitutionsPage,CommitmentsPage,HomePage,NavatarInvestorManager,ManageFolderPopUp,ManageApprovalsPopUp,NavigationPage,ProjectDetailsPoPUp,NavatarInvestorAddOnsPage,NewProjectPopUp,PipelineCustomPage
 		,CompanyPage,CreateFundraisingPage,CreateCommitmentFundType,CreateCommitmentCoInvestmentType,FundraisingPage,PartnershipsPage, DealPage,TaskRayPage, LimitedPartnerPage, BuildStep2Of3,PipelinesPage,NewTaskPage,
-	CRMUserPage,   TaskPage, NewTaskPopUP,TestCustomObjectPage, NewEventPopUp,ActivitiesOrMeetings,SearchActivitiesAttachment,EmailUploadPage,Object1Page,Object1PagePopup,Object2Page,Object3Page,Object4Page,ListEmail,
-	CompactLayout, MeetingType, AddPickListMeetingType,ActivityLayoutPage, SDGPage,Object5Page,AccountCustomFieldStatusPage,MEPageFromCalender,SharingSettingsPage,DashboardDeadDeals,AccountReferral,VisualForcePage;
+	CRMUserPage,   TaskPage, NewTaskPopUP,TestCustomObjectPage,ContactPage ,NewEventPopUp,ActivitiesOrMeetings,SearchActivitiesAttachment,EmailUploadPage,Object1Page,Object1PagePopup,Object2Page,Object3Page,Object4Page,ListEmail,
+CompactLayout, MeetingType, AddPickListMeetingType,ActivityLayoutPage, SDGPage,Object5Page,AccountCustomFieldStatusPage,MEPageFromCalender,SharingSettingsPage,DashboardDeadDeals,AccountReferral,VisualForcePage, WarningPopUp, RecordTypePortfolioCompany,CustomNavigationPage,NavigationPickListPage,CallPopUp,MeetingPopUp,ConvertToPortfolioFrame,TaskPopUp,GlobalActtion_TaskPOpUp, AffiliationPage, Fundraising_ContactPage, Financing, Financial_Performance, Marketing_Initiative, FundDrawdown,Marketing_Prospect, Advisor;
 
 
 
@@ -157,23 +185,28 @@ public class EnumConstants {
 	}
 	
 	public static enum Stage {
-		NDA_Signed,Deal_Received,Management_Meeting,IOI,IndicationOfInterest{
+		NDA_Signed,Deal_Received,Management_Meeting{
+			@Override
+			public String toString() {
+				return "Management Meeting";
+		}
+		},IOI,IndicationOfInterest{
 			@Override
 			public String toString() {
 				return "Indication of Interest";
 		}
-		},LOI,Due_Diligence,Parked,Closed,NonDisclosureAgreement{
+		},LOI,Due_Diligence,Parked,Closed,Closed_Updated,NonDisclosureAgreement{
 			@Override
 			public String toString() {
 				return "Non-Disclosure Agreement";
 		}
-		}
+		},Legal_Closed
 		,DeclinedDead{
 			@Override
 			public String toString() {
 				return "Declined/Dead";
 		}
-		};
+		},Prospect,Interested,Sent_PPM,Declined,Verbal_Commitment,Follow_up_Diligence,New_Interested,New_Stage_Verification;
 	}
 	public static enum YesNo {
 		Yes,No,YesWinium;
@@ -254,7 +287,42 @@ public class EnumConstants {
 				return "Accounts";
 				//	}
 			}
-		},Contact,Deal,Fund,Fundraising,Fundraising_Contact{
+		},Contact,Attendee,Time_Log{
+			@Override
+			public String toString() {
+				return "Time Log";
+			}
+		},Valuation,Deal,Deal_Expert{
+			@Override
+			public String toString() {
+				return "Deal Expert";
+			}
+		},Deal_Team{
+			@Override
+			public String toString() {
+				return "Deal Team";
+			}
+		},Fund,Fundraising,Sortable_Data_Grid{
+			@Override
+			public String toString() {
+				return "Sortable Data Grid";
+			}
+		},Sortable_Data_Grid_Action{
+			@Override
+			public String toString() {
+				return "Sortable Data Grid Action";
+			}
+		},Sortable_Data_Grid_Field{
+			@Override
+			public String toString() {
+				return "Sortable Data Grid Field";
+			}
+		},Sortable_Data_Grid_Preference{
+			@Override
+			public String toString() {
+				return "Sortable Data Grid Preference";
+			}
+		}, Grid,Fundraising_Contact{
 			@Override
 			public String toString() {
 				return "Fundraising Contact";
@@ -279,7 +347,17 @@ public class EnumConstants {
 			public String toString() {
 				return "Marketing Event";
 			}
-		}, Apps,Pipeline,
+		}, Apps,Pipeline,Request_Tracker{
+			@Override
+			public String toString() {
+				return "Request Tracker";
+			}
+		},Review,Pipeline_Snapshot{
+			@Override
+			public String toString() {
+				return "Pipeline Snapshot";
+			}
+		},
 		App_Manager{
 			@Override
 			public String toString() {
@@ -290,7 +368,18 @@ public class EnumConstants {
 			public String toString() {
 				return "Lightning App Builder";
 			}
-		}, Profiles, Custom_Object, Tabs, Create, Flows, Users,Sharing_Settings
+		}, Profiles, Custom_Object, Tabs, Create, Flows,Override, Users,Sharing_Settings,Institution,Firm
+		,CommunicationTemplates{
+			@Override
+			public String toString() {
+				return "Communication Templates";
+		}
+	},Test_Custom_Object{
+		@Override
+		public String toString() {
+			return CommonVariables.tabCustomObj;
+		}
+	},Navigation,navatarEdgeMenu, Affiliation, Financing,Commitment, Advisor
 	};
 
 	
@@ -305,9 +394,9 @@ public class EnumConstants {
 			@Override
 			public String toString() {
 				if(ExcelUtils.readDataFromPropertyFile("Mode").equalsIgnoreCase(Mode.Classic.toString())){
-					return "My Templates";
+					return "Classic Email Templates";
 				}else {
-					return "My Templates";
+					return "Classic Email Templates";
 				}
 		}
 	},compactLayouts{
@@ -321,7 +410,11 @@ public class EnumConstants {
 	@Override
 	public String toString() {
 			return "Fields & Relationships";
-}		
+}},ButtonLinksAndActions{
+	@Override
+	public String toString() {
+			return "Buttons, Links, and Actions";
+}	
 },FieldSets{
 	@Override
 	public String toString() {
@@ -341,7 +434,7 @@ public static enum PermissionType{
 
 //*************************************************************** Pages Field Labels*********************************************//
 	public static enum InstitutionPageFieldLabelText {
-		Street,Referral_Source_Description,Legal_Name,Description,
+		Street,Referral_Source_Description,Legal_Name,Description,Phone,
 		Shipping_State{
 			@Override
 			public String toString() {
@@ -352,7 +445,12 @@ public static enum PermissionType{
 			public String toString() {
 				return "Shipping Zip/Postal Code";
 			};
-		},Parent_Institution,Parent_Entity;
+		},Parent_Institution{
+			@Override
+			public String toString() {
+				return "Parent Firm";
+			};
+		},Parent_Entity;
 		
 	}
 	
@@ -485,6 +583,9 @@ public static enum PermissionType{
 	public static enum SDGLabels{
 		APIName,Override_Label,FieldOrder,Parent_Field_Name,URL,Actions;
 	}
+	public static enum InstRecordType{
+		Portfolio_Company,Portfolio,Company,Parent_Field_Name,URL,Actions;
+	}
 	
 	public static enum AttendeeLabels {
 		Attendee_Staff,Marketing_Event,Status,Notes,Attendee
@@ -573,7 +674,7 @@ public static enum PermissionType{
 			public String toString() {
 				return "Contact ID";
 			}
-		}
+		},Email,Phone,Contact_Full_Name
 	};
 	
 	public static enum FolderAccess{
@@ -870,7 +971,7 @@ public static enum PermissionType{
 		};
 	
 	public static enum ShowMoreActionDropDownList{
-		 New_Task,Edit, Delete, New_Meeting,LogCaLLWithMultiple{
+		 New_Task,New_Call,Edit, Delete, New_Meeting,LogCaLLWithMultiple{
 				@Override
 				public String toString() {
 					return "Log a Call with Multiple Associations";
@@ -880,7 +981,12 @@ public static enum PermissionType{
 				public String toString() {
 					return "New Task with Multiple Associations";
 				}
-			}, Contact_Transfer,Change_Date,Change_Priority,Change_Status,Edit_Comments,New_Attendee,New
+
+			}, Contact_Transfer,Change_Date,Change_Record_Type,Change_Priority,Change_Status,Edit_Comments,New_Attendee
+		 ,New, New_Referral,New_Financing,Create_Distribution, Create_Drawdown, New_Partnership, New_Fundraising, Bulk_Fundraising, New_Fundraising_Contact, 
+		 Create_Commitments, Clone,Change_Owner,Sharing,Sharing_Hierarchy, Printable_View,Send_Distribution_Notice,Send_Capital_Call_Notices,
+		 New_Affiliation,New_Client,New_Contact ,New_Commitment,New_Advisor,New_Deal,New_Investor, Add_Prospect, Email_Prospect
+
 			};
 		
 	public static enum IndiviualInvestorSectionsName{
@@ -1011,7 +1117,17 @@ public static enum PermissionType{
 	}
 		
 	public static enum Buttons{
-		SaveNext,SaveClose,Cancel,Cross,Delete_Photo,close;	  
+		SaveNext,SaveClose,Cancel,Cross,Delete_Photo,close,Save,Apply,Move_Up{
+			@Override
+			public String toString() {
+				return "Move up";
+			}
+		},Move_Down{
+			@Override
+			public String toString() {
+				return "Move down";
+			}
+		}, Add
 	};
 	
 	public static enum ProjectLabel{
@@ -1019,13 +1135,19 @@ public static enum PermissionType{
 	};
 	
 	public static enum RelatedTab{
-		Related,Details,Tasks,Meetings,Activities,Documents,Box,Investment,
+		Related,Details,Network,Tasks,Meetings,Activities,Affiliations,Documents,Box,Referrals,Clients,KPIs,Investment,All_Contacts,Board_Members,Recent_Moves,Connections,Contacts,Financing,Consultants,Fundraising,Investors,
+		Investor_Relations,Co_Investments{
+			@Override
+			public String toString() {
+				return "Co-Investments";
+			}
+		},Deals,Files,
 		QandA{
 			@Override
 			public String toString() {
 				return "Q&A";
 			}
-		}, Overview,Events;	  
+		}, Overview,Events, Fund_Management, Fund_Investments, Fundraising_Contacts;	  
 	};
 	
 	public static enum Header{
@@ -1040,7 +1162,12 @@ public static enum PermissionType{
 			public String toString() {
 				return "Tasks: Completed";
 			}
-		},Company,Contact 
+		},Company,Contact, Institution {
+			@Override
+			public String toString() {
+				return "Firm";
+			}
+		},Deal
 	};
 	
 	public static enum ProjectName{
@@ -1063,9 +1190,26 @@ public static enum PermissionType{
 			public String toString() {
 			return "Rename-Under Evaluation";
 
-		}},Watchlist, Profile_Image,Industry,Watch_list,Conversion_Date,Portfolio_Company,Related_Associations,Name, Subject, Due_Date, New_Task, Related_To, Comments, Edit, Assigned_To, Start_Date, End_Date, End_Time, Start_Time, Type, Date, Contact_Name, Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places, Values, Is_Touchpoint,Description, Request, Date_Requested, Attendee_Staff, Label, Panel_Width, Panel_Height,Deal,Team_Member_Role,Member, Page_Layout_Name,Organizer
 
-	};
+		}},Watchlist,Highest_Stage_Reached,Deal_Quality_Score,Average_Deal_Quality_Score,Total_Deals_Shown, Profile_Image,Industry,Watch_list,Deal_Conversion_Date,Portfolio_Company,Related_Associations,Name,Subject, Due_Date, New_Task, Related_To, Comments, Edit, Assigned_To, Start_Date, End_Date, End_Time, Start_Time, Type, 
+		Date{
+			@Override
+			public String toString() {
+				return "Start Date";
+			}},Navigation_Type{
+				@Override
+				public String toString() {
+					return "Navigation Type";
+				}
+			},
+		Contact_Name, Tax_Forms,Partner_Type,Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places, Values, Is_Touchpoint,Description, Request, Date_Requested, Attendee_Staff, Label, Panel_Width, Panel_Height,Deal,Team_Member_Role,Member, Page_Layout_Name,Organizer,Convert_to_Portfolio, Deal_Contact_Type, Team_Member, Location, End, All_Day_Event, Role, 
+		Lender_Status{
+				@Override
+				public String toString() {
+					return "Lender Status";
+				}
+			}
+		};
 	
 	public static enum Links{
 		View;	  
@@ -1100,7 +1244,12 @@ public static enum PermissionType{
 		ContactOnly,ContactAndInstitution,ContactInstitutionAndCustomObject;
 	}
 	public static enum ActivityTimeLineItem{
-        New_Meeting,Log_a_Call_with_Multiple_Associations,New_Task_with_Multiple_Associations, Expand_All,Refresh,Collapse_All, Filter, New_Task;     
+        New_Meeting,New_Call{
+            @Override
+            public String toString() {
+                return "Log a Call";
+            }
+        },Add,Log_a_Call_with_Multiple_Associations,New_Task_with_Multiple_Associations, Expand_All,Refresh,Collapse_All, Filter, New_Task, New_Event;     
     }
 	public static enum DueDate{
         No_due_date{
@@ -1112,7 +1261,7 @@ public static enum PermissionType{
     };
     
     public static enum SubjectElement{
-        CheckBox, StrikedText,SubjectLink,RedFlag,ExpandIcon,CollapseIcon,Attachment;     
+        CheckBox, StrikedText,SubjectLink,RedFlag,ExpandIcon,CollapseIcon,Attachment,NextGrid,PastGrid;     
     };
     
     public static enum ActivityType{
@@ -1260,7 +1409,7 @@ public static enum PermissionType{
 	}
 	
 	public static enum CSVLabel{
-		Navigation_Label ,Order,Parent,Action_Object,Action_Record_Type,List_View_Object,List_View_Name,URL,Activities_Button_API_Name;
+		Navigation_Label ,Order,Parent,Action_Object,Action_Record_Type,List_View_Object,List_View_Name,URL,Activities_Button_API_Name, Navigation_Type;
 	}
 
 	public static enum EditPageLabel{
@@ -1268,7 +1417,12 @@ public static enum PermissionType{
 			@Override
 			public String toString() {
 				return "Start Date/Time";
-			}},Title_Highlight_Color,Filter,Onclick_Title,Calendar_Filter_1,Calendar_Filter_2,Calendar_Filter_3;
+			}},Title_Highlight_Color,Filter,Onclick_Title,Calendar_Filter_1,Calendar_Filter_2,Calendar_Filter_3, Deal, Name, Fundraising,Phone,Stage,
+			Source_Firm{
+				@Override
+				public String toString() {
+					return "Source Firm";
+				}}, Closing;
 	}
 	public static enum ContactPagePhotoActions{
 		Update_Photo,Delete_Photo;
@@ -1316,4 +1470,221 @@ public static enum PermissionType{
 		Name,Event,Action_Order,Action_Type,Event_Payload;
     };
     
+    
+    public static enum NavigationMenuItems{
+    	Bulk_Actions {
+			@Override
+			public String toString() {
+				return "Bulk Actions";
+			}
+    	},New_Interactions{
+			@Override
+			public String toString() {
+				return "New Interactions";
+			}
+    	},Create_New{
+			@Override
+			public String toString() {
+				return "Create New";
+			}
+    	};
+    };
+    
+    public static enum BulkActions_DefaultValues{
+    	Bulk_Email {
+			@Override
+			public String toString() {
+				return "Bulk Email";
+			}
+    	},Bulk_Fundraising{
+			@Override
+			public String toString() {
+				return "Bulk Fundraising";
+			}
+    	},Bulk_Commitments{
+			@Override
+			public String toString() {
+				return "Bulk Commitments";
+			}
+    	},Deal_Creation {
+			@Override
+			public String toString() {
+				return "Deal Creation";
+			}
+    	},Individual_Investor_Creation {
+			@Override
+			public String toString() {
+				return "Individual Investor Creation";
+			}
+    	},;
+    };
+    
+    public static enum NewInteractions_DefaultValues{
+    	Call {
+			@Override
+			public String toString() {
+				return "Call";
+			}
+    	},Meeting{
+			@Override
+			public String toString() {
+				return "Meeting";
+			}
+    	},Task{
+			@Override
+			public String toString() {
+				return "Task";
+			}
+    	};
+    };
+    
+    public static enum CreateNew_DefaultValues{
+    	New_Deal {
+			@Override
+			public String toString() {
+				return "New Deal";
+			}
+    	},New_Institution{
+			@Override
+			public String toString() {
+				return "New Firm";
+			}
+    	},New_Contact{
+			@Override
+			public String toString() {
+				return "New Contact";
+			}
+    	};
+    };
+    
+    public static enum ReportFormatName{
+		Matrix,Joined,Summary,Tabular,Null;
+	}
+    
+    
+    public static enum SDGGridName{
+    	Deals,Fundraising,My_Call_List {
+			@Override
+			public String toString() {
+				return "My Call List";
+			}
+    	}
+    }
+    
+    
+    public static enum CollapseExpandIcon{
+    	Collpase,Expand;
+    	}
+    
+    public static enum SDGGridSideIcons{
+    	Manage_fields{
+			@Override
+			public String toString() {
+				return "Manage fields";
+			}
+    	},Open_SDG_Record{
+			@Override
+			public String toString() {
+				return "Open SDG record";
+			}
+    	},Toggle_Filters{
+			@Override
+			public String toString() {
+				return "Toggle Filters";
+			}
+    	},Reload{
+			@Override
+			public String toString() {
+				return "Reload";
+			}
+    	},Side_DropDOwnButtonforLightTheme,Setup, Side_DropDOwnButtonforStandardTheme;
+    	
+    	
+    }
+    
+    public static enum ActionType{
+    	Page,PageSize
+    }
+    
+    public static enum Operator{
+    	Equals,StartWith{
+			@Override
+			public String toString() {
+				return "Starts with";
+			}
+    	},Deal_Received{
+			@Override
+			public String toString() {
+				return "Deal Received";
+			}
+    	},Second_Closing{
+			@Override
+			public String toString() {
+				return "2nd Closing";
+			}
+    	},NDASigned{
+    		
+    		@Override
+			public String toString() {
+				return "NDA Signed";
+			}
+    	},Blank{
+    		
+    		public String toString(){
+    			
+    			return "";
+    		}
+    	}
+    		
+    
+    	
+    }
+    
+    public static enum Task{
+    	TodayTasks, TodayEvents;
+    }
+    
+    public static enum TodayTaskDownArrowValues{
+    	Today,MyTasks{
+    		@Override
+			public String toString() {
+				return "My Tasks";
+			}
+    	},AllOverdue{
+    		@Override
+			public String toString() {
+				return "All Overdue";
+			}
+    	},CompletedWithinLast7Days{
+    		@Override
+			public String toString() {
+				return "Completed Within Last 7 Days";
+			}
+    	},DelegatedTasks{
+    		@Override
+			public String toString() {
+				return "Delegated Tasks";
+			}
+    	}
+    }
+    
+    public static enum ViewAllAndViewCalendarLink{
+    	viewALl{
+    		@Override
+			public String toString() {
+				return "View All Tasks";
+			}
+    	},ViewCalendar{
+    		@Override
+			public String toString() {
+				return "View Calendar";
+			}
+    	}
+    }
+    
+    public static enum DealStage{
+    	Ahead, Completed,Current;
+    }
+    
+  
 }

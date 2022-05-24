@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.navatar.generic.BaseLib;
+import com.navatar.generic.EnumConstants.Header;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.PageName;
@@ -162,11 +163,17 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		
 			
 			xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
-					+ "']/../following-sibling::div//lightning-formatted-text";
+					+ "']/../following-sibling::div//*[contains(@class,'field-value')]";
 			if (labelName.equalsIgnoreCase(excelLabel.Deal_Quality_Score.toString()))
 				xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
-				+ "']/../following-sibling::div//lightning-formatted-number";
-	
+				+ "']/../following-sibling::div//*[contains(@class,'field-value')]";
+			else if(labelName.equalsIgnoreCase(excelLabel.Company_Name.toString())){
+				xpath="//span[@class='test-id__field-label']/../..//[text()='"+finalLabelName+"']/ancestor::a";
+
+			}else if(labelName.equalsIgnoreCase(excelLabel.Record_Type.toString())){
+				xpath = "//span[@class='test-id__field-label'][text()='"+finalLabelName+"']/../following-sibling::div//div[contains(@class,'recordTypeName')]/span";
+			}
+			
 		ele = isDisplayed(driver,
 				FindElement(driver, xpath, labelName + " label text in " + projectName, action.SCROLLANDBOOLEAN, 60),
 				"Visibility", 30, labelName + " label text in " + projectName);
@@ -175,6 +182,98 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			appLog.info("Lable Value is: "+aa);
 			if(labelName.contains("Date")) {
 				if(verifyDate(aa,null, labelName)) {
+					appLog.info("Dtae is verified Successfully");
+					return true;
+				}else {
+					appLog.error(labelName+ " Date is not verified. /t Actual Result: "+aa);
+				}
+			}else {
+				if(aa.contains(labelValue)) {
+					appLog.info(labelValue + " Value is matched successfully.");
+					return true;
+					
+				}else {
+					appLog.error(labelValue + " Value is not matched. Expected: "+labelValue+" /t Actual : "+aa);
+				}
+			}
+		} else {
+			appLog.error(labelName + " Value is not visible so cannot matched  label Value "+labelValue);
+		}
+		return false;
+
+	}
+	public boolean FieldValueVerificationOnFundPage(String projectName,
+			String labelName,String labelValue, boolean removeUnderscore) {
+		String xpath = "";
+		WebElement ele = null;
+		if(removeUnderscore)
+		labelValue=labelValue.replace("_", " ");
+		String finalLabelName=labelName.replace("_", " ");
+		if(labelName.contains(excelLabel.Target_Commitments.toString().replaceAll("_", " "))) {
+			labelName=FundPageFieldLabelText.Target_Commitments.toString();
+		}
+		
+			
+			xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
+					+ "']/../following-sibling::div//lightning-formatted-text";
+			if (labelName.equalsIgnoreCase(excelLabel.Deal_Quality_Score.toString()))
+				xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
+				+ "']/../following-sibling::div//lightning-formatted-number";
+			else if(labelName.equalsIgnoreCase(excelLabel.Company_Name.toString()))
+			xpath="//span[@class='test-id__field-label'][text()='"+finalLabelName+"']/../following-sibling::div//a//span";
+		ele = isDisplayed(driver,
+				FindElement(driver, xpath, labelName + " label text in " + projectName, action.SCROLLANDBOOLEAN, 60),
+				"Visibility", 30, labelName + " label text in " + projectName);
+		if (ele != null) {
+			String aa = ele.getText().trim();
+			appLog.info("Lable Value is: "+aa);
+			if(labelName.contains("Date")) {
+				if(verifyDate(aa,null, labelName)) {
+					appLog.info("Dtae is verified Successfully");
+					return true;
+				}else {
+					appLog.error(labelName+ " Date is not verified. /t Actual Result: "+aa);
+				}
+			}else {
+				if(aa.contains(labelValue)) {
+					appLog.info(labelValue + " Value is matched successfully.");
+					return true;
+					
+				}else {
+					appLog.error(labelValue + " Value is not matched. Expected: "+labelValue+" /t Actual : "+aa);
+				}
+			}
+		} else {
+			appLog.error(labelName + " Value is not visible so cannot matched  label Value "+labelValue);
+		}
+		return false;
+
+	}
+	public boolean FieldValueVerificationOnFundPage(String projectName,
+			String labelName,String labelValue, String date) {
+		String xpath = "";
+		WebElement ele = null;
+		String finalLabelName=labelName.replace("_", " ");
+		if(labelName.contains(excelLabel.Target_Commitments.toString().replaceAll("_", " "))) {
+			labelName=FundPageFieldLabelText.Target_Commitments.toString();
+		}
+		
+			
+			xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
+					+ "']/../following-sibling::div//lightning-formatted-text";
+			if (labelName.equalsIgnoreCase(excelLabel.Deal_Quality_Score.toString()))
+				xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
+				+ "']/../following-sibling::div//lightning-formatted-number";
+			else if(labelName.equalsIgnoreCase(excelLabel.Company_Name.toString()))
+			xpath="//span[@class='test-id__field-label'][text()='"+finalLabelName+"']/../following-sibling::div//a";
+		ele = isDisplayed(driver,
+				FindElement(driver, xpath, labelName + " label text in " + projectName, action.SCROLLANDBOOLEAN, 60),
+				"Visibility", 30, labelName + " label text in " + projectName);
+		if (ele != null) {
+			String aa = ele.getText().trim();
+			appLog.info("Lable Value is: "+aa);
+			if(labelName.contains("Date")) {
+				if(aa.contains(labelValue)) {
 					appLog.info("Dtae is verified Successfully");
 					return true;
 				}else {
@@ -244,7 +343,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 				appLog.info("Enter value on Fund Name Text Box : "+fundName);
 				if (click(driver, getFundType(projectName, 60), "Fund Type ", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on Fund Type");
-					xpath="//span[@title='"+fundType+"']/../..";
+					xpath="//*[text()='Fund Type']/following-sibling::div//span[@title='"+fundType+"']/../..";
 					WebElement fundTypeEle = FindElement(driver,xpath, fundType,action.SCROLLANDBOOLEAN, 10);
 					ThreadSleep(500);
 					if (click(driver, fundTypeEle, fundType, action.SCROLLANDBOOLEAN)) {
@@ -252,13 +351,32 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 
 						if (click(driver, getInvestmentCategory(projectName, 60), "Investment Category",
 								action.SCROLLANDBOOLEAN)) {
+							ThreadSleep(1000);
 							appLog.info("clicked on Investment category");
-							xpath="//label[text()='Investment Category']/following-sibling::div//span[@title='"+investmentCategory+"']/../..";
+							xpath="//*[text()='Investment Category']/following-sibling::div//span[@title='"+investmentCategory+"']/../..";
 							WebElement InvsCatgEle = FindElement(driver,xpath,investmentCategory, action.SCROLLANDBOOLEAN, 10);
 							ThreadSleep(500);
 							if (click(driver, InvsCatgEle, investmentCategory, action.SCROLLANDBOOLEAN)) {
 								appLog.info("Select Investment Category : "+investmentCategory);
 
+								if(labelswithValues!=null&&labelswithValues.equals("")){
+									for(String[] labelAndValue:labelswithValues){
+										
+										String label =labelAndValue[0].replaceAll("_", " ");
+										String value = labelAndValue[1];
+										xpath="//*[text()='"+label+"']/following-sibling::div//input";
+										ele = FindElement(driver, xpath, "Field : "+label, action.BOOLEAN, 30);
+										if (sendKeys(driver, ele, value, "Fund Name", action.BOOLEAN)) {
+											ThreadSleep(500);
+											appLog.info("Enter value on field:"+label+" Text Box : "+value);
+										}else{
+											
+											appLog.error("Not able to Enter value on field:"+label+" Text Box : "+value);
+
+										}
+									}
+									
+								}
 								if (click(driver, getCustomTabSaveBtn(projectName,60), "Save Button", action.BOOLEAN)) {
 									ThreadSleep(500);
 									appLog.info("click on save button");
@@ -502,12 +620,45 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 								appLog.error("Not able to enter "+labelText+" value "+strings[1]+" in text box so cannot create Deal : "+dealName);
 								return false;
 							}
+						}else if(labelText.equalsIgnoreCase("Pipeline Comments") || labelText.equalsIgnoreCase("Deal Description")){
+							
+							if (sendKeys(driver, FindElement(driver, "//*[text()='"+labelText+"']/following-sibling::div//textarea", labelText, action.SCROLLANDBOOLEAN, 30),strings[1],labelText,action.SCROLLANDBOOLEAN)) {
+								appLog.info(strings[1] + "  is passed to pipeline comment input box.");
+								
+							} else {
+								appLog.error("Not able to enter "+labelText+" value "+strings[1]+" in text box so cannot create Deal : "+dealName);
+								return false;
+							}
+						
+					}else {
+							if (sendKeys(driver, FindElement(driver, "//*[text()='"+labelText+"']/following-sibling::div//input", labelText, action.SCROLLANDBOOLEAN, 30),strings[1],labelText,action.SCROLLANDBOOLEAN)) {
+								appLog.info(strings[1] + "  is passed to pipeline comment input box.");
+								
+							} else {
+								appLog.error("Not able to enter "+labelText+" value "+strings[1]+" in text box so cannot create Deal : "+dealName);
+								return false;
+							}
+							
 						}
 					}
 				}
 				if (click(driver, getCustomTabSaveBtn(projectName,30), "Save Button", action.SCROLLANDBOOLEAN)) {
-					appLog.error("Click on save Button");	
-					flag = true;
+					appLog.error("Click on save Button");
+					
+					ThreadSleep(3000);
+					String str = getText(driver, verifyCreatedItemOnPage(Header.Deal, dealName), "Deal Name header Label Text",action.SCROLLANDBOOLEAN);
+					if (str != null) {
+						if (str.contains(dealName)) {
+							appLog.info("created Deal " + dealName + " is verified successfully.");
+							appLog.info(dealName + " is created successfully.");
+							flag=true;
+						} else {
+							appLog.error("Created  " + dealName + " is not matched with " + str);
+						}
+					} else {
+						appLog.error("Created  " + dealName + " is not visible");
+					}
+	
 				}else{
 					appLog.error("Not Able to Click on save Button");	
 				}
@@ -535,7 +686,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	 * @param labelswithValues
 	 * @param timeOut
 	 * @return true/false
-	 * @description this is used to create a deal in MNA
+	 * @description this method is used to create custom sdg
 	 */
 	public boolean createCustomSDG(String projectName,String sdgName, String sdgTag,String sObjectName,String stage,String[][] labelswithValues,int timeOut) {
 		WebElement ele;
@@ -767,5 +918,127 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		return flag;
 	}
 	
+	public WebElement sourceFirmLink(int timeOut) {
+		String xpath="//span[@class='test-id__field-label'][text()='Source Firm']/../following-sibling::div//a";
+		WebElement ele=FindElement(driver, xpath, "source firm", action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "visibility", 10, "source firm link");
+	}
+	
+	/**
+	 * @param projectName
+	 * @param dealType
+	 * @param dealName
+	 * @param companyName
+	 * @param stage
+	 * @param labelswithValues
+	 * @param timeOut
+	 * @return true if able to create Deal other Page rathewr than Deal Page New Button
+	 */
+	public boolean createDealPopUp(String projectName,String dealType, String dealName,String companyName,String stage,String[][] labelswithValues,int timeOut) {
+		WebElement ele;
+		boolean flag = false;
+		String xpath="";
+		//		status="Prospect";
+		//		stage="Prospect";
+		//		dealType="Sell-side Deal";
+		ThreadSleep(2000);
+		
+			if (!dealType.equals("") || !dealType.isEmpty()) {
+				ThreadSleep(2000);
+				ele=getRadioButtonforRecordType(dealType, timeOut);
+				if (click(driver, ele, dealType, action.SCROLLANDBOOLEAN)) {
+					appLog.info(" Selected Deal type : "+dealType);	
+					ThreadSleep(1000);
+					if (click(driver, getContinueOrNextButton(projectName,timeOut), "Continue Button", action.BOOLEAN)) {
+						appLog.info("Clicked on Continue or Nxt Button");	
+						ThreadSleep(1000);
+					}else{
+						appLog.error("Not Able to Click on Continue or Nxt Button");	
+					}
+
+				}else{
+					appLog.error("Not Able to Select Deal type : "+dealType);	
+				}
+			}
+			ele = getLabelTextBox(projectName, PageName.DealPage.toString(), PageLabel.Deal_Name.toString(), timeOut);
+			if (sendKeys(driver,ele, dealName, "Deal Name", action.BOOLEAN)) {
+				appLog.info("Successfully Entered value on Deal Name TextBox : "+dealName);		
+				ThreadSleep(1000);
+				if (sendKeys(driver, getCompanyName(projectName, 60), companyName, "Company Name",
+						action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(1000);
+						if (click(driver,FindElement(driver,"//input[contains(@placeholder,'Search')]/../following-sibling::*//*[@title='"+companyName+"']","Company Name List", action.BOOLEAN, 30),
+								companyName + "   :   Company Name", action.BOOLEAN)) {
+							appLog.info(companyName + "  is present in list.");
+						} else {
+							appLog.info(companyName + "  is not present in the list.");
+							return false;
+						}
+					
+				} else {
+					appLog.error("Not able to enter Company name");
+					return false;
+				}
+				
+				if (click(driver, getDealStage(projectName, timeOut), "Deal Status : "+stage, action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(2000);
+					appLog.error("Clicked on Deal stage");
+
+					xpath="//span[@title='"+stage+"']";
+					WebElement dealStageEle = FindElement(driver,xpath, stage,action.SCROLLANDBOOLEAN, timeOut);
+					ThreadSleep(2000);
+					if (click(driver, dealStageEle, stage, action.SCROLLANDBOOLEAN)) {
+						appLog.info("Selected Deal stage : "+stage);
+					} else {
+						appLog.error("Not able to Select on Deal stage : "+stage);
+					}
+
+				} else {
+					appLog.error("Not able to Click on Deal stage : ");
+				}
+				if(labelswithValues!=null) {
+					for (String[] strings : labelswithValues) {
+						String labelText= strings[0].replace("_", " ");
+						if(labelText.equalsIgnoreCase("Source Contact") || labelText.equalsIgnoreCase("Source Firm")) {
+							if (sendKeys(driver, getSourceFirmAndSourceContactTextBox(labelText, 10), strings[1], labelText+" text box",action.SCROLLANDBOOLEAN)) {
+								ThreadSleep(1000);
+								if (click(driver,FindElement(driver,"//*[text()='"+labelText+"']/..//*[@title='"+strings[1]+"']",strings[1]+" auto suggest drop down list", action.BOOLEAN, 30),
+										strings[1] + "   : auto suggest drop down list", action.BOOLEAN)) {
+									appLog.info(strings[1] + "  is selected from auto suggest drop down list.");
+								} else {
+									appLog.info(strings[1] + "  is not selected from auto suggest drop down list.");
+									return false;
+								}
+								
+							} else {
+								appLog.error("Not able to enter "+labelText+" value "+strings[1]+" in text box so cannot create Deal : "+dealName);
+								return false;
+							}
+						}
+					}
+				}
+				if (click(driver, getCustomTabSaveBtn(projectName,30), "Save Button", action.SCROLLANDBOOLEAN)) {
+					appLog.error("Click on save Button");	
+					flag = true;
+				}else{
+					appLog.error("Not Able to Click on save Button");	
+				}
+
+
+
+			} else {
+				appLog.error("Not Able to Entered value on Deal Name TextBox : "+dealName);	
+			}
+	
+
+
+		return flag;
+	}
+	
+	public WebElement highLightFundLabel(String label,int timeOut) {
+		String xpath="//div[@class='highlights slds-clearfix slds-page-header slds-page-header_record-home fixed-position']//div/p[text()='"+label+"']";
+		WebElement ele=FindElement(driver, xpath, label, action.SCROLLANDBOOLEAN, 10);
+		return isDisplayed(driver, ele, "visibility", timeOut, label);
+	}
 	
 }

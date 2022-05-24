@@ -5,6 +5,7 @@ import static com.navatar.generic.AppListeners.appLog;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -59,6 +60,87 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		return isDisplayed(driver, ele, "Visibility", timeOut, "Search Value : "+searchValue);
 	}
 	
+	/**
+	 * @author Ravi Kumar
+	 * @param tabToBeAdded
+	 * @param timeOut
+	 * @return true if all Tab added successfully
+	 */
+	public List<String> addRelatedTabOnEditPage_Lighting(String projectName,String tabToBeAdded,String typeoftab, int timeOut) {
+
+		switchToFrame(driver, 20, 	getEditPageFrame(projectName, timeOut));
+		List<String> result = new ArrayList<String>();
+		String splitedTabs =  typeoftab;
+		ThreadSleep(5000);
+		if (clickUsingJavaScript(driver, getRelatedTabBar(timeOut), "All Tab Button", action.SCROLLANDBOOLEAN)) {
+			appLog.info("clicked on all tabs icon");
+			ThreadSleep(3000);
+			switchToDefaultContent(driver);
+			if (click(driver, getAddTabEditPageLink(timeOut), "Add a Tab Link", action.SCROLLANDBOOLEAN)) {
+				appLog.info("clicked on add a tab link");
+				List<WebElement> element=getAlreadyAddedTabListEditPage(timeOut);
+				if (click(driver, getAlreadyAddedTabListEditPage(timeOut).get(element.size()-1), "Add a Tab Link", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on added tab link");
+					ThreadSleep(3000);
+						if (selectVisibleTextFromDropDown(driver, getTabLabelDropdownOnEditPage(timeOut), "Available Tab List",
+								splitedTabs)) {
+							appLog.info(splitedTabs + " is selected successfully in available tabs");
+							
+							if(splitedTabs.equalsIgnoreCase("Custom")) {
+								ThreadSleep(2000);
+								if (sendKeysAndPressEnter(driver, getTabLabelInputOnEditPage(timeOut), tabToBeAdded, "tab label input box", action.BOOLEAN)) {
+									appLog.error("enter tab label name:"+tabToBeAdded);
+									ThreadSleep(2000);
+									if (clickUsingJavaScript(driver, getTabLabelDoneButtonOnEditPage(timeOut), "tab label done button",
+											action.SCROLLANDBOOLEAN)) {
+										appLog.error("clicked on tab label done button");
+									} else {
+										result.add("Not able to clicked on tab label done button");
+										appLog.error("Not able to clicked on tab label done button");
+									}
+								} else {
+									result.add("Not able enter tab label name:"+tabToBeAdded);
+									appLog.error("Not able enter tab label name:"+tabToBeAdded);
+								}
+							}else {
+								ThreadSleep(5000);
+								if (clickUsingJavaScript(driver, getTabLabelDoneButtonOnEditPage(timeOut), "tab label done button",
+										action.SCROLLANDBOOLEAN)) {
+									appLog.error("clicked on tab label done button");
+								} else {
+									result.add("Not able to clicked on tab label done button");
+									appLog.error("Not able to clicked on tab label done button");
+								}
+							}
+							
+					
+				}else {
+					result.add(splitedTabs + " is not selected  in available tabs");
+					appLog.error(splitedTabs + " is not selected  in available tabs");
+				}
+					ThreadSleep(5000);
+				if (click(driver, getSaveButtonOnEditPage(60), "Custom Tab Save Button", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on save button");
+
+				} else {
+					result.add("Not able to click on save button so cannot save custom tabs");
+					appLog.error("Not able to click on save button so cannot save custom tabs");
+				}
+
+			} else {
+				result.add("Not able to click on add a tab link so cannot add custom tabs");
+				appLog.error("Not able to click on add a tab link so cannot add custom tabs");
+			}
+			} else {
+				result.add("Not able to click on add a tab link so cannot add custom tabs");
+				appLog.error("Not able to click on add a tab link so cannot add custom tabs");
+			}
+		} else {
+			result.add("Not able to click on all tabs icon so cannot add custom tabs");
+			appLog.error("Not able to click on all tabs icon so cannot add custom tabs");
+		}
+		return result;
+	}
 	
 	/**
 	 * @author Azhar Alam
@@ -107,7 +189,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 	 * @param fieldSetApiName
 	 * @return true if successfully drag N drop layout on Edit Page
 	 */
-	public boolean dragAndDropLayOutFromEditPage(String projectName,PageName pageName, RelatedTab relatedTab,String DropComponentName, String fieldSetApiName) {
+	public boolean dragAndDropLayOutFromEditPage(String projectName,PageName pageName, RelatedTab relatedTab,String DropComponentName, String fieldSetApiName, String imageFieldName) {
 		boolean flag = false;
 		WebElement ele=null,dropComponentXpath=null,dropLocation=null;
 		if(switchToFrame(driver, 30, getEditPageFrame(projectName,30))) {
@@ -122,29 +204,49 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 					switchToDefaultContent(driver);
 					if(sendKeys(driver,getEditPageSeachTextBox(projectName, 10), DropComponentName,DropComponentName+" component xpath", action.BOOLEAN)) {
 						log(LogStatus.INFO, "Enter component name in search box : "+DropComponentName, YesNo.No);
-						
 						String xpath = "//span[@title='"+DropComponentName+"' or text()='"+DropComponentName+"']";
 						dropComponentXpath =  isDisplayed(driver, FindElement(driver, xpath, "Search Value : "+DropComponentName, action.BOOLEAN, 10), "Visibility", 10, "Search Value : "+DropComponentName);
 						if(dropComponentXpath!=null) {
 //							Actions builder = new Actions(driver);
 //							builder.clickAndHold(dropComponentXpath).build().perform();
 					        switchToFrame(driver, 30, getEditPageFrame(projectName,30));
-					        String dropLocationXpath="(//a[@class='flexipageEditorContainerPlaceholder'])[1]";
-					        dropLocation = FindElement(driver, dropLocationXpath,"header xpath",action.BOOLEAN, 10);
+					        String dropLocationXpath ="";
+					        if(pageName.toString().equalsIgnoreCase(PageName.Object5Page.toString())) {
+					        	dropLocationXpath = "//*[@class='actualNode']//*[@role='tablist']";
+					        	dropLocation = FindElement(driver, dropLocationXpath,"header xpath",action.BOOLEAN, 10);
+							}else {
+					        	dropLocationXpath="(//a[@class='flexipageEditorContainerPlaceholder'])[1]";
+					        	 dropLocation = FindElement(driver, dropLocationXpath,"header xpath",action.BOOLEAN, 10);
+							}
 					    	if (dropLocation!=null) {
 					    		switchToDefaultContent(driver);
                                 Screen screen = new Screen();
                                 try {
-                                
+                                		if(pageName.toString().equalsIgnoreCase(PageName.Object5Page.toString())) {
+                                			screen.dragDrop("\\AutoIT\\FIeldSet.PNG", "\\AutoIT\\AddComponentHereOnMEPage.PNG");
+                                		}else {
 //                                		screen.dropAt("\\AutoIT\\AddComponentHere.PNG");
-                                		screen.dragDrop("\\AutoIT\\FIeldSet.PNG", "\\AutoIT\\AddComponentHere.PNG");
+                                			screen.dragDrop("\\AutoIT\\FIeldSet.PNG", "\\AutoIT\\AddComponentHere.PNG");
+											
+										}
                                 	
                                     ThreadSleep(500);
                                     if(sendKeys(driver, getFieldSetNameTextBox(10), fieldSetApiName, "field set name text box", action.BOOLEAN)) {
                                     	log(LogStatus.INFO, "field set name : "+fieldSetApiName, YesNo.No);
+                                    	
+                                    	if(imageFieldName!=null) {
+                                    		 if(sendKeys(driver, getImageFieldNameTextBox(10), imageFieldName, "image field name text box", action.BOOLEAN)) {
+                                             	log(LogStatus.INFO, "image field set name : "+imageFieldName, YesNo.No);
+                                             	
+                                    		 }else {
+         										log(LogStatus.ERROR, "Not able to enter image field set name : "+imageFieldName+" so cannot add field set", YesNo.Yes);
+         										clickUsingJavaScript(driver, getBackButton(10), "back button", action.BOOLEAN);
+         										return false;
+         									}
+                                    	}
                                     	if(click(driver, getCustomTabSaveBtn(projectName, 10), "save button", action.BOOLEAN)) {
                                     		log(LogStatus.INFO, "clicked on save button", YesNo.No);
-                                    		ThreadSleep(2000);
+                                    		ThreadSleep(7000);
                                     		if(clickUsingJavaScript(driver, getBackButton(10), "back button", action.BOOLEAN)) {
                                     			log(LogStatus.PASS, "clicked on back button", YesNo.No);
                                     			flag=true;
@@ -160,6 +262,9 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
                                 } catch (FindFailed e) {
                                     // TODO Auto-generated catch block
                                     e.printStackTrace();
+                                    log(LogStatus.ERROR, "Drop location is not visible", YesNo.Yes);
+                                    clickUsingJavaScript(driver, getBackButton(10), "back button", action.BOOLEAN);
+										return false;
                                 }
 					    	}else {
 					    		log(LogStatus.ERROR, "Drop location is not visible in list so cannot drag and drop component "+DropComponentName+" in "+relatedTab.toString(), YesNo.Yes);
@@ -313,21 +418,24 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 						ThreadSleep(2000);
 						if(clickUsingJavaScript(driver, getBackButton(10), "back button", action.BOOLEAN)) {
 							log(LogStatus.PASS, "clicked on back button", YesNo.No);
-							flag=true;
 						}else {
 							log(LogStatus.ERROR, "Not able to click on back button so cannot back on page ", YesNo.Yes);
+							flag=false;
 						}
 					}else {
 						log(LogStatus.ERROR, "Not able to click on save button so cannot create accordion : ", YesNo.No);
 					}
 				}else {
 								 log(LogStatus.ERROR, "Drop location is not visible in list so cannot drag and drop component "+DropComponentName, YesNo.Yes);
-							 }
+								 flag=false;			 
+				}
 			}else {
 				log(LogStatus.ERROR, "Not able to search on component so cannot drag and drop component "+DropComponentName, YesNo.Yes);
+				flag=false;
 			}
 		}else {
 			log(LogStatus.ERROR, "Cannot switch in edit page iframe cannot drag and drop component "+DropComponentName, YesNo.Yes);
+			flag=false;
 		}
 		switchToDefaultContent(driver);
 		return flag;
@@ -355,7 +463,16 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 	 * @return Contact SDG Query
 	 */
 	public String ContactSDGQuery(String fieldName) {
-		return "SELECT Id, Name, Title,"+fieldName+" Industry__c, Region__c,Profile_Image__c FROM Contact WHERE (AccountId = '<<recordId>>') ORDER BY Name ASC";
+		return "SELECT Id, Name, Title,"+fieldName+" navpeII__Sector__c, navpeII__Region__c,navpeII__Profile_Image__c FROM Contact WHERE (AccountId = '<<recordId>>') ORDER BY Name ASC";
+}
+	
+	/**
+	 * @author Akul Bhutani
+	 * @param fieldName
+	 * @return Contact SDG Query
+	 */
+	public String InstitutionSDGQuery(String fieldName) {
+		return "SELECT Id, Name, Title, Email, Phone"+fieldName+" FROM Contact WHERE (AccountId = '<<recordId>>') ORDER BY Name ASC";
 }
 	/**
 	 * @author Akul Bhutani
@@ -363,7 +480,8 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 	 * @return Deal Team SDG Query
 	 */
 	public String DealTeamSDGQuery(String fieldName) {
-		return "SELECT Member__c, Member__r.Name,Member__r.Title,"+fieldName+"Team_Member_Role__c,Type__c,Member__r.MediumPhotoURL FROM Deal_Team__c WHERE ( Pipeline__c = '<<recordId>>' AND (member__c <> null)) ORDER BY Id ASC";
+		return "SELECT navpeII__Team_Member__c,navpeII__Team_Member__r.Name,navpeII__Team_Member__r.Title,navpeII__Deal_Contact_Type__c,"+fieldName+"navpeII__Team_Member_Role__c,navpeII__Team_Member__r.MediumPhotoUrl FROM navpeII__Deal_Team__c WHERE(navpeII__Deal__c = '<<recordId>>' AND (navpeII__Team_Member__c <> null)) ORDER BY Id ASC";
+		//return "SELECT navpeII__Team_Member__c, navpeII__Team_Member__r.Name,navpeII__Team_Member__r.Title,"+fieldName+"navpeII__Team_Member_Role__c,navpeII__Deal_Contact_Type__c,navpeII__Team_Member__r.MediumPhotoUrl FROM navpeII__Deal_Team__c WHERE ( Name = '<<recordId>>' AND (navpeII__Team_Member__c <> null)) ORDER BY Id ASC";
 }
 
 	/**

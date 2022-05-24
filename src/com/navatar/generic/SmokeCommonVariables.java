@@ -18,10 +18,11 @@ import static com.navatar.generic.BaseLib.*;
 
 public class SmokeCommonVariables {
 	
-	public static String appName;
+	public static String appName,appVersion;
 	public static String superAdminUserName,superAdminRegistered,adminPassword;
 	public static String AdminUserFirstName,AdminUserLastName,AdminUserEmailID;
 	public static String crmUser1FirstName,crmUser1LastName,crmUser1EmailID,crmUserProfile,crmUserLience;
+	public static String crmUser3FirstName,crmUser3LastName,crmUser3EmailID,crmUser3Profile,crmUser3Lience;
 	public static String gmailUserName,gmailUserName2,gmailPassword;
 	
 	public static String Smoke_TaskINS1Name,Smoke_TaskINS1RecordType;
@@ -165,6 +166,7 @@ public class SmokeCommonVariables {
 		long StartTime = System.currentTimeMillis();
 		//if(obj instanceof SmokeTestCases){
 			appName=ExcelUtils.readDataFromPropertyFile("AppName");
+			appVersion=ExcelUtils.readDataFromPropertyFile("AppVersion");
 			tabCustomObj=ExcelUtils.readDataFromPropertyFile("CustomTabName");
 			tabObj1=ExcelUtils.readDataFromPropertyFile("Object1");
 			tabObj2=ExcelUtils.readDataFromPropertyFile("Object2");
@@ -202,6 +204,13 @@ public class SmokeCommonVariables {
 			crmUser1EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User1", excelLabel.User_Email);
 			crmUserProfile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User1", excelLabel.User_Profile);
 			crmUserLience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User1", excelLabel.User_License);
+			
+			
+			crmUser3FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User3", excelLabel.User_First_Name);
+			crmUser3LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User3", excelLabel.User_Last_Name);
+			crmUser3EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User3", excelLabel.User_Email);
+			crmUser3Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User3", excelLabel.User_Profile);
+			crmUser3Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User3", excelLabel.User_License);
 
 
 			//****************************************************************	EntityorAccount **********************************************************//

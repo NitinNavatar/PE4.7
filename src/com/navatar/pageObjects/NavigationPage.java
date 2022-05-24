@@ -91,7 +91,37 @@ public class NavigationPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, navigationPopUpHeader, "Visibility", timeOut, "navigation PopUp Header");
 	}
 	
+	/**
+	 * @return the NavigationList
+	 */
+	public List<WebElement> getNavigationList(String projectName,int timeOut) {
+		return FindElements(driver, "//div[contains(@id,'treeview')]//ul//li/span[3]", "Navigation List item");
+	}
 	
+	@FindBy(xpath="//*[text()='Navigation Type']/..//div//button")
+	private WebElement navigationTypeLabel;
+
+	/**
+	 * @return the navigationTypeLabel
+	 */
+	public WebElement getNavigationTypeLabel(String projectName,int timeOut) {
+		
+			return isDisplayed(driver, navigationTypeLabel,  "Visibility", timeOut, "Navigation TYpe Label");
+		
+
+	}
 	
+	@FindBy(xpath="//button[@title='Clear Selection']")
+	private WebElement clearSelection;
+
+	/**
+	 * @return the clearSelection
+	 */
+	public WebElement getClearSelection(String projectName,int timeOut) {
+		
+			return isDisplayed(driver, clearSelection, "Visibility", timeOut, "clear Selection");
+		
+
+	}
 }
 

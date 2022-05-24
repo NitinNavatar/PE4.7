@@ -193,6 +193,7 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 	 */
 	public boolean CRMlogout() {
 		boolean flag = false;
+		switchToDefaultContent(driver);
 		List<WebElement> lst = getUserMenuTab_Lightning();
 		for (int i = 0; i < lst.size(); i++) {
 //			if(isDisplayed(driver, lst.get(i), "visibility", 5, "user menu tab")!=null) {
@@ -247,7 +248,7 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
                 if(clickUsingJavaScript(driver, getAppNameLabelTextInAppLuncher(appName, 30), "app name label text in app luncher")) {
                     appLog.info("clicked on app Name "+appName);
                     ThreadSleep(5000);
-                    if(getAppNameXpathInLightning(appName, 60)!=null) {
+                    if(getAppNameXpathInLightning(appName, 10)!=null) {
                         appLog.info(appName+" App is open successfully in lightning ");
                         flag =  true;
                     }else {

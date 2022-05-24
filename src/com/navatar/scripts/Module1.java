@@ -1,5 +1,6 @@
 package com.navatar.scripts;
 
+import static com.navatar.generic.BaseLib.phase1DataSheetFilePath;
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
 import static com.navatar.generic.ExcelUtils.*;
@@ -145,6 +146,8 @@ public class Module1 extends BaseLib {
 	public void M1Tc001_2_Prerequisite(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentWindow=null;
 		String[][] userAndPassword = {{superAdminUserName,adminPassword},{crmUser1EmailID,adminPassword}};
 		for (String[] userPass : userAndPassword) {
 			lp.CRMLogin(userPass[0], userPass[1], appName);
@@ -158,16 +161,51 @@ public class Module1 extends BaseLib {
 			else{
 				tab1=tabObj1;
 			}
-			addRemoveTabName=tab1+"s,"+tabObj2+"s,"+tabObj3+"s,"+tabObj4+"s,"+"Tasks"+",Recycle Bin"+",Navatar Setup"+",Partnerships"+",Commitments,Coverages";
+			addRemoveTabName=tab1+"s,"+tabObj2+"s,"+tabObj3+"s,"+tabObj4+"s,"+"Tasks"+",Recycle Bin"+",Navatar Setup"+",Coverages,Deal Team";
 			if (lp.addTab_Lighting( addRemoveTabName, 5)) {
 				log(LogStatus.INFO,"Tab added : "+addRemoveTabName,YesNo.No);
 			} else {
 				log(LogStatus.FAIL,"Tab not added : "+addRemoveTabName,YesNo.No);
 				sa.assertTrue(false, "Tab not added : "+addRemoveTabName);
 			}		
-
-
-
+			
+			if(userPass[0]== superAdminUserName) {
+				if (home.clickOnSetUpLink()) {
+					parentWindow = switchOnWindow(driver);
+					if (parentWindow == null) {
+						sa.assertTrue(false,
+								"No new window is open after click on setup link in lighting mode so cannot create Fields object Entity for object");
+						log(LogStatus.SKIP,
+								"No new window is open after click on setup link in lighting mode so cannot create Fields object Entity for object",
+								YesNo.Yes);
+						exit("No new window is open after click on setup link in lighting mode so cannot create Fields object Entity for object");
+					}
+					ThreadSleep(3000);
+					object[] obj = {object.Institution,object.Deal,object.Marketing_Event};
+					int j=0;
+					String[][] labelAndValues= {
+					{FC_FieldType32,FC_FieldLabelName32,null,null},{FC_FieldType33,FC_FieldLabelName33,null,null},{FC_FieldType34,FC_FieldLabelName34,null,null}};
+					
+					
+					for(String[] objects : labelAndValues) {
+						String[][] valuesandLabel = {{objects[2],objects[3]}};
+						
+						if(setup.addCustomFieldforFormula(environment,mode,obj[j],ObjectFeatureName.FieldAndRelationShip,objects[0],objects[1], valuesandLabel, null,null)) {
+							log(LogStatus.PASS, "Field Object is created for :"+objects[1], YesNo.No);
+						}else {
+							log(LogStatus.PASS, "Field Object is not created for :"+objects[1], YesNo.Yes);
+							
+						}
+						j++;
+					}
+					switchToDefaultContent(driver);
+					driver.close();
+					driver.switchTo().window(parentWindow);
+				}else {
+					log(LogStatus.ERROR, "Not able to click on setup link so cannot create Fields object Entity for object", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on setup link so cannot create Fields object Entity for object");
+				}
+			}
 			ThreadSleep(5000);
 			lp.CRMlogout();
 			closeBrowser();
@@ -185,8 +223,8 @@ public class Module1 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
-		String[] tabs= {tabObj1,tabObj2,tabObj3,tabObj4,tabObj8Coverage};
-		TabName[] tab= {TabName.Object1Tab,TabName.Object2Tab,TabName.Object3Tab,TabName.Object4Tab,TabName.Object8Tab};
+		String[] tabs= {tabObj1,tabObj2,tabObj3,tabObj4,tabObj5,tabObj8Coverage};
+		TabName[] tab= {TabName.Object1Tab,TabName.Object2Tab,TabName.Object3Tab,TabName.Object4Tab,TabName.Object5Tab,TabName.Object8Tab};
 		int i=0;
 		for (TabName t:tab) {
 
@@ -299,7 +337,6 @@ public class Module1 extends BaseLib {
 			}
 			ThreadSleep(3000);
 			object object1 = object.valueOf(FS_Object1);
-			
 			if(setup.createFieldSetComponent(object1, ObjectFeatureName.FieldSets, FS_FieldSetLabel1, FS_NameSpacePrefix1, FS_FieldsName1)) {
 				log(LogStatus.PASS, "Field Set Component is created for : "+FS_FieldSetLabel1, YesNo.No);
 			}else {
@@ -320,6 +357,21 @@ public class Module1 extends BaseLib {
 				log(LogStatus.ERROR,"Field Set Component is not created for : "+FS_FieldSetLabel3, YesNo.Yes);
 				sa.assertTrue(false, "Field Set Component is not created for : "+FS_FieldSetLabel3);
 			}
+			if(setup.createFieldSetComponent(object.Marketing_Event, ObjectFeatureName.FieldSets, FS_FieldSetLabel4, FS_NameSpacePrefix4, FS_FieldsName4)) {
+				log(LogStatus.PASS, "Field Set Component is created for : "+FS_FieldSetLabel4, YesNo.No);
+				
+			}else {
+				log(LogStatus.ERROR,"Field Set Component is not created for : "+FS_FieldSetLabel4, YesNo.Yes);
+				sa.assertTrue(false, "Field Set Component is not created for : "+FS_FieldSetLabel4);
+			}
+			if(setup.createFieldSetComponent(object.Institution, ObjectFeatureName.FieldSets, FS_FieldSetLabel5, FS_NameSpacePrefix5, FS_FieldsName5)) {
+				log(LogStatus.PASS, "Field Set Component is created for : "+FS_FieldSetLabel5, YesNo.No);
+				
+			}else {
+				log(LogStatus.ERROR,"Field Set Component is not created for : "+FS_FieldSetLabel5, YesNo.Yes);
+				sa.assertTrue(false, "Field Set Component is not created for : "+FS_FieldSetLabel5);
+			}
+			
 			switchToDefaultContent(driver);
 			driver.close();
 			driver.switchTo().window(parentWindow);
@@ -342,13 +394,12 @@ public class Module1 extends BaseLib {
 		String value="";
 		String type="";
 		String[][] EntityOrAccounts = {{ FS_Ins1,FS_Ins1RecordType ,null}};
-		
 		for (String[] accounts : EntityOrAccounts) {
 			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
 				log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);	
 				value = accounts[0];
 				type = accounts[1];
-				if (ip.createEntityOrAccount(projectName, value, type, null, 20)) {
+				if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
 					log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
 				} else {
 					sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
@@ -365,7 +416,7 @@ public class Module1 extends BaseLib {
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);	
 			String mailID=	lp.generateRandomEmailId(gmailUserName);
 			ExcelUtils.writeData(phase1DataSheetFilePath, mailID, "Contacts", excelLabel.Variable_Name, "C1",excelLabel.Contact_EmailId);
-			if (con.createContact(projectName, FS_Con1_FName, FS_Con1_LName, FS_Ins1, mailID,FS_Con1_RecordType,excelLabel.Phone.toString(), FS_Con1_Phone, CreationPage.ContactPage, null)) {
+			if (con.createContact(projectName, FS_Con1_FName, FS_Con1_LName, FS_Ins1, mailID,FS_Con1_RecordType,excelLabel.Phone.toString(), FS_Con1_Phone, CreationPage.ContactPage, null, null)) {
 				log(LogStatus.INFO,"successfully Created Contact : "+FS_Con1_FName+" "+FS_Con1_LName,YesNo.No);	
 			} else {
 				sa.assertTrue(false,"Not Able to Create Contact : "+FS_Con1_FName+" "+FS_Con1_LName);
@@ -407,7 +458,7 @@ public class Module1 extends BaseLib {
 				log(LogStatus.INFO,"clicked on created contact : "+FS_Con1_FName+" "+FS_Con1_LName, YesNo.No);
 				ThreadSleep(5000);
 				if(edit.clickOnEditPageLink()) {
-					if(edit.dragAndDropLayOutFromEditPage(projectName, PageName.Object2Page, RelatedTab.Details, "Navatar Fieldset",FS_FieldSetLabel1)) {
+					if(edit.dragAndDropLayOutFromEditPage(projectName, PageName.Object2Page, RelatedTab.Details, "Navatar Fieldset",FS_FieldSetLabel1,"Profile_Image__c")) {
 						log(LogStatus.INFO, "Field set component is added on contact page :"+FS_Con1_FName+" "+FS_Con1_LName, YesNo.No);
 					}else {
 						log(LogStatus.ERROR, "Field set component is not added on contact page :"+FS_Con1_FName+" "+FS_Con1_LName, YesNo.Yes);
@@ -432,7 +483,7 @@ public class Module1 extends BaseLib {
 				log(LogStatus.INFO,"clicked on created Deal : "+FS_DealName1, YesNo.No);
 				ThreadSleep(5000);
 				if(edit.clickOnEditPageLink()) {
-					if(edit.dragAndDropLayOutFromEditPage(projectName, PageName.Object4Page, RelatedTab.Details, "Navatar Fieldset",FS_FieldSetLabel3)) {
+					if(edit.dragAndDropLayOutFromEditPage(projectName, PageName.Object4Page, RelatedTab.Details, "Navatar Fieldset",FS_FieldSetLabel3,"Profile_Image__c")) {
 						log(LogStatus.INFO, "Field set component is added on Deal page :"+FS_DealName1, YesNo.No);
 					}else {
 						log(LogStatus.ERROR, "Field set component is added on Deal page :"+FS_DealName1, YesNo.Yes);
@@ -467,7 +518,7 @@ public class Module1 extends BaseLib {
 				log(LogStatus.INFO,"clicked on created contact : "+FS_Con1_FName+" "+FS_Con1_LName, YesNo.No);
 				ThreadSleep(5000);
 				String[] ss = FS_FieldsName1.split("<break>");
-				String[] ss1 = {FS_Con1_FName+" "+FS_Con1_LName,FS_Ins1,FS_Con1_Email,FS_Con1_Phone};
+				String[] ss1 = {FS_Con1_FName+" "+FS_Con1_LName,"",FS_Con1_Email,FS_Con1_Phone};
 				for(int i=0; i<ss.length; i++) {
 					if(con.verifyFieldSetComponent(ss[i],ss1[i])) {
 						log(LogStatus.PASS, ss[i]+" is verified : "+ss1[i], YesNo.No);
@@ -733,7 +784,7 @@ public class Module1 extends BaseLib {
 				log(LogStatus.INFO,"clicked on created contact : "+FS_Con1_FName+" "+FS_Con1_LName, YesNo.No);
 				ThreadSleep(5000);
 				String[] ss = reverseObjects.split("<break>");
-				String[] ss1 = {FS_Con1_Phone,FS_Con1_Email,FS_Ins1,FS_Con1_FName+" "+FS_Con1_LName};;
+				String[] ss1 = {FS_Con1_Phone,FS_Con1_Email,"",FS_Con1_FName+" "+FS_Con1_LName};;
 				
 				for(int i=0; i<ss.length; i++) {
 					if(con.verifyFieldSetComponent(ss[i],ss1[i])) {
@@ -912,9 +963,10 @@ public class Module1 extends BaseLib {
 				log(LogStatus.INFO,"clicked on created contact : "+FS_Con1_FName+" "+FS_Con1_LName, YesNo.No);
 				ThreadSleep(5000);
 				if(edit.clickOnEditPageLink()) {
-					ThreadSleep(5000);
+					ThreadSleep(10000);
 					switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
 					scrollDownThroughWebelement(driver, edit.getFieldSetCompoentXpath(10), "");
+					ThreadSleep(10000);
 					if(click(driver, edit.getFieldSetCompoentXpath(10), "field set component xpath", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on field set component", YesNo.No);
 						ThreadSleep(2000);
@@ -922,9 +974,10 @@ public class Module1 extends BaseLib {
 						if(sendKeys(driver, edit.getFieldSetNameTextBox(10), "", "field set name text box", action.BOOLEAN)) {
 							log(LogStatus.INFO, "Enter Field Set Name as Blank", YesNo.No);
 							ThreadSleep(2000);
-							if(click(driver, edit.getCustomTabSaveBtn(projectName, 10), "save button", action.BOOLEAN)) {
-								log(LogStatus.INFO, "clicked on save button", YesNo.No);
+//							if(click(driver, edit.getCustomTabSaveBtn(projectName, 10), "save button", action.BOOLEAN)) {
+//								log(LogStatus.INFO, "clicked on save button", YesNo.No);
 								ThreadSleep(3000);
+								switchToDefaultContent(driver);
 								WebElement ele=edit.getnoOfRecordsErrorPopup(projectName, 10);
 								if (ele!=null) {
 									if (ele.getText().trim().equalsIgnoreCase(EditPageErrorMessage.noOfRecordsError)) {
@@ -938,11 +991,11 @@ public class Module1 extends BaseLib {
 									log(LogStatus.ERROR, "error message for no of records is not visible", YesNo.Yes);
 									sa.assertTrue(false, "error message for no of records is not visible");
 								}
-								click(driver, edit.getnoOfRecordsErrorPopupOK(projectName, 10), "ok button", action.BOOLEAN);
-							}else {
-								log(LogStatus.ERROR, "Not able to click on save button so cannot check error message", YesNo.No);
-								sa.assertTrue(false, "Not able to click on save button so cannot check error message");
-							}
+//								click(driver, edit.getnoOfRecordsErrorPopupOK(projectName, 10), "ok button", action.BOOLEAN);
+//							}else {
+//								log(LogStatus.ERROR, "Not able to click on save button so cannot check error message", YesNo.No);
+//								sa.assertTrue(false, "Not able to click on save button so cannot check error message");
+//							}
 						}else {
 							log(LogStatus.ERROR, "Not able to enter field set name as blank so cannot check error message", YesNo.Yes);
 							sa.assertTrue(false, "Not able to enter field set name as blank so cannot check error message");
@@ -973,9 +1026,6 @@ public class Module1 extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-	
-	
-	
 	
 	@Parameters({ "projectName"})
 	@Test
@@ -1099,13 +1149,14 @@ public class Module1 extends BaseLib {
 			{FC_FieldType8,FC_FieldLabelName8,excelLabel.Length.toString(),FC_Length8},
 			{FC_FieldType9,FC_FieldLabelName9,excelLabel.Length.toString(),FC_Length9},
 			{FC_FieldType10,FC_FieldLabelName10,excelLabel.Length.toString(),FC_Length10},
-			{FC_FieldType11,FC_FieldLabelName11,excelLabel.Length.toString(),FC_Length11}};
+			{FC_FieldType11,FC_FieldLabelName11,excelLabel.Length.toString(),FC_Length11},
+			{FC_FieldType32,FC_FieldLabelName32,null,null}};
 			
 			
 			for(String[] objects : labelAndValues) {
 				String[][] valuesandLabel = {{objects[2],objects[3]}};
 				
-				if(setup.addCustomFieldforFormula(environment,mode,object.Entity,ObjectFeatureName.FieldAndRelationShip,objects[0],objects[1], valuesandLabel, null,null)) {
+				if(setup.addCustomFieldforFormula(environment,mode,object.Institution,ObjectFeatureName.FieldAndRelationShip,objects[0],objects[1], valuesandLabel, null,null)) {
 					log(LogStatus.PASS, "Field Object is created for :"+objects[1], YesNo.No);
 				}else {
 					log(LogStatus.PASS, "Field Object is not created for :"+objects[1], YesNo.Yes);
@@ -1231,7 +1282,8 @@ public class Module1 extends BaseLib {
 			{FC_FieldType18,FC_FieldLabelName18,excelLabel.Length.toString(),FC_Length18},
 			{FC_FieldType19,FC_FieldLabelName19,excelLabel.Length.toString(),FC_Length19},
 			{FC_FieldType20,FC_FieldLabelName20,excelLabel.Length.toString(),FC_Length20},
-			{FC_FieldType21,FC_FieldLabelName21,excelLabel.Length.toString(),FC_Length21}};
+			{FC_FieldType21,FC_FieldLabelName21,excelLabel.Length.toString(),FC_Length21},
+			{FC_FieldType33,FC_FieldLabelName33,null,null}};
 			
 			
 			for(String[] objects : labelAndValues) {
@@ -1343,7 +1395,8 @@ public class Module1 extends BaseLib {
 			{FC_FieldType28,FC_FieldLabelName28,excelLabel.Length.toString(),FC_Length28},
 			{FC_FieldType29,FC_FieldLabelName29,excelLabel.Length.toString(),FC_Length29},
 			{FC_FieldType30,FC_FieldLabelName30,excelLabel.Length.toString(),FC_Length30},
-			{FC_FieldType31,FC_FieldLabelName31,excelLabel.Length.toString(),FC_Length31}};
+			{FC_FieldType31,FC_FieldLabelName31,excelLabel.Length.toString(),FC_Length31},
+			{FC_FieldType34,FC_FieldLabelName34,null,null}};
 			
 			
 			for(String[] objects : labelAndValues) {
@@ -1367,9 +1420,101 @@ public class Module1 extends BaseLib {
 		sa.assertAll();
 	}
 
+	
 	@Parameters({ "projectName"})
 	@Test
-	public void M1Tc018_verifyFieldSetImagePath(String projectName) {
+	public void M1Tc018_1_addAdvanceFieldSetLayoutOnContactAndDealPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
+			log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
+			if(ins.clickOnAlreadyCreatedItem(projectName, FS_Ins2, 30)) {
+				log(LogStatus.INFO,"clicked on created institution : "+FS_Ins2, YesNo.No);
+				ThreadSleep(5000);
+				if(edit.clickOnEditPageLink()) {
+					if(edit.dragAndDropLayOutFromEditPage(projectName, PageName.Object1Page, RelatedTab.Details, "Navatar Fieldset",FS_FieldSetLabel5,"Profile_Image__c")) {
+						log(LogStatus.INFO, "Field set component is added on institution page :"+FS_FieldSetLabel5, YesNo.No);
+					}else {
+						log(LogStatus.ERROR, "Field set component is not added on institution page :"+FS_FieldSetLabel5, YesNo.Yes);
+						sa.assertTrue(false, "Field set component is not added on institution page :"+FS_FieldSetLabel5);
+					}
+					
+				}else {
+					log(LogStatus.ERROR, "Not able to click on edit page so cannot add field set component on institution page : "+FS_FieldSetLabel5, YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on edit page so cannot add field set component on institution page : "+FS_FieldSetLabel5);
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to click on created institution "+FS_FieldSetLabel5+" so cannot drag and drop Advanced field set component", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on created institution "+FS_FieldSetLabel5+" so cannot drag and drop Advanced field set component");
+			}
+		} else {
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object1Tab+" so cannot drag and drop Advanced field set component",YesNo.Yes);
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object1Tab+" so cannot drag and drop Advanced field set component");
+		}
+		ThreadSleep(5000);
+		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+			if(lp.clickOnAlreadyCreatedItem(projectName,TabName.DealTab, FS_DealName3, 30)){
+				log(LogStatus.INFO,"clicked on created Deal : "+FS_DealName3, YesNo.No);
+				ThreadSleep(5000);
+				if(edit.clickOnEditPageLink()) {
+					if(edit.dragAndDropLayOutFromEditPage(projectName, PageName.Object4Page, RelatedTab.Details, "Navatar Fieldset",FS_FieldSetLabel3,"Profile_Image__c")) {
+						log(LogStatus.INFO, "Field set component is added on Deal page :"+FS_DealName3, YesNo.No);
+					}else {
+						log(LogStatus.ERROR, "Field set component is not added on Deal page :"+FS_DealName3, YesNo.Yes);
+						sa.assertTrue(false, "Field set component is not added on Deal page :"+FS_DealName3);
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to click on edit page so cannot add field set component on deal page : "+FS_DealName3, YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on edit page so cannot add field set component on deal page : "+FS_DealName3);
+				}
+			}else {
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object4Tab+" so cannot drag and drop Advanced field set component",YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object4Tab+" so cannot drag and drop Advanced field set component");
+			}
+
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object4Tab);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object4Tab,YesNo.Yes);
+		}
+		ThreadSleep(5000);
+		if (lp.clickOnTab(projectName, TabName.Object5Tab)) {
+			if(lp.clickOnAlreadyCreatedItem(projectName,TabName.Object5Tab, FS_MarketingEvent1Name, 30)){
+				log(LogStatus.INFO,"clicked on created Marketing event : "+FS_MarketingEvent1Name, YesNo.No);
+				ThreadSleep(5000);
+				if(edit.clickOnEditPageLink()) {
+					if(edit.dragAndDropLayOutFromEditPage(projectName, PageName.Object5Page, RelatedTab.Details, "Navatar Fieldset",FS_FieldSetLabel4,"Profile_Image__c")) {
+						log(LogStatus.INFO, "Field set component is added on Marketing event page :"+FS_MarketingEvent1Name, YesNo.No);
+					}else {
+						log(LogStatus.ERROR, "Field set component is not added on Marketing event page :"+FS_MarketingEvent1Name, YesNo.Yes);
+						sa.assertTrue(false, "Field set component is not added on Marketing event page :"+FS_MarketingEvent1Name);
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to click on edit page so cannot add field set component on Marketing event page : "+FS_MarketingEvent1Name, YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on edit page so cannot add field set component on Marketing event page : "+FS_MarketingEvent1Name);
+				}
+			}else {
+				log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object5Tab+" so cannot drag and drop Advanced field set component",YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object5Tab+" so cannot drag and drop Advanced field set component");
+			}
+
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object5Tab);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object5Tab,YesNo.Yes);
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	
+	
+	
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void M1Tc018_2_verifyFieldSetImagePath(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
 		List<String> tabNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",1,false));
@@ -1383,12 +1528,12 @@ public class Module1 extends BaseLib {
 					log(LogStatus.INFO,"clicked on created item : "+Items.get(i), YesNo.No);
 					ThreadSleep(5000);
 					if(edit.clickOnEditPageLink()) {
-						ThreadSleep(5000);
+						ThreadSleep(10000);
 						switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
 						scrollDownThroughWebelement(driver, edit.getFieldSetCompoentXpath(10), "");
 						if(click(driver, edit.getFieldSetCompoentXpath(10), "field set component xpath", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on field set component", YesNo.No);
-							ThreadSleep(2000);
+							ThreadSleep(5000);
 							switchToDefaultContent(driver);
 							if(getValueFromElementUsingJavaScript(driver, edit.getImageFieldNameTextBox(10), "image field name xpath").equalsIgnoreCase(ItemFieldName.get(i))){
 								log(LogStatus.PASS, "Image Field Name is verified on "+tabNames.get(i)+" for "+Items.get(i), YesNo.No);
@@ -1459,7 +1604,7 @@ public class Module1 extends BaseLib {
 						log(LogStatus.INFO, "Clicked on feature : "+ObjectFeatureName.pageLayouts+" of "+ObjectName, YesNo.No);
 						ThreadSleep(2000);
 						if(sendKeys(driver, setup.getQuickSearchInObjectManager_Lighting(10), objectAPINames.get(i), "search text box", action.BOOLEAN)) {
-							String xpath="//span[text()='"+objectAPINames.get(i)+"']/..";
+							String xpath="//div[@id=\"setupComponent\"]//a/span[text()='"+objectAPINames.get(i)+"']/..";
 							WebElement ele = isDisplayed(driver, FindElement(driver, xpath, "field set label text", action.BOOLEAN, 3), "visibility", 3, "field set label text");
 							if(ele!=null) {
 								if(click(driver, ele, "create field set "+objectAPINames.get(i), action.BOOLEAN)) {
@@ -1569,6 +1714,8 @@ public class Module1 extends BaseLib {
 		List<String> itemNames = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",2,false));
 		List<String> objectName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",4,false));
 		List<String> pageLayoutName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",8,false));
+		List<String> draggedComponentName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",7,false));
+		List<String> fieldSetNametName = createListOutOfString(readAllDataForAColumn(phase1DataSheetFilePath,"UploadImageData",8,false));
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (home.clickOnSetUpLink()) {
 			parentWindow = switchOnWindow(driver);
@@ -1585,12 +1732,23 @@ public class Module1 extends BaseLib {
 				object object1 = object.valueOf(objectName.get(i));
 				
 				if(setup.deleteFieldSetComponent(object1,ObjectFeatureName.FieldSets,pageLayoutName.get(i),YesNo.Yes)) {
-					log(LogStatus.PASS, "Field Set Object position is changed for : "+FS_FieldSetLabel1, YesNo.No);
+					log(LogStatus.PASS, "Field Set Object position is changed for : "+fieldSetNametName.get(i), YesNo.No);
 				}else {
-					log(LogStatus.ERROR,"Field Set Object position is not changed for : "+FS_FieldSetLabel1, YesNo.Yes);
-					sa.assertTrue(false, "Field Set Object position is not changed for : "+FS_FieldSetLabel1);
+					log(LogStatus.ERROR,"Field Set Object position is not changed for : "+fieldSetNametName.get(i), YesNo.Yes);
+					sa.assertTrue(false, "Field Set Object position is not changed for : "+fieldSetNametName.get(i));
 				}
 				
+			}
+			ThreadSleep(3000);
+			for(int i=0; i<objectName.size(); i++) {
+				object object1 = object.valueOf(objectName.get(i));
+				String[] draggedComponent = draggedComponentName.get(i).split("<breakOn>");
+				if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,fieldSetNametName.get(i), draggedComponent[0], null,YesNo.No, YesNo.No)) {
+					log(LogStatus.PASS, "Dargged Object in : "+fieldSetNametName.get(i), YesNo.No);
+				}else {
+					log(LogStatus.ERROR,"Not able to drag Field Set Object on : "+fieldSetNametName.get(i), YesNo.Yes);
+					sa.assertTrue(false, "Not able to drag Field Set Object on : "+fieldSetNametName.get(i));
+				}
 			}
 			switchToDefaultContent(driver);
 			driver.close();
@@ -1661,7 +1819,7 @@ public class Module1 extends BaseLib {
 			for(int i=0; i<objectName.size(); i++) {
 				object object1 = object.valueOf(objectName.get(i));
 				String[] draggedComponent = draggedComponentName.get(i).split("<breakOn>");
-				if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,fieldSetNametName.get(i), draggedComponent[0]+"<break>"+draggedComponent[1]+"<break>"+draggedComponent[2]+"<break>"+draggedComponent[3], null,YesNo.No, YesNo.No)) {
+				if(setup.changePositionOfFieldSetComponent(object1,ObjectFeatureName.FieldSets,fieldSetNametName.get(i),draggedComponent[1]+"<break>"+draggedComponent[2]+"<break>"+draggedComponent[3], null,YesNo.No, YesNo.No)) {
 					log(LogStatus.PASS, "Dargged Object in : "+fieldSetNametName.get(i), YesNo.No);
 				}else {
 					log(LogStatus.ERROR,"Not able to drag Field Set Object on : "+fieldSetNametName.get(i), YesNo.Yes);

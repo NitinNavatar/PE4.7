@@ -24,7 +24,7 @@ public class CustomObjPageBusinessLayer extends CustomObjPage{
 	 * @description this is used to create record of custom object page
 	 */
 	public boolean createRecord(String projectName, String recordType, String recordName, String value, boolean isCreatedFromTaskLayout) {
-		refresh(driver);
+	//	refresh(driver);
 		ThreadSleep(10000);
 		if (!isCreatedFromTaskLayout) {
 			if(clickUsingJavaScript(driver, getNewButton(projectName, 60), "new button")) {
