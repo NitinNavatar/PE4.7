@@ -69,11 +69,20 @@ public class DataLoaderWizardPage extends BasePageBusinessLayer {
 	}
 	
 	
-	@FindBy(xpath = "//div[@data-aura-class='dataImporterDiLanding']//a[text()='Launch Wizard!']")
+	/*
+	 * @FindBy(xpath =
+	 * "//div[@data-aura-class='dataImporterDiLanding']//a[text()='Launch Wizard!']"
+	 * )
+	 */
+	@FindBy(xpath="//a[contains(text(),\"Launch\")]")
 	private WebElement lunchWizardButton;
 
 	public WebElement getLunchWizardButton(int timeOut) {
-		return isDisplayed(driver, lunchWizardButton, "Visibility", timeOut, "lunch wizard button");
+		
+		
+		  return isDisplayed(driver, lunchWizardButton, "Visibility", timeOut,
+		  "lunch wizard button");
+		 
 	}
 	
 	
@@ -216,17 +225,47 @@ public class DataLoaderWizardPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, accountMatchByDropDownList, "Visibility", timeOut, "account match by drop down list");
 	}
 	
-	@FindBy(xpath = "//div[@data-aura-class='dataImporterDiMatchingChoiceActivity']//tr[1]/td/div/div[6]/select")
+	@FindBy(xpath = "//option[@label='Fund Name']/parent::select")
 	private WebElement fundNameLookUpFieldDropDownInFundRaising;
 
 	public WebElement getFundNameLookUpFieldDropDownInFundRaising(int timeOut) {
 		return isDisplayed(driver, fundNameLookUpFieldDropDownInFundRaising, "Visibility", timeOut, "fund Name LookUp Field DropDown In FundRaising");
 	}
 	
-	@FindBy(xpath = "//div[@data-aura-class='dataImporterDiMatchingChoiceActivity']//tr[1]/td/div/div[8]/select")
+	@FindBy(xpath = "(//span[text()='Which Firm field in your file do you want to match against to set the Legal Name lookup field?']/parent::div/following-sibling::div/select)[1]")
 	private WebElement legalNameDropDownListInFundRaising;
 
 	public WebElement getLegalNameDropDownListInFundRaising(int timeOut) {
 		return isDisplayed(driver, legalNameDropDownListInFundRaising, "Visibility", timeOut, "legal Name DropDown List In FundRaising");
 	}
+	
+	@FindBy(xpath = "//mark[text()='Data Import Wizard']")
+	private WebElement dataImportWizardBtnLink;
+
+	public WebElement getDataImportWizardBtnLink(int timeOut) {
+		return isDisplayed(driver, dataImportWizardBtnLink, "Visibility", timeOut, "Data Import Wizard Link");
+	}
+	
+	@FindBy(xpath = "//iframe[@title='Salesforce - Enterprise Edition']")
+	private WebElement dataImportWizardIFrame;
+
+	public WebElement getDataImportWizardIFrame(int timeOut) {
+		return isDisplayed(driver, dataImportWizardIFrame, "Visibility", timeOut, "Data Import Wizard IFrame");
+	}
+	
+	@FindBy(xpath = "//iframe[@title='Bulk Data Load Job ~ Salesforce - Enterprise Edition']")
+	private WebElement bulkDataLoadJobIFrame;
+
+	public WebElement getBulkDataLoadJobIFrame(int timeOut) {
+		return isDisplayed(driver, bulkDataLoadJobIFrame, "Visibility", timeOut, "Bulk Data Load Job IFrame");
+	}
+	
+	@FindBy(xpath = "//span[text()='Record type']/../following-sibling::div/select")
+	private WebElement recordTypeDropDownList;
+
+	public WebElement getRecordTypeDropDownList(int timeOut) {
+		return isDisplayed(driver, recordTypeDropDownList, "Visibility", timeOut, "account match by drop down list");
+	}
+	
+	
 }

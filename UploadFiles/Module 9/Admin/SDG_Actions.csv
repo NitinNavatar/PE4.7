@@ -1,0 +1,11 @@
+Name,SDG,Action Order,Action Type,Event Payload,Event,Requires Createable,Requires Deletable,Requires Editable
+Create Fund,Fund - First SDG Grid,1,List Button,"{
+""entityApiName"":""navpeII__Fund__c""
+}",e.force:createRecord,FALSE,FALSE,FALSE
+Delete,Fund - First SDG Grid,3,Row Button,"{""Action"":""Delete"",""sObjectID"":""#Id#""}",Internal,FALSE,FALSE,FALSE
+Edit,Fund - First SDG Grid,2,Row Button,"{""entityApiName"":""sObjectId "",""recordId"":""#Id#""}",e.force:editRecord,FALSE,FALSE,FALSE
+New Referral,Referrals,1,List Button,"{""entityApiName"": ""Account"", 
+""recordTypeName"": ""#Company#"",
+""defaultFieldValues"": { 
+""navpeII__Introduced_by__c"" : ""#parentrecordId#""
+}}",e.force:createRecord,FALSE,FALSE,FALSE
