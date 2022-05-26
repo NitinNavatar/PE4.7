@@ -4,6 +4,7 @@ import static com.navatar.generic.SmokeCommonVariables.adminPassword;
 import static com.navatar.generic.SmokeCommonVariables.superAdminUserName;
 import static com.navatar.generic.SmokeCommonVariables.todaysDate;
 import static com.navatar.generic.SmokeCommonVariables.AdminUserEmailID;
+import static com.navatar.generic.CommonLib.FindElement;
 import static com.navatar.generic.CommonLib.ThreadSleep;
 import static com.navatar.generic.CommonLib.click;
 import static com.navatar.generic.CommonLib.exit;
@@ -17,6 +18,7 @@ import static com.navatar.generic.CommonLib.switchToFrame;
 import static com.navatar.generic.CommonVariables.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
@@ -38,6 +40,7 @@ import com.navatar.generic.EnumConstants.ObjectName;
 import com.navatar.generic.EnumConstants.ObjectType;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.PopUpName;
+import com.navatar.generic.EnumConstants.RelatedTab;
 import com.navatar.generic.EnumConstants.ReportDashboardFolderType;
 import com.navatar.generic.EnumConstants.ReportField;
 import com.navatar.generic.EnumConstants.ReportFormatName;
@@ -54,6 +57,7 @@ import com.navatar.generic.EnumConstants.searchContactInEmailProspectGrid;
 import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.CustomObjPageBusinessLayer;
 import com.navatar.pageObjects.DataLoaderWizardPageBusinessLayer;
+import com.navatar.pageObjects.EditPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
 import com.navatar.pageObjects.NavigationPageBusineesLayer;
@@ -64,217 +68,259 @@ import com.relevantcodes.extentreports.LogStatus;
 
 public class Module9 extends BaseLib {
 
-	/*
-	 * @Parameters({ "projectName" })
-	 * 
-	 * @Test public void M9Tc001_1_CreateCRMUser1(String projectName) {
-	 * SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
-	 * LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-	 * HomePageBusineesLayer home = new HomePageBusineesLayer(driver); String
-	 * parentWindow = null; String[] splitedUserLastName =
-	 * removeNumbersFromString(crmUser1LastName); String UserLastName =
-	 * splitedUserLastName[0] + lp.generateRandomNumber(); String emailId =
-	 * lp.generateRandomEmailId(gmailUserName);
-	 * ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users",
-	 * excelLabel.Variable_Name, "User1", excelLabel.User_Last_Name);
-	 * lp.CRMLogin(superAdminUserName, adminPassword, appName); boolean flag =
-	 * false; for (int i = 0; i < 3; i++) { try { if (home.clickOnSetUpLink()) {
-	 * flag = true; parentWindow = switchOnWindow(driver); if (parentWindow == null)
-	 * { sa.assertTrue(false,
-	 * "No new window is open after click on setup link in lighting mode so cannot create CRM User1"
-	 * ); log(LogStatus.SKIP,
-	 * "No new window is open after click on setup link in lighting mode so cannot create CRM User1"
-	 * , YesNo.Yes);
-	 * exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1"
-	 * ); } if (setup.createPEUser(crmUser1FirstName, UserLastName, emailId,
-	 * crmUserLience, crmUserProfile)) { log(LogStatus.INFO,
-	 * "CRM User is created Successfully: " + crmUser1FirstName + " " +
-	 * UserLastName, YesNo.No); ExcelUtils.writeData(testCasesFilePath, emailId,
-	 * "Users", excelLabel.Variable_Name, "User1", excelLabel.User_Email);
-	 * ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users",
-	 * excelLabel.Variable_Name, "User1", excelLabel.User_Last_Name); flag = true;
-	 * break;
-	 * 
-	 * } driver.close(); driver.switchTo().window(parentWindow);
-	 * 
-	 * } } catch (Exception e) { log(LogStatus.INFO,
-	 * "could not find setup link, trying again..", YesNo.No); }
-	 * 
-	 * } if (flag) {
-	 * 
-	 * if (!environment.equalsIgnoreCase(Environment.Sandbox.toString())) { if
-	 * (setup.installedPackages(crmUser1FirstName, UserLastName)) {
-	 * appLog.info("PE Package is installed Successfully in CRM User: " +
-	 * crmUser1FirstName + " " + UserLastName);
-	 * 
-	 * } else { appLog.error( "Not able to install PE package in CRM User1: " +
-	 * crmUser1FirstName + " " + UserLastName); sa.assertTrue(false,
-	 * "Not able to install PE package in CRM User1: " + crmUser1FirstName + " " +
-	 * UserLastName); log(LogStatus.ERROR,
-	 * "Not able to install PE package in CRM User1: " + crmUser1FirstName + " " +
-	 * UserLastName, YesNo.Yes); } } } else {
-	 * 
-	 * log(LogStatus.ERROR, "could not click on setup link, test case fail",
-	 * YesNo.Yes); sa.assertTrue(false,
-	 * "could not click on setup link, test case fail");
-	 * 
-	 * }
-	 * 
-	 * closeBrowser(); driver.switchTo().window(parentWindow); lp.CRMlogout(); lp =
-	 * new LoginPageBusinessLayer(driver); String passwordResetLink = null; try {
-	 * passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
-	 * ExcelUtils.readDataFromPropertyFile("gmailUserName"),
-	 * ExcelUtils.readDataFromPropertyFile("gmailPassword")); } catch
-	 * (InterruptedException e2) { e2.printStackTrace(); }
-	 * appLog.info("ResetLinkIs: " + passwordResetLink);
-	 * driver.get(passwordResetLink); if (lp.setNewPassword()) {
-	 * appLog.info("Password is set successfully for CRM User1: " +
-	 * crmUser1FirstName + " " + UserLastName); } else {
-	 * appLog.info("Password is not set for CRM User1: " + crmUser1FirstName + " " +
-	 * UserLastName); sa.assertTrue(false, "Password is not set for CRM User1: " +
-	 * crmUser1FirstName + " " + UserLastName); log(LogStatus.ERROR,
-	 * "Password is not set for CRM User1: " + crmUser1FirstName + " " +
-	 * UserLastName, YesNo.Yes); } lp.CRMlogout(); sa.assertAll(); }
-	 * 
-	 * @Parameters({ "projectName" })
-	 * 
-	 * @Test public void M9Tc001_2_CreateCRMUser2(String projectName) {
-	 * SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
-	 * LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-	 * HomePageBusineesLayer home = new HomePageBusineesLayer(driver); String
-	 * parentWindow = null; String[] splitedUserLastName =
-	 * removeNumbersFromString(crmUser2LastName); String UserLastName =
-	 * splitedUserLastName[0] + lp.generateRandomNumber(); String emailId =
-	 * lp.generateRandomEmailId(gmailUserName2);
-	 * ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users",
-	 * excelLabel.Variable_Name, "User2", excelLabel.User_Last_Name);
-	 * lp.CRMLogin(superAdminUserName, adminPassword, appName); boolean flag =
-	 * false; for (int i = 0; i < 3; i++) { try { if (home.clickOnSetUpLink()) {
-	 * flag = true; parentWindow = switchOnWindow(driver); if (parentWindow == null)
-	 * { sa.assertTrue(false,
-	 * "No new window is open after click on setup link in lighting mode so cannot create CRM User2"
-	 * ); log(LogStatus.SKIP,
-	 * "No new window is open after click on setup link in lighting mode so cannot create CRM User2"
-	 * , YesNo.Yes);
-	 * exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2"
-	 * ); } if (setup.createPEUser(crmUser2FirstName, UserLastName, emailId,
-	 * crmUserLience, crmUserProfile)) { log(LogStatus.INFO,
-	 * "CRM User is created Successfully: " + crmUser2FirstName + " " +
-	 * UserLastName, YesNo.No); ExcelUtils.writeData(testCasesFilePath, emailId,
-	 * "Users", excelLabel.Variable_Name, "User2", excelLabel.User_Email);
-	 * ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users",
-	 * excelLabel.Variable_Name, "User2", excelLabel.User_Last_Name); flag = true;
-	 * break;
-	 * 
-	 * } driver.close(); driver.switchTo().window(parentWindow);
-	 * 
-	 * } } catch (Exception e) { log(LogStatus.INFO,
-	 * "could not find setup link, trying again..", YesNo.No); }
-	 * 
-	 * } if (flag) {
-	 * 
-	 * if (!environment.equalsIgnoreCase(Environment.Sandbox.toString())) { if
-	 * (setup.installedPackages(crmUser2FirstName, UserLastName)) {
-	 * appLog.info("PE Package is installed Successfully in CRM User: " +
-	 * crmUser2FirstName + " " + UserLastName);
-	 * 
-	 * } else { appLog.error( "Not able to install PE package in CRM User1: " +
-	 * crmUser2FirstName + " " + UserLastName); sa.assertTrue(false,
-	 * "Not able to install PE package in CRM User1: " + crmUser2FirstName + " " +
-	 * UserLastName); log(LogStatus.ERROR,
-	 * "Not able to install PE package in CRM User1: " + crmUser2FirstName + " " +
-	 * UserLastName, YesNo.Yes); } } } else {
-	 * 
-	 * log(LogStatus.ERROR, "could not click on setup link, test case fail",
-	 * YesNo.Yes); sa.assertTrue(false,
-	 * "could not click on setup link, test case fail");
-	 * 
-	 * }
-	 * 
-	 * closeBrowser(); driver.switchTo().window(parentWindow); lp.CRMlogout(); lp =
-	 * new LoginPageBusinessLayer(driver); String passwordResetLink = null; try {
-	 * passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
-	 * ExcelUtils.readDataFromPropertyFile("gmailUserName2"),
-	 * ExcelUtils.readDataFromPropertyFile("gmailPassword")); } catch
-	 * (InterruptedException e2) { e2.printStackTrace(); }
-	 * appLog.info("ResetLinkIs: " + passwordResetLink);
-	 * driver.get(passwordResetLink); if (lp.setNewPassword()) {
-	 * appLog.info("Password is set successfully for CRM User2: " +
-	 * crmUser2FirstName + " " + UserLastName); } else {
-	 * appLog.info("Password is not set for CRM User2: " + crmUser2FirstName + " " +
-	 * UserLastName); sa.assertTrue(false, "Password is not set for CRM User2: " +
-	 * crmUser2FirstName + " " + UserLastName); log(LogStatus.ERROR,
-	 * "Password is not set for CRM User2: " + crmUser2FirstName + " " +
-	 * UserLastName, YesNo.Yes); } lp.CRMlogout(); sa.assertAll(); }
-	 */
+	@Parameters({ "projectName" })
 
+	@Test
+	public void M9Tc001_1_CreateCRMUser1(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentWindow = null;
+		String[] splitedUserLastName = removeNumbersFromString(crmUser1LastName);
+		String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
+		String emailId = lp.generateRandomEmailId(gmailUserName);
+		ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",
+				excelLabel.User_Last_Name);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		boolean flag = false;
+		for (int i = 0; i < 3; i++) {
+			try {
+				if (home.clickOnSetUpLink()) {
+					flag = true;
+					parentWindow = switchOnWindow(driver);
+					if (parentWindow == null) {
+						sa.assertTrue(false,
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+						log(LogStatus.SKIP,
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User1",
+								YesNo.Yes);
+						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+					}
+					if (setup.createPEUser(crmUser1FirstName, UserLastName, emailId, crmUserLience, crmUserProfile)) {
+						log(LogStatus.INFO,
+								"CRM User is created Successfully: " + crmUser1FirstName + " " + UserLastName,
+								YesNo.No);
+						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User1",
+								excelLabel.User_Email);
+						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name,
+								"User1", excelLabel.User_Last_Name);
+						flag = true;
+						break;
 
+					}
+					driver.close();
+					driver.switchTo().window(parentWindow);
+
+				}
+			} catch (Exception e) {
+				log(LogStatus.INFO, "could not find setup link, trying again..", YesNo.No);
+			}
+
+		}
+		if (flag) {
+
+			if (!environment.equalsIgnoreCase(Environment.Sandbox.toString())) {
+				if (setup.installedPackages(crmUser1FirstName, UserLastName)) {
+					appLog.info("PE Package is installed Successfully in CRM User: " + crmUser1FirstName + " "
+							+ UserLastName);
+
+				} else {
+					appLog.error(
+							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
+					sa.assertTrue(false,
+							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
+					log(LogStatus.ERROR,
+							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName,
+							YesNo.Yes);
+				}
+			}
+		} else {
+
+			log(LogStatus.ERROR, "could not click on setup link, test case fail", YesNo.Yes);
+			sa.assertTrue(false, "could not click on setup link, test case fail");
+
+		}
+
+		closeBrowser();
+		driver.switchTo().window(parentWindow);
+		lp.CRMlogout();
+		lp = new LoginPageBusinessLayer(driver);
+		String passwordResetLink = null;
+		try {
+			passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
+					ExcelUtils.readDataFromPropertyFile("gmailUserName"),
+					ExcelUtils.readDataFromPropertyFile("gmailPassword"));
+		} catch (InterruptedException e2) {
+			e2.printStackTrace();
+		}
+		appLog.info("ResetLinkIs: " + passwordResetLink);
+		driver.get(passwordResetLink);
+		if (lp.setNewPassword()) {
+			appLog.info("Password is set successfully for CRM User1: " + crmUser1FirstName + " " + UserLastName);
+		} else {
+			appLog.info("Password is not set for CRM User1: " + crmUser1FirstName + " " + UserLastName);
+			sa.assertTrue(false, "Password is not set for CRM User1: " + crmUser1FirstName + " " + UserLastName);
+			log(LogStatus.ERROR, "Password is not set for CRM User1: " + crmUser1FirstName + " " + UserLastName,
+					YesNo.Yes);
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName" })
+
+	@Test
+	public void M9Tc001_2_CreateCRMUser2(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentWindow = null;
+		String[] splitedUserLastName = removeNumbersFromString(crmUser2LastName);
+		String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
+		String emailId = lp.generateRandomEmailId(gmailUserName2);
+		ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User2",
+				excelLabel.User_Last_Name);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		boolean flag = false;
+		for (int i = 0; i < 3; i++) {
+			try {
+				if (home.clickOnSetUpLink()) {
+					flag = true;
+					parentWindow = switchOnWindow(driver);
+					if (parentWindow == null) {
+						sa.assertTrue(false,
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+						log(LogStatus.SKIP,
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+								YesNo.Yes);
+						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					}
+					if (setup.createPEUser(crmUser2FirstName, UserLastName, emailId, crmUserLience, crmUserProfile)) {
+						log(LogStatus.INFO,
+								"CRM User is created Successfully: " + crmUser2FirstName + " " + UserLastName,
+								YesNo.No);
+						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User2",
+								excelLabel.User_Email);
+						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name,
+								"User2", excelLabel.User_Last_Name);
+						flag = true;
+						break;
+
+					}
+					driver.close();
+					driver.switchTo().window(parentWindow);
+
+				}
+			} catch (Exception e) {
+				log(LogStatus.INFO, "could not find setup link, trying again..", YesNo.No);
+			}
+
+		}
+		if (flag) {
+
+			if (!environment.equalsIgnoreCase(Environment.Sandbox.toString())) {
+				if (setup.installedPackages(crmUser2FirstName, UserLastName)) {
+					appLog.info("PE Package is installed Successfully in CRM User: " + crmUser2FirstName + " "
+							+ UserLastName);
+
+				} else {
+					appLog.error(
+							"Not able to install PE package in CRM User1: " + crmUser2FirstName + " " + UserLastName);
+					sa.assertTrue(false,
+							"Not able to install PE package in CRM User1: " + crmUser2FirstName + " " + UserLastName);
+					log(LogStatus.ERROR,
+							"Not able to install PE package in CRM User1: " + crmUser2FirstName + " " + UserLastName,
+							YesNo.Yes);
+				}
+			}
+		} else {
+
+			log(LogStatus.ERROR, "could not click on setup link, test case fail", YesNo.Yes);
+			sa.assertTrue(false, "could not click on setup link, test case fail");
+
+		}
+
+		closeBrowser();
+		driver.switchTo().window(parentWindow);
+		lp.CRMlogout();
+		lp = new LoginPageBusinessLayer(driver);
+		String passwordResetLink = null;
+		try {
+			passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
+					ExcelUtils.readDataFromPropertyFile("gmailUserName2"),
+					ExcelUtils.readDataFromPropertyFile("gmailPassword"));
+		} catch (InterruptedException e2) {
+			e2.printStackTrace();
+		}
+		appLog.info("ResetLinkIs: " + passwordResetLink);
+		driver.get(passwordResetLink);
+		if (lp.setNewPassword()) {
+			appLog.info("Password is set successfully for CRM User2: " + crmUser2FirstName + " " + UserLastName);
+		} else {
+			appLog.info("Password is not set for CRM User2: " + crmUser2FirstName + " " + UserLastName);
+			sa.assertTrue(false, "Password is not set for CRM User2: " + crmUser2FirstName + " " + UserLastName);
+			log(LogStatus.ERROR, "Password is not set for CRM User2: " + crmUser2FirstName + " " + UserLastName,
+					YesNo.Yes);
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 
 	@Parameters("projectName")
 	@Test
 	public void M9tc001_4_createCustomReport(String projectName) throws InterruptedException {
 
-
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		ReportsTabBusinessLayer report = new ReportsTabBusinessLayer(driver);
-		
-		
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-//		lp.CRMLogin(superAdminUserName, adminPassword);
-		
 
-			ReportField[][] fields = {{ReportField.Fundraising_Name, ReportField.Fund_Name},
-					{ReportField.First_Name, ReportField.Last_Name,ReportField.Legal_Name,ReportField.Industry}};
-			
-			String datas[][] = 
-				{{"Public Reports","#Stage - Interested","Fundraisings with Fund Name","All fundraisings","All Time","Closing Date","Fund Name: Fund Name<Break>Stage New","equals<Break>equals","Sumo Logic - Nov 2017<Break>Interested"},
-					{"Public Reports","#Individuals","Contacts & Firms","All firms","All Time","Created Date","Industry","equals","Agriculture"}};
-			
-		
-			String[] splitedReportName;
-			int i=0;
-			for(String[] data :datas) {
-			
-				splitedReportName = removeNumbersFromString("Test Module 9 Report");
-				SmokeReport2Name = splitedReportName[0] + lp.generateRandomNumber();
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
+		ReportField[][] fields = { { ReportField.Fundraising_Name, ReportField.Fund_Name },
+				{ ReportField.First_Name, ReportField.Last_Name, ReportField.Legal_Name, ReportField.Industry } };
+
+		String datas[][] = {
+				{ "Public Reports", "#Stage - Interested", "Fundraisings with Fund Name", "All fundraisings",
+						"All Time", "Closing Date", "Fund Name: Fund Name<Break>Stage New", "equals<Break>equals",
+						"Sumo Logic - Nov 2017<Break>Interested" },
+				{ "Public Reports", "#Individuals", "Contacts & Firms", "All firms", "All Time", "Created Date",
+						"Industry", "equals", "Agriculture" } };
+
+//		String[] splitedReportName;
+		int i = 0;
+		for (String[] data : datas) {
+
+			/*
+			 * splitedReportName = removeNumbersFromString("Test Module 9 Report");
+			 * SmokeReport2Name = splitedReportName[0] + lp.generateRandomNumber();
+			 */
 			if (report.createCustomReportForFolderLightningMode(environment, mode, data[0], ReportFormatName.Null,
-					SmokeReport2Name, SmokeReport2Name, data[2], fields[i], null, null,
-					null, null, null)) {
-				appLog.info("Custom Report is created succesdfully : " + SmokeReport2Name);
-				sa.assertTrue(true,
-						"Custom Report is created succesdfully : " + SmokeReport2Name);
-				
-					
-				  if(report.addFilterInCustomReportLightning(data[3],data[5],data[4],data[6],data[7],
-				  data[8])) {
-				  appLog.info("All Filters has been successfully applied to the report : " +
-				  SmokeReport2Name);
-				  sa.assertTrue(true,
-						  "All filters added to Custom Report : " + SmokeReport2Name);
-				  
-				  } else {
-				  appLog.error("Filters are not applied to Custom Report : " +
-				  SmokeReport2Name); sa.assertTrue(false,
-				  "Not able to add filters to Custom Report : " + SmokeReport2Name); }
-				 
-					
+					data[1], data[1], data[2], fields[i], null, null, null, null, null)) {
+				appLog.info("Custom Report is created succesdfully : " + data[1]);
+				sa.assertTrue(true, "Custom Report is created succesdfully : " + data[1]);
+
+				if (report.addFilterInCustomReportLightning(data[3], data[5], data[4], data[6], data[7], data[8])) {
+					appLog.info("All Filters has been successfully applied to the report : " + data[1]);
+					sa.assertTrue(true, "All filters added to Custom Report : " + data[1]);
+
+				} else {
+					appLog.error("Filters are not applied to Custom Report : " + data[1]);
+					sa.assertTrue(false, "Not able to add filters to Custom Report : " + data[1]);
+				}
+
 			}
-			
+
 			else {
 				appLog.error("Not able to create Custom Report : " + SmokeReport2Name);
 				sa.assertTrue(false, "Not able to create Custom Report : " + SmokeReport2Name);
 				log(LogStatus.ERROR, "Not able to create Custom Report : " + SmokeReport2Name, YesNo.Yes);
 			}
-			
-			i++;
-			}
-		
 
-		
+			i++;
+		}
+
 		home.switchToLighting();
 
-		
 		lp.CRMlogout();
 		sa.assertAll();
 
@@ -424,37 +470,39 @@ public class Module9 extends BaseLib {
 		String fields = SDGLabels.APIName.toString();
 		String values = "";
 		lp.searchAndClickOnApp(SDG, 30);
-		String[] splitedSDGName;
-		String SDGRandomTagName;
-		splitedSDGName = removeNumbersFromString("Test SDG Module 9");
-		SDGRandomTagName = splitedSDGName[0] + lp.generateRandomNumber();
+		/*
+		 * String[] splitedSDGName; String SDGRandomTagName; splitedSDGName =
+		 * removeNumbersFromString("Test SDG Module 9"); SDGRandomTagName =
+		 * splitedSDGName[0] + lp.generateRandomNumber();
+		 */
 
 		if (lp.clickOnTab(projectName, TabName.SDGTab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
-
-			String[][] sdgLabels = { { SDGCreationLabel.SDG_Name.toString(), "Fund - First SDG Grid" },
-					{ SDGCreationLabel.SDG_Tag.toString(), SDGRandomTagName },
+			String sdgName = "Fund - First SDG Grid New";
+			String sdgTag = "Fund - First SDG Grid New";
+			String[][] sdgLabels = { { SDGCreationLabel.SDG_Name.toString(), sdgName },
+					{ SDGCreationLabel.SDG_Tag.toString(), sdgTag },
 					{ SDGCreationLabel.sObjectName.toString(), "navpeII__Fund__c" },
 					{ SDGCreationLabel.Default_Sort.toString(), "Name Desc" } };
 
-			if (sdg.createCustomSDG(projectName, "Fund - First SDG Grid", sdgLabels, action.BOOLEAN, 20)) {
-				log(LogStatus.PASS, "create/verify created SDG : " + "Fund - First SDG Grid", YesNo.No);
+			if (sdg.createCustomSDG(projectName, sdgName, sdgLabels, action.BOOLEAN, 20)) {
+				log(LogStatus.PASS, "create/verify created SDG : " + sdgName, YesNo.No);
 
 				for (int i = 0; i < 1; i++) {
 					String api = "Name";
 					values = api;
 					if (sdg.addFieldOnSDG(projectName, fields, values)) {
-						log(LogStatus.INFO, "Successfully added fields on " + Sdg1Name, YesNo.Yes);
+						log(LogStatus.INFO, "Successfully added fields on " + sdgName, YesNo.Yes);
 
 					} else {
-						sa.assertTrue(false, "Not Able to add fields on SDG : " + Sdg1Name);
-						log(LogStatus.SKIP, "Not Able to add fields on SDG : " + Sdg1Name, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to add fields on SDG : " + sdgName);
+						log(LogStatus.SKIP, "Not Able to add fields on SDG : " + sdgName, YesNo.Yes);
 					}
 				}
 
 			} else {
-				sa.assertTrue(false, "Not Able to create/verify created SDG : " + Sdg1Name);
-				log(LogStatus.SKIP, "Not Able to create/verify created SDG : " + Sdg1Name, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to create/verify created SDG : " + sdgName);
+				log(LogStatus.SKIP, "Not Able to create/verify created SDG : " + sdgName, YesNo.Yes);
 			}
 
 		} else {
@@ -467,27 +515,89 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+	  
+	  @Test public void M9Tc003_ValidateEditAndErrorMsg_Fund_First_SDG_Grid(String
+	  projectName) { LoginPageBusinessLayer lp = new
+	  LoginPageBusinessLayer(driver); SDGPageBusinessLayer sdg = new
+	  SDGPageBusinessLayer(driver); lp.CRMLogin(superAdminUserName, adminPassword,
+	  appName); String fields = SDGLabels.APIName.toString(); String values = "";
+	  lp.searchAndClickOnApp(SDG, 30);
+	  
+	  if (lp.clickOnTab(projectName, TabName.SDGTab)) { log(LogStatus.INFO,
+	  "Click on Tab : " + TabName.SDGTab, YesNo.No);
+	  
+	  String[][] sdgLabels1 = { { SDGCreationLabel.Filter.toString(), "Fund1" }, {
+	  SDGCreationLabel.List_View_Name.toString(), "Fund_Type" } };
+	  
+	  String[][] sdgLabels2 = { { SDGCreationLabel.Filter.toString(),
+	  "Name <> 'Fund2'" }, { SDGCreationLabel.List_View_Name.toString(),
+	  "Launched_Date" } };
+	  
+	  String[][] sdgLabels3 = { { SDGCreationLabel.Filter.toString(), "" }, {
+	  SDGCreationLabel.List_View_Name.toString(), "" } }; String[][][]sdgLabels =
+	  {sdgLabels1,sdgLabels2,sdgLabels3};
+	  
+	  
+		/*
+		 * NOTE: editCustomSDGandFoundErrorMsg: Method Validate Error Msg, Also if
+		 * labelWithValue[0][1] !="" Then it will save SDG and validate the headers
+		 */
+	  
+	  if (sdg.editCustomSDGandFoundErrorMsgAndAtLastWithoutError(projectName,
+	  "Fund - First SDG Grid", sdgLabels, action.BOOLEAN, 20,
+	  "You can either fill 'Filter' or 'List View Name' to save the record.")) {
+	  log(LogStatus.PASS, "edit/verify created SDG : " + "Fund - First SDG Grid",
+	  YesNo.No); sa.assertTrue(true,
+	  "Able to edit SDG and Find error Msg for SDG : " + Sdg1Name);
+	  
+	  } else { sa.assertTrue(false, "Not Able to edit/verify created SDG : " +
+	  Sdg1Name); log(LogStatus.SKIP, "Not Able to edit/verify created SDG : " +
+	  Sdg1Name, YesNo.Yes); sa.assertTrue(false,
+	  "Not Able to edit SDG and Find error Msg for SDG " + Sdg1Name); }
+	  
+	  
+	  } else { sa.assertTrue(false, "Not Able to Click on Tab : " +
+	  TabName.SDGTab); log(LogStatus.SKIP, "Not Able to Click on Tab : " +
+	  TabName.SDGTab, YesNo.Yes); }
+	  
+	  lp.CRMlogout(); sa.assertAll(); }
+
+	@Parameters({ "projectName" })
 	@Test
-	public void M9Tc003_1_ValidateErrorMsg_Fund_First_SDG_Grid(String projectName) {
+	public void M9Tc004_ValidateErrorMsg_Fund_First_SDG_Grid(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		String fields = SDGLabels.APIName.toString();
 		String values = "";
 		lp.searchAndClickOnApp(SDG, 30);
-		String[] splitedSDGName;
-		String SDGRandomTagName;
-		splitedSDGName = removeNumbersFromString("Test SDG Module 9");
-		SDGRandomTagName = splitedSDGName[0] + lp.generateRandomNumber();
 
 		if (lp.clickOnTab(projectName, TabName.SDGTab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
 
-			String[][] sdgLabels = { { SDGCreationLabel.Filter.toString(), "Fund1" },
-					{ SDGCreationLabel.List_View_Name.toString(), "Fund_Type" } };
+			String[][] sdgLabels1 = {
+					{ SDGCreationLabel.Parent_Field_Name.toString(), "navpeII__X1st_Closing_Date__c" } };
+			String[][] sdgLabels2 = { { SDGCreationLabel.Parent_Field_Name.toString(), "Active__c" } };
+			String[][] sdgLabels3 = { { SDGCreationLabel.Parent_Field_Name.toString(), "Custom_Mpick_list__c" } };
+			String[][] sdgLabels4 = { { SDGCreationLabel.Parent_Field_Name.toString(), "navpeII__Fund_Type__c" } };
+			String[][] sdgLabels5 = {
+					{ SDGCreationLabel.Parent_Field_Name.toString(), "navpeII__Remaining_Commitments_USD_mn__c" } };
+			String[][] sdgLabels6 = {
+					{ SDGCreationLabel.Parent_Field_Name.toString(), "navpeII__Target_Commitments_USD_mn__c" } };
+			String[][] sdgLabels7 = {
+					{ SDGCreationLabel.Parent_Field_Name.toString(), "navpeII__Total_Capital_Called_mn__c" } };
+			String[][] sdgLabels8 = {
+					{ SDGCreationLabel.Parent_Field_Name.toString(), "navpeII__Total_Commitment__c" } };
 
+			String[][][] sdgLabels = { sdgLabels1, sdgLabels2, sdgLabels3, sdgLabels4, sdgLabels5, sdgLabels6,
+					sdgLabels7, sdgLabels8 };
+
+			/*
+			 * NOTE: editCustomSDGandFoundErrorMsg: Method Validate Error Msg
+			 * 
+			 */
 			if (sdg.editCustomSDGandFoundErrorMsg(projectName, "Fund - First SDG Grid", sdgLabels, action.BOOLEAN, 20,
-					"You can either fill 'Filter' or 'List View Name' to save the record.")) {
+					"must be a Reference, ID, String or Text Area field")) {
 				log(LogStatus.PASS, "edit/verify created SDG : " + "Fund - First SDG Grid", YesNo.No);
 				sa.assertTrue(true, "Able to edit SDG and Find error Msg for SDG : " + Sdg1Name);
 
@@ -508,42 +618,211 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void M9Tc003_2_ValidateErrorMsg_Fund_First_SDG_Grid(String projectName) {
+	public void M9Tc005_ValidateColumnsAndNoOfRecordsAndSDGComponent_Fund_First_SDG_Grid_InHomepage(
+			String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		String fields = SDGLabels.APIName.toString();
-		String values = "";
-		lp.searchAndClickOnApp(SDG, 30);
-		String[] splitedSDGName;
-		String SDGRandomTagName;
-		splitedSDGName = removeNumbersFromString("Test SDG Module 9");
-		SDGRandomTagName = splitedSDGName[0] + lp.generateRandomNumber();
 
-		if (lp.clickOnTab(projectName, TabName.SDGTab)) {
-			log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
+		String[] fieldsInSDG = { "FUND NAME", "OWNER NAME", "FUND TYPE", "POINT OF CONTACT", "1ST CLOSING DATE",
+				"SECTOR", "REGION", "CUSTOM MPICK_LIST", "TARGET - C@MMITMENTS", "#TARGET CLOSED",
+				"#STAGE - INTERESTED", "#CLOSING - 3RD CLOSING", "#TOTAL LOW INVESTMENT AMOUNT",
+				"#MAXINVESTOR'SAMOUNT($MN)", "#FINANCEBUYERS", "#FORMULA - COMMITMENT" };
+		String TitleOfSDG = "Fund - First SDG Grid";
 
-			String[][] sdgLabels = { { SDGCreationLabel.Filter.toString(), "Name <> 'Fund2'" },
-					{ SDGCreationLabel.List_View_Name.toString(), "Launched_Date" } };
+		List<String> columnsInSDG = Arrays.asList(fieldsInSDG);
+		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+			WebElement alreadyAddedComponentToHomePage = FindElement(driver, "//a[text()='" + TitleOfSDG + "']",
+					"Component Title ", action.SCROLLANDBOOLEAN, 10);
+			if (alreadyAddedComponentToHomePage != null) {
 
-			if (sdg.editCustomSDGandFoundErrorMsg(projectName, "Fund - First SDG Grid", sdgLabels, action.BOOLEAN, 20,
-					"You can either fill 'Filter' or 'List View Name' to save the record.")) {
-				log(LogStatus.PASS, "edit/verify created SDG : " + "Fund - First SDG Grid", YesNo.No);
-				sa.assertTrue(true, "Able to edit SDG and Find error Msg for SDG : " + Sdg1Name);
-
-			} else {
-				sa.assertTrue(false, "Not Able to edit/verify created SDG : " + Sdg1Name);
-				log(LogStatus.SKIP, "Not Able to edit/verify created SDG : " + Sdg1Name, YesNo.Yes);
-				sa.assertTrue(false, "Not Able to edit SDG and Find error Msg for SDG " + Sdg1Name);
+				log(LogStatus.INFO, "------------Component Already Added to Home Page, So Not adding Component: "
+						+ TitleOfSDG + "----------------", YesNo.Yes);
+				sa.assertTrue(true, "------------Component Already Added to Home Page, So Not adding Component: "
+						+ TitleOfSDG + "---------------");
 			}
 
-		} else {
-			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.SDGTab);
-			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.SDGTab, YesNo.Yes);
+			else {
+
+				if (edit.clickOnEditPageLink()) {
+					log(LogStatus.INFO, "Component Not Already Added to Home Page, So adding Component: " + TitleOfSDG,
+							YesNo.No);
+					if (edit.addSDGComponentToRefrencedComponentAndVerifyColumnsAndNoOfRecords(projectName,
+							columnsInSDG, "Navatar SDG", TitleOfSDG, "Fund - First SDG Grid", 84)) {
+						log(LogStatus.INFO, "Component Added to Home Page: " + TitleOfSDG, YesNo.Yes);
+						sa.assertTrue(true, "Component Added to Home Page: " + TitleOfSDG);
+					}
+
+					else {
+						log(LogStatus.ERROR, "Component Not Able to Add to Home Page: " + TitleOfSDG, YesNo.Yes);
+						sa.assertTrue(false, "Component Not Able to Add to Home Page: " + TitleOfSDG);
+					}
+				}
+
+				else {
+					log(LogStatus.ERROR,
+							"Not able to click on edit page so cannot add Component to Home Page : " + TitleOfSDG,
+							YesNo.Yes);
+					sa.assertTrue(false,
+							"Not able to click on edit page so cannot add Component to Home Page  : " + TitleOfSDG);
+				}
+
+			}
+
+			lp.CRMlogout();
+			sa.assertAll();
 		}
 
-		lp.CRMlogout();
-		sa.assertAll();
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void M9Tc006_ValidateMiscOptionsSDGComponent_Fund_First_SDG_Grid_InHomepage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
+		String[] fieldsInSDG = { "FUND NAME", "OWNER NAME", "FUND TYPE", "POINT OF CONTACT", "1ST CLOSING DATE",
+				"SECTOR", "REGION", "CUSTOM MPICK_LIST", "TARGET - C@MMITMENTS", "#TARGET CLOSED",
+				"#STAGE - INTERESTED", "#CLOSING - 3RD CLOSING", "#TOTAL LOW INVESTMENT AMOUNT",
+				"#MAXINVESTOR'SAMOUNT($MN)", "#FINANCEBUYERS", "#FORMULA - COMMITMENT" };
+		String TitleOfSDG = "Fund - First SDG Grid";
+		Boolean flag = false;
+		int status = 0;
+		List<String> columnsInSDG = Arrays.asList(fieldsInSDG);
+		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+			WebElement alreadyAddedComponentToHomePage = FindElement(driver, "//a[text()='" + TitleOfSDG + "']",
+					"Component Title ", action.SCROLLANDBOOLEAN, 10);
+			if (alreadyAddedComponentToHomePage != null) {
+				log(LogStatus.INFO,
+						"------------Component Already Added to Home Page " + TitleOfSDG + "----------------",
+						YesNo.Yes);
+				sa.assertTrue(true,
+						"------------Component Already Added to Home Page " + TitleOfSDG + "---------------");
+
+				if (edit.verifySDGExpandByDefault(TitleOfSDG)) {
+					log(LogStatus.PASS, "-----------SDG: " + TitleOfSDG + " is Expanded By Default--------------",
+							YesNo.No);
+					sa.assertTrue(true, "-----------SDG: " + TitleOfSDG + " is Expanded By Default--------------");
+
+				}
+
+				else {
+					log(LogStatus.FAIL, "-----------SDG: " + TitleOfSDG + " is not Expanded By Default--------------",
+							YesNo.No);
+					sa.assertTrue(false, "-----------SDG: " + TitleOfSDG + " is not Expanded By Default--------------");
+					status++;
+				}
+				if (edit.verifyColumnsOfSDG(TitleOfSDG, columnsInSDG)) {
+					log(LogStatus.PASS, "-------Columns of SDG: " + TitleOfSDG + "are Matched--------", YesNo.No);
+					sa.assertTrue(true, "-------Columns of SDG: " + TitleOfSDG + " are Matched-------");
+
+				} else {
+					log(LogStatus.FAIL, "------Columns of SDG: " + TitleOfSDG + " are not Matched------", YesNo.Yes);
+					sa.assertTrue(false, "------Columns of SDG: " + TitleOfSDG + " are not Matched------");
+					status++;
+				}
+				int row = 2;
+				if (edit.verifySDGTooltipForARecord(TitleOfSDG, row)) {
+					log(LogStatus.PASS, "-----------Tooltips for all columns of a record no. " + row
+							+ " matched of SDG: " + TitleOfSDG + "--------------", YesNo.No);
+					sa.assertTrue(true, "-----------Tooltips for all columns of a record no. " + row
+							+ " matched of SDG: " + TitleOfSDG + "--------------");
+
+				}
+
+				else {
+					log(LogStatus.FAIL, "-----------Tooltips for all columns of a record no. " + row
+							+ " Not matched of SDG: " + TitleOfSDG + "--------------", YesNo.No);
+					sa.assertTrue(false, "-----------Tooltips for all columns of a record no. " + row
+							+ " Not matched of SDG: " + TitleOfSDG + "--------------");
+					status++;
+				}
+
+				if (lp.clickOnTab(projectName, TabName.InstituitonsTab)) {
+					log(LogStatus.INFO, "Click on Tab : " + TabName.InstituitonsTab, YesNo.No);
+					if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+						log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+						if (edit.verifyCollapseTooltipAFterGoingToInstitutionPageAndComingBack(TitleOfSDG)) {
+							log(LogStatus.PASS,
+									"-----Tooltip Equal to 'Collapse' after coming back to Homepage after going to Intitution Page---------",
+									YesNo.No);
+							sa.assertTrue(true,
+									"-----Tooltip Equal to 'Collapse' after coming back to Homepage after going to Intitution Page---------");
+						} else {
+							log(LogStatus.FAIL,
+									"-----Tooltip Not Equal to 'Collapse' after coming back to Homepage after going to Intitution Page---------",
+									YesNo.No);
+							sa.assertTrue(false,
+									"-----Tooltip Not Equal to 'Collapse' after coming back to Homepage after going to Intitution Page---------");
+							status++;
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.No);
+					}
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on Tab : " + TabName.InstituitonsTab, YesNo.No);
+				}
+
+				if (lp.switchToClassic()) {
+					log(LogStatus.INFO, "----------Switched to Classic Mode-----", YesNo.No);
+					if (lp.switchToLighting()) {
+						log(LogStatus.INFO, "----------Switched to Lightning Mode-----", YesNo.No);
+						if (edit.verifyCollapseTooltipAFterGoingToInstitutionPageAndComingBack(TitleOfSDG)) {
+							log(LogStatus.PASS,
+									"-----Tooltip Equal to 'Collapse' after coming back to Lightning after going to Classic Mode---------",
+									YesNo.No);
+							sa.assertTrue(true,
+									"-----Tooltip Equal to 'Collapse' after coming back to Lightning after going to Classic Mode---------");
+						} else {
+							log(LogStatus.FAIL,
+									"-----Tooltip Not Equal to 'Collapse' after coming back to Lightning after going to Classic Mode---------",
+									YesNo.No);
+							sa.assertTrue(false,
+									"-----Tooltip Not Equal to 'Collapse' after coming back to Lightning after going to Classic Mode---------");
+							status++;
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Not Able to Switch to Lightning Mode", YesNo.No);
+					}
+				} else {
+					log(LogStatus.ERROR, "Not Able to Switch to Classic Mode", YesNo.No);
+				}
+
+				if (edit.verifySDGTooltipForExpandAndCollapse(TitleOfSDG)) {
+					log(LogStatus.PASS, "-----------Tooltip for Collapse/Expand after click matched of SDG: "
+							+ TitleOfSDG + "--------------", YesNo.No);
+					sa.assertTrue(true, "-----------Tooltip for Collapse/Expand after click matched of SDG: "
+							+ TitleOfSDG + "--------------");
+
+				}
+
+				else {
+					log(LogStatus.FAIL, "-----------Tooltips for Collapse/Expand after click Not matched of SDG: "
+							+ TitleOfSDG + "--------------", YesNo.No);
+					sa.assertTrue(true, "-----------Tooltips Collapse/Expand after click Not matched of SDG: "
+							+ TitleOfSDG + "--------------");
+					status++;
+				}
+
+			}
+
+			else {
+
+				log(LogStatus.ERROR, "-----------Component Not Added to Home Page: " + TitleOfSDG + " -------------",
+						YesNo.Yes);
+				sa.assertTrue(false, "-----------Component Not Added to Home Page: " + TitleOfSDG + " ------------");
+
+			}
+
+			lp.CRMlogout();
+			sa.assertAll();
+		}
+
 	}
 
 }

@@ -202,7 +202,11 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 	 * @return true if SDG created successfully
 	 */
 
-	public boolean editCustomSDGandFoundErrorMsg(String projectName, String sdgName, String[][] labelWithValues,
+	/*
+	 * NOTE: editCustomSDGandFoundErrorMsg: Method Validate Error Msg, Also if
+	 * labelWithValue[0][1] !="" Then it will save SDG and validate the headers
+	 */
+	public boolean editCustomSDGandFoundErrorMsgAndAtLastWithoutError(String projectName, String sdgName, String[][][] labelWithValues,
 			action action, int timeOut, String errorMsg) {
 		boolean flag = false;
 		ThreadSleep(5000);
@@ -225,49 +229,89 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 						log(LogStatus.INFO, "Clicked on SDG Name: " + sdgName, YesNo.No);
 						if (clickUsingJavaScript(driver, sdgEditButton(timeOut), "Edit button")) {
 							appLog.info("clicked on Edit button");
-							enterValueForSDGCreation(projectName, labelWithValues, action, timeOut);
-							if (click(driver, getRecordPageSettingSave(60), "Save Button", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO, "Click on Save Button  " + sdgName, YesNo.No);
-								ThreadSleep(5000);// strong[text()='Review the errors on this
-													// page.']/parent::div/following-sibling::ul
-								WebElement errorEle = FindElement(driver,
-										"//strong[text()='Review the errors on this page.']/parent::div/following-sibling::ul",
-										"Error: You can either fill 'Filter' or 'List View Name' to save the record. ",
-										action.SCROLLANDBOOLEAN, 10);
-								if (errorEle != null) {
-									if (errorEle.getAttribute("innerHTML").contains(errorMsg)) {
-										appLog.info("Error Msg Found :  " + errorMsg);
-										log(LogStatus.PASS, "Error Msg Found: " + errorMsg, YesNo.Yes);
-										flag = true;
-										WebElement cancelButtonEle = FindElement(driver, "//button[text()='Cancel']",
-												"Cancel Button ", action.SCROLLANDBOOLEAN, 10);
-										click(driver, cancelButtonEle, "Cancel Button", action.SCROLLANDBOOLEAN);
-										log(LogStatus.INFO, "Click on Cancel Button  ", YesNo.No);
-									} else {
-										appLog.error("Error Msg not Found: " + errorMsg);
-										log(LogStatus.FAIL, "Error Msg not Found:" + errorMsg, YesNo.Yes);
-										flag = false;
-										WebElement cancelButtonEle = FindElement(driver, "//button[text()='Cancel']",
-												"Cancel Button ", action.SCROLLANDBOOLEAN, 10);
-										click(driver, cancelButtonEle, "Cancel Button", action.SCROLLANDBOOLEAN);
-										log(LogStatus.INFO, "Clicked on Cancel Button  ", YesNo.No);
-									}
+							for (String[][] labelWithValue : labelWithValues) {
 
-								} else {
-									appLog.error("Error Msg not Found: " + errorMsg);
-									log(LogStatus.FAIL, "Error Msg not Found: " + errorMsg, YesNo.Yes);
-									flag = false;
+								if (labelWithValue[0][1] != "") {
+									enterValueForSDGCreation(projectName, labelWithValue, action, timeOut);
+									if (click(driver, getRecordPageSettingSave(60), "Save Button",
+											action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.INFO, "Click on Save Button  " + sdgName, YesNo.No);
+										ThreadSleep(5000);
+										WebElement errorEle = FindElement(driver,
+												"//strong[text()='Review the errors on this page.']/parent::div/following-sibling::ul",
+												"Error:  "+errorMsg,
+												action.SCROLLANDBOOLEAN, 10);
+										if (errorEle != null) {
+											if (errorEle.getAttribute("innerHTML").contains(errorMsg)) {
+												appLog.info("Error Msg Found :  " + errorMsg);
+												log(LogStatus.PASS, "Error Msg Found: " + errorMsg, YesNo.Yes);
+												flag = true;
+
+											} else {
+												appLog.error("Error Msg not Matched: " + errorMsg);
+												log(LogStatus.FAIL, "Error Msg not Matched:" + errorMsg, YesNo.Yes);
+												flag = false;
+
+											}
+
+										} else {
+											appLog.error("Error Msg not Found: " + errorMsg);
+											log(LogStatus.FAIL, "Error Msg not Found: " + errorMsg, YesNo.Yes);
+											flag = false;
+
+										}
+
+									} else {
+										sa.assertTrue(false,
+												"Not Able to Click on Save Button Value so cannot create  " + sdgName);
+										log(LogStatus.SKIP,
+												"Not Able to Click on Save Button Value so cannot create  " + sdgName,
+												YesNo.Yes);
+									}
 
 								}
 
-							} else {
-								sa.assertTrue(false,
-										"Not Able to Click on Save Button Value so cannot create  " + sdgName);
-								log(LogStatus.SKIP,
-										"Not Able to Click on Save Button Value so cannot create  " + sdgName,
-										YesNo.Yes);
-							}
+								else {
+									enterValueForSDGCreation(projectName, labelWithValue, action, timeOut);
+									if (click(driver, getRecordPageSettingSave(60), "Save Button",
+											action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.INFO, "Click on Save Button  " + sdgName, YesNo.No);
+										ThreadSleep(5000);
+										WebElement errorEle = FindElement(driver,
+												"//strong[text()='Review the errors on this page.']/parent::div/following-sibling::ul",
+												"Error: You can either fill 'Filter' or 'List View Name' to save the record. ",
+												action.SCROLLANDBOOLEAN, 10);
+										if (errorEle != null) {
+											if (errorEle.getAttribute("innerHTML").contains(errorMsg)) {
+												appLog.error("Error Msg Found: " + errorMsg);
+												log(LogStatus.FAIL, "Error Msg Found: " + errorMsg, YesNo.Yes);
+												flag = false;
 
+											}
+
+										} else {
+											if (getSDGHeaderValueInViewMode(projectName, sdgName, timeOut) != null) {
+												log(LogStatus.PASS, "Header verified for created  " + sdgName,
+														YesNo.No);
+												flag = true;
+											} else {
+												sa.assertTrue(false, "Header not verified for created  " + sdgName);
+												log(LogStatus.SKIP, "Header not verified for created  " + sdgName,
+														YesNo.Yes);
+												flag = false;
+											}
+
+										}
+
+									} else {
+										sa.assertTrue(false,
+												"Not Able to Click on Save Button Value so cannot create  " + sdgName);
+										log(LogStatus.SKIP,
+												"Not Able to Click on Save Button Value so cannot create  " + sdgName,
+												YesNo.Yes);
+									}
+								}
+							}
 						} else {
 							appLog.error("Not able to click on Edit Button so cannot create sdg : " + sdgName);
 
@@ -288,6 +332,118 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 			appLog.error("Not able to click on List Views Button");
 
 		}
+
+		return flag;
+	}
+	
+	
+	/**
+	 * @author Ankur Huria
+	 * @param projectName
+	 * @param sdgName
+	 * @param labelWithValues
+	 * @param action
+	 * @param timeOut
+	 * @return true if SDG created successfully
+	 */
+	
+	public boolean editCustomSDGandFoundErrorMsg(String projectName, String sdgName, String[][][] labelWithValues,
+			action action, int timeOut, String errorMsg) {
+		boolean flag = false;
+		ThreadSleep(5000);
+		refresh(driver);
+		ThreadSleep(5000);
+		if (click(driver, getSelectListIcon(60), "List View Button", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on List Views Button  ", YesNo.No);
+			WebElement allListViewEle = FindElement(driver, "//span[text()='All']/ancestor::a", "All List View Button ",
+					action.SCROLLANDBOOLEAN, 10);
+			if (click(driver, allListViewEle, "ALl List View Button", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on All List Views Button  ", YesNo.No);
+				if (sendKeys(driver, sdgSearchBox(30), sdgName, "SDG Name: " + sdgName, action)) {
+					log(LogStatus.INFO, "Able to Enter Value : " + sdgName + " to Search Box : " + sdgName, YesNo.No);
+
+					sdgSearchBox(30).sendKeys(Keys.ENTER);
+
+					WebElement sdgNameAfterSearchEle = FindElement(driver, "//th//a[text()='" + sdgName + "']",
+							"SDG Name After Search ", action.SCROLLANDBOOLEAN, 10);
+					if (click(driver, sdgNameAfterSearchEle, "SDG Name After Search", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on SDG Name: " + sdgName, YesNo.No);
+						if (clickUsingJavaScript(driver, sdgEditButton(timeOut), "Edit button")) {
+							appLog.info("clicked on Edit button");
+							for (String[][] labelWithValue : labelWithValues) {
+
+									enterValueForSDGCreation(projectName, labelWithValue, action, timeOut);
+									if (click(driver, getRecordPageSettingSave(60), "Save Button",
+											action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.INFO, "Click on Save Button  " + sdgName, YesNo.No);
+										ThreadSleep(5000);
+										WebElement errorEle = FindElement(driver,
+												"//strong[text()='Review the errors on this page.']/parent::div/following-sibling::ul",
+												"Error:  "+errorMsg,
+												action.SCROLLANDBOOLEAN, 10);
+										if (errorEle != null) {
+											if (errorEle.getAttribute("innerHTML").contains(errorMsg)) {
+												appLog.info("Error Msg Found :  " + errorMsg);
+												log(LogStatus.PASS, "Error Msg Found: " + errorMsg, YesNo.Yes);
+												flag = true;
+
+											} else {
+												appLog.error("Error Msg not Matched: " + errorMsg);
+												log(LogStatus.FAIL, "Error Msg not Matched:" + errorMsg, YesNo.Yes);
+												flag = false;
+												break;
+
+											}
+
+										} else {
+											appLog.error("Error Msg not Found: " + errorMsg);
+											log(LogStatus.FAIL, "Error Msg not Found: " + errorMsg, YesNo.Yes);
+											flag = false;
+											break;
+
+										}
+
+									} else {
+										sa.assertTrue(false,
+												"Not Able to Click on Save Button Value so cannot create  " + sdgName);
+										log(LogStatus.SKIP,
+												"Not Able to Click on Save Button Value so cannot create  " + sdgName,
+												YesNo.Yes);
+									}
+
+								
+
+							}
+						} else {
+							appLog.error("Not able to click on Edit Button so cannot create sdg : " + sdgName);
+
+						}
+					} else {
+						appLog.error("Not Able to Click/Find : " + sdgName + " after Search : ");
+
+					}
+				} else {
+					appLog.error("Not Able to Enter Value : " + sdgName + " to Search Box ");
+
+				}
+			} else {
+				appLog.error("Not able to click on All List View Button");
+
+			}
+		} else {
+			appLog.error("Not able to click on List Views Button");
+
+		}
+		WebElement cancelButtonEle = FindElement(driver, "//button[text()='Cancel']", "Cancel Button ",
+				action.SCROLLANDBOOLEAN, 10);
+		if(cancelButtonEle!=null) {
+			click(driver, cancelButtonEle, "Cancel Button", action.SCROLLANDBOOLEAN);
+		log(LogStatus.INFO, "Click on Cancel Button  ", YesNo.No);
+		}
+		else
+			log(LogStatus.ERROR, "Not Able to Find Cancel Button  ", YesNo.Yes);
+		
+		
 
 		return flag;
 	}
