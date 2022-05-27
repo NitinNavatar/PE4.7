@@ -386,73 +386,77 @@ public class CommonVariables {
 	public static String M7Event4Subject,M7Event4StartDate,M7Event4StartTime,M7Event4EndDate,M7Event4EndTime;
 	public static String M7Event5Subject,M7Event5StartDate,M7Event5StartTime,M7Event5EndDate,M7Event5EndTime;
 	public static String M7Event6Subject,M7Event6StartDate,M7Event6StartTime,M7Event6EndDate,M7Event6EndTime;
-	public static String M7Event7Subject, M7Event7StartDate, M7Event7StartTime, M7Event7EndDate, M7Event7EndTime;
 
-	public static String M7NContact1FName, M7NContact1LName, M7NContact1EmailID, M7NContact1RecordType;
-	public static String M7NContact2FName, M7NContact2LName, M7NContact2EmailID, M7NContact2RecordType;
-	public static String M7NContact3FName, M7NContact3LName, M7NContact3EmailID, M7NContact3RecordType;
-	public static String M7NContact4FName, M7NContact4LName, M7NContact4EmailID, M7NContact4RecordType;
-	public static String M7NContact5FName, M7NContact5LName, M7NContact5EmailID, M7NContact5RecordType;
-	public static String M7NContact6FName, M7NContact6LName, M7NContact6EmailID, M7NContact6RecordType;
-	public static String M7NContact7FName, M7NContact7LName, M7NContact7EmailID, M7NContact7RecordType;
-	public static String M7NContact8FName, M7NContact8LName, M7NContact8EmailID, M7NContact8RecordType;
-	public static String M7NContact9FName, M7NContact9LName, M7NContact9EmailID, M7NContact9RecordType;
-	public static String M7NContact10FName, M7NContact10LName, M7NContact10EmailID, M7NContact10RecordType;
-	public static String M7NContact11FName, M7NContact11LName, M7NContact11EmailID, M7NContact11RecordType;
-	public static String M7NContact12FName, M7NContact12LName, M7NContact12EmailID, M7NContact12RecordType;
-	public static String M7NContact13FName, M7NContact13LName, M7NContact13EmailID, M7NContact13RecordType;
-	public static String M7NContact14FName, M7NContact14LName, M7NContact14EmailID, M7NContact14RecordType;
-	public static String M7NContact15FName, M7NContact15LName, M7NContact15EmailID, M7NContact15RecordType;
-	public static String M7NContact16FName, M7NContact16LName, M7NContact16EmailID, M7NContact16RecordType;
-	public static String M7NContact17FName, M7NContact17LName, M7NContact17EmailID, M7NContact17RecordType;
-	public static String M7NContact18FName, M7NContact18LName, M7NContact18EmailID, M7NContact18RecordType;
-	public static String M7NContact19FName, M7NContact19LName, M7NContact19EmailID, M7NContact19RecordType;
-	public static String M7NContact20FName, M7NContact20LName, M7NContact20EmailID, M7NContact20RecordType;
-	public static String M7NContact21FName, M7NContact21LName, M7NContact21EmailID, M7NContact21RecordType;
-	public static String M7NContact22FName, M7NContact22LName, M7NContact22EmailID, M7NContact22RecordType;
-	public static String M7NContact23FName, M7NContact23LName, M7NContact23EmailID, M7NContact23RecordType;
-	public static String M7NContact24FName, M7NContact24LName, M7NContact24EmailID, M7NContact24RecordType;
-	public static String M7NContact25FName, M7NContact25LName, M7NContact25EmailID, M7NContact25RecordType;
-	public static String M7NContact26FName, M7NContact26LName, M7NContact26EmailID, M7NContact26RecordType;
-	public static String M7NContact27FName, M7NContact27LName, M7NContact27EmailID, M7NContact27RecordType;
+	public static String M7Event7Subject,M7Event7StartDate,M7Event7StartTime,M7Event7EndDate,M7Event7EndTime;
+	public static String M7Event8Subject,M7Event8StartDate,M7Event8StartTime,M7Event8EndDate,M7Event8EndTime;
+	
+	// Module 7N 
+	
+		public static String M7NIns1,M7NIns1RecordType;
+		
+		public static String M7NIns2,M7NIns2RecordType;
+		public static String M7NIns3,M7NIns3RecordType;
+		public static String M7NIns4,M7NIns4RecordType;
+		public static String M7NIns5,M7NIns5RecordType;
+	
+		
+		public static String M7NContact1FName,M7NContact1LName,M7NContact1EmailID,M7NContact1RecordType;
+		public static String M7NContact2FName,M7NContact2LName,M7NContact2EmailID,M7NContact2RecordType;
+		public static String M7NContact3FName,M7NContact3LName,M7NContact3EmailID,M7NContact3RecordType;
+		public static String M7NContact4FName,M7NContact4LName,M7NContact4EmailID,M7NContact4RecordType;
+		public static String M7NContact5FName,M7NContact5LName,M7NContact5EmailID,M7NContact5RecordType;
+		public static String M7NContact6FName,M7NContact6LName,M7NContact6EmailID,M7NContact6RecordType;
+		public static String M7NContact7FName,M7NContact7LName,M7NContact7EmailID,M7NContact7RecordType;
+		public static String M7NContact8FName,M7NContact8LName,M7NContact8EmailID,M7NContact8RecordType;
+		public static String M7NContact9FName,M7NContact9LName,M7NContact9EmailID,M7NContact9RecordType;
+		public static String M7NContact10FName,M7NContact10LName,M7NContact10EmailID,M7NContact10RecordType;
+		public static String M7NContact11FName,M7NContact11LName,M7NContact11EmailID,M7NContact11RecordType;
+		public static String M7NContact12FName,M7NContact12LName,M7NContact12EmailID,M7NContact12RecordType;
+		public static String M7NContact13FName,M7NContact13LName,M7NContact13EmailID,M7NContact13RecordType;
+		public static String M7NContact14FName,M7NContact14LName,M7NContact14EmailID,M7NContact14RecordType;
+		public static String M7NContact15FName,M7NContact15LName,M7NContact15EmailID,M7NContact15RecordType;
+		public static String M7NContact16FName,M7NContact16LName,M7NContact16EmailID,M7NContact16RecordType;
+		public static String M7NContact17FName,M7NContact17LName,M7NContact17EmailID,M7NContact17RecordType;
+		public static String M7NContact18FName,M7NContact18LName,M7NContact18EmailID,M7NContact18RecordType;
+		public static String M7NContact19FName,M7NContact19LName,M7NContact19EmailID,M7NContact19RecordType;
+		public static String M7NContact20FName,M7NContact20LName,M7NContact20EmailID,M7NContact20RecordType;
+		public static String M7NContact21FName,M7NContact21LName,M7NContact21EmailID,M7NContact21RecordType;
+		public static String M7NContact22FName,M7NContact22LName,M7NContact22EmailID,M7NContact22RecordType;
+		public static String M7NContact23FName,M7NContact23LName,M7NContact23EmailID,M7NContact23RecordType;
+		public static String M7NContact24FName,M7NContact24LName,M7NContact24EmailID,M7NContact24RecordType;
+		public static String M7NContact25FName,M7NContact25LName,M7NContact25EmailID,M7NContact25RecordType;
+		public static String M7NContact26FName,M7NContact26LName,M7NContact26EmailID,M7NContact26RecordType;
+		public static String M7NContact27FName,M7NContact27LName,M7NContact27EmailID,M7NContact27RecordType;
+		
+		public static String M7NTask1Subject,M7NTask1dueDate,M7NTask1Status,M7NTask1Priority;
+		public static String M7NTask2Subject,M7NTask2dueDate,M7NTask2Status,M7NTask2Priority;
+		public static String M7NTask3Subject,M7NTask3dueDate,M7NTask3Status,M7NTask3Priority;
+		public static String M7NTask4Subject,M7NTask4dueDate,M7NTask4Status,M7NTask4Priority;
+		public static String M7NTask5Subject,M7NTask5dueDate,M7NTask5Status,M7NTask5Priority;
+		public static String M7NTask6Subject,M7NTask6dueDate,M7NTask6Status,M7NTask6Priority;
+		public static String M7NTask7Subject,M7NTask7dueDate,M7NTask7Status,M7NTask7Priority;
+		public static String M7NTask8Subject,M7NTask8dueDate,M7NTask8Status,M7NTask8Priority,M7NTask8Updated_Subject;
+		public static String M7NTask9Subject,M7NTask9dueDate,M7NTask9Status,M7NTask9Priority,M7NTask9Updated_Subject;
+		public static String M7NTask10Subject,M7NTask10dueDate,M7NTask10Status,M7NTask10Priority,M7NTask10Updated_Subject;
+		public static String M7NTask11Subject,M7NTask11dueDate,M7NTask11Status,M7NTask11Priority,M7NTask11Updated_Subject;
+		
+		public static String M7NEvent1Subject,M7NEvent1StartDate,M7NEvent1StartTime,M7NEvent1EndDate,M7NEvent1EndTime;
+		public static String M7NEvent2Subject,M7NEvent2StartDate,M7NEvent2StartTime,M7NEvent2EndDate,M7NEvent2EndTime;
+		public static String M7NEvent3Subject,M7NEvent3StartDate,M7NEvent3StartTime,M7NEvent3EndDate,M7NEvent3EndTime;
+		public static String M7NEvent4Subject,M7NEvent4StartDate,M7NEvent4StartTime,M7NEvent4EndDate,M7NEvent4EndTime;
+		public static String M7NEvent5Subject,M7NEvent5StartDate,M7NEvent5StartTime,M7NEvent5EndDate,M7NEvent5EndTime;
+		public static String M7NEvent6Subject,M7NEvent6StartDate,M7NEvent6StartTime,M7NEvent6EndDate,M7NEvent6EndTime;
+		public static String M7NEvent7Subject,M7NEvent7StartDate,M7NEvent7StartTime,M7NEvent7EndDate,M7NEvent7EndTime;
+		public static String M7NEvent8Subject,M7NEvent8StartDate,M7NEvent8StartTime,M7NEvent8EndDate,M7NEvent8EndTime,M7NEvent8Name;
+		public static String M7NEvent9Subject,M7NEvent9StartDate,M7NEvent9StartTime,M7NEvent9EndDate,M7NEvent9EndTime,M7NEvent9Name;
+		public static String M7NEvent10Subject,M7NEvent10StartDate,M7NEvent10StartTime,M7NEvent10EndDate,M7NEvent10EndTime,M7NEvent10Name;
+		public static String M7NEvent11Subject,M7NEvent11StartDate,M7NEvent11StartTime,M7NEvent11EndDate,M7NEvent11EndTime,M7NEvent11Name;
+		public static String M7NEvent12Subject,M7NEvent12StartDate,M7NEvent12StartTime,M7NEvent12EndDate,M7NEvent12EndTime,M7NEvent12Name;
+		public static String M7NEvent13Subject,M7NEvent13StartDate,M7NEvent13StartTime,M7NEvent13EndDate,M7NEvent13EndTime,M7NEvent13Name;
+		public static String M7NEvent14Subject,M7NEvent14StartDate,M7NEvent14StartTime,M7NEvent14EndDate,M7NEvent14EndTime,M7NEvent14Name;
+		
+		//Module 8 
 
-	public static String M7NTask1Subject, M7NTask1dueDate, M7NTask1Status, M7NTask1Priority;
-	public static String M7NTask2Subject, M7NTask2dueDate, M7NTask2Status, M7NTask2Priority;
-	public static String M7NTask3Subject, M7NTask3dueDate, M7NTask3Status, M7NTask3Priority;
-	public static String M7NTask4Subject, M7NTask4dueDate, M7NTask4Status, M7NTask4Priority;
-	public static String M7NTask5Subject, M7NTask5dueDate, M7NTask5Status, M7NTask5Priority;
-	public static String M7NTask6Subject, M7NTask6dueDate, M7NTask6Status, M7NTask6Priority;
-	public static String M7NTask7Subject, M7NTask7dueDate, M7NTask7Status, M7NTask7Priority;
-	public static String M7NTask8Subject, M7NTask8dueDate, M7NTask8Status, M7NTask8Priority, M7NTask8Updated_Subject;
-	public static String M7NTask9Subject, M7NTask9dueDate, M7NTask9Status, M7NTask9Priority, M7NTask9Updated_Subject;
-	public static String M7NTask10Subject, M7NTask10dueDate, M7NTask10Status, M7NTask10Priority,
-			M7NTask10Updated_Subject;
-	public static String M7NTask11Subject, M7NTask11dueDate, M7NTask11Status, M7NTask11Priority,
-			M7NTask11Updated_Subject;
-
-	public static String M7NEvent1Subject, M7NEvent1StartDate, M7NEvent1StartTime, M7NEvent1EndDate, M7NEvent1EndTime;
-	public static String M7NEvent2Subject, M7NEvent2StartDate, M7NEvent2StartTime, M7NEvent2EndDate, M7NEvent2EndTime;
-	public static String M7NEvent3Subject, M7NEvent3StartDate, M7NEvent3StartTime, M7NEvent3EndDate, M7NEvent3EndTime;
-	public static String M7NEvent4Subject, M7NEvent4StartDate, M7NEvent4StartTime, M7NEvent4EndDate, M7NEvent4EndTime;
-	public static String M7NEvent5Subject, M7NEvent5StartDate, M7NEvent5StartTime, M7NEvent5EndDate, M7NEvent5EndTime;
-	public static String M7NEvent6Subject, M7NEvent6StartDate, M7NEvent6StartTime, M7NEvent6EndDate, M7NEvent6EndTime;
-	public static String M7NEvent7Subject, M7NEvent7StartDate, M7NEvent7StartTime, M7NEvent7EndDate, M7NEvent7EndTime;
-	public static String M7NEvent8Subject, M7NEvent8StartDate, M7NEvent8StartTime, M7NEvent8EndDate, M7NEvent8EndTime,
-			M7NEvent8Name;
-	public static String M7NEvent9Subject, M7NEvent9StartDate, M7NEvent9StartTime, M7NEvent9EndDate, M7NEvent9EndTime,
-			M7NEvent9Name;
-	public static String M7NEvent10Subject, M7NEvent10StartDate, M7NEvent10StartTime, M7NEvent10EndDate,
-			M7NEvent10EndTime, M7NEvent10Name;
-	public static String M7NEvent11Subject, M7NEvent11StartDate, M7NEvent11StartTime, M7NEvent11EndDate,
-			M7NEvent11EndTime, M7NEvent11Name;
-	public static String M7NEvent12Subject, M7NEvent12StartDate, M7NEvent12StartTime, M7NEvent12EndDate,
-			M7NEvent12EndTime, M7NEvent12Name;
-	public static String M7NEvent13Subject, M7NEvent13StartDate, M7NEvent13StartTime, M7NEvent13EndDate,
-			M7NEvent13EndTime, M7NEvent13Name;
-	public static String M7NEvent14Subject, M7NEvent14StartDate, M7NEvent14StartTime, M7NEvent14EndDate,
-			M7NEvent14EndTime, M7NEvent14Name;
-
-	// Module 8
 
 	public static String M8_Object1,M8_Object2,M8_Object3,M8_Object4,M8_Object5,M8_Object6;
 	
