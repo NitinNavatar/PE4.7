@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+import com.navatar.generic.CommonLib;
 import com.navatar.generic.SmokeCommonVariables;
 
 public class ReportsTab extends BasePageBusinessLayer {
@@ -202,4 +204,290 @@ public class ReportsTab extends BasePageBusinessLayer {
 		return isDisplayed(driver, ReportFolderSharePopUpDoneAndCloseButton, "Visibility", timeOut, "Report Folder Share Pop Up Done And Close Button");
 	}
 	
-}
+	@FindBy(xpath = "//button[text()='Add']")
+	private WebElement  addFilterBtn;
+
+	public WebElement addFilterBtn(int timeOut) {
+		return isDisplayed(driver, addFilterBtn, "Visibility", timeOut, "Add Filter Button");
+	}
+	
+	@FindBy(xpath = "//input[starts-with(@id,'scope-ext-gen')]")
+	private WebElement  showDrpDownLink;
+
+	public WebElement showDrpDownLink(int timeOut) {
+		return isDisplayed(driver, showDrpDownLink, "Visibility", timeOut, "Show Drop Down Link");
+	}
+	
+	@FindBy(xpath = "//iframe[@title='sessionserver']/following-sibling::div[@class='x-layer x-combo-list ']/div/div")
+	private List<WebElement>  showDrpDownList;
+	public List<WebElement> showDrpDownList(){
+		return FindElements(driver, showDrpDownList, "Show DropDown List");
+	}
+	
+	@FindBy(xpath = "//input[@name='dateColumn']")
+	private WebElement  dateFieldDrpDownLink;
+
+	public WebElement dateFieldDrpDownLink(int timeOut) {
+		return isDisplayed(driver, dateFieldDrpDownLink, "Visibility", timeOut, "Date Field Drop Down Link");
+	}
+	
+	@FindBy(xpath = "//div[@class='dateColumnCategory']/parent::div/div")
+	private List<WebElement>  dateFieldDrpDownList;
+	public List<WebElement> dateFieldDrpDownList(){
+		return FindElements(driver, dateFieldDrpDownList, "Date Field DropDown List");
+	}
+	
+	@FindBy(xpath = "//input[@name='pc']/following-sibling::img")
+	private WebElement  fieldDrpDownLink;
+////img[@id='ext-gen304']
+	public WebElement fieldDrpDownLink(int timeOut) {
+		return isDisplayed(driver, fieldDrpDownLink, "Visibility", timeOut, "Field Drop Down Link");
+	}
+	
+	@FindBy(xpath = "//div[@class='acFolder']/parent::div/div")
+	private List<WebElement>  fieldDrpDownList;
+	public List<WebElement> fieldDrpDownList(){
+		return FindElements(driver, fieldDrpDownList, "Field DropDown List");
+	}
+	
+	@FindBy(xpath = "//input[@name='pc']/parent::div/following-sibling::div//img")
+	private WebElement  operatorDrpDownLink;
+
+	public WebElement operatorDrpDownLink(int timeOut) {
+		return isDisplayed(driver, operatorDrpDownLink, "Visibility", timeOut, "Operator Drop Down Link");
+	}
+	
+	@FindBy(xpath = "//div[text()='equals']/parent::div/div")
+	private List<WebElement>  operatorDrpDownList;
+	public List<WebElement> operatorDrpDownList(){
+		return FindElements(driver, operatorDrpDownList, "Operator Drop Down List");
+	}
+	
+	@FindBy(xpath = "(//input[@name='pc']/parent::div/following-sibling::div)[2]/input")
+	private WebElement  fieldFilterValueInputBox;
+
+	public WebElement fieldFilterValueInputBox(int timeOut) {
+		return isDisplayed(driver, fieldFilterValueInputBox, "Visibility", timeOut, "Field Filter Value Input Box");
+	}
+	
+	@FindBy(xpath = "(//label[text()='Range']/preceding-sibling::div/following-sibling::div/input)[1]")
+	private WebElement  rangeDrpDownLink;
+
+	public WebElement rangeDrpDownLink(int timeOut) {
+		return isDisplayed(driver, rangeDrpDownLink, "Visibility", timeOut, "Range Drop Down Link");
+	}
+	
+	
+	@FindBy(xpath = "//iframe[@title='sessionserver']/following::div[text()='All Time']/../div")
+	private List<WebElement>  rangeDrpDownList;
+	public List<WebElement> rangeDrpDownList(){
+		return FindElements(driver, rangeDrpDownList, "Range Drop Down List");
+	}
+	
+	@FindBy(xpath = "//button[text()='OK']")
+	private WebElement  filterOKButton;
+
+	public WebElement filterOKButton(int timeOut) {
+		return isDisplayed(driver, filterOKButton, "Visibility", timeOut, "Filter Ok Button");
+	}
+	
+	@FindBy(xpath = "//img[@title='Home']")
+	private WebElement  homeLink;
+
+	public WebElement homeLink(int timeOut) {
+		return isDisplayed(driver, homeLink, "Visibility", timeOut, "Home Link");
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	@FindBy(xpath="//a[@title='New Report']")
+	private WebElement newReportBtn_Lightning;
+
+	public WebElement newReportBtn_Lightning(int timeOut) {
+		return isDisplayed(driver, newReportBtn_Lightning, "Visibility", timeOut, "New Report Btn Lightning");
+	}
+	
+	
+	@FindBy(xpath="//input[@id='modal-search-input']")
+	private WebElement ReportTypeSearchBox_Lightning;
+
+	public WebElement ReportTypeSearchBox_Lightning(int timeOut) {
+		return isDisplayed(driver, ReportTypeSearchBox_Lightning, "Visibility", timeOut, "Report Type Search Box");
+	}
+	
+	@FindBy(xpath="//button[text()='Continue']")
+	private WebElement continueButton_Lightning;
+
+	public WebElement continueButton_Lightning(int timeOut) {
+		return isDisplayed(driver, continueButton_Lightning, "Visibility", timeOut, "Report Type Search Box");
+	}
+	//div[text()='Columns']/parent::div/following-sibling::div//li/span/span/span
+	
+	@FindBy(xpath = "//div[text()='Columns']/parent::div/following-sibling::div//li/span/span/span")
+	private List<WebElement>  listOfFieldsAlreadyAdded;
+	public List<WebElement> listOfFieldsAlreadyAdded(){
+		return FindElements(driver, listOfFieldsAlreadyAdded, "List Of Fields Already Added");
+	}
+	
+	@FindBy(xpath="//div[text()='Columns']/parent::div/following-sibling::div//ul")
+	private WebElement FieldsAlreadyAdded;
+
+	public WebElement FieldsAlreadyAdded(int timeOut) {
+		return isDisplayed(driver, FieldsAlreadyAdded, "Visibility", timeOut, "Report Type Search Box");
+	}
+	
+	
+	@FindBy(xpath="//iframe[@title='Report Builder']")
+	private WebElement iFrameReportTypeLightning;
+
+	public WebElement iFrameReportTypeLightning(int timeOut) {
+		return isDisplayed(driver, iFrameReportTypeLightning, "Visibility", timeOut, "Report Type Search Box");
+	}
+	
+	@FindBy(xpath="//input[@placeholder='Add column...']")
+	private WebElement addColumnSearchBoxLightning;
+
+	public WebElement addColumnSearchBoxLightning(int timeOut) {
+		return isDisplayed(driver, addColumnSearchBoxLightning, "Visibility", timeOut, "Report Type Search Box");
+	}
+	
+	@FindBy(xpath="//input[@id='reportName']")
+	private WebElement reportNameInputBoxLightning;
+
+	public WebElement reportNameInputBoxLightning(int timeOut) {
+		return isDisplayed(driver, reportNameInputBoxLightning, "Visibility", timeOut, "Report Type Search Box");
+	}
+	
+	@FindBy(xpath="//input[@id='reportUniqueName']")
+	private WebElement reportUniqueNameInputBoxLightning;
+
+	public WebElement reportUniqueNameInputBoxLightning(int timeOut) {
+		return isDisplayed(driver, reportUniqueNameInputBoxLightning, "Visibility", timeOut, "Report Type Search Box");
+	}
+	
+	@FindBy(xpath="//label[text()='Report Description']/parent::div//textarea")
+	private WebElement reportDescriptionBoxLightning;
+
+	public WebElement reportDescriptionBoxLightning(int timeOut) {
+		return isDisplayed(driver, reportDescriptionBoxLightning, "Visibility", timeOut, "Report Type Search Box");
+	}
+	
+	@FindBy(xpath="//button[text()='Select Folder']")
+	private WebElement selectReportFolderButtonLightning;
+
+	public WebElement selectReportFolderButtonLightning(int timeOut) {
+		return isDisplayed(driver, selectReportFolderButtonLightning, "Visibility", timeOut, "Report Type Search Box");
+	}
+	
+	
+	@FindBy(xpath="//button[@title='Close']/../..//footer/button[text()='Save']")
+	private WebElement saveButtonInSaveReportPopUpLightning;
+
+	public WebElement saveButtonInSaveReportPopUpLightning(int timeOut) {
+		return isDisplayed(driver, saveButtonInSaveReportPopUpLightning, "Visibility", timeOut, "Report Type Search Box");
+	}
+	
+	
+	
+	//Filters Locators
+	@FindBy(xpath="//h2[text()='Filters']/ancestor::a")
+	private WebElement filterButtonLightning;
+
+	public WebElement filterButtonLightning(int timeOut) {
+		return isDisplayed(driver, filterButtonLightning, "Visibility", timeOut, "Report Type Search Box");
+	}
+	
+	@FindBy(xpath="//span[text()='Show Me']/parent::button")
+	private WebElement showMeFilterButtonLightning;
+
+	public WebElement showMeFilterButtonLightning(int timeOut) {
+		return isDisplayed(driver, showMeFilterButtonLightning, "Visibility", timeOut, "Report Type Search Box");
+	}
+	
+	@FindBy(xpath="//label[text()='Show Me']/parent::div//button")
+	private WebElement showMeFilterDropDownButtonLightning;
+
+	public WebElement showMeFilterDropDownButtonLightning(int timeOut) {
+		return isDisplayed(driver, showMeFilterDropDownButtonLightning, "Visibility", timeOut, "Report Type Search Box");
+	}
+	
+	@FindBy(xpath="//button[text()='Apply']")
+	private WebElement applyButtonLightning;
+
+	public WebElement applyButtonLightning(int timeOut) {
+		return isDisplayed(driver, applyButtonLightning, "Visibility", timeOut, "Report Type Search Box");
+	}
+	
+	@FindBy(xpath="//span[text()='Show Me']/parent::button/ancestor::li/following-sibling::li//button")
+	private WebElement dateRangeFilterButtonLightning;
+
+	public WebElement dateRangeFilterButtonLightning(int timeOut) {
+		return isDisplayed(driver, dateRangeFilterButtonLightning, "Visibility", timeOut, "Report Type Search Box");
+	}
+	
+	
+	@FindBy(xpath="//label[text()='Date']/parent::div//input")
+	private WebElement dateFilterDropDownButtonLightning;
+
+	public WebElement dateFilterDropDownButtonLightning(int timeOut) {
+		return isDisplayed(driver, dateFilterDropDownButtonLightning, "Visibility", timeOut, "Report Type Search Box");
+	}
+	
+	@FindBy(xpath="//label[text()='Range']/parent::div//button")
+	private WebElement rangeFilterDropDownButtonLightning;
+
+	public WebElement rangeFilterDropDownButtonLightning(int timeOut) {
+		return isDisplayed(driver, rangeFilterDropDownButtonLightning, "Visibility", timeOut, "Report Type Search Box");
+	}
+	
+	@FindBy(xpath="//input[@placeholder='Add filter...']")
+	private WebElement adFilterSearchBoxLightning;
+
+	public WebElement adFilterSearchBoxLightning(int timeOut) {
+		return isDisplayed(driver, adFilterSearchBoxLightning, "Visibility", timeOut, "Report Type Search Box");
+	}
+	
+	
+	@FindBy(xpath="//label[text()='Operator']/parent::div//button")
+	private WebElement operatorDropDownLinkLightning;
+
+	public WebElement operatorDropDownLinkLightning(int timeOut) {
+		return isDisplayed(driver, operatorDropDownLinkLightning, "Visibility", timeOut, "Report Type Search Box");
+	}
+	
+	
+	@FindBy(xpath="//input[@id='undefined-input']")
+	private WebElement customFilterFieldValueInputBoxLightning;
+
+	public WebElement customFilterFieldValueInputBoxLightning(int timeOut) {
+		return isDisplayed(driver, customFilterFieldValueInputBoxLightning, "Visibility", timeOut, "Report Type Search Box");
+	}
+	
+	
+	
+	
+	}

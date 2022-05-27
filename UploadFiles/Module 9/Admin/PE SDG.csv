@@ -1,0 +1,14 @@
+SDG Name,All Rows,Default Sort,Disable Sharing Rules,Enable Inline Edit,Enable Manage Fields,Filter,Grouping Field API,Highlight Colors,Is Valid,List View Name,My Records,My Home,My Teams Records,Parent Field Name,Related Association Query,Remember Filter,SDG Tag,Show Icon,sObjectName
+Firm With Primary Member,FALSE,Name Desc,FALSE,TRUE,TRUE,,,,TRUE,,,FALSE,,,,FALSE,Firm With Primary Member,FALSE,Account
+Fundraising_Test,FALSE,Name Desc,FALSE,TRUE,TRUE,,,,TRUE,,,FALSE,,navpeII__Fund_Name__c,,FALSE,Fundraising_Test,FALSE,navpeII__Fundraising__c
+Account Filter Grid,FALSE,Name Asc,FALSE,TRUE,TRUE,,,,TRUE,,"Select OwnerId FROM Account WHERE navpeII__Status__c NOT IN ('Portfolio Company', 'Due Diligence')",FALSE,(OwnerId IN (SELECT Id FROM User WHERE Team__c = '<<Team__c>>')),,,FALSE,Account Filter Grid,FALSE,Account
+Open Task,FALSE,ActivityDate Asc,FALSE,FALSE,TRUE,(Status!='Completed' AND (AccountId IN (SELECT Id FROM Account WHERE navpeII__Status__c = 'Watchlist'))),,,TRUE,,,FALSE,,,,TRUE,Open Task,FALSE,Task
+Fund Filter Grid,FALSE,Name Asc,FALSE,TRUE,TRUE,,,,TRUE,,,FALSE,(OwnerId IN (SELECT Id FROM User WHERE Team__c = '<<Team__c>>')),,,FALSE,Fund Filter Grid,FALSE,navpeII__Fund__c
+Fund - First SDG Grid,TRUE,Name Desc,FALSE,TRUE,TRUE,,,,TRUE,,,FALSE,,,,FALSE,Fund - First SDG Grid,FALSE,navpeII__Fund__c
+Fundraising Filter Grid,FALSE,Name Asc,FALSE,TRUE,TRUE,,,,TRUE,,,FALSE,(OwnerId IN (SELECT Id FROM User WHERE Team__c = '<<Team__c>>')),,,FALSE,Fundraising Filter Grid,FALSE,navpeII__Fundraising__c
+Contact Filter Grid,FALSE,Name Asc,FALSE,TRUE,TRUE,,,,TRUE,,,FALSE,(OwnerId IN (SELECT Id FROM User WHERE Team__c = '<<Team__c>>')),,,FALSE,Contact Filter Grid,FALSE,Contact
+SDG_GROUPBY_1,FALSE,Industry,FALSE,TRUE,TRUE,,Industry,,TRUE,,,FALSE,,,,FALSE,SDG_GROUPBY_1,FALSE,Account
+SDG_GROUPBY_2,FALSE,navpeII__Stage__c,FALSE,TRUE,TRUE,,navpeII__Stage__c,,TRUE,,,FALSE,,,,FALSE,SDG_GROUPBY_2,FALSE,navpeII__Fundraising__c
+SDG_GROUPBY_3,FALSE,navpeII__Reason_for_Decline__c DESC,FALSE,TRUE,TRUE,,navpeII__Reason_for_Decline__c,,TRUE,,,FALSE,,,,FALSE,SDG_GROUPBY_3,FALSE,navpeII__Fundraising__c
+Fund Prep,FALSE,Name ASC,FALSE,TRUE,TRUE,,,,TRUE,,Id IN (select Fund__c from Fund_Team__c where Fund_Team_Member__c ='<<User.Id>>'),FALSE,,,,TRUE,Fund Prep,FALSE,navpeII__Fund__c
+Referrals,FALSE,Name ASC,FALSE,TRUE,TRUE,,,,TRUE,,,FALSE,,navpeII__Introduced_by__c,,FALSE,Referrals,FALSE,Account
