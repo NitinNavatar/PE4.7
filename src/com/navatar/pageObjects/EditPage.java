@@ -1,5 +1,6 @@
 package com.navatar.pageObjects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -323,4 +324,221 @@ public class EditPage extends BasePageBusinessLayer {
 	public WebElement getSaveButtonOnEditPage(int timeOut) {
 		return isDisplayed(driver, saveButtonEditpage, "Visibility", timeOut, "Add a Tab Link");
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@FindBy(xpath="//iframe[@title='Salesforce - Enterprise Edition']")
+	private WebElement locator;
+
+	public WebElement getLocator() {
+		return locator;
+	}
+	
+	
+	 
+	
+	public WebElement getspinnericon()
+	{
+		WebElement spinnericon=driver.findElement(By.xpath("//div[@class='forceDotsSpinner']/div[@role='status']"));
+		return spinnericon;
+	}
+
+	public WebElement getnewButton() {
+		WebElement newButton= driver.findElement(By.xpath("//input[@name='new']"));
+		return newButton;
+	}
+	
+	public WebElement getlabelName() {
+		WebElement labelName=driver.findElement(By.xpath("//label[text()='Label']/following-sibling::div/input"));	
+		return labelName;
+	}
+	
+	public WebElement getnextButton() {
+		WebElement nextButton=driver.findElement(By.xpath("//a[text()='Next' and contains(@class,'primary-button')]"));
+		return nextButton;
+	}
+	
+
+	public WebElement getfinishButton() {
+		WebElement finishButton=driver.findElement(By.xpath("//a[text()='Finish']"));
+		return finishButton;
+		
+	}
+	
+	@FindBy(xpath="//input[@placeholder='Search...']")
+	private WebElement SearchonAppBuilder;
+
+	public WebElement getSearchonAppBuilder(int timeOut) {
+		return isDisplayed(driver, SearchonAppBuilder, "Visibility", timeOut, "object manage");
+	}
+	
+	
+	
+	@FindBy(xpath="//iframe[@title='Surface']")
+	private WebElement AppBuilderIframe;
+
+	public WebElement getAppBuilderIframe(int timeOut) {
+		return AppBuilderIframe;
+	}
+	
+	@FindBy(xpath="//span[text()='Navatar SDG']")
+	private WebElement NavatarSDGBtn;
+
+	public WebElement getNavatarSDGBtn(int timeOut) {
+		return isDisplayed(driver, NavatarSDGBtn, "Visibility", timeOut, "object manage");
+		
+	}
+	
+
+	
+	
+	@FindBy(xpath="//input[@name='Title']")
+	
+	private WebElement Title;
+
+	public WebElement getTitle(int timeOut) {
+		return isDisplayed(driver, Title, "Visibility", timeOut, "object manage");
+		
+	}
+	
+	
+	@FindBy(xpath="//label[text()='Data Provider']/parent::lightning-grouped-combobox//input[@role='combobox']")
+	private WebElement DataProvider;
+
+	public WebElement getDataProvider(int timeOut) {
+		return isDisplayed(driver, DataProvider, "Visibility", timeOut, "object manage");
+		
+	}
+	
+	@FindBy(xpath="//button[text()='Save']")
+	private WebElement SaveButton;
+
+	public WebElement getSaveButton(int timeOut) {
+		return isDisplayed(driver, SaveButton, "Visibility", timeOut, "object manage");
+		
+	}
+	
+	@FindBy(xpath="//label[text()='Data Provider']/parent::lightning-grouped-combobox//lightning-base-combobox-formatted-text")
+	private List<WebElement> DataProviderDropDownList;
+
+	public List<WebElement> getDataProviderDropDownList(int timeOut) {
+		return DataProviderDropDownList;
+	}
+	
+	@FindBy(xpath="//button[text()='Activate']")
+	private WebElement AvtivateButton;
+
+	public WebElement getAvtivateButton(int timeOut) {
+		return isDisplayed(driver, AvtivateButton, "Visibility", timeOut, "object manage");
+		
+	}
+	
+	@FindBy(xpath="//button[text()='Save' and contains(@class,'activateButton')]")
+	private WebElement AvtivatesaveButton;
+
+	public WebElement getAvtivatesaveButton(int timeOut) {
+		return isDisplayed(driver, AvtivatesaveButton, "Visibility", timeOut, "object manage");
+		
+	}
+	
+	@FindBy(xpath="//button[text()='Finish']")
+	private WebElement AvtivateFinishButton;
+
+	public WebElement getAvtivateFinishButton(int timeOut) {
+		return isDisplayed(driver, AvtivateFinishButton, "Visibility", timeOut, "object manage");
+		
+	}
+	
+	
+	
+	@FindBy(xpath="//button[text()='Activation...']")
+	private WebElement AvtivationButton;
+
+	public WebElement getAvtivationButton(int timeOut) {
+		return isDisplayed(driver, AvtivationButton, "Visibility", timeOut, "object manage");
+		
+	}
+	
+	//a[@title='Insert a component before this one.']
+	
+	
+	
+	
+			@FindBy(xpath="(//div[@id='brandBand_1']//div[@data-label='Navatar SDG'])[1]")
+			private WebElement dropComponent;
+
+			public WebElement dropComponent(int timeOut) {
+				return isDisplayed(driver, dropComponent, "Visibility", timeOut, "object manage");
+				
+			}
+			
+			
+			@FindBy(xpath="//span[text()='Navatar SDG']/parent::a")
+			private WebElement dragComponent;
+
+			public WebElement dragComponent(int timeOut) {
+				return isDisplayed(driver, dragComponent, "Visibility", timeOut, "object manage");
+				
+			}
+			
+			@FindBy(xpath="(//a[@title='Insert a component before this one.'])[1]")
+			private WebElement addComponentLink;
+
+			public WebElement addComponentLink(int timeOut) {
+				return isDisplayed(driver, addComponentLink, "Visibility", timeOut, "object manage");
+				
+			}
+			
+			@FindBy(xpath="(//a[@title='Insert a component before this one.'])[1]/parent::div")
+			private WebElement addComponentDiv;
+
+			public WebElement addComponentDiv(int timeOut) {
+				return isDisplayed(driver, addComponentDiv, "Visibility", timeOut, "object manage");
+				
+			}
+			@FindBy(xpath="//a[text()='Deals']")
+			private WebElement dealHeader;
+
+			public WebElement dealHeader(int timeOut) {
+				return isDisplayed(driver, dealHeader, "Visibility", timeOut, "Deal Header");
+				
+			}@FindBy(xpath="//h2[contains(text(),'retrieved: 0')]")
+			private WebElement afterAddComponentMsg;
+
+			public WebElement afterAddComponentMsg(int timeOut) {
+				return isDisplayed(driver, afterAddComponentMsg, "Visibility", timeOut, "Component Msg");
+				
+			}
+			
+			@FindBy(xpath = "//a[text()='Test']/ancestor::article//tbody/tr")
+			private List<WebElement>  showDrpDownList;
+			public List<WebElement> showDrpDownList(){
+				return FindElements(driver, showDrpDownList, "Show DropDown List");
+			}
+		
+			
+			
+			
+			
+			public WebElement TooltipElement(String Title) {
+			WebElement TooltipElement;
+			
+			return TooltipElement = FindElement(driver,
+					"//a[text()='" + Title + "']/ancestor::article/preceding-sibling::lightning-icon", "Tooltip",
+					action.SCROLLANDBOOLEAN, 20);
+			}
+			
+			//a[text()='Fund - First SDG Grid']/ancestor::article/preceding-sibling::lightning-icon
 }

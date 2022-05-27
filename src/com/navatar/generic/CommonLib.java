@@ -37,7 +37,9 @@ import com.navatar.pageObjects.BasePageErrorMessage;
 import com.relevantcodes.extentreports.LogStatus;
 
 import static com.navatar.generic.AppListeners.*;
+import static com.navatar.generic.CommonLib.FindElement;
 import static com.navatar.generic.CommonLib.ThreadSleep;
+import static com.navatar.generic.CommonLib.click;
 import static com.navatar.generic.CommonLib.previousOrForwardDateAccordingToTimeZone;
 import static com.navatar.generic.CommonLib.scrollDownThroughWebelement;
 import static org.testng.Assert.fail;
@@ -2900,4 +2902,91 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		    return ls1.containsAll(ls2) && ls1.size() == ls2.size() ? true :false;
 		     }
 		
+		
+		
+		public static boolean getSelectedOptionOfDropDown(WebDriver driver, WebElement dropDownElement,List<WebElement> listElements, String elementName, String textToSelect){
+			boolean flag=false;
+			if(checkElementVisibility(driver, dropDownElement, elementName, 60)){
+
+			if(click(driver,dropDownElement,elementName,action.BOOLEAN))
+			{
+			log(LogStatus.INFO, "successfully click on "+elementName, YesNo.No);
+
+			for(WebElement val :listElements )
+			{
+
+			if(val.getText().trim().equalsIgnoreCase(textToSelect))
+			{
+			clickUsingJavaScript(driver,val,val.getText(),action.BOOLEAN);
+			flag=true;
+			break;
+			}
+
+			}
+
+			}
+			else
+			{
+			log(LogStatus.ERROR, elementName+" button is not clickable", YesNo.No);
+
+			}
+
+			}
+			else {
+			log(LogStatus.ERROR, elementName+" is not visible", YesNo.No);
+			}
+			return flag;
+			}
+		
+		
+		
+		/**
+		 * @author Ankur Huria
+		 * @param driver
+		 * @param xpath
+		 * @param elementName
+		 * @return list<webelement>
+		 * @description returns the list of webelement based on the xpath passed
+		 */
+		public static List<WebElement> FindElements(WebDriver driver, List<WebElement> elements, String elementName){
+				
+			try {
+				if (elements != null) {
+			Wait<WebDriver> wait = new WebDriverWait(driver, 25);
+			 wait.until(ExpectedConditions.visibilityOf(elements.get(1)));
+			 return elements;
+				}
+				return elements;
+				}
+				catch(Exception e)
+				{
+					log(LogStatus.ERROR, elementName+" is not visible", YesNo.No);
+					return elements;
+				}
+}
+		public static boolean getSelectedOptionOfDropDown(WebDriver driver, WebElement dropDownElement,String elementToSelect, String elementName, String nothing) {
+		boolean flag = false;
+			if (dropDownElement != null) {
+			if (click(driver,dropDownElement, "Show Icon",
+					action.SCROLLANDBOOLEAN)) {
+				appLog.info("Click on Range Icon");
+				WebElement rangeValueEle = FindElement(driver,
+						"//div[text()='" + elementToSelect + "']", "Range value : " + elementToSelect,
+						action.SCROLLANDBOOLEAN, 10);
+				if (click(driver, rangeValueEle, "Show value : " + elementToSelect,
+						action.SCROLLANDBOOLEAN)) {
+					appLog.info("Selected Range Value : " + elementToSelect);
+					flag=true;
+				} else {
+					appLog.error(
+							"Not Able to Select on Value of Range drop down : " + elementToSelect);
+					
+				}
+
+			} else {
+				appLog.error("Not Able to Click on Show Value Icon");
+			}
+		}
+			return flag;
+			}
 }

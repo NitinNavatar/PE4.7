@@ -1525,8 +1525,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					+ "']/following-sibling::a";
 		} else if (PageLabel.Related_To.toString().equalsIgnoreCase(label)
 				|| PageLabel.Related_Associations.toString().equalsIgnoreCase(label) || isMultipleAssociation) {
-			xpath = "//span[text()='" + fieldlabel + "']/../following-sibling::div//div[contains(@class,'pill')]//span[text()='" + name
-					+ "']/following-sibling::a";
+			xpath = "//label[text()='" + fieldlabel + "']/..//span[contains(@class,'customPill')]//span[text()='" + name
+					+ "']//following-sibling::button";
 			// label[text()="Name"]/..//span[contains(@class,"customPill")]/span[text()="Davidson
 			// Bendt"]/following-sibling::button
 
@@ -1562,7 +1562,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			xpath = "//label[text()='" + fieldlabel + "']/..//span[contains(@class,'customPill')]//button/..//span[2]";
 			// label[text()="Name"]/..//span[contains(@class,"customPill")]//button
 		} else {
-			xpath = "//div[contains(@class,'ViewMode-normal')]//span[text()='"+fieldlabel+"']/../following-sibling::div//li/a/span[@class='pillText']";
+			xpath = "//label[text()='" + fieldlabel + "']/..//span[contains(@class,'pillSize')]//button/..//span[2]";
 		}
 
 		WebElement ele = FindElement(driver, xpath, "Already Selected item for Label : " + fieldlabel, action, timeOut);
@@ -1698,7 +1698,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			// xpath = "//span[text()='"+label+"']/../following-sibling::div";
 			xpath = "//ul/li/a[@title='" + value + "']";
 		} else {
-			xpath = "//a[@title='" + value + "']";
+			xpath = "//label[text()='" + label + "']/..//span[@title='" + value + "']";
 		}
 
 		ele = FindElement(driver, xpath, "Drop Down : " + label + " value : " + value, action, timeOut);
@@ -2391,8 +2391,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		if (ActivityTimeLineItem.New_Meeting.equals(activityTimeLineItem)
 				|| ActivityTimeLineItem.New_Task.equals(activityTimeLineItem)
-				|| ActivityTimeLineItem.New_Call.equals(activityTimeLineItem)
-			|| ActivityTimeLineItem.New_Event.equals(activityTimeLineItem)){
+				|| ActivityTimeLineItem.New_Call.equals(activityTimeLineItem)) {
 			xpath = "//div[contains(@class,'ViewMode-normal')]//div[@class='slds-card-wrapper activityPanel']//*[ text()='" + activity + "']";
 		} else {
 			if (projectName.equalsIgnoreCase(ProjectName.PE.toString()))
@@ -4661,5 +4660,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		
 		return result;
 	}
+	
+	
+ 	
 
 }
