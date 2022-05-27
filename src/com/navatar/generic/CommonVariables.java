@@ -381,6 +381,7 @@ public class CommonVariables {
 	// Module 7N 
 	
 		public static String M7NIns1,M7NIns1RecordType;
+		
 		public static String M7NIns2,M7NIns2RecordType;
 		public static String M7NIns3,M7NIns3RecordType;
 		public static String M7NIns4,M7NIns4RecordType;
