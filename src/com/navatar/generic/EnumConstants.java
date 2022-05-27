@@ -31,7 +31,30 @@ public class EnumConstants {
 			public String toString(){
 				return "Item Name";
 			}
-		},Record_Type,Street,City,State,Postal_Code,Country,Other_Street,Other_City,Other_State,Other_Zip,Other_Country,Report_Folder_Name,Report_Name,Select_Report_Type,Show,Range,Email_Template_Folder_Label,Public_Folder_Access,Type,Available_For_Use,Description,Subject,Email_Body,Email_Template_Name,Marketing_InitiativeName,Target_Commitments,Vintage_Year,Fax,
+		}, Account_Industry{
+			@Override
+			public String toString(){
+				return "Account Industry";
+			}
+		},Total_Firms{
+			@Override
+			public String toString(){
+				return "Total Firms";
+			}
+		},
+		Task_as_per_Industries{
+			@Override
+			public String toString(){
+				return "Task as per Industries";
+			}
+		},
+		Fundraising_as_per_Industries{
+			@Override
+			public String toString(){
+				return "Fundraising as per Industries";
+			}
+		},
+		Individuals,Record_Type,Street,City,State,Postal_Code,Country,Other_Street,Other_City,Other_State,Other_Zip,Other_Country,Report_Folder_Name,Report_Name,Select_Report_Type,Show,Range,Email_Template_Folder_Label,Public_Folder_Access,Type,Available_For_Use,Description,Subject,Email_Body,Email_Template_Name,Marketing_InitiativeName,Target_Commitments,Vintage_Year,Fax,
 		Frist_Closing_Date{
 			@Override
 			public String toString() {
@@ -1746,5 +1769,7 @@ public static enum PermissionType{
     	Ahead, Completed,Current;
     }
     
-  
+    public static enum Condition{
+    	activate,deactivate,replaceWithValue,replaceWithBlank,SelectCheckbox,UnSelectCheckbox;  		
+    }
 }
