@@ -83,7 +83,35 @@ public class SDGPage extends BasePageBusinessLayer {
 	}
 	
 	
+	@FindBy(xpath = "//button[text()='Edit']")
+	private WebElement editButton;
+	public WebElement getEditButton(String projectName,int timeOut) {
+		return isDisplayed(driver, editButton, "Visibility", timeOut, "Edit Button");
+	}
+
+	@FindBy(xpath = "//span[text()='All Rows']/parent::label/following-sibling::div//input[@type='checkbox']")
+	private WebElement allRowCheckbox;
+	public WebElement getAllRowCheckbox() {
+		return allRowCheckbox;
+	}
+
+	@FindBy(xpath = "//button[text()='Save']")
+	private WebElement saveButton;
+	public WebElement getSaveButton(String projectName,int timeOut) {
+		return isDisplayed(driver, saveButton, "Visibility", timeOut, "Save Button");
+	}
+
+	@FindBy(xpath = "//span[text()='Sortable Data Grid']")
+	private WebElement confirmationSaveMessage;
+	public WebElement getconfirmationSaveMessage(String projectName,int timeOut) {
+		return isDisplayed(driver, confirmationSaveMessage, "Visibility", timeOut, "Save confirmation message");
+	}
 	
+	@FindBy(xpath = "//input[@placeholder='Search this list...']")
+	private WebElement sdgSearchbox;
+	public WebElement getsdgSearchbox(String projectName,int timeOut) {
+		return isDisplayed(driver, sdgSearchbox, "Visibility", timeOut, "SDG Searchbox");
+	}
 	
 	
 	

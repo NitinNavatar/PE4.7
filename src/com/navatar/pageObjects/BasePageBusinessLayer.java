@@ -4662,6 +4662,303 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	}
 	
 	
+
+
+	public boolean createListView(String projectName, String listViewName, String listAccessibility,int timeOut) {
+		String xpath="";
+		refresh(driver);
+		ThreadSleep(2000);
+		if (click(driver, getlistViewControlsButton(projectName, timeOut), "list view", action.BOOLEAN)) {
+			log(LogStatus.INFO, "successfully click on list view", YesNo.No);
+			if (click(driver, getnewButtonListView(projectName, timeOut), "new ", action.BOOLEAN)) {
+				log(LogStatus.INFO, "successfully click on new buton", YesNo.No);
+				if (sendKeys(driver, getlistNameTextBox(projectName, "List Name", timeOut), listViewName,
+						"list name", action.SCROLLANDBOOLEAN)) {
+
+
+					xpath = "//span[contains(text(),'"+listAccessibility.trim()+"')]/../preceding-sibling::input";
+					WebElement ele = FindElement(driver, xpath, "Found : " + listAccessibility,
+							action.SCROLLANDBOOLEAN, 5);
+
+
+					if (click(driver, ele, listAccessibility, action.BOOLEAN)) {
+						log(LogStatus.INFO, "successfully click on "+listAccessibility, YesNo.No);
+						if (click(driver, getlistViewSaveButton(projectName, timeOut), "save", action.BOOLEAN)) {
+							log(LogStatus.INFO, "successfully click on save buton", YesNo.No);
+							return true;
+						} else {
+							log(LogStatus.ERROR, "list view save button is not clickable", YesNo.No);
+						}
+					} else {
+						log(LogStatus.ERROR, "all users radio button is not clickable", YesNo.No);
+					}
+
+				} else {
+					log(LogStatus.ERROR, "list name textbox is not visible", YesNo.No);
+				}
+			} else {
+				log(LogStatus.ERROR, "new button is not clickable", YesNo.No);
+			}
+		} else {
+			log(LogStatus.ERROR, "list view controls button is not clickable", YesNo.No);
+		}
+		return false;
+	}
+
+
+
+
+	public boolean addAutomationAllListView(String projectName,String[] listViewDataRowWise,int timeOut) {
+
+		String viewList = listViewDataRowWise[2], xpath = "";
+		if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(3000);
+			xpath = "//div[@class='listContent']//li/a/span[text()='" + viewList + "']";
+			WebElement selectListView = FindElement(driver, xpath, "Select List View : " + viewList,
+					action.SCROLLANDBOOLEAN, 5);
+			ThreadSleep(3000);
+			if (selectListView != null) {
+				log(LogStatus.INFO, "automation all is already present", YesNo.No);
+				return true;
+			} else {
+				log(LogStatus.ERROR, "not found automation all.. now creating", YesNo.No);
+
+			}
+		} else {
+			log(LogStatus.ERROR, "list dropdown is not clickable, so cannot check presence of Automation All",
+					YesNo.Yes);
+
+		}
+
+		if (createListView(projectName,listViewDataRowWise[2], listViewDataRowWise[3],timeOut)) {
+			if (changeFilterInListView(projectName, listViewDataRowWise, timeOut)) {
+				return true;
+			} else {
+				log(LogStatus.ERROR, "could not change filter to all", YesNo.Yes);
+			}
+		} else {
+			log(LogStatus.ERROR, "could not create new list", YesNo.Yes);
+		}
+		return false;
+
+	}
+
+	public boolean changeFilterInListView(String projectName, String[] listViewDataRowWise, int timeOut) {
+
+		if (click(driver, getfilterByOwnerBtn(projectName, 10), "filter section", action.BOOLEAN)) {
+			log(LogStatus.INFO, "successfully click on filter section", YesNo.No);
+			if (click(driver, getallCheckboxForFilter(projectName, timeOut), "all filters", action.BOOLEAN)) {
+				log(LogStatus.INFO, "successfully click on all radio button", YesNo.No);
+				if (click(driver, getdoneButtonListView(projectName, timeOut), "done", action.BOOLEAN)) {
+					log(LogStatus.INFO, "successfully click on done buton", YesNo.No);
+
+					if (click(driver, getaddFilterBtn(projectName, timeOut), "Add Filter Button", action.BOOLEAN)) {
+						log(LogStatus.INFO, "successfully click on Add Filter buton", YesNo.No);
+
+						if (getSelectedOptionOfDropDown(driver, getfilterFielddropdown(projectName, timeOut), getfilterFielddropdownlist(projectName, timeOut),"Field filter",listViewDataRowWise[5] )) {
+							log(LogStatus.INFO, "successfully Select the Field", YesNo.No);
+
+
+							if (getSelectedOptionOfDropDown(driver, getFilterOperatordropdown(projectName, timeOut), getfilterOperatordropdownlist(projectName, timeOut),"Operator filter",listViewDataRowWise[6] )) {
+								log(LogStatus.INFO, "successfully Select the Operator", YesNo.No);
+
+								if(listViewDataRowWise[5].trim().equalsIgnoreCase("Vintage Year") || listViewDataRowWise[5].trim().equalsIgnoreCase("1st Closing Date"))	
+								{
+									if(sendKeys(driver, getfilterValuefield(projectName, timeOut), listViewDataRowWise[7],	"value", action.SCROLLANDBOOLEAN))
+									{
+										log(LogStatus.INFO, "value has been entered", YesNo.No);
+
+									}
+									else
+									{
+										log(LogStatus.ERROR, "Value is not Entered", YesNo.No);
+
+									}
+
+
+								}
+
+								else if (listViewDataRowWise[5].equals("Fund Type") || listViewDataRowWise[5].equals("Investment Category"))
+								{
+									if(getSelectedOptionOfDropDown(driver, getfilterValueDropDown(projectName, timeOut), getfilterValueDropdownlist(projectName, timeOut),"Value filter list",listViewDataRowWise[7] )) {
+										log(LogStatus.INFO, "successfully Select the Operator", YesNo.No);
+									}
+									else
+									{
+										log(LogStatus.ERROR, "Value is not Selected", YesNo.No);
+									}
+
+
+								}
+
+								if (click(driver, getfilterDoneBtn(projectName, timeOut), "Filter Done Button", action.BOOLEAN)) {
+									log(LogStatus.INFO, "successfully click on Done buton", YesNo.No);
+
+
+
+
+
+
+
+									if (click(driver, getfilterSave(projectName, timeOut), "save", action.BOOLEAN)) {
+										log(LogStatus.INFO, "successfully click on save buton", YesNo.No);
+										WebElement ele = getCreatedConfirmationMsg(projectName, 15);
+										if (ele != null) {
+											String actualValue = ele.getText().trim();
+											String expectedValue = BasePageErrorMessage.listViewUpdated;
+											if (actualValue.contains(expectedValue)) {
+												log(LogStatus.INFO, expectedValue + " matched FOR Confirmation Msg", YesNo.No);
+												return true;
+											} else {
+												log(LogStatus.ERROR, "Actual : " + actualValue + " Expected : " + expectedValue
+														+ " not matched FOR Confirmation Msg", YesNo.Yes);
+												BaseLib.sa.assertTrue(false, "Actual : " + actualValue + " Expected : " + expectedValue
+														+ " not matched FOR Confirmation Msg");
+											}
+										} else {
+											sa.assertTrue(false, "Created Task Msg Ele not Found");
+											log(LogStatus.SKIP, "Created Task Msg Ele not Found", YesNo.Yes);
+
+										}
+									} else {
+										log(LogStatus.ERROR, "save button is not clickable", YesNo.No);
+									}
+								} else {
+									log(LogStatus.ERROR, "done button is not clickable", YesNo.No);
+								}
+							}else {
+								log(LogStatus.ERROR, "Add Filter button is not clickable", YesNo.No);
+							}	
+						} 
+						else
+						{
+							log(LogStatus.ERROR, "Field Filter is not Selected", YesNo.No);
+						}
+					}
+
+					else
+					{
+						log(LogStatus.ERROR, "Operator Filter is not Selected", YesNo.No);
+					}
+				}
+
+
+
+				else
+				{
+					log(LogStatus.ERROR, "Filter Done button is not clicked", YesNo.No);
+				}
+			}	
+
+
+			else { log(LogStatus.ERROR, "all checkbox is not clickable", YesNo.No); } }
+		else { log(LogStatus.ERROR, "list filter section is not clickable",
+				YesNo.No); }
+		return false;
+	}
+
+
+
+	public boolean openAppFromAppLauchner(String objectName,int timeOut) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+
+		boolean flag= false;
+		if(click(driver, lp.getAppLuncherXpath(timeOut), "App launcher icon", action.BOOLEAN)) {
+
+			AppListeners.appLog.info(" click on app launcher icon");
+			ThreadSleep(1000);
+			if(sendKeys(driver, lp.getSearchAppTextBoxInAppLuncher(timeOut), objectName, "Search box in app launcher", action.BOOLEAN)) {
+				AppListeners.appLog.info("entered value in app launcher search box value:"+objectName);
+				ThreadSleep(3000);
+				if(clickUsingJavaScript(driver, lp.getAppNameLabelTextInAppLuncher(objectName, timeOut), objectName+":app label in app launcher", action.BOOLEAN)) {
+					AppListeners.appLog.info("click on label in app launcher"+objectName);
+
+					ThreadSleep(7000);
+
+					String fullXpath = "//h2[text()='"+objectName+"']";
+
+					WebElement ele = FindElement(driver, fullXpath, " App Name", action.BOOLEAN, timeOut);
+
+					String pageName=ele.getText();
+					if(pageName.equals(objectName)) {
+						AppListeners.appLog.info(objectName +" page successfully loaded");
+						flag =true;
+
+					}else {
+
+						AppListeners.appLog.info(objectName +" page not loaded");
+						return false;
+					}
+
+				}else {
+
+					AppListeners.appLog.info("Not able tp click on label in app launcher"+objectName);
+					return false;
+				}				  
+			}else {
+
+				AppListeners.appLog.info("Not able to entered value in app launcher search box value:"+objectName);
+				return false;
+			}
+
+		}else {
+
+			AppListeners.appLog.info("Not able to click on app launcher icon");
+			return false;			  
+		}
+		return flag;
+	}
+
+	public boolean openAppFromAppLauchner(int timeOut,String objectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+
+		boolean flag= false;
+		if(click(driver, lp.getAppLuncherXpath(timeOut), "App launcher icon", action.BOOLEAN)) {
+
+			AppListeners.appLog.info(" click on app launcher icon");
+			ThreadSleep(1000);
+			if(sendKeys(driver, lp.getSearchAppTextBoxInAppLuncher(timeOut), objectName, "Search box in app launcher", action.BOOLEAN)) {
+				AppListeners.appLog.info("entered value in app launcher search box value:"+objectName);
+				ThreadSleep(3000);
+				if(clickUsingJavaScript(driver, lp.getAppNameLabelTextInAppLuncher(objectName, timeOut), objectName+":app label in app launcher", action.BOOLEAN)) {
+					AppListeners.appLog.info("click on label in app launcher"+objectName);
+
+					ThreadSleep(7000);
+
+					String fullXpath="//span[text()='"+objectName+"']";			
+					WebElement ele = FindElement(driver, fullXpath, " App Name", action.BOOLEAN, timeOut);
+
+					String pageName=ele.getText();
+					if(pageName.equals(objectName)) {
+						AppListeners.appLog.info(objectName +" page successfully loaded");
+						flag =true;
+
+					}else {
+
+						AppListeners.appLog.info(objectName +" page not loaded");
+						return false;
+					}
+
+				}else {
+
+					AppListeners.appLog.info("Not able to click on label in app launcher"+objectName);
+					return false;
+				}				  
+			}else {
+
+				AppListeners.appLog.info("Not able to entered value in app launcher search box value:"+objectName);
+				return false;
+			}
+
+		}else {
+
+			AppListeners.appLog.info("Not able to click on app launcher icon");
+			return false;			  
+		}
+		return flag;
+	}
+
+	
  	
 
 }

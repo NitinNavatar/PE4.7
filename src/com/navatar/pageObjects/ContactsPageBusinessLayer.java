@@ -1003,5 +1003,49 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		return false;
 	}
 	
-	
+
+	public boolean deleteContact(String projectName,String contactFirstName,String contactLastName)
+	{
+		boolean flag=false;
+		if(click(driver, getcontactPageOnProfileEroButton(projectName, 30), "Ero Button On Contact Page", action.SCROLLANDBOOLEAN)){
+			log(LogStatus.INFO,"Clicked on Ero Button for Delete the Contact ",YesNo.No);
+			if(click(driver, getcontactPageDeleteButton(projectName, 30), "Delete Button", action.SCROLLANDBOOLEAN)){
+				log(LogStatus.INFO,"Clicked on Delete Button",YesNo.No);
+
+				if(click(driver, getconfirmationDeleteButton(projectName, 30), "Confirmation Delete Button", action.SCROLLANDBOOLEAN)){
+					log(LogStatus.INFO,"Clicked on Confirmation Delete Button",YesNo.No);
+					
+					if(checkElementVisibility(driver,getconfirmationDeleteMessage(projectName, 50) , "Delete Confirmation Message", 50)){	
+						log(LogStatus.INFO,"Delete confirmation Message is visible So Email Id has been Deleted",YesNo.No);
+						
+						CommonLib.ThreadSleep(8000);
+						return true;
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR,"Confirmation Delete Message is not visible",YesNo.No);
+						return false;
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Could not click on the Confirmation Delete button",YesNo.No);
+					return false;
+				}
+
+			}else
+			{
+				log(LogStatus.ERROR,"Could not click on the Delete button",YesNo.No);
+				return false;
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Could not click on the Ero button",YesNo.No);
+			return false;
+		}
+
+	}
+
 }
