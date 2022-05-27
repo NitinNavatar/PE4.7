@@ -5,6 +5,7 @@ import static com.navatar.generic.SmokeCommonVariables.Smoke_STDTask1Subject;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EnumConstants.GlobalActionItem;
@@ -291,6 +292,14 @@ public class GlobalActionPageBusinessLayer extends GlobalActionPage {
 		ele =isDisplayed(driver, ele, "Visibility", timeOut, labelTextBox);		
 		return ele;
 	}
-	
+	@FindBy(xpath="//button[@title='Add']")
+	private WebElement Addbutton;
+
+	/**
+	 * @return the taskRayFrame
+	 */
+	public WebElement getAddbutton(String projectName,int timeOut) {
+		return isDisplayed(driver, Addbutton, "Visibility", timeOut, "Addbutton");
+	}
 
 }

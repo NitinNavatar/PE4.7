@@ -83,7 +83,7 @@ public class ContactsPage extends BasePageBusinessLayer {
 	@FindBy(xpath="//*[text()='Account Name']/following-sibling::*//input[@title='Search Accounts']")
 	private WebElement accountName;
 	
-	@FindBy(xpath="//*[text()='Legal Name']/following-sibling::div//input[contains(@placeholder,'Search')]")
+	@FindBy(xpath="//*[text()='Legal Name']/following-sibling::div//input")
 	private WebElement legalName;
 	
 	@FindBy(xpath="//*[text()='Legal Name']/following-sibling::*//input[contains(@placeholder,'Search')]")
@@ -105,7 +105,12 @@ public class ContactsPage extends BasePageBusinessLayer {
 		
 	
 	} 
+	@FindBy(xpath = "//label[text()='Legal Name']/following-sibling::div//button")
+	private WebElement LegalCrossIcon;
 	
+	public WebElement getLegalCrossIcon(String projectName,int timeOut) {
+     return isDisplayed(driver, LegalCrossIcon, "Visibility", timeOut, "LegalCrossIcon");
+	}
 	
 	@FindBy(xpath="//table[@class='detailList']//input[@name='con15']")
 	private WebElement emailId_Clasic;

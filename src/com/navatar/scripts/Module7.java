@@ -216,6 +216,7 @@ public class Module7 extends BaseLib {
 						log(LogStatus.INFO,"Clicked on "+ActivityTimeLineItem.New_Task.toString(),  YesNo.Yes);
 						ThreadSleep(1000);
 						
+						
 						ele = lp.getCrossButtonForAlreadySelectedItem(projectName, PageName.Object2Page, PageLabel.Name.toString(), true, primaryContact, action.SCROLLANDBOOLEAN, 10);
 						if (ele!=null) {
 							log(LogStatus.INFO, "successfully verified presence of "+primaryContact+" in name field",YesNo.No);
