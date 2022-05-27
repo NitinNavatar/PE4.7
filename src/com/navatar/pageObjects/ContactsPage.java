@@ -105,7 +105,12 @@ public class ContactsPage extends BasePageBusinessLayer {
 		
 	
 	} 
+	@FindBy(xpath = "//label[text()='Legal Name']/following-sibling::div//button")
+	private WebElement LegalCrossIcon;
 	
+	public WebElement getLegalCrossIcon(String projectName,int timeOut) {
+     return isDisplayed(driver, LegalCrossIcon, "Visibility", timeOut, "LegalCrossIcon");
+	}
 	
 	@FindBy(xpath="//table[@class='detailList']//input[@name='con15']")
 	private WebElement emailId_Clasic;

@@ -1276,7 +1276,7 @@ public static enum PermissionType{
             public String toString() {
                 return "Log a Call";
             }
-        },Add,Log_a_Call_with_Multiple_Associations,New_Task_with_Multiple_Associations, Expand_All,Refresh,Collapse_All, Filter, New_Task;     
+        },Add,Log_a_Call_with_Multiple_Associations,New_Event,New_Task_with_Multiple_Associations, Expand_All,Refresh,Collapse_All, Filter, New_Task;     
     }
 	public static enum DueDate{
         No_due_date{
