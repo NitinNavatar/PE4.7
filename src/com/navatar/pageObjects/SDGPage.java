@@ -83,8 +83,13 @@ public class SDGPage extends BasePageBusinessLayer {
 	}
 	
 	
+	public WebElement sdgLabelValueElement(int timeOut , String SDGCreationLabel) {
+	WebElement ele;
+	String xpath = "//span[text()='"+SDGCreationLabel+"']/parent::div/following-sibling::div//lightning-formatted-text";
+	ele = FindElement(driver, xpath, "SDGLabelValue Element, Label: "+SDGCreationLabel, action.SCROLLANDBOOLEAN, timeOut);
+	return isDisplayed(driver, ele, "Visibility", timeOut, "SDGLabelValue Element, Label: "+SDGCreationLabel);
 	
-	
+	}
 	
 	
 }

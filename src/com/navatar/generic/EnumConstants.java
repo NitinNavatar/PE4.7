@@ -1628,6 +1628,11 @@ public static enum PermissionType{
 			public String toString() {
 				return "My Call List";
 			}
+    	},Fund_First_SDG {
+			@Override
+			public String toString() {
+				return "Fund - First SDG Grid";
+			}
     	}
     }
     

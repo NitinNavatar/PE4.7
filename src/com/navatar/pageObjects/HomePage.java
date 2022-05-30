@@ -1158,8 +1158,8 @@ public class HomePage extends BasePageBusinessLayer {
 	
 	public List<WebElement> sdgGridHeadersLabelNameListForSorting(SDGGridName sdgGridName) {
 		
-		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName+"']/../../../../../following-sibling::div//table/thead/tr/th/div";
-		List<WebElement> ele = FindElements(driver, xpath, "SDG grid header label name "+sdgGridName);
+		String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName.toString()+"']/../../../../../following-sibling::div//table/thead/tr/th/div";
+		List<WebElement> ele = FindElements(driver, xpath, "SDG grid header label name "+sdgGridName.toString());
 		
 		return ele;
 	}
@@ -1754,6 +1754,57 @@ public boolean selectInvestorsContactFromCreateFundRaising(int numberofContact){
 		}
 	}
 	return flag;
+}
+
+
+public WebElement TooltipElement(String Title) {
+	WebElement TooltipElement;
+	
+	return TooltipElement = FindElement(driver,
+			"//a[text()='" + Title + "']/ancestor::article/preceding-sibling::lightning-icon", "Tooltip",
+			action.SCROLLANDBOOLEAN, 20);
+	}
+
+public WebElement gearIcon(String Title) {
+	WebElement gearIcon;
+	
+	return gearIcon = FindElement(driver,
+			"//a[text()='"+Title+"']/ancestor::header//div//button[@title='Open SDG record.']", "Tooltip",
+			action.SCROLLANDBOOLEAN, 20);
+	}
+
+
+public  List <WebElement> columnData(String Title, int index) {
+	List<WebElement> columnData;
+	String xpath = "//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+Title+"']/../../../../../following-sibling::div//table/tbody/tr/td["+index+"]//a";
+	return columnData = FindElements(driver,
+			xpath, "Column Data");
+	}
+
+public List<WebElement> sdgGridColumnsDataList(String Title, int DealsCloumnIndex) {
+	//index start from 2 in Deal SDG grid.
+	
+	String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+Title+"']/../../../../../following-sibling::div//table/tbody/tr/td["+DealsCloumnIndex+"]";
+	List<WebElement> ele = FindElements(driver, xpath, "SDG grid "+Title+" column data ");
+	
+	return ele;
+}
+
+public List<WebElement> sdgGridHeadersLabelNameListForSorting(SDGGridName sdgGridName, String columnName) {
+	
+	String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName.toString()+"']/../../../../../following-sibling::div//table/thead/tr/th//span[text()='"+columnName+"']/parent::div";
+	List<WebElement> ele = FindElements(driver, xpath, "SDG grid header label name "+sdgGridName.toString());
+	
+	return ele;
+}
+
+
+public List<WebElement> sdgGridAllHeadersLabelNameList(SDGGridName sdgGridName) {
+	
+	String xpath="//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='"+sdgGridName.toString()+"']/../../../../../following-sibling::div//table/thead/tr/th";
+	List<WebElement> ele = FindElements(driver, xpath, "SDG grid header label name "+sdgGridName.toString());
+	
+	return ele;
 }
 
 }

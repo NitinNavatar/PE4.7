@@ -391,6 +391,14 @@ public class DataLoaderWizardPageBusinessLayer extends DataLoaderWizardPage {
 	}
 	
 	
+	/**
+	 * @author Ankur Huria
+	 * @param environment
+	 * @param mode
+	 * @param object
+	 * @param objectFeatureName
+	 * @return true if able to click on Object on setup page
+	 */
 	public boolean dataImportWizardLightningMode(ObjectName objectName,ObjectType objectType,String dataImportFilePath,DataImportType dataImportType, String numberOfRecordImportCount, String Object) {
 		boolean flag = false;
 		BaseLib.PublicFlag = false;
@@ -672,6 +680,13 @@ public class DataLoaderWizardPageBusinessLayer extends DataLoaderWizardPage {
 	}
 	
 	
+	/**
+	 * @author Ankur Huria
+	 * @param environment
+	 * @param mode
+	 * @param object
+	 * @param objectFeatureName
+	 */
 	@SuppressWarnings("unlikely-arg-type")
 	public void addFieldsToLayoutPageInAdminCase(String fieldLabels, String pageLayoutName,String ObjectName)
 	{
@@ -722,7 +737,13 @@ public class DataLoaderWizardPageBusinessLayer extends DataLoaderWizardPage {
 	
 	
 	
-	
+	/**
+	 * @author Ankur Huria
+	 * @param environment
+	 * @param mode
+	 * @param object
+	 * @param objectFeatureName
+	 */
 	public void addFieldToLayoutPage(String projectName, List<String> pageLayoutsName, HashMap<String, String> sourceANDDestination,object obj) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);

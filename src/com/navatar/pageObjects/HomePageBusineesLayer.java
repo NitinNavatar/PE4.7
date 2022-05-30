@@ -16,11 +16,14 @@ import com.navatar.generic.EnumConstants.IndiviualInvestorFieldLabel;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.PopUpName;
+import com.navatar.generic.EnumConstants.SDGGridName;
 import com.navatar.generic.EnumConstants.SearchBasedOnExistingFundsOptions;
+import com.navatar.generic.EnumConstants.SortOrder;
 import com.navatar.generic.EnumConstants.TopOrBottom;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.generic.BaseLib;
+import com.navatar.generic.CommonLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.EnumConstants.NavatarQuickLink;
 import com.navatar.generic.EnumConstants.YesNo;
@@ -35,6 +38,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.EmailTemplate1_FolderName;
@@ -1460,5 +1464,540 @@ public boolean verifyAddedTabsInHomepage(String tabs,String mode){
 			return false;
 		}
 	}
+	
+	
+	
+	
+	/**
+	 * @author Ankur Huria
+	 * @param Title
+	 * @param fieldsInComponent
+	 */
+
+	public boolean verifyColumnsOfSDG(String Title, List<String> fieldsInComponent) {
+		boolean flag = false;
+		WebElement alreadyAddedComponentToHomePage = FindElement(driver, "//a[text()='" + Title + "']",
+				"Component Title ", action.SCROLLANDBOOLEAN, 10);
+		if (alreadyAddedComponentToHomePage != null) {
+
+			log(LogStatus.INFO, "Component Title Matched to Home Page " + Title, YesNo.Yes);
+
+			if(!verifySDGExpandByDefault(Title)) {
+				log(LogStatus.INFO, "Not Expanded By Default SDG: " + Title, YesNo.No);
+				log(LogStatus.INFO, "Now Expanding  SDG: " + Title, YesNo.No);
+				
+				WebElement TooltipElement = FindElement(driver,
+						"//a[text()='" + Title + "']/ancestor::article/preceding-sibling::lightning-icon", "Tooltip",
+						action.SCROLLANDBOOLEAN, 20);
+				if (click(driver, TooltipElement, "Collapse/Expand Element", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on Collapse/Expand");
+				flag=true;
+				}
+			 else {
+					log(LogStatus.ERROR, "Not Able to click on Expand Button of SDG :" + Title, YesNo.No);
+
+				}
+			
+				
+			}	
+			
+		 else {
+			log(LogStatus.INFO, "Expanded By Default SDG :" + Title, YesNo.No);
+			flag=true;
+
+		}
+				if(flag) {
+			List<WebElement> columns = FindElements(driver,
+					"//a[text()='" + Title + "']/ancestor::article//thead//th[contains(@class,'navpeI')]//span",
+					"Records");
+			List<String> columnsText = new ArrayList<String>();
+			for (WebElement column : columns) {
+				columnsText.add(column.getText());
+			}
+			System.out.println(columnsText);
+			if (CommonLib.compareList(columnsText, fieldsInComponent)) {
+				log(LogStatus.INFO, "All Fields are Matched ", YesNo.No);
+				flag = true;
+
+			} else {
+				log(LogStatus.ERROR, "All Fields are not Matched", YesNo.No);
+
+			}
+		
+
+		} else {
+			log(LogStatus.ERROR, "Component Title Not Matched to Home Page :" + Title, YesNo.No);
+
+		}
+		}
+		return flag;
+
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param Title
+	 */
+
+
+	public boolean verifySDGExpandByDefault(String Title) {
+		boolean flag = false;
+		WebElement expandElement = FindElement(driver,
+				"//a[text()='" + Title + "']/ancestor::article//div[@class='slds-hide']/following-sibling::div",
+				"Expand Element of SDG: " + Title, action.SCROLLANDBOOLEAN, 10);
+		if (expandElement != null) {
+
+			log(LogStatus.INFO, "Expand Element Found of SDG: " + Title, YesNo.Yes);
+
+			String display = CommonLib.getAttribute(driver, expandElement, "Expand Element of SDG: " + Title, "style");
+
+			if (display.contains("block")) {
+				log(LogStatus.INFO, "-------------SDG of Title:  " + Title + " is Expanded------------", YesNo.No);
+				flag = true;
+
+			} else {
+				log(LogStatus.ERROR, "-------------SDG of Title:  " + Title + " is not Expanded------------", YesNo.No);
+
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Expand Element Not Found of SDG:  " + Title, YesNo.No);
+
+		}
+		return flag;
+
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param Title
+	 * @param rowNumber
+	 */
+	public boolean verifySDGTooltipForARecord(String Title, int rowNumber) {
+		boolean flag = false;
+		List<WebElement> TooltipElements = FindElements(driver, "//a[text()='" + Title
+				+ "']/ancestor::article//tbody/tr[" + rowNumber + "]/td//lightning-formatted-url", "Tooltip");
+		List<WebElement> TooltipAnchorElements = FindElements(driver, "//a[text()='" + Title
+				+ "']/ancestor::article//tbody/tr[" + rowNumber + "]/td//lightning-formatted-url//a", "Tooltip Anchor");
+
+		if (TooltipElements.size() != 0) {
+
+			log(LogStatus.INFO, "1st Tooltip Element Found of SDG: " + Title, YesNo.Yes);
+			int i = 0;
+			for (WebElement ele : TooltipElements) {
+				if (CommonLib.getAttribute(driver, ele, "", "title").equals(TooltipAnchorElements.get(i).getText())) {
+					appLog.info("Toototip Verified : " + getAttribute(driver, ele, "", "title"));
+					log(LogStatus.INFO, "Toototip Verified : " + getAttribute(driver, ele, "", "title"), YesNo.No);
+					flag = true;
+				} else {
+					appLog.error("Toototip Not Verified : " + getAttribute(driver, ele, "", "title"));
+					log(LogStatus.ERROR, "Toototip Not Verified : " + getAttribute(driver, ele, "", "title"), YesNo.No);
+				}
+				i++;
+			}
+
+		} else {
+			appLog.error("1st type of Tooltip Elements Not Found of SDG: " + Title);
+			log(LogStatus.ERROR, "1st type of Tooltip Elements Not Found of SDG: " + Title, YesNo.No);
+
+		}
+
+		List<WebElement> TooltipElements2 = FindElements(driver, "//a[text()='" + Title
+				+ "']/ancestor::article//tbody/tr[" + rowNumber + "]/td//lightning-formatted-text", "Tooltip");
+
+		if (TooltipElements2.size() != 0) {
+			flag = false;
+			log(LogStatus.INFO, "1st Tooltip Element Found of SDG: " + Title, YesNo.Yes);
+			int i = 0;
+			for (WebElement ele : TooltipElements2) {
+				if (CommonLib.getAttribute(driver, ele, "", "title").equals(ele.getText())) {
+					appLog.info("Toototip Verified : " + getAttribute(driver, ele, "", "title"));
+					log(LogStatus.INFO, "Toototip Verified : " + getAttribute(driver, ele, "", "title"), YesNo.No);
+					flag = true;
+				} else {
+					log(LogStatus.ERROR, "Toototip Not Verified : " + getAttribute(driver, ele, "", "title"), YesNo.No);
+					appLog.error("Toototip Not Verified : " + getAttribute(driver, ele, "", "title"));
+				}
+				i++;
+			}
+
+		} else {
+			appLog.error("2nd type of Tooltip Elements Not Found of SDG: " + Title);
+			log(LogStatus.ERROR, "2nd type of Tooltip Elements Not Found of SDG: " + Title, YesNo.No);
+
+		}
+
+		List<WebElement> TooltipElements3 = FindElements(driver,
+				"//a[text()='" + Title + "']/ancestor::article//tbody/tr[" + rowNumber + "]/td//a[text()='0']",
+				"Tooltip");
+
+		if (TooltipElements3.size() != 0) {
+			flag = false;
+			log(LogStatus.INFO, "1st Tooltip Element Found of SDG: " + Title, YesNo.Yes);
+
+			for (WebElement ele : TooltipElements3) {
+				if (CommonLib.getAttribute(driver, ele, "", "title").equals(ele.getText())) {
+					appLog.info("Toototip Verified : " + getAttribute(driver, ele, "", "title"));
+					log(LogStatus.INFO, "Toototip Verified : " + getAttribute(driver, ele, "", "title"), YesNo.No);
+					flag = true;
+				} else {
+					log(LogStatus.ERROR, "Toototip Not Verified : " + getAttribute(driver, ele, "", "title"), YesNo.No);
+					appLog.error("Toototip Not Verified : " + getAttribute(driver, ele, "", "title"));
+				}
+
+			}
+
+		} else {
+			appLog.error("3rd type of Tooltip Elements Not Found of SDG: " + Title);
+			log(LogStatus.ERROR, "3rd type of Tooltip Elements Not Found of SDG: " + Title, YesNo.No);
+
+		}
+		return flag;
+
+	}
+
+	
+	/**
+	 * @author Ankur Huria
+	 * @param Title
+	 */
+	public boolean verifySDGTooltipForExpandAndCollapse(String Title) {
+		boolean flag = false;
+		
+
+		if (TooltipElement(Title) != null) {
+
+			log(LogStatus.INFO, "Collapse/Expand Tooltip Element Found of SDG: " + Title, YesNo.Yes);
+			if (CommonLib.getAttribute(driver, TooltipElement(Title), "", "title").equalsIgnoreCase("Collapse")) {
+				appLog.info("Toototip Verified : " + getAttribute(driver, TooltipElement(Title), "", "title"));
+				log(LogStatus.INFO, "Toototip Verified : " + getAttribute(driver, TooltipElement(Title), "", "title"), YesNo.No);
+				if (click(driver, TooltipElement(Title), "Collapse/Expand Element", action.SCROLLANDBOOLEAN)) 
+					appLog.info("clicked on Collapse/Expand");
+				WebElement expandElement = FindElement(driver,
+						"//a[text()='" + Title + "']/ancestor::article//div[@class='slds-hide']/following-sibling::div",
+						"Expand Element of SDG: " + Title, action.SCROLLANDBOOLEAN, 10);
+				if(expandElement!=null) {
+				String display = CommonLib.getAttribute(driver, expandElement, "Expand Element of SDG: " + Title, "style");
+
+				if (display.contains("none")) {
+				
+					appLog.info("----SDG gets Collapsed----");
+				log(LogStatus.INFO, "----SDG gets Collapsed-----", YesNo.No);
+					flag = true;
+				}
+				else 
+				{
+					appLog.error("----SDG not gets Collapsed----");
+					log(LogStatus.ERROR, "----SDG not gets Collapsed-----", YesNo.No);
+					
+				}
+			}} else if (CommonLib.getAttribute(driver, TooltipElement(Title), "", "title").equalsIgnoreCase("Expand")) {
+				flag = false;
+				if (click(driver, TooltipElement(Title), "Collapse/Expand Element", action.SCROLLANDBOOLEAN)) 
+					appLog.info("clicked on Collapse/Expand");
+				WebElement expandElement = FindElement(driver,
+						"//a[text()='" + Title + "']/ancestor::article//div[@class='slds-hide']/following-sibling::div",
+						"Expand Element of SDG: " + Title, action.SCROLLANDBOOLEAN, 10);
+				if(expandElement!=null) {
+				String display = CommonLib.getAttribute(driver, expandElement, "Expand Element of SDG: " + Title, "style");
+
+				if (display.contains("block")) {
+				
+					appLog.info("----SDG gets Expanded----");
+				log(LogStatus.INFO, "----SDG gets Expanded-----", YesNo.No);
+					flag = true;
+				}
+				else 
+				{
+					appLog.error("----SDG not gets Expanded----");
+					log(LogStatus.ERROR, "----SDG not gets Expanded-----", YesNo.No);
+					
+				}
+				}} else {
+				flag = false;
+				if (click(driver, TooltipElement(Title), "Collapse/Expand Element", action.SCROLLANDBOOLEAN)) 
+					appLog.info("clicked on Collapse/Expand");
+				WebElement expandElement = FindElement(driver,
+						"//a[text()='" + Title + "']/ancestor::article//div[@class='slds-hide']/following-sibling::div",
+						"Expand Element of SDG: " + Title, action.SCROLLANDBOOLEAN, 10);
+				if(expandElement!=null) {
+				String display = CommonLib.getAttribute(driver, expandElement, "Expand Element of SDG: " + Title, "style");
+
+				if (display.contains("none")) {
+				
+					appLog.info("----SDG gets Collapsed----");
+				log(LogStatus.INFO, "----SDG gets Collapsed-----", YesNo.No);
+					flag = true;
+				}
+				else 
+				{
+					appLog.error("----SDG not gets Collapsed----");
+					log(LogStatus.ERROR, "----SDG not gets Collapsed-----", YesNo.No);
+					
+				}
+				
+				}}
+
+		}
+
+		else {
+			appLog.error("Collapse/Expand Tooltip Element Not Found of SDG: " + Title);
+			log(LogStatus.ERROR, "Collapse/Expand Tooltip Element Not Found of SDG: " + Title, YesNo.No);
+
+		}
+		return flag;
+	}
+	
+	/**
+	 * @author Ankur Huria
+	 * @param Title
+	 */
+	public boolean verifyCollapseTooltipAFterGoingToInstitutionPageAndComingBack(String Title) 
+	{
+boolean flag = false;
+		
+
+		
+		if (TooltipElement(Title) != null) {
+
+			log(LogStatus.INFO, "Collapse/Expand Tooltip Element Found of SDG: " + Title, YesNo.Yes);
+			if (CommonLib.getAttribute(driver, TooltipElement(Title), "", "title").equalsIgnoreCase("Collapse")) {
+				appLog.info("Toototip Verified : " + getAttribute(driver, TooltipElement(Title), "", "title"));
+				log(LogStatus.INFO, "Toototip Verified : " + getAttribute(driver, TooltipElement(Title), "", "title"), YesNo.No);
+				flag=true;
+	}
+			else 
+			{
+				log(LogStatus.ERROR, "Toototip is Not Collapsed ", YesNo.No);
+				appLog.error("Toototip is Not Collapsed : ");
+			}
+			}
+		
+		else {
+			appLog.error("Collapse/Expand Tooltip Element Not Found of SDG: " + Title);
+			log(LogStatus.ERROR, "Collapse/Expand Tooltip Element Not Found of SDG: " + Title, YesNo.No);
+
+		}
+		return flag;
+		
+		
+		}
+	
+	
+	/**
+	 * @author Ankur Huria
+	 * @param Title
+	 */
+	public boolean verifyGearIconPresentAndVerifyTooltip(String Title) 
+	{
+boolean flag = false;
+		
+
+		
+		if (gearIcon(Title) != null) {
+
+			log(LogStatus.INFO, "Gear Icon Element Found of SDG: " + Title, YesNo.Yes);
+			if (CommonLib.getAttribute(driver, gearIcon(Title), "", "title").equalsIgnoreCase("Open SDG record.")) {
+				appLog.info("Toototip Verified : " + getAttribute(driver, gearIcon(Title), "", "title"));
+				log(LogStatus.INFO, "Toototip Verified : " + getAttribute(driver, gearIcon(Title), "", "title"), YesNo.No);
+				flag=true;
+	}
+			else 
+			{
+				log(LogStatus.ERROR, "Toototip is Not Verified "+getAttribute(driver, gearIcon(Title), "", "title"), YesNo.No);
+				appLog.error("Toototip is Not Verified : "+ getAttribute(driver, gearIcon(Title), "", "title"));
+			}
+			}
+		
+		else {
+			appLog.error("Gear Icon Element Not Found of SDG: " + Title);
+			log(LogStatus.ERROR, "Gear Icon Element Not Found of SDG: " + Title, YesNo.No);
+
+		}
+		return flag;
+		
+		
+		}
+	
+	/**
+	 * @author Ankur Huria
+	 * @param SDGGridName
+	 */
+	
+	public void verifyColumnAscendingDescendingOrder(SDGGridName sdgGridName, List<String> columnNames) 
+	{
+		
+		List<WebElement> headerList = sdgGridAllHeadersLabelNameList(sdgGridName);
+		List<String> columnDataText = headerList.stream().map(s -> s.getText())
+				.collect(Collectors.toList()).stream().map(t -> t.trim()).collect(Collectors.toList());
+		if(!headerList.isEmpty()) {
+			int i=0;
+			for(String columnName : columnNames) {
+				int columnIndex = columnDataText.indexOf(columnName);
+				if(i==0) {
+					if(CommonLib.checkSorting(driver, SortOrder.Decending, sdgGridColumnsDataList(sdgGridName.toString(),columnIndex+1))){
+						log(LogStatus.PASS, SortOrder.Decending+ "Check Sorting on "+columnName+" Columns ", YesNo.No);
+					}else {
+						log(LogStatus.FAIL, "Not Checked "+SortOrder.Decending+"Sorting on "+columnName+" Columns ", YesNo.No);
+						sa.assertTrue(false, "Not Checked "+SortOrder.Decending+"Sorting on "+columnName+" Columns ");
+					}
+				}else {
+					if(clickUsingJavaScript(driver, headerList.get(columnIndex), sdgGridName.toString()+" SDG Grid header column "+columnName, action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.PASS, "Clicked on Header"+columnName+" Clomun "+(columnIndex+1)+" for "+SortOrder.Assecending, YesNo.No);
+						ThreadSleep(35000);
+						if(CommonLib.checkSorting(driver, SortOrder.Assecending, sdgGridColumnsDataList(sdgGridName.toString(),columnIndex+1))){
+							log(LogStatus.PASS, SortOrder.Assecending+" Check Sorting on "+sdgGridName.toString()+" Columns "+columnName, YesNo.No);
+						}else {
+							log(LogStatus.FAIL, SortOrder.Assecending+" Not Checked Sorting on "+sdgGridName.toString()+" Columns "+columnName, YesNo.No);
+							sa.assertTrue(false, SortOrder.Assecending+" Not Checked Sorting on "+sdgGridName.toString()+" Columns "+columnName);
+						}
+					}else {
+						log(LogStatus.PASS, "Not able to click on "+sdgGridName.toString()+" SDG Grid header "+columnName+" so cannot check Sorting "+SortOrder.Assecending, YesNo.Yes);
+						sa.assertTrue(false, "Not able to click on "+sdgGridName.toString()+" SDG Grid header "+columnName+" so cannot check Sorting "+SortOrder.Assecending);
+					}
+					headerList=sdgGridAllHeadersLabelNameList(sdgGridName);
+				}
+				if(i==0) {
+					if(clickUsingJavaScript(driver, headerList.get(columnIndex), sdgGridName.toString()+" SDG Grid header column "+columnName, action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(35000);
+						log(LogStatus.PASS, "Clicked on Header"+columnName+" Clomun "+(i+1)+SortOrder.Assecending, YesNo.No);
+						if(CommonLib.checkSorting(driver, SortOrder.Assecending, sdgGridColumnsDataList(sdgGridName.toString(),columnIndex+1))){
+							log(LogStatus.PASS, SortOrder.Assecending+" Check Sorting on "+columnName+" Column on "+sdgGridName.toString()+" SDG Grid", YesNo.No);
+						}else {
+							log(LogStatus.FAIL, "Not Checked "+SortOrder.Assecending+" Sorting on "+sdgGridName.toString()+" Columns "+columnName, YesNo.No);
+							sa.assertTrue(false, "Not Checked "+SortOrder.Assecending+" Sorting on "+sdgGridName.toString()+" Columns "+columnName);
+						}
+					}else { 
+						log(LogStatus.PASS, "Not able to click on "+sdgGridName.toString()+" SDG Grid header "+columnName+" so cannot check Sorting "+SortOrder.Decending, YesNo.Yes);
+						sa.assertTrue(false, "Not able to click on "+sdgGridName.toString()+" SDG Grid header "+columnName+" so cannot check Sorting "+SortOrder.Decending);
+					}
+				}else {
+					if(clickUsingJavaScript(driver, headerList.get(columnIndex), sdgGridName.toString()+" SDG Grid header column", action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(35000);
+						log(LogStatus.PASS, "Clicked on Header "+columnName+" Clomun "+(columnIndex+1)+SortOrder.Decending, YesNo.No);
+						if(CommonLib.checkSorting(driver, SortOrder.Decending, sdgGridColumnsDataList(sdgGridName.toString(),columnIndex+1))){
+							log(LogStatus.PASS, SortOrder.Decending+" Check Sorting on "+columnName+" Columns on SDG Grid "+sdgGridName.toString(), YesNo.No);
+						}else {
+							log(LogStatus.FAIL, "Not Checked "+SortOrder.Decending+" Sorting on "+sdgGridName.toString()+" Columns "+columnName, YesNo.No);
+							sa.assertTrue(false, "Not Checked "+SortOrder.Decending+" Sorting on "+sdgGridName.toString()+" Columns "+columnName);
+						}
+					}else { 
+						log(LogStatus.PASS, "Not able to click on "+sdgGridName.toString()+" SDG Grid header "+columnName+" so cannot check Sorting "+SortOrder.Assecending, YesNo.Yes);
+						sa.assertTrue(false, "Not able to click on "+sdgGridName.toString()+" SDG Grid header "+columnName+" so cannot check Sorting "+SortOrder.Assecending);
+					}
+				}
+				headerList=sdgGridAllHeadersLabelNameList(sdgGridName);
+				i++;
+			}
+		}else {
+			log(LogStatus.PASS, sdgGridName.toString()+" SDG Grid header cloumns list is not visible so cannot check Sorting ", YesNo.Yes);
+			sa.assertTrue(false, sdgGridName.toString()+" SDG Grid header cloumns list is not visible so cannot check Sorting ");
+		}
+	}
+	
+	/**
+	 * @author Ankur Huria
+	 * @param Title
+	 */
+	public boolean sdgGridExpandedByDefaultIfNotThenExpand(String Title) 
+	{
+		boolean flag = false;
+		WebElement alreadyAddedComponentToHomePage = FindElement(driver, "//a[text()='" + Title + "']",
+				"Component Title ", action.SCROLLANDBOOLEAN, 10);
+		if (alreadyAddedComponentToHomePage != null) {
+
+			log(LogStatus.INFO, "Component Title Matched to Home Page " + Title, YesNo.Yes);
+
+			if(!verifySDGExpandByDefault(Title)) {
+				log(LogStatus.INFO, "Not Expanded By Default SDG: " + Title, YesNo.No);
+				log(LogStatus.INFO, "Now Expanding  SDG: " + Title, YesNo.No);
+				
+				WebElement TooltipElement = FindElement(driver,
+						"//a[text()='" + Title + "']/ancestor::article/preceding-sibling::lightning-icon", "Tooltip",
+						action.SCROLLANDBOOLEAN, 20);
+				if (click(driver, TooltipElement, "Collapse/Expand Element", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on Collapse/Expand");
+				flag=true;
+				}
+			 else {
+					log(LogStatus.ERROR, "Not Able to click on Expand Button of SDG :" + Title, YesNo.No);
+
+				}
+			
+				
+			}	
+			
+		 else {
+			log(LogStatus.INFO, "Expanded By Default SDG :" + Title, YesNo.No);
+			flag=true;
+
+		}
+	}
+		else {
+			log(LogStatus.ERROR, "Component Title Not Matched to Home Page :" + Title, YesNo.No);
+
+		}
+		
+		
+		
+		
+		return flag;
+	}
+	
+	
+	/**
+	 * @author Ankur Huria
+	 * @param Title
+	 * @param PageSize
+	 */
+	
+	public boolean pageSizeSelect(String Title, String pageSize)
+	{
+		boolean flag = false;
+		WebElement pageSizeSelect = FindElement(driver,
+				"//a[text()='" + Title
+						+ "']/ancestor::article//span[text()='Page Size']/../parent::div//select",
+				"Page Size Select ", action.SCROLLANDBOOLEAN, 10);
+		if (CommonLib.selectVisibleTextFromDropDown(driver, pageSizeSelect, "Page Size Select", pageSize)) {
+			log(LogStatus.INFO, "Selected the Page Size", YesNo.No);
+			CommonLib.ThreadSleep(30000);
+			flag=true;
+		}
+		 else {
+				log(LogStatus.ERROR, "Not Able To Select Page Size ", YesNo.No);
+				return flag;
+
+			}
+		
+		return flag;
+	}
+	
+	
+	/**
+	 * @author Ankur Huria
+	 * @param Title
+	 * @param NoOfRecordsLessThanEqualHundred
+	 */
+	public boolean numberOfRecordsMatch(String Title, int NoOfRecordsLessThanEqualHundred) 
+	{
+		boolean flag = false;
+		List<WebElement> records = FindElements(driver,
+				"//a[text()='" + Title + "']/ancestor::article//tbody/tr", "Records");
+		System.out.println("No. of Records Present: " + records.size());
+		if (records.size() == NoOfRecordsLessThanEqualHundred) {
+			log(LogStatus.INFO, "No. of Records Matched: " + NoOfRecordsLessThanEqualHundred, YesNo.No);
+			flag=true;
+
+		} else {
+			log(LogStatus.ERROR, "No. of Records not Matched: " + NoOfRecordsLessThanEqualHundred,
+					YesNo.No);
+
+			sa.assertTrue(false, "-----------No. of Records not Matched-----> "
+					+ "Actual: "+records.size() + "but Expected: "+NoOfRecordsLessThanEqualHundred+"--------------");
+
+		}
+		return flag;
+	}
+
 
 }
