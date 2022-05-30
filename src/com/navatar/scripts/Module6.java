@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
@@ -1042,7 +1043,9 @@ public class Module6 extends BaseLib{
 						log(LogStatus.ERROR, "Not able to search/click on "+object.Profiles, YesNo.Yes);
 						sa.assertTrue(false, "Not able to search/click on "+object.Profiles);
 					}
+					ThreadSleep(2000);
 					driver.close();
+					ThreadSleep(2000);
 					driver.switchTo().window(parentID);
 				}else {
 					log(LogStatus.FAIL, "could not find new window to switch, so cannot to set"+permission+" for "+onObject, YesNo.Yes);
@@ -1198,6 +1201,7 @@ public class Module6 extends BaseLib{
 						log(LogStatus.ERROR, "Not able to search/click on "+object.Profiles, YesNo.Yes);
 						sa.assertTrue(false, "Not able to search/click on "+object.Profiles);
 					}
+					ThreadSleep(5000);
 					driver.close();
 					driver.switchTo().window(parentID);
 				}else {
@@ -1378,14 +1382,16 @@ public class Module6 extends BaseLib{
 					if(setup.clickOnObjectFeature(environment, mode, object.Firm, ObjectFeatureName.recordTypes)) {
 						if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10), rt+Keys.ENTER, "status", action.BOOLEAN)) {
 							if (setup.clickOnAlreadyCreatedLayout(rt)) {
+								ThreadSleep(2000);
 								switchToFrame(driver, 10, setup.getFrame(PageName.RecordTypePortfolioCompany, 10));
 								if (click(driver, setup.getEditButton(environment,Mode.Classic.toString(),10), "edit", action.BOOLEAN)) {
 									switchToDefaultContent(driver);
+									ThreadSleep(5000);
 									switchToFrame(driver, 10, setup.getFrame(PageName.RecordTypePortfolioCompany, 10));
 									ThreadSleep(2000);
 									setup.getRecordTypeLabel(projectName, "Record Type Label", 10).sendKeys(InstRecordType.Portfolio.toString());
 									ThreadSleep(2000);switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
-										if (click(driver, setup.getSaveButtonInCustomFields(10), "save", action.SCROLLANDBOOLEAN)) {
+										if (clickUsingJavaScript(driver, setup.getSaveButtonInCustomFields(10), "save", action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "save button is clicked",YesNo.No);
 
 										}else {
@@ -1413,6 +1419,7 @@ public class Module6 extends BaseLib{
 					sa.assertTrue(false, "institution object is not clickable");
 				}
 				driver.close();
+				ThreadSleep(2000);
 				driver.switchTo().window(parentID);
 			}else {
 				log(LogStatus.FAIL, "could not find new window to switch",YesNo.Yes);
@@ -1560,19 +1567,30 @@ public class Module6 extends BaseLib{
 									ThreadSleep(2000);
 									switchToFrame(driver, 10, setup.getFrame(PageName.RecordTypePortfolioCompany, 10));
 									ThreadSleep(5000);
-									setup.getRecordTypeLabel(projectName, "Record Type Label", 10).sendKeys(rt);
-		
-									ThreadSleep(2000);switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
-									
-									if (sendKeys(driver, setup.getRecordTypeLabel(projectName, "Record Type Label", 10), rt, "label", action.BOOLEAN)){
-										if (sendKeysWithoutClearingTextBox(driver, setup.getRecordTypeLabel(projectName, "Record Type Name", 10), updateLabel, "label", action.BOOLEAN)){
-											switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
-										}
+								
+									WebElement ele=setup.getRecordTypeLabel(projectName, "Record Type Label", 10);
+									JavascriptExecutor js=(JavascriptExecutor) driver;
+									js.executeScript("arguments[0].setAttribute('value','')", ele);
+									ele.sendKeys(rt);
+									ele.sendKeys(Keys.TAB);
+									ThreadSleep(2000);
+									if (isAlertPresent(driver)) {
+										ThreadSleep(3000);
+										switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
+									}
+
+									ele=setup.getRecordTypeLabel(projectName, "Record Type Name", 10);
+									js.executeScript("arguments[0].setAttribute('value','')", ele);
+									ele.sendKeys(updateLabel);
+									ele.sendKeys(Keys.TAB);
+									ThreadSleep(2000);
+									if (isAlertPresent(driver)) {
+										ThreadSleep(3000);
+										switchToAlertAndAcceptOrDecline(driver, 30, action.ACCEPT);
 									}
 									ThreadSleep(2000);
-										
-									
-									if (click(driver, setup.getSaveButtonInCustomFields(10), "save", action.SCROLLANDBOOLEAN)) {
+
+									if (clickUsingJavaScript(driver, setup.getSaveButtonInCustomFields(10), "save", action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "save button is clicked",YesNo.No);
 
 										}else {
@@ -1728,7 +1746,7 @@ public class Module6 extends BaseLib{
 										sa.assertTrue(false, "activeCheckbox not clickable");
 									}
 									
-									if (click(driver, setup.getSaveButtonInCustomFields(10), "save", action.SCROLLANDBOOLEAN)) {
+									if (clickUsingJavaScript(driver, setup.getSaveButtonInCustomFields(10), "save", action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "save button is clicked",YesNo.No);
 
 										}else {
@@ -1836,60 +1854,60 @@ public class Module6 extends BaseLib{
 		
 		if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M6Deal8, 10)) {
-				if (click(driver, dp.getconvertToPortfolio(10),"convert to portfolio button", action.BOOLEAN)) {
-					if (click(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
+				if (click(driver, dp.getconvertToPortfolio(10), "convert to portfolio button", action.BOOLEAN)) {
+					if (click(driver, dp.getnextButton(10), "next button", action.BOOLEAN)) {
 						ThreadSleep(2000);
-						if (dp.getconvertToPortfolioMessageUnhandledFlow(10)!=null) {
-							if (dp.getconvertToPortfolioMessageUnhandledFlow(10).getText().contains(dp.unhandledError)) {
-								log(LogStatus.INFO,"successfully verified unhandled flow message",YesNo.Yes);
-								
-							}else {
-								sa.assertTrue(false,"could not verify unhandled flow message");
-								log(LogStatus.SKIP,"could not verify unhandled flow message",YesNo.Yes);
+						if (dp.getconvertToPortfolioMessageUnhandledFlow(10) != null) {
+							if (dp.getconvertToPortfolioMessageUnhandledFlow(10).getText()
+									.contains(dp.unhandledError)) {
+								log(LogStatus.INFO, "successfully verified unhandled flow message", YesNo.Yes);
+
+							} else {
+								sa.assertTrue(false, "could not verify unhandled flow message");
+								log(LogStatus.SKIP, "could not verify unhandled flow message", YesNo.Yes);
 							}
-						}else {
-							sa.assertTrue(false,"not visible already portfolio message for unhandled flow");
-							log(LogStatus.SKIP,"not visible already portfolio message for unhandled flow",YesNo.Yes);
+						} else {
+							sa.assertTrue(false, "not visible already portfolio message for unhandled flow");
+							log(LogStatus.SKIP, "not visible already portfolio message for unhandled flow", YesNo.Yes);
 						}
 						if (click(driver, dp.getconvertToPortfolioCrossButton(10), "finish", action.BOOLEAN)) {
 							log(LogStatus.INFO, "clicked on cross button", YesNo.No);
-						}else {
-							sa.assertTrue(false,"could not click on cross button");
-							log(LogStatus.SKIP,"could not click on cross button",YesNo.Yes);
+						} else {
+							sa.assertTrue(false, "could not click on cross button");
+							log(LogStatus.SKIP, "could not click on cross button", YesNo.Yes);
 						}
-						
-					
 
-				for (int i =0;i<labelName.length;i++) {
-					if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i])) {
-						log(LogStatus.SKIP,"successfully verified "+labelName[i],YesNo.No);
+						for (int i = 0; i < labelName.length; i++) {
+							if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i], labelValues[i])) {
+								log(LogStatus.SKIP, "successfully verified " + labelName[i], YesNo.No);
 
-					}else {
-						sa.assertTrue(false,"Not Able to verify "+labelName[i]);
-						log(LogStatus.SKIP,"Not Able to verify "+labelName[i],YesNo.Yes);
+							} else {
+								sa.assertTrue(false, "Not Able to verify " + labelName[i]);
+								log(LogStatus.SKIP, "Not Able to verify " + labelName[i], YesNo.Yes);
+							}
+
+						}
+					} else {
+						sa.assertTrue(false, "next button is not clickable");
+						log(LogStatus.SKIP, "next button is not clickable", YesNo.Yes);
 					}
-
+				} else {
+					sa.assertTrue(false, "convert to portfolio button is not clickable");
+					log(LogStatus.SKIP, "convert to portfolio button is not clickable", YesNo.Yes);
 				}
-					}else {
-						sa.assertTrue(false,"next button is not clickable");
-						log(LogStatus.SKIP,"next button is not clickable",YesNo.Yes);
-					}
-				}else {
-					sa.assertTrue(false,"convert to portfolio button is not clickable");
-					log(LogStatus.SKIP,"convert to portfolio button is not clickable",YesNo.Yes);
-				}
-			}else {
-				sa.assertTrue(false,M6Deal8+" deal is not clickable");
-				log(LogStatus.SKIP,M6Deal8+" deal is not clickable",YesNo.Yes);
+			} else {
+				sa.assertTrue(false, M6Deal8 + " deal is not clickable");
+				log(LogStatus.SKIP, M6Deal8 + " deal is not clickable", YesNo.Yes);
 			}
-		}else {
-			sa.assertTrue(false,"deal tab is not clickable");
-			log(LogStatus.SKIP,"deal tab is not clickable",YesNo.Yes);
+		} else {
+			sa.assertTrue(false, "deal tab is not clickable");
+			log(LogStatus.SKIP, "deal tab is not clickable", YesNo.Yes);
 		}
-		
+
 		lp.CRMlogout();
 		sa.assertAll();
 	}
+
 	@Parameters({ "projectName"})
 	@Test
 	public void M6tc014_1_CheckConvertToPortfolioFuncAfterInvactiveClosedDealStage(String projectName) {
@@ -1909,120 +1927,129 @@ public class Module6 extends BaseLib{
 			String parentID = switchOnWindow(driver);
 			if (parentID!=null) {
 
-				if(setup.searchStandardOrCustomObject(environment, mode, object.Firm)) {
-					if(setup.clickOnObjectFeature(environment, mode, object.Firm, ObjectFeatureName.recordTypes)) {
-						if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10), rt+Keys.ENTER, "status", action.BOOLEAN)) {
+				if (setup.searchStandardOrCustomObject(environment, mode, object.Firm)) {
+					if (setup.clickOnObjectFeature(environment, mode, object.Firm, ObjectFeatureName.recordTypes)) {
+						if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10), rt + Keys.ENTER,
+								"status", action.BOOLEAN)) {
 							if (setup.clickOnAlreadyCreatedLayout(rt)) {
+
 								switchToFrame(driver, 10, setup.getFrame(PageName.RecordTypePortfolioCompany, 10));
-								if (click(driver, setup.getEditButton(environment,Mode.Classic.toString(),10), "edit", action.BOOLEAN)) {
+								if (click(driver, setup.getEditButton(environment, Mode.Classic.toString(), 10), "edit",
+										action.BOOLEAN)) {
 									ThreadSleep(2000);
 									switchToDefaultContent(driver);
 									switchToFrame(driver, 10, setup.getFrame(PageName.RecordTypePortfolioCompany, 10));
 									ThreadSleep(2000);
-									//setup.getRecordTypeLabel(projectName,"Record Type Name", 10).sendKeys(updateLabel);
-									//if(sendKeys(driver, setup.getRecordTypeLabel(projectName,"Record Type Name", 10), , "name", action.SCROLLANDBOOLEAN)) {
-									if(!isSelected(driver, setup.getactiveCheckbox(10), "active checkbox")){
-									if (clickUsingJavaScript(driver, setup.getactiveCheckbox(10), "active", action.BOOLEAN)) {
-										log(LogStatus.INFO, "activeCheckbox is now checked",YesNo.No);
+									// setup.getRecordTypeLabel(projectName,"Record Type
+									// Name",10).sendKeys(updateLabel);
+									// if(sendKeys(driver,setup.getRecordTypeLabel(projectName,"Record Type Name",
+									// 10), , "name",action.SCROLLANDBOOLEAN)) {
+									if (!isSelected(driver, setup.getactiveCheckbox(10), "active checkbox")) {
+										if (clickUsingJavaScript(driver, setup.getactiveCheckbox(10), "active",
+												action.BOOLEAN)) {
+											log(LogStatus.INFO, "activeCheckbox is now checked", YesNo.No);
 
-									}else {
-										log(LogStatus.FAIL, "activeCheckbox not clickable",YesNo.Yes);
-										sa.assertTrue(false, "activeCheckbox not clickable");
-									}
-									}
-									if (click(driver, setup.getSaveButtonInCustomFields(10), "save", action.SCROLLANDBOOLEAN)) {
-										ThreadSleep(3000);	
-										log(LogStatus.INFO, "save button is clicked",YesNo.No);
-
-										}else {
-											log(LogStatus.FAIL, "save button not clickable",YesNo.Yes);
-											sa.assertTrue(false, "save button not clickable");
+										} else {
+											log(LogStatus.FAIL, "activeCheckbox not clickable", YesNo.Yes);
+											sa.assertTrue(false, "activeCheckbox not clickable");
 										}
-//									}else {
-//										log(LogStatus.FAIL, "name textbox not visible",YesNo.Yes);
-//										sa.assertTrue(false, "name textbox not visible");
-//									}
-								}else {
-									log(LogStatus.FAIL, "edit button not clickable",YesNo.Yes);
+									}
+									if (click(driver, setup.getSaveButtonInCustomFields(10), "save",
+											action.SCROLLANDBOOLEAN)) {
+										ThreadSleep(3000);
+										log(LogStatus.INFO, "save button is clicked", YesNo.No);
+
+									} else {
+										log(LogStatus.FAIL, "save button not clickable", YesNo.Yes);
+										sa.assertTrue(false, "save button not clickable");
+									} // }else { //
+									log(LogStatus.FAIL, "name textbox not visible", YesNo.Yes); //
+									sa.assertTrue(false, "name textbox not visible"); // } }else {
+									log(LogStatus.FAIL, "edit button not clickable", YesNo.Yes);
 									sa.assertTrue(false, "edit button not clickable");
 								}
-							}else {
-								log(LogStatus.FAIL, InstRecordType.Portfolio+" not found",YesNo.Yes);
-								sa.assertTrue(false, InstRecordType.Portfolio+" not found");
+							} else {
+								log(LogStatus.FAIL, InstRecordType.Portfolio + " not found", YesNo.Yes);
+								sa.assertTrue(false, InstRecordType.Portfolio + " not found");
 							}
-						}else {
-							log(LogStatus.FAIL, "search textbox not found",YesNo.Yes);
+						} else {
+							log(LogStatus.FAIL, "search textbox not found", YesNo.Yes);
 							sa.assertTrue(false, "search textbox not found");
 						}
-					}else {
-						log(LogStatus.FAIL, "record type feature not clickable",YesNo.Yes);
+					} else {
+						log(LogStatus.FAIL, "record type feature not clickable", YesNo.Yes);
 						sa.assertTrue(false, "record type feature not clickable");
 					}
-				}else {
-					log(LogStatus.FAIL, "institution object is not clickable",YesNo.Yes);
+				} else {
+					log(LogStatus.FAIL, "institution object is not clickable", YesNo.Yes);
 					sa.assertTrue(false, "institution object is not clickable");
 				}
 				ThreadSleep(500);
-				if(setup.searchStandardOrCustomObject(environment,mode, object.Deal)) {
-					log(LogStatus.INFO, "click on Object : "+object.Deal, YesNo.No);
+				if (setup.searchStandardOrCustomObject(environment, mode, object.Deal)) {
+					log(LogStatus.INFO, "click on Object : " + object.Deal, YesNo.No);
 					ThreadSleep(2000);
 					switchToDefaultContent(driver);
 					switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
-					boolean flag=false;;
-					String xpath="";
-					xpath="//th//a[text()='"+userName+"']";
-					WebElement ele=FindElement(driver, xpath,userName, action.SCROLLANDBOOLEAN, 10);
-					ele=isDisplayed(driver, ele, "visibility", 10, userName);
+					boolean flag = false;
+					;
+					String xpath = "";
+					xpath = "//th//a[text()='" + userName + "']";
+					WebElement ele = FindElement(driver, xpath, userName, action.SCROLLANDBOOLEAN, 10);
+					ele = isDisplayed(driver, ele, "visibility", 10, userName);
 					if (click(driver, ele, userName.toString(), action.BOOLEAN)) {
-						log(LogStatus.INFO, "able to click on "+userName, YesNo.No);
+						log(LogStatus.INFO, "able to click on " + userName, YesNo.No);
 						ThreadSleep(10000);
 						switchToDefaultContent(driver);
 						ThreadSleep(5000);
 						switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
-						xpath="//*[text()='Accounts']/following-sibling::*//*[text()='Edit']";
-						ele=FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, 10);
-						ele=isDisplayed(driver, ele, "visibility", 10, "Edit Button");
+						xpath = "//*[text()='Accounts']/following-sibling::[text()='Edit']";
+						ele = FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, 10);
+						ele = isDisplayed(driver, ele, "visibility", 10, "Edit Button");
 						if (click(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "able to click on edit button for record type settiing", YesNo.No);
 							switchToDefaultContent(driver);
-						ThreadSleep(5000);
-						switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
-						ThreadSleep(2000);
-						if (selectVisibleTextFromDropDown(driver, setup.getavailableRecordType(60), "Available Tab List",
-								rt)) {
-							appLog.info(rt + " is selected successfully in available tabs");
-							if (click(driver, setup.getAddBtn(60), "Custom Tab Add Button",
-									action.SCROLLANDBOOLEAN)) {
-								appLog.error("clicked on add button");
-							} else {
-								sa.assertTrue(false,"Not able to click on add button so cannot add custom tabs");
-								appLog.error("Not able to click on add button so cannot add custom tabs");
-							}
-						} else {
-							appLog.error(rt + " record type is not Available list Tab.");
-							sa.assertTrue(false,rt + " record type is not Available list Tab.");
-							}
-						if (click(driver, setup.getCreateUserSaveBtn_Lighting(30), "Save Button",
-								action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
+							ThreadSleep(5000);
+							switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
 							ThreadSleep(2000);
+							if (selectVisibleTextFromDropDown(driver, setup.getavailableRecordType(60),
+									"Available Tab List", rt)) {
+								appLog.info(rt + " is selected successfully in available tabs");
+								if (click(driver, setup.getAddBtn(60), "Custom Tab Add Button",
+										action.SCROLLANDBOOLEAN)) {
+									appLog.error("clicked on add button");
+								} else {
+									sa.assertTrue(false, "Not able to click on add button so cannot add custom tabs");
+									appLog.error("Not able to click on add button so cannot add custom tabs");
+								}
+							} else {
+								appLog.error(rt + " record type is not Available list Tab.");
+								sa.assertTrue(false, rt + " record type is not Available list Tab.");
+							}
+							if (clickUsingJavaScript(driver, setup.getCreateUserSaveBtn_Lighting(30), "Save Button",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
+								ThreadSleep(2000);
+							} else {
+								log(LogStatus.ERROR, "not able to click on save button for record type settiing",
+										YesNo.Yes);
+								sa.assertTrue(false, "not able to click on save button for record type settiing");
+
+							}
 						} else {
-							log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
-							sa.assertTrue(false,"not able to click on save button for record type settiing");
-							
-						} }else {
-							log(LogStatus.ERROR, "not able to click on edit button for record type settiing", YesNo.Yes);
-							sa.assertTrue(false,"not able to click on edit button for record type settiing");
-							
+							log(LogStatus.ERROR, "not able to click on edit button for record type settiing",
+									YesNo.Yes);
+							sa.assertTrue(false, "not able to click on edit button for record type settiing");
+
 						}
-					}else {
-						log(LogStatus.ERROR, userName+" profile is not clickable", YesNo.Yes);
-						sa.assertTrue(false,userName+" profile is not clickable");
+					} else {
+						log(LogStatus.ERROR, userName + " profile is not clickable", YesNo.Yes);
+						sa.assertTrue(false, userName + " profile is not clickable");
 					}
 				} else {
 					log(LogStatus.ERROR, "profiles tab is not clickable", YesNo.Yes);
-					sa.assertTrue(false,"profiles tab is not clickable");
+					sa.assertTrue(false, "profiles tab is not clickable");
 				}
+
 				if(setup.searchStandardOrCustomObject(environment, mode, object.Deal)) {
 					if(setup.clickOnObjectFeature(environment, mode, object.Deal, ObjectFeatureName.FieldAndRelationShip)) {
 						if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10), excelLabel.Stage.toString(), "stage", action.BOOLEAN)) {
@@ -2030,10 +2057,14 @@ public class Module6 extends BaseLib{
 								switchToDefaultContent(driver);
 								switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
 								WebElement ele=dp.findDeactivateLink(projectName, Stage.Closed.toString());
-								if (click(driver, ele, "deactivate closed", action.SCROLLANDBOOLEAN)) {
-									ThreadSleep(3000);
-									driver.switchTo().alert().accept();
-									//switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+								if (click(driver, ele, "deactivate  closed", action.SCROLLANDBOOLEAN)) {
+									ThreadSleep(5000);
+									if(!isAlertPresent(driver)) {
+										clickUsingJavaScript(driver, ele, "deactivate closed", action.SCROLLANDBOOLEAN);
+									}
+									ThreadSleep(2000);
+									//driver.switchTo().alert().accept();
+									switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
 									switchToDefaultContent(driver);
 									switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
 										
@@ -2099,7 +2130,7 @@ public class Module6 extends BaseLib{
 			if (ip.clickOnAlreadyCreatedItem(projectName, M6Deal2, 10)) {
 				if (click(driver, dp.getconvertToPortfolio(10),"convert to portfolio button", action.BOOLEAN)) {
 					
-					if (click(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
+					if (clickUsingJavaScript(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
 						ThreadSleep(3000);
 						if (dp.getconvertToPortfolioMessageRepeat(10)!=null) {
 							String text=dp.getconvertToPortfolioMessageRepeat(10).getText();
@@ -2121,7 +2152,7 @@ public class Module6 extends BaseLib{
 							sa.assertTrue(false,"could not verify cross icon presence");
 							log(LogStatus.SKIP,"could not verify cross icon presence",YesNo.Yes);
 						}
-						if (click(driver, dp.getfinishButton(10), "finish", action.BOOLEAN)) {
+						if (clickUsingJavaScript(driver, dp.getfinishButton(10), "finish", action.BOOLEAN)) {
 							log(LogStatus.INFO, "successfully verified finish button after convert to portfolio", YesNo.No);
 						}else {
 							sa.assertTrue(false,"could not verify convert to portfolio as finish button not clicked");
@@ -2147,26 +2178,37 @@ public class Module6 extends BaseLib{
 		if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M6Deal9, 10)) {
 				if (click(driver, dp.getconvertToPortfolio(10),"convert to portfolio button", action.BOOLEAN)) {
+					if (dp.getconvertToPortfolioMessage(M6Ins9,10)!=null) {
+						log(LogStatus.INFO, "successfully verified convert to portfolio text message", YesNo.No);
+					}else {
+						sa.assertTrue(false,"could not verify convert to portfolio text message before next");
+						log(LogStatus.SKIP,"could not verify convert to portfolio text message before next",YesNo.Yes);
+					}
 					if (click(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
-						ThreadSleep(3000);
-						refresh(driver);
-						ThreadSleep(2000);
 						String text=dp.getconvertToPortfolioMessageAfterNext(10).getText();
 
 						if (text.contains(dp.convertToPortfolioAfterNext(M6Ins9))) {
 							log(LogStatus.INFO,"successfully verified max character inst name on convert to portfolio message congratulations",YesNo.Yes);
 
 						}else {
-							sa.assertTrue(false,"could not verify convert to portfolio message Expected: "+dp.convertToPortfolioAfterNext(M6Ins9)+"\nactual: "+text);
-							log(LogStatus.SKIP,"could not verify convert to portfolio message Expected: "+dp.convertToPortfolioAfterNext(M6Ins9)+"\nactual: "+text,YesNo.Yes);
+							sa.assertTrue(false,"could not verify convert to portfolio message Expected: "+dp.convertToPortfolioAfterNext(M6Ins15)+"\nactual: "+text);
+							log(LogStatus.SKIP,"could not verify convert to portfolio message Expected: "+dp.convertToPortfolioAfterNext(M6Ins15)+"\nactual: "+text,YesNo.Yes);
 						}
-						if (click(driver, dp.getconvertToPortfolioCrossButton(10), "finish", action.BOOLEAN)) {
-							log(LogStatus.INFO, "clicked on cross button", YesNo.No);
+						if ( dp.getconvertToPortfolioCrossButton(10)!=null) {
+							log(LogStatus.INFO, "successfully verified cross button after convert to portfolio", YesNo.No);
 						}else {
-							sa.assertTrue(false,"could not click on cross button");
-							log(LogStatus.SKIP,"could not click on cross button",YesNo.Yes);
+							sa.assertTrue(false,"could not verify convert to portfolio as cross button not clicked");
+							log(LogStatus.SKIP,"could not verify convert to portfolio as cross button not clicked",YesNo.Yes);
 						}
-						
+						if (click(driver, dp.getfinishButton(10), "finish", action.BOOLEAN)) {
+							log(LogStatus.INFO, "clicked on finish button", YesNo.No);
+						}else {
+							sa.assertTrue(false,"could not click on finish button");
+							log(LogStatus.SKIP,"could not click on finish button",YesNo.Yes);
+						}
+						ThreadSleep(3000);
+						refresh(driver);
+						ThreadSleep(3000);
 					
 
 				for (int i =0;i<labelName.length;i++) {
@@ -2222,7 +2264,7 @@ public class Module6 extends BaseLib{
 						if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10), excelLabel.Stage.toString(), "stage", action.BOOLEAN)) {
 							if (setup.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
 								switchToDefaultContent(driver);
-								ThreadSleep(3000);
+								ThreadSleep(5000);
 								switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
 								WebElement ele=dp.findActivateLink(projectName, Stage.Closed.toString());
 								
@@ -2247,13 +2289,18 @@ public class Module6 extends BaseLib{
 										sendKeys(driver, setup.getFieldLabelTextBox1(10), Stage.Closed_Updated.toString(), "label", action.BOOLEAN);
 											
 
-										if (click(driver, fp.getCustomTabSaveBtn(10), "save", action.BOOLEAN)) {
+										if (clickUsingJavaScript(driver, fp.getCustomTabSaveBtn(10), "save", action.BOOLEAN)) {
 											ThreadSleep(3000);
 											switchToDefaultContent(driver);
 											ThreadSleep(3000);
 											switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
 											ele=dp.findDeactivateLink(projectName, Stage.Closed_Updated.toString());
-											
+											if (click(driver, ele, "deactivate  closed", action.SCROLLANDBOOLEAN)) {
+												ThreadSleep(5000);
+												if(!isAlertPresent(driver)) {
+													clickUsingJavaScript(driver, ele, "deactivate closed", action.SCROLLANDBOOLEAN);
+												}
+												
 											if(ele!=null) {
 												log(LogStatus.INFO, "successfully renamed closed value", YesNo.No);
 												if (clickUsingActionClass(driver, ele)) {
@@ -2320,7 +2367,7 @@ public class Module6 extends BaseLib{
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-	
+	}
 	@Parameters({ "projectName"})
 	@Test
 	public void M6tc015_2_CheckConvertToPortfolioFuncAfterRenameClosedDealStage(String projectName) {
@@ -2610,8 +2657,9 @@ public class Module6 extends BaseLib{
 								switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
 								WebElement ele;
 
-								ThreadSleep(3000);
+								
 								switchToDefaultContent(driver);
+								ThreadSleep(3000);
 								switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
 
 								ele=dp.findDeactivateLink(projectName, Stage.Closed_Updated.toString());
@@ -2630,7 +2678,7 @@ public class Module6 extends BaseLib{
 									sendKeys(driver, setup.getFieldLabelTextBox1(10), Stage.Closed.toString(), "label", action.BOOLEAN);
 
 
-									if (click(driver, fp.getCustomTabSaveBtn(10), "save", action.BOOLEAN)) {
+									if (clickUsingJavaScript(driver, fp.getCustomTabSaveBtn(10), "save", action.BOOLEAN)) {
 										ThreadSleep(3000);
 									}else {
 										sa.assertTrue(false,"not able to click on deactivate link");
@@ -2861,13 +2909,15 @@ public class Module6 extends BaseLib{
 							log(LogStatus.SKIP,"Not Able to verify "+labelName[i],YesNo.Yes);
 						}
 
-					}if(dp.checkValueOfPathComponentValueOfStage(Stage.Closed.toString(), 10)) {
-						log(LogStatus.INFO,"stage on path component successfully verified",YesNo.Yes);
-							
-					}else {
-						sa.assertTrue(false,"stage on path component could not be verified");
-						log(LogStatus.SKIP,"stage on path component could not be verified",YesNo.Yes);
-					}
+					} 
+						  if(dp.checkValueOfPathComponentValueOfStage(Stage.Closed.toString(), 10)) {
+						  log(LogStatus.INFO,"stage on path component successfully verified",YesNo.Yes)
+						  ;
+						  
+						  }else { sa.assertTrue(false,"stage on path component could not be verified");
+						  log(LogStatus.SKIP,"stage on path component could not be verified",YesNo.Yes)
+						  ; }
+						 
 					}else {
 						sa.assertTrue(false,"next button is not clickable");
 						log(LogStatus.SKIP,"next button is not clickable",YesNo.Yes);
@@ -3105,13 +3155,15 @@ public class Module6 extends BaseLib{
 						}
 
 					}
-					if(dp.checkValueOfPathComponentValueOfStage(Stage.Closed.toString(), 10)) {
-						log(LogStatus.INFO,"stage on path component successfully verified",YesNo.Yes);
-							
-					}else {
-						sa.assertTrue(false,"stage on path component could not be verified");
-						log(LogStatus.SKIP,"stage on path component could not be verified",YesNo.Yes);
-					}
+					
+					  if(dp.checkValueOfPathComponentValueOfStage(Stage.Closed.toString(), 10)) {
+					  log(LogStatus.INFO,"stage on path component successfully verified",YesNo.Yes)
+					  ;
+					  
+					  }else { sa.assertTrue(false,"stage on path component could not be verified");
+					  log(LogStatus.SKIP,"stage on path component could not be verified",YesNo.Yes)
+					  ; }
+					 
 					}else {
 						sa.assertTrue(false,"next button is not clickable");
 						log(LogStatus.SKIP,"next button is not clickable",YesNo.Yes);
@@ -3229,13 +3281,15 @@ public class Module6 extends BaseLib{
 						}
 
 					}
-					if(dp.checkValueOfPathComponentValueOfStage(Stage.Closed.toString(), 10)) {
-						log(LogStatus.INFO,"stage on path component successfully verified",YesNo.Yes);
-							
-					}else {
-						sa.assertTrue(false,"stage on path component could not be verified");
-						log(LogStatus.SKIP,"stage on path component could not be verified",YesNo.Yes);
-					}
+					
+					  if(dp.checkValueOfPathComponentValueOfStage(Stage.Closed.toString(), 10)) {
+					  log(LogStatus.INFO,"stage on path component successfully verified",YesNo.Yes)
+					  ;
+					  
+					  }else { sa.assertTrue(false,"stage on path component could not be verified");
+					  log(LogStatus.SKIP,"stage on path component could not be verified",YesNo.Yes)
+					  ; }
+					 
 					}else {
 						sa.assertTrue(false,"next button is not clickable");
 						log(LogStatus.SKIP,"next button is not clickable",YesNo.Yes);
@@ -3351,13 +3405,15 @@ public class Module6 extends BaseLib{
 						}
 
 					}
-					if(dp.checkValueOfPathComponentValueOfStage(Stage.Closed.toString(), 10)) {
-						log(LogStatus.INFO,"stage on path component successfully verified",YesNo.Yes);
-							
-					}else {
-						sa.assertTrue(false,"stage on path component could not be verified");
-						log(LogStatus.SKIP,"stage on path component could not be verified",YesNo.Yes);
-					}
+					
+					  if(dp.checkValueOfPathComponentValueOfStage(Stage.Closed.toString(), 10)) {
+					  log(LogStatus.INFO,"stage on path component successfully verified",YesNo.Yes)
+					  ;
+					  
+					  }else { sa.assertTrue(false,"stage on path component could not be verified");
+					  log(LogStatus.SKIP,"stage on path component could not be verified",YesNo.Yes)
+					  ; }
+					 
 					}else {
 						sa.assertTrue(false,"next button is not clickable");
 						log(LogStatus.SKIP,"next button is not clickable",YesNo.Yes);
@@ -3473,13 +3529,15 @@ public class Module6 extends BaseLib{
 						}
 
 					}
-					if(dp.checkValueOfPathComponentValueOfStage(Stage.Closed.toString(), 10)) {
-						log(LogStatus.INFO,"stage on path component successfully verified",YesNo.Yes);
-							
-					}else {
-						sa.assertTrue(false,"stage on path component could not be verified");
-						log(LogStatus.SKIP,"stage on path component could not be verified",YesNo.Yes);
-					}
+					
+					  if(dp.checkValueOfPathComponentValueOfStage(Stage.Closed.toString(), 10)) {
+					  log(LogStatus.INFO,"stage on path component successfully verified",YesNo.Yes)
+					  ;
+					  
+					  }else { sa.assertTrue(false,"stage on path component could not be verified");
+					  log(LogStatus.SKIP,"stage on path component could not be verified",YesNo.Yes)
+					  ; }
+					 
 					}else {
 						sa.assertTrue(false,"next button is not clickable");
 						log(LogStatus.SKIP,"next button is not clickable",YesNo.Yes);
@@ -3561,7 +3619,7 @@ public class Module6 extends BaseLib{
 									switchToDefaultContent(driver);
 									switchToFrame(driver, 10, setup.getFrame(PageName.ConvertToPortfolioFrame, 10));
 									if (sendKeys(driver, setup.getRecordTypeLabel(projectName, "Label", 10), updateLabel, "label", action.BOOLEAN)){
-										if (click(driver, setup.getSaveButtonInCustomFields(10), "save", action.SCROLLANDBOOLEAN)) {
+										if (clickUsingJavaScript(driver, setup.getSaveButtonInCustomFields(10), "save", action.SCROLLANDBOOLEAN)) {
 											ThreadSleep(3000);	
 											log(LogStatus.INFO, "save button is clicked",YesNo.No);
 
@@ -3755,14 +3813,16 @@ public class Module6 extends BaseLib{
 							if (setup.clickOnAlreadyCreatedLayout(oldLabel)) {
 							//if (setup.clickOnAlreadyCreatedLayout(PageLabel.Convert_to_Portfolio.toString().replace("_", " "))) {
 								switchToDefaultContent(driver);
+								ThreadSleep(3000);
 								switchToFrame(driver, 20,setup. getSetUpPageIframe(60));
 								ThreadSleep(3000);
 								ele=setup.getEditButton(environment,Mode.Classic.toString(), 10);
 								if (click(driver, ele, "edit", action.BOOLEAN)) {
 									switchToDefaultContent(driver);
+									ThreadSleep(3000);
 									switchToFrame(driver, 20,setup. getSetUpPageIframe(60));
 									if (sendKeys(driver, setup.getRecordTypeLabel(projectName, "Label", 10), PageLabel.Convert_to_Portfolio.toString().replace("_", " "), "label", action.BOOLEAN)){
-										if (click(driver, setup.getSaveButtonInCustomFields(10), "save", action.SCROLLANDBOOLEAN)) {
+										if (clickUsingJavaScript(driver, setup.getSaveButtonInCustomFields(10), "save", action.SCROLLANDBOOLEAN)) {
 											ThreadSleep(3000);	
 											log(LogStatus.INFO, "save button is clicked",YesNo.No);
 
@@ -3798,9 +3858,10 @@ public class Module6 extends BaseLib{
 						{recordTypeLabel.Active.toString(),""}};
 				String[][] deal = {{recordTypeLabel.Record_Type_Label.toString(),recTypeArray[1]},
 						{recordTypeLabel.Active.toString(),""}};
+				String [] profileforSelection= {crmUserProfile,AdminUserProfile};
 				if(setup.clickOnObjectFeature("", Mode.Lightning.toString(),object.Deal, ObjectFeatureName.recordTypes)) {
 					ThreadSleep(5000);
-					if (setup.createRecordTypeForObject(projectName, pitch, true, false,null, 10)) {
+					if (setup.createRecordTypeForObject(projectName, pitch, false, profileforSelection,false, null, 10)) {
 						log(LogStatus.INFO, "successfully created record type pitch",YesNo.Yes);
 						
 					}else {
@@ -3813,7 +3874,7 @@ public class Module6 extends BaseLib{
 				}
 				if(setup.clickOnObjectFeature("", Mode.Lightning.toString(),object.Deal, ObjectFeatureName.recordTypes)) {
 					ThreadSleep(5000);
-					if (setup.createRecordTypeForObject(projectName, deal, true, false,null, 10)) {
+					if (setup.createRecordTypeForObject(projectName, deal, false, profileforSelection,false, null, 10)) {
 						log(LogStatus.INFO, "successfully created record type deal",YesNo.Yes);
 						
 					}else {
@@ -3885,10 +3946,12 @@ public class Module6 extends BaseLib{
 					if(setup.clickOnObjectFeature(environment, mode, object.Deal, ObjectFeatureName.pageLayouts)) {
 						if (click(driver, setup.getpageLayoutAssignment(projectName, 10), "layout assignment", action.BOOLEAN)) {
 							switchToDefaultContent(driver);
+							ThreadSleep(3000);
 							switchToFrame(driver, 20, setup.getSetUpPageIframe(60));
 							
 							if (click(driver, setup.geteditAssignment(projectName, 10), "edit assignment", action.BOOLEAN)) {
 								switchToDefaultContent(driver);
+								ThreadSleep(3000);
 								switchToFrame(driver, 20, setup.getSetUpPageIframe(60));
 								int i = 0;
 								for (String re:rt) {
@@ -3897,6 +3960,7 @@ public class Module6 extends BaseLib{
 								WebElement ele=setup.clickOnRecordTypePageLayout(projectName, userProfile, loc);
 								if (click(driver,ele, "layout name for record type", action.BOOLEAN)) {
 									ele=setup.getpageLayoutSelector(10);
+									ThreadSleep(3000);
 									if (selectVisibleTextFromDropDown(driver,ele , "page layout selector", layouts[i])) {
 										
 									}else {
@@ -3909,7 +3973,7 @@ public class Module6 extends BaseLib{
 								}
 								i++;}
 								
-								if (click(driver, setup.getSaveButtonInCustomFields(10), "save", action.SCROLLANDBOOLEAN)) {
+								if (clickUsingJavaScript(driver, setup.getSaveButtonInCustomFields(10), "save", action.SCROLLANDBOOLEAN)) {
 									
 								}else {
 									log(LogStatus.FAIL, "save button is not clickable",YesNo.Yes);
@@ -3962,34 +4026,34 @@ public class Module6 extends BaseLib{
 			String parentID = switchOnWindow(driver);
 			if (parentID!=null) {
 
-
-				if(setup.searchStandardOrCustomObject(environment,mode, object.Profiles)) {
-					log(LogStatus.INFO, "click on Object : "+object.Profiles, YesNo.No);
+				if (setup.searchStandardOrCustomObject(environment, mode, object.Profiles)) {
+					log(LogStatus.INFO, "click on Object : " + object.Profiles, YesNo.No);
 					ThreadSleep(2000);
 					switchToDefaultContent(driver);
 					switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
-					boolean flag=false;;
-					String xpath="";
-					xpath="//th//a[text()='"+userName+"']";
-					WebElement ele=FindElement(driver, xpath,userName, action.SCROLLANDBOOLEAN, 10);
-					ele=isDisplayed(driver, ele, "visibility", 10, userName);
+					boolean flag = false;
+					;
+					String xpath = "";
+					xpath = "//th//a[text()='" + userName + "']";
+					WebElement ele = FindElement(driver, xpath, userName, action.SCROLLANDBOOLEAN, 10);
+					ele = isDisplayed(driver, ele, "visibility", 10, userName);
 					if (click(driver, ele, userName.toString(), action.BOOLEAN)) {
-						log(LogStatus.INFO, "able to click on "+userName, YesNo.No);
+						log(LogStatus.INFO, "able to click on " + userName, YesNo.No);
 						ThreadSleep(10000);
 						switchToDefaultContent(driver);
 						ThreadSleep(5000);
 						switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
-						xpath="//*[text()='Deals']/following-sibling::*//*[text()='Edit']";
-						ele=FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, 10);
-						ele=isDisplayed(driver, ele, "visibility", 10, "Edit Button");
+						xpath = "//*[text()='Deals']/following-sibling::*//*[text()='Edit']";
+						ele = FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, 10);
+						ele = isDisplayed(driver, ele, "visibility", 10, "Edit Button");
 						if (click(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "able to click on edit button for record type settiing", YesNo.No);
 							switchToDefaultContent(driver);
 							ThreadSleep(5000);
 							switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
 							ThreadSleep(2000);
-							if (selectVisibleTextFromDropDown(driver, setup.getavailableRecordType(60), "Available Tab List",
-									rt[0])) {
+							if (selectVisibleTextFromDropDown(driver, setup.getavailableRecordType(60),
+									"Available Tab List", rt[0])) {
 								appLog.info(rt + " is selected successfully in available tabs");
 								if (click(driver, setup.getAddBtn(60), "Custom Tab Add Button",
 										action.SCROLLANDBOOLEAN)) {
@@ -4443,13 +4507,14 @@ public void M6tc026_1_VerifyPathComponent(String projectName) {
 			HashMap<String, String> sourceANDDestination = new HashMap<String, String>();
 			sourceANDDestination.put(excelLabel.Last_Stage_Change_Date.toString(), excelLabel.Stage.toString());
 			List<String> abc = setup.DragNDrop("", mode, object.Fundraising, ObjectFeatureName.pageLayouts, layoutName, sourceANDDestination);
-			ThreadSleep(10000);
+			ThreadSleep(5000);
 			if (!abc.isEmpty()) {
 				log(LogStatus.FAIL, "field not added/already present 1", YesNo.Yes);
 			}else{
 				log(LogStatus.INFO, "field added/already present 1", YesNo.Yes);
 			}
 			driver.close();
+			ThreadSleep(5000);
 			driver.switchTo().window(parentID);
 			}else {
 				log(LogStatus.FAIL, "could not find new window to switch, so cannot add field", YesNo.Yes);
@@ -4790,6 +4855,7 @@ public void M6tc026_1_VerifyPathComponent(String projectName) {
 						if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), excelLabel.Stage.toString()+Keys.ENTER, "status", action.BOOLEAN)) {
 							if (sp.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
 									switchToDefaultContent(driver);
+									ThreadSleep(5000);
 									switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
 									stage=stage.replace("_", " ");
 									ThreadSleep(3000);ele=frp.getEditBtn(projectName, stage,action.SCROLLANDBOOLEAN,10);
@@ -4938,6 +5004,7 @@ public void M6tc026_1_VerifyPathComponent(String projectName) {
 						if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), excelLabel.Stage.toString()+Keys.ENTER, "status", action.BOOLEAN)) {
 							if (sp.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
 									switchToDefaultContent(driver);
+									ThreadSleep(10000);
 									switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
 									stage=stage.replace("_", " ");
 									ThreadSleep(3000);
@@ -5076,10 +5143,11 @@ public void M6tc026_1_VerifyPathComponent(String projectName) {
 		if (home.clickOnSetUpLink("", Mode.Lightning.toString())) {
 			parentID=switchOnWindow(driver);
 			if (parentID!=null) {
-				log(LogStatus.INFO, "Able to switch on new window", YesNo.No);
+				log(LogStatus.INFO, "Able to switch on  new window", YesNo.No);
 				ThreadSleep(3000);
 				refresh(driver);
-				ThreadSleep(3000);
+				ThreadSleep(5000);
+				System.out.println("Url:"+driver.getCurrentUrl());
 				if(setup.searchStandardOrCustomObject(environment,mode, object.Users)) {
 					log(LogStatus.INFO, "click on Object : "+object.Users, YesNo.No);
 					ThreadSleep(2000);
@@ -5092,15 +5160,14 @@ public void M6tc026_1_VerifyPathComponent(String projectName) {
 							log(LogStatus.INFO, "selected visbible text from the Timezone dropdown "+locale[i], YesNo.No);
 							ThreadSleep(2000);
 							switchToDefaultContent(driver);
-							ThreadSleep(2000);
+							ThreadSleep(5000);
 							switchToFrame(driver, 20, setup.getSetUpPageIframe(20));
 							if (selectVisibleTextFromDropDown(driver, setup.gettimezoneDropdownList(10), "timezone dropdown",t)) {
 								log(LogStatus.INFO, "selected visbible text from the Timezone dropdown "+t, YesNo.No);
 								ThreadSleep(2000);
-								
-							if (click(driver, setup.getSaveButton(20), "Save Button",action.SCROLLANDBOOLEAN)) {
-								switchToDefaultContent(driver);
+							if (clickUsingJavaScript(driver, setup.getSaveButton(20), "Save Button",action.SCROLLANDBOOLEAN)) {
 								ThreadSleep(5000);
+								switchToDefaultContent(driver);
 							} else {
 								log(LogStatus.ERROR, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName, YesNo.Yes);
 								sa.assertTrue(false, "Not Able to Click on Save Button for  "+crmUser1LastName+","+crmUser1FirstName);
@@ -5121,6 +5188,7 @@ public void M6tc026_1_VerifyPathComponent(String projectName) {
 						log(LogStatus.ERROR, "users object is not clickable", YesNo.Yes);
 						sa.assertTrue(false, "users object is not clickable");
 					}
+				lp.CRMlogout();
 				driver.close();
 				driver.switchTo().window(parentID);
 				}else {
@@ -5134,9 +5202,7 @@ public void M6tc026_1_VerifyPathComponent(String projectName) {
 		i++;
 		
 		lp.CRMlogout();
-		
-		driver.close();
-		config(browserToLaunch);
+		refresh(driver);
 		lp = new LoginPageBusinessLayer(driver);
 		fp = new FundsPageBusinessLayer(driver);
 		cp = new ContactsPageBusinessLayer(driver);
@@ -5186,8 +5252,6 @@ public void M6tc026_1_VerifyPathComponent(String projectName) {
 			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.FundraisingsTab,YesNo.Yes);
 		}
 		lp.CRMlogout();
-		driver.close();
-		config(browserToLaunch);
 		lp = new LoginPageBusinessLayer(driver);
 		fp = new FundsPageBusinessLayer(driver);
 		cp = new ContactsPageBusinessLayer(driver);

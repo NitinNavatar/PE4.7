@@ -207,7 +207,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		String xpath = "";
 		WebElement ele = null;
 		if(removeUnderscore)
-		labelValue=labelValue.replace("_", " ");
+		labelValue=labelValue;
 		String finalLabelName=labelName.replace("_", " ");
 		if(labelName.contains(excelLabel.Target_Commitments.toString().replaceAll("_", " "))) {
 			labelName=FundPageFieldLabelText.Target_Commitments.toString();
@@ -271,9 +271,10 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 				"Visibility", 30, labelName + " label text in " + projectName);
 		if (ele != null) {
 			String aa = ele.getText().trim();
-			appLog.info("Lable Value is: "+aa);
+			appLog.info("fetch Value is: "+aa);
+			appLog.info("match Value is: "+labelValue);
 			if(labelName.contains("Date")) {
-				if(aa.contains(labelValue)) {
+				if(verifyDate(aa, labelValue)) {
 					appLog.info("Dtae is verified Successfully");
 					return true;
 				}else {

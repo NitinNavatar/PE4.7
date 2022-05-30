@@ -48,10 +48,8 @@ Thumbs.db
 *.mov
 *.wmv
 
-/target/
-/test-output/
+ /Reports/
+        /screenshot/
+       /target/
+        /test-output/
 
-<<<<<<< HEAD:.gitignore
-=======
-
->>>>>>> release/PECloud:.gitign4ore

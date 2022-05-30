@@ -2111,11 +2111,23 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 *              on page and passed
 	 */
 	public boolean verifyDate(String dateToCheck, String valueOnPage) {
-		int size1 = dateToCheck.split("/").length;
-		int size2 = valueOnPage.split("/").length;
+		int size1 = valueOnPage.split("/").length;
+		int size2 = 0;
+		if(dateToCheck.contains(".")) {
+			size2= dateToCheck.split("[.]").length;
+		}else {
+			size2= dateToCheck.split("/").length;
+
+		}
+		String[] values =null;
 		if (!dateToCheck.isEmpty() && !dateToCheck.equals("") && size1 == 3 && size2 == 3) {
-			String[] dates = dateToCheck.split("/");
-			String[] values = valueOnPage.split("/");
+			String[] dates = valueOnPage.split("/");
+			if(dateToCheck.contains(".")) {
+				values= dateToCheck.split("[.]");
+			}else {
+				values= dateToCheck.split("/");
+
+			}
 			appLog.info("Excel Date : " + dateToCheck);
 			appLog.info("Page Date : " + valueOnPage);
 			if (dates[0].contains(values[0]) && dates[1].contains(values[1])
