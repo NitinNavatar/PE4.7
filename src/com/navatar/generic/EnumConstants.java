@@ -31,7 +31,30 @@ public class EnumConstants {
 			public String toString(){
 				return "Item Name";
 			}
-		},Record_Type,Street,City,State,Postal_Code,Country,Other_Street,Other_City,Other_State,Other_Zip,Other_Country,Report_Folder_Name,Report_Name,Select_Report_Type,Show,Range,Email_Template_Folder_Label,Public_Folder_Access,Type,Available_For_Use,Description,Subject,Email_Body,Email_Template_Name,Marketing_InitiativeName,Target_Commitments,Vintage_Year,Fax,
+		}, Account_Industry{
+			@Override
+			public String toString(){
+				return "Account Industry";
+			}
+		},Total_Firms{
+			@Override
+			public String toString(){
+				return "Total Firms";
+			}
+		},
+		Task_as_per_Industries{
+			@Override
+			public String toString(){
+				return "Task as per Industries";
+			}
+		},
+		Fundraising_as_per_Industries{
+			@Override
+			public String toString(){
+				return "Fundraising as per Industries";
+			}
+		},
+		Individuals,Record_Type,Street,City,State,Postal_Code,Country,Other_Street,Other_City,Other_State,Other_Zip,Other_Country,Report_Folder_Name,Report_Name,Select_Report_Type,Show,Range,Email_Template_Folder_Label,Public_Folder_Access,Type,Available_For_Use,Description,Subject,Email_Body,Email_Template_Name,Marketing_InitiativeName,Target_Commitments,Vintage_Year,Fax,
 		Frist_Closing_Date{
 			@Override
 			public String toString() {
@@ -50,7 +73,7 @@ public class EnumConstants {
 		, Due_Date,Investment_Likely_Amount,Closing,Total_Fundraising_Contacts,Fundraising_Contact_ID,Fundraising,Role, Other_Address,Label,
 		Mailing_Address,Total_Commitments,Commitment_Amount,Partner_Type,Tax_Forms,Final_Commitment_Date,Company,Bank_Name,Placement_Fee,Fund_Investment_Category,Total_CoInvestment_Commitments,Total_Fund_Commitments, Institution_Type, Fund_Preferences, Industry_Preferences, Shipping_Street, Shipping_City, Shipping_State, Shipping_Zip, Shipping_Country, Mobile_Phone, Assistant, Asst_Phone, Phone,Total_Call_Amount_Received, Total_Amount_Called,Total_Amount_Received,Total_Uncalled_Amount,Total_Commitment_Due,Commitment_Called,Called_Due,Preferred_Mode_of_Contact,Percent,Contact_Tier,Pipeline_Comments,
 		Parent_Field_Name,Override_Label,APIName,FieldOrder,URL,Region,Industry,Attendee_Staff,Marketing_Event,Notes,DTID,Member,File,EffectiveDate,ReceiptDate,
-		TotalCommitment, Priority, Project_Type, Project_Name, Task_Name, Status, Fund_InvestmentCategory,FundInvestmentID,Comment, Updated_Priority, Updated_Subject, Updated_Comment,Updated_Stage, Start_Date, End_Date, Data_Type, Field_Label, Length, Decimal_Places, Options, Deal_Name, SDG_Name, sObjectName, SDG_Tag, Object_Name, Field_Set_Label, NameSpace_PreFix, Page_Layout,Fields_Name, Toggle_Button, Request, Date_Requested, Request_Tracker_ID, Marketing_Event_Name, Date, TabName, Item,Filter_Value,Select_List_Item, RelatedTab, ToggleButton, Column_Name1, Column_Name2,Field_Type, FieldLabel_SubString, ExtraFieldsName, Column_Name, Navigation_Label_Name, Redirection_Label_Name, Update_Navigation_Label_Name, Updated_Order,Parent_Institution,Entity_Type, Parent, Navigation_Label_With_Parent, List_View_Object, List_View_Name, Action_Object, Coverage_Name,Action_Order,Event,Event_Payload,Action_Type, Sector, Assigned_To, Location, Event_PayLoad, Institution,Firm, Contact, Type_Of_Debt, Amount, Frequency, Fiscal_Year_end, Marketing_Initiative, Client, Advisor,List_Accessibility,Field,Operators,Filter;
+		TotalCommitment, Priority, Project_Type, Project_Name, Task_Name, Status, Fund_InvestmentCategory,FundInvestmentID,Comment, Updated_Priority, Updated_Subject, Updated_Comment,Updated_Stage, Start_Date, End_Date, Data_Type, Field_Label, Length, Decimal_Places, Options, Deal_Name, SDG_Name, sObjectName, SDG_Tag, Object_Name, Field_Set_Label, NameSpace_PreFix, Page_Layout,Fields_Name, Toggle_Button, Request, Date_Requested, Request_Tracker_ID, Marketing_Event_Name, Date, TabName, Item,Filter_Value,Select_List_Item, RelatedTab, ToggleButton, Column_Name1, Column_Name2,Field_Type, FieldLabel_SubString, ExtraFieldsName, Column_Name, Navigation_Label_Name, Redirection_Label_Name, Update_Navigation_Label_Name, Updated_Order,Parent_Institution,Entity_Type, Parent, Navigation_Label_With_Parent, List_View_Object, List_View_Name, Action_Object, Coverage_Name,Action_Order,Event,Event_Payload,Action_Type, Sector, Assigned_To, Location, Event_PayLoad, Institution,Firm, Contact, Type_Of_Debt, Amount, Frequency, Fiscal_Year_end, Marketing_Initiative, Client, Advisor,List_Accessibility,Field,Operators,Filter,Fundraising_Stage,Count_as_per_fundraising_stage,Fundraising_Count;
 };
 
 	public static enum fileDistributor {
@@ -380,7 +403,7 @@ CompactLayout, MeetingType, AddPickListMeetingType,ActivityLayoutPage, SDGPage,O
 		public String toString() {
 			return CommonVariables.tabCustomObj;
 		}
-	},Navigation,navatarEdgeMenu, Affiliation, Financing,Commitment, Advisor
+	},Navigation,navatarEdgeMenu, Affiliation, Financing,Commitment, Advisor,User
 	};
 
 	
@@ -1751,5 +1774,7 @@ public static enum PermissionType{
     	Ahead, Completed,Current;
     }
     
-  
+    public static enum Condition{
+    	activate,deactivate,replaceWithValue,replaceWithBlank,SelectCheckbox,UnSelectCheckbox;  		
+    }
 }

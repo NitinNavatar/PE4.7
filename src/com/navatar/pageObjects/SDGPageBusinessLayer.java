@@ -16,6 +16,7 @@ import com.navatar.generic.CommonLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.SoftAssert;
 import com.navatar.generic.EnumConstants.AddressAction;
+import com.navatar.generic.EnumConstants.Condition;
 import com.navatar.generic.EnumConstants.ContactPageFieldLabelText;
 import com.navatar.generic.EnumConstants.LimitedPartnerPageFieldLabelText;
 import com.navatar.generic.EnumConstants.Mode;
@@ -538,6 +539,126 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		}
 
 		return flag;
+	}
+	
+	
+
+	public boolean openSDG(String projectName,String sdgName)
+	{
+		String xpath="";
+		if(sendKeysAndPressEnter(driver, getsdgSearchbox(projectName,50), sdgName, "search text box", action.SCROLLANDBOOLEAN)) {
+			appLog.info("Passed Value in Search Text box: "+sdgName);
+
+			ThreadSleep(7000);
+			xpath="//a[@title='"+sdgName+"']";
+
+			WebElement ele = FindElement(driver, xpath, sdgName , action.SCROLLANDBOOLEAN, 30);
+
+			if (click(driver, ele, "SDG Name", action.BOOLEAN)) {
+
+				log(LogStatus.INFO,"Clicked on the SDG Name",YesNo.Yes);
+				return true;
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Could not click on the SDG Name",YesNo.Yes);
+				return false;
+			}		
+
+		}
+
+		else {
+			log(LogStatus.ERROR,"Not able to pass value "+sdgName+" in search text box so cannot search contact: "+sdgName,YesNo.Yes);
+			return false;
+		}
+
+	}
+
+
+	
+	
+	/**
+	 * @author Sourabh saini
+	 * @param projectName
+	 * @param names
+	 * @param values
+	 * @return true if able to add Field on SDG
+	 * @description pass Either SelectCheckbox or UnSelectCheckbox in the condition parameter.
+	 */
+	public boolean editAllRowOnSDG(String projectName,String sdgName,Condition condition)
+	{
+		if(openSDG(projectName,sdgName))
+		{
+			if (click(driver, getEditButton(projectName, 40), "Edit Button", action.BOOLEAN)) {
+				log(LogStatus.INFO,"Clicked on the Edit Button",YesNo.Yes);				
+				ThreadSleep(5000);
+				boolean status=isSelected(driver, getAllRowCheckbox(), "All Row");
+
+				if(condition.toString().equals("SelectCheckbox"))
+				{
+
+					if(status==false)
+					{
+						if (click(driver, getAllRowCheckbox(), "All Row cheeckbox", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO,"Clicked on the All Row checkbox",YesNo.Yes);
+						}
+						else
+						{
+							log(LogStatus.ERROR,"could not click on All row checkbox button",YesNo.Yes);
+							return false;
+						}
+					}
+				}
+				else if(condition.toString().equals("UnSelectCheckbox"))
+				{
+					if(status==true)
+					{
+						if (click(driver, getAllRowCheckbox(), "All Row cheeckbox", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO,"Clicked on the All Row checkbox",YesNo.Yes);
+						}
+						else
+						{
+							log(LogStatus.ERROR,"could not click on All row checkbox button",YesNo.Yes);
+							return false;
+						}
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Please pass the correct value on condition. could not click on the checkbox",YesNo.Yes);
+					return false;
+				}
+
+				if (click(driver, getSaveButton(projectName, 40), "Save Button", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO,"Clicked on the save button",YesNo.Yes);
+					if(checkElementVisibility(driver,getconfirmationSaveMessage(projectName, 50) , "Save Confirmation Message", 50)){
+						appLog.info("save confirmation Message is visible so All row checkbox has been clicked");
+						ThreadSleep(7000);
+						return true;					
+					}
+					else
+					{
+						log(LogStatus.ERROR,"save confirmation message is not visible  so All row checkbox is not clicked",YesNo.Yes);
+						return false;
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR,"could not click on save button",YesNo.Yes);
+					return false;
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR,"could not click on edit button",YesNo.Yes);
+				return false;
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR,"could not Open the SDG",YesNo.Yes);
+			return false;
+		}
 	}
 
 }
