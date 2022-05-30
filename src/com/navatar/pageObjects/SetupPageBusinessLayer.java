@@ -394,10 +394,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 								if(flag && obj!=object.Global_Actions){
 									ThreadSleep(5000);
 									click(driver, FindElement(driver, "//button[text()='Yes']", "Yes Button", action.BOOLEAN, 30), "", action.SCROLLANDBOOLEAN);
-								if (flag && obj != object.Global_Actions) {
-									click(driver, FindElement(driver, "//button[text()='Yes']", "Yes Button",
-											action.BOOLEAN, 30), "", action.SCROLLANDBOOLEAN);
-								}
+								
 								}
 							} else {
 								appLog.error(
@@ -419,9 +416,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 				}
 					if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 						ThreadSleep(5000);
-					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 						switchToDefaultContent(driver);
-					}
+					
 				}
 			} else {
 				appLog.error(
@@ -433,9 +429,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 			appLog.error("Not able to search Object: " + obj + " so cannot dragNdrop source.");
 			result.add("Not able to search Object: " + obj + " so cannot dragNdrop source.");
 		}
-		
 
-	
 		return result;
 	}
 			
