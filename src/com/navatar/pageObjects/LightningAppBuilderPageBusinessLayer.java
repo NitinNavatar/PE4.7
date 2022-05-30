@@ -29,9 +29,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		SoftAssert sa= new SoftAssert();
 
 		CommonLib.switchToFrame(driver, 50, getLocator());
-		//Actions act=new Actions(driver);
 
-		//act.click(getnewButton(80)).perform();
 		if (CommonLib.click(driver, getnewButton(80), "New Button", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on the new button", YesNo.No);
 			CommonLib.switchToDefaultContent(driver);
@@ -166,11 +164,12 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		String sdgData=null;
 		boolean flag=false;
 		int status=0;
+		WebElement pageSizeElement=null;
 		BasePageBusinessLayer BP=new BasePageBusinessLayer(driver);
-        ArrayList<String> verifyData = new ArrayList<String>();
-		String pageSizeXpath="//a[text()='"+sdgtableName+"']/ancestor::div[contains(@class,'slds-card__header')]/following-sibling::div//select[@name='PagerSize']";
-	//	String pageSizeXpath="//select[@name='PagerSize']";
-		WebElement pageSizeElement=CommonLib.FindElement(driver, pageSizeXpath, "Page size", action.SCROLLANDBOOLEAN, 50);	
+		ArrayList<String> verifyData = new ArrayList<String>();
+		//	String pageSizeXpath="//a[text()='"+sdgtableName+"']/ancestor::div[contains(@class,'slds-card__header')]/following-sibling::div//select[@name='PagerSize']";
+		//	String pageSizeXpath="//select[@name='PagerSize']";
+		//	WebElement pageSizeElement=CommonLib.FindElement(driver, pageSizeXpath, "Page size", action.SCROLLANDBOOLEAN, 50);	
 		int row = sdgTableData.length;	
 		int col= sdgTableData[0].length+1;
 		int totalData=row*col;
@@ -184,8 +183,15 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 			}
 		}
 
+		if(row<=10)
+		{
+			log(LogStatus.INFO, "Rows are Less then or equal to 10", YesNo.No);
+
+		}
 		if(row>10 && row<=20)
 		{
+			String pageSizeXpath="//a[text()='"+sdgtableName+"']/ancestor::div[contains(@class,'slds-card__header')]/following-sibling::div//select[@name='PagerSize']";
+			pageSizeElement=CommonLib.FindElement(driver, pageSizeXpath, "Page size", action.SCROLLANDBOOLEAN, 50);
 			if(CommonLib.selectVisibleTextFromDropDown(driver, pageSizeElement, "Page Size","20"))
 			{
 				log(LogStatus.INFO, "Page size 20 is Selected", YesNo.No);
@@ -194,12 +200,14 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 			{					
 				log(LogStatus.ERROR, "Could not Select the 20 from the Page size", YesNo.Yes);	
 				verifyData.add("Could not Select the 20 from the Page size");
-				
+
 			}
 
 		}
 		else if(row>20 && row<=50)
 		{
+			String pageSizeXpath="//a[text()='"+sdgtableName+"']/ancestor::div[contains(@class,'slds-card__header')]/following-sibling::div//select[@name='PagerSize']";
+			pageSizeElement=CommonLib.FindElement(driver, pageSizeXpath, "Page size", action.SCROLLANDBOOLEAN, 50);
 			if(CommonLib.selectVisibleTextFromDropDown(driver, pageSizeElement, "Page Size","50"))
 			{
 				log(LogStatus.INFO, "Page size 50 is Selected", YesNo.No);
@@ -208,11 +216,13 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 			{
 				log(LogStatus.ERROR, "Could not Select the 50 from the Page size", YesNo.Yes);
 				verifyData.add("Could not Select the 50 from the Page size");
-				
+
 			}
 		}
 		else if(row>50)
 		{
+			String pageSizeXpath="//a[text()='"+sdgtableName+"']/ancestor::div[contains(@class,'slds-card__header')]/following-sibling::div//select[@name='PagerSize']";
+			pageSizeElement=CommonLib.FindElement(driver, pageSizeXpath, "Page size", action.SCROLLANDBOOLEAN, 50);
 			if(CommonLib.selectVisibleTextFromDropDown(driver, pageSizeElement, "Page Size","100"))
 			{
 				log(LogStatus.INFO, "Page size 100 is Selected", YesNo.No);
@@ -226,7 +236,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 
 		CommonLib.ThreadSleep(20000);
 		String xpath="//a[text()='"+sdgtableName+"']/ancestor::div[contains(@class,'slds-card__header')]/following-sibling::div//tbody//td";
-	
+
 		List<WebElement> ele=CommonLib.FindElements(driver, xpath, "SDG Data");
 		ArrayList<String> sdgDataFromOrg=new ArrayList<String>();
 		for(int i=0;i<ele.size();i++)
@@ -246,9 +256,10 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 				ex.printStackTrace();
 				log(LogStatus.ERROR, "Could not get the text from the SDG", YesNo.Yes);
 				verifyData.add("Could not get the text from the SDG");
-				
+
 			}
 		}	
+
 		for(int i=0;i<sdgDataFromExcel.size();i++)
 		{
 			if(sdgDataFromOrg.get(i).equals(sdgDataFromExcel.get(i)))
@@ -259,7 +270,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 			{
 				log(LogStatus.ERROR, "Data from Excel : "+sdgDataFromExcel.get(i)+" is not matched with the Org SDG Data : "+sdgDataFromOrg.get(i), YesNo.Yes);
 				verifyData.add(sdgDataFromExcel.get(i));
-				
+
 			}
 		}
 

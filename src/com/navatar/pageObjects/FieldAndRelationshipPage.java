@@ -90,6 +90,101 @@ public class FieldAndRelationshipPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, replaceValueWithNull, "Visibility", timeOut, "Replace Value with Null Value");
 	}
 	
+	@FindBy(xpath="//input[@title='New Industry Picklist Values']")
+	private WebElement picklistNewButton;
+
+	public WebElement getpicklistNewButton(int timeOut) {
+		
+		return isDisplayed(driver, picklistNewButton, "Visibility", timeOut, "New Button for Picklist");
+	}
+	
+	@FindBy(xpath="//iframe[@title='Add Picklist Values: Industry ~ Salesforce - Enterprise Edition']")
+	private WebElement addPicklistIFrame;
+
+	public WebElement getaddPicklistIFrame(int timeOut) {
+		
+		return isDisplayed(driver, addPicklistIFrame, "Visibility", timeOut, "Add picklist Iframe");
+	}
+	
+	
+	@FindBy(xpath="//table[@class='detailList']//textarea")
+	private WebElement addPicklistTextArea;
+
+	public WebElement getaddPicklistTextArea(int timeOut) {
+		
+		return isDisplayed(driver, addPicklistTextArea, "Visibility", timeOut, "Add picklist Textarea");
+	}
+	
+	@FindBy(xpath="//input[@title='Save']")
+	private WebElement saveButton;
+
+	public WebElement getsaveButton(int timeOut) {	
+		return isDisplayed(driver, saveButton, "Visibility", timeOut, "Save button");
+	}
+	
+
+	@FindBy(xpath="//input[@title='Replace']")
+	private WebElement replaceButton;
+
+	public WebElement getreplaceButton(int timeOut) {	
+		return isDisplayed(driver, replaceButton, "Visibility", timeOut, "Replace button");
+	}
+	
+	@FindBy(xpath="//label[text()='Exact Value Changing From']/parent::td/following-sibling::td//input[@type='text']")
+	private WebElement valueChangingFrom;
+
+	public WebElement getvalueChangingFrom(int timeOut) {	
+		return isDisplayed(driver, valueChangingFrom, "Visibility", timeOut, "Value Changing From textbox");
+	}
+	
+	
+
+	@FindBy(xpath="//label[text()='Select Value Changing To']/parent::td/following-sibling::td//select")
+	private WebElement valueChangingTo;
+
+	public WebElement getvalueChangingTo(int timeOut) {	
+		return isDisplayed(driver, valueChangingTo, "Visibility", timeOut, "Value Changing To Dropdown");
+	}
+	
+	
+	@FindBy(xpath="//iframe[contains(@title,'Find and Replace Picklist: Industry')]")
+	private WebElement ReplaceOptionIframe;
+
+	public WebElement getReplaceOptionIframe(int timeOut) {	
+		return isDisplayed(driver, ReplaceOptionIframe, "Visibility", timeOut, "Find and Replace Iframe");
+	}
+	
+	
+	@FindBy(xpath="//h1[text()='Replace Picklist Confirmation']")
+	private WebElement ReplaceConfirmationMessage;
+
+	public WebElement getReplaceConfirmationMessage(int timeOut) {	
+		return isDisplayed(driver, ReplaceConfirmationMessage, "Visibility", timeOut, "Replace Confirmation Message");
+	}
+	
+
+	@FindBy(xpath="//iframe[contains(@title,'Replace Picklist Confirmation')]")
+	private WebElement ReplacePicklistConfirmationiframe;
+
+	public WebElement getReplacePicklistConfirmationiframe(int timeOut) {	
+		return isDisplayed(driver, ReplacePicklistConfirmationiframe, "Visibility", timeOut, "Replace Picklist Confirmation Iframe");
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
 	
 	
 	

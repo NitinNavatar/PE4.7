@@ -526,11 +526,7 @@ public class EditPage extends BasePageBusinessLayer {
 			private List<WebElement>  showDrpDownList;
 			public List<WebElement> showDrpDownList(){
 				return FindElements(driver, showDrpDownList, "Show DropDown List");
-			}
-		
-			
-			
-			
+			}			
 			
 			public WebElement TooltipElement(String Title) {
 			WebElement TooltipElement;
@@ -539,6 +535,43 @@ public class EditPage extends BasePageBusinessLayer {
 					"//a[text()='" + Title + "']/ancestor::article/preceding-sibling::lightning-icon", "Tooltip",
 					action.SCROLLANDBOOLEAN, 20);
 			}
+			
+			@FindBy(xpath="//a[text()='Add Component(s) Here']")
+
+			private WebElement AddComponentButton;
+
+			public WebElement getAddComponentButton(int timeOut) {
+				return isDisplayed(driver, AddComponentButton, "Visibility", timeOut, "object manage");
+
+			}
+			
+			@FindBy(xpath="//button[text()='Save']")
+			private WebElement editAppSaveButton;
+
+			public WebElement getEditAppSaveButton(int timeOut) {
+				return isDisplayed(driver, editAppSaveButton, "Visibility", timeOut, "Save Button");
+
+			}
+						
+			@FindBy(xpath="//div[@class='notification showMessage']")
+			private WebElement saveConfirmationMessage;
+
+			public WebElement getsaveConfirmationMessage(int timeOut) {
+				return isDisplayed(driver, saveConfirmationMessage, "Visibility", timeOut, "Save confirmation Message");
+
+			}
+			
+			@FindBy(xpath="//lightning-icon[contains(@class,'slds-icon-utility-back')]")
+			private WebElement backIcon;
+
+			public WebElement getbBackIcon(int timeOut) {
+				return isDisplayed(driver, backIcon, "Visibility", timeOut, "Back icon");
+
+			}
+			
+			
+			
+			
 			
 			//a[text()='Fund - First SDG Grid']/ancestor::article/preceding-sibling::lightning-icon
 }

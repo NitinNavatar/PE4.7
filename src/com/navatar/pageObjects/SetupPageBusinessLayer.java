@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.DoubleClickAction;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Screen;
 
@@ -39,7 +41,7 @@ import java.util.Set;
 import static com.navatar.generic.AppListeners.*;
 
 public class SetupPageBusinessLayer extends SetupPage {
-//	Scanner scn = new Scanner(System.in);
+	//	Scanner scn = new Scanner(System.in);
 	public SetupPageBusinessLayer(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
@@ -170,7 +172,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 					FindElement(driver,
 							"//table[@data-aura-class='uiVirtualDataGrid--default uiVirtualDataGrid']//a[text()='"
 									+ object + "']",
-							"", action.BOOLEAN, 20),
+									"", action.BOOLEAN, 20),
 					"visibility", 20, "page layout link");
 			if (ele != null) {
 				if (click(driver, ele, object + " object link", action.SCROLLANDBOOLEAN)) {
@@ -236,7 +238,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 						ele = isDisplayed(driver,
 								FindElement(driver,
 										"//a[text()='" + layoutName.get(i)
-												+ "']/../preceding-sibling::td//a[contains(@title,'Layout')]",
+										+ "']/../preceding-sibling::td//a[contains(@title,'Layout')]",
 										"", action.BOOLEAN, 20),
 								"visibility", 20, obj + " page layout link");
 					} else {
@@ -244,7 +246,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 							ele = isDisplayed(driver,
 									FindElement(driver,
 											"//div[@id='LayoutList_body']//tr/th[text()='" + layoutName.get(i)
-													+ "']/../td/a[contains(@title,'Edit')]",
+											+ "']/../td/a[contains(@title,'Edit')]",
 											"", action.BOOLEAN, 20),
 									"visibility", 20, layoutName.get(i) + " page layout link");
 						} else {
@@ -281,8 +283,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 									trgt = trgt.replace("_", " ");
 								}
 
-//								src=src.replace("_", " ");
-//								trgt=trgt.replace("_", " ");
+								//								src=src.replace("_", " ");
+								//								trgt=trgt.replace("_", " ");
 
 								WebElement targetElement = null;
 								if (src.split("<break>")[0].contains("Related List")) {
@@ -292,13 +294,13 @@ public class SetupPageBusinessLayer extends SetupPage {
 											trgt = trgt.split("<break>")[trgt.split("<break>").length - 1];
 											targetElement = FindElement(driver,
 													"//h3[text()='" + trgt
-															+ "']/../../../../../../../../preceding-sibling::div[1]",
+													+ "']/../../../../../../../../preceding-sibling::div[1]",
 													"", action.BOOLEAN, 20);
 										} else {
 											trgt = trgt.split("<break>")[trgt.split("<break>").length - 1];
 											targetElement = FindElement(driver,
 													"//h3[text()='" + trgt
-															+ "']/../../../../../../../../following-sibling::div[1]",
+													+ "']/../../../../../../../../following-sibling::div[1]",
 													"", action.BOOLEAN, 20);
 										}
 										src = src.split("<break>")[src.split("<break>").length - 1];
@@ -401,9 +403,9 @@ public class SetupPageBusinessLayer extends SetupPage {
 							}
 						} else {
 							appLog.error("Not able to click on " + layoutName.get(i)
-									+ "layout edit icon so cannot dargNdrop.");
+							+ "layout edit icon so cannot dargNdrop.");
 							result.add("Not able to click on " + layoutName.get(i)
-									+ "layout edit icon so cannot dargNdrop.");
+							+ "layout edit icon so cannot dargNdrop.");
 						}
 					} else {
 						appLog.error(layoutName.get(i) + " Layout name is not visible so cannot click on edit icon");
@@ -566,7 +568,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 						WebElement ele = FindElement(
 								driver, "//img[@title='Checked']/../..//span[contains(text(),'" + lastName + ", "
 										+ firstName + "')]/../..//input",
-								"Activate User Check Box", action.BOOLEAN, 20);
+										"Activate User Check Box", action.BOOLEAN, 20);
 						if (ele != null) {
 							for (int i = 0; i < 2; i++) {
 								if (click(driver, ele, firstName + " " + lastName + " check box", action.BOOLEAN)) {
@@ -574,7 +576,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 									WebElement checkBox = FindElement(driver,
 											"//img[@title='Checked']/../..//span[contains(text(),'" + lastName + ", "
 													+ firstName + "')]/../..//input",
-											"Activate User Check Box", action.BOOLEAN, 20);
+													"Activate User Check Box", action.BOOLEAN, 20);
 									if (isSelected(driver, checkBox, firstName + " " + lastName + " check box")) {
 										log(LogStatus.INFO, "clicked on user check box: " + firstName + " " + lastName,
 												YesNo.No);
@@ -594,7 +596,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 											log(LogStatus.INFO,
 													"Not able to click on add button so cannot install user package: "
 															+ firstName + " " + lastName,
-													YesNo.Yes);
+															YesNo.Yes);
 										}
 									} else {
 										if (i == 1) {
@@ -602,7 +604,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 											log(LogStatus.INFO,
 													"username checkbox is not selected in istalled package : "
 															+ firstName + " " + lastName,
-													YesNo.Yes);
+															YesNo.Yes);
 										}
 									}
 								} else {
@@ -980,28 +982,28 @@ public class SetupPageBusinessLayer extends SetupPage {
 															log(LogStatus.FAIL,
 																	"Not able to select to next button so cannot create  object "
 																			+ fieldLabelName,
-																	YesNo.Yes);
+																			YesNo.Yes);
 															return false;
 														}
 													} else {
 														log(LogStatus.FAIL,
 																"Not able to select to related drop down value : "
 																		+ relatedTovalue,
-																YesNo.Yes);
+																		YesNo.Yes);
 														return false;
 													}
 												} else {
 													log(LogStatus.FAIL,
 															"drop down value is not present for look relation object so cannot create look object "
 																	+ fieldLabelName,
-															YesNo.Yes);
+																	YesNo.Yes);
 													return false;
 												}
 											} else {
 												log(LogStatus.FAIL,
 														"related to drop down value is not present for look relation object so cannot create look object "
 																+ fieldLabelName,
-														YesNo.Yes);
+																YesNo.Yes);
 												return false;
 											}
 
@@ -1072,15 +1074,15 @@ public class SetupPageBusinessLayer extends SetupPage {
 												action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.PASS, "Clicked on Step 2 Next button", YesNo.No);
 											ThreadSleep(2000);
-//											if(sendKeys(driver, getFormulaTextBox(30), formulaText,"formula text area", action.SCROLLANDBOOLEAN)) {
-//													log(LogStatus.PASS, "Passed Value in formula Text Box "+formulaText, YesNo.No);
+											//											if(sendKeys(driver, getFormulaTextBox(30), formulaText,"formula text area", action.SCROLLANDBOOLEAN)) {
+											//													log(LogStatus.PASS, "Passed Value in formula Text Box "+formulaText, YesNo.No);
 											if (click(driver, getCustomFieldNextBtn(30), "next button",
 													action.SCROLLANDBOOLEAN)) {
 												log(LogStatus.PASS, "Clicked on Step 3 Next button", YesNo.No);
 												ThreadSleep(1000);
-//														if(click(driver, getCustomFieldNextBtn(30),"next button", action.SCROLLANDBOOLEAN)) {
-//															log(LogStatus.PASS, "Clicked on Step 4 Next button", YesNo.No);
-//															ThreadSleep(1000);
+												//														if(click(driver, getCustomFieldNextBtn(30),"next button", action.SCROLLANDBOOLEAN)) {
+												//															log(LogStatus.PASS, "Clicked on Step 4 Next button", YesNo.No);
+												//															ThreadSleep(1000);
 												click(driver, getCustomFieldNextBtn(10), "next button",
 														action.SCROLLANDBOOLEAN);
 												ThreadSleep(1000);
@@ -1095,28 +1097,28 @@ public class SetupPageBusinessLayer extends SetupPage {
 													log(LogStatus.FAIL,
 															"Not able to click on save button so cannot create custom field "
 																	+ objectName,
-															YesNo.Yes);
+																	YesNo.Yes);
 												}
 
-//														}else {
-//															log(LogStatus.FAIL, "Not able to click on Step 4 next button so cannot create custom field : "+objectName,YesNo.Yes);
-//														}
+												//														}else {
+												//															log(LogStatus.FAIL, "Not able to click on Step 4 next button so cannot create custom field : "+objectName,YesNo.Yes);
+												//														}
 
 											} else {
 												log(LogStatus.FAIL,
 														"Not able to click on Step 3 next button so cannot create custom field : "
 																+ objectName,
-														YesNo.Yes);
+																YesNo.Yes);
 											}
 
-//											}else {
-//												log(LogStatus.FAIL, "Not able to click on Step 2 next button so cannot create custom field : "+objectName,YesNo.Yes);
-//											}
+											//											}else {
+											//												log(LogStatus.FAIL, "Not able to click on Step 2 next button so cannot create custom field : "+objectName,YesNo.Yes);
+											//											}
 										} else {
 											log(LogStatus.FAIL,
 													"Not able to enter value in field label text box : "
 															+ fieldLabelName + " so cannot create custom field",
-													YesNo.Yes);
+															YesNo.Yes);
 										}
 									} else {
 										log(LogStatus.FAIL,
@@ -1214,8 +1216,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 										if (splitedDragComponent[i].equalsIgnoreCase("Highest Stage Reached")
 												|| splitedDragComponent[i]
 														.equalsIgnoreCase("Total Fund Commitments (mn)")
-												|| splitedDragComponent[i]
-														.equalsIgnoreCase("Total Co-investment Commitments (mn)")) {
+														|| splitedDragComponent[i]
+																.equalsIgnoreCase("Total Co-investment Commitments (mn)")) {
 											String DragComponent = splitedDragComponent[i].split(" ")[0];
 											sourceElement = isDisplayed(driver,
 													FindElement(driver,
@@ -1227,7 +1229,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 													FindElement(driver,
 															"//span[starts-with(text(),'" + splitedDragComponent[i]
 																	+ "')]",
-															"", action.BOOLEAN, 10),
+																	"", action.BOOLEAN, 10),
 													"visibility", 10, splitedDragComponent[i] + " page layout link");
 										}
 										ThreadSleep(2000);
@@ -1240,7 +1242,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 											log(LogStatus.ERROR,
 													"Not able to drag and drop field " + splitedDragComponent[i]
 															+ " in created field set component " + fieldSetLabel,
-													YesNo.Yes);
+															YesNo.Yes);
 										}
 									}
 									if (count == splitedDragComponent.length) {
@@ -1257,14 +1259,14 @@ public class SetupPageBusinessLayer extends SetupPage {
 									log(LogStatus.ERROR,
 											"Not able to click on Save button cannot save pagelayout dragged object or section in field set component "
 													+ fieldSetLabel,
-											YesNo.Yes);
+													YesNo.Yes);
 									flag = false;
 								}
 							} else {
 								log(LogStatus.ERROR,
 										"Not able to click on save button so cannot create field set label : "
 												+ fieldSetLabel,
-										YesNo.Yes);
+												YesNo.Yes);
 							}
 						} else {
 							log(LogStatus.ERROR, "Not able to enter the value in where is this used text area : "
@@ -1351,33 +1353,33 @@ public class SetupPageBusinessLayer extends SetupPage {
 														"Not able to click on save button field accessbility of field label "
 																+ fieldLabel + " in object " + objectName
 																+ " so cannot " + permissionType,
-														YesNo.Yes);
+																YesNo.Yes);
 											}
 										} else {
 											log(LogStatus.ERROR,
 													"Not able to click on visible field accessbility of field label "
 															+ fieldLabel + " in object " + objectName + " so cannot "
 															+ permissionType,
-													YesNo.Yes);
+															YesNo.Yes);
 										}
 									} else {
 										log(LogStatus.ERROR,
 												" Not able to click on profile link from view field accessbility of field label "
 														+ fieldLabel + " in object " + objectName + " so cannot "
 														+ permissionType,
-												YesNo.Yes);
+														YesNo.Yes);
 									}
 								} else {
 									log(LogStatus.ERROR,
 											"Not able to select value from view field accessbility of field label "
 													+ fieldLabel + " in object " + objectName + " so cannot "
 													+ permissionType,
-											YesNo.Yes);
+													YesNo.Yes);
 								}
 							} else {
 								log(LogStatus.ERROR,
 										"Not able to click on view field accessbility of field label " + fieldLabel
-												+ " in object " + objectName + " so cannot " + permissionType,
+										+ " in object " + objectName + " so cannot " + permissionType,
 										YesNo.Yes);
 							}
 						} else {
@@ -1468,33 +1470,33 @@ public class SetupPageBusinessLayer extends SetupPage {
 														"Not able to click on save button field accessbility of field label "
 																+ fieldLabel + " in object " + objectName
 																+ " so cannot " + permissionType,
-														YesNo.Yes);
+																YesNo.Yes);
 											}
 										} else {
 											log(LogStatus.ERROR,
 													"Not able to click on visible field accessbility of field label "
 															+ fieldLabel + " in object " + objectName + " so cannot "
 															+ permissionType,
-													YesNo.Yes);
+															YesNo.Yes);
 										}
 									} else {
 										log(LogStatus.ERROR,
 												" Not able to click on profile link from view field accessbility of field label "
 														+ fieldLabel + " in object " + objectName + " so cannot "
 														+ permissionType,
-												YesNo.Yes);
+														YesNo.Yes);
 									}
 								} else {
 									log(LogStatus.ERROR,
 											"Not able to select value from view field accessbility of field label "
 													+ fieldLabel + " in object " + objectName + " so cannot "
 													+ permissionType,
-											YesNo.Yes);
+													YesNo.Yes);
 								}
 							} else {
 								log(LogStatus.ERROR,
 										"Not able to click on view field accessbility of field label " + fieldLabel
-												+ " in object " + objectName + " so cannot " + permissionType,
+										+ " in object " + objectName + " so cannot " + permissionType,
 										YesNo.Yes);
 							}
 						} else {
@@ -1581,8 +1583,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 										} else {
 											log(LogStatus.INFO, "Not able to click on reomve icon of object : "
 													+ removeObject[i]
-													+ " so cannot remove old object and dragged new objects in field set",
-													YesNo.No);
+															+ " so cannot remove old object and dragged new objects in field set",
+															YesNo.No);
 											return false;
 										}
 									}
@@ -1619,13 +1621,13 @@ public class SetupPageBusinessLayer extends SetupPage {
 												FindElement(driver,
 														"//div[@id='defaultView']/div//*[contains(text(),'"
 																+ sourceComponent[i] + "')]",
-														"", action.BOOLEAN, 10),
+																"", action.BOOLEAN, 10),
 												"visibility", 10, sourceComponent[i] + " component in field set");
 
 										destination = isDisplayed(driver, FindElement(driver,
 												"//div[@id='defaultView']/div//*[contains(text(),'"
 														+ destinationComponent[i] + "')]",
-												"", action.BOOLEAN, 10), "visibility", 10,
+														"", action.BOOLEAN, 10), "visibility", 10,
 												destinationComponent[i] + " component in field set");
 
 									}
@@ -1637,7 +1639,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 										log(LogStatus.ERROR,
 												"Not able to drag and drop field " + sourceComponent[i]
 														+ " in created field set component " + fieldSetLabel,
-												YesNo.Yes);
+														YesNo.Yes);
 									}
 								}
 								if (count == sourceComponent.length) {
@@ -1688,9 +1690,9 @@ public class SetupPageBusinessLayer extends SetupPage {
 											|| splitedDragComponent[i].equalsIgnoreCase("Contact Referral Source")
 											|| splitedDragComponent[i]
 													.equalsIgnoreCase("Last Stay-in-Touch Request Date")
-											|| splitedDragComponent[i].equalsIgnoreCase("Total Fund Commitments (mn)")
-											|| splitedDragComponent[i]
-													.equalsIgnoreCase("Total Co-investment Commitments (mn)")) {
+													|| splitedDragComponent[i].equalsIgnoreCase("Total Fund Commitments (mn)")
+													|| splitedDragComponent[i]
+															.equalsIgnoreCase("Total Co-investment Commitments (mn)")) {
 										String DragComponent = splitedDragComponent[i].split(" ")[0];
 										sourceElement = isDisplayed(driver,
 												FindElement(driver,
@@ -1714,7 +1716,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 										log(LogStatus.ERROR,
 												"Not able to drag and drop field " + splitedDragComponent[i]
 														+ " in created field set component " + fieldSetLabel,
-												YesNo.Yes);
+														YesNo.Yes);
 									}
 								}
 								if (count == splitedDragComponent.length) {
@@ -1732,7 +1734,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 								log(LogStatus.ERROR,
 										"Not able to click on Save button cannot save pagelayout dragged object or section in field set component "
 												+ fieldSetLabel,
-										YesNo.Yes);
+												YesNo.Yes);
 								flag = false;
 							}
 						} else {
@@ -1816,7 +1818,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 															"//div[@id='defaultView']/div[@class='dataview-empty']",
 															"field set label text", action.BOOLEAN, 3),
 													"visibility", 3, "field set label text");
-//											fieldSetList=FindElements(driver, xpath, "all dragged field set list xpath");
+											//											fieldSetList=FindElements(driver, xpath, "all dragged field set list xpath");
 											if (ele != null) {
 												if (click(driver, getPageLayoutSaveBtn(object.Global_Actions, 10),
 														"page layouts save button", action.SCROLLANDBOOLEAN)) {
@@ -1829,7 +1831,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 													log(LogStatus.ERROR,
 															"Not able to click on Save button cannot save pagelayout dragged object or section in field set component "
 																	+ fieldSetLabel,
-															YesNo.Yes);
+																	YesNo.Yes);
 													return false;
 												}
 											} else {
@@ -1843,7 +1845,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 													log(LogStatus.ERROR,
 															"Not able to click on Save button cannot save pagelayout dragged object or section in field set component "
 																	+ fieldSetLabel,
-															YesNo.Yes);
+																	YesNo.Yes);
 													flag = false;
 												}
 											}
@@ -2630,15 +2632,15 @@ public class SetupPageBusinessLayer extends SetupPage {
 					log(LogStatus.INFO, "Click on Save Button", YesNo.No);
 					ThreadSleep(5000);
 					flag = true;
-//				String xpath = "//div[@aria-labelledby='appImageLabel']//span[text()='"+imgName+"']";
-//				WebElement ele= FindElement(driver, xpath, imgName, action.BOOLEAN, 30);
-//				if (ele!=null) {
-//					log(LogStatus.INFO,"File uploaded successfully "+imgName,YesNo.No);
-//					flag=true;
-//				} else {
-//					sa.assertTrue(false, "File not uploaded "+imgName);
-//					log(LogStatus.FAIL,"File not uploaded "+imgName,YesNo.Yes);
-//				}
+					//				String xpath = "//div[@aria-labelledby='appImageLabel']//span[text()='"+imgName+"']";
+					//				WebElement ele= FindElement(driver, xpath, imgName, action.BOOLEAN, 30);
+					//				if (ele!=null) {
+					//					log(LogStatus.INFO,"File uploaded successfully "+imgName,YesNo.No);
+					//					flag=true;
+					//				} else {
+					//					sa.assertTrue(false, "File not uploaded "+imgName);
+					//					log(LogStatus.FAIL,"File not uploaded "+imgName,YesNo.Yes);
+					//				}
 				} else {
 					sa.assertTrue(false, "Not Able to Click on Save Button");
 					log(LogStatus.FAIL, "Not Able to Click on Save Button", YesNo.Yes);
@@ -2980,9 +2982,9 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 					if (click(driver, getSelectFieldName(10), label,
 							action.SCROLLANDBOOLEAN)/*
-													 * selectVisibleTextFromDropDown(driver,getSelectFieldName(10),
-													 * label,label)
-													 */) {
+							 * selectVisibleTextFromDropDown(driver,getSelectFieldName(10),
+							 * label,label)
+							 */) {
 						log(LogStatus.INFO, "selected visbible text from the Field Name dropdown " + label, YesNo.No);
 						ThreadSleep(2000);
 						xpath = "//select[@id='ColumnEnumOrId']//*[text()='" + label + "']";
@@ -3286,9 +3288,9 @@ public class SetupPageBusinessLayer extends SetupPage {
 										log(LogStatus.PASS,
 												"passed value in field label using Java script in text box : "
 														+ updatedFieldName,
-												YesNo.No);
+														YesNo.No);
 										ThreadSleep(2000);
-//											
+										//											
 										if (click(driver, getViewAccessbilityDropDownSaveButton(30),
 												"save button for custom field", action.BOOLEAN)) {
 											log(LogStatus.PASS, "clicked on save button", YesNo.No);
@@ -3300,7 +3302,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 											log(LogStatus.FAIL,
 													"Not able to click on save button so cannot create custom field "
 															+ objectName,
-													YesNo.Yes);
+															YesNo.Yes);
 										}
 
 									} else {
@@ -3525,28 +3527,28 @@ public class SetupPageBusinessLayer extends SetupPage {
 															log(LogStatus.FAIL,
 																	"Not able to select to next button so cannot create  object "
 																			+ fieldLabelName,
-																	YesNo.Yes);
+																			YesNo.Yes);
 															return false;
 														}
 													} else {
 														log(LogStatus.FAIL,
 																"Not able to select to related drop down value : "
 																		+ relatedTovalue,
-																YesNo.Yes);
+																		YesNo.Yes);
 														return false;
 													}
 												} else {
 													log(LogStatus.FAIL,
 															"drop down value is not present for look relation object so cannot create look object "
 																	+ fieldLabelName,
-															YesNo.Yes);
+																	YesNo.Yes);
 													return false;
 												}
 											} else {
 												log(LogStatus.FAIL,
 														"related to drop down value is not present for look relation object so cannot create look object "
 																+ fieldLabelName,
-														YesNo.Yes);
+																YesNo.Yes);
 												return false;
 											}
 
@@ -3662,15 +3664,15 @@ public class SetupPageBusinessLayer extends SetupPage {
 												action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.PASS, "Clicked on Step 2 Next button", YesNo.No);
 											ThreadSleep(2000);
-//										if(sendKeys(driver, getFormulaTextBox(30), formulaText,"formula text area", action.SCROLLANDBOOLEAN)) {
-//												log(LogStatus.PASS, "Passed Value in formula Text Box "+formulaText, YesNo.No);
+											//										if(sendKeys(driver, getFormulaTextBox(30), formulaText,"formula text area", action.SCROLLANDBOOLEAN)) {
+											//												log(LogStatus.PASS, "Passed Value in formula Text Box "+formulaText, YesNo.No);
 											if (click(driver, getCustomFieldNextBtn(30), "next button",
 													action.SCROLLANDBOOLEAN)) {
 												log(LogStatus.PASS, "Clicked on Step 3 Next button", YesNo.No);
 												ThreadSleep(1000);
-//													if(click(driver, getCustomFieldNextBtn(30),"next button", action.SCROLLANDBOOLEAN)) {
-//														log(LogStatus.PASS, "Clicked on Step 4 Next button", YesNo.No);
-//														ThreadSleep(1000);
+												//													if(click(driver, getCustomFieldNextBtn(30),"next button", action.SCROLLANDBOOLEAN)) {
+												//														log(LogStatus.PASS, "Clicked on Step 4 Next button", YesNo.No);
+												//														ThreadSleep(1000);
 												click(driver, getCustomFieldNextBtn(10), "next button",
 														action.SCROLLANDBOOLEAN);
 												ThreadSleep(1000);
@@ -3685,28 +3687,28 @@ public class SetupPageBusinessLayer extends SetupPage {
 													log(LogStatus.FAIL,
 															"Not able to click on save button so cannot create custom field "
 																	+ objectName,
-															YesNo.Yes);
+																	YesNo.Yes);
 												}
 
-//													}else {
-//														log(LogStatus.FAIL, "Not able to click on Step 4 next button so cannot create custom field : "+objectName,YesNo.Yes);
-//													}
+												//													}else {
+												//														log(LogStatus.FAIL, "Not able to click on Step 4 next button so cannot create custom field : "+objectName,YesNo.Yes);
+												//													}
 
 											} else {
 												log(LogStatus.FAIL,
 														"Not able to click on Step 3 next button so cannot create custom field : "
 																+ objectName,
-														YesNo.Yes);
+																YesNo.Yes);
 											}
 
-//										}else {
-//											log(LogStatus.FAIL, "Not able to click on Step 2 next button so cannot create custom field : "+objectName,YesNo.Yes);
-//										}
+											//										}else {
+											//											log(LogStatus.FAIL, "Not able to click on Step 2 next button so cannot create custom field : "+objectName,YesNo.Yes);
+											//										}
 										} else {
 											log(LogStatus.FAIL,
 													"Not able to enter value in field label text box : "
 															+ fieldLabelName + " so cannot create custom field",
-													YesNo.Yes);
+															YesNo.Yes);
 										}
 									} else {
 										log(LogStatus.FAIL,
@@ -3830,5 +3832,314 @@ public class SetupPageBusinessLayer extends SetupPage {
 		}
 		return false;
 	}
+
+
+
+	/**
+	 * @author Ankit Jaiswal
+	 * @param objectName
+	 * @param objectFeatureName
+	 * @param permissionType
+	 * @param fieldLabel
+	 * @param profileName
+	 * @return true if able to give/Remove Object Permission From Object Manager
+	 */
+	public boolean giveAndRemoveObjectPermissionFromObjectManager(object objectName,
+			ObjectFeatureName objectFeatureName, String fieldLabel, PermissionType permissionType, String profileName) {
+		boolean flag = false;
+		WebElement ele = null;
+		if (searchStandardOrCustomObject(environment, mode, objectName)) {
+			log(LogStatus.INFO, "click on Object : " + objectName, YesNo.No);
+			ThreadSleep(2000);
+			if (clickOnObjectFeature(environment, mode, objectName, objectFeatureName)) {
+				log(LogStatus.INFO, "Clicked on feature : " + objectFeatureName, YesNo.No);
+				ThreadSleep(1000);
+				if (sendKeys(driver, getQuickSearchInObjectManager_Lighting(50), fieldLabel, "search text box",
+						action.BOOLEAN)) {
+					String xpath = "//span[text()='" + fieldLabel + "']/..";
+					ele = isDisplayed(driver, FindElement(driver, xpath, "field set label text", action.BOOLEAN, 3),
+							"visibility", 3, "field set label text");
+					if (ele != null) {
+						if (click(driver, ele, "field label text link", action.BOOLEAN)) {
+							log(LogStatus.INFO, "clicked on field label " + fieldLabel, YesNo.No);
+							switchToFrame(driver, 50, getFieldAndRelationShipFrame(50));
+							ThreadSleep(1000);
+							if (click(driver,
+									getObjectEditOrSetFieldSecurityOrViewFieldAccessbilityBtn(
+											"View Field Accessibility", 50),
+									"view field accessbility button xpath", action.BOOLEAN)) {
+								log(LogStatus.INFO, "clicked on view field accessbility of field label : " + fieldLabel,
+										YesNo.No);
+								ThreadSleep(2000);
+								switchToFrame(driver, 50, getFieldAndRelationShipFrame(50));
+								ThreadSleep(5000);
+								if (selectVisibleTextFromDropDown(driver, getFieldAccessbilityDropDown(50),
+										"field accessbility drop down", fieldLabel)) {
+									log(LogStatus.INFO, "select field label accessbility drop down " + fieldLabel,
+											YesNo.No);
+									ThreadSleep(1000);
+									if (clickUsingJavaScript(driver, getfieldAccessOptionLink(profileName, 10),
+											"profile link name", action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.INFO, "clicked on " + profileName + " link", YesNo.No);
+										CommonLib.switchToDefaultContent(driver);
+										switchToFrame(driver, 50, getFieldAndRelationShipFrame(50));
+										if(permissionType.toString().equals("givePermission"))
+										{
+											if(!CommonLib.isSelected(driver, getFieldLevelSecurityVisibleCheckBox(40), "Field-Level Security checkbox"))
+											{
+												if (click(driver, getFieldLevelSecurityVisibleCheckBox(40), "check box",
+														action.BOOLEAN)) {
+													log(LogStatus.INFO, "Clicked on field level security check box", YesNo.No);
+													ThreadSleep(5000);
+													if (clickUsingJavaScript(driver, getsaveButtonHeader(50), "save button",action.BOOLEAN)) {
+														log(LogStatus.INFO, "save button", YesNo.No);
+														flag=true;
+
+													} else {
+														log(LogStatus.ERROR,"Not able to click on save button field accessbility of field label "	+ fieldLabel + " in object " + objectName	+ " so cannot " + permissionType,YesNo.Yes);
+														flag=false;
+													}
+												} else {
+													log(LogStatus.ERROR,
+															"Not able to click on visible field accessbility of field label "
+																	+ fieldLabel + " in object " + objectName + " so cannot "
+																	+ permissionType,
+																	YesNo.Yes);
+													flag=false;
+												}
+											}
+											else
+											{
+												log(LogStatus.INFO, "Permission is already given", YesNo.No);
+												flag=true;
+											}
+										}
+										else if(permissionType.toString().equals("removePermission"))
+										{
+											if(CommonLib.isSelected(driver, getFieldLevelSecurityVisibleCheckBox(40), "Field-Level Security checkbox"))
+											{
+												if (click(driver, getFieldLevelSecurityVisibleCheckBox(40), "check box",
+														action.BOOLEAN)) {
+													log(LogStatus.INFO, "Clicked on field level security check box", YesNo.No);
+													ThreadSleep(5000);
+													if (clickUsingJavaScript(driver, getsaveButtonHeader(50), "save button",
+															action.BOOLEAN)) {
+														log(LogStatus.INFO, "save button", YesNo.No);
+														flag=true;
+
+													} else {
+														log(LogStatus.ERROR,
+																"Not able to click on save button field accessbility of field label "
+																		+ fieldLabel + " in object " + objectName
+																		+ " so cannot " + permissionType,
+																		YesNo.Yes);
+														flag=false;
+													}
+												} else {
+													log(LogStatus.ERROR,
+															"Not able to click on visible field accessbility of field label "
+																	+ fieldLabel + " in object " + objectName + " so cannot "
+																	+ permissionType,
+																	YesNo.Yes);
+													flag=false;
+												}
+											}
+											else
+											{
+												log(LogStatus.INFO, "Permission is already removed", YesNo.No);
+												flag=true;
+											}
+
+										}
+
+										else {
+											log(LogStatus.ERROR,
+													" Not able to click on profile link from view field accessbility of field label "
+															+ fieldLabel + " in object " + objectName + " so cannot "
+															+ permissionType,
+															YesNo.Yes);
+											flag=false;
+										}
+									} else {
+										log(LogStatus.ERROR,
+												"Not able to select value from view field accessbility of field label "
+														+ fieldLabel + " in object " + objectName + " so cannot "
+														+ permissionType,
+														YesNo.Yes);
+										flag=false;
+									}
+								} else {
+									log(LogStatus.ERROR,
+											"Not able to click on view field accessbility of field label " + fieldLabel
+											+ " in object " + objectName + " so cannot " + permissionType,
+											YesNo.Yes);
+									flag=false;
+								}
+							} else {
+								log(LogStatus.ERROR, "Not able to click on field label " + fieldLabel + " in object "
+										+ objectName + " so cannot " + permissionType, YesNo.Yes);
+							}
+						} else {
+							log(LogStatus.ERROR, "Search field label " + fieldLabel + " is not found in object "
+									+ objectName + " so cannot " + permissionType, YesNo.Yes);
+							flag=false;
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to search field label " + fieldLabel + " in object " + objectName
+								+ " so cannot " + permissionType, YesNo.Yes);
+						flag=false;
+					}
+
+				} else {
+					log(LogStatus.FAIL,
+							"Not able to found object : " + objectName.toString() + " so cannot " + permissionType,
+							YesNo.Yes);
+					flag=false;
+				}
+			} else {
+				log(LogStatus.FAIL, "Not able to search object " + objectName.toString() + " so cannot " + permissionType,
+						YesNo.Yes);
+				flag=false;
+			}
+
+
+		}
+
+		return flag;
+	}
+
+
+	/*******************************************************
+	 * Activity Association
+	 ******************************/
+	/**
+	 * @author Sourah Kumar
+	 * @param email
+	 * @param userLicense
+	 * @param userProfile
+	 * @return true/false
+	 * @description this method is used to
+	 */
+	public boolean EditPEUser(String email, String labelName, HTMLTAG tag,String value) {
+		boolean flag=false;
+		WebElement ele=null;
+		if (click(driver, getHomeTab(30), "home tab", action.SCROLLANDBOOLEAN)) {
+			appLog.info("clicked on the home tab");
+			if (click(driver, getExpandUserIcon(30), "expand User Icon", action.SCROLLANDBOOLEAN)) {
+				appLog.info("clicked on user expand icon");
+				if (click(driver, getUsersLink(30), "User Link", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on users link");
+					switchToFrame(driver, 20, getSetUpPageIframe(20));
+					try
+					{
+						ele=new WebDriverWait(driver, 50).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[text()='"+email+"']/parent::td//preceding-sibling::td[@class='actionColumn']//a[text()='Edit']")));
+					}
+					catch(Exception ex)
+					{
+						ex.printStackTrace();
+						log(LogStatus.ERROR,"Could not found the Element of the edit button",YesNo.Yes);
+						flag=false;
+					}
+					if (click(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
+						appLog.info("Clicked on the edit button against "+email);
+						CommonLib.switchToDefaultContent(driver);
+						CommonLib.switchToFrame(driver, 50, getuserEditPageIframe(50));
+
+						if(tag.toString().equals("select"))
+						{
+							try
+							{
+								ele=new WebDriverWait(driver, 50).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='"+labelName+"']/parent::td//following-sibling::td//select")));
+							}
+							catch(Exception ex)
+							{
+								ex.printStackTrace();
+								log(LogStatus.ERROR,"Could not found the Element of the Select tag",YesNo.Yes);
+								flag=false;
+							}
+
+							if(CommonLib.selectVisibleTextFromDropDown(driver, ele, labelName+" Dropdown list", value))
+							{
+								log(LogStatus.INFO, value+" has been selected from the "+labelName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Could not select the value from the drop down list",YesNo.Yes);
+								flag=false;
+							}
+
+						}
+						else if(tag.toString().equals("input"))
+						{
+
+							try
+							{
+								ele=new WebDriverWait(driver, 50).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='"+labelName+"']/parent::td//following-sibling::td//input")));
+							}
+							catch(Exception ex)
+							{
+								ex.printStackTrace();
+								log(LogStatus.ERROR,"Could not found the Element of the input tag",YesNo.Yes);
+								flag=false;
+							}
+							if(CommonLib.sendKeys(driver, ele, value, labelName+" input ", action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, value+" has been entered in the "+labelName, YesNo.No);
+							}
+
+						}
+						if (click(driver, geteditPageSaveButton(50), "save Button", action.SCROLLANDBOOLEAN)) {
+							appLog.info("Clicked on the save button against "+email);
+							CommonLib.switchToDefaultContent(driver);
+							switchToFrame(driver, 20, getSetUpPageIframe(20));
+
+							String userHeading=CommonLib.getText(driver, getallUserHeading(50), "Heading", action.SCROLLANDBOOLEAN);
+							if(userHeading.equals("All Users"))
+							{
+								log(LogStatus.PASS, "All Users Heading is visible so "+labelName+ "has been updated",YesNo.Yes);
+								flag=true;
+							}
+							else
+							{
+								log(LogStatus.FAIL, "All Users Heading is not visible so "+labelName+ "is not updated",YesNo.Yes);
+								flag=false;
+							}
+
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the save button against "+email,YesNo.Yes);
+							flag=false;
+						}
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the edit button against "+email,YesNo.Yes);
+						flag=false;
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on the User link button",YesNo.Yes);
+					flag=false;
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on expand user icon button",YesNo.Yes);
+				flag=false;
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on the home tab button",YesNo.Yes);
+			flag=false;
+		}
+		return flag;
+	}
+
+
 
 }

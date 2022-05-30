@@ -756,7 +756,49 @@ public class SetupPage extends BasePageBusinessLayer {
 		
 		scrollDownThroughWebelement(driver, objectDropdown, "override object dropdown");
 		return isDisplayed(driver, objectDropdown, "Visibility", timeOut, "override object dropdown");
-
-		
+	
 	}
+	
+	@FindBy(xpath = "//div[@class='pbHeader']//input[@title='Save']")
+	private WebElement saveButtonHeader;
+
+	public WebElement getsaveButtonHeader(int timeOut) {
+		return isDisplayed(driver, saveButtonHeader, "Visibility", timeOut, "Save Button");
+	}
+	
+	
+	@FindBy(xpath = "//iframe[contains(@title,'User Edit:')]")
+	private WebElement userEditPageIframe;
+
+	public WebElement getuserEditPageIframe(int timeOut) {
+		return isDisplayed(driver, userEditPageIframe, "Visibility", timeOut, "user edit page iframe");
+	}
+	
+	
+	@FindBy(xpath = "//ul[contains(@class,'tabBarItems slds-grid')]//span[contains(@class,'title slds-truncate')][contains(text(),'Home')]")
+	private WebElement homeTab;
+
+	public WebElement getHomeTab(int timeOut) {
+		return isDisplayed(driver, homeTab, "Visibility", timeOut, "Home tab button");
+	}
+	
+	@FindBy(xpath = "//div[@class='pbHeader']//input[@title='Save']")
+	private WebElement editPageSaveButton;
+
+	public WebElement geteditPageSaveButton(int timeOut) {
+		return isDisplayed(driver, editPageSaveButton, "Visibility", timeOut, "Save Button on Edit page");
+	}
+
+	@FindBy(xpath = "//h1[text()='All Users']")
+	private WebElement allUserHeading;
+
+	public WebElement getallUserHeading(int timeOut) {
+		return isDisplayed(driver, allUserHeading, "Visibility", timeOut, "All user heading");
+	}
+	
+	
+	
+	
+	
+	
 }

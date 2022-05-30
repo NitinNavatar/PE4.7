@@ -693,7 +693,14 @@ public class DataLoaderWizardPageBusinessLayer extends DataLoaderWizardPage {
 		for(String column : columns)
 		{
 			if(ObjectName.equals(object.Sortable_Data_Grid_Field.toString()))
+			{
 				sourceANDDestination.put(column, "sdg");
+			}
+			else if(ObjectName.equals(object.User.toString()))
+			{
+				sourceANDDestination.put(column, "Identifier");
+			}
+			
 			else
 				sourceANDDestination.put(column, "Account Name");
 		}
@@ -712,16 +719,13 @@ public class DataLoaderWizardPageBusinessLayer extends DataLoaderWizardPage {
 			addFieldToLayoutPage("", layoutName, sourceANDDestination, object.Sortable_Data_Grid_Action);
 		else if(ObjectName.equals(object.Sortable_Data_Grid_Field.toString()))
 			addFieldToLayoutPage("", layoutName, sourceANDDestination, object.Sortable_Data_Grid_Field);
+		else if(ObjectName.equals(object.User.toString()))
+			addFieldToLayoutPage("", layoutName, sourceANDDestination, object.User);
+		
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
+		
 	
 	public void addFieldToLayoutPage(String projectName, List<String> pageLayoutsName, HashMap<String, String> sourceANDDestination,object obj) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -760,6 +764,27 @@ public class DataLoaderWizardPageBusinessLayer extends DataLoaderWizardPage {
 		sa.assertAll();
 	
 	}
+	
+	
+	
+	public boolean addFieldToLayoutPage(String projectName,String mode, List<String> pageLayoutsName, HashMap<String, String> sourceANDDestination,object obj) {
+
+		SetupPageBusinessLayer setup=new SetupPageBusinessLayer(driver);
+		
+			List<String> abc = setup.DragNDrop("", mode, obj, ObjectFeatureName.pageLayouts, pageLayoutsName, sourceANDDestination);
+			ThreadSleep(10000);
+			
+			if (!abc.isEmpty()) {
+				log(LogStatus.FAIL, "field not added/already present 1", YesNo.Yes);
+			}else{
+				log(LogStatus.INFO, "field added in the layout", YesNo.No);
+                return true;
+			}
+      return false;
+	
+	}
+	
+	
 }
 	
 	
