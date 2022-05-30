@@ -321,6 +321,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 							if(click(driver, getPageLayoutSaveBtn(obj,30), "page layouts save button", action.SCROLLANDBOOLEAN)) {
 								appLog.info("clicked on save button");
 								if(flag && obj!=object.Global_Actions){
+									ThreadSleep(5000);
 									click(driver, FindElement(driver, "//button[text()='Yes']", "Yes Button", action.BOOLEAN, 30), "", action.SCROLLANDBOOLEAN);
 								}
 							}else {
@@ -336,6 +337,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 						result.add(layoutName.get(i) + " Layout name is not visible so cannot click on edit icon");
 					}
 					if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						ThreadSleep(5000);
 						switchToDefaultContent(driver);
 					}
 				}
@@ -1728,7 +1730,7 @@ public boolean changeRecordTypeSetting(WebDriver driver,String userName,String r
 			if (selectVisibleTextFromDropDown(driver, ele, recordType, recordType)) {
 				log(LogStatus.INFO, "selected default record Type : "+recordType, YesNo.No);
 				ThreadSleep(2000);
-				if (click(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",action.SCROLLANDBOOLEAN)) {
+				if (clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
 					ThreadSleep(10000);
 					flag=true;
@@ -1767,12 +1769,13 @@ public WebElement getRecordTypeLabel(String projectName,String recordTypeLabel,i
  * @param projectName
  * @param labelWithValue
  * @param isMakeAvailable
+ * @param profileForSelection TODO
  * @param isMakeDefault
  * @param layOut
  * @param timeOut
  * @return true if record type is created for Object
  */
-public boolean createRecordTypeForObject(String projectName,String[][] labelWithValue,boolean isMakeAvailable,boolean isMakeDefault,String layOut,int timeOut) {
+public boolean createRecordTypeForObject(String projectName,String[][] labelWithValue,boolean isMakeAvailable,String[] profileForSelection,boolean isMakeDefault,String layOut, int timeOut) {
 	WebElement ele;
 	String label;
 	String value;
@@ -1780,6 +1783,7 @@ public boolean createRecordTypeForObject(String projectName,String[][] labelWith
 	switchToDefaultContent(driver);
 	if (click(driver,getRecordTypeNewButton(120), "Record Type New Button", action.SCROLLANDBOOLEAN)) {
 		log(LogStatus.INFO, "Click on Record Type New Button", YesNo.No);
+		ThreadSleep(5000);
 		switchToFrame(driver, 20, getSetUpPageIframe(60));
 		for (String[] lv : labelWithValue) {
 			label=lv[0];
@@ -1815,6 +1819,31 @@ public boolean createRecordTypeForObject(String projectName,String[][] labelWith
 				sa.assertTrue(false,"Not Able to Click on make Available CheckBox");
 			}
 			}
+		}else if(!isMakeAvailable && profileForSelection!=null) {
+			ele=getMakeAvailableCheckBox(10);
+			if (isSelected(driver, ele, "make available")) {
+				if (click(driver, ele, "make Available CheckBox", action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on make Available CheckBox", YesNo.No);	
+					ThreadSleep(1000);
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on make Available CheckBox", YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on make Available CheckBox");
+				}
+			}
+			for(String profile:profileForSelection) {
+				ele=getProfileMakeAvailableCheckbox(profile,10);
+				ThreadSleep(1000);
+				if(click(driver, ele, profile+": profile checkbox", action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on on"+ profile+": profile CheckBox", YesNo.No);	
+					ThreadSleep(1000);
+				}else {
+					log(LogStatus.ERROR, "Not Able to Click on"+ profile+": profile CheckBox", YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on"+ profile+": profile CheckBox");
+				}
+				
+			}
+			
+			
 		}
 
 		if (isMakeDefault) {
@@ -1870,6 +1899,7 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 	String value;
 	boolean flag=false;
 	switchToDefaultContent(driver);;
+	ThreadSleep(2000);
 	switchToFrame(driver, 60, getSetUpPageIframe(120));
 	if (click(driver, getEditButton(environment,"Classic",10), "edit", action.SCROLLANDBOOLEAN)) {
 		log(LogStatus.INFO, "Click on edit Button", YesNo.No);
@@ -1882,6 +1912,7 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 			
 		} catch (Exception e1) {
 		}
+		ThreadSleep(2000);
 		switchToFrame(driver, 60, getSetUpPageIframe(120));
 		for (String[] lv : labelWithValue) {
 			label=lv[0];
@@ -1932,7 +1963,12 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 					sa.assertTrue(false,"Not Able to enter "+value+" to label "+label);
 				}
 				
-				
+				if(!isAlertPresent(driver)) {
+					clickUsingJavaScript(driver, ele, "deactivate closed", action.SCROLLANDBOOLEAN);
+				}
+				ThreadSleep(2000);
+				//driver.switchTo().alert().accept();
+				switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
 
 			}
 			ThreadSleep(1000);
@@ -2089,6 +2125,7 @@ public boolean addObjectToTab(String environment, String mode,String projectName
 	if(searchStandardOrCustomObject(environment, mode, objectName)) {
 		log(LogStatus.PASS, "object searched : "+objectName.toString(), YesNo.No);
 		switchToDefaultContent(driver);
+		ThreadSleep(2000);
 		switchToFrame(driver, 60, getSetUpPageIframe(120));
 		ThreadSleep(2000);
 		if (click(driver, getCustomObjectTabNewBtn(120), "New", action.BOOLEAN)) {
