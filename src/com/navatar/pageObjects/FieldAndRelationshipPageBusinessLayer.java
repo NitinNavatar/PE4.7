@@ -302,7 +302,7 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 						}
 
 					}
-					
+
 					CommonLib.switchToDefaultContent(driver);
 					CommonLib.switchToFrame(driver, 40, getfindAndReplaceIframe(30));			
 					CommonLib.ThreadSleep(15000);
@@ -337,6 +337,147 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 			log(LogStatus.ERROR,"Could not pass the Field value "+fieldName,YesNo.Yes);
 			flag=false;
 		}
+		return flag;
+
+	}
+
+	public boolean createPicklistValue(String projectName, String fieldName,String optionValueName)
+	{
+		String xPath="";
+		WebElement ele;
+		boolean flag=false;
+		if(CommonLib.sendKeysAndPressEnter(driver, getQucikSearchInFieldAndRelationshipPage(50),fieldName , "Field", action.SCROLLANDBOOLEAN))
+		{
+			log(LogStatus.INFO,"Field value has been passed in "+fieldName,YesNo.No);
+			CommonLib.ThreadSleep(6000);
+			xPath="//span[text()='"+fieldName+"']";
+			ele = FindElement(driver, xPath, fieldName + " xpath", action.SCROLLANDBOOLEAN, 30);
+			if (CommonLib.click(driver, ele,fieldName+" field" , action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "clicked on Field" + fieldName, YesNo.No);
+				CommonLib.ThreadSleep(7000);
+				CommonLib.switchToFrame(driver, 40, getfieldsAndRelationshipsIframe(30));
+				if(CommonLib.click(driver, getpicklistNewButton(60), "New Button for Picklist", action.SCROLLANDBOOLEAN))
+				{
+					log(LogStatus.INFO, "clicked on the New button", YesNo.No);
+					CommonLib.switchToDefaultContent(driver);
+					CommonLib.switchToFrame(driver, 50, getaddPicklistIFrame(50));
+					if(CommonLib.sendKeys(driver, getaddPicklistTextArea(50), optionValueName, "Textarea", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "Value has been passed into the Picklist textarea", YesNo.No);
+						if(CommonLib.click(driver, getsaveButton(50),"Save Button", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Save button has been clicked", YesNo.No);
+							CommonLib.switchToDefaultContent(driver);
+							CommonLib.switchToFrame(driver, 40, getfieldsAndRelationshipsIframe(30));
+							try
+							{
+								ele=new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[text()='"+optionValueName+"']")));
+							}
+							catch(Exception ex)
+							{
+								ex.printStackTrace();
+								log(LogStatus.ERROR,"Option is not created in the Piclist",YesNo.Yes);
+								return false;
+							}
+							if(ele!=null)
+							{
+								log(LogStatus.PASS, "Option has been created in the Piclist", YesNo.No);
+								flag=true;
+							}
+							else
+							{
+								log(LogStatus.ERROR,"Option is not created in the Piclist",YesNo.Yes);
+								flag=false;
+							}							
+						}
+						else
+						{
+							log(LogStatus.ERROR,"Could not click on the save button",YesNo.Yes);
+							flag=false;
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR,"Could not pass the option value in the Picklist textarea",YesNo.Yes);
+						flag=false;
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Could not click on the New Button",YesNo.Yes);
+					flag=false;
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Could not click on the "+fieldName,YesNo.Yes);
+				flag=false;
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Could not pass the Field value "+fieldName,YesNo.Yes);
+			flag=false;
+		}
+		return flag;
+	}
+
+	public boolean replacePiclistOptionValue(String projectName,String changingToValue,String changingFromValue)
+	{
+		boolean flag=false;
+		if(CommonLib.click(driver, getreplaceButton(50), "Replace Button Name", action.SCROLLANDBOOLEAN))
+		{
+			CommonLib.switchToDefaultContent(driver);
+			CommonLib.switchToFrame(driver, 50, getReplaceOptionIframe(50));
+			log(LogStatus.INFO, "Clickd on the Replace button", YesNo.No);
+			if(CommonLib.sendKeys(driver, getvalueChangingFrom(50), changingFromValue, "Changing From Value", action.SCROLLANDBOOLEAN))
+			{
+				log(LogStatus.INFO, changingFromValue+" has been passed in Exact Value Changing From textbox", YesNo.No);
+				if(CommonLib.selectVisibleTextFromDropDown(driver, getvalueChangingTo(50),  "Value Changing From Dropdown" ,changingToValue))
+				{
+					log(LogStatus.INFO, changingToValue+" has been selected from the Value changing to dropdown field", YesNo.No);
+					if(CommonLib.click(driver,	getreplaceButton(60), "Replace Button", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "Replace button has been clicked", YesNo.No);
+						CommonLib.switchToDefaultContent(driver);
+						CommonLib.switchToFrame(driver, 50, getReplacePicklistConfirmationiframe(50));
+						String Message=CommonLib.getText(driver, getReplaceConfirmationMessage(50), "Confirmation Message", action.SCROLLANDBOOLEAN);
+						if(Message.equals("Replace Picklist Confirmation"))
+						{
+							log(LogStatus.INFO, changingToValue+ " has been replaced with the "+changingToValue, YesNo.No);
+							CommonLib.switchToDefaultContent(driver);
+							flag=true;
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Could not repalce the "+changingFromValue+ " value with the "+changingToValue, YesNo.No);
+							flag=false;
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Could not click on the Replace Buttob", YesNo.No);
+						flag=false;
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Could not select the value from the Dropdown", YesNo.No);
+					flag=false;
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Could not pass the value in the Exact Value Changing From textbox ",YesNo.Yes);
+				flag=false;
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Could not click on the Replace button",YesNo.Yes);
+			flag=false;
+		}
+
 		return flag;
 
 	}
