@@ -1074,6 +1074,7 @@ lp.CRMlogout();
 
 						if(hp.selectFundNameOrCompanyNameOnCreateFundraisings(environment,mode, PopUpName.selectFundPopUp, M3Fund1, null)) {
 							log(LogStatus.INFO, "Select Fund : "+M3Fund1, YesNo.No);
+							ThreadSleep(3000);
 							switchToFrame(driver, 30, home.getCreateFundraisingsFrame_Lighting(20));
 
 							if(click(driver, home.getSelectFundNamePopUpContinueBtn(), "continue button", action.SCROLLANDBOOLEAN)) {
@@ -1149,6 +1150,7 @@ lp.CRMlogout();
 						if(hp.selectFundraisingNameOrCommitmentType(environment, mode, M3FRName1, null, null, null, CommitmentType.fundraisingName)) {
 							if(hp.commitmentInfoAndAdditionalInfo(environment, mode, commitmentInformation, null,null,null)) {
 								log(LogStatus.INFO, "All commitment information and additional information is passed successfully", YesNo.Yes);
+								ThreadSleep(3000);
 								switchToFrame(driver, 30, home.getCreateCommitmentFrame_Lightning(20));
 								//home.writeTotalAmountInExcelSheet(smokeFilePath, "SmokeFund1", "Funds")
 								if(click(driver, home.getCreateCommitmentBtn(20, TopOrBottom.BOTTOM), "create commitment button", action.SCROLLANDBOOLEAN)) {
@@ -1510,20 +1512,18 @@ lp.CRMlogout();
 							value = M3Ins8;
 							type = M3Ins8RecordType;
 							parent = M3Ins8Parent;
-						} else
-
-						 if(i==8) {
-						value=M3Ins11;
-							type=M3Ins11RecordType;
-					}	else if(i==9) {
-						value=M3Ins12;
-						type=M3Ins12RecordType;
-					}else if(i==10) {
-						value=M3Ins13;
-						type=M3Ins13RecordType;
-					}else if(i==11) {
-						value=M3Ins14;
-						type=M3Ins14RecordType;
+						} else if (i == 8) {
+							value = M3Ins11;
+							type = M3Ins11RecordType;
+						} else if (i == 9) {
+							value = M3Ins12;
+							type = M3Ins12RecordType;
+						} else if (i == 10) {
+							value = M3Ins13;
+							type = M3Ins13RecordType;
+						}else if(i==11) {
+						value= M3Ins14;
+						type= M3Ins14RecordType;
 					}
 						 
 						 if (ip.createInstitutionPopUp(projectName, environment, mode, value,type, InstitutionPageFieldLabelText.Parent_Institution.toString(),parent)) {
@@ -2490,11 +2490,11 @@ lp.CRMlogout();
 								ObjectFeatureName.recordTypes)) {
 							if (i == 0) {
 								flag = sp.createRecordTypeForObject(projectName, fundRecordType, isMakeAvailable,
-										isMakeDefault, null, 10);
+										null, isMakeDefault, null, 10);
 							} else {
 								isMakeDefault = false;
 								flag = sp.createRecordTypeForObject(projectName, ffrecordType, isMakeAvailable,
-										isMakeDefault, null, 10);
+										null, isMakeDefault, null, 10);
 							}
 							if (flag) {
 								log(LogStatus.ERROR, "Created Record Type : " + recordTypeArray[i], YesNo.No);
@@ -3127,10 +3127,10 @@ lp.CRMlogout();
 					if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(),object.Test_Custom_Object )) {
 						if(sp.clickOnObjectFeature("", Mode.Lightning.toString(),object.Test_Custom_Object, ObjectFeatureName.recordTypes)) {
 							if (i==0) {
-								flag=sp.createRecordTypeForObject(projectName, fundRecordType, isMakeAvailable, isMakeDefault,null, 10);	
+								flag=sp.createRecordTypeForObject(projectName, fundRecordType, isMakeAvailable, null,isMakeDefault, null, 10);	
 							} else {
 								isMakeDefault=false;
-								flag=sp.createRecordTypeForObject(projectName, ffrecordType, isMakeAvailable, isMakeDefault,null, 10);
+								flag=sp.createRecordTypeForObject(projectName, ffrecordType, isMakeAvailable, null,isMakeDefault, null, 10);
 							}
 							if (flag) {
 								log(LogStatus.ERROR, "Created Record Type : "+recordTypeArray[i], YesNo.No);
