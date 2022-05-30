@@ -1,0 +1,82 @@
+sdg,APIName,Color,FieldOrder,Filter Sequence,Grouping Query,Hide Filter,Image Field API,Is Hidden,Override Label,Parent Field Name,Redirect URL,URL,Is Valid
+Fund Prep,Owner.Name,,4,,,FALSE,,FALSE,Partner,,,,TRUE
+Fund Prep,navpeII__Region__c,,6,,,FALSE,,FALSE,Region,,,,TRUE
+Fund Filter Grid,navpeII__Region__c,,6,,,FALSE,,FALSE,Region,,,,TRUE
+Fund - First SDG Grid,navpeII__Region__c,,6,,,FALSE,,FALSE,Region,,,,TRUE
+Fund - First SDG Grid,Id,,14,,"SELECT Count(Id), navpeII__Fund_Name__c FROM navpeII__Fundraising__c WHERE navpeII__Legal_Name__r.Industry ='Finance'  AND navpeII__Fund_Name__c IN <<navpeII__Fund_Name__c>> GROUP BY navpeII__Fund_Name__c",FALSE,,FALSE,#FinanceBuyers,,,,TRUE
+Fund - First SDG Grid,Id,,12,,"SELECT SUM(navpeII__Investment_Low_Amount_USD_mn__c), navpeII__Fund_Name__c FROM navpeII__Fundraising__c WHERE navpeII__Fund_Name__c IN <<navpeII__Fund_Name__c>> GROUP BY navpeII__Fund_Name__c",FALSE,,FALSE,#Total Low Investment Amount,,,,TRUE
+Fund - First SDG Grid,Custom_Mpick_list__c,,7,,,FALSE,,FALSE,Custom Mpick_list,,,,TRUE
+Account Filter Grid,navpeII__HasPipeline__c,,11,,,FALSE,,FALSE,HasPipeline,,,,TRUE
+Fund - First SDG Grid,Owner.Name,,2,,,FALSE,,FALSE,Owner Name,,,,TRUE
+Fund Prep,navpeII__Fund_Type__c,,2,,,FALSE,,FALSE,Fund Type,,,,TRUE
+Fund Prep,navpeII__Target_Commitments_USD_mn__c,,3,,,FALSE,,FALSE,Target Commitments,,,,TRUE
+Firm With Primary Member,Name,,1,,,FALSE,,FALSE,Institution Name,,,,TRUE
+Open Task,ActivityDate,,2,,,FALSE,,FALSE,Activity Date,,,,TRUE
+Open Task,Owner.Name,,3,,,FALSE,,FALSE,Owner,,,,TRUE
+Account Filter Grid,navpeII__Tier__c,,2,,,FALSE,,FALSE,Tier,,,,TRUE
+Account Filter Grid,navpeII__Sector__c,,6,,,FALSE,,FALSE,Sector,,,,TRUE
+Contact Filter Grid,navpeII__Relationship_Classification__c,,4,,,FALSE,,FALSE,Relationship,,,,TRUE
+Fund - First SDG Grid,Id,,13,,"SELECT MAX(navpeII__Investment_High_Amount_USD_mn__c), navpeII__Fund_Name__c FROM navpeII__Fundraising__c WHERE navpeII__Fund_Name__c IN <<navpeII__Fund_Name__c>> GROUP BY navpeII__Fund_Name__c",FALSE,,FALSE,#MaxInvestor'sAmount($mn),,,,TRUE
+Account Filter Grid,Owner.Name,,5,,,FALSE,,FALSE,Owner,,,,TRUE
+Account Filter Grid,navpeII__Introduced_by__r.Name,,18,,,FALSE,,FALSE,Introduced By,,,,TRUE
+Fund Filter Grid,navpeII__Sector__c,,5,,,FALSE,,FALSE,Sector,,,,TRUE
+Contact Filter Grid,Account.RecordType.Name,,6,,,FALSE,,FALSE,Firm RecordType,,,,TRUE
+Fund - First SDG Grid,Id,,9,,"SELECT Count(Id), navpeII__Fund_Name__c FROM navpeII__Fundraising__c WHERE navpeII__Fund_Name__c IN <<navpeII__Fund_Name__c>> AND navpeII__Target_Close_Date__c = NULL GROUP BY navpeII__Fund_Name__c",FALSE,,FALSE,#Target Closed,,,/lightning/r/Report/00O02000000FVTFEA4/view?fv0=<<Name>>,TRUE
+Account Filter Grid,Description,,15,,,FALSE,,FALSE,Description,,,,TRUE
+Account Filter Grid,RecordType.Name,,10,,,FALSE,,FALSE,Record Type,,,,TRUE
+Account Filter Grid,navpeII__Source__c,,16,,,FALSE,,FALSE,Source,,,,TRUE
+Fund Filter Grid,Id,,3,,"SELECT Count(Id), navpeII__Fund_Name__c FROM navpeII__Fundraising__c WHERE navpeII__Fund_Name__c IN <<navpeII__Fund_Name__c>> GROUP BY navpeII__Fund_Name__c",FALSE,,FALSE,Fundraisings,,,,TRUE
+Contact Filter Grid,Name,,1,,,FALSE,,FALSE,Contact Name,,,,TRUE
+Contact Filter Grid,Account.navpeII__Status__c,,5,,,FALSE,,FALSE,Firm Status,,,,TRUE
+Fundraising Filter Grid,Name,,1,,,FALSE,,FALSE,Fundraising,,,,TRUE
+Fundraising Filter Grid,navpeII__Legal_Name__r.navpeII__Status__c,,5,,,FALSE,,FALSE,Firm Status,,,,TRUE
+Contact Filter Grid,navpeII__Tier__c,,3,,,FALSE,,FALSE,Tier,,,,TRUE
+Fund - First SDG Grid,navpeII__X1st_Closing_Date__c,,3,,,FALSE,,FALSE,1st Closing Date,,,,TRUE
+Account Filter Grid,Name,,1,2,,FALSE,,FALSE,Account Name,,,,TRUE
+Account Filter Grid,navpeII__Region__c,,7,,,FALSE,,FALSE,Region,,,,TRUE
+Fund - First SDG Grid,navpeII__Sector__c,,5,,,FALSE,,FALSE,Sector,,,,TRUE
+Account Filter Grid,navpeII__Locations__c,,17,,,FALSE,,FALSE,Source,,,,TRUE
+Fund - First SDG Grid,navpeII__Fund_Type__c,,2,,,FALSE,,FALSE,Fund Type,,,,TRUE
+Fund - First SDG Grid,Id,,15,,"SELECT Count(Id), navpeII__Fund__c FROM navpeII__Partnership__c WHERE navpeII__Total_Commitments_USD_mn__c != 0 and navpeII__Fund__c IN <<navpeII__Fund__c>> GROUP BY navpeII__Fund__c",FALSE,,FALSE,#Formula - Commitment,,,,TRUE
+Fund Filter Grid,navpeII__Target_Commitments_USD_mn__c,,4,,,FALSE,,FALSE,Target Commitments,,,,TRUE
+Fund - First SDG Grid,Name,,1,,,FALSE,,FALSE,Fund Name,,,,TRUE
+Firm With Primary Member,Id,,2,,"Select AccountId,Name,ID from Contact where AccountId in <<AccountId>> AND navpeII__Primary_Contact__c = TRUE",FALSE,,FALSE,Primary Member,,,,TRUE
+Fundraising_Test,Name,,1,,,FALSE,,FALSE,Fundraising Name,,,,TRUE
+Fund - First SDG Grid,Id,,10,,"SELECT Count(Id), navpeII__Fund_Name__c FROM navpeII__Fundraising__c WHERE navpeII__Fund_Name__c IN <<navpeII__Fund_Name__c>> AND navpeII__Stage__c= 'Interested' GROUP BY navpeII__Fund_Name__c",FALSE,,FALSE,#Stage - Interested,,,/lightning/r/Report/00O02000000FVTKEA4/view?fv0=<<Name>>,TRUE
+SDG_GROUPBY_1,Id,,5,,"SELECT COUNT(Id),Industry FROM Account WHERE Industry IN <<Industry,Industry>> GROUP BY Industry",FALSE,,FALSE,Total Firms,,,/lightning/r/Report/00O02000000FVcvEAG/view?fv0=<<Industry>>,TRUE
+SDG_GROUPBY_1,Id,,10,,"SELECT Count(Id),Account.Industry acs FROM Task WHERE Account.Industry IN <<acs,Industry>> GROUP BY Account.Industry",FALSE,,FALSE,Task as per Industries,,,/lightning/r/Report/00O02000000FVd1EAG/view?fv0=<<Industry>>,TRUE
+SDG_GROUPBY_1,Id,,15,,"SELECT COUNT(Id),Account.Industry acs FROM Contact WHERE Account.Industry IN <<acs,Industry>> GROUP BY Account.Industry",FALSE,,FALSE,Individuals,,,/lightning/r/Report/00O02000000FVd5EAG/view?fv0=<<Industry>>,TRUE
+SDG_GROUPBY_1,Id,,25,,"SELECT COUNT(Id),navpeII__Legal_Name__r.Industry acs FROM navpeII__Fundraising__c WHERE navpeII__Legal_Name__r.Industry IN <<acs,Industry>> GROUP BY navpeII__Legal_Name__r.Industry",FALSE,,FALSE,Fundraising as per Industries,,,1,TRUE
+SDG_GROUPBY_2,navpeII__Stage__c,,1,,,FALSE,,FALSE,Fundraising's Stage,,,,TRUE
+SDG_GROUPBY_2,Id,,5,,"SELECT COUNT(Id),navpeII__Stage__c FROM navpeII__Fundraising__c WHERE navpeII__Stage__c IN <<navpeII__Stage__c,navpeII__Stage__c>> GROUP BY navpeII__Stage__c",FALSE,,FALSE,Count as per fundraising stage,,,1,TRUE
+SDG_GROUPBY_3,navpeII__Reason_for_Decline__c,,1,,,FALSE,,FALSE,Fundraising,,,,TRUE
+SDG_GROUPBY_3,Id,,5,,"SELECT COUNT(Id),navpeII__Reason_for_Decline__c FROM navpeII__Fundraising__c WHERE navpeII__Reason_for_Decline__c IN <<navpeII__Reason_for_Decline__c,navpeII__Reason_for_Decline__c>> GROUP BY navpeII__Reason_for_Decline__c",FALSE,,FALSE,Count,,,1,TRUE
+SDG_GROUPBY_1,Industry,,1,,,FALSE,,FALSE,Account Industry,,,,TRUE
+Fundraising_Test,Id,,4,,"SELECT navpeII__Fundraising__c,navpeII__Contact__r.Name,navpeII__Contact__c FROM navpeII__Fundraising_Contact__c WHERE navpeII__Fundraising__c IN <<navpeII__Fundraising__c>> AND navpeII__IsPrimary__c = TRUE",FALSE,,FALSE,Fundraising's Contact,,,,TRUE
+Account Filter Grid,Website,,13,,,FALSE,,FALSE,Website,,,,TRUE
+Account Filter Grid,BillingAddress,,14,,,FALSE,,FALSE,Address,,,,TRUE
+Fund Filter Grid,navpeII__Vintage_Year__c,,2,,,FALSE,,FALSE,Vintage Year,,,,TRUE
+Firm With Primary Member,Owner.Name,,4,,,FALSE,,FALSE,Owner's Name,,,,TRUE
+Open Task,Who.Name,,1,,,FALSE,,FALSE,Contact Name,,,,TRUE
+Fundraising Filter Grid,navpeII__Stage__c,,4,,,FALSE,,FALSE,Stage,,,,TRUE
+Fund - First SDG Grid,navpeII__Target_Commitments_USD_mn__c,,8,,,FALSE,,FALSE,Target - C@mmitments,,,,TRUE
+Fundraising Filter Grid,navpeII__Fund_Name__r.Name,,2,1,,FALSE,,FALSE,Fund Name,,,,TRUE
+Fundraising Filter Grid,navpeII__Legal_Name__r.Name,,3,,,FALSE,,FALSE,Firm Name,,,,TRUE
+Fund - First SDG Grid,Id,,11,,"SELECT Count(Id), navpeII__Fund_Name__c FROM navpeII__Fundraising__c WHERE navpeII__Closing__c ='3rd Closing' AND navpeII__Fund_Name__c  IN <<navpeII__Fund_Name__c>> GROUP BY navpeII__Fund_Name__c",FALSE,,FALSE,#Closing - 3rd Closing,,,,TRUE
+Firm With Primary Member,Id,,4,,"Select AccountId,Name from Contact where AccountId in <<AccountId>> AND navpeII__Primary_Contact__c = TRUE AND Level__c='Primary'",FALSE,,FALSE,Primary Level Contact,,,,TRUE
+Fundraising_Test,navpeII__Legal_Name__r.Name,,2,,,FALSE,,FALSE,Legal Name,,,,TRUE
+Account Filter Grid,navpeII__Date_Created__c,,3,,,FALSE,,FALSE,Tracking Since,,,,TRUE
+Account Filter Grid,AnnualRevenue,,4,,,FALSE,,FALSE,Revenue,,,,TRUE
+Account Filter Grid,Id,,8,,"SELECT COUNT(Id), AccountId FROM Contact WHERE AccountId IN <<AccountId>>  GROUP BY AccountId",FALSE,,FALSE,No of Contacts,,,,TRUE
+Account Filter Grid,navpeII__Status__c,,9,,,FALSE,,FALSE,Status,,,,TRUE
+Account Filter Grid,Phone,,12,,,FALSE,,FALSE,Phone,,,,TRUE
+Fund Filter Grid,Name,,1,1,,FALSE,,FALSE,Fund,,,,TRUE
+Contact Filter Grid,Account.Name,,2,2,,FALSE,,FALSE,Firm,,,,TRUE
+Fund - First SDG Grid,Point_of_Contact__c,,2,,,FALSE,,FALSE,Point of Contact,,,,TRUE
+Firm With Primary Member,Id,,3,,"Select AccountId,Name from Contact where AccountId in <<AccountId>> AND navpeII__Primary_Contact__c = TRUE",FALSE,,FALSE,Primary Contact,,,,TRUE
+Fund Prep,Name,,1,,,FALSE,,FALSE,Fund Name,,,,TRUE
+Fund Prep,navpeII__Sector__c,,5,,,FALSE,,FALSE,Sector,,,,TRUE
+Referrals,Id,,55,,"Select FORMAT(MAX(navpeII__Last_Touch_Point__c)),AccountId from contact where AccountId IN <<AccountId>> Group By AccountId",FALSE,,FALSE,Last Touchpoint,,,,TRUE
+Referrals,navpeII__Status__c,,13,,,FALSE,,FALSE,Status,,,,TRUE
+Referrals,Name,,1,,,FALSE,,FALSE,Name ,,,,TRUE
+Referrals,navpeII__Introduction_Date__c,,14,,,FALSE,,FALSE,Introduction Date,,,,TRUE

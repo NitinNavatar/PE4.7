@@ -70,4 +70,21 @@ public class SDGPage extends BasePageBusinessLayer {
 	}
 	
 	
+	@FindBy(xpath = "//input[@placeholder='Search this list...']")
+	private WebElement sdgSearchBox;
+	public WebElement sdgSearchBox(int timeOut) {
+		return isDisplayed(driver, sdgSearchBox, "Visibility", timeOut, "SDG Search Box");
+	}
+	
+	@FindBy(xpath = "//div[contains(@class,'active')]//button[text()='Edit']")
+	private WebElement sdgEditButton;
+	public WebElement sdgEditButton(int timeOut) {
+		return isDisplayed(driver, sdgEditButton, "Visibility", timeOut, "SDG Edit Button");
+	}
+	
+	
+	
+	
+	
+	
 }
