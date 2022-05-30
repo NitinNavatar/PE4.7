@@ -406,7 +406,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	 * @return WebElement
 	 */
 	public WebElement getconvertToPortfolioMessage(String company,int timeOut) {
-		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//span[text()='"+convertToPortfolioBeforeNextPart1()+"']/../span[text()='"+company+" ']/../span[text()='"+convertToPortfolioBeforeNextPart2()+"']";
+		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//span//span/../span[text()='"+company+" ']/../span[text()='"+convertToPortfolioBeforeNextPart2()+"']";
 		WebElement ele = FindElement(driver, xpath,"convert to portfolio", action.SCROLLANDBOOLEAN, 10);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
 		

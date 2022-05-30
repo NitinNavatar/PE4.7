@@ -26,12 +26,12 @@ public class SetupPage extends BasePageBusinessLayer {
 		// TODO Auto-generated constructor stub
 	}
 
+	@FindBy(xpath="//input[contains(@placeholder,'Quick Find') or @class='filter-box input']")
+	private WebElement quickSearch;
+	
 	public WebElement getQucikSearchInSetupPage(int timeOut ) {
-		WebElement ele = null;
-		String xpath="";
-		xpath="//input[contains(@placeholder,'Quick Find')]";
-		ele=FindElement(driver, xpath, "search text box in ", action.SCROLLANDBOOLEAN,30);
-		return isDisplayed(driver,ele,"visibility",30,"quick search text box in ");
+		
+		return isDisplayed(driver,quickSearch,"visibility",30,"quick search text box in ");
 	}
 
 	@FindBy(xpath="//ul[contains(@class,'tabBarItems slds-grid')]//span[contains(@class,'title slds-truncate')][contains(text(),'Object Manager')]")
@@ -531,6 +531,13 @@ public class SetupPage extends BasePageBusinessLayer {
 		String xpath = "//*[text()='"+dropDownLabel+"']/following-sibling::*[text()='"+dropDownValue+"']";
 		WebElement ele = FindElement(driver, xpath, dropDownLabel+" "+dropDownValue, action.SCROLLANDBOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "Visibility", timeOut, dropDownLabel+" "+dropDownValue);
+
+	}
+	
+	public WebElement getProfileMakeAvailableCheckbox(String profile,int timeOut) {
+		String xpath="//th[text()='"+profile+"']/..//input[@title='Make Available']";
+		WebElement ele = FindElement(driver, xpath, profile+":checkbox", action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut,"");
 
 	}
 	

@@ -103,7 +103,7 @@ public class CommonVariables {
 
 
 	public static String superAdminUserName,superAdminRegistered,adminPassword;
-	public static String AdminUserFirstName,AdminUserLastName,AdminUserEmailID;
+	public static String AdminUserFirstName,AdminUserLastName,AdminUserEmailID,AdminUserProfile;
 	public static String crmUser1FirstName,crmUser1LastName,crmUser1EmailID,crmUserProfile,crmUserLience;
 	public static String crmUser2FirstName,crmUser2LastName,crmUser2EmailID;
 	public static String gmailUserName,gmailUserName2,gmailPassword;
@@ -398,6 +398,7 @@ public class CommonVariables {
 		public static String M7NIns3,M7NIns3RecordType;
 		public static String M7NIns4,M7NIns4RecordType;
 		public static String M7NIns5,M7NIns5RecordType;
+		public static String M7NIns6,M7NIns6RecordType;
 	
 		
 		public static String M7NContact1FName,M7NContact1LName,M7NContact1EmailID,M7NContact1RecordType;
@@ -847,6 +848,7 @@ public class CommonVariables {
 		AdminUserFirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_First_Name);
 		AdminUserLastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_Last_Name);
 		AdminUserEmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_Email);
+		AdminUserProfile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_Profile);
 
 		adminPassword=ExcelUtils.readDataFromPropertyFile("password");
 		gmailUserName=ExcelUtils.readDataFromPropertyFile("gmailUserName");
@@ -1980,6 +1982,9 @@ public class CommonVariables {
 			
 			M7NIns5=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M7NINS5", excelLabel.Institutions_Name);
 			M7NIns5RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M7NINS5", excelLabel.Record_Type);
+			
+			M7NIns6=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M7NINS6", excelLabel.Institutions_Name);
+			M7NIns6RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M7NINS6", excelLabel.Record_Type);
 			
 			M7NContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7NCON1", excelLabel.Contact_FirstName);
 			M7NContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "M7NCON1", excelLabel.Contact_LastName);

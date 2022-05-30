@@ -386,12 +386,18 @@ public class SetupPageBusinessLayer extends SetupPage {
 								}
 
 							}
+						
 							if (click(driver, getPageLayoutSaveBtn(obj, 30), "page layouts save button",
 									action.SCROLLANDBOOLEAN)) {
 								appLog.info("clicked on save button");
+
+								if(flag && obj!=object.Global_Actions){
+									ThreadSleep(5000);
+									click(driver, FindElement(driver, "//button[text()='Yes']", "Yes Button", action.BOOLEAN, 30), "", action.SCROLLANDBOOLEAN);
 								if (flag && obj != object.Global_Actions) {
 									click(driver, FindElement(driver, "//button[text()='Yes']", "Yes Button",
 											action.BOOLEAN, 30), "", action.SCROLLANDBOOLEAN);
+								}
 								}
 							} else {
 								appLog.error(
@@ -405,10 +411,14 @@ public class SetupPageBusinessLayer extends SetupPage {
 							result.add("Not able to click on " + layoutName.get(i)
 									+ "layout edit icon so cannot dargNdrop.");
 						}
+					
 					} else {
 						appLog.error(layoutName.get(i) + " Layout name is not visible so cannot click on edit icon");
 						result.add(layoutName.get(i) + " Layout name is not visible so cannot click on edit icon");
 					}
+				}
+					if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+						ThreadSleep(5000);
 					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 						switchToDefaultContent(driver);
 					}
@@ -423,9 +433,12 @@ public class SetupPageBusinessLayer extends SetupPage {
 			appLog.error("Not able to search Object: " + obj + " so cannot dragNdrop source.");
 			result.add("Not able to search Object: " + obj + " so cannot dragNdrop source.");
 		}
-		return result;
+		
 
+	
+		return result;
 	}
+			
 
 	/*******************************************************
 	 * Activity Association
@@ -2098,6 +2111,19 @@ public class SetupPageBusinessLayer extends SetupPage {
 		if (click(driver, ele, userName.toString(), action.BOOLEAN)) {
 			log(LogStatus.INFO, "able to click on " + userName, YesNo.No);
 			switchToFrame(driver, 60, getSetUpPageIframe(120));
+			xpath="//select[@id='p5']";
+			ele=FindElement(driver, xpath, "Record dropdown", action.SCROLLANDBOOLEAN, timeOut);
+			scrollDownThroughWebelement(driver, ele, "Record dropdown");
+			ThreadSleep(1000);
+			if (selectVisibleTextFromDropDown(driver, ele, recordType, recordType)) {
+				log(LogStatus.INFO, "selected default record Type : "+recordType, YesNo.No);
+				ThreadSleep(2000);
+				if (clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
+					ThreadSleep(10000);
+					flag=true;
+				}
+			}
 			xpath = "//*[text()='Accounts']/..//a[text()='Edit']";
 			ele = FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, timeOut);
 			if (click(driver, ele, "Edit Button", action.BOOLEAN)) {
@@ -2145,34 +2171,36 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return ele;
 	}
 
-	/**
-	 * @author Azhar Alam
-	 * @param projectName
-	 * @param labelWithValue
-	 * @param isMakeAvailable
-	 * @param isMakeDefault
-	 * @param layOut
-	 * @param timeOut
-	 * @return true if record type is created for Object
-	 */
-	public boolean createRecordTypeForObject(String projectName, String[][] labelWithValue, boolean isMakeAvailable,
-			boolean isMakeDefault, String layOut, int timeOut) {
-		WebElement ele;
-		String label;
-		String value;
-		boolean flag = false;
-		switchToDefaultContent(driver);
-		if (click(driver, getRecordTypeNewButton(120), "Record Type New Button", action.SCROLLANDBOOLEAN)) {
-			log(LogStatus.INFO, "Click on Record Type New Button", YesNo.No);
-			switchToFrame(driver, 20, getSetUpPageIframe(60));
-			for (String[] lv : labelWithValue) {
-				label = lv[0];
-				value = lv[1];
-				ele = getRecordTypeLabel(projectName, label, 60);
-				ThreadSleep(2000);
-				if (label.equals(recordTypeLabel.Active.toString())) {
-					if (click(driver, ele, "Active CheckBox", action.BOOLEAN)) {
-						log(LogStatus.INFO, "Click on Active CheckBox", YesNo.No);
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param labelWithValue
+ * @param isMakeAvailable
+ * @param profileForSelection TODO
+ * @param isMakeDefault
+ * @param layOut
+ * @param timeOut
+ * @return true if record type is created for Object
+ */
+public boolean createRecordTypeForObject(String projectName,String[][] labelWithValue,boolean isMakeAvailable,String[] profileForSelection,boolean isMakeDefault,String layOut, int timeOut) {
+	WebElement ele;
+	String label;
+	String value;
+	boolean flag=false;
+	switchToDefaultContent(driver);
+	if (click(driver,getRecordTypeNewButton(120), "Record Type New Button", action.SCROLLANDBOOLEAN)) {
+		log(LogStatus.INFO, "Click on Record Type New Button", YesNo.No);
+		ThreadSleep(5000);
+		switchToFrame(driver, 20, getSetUpPageIframe(60));
+		for (String[] lv : labelWithValue) {
+			label=lv[0];
+			value=lv[1];
+			ele =  getRecordTypeLabel(projectName, label, 60);
+			ThreadSleep(2000);
+			if (label.equals(recordTypeLabel.Active.toString())) {
+				if (click(driver, ele, "Active CheckBox", action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on Active CheckBox", YesNo.No);	
+
 					} else {
 						log(LogStatus.ERROR, "Not Able to Click on Active CheckBox", YesNo.Yes);
 						sa.assertTrue(false, "Not Able to Click on Active CheckBox");
@@ -2188,87 +2216,114 @@ public class SetupPageBusinessLayer extends SetupPage {
 				}
 				ThreadSleep(1000);
 			}
-			if (isMakeAvailable) {
-				ele = getMakeAvailableCheckBox(10);
-				if (!isSelected(driver, ele, "make available")) {
-					if (click(driver, ele, "make Available CheckBox", action.BOOLEAN)) {
-						log(LogStatus.INFO, "Click on make Available CheckBox", YesNo.No);
-						ThreadSleep(1000);
-					} else {
-						log(LogStatus.ERROR, "Not Able to Click on make Available CheckBox", YesNo.Yes);
-						sa.assertTrue(false, "Not Able to Click on make Available CheckBox");
-					}
-				}
+		
+		if (isMakeAvailable) {
+			ele=getMakeAvailableCheckBox(10);
+			if (!isSelected(driver, ele, "make available")) {
+			if (click(driver, ele, "make Available CheckBox", action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on make Available CheckBox", YesNo.No);	
+				ThreadSleep(1000);
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on make Available CheckBox", YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on make Available CheckBox");
 			}
-
-			if (isMakeDefault) {
-				ele = getMakeDefaultCheckBoxCheckBox(10);
-				if (click(driver, ele, "make Default CheckBox", action.BOOLEAN)) {
-					log(LogStatus.INFO, "Click on make Default CheckBox", YesNo.No);
+			}
+		}else if(!isMakeAvailable && profileForSelection!=null) {
+			ele=getMakeAvailableCheckBox(10);
+			if (isSelected(driver, ele, "make available")) {
+				if (click(driver, ele, "make Available CheckBox", action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on make Available CheckBox", YesNo.No);	
 					ThreadSleep(1000);
 				} else {
-					log(LogStatus.ERROR, "Not Able to Click on make Default CheckBox", YesNo.Yes);
-					sa.assertTrue(false, "Not Able to Click on make Default CheckBox");
+					log(LogStatus.ERROR, "Not Able to Click on make Available CheckBox", YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on make Available CheckBox");
 				}
 			}
-			if (click(driver, getCustomFieldNextBtn2(30), "next button", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.PASS, "Clicked on Next button", YesNo.No);
+			for(String profile:profileForSelection) {
+				ele=getProfileMakeAvailableCheckbox(profile,10);
 				ThreadSleep(1000);
-				if (layOut != null) {
-					if (selectVisibleTextFromDropDown(driver, getApplyOneLayoutToAllProfiles(120), "Page Layout",
-							layOut)) {
-						log(LogStatus.INFO, "Select Existing Page Layout drop down " + layOut, YesNo.No);
-						ThreadSleep(1000);
-					} else {
-						log(LogStatus.ERROR, "Not able to select value from Existing Page Layout drop down " + layOut,
-								YesNo.Yes);
-					}
+				if(click(driver, ele, profile+": profile checkbox", action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on on"+ profile+": profile CheckBox", YesNo.No);	
+					ThreadSleep(1000);
+				}else {
+					log(LogStatus.ERROR, "Not Able to Click on"+ profile+": profile CheckBox", YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on"+ profile+": profile CheckBox");
 				}
-				if (click(driver, getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.ERROR, "Click on save Button ", YesNo.No);
-					ThreadSleep(10000);
-					flag = true;
-				} else {
-					log(LogStatus.ERROR, "Not Able to Click on save Button ", YesNo.Yes);
-					sa.assertTrue(false, "Not Able to Click on save Button ");
-				}
-			} else {
-				log(LogStatus.FAIL, "Not able to click on next button so cannot record Type", YesNo.Yes);
-				sa.assertTrue(false, "Not able to click on next button so cannot record Type");
+				
 			}
-		} else {
-			log(LogStatus.ERROR, "Not Able to Click on Record Type New Button", YesNo.Yes);
-			sa.assertTrue(false, "Not Able to Click on Record Type New Button");
+			
+			
 		}
-		return flag;
-	}
 
-	/**
-	 * @author Azhar Alam
-	 * @param projectName
-	 * @param labelWithValue
-	 * @param timeOut
-	 * @return true if able to click on edit button for Object
-	 */
-	public boolean editRecordTypeForObject(String projectName, String[][] labelWithValue, int timeOut) {
-		WebElement ele;
-		String label;
-		String value;
-		boolean flag = false;
-		switchToDefaultContent(driver);
-		;
-		switchToFrame(driver, 60, getSetUpPageIframe(120));
-		if (click(driver, getEditButton(environment, "Classic", 10), "edit", action.SCROLLANDBOOLEAN)) {
-			log(LogStatus.INFO, "Click on edit Button", YesNo.No);
-			try {
-				if (isAlertPresent(driver)) {
-					Screen screen = new Screen();
-					screen.click(".\\AutoIT\\AlertOk.PNG");
-
-				}
-
-			} catch (Exception e1) {
+		if (isMakeDefault) {
+			ele=getMakeDefaultCheckBoxCheckBox(10);
+			if (click(driver, ele, "make Default CheckBox", action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on make Default CheckBox", YesNo.No);	
+				ThreadSleep(1000);
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on make Default CheckBox", YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on make Default CheckBox");
 			}
+		}
+		if(click(driver, getCustomFieldNextBtn2(30),"next button", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.PASS, "Clicked on Next button", YesNo.No);
+			ThreadSleep(1000);		
+			if (layOut!=null) {
+				if(selectVisibleTextFromDropDown(driver, getApplyOneLayoutToAllProfiles(120), "Page Layout",layOut)) {
+					log(LogStatus.INFO,"Select Existing Page Layout drop down "+layOut,YesNo.No);
+					ThreadSleep(1000);	
+				}else {
+					log(LogStatus.ERROR,"Not able to select value from Existing Page Layout drop down "+layOut,YesNo.Yes);
+				}	
+			}
+			if (click(driver,  getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.ERROR, "Click on save Button ", YesNo.No);
+				ThreadSleep(10000);
+				flag=true;
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on save Button ", YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on save Button ");
+			}
+		}else {
+			log(LogStatus.FAIL, "Not able to click on next button so cannot record Type",YesNo.Yes);
+			sa.assertTrue(false,"Not able to click on next button so cannot record Type");
+		}
+	} else {
+		log(LogStatus.ERROR, "Not Able to Click on Record Type New Button", YesNo.Yes);
+		sa.assertTrue(false,"Not Able to Click on Record Type New Button");
+		
+	}
+	return flag;
+}
+
+/**
+ * @author Azhar Alam
+ * @param projectName
+ * @param labelWithValue
+ * @param timeOut
+ * @return true if able to click on edit button for Object
+ */
+public boolean editRecordTypeForObject(String projectName,String[][] labelWithValue,int timeOut) {
+	WebElement ele;
+	String label;
+	String value;
+	boolean flag=false;
+	switchToDefaultContent(driver);;
+	ThreadSleep(2000);
+	switchToFrame(driver, 60, getSetUpPageIframe(120));
+	if (click(driver, getEditButton(environment,"Classic",10), "edit", action.SCROLLANDBOOLEAN)) {
+		log(LogStatus.INFO, "Click on edit Button", YesNo.No);
+		try {
+			if(isAlertPresent(driver)) {
+				Screen screen = new Screen();
+				screen.click(".\\AutoIT\\AlertOk.PNG");
+				
+			}
+			
+		} catch (Exception e1) {
+		}
+		ThreadSleep(2000);
+
 			switchToFrame(driver, 60, getSetUpPageIframe(120));
 			for (String[] lv : labelWithValue) {
 				label = lv[0];
@@ -2318,25 +2373,33 @@ public class SetupPageBusinessLayer extends SetupPage {
 					}
 
 				}
-				ThreadSleep(1000);
-			}
-
-			if (click(driver, getCreateUserSaveBtn_Lighting(30), "Save Button", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "clicked on save button", YesNo.No);
-				flag = true;
-				ThreadSleep(10000);
-				recordTypeVerification(labelWithValue);
-			} else {
-				log(LogStatus.ERROR, "not able to click on save button", YesNo.Yes);
-				sa.assertTrue(false, "not able to click on save button");
-			}
-
-		} else {
-			log(LogStatus.ERROR, "Not Able to Click on Edit Button", YesNo.Yes);
-			sa.assertTrue(false, "Not Able to Click on Edit Button");
+				
+				
+			ThreadSleep(1000);
 		}
-		return flag;
+		
+		if (click(driver,getCreateUserSaveBtn_Lighting(30), "Save Button",action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "clicked on save button", YesNo.No);
+			flag=true;
+			ThreadSleep(10000);
+			recordTypeVerification(labelWithValue);
+		} else {
+			log(LogStatus.ERROR, "not able to click on save button", YesNo.Yes);
+			sa.assertTrue(false, "not able to click on save button");
+		}
+
+
+
+
+	} else {
+		log(LogStatus.ERROR, "Not Able to Click on Edit Button", YesNo.Yes);
+		sa.assertTrue(false,"Not Able to Click on Edit Button");
 	}
+	return flag;
+}
+
+
+
 
 	/**
 	 * @author Azhar Alam
@@ -2346,6 +2409,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 		String xpath = "";
 		WebElement ele;
 		switchToDefaultContent(driver);
+		ThreadSleep(2000);
 		switchToFrame(driver, 60, getSetUpPageIframe(120));
 		for (String[] labelValue : labelWithValue) {
 			xpath = "//*[text()='" + labelValue[0] + "']/..//following-sibling::td[text()='" + labelValue[1] + "']";
