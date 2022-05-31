@@ -50,6 +50,8 @@ import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class Module9 extends BaseLib {
+
+	
 	
 	@Parameters({ "projectName" })
 
@@ -274,13 +276,13 @@ public class Module9 extends BaseLib {
 		for (String[] data : datas) {
 
 			/*
-	 * splitedReportName = removeNumbersFromString("Test Module 9 Report");
-	 * SmokeReport2Name = splitedReportName[0] + lp.generateRandomNumber();
-	 */
+			 * splitedReportName = removeNumbersFromString("Test Module 9 Report");
+			 * SmokeReport2Name = splitedReportName[0] + lp.generateRandomNumber();
+			 */
 
 
-		
-	if (report.createCustomReportForFolderLightningMode(environment, mode, data[0], ReportFormatName.Null,
+
+			if (report.createCustomReportForFolderLightningMode(environment, mode, data[0], ReportFormatName.Null,
 					data[1], data[1], data[2], fields[i], null, null, null, null, null)) {
 				appLog.info("Custom Report is created succesdfully : " + data[1]);
 				sa.assertTrue(true, "Custom Report is created succesdfully : " + data[1]);
@@ -448,7 +450,7 @@ public class Module9 extends BaseLib {
 	 */
 
 
-		
+
 	@Parameters({ "projectName" })
 	@Test
 	public void M9Tc002_1_Create_Fund_First_SDG_Grid(String projectName) {
@@ -459,14 +461,14 @@ public class Module9 extends BaseLib {
 		String values = "";
 		lp.searchAndClickOnApp(SDG, 30);
 		/*
-	 * String[] splitedSDGName; String SDGRandomTagName; splitedSDGName =
-	 * removeNumbersFromString("Test SDG Module 9"); SDGRandomTagName =
-	 * splitedSDGName[0] + lp.generateRandomNumber();
-	 */
+		 * String[] splitedSDGName; String SDGRandomTagName; splitedSDGName =
+		 * removeNumbersFromString("Test SDG Module 9"); SDGRandomTagName =
+		 * splitedSDGName[0] + lp.generateRandomNumber();
+		 */
 
 
-		
-	if (lp.clickOnTab(projectName, TabName.SDGTab)) {
+
+		if (lp.clickOnTab(projectName, TabName.SDGTab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
 			String sdgName = "Fund - First SDG Grid New";
 			String sdgTag = "Fund - First SDG Grid New";
@@ -529,13 +531,13 @@ public class Module9 extends BaseLib {
 
 
 						/*
-	 * NOTE: editCustomSDGandFoundErrorMsg: Method Validate Error Msg, Also if
-	 * labelWithValue[0][1] !="" Then it will save SDG and validate the headers
-	 */
+						 * NOTE: editCustomSDGandFoundErrorMsg: Method Validate Error Msg, Also if
+						 * labelWithValue[0][1] !="" Then it will save SDG and validate the headers
+						 */
 
 
-		
-	if (sdg.editCustomSDGandFoundErrorMsgAndAtLastWithoutError(projectName,
+
+						if (sdg.editCustomSDGandFoundErrorMsgAndAtLastWithoutError(projectName,
 								"Fund - First SDG Grid", sdgLabels, action.BOOLEAN, 20,
 								"You can either fill 'Filter' or 'List View Name' to save the record.")) {
 							log(LogStatus.PASS, "edit/verify created SDG : " + "Fund - First SDG Grid",
@@ -585,13 +587,13 @@ public class Module9 extends BaseLib {
 					sdgLabels7, sdgLabels8 };
 
 			/*
-	 * NOTE: editCustomSDGandFoundErrorMsg: Method Validate Error Msg
-	 * 
-	 */
+			 * NOTE: editCustomSDGandFoundErrorMsg: Method Validate Error Msg
+			 * 
+			 */
 
 
-	
-	if (sdg.editCustomSDGandFoundErrorMsg(projectName, "Fund - First SDG Grid", sdgLabels, action.BOOLEAN, 20,
+
+			if (sdg.editCustomSDGandFoundErrorMsg(projectName, "Fund - First SDG Grid", sdgLabels, action.BOOLEAN, 20,
 					"must be a Reference, ID, String or Text Area field")) {
 				log(LogStatus.PASS, "edit/verify created SDG : " + "Fund - First SDG Grid", YesNo.No);
 				sa.assertTrue(true, "Able to edit SDG and Find error Msg for SDG : " + Sdg1Name);
@@ -880,7 +882,6 @@ public class Module9 extends BaseLib {
 
 
 	@Parameters({ "projectName" })
-
 	@Test
 	public void M9Tc053_CreateAppPageAndAddSDG(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -927,7 +928,7 @@ public class Module9 extends BaseLib {
 		sa.assertAll();
 	}
 
-	
+
 	@Parameters({ "projectName" })
 
 	@Test
@@ -1998,10 +1999,10 @@ public class Module9 extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-	 
+
 	@Parameters({ "projectName" })
 	@Test
-	public void M9Tc065_VerifyDataOnSdg(String projectName) {
+	public void M9Tc065_VerifySDGDataOnAppPage(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -2019,11 +2020,11 @@ public class Module9 extends BaseLib {
 				{M9SDGD_141_Fundraising_Stage,M9SDGD_141_Count_as_per_fundraising_stage},
 				{M9SDGD_142_Fundraising_Stage,M9SDGD_142_Count_as_per_fundraising_stage},
 				{M9SDGD_143_Fundraising_Stage,M9SDGD_143_Count_as_per_fundraising_stage}};
-			
+
 
 		String [][] SDG_GROUPBY_3_SDG= {{M9SDGD_144_Fundraising,M9SDGD_144_Fundraising_Count},
 				{M9SDGD_145_Fundraising,M9SDGD_145_Fundraising_Count}};
-		
+
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		tableName="SDG_GROUPBY_2";
 		if(BP.openAppFromAppLauchner(appPage,50))
@@ -2045,9 +2046,9 @@ public class Module9 extends BaseLib {
 			log(LogStatus.ERROR, "Could not Opened the App Launcher", YesNo.Yes);
 			sa.assertTrue(false, "Could not Opened the App Launcher");
 		}
-		
+
 		lp.CRMlogout();
-		
+
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		tableName="SDG_GROUPBY_3";
 		if(BP.openAppFromAppLauchner(appPage,50))
@@ -2069,10 +2070,10 @@ public class Module9 extends BaseLib {
 			log(LogStatus.ERROR, "Could not Opened the App Launcher", YesNo.Yes);
 			sa.assertTrue(false, "Could not Opened the App Launcher");
 		}
-		
-		
+
+
 		lp.CRMlogout();
-				
+
 		sa.assertAll();
 	}
 
@@ -2165,8 +2166,69 @@ public class Module9 extends BaseLib {
 		driver.switchTo().window(parentWindow);
 		lp.CRMlogout();	
 		sa.assertAll();
-		
 
 	}
+
+
+	@Parameters({ "projectName" })
+	@Test
+	public void M9Tc067_CreateAppPageAndAddSDG(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		LightningAppBuilderPageBusinessLayer AppBuilder=new LightningAppBuilderPageBusinessLayer(driver);
+		String labelName="Custom App Page";
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
+		ArrayList<String> dataProviderName= new ArrayList<String>();
+		dataProviderName.add("CustomObject:Account Filter Grid");	
+		dataProviderName.add("CustomObject:Contact Filter Grid");
+		dataProviderName.add("CustomObject:Fund Filter Grid");
+		dataProviderName.add("CustomObject:Fundraising Filter Grid");
+
+		ArrayList<String> tableName=new ArrayList<String>();
+		tableName.add("Account Filter Grid");
+		tableName.add("Contact Filter Grid");
+		tableName.add("Fund Filter Grid");
+		tableName.add("Fundraising Filter Grid");
+
+		if (home.clickOnSetUpLink()){
+
+			String parentWindowID = switchOnWindow(driver);
+			if (parentWindowID == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create App Page");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create App Page",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create App Page");
+			}
+
+				if(setup.searchStandardOrCustomObject(projectName, mode, object.Lightning_App_Builder))
+				{
+					if(AppBuilder.CreateAppPage(projectName, mode,labelName,tableName,dataProviderName,parentWindowID))
+					{
+						log(LogStatus.PASS, "App Page has been Created : "+labelName, YesNo.Yes);		
+						sa.assertTrue(true, "App Page has been Created");
+					}
+					else
+					{
+						log(LogStatus.ERROR, "App Page is not created : "+labelName, YesNo.Yes);		
+						sa.assertTrue(false, "App Page is not created : "+labelName);
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to search the Object", YesNo.Yes);		
+					sa.assertTrue(false, "Not able to search the Object" );
+				}	
+
+			}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
 
 }
