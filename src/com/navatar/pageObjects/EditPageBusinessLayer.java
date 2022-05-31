@@ -1046,8 +1046,6 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 	{
 		boolean flag = false;
 
-
-
 		if (TooltipElement(Title) != null) {
 
 			log(LogStatus.INFO, "Collapse/Expand Tooltip Element Found of SDG: " + Title, YesNo.Yes);

@@ -201,6 +201,16 @@ public class LightningAppBuilderPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, AvtivationButton, "Visibility", timeOut, "object manage");
 
 	}
+	
+	@FindBy(xpath="//h2[@class='slds-card__header-title']")
+	private WebElement sldHeader;
+
+	public WebElement getsldHeader(int timeOut) {
+		return isDisplayed(driver, sldHeader, "Visibility", timeOut, "SLD Headers");
+
+	}
+	
+	
 
 
 
