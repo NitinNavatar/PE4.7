@@ -214,8 +214,8 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 								FindElement(driver, xpath, "Search Value : " + DropComponentName, action.BOOLEAN, 10),
 								"Visibility", 10, "Search Value : " + DropComponentName);
 						if (dropComponentXpath != null) {
-							//							Actions builder = new Actions(driver);
-							//							builder.clickAndHold(dropComponentXpath).build().perform();
+							// Actions builder = new Actions(driver);
+							// builder.clickAndHold(dropComponentXpath).build().perform();
 							switchToFrame(driver, 30, getEditPageFrame(projectName, 30));
 							String dropLocationXpath = "";
 							if (pageName.toString().equalsIgnoreCase(PageName.Object5Page.toString())) {
@@ -235,7 +235,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 										screen.dragDrop("\\AutoIT\\FIeldSet.PNG",
 												"\\AutoIT\\AddComponentHereOnMEPage.PNG");
 									} else {
-										//                                		screen.dropAt("\\AutoIT\\AddComponentHere.PNG");
+										// screen.dropAt("\\AutoIT\\AddComponentHere.PNG");
 										screen.dragDrop("\\AutoIT\\FIeldSet.PNG", "\\AutoIT\\AddComponentHere.PNG");
 
 									}
@@ -276,7 +276,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 											log(LogStatus.ERROR,
 													"Not able to click on save button so cannot add field set : "
 															+ fieldSetApiName,
-															YesNo.No);
+													YesNo.No);
 										}
 									} else {
 										log(LogStatus.ERROR, "Not able to enter field set name : " + fieldSetApiName
@@ -293,13 +293,13 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 								log(LogStatus.ERROR,
 										"Drop location is not visible in list so cannot drag and drop component "
 												+ DropComponentName + " in " + relatedTab.toString(),
-												YesNo.Yes);
+										YesNo.Yes);
 							}
 						} else {
 							log(LogStatus.ERROR,
 									"Searched component is not visible in list so cannot drag and drop component "
 											+ DropComponentName + " in " + relatedTab.toString(),
-											YesNo.Yes);
+									YesNo.Yes);
 						}
 					} else {
 						log(LogStatus.ERROR, "Not able to search on component so cannot drag and drop component "
@@ -337,7 +337,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 	public boolean dragNDropUsingScreen(String projectName, WebElement source, String imagePath, int timeOut) {
 		boolean flag = false;
 		Actions act = new Actions(driver);
-		//		WebElement source=getEditPageSeachValueLink(projectName, sValue, 10);
+		// WebElement source=getEditPageSeachValueLink(projectName, sValue, 10);
 		act.clickAndHold(source).build().perform();
 		ThreadSleep(1000);
 		Screen screen = new Screen();
@@ -631,7 +631,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 				"Add Link");
 
 		CommonLib.switchToDefaultContent(driver);
-		if (CommonLib.sendKeys(driver, getSearchonAppBuilder(50), ComponentName, "SearchBox",
+		if (CommonLib.sendKeys(driver, getComponentSearchBox(50), ComponentName, "SearchBox",
 				action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, ComponentName + "has been Search", YesNo.No);
 
@@ -707,7 +707,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 					WebElement pageSizeSelect = FindElement(driver,
 							"//a[text()='" + Title
-							+ "']/ancestor::article//span[text()='Page Size']/../parent::div//select",
+									+ "']/ancestor::article//span[text()='Page Size']/../parent::div//select",
 							"Page Size Select ", action.SCROLLANDBOOLEAN, 10);
 					if (CommonLib.selectVisibleTextFromDropDown(driver, pageSizeSelect, "Page Size Select", "100")) {
 						log(LogStatus.INFO, "Selected the Page Size", YesNo.No);
@@ -773,10 +773,10 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			return flag = true;
 
 		else
-			return flag = true;
+			return flag = false;
 
 	}
-
+	
 	/**
 	 * @author Ankur Huria
 	 * @param Title

@@ -2172,7 +2172,7 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void M9Tc067_CreateAppPageAndAddSDG(String projectName) {
+	public void M9Tc067_CreateAppPageAndAddSDGs(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
