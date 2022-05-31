@@ -11,8 +11,10 @@ import static com.navatar.generic.CommonVariables.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
@@ -29,7 +31,9 @@ import com.navatar.generic.EnumConstants.PermissionType;
 import com.navatar.generic.EnumConstants.ReportField;
 import com.navatar.generic.EnumConstants.ReportFormatName;
 import com.navatar.generic.EnumConstants.SDGCreationLabel;
+import com.navatar.generic.EnumConstants.SDGGridName;
 import com.navatar.generic.EnumConstants.SDGLabels;
+import com.navatar.generic.EnumConstants.SortOrder;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
@@ -41,6 +45,7 @@ import com.navatar.pageObjects.ContactsPageBusinessLayer;
 import com.navatar.pageObjects.DataLoaderWizardPageBusinessLayer;
 import com.navatar.pageObjects.EditPageBusinessLayer;
 import com.navatar.pageObjects.FieldAndRelationshipPageBusinessLayer;
+import com.navatar.pageObjects.HomePage;
 import com.navatar.pageObjects.HomePageBusineesLayer;
 import com.navatar.pageObjects.LightningAppBuilderPageBusinessLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
@@ -822,6 +827,488 @@ public class Module9 extends BaseLib {
 
 	}
 
+
+	@Parameters({ "projectName" })
+
+	@Test
+	public void M9Tc007_ValidateOptionsWithAdminAndUserSDGComponent_Fund_First_SDG_Grid_InHomepage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		HashMap<String, String> map = new HashMap<>();
+
+		String[] Emails = { superAdminUserName, crmUser2EmailID };
+
+		for (String Email : Emails) {
+			lp.CRMLogin(Email, adminPassword, appName);
+
+			String TitleOfSDG = "Fund - First SDG Grid";
+
+			if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+				log(LogStatus.INFO, "Clicked on Tab : " + TabName.HomeTab, YesNo.No);
+				WebElement alreadyAddedComponentToHomePage = FindElement(driver, "//a[text()='" + TitleOfSDG + "']",
+						"Component Title ", action.SCROLLANDBOOLEAN, 10);
+
+				if (alreadyAddedComponentToHomePage != null) {
+					log(LogStatus.INFO,
+							"------------Component Already Added to Home Page " + TitleOfSDG + "----------------",
+							YesNo.Yes);
+					sa.assertTrue(true,
+							"------------Component Already Added to Home Page " + TitleOfSDG + "---------------");
+
+					if (home.verifySDGExpandByDefault(TitleOfSDG)) {
+						log(LogStatus.PASS, "-----------SDG: " + TitleOfSDG + " is Expanded By Default in case of "
+								+ Email + "--------------", YesNo.No);
+						sa.assertTrue(true, "-----------SDG: " + TitleOfSDG + " is Expanded By Default in case of "
+								+ Email + "--------------");
+
+					}
+
+					else {
+						log(LogStatus.FAIL, "-----------SDG: " + TitleOfSDG + " is not Expanded By Default in case of "
+								+ Email + "--------------", YesNo.No);
+						sa.assertTrue(false, "-----------SDG: " + TitleOfSDG + " is not Expanded By Default in case of "
+								+ Email + "--------------");
+
+					}
+
+					if (home.verifyGearIconPresentAndVerifyTooltip(TitleOfSDG)) {
+						log(LogStatus.PASS, "-----------Gear Icon Found and Tooltip Verified--------------", YesNo.No);
+						sa.assertTrue(true, "-----------Gear Icon Found and Tooltip Verified--------------");
+
+					}
+
+					else {
+						log(LogStatus.FAIL, "-----------Gear Icon Found and Tooltip not Verified--------------",
+								YesNo.No);
+						sa.assertTrue(false, "-----------Gear Icon Found and Tooltip not Verified--------------");
+
+					}
+
+				} else {
+					log(LogStatus.ERROR,
+							"-----------Component Not Added to Home Page: " + TitleOfSDG + " -------------", YesNo.Yes);
+					sa.assertTrue(false,
+							"-----------Component Not Added to Home Page: " + TitleOfSDG + " ------------");
+
+				}
+
+			}
+
+			else {
+				log(LogStatus.ERROR,
+						"-----------Not Able to click on tab:" + TabName.HomeTab.toString() + " --------------",
+						YesNo.No);
+				sa.assertTrue(false,
+						"-----------Not Able to click on tab:" + TabName.HomeTab.toString() + " --------------");
+
+			}
+
+			lp.CRMlogout();
+
+		}
+		sa.assertAll();
+	}
+
+	
+	@Parameters({ "projectName" })
+
+	@Test
+	public void M9Tc008_ValidateDefaultSortingAndCustomSortingSDGComponent_Fund_First_SDG_Grid_InHomepage(
+			String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		HomePage hp = new HomePage(driver);
+
+		String[] fieldsInSDG = { "FUND NAME", "OWNER NAME", "FUND TYPE", "POINT OF CONTACT", "1ST CLOSING DATE",
+				"SECTOR", "REGION", "TARGET - C@MMITMENTS" };
+		List<String> columnInSDG = Arrays.asList(fieldsInSDG);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+
+		String TitleOfSDG = "Fund - First SDG Grid";
+
+		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+			log(LogStatus.INFO, "Clicked on Tab : " + TabName.HomeTab, YesNo.No);
+			WebElement alreadyAddedComponentToHomePage = FindElement(driver, "//a[text()='" + TitleOfSDG + "']",
+					"Component Title ", action.SCROLLANDBOOLEAN, 10);
+
+			if (alreadyAddedComponentToHomePage != null) {
+				log(LogStatus.INFO,
+						"------------Component Already Added to Home Page " + TitleOfSDG + "----------------",
+						YesNo.Yes);
+				sa.assertTrue(true,
+						"------------Component Already Added to Home Page " + TitleOfSDG + "---------------");
+
+				if (home.sdgGridExpandedByDefaultIfNotThenExpand(TitleOfSDG)) {
+
+					String pageSize = "100";
+					if (home.pageSizeSelect(TitleOfSDG, pageSize)) {
+
+						log(LogStatus.PASS, "-----------Page Size has selected to" + pageSize + " --------------",
+								YesNo.No);
+						List<String> columnDataText = hp.columnData(TitleOfSDG, 2).stream().map(s -> s.getText())
+								.collect(Collectors.toList()).stream().map(t -> t.trim()).collect(Collectors.toList());
+						Collections.sort(columnDataText, String.CASE_INSENSITIVE_ORDER.reversed());
+						System.out.println(
+								"Descending with Data: " + columnDataText.size() + " Collections: " + columnDataText);
+
+						if (CommonLib.checkSorting(driver, SortOrder.Decending, hp.columnData(TitleOfSDG, 2))) {
+							log(LogStatus.PASS,
+									"-----------Fund Name Column is in Descending Order By Default --------------",
+									YesNo.No);
+							sa.assertTrue(true,
+									"-----------Fund Name Column is in Descending Order By Default --------------");
+
+						}
+
+						else {
+							log(LogStatus.FAIL,
+									"-----------Fund Name Column not in Descending Order By Default --------------",
+									YesNo.No);
+							sa.assertTrue(false,
+									"-----------Fund Name Column not in Descending Order By Default --------------");
+
+						}
+					} else {
+						log(LogStatus.FAIL, "-----------Not able to Select Page Size: " + pageSize + "--------------",
+								YesNo.No);
+						sa.assertTrue(false,
+								"-----------Not able to Select Page Size: " + pageSize + " --------------");
+					}
+
+				} else {
+					log(LogStatus.FAIL, "-----------Not able to Expand SDG Grid --------------", YesNo.No);
+					sa.assertTrue(false, "-----------Not able to Expand SDG Grid --------------");
+				}
+
+				home.verifyColumnAscendingDescendingOrder(SDGGridName.Fund_First_SDG, columnInSDG);
+
+			} else {
+				log(LogStatus.ERROR, "-----------Component Not Added to Home Page: " + TitleOfSDG + " -------------",
+						YesNo.Yes);
+				sa.assertTrue(false, "-----------Component Not Added to Home Page: " + TitleOfSDG + " ------------");
+
+			}
+
+		}
+
+		else {
+			log(LogStatus.ERROR,
+					"-----------Not Able to click on tab:" + TabName.HomeTab.toString() + " --------------", YesNo.No);
+			sa.assertTrue(false,
+					"-----------Not Able to click on tab:" + TabName.HomeTab.toString() + " --------------");
+
+		}
+
+		lp.CRMlogout();
+
+	}
+	
+
+	@Parameters({ "projectName" })
+
+	@Test
+
+	public void M9Tc009_ValidateNumberOfRecordsAfterEnterLitViewNameSDGComponent_Fund_First_SDG_Grid_InHomepage(
+			String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		HomePage hp = new HomePage(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
+		String sdgName = "Fund - First SDG Grid";
+
+		lp.searchAndClickOnApp(SDG, 30);
+
+		if (lp.clickOnTab(projectName, TabName.SDGTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
+
+			String[][] sdgLabels = { { SDGCreationLabel.List_View_Name.toString(), "Type_Fund" } };
+
+			if (sdg.editCustomSDG(projectName, sdgName, sdgLabels, action.BOOLEAN, 20)) {
+				log(LogStatus.PASS, "--------edit/verify SDG : " + sdgName + " -------------", YesNo.No);
+				sa.assertTrue(true, "--------Able to edit SDG : " + sdgName + " --------------");
+
+				if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+					log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+					WebElement alreadyAddedComponentToHomePage = FindElement(driver, "//a[text()='" + sdgName + "']",
+							"Component Title ", action.SCROLLANDBOOLEAN, 10);
+
+					if (alreadyAddedComponentToHomePage != null) {
+						log(LogStatus.INFO,
+								"------------Component Already Added to Home Page " + sdgName + "----------------",
+								YesNo.Yes);
+						sa.assertTrue(true,
+								"------------Component Already Added to Home Page " + sdgName + "---------------");
+
+						if (home.sdgGridExpandedByDefaultIfNotThenExpand(sdgName)) {
+
+							String pageSize = "100";
+							if (home.pageSizeSelect(sdgName, pageSize)) {
+
+								log(LogStatus.PASS,
+										"-----------Page Size has selected to" + pageSize + " --------------",
+										YesNo.No);
+
+								int numberOfRecords = 76;
+								if (home.numberOfRecordsMatch(sdgName, 76)) {
+									log(LogStatus.INFO,
+											"----------No. of Records Matched: " + numberOfRecords + "------------",
+											YesNo.No);
+
+								}
+
+								else {
+									log(LogStatus.FAIL, "---------No. of Records not Matched-------- ", YesNo.No);
+									sa.assertTrue(false, "-----------No. of Records not Matched:  --------------");
+
+								}
+							} else {
+								log(LogStatus.FAIL,
+										"-----------Not able to Select Page Size: " + pageSize + "--------------",
+										YesNo.No);
+								sa.assertTrue(false,
+										"-----------Not able to Select Page Size: " + pageSize + " --------------");
+							}
+
+						} else {
+							log(LogStatus.FAIL, "-----------Not able to Expand SDG Grid --------------", YesNo.No);
+							sa.assertTrue(false, "-----------Not able to Expand SDG Grid --------------");
+						}
+
+					} else {
+						log(LogStatus.ERROR,
+								"-----------Component Not Added to Home Page: " + sdgName + " -------------",
+								YesNo.Yes);
+						sa.assertTrue(false,
+								"-----------Component Not Added to Home Page: " + sdgName + " ------------");
+
+					}
+
+				} else {
+					sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
+					log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
+				}
+
+			} else {
+				sa.assertTrue(false, "----------Not Able to edit/verify created SDG : " + sdgName + " ------------");
+				log(LogStatus.SKIP, "-----------Not Able to edit/verify created SDG : " + sdgName + " -------------",
+						YesNo.Yes);
+			}
+
+		} else {
+			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.SDGTab);
+			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.SDGTab, YesNo.Yes);
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName" })
+
+	@Test
+	public void M9Tc010_ValidateNumberOfRecordsAfterEnterLitViewNameForUserSDGComponent_Fund_First_SDG_Grid_InHomepage(
+			String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+
+		lp.CRMLogin(crmUser2EmailID, adminPassword, appName);
+
+		String sdgName = "Fund - First SDG Grid";
+
+		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+			WebElement alreadyAddedComponentToHomePage = FindElement(driver, "//a[text()='" + sdgName + "']",
+					"Component Title ", action.SCROLLANDBOOLEAN, 10);
+
+			if (alreadyAddedComponentToHomePage != null) {
+				log(LogStatus.INFO, "------------Component Already Added to Home Page " + sdgName + "----------------",
+						YesNo.Yes);
+				sa.assertTrue(true, "------------Component Already Added to Home Page " + sdgName + "---------------");
+
+				if (home.sdgGridExpandedByDefaultIfNotThenExpand(sdgName)) {
+
+					String pageSize = "100";
+					if (home.pageSizeSelect(sdgName, pageSize)) {
+
+						log(LogStatus.PASS, "-----------Page Size has selected to" + pageSize + " --------------",
+								YesNo.No);
+
+						int numberOfRecords = 76;
+						if (home.numberOfRecordsMatch(sdgName, numberOfRecords)) {
+							log(LogStatus.INFO, "----------No. of Records Matched: " + numberOfRecords + "------------",
+									YesNo.No);
+
+						}
+
+						else {
+							log(LogStatus.FAIL, "---------No. of Records not Matched-------- ", YesNo.No);
+							sa.assertTrue(false, "-----------No. of Records not Matched:  --------------");
+
+						}
+					} else {
+						log(LogStatus.FAIL, "-----------Not able to Select Page Size: " + pageSize + "--------------",
+								YesNo.No);
+						sa.assertTrue(false,
+								"-----------Not able to Select Page Size: " + pageSize + " --------------");
+					}
+
+				} else {
+					log(LogStatus.FAIL, "-----------Not able to Expand SDG Grid --------------", YesNo.No);
+					sa.assertTrue(false, "-----------Not able to Expand SDG Grid --------------");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "-----------Component Not Added to Home Page: " + sdgName + " -------------",
+						YesNo.Yes);
+				sa.assertTrue(false, "-----------Component Not Added to Home Page: " + sdgName + " ------------");
+
+			}
+
+		} else {
+			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
+			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName" })
+
+	@Test
+	public void M9Tc011_ValidateNumberOfRecordsAfterEnterInValidThenCorrectLitViewNameSDGComponent_Fund_First_SDG_Grid_InHomepage(
+			String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		HomePage hp = new HomePage(driver);
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String[][][] sdgLabels = { { { SDGCreationLabel.List_View_Name.toString(), "InvalidListViewName" } },
+				{ { SDGCreationLabel.List_View_Name.toString(), "Launched_Date" } } };
+		String sdgName = "Fund - First SDG Grid";
+		for (String[][] sdgLabel : sdgLabels) {
+			lp.searchAndClickOnApp(SDG, 30);
+
+			if (lp.clickOnTab(projectName, TabName.SDGTab)) {
+				log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
+
+				if (sdg.editCustomSDG(projectName, sdgName, sdgLabel, action.BOOLEAN, 20)) {
+					log(LogStatus.PASS, "--------edit/verify SDG : " + sdgName + " -------------", YesNo.No);
+					sa.assertTrue(true, "--------Able to edit SDG : " + sdgName + " --------------");
+
+					if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+						log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+						WebElement alreadyAddedComponentToHomePage = FindElement(driver,
+								"//a[text()='" + sdgName + "']", "Component Title ", action.SCROLLANDBOOLEAN, 10);
+
+						if (alreadyAddedComponentToHomePage != null) {
+							log(LogStatus.INFO,
+									"------------Component Already Added to Home Page " + sdgName + "----------------",
+									YesNo.Yes);
+							sa.assertTrue(true,
+									"------------Component Already Added to Home Page " + sdgName + "---------------");
+
+							if (home.sdgGridExpandedByDefaultIfNotThenExpand(sdgName)) {
+
+								String pageSize = "100";
+								if (home.pageSizeSelect(sdgName, pageSize)) {
+
+									log(LogStatus.PASS,
+											"-----------Page Size has selected to" + pageSize + " --------------",
+											YesNo.No);
+
+									if (sdgLabel[0][1].equals("InvalidListViewName")) {
+
+										int numberOfRecords = 84;
+										if (home.numberOfRecordsMatch(sdgName, numberOfRecords)) {
+											log(LogStatus.INFO,
+													"----------No. of Records Matched: " + numberOfRecords
+															+ "for List View Name: " + sdgLabel[0][1] + "------------",
+													YesNo.No);
+
+										}
+
+										else {
+											log(LogStatus.FAIL,
+													"---------No. of Records not Matched " + numberOfRecords
+															+ "for List View Name: " + sdgLabel[0][1] + "-------- ",
+													YesNo.No);
+											sa.assertTrue(false,
+													"-----------No. of Records not Matched: " + numberOfRecords
+															+ "for List View Name: " + sdgLabel[0][1]
+															+ " --------------");
+
+										}
+									} else if (sdgLabel[0][1].equals("Launched_Date")) {
+
+										int numberOfRecords = 2;
+										if (home.numberOfRecordsMatch(sdgName, numberOfRecords)) {
+											log(LogStatus.INFO,
+													"----------No. of Records Matched: " + numberOfRecords
+															+ "for List View Name: " + sdgLabel[0][1] + "------------",
+													YesNo.No);
+
+										}
+
+										else {
+											log(LogStatus.FAIL,
+													"---------No. of Records not Matched " + numberOfRecords
+															+ "for List View Name: " + sdgLabel[0][1] + "-------- ",
+													YesNo.No);
+											sa.assertTrue(false,
+													"-----------No. of Records not Matched: " + numberOfRecords
+															+ "for List View Name: " + sdgLabel[0][1]
+															+ " --------------");
+
+										}
+									}
+								} else {
+									log(LogStatus.FAIL,
+											"-----------Not able to Select Page Size: " + pageSize + "--------------",
+											YesNo.No);
+									sa.assertTrue(false,
+											"-----------Not able to Select Page Size: " + pageSize + " --------------");
+								}
+
+							} else {
+								log(LogStatus.FAIL, "-----------Not able to Expand SDG Grid --------------", YesNo.No);
+								sa.assertTrue(false, "-----------Not able to Expand SDG Grid --------------");
+							}
+
+						} else {
+							log(LogStatus.ERROR,
+									"-----------Component Not Added to Home Page: " + sdgName + " -------------",
+									YesNo.Yes);
+							sa.assertTrue(false,
+									"-----------Component Not Added to Home Page: " + sdgName + " ------------");
+
+						}
+
+					} else {
+						sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
+						log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
+					}
+
+				} else {
+					sa.assertTrue(false,
+							"----------Not Able to edit/verify created SDG : " + sdgName + " ------------");
+					log(LogStatus.SKIP,
+							"-----------Not Able to edit/verify created SDG : " + sdgName + " -------------",
+							YesNo.Yes);
+				}
+
+			} else {
+				sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.SDGTab);
+				log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.SDGTab, YesNo.Yes);
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 
 	@Parameters({ "projectName" })
 	@Test
