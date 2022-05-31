@@ -4695,29 +4695,6 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, listViewSaveButton, "Visibility", timeOut, "listViewSaveButton");
 	}
 	
-	public WebElement getListFilterSection(String projectName,String tab, int timeOut) {
-		tab=tab.toLowerCase();
-		String xpath="//div[contains(text(),'Filter')]/following-sibling::span[contains(text(),'"+tab+"')]/ancestor::a";
-		return isDisplayed(driver, FindElement(driver, xpath,"ListFilterSection" , action.SCROLLANDBOOLEAN, 
-				timeOut), "Visibility", timeOut, "ListFilterSection");
-	
-	}
-	
-	@FindBy(xpath = "//span[contains(text(),'All ')]/../..//input")
-	private WebElement allCheckboxForFilter;
-	
-	public WebElement getallCheckboxForFilter(String projectName,int timeOut) {
-		return isDisplayed(driver, allCheckboxForFilter, "Visibility", timeOut, "allCheckboxForFilter");
-	}
-	
-	@FindBy(xpath = "//span[text()='Done']/..")
-	private WebElement doneButtonListView;
-	
-	public WebElement getdoneButtonListView(String projectName,int timeOut) {
-		return isDisplayed(driver, doneButtonListView, "Visibility", timeOut, "doneButtonListView");
-	}
-	
-	
 	public WebElement getdoneButton(String projectName,int timeOut) {
 		return driver.findElement(By.xpath("//div[@class='modal-footer slds-modal__footer']//button[@type='submit']"));
 	}
@@ -5417,9 +5394,99 @@ public abstract class BasePage extends BaseLib {
 		
 	}
 	
+	@FindBy(xpath = "//div[text()='Filter by Owner']/ancestor::a")
+	private WebElement filterByOwnerBtn;
+	
+	public WebElement getfilterByOwnerBtn(String projectName,int timeOut) {
+		return isDisplayed(driver, filterByOwnerBtn, "Visibility", timeOut, "filterByOwnerBtn");
+	}
 	
 	
 	
+	public WebElement getListFilterSection(String projectName,String tab, int timeOut) {
+		tab=tab.toLowerCase();
+		String xpath="//div[contains(text(),'Filter')]/following-sibling::span[contains(text(),'"+tab+"')]/ancestor::a";
+		return isDisplayed(driver, FindElement(driver, xpath,"ListFilterSection" , action.SCROLLANDBOOLEAN, 
+				timeOut), "Visibility", timeOut, "ListFilterSection");
 	
+	}
+	
+	@FindBy(xpath = "//span[contains(text(),'All ')]/../..//input")
+	private WebElement allCheckboxForFilter;
+	
+	public WebElement getallCheckboxForFilter(String projectName,int timeOut) {
+		return isDisplayed(driver, allCheckboxForFilter, "Visibility", timeOut, "allCheckboxForFilter");
+	}
+	
+	@FindBy(xpath = "//span[text()='Done']/..")
+	private WebElement doneButtonListView;
+	
+	public WebElement getdoneButtonListView(String projectName,int timeOut) {
+		return isDisplayed(driver, doneButtonListView, "Visibility", timeOut, "doneButtonListView");
+	}
+	
+	@FindBy(xpath = "//a[text()='Add Filter']")
+	private WebElement addFilterBtn;
+	
+	public WebElement getaddFilterBtn(String projectName,int timeOut) {
+		return isDisplayed(driver, addFilterBtn, "Visibility", timeOut, "addFilterBtn");
+	}
+	
+	@FindBy(xpath = "//label[text()='Field']/..//button")
+	private WebElement filterFielddropdown;
+	
+	public WebElement getfilterFielddropdown(String projectName,int timeOut) {
+		return isDisplayed(driver, filterFielddropdown, "Visibility", timeOut, "filterFielddropdown");
+	}
+	
+	@FindBy(xpath = "//label[text()='Field']/parent::lightning-combobox//span[@class='slds-truncate']")
+	private List<WebElement> filterFielddropdownlist;
+	
+	public List<WebElement> getfilterFielddropdownlist(String projectName,int timeOut) {
+		return filterFielddropdownlist;
+	}
+	
+	@FindBy(xpath = "//button[@aria-label='Operator, equals']")
+	private WebElement filterOperatordropdown;
+	
+	public WebElement getFilterOperatordropdown(String projectName,int timeOut) {
+		return isDisplayed(driver, filterOperatordropdown, "Visibility", timeOut, "OperatorFielddropdown");
+	}
+	
+	@FindBy(xpath = "//label[text()='Operator']/parent::lightning-combobox//span[@class='slds-truncate']")
+	private List<WebElement> filterOperatordropdownlist;
+	
+	public List<WebElement> getfilterOperatordropdownlist(String projectName,int timeOut) {
+		return filterOperatordropdownlist;
+	}
+	
+	
+	@FindBy(xpath = "//span[text()='Value']/parent::label/following-sibling::input")
+	private WebElement filterValuefield;
+	
+	public WebElement getfilterValuefield(String projectName,int timeOut) {
+		return isDisplayed(driver, filterValuefield, "Visibility", timeOut, "filterValuefield");
+	}
+	
+	@FindBy(xpath = "//span[text()='Done']")
+	private WebElement filterDoneBtn;
+	
+	public WebElement getfilterDoneBtn(String projectName,int timeOut) {
+		return isDisplayed(driver, filterDoneBtn, "Visibility", timeOut, "filterDoneBtn");
+	}
+	
+	@FindBy(xpath = "//div[text()='Value']/..//a")
+	private WebElement filterValueDropDown;
+	
+	public WebElement getfilterValueDropDown(String projectName,int timeOut) {
+		return isDisplayed(driver, filterValueDropDown, "Visibility", timeOut, "filterValueDropDown");
+	}
+	
+	@FindBy(xpath = "//div[@role='menu']//li/a")
+	private List<WebElement> filterValueDropdownlist;
+	
+	public List<WebElement> getfilterValueDropdownlist(String projectName,int timeOut) {
+		return filterValueDropdownlist;
+	}
 	
 }

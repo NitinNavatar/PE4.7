@@ -463,6 +463,43 @@ public class ContactsPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, deletePhotoButton, "Visibility", timeOut, "delete photo button");
 		
 	}
+	
+	
+	
+
+	@FindBy(xpath = "//button[text()='New Referral']/ancestor::li/following-sibling::li//button")
+	private WebElement contactPageOnProfileEroButton;
+	
+	public WebElement getcontactPageOnProfileEroButton(String projectName,int timeOut) {
+		return isDisplayed(driver, contactPageOnProfileEroButton, "Visibility", timeOut, "Profile Ero Button on contact Page");
+		
+	}
+	
+	@FindBy(xpath = "//span[text()='Delete']")
+	private WebElement contactPageDeleteButton;
+	
+	public WebElement getcontactPageDeleteButton(String projectName,int timeOut) {
+		return isDisplayed(driver, contactPageDeleteButton, "Visibility", timeOut, "Delete Button on Contact Page");
+		
+	}
+	
+	@FindBy(xpath = "//div[contains(text(),'delete this contact?')]/parent::div/following-sibling::div//span[text()='Delete']")
+	private WebElement confirmationDeleteButton;
+	
+	public WebElement getconfirmationDeleteButton(String projectName,int timeOut) {
+		return isDisplayed(driver, confirmationDeleteButton, "Visibility", timeOut, "Confirmation Delete Button");
+		
+	}
+	
+	@FindBy(xpath = "//span[contains(text(),'Contact') and contains(@class,'toastMessage')]")
+	private WebElement confirmationDeleteMessage;
+	
+	public WebElement getconfirmationDeleteMessage(String projectName,int timeOut) {
+		return isDisplayed(driver, confirmationDeleteMessage, "Visibility", timeOut, "Confirmation Delete Message");
+		
+	}
+	
+	
 	/*@FindBy(xpath = "//input[@name='fileUploader']")
 	private WebElement deletePhotoButton;
 	
