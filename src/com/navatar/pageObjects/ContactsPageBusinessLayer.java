@@ -129,6 +129,88 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		return false;
 
 	}
+	public boolean officeLocationInputValueAndSelect_Lighting(String environment,String mode,String searchText,String lookUpValues){
+		String[] values = lookUpValues.split(",");
+		WebElement ele=null;
+		if (sendKeys(driver,getOfficeLocationTextBox_Lighting(environment, mode, 10), searchText, "Office Location Input Box", action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(2000);
+				for(int i=0;i<values.length;i++){
+					ele=isDisplayed(driver, FindElement(driver, "//*[@title='"+values[i]+"']",values[i]+" text value", action.SCROLLANDBOOLEAN, 20),"visibility", 20,values[i]+" text value");
+				
+					if(ele!=null) {
+						appLog.info(values[i]+" is visible in look up popup");	
+						
+						if(i==values.length-1){
+						ele=isDisplayed(driver, FindElement(driver, "//*[@title='"+values[0]+"']",values[0]+" text value", action.SCROLLANDBOOLEAN, 20),"visibility", 20,values[0]+" text value");
+						if(click(driver, ele, values[0]+" text value", action.SCROLLANDBOOLEAN)) {
+							appLog.info("clicked on "+values[0]+" in lookup pop up");
+							return true;
+						}
+					}
+						
+					}else{
+						appLog.error(values[i]+" is not visible in look up popup");
+						return false;
+					}
+				}
+				
+			}
+		return false;
+	}
+	
+	public boolean verifyCreatedOpenActivity(String environment, String mode, String activitySubject) {
+		WebElement ele;
+		String xpath;
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			xpath = "//h3[text()='Open Activities']/ancestor::div[@class='bRelatedList']//a[text()='" + activitySubject
+					+ "']";
+			ele = FindElement(driver, xpath, activitySubject, action.SCROLLANDBOOLEAN, 10);
+		} else {
+			ele = verifyCreatedActivityHistory_Lighting(environment, activitySubject);
+		}
+		if (ele != null) {
+			return true;
+		}
+		return false;
+
+	}
+
+	
+	public boolean verifyPresenceOfCorrespondenceRelatedList(String mode, String environment,String contactName, String LPname, String partnershipName, String commId, int timeOut) {
+		WebElement ele=null;
+		boolean flag = false;
+
+		String xpath = "//*[text()='Contact']/..//following-sibling::div//*[text()='"+contactName+"']";
+		ele = FindElement(driver, xpath, contactName, action.BOOLEAN, 30);
+		if (ele!=null) {
+			xpath = "//*[text()='Limited Partner']/..//following-sibling::div//*[text()='"+LPname+"']";
+			ele = FindElement(driver, xpath, LPname, action.BOOLEAN, 1);
+			if (ele!=null) {
+				xpath = "//*[text()='Partnership']/..//following-sibling::div//*[text()='"+partnershipName+"']";
+				ele = FindElement(driver, xpath, partnershipName, action.BOOLEAN, 1);
+
+				if (ele!=null) {
+					xpath = "//*[text()='Commitment']/..//following-sibling::div//*[text()='"+commId+"']";
+					ele = FindElement(driver, xpath, commId, action.BOOLEAN, 1);
+					if (ele!=null) {
+						flag=true;
+					} else {
+						CommonLib.log(LogStatus.ERROR, "Data not verified on Correspondence List : "+contactName+" >>>> "+LPname+" >>>> "+partnershipName+" >>> "+commId, YesNo.Yes);
+					}
+
+				} else {
+					CommonLib.log(LogStatus.ERROR, "Data not verified on Correspondence List : "+contactName+" >>>> "+LPname+" >>>> "+partnershipName+" >>> "+commId, YesNo.Yes);
+				}
+			} else {
+				CommonLib.log(LogStatus.ERROR, "Data not verified on Correspondence List : "+contactName+" >>>> "+LPname+" >>>> "+partnershipName+" >>> "+commId, YesNo.Yes);
+			}
+		} else {
+			CommonLib.log(LogStatus.ERROR, "Data not verified on Correspondence List : "+contactName+" >>>> "+LPname+" >>>> "+partnershipName+" >>> "+commId, YesNo.Yes);
+		}
+
+		return flag;
+	}
+	
 	
 	//////////////////////////////////////////////////////////////  Activity Association /////////////////////////////////////
 	
@@ -543,6 +625,69 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		return false;
 	}
 	
+	public WebElement verifyCreatedActivityHistory_Lighting(String environment, String activitySubject) {
+		WebElement ele;
+		String xpath;
+		xpath = "//a[contains(text(),'" + activitySubject + "')]";
+		ele = FindElement(driver, xpath, activitySubject, action.SCROLLANDBOOLEAN, 10);
+		return ele;
+
+	}
+
+	
+	public boolean verifyCreatedActivityHistory(String environment, String mode, String activitySubject) {
+		WebElement ele;
+		String xpath;
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			xpath = "//h3[text()='Activity History']/ancestor::div[@class='bRelatedList']//a[contains(text(),'" + activitySubject+ "')]";
+			ele = FindElement(driver, xpath, activitySubject, action.SCROLLANDBOOLEAN, 10);
+		} else {
+			ele = verifyCreatedActivityHistory_Lighting(environment, activitySubject);
+		}
+		if (ele != null) {
+			appLog.info("Activity History Grid : "+ele.getText().trim());
+			return true;
+		}
+		return false;
+
+	}
+	public boolean verifyContactTransferUIonContactPage(String environment,String mode,String contactName,String legalName,int timeOut){
+		WebElement ele ;
+		boolean flag=true;;
+		NavatarSetupPageBusinessLayer np = new NavatarSetupPageBusinessLayer(driver);
+		if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			switchToFrame(driver, timeOut, np.getnavatarSetUpTabFrame_Lighting(environment, 10));
+		} 
+			ele = isDisplayed(driver, FindElement(driver, "//div[@class='ContentStart']//p[@title='Contact Transfer']", "Contact Transfer Page", action.BOOLEAN,timeOut), "Visibility", timeOut, "Contact Transfer Page");
+			
+			if (ele!=null) {
+				CommonLib.log(LogStatus.INFO, "Landing Page Verified : Contact Transfer", YesNo.No);
+			} else {
+				flag= false;
+				CommonLib.log(LogStatus.INFO, "Landing Page Not Verified : Contact Transfer", YesNo.Yes);
+			}
+			
+			ele = isDisplayed(driver, FindElement(driver, "//label[text()='Name']/../following-sibling::td[text()='"+contactName+"']", "Contact Name : "+contactName, action.BOOLEAN,timeOut), "Visibility", timeOut, "Contact Name : "+contactName);
+			
+			if (ele!=null) {
+				CommonLib.log(LogStatus.INFO, "Name Label Verified : "+contactName, YesNo.No);
+			} else {
+				flag= false;
+				CommonLib.log(LogStatus.INFO, "Name Label Not Verified : "+contactName, YesNo.Yes);
+			}
+			
+			ele = isDisplayed(driver, FindElement(driver, "//label[text()='Legal Name']/../following-sibling::td[text()='"+legalName+"']", "Legal Name : "+contactName, action.BOOLEAN,timeOut), "Visibility", timeOut, "Legal Name : "+contactName);
+			
+			if (ele!=null) {
+				CommonLib.log(LogStatus.INFO, "Legal Name Label Verified : "+contactName, YesNo.No);
+			} else {
+				flag= false;
+				CommonLib.log(LogStatus.INFO, "Legal Name Label Not Verified : "+contactName, YesNo.Yes);
+			}
+		switchToDefaultContent(driver);
+		return flag;
+		
+	}
 	/**
 	 * @author Azhar Alam
 	 * @param projectName
@@ -610,6 +755,101 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 
 	}
 	
+	public boolean enteringValueforLegalNameOnContactTransferPage(String environment, String mode, String legalName,
+			AddressAction addressAction, int timeOut) {
+		WebElement ele;
+		boolean flag = true;
+		;
+		NavatarSetupPageBusinessLayer np = new NavatarSetupPageBusinessLayer(driver);
+		if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			switchToFrame(driver, timeOut, np.getnavatarSetUpTabFrame_Lighting(environment, timeOut));
+		}
+
+		ele = isDisplayed(driver,
+				FindElement(driver, "//label[text()='Legal Name']/../following-sibling::td/span/div/span//input",
+						"Legal Name ", action.BOOLEAN, timeOut),
+				"Visibility", timeOut, "Legal Name ");
+
+		if (sendKeys(driver, ele, legalName, "Input Value : " + legalName, action.BOOLEAN)) {
+			CommonLib.log(LogStatus.INFO, "Entered Value: " + legalName, YesNo.No);
+			if (click(driver, getTransferButton(environment,  timeOut), "Transfer Button", action.BOOLEAN)) {
+				CommonLib.log(LogStatus.INFO, "Clicked on Transfer Button", YesNo.No);
+
+				ele = getContactTransferConfirmationMsg(environment, timeOut);
+				if (ele != null) {
+					CommonLib.log(LogStatus.INFO, "Confirmation PopUp Element is Present", YesNo.No);
+					String msg = ele.getText();
+
+					if (ContactPageErrorMessage.TransferConfirmationPopUpMessage.equals(msg)) {
+						CommonLib.log(LogStatus.INFO, "Confirmation Msg Verified : " + msg, YesNo.No);
+					} else {
+						flag = false;
+						CommonLib.log(LogStatus.ERROR, "Confirmation Msg Not Verified Actual : " + msg
+								+ " \t Expected : " + ContactPageErrorMessage.TransferConfirmationPopUpMessage,
+								YesNo.Yes);
+					}
+
+				} else {
+					flag = false;
+					CommonLib.log(LogStatus.ERROR, "Confirmation PopUp Element is null", YesNo.Yes);
+				}
+
+				if (getRetainAddressButton(environment,  timeOut) != null) {
+					CommonLib.log(LogStatus.INFO, "Retain Address Button  Found", YesNo.No);
+				} else {
+					flag = false;
+					CommonLib.log(LogStatus.ERROR, "Retain Address Button Not Found", YesNo.Yes);
+				}
+
+				if (getClearAddressButton(environment,  timeOut) != null) {
+					CommonLib.log(LogStatus.INFO, "Clear Address Button  Found", YesNo.No);
+				} else {
+					flag = false;
+					CommonLib.log(LogStatus.ERROR, "Clear Address Button Not Found", YesNo.Yes);
+				}
+
+				if (addressAction.toString().equalsIgnoreCase(AddressAction.Retain.toString())) {
+
+					if (click(driver, getRetainAddressButton(environment, timeOut), "Retain Address Button",
+							action.BOOLEAN)) {
+						CommonLib.log(LogStatus.INFO, "Clicked on Retain Address Button", YesNo.No);
+					} else {
+						flag = false;
+						CommonLib.log(LogStatus.ERROR, "Not Able to Click on Retain Address Button", YesNo.Yes);
+					}
+
+				} else if (addressAction.toString().equalsIgnoreCase(AddressAction.Clear.toString())){
+
+					if (click(driver, getClearAddressButton(environment,  timeOut), "Clear Address Button",
+							action.BOOLEAN)) {
+						CommonLib.log(LogStatus.INFO, "Clicked on Clear Address Button", YesNo.No);
+					} else {
+						flag = false;
+						CommonLib.log(LogStatus.ERROR, "Not Able to Click on Clear Address Button", YesNo.Yes);
+					}
+
+				}else{
+					if (click(driver, getCrossIcononContactTransferPopUp(environment, mode, timeOut), "Cross Icon",
+							action.BOOLEAN)) {
+						CommonLib.log(LogStatus.INFO, "Clicked on Cross Icon", YesNo.No);
+					} else {
+						flag = false;
+						CommonLib.log(LogStatus.ERROR, "Not Able to Click on Cross Icon", YesNo.Yes);
+					}	
+				}
+
+			} else {
+				flag = false;
+				CommonLib.log(LogStatus.ERROR, "Not Able to Click on Transfer Button", YesNo.Yes);
+			}
+		} else {
+			flag = false;
+			CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + legalName, YesNo.Yes);
+		}
+		switchToDefaultContent(driver);
+		return flag;
+
+	}
 	
 	/**
 	 * @author Akul Bhutani

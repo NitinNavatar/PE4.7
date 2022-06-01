@@ -5,8 +5,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 
-
+import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.ProjectName;
+import com.navatar.generic.EnumConstants.RecordType;
 import com.navatar.generic.EnumConstants.action;
 import com.relevantcodes.extentreports.LogStatus;
 import com.relevantcodes.extentreports.model.Log;
@@ -31,7 +32,20 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 	public WebElement getRecordTypeOfNewRecordDropDownList(int timeOut) {
 		return isDisplayed(driver, recordTypeOfNewRecordDropDownList, "Visibility", timeOut, "Record type of new record drop down list");
 	}
-	
+	@FindBy(xpath="//h2//a[text()='Office Location']")
+	private WebElement officeLocation1;
+	 
+	public WebElement getOfficeLocation(String environment,String mode,RecordType recordType,int timeOut){
+		if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+//			if(click(driver, getRelatedTab_Lighting(environment,recordType, 10), "Related Tab", action.SCROLLANDBOOLEAN)){
+//				log(LogStatus.INFO, "Clicked on Related Tab", YesNo.No);
+//				ThreadSleep(3000);
+//				scrollThroughOutWindow(driver);
+//			}
+			ThreadSleep(2000);
+		}
+		return isDisplayed(driver, officeLocation1, "Visibility", timeOut, "office Location");	
+	}
 	@FindBy(xpath="//input[@title='Continue']")
 	private WebElement continueBtnClassic;
 
@@ -59,6 +73,35 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 		
 	}
 	
+	
+	 
+	public WebElement getNewOfficeLocationButton(String environment,String mode,RecordType recordType,int timeOut){
+		if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+
+			scrollThroughOutWindow(driver);
+			return isDisplayed(driver, newofficeLocationBtn_Lighting, "Visibility", timeOut, "office Location : "+mode);	
+	
+			
+		}else{
+			return isDisplayed(driver, newOfficeLocationBtn_Classic, "Visibility", timeOut, "office Location : "+mode);		
+		}
+		
+		
+	}
+	/**
+	 * @return the commitmentDetailsLabelText
+	 */
+	public WebElement getFundCommitmentDetailsLabelText(String environment, String mode,int timeOut) {
+		WebElement ele=null;
+		String xpath="";
+		if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			xpath="a";
+		}else {
+			xpath="h3";
+		}
+		ele=FindElement(driver, "//"+xpath+"[text()='Fund Commitments']", "Fund commitment details label text", action.SCROLLANDBOOLEAN,timeOut);
+		return isDisplayed(driver,ele , "Visibility", timeOut, "Fund commitment details label text");
+	}
 	@FindBy(xpath="//input[@name='acc2']")
 	private WebElement legalNameTextBoxClassic;
 	

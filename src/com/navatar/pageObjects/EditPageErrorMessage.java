@@ -16,6 +16,7 @@ public interface EditPageErrorMessage {
 	public String EnhancedLightningGrid = "Enhanced Lightning Grid";
 	public String NavatarSDGToggles = "Navatar SDG Toggles";
 	public String NavatarSDG = "Navatar SDG";
+	public String RelatedLists = "Related Lists";
 	public String noOfRecordsLimit="This value must be at least 1 and at most 30.";
 	public String noOfRecordsError="This field is required.";
 	public String noOfRecordsErrorAccordion="Component 'RelatedListAccordion' has an invalid value for property 'Number of Records to Display'.";

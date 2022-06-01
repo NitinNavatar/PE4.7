@@ -37,6 +37,14 @@ public class CorrespondenceListPage extends BasePageBusinessLayer{
 	public WebElement getContactValue(int timeOut) {
 		return isDisplayed(driver, contactValue, "Visibility", timeOut, "contact in edit Mode Classic");
 	}
+	
+	@FindBy(xpath = "//*[text()='New Correspondence List']")
+	private WebElement newCorrespondenceListButton;
+	
+	public WebElement getNewCorrespondenceListButton(int timeOut) {
+		return isDisplayed(driver, newCorrespondenceListButton, "Visibility", timeOut, "New Correspondence List Button");
+	}
+	
 	@FindBy(xpath = "//select[contains(@title,'Available')]")
 	private WebElement availableSelectBox_Classic;
 	

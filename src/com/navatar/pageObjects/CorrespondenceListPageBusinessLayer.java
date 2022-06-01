@@ -1,11 +1,6 @@
 package com.navatar.pageObjects;
 
 import static com.navatar.generic.AppListeners.appLog;
-import static com.navatar.generic.CommonLib.FindElement;
-import static com.navatar.generic.CommonLib.ThreadSleep;
-import static com.navatar.generic.CommonLib.click;
-import static com.navatar.generic.CommonLib.sendKeys;
-import static com.navatar.generic.CommonLib.getSelectedOptionOfDropDown;
 import static com.navatar.generic.CommonLib.*;
 import java.util.List;
 
@@ -14,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.server.handler.SendKeys;
 
 import com.navatar.generic.EnumConstants.Mode;
+import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.relevantcodes.extentreports.LogStatus;
 import com.relevantcodes.extentreports.model.Log;
@@ -24,7 +20,6 @@ public class CorrespondenceListPageBusinessLayer extends CorrespondenceListPage{
 		super(driver);
 		// TODO Auto-generated constructor stub
 	}
-	
 	
 	
 	/**

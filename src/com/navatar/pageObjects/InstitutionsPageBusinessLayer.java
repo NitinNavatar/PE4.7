@@ -165,7 +165,671 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		
 		return flag;
 	}
+public boolean clickOnCreatedInstitution(String environment,String mode,String inst_name) {
+		
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+			
+			List<WebElement> optionsInDropDown = FindElements(driver, "//select[@id='fcf']/option[text()='All Institutions']", "");
+			String[] options = {};
+			if(optionsInDropDown.size()>1){
+				String[] o = {optionsInDropDown.get(0).getAttribute("value"), optionsInDropDown.get(1).getAttribute("value")};
+				options = o;
+			} else {
+				String[] o = {optionsInDropDown.get(0).getAttribute("value")};
+				options = o;
+			}
+			
+			int i =1;
+			if (getSelectedOptionOfDropDown(driver, getViewDropdown(60), "View dropdown", "text")
+					.equalsIgnoreCase("All Firms")) {
+				if (click(driver, getGoButton(60), "Go button", action.BOOLEAN)) {
+
+				} else {
+					appLog.error("Go button not found");
+				}
+			} else {
+				if (selectVisibleTextFromDropDown(driver, getViewDropdown(60), "View dropdown", options[0])) {
+				} else {
+					appLog.error("All institutions not found in dropdown");
+				}
+
+			}
+			WebElement ele = isDisplayed(driver,
+					FindElement(driver, "//div[@class='x-panel-bwrap']//span[text()='" + inst_name + "']/..",
+							"Institution link", action.SCROLLANDBOOLEAN, 20),
+					"visibility", 20, "");
+			if(ele==null){
+				if(options.length>1){
+					if (selectVisibleTextFromDropDown(driver, getViewDropdown(60), "View dropdown", options[1])) {
+						ele = isDisplayed(driver,
+								FindElement(driver, "//div[@class='x-panel-bwrap']//span[text()='" + inst_name + "']/..",
+										"Institution link", action.SCROLLANDBOOLEAN, 20),
+								"visibility", 20, "");
+					} else {
+						appLog.error("All institutions not found in dropdown");
+					}
+				} else {
+					appLog.error("All institutions not found in dropdown");
+				}
+			}
+			if (ele != null) {
+				scrollDownThroughWebelement(driver, ele, "");
+				if (click(driver, ele, inst_name + " name text", action.SCROLLANDBOOLEAN)) {
+					appLog.info("Clicked on institution link");
+					return true;
+				} else {
+					appLog.error("Not able to click on " + inst_name);
+				}
+			} else {
+				while (true) {
+					appLog.error("Institutions is not Displaying on "+i+ " Page: " + inst_name);
+					if (click(driver, getNextImageonPage(10), "Institutions Page Next Button",
+							action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(2000);
+						appLog.info("Clicked on Next Button");
+						ele = FindElement(driver, "//div[@class='x-panel-bwrap']//span[text()='" + inst_name + "']/..",
+								"Institution link", action.SCROLLANDBOOLEAN, 20);
+						if (ele != null) {
+							if (click(driver, ele, inst_name, action.SCROLLANDBOOLEAN)) {
+								appLog.info("Clicked on Institutions name : " + inst_name);
+								return true;
+
+							} else {
+								appLog.error("Not able to click on " + inst_name);
+							}
+						}
+					} else {
+						appLog.error("Institutions Not Available : " + inst_name);
+						return false;
+					}
+					i++;
+				}
+			}
+		}else{
+			if(clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, inst_name, 30)){
+				appLog.info("Clicked on Institutions name : " + inst_name);
+				return true;
+			}else{
+				appLog.error("Institutions Not Available : " + inst_name);
+			}	
+		}
+		return false;
+	}
+/**
+ * @author Ankit Jaiswal
+ * @param environment
+ * @param mode
+ * @param commitmentRowRecord
+ * @param fundName
+ * @param totalAmount
+ * @return
+ */
+public List<String> verifyCommitmentDetails(String environment, String mode,String[][] commitmentRowRecord, String fundName, String totalAmount){
+	List<String> result = new ArrayList<String>();
+	String xpath="";
+	WebElement ele= null;
 	
+	scrollDownThroughWebelement(driver, getFundCommitmentDetailsLabelText(environment, mode, 30), "");
+	//switchToFrame(driver, 10, getCommitmentDetailsFrame(environment, mode, 30));
+	List<WebElement> commitmentIDList=getCommitmentIDList(environment, mode);
+	List<WebElement> commitmentAmountList=getCommitmentAmountList(environment, mode);
+	List<WebElement> LPList=getLimitedPartnerList(environment, mode);
+	List<WebElement> partnershipList=getPartnerShipList(environment, mode);
+	List<WebElement> createdDateList=createdDateList(environment, mode);
+	if(!commitmentIDList.isEmpty()) {
+		for (String[] commitmentRowData : commitmentRowRecord) {
+	for(int i=0; i<commitmentIDList.size(); i++) {
+				String id=commitmentIDList.get(i).getText().trim();
+				String amount=	commitmentAmountList.get(i).getText().trim();
+				String lp = LPList.get(i).getText().trim();
+				String partnership = partnershipList.get(i).getText().trim();
+				String createdDate=createdDateList.get(i).getText().trim();
+				String CommitAmount=convertNumberAccordingToFormatWithCurrencySymbol(commitmentRowData[1],"0,000.00");
+				if(commitmentRowData[0].contains(id) && CommitAmount.contains(amount) && commitmentRowData[2].contains(lp) ) {
+						/*&& createdDate.contains(commitmentRowData[5]*/
+					log(LogStatus.INFO, "Commitment ID : "+commitmentRowData[0]+", Commitment Amount :"+commitmentRowData[1]+", LP Name : "+commitmentRowData[2]
+							+", created Date : "+commitmentRowData[3]+" is matched ", YesNo.No);
+					break;
+
+				}else {
+					if(i==commitmentIDList.size()-1) {
+						log(LogStatus.ERROR, "Commitment ID : "+commitmentRowData[0]+", Commitment Amount :"+commitmentRowData[1]+", LP Name : "+commitmentRowData[2]
+								+" created Date : "+commitmentRowData[3]+" is not matched ", YesNo.Yes);
+						result.add("Commitment ID : "+commitmentRowData[0]+", Commitment Amount :"+commitmentRowData[1]+", LP Name : "+commitmentRowData[2]
+								+",created Date : "+commitmentRowData[3]+" is not matched ");
+					}
+				}
+			}
+			if(commitmentRowData[4]!=null&& !commitmentRowData[4].isEmpty() &&!commitmentRowData[4].isBlank()) {
+				ele=FindElement(driver, xpath, "company name", action.SCROLLANDBOOLEAN, 20);
+				if(ele!=null) {
+					String aa = ele.getText().trim();
+					if(aa.contains(commitmentRowData[4])) {
+						log(LogStatus.INFO, "Company name "+commitmentRowData[4]+" is matched ", YesNo.No);
+					}else {
+						log(LogStatus.ERROR, "Company Name "+commitmentRowData[4]+" is not matched ", YesNo.Yes);
+						result.add("Company Name "+commitmentRowData[4]+" is not matched");
+					}
+				}else {
+					log(LogStatus.ERROR, "Company Name is not visible so cannot verify it ", YesNo.No);
+					result.add("Company Name is not visible so cannot verify it ");
+				}
+			}
+			
+		}
+		if(totalAmount!=null&& !totalAmount.isEmpty()&&!totalAmount.isBlank()) {
+			totalAmount=convertNumberAccordingToFormatWithCurrencySymbol(totalAmount,"0,000.00");	
+			String xPath="//span[contains(@id,'grid_dealalert-cell-0-')]//a[contains(text(),'"+fundName+"')]/../../following-sibling::span[2]/span[text()='"+totalAmount+"']";
+			 ele = FindElement(driver, xPath, "fund name and total amount", action.SCROLLANDBOOLEAN, 20);
+			if(ele!=null) {
+				log(LogStatus.INFO, "fund name "+fundName+" total commitment amount "+totalAmount+" is verified ", YesNo.No);
+			}else {
+				log(LogStatus.ERROR, "fund name "+fundName+" total commitment amount "+totalAmount+" is not verified ", YesNo.No);
+				result.add("fund name "+fundName+" total commitment amount "+totalAmount+" is not verified ");
+			}
+		}else if (fundName!=null) {
+			 xpath="//a[text()='Fund Commitments']/ancestor::article//a[text()='"+fundName+"']";
+			 ele = FindElement(driver, xpath, "fund name", action.SCROLLANDBOOLEAN, 20);
+			if(ele!=null) {
+				log(LogStatus.INFO, "fund name "+fundName+" is verified ", YesNo.No);
+			}else {
+				log(LogStatus.ERROR, "fund name "+fundName+" is verified ", YesNo.No);
+				result.add("fund name "+fundName+" is verified ");
+			}
+		}
+	}else {
+		log(LogStatus.ERROR, "Commitment ID list is not visible on institution Page so cannot verify commitment details", YesNo.Yes);
+		result.add("Commitment ID list is not visible on institution Page so cannot verify commitment details");
+	}
+	switchToDefaultContent(driver);
+	return result;
+}
+
+
+public List<String> verifyCommitmentDetailsLP(String environment,String mode,String fundName,String cmntAmmmountinMn,String date) {
+	List<String> result = new ArrayList<String>();
+	log(LogStatus.INFO,"Header Verified " , YesNo.No);
+
+	ThreadSleep(5000);
+	try {
+		String headerxpath = "//thead//th//*[contains(text(),'Fund')]/../..//following-sibling::th//*[contains(text(),'Commitment Amount(M)')]/../..//following-sibling::th//*[contains(text(),'Commitment Date')]"; 
+		WebElement ele = FindElement(driver, headerxpath, "Header", action.BOOLEAN, 10);
+		if (ele!=null) {
+			log(LogStatus.INFO,"Header Verified " , YesNo.No);
+		} else {
+			log(LogStatus.INFO,"Header not Verified " , YesNo.No);
+			BaseLib.sa.assertTrue(false,"Header not Verified ");
+			result.add("Header not Verified ");
+
+		}
+
+		//a[text()='TestM1Fund1']/../../../..//following-sibling::td//a[text()='TestM1Institution1-LP1']/../../../..//following-sibling::td//*[text()='$20.0']/../../..//following-sibling::td
+		System.err.println("Value going to verified : "+fundName+" "+cmntAmmmountinMn+" "+date);
+		appLog.info("Value going to verified : "+fundName+" "+cmntAmmmountinMn+" "+date);
+		System.err.println("Value going to vrified");
+		String fundXpath= "//*[text()='"+fundName+"']";
+		
+		float f= Float.parseFloat(cmntAmmmountinMn)/1000000;
+		System.err.println(f);
+		String monney=BasePageBusinessLayer.convertNumberAccordingToFormatWithCurrencySymbol(""+f,"0.0") ;
+		String cmntXpath= "/ancestor::tr//*[text()='"+monney+"']";
+		String dateXpath = "/ancestor::tr//td[contains(@class,'Commitment_Date')]";
+		String detailsXpath= "//following-sibling::td[2]";
+		
+		System.err.println(monney);
+		System.err.println("Value going to verified : "+fundName+" "+monney+" "+date);
+		appLog.info("Value going to verified : "+fundName+" "+monney+" "+date);
+		
+
+		String fullXpath = fundXpath+cmntXpath+dateXpath;
+
+		ele = FindElement(driver, fullXpath, "Value xpath", action.BOOLEAN, 10);
+		if (ele!=null) {
+			System.err.println(ele.getText().trim());
+			String dated = ele.getText().trim();
+			log(LogStatus.INFO,"Date Element Found "+dated , YesNo.No);
+			
+			if (dated.equalsIgnoreCase(date)) {
+				
+			} else {
+				log(LogStatus.INFO,"Date not verified Actual : "+dated+"\t Expected : "+date , YesNo.No);
+				result.add("Date not verified Actual : "+dated+"\t Expected : "+date);
+				BaseLib.sa.assertTrue(false,"Date not verified Actual : "+dated+"\t Expected : "+date);
+			}
+			
+		} else {
+			result.add("Date Element Not Found ");
+			log(LogStatus.INFO,"Date Element Not Found " , YesNo.No);
+			BaseLib.sa.assertTrue(false,"Date Element Not Found ");
+
+		}
+
+		
+	} catch (Exception e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+	return result;	
+}
+
+public boolean clickOnCreatedLP(String environment,String mode,String lp_name) {
+	if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+	int i =1;
+	if (getSelectedOptionOfDropDown(driver, getViewDropdown(60), "View dropdown", "text")
+			.equalsIgnoreCase("All Limited Partners")) {
+		if (click(driver, getGoButton(60), "Go button", action.BOOLEAN)) {
+			appLog.info("Clicked on Go button");
+		} else {
+			appLog.error("Go button not found");
+		}
+	} else {
+		if (selectVisibleTextFromDropDown(driver, getViewDropdown(60), "View dropdown", "All Limited Partners")) {
+			appLog.info("Select Limited Partners in View Dropdown");
+
+		}
+
+	}
+	WebElement ele = isDisplayed(driver,
+			FindElement(driver,
+					"//*[@id='ext-gen12']/div/table/tbody/tr/td[4]/div/a/span[text()='" + lp_name + "']", "LP link",
+					action.SCROLLANDBOOLEAN, 10),
+			"visibility", 10, "");
+	if (ele != null) {
+		scrollDownThroughWebelement(driver, ele, "");
+		if (click(driver, ele, lp_name + " name text", action.SCROLLANDBOOLEAN)) {
+			appLog.info("Clicked on limited partner link");
+			return true;
+		} else {
+			appLog.error("Not able to click on " + lp_name);
+		}
+	} else {
+		while (true) {
+			appLog.error("limited partner is not Displaying on "+i+ " Page: " + lp_name);
+			if (click(driver, getNextImageonPage(10), "limited partner Page Next Button",
+					action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(2000);
+				appLog.info("Clicked on Next Button");
+				ele = FindElement(driver,
+						"//*[@id='ext-gen12']/div/table/tbody/tr/td[4]/div/a/span[text()='" + lp_name + "']", "LP link",
+						action.SCROLLANDBOOLEAN, 10);
+				if (ele != null) {
+					if (click(driver, ele, lp_name, action.SCROLLANDBOOLEAN)) {
+						appLog.info("Clicked on limited partner name : " + lp_name);
+						return true;
+						
+					}
+				}
+
+				
+
+			} else {
+				appLog.error("limited partner Not Available : " + lp_name);
+				return false;
+			}
+			i++;
+		}
+	}
+	}else{
+		if(clickOnAlreadyCreated_Lighting(environment, mode, TabName.LimitedPartner, lp_name, 30)){
+			appLog.info("Clicked on limited partner name : " + lp_name);
+			return true;
+		}else{
+			appLog.error("limited partner Not Available : " + lp_name);
+		}	
+	}
+	return false;
+}
+
+public boolean clickOnCreatedCompany(String environment,String mode,String company_name) {
+	if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+	int i =1;
+	if (getSelectedOptionOfDropDown(driver, getViewDropdown(60), "View dropdown", "text")
+			.equalsIgnoreCase("All Companies")) {
+		if (click(driver, getGoButton(60), "Go button", action.BOOLEAN)) {
+
+		} else {
+			appLog.error("Go button not found");
+		}
+	} else {
+		if (selectVisibleTextFromDropDown(driver, getViewDropdown(60), "View dropdown", "All Companies")) {
+		} else {
+			appLog.error("All Companies not found in dropdown");
+		}
+
+	}
+	WebElement ele = isDisplayed(driver,
+			FindElement(driver, "//div[@class='x-panel-bwrap']//span[text()='" + company_name + "']/..",
+					"Company link", action.SCROLLANDBOOLEAN, 20),
+			"visibility", 20, "");
+	if (ele != null) {
+		scrollDownThroughWebelement(driver, ele, "");
+		if (click(driver, ele, company_name + " name text", action.SCROLLANDBOOLEAN)) {
+			appLog.info("Clicked on company link");
+			return true;
+		} else {
+			appLog.error("Not able to click on " + company_name);
+		}
+	} else {
+		while (true) {
+			appLog.error("Company is not Displaying on "+i+ " Page: " + company_name);
+			if (click(driver, getNextImageonPage(10), "Company Page Next Button",
+					action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(2000);
+				appLog.info("Clicked on Next Button");
+				ele = FindElement(driver, "//div[@class='x-panel-bwrap']//span[text()='" + company_name + "']/..",
+						"Institution link", action.SCROLLANDBOOLEAN, 20);
+				if (ele != null) {
+					if (click(driver, ele, company_name, action.SCROLLANDBOOLEAN)) {
+						appLog.info("Clicked on Company name : " + company_name);
+						return true;
+						
+					}
+				}
+
+				
+
+			} else {
+				appLog.error("Company Not Available : " + company_name);
+				return false;
+			}
+			i++;
+		}
+}
+	}else{
+		if(clickOnAlreadyCreated_Lighting(environment, mode, TabName.CompaniesTab, company_name, 30)){
+			appLog.info("Clicked on Company name : " + company_name);
+			return true;
+		}else{
+			appLog.error("Company Not Available : " + company_name);
+		}	
+	}
+	return false;
+}
+public boolean verifyDealSourcedRelatedList(String environment,String mode,RecordType RecordType,String[][] headersWithValues){
+	boolean flag=true;
+	List<WebElement> header = new ArrayList<WebElement>();
+	List<WebElement> values = new ArrayList<WebElement>();
+	try {
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+		
+		FindElement(driver, "//div[@class='bRelatedList']//h3[text()='Deals Sourced']", "", action.SCROLLANDBOOLEAN, 10);
+		 header = FindElements(driver, "//h3[text()='Deals Sourced']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//tr[1]/*", "Header");
+		 values = FindElements(driver, "//h3[text()='Deals Sourced']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//tr[2]/*", "Values");
+		int i = 1;
+		for (String[] headerWithValue : headersWithValues) {
+			appLog.info("From PAGE    : "+header.get(i).getText()+"  <<<<<>>>>> "+values.get(i).getText());
+			appLog.info("fROM tESTcASE  : "+headerWithValue[0].replace("_", " ")+"  <<<<<>>>>> "+headerWithValue[1]);
+			if(header.get(i).getText().contains(headerWithValue[0].replace("_", " ")) && values.get(i).getText().contains(headerWithValue[1])){
+				appLog.info("Value matched : "+headerWithValue[1]);
+			}else{
+				flag=false;
+				appLog.error("Value Not matched : "+headerWithValue[1]);
+				BaseLib.sa.assertTrue(false, "Value Not matched : "+headerWithValue[1]);	
+			}
+			i++;
+		}
+		}else{
+			
+					ThreadSleep(2000);
+					driver.navigate().refresh();
+					ThreadSleep(5000);
+					flag=verifyRelatedListViewAllColumnAndValue(headersWithValues);
+			
+			
+		}
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		flag=false;
+		appLog.error("Exception Occur verifyDealSourcedRelatedList");
+		BaseLib.sa.assertTrue(false, "Exception Occur verifyDealSourcedRelatedList");
+	}
+	return flag;
+
+}
+public SoftAssert EnterValueForLabelonOfficeLocation(String environment, String mode,String[][] labelsWithValues) {
+	SoftAssert saa = new SoftAssert();
+	String finalLabelName;
+	String xpath = "";
+	WebElement ele = null;
+	for (String[] labelWithValue : labelsWithValues) {
+	
+		if (labelWithValue[0].contains("_")) {
+			finalLabelName = labelWithValue[0].replace("_", " ");
+		} else {
+			finalLabelName = labelWithValue[0];
+		}
+		
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			
+			if (finalLabelName.contains("Street")) {
+				xpath = "//form[@id='editPage']//label[text()='Street']/../following-sibling::td//textarea";
+			}else if(finalLabelName.contains("Primary")){
+				xpath="//form[@id='editPage']//label[text()='Primary']/../../following-sibling::td//input";				}
+			else{
+				xpath = "//form[@id='editPage']//label[text()='"+finalLabelName+"']/../following-sibling::td//input";	
+			}
+				
+	} else {
+		
+		if (finalLabelName.contains("Street")) {
+			xpath = "//*[text()='Street']//following-sibling::div/textarea";
+		}else if(finalLabelName.contains("Organization Name")) {
+			xpath = "//*[text()='Organization Name']//following-sibling::div";
+		}else if(finalLabelName.contains("Primary"))
+			xpath="//label/span[text()='Primary']/..//following-sibling::div//input";
+		else{
+			xpath = "//*[text()='"+finalLabelName+"']//following-sibling::div//input";
+		}
+		
+	}
+	
+		ele = FindElement(driver, xpath, finalLabelName, action.BOOLEAN, 10);
+		if (finalLabelName.contains("Primary")) {
+			
+			if (labelWithValue[1].toString().contains("checked")) {
+			
+				if (click(driver, ele, finalLabelName, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Clicked for Primary Label", YesNo.No);
+				}else{
+					saa.assertTrue(false, "Not Able to Click for Primary Label");
+					log(LogStatus.FAIL, "Not Able to Click for Primary Label", YesNo.Yes);
+				}
+				
+			} 
+			
+		}else{
+			
+			if (sendKeys(driver, ele, labelWithValue[1], labelWithValue[1], action.BOOLEAN)) {
+				log(LogStatus.INFO, "Enter value : "+labelWithValue[1]+" For Label : "+labelWithValue[0], YesNo.No);
+			}else{
+				saa.assertTrue(false, "Enter value : "+labelWithValue[1]+" For Label : "+labelWithValue[0]);
+				log(LogStatus.FAIL, "Enter value : "+labelWithValue[1]+" For Label : "+labelWithValue[0], YesNo.Yes);
+			}
+		}
+			
+	}
+	
+	if (click(driver, getSaveOfficeLocationButton(environment, mode, 10), "Save Button", action.BOOLEAN)) {
+		log(LogStatus.FAIL, "CLicked on Save Button", YesNo.Yes);
+	} else {
+		saa.assertTrue(false, "Not Able to CLick on Save Button");
+		log(LogStatus.FAIL, "Not Able to CLick on Save Button", YesNo.Yes);
+	}
+	
+	
+	return saa;
+
+}
+public boolean verifyOfficeLocationRelatedListGrid(String environment, String mode, String officeLocationName,
+		String street, String city, String state, String country, String primarycheckBox) {
+
+	log(LogStatus.INFO, "officeLocationName : " + officeLocationName, YesNo.No);
+	log(LogStatus.INFO, "street : " + street, YesNo.No);
+	log(LogStatus.INFO, "city : " + city, YesNo.No);
+	log(LogStatus.INFO, "state : " + state, YesNo.No);
+	log(LogStatus.INFO, "country : " + country, YesNo.No);
+	log(LogStatus.INFO, "primarycheckBox : " + primarycheckBox, YesNo.No);
+	String xpath;
+	for(int i=1;i<3;i++){
+	if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+		xpath = "//div[contains(@class,'windowViewMode-normal')]//a[text()='Office Location']/ancestor::article//table//a[text()='"
+				+ officeLocationName + "']/ancestor::tr//*[text()='" + street
+				+ "']/ancestor::tr//*[text()='" + city
+				+ "']/ancestor::tr//*[text()='" + state
+				+ "']/ancestor::tr//*[text()='" + country
+				+ "']/ancestor::tr//img[contains(@class,'"+primarycheckBox+"')]";
+	} else {
+		xpath = "//h3[text()='Office Locations']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//tr//th/a[text()='"
+				+ officeLocationName + "']/../following-sibling::td[text()='" + street
+				+ "']/following-sibling::td[text()='" + city + "']/following-sibling::td[text()='" + state
+				+ "']/following-sibling::td[text()='" + country + "']/following-sibling::td/img[contains(@src,'"
+				+ primarycheckBox + "')]";
+	}
+	WebElement ele = FindElement(driver, xpath, "Grid for : " + officeLocationName, action.BOOLEAN, 10);
+	if (ele != null) {
+		log(LogStatus.INFO, "Grid Verified for : " + officeLocationName, YesNo.No);
+		return true;
+	}
+	}
+	log(LogStatus.INFO, "Grid Not Verified for : " + officeLocationName, YesNo.No);
+	return false;
+}
+
+public boolean clickOnLinkForOfficeLocation(String environment, String mode, RecordType recordType,
+		String officeLocationName, int timeOut) {
+	WebElement ele;
+	if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			ThreadSleep(2000);
+			ele = FindElement(driver, "//div[contains(@class,'windowViewMode-normal')]//a[text()='Office Location']/ancestor::article//table//a[text()='" + officeLocationName + "']", officeLocationName,
+					action.SCROLLANDBOOLEAN, timeOut);
+			ThreadSleep(2000);
+			if (clickUsingJavaScript(driver, ele, officeLocationName, action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(2000);
+				return true;	
+
+				//refresh(driver);
+				
+			}
+		} else {
+			ele = FindElement(driver,
+					"//a[text()='" + officeLocationName + "']/../preceding-sibling::td/a[text()='Edit']",
+					"Edit Link : " + officeLocationName, action.SCROLLANDBOOLEAN, timeOut);
+			if (click(driver, ele, "Edit Link : "+officeLocationName, action.SCROLLANDBOOLEAN)) {
+				return true;
+			}
+		}
+	return false;
+}
+public boolean  verifyDealSourcedRelatedList(String environment,String mode,String deal,String contact,String stage) {
+	boolean flag=false;
+	ThreadSleep(5000);
+	try {
+		String headerxpath = "//thead//th//*[contains(text(),'Deal')]/../..//following-sibling::th//*[contains(text(),'Contact')]/../..//following-sibling::th//*[contains(text(),'Date Received')]/../..//following-sibling::th//*[contains(text(),'Stage')]/../..//following-sibling::th//*[contains(text(),'Deal Size(M)')]"; 
+		WebElement ele = FindElement(driver, headerxpath, "Header", action.BOOLEAN, 10);
+		if (ele!=null) {
+			log(LogStatus.INFO,"Header Verified for Deal Source Related List" , YesNo.No);
+		} else {
+			log(LogStatus.INFO,"Header not Verified for Deal Source Related List" , YesNo.No);
+			BaseLib.sa.assertTrue(false,"Header not Verified for Deal Source Related List");
+
+		}
+		System.err.println("Value going to verified : "+deal+" "+contact+" "+stage);
+		appLog.info("Value going to verified : "+deal+" "+contact+" "+stage);
+		String fundXpath="//a[text()='"+deal+"']//ancestor::td";
+		String cmntXpath="//following-sibling::td//*[text()='"+contact+"']//ancestor::td";
+		String dateXpath="//following-sibling::td//*[text()='"+stage+"']";
+		String fullXpath = fundXpath+cmntXpath+dateXpath;
+		ele = FindElement(driver, fullXpath, "Value xpath", action.BOOLEAN, 10);
+		if (ele!=null) {
+			flag=true;
+		} else {
+			flag=false;
+		}
+	} catch (Exception e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+	return flag;
+}
+
+
+public boolean verifyPipeLineRelatedList(String environment,String mode,RecordType RecordType,String[][] headersWithValues){
+	boolean flag=true;
+	List<WebElement> header = new ArrayList<WebElement>();
+	List<WebElement> values = new ArrayList<WebElement>();
+	try {
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+		
+		FindElement(driver, "//div[@class='bRelatedList']//h3[text()='Pipelines']", "", action.SCROLLANDBOOLEAN, 10);
+		 header = FindElements(driver, "//h3[text()='Pipelines']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//tr[1]/*", "Header");
+		 values = FindElements(driver, "//h3[text()='Pipelines']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//tr[2]/*", "Values");
+		int i = 1;
+		for (String[] headerWithValue : headersWithValues) {
+			appLog.info("From PAGE    : "+header.get(i).getText()+"  <<<<<>>>>> "+values.get(i).getText());
+			appLog.info("fROM tESTcASE  : "+headerWithValue[0].replace("_", " ")+"  <<<<<>>>>> "+headerWithValue[1]);
+			if(header.get(i).getText().contains(headerWithValue[0].replace("_", " ")) && values.get(i).getText().contains(headerWithValue[1])){
+				appLog.info("Value matched : "+headerWithValue[1]);
+			}else{
+				flag=false;
+				appLog.error("Value Not matched : "+headerWithValue[1]);
+				BaseLib.sa.assertTrue(false, "Value Not matched : "+headerWithValue[1]);	
+			}
+			i++;
+		}
+		}else{
+		
+			if(click(driver, getRelatedTab_Lighting(environment,RecordType, 10), "Related Tab", action.SCROLLANDBOOLEAN)){
+				ThreadSleep(10000);
+				log(LogStatus.INFO, "Clicked on Related Tab", YesNo.No);
+				if(clickUsingJavaScript(driver, getPipeLineViewAll_Lighting(environment, 10), "PipeLine View All", action.SCROLLANDBOOLEAN)){
+					ThreadSleep(3000);
+					driver.navigate().refresh();
+					ThreadSleep(5000);
+					flag=verifyRelatedListViewAllColumnAndValue(headersWithValues);
+				}
+			}else{
+				flag=false;
+			}
+			
+		}
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		flag=false;
+	}
+	return flag;
+
+}
+public boolean clickonDetails(String environment,String mode,String fundName,String cmntAmmmountinMn) {
+	boolean flag=false;
+	try {
+		
+		String fundXpath= "//a[text()='"+fundName+"']";
+		
+		float f= Float.parseFloat(cmntAmmmountinMn)/1000000;
+		System.err.println(f);
+		String monney=BasePageBusinessLayer.convertNumberAccordingToFormatWithCurrencySymbol(""+f,"0.0") ;
+		String cmntXpath= "/ancestor::tr//*[text()='"+monney+"']";
+		String detailsXpath= "/ancestor::tr//button[text()='Details']";
+		String fullXpath = fundXpath+cmntXpath+detailsXpath;
+
+		WebElement ele = FindElement(driver, fullXpath, "Value xpath", action.BOOLEAN, 10);
+		if (ele!=null) {
+			if (clickUsingJavaScript(driver, ele, "Details Image", action.BOOLEAN)) {
+				click(driver, ele, "Details Image", action.BOOLEAN);
+				flag=true;
+				ThreadSleep(2000);
+			}
+		}
+			
+	} catch (Exception e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+	return flag;	
+}
+
 	/**
 	 * @author Azhar Alam
 	 * @param projectName
