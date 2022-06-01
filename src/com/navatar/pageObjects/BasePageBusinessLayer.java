@@ -110,6 +110,458 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return false;
 	}
+	
+	public boolean clickOnRelatedList_Classic(String environment, RelatedList RelatedList) {
+		String relatedList = null;
+		WebElement ele;
+		switch (RelatedList) {
+		case Fundraising_Contacts:
+			relatedList = "Fundraising Contacts";
+			break;
+		case Office_Locations:
+			relatedList = "Office Locations";
+			break;
+		case Open_Activities:
+			relatedList = "Open Activities";
+			break;
+		case Fundraisings:
+			relatedList = "Fundraisings";
+			break;
+		case FundDrawdown:
+			relatedList = "Fund Drawdown";
+			break;
+		case CapitalCalls:
+			relatedList = "Capital Calls";
+			break;
+		case Affiliations:
+			relatedList = "Affiliations";
+			break;
+		case Activities:
+			relatedList = "Activities";
+			break;
+		case Activity_History:
+			relatedList = "Activity History";
+			break;
+		case Commitments:
+			relatedList = "Commitments";
+			break;
+		case Partnerships:
+			relatedList = "Partnerships";
+			break;
+		case Deals_Sourced:
+			relatedList = "Deals Sourced";
+			break;
+		case Pipeline_Stage_Logs:
+			relatedList = "Pipeline Stage Logs";
+			break;
+			
+		default:
+			return false;
+		}
+		ThreadSleep(2000);
+		System.err.println("Passed switch statement");
+		
+			ele = isDisplayed(driver, FindElement(driver, "//span[@class='listTitle'][text()='"+relatedList+"']", relatedList,
+					action.SCROLLANDBOOLEAN, 10), "visibility", 10, relatedList);
+			if (ele != null) {
+				if (click(driver, ele, relatedList, action.SCROLLANDBOOLEAN)) {
+					CommonLib.log(LogStatus.INFO, "Related List found : "+relatedList, YesNo.No);
+					ThreadSleep(2000);
+					return true;
+				}
+			}
+		
+
+		return false;
+	}
+	public boolean clickOnViewAllRelatedList(String environment,String mode, RelatedList RelatedList) {
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			if (clickOnRelatedList_Classic(environment, RelatedList)) {
+				return true;
+			}
+		} else {
+			String relatedList = null;
+			WebElement ele;
+			switch (RelatedList) {
+			case Fundraising_Contacts:
+				relatedList = "Fundraising Contacts";
+				break;
+			case Office_Locations:
+				relatedList = "Office Locations";
+				break;
+			case Affiliations:
+				relatedList = "Affiliations";
+				break;
+			case Activities:
+				relatedList = "Activities";
+				break;
+			case Activity_History:
+				relatedList = "Activity History";
+				break;	
+			case Deals_Sourced:
+				relatedList = "Deals Sourced";
+				break;
+			case Partnerships:
+				relatedList = "Partnerships";
+				break;
+			case FundDrawdown:
+				relatedList = "Fund Drawdown";
+				break;
+			case FundDistribution:
+				relatedList = "Fund Distribution";
+				break;
+			case CapitalCalls:
+				relatedList = "Capital Calls";
+				break;
+			case InvestorDistributions:
+				relatedList = "Investor Distributions";
+				break;	
+			case Pipeline_Stage_Logs:
+				relatedList = "Pipeline Stage Logs";
+				break;
+			case Correspondence_Lists:
+				relatedList = "Correspondence Lists";
+				break;
+			case Commitments:
+				relatedList = "Commitments";
+				break;
+			default:
+				return false;
+			}
+			ThreadSleep(2000);
+			System.err.println("Passed switch statement");
+		
+				
+				ele = isDisplayed(driver, FindElement(driver, "//span[text()='"+relatedList+"']/ancestor::article//span[text()='View All']", relatedList,
+						action.SCROLLANDBOOLEAN, 10), "visibility", 10, relatedList);
+				if (ele != null) {
+					if (clickUsingJavaScript(driver, ele, relatedList, action.SCROLLANDBOOLEAN)) {
+						CommonLib.log(LogStatus.INFO, "Related List found : "+relatedList, YesNo.No);
+						ThreadSleep(2000);
+						return true;
+					}
+					else
+						if (clickUsingJavaScript(driver, ele, relatedList)) {
+							CommonLib.log(LogStatus.INFO, "Related List found : "+relatedList, YesNo.No);
+							ThreadSleep(2000);
+							return true;
+						}
+				}
+			
+		}
+		
+
+		return false;
+	}
+
+	public boolean checkContactOrAccountOrFundraisingPage(String environment, String mode,String contactOrAccountOrFRName,PageName pageName,columnName columnName, WebElement scrollBox) {
+		String[] splitedContactName=null;
+		boolean flag=false;
+		int j = 0;
+		String XpathelementTOSearch="";
+		if(columnName.toString().equalsIgnoreCase(columnName.contactName.toString())) {
+			splitedContactName=contactOrAccountOrFRName.split(" ");
+			XpathelementTOSearch = "//span/div/a[contains(text(),'"+splitedContactName[0]+"')][contains(text(),'"+splitedContactName[1]+"')]";
+		}else if(columnName.toString().equalsIgnoreCase(columnName.AccountName.toString())) {
+			XpathelementTOSearch="//span/div/a[text()='"+contactOrAccountOrFRName+"']";
+		}else if(pageName.toString().equalsIgnoreCase(PageName.pastFundraisingContactPopUp.toString())) {
+			XpathelementTOSearch="//span[contains(@id,'Past_FundraisingsContact-cell-0')]/a[text()='"+contactOrAccountOrFRName+"']";
+		}else if(pageName.toString().equalsIgnoreCase(PageName.pastFundraisingAccountPopUp.toString())) {
+			XpathelementTOSearch="//span[contains(@id,'Past_Fundraisings-cell-0-0')]/a[text()='"+contactOrAccountOrFRName+"']";
+		}
+		else {
+			XpathelementTOSearch="";
+		}
+		By byelementToSearch = By.xpath(XpathelementTOSearch);
+		int widgetTotalScrollingHeight = Integer.parseInt(String.valueOf(((JavascriptExecutor) driver)
+				.executeScript("return arguments[0].scrollHeight", scrollBox)));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(0,0)", scrollBox);
+		for (int i = 0; i <= widgetTotalScrollingHeight / 25; i++) {
+			if (!driver.findElements(byelementToSearch).isEmpty()&& driver.findElement(byelementToSearch).isDisplayed()) {
+				appLog.info("Element Successfully Found and displayed");
+				ThreadSleep(500);
+				WebElement ele = FindElement(driver, XpathelementTOSearch,"", action.SCROLLANDBOOLEAN, 10);
+				if (ele!=null) {
+					if (click(driver, ele,columnName.toString()+" link", action.BOOLEAN)) {
+						String parentId = switchOnWindow(driver);
+						if (parentId!=null) {
+							ThreadSleep(5000);
+							if (Mode.Lightning.toString().equalsIgnoreCase(mode)) {
+								XpathelementTOSearch = "//h1//*[contains(text(),'"+contactOrAccountOrFRName+"')]";
+							}else{
+								XpathelementTOSearch = "//h2[contains(text(),'"+contactOrAccountOrFRName+"')]";	
+							}
+							ele = FindElement(driver, XpathelementTOSearch, columnName.toString()+"header text", action.SCROLLANDBOOLEAN,20);
+							if (ele!=null) {
+								appLog.info("Landing Page Verified : "+columnName.toString());
+								flag=true;
+							} else {
+								appLog.error("Landing Page Not Verified : "+columnName.toString());
+								sa.assertTrue(false, "Landing Page Not Verified : "+columnName.toString());
+							}
+							driver.close();
+							driver.switchTo().window(parentId);
+							switchToDefaultContent(driver);
+						} else {
+							appLog.error("Not New Window for "+columnName.toString());
+							sa.assertTrue(false, "Not New Window for "+columnName.toString());
+						}
+					} else {
+						appLog.error("Not able to click on "+columnName.toString()+" so cannot verify landing page");
+						sa.assertTrue(false, "Not able to click on "+columnName.toString()+" so cannot verify landing page");
+					}
+				} else {
+					appLog.error("Not able to click on "+columnName.toString()+" so cannot verify landing page");
+					sa.assertTrue(false, "Not able to click on "+columnName.toString()+" so cannot verify landing page");
+				}
+				break;
+			} else {
+				System.out.println("Not FOund: " + byelementToSearch.toString());
+				((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(" + j + "," + (j = j + 45) + ")",scrollBox);
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if (i == widgetTotalScrollingHeight / 50) {
+					return false;
+				}
+			}
+		}
+		return flag;
+	}
+	
+	public boolean verifyGridErrorMessage1(String environment,String mode,RelatedList gridSectionName , String expectedMsg,int timeOut) {
+		String xpath = "//*[text()='"+gridSectionName.toString()+"']/ancestor::article//*[text()='No data returned']";
+		WebElement ele = isDisplayed(driver, FindElement(driver, xpath, gridSectionName.toString(), action.SCROLLANDBOOLEAN, timeOut), "visiblity", 30, gridSectionName.toString());
+		
+		if (ele!=null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+public WebElement getStep1NextBtn(PageName pageName,TopOrBottom topOrBottom,int timeOut){
+		
+		WebElement ele=null;
+		String xpath=null;
+		if (PageName.BulkDownload.equals(pageName) || PageName.emailFundraisingContact.equals(pageName)|| PageName.emailCapitalCallNotice.equals(pageName) || PageName.Send_Distribution_Notices.equals(pageName)
+				|| PageName.BulkEmail.equals(pageName)) {
+			
+			if (TopOrBottom.TOP.equals(topOrBottom)) {
+				xpath = "(//div[@class='step_1']//a[@title='Next'])[1]";
+			} else {
+				xpath = "(//div[@class='step_1']//a[@title='Next'])[2]";
+			}
+			
+					
+		} else {
+
+		}
+		ele = FindElement(driver, xpath, "Step1 Nxt Btn : "+topOrBottom, action.SCROLLANDBOOLEAN, timeOut);
+		return ele;
+		
+	
+		
+	}
+
+
+public WebElement getStep2PreviousBtn(PageName pageName,TopOrBottom topOrBottom,int timeOut){
+	
+	WebElement ele=null;
+	String xpath=null;
+	if (PageName.BulkDownload.equals(pageName) || PageName.emailFundraisingContact.equals(pageName)|| PageName.emailCapitalCallNotice.equals(pageName) || PageName.emailCapitalCallNotice.equals(pageName) || PageName.Send_Distribution_Notices.equals(pageName)
+			|| PageName.BulkEmail.equals(pageName)) {
+		
+		if (TopOrBottom.TOP.equals(topOrBottom)) {
+			xpath = "(//div[@class='step_2']//a[@title='Previous'])[1]";
+		} else {
+			xpath = "(//div[@class='step_2']//a[@title='Previous'])[2]";
+		}
+		
+				
+	} else {
+
+	}
+	ele = FindElement(driver, xpath, "Step 2 Previous Btn : "+topOrBottom, action.SCROLLANDBOOLEAN, timeOut);
+	return ele;
+	
+
+	
+}
+
+
+public WebElement getStep1CancelBtn(PageName pageName,TopOrBottom topOrBottom,int timeOut){
+	
+	WebElement ele=null;
+	String xpath=null;
+	if (PageName.BulkDownload.equals(pageName)|| PageName.emailFundraisingContact.equals(pageName) || PageName.emailCapitalCallNotice.equals(pageName) || PageName.Send_Distribution_Notices.equals(pageName)
+			|| PageName.emailCapitalCallNotice.equals(pageName) || PageName.BulkEmail.equals(pageName)) {
+		
+		if (TopOrBottom.TOP.equals(topOrBottom)) {
+			xpath = "(//div[@class='step_1']//a[@title='Cancel'])[1]";
+		} else {
+			xpath = "(//div[@class='step_1']//a[@title='Cancel'])[2]";
+		}
+		
+				
+	} else {
+
+	}
+	ele = FindElement(driver, xpath, "Step1 Cancel Btn : "+topOrBottom, action.SCROLLANDBOOLEAN, timeOut);
+	return ele;
+	
+
+	
+}
+public WebElement getStep2CancelBtn(PageName pageName,TopOrBottom topOrBottom,int timeOut){
+	
+	WebElement ele=null;
+	String xpath=null;
+	if (PageName.BulkDownload.equals(pageName) || PageName.emailFundraisingContact.equals(pageName)|| PageName.emailCapitalCallNotice.equals(pageName) || PageName.Send_Distribution_Notices.equals(pageName)
+			|| PageName.BulkEmail.equals(pageName)) {
+		
+		if (TopOrBottom.TOP.equals(topOrBottom)) {
+			xpath = "(//div[@class='step_2']//a[@title='Cancel'])[1]";
+		} else {
+			xpath = "(//div[@class='step_2']//a[@title='Cancel'])[2]";
+		}
+		
+				
+	} else {
+
+	}
+	ele = FindElement(driver, xpath, "Step 2 Cancel Btn : "+topOrBottom, action.SCROLLANDBOOLEAN, timeOut);
+	return ele;
+	
+
+	
+}
+
+
+public WebElement getStep2NextBtn(PageName pageName,TopOrBottom topOrBottom,int timeOut){
+	
+	WebElement ele=null;
+	String xpath=null;
+	if (PageName.BulkDownload.equals(pageName) || PageName.emailFundraisingContact.equals(pageName)|| PageName.emailCapitalCallNotice.equals(pageName) || PageName.Send_Distribution_Notices.equals(pageName)
+			|| PageName.BulkEmail.equals(pageName)) {
+		
+		if (TopOrBottom.TOP.equals(topOrBottom)) {
+			xpath = "(//div[@class='step_2']//a[@title='Next'])[1]";
+		} else {
+			xpath = "(//div[@class='step_2']//a[@title='Next'])[2]";
+		}
+		
+				
+	} else if (PageName.DealPage.equals(pageName)) {
+		
+		if (TopOrBottom.TOP.equals(topOrBottom)) {
+			xpath = "(//div[@id='op2']//a[@title='Next'])[1]";
+		} else {
+			xpath = "(//div[@id='op2']//a[@title='Next'])[2]";
+		}
+		
+				
+	}else{
+		
+	}
+	ele = FindElement(driver, xpath, "Step 2 Next Btn : "+topOrBottom, action.SCROLLANDBOOLEAN, timeOut);
+	return ele;
+	
+
+	
+}
+
+public WebElement getStep3PreviousBtn(PageName pageName,TopOrBottom topOrBottom,int timeOut){
+	
+	WebElement ele=null;
+	String xpath=null;
+	if (PageName.BulkDownload.equals(pageName) || PageName.Send_Distribution_Notices.equals(pageName)
+			|| PageName.BulkEmail.equals(pageName)) {
+		
+		if (TopOrBottom.TOP.equals(topOrBottom)) {
+			xpath = "(//div[@class='step_3']//a[@title='Previous'])[1]";
+		} else {
+			xpath = "(//div[@class='step_3']//a[@title='Previous'])[2]";
+		}
+		
+				
+	} else if (PageName.DealPage.equals(pageName)) {
+		
+		if (TopOrBottom.TOP.equals(topOrBottom)) {
+			xpath = "(//div[@id='op3']//a[@title='Previous'])[1]";
+		} else {
+			xpath = "(//div[@id='op3']//a[@title='Previous'])[2]";
+		}
+		
+				
+	}else if (PageName.emailFundraisingContact.equals(pageName) || PageName.emailCapitalCallNotice.equals(pageName)) {
+		
+		if (TopOrBottom.TOP.equals(topOrBottom)) {
+			xpath = "(//div[@class='step_3']//a[text()='Previous'])[1]";
+		} else {
+			xpath = "(//div[@class='step_3']//a[text()='Previous'])[2]";
+		}
+				
+	}
+	ele = FindElement(driver, xpath, "Step3 Previous Btn : "+topOrBottom, action.SCROLLANDBOOLEAN, timeOut);
+	return ele;
+	
+
+	
+}
+
+
+
+public WebElement getStep3CancelBtn(PageName pageName,TopOrBottom topOrBottom,int timeOut){
+	
+	WebElement ele=null;
+	String xpath=null;
+	if (PageName.BulkDownload.equals(pageName)|| PageName.emailFundraisingContact.equals(pageName)|| PageName.emailCapitalCallNotice.equals(pageName) || PageName.Send_Distribution_Notices.equals(pageName)
+			|| PageName.BulkEmail.equals(pageName)) {
+		
+		if (TopOrBottom.TOP.equals(topOrBottom)) {
+			xpath = "(//div[@class='step_3']//a[@title='Cancel'])[1]";
+		} else {
+			xpath = "(//div[@class='step_3']//a[@title='Cancel'])[2]";
+		}
+		
+				
+	} else {
+
+	}
+	ele = FindElement(driver, xpath, "Step 3 Cancel Btn : "+topOrBottom, action.SCROLLANDBOOLEAN, timeOut);
+	return ele;
+	
+
+	
+}
+
+
+public WebElement getStep3SendBtn(PageName pageName,TopOrBottom topOrBottom,int timeOut){
+	
+	WebElement ele=null;
+	String xpath=null;
+	if (PageName.DealPage.equals(pageName) || PageName.Send_Distribution_Notices.equals(pageName) || PageName.BulkEmail.equals(pageName)) {
+		
+		if (TopOrBottom.TOP.equals(topOrBottom)) {
+			xpath = "(//div[@id='op3']//a[@title='Send'])[1]";
+		} else {
+			xpath = "(//div[@id='op3']//a[@title='Send'])[2]";
+		}
+		
+				
+	} else {
+
+	}
+	ele = FindElement(driver, xpath, "Step 3 Send Btn : "+topOrBottom, action.SCROLLANDBOOLEAN, timeOut);
+	return ele;
+	
+
+	
+}
 
 	/**
 	 * @author Ankit Jaiswal
@@ -2040,6 +2492,99 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return flag;
 	}
+	
+	public boolean clickOnShowMoreDropdownOnly(String environment,String mode,PageName pageName) {
+		ThreadSleep(10000);
+		String xpath = "";int i =1;
+		WebElement ele=null;
+		boolean flag = true;
+		if(mode.toString().equalsIgnoreCase(Mode.Lightning.toString())) {
+			xpath="//li//*[contains(@title,'more actions') or contains(text(),'more actions')]/..";
+			if (pageName == PageName.ContactsPage)
+				xpath="//li//*[contains(@title,'more actions') or contains(text(),'more actions')]/..";
+				
+			List<WebElement> ele1= FindElements(driver, xpath, "Show more action Icon");
+		
+		for (int j = 0; j < ele1.size(); j++) {
+			log(LogStatus.INFO, "Size :  "+ele1.size()+"  >>>>>>>>  "+i, YesNo.No);
+			ele = isDisplayed(driver, ele1.get(j), "visibility", 5, "Show more action Icon");
+			if(clickUsingJavaScript(driver, ele, "show more action on "+pageName.toString(), action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "clicked on show more actions icon ", YesNo.No);
+				return flag;
+			}else {
+				if (j==ele1.size()-1) {
+					log(LogStatus.FAIL, "cannot click on show more actions icon", YesNo.Yes);
+					flag = false;	
+				}
+				
+			}
+		}
+			
+		}
+		return flag;
+					
+}
+	public WebElement getRelatedTab(String relatedTab,int timeOut){
+	    String xpath="";
+	    WebElement ele=null;
+	    String related = relatedTab.toString().replace("_", " ");
+	    xpath = "//li//*[@title='"+related+"' or text()='"+related+"']";
+	    ele = isDisplayed(driver, FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut)
+	            , "visiblity", 30, relatedTab.toString());
+	    if (ele!=null) {
+	    appLog.info("Element Found : "+related);   
+	    }else {
+	        appLog.error("Element Not Found : "+related);   
+	        appLog.error("Going to check on more "+related);   
+	        xpath = "//li//button[@title='More Tabs']";
+	        ele = FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut);
+	        click(driver, ele, "More Tab", action.BOOLEAN);
+	        ThreadSleep(3000);
+	       
+	        xpath = "//a/span[text()='"+related+"']";
+	        ele = isDisplayed(driver, FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut)
+	                , "visiblity", 30, relatedTab.toString());
+	       
+	       
+	    }
+	    return ele;
+	}
+	/**
+	 * @author Ankit Jaiswal
+	 * @param environment
+	 * @param relatedTab TODO
+	 * @param RecordType
+	 * @return true/false
+	 */
+	public boolean ClickonRelatedTab_Lighting(String environment,RecordType recordType, String relatedTab) {
+		String xpath1 = "//*[text()='Related']";
+		String xpath2 = "//*[text()='Related']";
+		String xpath="";
+		if (relatedTab!=null) {
+			return click(driver, getRelatedTab(relatedTab, 20), relatedTab, action.BOOLEAN);
+		} else {
+			if ((recordType == RecordType.Partnerships) || (recordType == RecordType.Fund)|| (recordType == RecordType.Fundraising)||(recordType == RecordType.Company) || (recordType == RecordType.IndividualInvestor) ||(recordType == RecordType.Institution)|| (recordType == RecordType.Contact))
+				xpath = xpath1;
+				else
+					xpath = xpath2;
+				for(int i=0;i<2; i++){
+					refresh(driver);
+					ThreadSleep(3000);
+					
+					List<WebElement> eleList = FindElements(driver, xpath, "Related Tab");
+					for (WebElement ele : eleList) {
+						if(clickUsingJavaScript(driver, ele, recordType+" related tab", action.BOOLEAN)) {
+							log(LogStatus.INFO, "clicked on "+recordType+" related tab", YesNo.No);
+							return true;
+						}
+					}
+				}
+		}
+				
+		log(LogStatus.ERROR,"Not able to click on related tab "+recordType ,YesNo.Yes);
+		return false;
+	}
+	
 
 	/**
 	 * @param projectName
@@ -2063,6 +2608,34 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				timeOut, actionDropDown);
 	}
 
+	public boolean clickOnRelatedList(String environment,String mode,RecordType RecordType,RelatedList relatedList, String relatedTab){
+		
+		boolean flag=false;
+		if(mode.equalsIgnoreCase(Mode.Lightning.toString())){
+			if (RelatedList.Activity_History.equals(relatedList) || RelatedList.Open_Activities.equals(relatedList)) {
+				return true;
+			} else {
+				if (ClickonRelatedTab_Lighting(environment, RecordType, relatedTab)) {
+					ThreadSleep(4000);
+					scrollThroughOutWindow(driver);
+					ThreadSleep(4000);
+					flag=true;
+				}
+			}
+			
+			
+		}else{
+			flag=true;
+			/*if (clickOnRelatedList_Classic(environment, RelatedList)) {
+				flag = true;
+			}*/
+		}
+		
+		return flag;
+		
+	}
+
+	
 	/**
 	 * @param projectName
 	 * @param pageName
@@ -4236,7 +4809,596 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return isDisplayed(driver, ele, "visibility", timeOut, labelName + " with " + labelValue);
 
 	}
+	public boolean isRelatedListAvailable(String environment,String mode,TabName tabName,RelatedList RelatedList,int timeOut){
+		WebElement ele ;
+		WebElement relatedList;
+		
+			boolean flag=false;
+			if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+				ele =	FindElement(driver, "//span[@class='listTitle'][text()='"+RelatedList+"']", RelatedList.toString(), action.SCROLLANDBOOLEAN, 10);
+				relatedList = isDisplayed(driver, ele, "Visibility", timeOut, RelatedList.toString(), action.SCROLLANDBOOLEAN);
+			
+			} else {
+				scrollThroughOutWindow(driver);
+				ele =	FindElement(driver, "//span[text()='"+RelatedList+"']", RelatedList.toString(), action.SCROLLANDBOOLEAN, 10);
+				relatedList = isDisplayed(driver, ele, "Visibility", timeOut, RelatedList.toString(), action.SCROLLANDBOOLEAN);
+			}
+			if (relatedList!=null) {
+				flag =true;
+			}
+			
+			return flag;
+		}
+	/**
+	 * @param environment
+	 * @param timeOut
+	 * @return
+	 */
+	public WebElement getRelatedTab_Lighting(String environment,RecordType RecordType,int timeOut) {
+		
+		List<WebElement> eleList = FindElements(driver, "//*[text()='Related']", "Related Tab");
+		int i=0;
+		for (WebElement ele : eleList) {
+			i++;
+			WebElement ele1 ;
+			ele1=isDisplayed(driver, ele, "Visibility", timeOut, "Related Tab "+i);	
+			if (ele1!=null	) {
+				return ele1;	
+			}
+			
+		
+		}
+			
+		return null;
+	
+	}
+	public boolean verifyRelatedListViewAllColumnAndValue(String[][] headersWithValues){
+		String columnXpath="";
+		String valuXpath="";
+		WebElement ele;
+		String actual="";
+		String[] headerValues = new String[headersWithValues.length];
+		String[] Values = new String[headersWithValues.length];
+		boolean flag=true;
+		ThreadSleep(5000);
+		for (int j = 0; j < headerValues.length; j++) {
+			headerValues[j]=headersWithValues[j][0].replace("_", " ");
+			Values[j]=headersWithValues[j][1];
+		}
 
+		columnXpath="//*[@title='"+headerValues[0]+"']";
+		String columnOrder=headerValues[0];
+
+		for (int j = 1; j < headerValues.length; j++) {
+			columnXpath=columnXpath+"//following-sibling::*[@title='"+headerValues[j]+"']";
+			columnOrder=columnOrder+"  <>  "+headerValues[j];
+		}
+
+		ele = FindElement(driver, columnXpath, "Header ", action.BOOLEAN, 30);
+
+		if (ele!=null) {
+			appLog.info("Header Column Matched with order : "+columnOrder);
+		}else {
+			flag=false;
+			appLog.error("Header Column Not Matched with order : "+columnOrder);
+			BaseLib.sa.assertTrue(false, "Header Column Not Matched with order : "+columnOrder);
+
+		}
+
+		String val="";
+		for (int j = 1; j < Values.length; j++) {
+			val=Values[j];
+			if (Values[j].isEmpty() || Values[j].equals("")) {
+				valuXpath="//*[contains(@title,'"+Values[0]+"')]/../..//following-sibling::td["+j+"]//span//*";
+			} else {
+				valuXpath="//*[contains(@title,'"+Values[0]+"')]/../..//following-sibling::td["+j+"]//*[contains(@title,'"+val+"') or contains(text(),'"+val+"')]";
+			}
+
+			ele = FindElement(driver, valuXpath, val, action.BOOLEAN, 5);
+
+			if (ele!=null) {
+
+				actual=ele.getText().trim();
+				if (Values[j].isEmpty() || Values[j].equals("")) {
+					if (actual.isEmpty() || actual.equals("")) {
+						appLog.info("Header Column "+headerValues[j]+" Matched with Value "+Values[j]);
+					}else {
+						flag=false;
+						appLog.error("Header Column "+headerValues[j]+" Not Matched with Value "+Values[j]);
+						BaseLib.sa.assertTrue(false, "Header Column "+headerValues[j]+" Not Matched with Value "+Values[j]);
+
+					}
+				}else {
+					appLog.info("Header Column "+headerValues[j]+" Matched with Value "+Values[j]);
+				}
+
+			}else {
+				flag=false;
+				appLog.error("Header Column "+headerValues[j]+" Not Matched with Value "+Values[j]);
+				BaseLib.sa.assertTrue(false, "Header Column "+headerValues[j]+" Not Matched with Value "+Values[j]);
+
+			}
+
+		}
+
+		return flag;
+
+
+	}
+	/**@author Akul Bhutani
+	 * @param environment
+	 * @param mode
+	 * @param rl
+	 * @param viewAllOrNew TODO
+	 * @return
+	 * This method is used to scroll to a related list on lightning mode. Select true for View all and false for New button
+	 */
+	public boolean scrollToRelatedListViewAll_Lightning(String environment, String mode, RelatedList rl, boolean viewAllOrNew) {
+		if (mode.toString().equalsIgnoreCase(Mode.Lightning.toString())) {
+			String xpath = "";
+			if (viewAllOrNew)
+				xpath = "/ancestor::article//span[text()='View All']";
+			else
+				xpath = "/../../../../../following-sibling::div//*[@title='New']";
+			((JavascriptExecutor) driver)
+			.executeScript("window.scrollTo(0,0);");
+			int widgetTotalScrollingWidth = Integer.parseInt(String.valueOf(((JavascriptExecutor) driver)
+					.executeScript("return window.outerHeight")));
+			int j = 50;
+			int i = 0;
+			WebElement el=null;
+			while (el==null) {
+				el=isDisplayed(driver,FindElement(driver, "//*[text()='"+rl.toString()+"']"+xpath, rl.toString(), action.BOOLEAN, 5) , "visibility", 5, rl.toString());
+				((JavascriptExecutor) driver).executeScript("window.scrollBy( 0 ,"+j+")");
+				i+=j;
+				if (i >= widgetTotalScrollingWidth) {
+					return false;
+				}
+				else if (el!=null)
+					return true;
+			}
+			return false;
+		}
+		else
+			return true;
+	}
+	public boolean ClickOnLookUpAndSelectValueFromLookUpWindow(String environment, String mode, LookUpIcon lookUpIcon,
+			String searchText, String lookUpValues) {
+
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			appLog.info("Classic : ");
+			return clickOnLookUpAndSelectValueFromLookUpWindow_Classic(environment, mode, lookUpIcon, searchText,lookUpValues);
+		} else {
+			appLog.info("Lighting : ");
+			return cp.officeLocationInputValueAndSelect_Lighting(environment, mode, searchText, lookUpValues);
+		}
+	
+	}
+	
+	public boolean verifyOpenActivityRelatedList(String environment,String mode,TabName tabName,String subject,String relatedTo, String contactName){
+		WebElement ele;
+		String xpath;
+		if (tabName.toString().equalsIgnoreCase(TabName.ContactTab.toString())) {
+			if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+				if (relatedTo==null) {
+					xpath="(//h3[text()='Open Activities']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//tr//th/a[contains(text(),'"+subject+"')]/../following-sibling::td)[1]";
+					ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+					System.err.println(">>>>>ele:");
+					if (ele!=null) {
+						String msg= ele.getText().trim();
+						System.err.println(">>>>>msg: "+msg);
+						if (msg.isEmpty()) {
+							return true;
+						} else {
+							return false;
+						}
+					} else {
+						return false;
+					}
+				} else {
+					xpath = "//h3[text()='Open Activities']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//tr//th/a[contains(text(),'"+subject+"')]/../following-sibling::td/a[text()='"+relatedTo+"']";
+				}
+
+				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+			} else {
+				if (relatedTo==null || contactName==null) {
+					xpath = "//div[contains(@class,'slds-section__content')]//a[text()='"+subject+"']";
+				}else{
+					xpath = "//div[contains(@class,'slds-section__content')]//a[text()='"+subject+"']/ancestor::div[@class='slds-media']//a[text()='"+relatedTo+"']";
+				}
+				xpath = "//div[@class='Next_steps']/following-sibling::div[@class='activity-timeline']//a[text()='"+subject+"']";
+				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+			}
+		}else if (tabName.toString().equalsIgnoreCase(TabName.InstituitonsTab.toString())) {
+			if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+				if (relatedTo==null) {
+					xpath = "(//h3[text()='Open Activities']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//tr//th/a[contains(text(),'"+subject+"')]/../following-sibling::td/a[text()='"+contactName+"']/../following-sibling::td)[1]";
+					ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+					System.err.println(">>>>>ele:");
+					if (ele!=null) {
+						String msg= ele.getText().trim();
+						System.err.println(">>>>>msg: "+msg);
+						if (msg.isEmpty()) {
+							return true;
+						} else {
+							return false;
+						}
+					} else {
+						return false;
+					}
+				} else {
+					xpath = "//h3[text()='Open Activities']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//tr//th/a[contains(text(),'"+subject+"')]/../following-sibling::td/a[text()='"+contactName+"']/../following-sibling::td/a[text()='"+relatedTo+"']";
+				}
+				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+			} else {
+				xpath = "//div[@class='Next_steps']/following-sibling::div[@class='activity-timeline']//a[text()='"+subject+"']";
+				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+			}
+		}else{
+			return false;	
+		}
+		if (ele!=null) {
+			return true;
+		} else {
+			return false;
+		}
+
+
+	}
+	public boolean verifyActivityHistoryRelatedList(String environment,String mode,TabName tabName,String subject,String relatedTo, String contactName){
+		WebElement ele=null;
+		String xpath;
+		if (tabName.toString().equalsIgnoreCase(TabName.ContactTab.toString())) {
+			if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+				xpath = "//h3[text()='Activity History']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//tr//th/a[contains(text(),'"+subject+"')]/../following-sibling::td/a[text()='"+relatedTo+"']";
+				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+			} else {
+				xpath = "//div[@class='slds-section__title  past_activity']/following-sibling::div[@class='activity-timeline']//a[text()='"+subject+"']";
+				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+			}
+		}else if (tabName.toString().equalsIgnoreCase(TabName.InstituitonsTab.toString())) {
+			if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+				xpath = "//h3[text()='Activity History']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//tr//th/a[text()='"+subject+"']/../following-sibling::td/a[text()='"+contactName+"']/../following-sibling::td/a[text()='"+relatedTo+"']";
+				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+			} else {
+				xpath = "//div[@class='slds-section__title  past_activity']/following-sibling::div[@class='activity-timeline']//a[text()='"+subject+"']";
+				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+			}
+		}else{
+			return false;
+		}
+		if (ele!=null) {
+			return true;
+		} else {
+			return false;
+		}
+
+
+	}
+	
+	public boolean verifyAffliationRelatedList(String environment,String mode,TabName tabName,String institutionName){
+		WebElement ele;
+		String xpath;
+		if (tabName.toString().equalsIgnoreCase(TabName.ContactTab.toString())) {
+			if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+				xpath = "//h3[text()='Affiliations']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//tr//th/a[contains(text(),'AF')]/../following-sibling::td/a[text()='"+institutionName+"']/../following-sibling::td[text()='Former Employee']";
+				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+			} else {
+				xpath = "(//table[@data-aura-class='uiVirtualDataTable'])[1]/tbody/tr/th/span/a[contains(text(),'AF')]/../../following-sibling::td/span/a[text()='"+institutionName+"']/../../following-sibling::td/span/span[text()='Former Employee']";
+				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+			}	
+		}else{
+			return false;
+		}
+		
+		if (ele!=null) {
+			return true;
+		} else {
+			return false;
+		}
+		
+		
+	}
+	public boolean verifyGridErrorMessage(String environment,String mode,RelatedList gridSectionName , String expectedMsg,int timeOut) {
+		if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			return verifyNoDataToDisplayErrorMsg_Lightning(environment, mode, gridSectionName, expectedMsg, timeOut);
+		}else {
+			 return verifyNoDataToDisplayErrorMsg_Classic(environment, mode, gridSectionName, expectedMsg, timeOut);
+		}
+		
+		
+	}
+	public boolean verifyNoDataToDisplayErrorMsg_Classic(String environment,String mode,RelatedList gridSectionName,String expectedMsg,int timeOut){
+		String xpath="//h3[text()='"+gridSectionName+"']/ancestor::div[contains(@class,'bRelatedList')]//div[@class='pbBody']//tr//th[1]";
+		WebElement ele = isDisplayed(driver, FindElement(driver,xpath, gridSectionName.toString()+ " error message", action.SCROLLANDBOOLEAN,timeOut),"visibility", timeOut, gridSectionName.toString()+ " error message");
+		String msg;
+		boolean flag=false;
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			msg = ele.getText().trim();
+			CommonLib.log(LogStatus.INFO, "Grid Message : "+msg, YesNo.No);
+			if (expectedMsg.equalsIgnoreCase(msg)) {
+				flag = true;
+			}
+		} 
+		return flag;
+		
+	}
+	public boolean clickOnGridSection_Lightning(String environment,String mode,RelatedList gridSectionName ,int timeOut) {
+		WebElement ele = null;
+		boolean flag=false;
+		String xpath1="//span[@title='"+gridSectionName+"']";
+		List<WebElement> eleList = FindElements(driver, xpath1, gridSectionName.toString());
+		for (WebElement webElement : eleList) {
+			ele = isDisplayed(driver, webElement,"visibility", 3, gridSectionName.toString()+ " link");
+			if (ele!=null) {
+				if(click(driver, ele, gridSectionName.toString()+ " link", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "clicked on "+gridSectionName.toString()+" link", YesNo.No);
+					flag=true;
+					return flag;
+				}else {
+					log(LogStatus.ERROR, "Not able to click on "+gridSectionName.toString()+" link so cannot verify error message", YesNo.Yes);
+				}
+			}
+			
+		}
+		
+		return flag;
+	}
+	
+	
+	public boolean verifyNoDataToDisplayErrorMsg_Lightning(String environment,String mode,RelatedList gridSectionName , String expectedMsg,int timeOut){
+		WebElement ele = null;
+		String msg;
+		boolean flag=false;
+		if(clickOnGridSection_Lightning(environment, mode, gridSectionName, timeOut)) {
+			log(LogStatus.INFO, "clicked on "+gridSectionName.toString()+" link", YesNo.No);
+			String xpath="//h1[text()='"+gridSectionName+"']/ancestor::div[contains(@class,'test-listViewManager')]//div[contains(@class,'emptyContentInner')]/p";
+			ele = isDisplayed(driver, FindElement(driver,xpath, gridSectionName.toString()+ " error message", action.SCROLLANDBOOLEAN,timeOut),"visibility", timeOut, gridSectionName.toString()+ " error message");
+			
+			if (ele!=null) {
+				msg = ele.getText().trim();
+				CommonLib.log(LogStatus.INFO, "Grid Message : "+msg, YesNo.No);
+				if (expectedMsg.equals(msg)) {
+					flag = true;
+				}
+			} 
+//			String xpath="//h2//a[text()='"+gridSectionName.toString()+"']/ancestor::div//table//tr//td/span[contains(text(),'No data')]";
+//			List<WebElement> eleList = FindElements(driver, xpath, expectedMsg);
+//			for (WebElement webElement : eleList) {
+//				ele = isDisplayed(driver, webElement,"visibility", timeOut, gridSectionName.toString()+ " error message");
+//				if (ele!=null) {
+//					return true;
+//				}
+//					
+//			}
+//			ele = isDisplayed(driver, FindElement(driver,xpath, gridSectionName.toString()+ " error message", action.SCROLLANDBOOLEAN,timeOut),"visibility", timeOut, gridSectionName.toString()+ " error message");
+//			msg = ele.getText().trim();
+//				CommonLib.log(LogStatus.INFO, "Grid Message : "+msg, YesNo.No);
+//				if (expectedMsg.equals(msg)) {
+//					flag = true;
+//				}
+		}else {
+			log(LogStatus.ERROR, "Not able to click on "+gridSectionName.toString()+" link so cannot verify error message", YesNo.Yes);
+		}
+		return flag;
+		
+	}
+	public boolean verifyNoDataAtActivitiesSection(String environment,String mode,TabName tabName,int timeOut){
+		WebElement ele = getActivitiesGridNoRecordsToDisplay(environment, mode, timeOut);
+		String msg;
+		boolean flag=false;
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			msg = ele.getText();
+			CommonLib.log(LogStatus.INFO, "Grid Message : "+msg, YesNo.No);
+			if (BasePageBusinessLayer.noRecordsToDisplayMsg.equals(msg)) {
+				flag = true;
+			}
+		} else {
+			
+			if (ele!=null) {
+				flag =true;
+			}
+		}
+		return flag;
+		
+	}
+	public boolean verifyActivitiesRelatedList(String environment,String mode,TabName tabName,String subject,String contactName,String relatedTo){
+		WebElement ele;
+		String xpath;
+		if (tabName.toString().equalsIgnoreCase(TabName.InstituitonsTab.toString())) {
+			if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+				if (relatedTo==null) {
+					xpath = "(//h3[text()='Activities']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//th//a[text()='"+subject+"']/../following-sibling::td/a[text()='"+contactName+"']/../following-sibling::td)[1]";
+					ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+					System.err.println(">>>>>ele:");
+					if (ele!=null) {
+						String msg= ele.getText().trim();
+						System.err.println(">>>>>msg: "+msg);
+						if (msg.isEmpty()) {
+							return true;
+						} else {
+							return false;
+						}
+					} else {
+						return false;
+					}
+				} else {
+					xpath = "//h3[text()='Activities']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//th//a[text()='"+subject+"']/../following-sibling::td/a[text()='"+contactName+"']/../following-sibling::td/a[text()='"+relatedTo+"']";
+				}
+				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+			} else {
+				if (relatedTo==null) {
+					xpath = "//table[@data-aura-class='uiVirtualDataTable']/tbody/tr/th/span/a[contains(text(),'"+subject+"')]/../../following-sibling::td/span/a[text()='"+contactName+"']/../../following-sibling::td";
+					ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+					System.err.println(">>>>>ele:");
+					if (ele!=null) {
+						String msg= ele.getText().trim();
+						System.err.println(">>>>>msg: "+msg);
+						if (msg.isEmpty()) {
+							return true;
+						} else {
+							return false;
+						}
+					} else {
+						return false;
+					}
+				} else {
+					xpath = "//table[@data-aura-class='uiVirtualDataTable']/tbody/tr/th/span/a[contains(text(),'"+subject+"')]/../../following-sibling::td/span/a[text()='"+contactName+"']/../../following-sibling::td/span/a[text()='"+relatedTo+"']";
+				}
+				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+			}	
+		}else{
+			return false;
+		}
+		
+		if (ele!=null) {
+			return true;
+		} else {
+			return false;
+		}
+		
+		
+	}
+	
+	public boolean verifyNoDataAtOpenActivitiesSection(String environment,String mode,TabName tabName,int timeOut){
+		WebElement ele = getOpenActivitiesNoRecordsToDisplay(environment, mode, timeOut);
+		String msg;
+		boolean flag=false;
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			msg = ele.getText();
+			CommonLib.log(LogStatus.INFO, "Grid Message : "+msg, YesNo.No);
+			if (BasePageBusinessLayer.noRecordsToDisplayMsg.equals(msg)) {
+				flag = true;
+			}
+		} else {
+			msg = ele.getText();
+			CommonLib.log(LogStatus.INFO, "Grid Message : "+msg, YesNo.No);
+			if (msg.contains(BasePageBusinessLayer.noNextActivityMsg1) || msg.contains(BasePageBusinessLayer.noNextActivityMsg2)) {
+				flag =true;
+			}
+		}
+		return flag;
+		
+	}
+	
+	public boolean verifyNoDataAtActivityHistorySection(String environment,String mode,TabName tabName,int timeOut){
+		WebElement ele = getActivityHistoryNoRecordsToDisplay(environment, mode, timeOut);
+		String msg;
+		boolean flag=false;
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			msg = ele.getText();
+			CommonLib.log(LogStatus.INFO, "Grid Message : "+msg, YesNo.No);
+			if (BasePageBusinessLayer.noRecordsToDisplayMsg.equals(msg)) {
+				flag = true;
+			}
+		} else {
+			msg = ele.getText();
+			CommonLib.log(LogStatus.INFO, "Grid Message : "+msg, YesNo.No);
+			if (msg.contains(BasePageBusinessLayer.noPastActivityMsg1) && msg.contains(BasePageBusinessLayer.noPastActivityMsg2)) {
+				flag =true;
+			}
+		}
+		return flag;
+		
+	}
+	
+	
+
+	public boolean clickOnLookUpAndSelectValueFromLookUpWindow_Classic(String environment,String mode,LookUpIcon lookUpIcon,String searchText,String lookUpValues){
+		String[] values = lookUpValues.split(",");
+		WebElement ele=null;
+		String xpath="";
+		if(lookUpIcon.toString().equalsIgnoreCase(LookUpIcon.selectFundFromCreateFundraising.toString())) {
+			xpath="(//img[@title='"+lookUpIcon+"'])[2]";
+		}else {
+			xpath="//img[@title='"+lookUpIcon+"']";
+		}
+		WebElement lookUpIconEle = FindElement(driver,xpath, lookUpIcon.toString(), action.SCROLLANDBOOLEAN, 10);
+		if (click(driver, lookUpIconEle, "Look Up Icon", action.SCROLLANDBOOLEAN)) {
+		
+		String parentWindow=null;
+		parentWindow=switchOnWindow(driver);
+		if(parentWindow!=null) {
+			switchToFrame(driver, 20, getLookUpSearchFrame(10));
+			if(sendKeys(driver, getLookUpSearchTextBox(30), searchText, "search text box", action.SCROLLANDBOOLEAN)) {
+				if(click(driver, getLookUpSearchGoBtn(20), "go button", action.SCROLLANDBOOLEAN)) {
+					switchToDefaultContent(driver);
+					switchToFrame(driver, 20, getLookUpResultFrame(10));
+					for(int i=0;i<values.length;i++){
+						ele=isDisplayed(driver, FindElement(driver, "//a[text()='"+values[i]+"']",values[i]+" text value", action.SCROLLANDBOOLEAN, 20),"visibility", 20,values[i]+" text value");
+						if(ele!=null) {
+							appLog.info(values[i]+" is visible in look up popup");	
+							
+							if(i==values.length-1){
+							ele=isDisplayed(driver, FindElement(driver, "//a[text()='"+values[0]+"']",values[0]+" text value", action.SCROLLANDBOOLEAN, 20),"visibility", 20,values[0]+" text value");
+							if(!click(driver, ele, values[0]+" text value", action.SCROLLANDBOOLEAN)) {
+								appLog.info("clicked on "+values[0]+" in lookup pop up");
+								driver.switchTo().window(parentWindow);
+								return true;
+							}
+						}
+							
+						}else {
+						appLog.error(values[i]+" is not visible in look up popup");
+						driver.close();
+						driver.switchTo().window(parentWindow);
+						return false;
+					}
+					}
+						
+					
+				}else {
+					appLog.error("Not able to click on go button so cannot select "+searchText);
+					driver.close();
+					driver.switchTo().window(parentWindow);
+				}
+			}else {
+				appLog.error("Not able to pass value in search text box : "+searchText+" so cannot select value "+searchText+" from look up");
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
+		}else {
+			appLog.error("No new window is open so cannot select value "+searchText+" from look up");
+		}
+	}else{
+		appLog.error("Not Able to Click oN Look Up Icon");	
+	}
+		return false;
+	}
+	public boolean verifyRelatedListWithCount(String environment,String mode,TabName tabName,RelatedList RelatedList,int count,int timeOut){
+		WebElement ele ;
+		WebElement relatedListWithCount;
+		
+			boolean flag=false;
+			if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+				ele =	FindElement(driver, "//span[@class='listTitle'][text()='"+RelatedList+"']/span[text()='["+count+"]']", RelatedList.toString()+" : "+count, action.SCROLLANDBOOLEAN, 10);
+				relatedListWithCount = isDisplayed(driver, ele, "Visibility", timeOut, RelatedList.toString()+" : "+count, action.SCROLLANDBOOLEAN);
+			
+			} else {
+				ele =	FindElement(driver, "//span[text()='"+RelatedList+"']/following-sibling::span[@title='("+count+")']", RelatedList.toString()+" : "+count, action.SCROLLANDBOOLEAN, 10);
+				relatedListWithCount = isDisplayed(driver, ele, "Visibility", timeOut, RelatedList.toString()+" : "+count, action.SCROLLANDBOOLEAN);
+			}
+			if (relatedListWithCount!=null) {
+				flag =true;
+			}
+			
+			return flag;
+		}
+	public String getValueInCreateDrawdownsOrDistributionsPage(String field) {
+		WebElement ele;
+		String a="";
+		ele = isDisplayed(driver, FindElement(driver, "//td[text()='"+field+"']/following-sibling::td//div//span","text in front of "+field , action.BOOLEAN, 30), "visibility", 30, "text in front of "+field);
+		if (ele!=null) {
+			a = ele.getText().trim();
+		}
+		else {
+			log(LogStatus.ERROR, "text is null", YesNo.No);
+			return null;
+		}
+		return a;
+	}
 	public WebElement verifyCreatedItemOnPage(String header, String itemName) {
 		WebElement ele;
 		String xpath = "";

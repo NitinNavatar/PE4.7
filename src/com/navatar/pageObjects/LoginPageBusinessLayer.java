@@ -40,6 +40,26 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 		// TODO Auto-generated constructor stub
 	}
 	
+	public boolean clickOnSettings_Lightning(String environment, String mode) {
+		boolean flag=false;
+		List<WebElement> lst = getUserMenuTab_Lightning();
+		for (int i = 0; i < lst.size(); i++) {
+//			if(isDisplayed(driver, lst.get(i), "visibility", 5, "user menu tab")!=null) {
+				if(clickUsingJavaScript(driver,lst.get(i), "User menu")) {
+					ThreadSleep(500);
+					flag = true;
+				}else {
+					if(i==lst.size()-1) {
+						appLog.error("User menu tab not found");
+					}
+				}
+			
+		}
+		click(driver, getSettingsLinkLightning(30), "settings link", action.BOOLEAN);
+		
+		return flag;
+	}
+	
 	/**@author Akul Bhutani
 	 * @param username
 	 * @param password
@@ -231,6 +251,61 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 	}
 	
 	/**
+	 * @author Akul Bhutani
+	 * @param environment TODO
+	 * @param mode TODO
+	 *
+	 */
+	public boolean CRMlogout(String environment, String mode) {boolean flag = false;
+	if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+		List<WebElement> lst = getUserMenuTab_Lightning();
+		for (int i = 0; i < lst.size(); i++) {
+//			if(isDisplayed(driver, lst.get(i), "visibility", 5, "user menu tab")!=null) {
+				if(clickUsingJavaScript(driver,lst.get(i), "User menu")) {
+					ThreadSleep(500);
+					flag = true;
+				}else {
+					if(i==lst.size()-1) {
+						appLog.error("User menu tab not found");
+					}
+				}
+				
+//			}else {
+//				if(i==lst.size()-1) {
+//					appLog.error("User menu tab not visible so cannot click on it");
+//				}
+//			}
+			
+		}
+	}else {
+		if (click(driver, getUserMenuTab(30), "User menu", action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(500);
+			flag = true;
+		}
+		else {
+			appLog.error("User menu tab not found");
+		}
+		
+	}
+	if(flag) {
+		ThreadSleep(500);
+		if (clickUsingJavaScript(driver, getLogoutButton( 30), "Log out button")) {
+			if (matchTitle(driver, "Login | Salesforce", 20)) {
+				appLog.info("User successfully Logged Out");
+				return true;
+			}
+			else {
+				appLog.error("Not logged out");
+			}
+		}else {
+			appLog.error("Log out button in user menu tab not found");
+		}
+	}
+	return false;
+	}
+	
+	
+	/**
 	 * @author Azhar Alam
 	 * @param appName
 	 * @param timOut
@@ -269,6 +344,66 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 		
 	}
 	
-	
+	public boolean activateLighting(String environment,String mode,int timeOut){
+		boolean flag = false;
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+
+		if (getSwitchToLightingLink(timeOut) == null) {
+			appLog.info("Lighting is Not Activated");
+			if (home.clickOnSetUpLink(environment,mode)) {
+				ThreadSleep(2000);
+				WebElement ele = 	FindElement(driver, "//input[@value='Get Started']", "Get Started Button", action.BOOLEAN, timeOut);
+				if (click(driver, ele, "Get Started Button", action.BOOLEAN)) {
+					ThreadSleep(5000);
+					ele = 	FindElement(driver, "//div[contains(@class,'rolloutAssistant')]//button[@title='Go to Steps']", "Get Started Button", action.BOOLEAN, timeOut);
+					if (click(driver, ele, "Go to Steps", action.BOOLEAN)) {
+						ThreadSleep(5000);	
+						ele = 	FindElement(driver, "//button[@title='Launch Lightning Experience']", "Launch Lightning Experience", action.SCROLLANDBOOLEAN, timeOut);
+						if (click(driver, ele, "Launch Lightning Experience", action.SCROLLANDBOOLEAN)) {
+							ThreadSleep(2000);
+							ele = 	FindElement(driver, "(//div[contains(@class,'actionComponent slds-float_right')]//span[text()='Off']/preceding-sibling::span[2])[2]", "Toggle Button", action.SCROLLANDBOOLEAN, timeOut);
+							if (click(driver, ele, "Toggle Button", action.SCROLLANDBOOLEAN)) {
+								ThreadSleep(2000);
+								flag = true;
+								ele = 	FindElement(driver, "//span[text()='Finish Turning On Lightning Experience']", "Finish Turning On Lightning Experience", action.SCROLLANDBOOLEAN, timeOut);
+								if (click(driver, ele, "Finish Turning On Lightning Experience", action.SCROLLANDBOOLEAN)) {
+									ThreadSleep(2000);
+								} else {
+									appLog.info("Not Able to Click on Finish Turning On Lightning Experience");
+
+								}
+
+							} else {
+								appLog.info("Not Able to Click on Toggle Button");
+
+							}
+
+						} else {
+							appLog.info("Not Able to Click on Launch Lightning Experience");
+
+						}
+
+
+					} else {
+						appLog.info("Not Able to Click on Go to Steps");
+
+					}
+
+				} else {
+					appLog.info("Not Able to Click on Get Started Button");
+
+				}
+			}else{
+				appLog.info("Not Able to Click on SetUp Link");	
+			}
+		}else {
+			appLog.info("Lighting Already Activated");
+			flag = true;
+		}
+
+
+
+		return flag;
+	}
 	
 }

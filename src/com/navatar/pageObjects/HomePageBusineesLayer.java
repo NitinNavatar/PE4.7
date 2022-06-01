@@ -5,10 +5,12 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.testng.annotations.Test;
 
 import com.navatar.generic.EnumConstants.AddProspectsTab;
 import com.navatar.generic.EnumConstants.CommitmentType;
+import com.navatar.generic.EnumConstants.CreateCommitmentPageFieldLabelText;
 import com.navatar.generic.EnumConstants.CreatedOrNot;
 import com.navatar.generic.EnumConstants.FundraisingContactPageTab;
 import com.navatar.generic.EnumConstants.HTMLTAG;
@@ -22,6 +24,7 @@ import com.navatar.generic.EnumConstants.SortOrder;
 import com.navatar.generic.EnumConstants.TopOrBottom;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
+import com.navatar.generic.EnumConstants.fundraisingContactActions;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.ExcelUtils;
@@ -81,6 +84,681 @@ public class HomePageBusineesLayer extends HomePage {
 		}
 		return flag;
 	}
+	
+	public List<String> verifyContactNameInReviewInvestorList(List<String> contactName, List<String> accountName) {
+		List<String> result = new ArrayList<String>();
+		HashMap<String,String> uniqueAccountName = new HashMap<String, String>();
+		int count=0;
+		if(!contactName.isEmpty() && !accountName.isEmpty()) {
+			WebElement ele= null;
+			for(int i=0; i<accountName.size(); i++) {
+				count=0;
+				for(int j=0; j<accountName.size(); j++) {
+					if(accountName.get(i).equalsIgnoreCase(accountName.get(j))) {
+						count++;
+						uniqueAccountName.put(accountName.get(i),String.valueOf(count));
+					}
+				}
+			}
+			Set<String> ACName = uniqueAccountName.keySet();
+			Iterator<String> itr = ACName.iterator();
+			while (itr.hasNext()) {
+				String gotAccountName=itr.next();
+				String CountNumber=uniqueAccountName.get(gotAccountName);
+				String xpath="//span[@id='Institution_of_Selected_Contacts-view-box-middle']//span/a[text()='"+gotAccountName+"']/../following-sibling::span/a[text()='"+CountNumber+" Contact(s)']";
+				ele = isDisplayed(driver, FindElement(driver,xpath, "", action.BOOLEAN,10), "visibility",10,"Selected AccountName"+gotAccountName);
+				if(ele!=null) {
+					log(LogStatus.INFO, gotAccountName+" Account Name and it's contact count number "+CountNumber+" is matched in review investor list", YesNo.No);
+				}else {
+					log(LogStatus.ERROR, gotAccountName+" Account Name and it's contact count number "+CountNumber+" is not matched in review investor list", YesNo.Yes);
+					result.add(gotAccountName+" Account Name and it's contact count number "+CountNumber+" is not matched in review investor list");
+				}
+			}
+		}else {
+			log(LogStatus.ERROR, "Contact Name and Account Name list is empty so cannot verify contact Name in review investor list", YesNo.Yes);
+			result.add("Contact Name and Account Name list is empty so cannot verify contact Name in review investor list");
+		}
+		return result;
+		
+	}
+	
+	public double getTotalCommitmentAmount() {
+		ThreadSleep(5000);
+		WebElement ele= getTotalCommitmentAmount(30);
+		if(ele!=null) {
+			return Double.parseDouble(ele.getText().trim().substring(1).replace(",",""));
+		}
+		return 0.00;
+	}
+	/**
+	 * @author Ankit Jaiswal
+	 * @param excelpath
+	 * @param variableName
+	 * @param sheetName
+	 * @return
+	 */
+	public boolean writeTotalAmountInExcelSheet(String excelpath,String variableName,String sheetName) {
+		if(getTotalCommitmentAmount()!=0.00) {
+			return ExcelUtils.writeData(excelpath,Double.parseDouble(ExcelUtils.readData(excelpath, sheetName, excelLabel.Variable_Name, variableName, excelLabel.Total_Commitments))+getTotalCommitmentAmount(), sheetName, excelLabel.Variable_Name, variableName,excelLabel.Total_Commitments);
+		}else {
+			return false;
+		}
+	}
+	
+	public SoftAssert verifyCreateCommitmentGenralOrFundraisingInfo(String environment,String mode,String[][] labelAndValue) {
+		SoftAssert saa = new SoftAssert();
+		WebElement ele=null;
+		if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			switchToFrame(driver, 30, getCreateCommitmentFrame_Lightning(20));
+		}
+		List<WebElement> companyName= new ArrayList<WebElement>();
+		for (String[] splitedlabelAndvalue : labelAndValue) {
+			String label =splitedlabelAndvalue[0].replace("_"," ");
+			String xpath="//label[text()='"+label+"']/../following-sibling::td/span";
+			if(label.equalsIgnoreCase(CreateCommitmentPageFieldLabelText.Company.toString())) {
+				companyName= FindElements(driver, xpath, "company name list");
+				if(!companyName.isEmpty()) {
+					for (int i = 0; i < companyName.size(); i++) {
+						String aa =companyName.get(i).getText().trim();
+						if(splitedlabelAndvalue[1].isEmpty()) {
+							if(aa.contains(splitedlabelAndvalue[1])) {
+								log(LogStatus.INFO, "Company name is balnk. ", YesNo.No);
+								
+							}else {
+								if(i==companyName.size()-1) {
+									log(LogStatus.ERROR, "Company name is not balnk.  \t Actual : "+aa,YesNo.Yes);
+									saa.assertTrue(false, "Company name is not balnk.  \t Actual :"+aa);
+								}
+							}
+						}else {
+							if(aa.contains(splitedlabelAndvalue[1])) {
+								log(LogStatus.INFO, "Company name is matched. "+splitedlabelAndvalue[1], YesNo.No);
+								break;
+							}else {
+								if(i==companyName.size()-1) {
+									log(LogStatus.ERROR, "Company name is not matched. Expected:  "+splitedlabelAndvalue[1]+"\t Actual : "+aa,YesNo.Yes);
+									saa.assertTrue(false, "Company name is not matched. Expected:  "+splitedlabelAndvalue[1]+"\t Actual : "+aa);
+								}
+							}
+						}
+					}
+				}else {
+					log(LogStatus.ERROR, "Company name list is not visible so cannot verify company name "+splitedlabelAndvalue[1],YesNo.Yes);
+					saa.assertTrue(false, "Company name list is not visible so cannot verify company name "+splitedlabelAndvalue[1]);
+				}
+				
+			}else {
+				ele=FindElement(driver,xpath, splitedlabelAndvalue[0]+" label text", action.SCROLLANDBOOLEAN,30);
+				if(ele!=null) {
+					String aa = ele.getText().trim();
+					if(splitedlabelAndvalue[1].contains(aa)) {
+						log(LogStatus.INFO, splitedlabelAndvalue[0]+" Field value "+splitedlabelAndvalue[1]+" is displaying on create commitment page", YesNo.No);
+					}else {
+						log(LogStatus.ERROR, splitedlabelAndvalue[1]+" Field value "+splitedlabelAndvalue[1]+" is not displaying on create commitment page", YesNo.Yes);
+						saa.assertTrue(false, splitedlabelAndvalue[1]+" Field value "+splitedlabelAndvalue[1]+" is not displaying on create commitment page");
+					}
+				}else {
+					log(LogStatus.ERROR, splitedlabelAndvalue[0]+" label is not visible so cannot verify "+splitedlabelAndvalue[1]+" value on create commitment page", YesNo.Yes);
+					saa.assertTrue(false, splitedlabelAndvalue[0]+" label is not visible so cannot verify "+splitedlabelAndvalue[1]+" value on create commitment page");
+				}
+			}
+		}
+		if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+			switchToDefaultContent(driver);
+		}
+		return saa;
+		
+	}
+	
+	
+	public SoftAssert deleteRowsFromCreateCommitmentGenralOrFundraisingInfo(String environment,String mode) {
+		SoftAssert saa = new SoftAssert();
+		List<WebElement> ele= FindElements(driver, "//h2[text()='Commitment Information']/..//table//a[@title='Delete'][contains(@style,'display:inline;')]", "delete icon");
+		if(!ele.isEmpty()) {
+			for (int i = 0; i < ele.size(); i++) {
+				if(click(driver, ele.get(i), "delete icon", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "clicked on delete icon", YesNo.No);
+				}else {
+					log(LogStatus.ERROR, "Not able to click on delete icon so cannot delete row from CreateCommitmentGenralOrFundraisingInfo", YesNo.Yes);
+					saa.assertTrue(false, "Not able to click on delete icon so cannot delete row from CreateCommitmentGenralOrFundraisingInfo");
+				}
+			}
+		}else {
+			log(LogStatus.ERROR, "Delete Icon is not visible so cannot click on delete icons", YesNo.Yes);
+			saa.assertTrue(false, "Delete Icon is not visible so cannot click on delete icons");
+		}
+		return saa;
+	}
+	
+	public boolean createNavigationItem(String environment,String mode, String[][] labelWithValue,int timeOut) {
+		String navigationTab="Navigation";
+		boolean flag=false;
+		if (clickOnTab(environment,navigationTab)) {
+			log(LogStatus.INFO, "Click on Tab : "+navigationTab, YesNo.No);
+			ThreadSleep(15000);
+			if(clickUsingJavaScript(driver, getNewButton(environment,mode, 10), "new button")) {
+				log(LogStatus.INFO, "Click on new button going to create ", YesNo.No);
+				enteringValueForNavigation(labelWithValue, action.BOOLEAN, timeOut);
+				if (click(driver,  getNavigationTabSaveBtn(environment,10), "save button", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.ERROR, "Click on save Button ", YesNo.No);
+					ThreadSleep(5000);
+					flag=true;
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on save Button ", YesNo.Yes);
+					BaseLib.sa.assertTrue(false,"Not Able to Click on save Button ");
+				}
+				
+			}else {
+				log(LogStatus.ERROR, "Not Able to Click on new button so cannot create", YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not Able to Click on new button so cannot create");
+
+			}
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on Tab : "+navigationTab, YesNo.Yes);
+			BaseLib.sa.assertTrue(false,"Not Able to Click on Tab : "+navigationTab);
+		}
+		return flag;
+	}
+	public void enteringValueForNavigation(String[][] navigationFieldWithValues,action action,int timeOut) {
+		String navigationField;
+		String navigationvalue;
+		WebElement ele;
+		for (String[] navigationFieldAndvalue : navigationFieldWithValues) {
+			navigationField=navigationFieldAndvalue[0];
+			navigationvalue = navigationFieldAndvalue[1];
+			ele =getNavigationField(navigationField, action, 20);
+
+			if (navigationField.equalsIgnoreCase("Navigation Type")) {
+
+				if (click(driver, getNavigationTypeLabel(timeOut), navigationField, action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(2000);
+					appLog.error("Clicked on Deal stage");
+
+					String xpath = "//span[@title='"+navigationvalue+"']";
+					ele = FindElement(driver,xpath, navigationvalue,action.SCROLLANDBOOLEAN, timeOut);
+					ThreadSleep(2000);
+					if (click(driver, ele, navigationvalue, action.SCROLLANDBOOLEAN)) {
+						appLog.info("Selected navigation type : "+navigationvalue);
+					} else {
+						appLog.error("Not able to Select on navigation type : "+navigationvalue);
+					}
+
+				} else {
+					appLog.error("Not able to Click on Deal stage : ");
+				}	
+			}else{
+				if (sendKeys(driver, ele, navigationvalue, navigationField, action)) {
+					log(LogStatus.INFO, "Able to enter "+navigationField, YesNo.No);
+
+					if (navigationField.equalsIgnoreCase("Parent")) {
+						ThreadSleep(10000);
+						if (click(driver,getItemInList( navigationvalue, action.BOOLEAN, 20),
+								navigationvalue + "   :  Parent Name", action.BOOLEAN)) {
+							log(LogStatus.INFO, navigationvalue+" is available", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, navigationvalue+" is not available", YesNo.Yes);
+							BaseLib.sa.assertTrue(false, navigationvalue+" is not available");
+
+						}	
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to enter "+navigationField, YesNo.Yes);
+					BaseLib.sa.assertTrue(false,"Not Able to enter "+navigationField);
+				}	
+			}
+
+		}
+
+	}
+	public WebElement getItemInList(String itemName,action action,int timeOut) {
+		String xpath = "//*[@title='"+itemName+"']//strong[text()='"+itemName.split(" ")[0]+"']";
+		WebElement ele = FindElement(driver, xpath, itemName, action, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, itemName);
+	}
+	public WebElement getNavigationField(String navigationField,action action,int timeOut) {
+		navigationField=navigationField.replace("_", " ");
+		if (navigationField.equalsIgnoreCase("Parent")) {
+			String xpath = "//*[text()='Parent']/following-sibling::*//*//button";
+			WebElement ele = FindElement(driver, xpath, navigationField, action, 5);	
+			click(driver, ele, "PARENT Cross icon", action.BOOLEAN);
+		}
+		String xpath = "//*[text()='"+navigationField+"']/following-sibling::div//input";
+		WebElement ele = FindElement(driver, xpath, navigationField, action, timeOut);
+		scrollDownThroughWebelement(driver, ele, navigationField);
+		return isDisplayed(driver, ele, "Visibility", timeOut, navigationField);
+	}
+	
+	@FindBy(xpath="//*[text()='Navigation Type']/..//div//button")
+	private WebElement navigationTypeLabel;
+
+	/**
+	 * @return the navigationTypeLabel
+	 */
+	public WebElement getNavigationTypeLabel(int timeOut) {
+		
+			return isDisplayed(driver, navigationTypeLabel, "Visibility", timeOut, "Navigation TYpe Label");
+		
+
+	}
+
+	/**
+	 * @author Ankit Jaiswal
+	 * @param accountName
+	 * @return
+	 */
+	public boolean clickOnReviewInvestorListFundraisingContactLink(String accountName) {
+		WebElement ele=null;
+		String xpath="//span[contains(@id,'Institution_of_Selected_Contacts-cell')]/a[text()='"+accountName+"']/../following-sibling::span/a";
+		ele=isDisplayed(driver, FindElement(driver, xpath,accountName+ " account fundraising contact link",action.SCROLLANDBOOLEAN,10), "visibility",10, accountName+ " account fundraising contact link");
+		if(ele!=null) {
+			if(click(driver, ele, accountName+ " account fundraising contact link", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "clicked on "+accountName+" account fundraising contact link", YesNo.No);
+				return true;
+			}else {
+				log(LogStatus.ERROR, "Not able to click on "+accountName+" account fundraising contact link", YesNo.Yes);
+			}
+		}else {
+			log(LogStatus.ERROR, accountName+" account fundraising contact link is not visible so cannot click on it", YesNo.Yes);
+		}
+		return false;
+	}
+	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param fundRaisingName
+	 * @param stage
+	 * @param investmentLikelyAmount
+	 * @param role
+	 * @param primary
+	 * @param date
+	 * @return
+	 */
+	public SoftAssert VerifyPastFundraisingData(String fundRaisingName, String stage, String investmentLikelyAmount, String role, String primary, String date) {
+		SoftAssert result = new SoftAssert();
+		WebElement ele=null;
+		List<WebElement>fundraisingNameList= getFundraisingNameList();
+		List<WebElement> stageList= getStageList();
+		List<WebElement> investmentList= getInvestmentLikelyAmountList();
+		List<WebElement> roleList= getRoleList();
+//		List<WebElement> primaryList= getPrimaryList();
+		List<WebElement> createdDateList = getCreatedDateList();
+		String[] splFRName=fundRaisingName.split("<break>");
+		String[] splStage=stage.split("<break>");
+		String[] splInvesmentLikely=investmentLikelyAmount.split("<break>");
+		String[] splRole= role.split("<break>");
+		String[] splPrimary= primary.split("<break>");
+		String[] splDate= date.split("<break>");
+		if(!fundraisingNameList.isEmpty()) {
+			for (int i = 0; i < fundraisingNameList.size(); i++) {
+				for(int j=0; j<splFRName.length; j++) {
+					if(fundraisingNameList.get(i).getText().trim().contains(splFRName[j]) && stageList.get(i).getText().trim().contains(splStage[j]) && investmentList.get(i).getText().trim().contains(convertNumberAccordingToFormatWithoutCurrencySymbol(splInvesmentLikely[j], "0,000.00"))
+							&& roleList.get(i).getText().trim().contains(splRole[j]) &&  verifyDate(createdDateList.get(i).getText().trim(), null, "created date in past fundraising pop up")) {
+						log(LogStatus.INFO, splFRName[j]+" "+splStage[j]+" "+splInvesmentLikely[j]+" "+splRole[j]+" "+splDate[j]+"  is verified in past fundraising grid", YesNo.No);
+						break;
+					}
+					else {
+						if(i==fundraisingNameList.size()-1) {
+							log(LogStatus.ERROR, splFRName[j]+" "+splStage[j]+" "+splInvesmentLikely[j]+" "+splRole[j]+" "+splDate[j]+"  is not verified in past fundraising grid", YesNo.Yes);
+							result.assertTrue(false, splFRName[j]+" "+splStage[j]+" "+splInvesmentLikely[j]+" "+splRole[j]+" "+splDate[j]+"  is not verified in past fundraising grid");
+						}
+					}
+				}
+			}
+				for(int j=0; j<splFRName.length; j++) {
+					String xpath="//span[contains(@id,'Past_FundraisingsContact-cell-0')]/a[text()='"+splFRName[j]+"']/../following-sibling::span[4]/img";
+					ele=isDisplayed(driver, FindElement(driver,xpath, "", action.BOOLEAN,3), "visibility",3,splFRName[j]+" primary data");
+					if(!splPrimary[j].isEmpty() && splPrimary[j].contains("Checked")) {
+						if(ele!=null) {
+							log(LogStatus.INFO,"Primary is checked for fundraising "+splFRName[j], YesNo.No);
+						}else {
+							log(LogStatus.ERROR, "Primary is not checked for fundraising "+splFRName[j], YesNo.Yes);
+							result.assertTrue(false, "Primary is not checked for fundraising "+splFRName[j]);
+						}
+						
+					}else if(splPrimary[j].isEmpty() || splPrimary[j].contains("Not Checked")) {
+						if(ele==null) {
+							log(LogStatus.INFO, "Primary is not checked for fundraising "+splFRName[j], YesNo.No);
+						}else {
+							log(LogStatus.ERROR,"Primary is checked for fundraising "+splFRName[j],YesNo.Yes);
+							result.assertTrue(false, "Primary is checked for fundraising "+splFRName[j]);
+						}
+					}
+				}
+		}else {
+			log(LogStatus.ERROR, "Fundraising Name is not visible on past fundraising pop up so cannot verify data on it", YesNo.Yes);
+			result.assertTrue(false, "Fundraising Name is not visible on past fundraising pop up so cannot verify data on it");
+		}
+		return result;
+		
+	}
+	/**
+	 * @author Ankit Jaiswal
+	 * @param ContactName
+	 * @param AccountName
+	 * @return String xpath
+	 */
+	public static String xpathOfSelectInvestorsInfoIcon(String ContactName,String AccountName) {
+		String xpath="//span[@id='Select_from_Search_Results-view-box-middle']//span/div/a[text()='"+AccountName+"']/../../preceding-sibling::span//a";
+		String xpath1="/following-sibling::a//img";
+		for(int i=0; i<ContactName.split(" ").length; i++) {
+			xpath=xpath+"[contains(text(),'"+ContactName.split(" ")[i]+"')]";
+		}
+		return xpath+xpath1;
+	}
+	/**
+	 * @author Ankit Jaiswal
+	 * @param ContactName
+	 * @param AccountName
+	 * @return String xpath
+	 */
+	public static String xpathOfSelectInvestorsContactName(String ContactName,String AccountName) {
+		String xpath="//span[@id='Select_from_Search_Results-view-box-middle']//span/div/a[text()='"+AccountName+"']/../../preceding-sibling::span//a";
+		for(int i=0; i<ContactName.split(" ").length; i++) {
+			xpath=xpath+"[contains(text(),'"+ContactName.split(" ")[i]+"')]";
+		}
+		return xpath;
+	}
+	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param contactName
+	 * @param accountName
+	 * @return
+	 */
+	public boolean clickOnInfoIcon(String contactName, String accountName) {
+		WebElement ele=null;
+		ele=isDisplayed(driver, FindElement(driver,xpathOfSelectInvestorsContactName(contactName, accountName), "", action.BOOLEAN,10), "visibility",10,contactName+" text ");
+		if(ele!=null) {
+			if(mouseOverOperation(driver,ele)) {
+				log(LogStatus.INFO, "mouse over on contact name "+contactName, YesNo.No);
+				ele=isDisplayed(driver, FindElement(driver,xpathOfSelectInvestorsInfoIcon(contactName, accountName), "", action.BOOLEAN,10), "visibility",10,contactName+" info icon");
+				if(ele!=null) {
+					if(click(driver, ele, contactName+" info icon", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "clicked on contact name "+contactName, YesNo.No);
+						return true;
+					}else {
+						log(LogStatus.ERROR, "Not able to click on contact name "+contactName+"  info icon", YesNo.Yes);
+					}
+				}else {
+					log(LogStatus.ERROR, "Not able to click on contact "+contactName+" info icon so cannot verify past fundraising data", YesNo.Yes);
+				}
+				
+			}else {
+				log(LogStatus.ERROR,"Not able to mouse over on contact name "+contactName+" so cannot click on contact Name info icon", YesNo.Yes);
+			}
+		}else {
+			log(LogStatus.ERROR, contactName+" contact name is not visible so cannot mouse over on contact name "+contactName, YesNo.Yes);
+		}
+		return false;
+		
+	}
+	/**
+	 * @author Ankit Jaiswal
+	 * @param fieldsAndvalue
+	 * @return
+	 */
+	public boolean selectDefaultFundraisingValue(List<String> fieldsAndvalue) {
+		String[]  splfield = fieldsAndvalue.get(0).split("<break>");
+		String [] splvalue=fieldsAndvalue.get(0).split("<break>");
+		WebElement ele = null;
+//		for (int i = 0; i < splfield.length; i++) {
+			String xpath="//select[@id='a51aa']";
+			ele = isDisplayed(driver, FindElement(driver,xpath, "", action.BOOLEAN,10), "visibility",10,"field drop down list");
+			if(selectVisibleTextFromDropDown(driver, ele, "field drop down list", splvalue[0])) {
+				log(LogStatus.INFO, "select field "+splfield[0], YesNo.No);
+				String xpath1="//input[@id='criteriatextbox51']";
+				ele = isDisplayed(driver, FindElement(driver,xpath1, "", action.BOOLEAN,10), "visibility",10,"Value text box");
+				if(sendKeys(driver, ele, splvalue[1], "Value Text Box", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Passed Value "+splvalue[1], YesNo.No);
+					return true;
+				}
+			}else {
+				log(LogStatus.ERROR, "Not able to select field "+splfield[0]+" so cannot select default fundraising value", YesNo.Yes);
+			}
+//		}
+		return false;
+	}
+	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param contactNamelist
+	 * @param accountNamelist
+	 * @param ContactFullNameAndItsAction
+	 * @return
+	 */
+	public List<String> verifyFundRaisingContactAndSetRolePrimaryContact(List<String> contactNamelist,List<String> accountNamelist, List<String> ContactFullNameAndItsAction) {
+		List<String> result = new ArrayList<String>();
+		WebElement ele = null;
+		String xpath="";
+		String roleXpath="";
+		String roleDropDownSign="";
+		if(!contactNamelist.isEmpty() && !accountNamelist.isEmpty()) {
+			for(int i=0; i<contactNamelist.size(); i++) {
+				String contactXpath="//span[contains(@id,'gridSelectedContact-row-')]/span[text()='"+contactNamelist.get(i)+"']/following-sibling::span[text()='"+accountNamelist.get(i)+"']";
+				ele=isDisplayed(driver, FindElement(driver, contactXpath, contactNamelist.get(i)+" text", action.SCROLLANDBOOLEAN,10), "visibility",10, contactNamelist.get(i)+" text");
+				if(ele!=null) {
+					log(LogStatus.INFO, accountNamelist.get(i)+" account name contact name "+contactNamelist.get(i)+" is displaying", YesNo.No);
+				}else {
+					log(LogStatus.ERROR, accountNamelist.get(i)+" account name contact name "+contactNamelist.get(i)+" is not displaying", YesNo.Yes);
+					result.add(accountNamelist.get(i)+" account name contact name "+contactNamelist.get(i)+" is not displaying");
+				}
+			}
+			for(int i =0 ; i<ContactFullNameAndItsAction.size(); i++) {
+				xpath="";
+				String contactName = ContactFullNameAndItsAction.get(i).split("<break>")[0];
+				String actions = ContactFullNameAndItsAction.get(i).split("<break>")[1];
+				System.err.println(contactName);
+				System.err.println(actions);
+				if(actions.equalsIgnoreCase(fundraisingContactActions.Remove.toString())) {
+					 xpath="//span[contains(@id,'gridSelectedContact-row-')]/span[text()='"+contactName+"']/../span/div/img";
+				}else if (actions.equalsIgnoreCase(fundraisingContactActions.PrimaryContact.toString())) {
+					xpath="//span[contains(@id,'gridSelectedContact-row-')]/span[text()='"+contactName+"']/following-sibling::span/span/span[contains(@class,'aw-item-marker')]/../..";
+				}else {
+					roleDropDownSign="//span[contains(@id,'gridSelectedContact-row-')]/span[text()='"+contactName+"']/following-sibling::span/span/table//tr[2]";
+					roleXpath="//span[contains(@id,'gridSelectedContact-popup-4-0-item-')]/span/span[text()='"+actions+"']";
+				}
+				if(!xpath.isEmpty()) {
+					ele=isDisplayed(driver, FindElement(driver, xpath, contactName+" "+actions+" element",action.SCROLLANDBOOLEAN,10), "visibility",10, contactName+" "+actions+" element");
+					if(click(driver, ele, contactName+" "+actions+" "+" element", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "clicked on contact name "+contactName+" "+actions+" action", YesNo.No);
+					}else {
+						log(LogStatus.ERROR, "Not able to click on Contact Name "+contactName+" "+actions+" action", YesNo.Yes);
+						result.add("Not able to click on Contact Name "+contactName+" "+actions+" action");
+					}
+				}else {
+					if(actions.equalsIgnoreCase(fundraisingContactActions.AddNewContactInFundraisingContact.toString())) {
+						xpath="//div[contains(@class,'ContactAccess_fancybox')]//div[@id='displayFilterText1']//img";
+						ele=isDisplayed(driver, FindElement(driver, xpath,"expand icon", action.SCROLLANDBOOLEAN,60), "visibility",60,"expand icon");
+						if(ele!=null) {
+							if (click(driver, ele, "expand icon", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.ERROR,"clicked on expand icon ",YesNo.No);
+								xpath="//input[@id='searchcon_grid_select_contact']";
+								ele=isDisplayed(driver, FindElement(driver, xpath,"expand icon", action.SCROLLANDBOOLEAN,5), "visibility",5,"expand icon");
+								if(ele!=null) {
+									if(sendKeys(driver, ele, contactName,contactName+" search text box", action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.ERROR,"passed value in serach text box "+contactName,YesNo.No);
+										if(click(driver, getFundraisingContactSearchTextSearchIcon(5), "search icon",action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.ERROR,"clicked on Search icon",YesNo.No);
+											xpath="//a[text()='"+contactName+"']/../preceding-sibling::span/span/span[1]";
+											ele = /* isDisplayed(driver, */ FindElement(driver, xpath, "expand icon",
+													action.SCROLLANDBOOLEAN, 60)/* , "visibility",60,"expand icon") */;
+											if(ele!=null) {
+												if(click(driver, ele, contactName+" check box", action.SCROLLANDBOOLEAN)) {
+													log(LogStatus.ERROR,"clicked on contact name check box "+contactName,YesNo.No);
+													xpath="//button[@id='addSelConBtn']";
+													ele=isDisplayed(driver, FindElement(driver, xpath,"expand icon", action.SCROLLANDBOOLEAN,60), "visibility",60,"expand icon");
+													if(click(driver, ele, "add selected contacts button", action.SCROLLANDBOOLEAN)) {
+														log(LogStatus.ERROR,"clicked on add selected contacts button",YesNo.No);
+														
+													}else {
+														log(LogStatus.ERROR,"Not able to click on add selected contacts button",YesNo.Yes);
+														result.add("Not able to click on add selected contacts button");
+													}
+													
+												}else {
+													log(LogStatus.ERROR, "Not able to select contact Name "+contactName+" in fundraising contact grid",YesNo.Yes);
+													result.add("Not able to select contact Name "+contactName+" in fundraising contact grid");
+												}
+												
+											}else {
+												log(LogStatus.ERROR, "Search text Box is not visible so cannot add contact "+contactName+" in fundraising contact grid",YesNo.Yes);
+												result.add("Search text Box is not visible so cannot add contact "+contactName+" in fundraising contact grid");
+											}
+										}else {
+											log(LogStatus.ERROR, "Not able to click on Search icon so cannot add contact "+contactName+" in fundraising contact grid",YesNo.Yes);
+											result.add("Not able to click on Search icon so cannot add contact "+contactName+" in fundraising contact grid");
+										}
+									}else {
+										log(LogStatus.ERROR,"Not abel to pass value in serach text box so cannot add contact "+contactName+" in fundraising contact grid",YesNo.Yes);
+										result.add("Not abel to pass value in serach text box so cannot add contact "+contactName+" in fundraising contact grid");
+									}
+									
+								}else {
+									log(LogStatus.ERROR, "Search text Box is not visible so cannot add contact "+contactName+" in fundraising contact grid",YesNo.Yes);
+									result.add("Search text Box is not visible so cannot add contact "+contactName+" in fundraising contact grid");
+								}
+								
+							}else {
+								log(LogStatus.ERROR,"Not able to click on expand icon so cannot add contact "+contactName+" in fundraising contact grid",YesNo.Yes);
+								result.add("Not able to click on expand icon so cannot add contact "+contactName+" in fundraising contact grid");
+							}
+						
+						}
+					}else {
+						ele=isDisplayed(driver, FindElement(driver, roleDropDownSign, contactName+" role drop down Sign",action.SCROLLANDBOOLEAN,10), "visibility",10, contactName+" role drop down sign");
+						ThreadSleep(3000);
+						if(click(driver, ele, contactName+" role drop down Sign", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on contact name "+contactName+" role drop down Sign", YesNo.No);
+							ThreadSleep(3000);
+							ele=isDisplayed(driver, FindElement(driver, roleXpath, actions+" role drop down Value",action.SCROLLANDBOOLEAN,10), "visibility",10,  actions+" role drop down Value");
+							if(clickUsingJavaScript(driver, ele, "click on dropdown list")) {
+								ThreadSleep(3000);
+								log(LogStatus.INFO, "clicked on contact name "+contactName+" role drop down Value: "+actions, YesNo.No);
+							}else {
+								log(LogStatus.ERROR, "Not able to click on contact name "+contactName+" role drop down Sign so cannot select "+actions+" value", YesNo.Yes);
+								result.add("Not able to click on contact name "+contactName+" role drop down Sign so cannot select "+actions+" value");
+							}
+						}else {
+							log(LogStatus.ERROR, "Not able to click on contact name "+contactName+" role drop down Sign so cannot select "+actions+" value", YesNo.Yes);
+							result.add("Not able to click on contact name "+contactName+" role drop down Sign so cannot select "+actions+" value");
+						}
+					}
+				}
+			
+			}
+		}else {
+			log(LogStatus.ERROR, "ContactName and AccountName list is empty so cannot verify contact and account name.",YesNo.Yes);
+			result.add("ContactName and AccountName list is empty so cannot verify contact and account name.");
+		}
+		return result;
+	}
+	
+	public SoftAssert deleteRowsFromCreateFundraisingDefaultFundraisingValues(String environment,String mode) {
+		SoftAssert saa = new SoftAssert();
+		List<WebElement> ele= FindElements(driver, "//div[@id='AddRemoveSection']//a[@title='Remove Row']", "delete icon");
+		if(!ele.isEmpty()) {
+			for (int i = 0; i < ele.size(); i++) {
+				if(click(driver, ele.get(i), "delete icon", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "clicked on delete icon", YesNo.No);
+				}else {
+					log(LogStatus.ERROR, "Not able to click on delete icon so cannot delete row from Create Fundraising Default Fundraising Values", YesNo.Yes);
+					saa.assertTrue(false, "Not able to click on delete icon so cannot delete row from Create Fundraising Default Fundraising Values");
+				}
+			}
+		}else {
+			log(LogStatus.ERROR, "Delete Icon is not visible so cannot click on delete icons", YesNo.Yes);
+			saa.assertTrue(false, "Delete Icon is not visible so cannot click on delete icons");
+		}
+		return saa;
+	}
+	
+	
+	/**
+	 * @param projectName
+	 * @param searchValue
+	 * @param action
+	 * @param timeOut
+	 * @return true if able to click on Navatar Edge
+	 */
+	public boolean clickOnNavatarEdgeLinkHomePage(String searchValue,action action,int timeOut) {
+		boolean flag=false;
+		String xpath = "//div[@class='flexipagePage']//span[text()='"+searchValue+"']";
+		WebElement ele = FindElement(driver, xpath, searchValue, action, timeOut);
+		WebElement ele1=null;
+		if (click(driver, ele, searchValue, action)) {
+			log(LogStatus.INFO, "able to click on "+searchValue, YesNo.No);	
+			flag=true;
+			xpath = "//div[@class='flexipagePage']//h2[text()='"+searchValue+"']";
+			ele = FindElement(driver, xpath, searchValue+" header", action, timeOut);
+			ele = isDisplayed(driver, ele, "Visibility", timeOut, searchValue+" Header");
+			
+			xpath = "//div[@class='flexipagePage']//h2[text()='"+searchValue+"']/..//preceding-sibling::div";
+			ele1 = FindElement(driver, xpath, searchValue+" image", action, timeOut);
+			ele1 = isDisplayed(driver, ele, "Visibility", timeOut, searchValue+" Image");
+			
+			if (ele!=null && ele1!=null && getNavatarQuickLinkMinimize_Lighting("", timeOut)!=null) {
+				log(LogStatus.INFO, "Image , Header and minimize icon Verified after click on "+searchValue, YesNo.No);	
+				flag=true;
+			} else {
+				log(LogStatus.ERROR, "Image , Header and minimize icon Not Verified after click on "+searchValue, YesNo.No);
+				BaseLib.sa.assertTrue(false, "Image , Header and minimize icon Not Verified after click on "+searchValue);
+			}
+			
+		} else {
+			log(LogStatus.ERROR, "Not able to click on "+searchValue, YesNo.No);
+		}
+		return flag;
+	}
+	
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param navigationLabel
+	 * @param action
+	 * @param timeOut
+	 * @return getNavigationLabel
+	 */
+	public WebElement getNavigationLabel(String navigationLabel,action action,int timeOut) {
+
+		int i=0;
+		String[] nb = navigationLabel.split("/");
+		String xpath = "";
+		WebElement ele=null;
+		for (i = 0; i < nb.length; i++) {
+			if (i==0) {
+				xpath = "//div[contains(@id,'treeview')]//*//*[text()='"+nb[i]+"']";	
+				ele = FindElement(driver, xpath, nb[i], action, timeOut);
+				
+			} else {
+				xpath=xpath+"/../following-sibling::*/*[text()='"+nb[i]+"']";
+			}
+			if (nb.length>1 && i==nb.length-1) {
+				click(driver,ele, nb[i], action);	
+			}
+		}
+		ele = FindElement(driver, xpath, navigationLabel, action, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, navigationLabel);
+
+	}
+	public boolean ClickOnItemOnNavatarEdge(String searchValue,String bulkActionNavigationLink,action action,int timeOut){
+		boolean flag=false;
+		WebElement ele;
+		if (clickOnNavatarEdgeLinkHomePage(searchValue, action, timeOut)) {
+			ele = getNavigationLabel(bulkActionNavigationLink, action.BOOLEAN, 10);
+			if (ele!=null && click(driver, ele, bulkActionNavigationLink, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on "+bulkActionNavigationLink, YesNo.No);
+					flag = true;
+				
+			}else{
+				log(LogStatus.ERROR, "Not Able to Click on "+bulkActionNavigationLink, YesNo.Yes);	
+			}
+		}else{
+			log(LogStatus.ERROR, "Not Able to Click on "+searchValue+" so cannot click on : "+bulkActionNavigationLink, YesNo.Yes);
+		}
+		return flag;
+	}
+	
 	
 	/**@author Akul Bhutani
 	 * @param environment

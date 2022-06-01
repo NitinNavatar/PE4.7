@@ -219,6 +219,28 @@ public class ContactsPage extends BasePageBusinessLayer {
 		
 	}
 	
+	@FindBy(xpath="//a[@title='Transfer']/preceding-sibling::input[@title='Cancel']")
+	private WebElement contactTransferCancelButton;
+
+
+	/**
+	 * @return the getTransferButton
+	 */
+	public WebElement getContactTransferCancelButton(String environment,String mode,int timeOut) {
+		return isDisplayed(driver, contactTransferCancelButton, "Visibility", timeOut, "contact Transfer Cancel Button");
+		
+	}
+	@FindBy(xpath="//input[@value='Clear Address']/../preceding-sibling::div/div/a/img")
+	private WebElement crossIcononContactTransferPopUp;
+
+
+	/**
+	 * @return the clearAddressButton
+	 */
+	public WebElement getCrossIcononContactTransferPopUp(String environment,String mode,int timeOut) {
+		return isDisplayed(driver, crossIcononContactTransferPopUp, "Visibility", timeOut, "cross Icon on Contact Transfer PopUp");
+		
+	}
 	
 	@FindBy(xpath="//div/button/span[text()='Save']")
 	private WebElement saveButtonTask_Lighting;
