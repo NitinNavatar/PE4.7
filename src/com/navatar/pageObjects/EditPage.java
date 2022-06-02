@@ -44,6 +44,50 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, sdgConfigDataProviderTextBox, "Visibility", timeOut,
 				"sdg Config Data Provider TextBox");
 	}
+	
+	@FindBy(xpath="//button[text()='Add Tab']")
+	private WebElement addTab;
+	
+
+
+	
+	public WebElement getAddTab(int timeOut) {
+		return isDisplayed(driver, addTab, "Visibility", timeOut, "Add Tab");
+	}
+	
+
+	/**
+	 * @return the editPageFrame
+	 */
+	public WebElement getPageTabEle(String tabName,int timeOut) {
+		String 	xpath= "(//*[@class='uiOutputText']/../..//*[@title='"+tabName+"'])[2]";
+		WebElement ele = FindElement(driver, xpath, tabName, action.BOOLEAN, timeOut);
+		if (ele!=null) {
+			return isDisplayed(driver, ele, "Visibility", timeOut, tabName);
+		} else {
+			xpath= "(//*[@class='uiOutputText']/../..//*[@title='tabName'])[1]";
+			ele = FindElement(driver, xpath, tabName, action.BOOLEAN, timeOut);
+			return isDisplayed(driver, ele, "Visibility", timeOut,tabName);
+		}
+
+	}
+	
+	@FindBy(xpath="//*[text()='Tab Label']/../following-sibling::*//select[@class='slds-select']")
+	private WebElement subTabDropdownList;
+
+	/**
+	 * @return the userProfileDropDownList
+	 */
+	public WebElement getSubTabDropdownListt(int timeOut) {
+		return isDisplayed(driver, subTabDropdownList, "Visibility", timeOut, "Sub Tab Drop Down List");
+	}
+
+	@FindBy(xpath="//button[text()='Done']")
+	private WebElement doneButton;
+	
+	public WebElement getdoneButton(int timeOut) {
+		return isDisplayed(driver, doneButton, "Visibility", timeOut, "Done Button");
+	}
 
 	@FindBy(xpath = "//*[text()='Default SDG Toggle']/following-sibling::div/input")
 	private WebElement defaultSDGToggleTextBox;
@@ -585,6 +629,8 @@ public class EditPage extends BasePageBusinessLayer {
 
 	public WebElement getcustomFilterComponent(int timeOut) {
 		return isDisplayed(driver, customFilterComponent, "Visibility", timeOut, "Custom Filter Component");
+
+
 
 	}
 

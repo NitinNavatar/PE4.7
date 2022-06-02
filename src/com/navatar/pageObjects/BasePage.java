@@ -4694,7 +4694,27 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getlistViewSaveButton(String projectName,int timeOut) {
 		return isDisplayed(driver, listViewSaveButton, "Visibility", timeOut, "listViewSaveButton");
 	}
+	/**
+	 * @return the folrulaTextBox
+	 */
+	public WebElement getOfficeLocationSDGLink(int timeOut) {
+		
+		WebElement ele = FindElement(driver, "//a[text()='Office Location']", "office Location SDG Link", action.BOOLEAN, timeOut);
+		scrollDownThroughWebelement(driver, ele, "office Location SDG Link");
+		
+		return isDisplayed(driver, ele, "Visibility", timeOut, "office Location SDG Link");
+	} 
+	@FindBy(xpath="//*[text()='Details']")
+	private WebElement detailsTab_Lighting;
 	
+	/**
+	 * @param environment
+	 * @param timeOut
+	 * @return
+	 */
+	public WebElement getdetailsTab_Lighting(String environment,TabName TabName,int timeOut) {
+		return isDisplayed(driver, detailsTab_Lighting, "Visibility", timeOut, "Details Tab");	
+		}
 	public WebElement getdoneButton(String projectName,int timeOut) {
 		return driver.findElement(By.xpath("//div[@class='modal-footer slds-modal__footer']//button[@type='submit']"));
 	}
@@ -5488,5 +5508,50 @@ public abstract class BasePage extends BaseLib {
 	public List<WebElement> getfilterValueDropdownlist(String projectName,int timeOut) {
 		return filterValueDropdownlist;
 	}
+	
+	@FindBy(xpath = "//li//a//span[text()='Delete']")
+	private WebElement deleteButtonListView;
+	
+	public WebElement getdeleteButtonListView(String projectName,int timeOut) {
+		return isDisplayed(driver, deleteButtonListView, "Visibility", timeOut, "deleteButtonListView");
+	}
+	
+	@FindBy(xpath = "//span[text()='Delete']/parent::button")
+	private WebElement deleteConfirmButtonListView;
+	
+	public WebElement getdeleteConfirmButtonListView(String projectName,int timeOut) {
+		return isDisplayed(driver, deleteConfirmButtonListView, "Visibility", timeOut, "deleteConfirmButtonListView");
+	}
+	
+	@FindBy(xpath = "//input[@placeholder='Search this list...']")
+	private WebElement listSearchBox;
+
+	public WebElement listSearchBox(int timeOut) {
+		return isDisplayed(driver, listSearchBox, "Visibility", timeOut, "List Search Box");
+	}
+	
+	
+	
+	public WebElement getSelectEditOfFundName(String fundName,int timeOut) {
+		String xpath="//tbody//a[text()='"+fundName+"']/ancestor::th/following-sibling::td//ul[contains(@class,'oneActionsRibbon')]//a";
+		WebElement ele=FindElement(driver, xpath, "select Edit of: "+fundName, action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "select Edit of: "+fundName);
+		}
+	
+	public WebElement getFundNameElement(String fundName,int timeOut) {
+		String xpath="//tbody//a[text()='"+fundName+"']";
+		WebElement ele=FindElement(driver, xpath, "Record Found: "+fundName, action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "Record Found: "+fundName);
+		}
+	
+	@FindBy(xpath = "//a[@title='Delete']")
+	private WebElement deleteRecordButton;
+
+	public WebElement deleteRecordButton(int timeOut) {
+		return isDisplayed(driver, deleteRecordButton, "Visibility", timeOut, "Delete Record Button");
+	
+	}	
+
+	
 	
 }

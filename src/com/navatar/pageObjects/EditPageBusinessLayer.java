@@ -59,6 +59,122 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		WebElement ele = FindElement(driver, xpath, "Search Value : " + searchValue, action.BOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "Search Value : " + searchValue);
 	}
+	public boolean addingSubTab(String subTab,String searchText,String sourceImage,String targetImage){
+		boolean flag=false;
+		String xpath="";
+		WebElement ele=null;
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
+		if (hp.clickOnEditPageLinkOnSetUpLink()) {
+			log(LogStatus.INFO,"click on Edit Page SetUp Link", YesNo.No);		
+			// scn.nextLine();
+			switchToDefaultContent(driver);
+			switchToFrame(driver, 60, getEditPageFrame("",120));
+			//relatedTab=relatedTabs[i];
+			ele = ip.getRelatedTab("", subTab, 5);
+			if (ele!=null) {
+				log(LogStatus.INFO,"Sub Tab is Already Added : "+subTab, YesNo.No);
+			} else {
+				String relatedTab="Details";
+				if (clickUsingJavaScript(driver, ip.getRelatedTab("", relatedTab, 30), relatedTab.toString(), action.BOOLEAN)) {
+					log(LogStatus.INFO,"Click on Sub Tab : "+relatedTab,YesNo.No);
+					ThreadSleep(2000);
+					switchToDefaultContent(driver);
+					if (click(driver, getAddTab(10), "Add TAB", action.BOOLEAN)) {
+						log(LogStatus.INFO,"Click on Add Tab Link", YesNo.No);
+						if (click(driver, getPageTabEle(relatedTab, 20), relatedTab, action.BOOLEAN)) {
+							log(LogStatus.INFO,"Click on "+relatedTab, YesNo.No);
+							List<WebElement> eleList = allOptionsInDropDrop(driver, getSubTabDropdownListt(20), "");
+							for (WebElement webElement : eleList) {
+								System.err.println(">>>>>>>> "+webElement.getText().trim());
+							}
+							if (selectVisibleTextFromDropDown(driver, getSubTabDropdownListt(20),"Sub tab drop down list", subTab)) {
+								log(LogStatus.INFO,"Able to on select  "+subTab, YesNo.No);
+
+							} else {
+								BaseLib.sa.assertTrue(false,"Not Able to on select  "+subTab);
+								log(LogStatus.SKIP,"Not Able to on select  "+subTab, YesNo.Yes);
+							}
+							if (click(driver, getdoneButton(20), "Done Button", action.BOOLEAN)) {
+								log(LogStatus.INFO,"Click on Done Button", YesNo.No);
+								switchToDefaultContent(driver);
+								switchToFrame(driver, 60, getEditPageFrame("",120));
+								relatedTab=subTab;
+								if (clickUsingJavaScript(driver, ip.getRelatedTab("", relatedTab, 120), relatedTab.toString(), action.BOOLEAN)) {
+									log(LogStatus.INFO,"Click on Sub Tab : "+relatedTab,YesNo.No);
+									if (searchAndDragDropinEditPage(searchText, sourceImage, targetImage)) {
+										log(LogStatus.INFO,"Able to DragNDrop : "+searchText,YesNo.No);
+										flag=true;
+
+									} else {
+										BaseLib.sa.assertTrue(false, "Not Able to DragNDrop : "+searchText);
+										log(LogStatus.FAIL,"Not Able to DragNDrop : "+searchText,YesNo.Yes);
+									}
+
+								} else {
+									BaseLib.sa.assertTrue(false,"Not Able to Click on Sub Tab : "+relatedTab);
+									log(LogStatus.SKIP,"Not Able to Click on Sub Tab : "+relatedTab,YesNo.Yes);
+								}
+								} else {
+								BaseLib.sa.assertTrue(false,"Not Able to on Click on Done Button");
+								log(LogStatus.SKIP,"Not Able to on Click on Done Button", YesNo.Yes);
+							}
+						} else {
+							BaseLib.sa.assertTrue(false,"Not Able to on Click on "+relatedTab);
+							log(LogStatus.SKIP,"Not Able to on Click on "+relatedTab, YesNo.Yes);
+						}
+
+					} else {
+						BaseLib.sa.assertTrue(false,"Not Able to on Click on Add Tab Link");
+						log(LogStatus.SKIP,"Not Able to on Click on Add Tab Link", YesNo.Yes);
+					}
+				} else {
+					BaseLib.sa.assertTrue(false,"Not Able to Click on Sub Tab : "+relatedTab);
+					log(LogStatus.SKIP,"Not Able to Click on Sub Tab : "+relatedTab,YesNo.Yes);
+				}
+			}
+		} else {
+			log(LogStatus.ERROR,"Not Able to click on Edit Page SetUp Link", YesNo.Yes);
+			BaseLib.sa.assertTrue(false,"Not Able to click on Edit Page SetUp Link");
+		}
+
+		return flag;
+	}
+	public boolean searchAndDragDropinEditPage(String searchText,String sourceImage,String targetImage)
+	{
+		boolean flag=false;
+		switchToDefaultContent(driver);;
+		String sValue = searchText;
+		if (sendKeys(driver, getEditPageSeachTextBox("", 10),sValue,"Search TextBox",action.BOOLEAN)) {
+			ThreadSleep(2000);
+			log(LogStatus.INFO,"send value to Search TextBox : "+sValue,YesNo.No);
+			if (dragNDropUsingScreen("", sourceImage, targetImage, 20)) {
+				log(LogStatus.INFO,"Able to DragNDrop : "+sValue,YesNo.No);
+				ThreadSleep(2000);
+				if (click(driver, getEditPageSaveButton("", 10),"Edit Page Save Button", action.BOOLEAN)) {
+					log(LogStatus.INFO,"Click on Edit Page Save Button",YesNo.No);
+					flag=true;
+					ThreadSleep(10000);
+					
+				} else {
+					BaseLib.sa.assertTrue(false, "Not Able to Click on Edit Page Save Button");
+					log(LogStatus.FAIL,"Not Able to Click on Edit Page Save Button",YesNo.Yes);
+				}
+				
+
+			} else {
+				BaseLib.sa.assertTrue(false, "Not Able to DragNDrop : "+sValue);
+				log(LogStatus.FAIL,"Not Able to DragNDrop : "+sValue,YesNo.Yes);
+			}
+
+		} else {
+			BaseLib.sa.assertTrue(false, "Not Able to send value to Search TextBox : "+sValue);
+			log(LogStatus.FAIL,"Not Able to send value to Search TextBox : "+sValue,YesNo.Yes);
+		}
+		
+		
+		return flag;
+	}
 
 	/**
 	 * @author Ravi Kumar
@@ -791,7 +907,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 			log(LogStatus.INFO, "Component Title Matched to Home Page " + Title, YesNo.Yes);
 
-			if(!verifySDGExpandByDefault(Title)) {
+			if (!verifySDGExpandByDefault(Title)) {
 				log(LogStatus.INFO, "Not Expanded By Default SDG: " + Title, YesNo.No);
 				log(LogStatus.INFO, "Now Expanding  SDG: " + Title, YesNo.No);
 
@@ -800,22 +916,20 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 						action.SCROLLANDBOOLEAN, 20);
 				if (click(driver, TooltipElement, "Collapse/Expand Element", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on Collapse/Expand");
-					flag=true;
-				}
-				else {
+					flag = true;
+				} else {
 					log(LogStatus.ERROR, "Not Able to click on Expand Button of SDG :" + Title, YesNo.No);
 
 				}
 
-
-			}	
+			}
 
 			else {
 				log(LogStatus.INFO, "Expanded By Default SDG :" + Title, YesNo.No);
-				flag=true;
+				flag = true;
 
 			}
-			if(flag) {
+			if (flag) {
 				List<WebElement> columns = FindElements(driver,
 						"//a[text()='" + Title + "']/ancestor::article//thead//th[contains(@class,'navpeI')]//span",
 						"Records");
@@ -832,7 +946,6 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 					log(LogStatus.ERROR, "All Fields are not Matched", YesNo.No);
 
 				}
-
 
 			} else {
 				log(LogStatus.ERROR, "Component Title Not Matched to Home Page :" + Title, YesNo.No);
@@ -957,79 +1070,79 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 	public boolean verifySDGTooltipForExpandAndCollapse(String Title) {
 		boolean flag = false;
 
-
 		if (TooltipElement(Title) != null) {
 
 			log(LogStatus.INFO, "Collapse/Expand Tooltip Element Found of SDG: " + Title, YesNo.Yes);
 			if (CommonLib.getAttribute(driver, TooltipElement(Title), "", "title").equalsIgnoreCase("Collapse")) {
 				appLog.info("Toototip Verified : " + getAttribute(driver, TooltipElement(Title), "", "title"));
-				log(LogStatus.INFO, "Toototip Verified : " + getAttribute(driver, TooltipElement(Title), "", "title"), YesNo.No);
-				if (click(driver, TooltipElement(Title), "Collapse/Expand Element", action.SCROLLANDBOOLEAN)) 
+				log(LogStatus.INFO, "Toototip Verified : " + getAttribute(driver, TooltipElement(Title), "", "title"),
+						YesNo.No);
+				if (click(driver, TooltipElement(Title), "Collapse/Expand Element", action.SCROLLANDBOOLEAN))
 					appLog.info("clicked on Collapse/Expand");
 				WebElement expandElement = FindElement(driver,
 						"//a[text()='" + Title + "']/ancestor::article//div[@class='slds-hide']/following-sibling::div",
 						"Expand Element of SDG: " + Title, action.SCROLLANDBOOLEAN, 10);
-				if(expandElement!=null) {
-					String display = CommonLib.getAttribute(driver, expandElement, "Expand Element of SDG: " + Title, "style");
+				if (expandElement != null) {
+					String display = CommonLib.getAttribute(driver, expandElement, "Expand Element of SDG: " + Title,
+							"style");
 
 					if (display.contains("none")) {
 
 						appLog.info("----SDG gets Collapsed----");
 						log(LogStatus.INFO, "----SDG gets Collapsed-----", YesNo.No);
 						flag = true;
-					}
-					else 
-					{
+					} else {
 						appLog.error("----SDG not gets Collapsed----");
 						log(LogStatus.ERROR, "----SDG not gets Collapsed-----", YesNo.No);
 
 					}
-				}} else if (CommonLib.getAttribute(driver, TooltipElement(Title), "", "title").equalsIgnoreCase("Expand")) {
-					flag = false;
-					if (click(driver, TooltipElement(Title), "Collapse/Expand Element", action.SCROLLANDBOOLEAN)) 
-						appLog.info("clicked on Collapse/Expand");
-					WebElement expandElement = FindElement(driver,
-							"//a[text()='" + Title + "']/ancestor::article//div[@class='slds-hide']/following-sibling::div",
-							"Expand Element of SDG: " + Title, action.SCROLLANDBOOLEAN, 10);
-					if(expandElement!=null) {
-						String display = CommonLib.getAttribute(driver, expandElement, "Expand Element of SDG: " + Title, "style");
+				}
+			} else if (CommonLib.getAttribute(driver, TooltipElement(Title), "", "title").equalsIgnoreCase("Expand")) {
+				flag = false;
+				if (click(driver, TooltipElement(Title), "Collapse/Expand Element", action.SCROLLANDBOOLEAN))
+					appLog.info("clicked on Collapse/Expand");
+				WebElement expandElement = FindElement(driver,
+						"//a[text()='" + Title + "']/ancestor::article//div[@class='slds-hide']/following-sibling::div",
+						"Expand Element of SDG: " + Title, action.SCROLLANDBOOLEAN, 10);
+				if (expandElement != null) {
+					String display = CommonLib.getAttribute(driver, expandElement, "Expand Element of SDG: " + Title,
+							"style");
 
-						if (display.contains("block")) {
+					if (display.contains("block")) {
 
-							appLog.info("----SDG gets Expanded----");
-							log(LogStatus.INFO, "----SDG gets Expanded-----", YesNo.No);
-							flag = true;
-						}
-						else 
-						{
-							appLog.error("----SDG not gets Expanded----");
-							log(LogStatus.ERROR, "----SDG not gets Expanded-----", YesNo.No);
+						appLog.info("----SDG gets Expanded----");
+						log(LogStatus.INFO, "----SDG gets Expanded-----", YesNo.No);
+						flag = true;
+					} else {
+						appLog.error("----SDG not gets Expanded----");
+						log(LogStatus.ERROR, "----SDG not gets Expanded-----", YesNo.No);
 
-						}
-					}} else {
-						flag = false;
-						if (click(driver, TooltipElement(Title), "Collapse/Expand Element", action.SCROLLANDBOOLEAN)) 
-							appLog.info("clicked on Collapse/Expand");
-						WebElement expandElement = FindElement(driver,
-								"//a[text()='" + Title + "']/ancestor::article//div[@class='slds-hide']/following-sibling::div",
-								"Expand Element of SDG: " + Title, action.SCROLLANDBOOLEAN, 10);
-						if(expandElement!=null) {
-							String display = CommonLib.getAttribute(driver, expandElement, "Expand Element of SDG: " + Title, "style");
+					}
+				}
+			} else {
+				flag = false;
+				if (click(driver, TooltipElement(Title), "Collapse/Expand Element", action.SCROLLANDBOOLEAN))
+					appLog.info("clicked on Collapse/Expand");
+				WebElement expandElement = FindElement(driver,
+						"//a[text()='" + Title + "']/ancestor::article//div[@class='slds-hide']/following-sibling::div",
+						"Expand Element of SDG: " + Title, action.SCROLLANDBOOLEAN, 10);
+				if (expandElement != null) {
+					String display = CommonLib.getAttribute(driver, expandElement, "Expand Element of SDG: " + Title,
+							"style");
 
-							if (display.contains("none")) {
+					if (display.contains("none")) {
 
-								appLog.info("----SDG gets Collapsed----");
-								log(LogStatus.INFO, "----SDG gets Collapsed-----", YesNo.No);
-								flag = true;
-							}
-							else 
-							{
-								appLog.error("----SDG not gets Collapsed----");
-								log(LogStatus.ERROR, "----SDG not gets Collapsed-----", YesNo.No);
+						appLog.info("----SDG gets Collapsed----");
+						log(LogStatus.INFO, "----SDG gets Collapsed-----", YesNo.No);
+						flag = true;
+					} else {
+						appLog.error("----SDG not gets Collapsed----");
+						log(LogStatus.ERROR, "----SDG not gets Collapsed-----", YesNo.No);
 
-							}
+					}
 
-						}}
+				}
+			}
 
 		}
 
@@ -1041,9 +1154,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		return flag;
 	}
 
-
-	public boolean verifyCollapseTooltipAFterGoingToInstitutionPageAndComingBack(String Title) 
-	{
+	public boolean verifyCollapseTooltipAFterGoingToInstitutionPageAndComingBack(String Title) {
 		boolean flag = false;
 
 		if (TooltipElement(Title) != null) {
@@ -1051,11 +1162,10 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			log(LogStatus.INFO, "Collapse/Expand Tooltip Element Found of SDG: " + Title, YesNo.Yes);
 			if (CommonLib.getAttribute(driver, TooltipElement(Title), "", "title").equalsIgnoreCase("Collapse")) {
 				appLog.info("Toototip Verified : " + getAttribute(driver, TooltipElement(Title), "", "title"));
-				log(LogStatus.INFO, "Toototip Verified : " + getAttribute(driver, TooltipElement(Title), "", "title"), YesNo.No);
-				flag=true;
-			}
-			else 
-			{
+				log(LogStatus.INFO, "Toototip Verified : " + getAttribute(driver, TooltipElement(Title), "", "title"),
+						YesNo.No);
+				flag = true;
+			} else {
 				log(LogStatus.ERROR, "Toototip is Not Collapsed ", YesNo.No);
 				appLog.error("Toototip is Not Collapsed : ");
 			}
@@ -1070,65 +1180,58 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 	}
 
-
-
-	public boolean editPageAndAddSDG(String labelName,String tableName, String dataProviderName)
-	{	
+	public boolean editPageAndAddSDG(String labelName, String tableName, String dataProviderName) {
 		WebElement ele;
 
-		BasePageBusinessLayer BP=new BasePageBusinessLayer(driver);
-		if(clickOnEditPageLink())
-		{
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		if (clickOnEditPageLink()) {
 			CommonLib.switchToFrame(driver, 50, getAppBuilderIframe(90));
 			ThreadSleep(10000);
 			if (CommonLib.click(driver, getAddComponentButton(50), "Add to component", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Add to component button has been clicked", YesNo.No);
 				CommonLib.switchToDefaultContent(driver);
-				if (CommonLib.sendKeys(driver, getSearchonAppBuilder(50), "Navatar SDG", "SearchBox", action.SCROLLANDBOOLEAN)) {
+				if (CommonLib.sendKeys(driver, getSearchonAppBuilder(50), "Navatar SDG", "SearchBox",
+						action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Navatar SDG has been Search", YesNo.No);
 					if (CommonLib.click(driver, getNavatarSDGBtn(50), "Navatar SDG Button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Navatar SDG Button has been clicked", YesNo.No);
-						if (CommonLib.sendKeys(driver, getTitle(50),tableName , "Title", action.SCROLLANDBOOLEAN)) {
+						if (CommonLib.sendKeys(driver, getTitle(50), tableName, "Title", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Title has been Entered", YesNo.No);
-							if (CommonLib.getSelectedOptionOfDropDown(driver, getDataProvider(50), getDataProviderDropDownList(30), "Data Provider", dataProviderName))  {
+							if (CommonLib.getSelectedOptionOfDropDown(driver, getDataProvider(50),
+									getDataProviderDropDownList(30), "Data Provider", dataProviderName)) {
 								log(LogStatus.INFO, "SDG Data Provider has been searched", YesNo.No);
-								if (CommonLib.click(driver, getEditAppSaveButton(50), "App builder Save Button", action.SCROLLANDBOOLEAN)) {
+								if (CommonLib.click(driver, getEditAppSaveButton(50), "App builder Save Button",
+										action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "App Builder save button has been clicked", YesNo.No);
-									if(CommonLib.checkElementVisibility(driver, getsaveConfirmationMessage(90), "Save Button", 90)){
+									if (CommonLib.checkElementVisibility(driver, getsaveConfirmationMessage(90),
+											"Save Button", 90)) {
 										log(LogStatus.INFO, "SDG has been saved", YesNo.No);
-										if(CommonLib.click(driver, getbBackIcon(50), "", action.SCROLLANDBOOLEAN)) {
+										if (CommonLib.click(driver, getbBackIcon(50), "", action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "Back icon has been clicked", YesNo.No);
-											CommonLib.ThreadSleep(9000);								
-											try
-											{
-												ele=new WebDriverWait(driver, 50).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[text()='"+tableName+"']")));
-											}
-											catch(Exception ex)
-											{
+											CommonLib.ThreadSleep(9000);
+											try {
+												ele = new WebDriverWait(driver, 50)
+														.until(ExpectedConditions.presenceOfElementLocated(
+																By.xpath("//a[text()='" + tableName + "']")));
+											} catch (Exception ex) {
 												ex.printStackTrace();
-												log(LogStatus.ERROR,"Could not found the "+tableName+" Element",YesNo.Yes);
+												log(LogStatus.ERROR, "Could not found the " + tableName + " Element",
+														YesNo.Yes);
 												return false;
 											}
 
-											if(CommonLib.isElementPresent(ele))
-											{
+											if (CommonLib.isElementPresent(ele)) {
 												log(LogStatus.INFO, "SDG has been added", YesNo.No);
 												return true;
-											}
-											else
-											{
+											} else {
 												log(LogStatus.ERROR, "SDG is not added", YesNo.Yes);
 												return false;
 											}
-										}
-										else
-										{
+										} else {
 											log(LogStatus.ERROR, "Could not click on back icon", YesNo.Yes);
 											return false;
 										}
-									}
-									else
-									{
+									} else {
 										log(LogStatus.ERROR, "Could not click on save button", YesNo.Yes);
 										return false;
 									}
@@ -1162,14 +1265,15 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			}
 		}
 
-		else
-		{
+		else {
 			log(LogStatus.ERROR, "Could not click on the Edit Page", YesNo.Yes);
 			return false;
 		}
 	}
 
 
+	
+	
 	public boolean editPageAndAddFilter(String label1, String query1, String label2, String query2,String label3, String query3)
 	{
 		BasePageBusinessLayer BP=new BasePageBusinessLayer(driver);
@@ -1177,6 +1281,8 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		{
 			CommonLib.switchToFrame(driver, 50, getAppBuilderIframe(90));
 			ThreadSleep(10000);
+
+
 
 			JavascriptExecutor js = (JavascriptExecutor) driver;
 			CommonLib.clickUsingJavaScript(driver, getsldHeader(50), "SDG Header Element",action.SCROLLANDBOOLEAN);
@@ -1209,7 +1315,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 														if(CommonLib.click(driver, getbBackIcon(50), "", action.SCROLLANDBOOLEAN)) {
 															log(LogStatus.INFO, "Back icon has been clicked", YesNo.No);
 
-															CommonLib.ThreadSleep(9000);								
+															CommonLib.ThreadSleep(9000);
 
 															if(CommonLib.isElementPresent(getcustomFilterComponent(50)))
 															{
@@ -1235,11 +1341,13 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 													}
 												}
 
+
+
 												else {
 													log(LogStatus.ERROR, "Could not be click on save button", YesNo.Yes);
 													return false;
 												}
-											} 
+											}
 											else {
 												log(LogStatus.ERROR, "Could not entered the query 3", YesNo.Yes);
 												return false;
@@ -1261,6 +1369,8 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 								}
 							}
 
+
+
 							else {
 								log(LogStatus.ERROR, "Could not entered the query 1", YesNo.Yes);
 								return false;
@@ -1280,6 +1390,8 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 					log(LogStatus.ERROR, "Could not be Search the item", YesNo.Yes);
 					return false;
 
+
+
 				}
 			} else {
 				log(LogStatus.ERROR, "Could not be click on the Add to component button", YesNo.Yes);
@@ -1287,13 +1399,16 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			}
 		}
 
+
+
 		else
 		{
 			log(LogStatus.ERROR, "Could not click on the Edit Page", YesNo.Yes);
 			return false;
 		}
-	
 
 
-	}	
+
+
+	}
 }

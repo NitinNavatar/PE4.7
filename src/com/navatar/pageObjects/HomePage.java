@@ -946,6 +946,71 @@ public class HomePage extends BasePageBusinessLayer {
 	public WebElement getFundraisingContactSearchTextSearchIcon(int timeOut) {
 		return isDisplayed(driver, fundraisingContactSearchTextSearchIcon, "Visibility", timeOut, "fundraising Contact Search Text Search Icon");
 	}
+	/**
+	 * @return the infoLink
+	 */
+	public WebElement getPastFundraisingwrenchIconCancelBtn(PageName pageName,int timeOut) {
+		
+		String xpath="";
+		if(pageName.toString().equalsIgnoreCase(PageName.pastFundraisingContactPopUp.toString())) {
+			
+			xpath="//button[@title='Cancel'][contains(@onclick,'closepopupwrenchwrenchCMF_PFC')]";
+		}else if(pageName.toString().equalsIgnoreCase(PageName.pastFundraisingAccountPopUp.toString())) {
+			
+			xpath="//div[@id='wrenchpopup1wrenchCMF_PFA']//button[@title='Cancel']";
+		}else {
+			xpath="";
+		}
+		return isDisplayed(driver, FindElement(driver, xpath, "apply button", action.BOOLEAN,10), "Visibility", timeOut, "apply button");
+	}
+	
+
+	/**
+	 * @return the infoLink
+	 */
+	public WebElement getPastFundraisingwrenchIconCrossIcon(PageName pageName,int timeOut) {
+		String xpath="";
+		if(pageName.toString().equalsIgnoreCase(PageName.pastFundraisingContactPopUp.toString())) {
+			
+			xpath="//a[@title='Close'][contains(@onclick,'closepopupwrenchwrenchCMF_PFC')]";
+		}else if(pageName.toString().equalsIgnoreCase(PageName.pastFundraisingAccountPopUp.toString())) {
+			
+			xpath="//div[@id='wrenchpopup1wrenchCMF_PFA']//a[@title='Close']";
+		}else {
+			xpath="";
+		}
+		return isDisplayed(driver, FindElement(driver, xpath, "cross button", action.BOOLEAN,10), "Visibility", timeOut, "apply button");
+		
+	}
+	
+	public WebElement getPastFundraisingsPopUpScrollBox(PageName pageName,int timeOut) {
+		String xpath="";
+		if(pageName.toString().equalsIgnoreCase(PageName.pastFundraisingContactPopUp.toString())) {
+			
+			xpath="//span[@id='Past_FundraisingsContact-scroll-box']";
+		}else if(pageName.toString().equalsIgnoreCase(PageName.pastFundraisingAccountPopUp.toString())) {
+			
+			xpath="//span[@id='Past_Fundraisings-scroll-box']";
+		}else {
+			xpath="";
+		}
+		return isDisplayed(driver, FindElement(driver, xpath, "cross button", action.BOOLEAN,10), "Visibility", timeOut, "apply button");
+		
+	}
+	public WebElement getPastFundraisingPopCrossIcon(PageName pageName,int timeOut) {
+		String xpath="";
+		if(pageName.toString().equalsIgnoreCase(PageName.pastFundraisingContactPopUp.toString())) {
+			
+			xpath="//div[contains(@class,'ast_FundraisingsContact_PopUp')]//a/img";
+		}else if(pageName.toString().equalsIgnoreCase(PageName.pastFundraisingAccountPopUp.toString())) {
+			
+			xpath="//div[contains(@class,'Past_Fundraisings_PopUp')]//a/img";
+		}else {
+			xpath="";
+		}
+		return isDisplayed(driver, FindElement(driver, xpath, "cross button", action.BOOLEAN,10), "Visibility", timeOut, "apply button");
+		
+	}
 	
 	
 	@FindBy(id="j_id0:CreateFundraisingFormId:j_id37")
@@ -986,6 +1051,12 @@ public class HomePage extends BasePageBusinessLayer {
 	 */
 	public WebElement getNavatarQuickLinkMinimize_Lighting(String environment,int timeOut) {
 		return isDisplayed(driver, navatarQuickLinkMinimize_Lighting, "Visibility", timeOut, "Navatar Quick Link Minimize Lighting");
+	}
+	/**
+	 * @return the NavigationList
+	 */
+	public List<WebElement> getNavigationList(int timeOut) {
+		return FindElements(driver, "//div[contains(@id,'treeview')]//ul//li/span[3]", "Navigation List item");
 	}
 	
 
@@ -1806,6 +1877,38 @@ public List<WebElement> sdgGridAllHeadersLabelNameList(SDGGridName sdgGridName) 
 	
 	return ele;
 }
+
+
+public WebElement fundNameElement(String Title, String FundName) {
+	
+	return  FindElement(driver,
+			"//a[text()='"+Title+"']/ancestor::article//tbody/tr/td//a[text()='"+FundName+"']", "Fund Name",
+			action.SCROLLANDBOOLEAN, 30);
+	}
+
+
+public WebElement deleteRecordBtn(String Title, String FundName) {
+	
+	return  FindElement(driver,
+			"//a[text()='"+Title+"']/ancestor::article//tbody/tr/td//a[text()='"+FundName+"']/ancestor::td/following-sibling::td//button[text()='Delete']", "Delete Button",
+			action.SCROLLANDBOOLEAN, 30);
+	}
+
+public WebElement deleteRecordConfirmBtn(String Title) {
+	
+	return  FindElement(driver,
+			"//a[text()='"+Title+"']/ancestor::article/../..//button[@title='Delete']", "Delete Confirm Button",
+			action.SCROLLANDBOOLEAN, 30);
+	}
+
+
+@FindBy(xpath = "//span[@data-aura-class='forceActionsText']")
+private WebElement deleteRecordMsg;
+
+public WebElement deleteRecordMsg(int timeOut) {
+	return isDisplayed(driver, deleteRecordMsg, "Visibility", timeOut, "Delete Record Msg");
+}
+
 
 }
 
