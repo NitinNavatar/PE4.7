@@ -59,6 +59,122 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		WebElement ele = FindElement(driver, xpath, "Search Value : " + searchValue, action.BOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "Search Value : " + searchValue);
 	}
+	public boolean addingSubTab(String subTab,String searchText,String sourceImage,String targetImage){
+		boolean flag=false;
+		String xpath="";
+		WebElement ele=null;
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
+		if (hp.clickOnEditPageLinkOnSetUpLink()) {
+			log(LogStatus.INFO,"click on Edit Page SetUp Link", YesNo.No);		
+			// scn.nextLine();
+			switchToDefaultContent(driver);
+			switchToFrame(driver, 60, getEditPageFrame("",120));
+			//relatedTab=relatedTabs[i];
+			ele = ip.getRelatedTab("", subTab, 5);
+			if (ele!=null) {
+				log(LogStatus.INFO,"Sub Tab is Already Added : "+subTab, YesNo.No);
+			} else {
+				String relatedTab="Details";
+				if (clickUsingJavaScript(driver, ip.getRelatedTab("", relatedTab, 30), relatedTab.toString(), action.BOOLEAN)) {
+					log(LogStatus.INFO,"Click on Sub Tab : "+relatedTab,YesNo.No);
+					ThreadSleep(2000);
+					switchToDefaultContent(driver);
+					if (click(driver, getAddTab(10), "Add TAB", action.BOOLEAN)) {
+						log(LogStatus.INFO,"Click on Add Tab Link", YesNo.No);
+						if (click(driver, getPageTabEle(relatedTab, 20), relatedTab, action.BOOLEAN)) {
+							log(LogStatus.INFO,"Click on "+relatedTab, YesNo.No);
+							List<WebElement> eleList = allOptionsInDropDrop(driver, getSubTabDropdownListt(20), "");
+							for (WebElement webElement : eleList) {
+								System.err.println(">>>>>>>> "+webElement.getText().trim());
+							}
+							if (selectVisibleTextFromDropDown(driver, getSubTabDropdownListt(20),"Sub tab drop down list", subTab)) {
+								log(LogStatus.INFO,"Able to on select  "+subTab, YesNo.No);
+
+							} else {
+								BaseLib.sa.assertTrue(false,"Not Able to on select  "+subTab);
+								log(LogStatus.SKIP,"Not Able to on select  "+subTab, YesNo.Yes);
+							}
+							if (click(driver, getdoneButton(20), "Done Button", action.BOOLEAN)) {
+								log(LogStatus.INFO,"Click on Done Button", YesNo.No);
+								switchToDefaultContent(driver);
+								switchToFrame(driver, 60, getEditPageFrame("",120));
+								relatedTab=subTab;
+								if (clickUsingJavaScript(driver, ip.getRelatedTab("", relatedTab, 120), relatedTab.toString(), action.BOOLEAN)) {
+									log(LogStatus.INFO,"Click on Sub Tab : "+relatedTab,YesNo.No);
+									if (searchAndDragDropinEditPage(searchText, sourceImage, targetImage)) {
+										log(LogStatus.INFO,"Able to DragNDrop : "+searchText,YesNo.No);
+										flag=true;
+
+									} else {
+										BaseLib.sa.assertTrue(false, "Not Able to DragNDrop : "+searchText);
+										log(LogStatus.FAIL,"Not Able to DragNDrop : "+searchText,YesNo.Yes);
+									}
+
+								} else {
+									BaseLib.sa.assertTrue(false,"Not Able to Click on Sub Tab : "+relatedTab);
+									log(LogStatus.SKIP,"Not Able to Click on Sub Tab : "+relatedTab,YesNo.Yes);
+								}
+								} else {
+								BaseLib.sa.assertTrue(false,"Not Able to on Click on Done Button");
+								log(LogStatus.SKIP,"Not Able to on Click on Done Button", YesNo.Yes);
+							}
+						} else {
+							BaseLib.sa.assertTrue(false,"Not Able to on Click on "+relatedTab);
+							log(LogStatus.SKIP,"Not Able to on Click on "+relatedTab, YesNo.Yes);
+						}
+
+					} else {
+						BaseLib.sa.assertTrue(false,"Not Able to on Click on Add Tab Link");
+						log(LogStatus.SKIP,"Not Able to on Click on Add Tab Link", YesNo.Yes);
+					}
+				} else {
+					BaseLib.sa.assertTrue(false,"Not Able to Click on Sub Tab : "+relatedTab);
+					log(LogStatus.SKIP,"Not Able to Click on Sub Tab : "+relatedTab,YesNo.Yes);
+				}
+			}
+		} else {
+			log(LogStatus.ERROR,"Not Able to click on Edit Page SetUp Link", YesNo.Yes);
+			BaseLib.sa.assertTrue(false,"Not Able to click on Edit Page SetUp Link");
+		}
+
+		return flag;
+	}
+	public boolean searchAndDragDropinEditPage(String searchText,String sourceImage,String targetImage)
+	{
+		boolean flag=false;
+		switchToDefaultContent(driver);;
+		String sValue = searchText;
+		if (sendKeys(driver, getEditPageSeachTextBox("", 10),sValue,"Search TextBox",action.BOOLEAN)) {
+			ThreadSleep(2000);
+			log(LogStatus.INFO,"send value to Search TextBox : "+sValue,YesNo.No);
+			if (dragNDropUsingScreen("", sourceImage, targetImage, 20)) {
+				log(LogStatus.INFO,"Able to DragNDrop : "+sValue,YesNo.No);
+				ThreadSleep(2000);
+				if (click(driver, getEditPageSaveButton("", 10),"Edit Page Save Button", action.BOOLEAN)) {
+					log(LogStatus.INFO,"Click on Edit Page Save Button",YesNo.No);
+					flag=true;
+					ThreadSleep(10000);
+					
+				} else {
+					BaseLib.sa.assertTrue(false, "Not Able to Click on Edit Page Save Button");
+					log(LogStatus.FAIL,"Not Able to Click on Edit Page Save Button",YesNo.Yes);
+				}
+				
+
+			} else {
+				BaseLib.sa.assertTrue(false, "Not Able to DragNDrop : "+sValue);
+				log(LogStatus.FAIL,"Not Able to DragNDrop : "+sValue,YesNo.Yes);
+			}
+
+		} else {
+			BaseLib.sa.assertTrue(false, "Not Able to send value to Search TextBox : "+sValue);
+			log(LogStatus.FAIL,"Not Able to send value to Search TextBox : "+sValue,YesNo.Yes);
+		}
+		
+		
+		return flag;
+	}
 
 	/**
 	 * @author Ravi Kumar

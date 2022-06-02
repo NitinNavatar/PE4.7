@@ -65,7 +65,14 @@ public class SetupPage extends BasePageBusinessLayer {
 		
 		return FindElements(driver, "//*[@class='compactLayoutFields']/li", "Compact layout field item");
 	}
+	
+	@FindBy(xpath = "//*[text()='Organization Name']/following-sibling::*[1]")
+	private WebElement orgCompanyName;
 
+	public WebElement getOrgCompanyName(int timeOut) {
+		return isDisplayed(driver, orgCompanyName, "Visibility", timeOut, "org Company Name");
+	}
+	
 	@FindBy(xpath="//input[@id='quickfind']")
 	private WebElement quickFindInPageLayout_Lighting;
 

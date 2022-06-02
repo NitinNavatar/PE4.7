@@ -14,6 +14,7 @@ import org.sikuli.script.FindFailed;
 import org.sikuli.script.Screen;
 
 import com.navatar.generic.AppListeners;
+import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.EnumConstants.ContactPagePhotoActions;
 import com.navatar.generic.EnumConstants.LookUpIcon;
@@ -26,6 +27,7 @@ import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.generic.EnumConstants.object;
+import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.relevantcodes.extentreports.LogStatus;
 
 import static com.navatar.generic.CommonLib.*;
@@ -135,7 +137,24 @@ public class SetupPageBusinessLayer extends SetupPage {
 		}
 		return false;
 	}
+	
+	public WebElement VFPagePreviewLink(String page,int timeout) {
+		String xpath = "//a[text()='"+page+"']/../preceding-sibling::td//img[contains(@title,'Preview')]/..";
+		
+		WebElement ele=FindElement(driver, xpath, "vfpage preview link", action.SCROLLANDBOOLEAN,timeout);
+		scrollDownThroughWebelement(driver, ele, "vfpage preview link");
+		ThreadSleep(2000);
+		return isDisplayed(driver,ele,"visibility",10,"vfpage preview link");
 
+	}
+	/**
+	 * @author Azhar Alam
+	 * @param projectName
+	 * @param labelWithValue
+	 * @param timeOut
+	 * @return true if successfully created navigation item
+	 */
+	
 	/**
 	 * @author Akul Bhutani
 	 * @param environment

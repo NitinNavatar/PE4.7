@@ -4694,7 +4694,27 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getlistViewSaveButton(String projectName,int timeOut) {
 		return isDisplayed(driver, listViewSaveButton, "Visibility", timeOut, "listViewSaveButton");
 	}
+	/**
+	 * @return the folrulaTextBox
+	 */
+	public WebElement getOfficeLocationSDGLink(int timeOut) {
+		
+		WebElement ele = FindElement(driver, "//a[text()='Office Location']", "office Location SDG Link", action.BOOLEAN, timeOut);
+		scrollDownThroughWebelement(driver, ele, "office Location SDG Link");
+		
+		return isDisplayed(driver, ele, "Visibility", timeOut, "office Location SDG Link");
+	} 
+	@FindBy(xpath="//*[text()='Details']")
+	private WebElement detailsTab_Lighting;
 	
+	/**
+	 * @param environment
+	 * @param timeOut
+	 * @return
+	 */
+	public WebElement getdetailsTab_Lighting(String environment,TabName TabName,int timeOut) {
+		return isDisplayed(driver, detailsTab_Lighting, "Visibility", timeOut, "Details Tab");	
+		}
 	public WebElement getdoneButton(String projectName,int timeOut) {
 		return driver.findElement(By.xpath("//div[@class='modal-footer slds-modal__footer']//button[@type='submit']"));
 	}
