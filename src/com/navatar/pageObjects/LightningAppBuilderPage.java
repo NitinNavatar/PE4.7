@@ -211,6 +211,29 @@ public class LightningAppBuilderPage extends BasePageBusinessLayer {
 	}
 	
 	
+	
+	@FindBy(xpath="//label[text()='Fund']/parent::lightning-combobox//button/span[text()='All']")
+	private WebElement FundDropDown;
+
+	public WebElement getFundDropDown(int timeOut) {
+		return isDisplayed(driver, FundDropDown, "Visibility", timeOut, "Fund drop down");
+
+	}
+	
+	
+	@FindBy(xpath="//label[text()='Fund']/parent::lightning-combobox//lightning-base-combobox-item")
+	private List<WebElement> FundDropDownList;
+
+	public List<WebElement> getFundDropDownList() {
+		return FundDropDownList;
+
+	}
+	
+	
+	
+	
+	
+	
 
 
 

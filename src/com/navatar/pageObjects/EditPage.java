@@ -557,5 +557,81 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, backIcon, "Visibility", timeOut, "Back icon");
 
 	}
+	
+
+	@FindBy(xpath = "//input[@name='label1']")
+	private WebElement label1;
+
+	public WebElement getlabel1(int timeOut) {
+		return isDisplayed(driver, label1, "Visibility", timeOut, "Label 1");
+
+	}
+	
+	@FindBy(xpath = "//input[@name='query1']")
+	private WebElement query1;
+
+	public WebElement getquery1(int timeOut) {
+		return isDisplayed(driver, query1, "Visibility", timeOut, "Query 1");
+
+	}
+	
+	@FindBy(xpath = "//input[@name='label2']")
+	private WebElement label2;
+
+	public WebElement getlabel2(int timeOut) {
+		return isDisplayed(driver, label2, "Visibility", timeOut, "Label 2");
+
+	}
+	
+	@FindBy(xpath = "//input[@name='query2']")
+	private WebElement query2;
+
+	public WebElement getquery2(int timeOut) {
+		return isDisplayed(driver, query2, "Visibility", timeOut, "Query 2");
+
+	}
+	
+	@FindBy(xpath = "//input[@name='label3']")
+	private WebElement label3;
+
+	public WebElement getlabel3(int timeOut) {
+		return isDisplayed(driver, label3, "Visibility", timeOut, "Label 3");
+
+	}
+	
+	@FindBy(xpath = "//input[@name='query3']")
+	private WebElement query3;
+
+	public WebElement getquery3(int timeOut) {
+		return isDisplayed(driver, query3, "Visibility", timeOut, "Query 3");
+
+	}
+	
+	@FindBy(xpath="//h2[@class='slds-card__header-title']")
+	private WebElement sldHeader;
+
+	public WebElement getsldHeader(int timeOut) {
+		return isDisplayed(driver, sldHeader, "Visibility", timeOut, "SLD Headers");
+
+	}
+	
+	@FindBy(xpath="//span[text()='Navatar Custom Filter For SDG']")
+	private WebElement customFilterForSDGButton;
+
+	public WebElement getcustomFilterForSDGButton(int timeOut) {
+		return isDisplayed(driver, customFilterForSDGButton, "Visibility", timeOut, "Custon field for sdg");
+
+	}
+	
+	
+	@FindBy(xpath="//div[@class='navpeIICustomFilterCompForSDG']")
+	private WebElement customFilterComponent;
+
+	public WebElement getcustomFilterComponent(int timeOut) {
+		return isDisplayed(driver, customFilterComponent, "Visibility", timeOut, "Custom Filter Component");
+
+
+
+	}
 
 }
