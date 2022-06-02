@@ -1358,8 +1358,13 @@ public static enum PermissionType{
             public String toString() {
                 return "List View Name";
             }
+        },
+    	My_Records{
+            @Override
+            public String toString() {
+                return "My Records";
+            }
         }
-;
     };
     
     public static enum ToggleButton{

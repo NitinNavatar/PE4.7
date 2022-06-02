@@ -32,6 +32,7 @@ import com.navatar.generic.CommonVariables;
 import static com.navatar.generic.AppListeners.*;
 import static com.navatar.generic.BaseLib.sa;
 import static com.navatar.generic.CommonLib.*;
+import static com.navatar.generic.CommonVariables.environment;
 import static com.navatar.generic.CommonVariables.mode;
 
 import java.util.Random;
@@ -536,8 +537,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return flag;
 	}
-	
-	
 
 	/**
 	 * @param projectName
@@ -548,26 +547,26 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 */
 	public WebElement getRelatedTab(String projectName, PageName pageName, RelatedTab relatedTab, int timeOut) {
 		String xpath = "";
-		WebElement ele=null;
+		WebElement ele = null;
 		String related = relatedTab.toString().replace("_", " ");
 		if (projectName.contains(ProjectName.PE.toString()))
 			xpath = "//li[@title='" + related + "']//a";
 		else
 			xpath = "//li//*[@title='" + related + "' or text()='" + related + "']";
 		xpath = "//li//*[@title='" + related + "' or text()='" + related + "']";
-		
+
 		List<WebElement> list = FindElements(driver, xpath, "");
-		
-		for(WebElement element:list){
-			ele=isDisplayed(driver, element,"visiblity", 30, relatedTab.toString());
-			if(ele!=null){
-				ele=element;
+
+		for (WebElement element : list) {
+			ele = isDisplayed(driver, element, "visiblity", 30, relatedTab.toString());
+			if (ele != null) {
+				ele = element;
 				break;
-			}else{
-				appLog.info("Element not visible going to check in another iteration : " );
+			} else {
+				appLog.info("Element not visible going to check in another iteration : ");
 			}
 		}
-		
+
 		if (ele != null) {
 			appLog.info("Element Found : " + related);
 		} else {
@@ -580,14 +579,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 			xpath = "//a/span[text()='" + related + "']";
 			List<WebElement> list2 = FindElements(driver, xpath, "");
-			
-			for(WebElement element:list2){
-				ele=isDisplayed(driver, element,"visiblity", 30, relatedTab.toString());
-				if(ele!=null){
-					ele=element;
+
+			for (WebElement element : list2) {
+				ele = isDisplayed(driver, element, "visiblity", 30, relatedTab.toString());
+				if (ele != null) {
+					ele = element;
 					break;
-				}else{
-					appLog.info("Element not visible going to check in another iteration : " );
+				} else {
+					appLog.info("Element not visible going to check in another iteration : ");
 				}
 			}
 
@@ -598,55 +597,57 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 ////////////////////////////////////////////////  Activity Association ///////////////////////////////////////////////////////////////////
 
-	
-	public WebElement getComponentNoDataToDisplayMessage(String componentTab ,int timeOut){
-		WebElement ele=null;
-		
-		String xpath ="//p[text()='No data to display.']/ancestor::div//li[@title='"+componentTab.replaceAll("_", " ")+"']";
-		
-		ele=isDisplayed(driver, FindElement(driver, xpath, "No data to display message of tab:", action.BOOLEAN, timeOut),"visiblity", 30, "No data to display message of tab:"+componentTab);
-			
-		
+	public WebElement getComponentNoDataToDisplayMessage(String componentTab, int timeOut) {
+		WebElement ele = null;
+
+		String xpath = "//p[text()='No data to display.']/ancestor::div//li[@title='"
+				+ componentTab.replaceAll("_", " ") + "']";
+
+		ele = isDisplayed(driver,
+				FindElement(driver, xpath, "No data to display message of tab:", action.BOOLEAN, timeOut), "visiblity",
+				30, "No data to display message of tab:" + componentTab);
+
 		return ele;
 	}
-	
-	public WebElement getHyperLinkAtConnectionComponent(String contactName){
-		WebElement ele=null;
-		String xpath ="//a[text()='"+contactName+"']//ancestor::div[@class='slds-grid slds-wrap']/*/div[contains(@class,'ColumnFooter')]//a";
+
+	public WebElement getHyperLinkAtConnectionComponent(String contactName) {
+		WebElement ele = null;
+		String xpath = "//a[text()='" + contactName
+				+ "']//ancestor::div[@class='slds-grid slds-wrap']/*/div[contains(@class,'ColumnFooter')]//a";
 		List<WebElement> list = FindElements(driver, xpath, "");
-		
-		for(WebElement element:list){
-			ele=isDisplayed(driver, element,"visiblity", 30, "Connection hyperlink"+contactName);
-			if(ele!=null){
-				ele=element;
+
+		for (WebElement element : list) {
+			ele = isDisplayed(driver, element, "visiblity", 30, "Connection hyperlink" + contactName);
+			if (ele != null) {
+				ele = element;
 				break;
-			}else{
-				appLog.info("Element not visible going to check in another iteration : " );
+			} else {
+				appLog.info("Element not visible going to check in another iteration : ");
 			}
 		}
-		
+
 		return ele;
 	}
-	
-	public List<WebElement> getComponentInsAndContactNameLinkList(){
-		List<WebElement> ele=new ArrayList<>();
-		WebElement ele2=null;
-		String xpath ="//div[@class='slds-is-relative cls_relativePos']//a";
+
+	public List<WebElement> getComponentInsAndContactNameLinkList() {
+		List<WebElement> ele = new ArrayList<>();
+		WebElement ele2 = null;
+		String xpath = "//div[@class='slds-is-relative cls_relativePos']//a";
 		ThreadSleep(5000);
 		List<WebElement> list = FindElements(driver, xpath, "");
-		
-		for(WebElement element:list){
-			ele2=isDisplayed(driver, element,"visiblity", 5, "No data to display message of tab:");
-			if(ele!=null){
+
+		for (WebElement element : list) {
+			ele2 = isDisplayed(driver, element, "visiblity", 5, "No data to display message of tab:");
+			if (ele != null) {
 				ele.add(element);
-			}else{
-				appLog.info("Element not visible going to check in another iteration : " );
+			} else {
+				appLog.info("Element not visible going to check in another iteration : ");
 			}
 		}
-		
+
 		return ele;
 	}
-	
+
 	/**
 	 * @param projectName
 	 * @param TabName
@@ -1595,7 +1596,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			else
 				xpath = "//span[text()='" + labelTextBox + "']/..//following-sibling::div//input";
 		} else {
-			xpath ="//span[text()='" + labelTextBox + "']/ancestor::div//input[@title='Search Contacts']";
+			xpath = "//span[text()='" + labelTextBox + "']/ancestor::div//input[@title='Search Contacts']";
 		}
 
 		ele = FindElement(driver, xpath, labelTextBox, action, timeOut);
@@ -1726,7 +1727,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		boolean flag = false;
 		String actionDropDown = showMoreActionDropDownList.toString().replace("_", " ");
 
-		if (clickOnShowMoreDropdownOnly(projectName, pageName,actionDropDown)) {
+		if (clickOnShowMoreDropdownOnly(projectName, pageName, actionDropDown)) {
 			ThreadSleep(3000);
 			log(LogStatus.INFO, "clicked on show more actions icon", YesNo.No);
 			if (pageName.equals(PageName.TaskPage))
@@ -1760,7 +1761,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return flag;
 
 	}
-	
+
 	public boolean verifyPresenceOfActionButtonOfShowMoreActionDownArrow(String projectName, PageName pageName,
 			ShowMoreActionDropDownList showMoreActionDropDownList, int timeOut) {
 		int i = 1;
@@ -1769,7 +1770,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		boolean flag = false;
 		String actionDropDown = showMoreActionDropDownList.toString().replace("_", " ");
 
-		if (clickOnShowMoreDropdownOnly(projectName, pageName,actionDropDown)) {
+		if (clickOnShowMoreDropdownOnly(projectName, pageName, actionDropDown)) {
 			ThreadSleep(3000);
 			log(LogStatus.INFO, "clicked on show more actions icon", YesNo.No);
 			if (pageName.equals(PageName.TaskPage))
@@ -1781,18 +1782,18 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			ThreadSleep(3000);
 			ele = FindElement(driver, xpath, "show more action down arrow : " + actionDropDown, action.BOOLEAN, 10);
 			// mouseOverOperation(driver, ele);
-			if (ele!=null) {
+			if (ele != null) {
 				log(LogStatus.INFO, "button: " + actionDropDown + " present in action dropdown", YesNo.No);
 				flag = true;
-				clickOnShowMoreDropdownOnly(projectName, pageName,actionDropDown);
+				clickOnShowMoreDropdownOnly(projectName, pageName, actionDropDown);
 			} else {
 				// log(LogStatus.ERROR, "Not able to click on "+actionDropDown+" link",
 				// YesNo.Yes);
 				xpath = "//button[@name='" + actionDropDown + "']";
 				ele = FindElement(driver, xpath, actionDropDown, action.BOOLEAN, 10);
-				if (ele!=null) {
+				if (ele != null) {
 					flag = true;
-					clickOnShowMoreDropdownOnly(projectName, pageName,actionDropDown);
+					clickOnShowMoreDropdownOnly(projectName, pageName, actionDropDown);
 				} else {
 					log(LogStatus.ERROR, "Not able to click on " + actionDropDown + " link", YesNo.Yes);
 				}
@@ -1828,7 +1829,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					+ "']";
 		} else {
 			// Need to write ofr copy if same
-			xpath = "//span[text()='"+labelFieldTextBox+"']/ancestor::div//*[@title='"+name+"']";
+			xpath = "//span[text()='" + labelFieldTextBox + "']/ancestor::div//*[@title='" + name + "']";
 		}
 
 		ele = FindElement(driver, xpath, labelFieldTextBox, action, timeOut);
@@ -1952,7 +1953,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (ele != null) {
 			log(LogStatus.INFO, "PopUp is open", YesNo.No);
 			String actualHeader = ele.getText().trim();
-			if (ele.getText().trim().equals(expecedHeader)||actualHeader.equalsIgnoreCase("New Event")) {
+			if (ele.getText().trim().equals(expecedHeader) || actualHeader.equalsIgnoreCase("New Event")) {
 				log(LogStatus.INFO, "Header Text verified : " + expecedHeader, YesNo.Yes);
 
 			} else {
@@ -2009,7 +2010,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 * @param pageName
 	 * @return true if able to click o Show more action Icon
 	 */
-	public boolean clickOnShowMoreDropdownOnly(String projectName, PageName pageName,String field) {
+	public boolean clickOnShowMoreDropdownOnly(String projectName, PageName pageName, String field) {
 		String xpath = "";
 		int i = 1;
 		WebElement ele = null;
@@ -2023,13 +2024,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			xpath = "(//span[contains(text(),'more actions')])[1]/..";
 		} else if (PageName.SDGPage.equals(pageName)) {
 			xpath = "(//span[contains(text(),'More options')])[1]/..";
-		}else if (PageName.TaskPage.equals(pageName)&&field.equalsIgnoreCase("New Task")) {
+		} else if (PageName.TaskPage.equals(pageName) && field.equalsIgnoreCase("New Task")) {
 			xpath = "//a[@title='Show one more action']";
-		
-		}else if (PageName.TaskPage.equals(pageName)) {
+
+		} else if (PageName.TaskPage.equals(pageName)) {
 			xpath = "//div[contains(@class,'ViewMode-normal')]//*[contains(@class,'actionsContainer')]//span[text()='Show more actions']/ancestor::a";
 		}
-		
+
 		ele = FindElement(driver, xpath, "show more action down arrow", action.SCROLLANDBOOLEAN, 30);
 		if (click(driver, ele, "show more action on " + pageName.toString(), action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "clicked on show more actions icon", YesNo.No);
@@ -2084,8 +2085,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			label = "Account Name";
 		} else if (projectName.contains(ProjectName.PE.toString()) && PageLabel.Account_Name.equals(pageLabel)) {
 			label = "Legal Name";
-		} else if (projectName.contains(ProjectName.PEEdge.toString())
-				&& PageLabel.Account_Name.equals(pageLabel)) {
+		} else if (projectName.contains(ProjectName.PEEdge.toString()) && PageLabel.Account_Name.equals(pageLabel)) {
 			label = "Firm";
 		}
 		xpath = "//span[text()='" + label + "']/../following-sibling::div//*[text()='" + labelValue + "']";
@@ -2113,19 +2113,19 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	public boolean verifyDate(String dateToCheck, String valueOnPage) {
 		int size1 = valueOnPage.split("/").length;
 		int size2 = 0;
-		if(dateToCheck.contains(".")) {
-			size2= dateToCheck.split("[.]").length;
-		}else {
-			size2= dateToCheck.split("/").length;
+		if (dateToCheck.contains(".")) {
+			size2 = dateToCheck.split("[.]").length;
+		} else {
+			size2 = dateToCheck.split("/").length;
 
 		}
-		String[] values =null;
+		String[] values = null;
 		if (!dateToCheck.isEmpty() && !dateToCheck.equals("") && size1 == 3 && size2 == 3) {
 			String[] dates = valueOnPage.split("/");
-			if(dateToCheck.contains(".")) {
-				values= dateToCheck.split("[.]");
-			}else {
-				values= dateToCheck.split("/");
+			if (dateToCheck.contains(".")) {
+				values = dateToCheck.split("[.]");
+			} else {
+				values = dateToCheck.split("/");
 
 			}
 			appLog.info("Excel Date : " + dateToCheck);
@@ -2146,24 +2146,23 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return false;
 	}
 
-	public String getDaysDifferenceOfTwoDates(String startDate, String endDate,String format)  {   
+	public String getDaysDifferenceOfTwoDates(String startDate, String endDate, String format) {
 		long days_difference = 0;
-		long time_difference =0;
-        SimpleDateFormat obj = new SimpleDateFormat(format);   
-        try {   
-            Date date1 = obj.parse(startDate);   
-            Date date2 = obj.parse(endDate);   
-             time_difference = date2.getTime() - date1.getTime();  
-             days_difference = (time_difference / (1000*60*60*24)) % 365;   
- 
-        }catch(ParseException excep){
-        	  excep.printStackTrace(); 
-        	
-        }
-        
-        return String.valueOf(days_difference);
-    }
+		long time_difference = 0;
+		SimpleDateFormat obj = new SimpleDateFormat(format);
+		try {
+			Date date1 = obj.parse(startDate);
+			Date date2 = obj.parse(endDate);
+			time_difference = date2.getTime() - date1.getTime();
+			days_difference = (time_difference / (1000 * 60 * 60 * 24)) % 365;
 
+		} catch (ParseException excep) {
+			excep.printStackTrace();
+
+		}
+
+		return String.valueOf(days_difference);
+	}
 
 	/**
 	 * @param projectName
@@ -2173,7 +2172,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 * @description this method is used to add list view to page if automation all
 	 *              is not present
 	 */
- 	public boolean addAutomationAllListView(String projectName, String tabObj, int timeOut) {
+	public boolean addAutomationAllListView(String projectName, String tabObj, int timeOut) {
 		String viewList = "Automation All", xpath = "";
 		if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
 			ThreadSleep(3000);
@@ -2395,7 +2394,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 */
 	public WebElement getActivityTimeLineItem(String projectName, PageName pageName,
 			ActivityTimeLineItem activityTimeLineItem, int timeOut) {
-		//clickUsingJavaScript(driver, getactivityLineItemsDropdown(projectName, 10), "dropdown", action.BOOLEAN);
+		// clickUsingJavaScript(driver, getactivityLineItemsDropdown(projectName, 10),
+		// "dropdown", action.BOOLEAN);
 
 		String xpath = "";
 		// WebElement ele;
@@ -2404,12 +2404,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (ActivityTimeLineItem.New_Meeting.equals(activityTimeLineItem)
 				|| ActivityTimeLineItem.New_Task.equals(activityTimeLineItem)
 				|| ActivityTimeLineItem.New_Call.equals(activityTimeLineItem)) {
-			xpath = "//div[contains(@class,'ViewMode-normal')]//div[@class='slds-card-wrapper activityPanel']//*[ text()='" + activity + "']";
+			xpath = "//div[contains(@class,'ViewMode-normal')]//div[@class='slds-card-wrapper activityPanel']//*[ text()='"
+					+ activity + "']";
 		} else {
 			if (projectName.equalsIgnoreCase(ProjectName.PE.toString()))
 				xpath = "//div[@id='completeDiv' and @class='cActivityTimeline']/..//*[text()='" + activity + "']";
 			else
-				xpath = "//div[contains(@class,'ViewMode-normal')]//div[@class='slds-card-wrapper activityPanel']//*[ text()='"+activity+ "']";
+				xpath = "//div[contains(@class,'ViewMode-normal')]//div[@class='slds-card-wrapper activityPanel']//*[ text()='"
+						+ activity + "']";
 		}
 
 		List<WebElement> li = FindElements(driver, xpath, activityTimeLineItem.toString());
@@ -2473,11 +2475,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String type = "";
 		if (activityType == ActivityType.Next) {
 			type = "upcoming";
-		} else if(activityType == ActivityType.Past) {
+		} else if (activityType == ActivityType.Past) {
 			type = "past";
 		}
 
-		String nextStepsXpath = "//div[contains(@id,'"+type+"-activities-section')]";
+		String nextStepsXpath = "//div[contains(@id,'" + type + "-activities-section')]";
 
 		String subjectXpath = nextStepsXpath + "//a[@title='" + subject + "']";
 
@@ -2500,7 +2502,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		} else if (subjectElement == SubjectElement.PastGrid) {
 			eleXpath = nextStepsXpath;
 		} else {
-			eleXpath = subjectXpath ;
+			eleXpath = subjectXpath;
 		}
 		ele = FindElement(driver, eleXpath, subjectElement + " For : " + subject, action.SCROLLANDBOOLEAN, timeOut);
 		ele = isDisplayed(driver, ele, "Visibility", timeOut, subjectElement + " For : " + subject);
@@ -2736,7 +2738,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			tabName = "Institutions";
 		} else if (TabName.contains("Fund")) {
 			tabName = "Funds";
-		}else {
+		} else {
 			tabName = TabName;
 		}
 		System.err.println("Passed switch statement");
@@ -2904,9 +2906,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String btname = btnName.toString();
 		String xpath = "";
 		if (isInside) {
-			xpath = "//button[text()='"+toggleTab+"' or @title='"+toggleTab+"']";
+			xpath = "//button[text()='" + toggleTab + "' or @title='" + toggleTab + "']";
 		} else {
-			xpath = "//button[text()='"+toggleTab+"' or @title='"+toggleTab+"']";
+			xpath = "//button[text()='" + toggleTab + "' or @title='" + toggleTab + "']";
 		}
 		WebElement ele = FindElement(driver, xpath, toggleTab + " >> " + btname, action, timeOut);
 		scrollDownThroughWebelement(driver, ele, "Toggle Button : " + btname);
@@ -3086,8 +3088,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String field = "";
 		String value = "";
 		boolean flag = true;
-		String finalx = "",
-				xpath = "//article[contains(@class,'RelatedListAccordion')]";
+		String finalx = "", xpath = "//article[contains(@class,'RelatedListAccordion')]";
 		WebElement ele = FindElement(driver, xpath, recordName, action.SCROLLANDBOOLEAN, 10);
 		if (isDisplayed(driver, ele, "visibility", timeOut, recordName + " in accordion") != null) {
 			xpath = "//article[contains(@class,'RelatedListAccordion')]";
@@ -3096,15 +3097,16 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					field = fieldValue.split(breakSP)[0];
 					value = fieldValue.split(breakSP)[1];
 					field = field.replace("_", " ");
-					
-				if(field.equalsIgnoreCase(PageLabel.Name.toString())){
-					
-					finalx = xpath + "//a[text()='" + value + "']";
 
-				}else{
-					finalx = xpath + "//li//div[@title='" + field + "']/following-sibling::div[@title='" + value + "']";
+					if (field.equalsIgnoreCase(PageLabel.Name.toString())) {
 
-				}
+						finalx = xpath + "//a[text()='" + value + "']";
+
+					} else {
+						finalx = xpath + "//li//div[@title='" + field + "']/following-sibling::div[@title='" + value
+								+ "']";
+
+					}
 					ele = FindElement(driver, finalx, field + " and " + value, action.SCROLLANDBOOLEAN, 10);
 					ele = isDisplayed(driver, ele, "visibility", 10, field + " and " + value);
 					if (ele != null) {
@@ -3835,7 +3837,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case TaskTab:
 			tabName = "Tasks";
 			break;
-			
+
 		case Object1Tab:
 			tabName = "Firms";
 			break;
@@ -4098,7 +4100,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return false;
 	}
-
 
 	/**
 	 * @author Azhar Alam
@@ -4379,12 +4380,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String[] sectionsAndFields = fieldNameList.split("<break>");
 		String filesName;
 
-		if(clickUsingJavaScript(driver, getRelatedTab(projectName, RelatedTab.Details.toString(), 10), "", action.BOOLEAN)) {
-			
-			AppListeners.appLog.info( "clicked on details tab of tab: "+tabName);
-		}else {
-			AppListeners.appLog.info("Not able to clicked on details tab of tab: "+tabName);
-			
+		if (clickUsingJavaScript(driver, getRelatedTab(projectName, RelatedTab.Details.toString(), 10), "",
+				action.BOOLEAN)) {
+
+			AppListeners.appLog.info("clicked on details tab of tab: " + tabName);
+		} else {
+			AppListeners.appLog.info("Not able to clicked on details tab of tab: " + tabName);
+
 		}
 		for (String sectionWithField : sectionsAndFields) {
 
@@ -4398,18 +4400,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 			WebElement element = getHeaderSectionGrid(sectionList.get(k), null, timeout);
 			String value = getAttribute(driver, element, "section", "aria-expanded");
-			AppListeners.appLog.info( "Header section expanded is:" + value);
+			AppListeners.appLog.info("Header section expanded is:" + value);
 			if (value.contains("false")) {
-				AppListeners.appLog.info( "Header section going to expanded  :" + value);
-				for(int i=0;i<3;i++) {
+				AppListeners.appLog.info("Header section going to expanded  :" + value);
+				for (int i = 0; i < 3; i++) {
 					click(driver, element, sectionList.get(k), action.SCROLLANDBOOLEAN);
 					value = getAttribute(driver, element, "section", "aria-expanded");
-					AppListeners.appLog.info( "Header section is successffully  expanded  :" + value);
+					AppListeners.appLog.info("Header section is successffully  expanded  :" + value);
 					if (value.contains("true")) {
 						break;
 					}
 				}
-				
 
 			}
 			filesName = fieldList.get(k).toString();
@@ -4463,238 +4464,235 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return result;
 	}
-	
-	public boolean openObjectFromAppLauchner(String objectName,int timeOut) {
+
+	public boolean openObjectFromAppLauchner(String objectName, int timeOut) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 
-		boolean flag= false;
-		if(click(driver, lp.getAppLuncherXpath(timeOut), "App launcher icon", action.BOOLEAN)) {
-			  
-			  AppListeners.appLog.info(" click on app launcher icon");
-			  ThreadSleep(1000);
-			  if(sendKeys(driver, lp.getSearchAppTextBoxInAppLuncher(timeOut), objectName, "Search box in app launcher", action.BOOLEAN)) {
-				  AppListeners.appLog.info("entered value in app launcher search box value:"+objectName);
-				  ThreadSleep(3000);
-				  if(clickUsingJavaScript(driver, lp.getAppNameLabelTextInAppLuncher(objectName, timeOut), objectName+":app label in app launcher", action.BOOLEAN)) {
-					AppListeners.appLog.info("click on label in app launcher"+objectName);
+		boolean flag = false;
+		if (click(driver, lp.getAppLuncherXpath(timeOut), "App launcher icon", action.BOOLEAN)) {
 
-					  ThreadSleep(5000);
-					  String pageName=getPageHeaderName(timeOut).getText();
-					  if(pageName.equals(objectName)) {
-						  AppListeners.appLog.info(objectName +" page successfully loaded");
-						  flag =true;
-						  
-					  }else {
-						  
-						  AppListeners.appLog.info(objectName +" page not loaded");
-							return false;
-					  }
-					  				  
-				  }else {
-					  
-					  AppListeners.appLog.info("Not able tp click on label in app launcher"+objectName);
+			AppListeners.appLog.info(" click on app launcher icon");
+			ThreadSleep(1000);
+			if (sendKeys(driver, lp.getSearchAppTextBoxInAppLuncher(timeOut), objectName, "Search box in app launcher",
+					action.BOOLEAN)) {
+				AppListeners.appLog.info("entered value in app launcher search box value:" + objectName);
+				ThreadSleep(3000);
+				if (clickUsingJavaScript(driver, lp.getAppNameLabelTextInAppLuncher(objectName, timeOut),
+						objectName + ":app label in app launcher", action.BOOLEAN)) {
+					AppListeners.appLog.info("click on label in app launcher" + objectName);
+
+					ThreadSleep(5000);
+					String pageName = getPageHeaderName(timeOut).getText();
+					if (pageName.equals(objectName)) {
+						AppListeners.appLog.info(objectName + " page successfully loaded");
+						flag = true;
+
+					} else {
+
+						AppListeners.appLog.info(objectName + " page not loaded");
 						return false;
-				  }				  
-			  }else {
-				  
-				  AppListeners.appLog.info("Not able to entered value in app launcher search box value:"+objectName);
+					}
+
+				} else {
+
+					AppListeners.appLog.info("Not able tp click on label in app launcher" + objectName);
 					return false;
-			  }
-			 
-		  }else {
-			  
-			  AppListeners.appLog.info("Not able to click on app launcher icon");
-				return false;			  
-		  }
+				}
+			} else {
+
+				AppListeners.appLog.info("Not able to entered value in app launcher search box value:" + objectName);
+				return false;
+			}
+
+		} else {
+
+			AppListeners.appLog.info("Not able to click on app launcher icon");
+			return false;
+		}
 		return flag;
 	}
 
-	public List<String> verifyObjectListViewAndFilterCondition(String projectName,String mode,String objectName,String selectListLink,String filterList,int timeOut){
+	public List<String> verifyObjectListViewAndFilterCondition(String projectName, String mode, String objectName,
+			String selectListLink, String filterList, int timeOut) {
 		List<String> result = new ArrayList<>();
-		
-		 if(openObjectFromAppLauchner(objectName, timeOut)) {
-			 AppListeners.appLog.info("Object page successfully open:"+objectName);
 
-			 if(click(driver, getSelectListIcon(timeOut), "selet list icon", action.BOOLEAN)) {
-				 
-				 	AppListeners.appLog.info("Click on select list icon on:"+objectName);
-					 ThreadSleep(2000);
+		if (openObjectFromAppLauchner(objectName, timeOut)) {
+			AppListeners.appLog.info("Object page successfully open:" + objectName);
 
-				 if(getSelectListIcon(timeOut).getAttribute("aria-expanded").contains("true")) {
-					 
-					 	AppListeners.appLog.info("after clicking select list icon is in expand mode on:"+objectName);
+			if (click(driver, getSelectListIcon(timeOut), "selet list icon", action.BOOLEAN)) {
 
-					 ThreadSleep(3000);
-						List<WebElement> lst= getAllLinkOfSelectListIconOption(mode,objectName, 30);
-						if(compareMultipleList(driver, selectListLink, lst).isEmpty()){
-							log(LogStatus.PASS,	"", YesNo.No);
-						 	AppListeners.appLog.info("All link of select list icon  is verified on:"+objectName);
-						 	
-						 	click(driver, getSelectListIcon(timeOut), "selet list icon", action.BOOLEAN);
-							 ThreadSleep(2000);
-						 	 if(getSelectListIcon(timeOut).getAttribute("aria-expanded").contains("false")) {
-								 	AppListeners.appLog.info("after verifying list view and clicking on select list icon is not in expand mode on:"+objectName);
+				AppListeners.appLog.info("Click on select list icon on:" + objectName);
+				ThreadSleep(2000);
 
-						 	 }else {
-								 AppListeners.appLog.info("after verifying list view and clicking on select list icon should not be in expand mode on:"+objectName);
-	 
-						 	 }
+				if (getSelectListIcon(timeOut).getAttribute("aria-expanded").contains("true")) {
 
-						}else{
-							
-							AppListeners.appLog.info("All link of select list icon is not verified on "+objectName);
-							result.add("All link of select list icon  is not verified on "+objectName);
+					AppListeners.appLog.info("after clicking select list icon is in expand mode on:" + objectName);
+
+					ThreadSleep(3000);
+					List<WebElement> lst = getAllLinkOfSelectListIconOption(mode, objectName, 30);
+					if (compareMultipleList(driver, selectListLink, lst).isEmpty()) {
+						log(LogStatus.PASS, "", YesNo.No);
+						AppListeners.appLog.info("All link of select list icon  is verified on:" + objectName);
+
+						click(driver, getSelectListIcon(timeOut), "selet list icon", action.BOOLEAN);
+						ThreadSleep(2000);
+						if (getSelectListIcon(timeOut).getAttribute("aria-expanded").contains("false")) {
+							AppListeners.appLog.info(
+									"after verifying list view and clicking on select list icon is not in expand mode on:"
+											+ objectName);
+
+						} else {
+							AppListeners.appLog.info(
+									"after verifying list view and clicking on select list icon should not be in expand mode on:"
+											+ objectName);
+
 						}
-					 
-					 
-				 }else {
-					 
-					 AppListeners.appLog.info("after clicking select list icon is should be in expand mode on:"+objectName);
-						result.add("after clicking select list icon is should be in expand mode on:"+objectName);
-				 }
-					 
-				 
-			 }else {
-				 
-				 AppListeners.appLog.info("Not able to click on select list icon on:"+objectName);
-					result.add("Not able to click on select list icon on:"+objectName);
-			 }
-			 
-			 
-			 String[] listView=filterList.split("<break>");
-				
-				List<String> filterName=new ArrayList<>();
 
-				 for(int i=0;i<=listView.length;i++) {
-					 
-					String[] list= listView[i].split("<filter>");
-					 
-					 String listViewValue=list[0];
-					 String[] filtersValue=list[1].split("#");
-					 
-					 if(click(driver, getSelectListIcon(timeOut), "select list icon", action.BOOLEAN)) {
-						 
-						 	AppListeners.appLog.info("Click on select list icon on:"+objectName);
-							 ThreadSleep(2000);
+					} else {
 
-						 if(getSelectListIcon(timeOut).getAttribute("aria-expanded").contains("true")) {
-							 
-							 	AppListeners.appLog.info("after clicking select list icon is in expand mode on:"+objectName);
-							 	
-							 	if(click(driver, getSelectListLabelLink(listViewValue, timeOut),listViewValue+": label",action.BOOLEAN)) {
-								 	AppListeners.appLog.info("click on select list label:"+listViewValue);
+						AppListeners.appLog.info("All link of select list icon is not verified on " + objectName);
+						result.add("All link of select list icon  is not verified on " + objectName);
+					}
 
+				} else {
 
-							 		if(filterList!=null||!filterList.isEmpty()|!filterList.equals("")) {
-									 	AppListeners.appLog.info("going to verify filters");
+					AppListeners.appLog
+							.info("after clicking select list icon is should be in expand mode on:" + objectName);
+					result.add("after clicking select list icon is should be in expand mode on:" + objectName);
+				}
 
-									 	if(getFilterButton(timeOut).getAttribute("aria-pressed").contains("false")) {
-									 		
-									 		if(click(driver, getFilterButton(timeOut), "filter button", action.BOOLEAN)) {
-											 	AppListeners.appLog.info("click on fiter button on"+objectName);
-									 		}else {
+			} else {
 
-								 				 AppListeners.appLog.info("Not able to click on fiter button on"+objectName);
-												 result.add("Not able to click on fiter button on"+objectName);
-								 			}
+				AppListeners.appLog.info("Not able to click on select list icon on:" + objectName);
+				result.add("Not able to click on select list icon on:" + objectName);
+			}
 
+			String[] listView = filterList.split("<break>");
 
-									 	}else {
-									 		
-										 	AppListeners.appLog.info("filter panel is already open");
+			List<String> filterName = new ArrayList<>();
 
-									 	}
-							 			
-							 				List<WebElement> lst= getListOfFilterPanelValue(timeOut);
+			for (int i = 0; i <= listView.length; i++) {
 
-							 					for(WebElement element:lst) {
+				String[] list = listView[i].split("<filter>");
 
-							 						String value=element.getText().replaceAll("\\s+", "");
-												 	AppListeners.appLog.info("fetch vlaue is :"+value);
-							 						filterName.add(value);
-							 						
+				String listViewValue = list[0];
+				String[] filtersValue = list[1].split("#");
 
-							 					}
-							 					System.out.println("Filter Value list:"+filterName);
-							 					
- 							 					for(int j=0;j<filterName.size();j++) {
-							 						
-							 						if(filterName.get(j).equalsIgnoreCase(filtersValue[j].replaceAll("\\s+", ""))) {
-													 	AppListeners.appLog.info(filterName.get(j)+":Filter value is verified with:"+filtersValue[j]);
+				if (click(driver, getSelectListIcon(timeOut), "select list icon", action.BOOLEAN)) {
 
+					AppListeners.appLog.info("Click on select list icon on:" + objectName);
+					ThreadSleep(2000);
 
-								 					}else {
-								 						 AppListeners.appLog.info(filterName.get(j)+": Filter value is not verified with: "+filtersValue[j]);
-								 						 result.add(filterName.get(j)+"Filter value is not verified with:"+filtersValue[j]);
+					if (getSelectListIcon(timeOut).getAttribute("aria-expanded").contains("true")) {
 
-								 					}
-							 					}
-							 					filterName.clear();
-							 					System.out.println("Filter Value list:"+filterName);
-							 					
-							 				}else {
-							 					 AppListeners.appLog.info("Filter value is not present in filter panel size:"+filterName.size());
-												 result.add("Filter value is not present in filter panel size:"+filterName.size());
+						AppListeners.appLog.info("after clicking select list icon is in expand mode on:" + objectName);
 
-							 				}
-							 			
-							 	
-							 	}else {
-							 		
-							 		 AppListeners.appLog.info("Not able to click on select list label:"+listViewValue);
-									 result.add("Not able to click on select list label:"+listViewValue);
-							 	}
-							 	
+						if (click(driver, getSelectListLabelLink(listViewValue, timeOut), listViewValue + ": label",
+								action.BOOLEAN)) {
+							AppListeners.appLog.info("click on select list label:" + listViewValue);
 
-						 }else {
+							if (filterList != null || !filterList.isEmpty() | !filterList.equals("")) {
+								AppListeners.appLog.info("going to verify filters");
 
-							 AppListeners.appLog.info("after clicking select list icon is should be in expand mode on:"+objectName);
-							 result.add("after clicking select list icon is should be in expand mode on:"+objectName);
-						 }
+								if (getFilterButton(timeOut).getAttribute("aria-pressed").contains("false")) {
 
+									if (click(driver, getFilterButton(timeOut), "filter button", action.BOOLEAN)) {
+										AppListeners.appLog.info("click on fiter button on" + objectName);
+									} else {
 
-					 }else {
+										AppListeners.appLog.info("Not able to click on fiter button on" + objectName);
+										result.add("Not able to click on fiter button on" + objectName);
+									}
 
-						 AppListeners.appLog.info("Not able to click on select list icon on:"+objectName);
-						 result.add("Not able to click on select list icon on:"+objectName);
-					 }
-					 
-				 }
-			 
-		 }else {
-			 
-			 	AppListeners.appLog.info("Unable to open Object page :"+objectName);
-				result.add("Unable to open Object page :"+objectName);
-			 
-		 }
-		 
-		 
-		
+								} else {
+
+									AppListeners.appLog.info("filter panel is already open");
+
+								}
+
+								List<WebElement> lst = getListOfFilterPanelValue(timeOut);
+
+								for (WebElement element : lst) {
+
+									String value = element.getText().replaceAll("\\s+", "");
+									AppListeners.appLog.info("fetch vlaue is :" + value);
+									filterName.add(value);
+
+								}
+								System.out.println("Filter Value list:" + filterName);
+
+								for (int j = 0; j < filterName.size(); j++) {
+
+									if (filterName.get(j).equalsIgnoreCase(filtersValue[j].replaceAll("\\s+", ""))) {
+										AppListeners.appLog.info(filterName.get(j) + ":Filter value is verified with:"
+												+ filtersValue[j]);
+
+									} else {
+										AppListeners.appLog.info(filterName.get(j)
+												+ ": Filter value is not verified with: " + filtersValue[j]);
+										result.add(filterName.get(j) + "Filter value is not verified with:"
+												+ filtersValue[j]);
+
+									}
+								}
+								filterName.clear();
+								System.out.println("Filter Value list:" + filterName);
+
+							} else {
+								AppListeners.appLog
+										.info("Filter value is not present in filter panel size:" + filterName.size());
+								result.add("Filter value is not present in filter panel size:" + filterName.size());
+
+							}
+
+						} else {
+
+							AppListeners.appLog.info("Not able to click on select list label:" + listViewValue);
+							result.add("Not able to click on select list label:" + listViewValue);
+						}
+
+					} else {
+
+						AppListeners.appLog
+								.info("after clicking select list icon is should be in expand mode on:" + objectName);
+						result.add("after clicking select list icon is should be in expand mode on:" + objectName);
+					}
+
+				} else {
+
+					AppListeners.appLog.info("Not able to click on select list icon on:" + objectName);
+					result.add("Not able to click on select list icon on:" + objectName);
+				}
+
+			}
+
+		} else {
+
+			AppListeners.appLog.info("Unable to open Object page :" + objectName);
+			result.add("Unable to open Object page :" + objectName);
+
+		}
+
 		return result;
 	}
-	
-	
 
-
-	public boolean createListView(String projectName, String listViewName, String listAccessibility,int timeOut) {
-		String xpath="";
+	public boolean createListView(String projectName, String listViewName, String listAccessibility, int timeOut) {
+		String xpath = "";
 		refresh(driver);
 		ThreadSleep(2000);
 		if (click(driver, getlistViewControlsButton(projectName, timeOut), "list view", action.BOOLEAN)) {
 			log(LogStatus.INFO, "successfully click on list view", YesNo.No);
 			if (click(driver, getnewButtonListView(projectName, timeOut), "new ", action.BOOLEAN)) {
 				log(LogStatus.INFO, "successfully click on new buton", YesNo.No);
-				if (sendKeys(driver, getlistNameTextBox(projectName, "List Name", timeOut), listViewName,
-						"list name", action.SCROLLANDBOOLEAN)) {
+				if (sendKeys(driver, getlistNameTextBox(projectName, "List Name", timeOut), listViewName, "list name",
+						action.SCROLLANDBOOLEAN)) {
 
-
-					xpath = "//span[contains(text(),'"+listAccessibility.trim()+"')]/../preceding-sibling::input";
-					WebElement ele = FindElement(driver, xpath, "Found : " + listAccessibility,
-							action.SCROLLANDBOOLEAN, 5);
-
+					xpath = "//span[contains(text(),'" + listAccessibility.trim() + "')]/../preceding-sibling::input";
+					WebElement ele = FindElement(driver, xpath, "Found : " + listAccessibility, action.SCROLLANDBOOLEAN,
+							5);
 
 					if (click(driver, ele, listAccessibility, action.BOOLEAN)) {
-						log(LogStatus.INFO, "successfully click on "+listAccessibility, YesNo.No);
+						log(LogStatus.INFO, "successfully click on " + listAccessibility, YesNo.No);
 						if (click(driver, getlistViewSaveButton(projectName, timeOut), "save", action.BOOLEAN)) {
 							log(LogStatus.INFO, "successfully click on save buton", YesNo.No);
 							return true;
@@ -4717,10 +4715,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return false;
 	}
 
-
-
-
-	public boolean addAutomationAllListView(String projectName,String[] listViewDataRowWise,int timeOut) {
+	public boolean addAutomationAllListView(String projectName, String[] listViewDataRowWise, int timeOut) {
 
 		String viewList = listViewDataRowWise[2], xpath = "";
 		if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
@@ -4742,7 +4737,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		}
 
-		if (createListView(projectName,listViewDataRowWise[2], listViewDataRowWise[3],timeOut)) {
+		if (createListView(projectName, listViewDataRowWise[2], listViewDataRowWise[3], timeOut)) {
 			if (changeFilterInListView(projectName, listViewDataRowWise, timeOut)) {
 				return true;
 			} else {
@@ -4767,50 +4762,45 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					if (click(driver, getaddFilterBtn(projectName, timeOut), "Add Filter Button", action.BOOLEAN)) {
 						log(LogStatus.INFO, "successfully click on Add Filter buton", YesNo.No);
 
-						if (getSelectedOptionOfDropDown(driver, getfilterFielddropdown(projectName, timeOut), getfilterFielddropdownlist(projectName, timeOut),"Field filter",listViewDataRowWise[5] )) {
+						if (getSelectedOptionOfDropDown(driver, getfilterFielddropdown(projectName, timeOut),
+								getfilterFielddropdownlist(projectName, timeOut), "Field filter",
+								listViewDataRowWise[5])) {
 							log(LogStatus.INFO, "successfully Select the Field", YesNo.No);
 
-
-							if (getSelectedOptionOfDropDown(driver, getFilterOperatordropdown(projectName, timeOut), getfilterOperatordropdownlist(projectName, timeOut),"Operator filter",listViewDataRowWise[6] )) {
+							if (getSelectedOptionOfDropDown(driver, getFilterOperatordropdown(projectName, timeOut),
+									getfilterOperatordropdownlist(projectName, timeOut), "Operator filter",
+									listViewDataRowWise[6])) {
 								log(LogStatus.INFO, "successfully Select the Operator", YesNo.No);
 
-								if(listViewDataRowWise[5].trim().equalsIgnoreCase("Vintage Year") || listViewDataRowWise[5].trim().equalsIgnoreCase("1st Closing Date"))	
-								{
-									if(sendKeys(driver, getfilterValuefield(projectName, timeOut), listViewDataRowWise[7],	"value", action.SCROLLANDBOOLEAN))
-									{
+								if (listViewDataRowWise[5].trim().equalsIgnoreCase("Vintage Year")
+										|| listViewDataRowWise[5].trim().equalsIgnoreCase("1st Closing Date")) {
+									if (sendKeys(driver, getfilterValuefield(projectName, timeOut),
+											listViewDataRowWise[7], "value", action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.INFO, "value has been entered", YesNo.No);
 
-									}
-									else
-									{
+									} else {
 										log(LogStatus.ERROR, "Value is not Entered", YesNo.No);
 
 									}
 
-
 								}
 
-								else if (listViewDataRowWise[5].equals("Fund Type") || listViewDataRowWise[5].equals("Investment Category"))
-								{
-									if(getSelectedOptionOfDropDown(driver, getfilterValueDropDown(projectName, timeOut), getfilterValueDropdownlist(projectName, timeOut),"Value filter list",listViewDataRowWise[7] )) {
+								else if (listViewDataRowWise[5].equals("Fund Type")
+										|| listViewDataRowWise[5].equals("Investment Category")) {
+									if (getSelectedOptionOfDropDown(driver,
+											getfilterValueDropDown(projectName, timeOut),
+											getfilterValueDropdownlist(projectName, timeOut), "Value filter list",
+											listViewDataRowWise[7])) {
 										log(LogStatus.INFO, "successfully Select the Operator", YesNo.No);
-									}
-									else
-									{
+									} else {
 										log(LogStatus.ERROR, "Value is not Selected", YesNo.No);
 									}
 
-
 								}
 
-								if (click(driver, getfilterDoneBtn(projectName, timeOut), "Filter Done Button", action.BOOLEAN)) {
+								if (click(driver, getfilterDoneBtn(projectName, timeOut), "Filter Done Button",
+										action.BOOLEAN)) {
 									log(LogStatus.INFO, "successfully click on Done buton", YesNo.No);
-
-
-
-
-
-
 
 									if (click(driver, getfilterSave(projectName, timeOut), "save", action.BOOLEAN)) {
 										log(LogStatus.INFO, "successfully click on save buton", YesNo.No);
@@ -4819,13 +4809,15 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 											String actualValue = ele.getText().trim();
 											String expectedValue = BasePageErrorMessage.listViewUpdated;
 											if (actualValue.contains(expectedValue)) {
-												log(LogStatus.INFO, expectedValue + " matched FOR Confirmation Msg", YesNo.No);
+												log(LogStatus.INFO, expectedValue + " matched FOR Confirmation Msg",
+														YesNo.No);
 												return true;
 											} else {
-												log(LogStatus.ERROR, "Actual : " + actualValue + " Expected : " + expectedValue
-														+ " not matched FOR Confirmation Msg", YesNo.Yes);
-												BaseLib.sa.assertTrue(false, "Actual : " + actualValue + " Expected : " + expectedValue
-														+ " not matched FOR Confirmation Msg");
+												log(LogStatus.ERROR, "Actual : " + actualValue + " Expected : "
+														+ expectedValue + " not matched FOR Confirmation Msg",
+														YesNo.Yes);
+												BaseLib.sa.assertTrue(false, "Actual : " + actualValue + " Expected : "
+														+ expectedValue + " not matched FOR Confirmation Msg");
 											}
 										} else {
 											sa.assertTrue(false, "Created Task Msg Ele not Found");
@@ -4838,139 +4830,309 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								} else {
 									log(LogStatus.ERROR, "done button is not clickable", YesNo.No);
 								}
-							}else {
+							} else {
 								log(LogStatus.ERROR, "Add Filter button is not clickable", YesNo.No);
-							}	
-						} 
-						else
-						{
+							}
+						} else {
 							log(LogStatus.ERROR, "Field Filter is not Selected", YesNo.No);
 						}
 					}
 
-					else
-					{
+					else {
 						log(LogStatus.ERROR, "Operator Filter is not Selected", YesNo.No);
 					}
 				}
 
-
-
-				else
-				{
+				else {
 					log(LogStatus.ERROR, "Filter Done button is not clicked", YesNo.No);
 				}
-			}	
+			}
 
-
-			else { log(LogStatus.ERROR, "all checkbox is not clickable", YesNo.No); } }
-		else { log(LogStatus.ERROR, "list filter section is not clickable",
-				YesNo.No); }
+			else {
+				log(LogStatus.ERROR, "all checkbox is not clickable", YesNo.No);
+			}
+		} else {
+			log(LogStatus.ERROR, "list filter section is not clickable", YesNo.No);
+		}
 		return false;
 	}
 
-
-
-	public boolean openAppFromAppLauchner(String objectName,int timeOut) {
+	public boolean openAppFromAppLauchner(String objectName, int timeOut) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 
-		boolean flag= false;
-		if(click(driver, lp.getAppLuncherXpath(timeOut), "App launcher icon", action.BOOLEAN)) {
+		boolean flag = false;
+		if (click(driver, lp.getAppLuncherXpath(timeOut), "App launcher icon", action.BOOLEAN)) {
 
 			AppListeners.appLog.info(" click on app launcher icon");
 			ThreadSleep(1000);
-			if(sendKeys(driver, lp.getSearchAppTextBoxInAppLuncher(timeOut), objectName, "Search box in app launcher", action.BOOLEAN)) {
-				AppListeners.appLog.info("entered value in app launcher search box value:"+objectName);
+			if (sendKeys(driver, lp.getSearchAppTextBoxInAppLuncher(timeOut), objectName, "Search box in app launcher",
+					action.BOOLEAN)) {
+				AppListeners.appLog.info("entered value in app launcher search box value:" + objectName);
 				ThreadSleep(3000);
-				if(clickUsingJavaScript(driver, lp.getAppNameLabelTextInAppLuncher(objectName, timeOut), objectName+":app label in app launcher", action.BOOLEAN)) {
-					AppListeners.appLog.info("click on label in app launcher"+objectName);
+				if (clickUsingJavaScript(driver, lp.getAppNameLabelTextInAppLuncher(objectName, timeOut),
+						objectName + ":app label in app launcher", action.BOOLEAN)) {
+					AppListeners.appLog.info("click on label in app launcher" + objectName);
 
 					ThreadSleep(7000);
 
-					String fullXpath = "//h2[text()='"+objectName+"']";
+					String fullXpath = "//h2[text()='" + objectName + "']";
 
 					WebElement ele = FindElement(driver, fullXpath, " App Name", action.BOOLEAN, timeOut);
 
-					String pageName=ele.getText();
-					if(pageName.equals(objectName)) {
-						AppListeners.appLog.info(objectName +" page successfully loaded");
-						flag =true;
+					String pageName = ele.getText();
+					if (pageName.equals(objectName)) {
+						AppListeners.appLog.info(objectName + " page successfully loaded");
+						flag = true;
 
-					}else {
+					} else {
 
-						AppListeners.appLog.info(objectName +" page not loaded");
+						AppListeners.appLog.info(objectName + " page not loaded");
 						return false;
 					}
 
-				}else {
+				} else {
 
-					AppListeners.appLog.info("Not able tp click on label in app launcher"+objectName);
+					AppListeners.appLog.info("Not able tp click on label in app launcher" + objectName);
 					return false;
-				}				  
-			}else {
+				}
+			} else {
 
-				AppListeners.appLog.info("Not able to entered value in app launcher search box value:"+objectName);
+				AppListeners.appLog.info("Not able to entered value in app launcher search box value:" + objectName);
 				return false;
 			}
 
-		}else {
+		} else {
 
 			AppListeners.appLog.info("Not able to click on app launcher icon");
-			return false;			  
+			return false;
 		}
 		return flag;
 	}
 
-	public boolean openAppFromAppLauchner(int timeOut,String objectName) {
+	public boolean openAppFromAppLauchner(int timeOut, String objectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 
-		boolean flag= false;
-		if(click(driver, lp.getAppLuncherXpath(timeOut), "App launcher icon", action.BOOLEAN)) {
+		boolean flag = false;
+		if (click(driver, lp.getAppLuncherXpath(timeOut), "App launcher icon", action.BOOLEAN)) {
 
 			AppListeners.appLog.info(" click on app launcher icon");
 			ThreadSleep(1000);
-			if(sendKeys(driver, lp.getSearchAppTextBoxInAppLuncher(timeOut), objectName, "Search box in app launcher", action.BOOLEAN)) {
-				AppListeners.appLog.info("entered value in app launcher search box value:"+objectName);
+			if (sendKeys(driver, lp.getSearchAppTextBoxInAppLuncher(timeOut), objectName, "Search box in app launcher",
+					action.BOOLEAN)) {
+				AppListeners.appLog.info("entered value in app launcher search box value:" + objectName);
 				ThreadSleep(3000);
-				if(clickUsingJavaScript(driver, lp.getAppNameLabelTextInAppLuncher(objectName, timeOut), objectName+":app label in app launcher", action.BOOLEAN)) {
-					AppListeners.appLog.info("click on label in app launcher"+objectName);
+				if (clickUsingJavaScript(driver, lp.getAppNameLabelTextInAppLuncher(objectName, timeOut),
+						objectName + ":app label in app launcher", action.BOOLEAN)) {
+					AppListeners.appLog.info("click on label in app launcher" + objectName);
 
 					ThreadSleep(7000);
 
-					String fullXpath="//span[text()='"+objectName+"']";			
+					String fullXpath = "//span[text()='" + objectName + "']";
 					WebElement ele = FindElement(driver, fullXpath, " App Name", action.BOOLEAN, timeOut);
 
-					String pageName=ele.getText();
-					if(pageName.equals(objectName)) {
-						AppListeners.appLog.info(objectName +" page successfully loaded");
-						flag =true;
+					String pageName = ele.getText();
+					if (pageName.equals(objectName)) {
+						AppListeners.appLog.info(objectName + " page successfully loaded");
+						flag = true;
 
-					}else {
+					} else {
 
-						AppListeners.appLog.info(objectName +" page not loaded");
+						AppListeners.appLog.info(objectName + " page not loaded");
 						return false;
 					}
 
-				}else {
+				} else {
 
-					AppListeners.appLog.info("Not able to click on label in app launcher"+objectName);
+					AppListeners.appLog.info("Not able to click on label in app launcher" + objectName);
 					return false;
-				}				  
-			}else {
+				}
+			} else {
 
-				AppListeners.appLog.info("Not able to entered value in app launcher search box value:"+objectName);
+				AppListeners.appLog.info("Not able to entered value in app launcher search box value:" + objectName);
 				return false;
 			}
 
-		}else {
+		} else {
 
 			AppListeners.appLog.info("Not able to click on app launcher icon");
-			return false;			  
+			return false;
 		}
 		return flag;
 	}
 
+	/**
+	 * @author Ankur Huria
+	 * @param projectName
+	 * @param listViewName
+	 * @param timeOut
+	 */
+	public boolean deleteListView(String projectName, String listViewName, int timeOut) {
+		boolean flag = false;
+		String viewList = listViewName, xpath = "";
+		if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(3000);
+			xpath = "//div[@class='listContent']//li/a/span[text()='" + viewList + "']";
+			WebElement selectListView = FindElement(driver, xpath, "Select List View : " + viewList,
+					action.SCROLLANDBOOLEAN, 10);
+			ThreadSleep(3000);
+			if (selectListView != null) {
+				log(LogStatus.INFO, "List View already Present, Now Deleting List View: " + viewList, YesNo.No);
+				if (click(driver, selectListView, "List View: " + viewList, action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Selected the List View: " + viewList, YesNo.No);
+					if (click(driver, getlistViewControlsButton(projectName, timeOut), "list view", action.BOOLEAN)) {
+						log(LogStatus.INFO, "successfully click on list view setting Icon", YesNo.No);
+
+						if (click(driver, getdeleteButtonListView(projectName, timeOut), "Delete Button",
+								action.BOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Delete Button", YesNo.No);
+
+							if (click(driver, getdeleteConfirmButtonListView(projectName, timeOut),
+									"Delete Confirm Button", action.BOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Delete Confirm Button", YesNo.No);
+								CommonLib.ThreadSleep(3000);
+								if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "Clicked on Select List Icon", YesNo.No);
+									ThreadSleep(3000);
+									WebElement selectListViewAfterDelete = FindElement(driver, xpath,
+											"Select List View : " + viewList, action.SCROLLANDBOOLEAN, 10);
+									if (selectListViewAfterDelete != null) {
+										log(LogStatus.FAIL,
+												"List View:" + viewList
+														+ " again present after delete, So Test Case is going to fail ",
+												YesNo.No);
+
+									} else {
+										log(LogStatus.PASS,
+												"List View:" + viewList
+														+ " not present after delete, So Confirmed delete of List View",
+												YesNo.No);
+										flag = true;
+									}
+
+								} else {
+									log(LogStatus.ERROR, "Not Able to click on Select List Icon", YesNo.No);
+								}
+							}
+
+							else {
+								log(LogStatus.ERROR, "Not Able to click on Delete Confirm Button", YesNo.No);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not Able to click on Delete Button", YesNo.No);
+						}
+					} else {
+						log(LogStatus.ERROR, "list view Setting Icon is not clickable", YesNo.No);
+					}
+				}
+
+				else {
+					log(LogStatus.ERROR, "Not Able to Select the List View: " + viewList, YesNo.No);
+
+				}
+
+			} else {
+				log(LogStatus.FAIL, "List View not already Present, So cannot Delete List View: " + viewList, YesNo.No);
+				sa.assertTrue(false, "List View not already Present, So cannot Delete List View: " + viewList);
+
+			}
+		} else {
+			log(LogStatus.ERROR, "list dropdown is not clickable, so cannot check presence of Automation All",
+					YesNo.Yes);
+
+		}
+
+		return flag;
+
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param projectName
+	 * @param listViewName
+	 * @param timeOut
+	 * @param record
+	 */
+	public boolean deleteListViewRecord(String projectName, String listViewName, int timeOut, String record) {
+		boolean flag = false;
+		String viewList = listViewName, xpath = "";
+		if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(3000);
+			xpath = "//div[@class='listContent']//li/a/span[text()='" + viewList + "']";
+			WebElement selectListView = FindElement(driver, xpath, "Select List View : " + viewList,
+					action.SCROLLANDBOOLEAN, 10);
+			ThreadSleep(3000);
+			if (selectListView != null) {
+				log(LogStatus.INFO, "List View already Present, List View: " + viewList, YesNo.No);
+				if (click(driver, selectListView, "List View: " + viewList, action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Selected the List View: " + viewList, YesNo.No);
+					if (sendKeys(driver, listSearchBox(timeOut), record, "search text box", action.SCROLLANDBOOLEAN)) {
+						appLog.info("Passed Value in Search Text box: " + record);
+						log(LogStatus.INFO, "Passed Value in Search Text box: " + record, YesNo.No);
+						ThreadSleep(2000);
+						if (getFundNameElement(record, 20) != null) {
+							log(LogStatus.INFO, "Record Found " + record, YesNo.No);
+							if (click(driver, getSelectEditOfFundName(record, 20), "Edit Button: " + record,
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Edit of the record " + record, YesNo.No);
+								if (click(driver, deleteRecordButton(timeOut), "Delete Button", action.BOOLEAN)) {
+									log(LogStatus.INFO, "Clicked on Delete button", YesNo.No);
+
+									if (click(driver, getdeleteConfirmButtonListView(projectName, timeOut),
+											"Delete Confirm Button", action.BOOLEAN)) {
+										log(LogStatus.INFO, "Clicked on Delete Confirm Button", YesNo.No);
+										CommonLib.ThreadSleep(3000);
+										flag = true;
+									}
+
+									else {
+										log(LogStatus.ERROR, "Not Able to click on Delete Confirm Button", YesNo.No);
+									}
+
+								} else {
+									log(LogStatus.ERROR, "Not Able to Click on Delete button", YesNo.No);
+								}
+							}
+
+							else {
+								log(LogStatus.ERROR, "Not able to Click on Edit Record of: " + record, YesNo.No);
+
+							}
+
+						}
+
+						else {
+							log(LogStatus.ERROR, "Record not Found: " + record, YesNo.No);
+
+						}
+					}
+
+					else {
+						log(LogStatus.ERROR, "Passed Value in Search Text box: " + record, YesNo.No);
+
+					}
+				} else {
+					log(LogStatus.ERROR, "Not Able to Select the List View: " + viewList, YesNo.No);
+
+				}
+
+			} else {
+				log(LogStatus.FAIL, "List View not already Present, List View: " + viewList, YesNo.No);
+				sa.assertTrue(false, "List View not already Present,  List View: " + viewList);
+
+			}
+		} else {
+			log(LogStatus.ERROR, "list dropdown is not clickable, so cannot check presence of Automation All",
+					YesNo.Yes);
+
+		}
+
+		return flag;
+
+	}
 	
- 	
+	
+	
+	
 
 }

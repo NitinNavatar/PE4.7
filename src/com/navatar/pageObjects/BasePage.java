@@ -5489,4 +5489,49 @@ public abstract class BasePage extends BaseLib {
 		return filterValueDropdownlist;
 	}
 	
+	@FindBy(xpath = "//li//a//span[text()='Delete']")
+	private WebElement deleteButtonListView;
+	
+	public WebElement getdeleteButtonListView(String projectName,int timeOut) {
+		return isDisplayed(driver, deleteButtonListView, "Visibility", timeOut, "deleteButtonListView");
+	}
+	
+	@FindBy(xpath = "//span[text()='Delete']/parent::button")
+	private WebElement deleteConfirmButtonListView;
+	
+	public WebElement getdeleteConfirmButtonListView(String projectName,int timeOut) {
+		return isDisplayed(driver, deleteConfirmButtonListView, "Visibility", timeOut, "deleteConfirmButtonListView");
+	}
+	
+	@FindBy(xpath = "//input[@placeholder='Search this list...']")
+	private WebElement listSearchBox;
+
+	public WebElement listSearchBox(int timeOut) {
+		return isDisplayed(driver, listSearchBox, "Visibility", timeOut, "List Search Box");
+	}
+	
+	
+	
+	public WebElement getSelectEditOfFundName(String fundName,int timeOut) {
+		String xpath="//tbody//a[text()='"+fundName+"']/ancestor::th/following-sibling::td//ul[contains(@class,'oneActionsRibbon')]//a";
+		WebElement ele=FindElement(driver, xpath, "select Edit of: "+fundName, action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "select Edit of: "+fundName);
+		}
+	
+	public WebElement getFundNameElement(String fundName,int timeOut) {
+		String xpath="//tbody//a[text()='"+fundName+"']";
+		WebElement ele=FindElement(driver, xpath, "Record Found: "+fundName, action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "Visibility", timeOut, "Record Found: "+fundName);
+		}
+	
+	@FindBy(xpath = "//a[@title='Delete']")
+	private WebElement deleteRecordButton;
+
+	public WebElement deleteRecordButton(int timeOut) {
+		return isDisplayed(driver, deleteRecordButton, "Visibility", timeOut, "Delete Record Button");
+	
+	}	
+
+	
+	
 }
