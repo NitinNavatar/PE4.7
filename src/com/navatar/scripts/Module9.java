@@ -57,7 +57,7 @@ import com.relevantcodes.extentreports.LogStatus;
 public class Module9 extends BaseLib {
 
 	
-	
+
 	@Parameters({ "projectName" })
 
 	@Test
@@ -276,16 +276,9 @@ public class Module9 extends BaseLib {
 				{ "Public Reports", "#Individuals", "Contacts & Firms", "All firms", "All Time", "Created Date",
 					"Industry", "equals", "Agriculture" } };
 
-		//		String[] splitedReportName;
+	
 		int i = 0;
 		for (String[] data : datas) {
-
-			/*
-			 * splitedReportName = removeNumbersFromString("Test Module 9 Report");
-			 * SmokeReport2Name = splitedReportName[0] + lp.generateRandomNumber();
-			 */
-
-
 
 			if (report.createCustomReportForFolderLightningMode(environment, mode, data[0], ReportFormatName.Null,
 					data[1], data[1], data[2], fields[i], null, null, null, null, null)) {
@@ -454,7 +447,7 @@ public class Module9 extends BaseLib {
 	 * }
 	 */
 
-
+	
 
 	@Parameters({ "projectName" })
 	@Test
@@ -465,13 +458,6 @@ public class Module9 extends BaseLib {
 		String fields = SDGLabels.APIName.toString();
 		String values = "";
 		lp.searchAndClickOnApp(SDG, 30);
-		/*
-		 * String[] splitedSDGName; String SDGRandomTagName; splitedSDGName =
-		 * removeNumbersFromString("Test SDG Module 9"); SDGRandomTagName =
-		 * splitedSDGName[0] + lp.generateRandomNumber();
-		 */
-
-
 
 		if (lp.clickOnTab(projectName, TabName.SDGTab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
@@ -535,13 +521,9 @@ public class Module9 extends BaseLib {
 							{sdgLabels1,sdgLabels2,sdgLabels3};
 
 
-						/*
-						 * NOTE: editCustomSDGandFoundErrorMsg: Method Validate Error Msg, Also if
-						 * labelWithValue[0][1] !="" Then it will save SDG and validate the headers
-						 */
 
 
-
+	
 						if (sdg.editCustomSDGandFoundErrorMsgAndAtLastWithoutError(projectName,
 								"Fund - First SDG Grid", sdgLabels, action.BOOLEAN, 20,
 								"You can either fill 'Filter' or 'List View Name' to save the record.")) {
@@ -591,13 +573,8 @@ public class Module9 extends BaseLib {
 			String[][][] sdgLabels = { sdgLabels1, sdgLabels2, sdgLabels3, sdgLabels4, sdgLabels5, sdgLabels6,
 					sdgLabels7, sdgLabels8 };
 
-			/*
-			 * NOTE: editCustomSDGandFoundErrorMsg: Method Validate Error Msg
-			 * 
-			 */
 
-
-
+	
 			if (sdg.editCustomSDGandFoundErrorMsg(projectName, "Fund - First SDG Grid", sdgLabels, action.BOOLEAN, 20,
 					"must be a Reference, ID, String or Text Area field")) {
 				log(LogStatus.PASS, "edit/verify created SDG : " + "Fund - First SDG Grid", YesNo.No);
@@ -909,7 +886,7 @@ public class Module9 extends BaseLib {
 		sa.assertAll();
 	}
 
-	
+
 	@Parameters({ "projectName" })
 
 	@Test
@@ -1002,7 +979,7 @@ public class Module9 extends BaseLib {
 		lp.CRMlogout();
 
 	}
-	
+
 
 	@Parameters({ "projectName" })
 
@@ -1649,7 +1626,7 @@ public class Module9 extends BaseLib {
 		WebElement ele;
 		String appPage="Test App Page";
 		String tableName="Test";
-		String name="James Falcon -1";
+		String name="Test M1Contact1";
 		String[][] val= {{M9SDGD_1_AccountIndustry,M9SDGD_1_Totalfirm,M9SDGD_1_Task_as_per_Industries,M9SDGD_1_Individuals,M9SDGD_1_Fundraising_as_per_Industries},
 				{M9SDGD_2_AccountIndustry,M9SDGD_2_Totalfirm,M9SDGD_2_Task_as_per_Industries,M9SDGD_2_Individuals,M9SDGD_2_Fundraising_as_per_Industries},
 				{M9SDGD_3_AccountIndustry,M9SDGD_3_Totalfirm,M9SDGD_3_Task_as_per_Industries,M9SDGD_3_Individuals,M9SDGD_3_Fundraising_as_per_Industries},
@@ -1674,11 +1651,12 @@ public class Module9 extends BaseLib {
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		String recycleTab= lp.getTabName(projectName, TabName.RecycleBinTab);
-		if(lp.searchAndClickOnApp(recycleTab, 60))
+		if(lp.openAppFromAppLauchner(60,recycleTab))
+			
 		{
 			ele = lp.getCheckboxOfRestoreItemOnRecycleBin(projectName,name , 30);
 			if (clickUsingJavaScript(driver, ele, "Check box against : "+name, action.BOOLEAN)) {
-				log(LogStatus.INFO,"Click on checkbox for "+name,YesNo.No);;
+				log(LogStatus.INFO,"Click on checkbox for "+name,YesNo.No);
 				ele=lp.getRestoreButtonOnRecycleBin(projectName, 30);
 				if (clickUsingJavaScript(driver, ele, "Restore Button : "+name, action.BOOLEAN)) {
 					ThreadSleep(10000);		
@@ -2712,10 +2690,341 @@ public class Module9 extends BaseLib {
 				}	
 
 			}
-		
+
 		lp.CRMlogout();
 		sa.assertAll();
 	}
 
+
+	@Parameters({ "projectName" })
+	@Test
+	public void M9Tc068_EditAppPageAndAddFilter(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		BasePageBusinessLayer BP=new BasePageBusinessLayer(driver);
+		LightningAppBuilderPageBusinessLayer AppBuilder=new LightningAppBuilderPageBusinessLayer(driver);
+		FieldAndRelationshipPageBusinessLayer fr = new FieldAndRelationshipPageBusinessLayer(driver);
+		EditPageBusinessLayer EP=new EditPageBusinessLayer(driver);
+		String labelName="Testing1234";
+		String tableName="Test";
+		String appPage="Custom App Page";
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
+			if(BP.openAppFromAppLauchner(appPage,50))
+			{
+				if(EP.editPageAndAddFilter("Fund", "Select Name from navpeII__Fund__c ORDER BY Name ASC", "Firm", "Select Name from Account where RecordType.Name = 'Institution' ORDER BY Name ASC","",""))
+				{
+					log(LogStatus.PASS,"Filter has been added on the page",YesNo.Yes);
+					sa.assertTrue(true, "Filter has been added on the page");
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Could not edit the Page and add the Filter",YesNo.Yes);
+					sa.assertTrue(false, "Could not edit the Page and add the SDG");
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Could not open the App from the App Launcher",YesNo.Yes);
+				sa.assertTrue(false, "Could not open the App from the App Launcher");
+			}
+
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+
+	@Parameters({ "projectName" })
+	@Test
+	public void M9Tc069_VerifyFundAndFirmDropDownCountAndAcendingOrder(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		BasePageBusinessLayer BP=new BasePageBusinessLayer(driver);
+		LightningAppBuilderPageBusinessLayer AppBuilder=new LightningAppBuilderPageBusinessLayer(driver);
+		FieldAndRelationshipPageBusinessLayer fr = new FieldAndRelationshipPageBusinessLayer(driver);
+		EditPageBusinessLayer EP=new EditPageBusinessLayer(driver);
+
+		String appPage="Custom App Page";
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		ArrayList<String> labelName=new ArrayList<String>();
+		labelName.add("Fund");
+		labelName.add("Firm");
+
+		ArrayList<Integer> count=new ArrayList<Integer>();
+		count.add(84);
+		count.add(34);
+
+		if(BP.openAppFromAppLauchner(appPage,50))
+		{
+			log(LogStatus.INFO,"App page has been open",YesNo.No);
+
+			if(AppBuilder.VerifyDropdownCountandAscendingOrder(labelName,count))
+			{
+				log(LogStatus.INFO,"Dropdown count and Ascending order has been matched",YesNo.No);
+
+			}
+			else
+			{
+				log(LogStatus.INFO,"Dropdown count and Ascending order is not matched of ",YesNo.No);
+			}
+
+
+
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Could not open the App page",YesNo.No);
+		}
+
+
+
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+
+	@Parameters({ "projectName" })
+
+	@Test
+	public void M9Tc070_VerifyGlobalFilterForFundAndFirm(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		BasePageBusinessLayer BP=new BasePageBusinessLayer(driver);
+		LightningAppBuilderPageBusinessLayer AppBuilder=new LightningAppBuilderPageBusinessLayer(driver);
+		FieldAndRelationshipPageBusinessLayer fr = new FieldAndRelationshipPageBusinessLayer(driver);
+		EditPageBusinessLayer EP=new EditPageBusinessLayer(driver);
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
+
+		String appPage="Custom App Page";
+		String pageSize="100";
+		String fundSDGName="Fund Filter Grid";
+		String accountSDGName="Account Filter Grid";
+		String fundraisingSDGName="Fundraising Filter Grid";
+		String contactSDGName="Contact Filter Grid";
+
+		int fundRowCountBeforeFilter,fundraisingRowCountBeforeFilter,accountFilterRowCountBeforeFilter,contactFilterRowCountBeforeFilter;
+		int fundRowCountAfterFilter,fundraisingRowCountAfterFilter,accountFilterRowCountAfterFilter,contactFilterRowCountAfterFilter;
+
+
+		if(BP.openAppFromAppLauchner(appPage,50))
+		{
+
+			fundRowCountBeforeFilter=AppBuilder.numberOfRecords(fundSDGName,pageSize);
+			accountFilterRowCountBeforeFilter=AppBuilder.numberOfRecords(accountSDGName,pageSize);
+			fundraisingRowCountBeforeFilter=AppBuilder.numberOfRecords(fundraisingSDGName,pageSize);
+			contactFilterRowCountBeforeFilter=AppBuilder.numberOfRecords(contactSDGName,pageSize);		
+
+			if(fundRowCountBeforeFilter!=0 && accountFilterRowCountBeforeFilter!=0 && fundraisingRowCountBeforeFilter!=0 && contactFilterRowCountBeforeFilter!=0)
+			{
+				log(LogStatus.INFO, "The row count before filter of FundSDG : "+fundRowCountBeforeFilter+" \n AccountSDG : "+accountFilterRowCountBeforeFilter+" \nFundraising : "+fundraisingRowCountBeforeFilter+" \n Contact : "+contactFilterRowCountBeforeFilter, YesNo.No);
+
+				if(AppBuilder.selectFilter("Fund", "Appfluent Technology"))
+				{
+					log(LogStatus.INFO, "Filter has been selected of the fund", YesNo.No);
+					CommonLib.ThreadSleep(8000);
+
+					fundRowCountAfterFilter=AppBuilder.numberOfRecords(fundSDGName,pageSize);
+					accountFilterRowCountAfterFilter=AppBuilder.numberOfRecords(accountSDGName,pageSize);
+					fundraisingRowCountAfterFilter=AppBuilder.numberOfRecords(fundraisingSDGName,pageSize);
+					contactFilterRowCountAfterFilter=AppBuilder.numberOfRecords(contactSDGName,pageSize);	
+
+					if(fundRowCountAfterFilter!=0 && accountFilterRowCountAfterFilter!=0 && fundraisingRowCountAfterFilter!=0 && contactFilterRowCountAfterFilter!=0)
+					{
+						log(LogStatus.INFO, "The row count before filter of FundSDG : "+fundRowCountAfterFilter+" \n AccountSDG : "+accountFilterRowCountAfterFilter+" \nFundraising : "+fundraisingRowCountAfterFilter+" \n Contact : "+contactFilterRowCountAfterFilter, YesNo.No);
+
+						if(fundRowCountBeforeFilter==fundRowCountAfterFilter && accountFilterRowCountBeforeFilter==accountFilterRowCountAfterFilter && fundraisingRowCountBeforeFilter==fundraisingRowCountAfterFilter && contactFilterRowCountBeforeFilter==contactFilterRowCountAfterFilter)
+						{
+							log(LogStatus.PASS, "The count of row has been matched.  The row count before filter of FundSDG : "+fundRowCountBeforeFilter+" \n AccountSDG : "+accountFilterRowCountBeforeFilter+" \nFundraising : "+fundraisingRowCountBeforeFilter+" \n Contact : "+contactFilterRowCountBeforeFilter+" \n\nThe row count After filter of FundSDG : "+fundRowCountAfterFilter+" \n AccountSDG : "+accountFilterRowCountAfterFilter+" \nFundraising : "+fundraisingRowCountAfterFilter+" \n Contact : "+contactFilterRowCountAfterFilter+ "", YesNo.No);
+							sa.assertTrue(true, "The count of row has been matched. The row count before filter of FundSDG : "+fundRowCountBeforeFilter+" \n AccountSDG : "+accountFilterRowCountBeforeFilter+" \nFundraising : "+fundraisingRowCountBeforeFilter+" \n Contact : "+contactFilterRowCountBeforeFilter+" \n\nThe row count After filter of FundSDG : "+fundRowCountAfterFilter+" \n AccountSDG : "+accountFilterRowCountAfterFilter+" \nFundraising : "+fundraisingRowCountAfterFilter+" \n Contact : "+contactFilterRowCountAfterFilter+ "");
+						}
+						else
+						{
+							log(LogStatus.FAIL, "The count of row is not matched. The row count before filter of FundSDG : "+fundRowCountBeforeFilter+" \n AccountSDG : "+accountFilterRowCountBeforeFilter+" \nFundraising : "+fundraisingRowCountBeforeFilter+" \n Contact : "+contactFilterRowCountBeforeFilter+" \n\nThe row count After filter of FundSDG : "+fundRowCountAfterFilter+" \n AccountSDG : "+accountFilterRowCountAfterFilter+" \nFundraising : "+fundraisingRowCountAfterFilter+" \n Contact : "+contactFilterRowCountAfterFilter+ "", YesNo.Yes);
+							sa.assertTrue(false, "The count of row is not matched. The row count before filter of FundSDG : "+fundRowCountBeforeFilter+" \n AccountSDG : "+accountFilterRowCountBeforeFilter+" \nFundraising : "+fundraisingRowCountBeforeFilter+" \n Contact : "+contactFilterRowCountBeforeFilter+" \n\nThe row count After filter of FundSDG : "+fundRowCountAfterFilter+" \n AccountSDG : "+accountFilterRowCountAfterFilter+" \nFundraising : "+fundraisingRowCountAfterFilter+" \n Contact : "+contactFilterRowCountAfterFilter+ "");
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Could not get the count of row ", YesNo.No);
+						sa.assertTrue(false, "Could not get the count of row ");
+					}		
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Could not Select the filter", YesNo.No);
+					sa.assertTrue(false,"Could not Select the filter");
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Could not get the count of row ", YesNo.No);
+				sa.assertTrue(false, "Could not get the count of row ");
+			}
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Could not open the app from the App Launcher", YesNo.No);
+			sa.assertTrue(false, "Could not open the app from the App Launcher");
+		}
+
+
+
+		if(BP.openAppFromAppLauchner(appPage,50))
+		{
+
+			fundRowCountBeforeFilter=AppBuilder.numberOfRecords(fundSDGName,pageSize);
+			accountFilterRowCountBeforeFilter=AppBuilder.numberOfRecords(accountSDGName,pageSize);
+			fundraisingRowCountBeforeFilter=AppBuilder.numberOfRecords(fundraisingSDGName,pageSize);
+			contactFilterRowCountBeforeFilter=AppBuilder.numberOfRecords(contactSDGName,pageSize);		
+
+			if(fundRowCountBeforeFilter!=0 && accountFilterRowCountBeforeFilter!=0 && fundraisingRowCountBeforeFilter!=0 && contactFilterRowCountBeforeFilter!=0)
+			{
+				log(LogStatus.INFO, "The row count before filter of FundSDG : "+fundRowCountBeforeFilter+" \n AccountSDG : "+accountFilterRowCountBeforeFilter+" \nFundraising : "+fundraisingRowCountBeforeFilter+" \n Contact : "+contactFilterRowCountBeforeFilter, YesNo.No);
+
+				if(AppBuilder.selectFilter("Firm", "Appfluent Technology, Inc."))
+				{
+					log(LogStatus.INFO, "Filter has been selected of the Firm", YesNo.No);
+					CommonLib.ThreadSleep(8000);
+
+					fundRowCountAfterFilter=AppBuilder.numberOfRecords(fundSDGName,pageSize);
+					accountFilterRowCountAfterFilter=AppBuilder.numberOfRecords(accountSDGName,pageSize);
+					fundraisingRowCountAfterFilter=AppBuilder.numberOfRecords(fundraisingSDGName,pageSize);
+					contactFilterRowCountAfterFilter=AppBuilder.numberOfRecords(contactSDGName,pageSize);	
+
+					if(fundRowCountAfterFilter!=0 && accountFilterRowCountAfterFilter!=0 && fundraisingRowCountAfterFilter!=0 && contactFilterRowCountAfterFilter!=0)
+					{
+						log(LogStatus.INFO, "The row count After filter of FundSDG : "+fundRowCountAfterFilter+" \n AccountSDG : "+accountFilterRowCountAfterFilter+" \nFundraising : "+fundraisingRowCountAfterFilter+" \n Contact : "+contactFilterRowCountAfterFilter, YesNo.No);
+
+						if(fundRowCountBeforeFilter==fundRowCountAfterFilter && accountFilterRowCountBeforeFilter==accountFilterRowCountAfterFilter && fundraisingRowCountBeforeFilter==fundraisingRowCountAfterFilter && contactFilterRowCountBeforeFilter==contactFilterRowCountAfterFilter)
+						{
+							log(LogStatus.PASS, "The row count has been matched. The row count before filter of FundSDG : "+fundRowCountBeforeFilter+" \n AccountSDG : "+accountFilterRowCountBeforeFilter+" \nFundraising : "+fundraisingRowCountBeforeFilter+" \n Contact : "+contactFilterRowCountBeforeFilter+" \n\nThe row count After filter of FundSDG : "+fundRowCountAfterFilter+" \n AccountSDG : "+accountFilterRowCountAfterFilter+" \nFundraising : "+fundraisingRowCountAfterFilter+" \n Contact : "+contactFilterRowCountAfterFilter+ "", YesNo.No);
+							sa.assertTrue(true, "The count of has been matched. The row count before filter of FundSDG : "+fundRowCountBeforeFilter+" \n AccountSDG : "+accountFilterRowCountBeforeFilter+" \nFundraising : "+fundraisingRowCountBeforeFilter+" \n Contact : "+contactFilterRowCountBeforeFilter+" \n\nThe row count After filter of FundSDG : "+fundRowCountAfterFilter+" \n AccountSDG : "+accountFilterRowCountAfterFilter+" \nFundraising : "+fundraisingRowCountAfterFilter+" \n Contact : "+contactFilterRowCountAfterFilter+ "");
+						}
+						else
+						{
+							log(LogStatus.FAIL, "Row count is not matched. The row count before filter of FundSDG : "+fundRowCountBeforeFilter+" \n AccountSDG : "+accountFilterRowCountBeforeFilter+" \nFundraising : "+fundraisingRowCountBeforeFilter+" \n Contact : "+contactFilterRowCountBeforeFilter+" \n\nThe row count After filter of FundSDG : "+fundRowCountAfterFilter+" \n AccountSDG : "+accountFilterRowCountAfterFilter+" \nFundraising : "+fundraisingRowCountAfterFilter+" \n Contact : "+contactFilterRowCountAfterFilter+ "", YesNo.Yes);
+							sa.assertTrue(false, "Row count is not mathced. The row count before filter of FundSDG : "+fundRowCountBeforeFilter+" \n AccountSDG : "+accountFilterRowCountBeforeFilter+" \nFundraising : "+fundraisingRowCountBeforeFilter+" \n Contact : "+contactFilterRowCountBeforeFilter+" \n\nThe row count After filter of FundSDG : "+fundRowCountAfterFilter+" \n AccountSDG : "+accountFilterRowCountAfterFilter+" \nFundraising : "+fundraisingRowCountAfterFilter+" \n Contact : "+contactFilterRowCountAfterFilter+ "");
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Could not get the count of row ", YesNo.No);
+						sa.assertTrue(false, "Could not get the count of row ");
+					}		
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Could not Select the filter", YesNo.No);
+					sa.assertTrue(false,"Could not Select the filter");
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Could not get the count of row ", YesNo.No);
+				sa.assertTrue(false, "Could not get the count of row ");
+			}
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Could not open the app from the App Launcher", YesNo.No);
+			sa.assertTrue(false, "Could not open the app from the App Launcher");
+		}
+
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	 
+
+	@Parameters({ "projectName" })
+	@Test
+	public void M9Tc071_AddFilterSequenceAndVerifyRecord(String projectName) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		BasePageBusinessLayer BP=new BasePageBusinessLayer(driver);
+		LightningAppBuilderPageBusinessLayer AppBuilder=new LightningAppBuilderPageBusinessLayer(driver);
+		FieldAndRelationshipPageBusinessLayer fr = new FieldAndRelationshipPageBusinessLayer(driver);
+		EditPageBusinessLayer EP=new EditPageBusinessLayer(driver);
+		SDGPageBusinessLayer SB=new SDGPageBusinessLayer(driver);
+		String appPage="Custom App Page";
+		String fundraisingSDGName="Fundraising Filter Grid";
+		int fundraisingRowCountBeforeFilter,fundraisingRowCountAfterFilter;
+		String pageSize="100";
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
+		if(BP.openAppFromAppLauchner(60,"Sortable Data Grids"))
+		{
+			if(SB.sequenceFilter(projectName,"Fund Filter Grid"))
+			{				
+				if(BP.openAppFromAppLauchner(appPage,50))
+				{
+					fundraisingRowCountBeforeFilter=AppBuilder.numberOfRecords(fundraisingSDGName,pageSize);
+					if(fundraisingRowCountBeforeFilter!=0)
+					{
+						log(LogStatus.INFO,"The fundraising count before filter is : "+fundraisingRowCountBeforeFilter,YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR,"Could not open the App page",YesNo.No);
+						sa.assertTrue(false, "Could not get the Fundraising Count");
+					}
+					if(AppBuilder.selectFilter("Fund", "Appfluent Technology"))
+					{
+						log(LogStatus.INFO, "Filter has been selected from the fund", YesNo.No);
+						CommonLib.ThreadSleep(8000);
+						fundraisingRowCountAfterFilter=AppBuilder.numberOfRecords(fundraisingSDGName,pageSize);
+						if(fundraisingRowCountAfterFilter==fundraisingRowCountBeforeFilter)
+						{
+							log(LogStatus.PASS, "Fundraising count is not filtered", YesNo.No);
+							sa.assertTrue(true, "Fundraising count is not filtered");
+						}
+						else
+						{
+							log(LogStatus.PASS, "Fundraising count is filtered", YesNo.No);
+							sa.assertTrue(true, "Fundraising count is filtered");
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR,"Could not select the filter from the fund",YesNo.No);
+						sa.assertTrue(true, "Could not select the filter from the fund");
+					}
+						
+							
+						
+				log(LogStatus.INFO,"Sequence filter is not added",YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Could not open the App page",YesNo.No);
+				sa.assertTrue(true, "Could not open the App page");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Could not open the App page",YesNo.No);
+			sa.assertTrue(false, "Could not open the App page");
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	}
 
 }

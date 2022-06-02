@@ -1922,9 +1922,7 @@ boolean flag = false;
 			 else {
 					log(LogStatus.ERROR, "Not Able to click on Expand Button of SDG :" + Title, YesNo.No);
 
-				}
-			
-				
+				}			
 			}	
 			
 		 else {
@@ -1937,10 +1935,7 @@ boolean flag = false;
 			log(LogStatus.ERROR, "Component Title Not Matched to Home Page :" + Title, YesNo.No);
 
 		}
-		
-		
-		
-		
+				
 		return flag;
 	}
 	

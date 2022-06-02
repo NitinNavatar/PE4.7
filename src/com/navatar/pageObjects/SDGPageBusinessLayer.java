@@ -499,8 +499,8 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 										{
 											sa.assertTrue(false, "Value Expected: " + value+" but Actual: "+ele.getText());
 											log(LogStatus.FAIL, "Value Expected: " + value+" but Actual: "+ele.getText(), YesNo.Yes);
-										flag=false;
-										break;
+											flag=false;
+											break;
 										}
 									}
 								} else {
@@ -540,8 +540,8 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 
 		return flag;
 	}
-	
-	
+
+
 
 	public boolean openSDG(String projectName,String sdgName)
 	{
@@ -575,8 +575,8 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 	}
 
 
-	
-	
+
+
 	/**
 	 * @author Sourabh saini
 	 * @param projectName
@@ -596,7 +596,6 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 
 				if(condition.toString().equals("SelectCheckbox"))
 				{
-
 					if(status==false)
 					{
 						if (click(driver, getAllRowCheckbox(), "All Row cheeckbox", action.SCROLLANDBOOLEAN)) {
@@ -660,5 +659,94 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 			return false;
 		}
 	}
+
+
+
+
+	public boolean sequenceFilter(String projectName, String sdgName)
+	{
+		if(openSDG(projectName,sdgName))
+		{
+			if (click(driver, getrelatedTabOnSDG(40), "Related tab on SDG", action.BOOLEAN)) {
+				log(LogStatus.INFO,"Clicked on the Related Button",YesNo.Yes);	
+				if (click(driver, getnameEroBtn(40), "Name button", action.BOOLEAN)) {
+					log(LogStatus.INFO,"Clicked on the name button",YesNo.Yes);				
+					CommonLib.ThreadSleep(8000);
+					if (click(driver, getsdgPageEditButton(40), "Edit button", action.BOOLEAN)) {
+						log(LogStatus.INFO,"Clicked on the edit button",YesNo.Yes);	
+						if (click(driver, getfilterSequenceButton(40), "Filter sequence button", action.BOOLEAN)) {
+							log(LogStatus.INFO,"Clicked on the filter sequence button",YesNo.Yes);
+							CommonLib.ThreadSleep(3000);
+
+							if(CommonLib.getSelectedOptionOfDropDown(driver, getfilterSequenceDropdownList(), "Filter Sequence list", "1"))
+							{
+								log(LogStatus.INFO,"Option has been selected from the sequence filter field drop down",YesNo.Yes);
+								if (click(driver, getsdgSaveBtn(40), "save button", action.BOOLEAN)) {
+									log(LogStatus.INFO,"Clicked on the save button",YesNo.Yes);
+									if(CommonLib.checkElementVisibility(driver, getsdgSaveConfirmationMsg(50), "Confirmation message after click on the save button", 50))
+									{
+										log(LogStatus.INFO,"Sequence filter has been saved",YesNo.No);
+										return true;
+									}
+									else
+									{
+										log(LogStatus.ERROR,"Sequence filter is not saved",YesNo.Yes);
+										return false;
+									}				
+								}
+								else
+								{
+									log(LogStatus.ERROR,"could not click on the save button",YesNo.Yes);
+									return false;
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR,"could not select the option value from the sequence filter field drop down",YesNo.Yes);
+								return false;
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR,"could not click on the filter sequence button",YesNo.Yes);
+							return false;
+						}
+
+					}
+
+					else
+					{
+						log(LogStatus.ERROR,"could not click on the edit button",YesNo.Yes);
+						return false;
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR,"could not click on the name button",YesNo.Yes);
+					return false;
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR,"could not click on the Related tab button",YesNo.Yes);
+				return false;
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR,"could not open the SDG",YesNo.Yes);
+			return false;
+		}
+	
+
+
+	}
+
+
+
+
+
 
 }
