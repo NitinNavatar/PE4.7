@@ -92,13 +92,12 @@ public class SDGPage extends BasePageBusinessLayer {
 		WebElement ele;
 		String xpath = "//span[text()='" + SDGCreationLabel
 				+ "']/parent::div/following-sibling::div//lightning-formatted-text";
-		ele = FindElement(driver, xpath, "SDGLabelValue Element, Label: " + SDGCreationLabel, action.SCROLLANDBOOLEAN,
+		return ele = FindElement(driver, xpath, "SDGLabelValue Element, Label: " + SDGCreationLabel, action.SCROLLANDBOOLEAN,
 				timeOut);
-		return isDisplayed(driver, ele, "Visibility", timeOut, "SDGLabelValue Element, Label: " + SDGCreationLabel);
 
 	}
 
-	@FindBy(xpath = "//button[text()='Edit']")
+	@FindBy(xpath = "//div[contains(@class,'active')]//button[text()='Edit']")
 	private WebElement editButton;
 
 	public WebElement getEditButton(String projectName, int timeOut) {
@@ -132,5 +131,75 @@ public class SDGPage extends BasePageBusinessLayer {
 	public WebElement getsdgSearchbox(String projectName, int timeOut) {
 		return isDisplayed(driver, sdgSearchbox, "Visibility", timeOut, "SDG Searchbox");
 	}
+	
+
+	@FindBy(xpath = "//a[@id='relatedListsTab__item']")
+	private WebElement relatedTabOnSDG;
+
+	public WebElement getrelatedTabOnSDG(int timeOut) {
+		return isDisplayed(driver, relatedTabOnSDG, "Visibility", timeOut, "Related tab on SDG");
+	}
+	
+	@FindBy(xpath = "//tr[@class='slds-hint-parent']/th[@tabindex='0']//span[@id='window']")
+	private WebElement nameFieldButton;
+
+	public WebElement getnameFieldButton(int timeOut) {
+		return isDisplayed(driver, nameFieldButton, "Visibility", timeOut, "Name Field Button");
+	}
+	
+	@FindBy(xpath = "//label[text()='Filter Sequence']/parent::lightning-combobox//button")
+	private WebElement filterSequenceButton;
+
+	public WebElement getfilterSequenceButton(int timeOut) {
+		return isDisplayed(driver, filterSequenceButton, "Visibility", timeOut, "Filter Sequence Button");
+	}
+	
+	@FindBy(xpath = "//label[text()='Filter Sequence']/parent::lightning-combobox//lightning-base-combobox-item//span[@class='slds-truncate']")
+	private List<WebElement> filterSequenceDropdownList;
+
+	public List<WebElement> getfilterSequenceDropdownList() {
+		return filterSequenceDropdownList;
+	}
+	
+	@FindBy(xpath = "//span[contains(@class,'toastMessage')]")
+	private WebElement sdgSaveConfirmationMsg;
+
+	public WebElement getsdgSaveConfirmationMsg(int timeOut) {
+		return isDisplayed(driver, sdgSaveConfirmationMsg, "Visibility", timeOut, "SDG save button");
+	}
+	
+	@FindBy(xpath = "//button[text()='Save']")
+	private WebElement sdgSaveBtn;
+
+	public WebElement getsdgSaveBtn(int timeOut) {
+		return isDisplayed(driver, sdgSaveBtn, "Visibility", timeOut, "SDG save button");
+	}
+	
+	
+	
+	
+	@FindBy(xpath = "//tbody//lst-formatted-text[text()='Name']/ancestor::td/following-sibling::td//button")
+	private WebElement nameEroBtn;
+
+	public WebElement getnameEroBtn(int timeOut) {
+		return isDisplayed(driver, nameEroBtn, "Visibility", timeOut, "Name ero button");
+	}
+	
+	@FindBy(xpath = "//a[@title='Edit']")
+	private WebElement sdgPageEditButton;
+
+	public WebElement getsdgPageEditButton(int timeOut) {
+		return isDisplayed(driver, sdgPageEditButton, "Visibility", timeOut, "Edit button");
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

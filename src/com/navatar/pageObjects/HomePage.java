@@ -1878,5 +1878,37 @@ public List<WebElement> sdgGridAllHeadersLabelNameList(SDGGridName sdgGridName) 
 	return ele;
 }
 
+
+public WebElement fundNameElement(String Title, String FundName) {
+	
+	return  FindElement(driver,
+			"//a[text()='"+Title+"']/ancestor::article//tbody/tr/td//a[text()='"+FundName+"']", "Fund Name",
+			action.SCROLLANDBOOLEAN, 30);
+	}
+
+
+public WebElement deleteRecordBtn(String Title, String FundName) {
+	
+	return  FindElement(driver,
+			"//a[text()='"+Title+"']/ancestor::article//tbody/tr/td//a[text()='"+FundName+"']/ancestor::td/following-sibling::td//button[text()='Delete']", "Delete Button",
+			action.SCROLLANDBOOLEAN, 30);
+	}
+
+public WebElement deleteRecordConfirmBtn(String Title) {
+	
+	return  FindElement(driver,
+			"//a[text()='"+Title+"']/ancestor::article/../..//button[@title='Delete']", "Delete Confirm Button",
+			action.SCROLLANDBOOLEAN, 30);
+	}
+
+
+@FindBy(xpath = "//span[@data-aura-class='forceActionsText']")
+private WebElement deleteRecordMsg;
+
+public WebElement deleteRecordMsg(int timeOut) {
+	return isDisplayed(driver, deleteRecordMsg, "Visibility", timeOut, "Delete Record Msg");
+}
+
+
 }
 
