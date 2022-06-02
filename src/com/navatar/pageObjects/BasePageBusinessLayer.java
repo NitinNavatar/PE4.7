@@ -1977,8 +1977,8 @@ public WebElement getStep3SendBtn(PageName pageName,TopOrBottom topOrBottom,int 
 					+ "']/following-sibling::a";
 		} else if (PageLabel.Related_To.toString().equalsIgnoreCase(label)
 				|| PageLabel.Related_Associations.toString().equalsIgnoreCase(label) || isMultipleAssociation) {
-			xpath = "//label[text()='" + fieldlabel + "']/..//span[contains(@class,'customPill')]//span[text()='" + name
-					+ "']//following-sibling::button";
+			xpath = "//span[text()='" + fieldlabel + "']/../..//span[text()='" + name
+					+ "']//following-sibling::a[@class='deleteAction']";
 			// label[text()="Name"]/..//span[contains(@class,"customPill")]/span[text()="Davidson
 			// Bendt"]/following-sibling::button
 

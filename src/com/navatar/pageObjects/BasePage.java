@@ -4614,7 +4614,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getDeleteButtonPopUp(String projectName,int timeOut) {
 		WebElement ele=null;
 		
-		String xpath="//button[@title='Delete' or text()='Delete']";
+		String xpath="//div[contains(@class,'forceModalActionContainer')]//button[@title='Delete' or text()='Delete']";
 		List<WebElement> list= FindElements(driver, xpath, "Delete Button PopUp");
 		
 		for(WebElement element:list) {
