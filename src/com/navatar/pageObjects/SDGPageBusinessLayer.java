@@ -467,9 +467,10 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 					log(LogStatus.INFO, "Able to Enter Value : " + sdgName + " to Search Box : " + sdgName, YesNo.No);
 
 					sdgSearchBox(30).sendKeys(Keys.ENTER);
-
+					CommonLib.ThreadSleep(2000);
 					WebElement sdgNameAfterSearchEle = FindElement(driver, "//th//a[text()='" + sdgName + "']",
 							"SDG Name After Search ", action.SCROLLANDBOOLEAN, 20);
+					CommonLib.ThreadSleep(2000);
 					if (click(driver, sdgNameAfterSearchEle, "SDG Name After Search", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on SDG Name: " + sdgName, YesNo.No);
 						if (clickUsingJavaScript(driver, sdgEditButton(timeOut), "Edit button")) {

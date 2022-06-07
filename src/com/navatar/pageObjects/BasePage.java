@@ -5,6 +5,7 @@ package com.navatar.pageObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.server.handler.FindElements;
@@ -5551,6 +5552,19 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, deleteRecordButton, "Visibility", timeOut, "Delete Record Button");
 	
 	}	
+	
+	public WebElement getUserNameHeader(String userName,int timeOut) {
+		String xpath="//b//span[text()='"+userName+"']";
+		WebElement ele=FindElement(driver, xpath, "User Header Found: "+userName, action.SCROLLANDBOOLEAN, timeOut);
+		try {
+		return isDisplayed(driver, ele, "Visibility", timeOut, "User Header Found: "+userName);
+		
+		}
+		catch(StaleElementReferenceException e)
+		{
+			return isDisplayed(driver, ele, "Visibility", timeOut, "User Header Found: "+userName);
+		}
+		}
 
 	
 	

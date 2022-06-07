@@ -11,12 +11,15 @@ import com.navatar.generic.CommonLib;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.ReportDashboardFolderType;
 import com.navatar.generic.EnumConstants.ReportField;
+import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.object;
+import com.relevantcodes.extentreports.LogStatus;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import static com.navatar.generic.CommonLib.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ReportsTabBusinessLayer extends ReportsTab {
 
@@ -399,10 +402,6 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 
 	}
 
-	
-	
-	
-	
 	public boolean createCustomReportForFolderLightningMode(String environment, String mode, String folderName,
 			ReportFormatName reportFormatName, String reportName, String reportDescription, String reportType,
 			ReportField[] reportField, String showValue, String dateField, String rangeValue, String fromDate,
@@ -872,7 +871,7 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 
 										appLog.info("Selected Operator Filter value : " + operatorDrpDownVal[j]);
 
-										if (customFieldDrpDwnVal.equals("Stage New")
+										if (customFieldDrpDwnVal.equals("Stage")
 												|| customFieldDrpDwnVal.equals("Industry"))
 
 										{
@@ -1053,6 +1052,73 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 			appLog.error("Not Able to Add Filters ");
 
 		return flag;
+
+	}
+
+	
+	/**
+	 * @author Ankur Huria
+	 * @param reportName
+	 * @param reportCount
+	 * @param reportColumns
+	 */
+	public boolean reportVerification(String reportName, int reportCount, List<String> reportColumns)
+
+	{
+		int status = 0;
+		CommonLib.ThreadSleep(10000);
+		List<String> columns = reportColumnHeaders().stream().map(s -> s.getText()).collect(Collectors.toList());
+		int numberOfColumnsActual = columns.size();
+		int numberOfColumnsExpected = reportColumns.size();
+		if (CommonLib.getText(driver, getreportName(reportName), "Report Name:" + reportName, action.SCROLLANDBOOLEAN)
+				.equals(reportName)) {
+			log(LogStatus.PASS, "Report Name: " + reportName + " is verified", YesNo.No);
+			if (reportRecordsRowsCount().size() == reportCount) {
+				log(LogStatus.PASS, "Number of Records Verified", YesNo.No);
+				status++;
+
+			} else {
+				log(LogStatus.ERROR, "Number of Records not Verified, Expected: " + reportCount + "but Actual: "
+						+ reportRecordsRowsCount().size(), YesNo.No);
+				sa.assertTrue(false, "Number of Records not Verified, Expected: " + reportCount + "but Actual: "
+						+ reportRecordsRowsCount().size());
+			}
+
+			if (numberOfColumnsActual == numberOfColumnsExpected) {
+				log(LogStatus.PASS, "Number of Columns Verified", YesNo.No);
+				status++;
+				if (columns.equals(reportColumns)) {
+					log(LogStatus.PASS, "Column Headers Verified", YesNo.No);
+					status++;
+
+				} else {
+					log(LogStatus.ERROR,
+							"Column Headers not Verified, Expected: " + reportColumns + "but Actual: " + columns,
+							YesNo.No);
+					sa.assertTrue(false,
+							"Column Headers not Verified, Expected: " + reportColumns + "but Actual: " + columns);
+
+				}
+			} else {
+				log(LogStatus.ERROR, "Number of Columns not Verified, Expected: " + numberOfColumnsExpected
+						+ "but Actual: " + numberOfColumnsActual, YesNo.No);
+				sa.assertTrue(false, "Number of Columns not Verified, Expected: " + numberOfColumnsExpected
+						+ "but Actual: " + numberOfColumnsActual);
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Report Name not verfied, Expected: " + reportName + "but Actual: " + CommonLib
+					.getText(driver, getreportName(reportName), "Report Name:" + reportName, action.SCROLLANDBOOLEAN),
+					YesNo.No);
+			sa.assertTrue(false, "Report Name not verfied, Expected: " + reportName + "but Actual: " + CommonLib
+					.getText(driver, getreportName(reportName), "Report Name:" + reportName, action.SCROLLANDBOOLEAN));
+		}
+		if (status == 3)
+
+			return true;
+
+		else
+			return false;
 
 	}
 }

@@ -683,7 +683,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 
 		try
 		{
-			ele = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='"+fieldLabel+"']/parent::lightning-combobox//button/span[text()='All']")));
+			ele = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='"+fieldLabel+"']/parent::lightning-combobox//button")));
 			log(LogStatus.INFO, "Element has been found for the "+fieldLabel, YesNo.No);
 		}
 		catch(Exception ex)
