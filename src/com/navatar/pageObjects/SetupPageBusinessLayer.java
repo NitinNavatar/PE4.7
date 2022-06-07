@@ -4121,6 +4121,7 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 						appLog.info("Clicked on the edit button against "+email);
 						CommonLib.switchToDefaultContent(driver);
 						CommonLib.switchToFrame(driver, 50, getuserEditPageIframe(50));
+						CommonLib.ThreadSleep(3000);
 
 						if(tag.toString().equals("select"))
 						{
@@ -4165,6 +4166,7 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 							}
 
 						}
+						CommonLib.ThreadSleep(3000);
 						if (click(driver, geteditPageSaveButton(50), "save Button", action.SCROLLANDBOOLEAN)) {
 							appLog.info("Clicked on the save button against "+email);
 							CommonLib.switchToDefaultContent(driver);

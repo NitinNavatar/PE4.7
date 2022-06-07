@@ -630,7 +630,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 				"Page Size Select ", action.SCROLLANDBOOLEAN, 10);
 		if (CommonLib.selectVisibleTextFromDropDown(driver, pageSizeSelect, "Page Size Select", pageSize)) {
 			log(LogStatus.INFO, "Selected the Page Size", YesNo.No);
-			CommonLib.ThreadSleep(30000);
+			CommonLib.ThreadSleep(25000);
 			flag=true;
 		}
 		else {
@@ -681,9 +681,12 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		WebElement ele;
 		String xPath;
 
+		CommonLib.refresh(driver);
+
 		try
 		{
-			ele = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='"+fieldLabel+"']/parent::lightning-combobox//button/span[text()='All']")));
+			//	ele = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='"+fieldLabel+"']/parent::lightning-combobox//button/span[text()='All']")));
+			ele = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='"+fieldLabel+"']/parent::lightning-combobox//button")));		
 			log(LogStatus.INFO, "Element has been found for the "+fieldLabel, YesNo.No);
 		}
 		catch(Exception ex)
@@ -692,12 +695,22 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 			log(LogStatus.ERROR,"Could not get the element for "+fieldLabel,YesNo.No);
 			return false;
 		}
-
-		Actions act=new Actions(driver);
-		act.moveToElement(ele).perform();
+		CommonLib.ThreadSleep(3000);
+		try
+		{
+			Actions act=new Actions(driver);
+			act.moveToElement(ele).perform();
+			log(LogStatus.INFO, "Element has been moved to "+fieldLabel, YesNo.No);
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+			log(LogStatus.ERROR, "not able to move to Element : "+fieldLabel, YesNo.No);
+		}
+		CommonLib.ThreadSleep(2000);
 		if(CommonLib.click(driver, ele,fieldLabel , action.BOOLEAN))
 		{
-            CommonLib.ThreadSleep(3000);
+			CommonLib.ThreadSleep(4000);
 			xPath="//label[text()='"+fieldLabel+"']/parent::lightning-combobox//lightning-base-combobox-item//span[@class='slds-truncate']";
 			List<WebElement> elements=CommonLib.FindElements(driver, xPath, fieldLabel);
 			if(CommonLib.getSelectedOptionOfDropDown(driver,elements,fieldLabel+ "Dropdown list" , filterName))
@@ -719,9 +732,88 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 
 
 	}
+
+	public boolean verifyRecordfilterfieldvisibility()
+	{
+		
+		CommonLib.refresh(driver);
+		
+		if(CommonLib.checkElementVisibility(driver, getrecordFilter(50), "Record Filter", 50))
+		{
+			log(LogStatus.INFO,"Record Filter fild is visible",YesNo.No);
+
+			return true;
+		}
+		else
+		{
+			log(LogStatus.INFO,"Record Filter fild is not visible",YesNo.No);
+
+			return false;
+		}
+
+	}
 	
+	public ArrayList<String> verifyDropDownOptionValue(String fieldLabel, ArrayList<String> optionvalue)
+	{
+		WebElement ele=null;
+		boolean flag= false;
+		String xPath;
+		ArrayList<String> result=new ArrayList<String>();
+		try
+		{
+			ele = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='"+fieldLabel+"']/parent::lightning-combobox//button")));
+			log(LogStatus.INFO, "Element has been found for the "+fieldLabel, YesNo.No);
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+			log(LogStatus.ERROR,"Could not get the element for "+fieldLabel,YesNo.No);
+			result.add("Could not get the element for "+fieldLabel);
+		}
+		if(CommonLib.click(driver, ele,fieldLabel , action.SCROLLANDBOOLEAN))
+		{
+			log(LogStatus.INFO, "Clicked on the "+fieldLabel, YesNo.No);
+			xPath="//label[text()='"+fieldLabel+"']/parent::lightning-combobox//span[not(text()='All')]/parent::span/parent::lightning-base-combobox-item";
+			List<WebElement> elements=CommonLib.FindElements(driver, xPath, fieldLabel);
+			
+			ArrayList<String> dropDownOptionvalue = new ArrayList<String>();
+			
+			for(WebElement eles:elements)
+			{
+				String val=CommonLib.getText(driver, eles, fieldLabel, action.SCROLLANDBOOLEAN);
+				dropDownOptionvalue.add(val);
+			}
+			
+			for(int i=0;i<optionvalue.size();i++)
+			{
+				if(optionvalue.get(i).equals(dropDownOptionvalue.get(i)))
+				{
+					log(LogStatus.INFO, optionvalue.get(i)+" value has been matched with the "+dropDownOptionvalue.get(i), YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR, optionvalue.get(i)+" value is not matched with the "+dropDownOptionvalue.get(i), YesNo.No);
+					result.add(optionvalue.get(i)+" value is not matched with the "+dropDownOptionvalue.get(i));					
+				}
+			}
+
+			
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Could not click on the Record filter field", YesNo.No);
+			result.add("Could not click on the Record filter field");					
 	
-	
+		}
+		
+		
+		return result;
+
+		
+	}
+
+
+
 }
 
 

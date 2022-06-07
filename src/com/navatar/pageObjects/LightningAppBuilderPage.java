@@ -231,6 +231,15 @@ public class LightningAppBuilderPage extends BasePageBusinessLayer {
 	
 	
 	
+	@FindBy(xpath="//label[text()='Show']")
+	private WebElement recordFilter;
+
+	public WebElement getrecordFilter(int timeOut) {
+		return isDisplayed(driver, recordFilter, "Visibility", timeOut, "Record Filter");
+
+	}
+	
+	
 	
 	
 	
