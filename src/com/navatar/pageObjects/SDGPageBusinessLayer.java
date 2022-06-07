@@ -2,6 +2,7 @@ package com.navatar.pageObjects;
 
 import static com.navatar.generic.AppListeners.appLog;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -663,22 +664,27 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 
 
 
-	public boolean sequenceFilter(String projectName, String sdgName)
+	public boolean sequenceFilter(String projectName, String sdgName,String apiNameOrOverrideLabelName,String sequenceFilterOptionValue)
 	{
+		String xpath="";
+		WebElement ele;
 		if(openSDG(projectName,sdgName))
 		{
 			if (click(driver, getrelatedTabOnSDG(40), "Related tab on SDG", action.BOOLEAN)) {
 				log(LogStatus.INFO,"Clicked on the Related Button",YesNo.Yes);	
-				if (click(driver, getnameEroBtn(40), "Name button", action.BOOLEAN)) {
+				CommonLib.ThreadSleep(3000);
+				xpath="//tbody//lst-formatted-text[text()='"+apiNameOrOverrideLabelName+"']/ancestor::td/following-sibling::td//button";
+				ele=CommonLib.FindElement(driver, xpath, "Ero Button", action.SCROLLANDBOOLEAN, 50);
+				if (click(driver, ele, "Name button", action.BOOLEAN)) {
 					log(LogStatus.INFO,"Clicked on the name button",YesNo.Yes);				
 					CommonLib.ThreadSleep(8000);
 					if (click(driver, getsdgPageEditButton(40), "Edit button", action.BOOLEAN)) {
 						log(LogStatus.INFO,"Clicked on the edit button",YesNo.Yes);	
+						CommonLib.ThreadSleep(3000);
 						if (click(driver, getfilterSequenceButton(40), "Filter sequence button", action.BOOLEAN)) {
 							log(LogStatus.INFO,"Clicked on the filter sequence button",YesNo.Yes);
 							CommonLib.ThreadSleep(3000);
-
-							if(CommonLib.getSelectedOptionOfDropDown(driver, getfilterSequenceDropdownList(), "Filter Sequence list", "1"))
+							if(CommonLib.getSelectedOptionOfDropDown(driver, getfilterSequenceDropdownList(), "Filter Sequence list", sequenceFilterOptionValue))
 							{
 								log(LogStatus.INFO,"Option has been selected from the sequence filter field drop down",YesNo.Yes);
 								if (click(driver, getsdgSaveBtn(40), "save button", action.BOOLEAN)) {
@@ -739,13 +745,159 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 			log(LogStatus.ERROR,"could not open the SDG",YesNo.Yes);
 			return false;
 		}
-	
-
 
 	}
 
 
+	public ArrayList<String> getListText(String xpath,String elementName)
+	{
+		ArrayList<String> list=new ArrayList<String>();
+		if(xpath!=null) {
+			List<WebElement> elements=CommonLib.FindElements(driver, xpath, elementName);
 
+			for(int i=0;i<elements.size();i++)
+			{
+				String val=CommonLib.getText(driver, elements.get(i), elementName, action.SCROLLANDBOOLEAN);
+				list.add(val);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, elementName+ " xpath is null",YesNo.Yes);
+			return null;
+		}
+
+		return list;	
+	}
+
+
+	public boolean verifyRecordExistOrNotOnSDG(String sdgName,String elementName)
+	{
+		WebElement ele;
+		String xpath;
+		xpath="//a[text()='"+sdgName+"']/ancestor::div[contains(@class,'slds-card__header')]/following-sibling::div//span[text()='No data returned']";
+		ele=CommonLib.FindElement(driver, xpath, elementName, action.SCROLLANDBOOLEAN, 30);
+		if(ele!=null)
+		{
+			log(LogStatus.INFO, elementName+ " element has been Found",YesNo.No);
+			return true;
+
+		}
+		else
+		{
+			log(LogStatus.INFO, "could not get the "+elementName+" element",YesNo.No);
+			return false;	
+		}
+
+
+	}
+	public boolean verifyRecordAfterApplyingGlobalFilter(String sdgName,String filterOptionValue, String fieldName,String elementName)
+	{
+		int status=0;
+		boolean flag=false;
+		ThreadSleep(3000);
+		String xpath="//a[text()='"+sdgName+"']/ancestor::div[contains(@class,'slds-card__header')]/following-sibling::div//tbody//td[@data-label='"+fieldName+": ']";
+		ArrayList<String> list= getListText(xpath, elementName);
+		if(list!=null)
+		{
+			for(int i=0; i<list.size();i++)
+			{
+				if(list.get(i).equals(filterOptionValue))
+				{
+					log(LogStatus.INFO, list.get(i)+" has been matched with "+filterOptionValue+"", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR, list.get(i)+" is not matched with the "+filterOptionValue+"", YesNo.No);
+					status++;
+				}
+			}
+
+			if(status==0)
+			{
+				log(LogStatus.INFO, "Sequence filter has been Applied Records are matched", YesNo.No);
+				flag=true;
+			}
+			else
+			{
+				log(LogStatus.INFO, "Sequence filter has been Applied but Record is not matched", YesNo.No);
+				flag=false;
+			}
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Either Sequence filter is not applied properly or Could not get the records", YesNo.No);
+			sa.assertTrue(false, "Either Sequence filter is not applied properly or Could not get the records");
+		}
+		return flag;
+
+	}
+
+
+	public boolean verifyEditOrLockedIconOnSDGData(String recordName,IconType icon)
+	{
+		String xPath="";
+		WebElement ele=null;
+		WebElement verifyElement=null;
+		boolean flag=false;
+		CommonLib.ThreadSleep(2000);
+		
+		
+		xPath="(//td[@data-label='"+recordName+": '])[3]";
+		ele=CommonLib.FindElement(driver, xPath, recordName+" Record Name", action.BOOLEAN, 50);
+		mouseOverOperation(driver, ele);
+		
+		xPath="(//td[@data-label='"+recordName+": '])[1]";
+		
+		ele=CommonLib.FindElement(driver, xPath, recordName+" Record Name", action.BOOLEAN, 50);
+
+		if(mouseOverOperation(driver, ele))
+		{
+			log(LogStatus.INFO, "Mouse has been hover to "+recordName, YesNo.No);
+
+			if(icon.toString().equals("Edit"))
+			{
+				xPath="(//td[@data-label='"+recordName+": ']//span[text()='Edit']/preceding-sibling::lightning-primitive-icon)[1]";
+				ele=CommonLib.FindElement(driver, xPath, "Edit icon on "+recordName, action.BOOLEAN, 50);
+
+				verifyElement=CommonLib.isDisplayed(driver, ele, "Visibility", 30, "Edit icon on "+recordName);
+
+				if(verifyElement!=null)
+				{
+					log(LogStatus.INFO, "Edit icon is visible on "+recordName, YesNo.No);
+					flag=true;
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Edit icon is not visible on "+recordName, YesNo.No);
+				}
+
+			}
+			else if(icon.toString().equals("Locked"))
+			{
+				xPath="(//td[@data-label='"+recordName+": ']//span[text()='Locked']/preceding-sibling::lightning-primitive-icon)[1]";
+				ele=CommonLib.FindElement(driver, xPath, "Locked icon on "+recordName, action.BOOLEAN, 50);
+
+				verifyElement=CommonLib.isDisplayed(driver, ele, "Visibility", 30, "Locked icon on "+recordName);
+
+				if(verifyElement!=null)
+				{
+					log(LogStatus.INFO, "Locked icon is visible on "+recordName, YesNo.No);
+					flag=true;
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Locked icon is not visible on "+recordName, YesNo.No);
+				}
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Mouse is not hover on the "+recordName, YesNo.No);	
+		}
+		return flag;
+	}
 
 
 

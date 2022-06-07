@@ -2291,7 +2291,7 @@ public boolean createRecordTypeForObject(String projectName,String[][] labelWith
 					log(LogStatus.ERROR,"Not able to select value from Existing Page Layout drop down "+layOut,YesNo.Yes);
 				}	
 			}
-			if (click(driver,  getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
+			if (clickUsingJavaScript(driver,  getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.ERROR, "Click on save Button ", YesNo.No);
 				ThreadSleep(10000);
 				flag=true;
@@ -2338,30 +2338,30 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 		} catch (Exception e1) {
 		}
 		ThreadSleep(2000);
-
+		
 			switchToFrame(driver, 60, getSetUpPageIframe(120));
 			for (String[] lv : labelWithValue) {
 				label = lv[0];
 				value = lv[1];
 				ele = getRecordTypeLabel(projectName, label, 20);
-				ThreadSleep(2000);
-				try {
-					if (isAlertPresent(driver)) {
-						Screen screen = new Screen();
-						screen.click(".\\AutoIT\\AlertOk.PNG");
-
-					}
-				} catch (Exception e) {
-					try {
-						if (isAlertPresent(driver)) {
-							Screen screen = new Screen();
-							screen.click(".\\AutoIT\\AlertOk.PNG");
-
-						}
-					} catch (Exception e1) {
-					}
-				}
-
+//				ThreadSleep(2000);
+//				try {
+//					if (isAlertPresent(driver)) {
+//						Screen screen = new Screen();
+//						screen.click(".\\AutoIT\\AlertOk.PNG");
+//
+//					}
+//				} catch (Exception e) {
+//					try {
+//						if (isAlertPresent(driver)) {
+//							Screen screen = new Screen();
+//							screen.click(".\\AutoIT\\AlertOk.PNG");
+//
+//						}
+//					} catch (Exception e1) {
+//					}
+//				}
+				/* driver.switchTo().alert().accept(); */
 				if (label.equals(recordTypeLabel.Active.toString())) {
 					if (click(driver, ele, "Active CheckBox", action.BOOLEAN)) {
 						log(LogStatus.INFO, "Click on Active CheckBox", YesNo.No);
@@ -2371,22 +2371,9 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 					}
 				} else {
 
-					if (sendKeys(driver, ele, value, label, action.BOOLEAN)) {
-						log(LogStatus.INFO, "Able to enter " + label, YesNo.No);
-
-						try {
-							Screen screen = new Screen();
-							screen.click(".\\AutoIT\\AlertOk.PNG");
-						} catch (FindFailed e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-
-					} else {
-						log(LogStatus.ERROR, "Not Able to enter " + value + " to label " + label, YesNo.Yes);
-						sa.assertTrue(false, "Not Able to enter " + value + " to label " + label);
-					}
-
+					JavascriptExecutor js = (JavascriptExecutor) driver;
+					js.executeScript("arguments[0].setAttribute('value', arguments[1])",ele,value);
+					
 				}
 				
 				
@@ -4121,6 +4108,7 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 						appLog.info("Clicked on the edit button against "+email);
 						CommonLib.switchToDefaultContent(driver);
 						CommonLib.switchToFrame(driver, 50, getuserEditPageIframe(50));
+						CommonLib.ThreadSleep(3000);
 
 						if(tag.toString().equals("select"))
 						{
@@ -4165,6 +4153,7 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 							}
 
 						}
+						CommonLib.ThreadSleep(3000);
 						if (click(driver, geteditPageSaveButton(50), "save Button", action.SCROLLANDBOOLEAN)) {
 							appLog.info("Clicked on the save button against "+email);
 							CommonLib.switchToDefaultContent(driver);

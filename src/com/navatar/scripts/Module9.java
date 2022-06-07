@@ -6,6 +6,7 @@ import static com.navatar.generic.CommonLib.ThreadSleep;
 import static com.navatar.generic.CommonLib.click;
 import static com.navatar.generic.CommonLib.clickUsingJavaScript;
 import static com.navatar.generic.CommonLib.exit;
+import static com.navatar.generic.CommonLib.isDisplayed;
 import static com.navatar.generic.CommonLib.log;
 import static com.navatar.generic.CommonLib.removeNumbersFromString;
 import static com.navatar.generic.CommonLib.switchOnWindow;
@@ -18,7 +19,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -28,6 +32,7 @@ import com.navatar.generic.EmailLib;
 import com.navatar.generic.EnumConstants.Condition;
 import com.navatar.generic.EnumConstants.Environment;
 import com.navatar.generic.EnumConstants.HTMLTAG;
+import com.navatar.generic.EnumConstants.IconType;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.PermissionType;
 import com.navatar.generic.EnumConstants.ReportField;
@@ -60,6 +65,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 public class Module9 extends BaseLib {
 
+	
 	@Parameters({ "projectName" })
 
 	@Test
@@ -274,10 +280,12 @@ public class Module9 extends BaseLib {
 
 		String datas[][] = {
 				{ "Public Reports", "#Stage - Interested", "Fundraisings with Fund Name", "All fundraisings",
+
 						"All Time", "Closing Date", "Fund Name: Fund Name<Break>Stage", "equals<Break>equals",
 						"Sumo Logic - Nov 2017<Break>Interested" },
+
 				{ "Public Reports", "#Individuals", "Contacts & Firms", "All firms", "All Time", "Created Date",
-						"Industry", "equals", "Agriculture" } };
+					"Industry", "equals", "Agriculture" } };
 
 		int i = 0;
 		for (String[] data : datas) {
@@ -449,7 +457,7 @@ public class Module9 extends BaseLib {
 	 * 
 	 * }
 	 */
-
+	
 	@Parameters({ "projectName" })
 
 	@Test
@@ -978,7 +986,7 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 
-	@Test
+	@Test	
 
 	public void M9Tc009_ValidateNumberOfRecordsAfterEnterLitViewNameSDGComponent_Fund_First_SDG_Grid_InHomepage(
 			String projectName) {
@@ -1199,7 +1207,7 @@ public class Module9 extends BaseLib {
 										if (home.numberOfRecordsMatch(sdgName, numberOfRecords)) {
 											log(LogStatus.INFO,
 													"----------No. of Records Matched: " + numberOfRecords
-															+ "for List View Name: " + sdgLabel[0][1] + "------------",
+													+ "for List View Name: " + sdgLabel[0][1] + "------------",
 													YesNo.No);
 
 										}
@@ -1207,11 +1215,11 @@ public class Module9 extends BaseLib {
 										else {
 											log(LogStatus.FAIL,
 													"---------No. of Records not Matched " + numberOfRecords
-															+ "for List View Name: " + sdgLabel[0][1] + "-------- ",
+													+ "for List View Name: " + sdgLabel[0][1] + "-------- ",
 													YesNo.No);
 											sa.assertTrue(false,
 													"-----------No. of Records not Matched: " + numberOfRecords
-															+ "for List View Name: " + sdgLabel[0][1]
+													+ "for List View Name: " + sdgLabel[0][1]
 															+ " --------------");
 
 										}
@@ -1221,7 +1229,7 @@ public class Module9 extends BaseLib {
 										if (home.numberOfRecordsMatch(sdgName, numberOfRecords)) {
 											log(LogStatus.INFO,
 													"----------No. of Records Matched: " + numberOfRecords
-															+ "for List View Name: " + sdgLabel[0][1] + "------------",
+													+ "for List View Name: " + sdgLabel[0][1] + "------------",
 													YesNo.No);
 
 										}
@@ -1229,11 +1237,11 @@ public class Module9 extends BaseLib {
 										else {
 											log(LogStatus.FAIL,
 													"---------No. of Records not Matched " + numberOfRecords
-															+ "for List View Name: " + sdgLabel[0][1] + "-------- ",
+													+ "for List View Name: " + sdgLabel[0][1] + "-------- ",
 													YesNo.No);
 											sa.assertTrue(false,
 													"-----------No. of Records not Matched: " + numberOfRecords
-															+ "for List View Name: " + sdgLabel[0][1]
+													+ "for List View Name: " + sdgLabel[0][1]
 															+ " --------------");
 
 										}
@@ -1290,13 +1298,13 @@ public class Module9 extends BaseLib {
 
 		String[][] listViewSheetData = {
 				{ M9LV_1_Member, M9LV_1_TabName, M9LV_1_ListViewName, M9LV_1_ListAccessibility, M9LV_1_Filter,
-						M9LV_1_Field, M9LV_1_Operators, M9LV_1_FilterValue },
+					M9LV_1_Field, M9LV_1_Operators, M9LV_1_FilterValue },
 				{ M9LV_2_Member, M9LV_2_TabName, M9LV_2_ListViewName, M9LV_2_ListAccessibility, M9LV_2_Filter,
 						M9LV_2_Field, M9LV_2_Operators, M9LV_2_FilterValue },
 				{ M9LV_3_Member, M9LV_3_TabName, M9LV_3_ListViewName, M9LV_3_ListAccessibility, M9LV_3_Filter,
-						M9LV_3_Field, M9LV_3_Operators, M9LV_3_FilterValue },
+							M9LV_3_Field, M9LV_3_Operators, M9LV_3_FilterValue },
 				{ M9LV_4_Member, M9LV_4_TabName, M9LV_4_ListViewName, M9LV_4_ListAccessibility, M9LV_4_Filter,
-						M9LV_4_Field, M9LV_4_Operators, M9LV_4_FilterValue } };
+								M9LV_4_Field, M9LV_4_Operators, M9LV_4_FilterValue } };
 
 		for (String[] row : listViewSheetData) {
 
@@ -1387,45 +1395,45 @@ public class Module9 extends BaseLib {
 
 		String[][] val = {
 				{ M9SDGD_1_AccountIndustry, M9SDGD_1_Totalfirm, M9SDGD_1_Task_as_per_Industries, M9SDGD_1_Individuals,
-						M9SDGD_1_Fundraising_as_per_Industries },
+					M9SDGD_1_Fundraising_as_per_Industries },
 				{ M9SDGD_2_AccountIndustry, M9SDGD_2_Totalfirm, M9SDGD_2_Task_as_per_Industries, M9SDGD_2_Individuals,
 						M9SDGD_2_Fundraising_as_per_Industries },
 				{ M9SDGD_3_AccountIndustry, M9SDGD_3_Totalfirm, M9SDGD_3_Task_as_per_Industries, M9SDGD_3_Individuals,
-						M9SDGD_3_Fundraising_as_per_Industries },
+							M9SDGD_3_Fundraising_as_per_Industries },
 				{ M9SDGD_4_AccountIndustry, M9SDGD_4_Totalfirm, M9SDGD_4_Task_as_per_Industries, M9SDGD_4_Individuals,
-						M9SDGD_4_Fundraising_as_per_Industries },
+								M9SDGD_4_Fundraising_as_per_Industries },
 				{ M9SDGD_5_AccountIndustry, M9SDGD_5_Totalfirm, M9SDGD_5_Task_as_per_Industries, M9SDGD_5_Individuals,
-						M9SDGD_5_Fundraising_as_per_Industries },
+									M9SDGD_5_Fundraising_as_per_Industries },
 				{ M9SDGD_6_AccountIndustry, M9SDGD_6_Totalfirm, M9SDGD_6_Task_as_per_Industries, M9SDGD_6_Individuals,
-						M9SDGD_6_Fundraising_as_per_Industries },
+										M9SDGD_6_Fundraising_as_per_Industries },
 				{ M9SDGD_7_AccountIndustry, M9SDGD_7_Totalfirm, M9SDGD_7_Task_as_per_Industries, M9SDGD_7_Individuals,
-						M9SDGD_7_Fundraising_as_per_Industries },
+											M9SDGD_7_Fundraising_as_per_Industries },
 				{ M9SDGD_8_AccountIndustry, M9SDGD_8_Totalfirm, M9SDGD_8_Task_as_per_Industries, M9SDGD_8_Individuals,
-						M9SDGD_8_Fundraising_as_per_Industries },
+												M9SDGD_8_Fundraising_as_per_Industries },
 				{ M9SDGD_9_AccountIndustry, M9SDGD_9_Totalfirm, M9SDGD_9_Task_as_per_Industries, M9SDGD_9_Individuals,
-						M9SDGD_9_Fundraising_as_per_Industries },
+													M9SDGD_9_Fundraising_as_per_Industries },
 				{ M9SDGD_10_AccountIndustry, M9SDGD_10_Totalfirm, M9SDGD_10_Task_as_per_Industries,
-						M9SDGD_10_Individuals, M9SDGD_10_Fundraising_as_per_Industries },
+														M9SDGD_10_Individuals, M9SDGD_10_Fundraising_as_per_Industries },
 				{ M9SDGD_11_AccountIndustry, M9SDGD_11_Totalfirm, M9SDGD_11_Task_as_per_Industries,
-						M9SDGD_11_Individuals, M9SDGD_11_Fundraising_as_per_Industries },
+															M9SDGD_11_Individuals, M9SDGD_11_Fundraising_as_per_Industries },
 				{ M9SDGD_12_AccountIndustry, M9SDGD_12_Totalfirm, M9SDGD_12_Task_as_per_Industries,
-						M9SDGD_12_Individuals, M9SDGD_12_Fundraising_as_per_Industries },
+																M9SDGD_12_Individuals, M9SDGD_12_Fundraising_as_per_Industries },
 				{ M9SDGD_13_AccountIndustry, M9SDGD_13_Totalfirm, M9SDGD_13_Task_as_per_Industries,
-						M9SDGD_13_Individuals, M9SDGD_13_Fundraising_as_per_Industries },
+																	M9SDGD_13_Individuals, M9SDGD_13_Fundraising_as_per_Industries },
 				{ M9SDGD_14_AccountIndustry, M9SDGD_14_Totalfirm, M9SDGD_14_Task_as_per_Industries,
-						M9SDGD_14_Individuals, M9SDGD_14_Fundraising_as_per_Industries },
+																		M9SDGD_14_Individuals, M9SDGD_14_Fundraising_as_per_Industries },
 				{ M9SDGD_15_AccountIndustry, M9SDGD_15_Totalfirm, M9SDGD_15_Task_as_per_Industries,
-						M9SDGD_15_Individuals, M9SDGD_15_Fundraising_as_per_Industries },
+																			M9SDGD_15_Individuals, M9SDGD_15_Fundraising_as_per_Industries },
 				{ M9SDGD_16_AccountIndustry, M9SDGD_16_Totalfirm, M9SDGD_16_Task_as_per_Industries,
-						M9SDGD_16_Individuals, M9SDGD_16_Fundraising_as_per_Industries },
+																				M9SDGD_16_Individuals, M9SDGD_16_Fundraising_as_per_Industries },
 				{ M9SDGD_17_AccountIndustry, M9SDGD_17_Totalfirm, M9SDGD_17_Task_as_per_Industries,
-						M9SDGD_17_Individuals, M9SDGD_17_Fundraising_as_per_Industries },
+																					M9SDGD_17_Individuals, M9SDGD_17_Fundraising_as_per_Industries },
 				{ M9SDGD_18_AccountIndustry, M9SDGD_18_Totalfirm, M9SDGD_18_Task_as_per_Industries,
-						M9SDGD_18_Individuals, M9SDGD_18_Fundraising_as_per_Industries },
+																						M9SDGD_18_Individuals, M9SDGD_18_Fundraising_as_per_Industries },
 				{ M9SDGD_19_AccountIndustry, M9SDGD_19_Totalfirm, M9SDGD_19_Task_as_per_Industries,
-						M9SDGD_19_Individuals, M9SDGD_19_Fundraising_as_per_Industries },
+																							M9SDGD_19_Individuals, M9SDGD_19_Fundraising_as_per_Industries },
 				{ M9SDGD_20_AccountIndustry, M9SDGD_20_Totalfirm, M9SDGD_20_Task_as_per_Industries,
-						M9SDGD_20_Individuals, M9SDGD_20_Fundraising_as_per_Industries } };
+																								M9SDGD_20_Individuals, M9SDGD_20_Fundraising_as_per_Industries } };
 
 		if (BP.openAppFromAppLauchner(appPage, 50)) {
 			ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage, tableName, val);
@@ -1458,45 +1466,45 @@ public class Module9 extends BaseLib {
 
 		String[][] val = {
 				{ M9SDGD_21_AccountIndustry, M9SDGD_21_Totalfirm, M9SDGD_21_Task_as_per_Industries,
-						M9SDGD_21_Individuals, M9SDGD_21_Fundraising_as_per_Industries },
+					M9SDGD_21_Individuals, M9SDGD_21_Fundraising_as_per_Industries },
 				{ M9SDGD_22_AccountIndustry, M9SDGD_22_Totalfirm, M9SDGD_22_Task_as_per_Industries,
 						M9SDGD_22_Individuals, M9SDGD_22_Fundraising_as_per_Industries },
 				{ M9SDGD_23_AccountIndustry, M9SDGD_23_Totalfirm, M9SDGD_23_Task_as_per_Industries,
-						M9SDGD_23_Individuals, M9SDGD_23_Fundraising_as_per_Industries },
+							M9SDGD_23_Individuals, M9SDGD_23_Fundraising_as_per_Industries },
 				{ M9SDGD_24_AccountIndustry, M9SDGD_24_Totalfirm, M9SDGD_24_Task_as_per_Industries,
-						M9SDGD_24_Individuals, M9SDGD_24_Fundraising_as_per_Industries },
+								M9SDGD_24_Individuals, M9SDGD_24_Fundraising_as_per_Industries },
 				{ M9SDGD_25_AccountIndustry, M9SDGD_25_Totalfirm, M9SDGD_25_Task_as_per_Industries,
-						M9SDGD_25_Individuals, M9SDGD_25_Fundraising_as_per_Industries },
+									M9SDGD_25_Individuals, M9SDGD_25_Fundraising_as_per_Industries },
 				{ M9SDGD_26_AccountIndustry, M9SDGD_26_Totalfirm, M9SDGD_26_Task_as_per_Industries,
-						M9SDGD_26_Individuals, M9SDGD_26_Fundraising_as_per_Industries },
+										M9SDGD_26_Individuals, M9SDGD_26_Fundraising_as_per_Industries },
 				{ M9SDGD_27_AccountIndustry, M9SDGD_27_Totalfirm, M9SDGD_27_Task_as_per_Industries,
-						M9SDGD_27_Individuals, M9SDGD_27_Fundraising_as_per_Industries },
+											M9SDGD_27_Individuals, M9SDGD_27_Fundraising_as_per_Industries },
 				{ M9SDGD_28_AccountIndustry, M9SDGD_28_Totalfirm, M9SDGD_28_Task_as_per_Industries,
-						M9SDGD_28_Individuals, M9SDGD_28_Fundraising_as_per_Industries },
+												M9SDGD_28_Individuals, M9SDGD_28_Fundraising_as_per_Industries },
 				{ M9SDGD_29_AccountIndustry, M9SDGD_29_Totalfirm, M9SDGD_29_Task_as_per_Industries,
-						M9SDGD_29_Individuals, M9SDGD_29_Fundraising_as_per_Industries },
+													M9SDGD_29_Individuals, M9SDGD_29_Fundraising_as_per_Industries },
 				{ M9SDGD_30_AccountIndustry, M9SDGD_30_Totalfirm, M9SDGD_30_Task_as_per_Industries,
-						M9SDGD_30_Individuals, M9SDGD_30_Fundraising_as_per_Industries },
+														M9SDGD_30_Individuals, M9SDGD_30_Fundraising_as_per_Industries },
 				{ M9SDGD_31_AccountIndustry, M9SDGD_31_Totalfirm, M9SDGD_31_Task_as_per_Industries,
-						M9SDGD_31_Individuals, M9SDGD_31_Fundraising_as_per_Industries },
+															M9SDGD_31_Individuals, M9SDGD_31_Fundraising_as_per_Industries },
 				{ M9SDGD_32_AccountIndustry, M9SDGD_32_Totalfirm, M9SDGD_32_Task_as_per_Industries,
-						M9SDGD_32_Individuals, M9SDGD_32_Fundraising_as_per_Industries },
+																M9SDGD_32_Individuals, M9SDGD_32_Fundraising_as_per_Industries },
 				{ M9SDGD_33_AccountIndustry, M9SDGD_33_Totalfirm, M9SDGD_33_Task_as_per_Industries,
-						M9SDGD_33_Individuals, M9SDGD_33_Fundraising_as_per_Industries },
+																	M9SDGD_33_Individuals, M9SDGD_33_Fundraising_as_per_Industries },
 				{ M9SDGD_34_AccountIndustry, M9SDGD_34_Totalfirm, M9SDGD_34_Task_as_per_Industries,
-						M9SDGD_34_Individuals, M9SDGD_34_Fundraising_as_per_Industries },
+																		M9SDGD_34_Individuals, M9SDGD_34_Fundraising_as_per_Industries },
 				{ M9SDGD_35_AccountIndustry, M9SDGD_35_Totalfirm, M9SDGD_35_Task_as_per_Industries,
-						M9SDGD_35_Individuals, M9SDGD_35_Fundraising_as_per_Industries },
+																			M9SDGD_35_Individuals, M9SDGD_35_Fundraising_as_per_Industries },
 				{ M9SDGD_36_AccountIndustry, M9SDGD_36_Totalfirm, M9SDGD_36_Task_as_per_Industries,
-						M9SDGD_36_Individuals, M9SDGD_36_Fundraising_as_per_Industries },
+																				M9SDGD_36_Individuals, M9SDGD_36_Fundraising_as_per_Industries },
 				{ M9SDGD_37_AccountIndustry, M9SDGD_37_Totalfirm, M9SDGD_37_Task_as_per_Industries,
-						M9SDGD_37_Individuals, M9SDGD_37_Fundraising_as_per_Industries },
+																					M9SDGD_37_Individuals, M9SDGD_37_Fundraising_as_per_Industries },
 				{ M9SDGD_38_AccountIndustry, M9SDGD_38_Totalfirm, M9SDGD_38_Task_as_per_Industries,
-						M9SDGD_38_Individuals, M9SDGD_38_Fundraising_as_per_Industries },
+																						M9SDGD_38_Individuals, M9SDGD_38_Fundraising_as_per_Industries },
 				{ M9SDGD_39_AccountIndustry, M9SDGD_39_Totalfirm, M9SDGD_39_Task_as_per_Industries,
-						M9SDGD_39_Individuals, M9SDGD_39_Fundraising_as_per_Industries },
+																							M9SDGD_39_Individuals, M9SDGD_39_Fundraising_as_per_Industries },
 				{ M9SDGD_40_AccountIndustry, M9SDGD_40_Totalfirm, M9SDGD_40_Task_as_per_Industries,
-						M9SDGD_40_Individuals, M9SDGD_40_Fundraising_as_per_Industries } };
+																								M9SDGD_40_Individuals, M9SDGD_40_Fundraising_as_per_Industries } };
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
@@ -1553,45 +1561,45 @@ public class Module9 extends BaseLib {
 
 		String[][] val = {
 				{ M9SDGD_21_AccountIndustry, M9SDGD_21_Totalfirm, M9SDGD_21_Task_as_per_Industries,
-						M9SDGD_21_Individuals, M9SDGD_21_Fundraising_as_per_Industries },
+					M9SDGD_21_Individuals, M9SDGD_21_Fundraising_as_per_Industries },
 				{ M9SDGD_22_AccountIndustry, M9SDGD_22_Totalfirm, M9SDGD_22_Task_as_per_Industries,
 						M9SDGD_22_Individuals, M9SDGD_22_Fundraising_as_per_Industries },
 				{ M9SDGD_23_AccountIndustry, M9SDGD_23_Totalfirm, M9SDGD_23_Task_as_per_Industries,
-						M9SDGD_23_Individuals, M9SDGD_23_Fundraising_as_per_Industries },
+							M9SDGD_23_Individuals, M9SDGD_23_Fundraising_as_per_Industries },
 				{ M9SDGD_24_AccountIndustry, M9SDGD_24_Totalfirm, M9SDGD_24_Task_as_per_Industries,
-						M9SDGD_24_Individuals, M9SDGD_24_Fundraising_as_per_Industries },
+								M9SDGD_24_Individuals, M9SDGD_24_Fundraising_as_per_Industries },
 				{ M9SDGD_25_AccountIndustry, M9SDGD_25_Totalfirm, M9SDGD_25_Task_as_per_Industries,
-						M9SDGD_25_Individuals, M9SDGD_25_Fundraising_as_per_Industries },
+									M9SDGD_25_Individuals, M9SDGD_25_Fundraising_as_per_Industries },
 				{ M9SDGD_26_AccountIndustry, M9SDGD_26_Totalfirm, M9SDGD_26_Task_as_per_Industries,
-						M9SDGD_26_Individuals, M9SDGD_26_Fundraising_as_per_Industries },
+										M9SDGD_26_Individuals, M9SDGD_26_Fundraising_as_per_Industries },
 				{ M9SDGD_27_AccountIndustry, M9SDGD_27_Totalfirm, M9SDGD_27_Task_as_per_Industries,
-						M9SDGD_27_Individuals, M9SDGD_27_Fundraising_as_per_Industries },
+											M9SDGD_27_Individuals, M9SDGD_27_Fundraising_as_per_Industries },
 				{ M9SDGD_28_AccountIndustry, M9SDGD_28_Totalfirm, M9SDGD_28_Task_as_per_Industries,
-						M9SDGD_28_Individuals, M9SDGD_28_Fundraising_as_per_Industries },
+												M9SDGD_28_Individuals, M9SDGD_28_Fundraising_as_per_Industries },
 				{ M9SDGD_29_AccountIndustry, M9SDGD_29_Totalfirm, M9SDGD_29_Task_as_per_Industries,
-						M9SDGD_29_Individuals, M9SDGD_29_Fundraising_as_per_Industries },
+													M9SDGD_29_Individuals, M9SDGD_29_Fundraising_as_per_Industries },
 				{ M9SDGD_30_AccountIndustry, M9SDGD_30_Totalfirm, M9SDGD_30_Task_as_per_Industries,
-						M9SDGD_30_Individuals, M9SDGD_30_Fundraising_as_per_Industries },
+														M9SDGD_30_Individuals, M9SDGD_30_Fundraising_as_per_Industries },
 				{ M9SDGD_31_AccountIndustry, M9SDGD_31_Totalfirm, M9SDGD_31_Task_as_per_Industries,
-						M9SDGD_31_Individuals, M9SDGD_31_Fundraising_as_per_Industries },
+															M9SDGD_31_Individuals, M9SDGD_31_Fundraising_as_per_Industries },
 				{ M9SDGD_32_AccountIndustry, M9SDGD_32_Totalfirm, M9SDGD_32_Task_as_per_Industries,
-						M9SDGD_32_Individuals, M9SDGD_32_Fundraising_as_per_Industries },
+																M9SDGD_32_Individuals, M9SDGD_32_Fundraising_as_per_Industries },
 				{ M9SDGD_33_AccountIndustry, M9SDGD_33_Totalfirm, M9SDGD_33_Task_as_per_Industries,
-						M9SDGD_33_Individuals, M9SDGD_33_Fundraising_as_per_Industries },
+																	M9SDGD_33_Individuals, M9SDGD_33_Fundraising_as_per_Industries },
 				{ M9SDGD_34_AccountIndustry, M9SDGD_34_Totalfirm, M9SDGD_34_Task_as_per_Industries,
-						M9SDGD_34_Individuals, M9SDGD_34_Fundraising_as_per_Industries },
+																		M9SDGD_34_Individuals, M9SDGD_34_Fundraising_as_per_Industries },
 				{ M9SDGD_35_AccountIndustry, M9SDGD_35_Totalfirm, M9SDGD_35_Task_as_per_Industries,
-						M9SDGD_35_Individuals, M9SDGD_35_Fundraising_as_per_Industries },
+																			M9SDGD_35_Individuals, M9SDGD_35_Fundraising_as_per_Industries },
 				{ M9SDGD_36_AccountIndustry, M9SDGD_36_Totalfirm, M9SDGD_36_Task_as_per_Industries,
-						M9SDGD_36_Individuals, M9SDGD_36_Fundraising_as_per_Industries },
+																				M9SDGD_36_Individuals, M9SDGD_36_Fundraising_as_per_Industries },
 				{ M9SDGD_37_AccountIndustry, M9SDGD_37_Totalfirm, M9SDGD_37_Task_as_per_Industries,
-						M9SDGD_37_Individuals, M9SDGD_37_Fundraising_as_per_Industries },
+																					M9SDGD_37_Individuals, M9SDGD_37_Fundraising_as_per_Industries },
 				{ M9SDGD_38_AccountIndustry, M9SDGD_38_Totalfirm, M9SDGD_38_Task_as_per_Industries,
-						M9SDGD_38_Individuals, M9SDGD_38_Fundraising_as_per_Industries },
+																						M9SDGD_38_Individuals, M9SDGD_38_Fundraising_as_per_Industries },
 				{ M9SDGD_39_AccountIndustry, M9SDGD_39_Totalfirm, M9SDGD_39_Task_as_per_Industries,
-						M9SDGD_39_Individuals, M9SDGD_39_Fundraising_as_per_Industries },
+																							M9SDGD_39_Individuals, M9SDGD_39_Fundraising_as_per_Industries },
 				{ M9SDGD_40_AccountIndustry, M9SDGD_40_Totalfirm, M9SDGD_40_Task_as_per_Industries,
-						M9SDGD_40_Individuals, M9SDGD_40_Fundraising_as_per_Industries } };
+																								M9SDGD_40_Individuals, M9SDGD_40_Fundraising_as_per_Industries } };
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (BP.openAppFromAppLauchner(60, "Sortable Data Grids")) {
@@ -1645,45 +1653,45 @@ public class Module9 extends BaseLib {
 		String name = "James Falcon -1";
 		String[][] val = {
 				{ M9SDGD_1_AccountIndustry, M9SDGD_1_Totalfirm, M9SDGD_1_Task_as_per_Industries, M9SDGD_1_Individuals,
-						M9SDGD_1_Fundraising_as_per_Industries },
+					M9SDGD_1_Fundraising_as_per_Industries },
 				{ M9SDGD_2_AccountIndustry, M9SDGD_2_Totalfirm, M9SDGD_2_Task_as_per_Industries, M9SDGD_2_Individuals,
 						M9SDGD_2_Fundraising_as_per_Industries },
 				{ M9SDGD_3_AccountIndustry, M9SDGD_3_Totalfirm, M9SDGD_3_Task_as_per_Industries, M9SDGD_3_Individuals,
-						M9SDGD_3_Fundraising_as_per_Industries },
+							M9SDGD_3_Fundraising_as_per_Industries },
 				{ M9SDGD_4_AccountIndustry, M9SDGD_4_Totalfirm, M9SDGD_4_Task_as_per_Industries, M9SDGD_4_Individuals,
-						M9SDGD_4_Fundraising_as_per_Industries },
+								M9SDGD_4_Fundraising_as_per_Industries },
 				{ M9SDGD_5_AccountIndustry, M9SDGD_5_Totalfirm, M9SDGD_5_Task_as_per_Industries, M9SDGD_5_Individuals,
-						M9SDGD_5_Fundraising_as_per_Industries },
+									M9SDGD_5_Fundraising_as_per_Industries },
 				{ M9SDGD_6_AccountIndustry, M9SDGD_6_Totalfirm, M9SDGD_6_Task_as_per_Industries, M9SDGD_6_Individuals,
-						M9SDGD_6_Fundraising_as_per_Industries },
+										M9SDGD_6_Fundraising_as_per_Industries },
 				{ M9SDGD_7_AccountIndustry, M9SDGD_7_Totalfirm, M9SDGD_7_Task_as_per_Industries, M9SDGD_7_Individuals,
-						M9SDGD_7_Fundraising_as_per_Industries },
+											M9SDGD_7_Fundraising_as_per_Industries },
 				{ M9SDGD_8_AccountIndustry, M9SDGD_8_Totalfirm, M9SDGD_8_Task_as_per_Industries, M9SDGD_8_Individuals,
-						M9SDGD_8_Fundraising_as_per_Industries },
+												M9SDGD_8_Fundraising_as_per_Industries },
 				{ M9SDGD_9_AccountIndustry, M9SDGD_9_Totalfirm, M9SDGD_9_Task_as_per_Industries, M9SDGD_9_Individuals,
-						M9SDGD_9_Fundraising_as_per_Industries },
+													M9SDGD_9_Fundraising_as_per_Industries },
 				{ M9SDGD_10_AccountIndustry, M9SDGD_10_Totalfirm, M9SDGD_10_Task_as_per_Industries,
-						M9SDGD_10_Individuals, M9SDGD_10_Fundraising_as_per_Industries },
+														M9SDGD_10_Individuals, M9SDGD_10_Fundraising_as_per_Industries },
 				{ M9SDGD_11_AccountIndustry, M9SDGD_11_Totalfirm, M9SDGD_11_Task_as_per_Industries,
-						M9SDGD_11_Individuals, M9SDGD_11_Fundraising_as_per_Industries },
+															M9SDGD_11_Individuals, M9SDGD_11_Fundraising_as_per_Industries },
 				{ M9SDGD_12_AccountIndustry, M9SDGD_12_Totalfirm, M9SDGD_12_Task_as_per_Industries,
-						M9SDGD_12_Individuals, M9SDGD_12_Fundraising_as_per_Industries },
+																M9SDGD_12_Individuals, M9SDGD_12_Fundraising_as_per_Industries },
 				{ M9SDGD_13_AccountIndustry, M9SDGD_13_Totalfirm, M9SDGD_13_Task_as_per_Industries,
-						M9SDGD_13_Individuals, M9SDGD_13_Fundraising_as_per_Industries },
+																	M9SDGD_13_Individuals, M9SDGD_13_Fundraising_as_per_Industries },
 				{ M9SDGD_14_AccountIndustry, M9SDGD_14_Totalfirm, M9SDGD_14_Task_as_per_Industries,
-						M9SDGD_14_Individuals, M9SDGD_14_Fundraising_as_per_Industries },
+																		M9SDGD_14_Individuals, M9SDGD_14_Fundraising_as_per_Industries },
 				{ M9SDGD_15_AccountIndustry, M9SDGD_15_Totalfirm, M9SDGD_15_Task_as_per_Industries,
-						M9SDGD_15_Individuals, M9SDGD_15_Fundraising_as_per_Industries },
+																			M9SDGD_15_Individuals, M9SDGD_15_Fundraising_as_per_Industries },
 				{ M9SDGD_16_AccountIndustry, M9SDGD_16_Totalfirm, M9SDGD_16_Task_as_per_Industries,
-						M9SDGD_16_Individuals, M9SDGD_16_Fundraising_as_per_Industries },
+																				M9SDGD_16_Individuals, M9SDGD_16_Fundraising_as_per_Industries },
 				{ M9SDGD_17_AccountIndustry, M9SDGD_17_Totalfirm, M9SDGD_17_Task_as_per_Industries,
-						M9SDGD_17_Individuals, M9SDGD_17_Fundraising_as_per_Industries },
+																					M9SDGD_17_Individuals, M9SDGD_17_Fundraising_as_per_Industries },
 				{ M9SDGD_18_AccountIndustry, M9SDGD_18_Totalfirm, M9SDGD_18_Task_as_per_Industries,
-						M9SDGD_18_Individuals, M9SDGD_18_Fundraising_as_per_Industries },
+																						M9SDGD_18_Individuals, M9SDGD_18_Fundraising_as_per_Industries },
 				{ M9SDGD_19_AccountIndustry, M9SDGD_19_Totalfirm, M9SDGD_19_Task_as_per_Industries,
-						M9SDGD_19_Individuals, M9SDGD_19_Fundraising_as_per_Industries },
+																							M9SDGD_19_Individuals, M9SDGD_19_Fundraising_as_per_Industries },
 				{ M9SDGD_20_AccountIndustry, M9SDGD_20_Totalfirm, M9SDGD_20_Task_as_per_Industries,
-						M9SDGD_20_Individuals, M9SDGD_20_Fundraising_as_per_Industries } };
+																								M9SDGD_20_Individuals, M9SDGD_20_Fundraising_as_per_Industries } };
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		String recycleTab = lp.getTabName(projectName, TabName.RecycleBinTab);
@@ -1760,45 +1768,45 @@ public class Module9 extends BaseLib {
 
 		String[][] val = {
 				{ M9SDGD_41_AccountIndustry, M9SDGD_41_Totalfirm, M9SDGD_41_Task_as_per_Industries,
-						M9SDGD_41_Individuals, M9SDGD_41_Fundraising_as_per_Industries },
+					M9SDGD_41_Individuals, M9SDGD_41_Fundraising_as_per_Industries },
 				{ M9SDGD_42_AccountIndustry, M9SDGD_42_Totalfirm, M9SDGD_42_Task_as_per_Industries,
 						M9SDGD_42_Individuals, M9SDGD_42_Fundraising_as_per_Industries },
 				{ M9SDGD_43_AccountIndustry, M9SDGD_43_Totalfirm, M9SDGD_43_Task_as_per_Industries,
-						M9SDGD_43_Individuals, M9SDGD_43_Fundraising_as_per_Industries },
+							M9SDGD_43_Individuals, M9SDGD_43_Fundraising_as_per_Industries },
 				{ M9SDGD_44_AccountIndustry, M9SDGD_44_Totalfirm, M9SDGD_44_Task_as_per_Industries,
-						M9SDGD_44_Individuals, M9SDGD_44_Fundraising_as_per_Industries },
+								M9SDGD_44_Individuals, M9SDGD_44_Fundraising_as_per_Industries },
 				{ M9SDGD_45_AccountIndustry, M9SDGD_45_Totalfirm, M9SDGD_45_Task_as_per_Industries,
-						M9SDGD_45_Individuals, M9SDGD_45_Fundraising_as_per_Industries },
+									M9SDGD_45_Individuals, M9SDGD_45_Fundraising_as_per_Industries },
 				{ M9SDGD_46_AccountIndustry, M9SDGD_46_Totalfirm, M9SDGD_46_Task_as_per_Industries,
-						M9SDGD_46_Individuals, M9SDGD_46_Fundraising_as_per_Industries },
+										M9SDGD_46_Individuals, M9SDGD_46_Fundraising_as_per_Industries },
 				{ M9SDGD_47_AccountIndustry, M9SDGD_47_Totalfirm, M9SDGD_47_Task_as_per_Industries,
-						M9SDGD_47_Individuals, M9SDGD_47_Fundraising_as_per_Industries },
+											M9SDGD_47_Individuals, M9SDGD_47_Fundraising_as_per_Industries },
 				{ M9SDGD_48_AccountIndustry, M9SDGD_48_Totalfirm, M9SDGD_48_Task_as_per_Industries,
-						M9SDGD_48_Individuals, M9SDGD_48_Fundraising_as_per_Industries },
+												M9SDGD_48_Individuals, M9SDGD_48_Fundraising_as_per_Industries },
 				{ M9SDGD_49_AccountIndustry, M9SDGD_49_Totalfirm, M9SDGD_49_Task_as_per_Industries,
-						M9SDGD_49_Individuals, M9SDGD_49_Fundraising_as_per_Industries },
+													M9SDGD_49_Individuals, M9SDGD_49_Fundraising_as_per_Industries },
 				{ M9SDGD_50_AccountIndustry, M9SDGD_50_Totalfirm, M9SDGD_50_Task_as_per_Industries,
-						M9SDGD_50_Individuals, M9SDGD_50_Fundraising_as_per_Industries },
+														M9SDGD_50_Individuals, M9SDGD_50_Fundraising_as_per_Industries },
 				{ M9SDGD_51_AccountIndustry, M9SDGD_51_Totalfirm, M9SDGD_51_Task_as_per_Industries,
-						M9SDGD_51_Individuals, M9SDGD_51_Fundraising_as_per_Industries },
+															M9SDGD_51_Individuals, M9SDGD_51_Fundraising_as_per_Industries },
 				{ M9SDGD_52_AccountIndustry, M9SDGD_52_Totalfirm, M9SDGD_52_Task_as_per_Industries,
-						M9SDGD_52_Individuals, M9SDGD_52_Fundraising_as_per_Industries },
+																M9SDGD_52_Individuals, M9SDGD_52_Fundraising_as_per_Industries },
 				{ M9SDGD_53_AccountIndustry, M9SDGD_53_Totalfirm, M9SDGD_53_Task_as_per_Industries,
-						M9SDGD_53_Individuals, M9SDGD_53_Fundraising_as_per_Industries },
+																	M9SDGD_53_Individuals, M9SDGD_53_Fundraising_as_per_Industries },
 				{ M9SDGD_54_AccountIndustry, M9SDGD_54_Totalfirm, M9SDGD_54_Task_as_per_Industries,
-						M9SDGD_54_Individuals, M9SDGD_54_Fundraising_as_per_Industries },
+																		M9SDGD_54_Individuals, M9SDGD_54_Fundraising_as_per_Industries },
 				{ M9SDGD_55_AccountIndustry, M9SDGD_55_Totalfirm, M9SDGD_55_Task_as_per_Industries,
-						M9SDGD_55_Individuals, M9SDGD_55_Fundraising_as_per_Industries },
+																			M9SDGD_55_Individuals, M9SDGD_55_Fundraising_as_per_Industries },
 				{ M9SDGD_56_AccountIndustry, M9SDGD_56_Totalfirm, M9SDGD_56_Task_as_per_Industries,
-						M9SDGD_56_Individuals, M9SDGD_56_Fundraising_as_per_Industries },
+																				M9SDGD_56_Individuals, M9SDGD_56_Fundraising_as_per_Industries },
 				{ M9SDGD_57_AccountIndustry, M9SDGD_57_Totalfirm, M9SDGD_57_Task_as_per_Industries,
-						M9SDGD_57_Individuals, M9SDGD_57_Fundraising_as_per_Industries },
+																					M9SDGD_57_Individuals, M9SDGD_57_Fundraising_as_per_Industries },
 				{ M9SDGD_58_AccountIndustry, M9SDGD_58_Totalfirm, M9SDGD_58_Task_as_per_Industries,
-						M9SDGD_58_Individuals, M9SDGD_58_Fundraising_as_per_Industries },
+																						M9SDGD_58_Individuals, M9SDGD_58_Fundraising_as_per_Industries },
 				{ M9SDGD_59_AccountIndustry, M9SDGD_59_Totalfirm, M9SDGD_59_Task_as_per_Industries,
-						M9SDGD_59_Individuals, M9SDGD_59_Fundraising_as_per_Industries },
+																							M9SDGD_59_Individuals, M9SDGD_59_Fundraising_as_per_Industries },
 				{ M9SDGD_60_AccountIndustry, M9SDGD_60_Totalfirm, M9SDGD_60_Task_as_per_Industries,
-						M9SDGD_60_Individuals, M9SDGD_60_Fundraising_as_per_Industries } };
+																								M9SDGD_60_Individuals, M9SDGD_60_Fundraising_as_per_Industries } };
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (home.clickOnSetUpLink()) {
@@ -1879,45 +1887,45 @@ public class Module9 extends BaseLib {
 
 		String[][] val = {
 				{ M9SDGD_61_AccountIndustry, M9SDGD_61_Totalfirm, M9SDGD_61_Task_as_per_Industries,
-						M9SDGD_61_Individuals, M9SDGD_61_Fundraising_as_per_Industries },
+					M9SDGD_61_Individuals, M9SDGD_61_Fundraising_as_per_Industries },
 				{ M9SDGD_62_AccountIndustry, M9SDGD_62_Totalfirm, M9SDGD_62_Task_as_per_Industries,
 						M9SDGD_62_Individuals, M9SDGD_62_Fundraising_as_per_Industries },
 				{ M9SDGD_63_AccountIndustry, M9SDGD_63_Totalfirm, M9SDGD_63_Task_as_per_Industries,
-						M9SDGD_63_Individuals, M9SDGD_63_Fundraising_as_per_Industries },
+							M9SDGD_63_Individuals, M9SDGD_63_Fundraising_as_per_Industries },
 				{ M9SDGD_64_AccountIndustry, M9SDGD_64_Totalfirm, M9SDGD_64_Task_as_per_Industries,
-						M9SDGD_64_Individuals, M9SDGD_64_Fundraising_as_per_Industries },
+								M9SDGD_64_Individuals, M9SDGD_64_Fundraising_as_per_Industries },
 				{ M9SDGD_65_AccountIndustry, M9SDGD_65_Totalfirm, M9SDGD_65_Task_as_per_Industries,
-						M9SDGD_65_Individuals, M9SDGD_65_Fundraising_as_per_Industries },
+									M9SDGD_65_Individuals, M9SDGD_65_Fundraising_as_per_Industries },
 				{ M9SDGD_66_AccountIndustry, M9SDGD_66_Totalfirm, M9SDGD_66_Task_as_per_Industries,
-						M9SDGD_66_Individuals, M9SDGD_66_Fundraising_as_per_Industries },
+										M9SDGD_66_Individuals, M9SDGD_66_Fundraising_as_per_Industries },
 				{ M9SDGD_67_AccountIndustry, M9SDGD_67_Totalfirm, M9SDGD_67_Task_as_per_Industries,
-						M9SDGD_67_Individuals, M9SDGD_67_Fundraising_as_per_Industries },
+											M9SDGD_67_Individuals, M9SDGD_67_Fundraising_as_per_Industries },
 				{ M9SDGD_68_AccountIndustry, M9SDGD_68_Totalfirm, M9SDGD_68_Task_as_per_Industries,
-						M9SDGD_68_Individuals, M9SDGD_68_Fundraising_as_per_Industries },
+												M9SDGD_68_Individuals, M9SDGD_68_Fundraising_as_per_Industries },
 				{ M9SDGD_69_AccountIndustry, M9SDGD_69_Totalfirm, M9SDGD_69_Task_as_per_Industries,
-						M9SDGD_69_Individuals, M9SDGD_69_Fundraising_as_per_Industries },
+													M9SDGD_69_Individuals, M9SDGD_69_Fundraising_as_per_Industries },
 				{ M9SDGD_70_AccountIndustry, M9SDGD_70_Totalfirm, M9SDGD_70_Task_as_per_Industries,
-						M9SDGD_70_Individuals, M9SDGD_70_Fundraising_as_per_Industries },
+														M9SDGD_70_Individuals, M9SDGD_70_Fundraising_as_per_Industries },
 				{ M9SDGD_71_AccountIndustry, M9SDGD_71_Totalfirm, M9SDGD_71_Task_as_per_Industries,
-						M9SDGD_71_Individuals, M9SDGD_71_Fundraising_as_per_Industries },
+															M9SDGD_71_Individuals, M9SDGD_71_Fundraising_as_per_Industries },
 				{ M9SDGD_72_AccountIndustry, M9SDGD_72_Totalfirm, M9SDGD_72_Task_as_per_Industries,
-						M9SDGD_72_Individuals, M9SDGD_72_Fundraising_as_per_Industries },
+																M9SDGD_72_Individuals, M9SDGD_72_Fundraising_as_per_Industries },
 				{ M9SDGD_73_AccountIndustry, M9SDGD_73_Totalfirm, M9SDGD_73_Task_as_per_Industries,
-						M9SDGD_73_Individuals, M9SDGD_73_Fundraising_as_per_Industries },
+																	M9SDGD_73_Individuals, M9SDGD_73_Fundraising_as_per_Industries },
 				{ M9SDGD_74_AccountIndustry, M9SDGD_74_Totalfirm, M9SDGD_74_Task_as_per_Industries,
-						M9SDGD_74_Individuals, M9SDGD_74_Fundraising_as_per_Industries },
+																		M9SDGD_74_Individuals, M9SDGD_74_Fundraising_as_per_Industries },
 				{ M9SDGD_75_AccountIndustry, M9SDGD_75_Totalfirm, M9SDGD_75_Task_as_per_Industries,
-						M9SDGD_75_Individuals, M9SDGD_75_Fundraising_as_per_Industries },
+																			M9SDGD_75_Individuals, M9SDGD_75_Fundraising_as_per_Industries },
 				{ M9SDGD_76_AccountIndustry, M9SDGD_76_Totalfirm, M9SDGD_76_Task_as_per_Industries,
-						M9SDGD_76_Individuals, M9SDGD_76_Fundraising_as_per_Industries },
+																				M9SDGD_76_Individuals, M9SDGD_76_Fundraising_as_per_Industries },
 				{ M9SDGD_77_AccountIndustry, M9SDGD_77_Totalfirm, M9SDGD_77_Task_as_per_Industries,
-						M9SDGD_77_Individuals, M9SDGD_77_Fundraising_as_per_Industries },
+																					M9SDGD_77_Individuals, M9SDGD_77_Fundraising_as_per_Industries },
 				{ M9SDGD_78_AccountIndustry, M9SDGD_78_Totalfirm, M9SDGD_78_Task_as_per_Industries,
-						M9SDGD_78_Individuals, M9SDGD_78_Fundraising_as_per_Industries },
+																						M9SDGD_78_Individuals, M9SDGD_78_Fundraising_as_per_Industries },
 				{ M9SDGD_79_AccountIndustry, M9SDGD_79_Totalfirm, M9SDGD_79_Task_as_per_Industries,
-						M9SDGD_79_Individuals, M9SDGD_79_Fundraising_as_per_Industries },
+																							M9SDGD_79_Individuals, M9SDGD_79_Fundraising_as_per_Industries },
 				{ M9SDGD_80_AccountIndustry, M9SDGD_80_Totalfirm, M9SDGD_80_Task_as_per_Industries,
-						M9SDGD_80_Individuals, M9SDGD_80_Fundraising_as_per_Industries } };
+																								M9SDGD_80_Individuals, M9SDGD_80_Fundraising_as_per_Industries } };
 
 		String value = "BiotechnologyUP";
 
@@ -1997,45 +2005,45 @@ public class Module9 extends BaseLib {
 
 		String[][] val = {
 				{ M9SDGD_61_AccountIndustry, M9SDGD_61_Totalfirm, M9SDGD_61_Task_as_per_Industries,
-						M9SDGD_61_Individuals, M9SDGD_61_Fundraising_as_per_Industries },
+					M9SDGD_61_Individuals, M9SDGD_61_Fundraising_as_per_Industries },
 				{ M9SDGD_62_AccountIndustry, M9SDGD_62_Totalfirm, M9SDGD_62_Task_as_per_Industries,
 						M9SDGD_62_Individuals, M9SDGD_62_Fundraising_as_per_Industries },
 				{ M9SDGD_63_AccountIndustry, M9SDGD_63_Totalfirm, M9SDGD_63_Task_as_per_Industries,
-						M9SDGD_63_Individuals, M9SDGD_63_Fundraising_as_per_Industries },
+							M9SDGD_63_Individuals, M9SDGD_63_Fundraising_as_per_Industries },
 				{ M9SDGD_64_AccountIndustry, M9SDGD_64_Totalfirm, M9SDGD_64_Task_as_per_Industries,
-						M9SDGD_64_Individuals, M9SDGD_64_Fundraising_as_per_Industries },
+								M9SDGD_64_Individuals, M9SDGD_64_Fundraising_as_per_Industries },
 				{ M9SDGD_65_AccountIndustry, M9SDGD_65_Totalfirm, M9SDGD_65_Task_as_per_Industries,
-						M9SDGD_65_Individuals, M9SDGD_65_Fundraising_as_per_Industries },
+									M9SDGD_65_Individuals, M9SDGD_65_Fundraising_as_per_Industries },
 				{ M9SDGD_66_AccountIndustry, M9SDGD_66_Totalfirm, M9SDGD_66_Task_as_per_Industries,
-						M9SDGD_66_Individuals, M9SDGD_66_Fundraising_as_per_Industries },
+										M9SDGD_66_Individuals, M9SDGD_66_Fundraising_as_per_Industries },
 				{ M9SDGD_67_AccountIndustry, M9SDGD_67_Totalfirm, M9SDGD_67_Task_as_per_Industries,
-						M9SDGD_67_Individuals, M9SDGD_67_Fundraising_as_per_Industries },
+											M9SDGD_67_Individuals, M9SDGD_67_Fundraising_as_per_Industries },
 				{ M9SDGD_68_AccountIndustry, M9SDGD_68_Totalfirm, M9SDGD_68_Task_as_per_Industries,
-						M9SDGD_68_Individuals, M9SDGD_68_Fundraising_as_per_Industries },
+												M9SDGD_68_Individuals, M9SDGD_68_Fundraising_as_per_Industries },
 				{ M9SDGD_69_AccountIndustry, M9SDGD_69_Totalfirm, M9SDGD_69_Task_as_per_Industries,
-						M9SDGD_69_Individuals, M9SDGD_69_Fundraising_as_per_Industries },
+													M9SDGD_69_Individuals, M9SDGD_69_Fundraising_as_per_Industries },
 				{ M9SDGD_70_AccountIndustry, M9SDGD_70_Totalfirm, M9SDGD_70_Task_as_per_Industries,
-						M9SDGD_70_Individuals, M9SDGD_70_Fundraising_as_per_Industries },
+														M9SDGD_70_Individuals, M9SDGD_70_Fundraising_as_per_Industries },
 				{ M9SDGD_71_AccountIndustry, M9SDGD_71_Totalfirm, M9SDGD_71_Task_as_per_Industries,
-						M9SDGD_71_Individuals, M9SDGD_71_Fundraising_as_per_Industries },
+															M9SDGD_71_Individuals, M9SDGD_71_Fundraising_as_per_Industries },
 				{ M9SDGD_72_AccountIndustry, M9SDGD_72_Totalfirm, M9SDGD_72_Task_as_per_Industries,
-						M9SDGD_72_Individuals, M9SDGD_72_Fundraising_as_per_Industries },
+																M9SDGD_72_Individuals, M9SDGD_72_Fundraising_as_per_Industries },
 				{ M9SDGD_73_AccountIndustry, M9SDGD_73_Totalfirm, M9SDGD_73_Task_as_per_Industries,
-						M9SDGD_73_Individuals, M9SDGD_73_Fundraising_as_per_Industries },
+																	M9SDGD_73_Individuals, M9SDGD_73_Fundraising_as_per_Industries },
 				{ M9SDGD_74_AccountIndustry, M9SDGD_74_Totalfirm, M9SDGD_74_Task_as_per_Industries,
-						M9SDGD_74_Individuals, M9SDGD_74_Fundraising_as_per_Industries },
+																		M9SDGD_74_Individuals, M9SDGD_74_Fundraising_as_per_Industries },
 				{ M9SDGD_75_AccountIndustry, M9SDGD_75_Totalfirm, M9SDGD_75_Task_as_per_Industries,
-						M9SDGD_75_Individuals, M9SDGD_75_Fundraising_as_per_Industries },
+																			M9SDGD_75_Individuals, M9SDGD_75_Fundraising_as_per_Industries },
 				{ M9SDGD_76_AccountIndustry, M9SDGD_76_Totalfirm, M9SDGD_76_Task_as_per_Industries,
-						M9SDGD_76_Individuals, M9SDGD_76_Fundraising_as_per_Industries },
+																				M9SDGD_76_Individuals, M9SDGD_76_Fundraising_as_per_Industries },
 				{ M9SDGD_77_AccountIndustry, M9SDGD_77_Totalfirm, M9SDGD_77_Task_as_per_Industries,
-						M9SDGD_77_Individuals, M9SDGD_77_Fundraising_as_per_Industries },
+																					M9SDGD_77_Individuals, M9SDGD_77_Fundraising_as_per_Industries },
 				{ M9SDGD_78_AccountIndustry, M9SDGD_78_Totalfirm, M9SDGD_78_Task_as_per_Industries,
-						M9SDGD_78_Individuals, M9SDGD_78_Fundraising_as_per_Industries },
+																						M9SDGD_78_Individuals, M9SDGD_78_Fundraising_as_per_Industries },
 				{ M9SDGD_79_AccountIndustry, M9SDGD_79_Totalfirm, M9SDGD_79_Task_as_per_Industries,
-						M9SDGD_79_Individuals, M9SDGD_79_Fundraising_as_per_Industries },
+																							M9SDGD_79_Individuals, M9SDGD_79_Fundraising_as_per_Industries },
 				{ M9SDGD_80_AccountIndustry, M9SDGD_80_Totalfirm, M9SDGD_80_Task_as_per_Industries,
-						M9SDGD_80_Individuals, M9SDGD_80_Fundraising_as_per_Industries } };
+																								M9SDGD_80_Individuals, M9SDGD_80_Fundraising_as_per_Industries } };
 
 		String value = "BiotechnologyUP";
 
@@ -2117,43 +2125,43 @@ public class Module9 extends BaseLib {
 
 		String[][] val = {
 				{ M9SDGD_81_AccountIndustry, M9SDGD_81_Totalfirm, M9SDGD_81_Task_as_per_Industries,
-						M9SDGD_81_Individuals, M9SDGD_81_Fundraising_as_per_Industries },
+					M9SDGD_81_Individuals, M9SDGD_81_Fundraising_as_per_Industries },
 				{ M9SDGD_82_AccountIndustry, M9SDGD_82_Totalfirm, M9SDGD_82_Task_as_per_Industries,
 						M9SDGD_82_Individuals, M9SDGD_82_Fundraising_as_per_Industries },
 				{ M9SDGD_83_AccountIndustry, M9SDGD_83_Totalfirm, M9SDGD_83_Task_as_per_Industries,
-						M9SDGD_83_Individuals, M9SDGD_83_Fundraising_as_per_Industries },
+							M9SDGD_83_Individuals, M9SDGD_83_Fundraising_as_per_Industries },
 				{ M9SDGD_84_AccountIndustry, M9SDGD_84_Totalfirm, M9SDGD_84_Task_as_per_Industries,
-						M9SDGD_84_Individuals, M9SDGD_84_Fundraising_as_per_Industries },
+								M9SDGD_84_Individuals, M9SDGD_84_Fundraising_as_per_Industries },
 				{ M9SDGD_85_AccountIndustry, M9SDGD_85_Totalfirm, M9SDGD_85_Task_as_per_Industries,
-						M9SDGD_85_Individuals, M9SDGD_85_Fundraising_as_per_Industries },
+									M9SDGD_85_Individuals, M9SDGD_85_Fundraising_as_per_Industries },
 				{ M9SDGD_86_AccountIndustry, M9SDGD_86_Totalfirm, M9SDGD_86_Task_as_per_Industries,
-						M9SDGD_86_Individuals, M9SDGD_86_Fundraising_as_per_Industries },
+										M9SDGD_86_Individuals, M9SDGD_86_Fundraising_as_per_Industries },
 				{ M9SDGD_87_AccountIndustry, M9SDGD_87_Totalfirm, M9SDGD_87_Task_as_per_Industries,
-						M9SDGD_87_Individuals, M9SDGD_87_Fundraising_as_per_Industries },
+											M9SDGD_87_Individuals, M9SDGD_87_Fundraising_as_per_Industries },
 				{ M9SDGD_88_AccountIndustry, M9SDGD_88_Totalfirm, M9SDGD_88_Task_as_per_Industries,
-						M9SDGD_88_Individuals, M9SDGD_88_Fundraising_as_per_Industries },
+												M9SDGD_88_Individuals, M9SDGD_88_Fundraising_as_per_Industries },
 				{ M9SDGD_89_AccountIndustry, M9SDGD_89_Totalfirm, M9SDGD_89_Task_as_per_Industries,
-						M9SDGD_89_Individuals, M9SDGD_89_Fundraising_as_per_Industries },
+													M9SDGD_89_Individuals, M9SDGD_89_Fundraising_as_per_Industries },
 				{ M9SDGD_90_AccountIndustry, M9SDGD_90_Totalfirm, M9SDGD_90_Task_as_per_Industries,
-						M9SDGD_90_Individuals, M9SDGD_90_Fundraising_as_per_Industries },
+														M9SDGD_90_Individuals, M9SDGD_90_Fundraising_as_per_Industries },
 				{ M9SDGD_91_AccountIndustry, M9SDGD_91_Totalfirm, M9SDGD_91_Task_as_per_Industries,
-						M9SDGD_91_Individuals, M9SDGD_91_Fundraising_as_per_Industries },
+															M9SDGD_91_Individuals, M9SDGD_91_Fundraising_as_per_Industries },
 				{ M9SDGD_92_AccountIndustry, M9SDGD_92_Totalfirm, M9SDGD_92_Task_as_per_Industries,
-						M9SDGD_92_Individuals, M9SDGD_92_Fundraising_as_per_Industries },
+																M9SDGD_92_Individuals, M9SDGD_92_Fundraising_as_per_Industries },
 				{ M9SDGD_93_AccountIndustry, M9SDGD_93_Totalfirm, M9SDGD_93_Task_as_per_Industries,
-						M9SDGD_93_Individuals, M9SDGD_93_Fundraising_as_per_Industries },
+																	M9SDGD_93_Individuals, M9SDGD_93_Fundraising_as_per_Industries },
 				{ M9SDGD_94_AccountIndustry, M9SDGD_94_Totalfirm, M9SDGD_94_Task_as_per_Industries,
-						M9SDGD_94_Individuals, M9SDGD_94_Fundraising_as_per_Industries },
+																		M9SDGD_94_Individuals, M9SDGD_94_Fundraising_as_per_Industries },
 				{ M9SDGD_95_AccountIndustry, M9SDGD_95_Totalfirm, M9SDGD_95_Task_as_per_Industries,
-						M9SDGD_95_Individuals, M9SDGD_95_Fundraising_as_per_Industries },
+																			M9SDGD_95_Individuals, M9SDGD_95_Fundraising_as_per_Industries },
 				{ M9SDGD_96_AccountIndustry, M9SDGD_96_Totalfirm, M9SDGD_96_Task_as_per_Industries,
-						M9SDGD_96_Individuals, M9SDGD_96_Fundraising_as_per_Industries },
+																				M9SDGD_96_Individuals, M9SDGD_96_Fundraising_as_per_Industries },
 				{ M9SDGD_97_AccountIndustry, M9SDGD_97_Totalfirm, M9SDGD_97_Task_as_per_Industries,
-						M9SDGD_97_Individuals, M9SDGD_97_Fundraising_as_per_Industries },
+																					M9SDGD_97_Individuals, M9SDGD_97_Fundraising_as_per_Industries },
 				{ M9SDGD_98_AccountIndustry, M9SDGD_98_Totalfirm, M9SDGD_98_Task_as_per_Industries,
-						M9SDGD_98_Individuals, M9SDGD_98_Fundraising_as_per_Industries },
+																						M9SDGD_98_Individuals, M9SDGD_98_Fundraising_as_per_Industries },
 				{ M9SDGD_99_AccountIndustry, M9SDGD_99_Totalfirm, M9SDGD_99_Task_as_per_Industries,
-						M9SDGD_99_Individuals, M9SDGD_99_Fundraising_as_per_Industries } };
+																							M9SDGD_99_Individuals, M9SDGD_99_Fundraising_as_per_Industries } };
 
 		String appPage = "Test App Page";
 		String tableName = "Test";
@@ -2241,41 +2249,41 @@ public class Module9 extends BaseLib {
 
 		String[][] val = {
 				{ M9SDGD_100_AccountIndustry, M9SDGD_100_Totalfirm, M9SDGD_100_Task_as_per_Industries,
-						M9SDGD_100_Individuals, M9SDGD_100_Fundraising_as_per_Industries },
+					M9SDGD_100_Individuals, M9SDGD_100_Fundraising_as_per_Industries },
 				{ M9SDGD_101_AccountIndustry, M9SDGD_101_Totalfirm, M9SDGD_101_Task_as_per_Industries,
 						M9SDGD_101_Individuals, M9SDGD_101_Fundraising_as_per_Industries },
 				{ M9SDGD_102_AccountIndustry, M9SDGD_102_Totalfirm, M9SDGD_102_Task_as_per_Industries,
-						M9SDGD_102_Individuals, M9SDGD_102_Fundraising_as_per_Industries },
+							M9SDGD_102_Individuals, M9SDGD_102_Fundraising_as_per_Industries },
 				{ M9SDGD_103_AccountIndustry, M9SDGD_103_Totalfirm, M9SDGD_103_Task_as_per_Industries,
-						M9SDGD_103_Individuals, M9SDGD_103_Fundraising_as_per_Industries },
+								M9SDGD_103_Individuals, M9SDGD_103_Fundraising_as_per_Industries },
 				{ M9SDGD_104_AccountIndustry, M9SDGD_104_Totalfirm, M9SDGD_104_Task_as_per_Industries,
-						M9SDGD_104_Individuals, M9SDGD_104_Fundraising_as_per_Industries },
+									M9SDGD_104_Individuals, M9SDGD_104_Fundraising_as_per_Industries },
 				{ M9SDGD_105_AccountIndustry, M9SDGD_105_Totalfirm, M9SDGD_105_Task_as_per_Industries,
-						M9SDGD_105_Individuals, M9SDGD_105_Fundraising_as_per_Industries },
+										M9SDGD_105_Individuals, M9SDGD_105_Fundraising_as_per_Industries },
 				{ M9SDGD_106_AccountIndustry, M9SDGD_106_Totalfirm, M9SDGD_106_Task_as_per_Industries,
-						M9SDGD_106_Individuals, M9SDGD_106_Fundraising_as_per_Industries },
+											M9SDGD_106_Individuals, M9SDGD_106_Fundraising_as_per_Industries },
 				{ M9SDGD_107_AccountIndustry, M9SDGD_107_Totalfirm, M9SDGD_107_Task_as_per_Industries,
-						M9SDGD_107_Individuals, M9SDGD_107_Fundraising_as_per_Industries },
+												M9SDGD_107_Individuals, M9SDGD_107_Fundraising_as_per_Industries },
 				{ M9SDGD_108_AccountIndustry, M9SDGD_108_Totalfirm, M9SDGD_108_Task_as_per_Industries,
-						M9SDGD_108_Individuals, M9SDGD_108_Fundraising_as_per_Industries },
+													M9SDGD_108_Individuals, M9SDGD_108_Fundraising_as_per_Industries },
 				{ M9SDGD_109_AccountIndustry, M9SDGD_109_Totalfirm, M9SDGD_109_Task_as_per_Industries,
-						M9SDGD_109_Individuals, M9SDGD_109_Fundraising_as_per_Industries },
+														M9SDGD_109_Individuals, M9SDGD_109_Fundraising_as_per_Industries },
 				{ M9SDGD_110_AccountIndustry, M9SDGD_110_Totalfirm, M9SDGD_110_Task_as_per_Industries,
-						M9SDGD_110_Individuals, M9SDGD_110_Fundraising_as_per_Industries },
+															M9SDGD_110_Individuals, M9SDGD_110_Fundraising_as_per_Industries },
 				{ M9SDGD_111_AccountIndustry, M9SDGD_111_Totalfirm, M9SDGD_111_Task_as_per_Industries,
-						M9SDGD_111_Individuals, M9SDGD_111_Fundraising_as_per_Industries },
+																M9SDGD_111_Individuals, M9SDGD_111_Fundraising_as_per_Industries },
 				{ M9SDGD_112_AccountIndustry, M9SDGD_112_Totalfirm, M9SDGD_112_Task_as_per_Industries,
-						M9SDGD_112_Individuals, M9SDGD_112_Fundraising_as_per_Industries },
+																	M9SDGD_112_Individuals, M9SDGD_112_Fundraising_as_per_Industries },
 				{ M9SDGD_113_AccountIndustry, M9SDGD_113_Totalfirm, M9SDGD_113_Task_as_per_Industries,
-						M9SDGD_113_Individuals, M9SDGD_113_Fundraising_as_per_Industries },
+																		M9SDGD_113_Individuals, M9SDGD_113_Fundraising_as_per_Industries },
 				{ M9SDGD_114_AccountIndustry, M9SDGD_114_Totalfirm, M9SDGD_114_Task_as_per_Industries,
-						M9SDGD_114_Individuals, M9SDGD_114_Fundraising_as_per_Industries },
+																			M9SDGD_114_Individuals, M9SDGD_114_Fundraising_as_per_Industries },
 				{ M9SDGD_115_AccountIndustry, M9SDGD_115_Totalfirm, M9SDGD_115_Task_as_per_Industries,
-						M9SDGD_115_Individuals, M9SDGD_115_Fundraising_as_per_Industries },
+																				M9SDGD_115_Individuals, M9SDGD_115_Fundraising_as_per_Industries },
 				{ M9SDGD_116_AccountIndustry, M9SDGD_116_Totalfirm, M9SDGD_116_Task_as_per_Industries,
-						M9SDGD_116_Individuals, M9SDGD_116_Fundraising_as_per_Industries },
+																					M9SDGD_116_Individuals, M9SDGD_116_Fundraising_as_per_Industries },
 				{ M9SDGD_117_AccountIndustry, M9SDGD_117_Totalfirm, M9SDGD_117_Task_as_per_Industries,
-						M9SDGD_117_Individuals, M9SDGD_117_Fundraising_as_per_Industries } };
+																						M9SDGD_117_Individuals, M9SDGD_117_Fundraising_as_per_Industries } };
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (home.clickOnSetUpLink()) {
@@ -2358,41 +2366,41 @@ public class Module9 extends BaseLib {
 
 		String[][] val = {
 				{ M9SDGD_118_AccountIndustry, M9SDGD_118_Totalfirm, M9SDGD_118_Task_as_per_Industries,
-						M9SDGD_118_Individuals, M9SDGD_118_Fundraising_as_per_Industries },
+					M9SDGD_118_Individuals, M9SDGD_118_Fundraising_as_per_Industries },
 				{ M9SDGD_119_AccountIndustry, M9SDGD_119_Totalfirm, M9SDGD_119_Task_as_per_Industries,
 						M9SDGD_119_Individuals, M9SDGD_119_Fundraising_as_per_Industries },
 				{ M9SDGD_120_AccountIndustry, M9SDGD_120_Totalfirm, M9SDGD_120_Task_as_per_Industries,
-						M9SDGD_120_Individuals, M9SDGD_120_Fundraising_as_per_Industries },
+							M9SDGD_120_Individuals, M9SDGD_120_Fundraising_as_per_Industries },
 				{ M9SDGD_121_AccountIndustry, M9SDGD_121_Totalfirm, M9SDGD_121_Task_as_per_Industries,
-						M9SDGD_121_Individuals, M9SDGD_121_Fundraising_as_per_Industries },
+								M9SDGD_121_Individuals, M9SDGD_121_Fundraising_as_per_Industries },
 				{ M9SDGD_122_AccountIndustry, M9SDGD_122_Totalfirm, M9SDGD_122_Task_as_per_Industries,
-						M9SDGD_122_Individuals, M9SDGD_122_Fundraising_as_per_Industries },
+									M9SDGD_122_Individuals, M9SDGD_122_Fundraising_as_per_Industries },
 				{ M9SDGD_123_AccountIndustry, M9SDGD_123_Totalfirm, M9SDGD_123_Task_as_per_Industries,
-						M9SDGD_123_Individuals, M9SDGD_123_Fundraising_as_per_Industries },
+										M9SDGD_123_Individuals, M9SDGD_123_Fundraising_as_per_Industries },
 				{ M9SDGD_124_AccountIndustry, M9SDGD_124_Totalfirm, M9SDGD_124_Task_as_per_Industries,
-						M9SDGD_124_Individuals, M9SDGD_124_Fundraising_as_per_Industries },
+											M9SDGD_124_Individuals, M9SDGD_124_Fundraising_as_per_Industries },
 				{ M9SDGD_125_AccountIndustry, M9SDGD_125_Totalfirm, M9SDGD_125_Task_as_per_Industries,
-						M9SDGD_125_Individuals, M9SDGD_125_Fundraising_as_per_Industries },
+												M9SDGD_125_Individuals, M9SDGD_125_Fundraising_as_per_Industries },
 				{ M9SDGD_126_AccountIndustry, M9SDGD_126_Totalfirm, M9SDGD_126_Task_as_per_Industries,
-						M9SDGD_126_Individuals, M9SDGD_126_Fundraising_as_per_Industries },
+													M9SDGD_126_Individuals, M9SDGD_126_Fundraising_as_per_Industries },
 				{ M9SDGD_127_AccountIndustry, M9SDGD_127_Totalfirm, M9SDGD_127_Task_as_per_Industries,
-						M9SDGD_127_Individuals, M9SDGD_127_Fundraising_as_per_Industries },
+														M9SDGD_127_Individuals, M9SDGD_127_Fundraising_as_per_Industries },
 				{ M9SDGD_128_AccountIndustry, M9SDGD_128_Totalfirm, M9SDGD_128_Task_as_per_Industries,
-						M9SDGD_128_Individuals, M9SDGD_128_Fundraising_as_per_Industries },
+															M9SDGD_128_Individuals, M9SDGD_128_Fundraising_as_per_Industries },
 				{ M9SDGD_129_AccountIndustry, M9SDGD_129_Totalfirm, M9SDGD_129_Task_as_per_Industries,
-						M9SDGD_129_Individuals, M9SDGD_129_Fundraising_as_per_Industries },
+																M9SDGD_129_Individuals, M9SDGD_129_Fundraising_as_per_Industries },
 				{ M9SDGD_130_AccountIndustry, M9SDGD_130_Totalfirm, M9SDGD_130_Task_as_per_Industries,
-						M9SDGD_130_Individuals, M9SDGD_130_Fundraising_as_per_Industries },
+																	M9SDGD_130_Individuals, M9SDGD_130_Fundraising_as_per_Industries },
 				{ M9SDGD_131_AccountIndustry, M9SDGD_131_Totalfirm, M9SDGD_131_Task_as_per_Industries,
-						M9SDGD_131_Individuals, M9SDGD_131_Fundraising_as_per_Industries },
+																		M9SDGD_131_Individuals, M9SDGD_131_Fundraising_as_per_Industries },
 				{ M9SDGD_132_AccountIndustry, M9SDGD_132_Totalfirm, M9SDGD_132_Task_as_per_Industries,
-						M9SDGD_132_Individuals, M9SDGD_132_Fundraising_as_per_Industries },
+																			M9SDGD_132_Individuals, M9SDGD_132_Fundraising_as_per_Industries },
 				{ M9SDGD_133_AccountIndustry, M9SDGD_133_Totalfirm, M9SDGD_133_Task_as_per_Industries,
-						M9SDGD_133_Individuals, M9SDGD_133_Fundraising_as_per_Industries },
+																				M9SDGD_133_Individuals, M9SDGD_133_Fundraising_as_per_Industries },
 				{ M9SDGD_134_AccountIndustry, M9SDGD_134_Totalfirm, M9SDGD_134_Task_as_per_Industries,
-						M9SDGD_134_Individuals, M9SDGD_134_Fundraising_as_per_Industries },
+																					M9SDGD_134_Individuals, M9SDGD_134_Fundraising_as_per_Industries },
 				{ M9SDGD_135_AccountIndustry, M9SDGD_135_Totalfirm, M9SDGD_135_Task_as_per_Industries,
-						M9SDGD_135_Individuals, M9SDGD_135_Fundraising_as_per_Industries } };
+																						M9SDGD_135_Individuals, M9SDGD_135_Fundraising_as_per_Industries } };
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (home.clickOnSetUpLink()) {
@@ -2845,21 +2853,21 @@ public class Module9 extends BaseLib {
 												if (home.numberOfRecordsMatch(sdgName, numberOfRecords)) {
 													log(LogStatus.INFO,
 															"----------No. of Records Matched: " + numberOfRecords
-																	+ "for List View Name: " + sdgLabel[0][1]
+															+ "for List View Name: " + sdgLabel[0][1]
 																	+ "------------",
-															YesNo.No);
+																	YesNo.No);
 
 												}
 
 												else {
 													log(LogStatus.FAIL,
 															"---------No. of Records not Matched " + numberOfRecords
-																	+ "for List View Name: " + sdgLabel[0][1]
+															+ "for List View Name: " + sdgLabel[0][1]
 																	+ "-------- ",
-															YesNo.No);
+																	YesNo.No);
 													sa.assertTrue(false,
 															"-----------No. of Records not Matched: " + numberOfRecords
-																	+ "for List View Name: " + sdgLabel[0][1]
+															+ "for List View Name: " + sdgLabel[0][1]
 																	+ " --------------");
 
 												}
@@ -2872,21 +2880,21 @@ public class Module9 extends BaseLib {
 												if (home.numberOfRecordsMatch(sdgName, numberOfRecords)) {
 													log(LogStatus.INFO,
 															"----------No. of Records Matched: " + numberOfRecords
-																	+ "for List View Name: " + sdgLabel[0][1]
+															+ "for List View Name: " + sdgLabel[0][1]
 																	+ "------------",
-															YesNo.No);
+																	YesNo.No);
 
 												}
 
 												else {
 													log(LogStatus.FAIL,
 															"---------No. of Records not Matched " + numberOfRecords
-																	+ "for List View Name: " + sdgLabel[0][1]
+															+ "for List View Name: " + sdgLabel[0][1]
 																	+ "-------- ",
-															YesNo.No);
+																	YesNo.No);
 													sa.assertTrue(false,
 															"-----------No. of Records not Matched: " + numberOfRecords
-																	+ "for List View Name: " + sdgLabel[0][1]
+															+ "for List View Name: " + sdgLabel[0][1]
 																	+ " --------------");
 
 												}
@@ -2991,7 +2999,7 @@ public class Module9 extends BaseLib {
 										"-----------Record Not Gets Deleted " + fundNameToDelete + " ,Expected:"
 												+ (noRecordsBeforeDelete - 1) + " " + ",But Actual:"
 												+ home.numberOfRecordsInComponent(sdgName) + "-------------",
-										YesNo.Yes);
+												YesNo.Yes);
 								sa.assertTrue(false,
 										"-----------Record Not Gets Deleted " + fundNameToDelete + " ,Expected:"
 												+ (noRecordsBeforeDelete - 1) + " " + ",But Actual:"
@@ -3499,9 +3507,9 @@ public class Module9 extends BaseLib {
 		String contactSDGName = "Contact Filter Grid";
 
 		int fundRowCountBeforeFilter, fundraisingRowCountBeforeFilter, accountFilterRowCountBeforeFilter,
-				contactFilterRowCountBeforeFilter;
+		contactFilterRowCountBeforeFilter;
 		int fundRowCountAfterFilter, fundraisingRowCountAfterFilter, accountFilterRowCountAfterFilter,
-				contactFilterRowCountAfterFilter;
+		contactFilterRowCountAfterFilter;
 
 		if (BP.openAppFromAppLauchner(appPage, 50)) {
 
@@ -3547,7 +3555,7 @@ public class Module9 extends BaseLib {
 											+ " \n AccountSDG : " + accountFilterRowCountAfterFilter
 											+ " \nFundraising : " + fundraisingRowCountAfterFilter + " \n Contact : "
 											+ contactFilterRowCountAfterFilter + "",
-									YesNo.No);
+											YesNo.No);
 							sa.assertTrue(true,
 									"The count of row has been matched. The row count before filter of FundSDG : "
 											+ fundRowCountBeforeFilter + " \n AccountSDG : "
@@ -3569,7 +3577,7 @@ public class Module9 extends BaseLib {
 											+ " \n AccountSDG : " + accountFilterRowCountAfterFilter
 											+ " \nFundraising : " + fundraisingRowCountAfterFilter + " \n Contact : "
 											+ contactFilterRowCountAfterFilter + "",
-									YesNo.Yes);
+											YesNo.Yes);
 							sa.assertTrue(false,
 									"The count of row is not matched. The row count before filter of FundSDG : "
 											+ fundRowCountBeforeFilter + " \n AccountSDG : "
@@ -3645,7 +3653,7 @@ public class Module9 extends BaseLib {
 											+ " \n AccountSDG : " + accountFilterRowCountAfterFilter
 											+ " \nFundraising : " + fundraisingRowCountAfterFilter + " \n Contact : "
 											+ contactFilterRowCountAfterFilter + "",
-									YesNo.No);
+											YesNo.No);
 							sa.assertTrue(true,
 									"The count of has been matched. The row count before filter of FundSDG : "
 											+ fundRowCountBeforeFilter + " \n AccountSDG : "
@@ -3714,10 +3722,16 @@ public class Module9 extends BaseLib {
 		String fundraisingSDGName = "Fundraising Filter Grid";
 		int fundraisingRowCountBeforeFilter, fundraisingRowCountAfterFilter;
 		String pageSize = "100";
+		int status=0;
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
 		if (BP.openAppFromAppLauchner(60, "Sortable Data Grids")) {
-			if (SB.sequenceFilter(projectName, "Fund Filter Grid")) {
+			if (SB.sequenceFilter(projectName, "Fund Filter Grid","Name","1")) {
+				log(LogStatus.INFO,
+						"Sequence Filter has been saved",
+						YesNo.No);
+				sa.assertTrue(true, "Sequence Filter has been saved");
+
 				if (BP.openAppFromAppLauchner(appPage, 50)) {
 					fundraisingRowCountBeforeFilter = AppBuilder.numberOfRecords(fundraisingSDGName, pageSize);
 					if (fundraisingRowCountBeforeFilter != 0) {
@@ -3736,8 +3750,45 @@ public class Module9 extends BaseLib {
 							log(LogStatus.PASS, "Fundraising count is not filtered", YesNo.No);
 							sa.assertTrue(true, "Fundraising count is not filtered");
 						} else {
-							log(LogStatus.PASS, "Fundraising count is filtered", YesNo.No);
-							sa.assertTrue(true, "Fundraising count is filtered");
+							log(LogStatus.ERROR, "Fundraising count is filtered", YesNo.No);
+							sa.assertTrue(false, "Fundraising count is filtered");
+						}
+						CommonLib.ThreadSleep(4000);					  
+						String xpath="//a[text()='Fund Filter Grid']/ancestor::div[contains(@class,'slds-card__header')]/following-sibling::div//tbody//td[@data-label='Fund: ']";
+						ArrayList<String> list= SB.getListText(xpath, "Fund SDG");
+						if(list!=null)
+						{
+							for(int i=0; i<list.size();i++)
+							{
+								if(list.get(i).equals("Appfluent Technology"))
+								{
+									log(LogStatus.INFO, list.get(i)+" has been matched", YesNo.No);
+
+								}
+								else
+								{
+									log(LogStatus.ERROR, list.get(i)+" is not matched with the Appfluent Technology", YesNo.No);
+									status++;
+								}
+							}
+
+							if(status==0)
+							{
+								log(LogStatus.PASS, "Sequence filter has been Applied Fund is matched", YesNo.No);
+								sa.assertTrue(true, "Sequence filter has been Applied Fund is matched");
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Sequence filter has been Applied but Fund data is not matched", YesNo.No);
+								sa.assertTrue(false, "Could not select the filter from the fund data is not matched");
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Could not get the data from the Fund SDG after applying filter", YesNo.No);				
+							status++;
+							sa.assertTrue(false, "Could not get the data from the Fund SDG after applying filter");
 						}
 
 					} else {
@@ -3745,7 +3796,6 @@ public class Module9 extends BaseLib {
 						sa.assertTrue(true, "Could not select the filter from the fund");
 					}
 
-					log(LogStatus.INFO, "Sequence filter is not added", YesNo.No);
 				} else {
 					log(LogStatus.ERROR, "Could not open the App page", YesNo.No);
 					sa.assertTrue(true, "Could not open the App page");
@@ -3755,10 +3805,12 @@ public class Module9 extends BaseLib {
 				sa.assertTrue(false, "Could not open the App page");
 			}
 
-			lp.CRMlogout();
-			sa.assertAll();
+
 		}
+		lp.CRMlogout();
+		sa.assertAll();
 	}
+
 
 	@Parameters({ "projectName" })
 
@@ -3877,6 +3929,102 @@ public class Module9 extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void M9Tc072_AddFilterSequenceForFundAndVerifyRecord(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
+		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+		String appPage = "Custom App Page";
+		String fundraisingSDGName = "Fundraising Filter Grid";
+		String filterOptionValue="Appfluent Technology";
+		String fundSDGName="Fund Filter Grid";
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
+		if (BP.openAppFromAppLauchner(60, "Sortable Data Grids")) {
+			if (SB.sequenceFilter(projectName, "Fundraising Filter Grid","Fund Name","1")) {
+				log(LogStatus.INFO,"Sequence Filter has been saved",YesNo.No);
+				sa.assertTrue(true, "Sequence Filter has been saved");
+				if (BP.openAppFromAppLauchner(appPage, 50)) {
+					if (AppBuilder.selectFilter("Fund", filterOptionValue)) {
+						log(LogStatus.INFO, "Filter has been selected from the fund", YesNo.No);
+						CommonLib.ThreadSleep(8000);
+						if(!SB.verifyRecordExistOrNotOnSDG(fundraisingSDGName,"Fundraising SDG"))
+						{
+							if(SB.verifyRecordAfterApplyingGlobalFilter(fundraisingSDGName,filterOptionValue, "Fund Name","Fundraising SDG"))
+							{
+								log(LogStatus.PASS, "Sequence filter has been Applied Records are matched", YesNo.No);
+								sa.assertTrue(true, "Sequence filter has been Applied Records are matched");
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Sequence filter has been Applied but Record is not matched", YesNo.No);
+								sa.assertTrue(false, "Sequence filter has been Applied but Record is not matched");
+							}				
+						}
+						else
+						{
+							log(LogStatus.PASS, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully", YesNo.No);
+							sa.assertTrue(true, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully");
+
+						}
+
+						if(!SB.verifyRecordExistOrNotOnSDG(fundSDGName,"Fund SDG"))
+						{
+							if(SB.verifyRecordAfterApplyingGlobalFilter(fundSDGName,filterOptionValue, "Fund","Fund SDG"))
+							{
+								log(LogStatus.PASS, "Sequence filter has been Applied Records are matched", YesNo.No);
+								sa.assertTrue(true, "Sequence filter has been Applied Records are matched");
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Sequence filter has been Applied but Record is not matched", YesNo.No);
+								sa.assertTrue(false, "Sequence filter has been Applied but Record is not matched");
+							}				
+						}
+						else
+						{
+							log(LogStatus.PASS, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully", YesNo.No);
+							sa.assertTrue(true, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully");
+
+						}
+
+					}
+					else
+					{
+						log(LogStatus.ERROR,"Could not select the filter",YesNo.No);
+						sa.assertTrue(false, "Could not select the filter");
+					}
+
+				}			
+				else
+				{
+					log(LogStatus.ERROR,"Could not open the app from the app launcher",YesNo.No);
+					sa.assertTrue(false, "Could not open the app from the app launcher");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Sequence Filter is not saved",YesNo.No);
+				sa.assertTrue(false, "Sequence Filter is not saved");
+			}
+
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Could not open the app from the App Launcher",YesNo.No);
+			sa.assertTrue(false, "Could not open the app from the App Launcher");
+		}
+
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
 
 	@Parameters({ "projectName" })
 
@@ -4181,6 +4329,194 @@ public class Module9 extends BaseLib {
 
 	}
 
+
+	@Parameters({ "projectName" })
+	@Test
+	public void M9Tc073_AddFilterSequenceForAccountAndContactVerifyRecord(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
+		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+		String appPage = "Custom App Page";
+		String accountSDGName = "Account Filter Grid";
+		String contactSDGName="Contact Filter Grid";
+		int status=0,fundraisingRowCountBeforeFilter,fundraisingRowCountAfterFilter;
+		String fundraisingSDGName="Fundraising Filter Grid";
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
+		if (BP.openAppFromAppLauchner(60, "Sortable Data Grids")) {
+			if (SB.sequenceFilter(projectName, "Account Filter Grid","Account Name","2")) 		
+			{
+				log(LogStatus.INFO,"Sequence Filter has been saved",YesNo.No);
+				sa.assertTrue(true, "Sequence Filter has been saved");
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Sequence Filter is not saved",YesNo.No);
+				sa.assertTrue(false, "Sequence Filter is not saved");
+			}
+		}else
+		{
+			log(LogStatus.ERROR,"Could not open the app from the App Launcher",YesNo.No);
+			sa.assertTrue(false, "Could not open the app from the App Launcher");
+		}
+
+		if (BP.openAppFromAppLauchner(60, "Sortable Data Grids")) {
+			CommonLib.refresh(driver);
+			if (SB.sequenceFilter(projectName, "Contact Filter Grid","Contact Name","2")) 		
+			{
+				log(LogStatus.INFO,"Sequence Filter has been saved",YesNo.No);
+				sa.assertTrue(true, "Sequence Filter has been saved");
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Sequence Filter is not saved",YesNo.No);
+				sa.assertTrue(false, "Sequence Filter is not saved");
+				status++;
+			}
+		}else
+		{
+			log(LogStatus.ERROR,"Could not open the app from the App Launcher",YesNo.No);
+			sa.assertTrue(false, "Could not open the app from the App Launcher");
+			status++;
+		}
+
+		if(status==0)
+		{
+			lp.CRMlogout();
+			lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+			if (BP.openAppFromAppLauchner(appPage, 50)) {
+				fundraisingRowCountBeforeFilter = AppBuilder.numberOfRecords(fundraisingSDGName, "100");
+				if (AppBuilder.selectFilter("Firm", "AIG Group")) {
+					log(LogStatus.INFO, "Filter has been selected from the firm", YesNo.No);
+					CommonLib.ThreadSleep(8000);
+					if(!SB.verifyRecordExistOrNotOnSDG(accountSDGName,"Account SDG"))
+					{
+						if(SB.verifyRecordAfterApplyingGlobalFilter(accountSDGName,"AIG Group", "Account Name","Account SDG"))
+						{
+							log(LogStatus.PASS, "Sequence filter has been Applied Records are matched", YesNo.No);
+							sa.assertTrue(true, "Sequence filter has been Applied Records are matched");
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Sequence filter has been Applied but Record is not matched", YesNo.No);
+							sa.assertTrue(false, "Sequence filter has been Applied but Record is not matched");
+						}				
+					}
+					else
+					{
+						log(LogStatus.PASS, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully", YesNo.No);
+						sa.assertTrue(true, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully");
+
+					}
+
+					if(!SB.verifyRecordExistOrNotOnSDG(contactSDGName,"Contact SDG"))
+					{
+						if(SB.verifyRecordAfterApplyingGlobalFilter(contactSDGName,"AIG Group", "Contact Name","Contact SDG"))
+						{
+							log(LogStatus.PASS, "Sequence filter has been Applied Records are matched", YesNo.No);
+							sa.assertTrue(true, "Sequence filter has been Applied Records are matched");
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Sequence filter has been Applied but Record is not matched", YesNo.No);
+							sa.assertTrue(false, "Sequence filter has been Applied but Record is not matched");
+						}				
+					}
+					else
+					{
+						log(LogStatus.PASS, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully", YesNo.No);
+						sa.assertTrue(true, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully");
+
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Could not select the filter",YesNo.No);
+					sa.assertTrue(false, "Could not select the filter");
+				}			
+				CommonLib.refresh(driver);
+				if (AppBuilder.selectFilter("Firm", "Applied Systems, Inc.")) {
+					log(LogStatus.INFO, "Filter has been selected from the firm", YesNo.No);
+					CommonLib.ThreadSleep(8000);
+					if(!SB.verifyRecordExistOrNotOnSDG(accountSDGName,"Account SDG"))
+					{
+						if(SB.verifyRecordAfterApplyingGlobalFilter(accountSDGName,"Applied Systems, Inc.", "Account Name","Account SDG"))
+						{
+							log(LogStatus.PASS, "Sequence filter has been Applied Records are matched", YesNo.No);
+							sa.assertTrue(true, "Sequence filter has been Applied Records are matched");
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Sequence filter has been Applied but Record is not matched", YesNo.No);
+							sa.assertTrue(false, "Sequence filter has been Applied but Record is not matched");
+						}				
+					}
+					else
+					{
+						log(LogStatus.PASS, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully", YesNo.No);
+						sa.assertTrue(true, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully");
+
+					}
+
+					if(!SB.verifyRecordExistOrNotOnSDG(contactSDGName,"Contact SDG"))
+					{
+						if(SB.verifyRecordAfterApplyingGlobalFilter(contactSDGName,"Applied Systems, Inc.", "Contact Name","Contact SDG"))
+						{
+							log(LogStatus.PASS, "Sequence filter has been Applied Records are matched", YesNo.No);
+							sa.assertTrue(true, "Sequence filter has been Applied Records are matched");
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Sequence filter has been Applied but Record is not matched", YesNo.No);
+							sa.assertTrue(false, "Sequence filter has been Applied but Record is not matched");
+						}				
+					}
+					else
+					{
+						log(LogStatus.PASS, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully", YesNo.No);
+						sa.assertTrue(true, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully");
+
+					}
+
+
+					fundraisingRowCountAfterFilter = AppBuilder.numberOfRecords(fundraisingSDGName, "100");
+					if(fundraisingRowCountAfterFilter==fundraisingRowCountBeforeFilter)
+					{
+						log(LogStatus.INFO,"Fundraising grid is not filtered",YesNo.No);
+						sa.assertTrue(true, "Fundraising grid is not filtered");
+					}
+					else
+					{
+						log(LogStatus.INFO,"Fundraising grid filtered",YesNo.No);
+						sa.assertTrue(true, "Fundraising grid filtered");
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Could not select the filter",YesNo.No);
+					sa.assertTrue(false, "Could not select the filter");
+				}
+
+			}	
+
+			else
+			{
+				log(LogStatus.ERROR,"Could not open the app from the app launcher",YesNo.No);
+				sa.assertTrue(false, "Could not open the app from the app launcher");
+			}
+		}
+
+
+		lp.CRMlogout();
+		sa.assertAll();
+
+	}
+
+
 	@Parameters({ "projectName" })
 
 	@Test
@@ -4323,4 +4659,1121 @@ public class Module9 extends BaseLib {
 		sa.assertAll();
 	}
 
+
+
+
+
+	@Parameters({ "projectName" })
+	@Test
+	public void M9Tc074_VerifyFundAndFirmFilter(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
+		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+		String appPage = "Custom App Page";
+		String fundraisingSDGName = "Fundraising Filter Grid";
+		String fundSDGName="Fund Filter Grid";
+		String accountSDGName="Account Filter Grid";
+		String contactSDGName="Contact Filter Grid";
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
+		if (BP.openAppFromAppLauchner(appPage, 50)) {
+			if (AppBuilder.selectFilter("Fund", "VMWare- Capital Raise 2018")) {
+				log(LogStatus.INFO, "Filter has been selected from the fund", YesNo.No);
+				CommonLib.ThreadSleep(8000);
+				if(!SB.verifyRecordExistOrNotOnSDG(fundraisingSDGName,"Fundraising SDG"))
+				{
+					if(SB.verifyRecordAfterApplyingGlobalFilter(fundraisingSDGName,"VMWare- Capital Raise 2018", "Fund Name","Fundraising SDG"))
+					{
+						log(LogStatus.PASS, "Sequence filter has been Applied Records are matched", YesNo.No);
+						sa.assertTrue(true, "Sequence filter has been Applied Records are matched");
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Sequence filter has been Applied but Record is not matched", YesNo.No);
+						sa.assertTrue(false, "Sequence filter has been Applied but Record is not matched");
+					}				
+				}
+				else
+				{
+					log(LogStatus.PASS, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully", YesNo.No);
+					sa.assertTrue(true, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully");
+
+				}
+
+				if(!SB.verifyRecordExistOrNotOnSDG(fundSDGName,"Fund SDG"))
+				{
+					if(SB.verifyRecordAfterApplyingGlobalFilter(fundSDGName,"VMWare- Capital Raise 2018", "Fund","Fund SDG"))
+					{
+						log(LogStatus.PASS, "Sequence filter has been Applied Records are matched", YesNo.No);
+						sa.assertTrue(true, "Sequence filter has been Applied Records are matched");
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Sequence filter has been Applied but Record is not matched", YesNo.No);
+						sa.assertTrue(false, "Sequence filter has been Applied but Record is not matched");
+					}				
+				}
+				else
+				{
+					log(LogStatus.PASS, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully", YesNo.No);
+					sa.assertTrue(true, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully");
+
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Could not select the filter",YesNo.No);
+				sa.assertTrue(false, "Could not select the filter");
+			}
+
+			if (AppBuilder.selectFilter("Firm", "General Motors")) {
+				log(LogStatus.INFO, "Filter has been selected from the fund", YesNo.No);
+				CommonLib.ThreadSleep(8000);
+				if(!SB.verifyRecordExistOrNotOnSDG(accountSDGName,"Account SDG"))
+				{
+					if(SB.verifyRecordAfterApplyingGlobalFilter(accountSDGName,"General Motors", "Account Name","Account SDG"))
+					{
+						log(LogStatus.PASS, "Sequence filter has been Applied Records are matched", YesNo.No);
+						sa.assertTrue(true, "Sequence filter has been Applied Records are matched");
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Sequence filter has been Applied but Record is not matched", YesNo.No);
+						sa.assertTrue(false, "Sequence filter has been Applied but Record is not matched");
+					}				
+				}
+				else
+				{
+					log(LogStatus.PASS, "Record is not persent against General Motors Filter on Fund But Filter has been applied successfully", YesNo.No);
+					sa.assertTrue(true, "Record is not persent against General Motors Filter on Fund But Filter has been applied successfully");
+
+				}
+
+				if(!SB.verifyRecordExistOrNotOnSDG(contactSDGName,"Fund SDG"))
+				{
+					if(SB.verifyRecordAfterApplyingGlobalFilter(contactSDGName,"General Motors", "Contact Name","Contact SDG"))
+					{
+						log(LogStatus.PASS, "Sequence filter has been Applied Records are matched", YesNo.No);
+						sa.assertTrue(true, "Sequence filter has been Applied Records are matched");
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Sequence filter has been Applied but Record is not matched", YesNo.No);
+						sa.assertTrue(false, "Sequence filter has been Applied but Record is not matched");
+					}				
+				}
+				else
+				{
+					log(LogStatus.PASS, "Record is not persent against General Motors Filter on Fund But Filter has been applied successfully", YesNo.No);
+					sa.assertTrue(true, "Record is not persent against General Motors Filter on Fund But Filter has been applied successfully");
+
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Could not select the filter",YesNo.No);
+				sa.assertTrue(false, "Could not select the filter");
+			}
+
+		}			
+
+		else
+		{
+			log(LogStatus.ERROR,"Could not open the app from the app launcher",YesNo.No);
+			sa.assertTrue(false, "Could not open the app from the app launcher");
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void M9Tc075_checkMyRecordFiltercCheckbox(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
+		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+		EditPageBusinessLayer EB=new EditPageBusinessLayer(driver);
+		String appPage = "Custom App Page";
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
+		if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+			if(EB.editMyRecordCheckboxOnAppPage(Condition.SelectCheckbox))
+			{
+				log(LogStatus.PASS, "My Record checkbox has been unselect", YesNo.No);
+				sa.assertTrue(true, "My Record checkbox has been unselect");
+				lp.CRMlogout();
+				lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+				if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+
+					if(AppBuilder.verifyRecordfilterfieldvisibility())
+					{
+						log(LogStatus.PASS, "Record filter field is visible", YesNo.No);
+						sa.assertTrue(true, "Record Filter field is visible");
+
+						ArrayList<String> optionValue=new ArrayList<String>();
+						optionValue.add("All Records");
+						optionValue.add("My Records");
+						optionValue.add("My Team's Records");				
+						ArrayList<String> result=AppBuilder.verifyDropDownOptionValue("Show", optionValue);
+						if(result.isEmpty())
+						{
+							log(LogStatus.PASS, "Dropdown Option values has been verified", YesNo.No);
+							sa.assertTrue(true, "Dropdown Option values has been verified");
+						}
+						else
+						{
+							log(LogStatus.FAIL, "Dropdown Option values are not verify", YesNo.No);
+							sa.assertTrue(false, "Dropdown Option values are not verify "+result);
+						}
+					}
+					else
+					{
+						log(LogStatus.FAIL, "Record filter field is not visible", YesNo.No);
+						sa.assertTrue(false, "Record Filter field is not visible");
+					}
+
+				}
+				else
+				{
+					log(LogStatus.FAIL, "Could not open the app from the app launcher", YesNo.No);
+					sa.assertTrue(false, "Could not open the app from the app launcher");
+				}
+			}
+			else
+			{
+				log(LogStatus.FAIL, "My Record checkbox is selected", YesNo.No);
+				sa.assertTrue(false, "My Record checkbox is selected");
+			}
+
+		}		
+		else
+		{
+			log(LogStatus.FAIL,"Could not open the app from the app launcher",YesNo.No);
+			sa.assertTrue(false, "Could not open the app from the app launcher");
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+
+	@Parameters({ "projectName" })
+	@Test
+	public void M9Tc076_verifyMyTeamRecordUser(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
+		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+		String appPage = "Custom App Page";
+		String fundraisingSDGName = "Fundraising Filter Grid";
+		String fundSDGName="Fund Filter Grid";
+		String accountSDGName="Account Filter Grid";
+		String contactSDGName="Contact Filter Grid";
+		int fundRowCount,accountFilterRowCount,fundraisingRowCount,contactFilterRowCount;
+		String pageSize="100";
+
+		String[] sdgDataCount=M9Tc076_SDGCount.split("<break>");
+
+		 int[] values = Arrays.stream(sdgDataCount)
+                 .mapToInt(Integer::parseInt)
+                 .toArray();
+		int accountSDGCount=values[0];
+		int contactSDGCount=values[1];
+		int fundSDGCount=values[2];
+		int fundraisingSDGCount=values[3];
+
+
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+
+		if (BP.openAppFromAppLauchner(appPage, 50)) {
+			if (AppBuilder.selectFilter("Show", "My Team's Records")) {
+				log(LogStatus.INFO, "Filter has been selected from the Show Filter", YesNo.No);
+				CommonLib.ThreadSleep(8000);
+
+				fundRowCount = AppBuilder.numberOfRecords(fundSDGName, pageSize);
+				accountFilterRowCount = AppBuilder.numberOfRecords(accountSDGName, pageSize);
+				fundraisingRowCount = AppBuilder.numberOfRecords(fundraisingSDGName, pageSize);
+				contactFilterRowCount = AppBuilder.numberOfRecords(contactSDGName, pageSize);
+
+				if(fundRowCount==fundSDGCount)
+				{
+					log(LogStatus.PASS,"Fund Grid Count "+fundSDGCount+" has been verified",YesNo.No);
+					sa.assertTrue(true, "Fund Grid Count "+fundSDGCount+" has been verified");
+				}
+				else
+				{
+					log(LogStatus.FAIL,"Fund Grid Count "+fundSDGCount+" is not matched",YesNo.No);
+					sa.assertTrue(false, "Fund Grid Count "+fundSDGCount+" is not matched");
+				}
+
+				if(accountFilterRowCount==accountSDGCount)
+				{
+					log(LogStatus.PASS,"Account Grid Count "+accountSDGCount+" has been verified",YesNo.No);
+					sa.assertTrue(true, "Account Grid Count "+accountSDGCount+" has been verified");
+				}
+				else
+				{
+					log(LogStatus.FAIL,"Account Grid Count "+accountSDGCount+" is not matched",YesNo.No);
+					sa.assertTrue(false, "Account Grid Count "+accountSDGCount+" is not matched");
+				}
+
+
+				if(fundraisingRowCount==fundraisingSDGCount)
+				{
+					log(LogStatus.PASS,"Fundraising Grid Count "+fundraisingSDGCount+" has been verified",YesNo.No);
+					sa.assertTrue(true, "Fundraising Grid Count "+fundraisingSDGCount+" has been verified");
+				}
+				else
+				{
+					log(LogStatus.FAIL,"Fundraising Grid Count "+fundraisingSDGCount+" is not matched",YesNo.No);
+					sa.assertTrue(false, "Fundraising Grid Count "+fundraisingSDGCount+" is not matched");
+				}
+
+
+				if(contactFilterRowCount==contactSDGCount)
+				{
+					log(LogStatus.PASS,"Contact Grid Count "+contactSDGCount+" has been verified",YesNo.No);
+					sa.assertTrue(true, "Contact Grid Count "+contactSDGCount+" has been verified");
+				}
+				else
+				{
+					log(LogStatus.FAIL,"Contact Grid Count "+contactSDGCount+" is not matched",YesNo.No);
+					sa.assertTrue(false, "Contact Grid Count "+contactSDGCount+" is not matched");
+				}
+			}
+			else
+			{
+				log(LogStatus.FAIL,"Could not select the filter from the Show field",YesNo.No);
+				sa.assertTrue(false, "Could not select the filter from the Show field");
+			}
+		}
+		else
+		{
+			log(LogStatus.FAIL,"Could not open the app from the App Launcher",YesNo.No);
+			sa.assertTrue(false, "Could not open the app from the App Launcher");
+		}
+
+		lp.CRMlogout();
+
+
+
+		lp.CRMLogin(crmUser2EmailID, adminPassword, appName);
+
+		if (BP.openAppFromAppLauchner(appPage, 50)) {
+			if (AppBuilder.selectFilter("Show", "My Team's Records")) {
+				log(LogStatus.INFO, "Filter has been selected from the Show Filter", YesNo.No);
+				CommonLib.ThreadSleep(8000);
+
+				fundRowCount = AppBuilder.numberOfRecords(fundSDGName, pageSize);
+				accountFilterRowCount = AppBuilder.numberOfRecords(accountSDGName, pageSize);
+				fundraisingRowCount = AppBuilder.numberOfRecords(fundraisingSDGName, pageSize);
+				contactFilterRowCount = AppBuilder.numberOfRecords(contactSDGName, pageSize);
+
+				if(fundRowCount==fundSDGCount)
+				{
+					log(LogStatus.PASS,"Fund Grid Count "+fundSDGCount+" has been verified",YesNo.No);
+					sa.assertTrue(true, "Fund Grid Count "+fundSDGCount+" has been verified");
+				}
+				else
+				{
+					log(LogStatus.FAIL,"Fund Grid Count "+fundSDGCount+" is not matched",YesNo.No);
+					sa.assertTrue(false, "Fund Grid Count "+fundSDGCount+" is not matched");
+				}
+
+				if(accountFilterRowCount==accountSDGCount)
+				{
+					log(LogStatus.PASS,"Account Grid Count "+accountSDGCount+" has been verified",YesNo.No);
+					sa.assertTrue(true, "Account Grid Count "+accountSDGCount+" has been verified");
+				}
+				else
+				{
+					log(LogStatus.FAIL,"Account Grid Count "+accountSDGCount+" is not matched",YesNo.No);
+					sa.assertTrue(false, "Account Grid Count "+accountSDGCount+" is not matched");
+				}
+
+
+				if(fundraisingRowCount==fundraisingSDGCount)
+				{
+					log(LogStatus.PASS,"Fundraising Grid Count "+fundraisingSDGCount+" has been verified",YesNo.No);
+					sa.assertTrue(true, "Fundraising Grid Count "+fundraisingSDGCount+" has been verified");
+				}
+				else
+				{
+					log(LogStatus.FAIL,"Fundraising Grid Count "+fundraisingSDGCount+" is not matched",YesNo.No);
+					sa.assertTrue(false, "Fundraising Grid Count "+fundraisingSDGCount+" is not matched");
+				}
+
+
+				if(contactFilterRowCount==contactSDGCount)
+				{
+					log(LogStatus.PASS,"Contact Grid Count "+contactSDGCount+" has been verified",YesNo.No);
+					sa.assertTrue(true, "Contact Grid Count "+contactSDGCount+" has been verified");
+				}
+				else
+				{
+					log(LogStatus.FAIL,"Contact Grid Count "+contactSDGCount+" is not matched",YesNo.No);
+					sa.assertTrue(false, "Contact Grid Count "+contactSDGCount+" is not matched");
+				}
+			}
+			else
+			{
+				log(LogStatus.FAIL,"Could not select the filter from the Show field",YesNo.No);
+				sa.assertTrue(false, "Could not select the filter from the Show field");
+			}
+		}
+		else
+		{
+			log(LogStatus.FAIL,"Could not open the app from the App Launcher",YesNo.No);
+			sa.assertTrue(false, "Could not open the app from the App Launcher");
+		}
+
+		lp.CRMlogout();		
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void M9Tc077_verifyMyTeamRecordAdmin(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
+		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+		String appPage = "Custom App Page";
+		String fundraisingSDGName = "Fundraising Filter Grid";
+		String fundSDGName="Fund Filter Grid";
+		String accountSDGName="Account Filter Grid";
+		String contactSDGName="Contact Filter Grid";
+		int fundRowCount,accountFilterRowCount,fundraisingRowCount,contactFilterRowCount;
+		String pageSize="100";
+
+		String[] sdgDataCount=M9Tc077_SDGCount.split("<break>");
+
+		 int[] values = Arrays.stream(sdgDataCount)
+                .mapToInt(Integer::parseInt)
+                .toArray();
+		int accountSDGCount=values[0];
+		int contactSDGCount=values[1];
+		int fundSDGCount=values[2];
+		int fundraisingSDGCount=values[3];
+
+
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
+		if (BP.openAppFromAppLauchner(appPage, 50)) {
+			if (AppBuilder.selectFilter("Show", "My Team's Records")) {
+				log(LogStatus.INFO, "Filter has been selected from the Show Filter", YesNo.No);
+				CommonLib.ThreadSleep(8000);
+
+				fundRowCount = AppBuilder.numberOfRecords(fundSDGName, pageSize);
+				accountFilterRowCount = AppBuilder.numberOfRecords(accountSDGName, pageSize);
+				fundraisingRowCount = AppBuilder.numberOfRecords(fundraisingSDGName, pageSize);
+				contactFilterRowCount = AppBuilder.numberOfRecords(contactSDGName, pageSize);
+
+				if(fundRowCount==fundSDGCount)
+				{
+					log(LogStatus.PASS,"Fund Grid Count "+fundSDGCount+" has been verified",YesNo.No);
+					sa.assertTrue(true, "Fund Grid Count "+fundSDGCount+" has been verified");
+				}
+				else
+				{
+					log(LogStatus.FAIL,"Fund Grid Count "+fundSDGCount+" is not matched",YesNo.No);
+					sa.assertTrue(false, "Fund Grid Count "+fundSDGCount+" is not matched");
+				}
+
+				if(accountFilterRowCount==accountSDGCount)
+				{
+					log(LogStatus.PASS,"Account Grid Count "+accountSDGCount+" has been verified",YesNo.No);
+					sa.assertTrue(true, "Account Grid Count "+accountSDGCount+" has been verified");
+				}
+				else
+				{
+					log(LogStatus.FAIL,"Account Grid Count "+accountSDGCount+" is not matched",YesNo.No);
+					sa.assertTrue(false, "Account Grid Count "+accountSDGCount+" is not matched");
+				}
+
+
+				if(fundraisingRowCount==fundraisingSDGCount)
+				{
+					log(LogStatus.PASS,"Fundraising Grid Count "+fundraisingSDGCount+" has been verified",YesNo.No);
+					sa.assertTrue(true, "Fundraising Grid Count "+fundraisingSDGCount+" has been verified");
+				}
+				else
+				{
+					log(LogStatus.FAIL,"Fundraising Grid Count "+fundraisingSDGCount+" is not matched",YesNo.No);
+					sa.assertTrue(false, "Fundraising Grid Count "+fundraisingSDGCount+" is not matched");
+				}
+
+
+				if(contactFilterRowCount==contactSDGCount)
+				{
+					log(LogStatus.PASS,"Contact Grid Count "+contactSDGCount+" has been verified",YesNo.No);
+					sa.assertTrue(true, "Contact Grid Count "+contactSDGCount+" has been verified");
+				}
+				else
+				{
+					log(LogStatus.FAIL,"Contact Grid Count "+contactSDGCount+" is not matched",YesNo.No);
+					sa.assertTrue(false, "Contact Grid Count "+contactSDGCount+" is not matched");
+				}
+			}
+			else
+			{
+				log(LogStatus.FAIL,"Could not select the filter from the Show field",YesNo.No);
+				sa.assertTrue(false, "Could not select the filter from the Show field");
+			}
+		}
+		else
+		{
+			log(LogStatus.FAIL,"Could not open the app from the App Launcher",YesNo.No);
+			sa.assertTrue(false, "Could not open the app from the App Launcher");
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	  
+
+	@Parameters({ "projectName" })
+	@Test
+	public void M9Tc078_updateTeamBlankAndVerifyMyTeamRecordFilterRecord(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+		String appPage = "Custom App Page";
+		String fundraisingSDGName = "Fundraising Filter Grid";
+		String fundSDGName="Fund Filter Grid";
+		String accountSDGName="Account Filter Grid";
+		String contactSDGName="Contact Filter Grid";
+		int fundRowCount,accountFilterRowCount,fundraisingRowCount,contactFilterRowCount;
+		String pageSize="100";
+		String parentWindow="";
+
+		String[] sdgDataCount=M9Tc078_SDGCount.split("<break>");
+
+		int[] values = Arrays.stream(sdgDataCount)
+				.mapToInt(Integer::parseInt)
+				.toArray();
+		int accountSDGCount=values[0];
+		int contactSDGCount=values[1];
+		int fundSDGCount=values[2];
+		int fundraisingSDGCount=values[3];
+
+
+		ArrayList<String> EmailId=new ArrayList<String>();
+		EmailId.add(crmUser1EmailID);
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+			}
+		}
+
+		for(String email:EmailId)
+		{
+			if (setup.EditPEUser(email, "Team", HTMLTAG.select, "--None--")) {
+				log(LogStatus.INFO, "Team has been blank for : " + email, YesNo.No);
+				sa.assertTrue(true, "Team has been blank for : " + email);
+				driver.close();
+				driver.switchTo().window(parentWindow);
+				lp.CRMlogout();
+				lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+
+				if (BP.openAppFromAppLauchner(appPage, 50)) {
+					if (AppBuilder.selectFilter("Show", "My Team's Records")) {
+						log(LogStatus.INFO, "Filter has been selected from the Show Filter", YesNo.No);
+						CommonLib.ThreadSleep(8000);
+
+						fundRowCount = AppBuilder.numberOfRecords(fundSDGName, pageSize);
+						accountFilterRowCount = AppBuilder.numberOfRecords(accountSDGName, pageSize);
+						fundraisingRowCount = AppBuilder.numberOfRecords(fundraisingSDGName, pageSize);
+						contactFilterRowCount = AppBuilder.numberOfRecords(contactSDGName, pageSize);
+
+						if(fundRowCount==fundSDGCount)
+						{
+							log(LogStatus.PASS,"Fund Grid Count "+fundSDGCount+" has been verified",YesNo.No);
+							sa.assertTrue(true, "Fund Grid Count "+fundSDGCount+" has been verified");
+						}
+						else
+						{
+							log(LogStatus.FAIL,"Fund Grid Count "+fundSDGCount+" is not matched",YesNo.No);
+							sa.assertTrue(false, "Fund Grid Count "+fundSDGCount+" is not matched");
+						}
+
+						if(accountFilterRowCount==accountSDGCount)
+						{
+							log(LogStatus.PASS,"Account Grid Count "+accountSDGCount+" has been verified",YesNo.No);
+							sa.assertTrue(true, "Account Grid Count "+accountSDGCount+" has been verified");
+						}
+						else
+						{
+							log(LogStatus.FAIL,"Account Grid Count "+accountSDGCount+" is not matched",YesNo.No);
+							sa.assertTrue(false, "Account Grid Count "+accountSDGCount+" is not matched");
+						}
+
+
+						if(fundraisingRowCount==fundraisingSDGCount)
+						{
+							log(LogStatus.PASS,"Fundraising Grid Count "+fundraisingSDGCount+" has been verified",YesNo.No);
+							sa.assertTrue(true, "Fundraising Grid Count "+fundraisingSDGCount+" has been verified");
+						}
+						else
+						{
+							log(LogStatus.FAIL,"Fundraising Grid Count "+fundraisingSDGCount+" is not matched",YesNo.No);
+							sa.assertTrue(false, "Fundraising Grid Count "+fundraisingSDGCount+" is not matched");
+						}
+
+
+						if(contactFilterRowCount==contactSDGCount)
+						{
+							log(LogStatus.PASS,"Contact Grid Count "+contactSDGCount+" has been verified",YesNo.No);
+							sa.assertTrue(true, "Contact Grid Count "+contactSDGCount+" has been verified");
+						}
+						else
+						{
+							log(LogStatus.FAIL,"Contact Grid Count "+contactSDGCount+" is not matched",YesNo.No);
+							sa.assertTrue(false, "Contact Grid Count "+contactSDGCount+" is not matched");
+						}
+
+					}
+					else
+					{
+						log(LogStatus.PASS,"Could not select the filter from the Show field",YesNo.No);
+						sa.assertTrue(false, "Could not select the filter from the Show field");
+					}
+				}
+				else
+				{
+					log(LogStatus.FAIL,"Could not open the app from the App Launcher",YesNo.No);
+					sa.assertTrue(false, "Could not open the app from the App Launcher");
+				}				
+
+			} else {
+				log(LogStatus.ERROR, "--None-- is not added in the Team field for user :" + email,
+						YesNo.Yes);
+				sa.assertTrue(false, "--None-- is not added in the Team field for user :" + email);
+			}
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+
+	@Parameters({ "projectName" })
+	@Test
+	public void M9Tc079_updateTeamToOriginationAndVerifyMyTeamRecordFilterRecords(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+		String appPage = "Custom App Page";
+		String fundraisingSDGName = "Fundraising Filter Grid";
+		String fundSDGName="Fund Filter Grid";
+		String accountSDGName="Account Filter Grid";
+		String contactSDGName="Contact Filter Grid";
+		int fundRowCount,accountFilterRowCount,fundraisingRowCount,contactFilterRowCount;
+		String pageSize="100";
+		String parentWindow="";
+
+		String[] sdgDataCount=M9Tc079_SDGCount.split("<break>");
+
+		int[] values = Arrays.stream(sdgDataCount)
+				.mapToInt(Integer::parseInt)
+				.toArray();
+		int accountSDGCount=values[0];
+		int contactSDGCount=values[1];
+		int fundSDGCount=values[2];
+		int fundraisingSDGCount=values[3];
+
+
+		ArrayList<String> EmailId=new ArrayList<String>();
+		EmailId.add(crmUser1EmailID);
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+			}
+		}
+
+		for(String email:EmailId)
+		{
+			if (setup.EditPEUser(email, "Team", HTMLTAG.select, "Origination")) {
+				log(LogStatus.INFO, "Origination has been selected from Team for : " + email, YesNo.No);
+				sa.assertTrue(true, "Origination has been selected from Team for : " + email);
+				driver.close();
+				driver.switchTo().window(parentWindow);
+				lp.CRMlogout();
+				lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+
+				if (BP.openAppFromAppLauchner(appPage, 50)) {
+					if (AppBuilder.selectFilter("Show", "My Team's Records")) {
+						log(LogStatus.INFO, "Filter has been selected from the Show Filter", YesNo.No);
+						CommonLib.ThreadSleep(8000);
+
+						fundRowCount = AppBuilder.numberOfRecords(fundSDGName, pageSize);
+						accountFilterRowCount = AppBuilder.numberOfRecords(accountSDGName, pageSize);
+						fundraisingRowCount = AppBuilder.numberOfRecords(fundraisingSDGName, pageSize);
+						contactFilterRowCount = AppBuilder.numberOfRecords(contactSDGName, pageSize);
+
+						if(fundRowCount==fundSDGCount)
+						{
+							log(LogStatus.PASS,"Fund Grid Count "+fundSDGCount+" has been verified",YesNo.No);
+							sa.assertTrue(true, "Fund Grid Count "+fundSDGCount+" has been verified");
+						}
+						else
+						{
+							log(LogStatus.FAIL,"Fund Grid Count "+fundSDGCount+" is not matched",YesNo.No);
+							sa.assertTrue(false, "Fund Grid Count "+fundSDGCount+" is not matched");
+						}
+
+						if(accountFilterRowCount==accountSDGCount)
+						{
+							log(LogStatus.PASS,"Account Grid Count "+accountSDGCount+" has been verified",YesNo.No);
+							sa.assertTrue(true, "Account Grid Count "+accountSDGCount+" has been verified");
+						}
+						else
+						{
+							log(LogStatus.FAIL,"Account Grid Count "+accountSDGCount+" is not matched",YesNo.No);
+							sa.assertTrue(false, "Account Grid Count "+accountSDGCount+" is not matched");
+						}
+
+
+						if(fundraisingRowCount==fundraisingSDGCount)
+						{
+							log(LogStatus.PASS,"Fundraising Grid Count "+fundraisingSDGCount+" has been verified",YesNo.No);
+							sa.assertTrue(true, "Fundraising Grid Count "+fundraisingSDGCount+" has been verified");
+						}
+						else
+						{
+							log(LogStatus.FAIL,"Fundraising Grid Count "+fundraisingSDGCount+" is not matched",YesNo.No);
+							sa.assertTrue(false, "Fundraising Grid Count "+fundraisingSDGCount+" is not matched");
+						}
+
+
+						if(contactFilterRowCount==contactSDGCount)
+						{
+							log(LogStatus.PASS,"Contact Grid Count "+contactSDGCount+" has been verified",YesNo.No);
+							sa.assertTrue(true, "Contact Grid Count "+contactSDGCount+" has been verified");
+						}
+						else
+						{
+							log(LogStatus.FAIL,"Contact Grid Count "+contactSDGCount+" is not matched",YesNo.No);
+							sa.assertTrue(false, "Contact Grid Count "+contactSDGCount+" is not matched");
+						}
+
+					}
+					else
+					{
+						log(LogStatus.FAIL,"Could not select the filter from the Show field",YesNo.No);
+						sa.assertTrue(false, "Could not select the filter from the Show field");
+					}
+				}
+				else
+				{
+					log(LogStatus.FAIL,"Could not open the app from the App Launcher",YesNo.No);
+					sa.assertTrue(false, "Could not open the app from the App Launcher");
+				}		
+
+
+				lp.CRMlogout();
+				lp.CRMLogin(crmUser2EmailID, adminPassword, appName);
+
+				if (BP.openAppFromAppLauchner(appPage, 50)) {
+					if (AppBuilder.selectFilter("Show", "My Team's Records")) {
+						log(LogStatus.INFO, "Filter has been selected from the Show Filter", YesNo.No);
+						CommonLib.ThreadSleep(8000);
+
+						fundRowCount = AppBuilder.numberOfRecords(fundSDGName, pageSize);
+						accountFilterRowCount = AppBuilder.numberOfRecords(accountSDGName, pageSize);
+						fundraisingRowCount = AppBuilder.numberOfRecords(fundraisingSDGName, pageSize);
+						contactFilterRowCount = AppBuilder.numberOfRecords(contactSDGName, pageSize);
+
+						if(fundRowCount==fundSDGCount)
+						{
+							log(LogStatus.PASS,"Fund Grid Count "+fundSDGCount+" has been verified",YesNo.No);
+							sa.assertTrue(true, "Fund Grid Count "+fundSDGCount+" has been verified");
+						}
+						else
+						{
+							log(LogStatus.FAIL,"Fund Grid Count "+fundSDGCount+" is not matched",YesNo.No);
+							sa.assertTrue(false, "Fund Grid Count "+fundSDGCount+" is not matched");
+						}
+
+						if(accountFilterRowCount==accountSDGCount)
+						{
+							log(LogStatus.PASS,"Account Grid Count "+accountSDGCount+" has been verified",YesNo.No);
+							sa.assertTrue(true, "Account Grid Count "+accountSDGCount+" has been verified");
+						}
+						else
+						{
+							log(LogStatus.FAIL,"Account Grid Count "+accountSDGCount+" is not matched",YesNo.No);
+							sa.assertTrue(false, "Account Grid Count "+accountSDGCount+" is not matched");
+						}
+
+
+						if(fundraisingRowCount==fundraisingSDGCount)
+						{
+							log(LogStatus.PASS,"Fundraising Grid Count "+fundraisingSDGCount+" has been verified",YesNo.No);
+							sa.assertTrue(true, "Fundraising Grid Count "+fundraisingSDGCount+" has been verified");
+						}
+						else
+						{
+							log(LogStatus.FAIL,"Fundraising Grid Count "+fundraisingSDGCount+" is not matched",YesNo.No);
+							sa.assertTrue(false, "Fundraising Grid Count "+fundraisingSDGCount+" is not matched");
+						}
+
+
+						if(contactFilterRowCount==contactSDGCount)
+						{
+							log(LogStatus.PASS,"Contact Grid Count "+contactSDGCount+" has been verified",YesNo.No);
+							sa.assertTrue(true, "Contact Grid Count "+contactSDGCount+" has been verified");
+						}
+						else
+						{
+							log(LogStatus.FAIL,"Contact Grid Count "+contactSDGCount+" is not matched",YesNo.No);
+							sa.assertTrue(false, "Contact Grid Count "+contactSDGCount+" is not matched");
+						}
+
+					}
+					else
+					{
+						log(LogStatus.FAIL,"Could not select the filter from the Show field",YesNo.No);
+						sa.assertTrue(false, "Could not select the filter from the Show field");
+					}
+				}
+				else
+				{
+					log(LogStatus.FAIL,"Could not open the app from the App Launcher",YesNo.No);
+					sa.assertTrue(false, "Could not open the app from the App Launcher");
+				}	
+
+
+			} else {
+				log(LogStatus.FAIL, "Origination is not added in the Team field for user :" + email,
+						YesNo.Yes);
+				sa.assertTrue(false, "Origination is not added in the Team field for user :" + email);
+			}
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+
+	@Parameters({ "projectName" })
+	@Test
+	public void M9Tc080_updateTeamBlankAndVerifyMyTeamRecordFilterRecord(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+		String appPage = "Custom App Page";
+		String fundraisingSDGName = "Fundraising Filter Grid";
+		String fundSDGName="Fund Filter Grid";
+		String accountSDGName="Account Filter Grid";
+		String contactSDGName="Contact Filter Grid";
+		int fundRowCount,accountFilterRowCount,fundraisingRowCount,contactFilterRowCount;
+		String pageSize="100";
+		String parentWindow="";
+
+		String[] sdgDataCount=M9Tc080_SDGCount.split("<break>");
+
+		int[] values = Arrays.stream(sdgDataCount)
+				.mapToInt(Integer::parseInt)
+				.toArray();
+		int accountSDGCount=values[0];
+		int contactSDGCount=values[1];
+		int fundSDGCount=values[2];
+		int fundraisingSDGCount=values[3];
+
+
+		ArrayList<String> EmailId=new ArrayList<String>();
+		EmailId.add(crmUser1EmailID);
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+			}
+		}
+
+		for(String email:EmailId)
+		{
+			if (setup.EditPEUser(email, "Team", HTMLTAG.select, "--None--")) {
+				log(LogStatus.INFO, "Team has been blank for : " + email, YesNo.No);
+				sa.assertTrue(true, "Team has been blank for : " + email);
+				driver.close();
+				driver.switchTo().window(parentWindow);
+				lp.CRMlogout();
+				lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+
+				if (BP.openAppFromAppLauchner(appPage, 50)) {
+					if (AppBuilder.selectFilter("Show", "My Team's Records")) {
+						log(LogStatus.INFO, "Filter has been selected from the Show Filter", YesNo.No);
+						CommonLib.ThreadSleep(8000);
+
+						fundRowCount = AppBuilder.numberOfRecords(fundSDGName, pageSize);
+						accountFilterRowCount = AppBuilder.numberOfRecords(accountSDGName, pageSize);
+						fundraisingRowCount = AppBuilder.numberOfRecords(fundraisingSDGName, pageSize);
+						contactFilterRowCount = AppBuilder.numberOfRecords(contactSDGName, pageSize);
+
+						if(fundRowCount==fundSDGCount)
+						{
+							log(LogStatus.PASS,"Fund Grid Count "+fundSDGCount+" has been verified",YesNo.No);
+							sa.assertTrue(true, "Fund Grid Count "+fundSDGCount+" has been verified");
+						}
+						else
+						{
+							log(LogStatus.FAIL,"Fund Grid Count "+fundSDGCount+" is not matched",YesNo.No);
+							sa.assertTrue(false, "Fund Grid Count "+fundSDGCount+" is not matched");
+						}
+
+						if(accountFilterRowCount==accountSDGCount)
+						{
+							log(LogStatus.PASS,"Account Grid Count "+accountSDGCount+" has been verified",YesNo.No);
+							sa.assertTrue(true, "Account Grid Count "+accountSDGCount+" has been verified");
+						}
+						else
+						{
+							log(LogStatus.FAIL,"Account Grid Count "+accountSDGCount+" is not matched",YesNo.No);
+							sa.assertTrue(false, "Account Grid Count "+accountSDGCount+" is not matched");
+						}
+
+
+						if(fundraisingRowCount==fundraisingSDGCount)
+						{
+							log(LogStatus.PASS,"Fundraising Grid Count "+fundraisingSDGCount+" has been verified",YesNo.No);
+							sa.assertTrue(true, "Fundraising Grid Count "+fundraisingSDGCount+" has been verified");
+						}
+						else
+						{
+							log(LogStatus.FAIL,"Fundraising Grid Count "+fundraisingSDGCount+" is not matched",YesNo.No);
+							sa.assertTrue(false, "Fundraising Grid Count "+fundraisingSDGCount+" is not matched");
+						}
+
+
+						if(contactFilterRowCount==contactSDGCount)
+						{
+							log(LogStatus.PASS,"Contact Grid Count "+contactSDGCount+" has been verified",YesNo.No);
+							sa.assertTrue(true, "Contact Grid Count "+contactSDGCount+" has been verified");
+						}
+						else
+						{
+							log(LogStatus.FAIL,"Contact Grid Count "+contactSDGCount+" is not matched",YesNo.No);
+							sa.assertTrue(false, "Contact Grid Count "+contactSDGCount+" is not matched");
+						}
+
+					}
+					else
+					{
+						log(LogStatus.FAIL,"Could not select the filter from the Show field",YesNo.No);
+						sa.assertTrue(false, "Could not select the filter from the Show field");
+					}
+				}
+				else
+				{
+					log(LogStatus.FAIL,"Could not open the app from the App Launcher",YesNo.No);
+					sa.assertTrue(false, "Could not open the app from the App Launcher");
+				}				
+
+			} else {
+				log(LogStatus.FAIL, "--None-- is not added in the Team field for user :" + email,
+						YesNo.Yes);
+				sa.assertTrue(false, "--None-- is not added in the Team field for user :" + email);
+			}
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+
+	
+
+	@Parameters({ "projectName" })
+	@Test
+	
+		public void M9Tc081_verifyEditLockedIconOnRecord(String projectName) {
+
+			LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+			BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+			LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
+			SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+			HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+			SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+			String appPage = "Custom App Page";
+			boolean result=false;
+			lp.CRMLogin(superAdminUserName, adminPassword, appName);
+			if (BP.openAppFromAppLauchner(appPage, 50)) {
+				log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+				CommonLib.refresh(driver);
+				CommonLib.ThreadSleep(10000);
+				if(SB.verifyEditOrLockedIconOnSDGData("Account Name", IconType.Edit))
+				{
+					log(LogStatus.PASS,"Edit icon is visible on Account Name",YesNo.No);
+					sa.assertTrue(true, "Edit icon is visible on Account Name");
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Edit icon is not visible on Account Name",YesNo.No);
+					sa.assertTrue(false, "Edit icon is not visible on Account Name");
+				}
+				
+				if(SB.verifyEditOrLockedIconOnSDGData("Phone", IconType.Edit))
+				{
+					log(LogStatus.PASS,"Edit icon is visible on Phone",YesNo.No);
+					sa.assertTrue(true, "Edit icon is visible on Phone");
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Edit icon is not visible on Phone",YesNo.No);
+					sa.assertTrue(false, "Edit icon is not visible on Phone");
+				}
+				
+				if(SB.verifyEditOrLockedIconOnSDGData("Website", IconType.Edit))
+				{
+					log(LogStatus.PASS,"Edit icon is visible on Website",YesNo.No);
+					sa.assertTrue(true, "Edit icon is visible on Website");
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Edit icon is not visible on Website",YesNo.No);
+					sa.assertTrue(false, "Edit icon is not visible on Website");
+				}
+				
+				if(SB.verifyEditOrLockedIconOnSDGData("Description", IconType.Edit))
+				{
+					log(LogStatus.PASS,"Edit icon is visible on Description",YesNo.No);
+					sa.assertTrue(true, "Edit icon is visible on Description");
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Edit icon is not visible on Description",YesNo.No);
+					sa.assertTrue(false, "Edit icon is not visible on Description");
+				}
+				
+				if(SB.verifyEditOrLockedIconOnSDGData("Revenue", IconType.Edit))
+				{
+					log(LogStatus.PASS,"Edit icon is visible on Revenue",YesNo.No);
+					sa.assertTrue(true, "Edit icon is visible on Revenue");
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Edit icon is not visible on Revenue",YesNo.No);
+					sa.assertTrue(false, "Edit icon is not visible on Revenue");
+				}
+				
+				if(SB.verifyEditOrLockedIconOnSDGData("Address", IconType.Locked))
+				{
+					log(LogStatus.PASS,"Locked icon is visible on Address",YesNo.No);
+					sa.assertTrue(true, "Locked icon is visible on Address");
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Locked icon is not visible on Address",YesNo.No);
+					sa.assertTrue(false, "Locked icon is not visible on Address");
+				}
+				
+				if(SB.verifyEditOrLockedIconOnSDGData("Record Type", IconType.Locked))
+				{
+					log(LogStatus.PASS,"Locked icon is visible on Record Type",YesNo.No);
+					sa.assertTrue(true, "Locked icon is visible on Record Type");
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Locked icon is not visible on Record Type",YesNo.No);
+					sa.assertTrue(false, "Locked icon is not visible on Record Type");
+				}
+				
+				
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Could not open the app from the App Launcher",YesNo.Yes);
+				sa.assertTrue(false, "Could not open the app from the App Launcher");
+			}
+			
+			lp.CRMlogout();
+			sa.assertAll();
+	}
+			
+
+	
+	@Parameters({ "projectName" })
+	@Test
+	
+		public void M9Tc082_VerifyCheckedOrUnchecked(String projectName) {
+
+			LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+			BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+			LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
+			SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+			HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+			SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+			String appPage = "Custom App Page";
+			boolean result=false;
+			lp.CRMLogin(superAdminUserName, adminPassword, appName);
+			if (BP.openAppFromAppLauchner(appPage, 50)) {
+				
+				log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+				CommonLib.refresh(driver);
+				
+				
+				
+			}
+	}
+	
 }
+
+
+
+
+
+
