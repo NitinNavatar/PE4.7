@@ -1,5 +1,6 @@
 package com.navatar.pageObjects;
 
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -246,6 +247,19 @@ public class FundsPage extends BasePageBusinessLayer {
 		String xpath="//*[text()='"+fieldLabelName+"']/following-sibling::div//input";
 		WebElement ele = FindElement(driver, xpath, fieldLabelName+" text box ", action.SCROLLANDBOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "text box : "+fieldLabelName);
+		
+	}
+	
+	public WebElement getFundNameHeader(String fundName, int timeOut) {
+		String xpath="//h1//lightning-formatted-text[text()='"+fundName+"']";
+		WebElement ele = FindElement(driver, xpath, fundName+" Header ", action.SCROLLANDBOOLEAN, timeOut);
+		try {
+		return isDisplayed(driver, ele, "Visibility", timeOut, "Header : "+fundName);
+		}
+		catch(StaleElementReferenceException e)
+		{
+			return isDisplayed(driver, ele, "Visibility", timeOut, "Header : "+fundName);
+		}
 		
 	}
 	
