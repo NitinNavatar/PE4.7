@@ -62,7 +62,7 @@ public class FundsPage extends BasePageBusinessLayer {
 
 
 	
-	@FindBy(xpath="//span[text()='Fund Name']/../following-sibling::input")
+	@FindBy(xpath="//label[text()='Fund Name']/following-sibling::div//input")
 	private WebElement fundName_Lighting;
 
 	/**
@@ -138,9 +138,9 @@ public class FundsPage extends BasePageBusinessLayer {
 		}
 		
 			//span[text()='Description']/..//following-sibling::textarea
-			xpath="//span[contains(text(),'"+finalLabelName+"')]";
-			inputXpath="/..//following-sibling::input";
-			dateXpath="/../following-sibling::div/input";
+			xpath="//label[contains(text(),'"+finalLabelName+"')]";
+			inputXpath="/..//following-sibling::div//input";
+			dateXpath="/..//input";
 		
 		if(labelName.contains("Date")) {
 			finalXpath=xpath+dateXpath;
@@ -152,7 +152,7 @@ public class FundsPage extends BasePageBusinessLayer {
 	}
 	
 	
-	@FindBy(xpath="//iframe[@title='Email Fundraisings']")
+	@FindBy(xpath="//div[contains(@class,'windowViewMode-normal')]//iframe[@title='accessibility title']")
 	private WebElement emailFundraisingContactFrame_Lightning;
 	
 	/**
@@ -165,7 +165,7 @@ public class FundsPage extends BasePageBusinessLayer {
 	@FindBy(xpath="//input[@title='Email Fundraising Contacts']")
 	private WebElement emailFundraisingContactsBtn_Classic;
 
-	@FindBy(xpath="//a[@title='Email Fundraising Contacts']")
+	@FindBy(xpath="//button[@title='Email Fundraising Contacts' or text()='Email Fundraising Contacts']")
 	private WebElement emailFundraisingContactsBtn_Lightning;
 	/**
 	 * @return the emailFundraisingContactsBtn

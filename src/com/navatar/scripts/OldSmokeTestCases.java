@@ -231,40 +231,9 @@ public class OldSmokeTestCases extends BaseLib {
 		String[] splitedUserLastName = removeNumbersFromString(crmUser1LastName);
 		String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
 		String emailId = lp.generateRandomEmailId(gmailUserName2);
-		ExcelUtils.writeData(smokeFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",excelLabel.User_Last_Name);
+		ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",excelLabel.User_Last_Name);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		boolean flag = false;
-		if (home.clickOnSetUpLink(environment, mode)) {
-			String parentID = switchOnWindow(driver);
-			if (parentID!=null) {
-				if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(),object.Company_Information )) {
-					switchToFrame(driver, 20, sp.getSetUpPageIframe(20));
-					WebElement ele = sp.getOrgCompanyName(30);
-					if (ele!=null) {
-						String Organization_Name=ele.getText().trim();
-						System.err.println("getOrgCompanyName "+Organization_Name);
-						ExcelUtils.writeData(smokeFilePath, Organization_Name, "Users", excelLabel.Variable_Name, "AdminUser",excelLabel.Organization_Name);
-							
-					} else {
-						log(LogStatus.ERROR, object.Company_Information+" element could not be found at setup", YesNo.Yes);
-						sa.assertTrue(false, object.Company_Information+" element could not be found at setup");
-					}
-					
-				}else {
-					log(LogStatus.ERROR, object.Company_Information+" could not be found at setup", YesNo.Yes);
-					sa.assertTrue(false, object.Company_Information+" could not be found at setup");
-				}
-				driver.close();
-				driver.switchTo().window(parentID);
-			}else {
-				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
-				sa.assertTrue(false, "could not find new window to switch");
-			}
-		}else {
-			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
-			sa.assertTrue(false, "could not click on setup link");
-		}
-		
 		switchToDefaultContent(driver);
 		
 		for (int i = 0; i < 3; i++) {
@@ -285,9 +254,9 @@ public class OldSmokeTestCases extends BaseLib {
 					if (sp.createPEUser(crmUser1FirstName, UserLastName, emailId, crmUserLience,
 							crmUserProfile)) {
 						log(LogStatus.INFO, "CRM User is created Successfully: " + crmUser1FirstName + " " + UserLastName, YesNo.No);
-						ExcelUtils.writeData(smokeFilePath, emailId, "Users", excelLabel.Variable_Name, "User1",
+						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User1",
 								excelLabel.User_Email);
-						ExcelUtils.writeData(smokeFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",
+						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",
 								excelLabel.User_Last_Name);
 						flag = true;
 						break;
@@ -305,7 +274,7 @@ public class OldSmokeTestCases extends BaseLib {
 			}
 			
 		}
-		if (flag) {
+		if (flag && (environment.equalsIgnoreCase("Test")|| environment.equalsIgnoreCase("Testing"))) {
 			
 			if (sp.installedPackages(crmUser1FirstName, UserLastName)) {
 				appLog.info("PE Package is installed Successfully in CRM User: " + crmUser1FirstName + " "
@@ -427,7 +396,8 @@ public class OldSmokeTestCases extends BaseLib {
 	
 	@Parameters({ "environment", "mode" })
 	@Test
-	public void PESmokeTc001_3_createCustomEmailAndTemplate(String environment, String mode) {ReportsTabBusinessLayer report = new ReportsTabBusinessLayer(driver);
+	public void PESmokeTc001_3_createCustomEmailAndTemplate(String environment, String mode) {
+	ReportsTabBusinessLayer report = new ReportsTabBusinessLayer(driver);
 	EmailMyTemplatesPageBusinessLayer emailtemplate = new EmailMyTemplatesPageBusinessLayer(driver);
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -513,9 +483,7 @@ public class OldSmokeTestCases extends BaseLib {
 	@Parameters({ "environment", "mode" })
 	@Test
 	public void PESmokeTc001_4_createPreCondition(String environment, String mode) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
 		MarketingInitiativesPageBusinesslayer market = new MarketingInitiativesPageBusinesslayer(driver);
@@ -523,7 +491,7 @@ public class OldSmokeTestCases extends BaseLib {
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		String FieldLabels = excelLabel.Street.toString() + "," + excelLabel.City.toString() + ","
 				+ excelLabel.State.toString() + "," + excelLabel.Postal_Code.toString() + ","
-				+ excelLabel.Country.toString() + "," + excelLabel.Phone.toString() + "," + excelLabel.Fax.toString();
+				+ excelLabel.Country.toString() + "," + excelLabel.Phone.toString() ;
 		for (int j = 0; j < 10; j++) {
 			if (lp.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
 				ThreadSleep(2000);
@@ -538,24 +506,31 @@ public class OldSmokeTestCases extends BaseLib {
 				}
 				if (j == 1) {
 					String FielsValues = SmokeINS2_Street + "," + SmokeINS2_City + "," + SmokeINS2_State + ","
-							+ SmokeINS2_Postal_Code + "," + SmokeINS2_Country + "," + SmokeINS2_Phone + ","
-							+ SmokeINS2_Fax;
+							+ SmokeINS2_Postal_Code + "," + SmokeINS2_Country + "," + SmokeINS2_Phone ;
 					if (ins.createInstitution(environment, mode, SmokeINS2, SmokeINS2_RecordType, FieldLabels,
 							FielsValues)) {
 						appLog.info("institution is created : " + SmokeINS2);
 						String emailId = contact.generateRandomEmailId();
-						if (contact.createContact(mode, SmokeC5_FName, SmokeC5_LName, SmokeINS2, emailId,
-								SmokeC5_RecordType,null, null, CreationPage.InstitutionPage,null,null)) {
-							appLog.info("Contact is create Successfully: " + SmokeC5_FName + " " + SmokeC5_LName);
-							ExcelUtils.writeData(smokeFilePath, emailId, "Contacts", excelLabel.Variable_Name,
-									"SmokeC5", excelLabel.Contact_EmailId);
-						} else {
-							appLog.error("Not able to create Contact: " + SmokeC5_FName + " " + SmokeC5_LName);
-							sa.assertTrue(false, "Not able to create Contact: " + SmokeC5_FName + " " + SmokeC5_LName);
-							log(LogStatus.ERROR, "Not able to create Contact: " + SmokeC5_FName + " " + SmokeC5_LName,
-									YesNo.Yes);
-						}
+						if (lp.clickOnTab(environment, mode, TabName.ContactTab)) {
+							appLog.info("click on contact tab");
+							if (contact.createContact(mode, SmokeC5_FName, SmokeC5_LName, SmokeINS2, emailId,
+									SmokeC5_RecordType,null, null, CreationPage.InstitutionPage,null,null)) {
+								appLog.info("Contact is create Successfully: " + SmokeC5_FName + " " + SmokeC5_LName);
+								ExcelUtils.writeData(smokeFilePath, emailId, "Contacts", excelLabel.Variable_Name,
+										"SmokeC5", excelLabel.Contact_EmailId);
+							} else {
+								appLog.error("Not able to create Contact: " + SmokeC5_FName + " " + SmokeC5_LName);
+								sa.assertTrue(false, "Not able to create Contact: " + SmokeC5_FName + " " + SmokeC5_LName);
+								log(LogStatus.ERROR, "Not able to create Contact: " + SmokeC5_FName + " " + SmokeC5_LName,
+										YesNo.Yes);
+							}
 
+						}else {
+							appLog.error("Not able to click on related contact tab");
+							sa.assertTrue(false, "Not able to click on related contact tab");
+							log(LogStatus.ERROR, "Not able to click on related contact tab", YesNo.Yes);
+						}
+						
 					} else {
 						appLog.error("Not able to click on create Institute : " + SmokeINS2);
 						sa.assertTrue(false, "Not able to click on create Institute : " + SmokeINS2);
@@ -573,25 +548,33 @@ public class OldSmokeTestCases extends BaseLib {
 				}
 				if (j == 3) {
 					String FielsValues = SmokeINS4_Street + "," + SmokeINS4_City + "," + SmokeINS4_State + ","
-							+ SmokeINS4_Postal_Code + "," + SmokeINS4_Country + "," + SmokeINS4_Phone + ","
-							+ SmokeINS4_Fax;
+							+ SmokeINS4_Postal_Code + "," + SmokeINS4_Country + "," + SmokeINS4_Phone ;
 					if (ins.createInstitution(environment, mode, SmokeINS4, SmokeINS4_RecordType, FieldLabels,
 							FielsValues)) {
 						appLog.info("institution is created : " + SmokeINS4);
 						String emailId = contact.generateRandomEmailId();
 						String contact6FieldLabels=excelLabel.Other_Street.toString()+","+excelLabel.Other_City.toString()+","+excelLabel.Other_State.toString()+","+excelLabel.Other_Zip.toString()+","+excelLabel.Other_Country.toString();
 						String contact6FieldValues=SmokeC6_Other_Street+","+SmokeC6_Other_City+","+SmokeC6_Other_State+","+SmokeC6_Other_Zip+","+SmokeC6_Other_Country;
-						if (contact.createContact(mode, SmokeC6_FName, SmokeC6_LName, SmokeINS4, emailId,SmokeC4_RecordType,
-								contact6FieldLabels, contact6FieldValues, CreationPage.InstitutionPage,null,null)) {
-							appLog.info("Contact is create Successfully: " + SmokeC6_FName + " " + SmokeC6_LName);
-							ExcelUtils.writeData(smokeFilePath, emailId, "Contacts", excelLabel.Variable_Name,
-									"SmokeC6", excelLabel.Contact_EmailId);
-						} else {
-							appLog.error("Not able to create Contact: " + SmokeC6_FName + " " + SmokeC6_LName);
-							sa.assertTrue(false, "Not able to create Contact: " + SmokeC6_FName + " " + SmokeC6_LName);
-							log(LogStatus.ERROR, "Not able to create Contact: " + SmokeC6_FName + " " + SmokeC6_LName,
-									YesNo.Yes);
+						
+						if (lp.clickOnTab(environment, mode, TabName.ContactTab)) {
+							appLog.info("click on contact tab");
+							if (contact.createContact(mode, SmokeC6_FName, SmokeC6_LName, SmokeINS4, emailId,SmokeC4_RecordType,
+									contact6FieldLabels, contact6FieldValues, CreationPage.InstitutionPage,null,null)) {
+								appLog.info("Contact is create Successfully: " + SmokeC6_FName + " " + SmokeC6_LName);
+								ExcelUtils.writeData(smokeFilePath, emailId, "Contacts", excelLabel.Variable_Name,
+										"SmokeC6", excelLabel.Contact_EmailId);
+							} else {
+								appLog.error("Not able to create Contact: " + SmokeC6_FName + " " + SmokeC6_LName);
+								sa.assertTrue(false, "Not able to create Contact: " + SmokeC6_FName + " " + SmokeC6_LName);
+								log(LogStatus.ERROR, "Not able to create Contact: " + SmokeC6_FName + " " + SmokeC6_LName,
+										YesNo.Yes);
+							}
+						}else {
+							appLog.error("Not able to click on related contact tab");
+							sa.assertTrue(false, "Not able to click on related contact tab");
+							log(LogStatus.ERROR, "Not able to click on related contact tab", YesNo.Yes);
 						}
+						
 					} else {
 						appLog.error("Not able to click on create Institute : " + SmokeINS4);
 						sa.assertTrue(false, "Not able to click on create Institute : " + SmokeINS4);
@@ -880,12 +863,8 @@ public class OldSmokeTestCases extends BaseLib {
 	@Parameters({ "environment", "mode" })
 	@Test
 	public void PESmokeTc002_verifyAddProspectAndAddContacts(String environment, String mode) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
-		ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
 		MarketingInitiativesPageBusinesslayer market = new MarketingInitiativesPageBusinesslayer(driver);
-		FundsPageBusinessLayer fund = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		HashMap<String, String> ContactAndAccountName = new HashMap<>();
 		ContactAndAccountName.put(SmokeC1_FName + " " + SmokeC1_LName, SmokeINS1);
@@ -911,7 +890,7 @@ public class OldSmokeTestCases extends BaseLib {
 					sa.assertTrue(false, "Add prospect button is not visible on created MI: " + Smoke_MI1);
 					log(LogStatus.ERROR, "Add prospect button is not visible on created MI: " + Smoke_MI1, YesNo.Yes);
 				}
-				if (market.actionDropdownElement(environment, PageName.Marketing_Initiative, ShowMoreActionDropDownList.Email_Prospect, 10) != null) {
+				if (market.actionDropdownElement(environment, PageName.Marketing_Initiative, ShowMoreActionDropDownList.Email_Prospects, 10) != null) {
 					appLog.info("Email prospects button is displaying on MI : " + Smoke_MI1);
 				} else {
 					appLog.error("Email prospect button is not visible on created MI: " + Smoke_MI1);
@@ -1670,6 +1649,7 @@ public class OldSmokeTestCases extends BaseLib {
 									log(LogStatus.ERROR, "NOt able to click on remove button so cannot check the error message.", YesNo.Yes);
 									sa.assertTrue(false,"NOt able to click on remove button so cannot check the error message.");
 								}
+								ThreadSleep(2000);
 								if (market.selectProspectsContactAndVerifyReviewProspectList(environment,mode,AddProspectsTab.Report,
 										ContactAndAccountName, false).isEmpty()) {
 									appLog.info("Contact is selected Successfully in review prospects list");
@@ -2155,12 +2135,8 @@ public class OldSmokeTestCases extends BaseLib {
 	@Parameters({ "environment", "mode" })
 	@Test
 	public void PESmokeTc006_verifyEmailProspectAndSendEmail(String environment, String mode) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
-		ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
 		MarketingInitiativesPageBusinesslayer market = new MarketingInitiativesPageBusinesslayer(driver);
-		FundsPageBusinessLayer fund = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		HashMap<String, String> ContactAndAccountName = new HashMap<>();
 		ContactAndAccountName.put(SmokeC1_FName + " " + SmokeC1_LName, SmokeINS1);
@@ -2472,13 +2448,9 @@ public class OldSmokeTestCases extends BaseLib {
 	@Parameters({ "environment", "mode" })
 	@Test
 	public void PESmokeTc007_verifyEmailAndCreateActivity(String environment, String mode) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
-		ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
 		MarketingInitiativesPageBusinesslayer market = new MarketingInitiativesPageBusinesslayer(driver);
-		FundsPageBusinessLayer fund = new FundsPageBusinessLayer(driver);
 		String text = null;
 		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "MM/dd/YYYY");
 		lp.CRMLogin(superAdminUserName, adminPassword);
@@ -2656,12 +2628,8 @@ public class OldSmokeTestCases extends BaseLib {
 	@Parameters({ "environment", "mode" })
 	@Test
 	public void PESmokeTc008_verifyEmailProspectPageAndSendMail(String environment, String mode) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
-		ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
 		MarketingInitiativesPageBusinesslayer market = new MarketingInitiativesPageBusinesslayer(driver);
-		FundsPageBusinessLayer fund = new FundsPageBusinessLayer(driver);
 		WebElement ele = null;
 		String emailFolderName = ExcelUtils.readData(smokeFilePath, "CustomEmailFolder", excelLabel.Variable_Name,
 				"EmailTemplate1", excelLabel.Email_Template_Folder_Label);
@@ -2764,12 +2732,9 @@ public class OldSmokeTestCases extends BaseLib {
 	@Parameters({ "environment", "mode" })
 	@Test
 	public void PESmokeTc009_1_verifyEmailAndCreateActivityforContact2(String environment, String mode) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
 		MarketingInitiativesPageBusinesslayer market = new MarketingInitiativesPageBusinesslayer(driver);
-		FundsPageBusinessLayer fund = new FundsPageBusinessLayer(driver);
 		String text = null;
 		String emailFolderSubject = ExcelUtils.readData(smokeFilePath, "CustomEmailFolder", excelLabel.Variable_Name,
 				"EmailTemplate1", excelLabel.Subject);
@@ -3260,10 +3225,7 @@ public class OldSmokeTestCases extends BaseLib {
 	@Parameters({ "environment", "mode" })
 	@Test
 	public void PESmokeTc010_verifyCreateFundRaisingButton(String environment, String mode) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
-		ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		MarketingInitiativesPageBusinesslayer market = new MarketingInitiativesPageBusinesslayer(driver);
 		FundsPageBusinessLayer fund = new FundsPageBusinessLayer(driver);
@@ -3373,13 +3335,9 @@ public class OldSmokeTestCases extends BaseLib {
 	@Parameters({ "environment", "mode" })
 	@Test
 	public void PESmokeTc011_verifyCreateFundraisingsFromHomePage(String environment, String mode) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
-		ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		MarketingInitiativesPageBusinesslayer market = new MarketingInitiativesPageBusinesslayer(driver);
-		FundsPageBusinessLayer fund = new FundsPageBusinessLayer(driver);
 		FundraisingsPageBusinessLayer frpg = new FundraisingsPageBusinessLayer(driver);
 		List<String> contactNamelist= new ArrayList<String>();
 		contactNamelist.add(SmokeC1_FName+" "+SmokeC1_LName);
@@ -3626,10 +3584,7 @@ public class OldSmokeTestCases extends BaseLib {
 	@Parameters({ "environment", "mode" })
 	@Test
 	public void PESmokeTc012_1_verifyCreateFundraisingsForCoInvestment(String environment, String mode) {
-			SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 			LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-			InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
-			ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
 			HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 			MarketingInitiativesPageBusinesslayer market = new MarketingInitiativesPageBusinesslayer(driver);
 			FundsPageBusinessLayer fund = new FundsPageBusinessLayer(driver);
@@ -5269,7 +5224,7 @@ public class OldSmokeTestCases extends BaseLib {
 		if(fund.clickOnTab(environment, mode, TabName.FundsTab)) {
 			if(fund.clickOnCreatedFund(environment, mode, Smoke_Fund1)) {
 				appLog.info("clicked on Fund : " + Smoke_Fund1);
-				if(fund.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.Fundraisings, RelatedTab.Fundraising.toString())) {
+				if(fund.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.Fundraising_Contacts, RelatedTab.Fundraising_Contact.toString())) {
 					if(click(driver,fund.getEmailFundraisingContactsBtn(environment, mode, 30), "email fundraising contact button", action.SCROLLANDBOOLEAN)) {
 						if(mode.toString().equalsIgnoreCase(Mode.Lightning.toString())) {
 							switchToFrame(driver, 20, fund.getEmailFundraisingContactFrame_Lightning(20));
@@ -5428,7 +5383,7 @@ public class OldSmokeTestCases extends BaseLib {
 		if(fund.clickOnTab(environment, mode, TabName.FundsTab)) {
 			if(fund.clickOnCreatedFund(environment, mode, Smoke_Fund3)) {
 				appLog.info("clicked on Fund : " + Smoke_Fund3);
-				if(fund.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.Fundraisings, RelatedTab.Fundraising.toString())) {
+				if(fund.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.Fundraising_Contacts, RelatedTab.Fundraising_Contact.toString())) {
 					if(click(driver,fund.getEmailFundraisingContactsBtn(environment, mode, 30), "email fundraising contact button", action.SCROLLANDBOOLEAN)) {
 						if(mode.toString().equalsIgnoreCase(Mode.Lightning.toString())) {
 							switchToFrame(driver, 20, fund.getEmailFundraisingContactFrame_Lightning(20));

@@ -3115,7 +3115,7 @@ public abstract class BasePage extends BaseLib {
 	@FindBy(xpath="//input[@name='save']")
 	private WebElement saveButtonClassic;
 	
-	@FindBy(xpath="//button[@title='Save']/span[text()='Save']")
+	@FindBy(xpath="//button[@title='Save' or text()='Save']")
 	private WebElement saveButtonLighting;
 
 	/**
