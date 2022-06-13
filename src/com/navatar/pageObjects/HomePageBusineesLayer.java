@@ -3125,4 +3125,125 @@ public class HomePageBusineesLayer extends HomePage {
 		}
 		return records.size();
 	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param sdgGridName
+	 * @param columnNames
+	 */
+	public boolean verifyColumnRecordsRedirecting(SDGGridName sdgGridName, List<String> columnNames) {
+
+		List<WebElement> headerList = sdgGridAllHeadersLabelNameList(sdgGridName);
+		List<String> columnDataText = headerList.stream().map(s -> s.getText()).collect(Collectors.toList()).stream()
+				.map(t -> t.trim()).collect(Collectors.toList());
+		boolean flag = false;
+		if (!headerList.isEmpty()) {
+			for (String columnName : columnNames) {
+				int columnIndex = columnDataText.indexOf(columnName);
+				if (sdgGridColumnsDataListAnchorTag(sdgGridName.toString(), columnIndex + 1).size() != 0) {
+					log(LogStatus.PASS, "------Column : " + columnName + " contains Redirect URL Data--------",
+							YesNo.No);
+					for (WebElement columnData : sdgGridColumnsDataListAnchorTag(sdgGridName.toString(),
+							columnIndex + 1)) {
+
+						if (CommonLib.getAttribute(driver, columnData, columnData.getText(), "target")
+								.equals("_blank")) {
+							log(LogStatus.PASS, "Column Data: " + columnData.getText() + " will Redirect to New Tab",
+									YesNo.No);
+							flag = true;
+						} else {
+							log(LogStatus.FAIL,
+									"Column Data: " + columnData.getText() + " will Not Redirect to New Tab", YesNo.No);
+							sa.assertTrue(false,
+									"Column Data: " + columnData.getText() + " will Not Redirect to New Tab");
+
+						}
+
+					}
+				} else {
+					log(LogStatus.INFO, "-------Column : " + columnName + " not contains any Redirect URL Data--------",
+							YesNo.No);
+				}
+			}
+		} else {
+			log(LogStatus.ERROR, "-----No Column Present for SDG: " + sdgGridName + " -----", YesNo.No);
+			sa.assertTrue(false, "-----No Column Present for SDG: " + sdgGridName + " -----");
+		}
+
+		return flag;
+
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param sdgGridName
+	 * @param columnNames
+	 * @param columnRecordToVerify
+	 */
+	public String verifyColumnRecordRedirectAndReturnNewWindowId(SDGGridName sdgGridName, String columnName,
+			List<String> columnRecordToVerify, int indexColumnDataFromList) {
+
+		List<WebElement> headerList = sdgGridAllHeadersLabelNameList(sdgGridName);
+		List<String> columnDataText = headerList.stream().map(s -> s.getText()).collect(Collectors.toList()).stream()
+				.map(t -> t.trim()).collect(Collectors.toList());
+		String parentWindowId = null;
+		if (!headerList.isEmpty()) {
+			
+				int columnIndex = columnDataText.indexOf(columnName);
+				if (sdgGridColumnsDataListAnchorTag(sdgGridName.toString(), columnIndex + 1).size() != 0) {
+					log(LogStatus.PASS, "------Column : " + columnName + " contains Redirect URL Data--------",
+							YesNo.No);
+					for (WebElement columnData : sdgGridColumnsDataListAnchorTag(sdgGridName.toString(),
+							columnIndex + 1)) {
+
+						if (columnData.getText().equals(columnRecordToVerify.get(indexColumnDataFromList))) {
+							if (CommonLib.getAttribute(driver, columnData, columnData.getText(), "target")
+									.equals("_blank")) {
+								log(LogStatus.PASS,
+										"Column Data: " + columnData.getText() + " will Redirect to New Tab", YesNo.No);
+								if (clickUsingJavaScript(driver, columnData, columnData.getText(),
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "Clicked on :" + columnData.getText(), YesNo.No);
+									parentWindowId = CommonLib.switchOnWindow(driver);
+									if (parentWindowId != null) {
+										log(LogStatus.INFO, "Switched to New Tab", YesNo.No);
+										return parentWindowId;
+									} else {
+										log(LogStatus.ERROR, "New Tab not Open After click on: " + columnData.getText(),
+												YesNo.No);
+									}
+
+								} else {
+									log(LogStatus.ERROR, "Not Able to Click on :" + columnData.getText(), YesNo.No);
+								}
+
+							} else {
+								log(LogStatus.FAIL,
+										"Column Data: " + columnData.getText() + " will Not Redirect to New Tab",
+										YesNo.No);
+								sa.assertTrue(false,
+										"Column Data: " + columnData.getText() + " will Not Redirect to New Tab");
+
+							}
+						}
+
+					}
+				} else {
+					log(LogStatus.INFO, "-------Column : " + columnName + " not contains any Redirect URL Data--------",
+							YesNo.No);
+				}
+
+			
+		} else {
+			log(LogStatus.ERROR, "-----No Column Present for SDG: " + sdgGridName + " -----", YesNo.No);
+			sa.assertTrue(false, "-----No Column Present for SDG: " + sdgGridName + " -----");
+		}
+
+		return null;
+
+	}
+
+	
+	
+	 
 }

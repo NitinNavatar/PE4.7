@@ -808,6 +808,11 @@ public class CommonVariables {
 		
 		//Fundraising_Count
 		public static String M9SDGD_144_Fundraising_Count,M9SDGD_145_Fundraising_Count;
+		
+		//SDG Count 
+		public static String M9Tc076_SDGCount,M9Tc077_SDGCount,M9Tc078_SDGCount,M9Tc079_SDGCount,M9Tc080_SDGCount;
+		
+
 
 	
 	
@@ -4019,7 +4024,15 @@ public class CommonVariables {
 			//Fundraising_Count
 			M9SDGD_144_Fundraising_Count=ExcelUtils.readData(wb,phase1DataSheetFilePath,"SDGData",excelLabel.Variable_Name, "M9SDGD_144", excelLabel.Fundraising_Count);
 			M9SDGD_145_Fundraising_Count=ExcelUtils.readData(wb,phase1DataSheetFilePath,"SDGData",excelLabel.Variable_Name, "M9SDGD_145", excelLabel.Fundraising_Count);
-			  
+			
+			
+			//SDG Count
+			
+			M9Tc076_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "M9Tc076_verifyMyTeamRecordUser", excelLabel.SDG_Data_Count);
+			M9Tc077_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "M9Tc077_verifyMyTeamRecordAdmin", excelLabel.SDG_Data_Count);
+			M9Tc078_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "M9Tc078_updateTeamBlankAndVerifyMyTeamRecordFilterRecord", excelLabel.SDG_Data_Count);
+			M9Tc079_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "M9Tc079_updateTeamToOriginationAndVerifyMyTeamRecordFilterRecords", excelLabel.SDG_Data_Count);
+			M9Tc080_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "M9Tc080_updateTeamBlankAndVerifyMyTeamRecordFilterRecord", excelLabel.SDG_Data_Count);
 			  
 			try {
 				fis.close();
