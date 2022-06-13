@@ -485,19 +485,27 @@ public class MarketingInitiativesPageBusinesslayer extends MarketingInitiativesP
 			XpathelementTOSearch = "//span[@id='Select_from_Search_ResultsArep-view-box-middle']//a[text()='"+splitedContactName[0]+"']/../../following-sibling::span//a[text()='"+splitedContactName[1]+"']/../../../span[2]/span/span[1]";
 		}
 		
-		By byelementToSearch = By.xpath(XpathelementTOSearch);
+		//By byelementToSearch = By.xpath(XpathelementTOSearch);
 		int widgetTotalScrollingHeight = Integer.parseInt(String.valueOf(((JavascriptExecutor) driver)
 				.executeScript("return arguments[0].scrollHeight", getSelectProspectsGridScrollBox(addProspectsTab,10))));
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(0,0)", getSelectProspectsGridScrollBox(addProspectsTab,10));
+		ThreadSleep(2000);
 		for (int i = 0; i <= widgetTotalScrollingHeight / 25; i++) {
-			if (!driver.findElements(byelementToSearch).isEmpty()
-					&& driver.findElement(byelementToSearch).isDisplayed()) {
+			
+			if(sendKeysAndPressEnter(driver, getSearchForAContactTextBoxOnReportTab(10), accountName, accountName, action.BOOLEAN)) {
+				appLog.info("enter value in search box:"+accountName);
+				
+			}
+			ThreadSleep(2000);
+			if (!driver.findElements(By.xpath(XpathelementTOSearch)).isEmpty()
+					|| driver.findElement(By.xpath(XpathelementTOSearch)).isDisplayed()) {
 				appLog.info("Element Successfully Found and displayed");
 				ThreadSleep(500);
 				ele = FindElement(driver, XpathelementTOSearch, "", action.BOOLEAN, timeout);
 				if (ele != null) {
 					if (click(driver, ele, "", action.BOOLEAN)) {
 						appLog.info("clicked on Contact Name : "+contactName);
+						sendKeysAndPressEnter(driver, getSearchForAContactTextBoxOnReportTab(10), "", "", action.BOOLEAN);
 					} else {
 						appLog.error("Not able to clicke on Contact Name: "+contactName);
 						return false;
@@ -505,7 +513,7 @@ public class MarketingInitiativesPageBusinesslayer extends MarketingInitiativesP
 				}
 				break;
 			} else {
-				System.out.println("Not FOund: " + byelementToSearch.toString());
+				System.out.println("Not FOund: " + By.xpath(XpathelementTOSearch).toString());
 				((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(" + j + "," + (j = j + 45) + ")",
 						getSelectProspectsGridScrollBox(addProspectsTab,10));
 				try {

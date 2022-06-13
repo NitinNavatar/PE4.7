@@ -66,7 +66,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		
 					if (click(driver, getFundType(projectName, 60), "Fund Type ", action.SCROLLANDBOOLEAN)) {
 						WebElement fundTypeEle = FindElement(driver,
-								"(//div[@class='select-options'])[2]//a[@title='" + fundType + "']", fundType,
+								"//*[text()='Fund Type']/following-sibling::div//span[@title='"+fundType+"']", fundType,
 								action.SCROLLANDBOOLEAN, 10);
 						ThreadSleep(500);
 						if (click(driver, fundTypeEle, fundType, action.SCROLLANDBOOLEAN)) {
@@ -81,7 +81,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 					if (click(driver, getInvestmentCategory(projectName, 60), "Investment Category",
 							action.SCROLLANDBOOLEAN)) {
 						WebElement InvsCatgEle = FindElement(driver,
-								"(//div[@class='select-options'])[2]//a[@title='" + investmentCategory + "']",
+								"//*[text()='Investment Category']/following-sibling::div//span[@title='"+investmentCategory+"']",
 								investmentCategory, action.SCROLLANDBOOLEAN, 10);
 						ThreadSleep(500);
 						if (click(driver, InvsCatgEle, investmentCategory, action.SCROLLANDBOOLEAN)) {
@@ -314,7 +314,9 @@ public boolean clickOnCreatedFund(String environment, String mode,String fundNam
 
 			}else if(labelName.equalsIgnoreCase(excelLabel.Record_Type.toString())){
 				xpath = "//span[@class='test-id__field-label'][text()='"+finalLabelName+"']/../following-sibling::div//div[contains(@class,'recordTypeName')]/span";
-			}
+			}else if(labelName.equalsIgnoreCase(excelLabel.Target_Commitments.toString())){
+				xpath = "//span[@class='test-id__field-label'][contains(text(),'" + finalLabelName
+						+ "')]/../following-sibling::div//*[contains(@class,'field-value')]";			}
 			
 		ele = isDisplayed(driver,
 				FindElement(driver, xpath, labelName + " label text in " + projectName, action.SCROLLANDBOOLEAN, 60),

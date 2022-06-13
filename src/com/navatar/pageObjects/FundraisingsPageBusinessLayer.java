@@ -333,7 +333,7 @@ public class FundraisingsPageBusinessLayer extends FundraisingsPage {
 	
 	public boolean verifyfundraisingContacts(String headder,String Name,String firm,String role,String primary) {
 
-
+		boolean flag =true;
 		try {
 			String headerxpath = "//*[text()='Fundraising Contacts']/ancestor::article//*[text()='Name']/ancestor::th//following-sibling::th//*[text()='Firm']/ancestor::th//following-sibling::th//*[text()='Role']/ancestor::th//following-sibling::th//*[text()='Primary']"; 
 			WebElement ele = FindElement(driver, headerxpath, "Header", action.BOOLEAN, 10);
@@ -342,31 +342,34 @@ public class FundraisingsPageBusinessLayer extends FundraisingsPage {
 			} else {
 				log(LogStatus.INFO,"Header not Verified " , YesNo.No);
 				BaseLib.sa.assertTrue(false,"Header not Verified ");
+				flag=false;
 
 			}
-
-			String xpath = "//*[text()='Fundraising Contacts']/ancestor::article//tr//*[text()='"+Name+"']/ancestor::td//following-sibling::td/span";
+			
+		
+			ThreadSleep(2000);
+			String xpath = "//*[text()='Fundraising Contacts']/ancestor::article//tr//td//*[@class='cls_des']";
 			List<WebElement> eleList = FindElements(driver, xpath, "FR Contact Grid Data for : "+Name);
 			String actual="";
-			String expcted="";
+			String expcted=Name+","+firm+","+role;
+			
 			if (!eleList.isEmpty()) {
-				for (int i = 0; i < eleList.size()-1; i++) {
-					actual=eleList.get(i).getText().trim();
-					if (i==0) {
-						expcted=firm;
-					} else if(i==1) {
-						expcted=role;
-					}
-					if (expcted.equals(actual)) {
-						log(LogStatus.INFO, "Grid value for "+Name+" with Actual:"+actual+"Expected :"+expcted+" verified", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "Grid value for "+Name+" with Actual:"+actual+"Expected :"+expcted+" not verified", YesNo.Yes);
-						BaseLib.sa.assertTrue(false, "Grid value for "+Name+" with Actual:"+actual+"Expected :"+expcted+"not verified");
-					}
-				} 
+				
+				if(compareMultipleList(driver,expcted , eleList).isEmpty()) {
+					
+					log(LogStatus.INFO, "Grid value "+expcted+" verified", YesNo.No);
+
+				}else {
+					log(LogStatus.ERROR, "Grid value "+expcted+" is not  verified", YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Grid value "+expcted+" is not verified");
+					flag=false;
+				}
+				
+				
 			} else {
 				log(LogStatus.ERROR, "Grid value for "+Name+" with "+firm+" "+role+" "+primary+" not verified", YesNo.Yes);
 				BaseLib.sa.assertTrue(false, "Grid value for "+Name+" with "+firm+" "+role+" "+primary+" not verified");
+				flag=false;
 			}
 
 			headerxpath = "//*[text()='Fundraising Contacts']/ancestor::article//tr//*[text()='"+Name+"']/ancestor::td//following-sibling::td/span//img"; 
@@ -382,10 +385,12 @@ public class FundraisingsPageBusinessLayer extends FundraisingsPage {
 				if (expcted.equals(actual)) {
 					log(LogStatus.INFO, "Grid value for "+Name+" with "+expcted+" verified", YesNo.No);
 				} else {
+					flag=false;
 					log(LogStatus.ERROR, "Grid value for "+Name+" with "+expcted+" not verified Actual : "+actual, YesNo.Yes);
 					BaseLib.sa.assertTrue(false, "Grid value for "+Name+" with "+expcted+" not verified Actual : "+actual);
 				}
 			} else {
+				flag=false;
 				log(LogStatus.ERROR, "Grid value for "+Name+" with "+expcted+" not verified Actual : "+actual, YesNo.Yes);
 				BaseLib.sa.assertTrue(false, "Grid value for "+Name+" with "+expcted+" not verified Actual : "+actual);
 
@@ -398,7 +403,7 @@ public class FundraisingsPageBusinessLayer extends FundraisingsPage {
 			BaseLib.sa.assertTrue(false, "Grid value for "+Name+" with "+firm+" "+role+" "+primary+" not verified");
 
 		}
-		return true;
+		return flag;
 	}
 
 }

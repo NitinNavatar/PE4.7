@@ -494,7 +494,7 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 	
 	
 	
-	@FindBy(xpath="//span[contains(text(),'Contacts')]/ancestor::header/following-sibling::div[@class='slds-no-flex']//a")
+	@FindBy(xpath="//a[contains(text(),'Contacts')]/ancestor::header//button[text()='New Contact']")
 	private WebElement newContactBtn_Lighting;
 	
 	

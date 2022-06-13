@@ -4340,7 +4340,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			tabName = "Contacts";
 			break;
 		case InstituitonsTab:
-			tabName = "Institutions";
+			tabName = "Firms";
 			break;
 		case FundraisingsTab:
 			tabName = "Fundraisings";
@@ -5476,7 +5476,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String xpath = "";
 		String head = header.toString().replace("_", " ");
 		ThreadSleep(3000);
-		xpath = "(//*[contains(text(),'" + header + "')]/following-sibling::*//*[text()='" + itemName + "'])[1]";
+		xpath = "(//*[contains(text(),'" + head + "')]/following-sibling::*//*[text()='" + itemName + "'])[1]";
 		ele = FindElement(driver, xpath, "Header : " + itemName, action.BOOLEAN, 30);
 		// ele = isDisplayed(driver, ele, "Visibility", 10, head+" : "+itemName);
 		return ele;
