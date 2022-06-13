@@ -300,7 +300,7 @@ public List<String> verifyCommitmentDetails(String environment, String mode,Stri
 					}
 				}
 			}
-			if(commitmentRowData[4]!=null&& !commitmentRowData[4].isEmpty() &&!commitmentRowData[4].isBlank()) {
+			if(commitmentRowData[4]!=null&& !commitmentRowData[4].isEmpty() &&!commitmentRowData[4].equalsIgnoreCase("")) {
 				ele=FindElement(driver, xpath, "company name", action.SCROLLANDBOOLEAN, 20);
 				if(ele!=null) {
 					String aa = ele.getText().trim();
@@ -317,7 +317,7 @@ public List<String> verifyCommitmentDetails(String environment, String mode,Stri
 			}
 			
 		}
-		if(totalAmount!=null&& !totalAmount.isEmpty()&&!totalAmount.isBlank()) {
+		if(totalAmount!=null&& !totalAmount.isEmpty()&&!totalAmount.equalsIgnoreCase("")) {
 			totalAmount=convertNumberAccordingToFormatWithCurrencySymbol(totalAmount,"0,000.00");	
 			String xPath="//span[contains(@id,'grid_dealalert-cell-0-')]//a[contains(text(),'"+fundName+"')]/../../following-sibling::span[2]/span[text()='"+totalAmount+"']";
 			 ele = FindElement(driver, xPath, "fund name and total amount", action.SCROLLANDBOOLEAN, 20);
