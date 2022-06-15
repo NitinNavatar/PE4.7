@@ -1394,6 +1394,7 @@ public class Module9 extends BaseLib {
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 		String appPage = M9Tc050_AppPageName;
 		String tableName = M9Tc050_SDGTableName;
+		String text=crmUser1EmailID;
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
 		String[][] val = {

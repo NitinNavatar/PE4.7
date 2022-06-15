@@ -5,6 +5,7 @@ package com.navatar.generic;
 
 import static com.navatar.generic.BaseLib.testCasesFilePath;
 import static com.navatar.generic.BaseLib.phase1DataSheetFilePath;
+import static com.navatar.generic.BaseLib.smokeFilePath;
 import static com.navatar.generic.CommonLib.getDateAccToTimeZone;
 import static com.navatar.generic.CommonLib.previousOrForwardDate;
 
@@ -43,8 +44,8 @@ public class CommonVariables {
 	public static double dueDiligenceScore=5.0,closedScore=5.0,declinedDeadScore=5.0,parkedScore=5.0;
 
 
-
-	public static String URL,todaysDate,todaysDate1,tomorrowsDate,todaysDateEurope,todaysDateddmm,todaysDateSingleDigit,todaysDateNewZealand,yesterdaysDate;
+	public static String todaysDateSingleMonth,todaysDateSingleDate,todaysDateSingleDateSingleMonth;
+	public static String URL,todaysDate,todaysDate1,tomorrowsDate,dayBeforeYesterdaysDate,dayAfterTomorrowsDate,todaysDateEurope,todaysDateddmm,todaysDateSingleDigit,todaysDateNewZealand,yesterdaysDate;
 	public static String browserToLaunch;
 	public static String Smoke_TWINS1Name,Smoke_TWINS1RecordType,Smoke_TWINS1Status;
 	public static String Smoke_CDINS1Name,Smoke_CDINS1RecordType,Smoke_CDINS1Status;
@@ -102,10 +103,12 @@ public class CommonVariables {
 	public static String M2_DQSContact3FName,M2_DQSContact3LName,M2_DQSContact3Ins,M2_DQSContact3EmailID;
 
 
-	public static String superAdminUserName,superAdminRegistered,adminPassword;
+	public static String superAdminUserName,superAdminRegistered,adminPassword,OrganizationName;
 	public static String AdminUserFirstName,AdminUserLastName,AdminUserEmailID,AdminUserProfile;
 	public static String crmUser1FirstName,crmUser1LastName,crmUser1EmailID,crmUserProfile,crmUserLience;
 	public static String crmUser2FirstName,crmUser2LastName,crmUser2EmailID;
+	public static String crmUser3FirstName,crmUser3LastName,crmUser3EmailID,crmUser3Profile,crmUser3Lience;
+
 	public static String gmailUserName,gmailUserName2,gmailPassword;
 
 	public static String tabCustomObj,tabCustomObjField,tabCustomObjAPIName;
@@ -862,7 +865,56 @@ public class CommonVariables {
 		AppDeveloperName=ExcelUtils.readDataFromPropertyFile("AppDeveloperName");
 		AppDescription=ExcelUtils.readDataFromPropertyFile("AppDescription");
 
+		environment=ExcelUtils.readDataFromPropertyFile("Environment");
+		mode=ExcelUtils.readDataFromPropertyFile("Mode");
+		appName=ExcelUtils.readDataFromPropertyFile("AppName");
+		appVersion=ExcelUtils.readDataFromPropertyFile("AppVersion");
+		tabObj1=ExcelUtils.readDataFromPropertyFile("Object1");
+		tabObj2=ExcelUtils.readDataFromPropertyFile("Object2");
+		tabObj3=ExcelUtils.readDataFromPropertyFile("Object3");
+		tabObj4=ExcelUtils.readDataFromPropertyFile("Object4");
+		tabObj5=ExcelUtils.readDataFromPropertyFile("Object5");
+		tabObj6=ExcelUtils.readDataFromPropertyFile("Object6");
+		tabObj7=ExcelUtils.readDataFromPropertyFile("Object7");
+		tabObj8Coverage=ExcelUtils.readDataFromPropertyFile("Object8");
+		tabCustomObjField=ExcelUtils.readDataFromPropertyFile("CustomTabFieldName");
+		System.err.println("smokeExcelPathCommonVariable : "+testCasesFilePath);
+		todaysDate=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "MM/dd/YYYY");
+		todaysDateSingleDate=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "MM/d/YYYY");
+		todaysDateSingleDateSingleMonth=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
+		todaysDateSingleMonth=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/dd/YYYY");
+		yesterdaysDate=previousOrForwardDate(-1, "M/d/YYYY");
+		dayBeforeYesterdaysDate=previousOrForwardDate(-2, "M/d/YYYY");
+		tomorrowsDate=previousOrForwardDate(1, "M/d/YYYY");
+		dayAfterTomorrowsDate=previousOrForwardDate(2, "M/d/YYYY");
+		
 
+		//****************************************************************	SuperAdmin And CRM User **********************************************************//
+
+		AdminUserFirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_First_Name);
+		AdminUserLastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_Last_Name);
+		AdminUserEmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_Email);
+		OrganizationName=ExcelUtils.readData(smokeFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.Organization_Name);
+		AdminUserProfile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_Profile);
+
+
+		adminPassword=ExcelUtils.readDataFromPropertyFile("password");
+		gmailUserName=ExcelUtils.readDataFromPropertyFile("gmailUserName");
+		gmailUserName2=ExcelUtils.readDataFromPropertyFile("gmailUserName2");
+		gmailPassword=ExcelUtils.readDataFromPropertyFile("gmailPassword");
+		crmUser1FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User1", excelLabel.User_First_Name);
+		crmUser1LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User1", excelLabel.User_Last_Name);
+		crmUser1EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User1", excelLabel.User_Email);
+		crmUserProfile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User1", excelLabel.User_Profile);
+		crmUserLience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User1", excelLabel.User_License);
+		
+		
+		crmUser3FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User3", excelLabel.User_First_Name);
+		crmUser3LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User3", excelLabel.User_Last_Name);
+		crmUser3EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User3", excelLabel.User_Email);
+		crmUser3Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User3", excelLabel.User_Profile);
+		crmUser3Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User3", excelLabel.User_License);
+		
 		//****************************************************************	Toggle Variable **********************************************************//
 
 		FileInputStream fis = null;
