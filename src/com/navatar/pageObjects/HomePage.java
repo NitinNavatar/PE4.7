@@ -529,8 +529,18 @@ public class HomePage extends BasePageBusinessLayer {
 	 * @return the selectCompanyNameLookUpIconOnCreateCommitmentPopUp
 	 */
 	public WebElement getSelectCompanyNameLookUpIconOnCreateCommitmentPopUp(int timeOut) {
-		return isDisplayed(driver, selectCompanyNameLookUpIconOnCreateCommitmentPopUp, "Visibility", timeOut,
-				"select Company Name LookUpIcon On Create Commitment PopUp");
+		WebElement element=null;
+		List<WebElement> list= FindElements(driver, "//img[@title='Company Lookup (New Window)']", "");
+		for(WebElement ele:list) {
+			element=isDisplayed(driver, ele, "Visibility", timeOut,
+					"select Company Name LookUpIcon On Create Commitment PopUp");
+			if(element!=null) {
+				element=ele;
+				break;
+			}
+			
+		}
+		return element ;
 	}
 
 	@FindBy(xpath = "//h2[text()='General Information']/..//table//label[text()='Company']/../following-sibling::td/span")
