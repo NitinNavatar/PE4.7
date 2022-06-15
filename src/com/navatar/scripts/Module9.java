@@ -35,6 +35,7 @@ import com.navatar.generic.EnumConstants.HTMLTAG;
 import com.navatar.generic.EnumConstants.IconType;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.PermissionType;
+import com.navatar.generic.EnumConstants.RecordType;
 import com.navatar.generic.EnumConstants.ReportField;
 import com.navatar.generic.EnumConstants.ReportFormatName;
 import com.navatar.generic.EnumConstants.SDGCreationLabel;
@@ -55,6 +56,7 @@ import com.navatar.pageObjects.FieldAndRelationshipPageBusinessLayer;
 import com.navatar.pageObjects.FundsPage;
 import com.navatar.pageObjects.HomePage;
 import com.navatar.pageObjects.HomePageBusineesLayer;
+import com.navatar.pageObjects.InstitutionsPageBusinessLayer;
 import com.navatar.pageObjects.LightningAppBuilderPageBusinessLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
 import com.navatar.pageObjects.ReportsTab;
@@ -65,7 +67,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 public class Module9 extends BaseLib {
 
-	
+	/*	
 	@Parameters({ "projectName" })
 
 	@Test
@@ -321,7 +323,7 @@ public class Module9 extends BaseLib {
 		sa.assertAll();
 
 	}
-
+	 */
 	/*
 	 * @Parameters({"projectName"})
 	 * 
@@ -456,8 +458,8 @@ public class Module9 extends BaseLib {
 	 * 
 	 * 
 	 * }
-	 */
-	
+	 */	 
+	/*		
 	@Parameters({ "projectName" })
 
 	@Test
@@ -1339,17 +1341,18 @@ public class Module9 extends BaseLib {
 
 		sa.assertAll();
 	}
-
+	 */
 	@Parameters({ "projectName" })
 
 	@Test
-	public void M9Tc053_CreateAppPageAndAddSDG(String projectName) {
+	public void M9Tc049_CreateAppPageAndAddSDG(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
-		String labelName = "Test App Page";
-		String tableName = "Test";
+		String labelName = M9Tc049_AppPageName;
+		String tableName = M9Tc049_SDGTableName;
+		String dataProviderName=M9Tc049_SDGDataProvider;
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (home.clickOnSetUpLink()) {
@@ -1365,12 +1368,12 @@ public class Module9 extends BaseLib {
 			}
 
 			if (setup.searchStandardOrCustomObject(projectName, mode, object.Lightning_App_Builder)) {
-				if (AppBuilder.CreateAppPage(projectName, mode, labelName, tableName, parentWindowID)) {
-					log(LogStatus.PASS, "App Page has been Created : " + labelName, YesNo.Yes);
-					sa.assertTrue(true, "App Page has been Created");
+				if (AppBuilder.CreateAppPage(projectName, mode, labelName, tableName, dataProviderName,parentWindowID)) {
+					log(LogStatus.PASS, labelName+ " App Page has been Created", YesNo.Yes);
+					sa.assertTrue(true, labelName+ " App Page has been Created");
 				} else {
-					log(LogStatus.ERROR, "App Page is not created : " + labelName, YesNo.Yes);
-					sa.assertTrue(false, "App Page is not created : " + labelName);
+					log(LogStatus.ERROR, labelName+" App Page is not created", YesNo.Yes);
+					sa.assertTrue(false, labelName+" App Page is not created");
 				}
 			} else {
 				log(LogStatus.ERROR, "Not able to search the Object", YesNo.Yes);
@@ -1385,12 +1388,13 @@ public class Module9 extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void M9Tc054_VerifySDGDataOnAppPage(String projectName) {
+	public void M9Tc050_VerifySDGDataOnAppPage(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
-		String appPage = "Test App Page";
-		String tableName = "Test";
+		String appPage = M9Tc050_AppPageName;
+		String tableName = M9Tc050_SDGTableName;
+		String text=crmUser1EmailID;
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
 		String[][] val = {
@@ -1437,7 +1441,7 @@ public class Module9 extends BaseLib {
 
 		if (BP.openAppFromAppLauchner(appPage, 50)) {
 			ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage, tableName, val);
-			if (Data == null) {
+			if (Data.isEmpty()) {
 				log(LogStatus.PASS, "SDG Data has been Matched", YesNo.No);
 				sa.assertTrue(true, "SDG Data has been Matched");
 			} else {
@@ -1455,14 +1459,14 @@ public class Module9 extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void M9Tc055_DeleteContactAndVerifySDGDataOnAppPage(String projectName) {
+	public void M9Tc051_DeleteContactAndVerifySDGDataOnAppPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer con = new ContactsPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
-		String appPage = "Test App Page";
-		String tableName = "Test";
+		String appPage = M9Tc051_AppPageName;
+		String tableName = M9Tc051_SDGTableName;
 
 		String[][] val = {
 				{ M9SDGD_21_AccountIndustry, M9SDGD_21_Totalfirm, M9SDGD_21_Task_as_per_Industries,
@@ -1515,7 +1519,7 @@ public class Module9 extends BaseLib {
 					if (BP.openAppFromAppLauchner(appPage, 50)) {
 						ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage,
 								tableName, val);
-						if (Data == null) {
+						if (Data.isEmpty()) {
 							log(LogStatus.PASS, "SDG Data has been Matched", YesNo.No);
 							sa.assertTrue(true, "SDG Data has been Matched");
 						} else {
@@ -1550,14 +1554,14 @@ public class Module9 extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void M9Tc056_checkAllRowAndVerifySDGDataOnAppPage(String projectName) {
+	public void M9Tc052_checkAllRowButtonOnSDGAndVerifySDGDataOnAppPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 		SDGPageBusinessLayer sd = new SDGPageBusinessLayer(driver);
-		String appPage = "Test App Page";
-		String tableName = "Test";
+		String appPage = M9Tc052_AppPageName;
+		String tableName = M9Tc052_SDGTableName;
 
 		String[][] val = {
 				{ M9SDGD_21_AccountIndustry, M9SDGD_21_Totalfirm, M9SDGD_21_Task_as_per_Industries,
@@ -1607,7 +1611,7 @@ public class Module9 extends BaseLib {
 				if (BP.openAppFromAppLauchner(appPage, 50)) {
 					ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage, tableName,
 							val);
-					if (Data == null) {
+					if (Data.isEmpty()) {
 						log(LogStatus.PASS, "SDG Data has been Matched", YesNo.No);
 						sa.assertTrue(true, "SDG Data has been Matched");
 					} else {
@@ -1640,7 +1644,7 @@ public class Module9 extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void M9Tc057_RemoveEmailFromRecycleAndEditSDGAndVerifySDGDataOnAppPage(String projectName) {
+	public void M9Tc053_RemoveContactFromRecyclebinAndUncheckAllRowButtonVerifySDGDataOnAppPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
@@ -1648,9 +1652,19 @@ public class Module9 extends BaseLib {
 		SDGPageBusinessLayer sd = new SDGPageBusinessLayer(driver);
 		WebElement ele;
 
-		String appPage = "Test App Page";
-		String tableName = "Test";
-		String name = "James Falcon -1";
+		String appPage = M9Tc053_AppPageName;
+		String tableName = M9Tc053_SDGTableName;
+		String concatFullName;
+		if(M9_Con1_FName==null){
+			concatFullName=M9_Con1_LName;
+		} else {
+			concatFullName=M9_Con1_FName+" "+M9_Con1_LName;
+		}
+
+		String[][] listViewSheetData = {
+				{ M9LV_5_Member, M9LV_5_TabName, M9LV_5_ListViewName, M9LV_5_ListAccessibility, M9LV_5_Filter,
+					M9LV_5_Field, M9LV_5_Operators, M9LV_5_FilterValue }};
+
 		String[][] val = {
 				{ M9SDGD_1_AccountIndustry, M9SDGD_1_Totalfirm, M9SDGD_1_Task_as_per_Industries, M9SDGD_1_Individuals,
 					M9SDGD_1_Fundraising_as_per_Industries },
@@ -1695,54 +1709,76 @@ public class Module9 extends BaseLib {
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		String recycleTab = lp.getTabName(projectName, TabName.RecycleBinTab);
-		if (lp.searchAndClickOnApp(recycleTab, 60)) {
-			ele = lp.getCheckboxOfRestoreItemOnRecycleBin(projectName, name, 30);
-			if (clickUsingJavaScript(driver, ele, "Check box against : " + name, action.BOOLEAN)) {
-				log(LogStatus.INFO, "Click on checkbox for " + name, YesNo.No);
-				;
-				ele = lp.getRestoreButtonOnRecycleBin(projectName, 30);
-				if (clickUsingJavaScript(driver, ele, "Restore Button : " + name, action.BOOLEAN)) {
-					ThreadSleep(10000);
-					log(LogStatus.INFO, "Click on Restore Button for " + name, YesNo.No);
-					if (BP.openAppFromAppLauchner(60, "Sortable Data Grids")) {
-						if (sd.editAllRowOnSDG(projectName, "SDG_GROUPBY_1", Condition.UnSelectCheckbox)) {
+		if (lp.openAppFromAppLauchner(60,recycleTab)) {
 
-							lp.CRMlogout();
-							lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-							if (BP.openAppFromAppLauchner(appPage, 50)) {
-								ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage,
-										tableName, val);
-								if (Data == null) {
-									log(LogStatus.PASS, "SDG Data has been Matched", YesNo.No);
-									sa.assertTrue(true, "SDG Data has been Matched");
+
+			for (String[] row : listViewSheetData) {
+
+
+				if (lp.addListView(projectName, row, 10)) {
+					log(LogStatus.INFO, "list view added on " + row[1], YesNo.No);
+					ele = lp.getCheckboxOfRestoreItemOnRecycleBin(projectName, concatFullName, 30);
+					if (clickUsingJavaScript(driver, ele, "Check box against : " + concatFullName, action.BOOLEAN)) {
+						log(LogStatus.INFO, "Click on checkbox for " + concatFullName, YesNo.No);
+						;
+						ele = lp.getRestoreButtonOnRecycleBin(projectName, 30);
+						if (clickUsingJavaScript(driver, ele, "Restore Button : " + concatFullName, action.BOOLEAN)) {
+							ThreadSleep(10000);
+							log(LogStatus.INFO, "Click on Restore Button for " + concatFullName, YesNo.No);
+							sa.assertTrue(true, "Contact has been restore from the Recycle bin");
+
+							CommonLib.switchToDefaultContent(driver);
+							ThreadSleep(2000);
+							if (BP.openAppFromAppLauchner(60, "Sortable Data Grids")) {
+								if (sd.editAllRowOnSDG(projectName, "SDG_GROUPBY_1", Condition.UnSelectCheckbox)) {
+
+									lp.CRMlogout();
+									lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+									if (BP.openAppFromAppLauchner(appPage, 50)) {
+										ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage,
+												tableName, val);
+										if (Data.isEmpty()) {
+											log(LogStatus.PASS, "SDG Data has been Matched", YesNo.No);
+											sa.assertTrue(true, "SDG Data has been Matched");
+										} else {
+											log(LogStatus.ERROR, "SDG Data is not Matched", YesNo.Yes);
+											sa.assertTrue(false, "SDG Data is not Matched : " + Data);
+										}
+
+									} else {
+										log(LogStatus.ERROR, "Could not Open the App from the App Launcher", YesNo.Yes);
+
+										sa.assertTrue(false, "Could not Open the App from the App Launcher");
+									}
+
 								} else {
-									log(LogStatus.ERROR, "SDG Data is not Matched", YesNo.Yes);
-									sa.assertTrue(false, "SDG Data is not Matched : " + Data);
+									log(LogStatus.ERROR, "Could not Edit the All Row on SDG", YesNo.Yes);
 								}
-
 							} else {
-								log(LogStatus.ERROR, "Could not Open the App from the App Launcher", YesNo.Yes);
+								log(LogStatus.ERROR, "Could not Open the SDG on the App Launcher", YesNo.Yes);
 							}
 
 						} else {
-							log(LogStatus.ERROR, "Could not Edit the All Row on SDG", YesNo.Yes);
+
+							log(LogStatus.ERROR, "Not Able to Click on Restore Button for " + concatFullName, YesNo.Yes);
+							sa.assertTrue(false, "Contact is not restore from the Recycle bin");
 						}
+
 					} else {
-						log(LogStatus.ERROR, "Could not Open the SDG on the App Launcher", YesNo.Yes);
+
+						log(LogStatus.ERROR, "Not Able to Click on checkbox for " + concatFullName, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Click on checkbox for " + concatFullName);
 					}
-
-				} else {
-
-					log(LogStatus.ERROR, "Not Able to Click on Restore Button for " + name, YesNo.Yes);
-					sa.assertTrue(false, "Not Able to Click on Restore Button for " + name);
 				}
 
-			} else {
 
-				log(LogStatus.ERROR, "Not Able to Click on checkbox for " + name, YesNo.Yes);
-				sa.assertTrue(false, "Not Able to Click on checkbox for " + name);
+				else {
+					log(LogStatus.FAIL, "list view could not added on " + row[1], YesNo.Yes);
+					sa.assertTrue(false, "list view could not added on " + row[1]);
+				}
 			}
-		} else {
+		}
+		else {
 			log(LogStatus.ERROR, "Not Able to open the Recycle been tab", YesNo.Yes);
 			sa.assertTrue(false, "Not Able to open the Recycle been tab");
 
@@ -1751,11 +1787,11 @@ public class Module9 extends BaseLib {
 		sa.assertAll();
 
 	}
-
+	
 	@Parameters({ "projectName" })
 
 	@Test
-	public void M9Tc058_UpdatePiclistFieldLabelAndVerifySDGDataOnAppPage(String projectName) {
+	public void M9Tc054_UpdatePiclistFieldLabelAndVerifySDGDataOnAppPage(String projectName) {
 
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -1763,8 +1799,8 @@ public class Module9 extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 		FieldAndRelationshipPageBusinessLayer fr = new FieldAndRelationshipPageBusinessLayer(driver);
-		String appPage = "Test App Page";
-		String tableName = "Test";
+		String appPage = M9Tc054_AppPageName;
+		String tableName = M9Tc054_SDGTableName;
 
 		String[][] val = {
 				{ M9SDGD_41_AccountIndustry, M9SDGD_41_Totalfirm, M9SDGD_41_Task_as_per_Industries,
@@ -1875,15 +1911,15 @@ public class Module9 extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void M9Tc059_DeactivateBiotechnologyOnIndustryAndVerifySDGDataOnAppPage(String projectName) {
+	public void M9Tc055_DeactivateBiotechnologyOnIndustryAndVerifySDGDataOnAppPage(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 		FieldAndRelationshipPageBusinessLayer fr = new FieldAndRelationshipPageBusinessLayer(driver);
-		String appPage = "Test App Page";
-		String tableName = "Test";
+		String appPage = M9Tc055_AppPageName;
+		String tableName = M9Tc055_SDGTableName;
 
 		String[][] val = {
 				{ M9SDGD_61_AccountIndustry, M9SDGD_61_Totalfirm, M9SDGD_61_Task_as_per_Industries,
@@ -1992,7 +2028,7 @@ public class Module9 extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void M9Tc060_ActivateBiotechnologyOnIndustryAndVerifySDGDataOnAppPage(String projectName) {
+	public void M9Tc056_ActivateBiotechnologyOnIndustryAndVerifySDGDataOnAppPage(String projectName) {
 
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -2000,8 +2036,8 @@ public class Module9 extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 		FieldAndRelationshipPageBusinessLayer fr = new FieldAndRelationshipPageBusinessLayer(driver);
-		String appPage = "Test App Page";
-		String tableName = "Test";
+		String appPage = M9Tc056_AppPageName;
+		String tableName = M9Tc056_SDGTableName;
 
 		String[][] val = {
 				{ M9SDGD_61_AccountIndustry, M9SDGD_61_Totalfirm, M9SDGD_61_Task_as_per_Industries,
@@ -2111,7 +2147,7 @@ public class Module9 extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void M9Tc061_deletePicklistOptionAndReplaceValueAndVerifySDGDataOnAppPage(String projectName) {
+	public void M9Tc057_deletePicklistOptionAndReplaceValueAndVerifySDGDataOnAppPage(String projectName) {
 
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -2163,8 +2199,8 @@ public class Module9 extends BaseLib {
 				{ M9SDGD_99_AccountIndustry, M9SDGD_99_Totalfirm, M9SDGD_99_Task_as_per_Industries,
 																							M9SDGD_99_Individuals, M9SDGD_99_Fundraising_as_per_Industries } };
 
-		String appPage = "Test App Page";
-		String tableName = "Test";
+		String appPage = M9Tc057_AppPageName;
+		String tableName = M9Tc057_SDGTableName;
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (home.clickOnSetUpLink()) {
 
@@ -2233,7 +2269,7 @@ public class Module9 extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void M9Tc062_deletePicklistOptionAndReplaceValuewithBlankAndVerifySDGDataOnAppPage(String projectName) {
+	public void M9Tc058_deletePicklistOptionAndReplaceValuewithBlankAndVerifySDGDataOnAppPage(String projectName) {
 
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -2244,8 +2280,8 @@ public class Module9 extends BaseLib {
 		String field = "Industry";
 		String picklistvalue = "Utilities";
 		String replaceValueName = "Consulting";
-		String appPage = "Test App Page";
-		String tableName = "Test";
+		String appPage = M9Tc058_AppPageName;
+		String tableName = M9Tc058_SDGTableName;
 
 		String[][] val = {
 				{ M9SDGD_100_AccountIndustry, M9SDGD_100_Totalfirm, M9SDGD_100_Task_as_per_Industries,
@@ -2350,7 +2386,7 @@ public class Module9 extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void M9Tc063_CreateNewOptionAndReplaceWithExistingValueVerifySDGDataOnAppPage(String projectName) {
+	public void M9Tc059_CreateNewOptionAndReplaceWithExistingValueVerifySDGDataOnAppPage(String projectName) {
 
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -2361,8 +2397,8 @@ public class Module9 extends BaseLib {
 		String field = "Industry";
 		String OptionValue = "Cargo";
 		String replaceValueName = "Education";
-		String appPage = "Test App Page";
-		String tableName = "Test";
+		String appPage = M9Tc059_AppPageName;
+		String tableName = M9Tc059_SDGTableName;
 
 		String[][] val = {
 				{ M9SDGD_118_AccountIndustry, M9SDGD_118_Totalfirm, M9SDGD_118_Task_as_per_Industries,
@@ -2476,24 +2512,27 @@ public class Module9 extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void M9Tc064_AddSDGOnAppPage(String projectName) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
-		FieldAndRelationshipPageBusinessLayer fr = new FieldAndRelationshipPageBusinessLayer(driver);
-		EditPageBusinessLayer EP = new EditPageBusinessLayer(driver);
-		String labelName = "Testing1234";
-		String tableName = "Test";
-		String appPage = "Testing1234";
+	public void M9Tc060_AddSDGOnAppPage(String projectName) {
 
-		ArrayList<String> tableNames = new ArrayList<String>();
-		tableNames.add("SDG_GROUPBY_2");
-		tableNames.add("SDG_GROUPBY_3");
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);		
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		EditPageBusinessLayer EP = new EditPageBusinessLayer(driver);
+		String appPage = M9Tc060_AppPageName;
+
+		ArrayList<String> tableNames = new ArrayList<String>();	
+		String[] table=M9Tc060_SDGTableName.split("<BreakOn>");	
+		for(int i=0; i<table.length; i++)
+		{
+		tableNames.add(table[i]);
+		}
+		
+		String[] data=M9Tc060_SDGDataProvider.split("<BreakOn>");
+		
 		ArrayList<String> dataProviderName = new ArrayList<String>();
-		dataProviderName.add("CustomObject:SDG_GROUPBY_2");
-		dataProviderName.add("CustomObject:SDG_GROUPBY_3");
+		for(int i=0; i<data.length; i++)
+		{
+		dataProviderName.add(data[i]);
+		}
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		for (int i = 0; i < dataProviderName.size(); i++) {
 
@@ -2518,16 +2557,14 @@ public class Module9 extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void M9Tc065_VerifySDGDataOnAppPage(String projectName) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+	public void M9Tc061_VerifyNewlySDGDataOnAppPage(String projectName) {
+
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
-		FieldAndRelationshipPageBusinessLayer fr = new FieldAndRelationshipPageBusinessLayer(driver);
-		EditPageBusinessLayer EP = new EditPageBusinessLayer(driver);
-		String tableName = "";
-		String appPage = "Test App Page";
+		
+		String appPage = M9Tc061_AppPageName;
+		String[] tableName=M9Tc061_SDGTableName.split("<BreakOn>");
 		String[][] SDG_GROUPBY_2_SDG = { { M9SDGD_136_Fundraising_Stage, M9SDGD_136_Count_as_per_fundraising_stage },
 				{ M9SDGD_137_Fundraising_Stage, M9SDGD_137_Count_as_per_fundraising_stage },
 				{ M9SDGD_138_Fundraising_Stage, M9SDGD_138_Count_as_per_fundraising_stage },
@@ -2541,9 +2578,9 @@ public class Module9 extends BaseLib {
 				{ M9SDGD_145_Fundraising, M9SDGD_145_Fundraising_Count } };
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		tableName = "SDG_GROUPBY_2";
+		
 		if (BP.openAppFromAppLauchner(appPage, 50)) {
-			ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage, tableName,
+			ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage, tableName[0],
 					SDG_GROUPBY_2_SDG);
 			if (Data == null) {
 				log(LogStatus.PASS, "SDG Data has been Matched", YesNo.No);
@@ -2561,9 +2598,9 @@ public class Module9 extends BaseLib {
 		lp.CRMlogout();
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		tableName = "SDG_GROUPBY_3";
+		
 		if (BP.openAppFromAppLauchner(appPage, 50)) {
-			ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage, tableName,
+			ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage, tableName[1],
 					SDG_GROUPBY_3_SDG);
 			if (Data == null) {
 				log(LogStatus.PASS, "SDG Data has been Matched", YesNo.No);
@@ -2583,20 +2620,17 @@ public class Module9 extends BaseLib {
 		sa.assertAll();
 	}
 
+/*	
 	@Parameters({ "projectName" })
 
 	@Test
-	public void M9Tc066_VerifyPermissionAddFieldToLayoutAndEditField(String projectName) {
+	public void M9Tc062_VerifyPermissionAddFieldToLayoutAndEditField(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
-		FieldAndRelationshipPageBusinessLayer fr = new FieldAndRelationshipPageBusinessLayer(driver);
-		EditPageBusinessLayer EP = new EditPageBusinessLayer(driver);
 		DataLoaderWizardPageBusinessLayer dataload = new DataLoaderWizardPageBusinessLayer(driver);
 		String parentWindow = "";
-		boolean flag = false;
+
 		String data;
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (home.clickOnSetUpLink()) {
@@ -2671,7 +2705,7 @@ public class Module9 extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void M9Tc067_CreateAppPageAndAddSDGs(String projectName) {
+	public void M9Tc063_CreateAppPageAndAddSDGs(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -3413,16 +3447,11 @@ public class Module9 extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void M9Tc068_EditAppPageAndAddFilter(String projectName) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+	public void M9Tc064_EditAppPageAndAddFilter(String projectName) {
+
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
-		FieldAndRelationshipPageBusinessLayer fr = new FieldAndRelationshipPageBusinessLayer(driver);
 		EditPageBusinessLayer EP = new EditPageBusinessLayer(driver);
-		String labelName = "Testing1234";
-		String tableName = "Test";
 		String appPage = "Custom App Page";
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
@@ -3448,14 +3477,10 @@ public class Module9 extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void M9Tc069_VerifyFundAndFirmDropDownCountAndAcendingOrder(String projectName) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+	public void M9Tc065_VerifyFundAndFirmDropDownCountAndAcendingOrder(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
-		FieldAndRelationshipPageBusinessLayer fr = new FieldAndRelationshipPageBusinessLayer(driver);
-		EditPageBusinessLayer EP = new EditPageBusinessLayer(driver);
 
 		String appPage = "Custom App Page";
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
@@ -3488,14 +3513,11 @@ public class Module9 extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void M9Tc070_VerifyGlobalFilterForFundAndFirm(String projectName) {
+	public void M9Tc066_VerifyGlobalFilterForFundAndFirm(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
-		FieldAndRelationshipPageBusinessLayer fr = new FieldAndRelationshipPageBusinessLayer(driver);
-		EditPageBusinessLayer EP = new EditPageBusinessLayer(driver);
+
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
@@ -3709,14 +3731,10 @@ public class Module9 extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void M9Tc071_AddFilterSequenceAndVerifyRecord(String projectName) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+	public void M9Tc067_AddFilterSequenceAndVerifyRecord(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
-		FieldAndRelationshipPageBusinessLayer fr = new FieldAndRelationshipPageBusinessLayer(driver);
-		EditPageBusinessLayer EP = new EditPageBusinessLayer(driver);
 		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
 		String appPage = "Custom App Page";
 		String fundraisingSDGName = "Fundraising Filter Grid";
@@ -3932,7 +3950,7 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void M9Tc072_AddFilterSequenceForFundAndVerifyRecord(String projectName) {
+	public void M9Tc068_AddFilterSequenceForFundAndVerifyRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
@@ -4332,7 +4350,7 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void M9Tc073_AddFilterSequenceForAccountAndContactVerifyRecord(String projectName) {
+	public void M9Tc069_AddFilterSequenceForAccountAndContactVerifyRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
@@ -4665,7 +4683,7 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void M9Tc074_VerifyFundAndFirmFilter(String projectName) {
+	public void M9Tc070_VerifyFundAndFirmFilter(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
@@ -4794,12 +4812,11 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void M9Tc075_checkMyRecordFiltercCheckbox(String projectName) {
+	public void M9Tc071_checkMyRecordFiltercCheckbox(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
-		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
 		EditPageBusinessLayer EB=new EditPageBusinessLayer(driver);
 		String appPage = "Custom App Page";
 
@@ -4870,12 +4887,11 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void M9Tc076_verifyMyTeamRecordUser(String projectName) {
+	public void M9Tc072_verifyMyTeamRecordUser(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
-		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
 		String appPage = "Custom App Page";
 		String fundraisingSDGName = "Fundraising Filter Grid";
 		String fundSDGName="Fund Filter Grid";
@@ -5046,12 +5062,11 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void M9Tc077_verifyMyTeamRecordAdmin(String projectName) {
+	public void M9Tc073_verifyMyTeamRecordAdmin(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
-		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
 		String appPage = "Custom App Page";
 		String fundraisingSDGName = "Fundraising Filter Grid";
 		String fundSDGName="Fund Filter Grid";
@@ -5145,18 +5160,17 @@ public class Module9 extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-	  
+
 
 	@Parameters({ "projectName" })
 	@Test
-	public void M9Tc078_updateTeamBlankAndVerifyMyTeamRecordFilterRecord(String projectName) {
+	public void M9Tc074_updateTeamBlankAndVerifyMyTeamRecordFilterRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
 		String appPage = "Custom App Page";
 		String fundraisingSDGName = "Fundraising Filter Grid";
 		String fundSDGName="Fund Filter Grid";
@@ -5287,14 +5301,13 @@ public class Module9 extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void M9Tc079_updateTeamToOriginationAndVerifyMyTeamRecordFilterRecords(String projectName) {
+	public void M9Tc075_updateTeamToOriginationForUser1AndVerifyMyTeamRecordFilterRecords(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
 		String appPage = "Custom App Page";
 		String fundraisingSDGName = "Fundraising Filter Grid";
 		String fundSDGName="Fund Filter Grid";
@@ -5495,18 +5508,17 @@ public class Module9 extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-	
+
 
 	@Parameters({ "projectName" })
 	@Test
-	public void M9Tc080_updateTeamBlankAndVerifyMyTeamRecordFilterRecord(String projectName) {
+	public void M9Tc076_updateTeamBlankAndVerifyMyTeamRecordFilterRecord(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
 		String appPage = "Custom App Page";
 		String fundraisingSDGName = "Fundraising Filter Grid";
 		String fundSDGName="Fund Filter Grid";
@@ -5634,22 +5646,16 @@ public class Module9 extends BaseLib {
 		sa.assertAll();
 	}
 
-
-	
-
 	@Parameters({ "projectName" })
 	@Test
-	
-		public void M9Tc081_verifyEditLockedIconOnRecord(String projectName) {
+
+	public void M9Tc077_verifyEditLockedIconOnRecord(String projectName) {
 
 			LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 			BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-			LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
-			SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
-			HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+
 			SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
 			String appPage = "Custom App Page";
-			boolean result=false;
 			lp.CRMLogin(superAdminUserName, adminPassword, appName);
 			if (BP.openAppFromAppLauchner(appPage, 50)) {
 				log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
@@ -5665,7 +5671,7 @@ public class Module9 extends BaseLib {
 					log(LogStatus.ERROR,"Edit icon is not visible on Account Name",YesNo.No);
 					sa.assertTrue(false, "Edit icon is not visible on Account Name");
 				}
-				
+
 				if(SB.verifyEditOrLockedIconOnSDGData("Phone", IconType.Edit))
 				{
 					log(LogStatus.PASS,"Edit icon is visible on Phone",YesNo.No);
@@ -5676,7 +5682,7 @@ public class Module9 extends BaseLib {
 					log(LogStatus.ERROR,"Edit icon is not visible on Phone",YesNo.No);
 					sa.assertTrue(false, "Edit icon is not visible on Phone");
 				}
-				
+
 				if(SB.verifyEditOrLockedIconOnSDGData("Website", IconType.Edit))
 				{
 					log(LogStatus.PASS,"Edit icon is visible on Website",YesNo.No);
@@ -5687,7 +5693,7 @@ public class Module9 extends BaseLib {
 					log(LogStatus.ERROR,"Edit icon is not visible on Website",YesNo.No);
 					sa.assertTrue(false, "Edit icon is not visible on Website");
 				}
-				
+
 				if(SB.verifyEditOrLockedIconOnSDGData("Description", IconType.Edit))
 				{
 					log(LogStatus.PASS,"Edit icon is visible on Description",YesNo.No);
@@ -5698,7 +5704,7 @@ public class Module9 extends BaseLib {
 					log(LogStatus.ERROR,"Edit icon is not visible on Description",YesNo.No);
 					sa.assertTrue(false, "Edit icon is not visible on Description");
 				}
-				
+
 				if(SB.verifyEditOrLockedIconOnSDGData("Revenue", IconType.Edit))
 				{
 					log(LogStatus.PASS,"Edit icon is visible on Revenue",YesNo.No);
@@ -5709,7 +5715,7 @@ public class Module9 extends BaseLib {
 					log(LogStatus.ERROR,"Edit icon is not visible on Revenue",YesNo.No);
 					sa.assertTrue(false, "Edit icon is not visible on Revenue");
 				}
-				
+
 				if(SB.verifyEditOrLockedIconOnSDGData("Address", IconType.Locked))
 				{
 					log(LogStatus.PASS,"Locked icon is visible on Address",YesNo.No);
@@ -5720,7 +5726,7 @@ public class Module9 extends BaseLib {
 					log(LogStatus.ERROR,"Locked icon is not visible on Address",YesNo.No);
 					sa.assertTrue(false, "Locked icon is not visible on Address");
 				}
-				
+
 				if(SB.verifyEditOrLockedIconOnSDGData("Record Type", IconType.Locked))
 				{
 					log(LogStatus.PASS,"Locked icon is visible on Record Type",YesNo.No);
@@ -5731,46 +5737,1945 @@ public class Module9 extends BaseLib {
 					log(LogStatus.ERROR,"Locked icon is not visible on Record Type",YesNo.No);
 					sa.assertTrue(false, "Locked icon is not visible on Record Type");
 				}
-				
-				
+
+
 			}
 			else
 			{
 				log(LogStatus.ERROR,"Could not open the app from the App Launcher",YesNo.Yes);
 				sa.assertTrue(false, "Could not open the app from the App Launcher");
 			}
-			
+
 			lp.CRMlogout();
 			sa.assertAll();
 	}
-			
 
-	
+
+
 	@Parameters({ "projectName" })
 	@Test
-	
-		public void M9Tc082_VerifyCheckedOrUnchecked(String projectName) {
 
-			LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-			BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-			LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
-			SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
-			HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-			SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
-			String appPage = "Custom App Page";
-			boolean result=false;
-			lp.CRMLogin(superAdminUserName, adminPassword, appName);
+	public void M9Tc078_VerifyHeaderCheckboxOfSDG(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);		
+		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+		String appPage = "Custom App Page";
+		String sdgName="Account Filter Grid";
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+			log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+			CommonLib.refresh(driver);
+			if(SB.CheckedOrUncheckedCheckox(sdgName, Condition.SelectCheckbox))
+			{					
+				int count = SB.CheckedOrUncheckedCheckboxCountOnSDGGrid(sdgName,  Condition.SelectCheckbox);
+				if(count==10)
+				{
+				log(LogStatus.PASS,"Checkbox Selected, The count is 10 in "+sdgName+ " Grid",YesNo.Yes);
+				sa.assertTrue(true, "Checkbox Selected, The count is 10 in "+sdgName+ " Grid");
+				}
+				else
+				{
+					log(LogStatus.PASS,"The count of selected checkbox is "+count+" in "+sdgName+ " Grid",YesNo.Yes);
+					sa.assertTrue(true, "The count of selected checkbox is "+count+" in "+sdgName+ " Grid");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Could not select the checkbox of "+sdgName,YesNo.Yes);
+				sa.assertTrue(false, "Could not select the checkbox of "+sdgName);	
+			}
+
+			if(SB.CheckedOrUncheckedCheckox(sdgName, Condition.UnSelectCheckbox))
+			{					
+				int count = SB.CheckedOrUncheckedCheckboxCountOnSDGGrid(sdgName,  Condition.UnSelectCheckbox);
+				if(count==0)
+				{
+				log(LogStatus.PASS,"Checkbox Unselected, The count is 0 in "+sdgName+ " Grid",YesNo.Yes);
+				sa.assertTrue(true, "Checkbox Unselected, The count is 0 in "+sdgName+ " Grid");
+				}
+				else
+				{
+					log(LogStatus.PASS,"The count of selected checkbox is "+count+" in "+sdgName+ " Grid",YesNo.Yes);
+					sa.assertTrue(true, "The count of selected checkbox is "+count+" in "+sdgName+ " Grid");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Could not unselect the checkbox of "+sdgName,YesNo.Yes);
+				sa.assertTrue(false, "Could not unselect the checkbox of "+sdgName);	
+			}
+
+
+			if(SB.CheckedOrUncheckedCheckox(sdgName, Condition.SelectCheckbox))
+			{					
+				int count = SB.CheckedOrUncheckedCheckboxCountOnSDGGrid(sdgName,  Condition.SelectCheckbox);
+				if(count==10)
+				{
+				log(LogStatus.PASS,"Checkbox Selected, The count is 10 in "+sdgName+ " Grid",YesNo.Yes);
+				sa.assertTrue(true, "Checkbox Selected, The count is 10 in "+sdgName+ " Grid");
+				}
+				else
+				{
+					log(LogStatus.PASS,"The count of selected checkbox is "+count+" in "+sdgName+ " Grid",YesNo.Yes);
+					sa.assertTrue(true, "The count of selected checkbox is "+count+" in "+sdgName+ " Grid");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Could not select the checkbox of "+sdgName,YesNo.Yes);
+				sa.assertTrue(false, "Could not select the checkbox of "+sdgName);	
+			}
+
+			if(SB.CheckedOrUncheckedCheckox(sdgName, Condition.UnSelectCheckbox))
+			{					
+				int count = SB.CheckedOrUncheckedCheckboxCountOnSDGGrid(sdgName,  Condition.UnSelectCheckbox);
+				if(count==0)
+				{
+				log(LogStatus.PASS,"Checkbox Unselected, The count is 0 in "+sdgName+ " Grid",YesNo.Yes);
+				sa.assertTrue(true, "Checkbox Unselected, The count is 0 in "+sdgName+ " Grid");
+				}
+				else
+				{
+					log(LogStatus.PASS,"The count of selected checkbox is "+count+" in "+sdgName+ " Grid",YesNo.Yes);
+					sa.assertTrue(true, "The count of selected checkbox is "+count+" in "+sdgName+ " Grid");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Could not unselect the checkbox of "+sdgName,YesNo.Yes);
+				sa.assertTrue(false, "Could not unselect the checkbox of "+sdgName);	
+			}
+
+
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+
+	public void M9Tc079_VerifyErrorMessageIfRequireFieldEmpty(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);		
+		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+		String appPage = "Custom App Page";
+		String sdgName="Account Filter Grid";
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+
+
+
+		if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+			log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+			CommonLib.refresh(driver);
+			if(SB.removeRecordAndVerifyErrorMessage(sdgName,"Account Name"))
+			{
+				log(LogStatus.PASS,"\"1 record has error. Kindly resolve them and try again.\" Error Message is visible",YesNo.Yes);
+				sa.assertTrue(true, "\"1 record has error. Kindly resolve them and try again.\" Error Message is visible");
+				CommonLib.ThreadSleep(5000);
+				if(SB.verifyErrorMessage(sdgName,"Account Name"))
+				{
+					log(LogStatus.PASS,"Error Message is visible",YesNo.Yes);
+					sa.assertTrue(true, "Error Message is visible");		
+					if(SB.updateRecordAndVerifyMessage(sdgName,"Account Name","Account 1"))
+					{
+						log(LogStatus.PASS,"\"Your changes are saved.\" Error Message is visible",YesNo.Yes);
+						sa.assertTrue(true, "\"Your changes are saved.\" Error Message is visible");
+					}
+					else
+					{
+						log(LogStatus.ERROR,"\"Your changes are saved.\" Error Message is not visible",YesNo.Yes);
+						sa.assertTrue(false, "\"Your changes are saved.\" Error Message is not visible");
+
+					}
+
+				}
+				else
+				{
+					log(LogStatus.FAIL,"Error Message is not visible",YesNo.Yes);
+					sa.assertTrue(false, "Error Message is not visible");	
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR,"\"1 record has error. Kindly resolve them and try again.\" Error Message is not visible",YesNo.Yes);
+				sa.assertTrue(false, "\"1 record has error. Kindly resolve them and try again.\" Error Message is not visible");
+			}
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+
+	public void M9Tc080_VerifyFieldsWhichEditableOnSingleRecordAndMultipleRecord(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);		
+		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		InstitutionsPageBusinessLayer IB=new InstitutionsPageBusinessLayer(driver);
+		String appPage = "Custom App Page";
+		String sdgName="Account Filter Grid";
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String parentWindow="";
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create Field Set Component",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+			}
+			ThreadSleep(3000);
+
+			if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Firm,
+					ObjectFeatureName.FieldAndRelationShip, "Annual Revenue", PermissionType.givePermission,
+					"System Administrator",RecordType.Institution)) {
+				log(LogStatus.PASS, "Annual Revenue field Permission is given from the Firm Object Manager for Institution Record Type", YesNo.No);
+				sa.assertTrue(true, "Annual Revenue field Permission is given from the Firm Object Manager for Institution Record Type");
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Annual Revenue field Permission is not given from the Firm Object Manager for Institution Record Type", YesNo.No);
+				sa.assertTrue(false, "Annual Revenue field Permission is not given from the Firm Object Manager for Institution Record Type");
+			}
+
+			CommonLib.switchToDefaultContent(driver);
+			if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Firm,
+					ObjectFeatureName.FieldAndRelationShip, "Annual Revenue", PermissionType.givePermission,
+					"System Administrator",RecordType.Intermediary)) {
+				log(LogStatus.PASS, "Annual Revenue field Permission is given from the Firm Object Manager for Intermediary Record Type", YesNo.No);
+				sa.assertTrue(true, "Annual Revenue field Permission is given from the Firm Object Manager for Intermediary Record Type");
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Annual Revenue field Permission is not given from the Firm Object Manager for Intermediary Record Type", YesNo.No);
+				sa.assertTrue(false, "Annual Revenue field Permission is not given from the Firm Object Manager for Intermediary Record Type");
+
+			}
+
+			CommonLib.switchToDefaultContent(driver);
+
+			if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Firm,
+					ObjectFeatureName.FieldAndRelationShip, "Source", PermissionType.givePermission,
+					"System Administrator",RecordType.Institution)) {
+				log(LogStatus.PASS, "Source field Permission is given from the Firm Object Manager for Institution Record Type", YesNo.No);
+				sa.assertTrue(true, "Annual Revenue field Permission is given from the Firm Object Manager for Intermediary Record Type");
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Source field Permission is not given from the Firm Object Manager for Institution Record Type", YesNo.No);
+				sa.assertTrue(false, "Source field Permission is not given from the Firm Object Manager for Institution Record Type");
+
+			}
+
+			CommonLib.switchToDefaultContent(driver);
+
+			if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Firm,
+					ObjectFeatureName.FieldAndRelationShip, "Source", PermissionType.givePermission,
+					"System Administrator",RecordType.Intermediary)) {
+				log(LogStatus.INFO, "Source field Permission is given from the Firm Object Manager for Intermediary Record Type", YesNo.No);
+				sa.assertTrue(true, "Source field Permission is given from the Firm Object Manager for Intermediary Record Type");
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Source field Permission is not given from the Firm Object Manager for Intermediary Record Type", YesNo.No);
+				sa.assertTrue(false, "Source field Permission is not given from the Firm Object Manager for Intermediary Record Type");
+
+			}
+
+			CommonLib.switchToDefaultContent(driver);
+
+			if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Firm,
+					ObjectFeatureName.FieldAndRelationShip, "Location Preferences", PermissionType.givePermission,
+					"System Administrator",RecordType.Institution)) {
+				log(LogStatus.INFO, "Location Preferences field Permission is given from the Firm Object Manager for Institution Record Type", YesNo.No);
+				sa.assertTrue(true, "Location Preferences field Permission is given from the Firm Object Manager for Institution Record Type");
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Location Preferences field Permission is not given from the Firm Object Manager for Institution Record Type", YesNo.No);
+				sa.assertTrue(false, "Location Preferences field Permission is not given from the Firm Object Manager for Institution Record Type");
+
+			}
+
+			CommonLib.switchToDefaultContent(driver);
+
+			if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Firm,
+					ObjectFeatureName.FieldAndRelationShip, "Location Preferences", PermissionType.givePermission,
+					"System Administrator",RecordType.Intermediary)) {
+				log(LogStatus.INFO, "Location Preferences field Permission is given from the Firm Object Manager for Intermediary Record Type", YesNo.No);
+				sa.assertTrue(true, "Location Preferences field Permission is given from the Firm Object Manager for Intermediary Record Type");
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Location Preferences field Permission is not given from the Firm Object Manager for Intermediary Record Type", YesNo.No);
+				sa.assertTrue(false, "Location Preferences field Permission is not given from the Firm Object Manager for Intermediary Record Type");
+
+			}
+
+			driver.close();
+			driver.switchTo().window(parentWindow);
+
+			lp.CRMlogout();
+			lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+
+
 			if (BP.openAppFromAppLauchner(appPage, 50)) {
-				
+
 				log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
 				CommonLib.refresh(driver);
-				
-				
-				
+				if(SB.updateSDGRecordAndVerifySaveCancelButton(sdgName,"Account 2","Revenue","70000","Text",null))
+				{
+					log(LogStatus.INFO, "\"Account 2\" Revenue record has been updated to 70000", YesNo.No);
+					sa.assertTrue(true, "\"Account 2\" Revenue record has been updated to 70000");
+
+					if(BP.clickOnTab(projectName,TabName.InstituitonsTab))
+					{
+						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+ "Tab has been opened", YesNo.No);
+						if(BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+								"Account 2", 50))
+						{
+							log(LogStatus.INFO, "Clicked on the Account 2 name", YesNo.No);
+							CommonLib.ThreadSleep(5000);
+							if(IB.verifyValueOnFirm("Annual Revenue","70,000"))
+							{
+								log(LogStatus.INFO, "\"Annual Revenue - 70000\" data has been matched", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "\"Annual Revenue - 70000\" data is not matched", YesNo.No);
+
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Could not click on the Account 2 name", YesNo.No);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, TabName.InstituitonsTab.toString()+" is not open", YesNo.No);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.FAIL, "\"Account 2\" Revenue record is not updated to 70000", YesNo.No);
+					sa.assertTrue(false, "\"Account 2\" Revenue record is not updated to 70000");
+				}
 			}
+
+
+			if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+				log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+				CommonLib.refresh(driver);
+				if(SB.updateSDGRecordAndVerifySaveCancelButton(sdgName,"Account 8","Phone","9874563215","Text",null))
+				{
+					log(LogStatus.INFO,"\"Account 8\" phone record has been updated to 9874563215", YesNo.No);
+					sa.assertTrue(true, "\"Account 8\" phone record has been updated to 9874563215");
+
+					if(BP.clickOnTab(projectName,TabName.InstituitonsTab))
+					{
+						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab has been open", YesNo.No);
+						if(BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab,
+								"Account 8", 50))
+						{
+
+							log(LogStatus.INFO, "Clicked on the Account 8 name", YesNo.No);
+							CommonLib.ThreadSleep(5000);
+							if(IB.verifyValueOnFirm("Phone","(987) 456-3215"))
+							{
+								log(LogStatus.INFO,  "\"Phone - (987) 456-3215\" data has been matched", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "\"Phone - (987) 456-3215\" data is not matched", YesNo.No);
+
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Could not clicks on the Account 8 name", YesNo.No);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, TabName.InstituitonsTab.toString()+" is not open", YesNo.No);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.FAIL, "\"Account 8\" Phone record is not updated to (987) 456-3215", YesNo.No);
+					sa.assertTrue(false, "\"Account 8\" Phone record is not updated to (987) 456-3215");
+				}
+			}
+
+			if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+				log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+				CommonLib.refresh(driver);
+				if(SB.updateSDGRecordAndVerifySaveCancelButton(sdgName,"Account 8","Source","Navatar Deal Connect","Picklist",null))
+				{
+					log(LogStatus.INFO,"\"Account 8\" Source record has been updated to Navatar Deal Connect", YesNo.No);
+					sa.assertTrue(true, "\"Account 8\" Source record has been updated to Navatar Deal Connect");
+
+					if(BP.clickOnTab(projectName,TabName.InstituitonsTab))
+					{
+						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab has been open", YesNo.No);
+						if(BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab,
+								"Account 8", 50))
+						{
+
+							log(LogStatus.INFO, "Clicked on the Account 8 name", YesNo.No);
+							CommonLib.ThreadSleep(5000);
+							if(IB.verifyValueOnFirm("Source","Navatar Deal Connect"))
+							{
+								log(LogStatus.INFO,  "\"Source - Navatar Deal Connect\" data has been matched", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR,  "\"Source - Navatar Deal Connect\" data is not matched", YesNo.No);
+
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Could not clicks on the name Account 8", YesNo.No);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, TabName.InstituitonsTab.toString()+" is not open", YesNo.No);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.FAIL, "\"Source\" record is not updated to Navatar Deal Connect", YesNo.No);
+					sa.assertTrue(false, "\"Source\" record is not updated to Navatar Deal Connect ");
+				}
+
+			}
+			if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+				log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+				CommonLib.refresh(driver);
+
+				ArrayList<String> val= new ArrayList<String>();
+				val.add("Asia");
+				if(SB.updateSDGRecordAndVerifySaveCancelButton(sdgName,"Account 8","Location","Asia","Multipicklist",val))
+				{
+					log(LogStatus.INFO,"\"Account 8\" Location record has been updated to Asia", YesNo.No);
+					sa.assertTrue(true, "\"Account 8\" Location record has been updated to Asia");
+
+					if(BP.clickOnTab(projectName,TabName.InstituitonsTab))
+					{
+						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab has been open", YesNo.No);
+						if(BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab,
+								"Account 8", 50))
+						{
+
+							log(LogStatus.INFO, "Clicked on the Account 8 name", YesNo.No);
+							CommonLib.ThreadSleep(5000);
+							if(IB.verifyValueOnFirm("Location Preferences","Asia"))
+							{
+								log(LogStatus.INFO,  "\"Location - Asia\" data has been matched", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR,  "\"Location - Asia\" data is not matched", YesNo.No);
+
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Could not clicks on the Account 8 name", YesNo.No);
+						}
+					}
+					else
+					{
+						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab is not open", YesNo.No);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.FAIL, "\"Location\" record is not updated to Asia", YesNo.No);
+					sa.assertTrue(false, "\"Location\" record is not updated to Asia");
+				}
+			}
+			if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+				log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+				CommonLib.refresh(driver);
+
+				ArrayList<String> val1= new ArrayList<String>();
+				val1.add("Far East");
+				val1.add("Global");
+				val1.add("Middle East");
+				if(SB.updateSDGRecordAndVerifySaveCancelButton(sdgName,"Account 8","Location",null,"Multipicklist",val1))
+				{
+					log(LogStatus.INFO,"\"Account 8\" Location record has been updated to Far East, Global, Middle East", YesNo.No);
+					sa.assertTrue(true, "\"Account 8\" Location record is not updated to Far East, Global, Middle East");
+
+					if(BP.clickOnTab(projectName,TabName.InstituitonsTab))
+					{
+						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab has been open", YesNo.No);
+						if(BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab,
+								"Account 8", 50))
+						{
+
+							log(LogStatus.INFO, "Clicked on the name Account 8", YesNo.No);
+							CommonLib.ThreadSleep(5000);
+							if(IB.verifyValueOnFirm("Location Preferences","Far East;Global;Middle East"))
+							{
+								log(LogStatus.INFO,  "\"Location Preferences - East;Global;Middle East\" data has been matched", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR,  "\"Location Preferences - East;Global;Middle East\" data is not matched", YesNo.No);
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Could not click on the Account name", YesNo.No);
+						}
+					}
+
+					else
+					{
+						log(LogStatus.ERROR, TabName.InstituitonsTab.toString()+" tab is not open", YesNo.No);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.FAIL, "\"Location Preferences\" record is not updated to East;Global;Middle East", YesNo.No);
+					sa.assertTrue(false, "\"Location Preferences\" record is not updated to East;Global;Middle East");
+				}
+
+			}
+			if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+				log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+				CommonLib.refresh(driver);
+				if(SB.updateSDGRecordAndVerifySaveCancelButton(sdgName,"Account 8","Description","The company was founded in 1999 by former Oracle executive Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a software as a service (SaaS) company.","Textarea",null))
+				{
+					log(LogStatus.INFO,"\"Account 8\" Description record has been updated to The company was founded in 1999 by former Oracle executive Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a software as a service (SaaS) company.", YesNo.No);
+					sa.assertTrue(true, "\"Account 8\" Description record is not updated to The company was founded in 1999 by former Oracle executive Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a software as a service (SaaS) company.");
+
+					if(BP.clickOnTab(projectName,TabName.InstituitonsTab))
+					{
+						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab has been open", YesNo.No);
+						if(BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab,
+								"Account 8", 50))
+						{
+							log(LogStatus.INFO, "Clicked on the Account 8 name", YesNo.No);
+							CommonLib.ThreadSleep(5000);
+							if(IB.verifyValueOnFirm("Description","The company was founded in 1999"))
+							{
+								log(LogStatus.INFO,  "\"Description - The company was founded in 1999 by former Oracle executive Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a software as a service (SaaS) company.\" data has been matched", YesNo.No);
+
+							}
+							else
+							{
+								log(LogStatus.INFO,  "\"Description - The company was founded in 1999 by former Oracle executive Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a software as a service (SaaS) company.\" data is not matched", YesNo.No);
+
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Could not clicks on the Account 8 name", YesNo.No);
+						}
+					}
+					else
+
+					{
+						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab is not open", YesNo.No);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.FAIL, "\"Description\" record is not updated to The company was founded in 1999 by former Oracle executive Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a software as a service (SaaS) company.", YesNo.No);
+					sa.assertTrue(false, "\"Description\" record is not updated to The company was founded in 1999 by former Oracle executive Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a software as a service (SaaS) company.");
+				}
+
+			}
+			if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+				log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+				CommonLib.refresh(driver);
+				if(SB.updateSDGRecordAndVerifySaveCancelButton(sdgName,"Account 8","Website","www.google.com","Text",null))
+				{
+					log(LogStatus.INFO,"\"Account 8\" Website record has been updated to www.google.com", YesNo.No);
+					sa.assertTrue(true, "\"Account 8\" Websote record is not updated to www.google.com");
+
+
+					if(BP.clickOnTab(projectName,TabName.InstituitonsTab))
+					{
+						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab has been open", YesNo.No);
+						if(BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab,
+								"Account 8", 50))
+						{
+							log(LogStatus.INFO, "Clicked on the Account 8 name", YesNo.No);
+							CommonLib.ThreadSleep(5000);
+							if(IB.verifyValueOnFirm("Website","google"))
+							{
+								log(LogStatus.INFO,  "\"Website - www.google.com\" data has been matched", YesNo.No);
+
+							}
+							else
+							{
+								log(LogStatus.INFO,  "\"Website - www.google.com\" data is not matched", YesNo.No);
+
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Could not click on the Account 8 name", YesNo.No);
+						}
+					}
+					else
+
+					{
+						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab is not open", YesNo.No);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.FAIL, "\"Website\" record is not updated to www.google.com", YesNo.No);
+					sa.assertTrue(false, "\"Website\" record is not updated to www.google.com");
+				}
+
+
+			}
+
+
+			if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+				log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+				CommonLib.refresh(driver);
+				if(SB.updateSDGRecordAndVerifySaveCancelButton(sdgName,"Account 1 Updated","Revenue","90000","Text",null))
+				{
+					log(LogStatus.INFO, "\"Account 1 Updated\" Revenue record has been updated to 90000", YesNo.No);
+					sa.assertTrue(true, "\"Account 1 Updated\" Revenue record has been updated to 90000");
+
+					if(BP.clickOnTab(projectName,TabName.InstituitonsTab))
+					{
+						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+ "Tab has been opened", YesNo.No);
+						if(BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+								"Account 2", 50))
+						{
+							log(LogStatus.INFO, "Clicked on the Account 1 Updated name", YesNo.No);
+							CommonLib.ThreadSleep(5000);
+							if(IB.verifyValueOnFirm("Annual Revenue","90,000"))
+							{
+								log(LogStatus.INFO, "\"Annual Revenue - 90000\" data has been matched", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "\"Annual Revenue - 90000\" data is not matched", YesNo.No);
+
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Could not click on the Account 1 Updated name", YesNo.No);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, TabName.InstituitonsTab.toString()+" is not open", YesNo.No);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.FAIL, "\"Account 1 Updated\" Revenue record is not updated to 90000", YesNo.No);
+					sa.assertTrue(false, "\"Account 1 Updated\" Revenue record is not updated to 90000");
+				}
+			}
+
+
+			if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+				log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+				CommonLib.refresh(driver);
+				if(SB.updateSDGRecordAndVerifySaveCancelButton(sdgName,"Account 1 Updated","Phone","9874563235","Text",null))
+				{
+					log(LogStatus.INFO,"\"Account 1 Updated\" phone record has been updated to 9874563235", YesNo.No);
+					sa.assertTrue(true, "\"Account 1 Updated\" phone record has been updated to 9874563235");
+
+					if(BP.clickOnTab(projectName,TabName.InstituitonsTab))
+					{
+						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab has been open", YesNo.No);
+						if(BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab,
+								"Account 8", 50))
+						{
+
+							log(LogStatus.INFO, "Clicked on the Account 1 Updated name", YesNo.No);
+							CommonLib.ThreadSleep(5000);
+							if(IB.verifyValueOnFirm("Phone","(987) 456-3235"))
+							{
+								log(LogStatus.INFO,  "\"Phone - (987) 456-3235\" data has been matched", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "\"Phone - (987) 456-3235\" data is not matched", YesNo.No);
+
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Could not clicks on the Account 1 Updated name", YesNo.No);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, TabName.InstituitonsTab.toString()+" is not open", YesNo.No);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.FAIL, "\"Account 8\" Phone record is not updated to (987) 456-3235", YesNo.No);
+					sa.assertTrue(false, "\"Account 8\" Phone record is not updated to (987) 456-3235");
+				}
+			}
+
+			if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+				log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+				CommonLib.refresh(driver);
+				if(SB.updateSDGRecordAndVerifySaveCancelButton(sdgName,"Account 1 Updated","Source","Navatar Deal Connect","Picklist",null))
+				{
+					log(LogStatus.INFO,"\"Account 1 Updated\" Source record has been updated to Navatar Deal Connect", YesNo.No);
+					sa.assertTrue(true, "\"Account 1 Updated\" Source record has been updated to Navatar Deal Connect");
+
+					if(BP.clickOnTab(projectName,TabName.InstituitonsTab))
+					{
+						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab has been open", YesNo.No);
+						if(BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab,
+								"Account 8", 50))
+						{
+
+							log(LogStatus.INFO, "Clicked on the Account Account 1 Updated name", YesNo.No);
+							CommonLib.ThreadSleep(5000);
+							if(IB.verifyValueOnFirm("Source","Navatar Deal Connect"))
+							{
+								log(LogStatus.INFO,  "\"Source - Navatar Deal Connect\" data has been matched", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR,  "\"Source - Navatar Deal Connect\" data is not matched", YesNo.No);
+
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Could not clicks on the name Account 1 Updated", YesNo.No);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, TabName.InstituitonsTab.toString()+" is not open", YesNo.No);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.FAIL, "\"Source\" record is not updated to Navatar Deal Connect", YesNo.No);
+					sa.assertTrue(false, "\"Source\" record is not updated to Navatar Deal Connect ");
+				}
+
+			}
+			if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+				log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+				CommonLib.refresh(driver);
+
+				ArrayList<String> val= new ArrayList<String>();
+				val.add("Far East");
+				if(SB.updateSDGRecordAndVerifySaveCancelButton(sdgName,"Account 8","Location","null","Multipicklist",val))
+				{
+					log(LogStatus.INFO,"\"Account 1 Updated\" Location record has been updated to Far East", YesNo.No);
+					sa.assertTrue(true, "\"Account Updated\" Location record has been updated to Far East");
+
+					if(BP.clickOnTab(projectName,TabName.InstituitonsTab))
+					{
+						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab has been open", YesNo.No);
+						if(BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab,
+								"Account 8", 50))
+						{
+
+							log(LogStatus.INFO, "Clicked on the Account 1 Updated name", YesNo.No);
+							CommonLib.ThreadSleep(5000);
+							if(IB.verifyValueOnFirm("Location Preferences","Far East"))
+							{
+								log(LogStatus.INFO,  "\"Location - Far East\" data has been matched", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR,  "\"Location - Far East\" data is not matched", YesNo.No);
+
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Could not click on the Account 1 Updated name", YesNo.No);
+						}
+					}
+					else
+					{
+						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab is not open", YesNo.No);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.FAIL, "\"Location\" record is not updated to Far East", YesNo.No);
+					sa.assertTrue(false, "\"Location\" record is not updated to Far East");
+				}
+			}
+			if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+				log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+				CommonLib.refresh(driver);
+
+				ArrayList<String> val1= new ArrayList<String>();
+				val1.add("Asia");
+				val1.add("Middle East");
+				val1.add("Global");
+				if(SB.updateSDGRecordAndVerifySaveCancelButton(sdgName,"Account 1 Updated","Location",null,"Multipicklist",val1))
+				{
+					log(LogStatus.INFO,"\"Account 8\" Location record has been updated to Far Asia, Global, Middle East", YesNo.No);
+					sa.assertTrue(true, "\"Account 8\" Location record is not updated to Far Asia, Global, Middle East");
+
+					if(BP.clickOnTab(projectName,TabName.InstituitonsTab))
+					{
+						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab has been open", YesNo.No);
+						if(BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab,
+								"Account 8", 50))
+						{
+
+							log(LogStatus.INFO, "Clicked on the name Account 1 Updated", YesNo.No);
+							CommonLib.ThreadSleep(5000);
+							if(IB.verifyValueOnFirm("Location Preferences","Far Asia;Global;Middle East"))
+							{
+								log(LogStatus.INFO,  "\"Location Preferences - Asia;Global;Middle East\" data has been matched", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR,  "\"Location Preferences - Asia;Global;Middle East\" data is not matched", YesNo.No);
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Could not click on the Account name", YesNo.No);
+						}
+					}
+
+					else
+					{
+						log(LogStatus.ERROR, TabName.InstituitonsTab.toString()+" tab is not open", YesNo.No);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.FAIL, "\"Location Preferences\" record is not updated to Asia;Global;Middle East", YesNo.No);
+					sa.assertTrue(false, "\"Location Preferences\" record is not updated to Asia;Global;Middle East");
+				}
+
+			}
+			if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+				log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+				CommonLib.refresh(driver);
+				if(SB.updateSDGRecordAndVerifySaveCancelButton(sdgName,"Account 1 Updated","Description","The company was founded in 1999 by former Oracle executive Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a software as a service (SaaS) company.","Textarea",null))
+				{
+					log(LogStatus.INFO,"\"Account 1 Updated\" Description record has been updated to The company was founded in 1999 by former Oracle executive Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a software as a service (SaaS) company.", YesNo.No);
+					sa.assertTrue(true, "\"Account 1 Updated\" Description record is not updated to The company was founded in 1999 by former Oracle executive Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a software as a service (SaaS) company.");
+
+					if(BP.clickOnTab(projectName,TabName.InstituitonsTab))
+					{
+						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab has been open", YesNo.No);
+						if(BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab,
+								"Account 8", 50))
+						{
+							log(LogStatus.INFO, "Clicked on the Account 1 Updated name", YesNo.No);
+							CommonLib.ThreadSleep(5000);
+							if(IB.verifyValueOnFirm("Description","The company was founded in 1999"))
+							{
+								log(LogStatus.INFO,  "\"Description - The company was founded in 1999 by former Oracle executive Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a software as a service (SaaS) company.\" data has been matched", YesNo.No);
+
+							}
+							else
+							{
+								log(LogStatus.ERROR,  "\"Description - The company was founded in 1999 by former Oracle executive Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a software as a service (SaaS) company.", YesNo.No);
+
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Could not clicks on the Account 8 name", YesNo.No);
+						}
+					}
+					else
+
+					{
+						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab is not open", YesNo.No);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.FAIL, "\"Description\" record is not updated to The company was founded in 1999 by former Oracle executive Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a software as a service (SaaS) company.", YesNo.No);
+					sa.assertTrue(false, "\"Description\" record is not updated to The company was founded in 1999 by former Oracle executive Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a software as a service (SaaS) company.");
+				}
+
+			}
+			if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+				log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+				CommonLib.refresh(driver);
+				if(SB.updateSDGRecordAndVerifySaveCancelButton(sdgName,"Account 1 Updated","Website","www.google.com","Text",null))
+				{
+					log(LogStatus.INFO,"\"Account 1 Updated\" Website record has been updated to www.google.com", YesNo.No);
+					sa.assertTrue(true, "\"Account 1 Updated\" Websote record is not updated to www.google.com");
+
+
+					if(BP.clickOnTab(projectName,TabName.InstituitonsTab))
+					{
+						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab has been open", YesNo.No);
+						if(BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab,
+								"Account 8", 50))
+						{
+							log(LogStatus.INFO, "Clicked on the Account 1 Updated name", YesNo.No);
+							CommonLib.ThreadSleep(5000);
+							if(IB.verifyValueOnFirm("Website","google"))
+							{
+								log(LogStatus.INFO,  "\"Website - www.google.com\" data has been matched", YesNo.No);
+
+							}
+							else
+							{
+								log(LogStatus.INFO,  "\"Website - www.google.com\" data is not matched", YesNo.No);
+
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Could not click on the Account 1 Updated name", YesNo.No);
+						}
+					}
+					else
+
+					{
+						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab is not open", YesNo.No);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.FAIL, "\"Website\" record is not updated to www.google.com", YesNo.No);
+					sa.assertTrue(false, "\"Website\" record is not updated to www.google.com");
+				}
+
+
+			}
+
+
+
+		}
+
+
+		lp.CRMlogout();
+		sa.assertAll();
 	}
-	
+
+
+	@Parameters({ "projectName" })
+	@Test
+
+	public void M9Tc081_VerifyMultipleFieldsWhichEditableOnSameTimeWithSingleOrMultipleRecored(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);		
+		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String appPage = "Custom App Page";
+		String sdgName="Account Filter Grid";
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String parentWindow="";
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create Field Set Component",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+			}
+			ThreadSleep(3000);
+
+			if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Firm,
+					ObjectFeatureName.FieldAndRelationShip, "Phone", PermissionType.removePermission,
+					"System Administrator",RecordType.Institution)) {
+				log(LogStatus.PASS, "Phone field Permission is given from the Firm Object Manager for Institution Record Type", YesNo.No);
+				sa.assertTrue(true, "Phone Revenue field Permission is given from the Firm Object Manager for Institution Record Type");
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Phone field Permission is not given from the Firm Object Manager for Institution Record Type", YesNo.No);
+				sa.assertTrue(false, "Phone field Permission is not given from the Firm Object Manager for Institution Record Type");
+			}
+		}
+
+		CommonLib.switchToDefaultContent(driver);
+		driver.close();
+		driver.switchTo().window(parentWindow);
+		lp.CRMlogout();
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+			log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+			CommonLib.refresh(driver);
+			if(SB.upadateLegalNameWebsiteRevenueAndVerifyErrorMessageSaveCancelButton(sdgName,"Account 1 Updated","Account Name","","Website","www.yahoo.com" ,"Revenue","1000000"))
+			{
+				log(LogStatus.PASS, "\"1 records has error. Kindly resolve them and try again.\", error message is visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also visible", YesNo.No);
+				sa.assertTrue(true, "\"1 records has error. Kindly resolve them and try again.\", error message is visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also visible");
+				CommonLib.ThreadSleep(7000);
+				if(SB.verifyErrorMessageOnTriangleIcon(sdgName, "Revenue"))
+				{
+					log(LogStatus.PASS, "Error message is visible on the hover to the triangle icon", YesNo.No);
+					sa.assertTrue(true, "Error message is visible on the hover to the triangle icon");
+
+					if(SB.clickCancelBtnAndVerifyRecord(sdgName, "Account 1 Updated", "Website", "www.allsec.com"))
+					{
+						log(LogStatus.PASS, "Page has been refreash and data is matched", YesNo.No);
+						sa.assertTrue(true, "Page has been refreash and data is matched");
+
+					}
+					else
+					{
+						log(LogStatus.FAIL,"Page is not refeash and data is not matched", YesNo.No);
+						sa.assertTrue(false, "Page is not refeash and data is not matched");
+					}
+				}
+				else
+				{
+					log(LogStatus.PASS, "Error message is not visible on the hover to the triangle icon", YesNo.No);
+					sa.assertTrue(false, "Error message is not visible on the hover to the triangle icon");
+
+				}
+
+			}
+			else
+			{
+				log(LogStatus.FAIL, "\"1 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible", YesNo.No);
+				sa.assertTrue(false, "\"1 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible");
+
+			}
+
+
+			CommonLib.refresh(driver);
+			if(SB.upadatePhoneWebsiteRevenueAndVerifyErrorMessageSaveCancelButton(sdgName,"Account 1 Updated","Phone","6532145698","Website","www.yahoo.com" ,"Revenue","1000000"))
+			{
+				log(LogStatus.PASS, "\"1 records has error. Kindly resolve them and try again.\", error message is visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also visible", YesNo.No);
+				sa.assertTrue(true, "\"1 records has error. Kindly resolve them and try again.\", error message is visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also visible");
+				CommonLib.ThreadSleep(7000);
+
+
+				if(SB.clickCancelBtnAndVerifyRecord(sdgName, "Account 1 Updated", "Website", "www.allsec.com"))
+				{
+					log(LogStatus.PASS, "Page has been refreash and data is matched", YesNo.No);
+					sa.assertTrue(true, "Page has been refreash and data is matched");
+
+				}
+				else
+				{
+					log(LogStatus.FAIL,"Page is not refeash and data is not matched", YesNo.No);
+					sa.assertTrue(false, "Page is not refeash and data is not matched");
+				}			
+			}
+			else
+			{
+				log(LogStatus.FAIL, "\"1 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible", YesNo.No);
+				sa.assertTrue(false, "\"1 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible");
+
+			}
+
+
+
+			if(SB.clickTwoCheckboxupadatePhoneWebsiteRevenueAndVerifyErrorMessageSaveCancelButton(sdgName, "Account 1 Updated", "Account 2", "Phone","6532145698","Website","www.yahoo.com" ,"Revenue","1000000"))
+			{
+				log(LogStatus.PASS, "\"2 records has error. Kindly resolve them and try again.\", error message is visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also visible", YesNo.No);
+				sa.assertTrue(true, "\"2 records has error. Kindly resolve them and try again.\", error message is visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also visible");
+				ArrayList<String> fieldName=new ArrayList<String>();
+				ArrayList<String> value=new ArrayList<String>();
+				fieldName.add("Phone");
+				fieldName.add("Website");
+				fieldName.add("Revenue");
+
+				value.add("");
+				value.add("www.allsec.com");
+				value.add("");
+
+				ArrayList<String> data= SB.clickCancelBtnAndVerifyRecord(sdgName,"Account 1 Updated",fieldName,value);
+				if(data.isEmpty())
+				{
+					log(LogStatus.PASS, "Page has been refreash and data is matched", YesNo.No);
+					sa.assertTrue(true, "Page has been refreash and data is matched");
+				}
+				else
+				{
+					log(LogStatus.FAIL,"Either Page is not refresh or data is not matched" +data, YesNo.No);
+					sa.assertTrue(false, "Either Page is not refresh or data is not matched" +data);
+				}
+
+			}
+			else
+			{
+				log(LogStatus.FAIL, "\"2 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible", YesNo.No);
+				sa.assertTrue(false, "\"2 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible");
+
+			}
+
+
+			if(SB.clickTwoCheckboxupadatePhoneWebsiteRevenueAndVerifyErrorMessageSaveCancelButton(sdgName, "Account 1 Updated", "Account 5", "Phone","6532145698","Website","www.yahoo.com" ,"Revenue","1000000"))
+			{
+				log(LogStatus.PASS, "\"1 record has error. Kindly resolve them and try again.\", error message is visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also visible", YesNo.No);
+				sa.assertTrue(true, "\"1 record has error. Kindly resolve them and try again.\", error message is visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also visible");
+
+				if(SB.verifyErrorMessageOnTriangleIconForPermission(sdgName, "Phone"))
+				{
+					log(LogStatus.PASS, "Error message is visible on the hover to the triangle icon", YesNo.No);
+					sa.assertTrue(true, "Error message is visible on the hover to the triangle icon");
+
+
+
+					ArrayList<String> fieldName=new ArrayList<String>();
+					ArrayList<String> value1=new ArrayList<String>();
+					fieldName.add("Phone");
+					fieldName.add("Website");
+					fieldName.add("Revenue");
+
+					value1.add("");
+					value1.add("www.allsec.com");
+					value1.add("");
+
+					ArrayList<String> data= SB.clickCancelBtnAndVerifyRecord(sdgName,"Account 1 Updated",fieldName,value1);
+					if(data.isEmpty())
+					{
+						log(LogStatus.PASS, "Page has been refreash and data is matched", YesNo.No);
+						sa.assertTrue(true, "Page has been refreash and data is matched");
+					}
+					else
+					{
+						log(LogStatus.FAIL,"Either Page is not refresh or data is not matched" +data, YesNo.No);
+						sa.assertTrue(false, "Either Page is not refresh or data is not matched" +data);
+					}
+
+					ArrayList<String> value2=new ArrayList<String>();
+					value2.add("(653) 214-5698)");
+					value2.add("www.yahoo.com");
+					value2.add("1000000");
+					ArrayList<String> data1= SB.verifySDGRecord(sdgName,"Account 5",fieldName,value1);
+					if(data1.isEmpty())
+					{
+						log(LogStatus.PASS, "Page has been refreash and data is matched", YesNo.No);
+						sa.assertTrue(true, "Page has been refreash and data is matched");
+					}
+					else
+					{
+						log(LogStatus.FAIL,"Either Page is not refresh or data is not matched" +data1, YesNo.No);
+						sa.assertTrue(false, "Either Page is not refresh or data is not matched" +data1);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.PASS, "Error message is not visible on the hover to the triangle icon", YesNo.No);
+					sa.assertTrue(false, "Error message is not visible on the hover to the triangle icon");
+				}
+			}
+			else
+			{
+				log(LogStatus.FAIL, "\"2 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible", YesNo.No);
+				sa.assertTrue(false, "\"2 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible");
+
+			}
+		}
+
+
+		else
+		{
+			log(LogStatus.FAIL, "Could not open the "+appPage+" from the App Launcher", YesNo.No);
+			sa.assertTrue(false, "Could not open the "+appPage+" from the App Launcher");
+
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+
+	}
+
+
+
+	@Parameters({ "projectName" })
+	@Test
+
+	public void M9Tc082_UpdatePhoneForCompanyAndVerifyErrorMessage(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);		
+		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
+
+		String appPage = "Custom App Page";
+		String sdgName="Account Filter Grid";
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+			log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+			CommonLib.refresh(driver);
+			ThreadSleep(7000);
+			AppBuilder.pageSizeSelect(sdgName, "100");
+			CommonLib.ThreadSleep(20000);
+			if(SB.updatePhoneOnSDGRecordAndVerifyErrorMessage(sdgName,"Tata Motors","Phone","9876543321"))
+			{
+				log(LogStatus.INFO,"\"Tata Motors\" Phone record has been updated to Navatar 9876543321", YesNo.No);
+				sa.assertTrue(true, "\"Tata Motors\" Phone record has been updated to Navatar 9876543321");
+				CommonLib.ThreadSleep(7000);
+				if(SB.verifyErrorMessageOnTriangleIconForPermission(sdgName, "Phone"))
+				{
+					log(LogStatus.PASS, "Error message is visible on the hover to the triangle icon", YesNo.No);
+					sa.assertTrue(true, "Error message is visible on the hover to the triangle icon");
+
+					ArrayList<String> fieldName=new ArrayList<String>();
+					ArrayList<String> value1=new ArrayList<String>();
+					fieldName.add("Phone");
+					value1.add("");
+					ArrayList<String> data= SB.clickCancelBtnAndVerifyRecord(sdgName,"Account 3",fieldName,value1);
+					if(data.isEmpty())
+					{
+						log(LogStatus.PASS, "Page has been refreash and data is matched", YesNo.No);
+						sa.assertTrue(true, "Page has been refreash and data is matched");
+					}
+					else
+					{
+						log(LogStatus.FAIL,"Either Page is not refresh or data is not matched" +data, YesNo.No);
+						sa.assertTrue(false, "Either Page is not refresh or data is not matched" +data);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.PASS, "Error message is not visible on the hover to the triangle icon", YesNo.No);
+					sa.assertTrue(false, "Error message is not visible on the hover to the triangle icon");
+
+				}
+
+			}
+			else
+			{
+				log(LogStatus.FAIL, "\"1 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible", YesNo.No);
+				sa.assertTrue(false, "\"1 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible");
+
+			}
+		}
+		else
+		{
+			log(LogStatus.FAIL,"Could not open the App from the App Launcher", YesNo.No);
+			sa.assertTrue(false, "Could not open the App from the App Launcher");
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+
+	@Parameters({ "projectName" })
+	@Test
+
+	public void M9Tc083_UpdatePhoneWebSiteRevenueAndRefreashSDGAndVerifyRecord(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);		
+		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+		String appPage = "Custom App Page";
+		String sdgName="Account Filter Grid";
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+			log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+			CommonLib.refresh(driver);
+			if(SB.upadatePhoneWebsiteRevenueAndVerifyErrorMessageSaveCancelButton(sdgName,"Account 1 Updated","Phone","9876543321","Website","www.yahoo.com" ,"Revenue","1000000"))
+			{
+				log(LogStatus.PASS, "\"1 records has error. Kindly resolve them and try again.\", error message is visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also visible", YesNo.No);
+				sa.assertTrue(true, "\"1 records has error. Kindly resolve them and try again.\", error message is visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also visible");
+				CommonLib.ThreadSleep(7000);
+
+				if(SB.verifyErrorMessageOnTriangleIconForPermission(sdgName, "Phone"))
+				{
+					log(LogStatus.PASS, "Error message is visible on the hover to the triangle icon", YesNo.No);
+					sa.assertTrue(true, "Error message is visible on the hover to the triangle icon");
+
+					if(SB.reloadSDG(sdgName))
+					{
+						CommonLib.ThreadSleep(5000);					
+						ArrayList<String> fieldName=new ArrayList<String>();
+
+						fieldName.add("Phone");
+						fieldName.add("Website");
+						fieldName.add("Revenue");
+
+						ArrayList<String> value=new ArrayList<String>();
+						value.add("");
+						value.add("www.allsec.com");
+						value.add("");
+						ArrayList<String> data= SB.verifySDGRecord(sdgName,"Account 1 Updated",fieldName,value);
+						if(data.isEmpty())
+						{
+							log(LogStatus.PASS, "Page has been refreash and data is matched", YesNo.No);
+							sa.assertTrue(true, "Page has been refreash and data is matched");
+						}
+						else
+						{
+							log(LogStatus.FAIL,"Either Page is not refresh or data is not matched" +data, YesNo.No);
+							sa.assertTrue(false, "Either Page is not refresh or data is not matched" +data);
+						}
+					}
+					else
+					{
+						log(LogStatus.FAIL,"Could not refresh the page", YesNo.Yes);
+						sa.assertTrue(false, "Could not refresh the page");
+					}
+
+				}
+				else
+				{
+					log(LogStatus.FAIL, "Error message is not visible on the hover to the triangle icon", YesNo.No);
+					sa.assertTrue(false, "Error message is not visible on the hover to the triangle icon");
+				}
+			}
+
+			else
+			{
+				log(LogStatus.FAIL, "\"1 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible", YesNo.No);
+				sa.assertTrue(false, "\"1 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible");
+
+			}
+
+		}
+		else
+		{
+			log(LogStatus.FAIL, "Could not open the App from the App Launcher", YesNo.Yes);
+			sa.assertTrue(false, "Could not open the App from the App Launcher");
+
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+
+	@Parameters({ "projectName" })
+	@Test
+
+	public void M9Tc084_VerifyMultipleFieldWillNotEditSameTimeOnDifferentPage(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);		
+		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+		String appPage = "Custom App Page";
+		String sdgName="Account Filter Grid";
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+
+			if(SB.verifyMultipleFieldWillNotEditOnDifferentPage(sdgName, "Account 2", "Account 3","AIH Limited", "AIG Group"))
+			{
+				log(LogStatus.PASS, "Multiple field is not editable on the multiple page", YesNo.No);
+				sa.assertTrue(true, "Multiple field is not editable on the multiple page");
+
+			}
+			else
+			{
+				log(LogStatus.PASS, "Multiple field is editable on the multiple page", YesNo.No);
+				sa.assertTrue(true, "Multiple field is editable on the multiple page");
+
+			}	
+
+
+			if(SB.clickTwoCheckboxupadatePhoneWebsiteRevenueAndVerifyErrorMessageSaveCancelButton(sdgName, "Account 1 Updated", "Account 8", "Phone","6532145698","Website","www.yahoo.com" ,"Revenue","1000000"))
+			{
+				log(LogStatus.PASS, "\"1 record has error. Kindly resolve them and try again.\", error message is visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also visible", YesNo.No);
+				sa.assertTrue(true, "\"1 record has error. Kindly resolve them and try again.\", error message is visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also visible");
+
+				if(SB.verifyErrorMessageOnTriangleIconForPermission(sdgName, "Phone"))
+				{
+					log(LogStatus.PASS, "Error message is visible on the hover to the triangle icon", YesNo.No);
+					sa.assertTrue(true, "Error message is visible on the hover to the triangle icon");
+
+
+
+					ArrayList<String> fieldName=new ArrayList<String>();
+					ArrayList<String> value1=new ArrayList<String>();
+					fieldName.add("Phone");
+					fieldName.add("Website");
+					fieldName.add("Revenue");
+
+					value1.add("");
+					value1.add("www.allsec.com");
+					value1.add("");
+
+					ArrayList<String> data= SB.clickCancelBtnAndVerifyRecord(sdgName,"Account 1 Updated",fieldName,value1);
+					if(data.isEmpty())
+					{
+						log(LogStatus.PASS, "Page has been refreash and data is matched", YesNo.No);
+						sa.assertTrue(true, "Page has been refreash and data is matched");
+					}
+					else
+					{
+						log(LogStatus.FAIL,"Either Page is not refresh or data is not matched" +data, YesNo.No);
+						sa.assertTrue(false, "Either Page is not refresh or data is not matched" +data);
+					}
+
+					ArrayList<String> value2=new ArrayList<String>();
+					value2.add("(653) 214-5698");
+					value2.add("www.yahoo.com");
+					value2.add("$1,000,000");
+					ArrayList<String> data1= SB.verifySDGRecord(sdgName,"Account 8",fieldName,value2);
+					if(data1.isEmpty())
+					{
+						log(LogStatus.PASS, "Page has been refreash and data is matched", YesNo.No);
+						sa.assertTrue(true, "Page has been refreash and data is matched");
+					}
+					else
+					{
+						log(LogStatus.FAIL,"Either Page is not refresh or data is not matched" +data1, YesNo.No);
+						sa.assertTrue(false, "Either Page is not refresh or data is not matched" +data1);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.PASS, "Error message is not visible on the hover to the triangle icon", YesNo.No);
+					sa.assertTrue(false, "Error message is not visible on the hover to the triangle icon");
+				}
+			}
+			else
+			{
+				log(LogStatus.FAIL, "\"2 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible", YesNo.No);
+				sa.assertTrue(false, "\"2 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible");
+
+			}
+
+		}
+
+		else
+		{
+			log(LogStatus.FAIL, "Could not open the App from the App Launcher", YesNo.Yes);
+			sa.assertTrue(false, "Could not open the App from the App Launcher");
+
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+
+
+	@Parameters({ "projectName" })
+	@Test
+
+	public void M9Tc085_VerifyAllfieldsWillEditAtAameTimeOnSamePage(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);		
+		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer IB=new InstitutionsPageBusinessLayer(driver);
+		String appPage = "Custom App Page";
+		String sdgName="Account Filter Grid";
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+
+			if(SB.verifyAllFieldEditAtSameTimeInWebsiteRevenue(sdgName,"Account 1 Updated","Website","www.yahoo.com","Revenue","1000000"))
+			{
+				log(LogStatus.PASS, "Data has been saved in all field at the same time. Save and Cancel Button are also visible", YesNo.No);
+				sa.assertTrue(true, "Data has been saved in all field at the same time. Save and Cancel Button are also visible");
+
+
+				ArrayList<String> recordName=new ArrayList<String>();
+				recordName.add("Account 1 Updated");
+				recordName.add("Account 2");
+				recordName.add("Account 3");
+				recordName.add("Account 4");
+				recordName.add("Account 5");
+				recordName.add("Account 6");
+				recordName.add("Account 7");
+				recordName.add("Account 8");
+				recordName.add("Account 9");
+				recordName.add("AF Group Inc");
+
+
+				for(String record:recordName)
+				{
+
+				if(BP.clickOnTab(projectName,TabName.InstituitonsTab))
+				{
+					log(LogStatus.INFO, TabName.InstituitonsTab.toString()+ "Tab has been opened", YesNo.No);
+
+
+
+					if(BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab,
+							record, 50))
+					{
+						log(LogStatus.INFO, "Clicked on the "+record+" name", YesNo.No);
+						CommonLib.ThreadSleep(5000);
+						ArrayList<String> labelName= new ArrayList<String>();
+						ArrayList<String> value= new ArrayList<String>();
+						labelName.add("Website");
+						labelName.add("Annual Revenue");
+						value.add("www.yahoo.com");
+						value.add("$1,000,000");
+						if(IB.verifyValueOnFirm(labelName,value))
+						{
+							log(LogStatus.INFO, "data has been matched for the "+record+" record", YesNo.No);
+							sa.assertTrue(true,  "data is not matched for the "+record+" record");
+						}
+						else
+						{
+							log(LogStatus.ERROR, "data is not matched for the "+record+" record", YesNo.Yes);
+							sa.assertTrue(false,  "data is not matched for the "+record+" record");
+
+						}
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Could not click on the Account 2 name", YesNo.Yes);
+						sa.assertTrue(false, "Could not click on the Account 2 name");
+					}
+					}
+
+				else
+				{
+					log(LogStatus.ERROR, TabName.InstituitonsTab.toString()+" is not open", YesNo.Yes);
+					sa.assertTrue(false, TabName.InstituitonsTab.toString()+" is not open");
+				}
+
+				}
+			}
+			else
+			{
+				log(LogStatus.FAIL, "Data is not saved in all field at the same time. Save and Cancel Button are also visible", YesNo.No);
+				sa.assertTrue(false, "Data is not saved in all field at the same time. Save and Cancel Button are also visible");
+
+			}
+		}
+		else
+		{
+			log(LogStatus.PASS, "Not able to open the app from the App launcher", YesNo.No);
+			sa.assertTrue(false, "Not able to open the app from the App launcher");
+
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+
+	@Parameters({ "projectName" })
+	@Test
+
+	public void M9Tc086_CreateCustompicklistfieldAndSetCustomSourcefieldAsControllingField(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+    	SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String parentWindow="";
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create Field Set Component",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create Field Set Component");
+			}
+			ThreadSleep(3000);
+
+			String[][] labelAndValues= {{M9FC_12_FieldType,M9FC_12_FieldLabel,excelLabel.Length.toString(),M9FC_12_FieldValues,M9FC_12_ObjectName}};
+			for (String[] objects : labelAndValues) {
+				String[][] valuesandLabel = { { objects[2], objects[3] } };
+
+				if (setup.addCustomFieldforFormula(environment, mode, objects[4],
+						ObjectFeatureName.FieldAndRelationShip, objects[0], objects[1], valuesandLabel, null, null)) {
+					log(LogStatus.PASS, "Field Object is created for :" + objects[1], YesNo.No);
+					sa.assertTrue(false, "Field Object is created for :" + objects[1]);
+				} else {
+					log(LogStatus.PASS, "Field Object is not created for :" + objects[1], YesNo.Yes);
+					sa.assertTrue(false, "Field Object is not created for :" + objects[1]);
+				}
+			}
+
+			CommonLib.switchToDefaultContent(driver);
+
+			if(setup.searchStandardOrCustomObject(environment, mode, object.Firm))
+			{
+				log(LogStatus.INFO, "Firm Object has been search", YesNo.No);
+
+				if(setup.clickOnObjectFeature(environment, mode, object.Firm, ObjectFeatureName.FieldAndRelationShip))
+				{
+					log(LogStatus.INFO, "Field and relationship Feature has been open", YesNo.No);
+
+
+
+					ArrayList<String> val=new ArrayList<String>();
+					val.add("Under Evaluation");
+					val.add("Portfolio Company");
+					val.add("Declined");
+					val.add("Sold/Exited");
+					val.add("New");
+					val.add("Due Diligence");
+					val.add("Qualified");
+					val.add("Investment");
+					val.add("Watchlist");
+
+					if(setup.fieldDependencies("Custom_Status","Source","Custom_Status", val))
+					{
+						log(LogStatus.INFO, "Field Dependency has been created", YesNo.Yes);
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to create the field Dependency", YesNo.Yes);
+
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able click on the field and relationship Feature Name", YesNo.Yes);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to search the object", YesNo.Yes);
+			}
+		}
+		else
+		{
+			log(LogStatus.FAIL, "Could not click on the setup Link", YesNo.Yes);
+			sa.assertTrue(false, "Could not click on the setup Link");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+
+	@Parameters({ "projectName" })
+	@Test
+
+	public void M9Tc087_addFieldOnSDG(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);		
+		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+		String sdgName="Account Filter Grid";
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (BP.openAppFromAppLauchner(50,"Sortable Data Grids")) {
+
+			log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
+			if(SB.openSDG(projectName, sdgName))
+			{
+				log(LogStatus.INFO, sdgName+ " has been open", YesNo.Yes);
+
+				if (SB.addFieldOnSDG(projectName,SDGLabels.APIName.toString() , "Custom_Status__c")) {
+					log(LogStatus.INFO, "Successfully added fields on " + sdgName, YesNo.Yes);
+					sa.assertTrue(true, "Successfully added fields on " + sdgName);
+
+
+				} else {
+
+					log(LogStatus.FAIL, "Not Able to add fields on SDG : " + sdgName, YesNo.Yes);
+					sa.assertTrue(false, "Not Able to add fields on SDG : " + sdgName);
+
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not Able to open "+sdgName, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to open "+sdgName);
+			}
+
+		}
+		else {
+
+			log(LogStatus.ERROR, "Not Able to Click on Tab : " + TabName.SDGTab, YesNo.Yes);
+			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.SDGTab);
+
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+
+	public void M9Tc088_verifyLockedIconOnSourceAndStatusField(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+		String appPage = "Custom App Page";
+		String sdgName="Account Filter Grid";
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (BP.openAppFromAppLauchner(appPage, 50)) {
+			log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+			CommonLib.refresh(driver);
+			CommonLib.ThreadSleep(10000);
+			if(SB.verifyEditOrLockedIconOnSDGData(sdgName,"Status", IconType.Locked))
+			{
+				log(LogStatus.PASS,"Locked icon is visible on Account Name",YesNo.No);
+				sa.assertTrue(true, "Locked icon is visible on Account Name");
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Locked icon is not visible on Account Name",YesNo.No);
+				sa.assertTrue(false, "Locked icon is not visible on Account Name");
+			}
+
+			if(SB.verifyEditOrLockedIconOnSDGData(sdgName,"Source", IconType.Locked))
+			{
+				log(LogStatus.PASS,"Locked icon is visible on Source",YesNo.No);
+				sa.assertTrue(true, "Locked icon is visible on Phone");
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Locked icon is not visible on Phone",YesNo.No);
+				sa.assertTrue(false, "Locked icon is not visible on Phone");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Not able to open the sdg from the App launcher",YesNo.Yes);
+			sa.assertTrue(false, "Not able to open the sdg from the App launcher");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+
+	@Parameters({ "projectName" })
+	@Test
+
+	public void M9Tc089_verifyValidation(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);		
+		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+		String appPage = "Custom App Page";
+		String sdgName="Account Filter Grid";
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
+
+		if (BP.openAppFromAppLauchner(appPage, 50)) {
+
+			log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+			CommonLib.refresh(driver);
+			if(SB.VerifyValidationUpdateSDGRecordButValueshouldnotUpdate(sdgName,"Account 1 Updated","Revenue","Test of = Account 5"))
+			{
+				log(LogStatus.INFO, "Value is not changed. So we are not able to enter the character", YesNo.No);
+				sa.assertTrue(true, "Value is not changed. So we are not able to enter the character");
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Value has been changed. So we are able to enter the character", YesNo.Yes);
+				sa.assertTrue(false, "Value has been changed. So we are able to enter the character");
+
+			}
+
+			CommonLib.refresh(driver);
+
+			if(SB.updateSDGRecordAndVerifySaveCancelButton(sdgName,"Account 1 Updated","Revenue","52369874","Text",null))
+			{
+				log(LogStatus.INFO, "\"Account 1 Updated\" Revenue record has been updated to 52369874", YesNo.No);
+				sa.assertTrue(true, "\"Account 1 Updated\" Revenue record has been updated to 52369874");
+
+			}
+			else
+			{
+				log(LogStatus.FAIL, "\"Account 1 Updated\" Revenue record is not updated to 52369874", YesNo.No);
+				sa.assertTrue(false, "\"Account 1 Updated\" Revenue record is not updated to 52369874");
+
+			}
+
+			CommonLib.refresh(driver);
+
+			if(SB.upadateSingleRecordVerifyErrorMessageSaveCancelButton(sdgName,"Account 1 Updated","Revenue","1234567890987654321"))
+			{
+				log(LogStatus.PASS, "\"1 record has error. Kindly resolve them and try again.\", error message is visible on record update of Revenue field. Save and Cancel Button are also visible", YesNo.No);
+				sa.assertTrue(true, "\"1 record has error. Kindly resolve them and try again.\", error message is visible on record update of Revenue field. Save and Cancel Button are also visible");
+
+
+				if(SB.verifyErrorMessageOnTriangleIconForOutsideRange(sdgName, "Account 1 Updated"))
+				{
+					log(LogStatus.PASS, "outside range message has been verified on the hover of trianlge icon", YesNo.No);
+					sa.assertTrue(true, "outside range message has been verified on the hover of trianlge icon");
+
+				}
+				else
+				{
+					log(LogStatus.FAIL, "outside range message is not visible on the hover of trianlge icon", YesNo.Yes);
+					sa.assertTrue(false, "outside range message is not visible on the hover of trianlge icon");
+
+				}
+			}
+			else
+			{
+				log(LogStatus.FAIL, "\"1 record has error. Kindly resolve them and try again.\", error message is not visible on record update of Revenue field. Save and Cancel Button are also visible", YesNo.No);
+				sa.assertTrue(false, "\"1 record has error. Kindly resolve them and try again.\", error message is not visible on record update of Revenue field.");
+
+			}
+
+
+		}
+		else
+		{
+			log(LogStatus.FAIL, "Not able to open the App from the App Launcher", YesNo.Yes);
+			sa.assertTrue(false, "Not able to open the App from the App Launcher");
+
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+
+	public void M9Tc090_verifyLockedIconOnNumberOfContactField(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+		String appPage = "Custom App Page";
+		String sdgName="Account Filter Grid";
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (BP.openAppFromAppLauchner(appPage, 50)) {
+			log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+			CommonLib.refresh(driver);
+			CommonLib.ThreadSleep(10000);
+			if(SB.verifyEditOrLockedIconOnSDGData(sdgName,"No of Contacts", IconType.Locked))
+			{
+				log(LogStatus.PASS,"Locked icon is visible on No of Contacts",YesNo.No);
+				sa.assertTrue(true, "Locked icon is visible on No of Contacts");
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Locked icon is not visible on No of Contacts",YesNo.No);
+				sa.assertTrue(false, "Locked icon is not visible on No of Contacts");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Not able to open the sdg from the App launcher",YesNo.Yes);
+			sa.assertTrue(false, "Not able to open the sdg from the App launcher");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	public void M9Tc091_verifyLockedIconOnIntroducedByField(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	    SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+		String appPage = "Custom App Page";
+		String sdgName="Account Filter Grid";
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (BP.openAppFromAppLauchner(appPage, 50)) {
+			log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
+			CommonLib.refresh(driver);
+			CommonLib.ThreadSleep(10000);
+			if(SB.verifyEditOrLockedIconOnSDGData(sdgName,"Introduced By", IconType.Locked))
+			{
+				log(LogStatus.PASS,"Locked icon is visible on Introduced By",YesNo.No);
+				sa.assertTrue(true, "Locked icon is visible on Introduced By");
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Locked icon is not visible on Introduced By",YesNo.No);
+				sa.assertTrue(false, "Locked icon is not visible on No of Contacts");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Not able to open the sdg from the App launcher",YesNo.Yes);
+			sa.assertTrue(false, "Not able to open the sdg from the App launcher");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+*/
+	 
 }
+
+
+
+
+
+
 
 
 
