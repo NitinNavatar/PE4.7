@@ -4,8 +4,10 @@ import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
 import static com.navatar.generic.SmokeCommonVariables.todaysDate;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import java.util.ArrayList;
@@ -39,6 +41,7 @@ public class Module2 extends BaseLib{
 	//postcondition:
 	//ioi, nda signed revert
 	//watch list rename to watchlist
+	private String TWTask1Subject;
 	
 	// Highest Stage Reached
 	
@@ -519,9 +522,17 @@ public class Module2 extends BaseLib{
 
 					}
 
-					ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20).clear();	
+					ele=ip.getLabelTextBox("PE", PageName.NewTaskPage.toString(), "Subject",20);
 					ThreadSleep(1000);
-					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask3Subject, "Subject", action.SCROLLANDBOOLEAN)) {
+					JavascriptExecutor js = (JavascriptExecutor) driver;
+					ele.clear();
+					ThreadSleep(1000);
+					js.executeScript("arguments[0].value='"+TWTask3Subject+"';", ele);
+					ele.sendKeys(Keys.BACK_SPACE);
+					ele.sendKeys(Keys.ENTER);
+					ThreadSleep(1000);
+				
+					if (sendKeys(driver, ele, TWTask3Subject, "Subject", action.SCROLLANDBOOLEAN)) {
 								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
 								}
@@ -589,8 +600,17 @@ public class Module2 extends BaseLib{
 						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.Yes);
 
 					}
-
-					tp.getdueDateTextBoxInNewTask(projectName, 20).clear();						
+//					due is removed from log a call layout
+//					tp.getdueDateTextBoxInNewTask(projectName, 20).clear();	
+					ele=ip.getLabelTextBox("PE", PageName.NewTaskPage.toString(), "Subject",20);
+					ThreadSleep(1000);
+					JavascriptExecutor js = (JavascriptExecutor) driver;
+					ele.clear();
+					ThreadSleep(1000);
+					js.executeScript("arguments[0].value='"+TWTask4Subject+"';", ele);
+					ele.sendKeys(Keys.BACK_SPACE);
+					ele.sendKeys(Keys.ENTER);
+					ThreadSleep(1000);
 					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask4Subject, "Subject", action.SCROLLANDBOOLEAN)) {
 								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
@@ -809,8 +829,17 @@ public class Module2 extends BaseLib{
 						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.Yes);
 
 					}
-					
-					tp.getdueDateTextBoxInNewTask(projectName, 20).clear();						
+//				due is removed from log a call layout	
+//					tp.getdueDateTextBoxInNewTask(projectName, 20).clear();		
+					ele=ip.getLabelTextBox("PE", PageName.NewTaskPage.toString(), "Subject",20);
+					ThreadSleep(1000);
+					JavascriptExecutor js = (JavascriptExecutor) driver;
+					ele.clear();
+					ThreadSleep(1000);
+					js.executeScript("arguments[0].value='"+TWTask6Subject+"';", ele);
+					ele.sendKeys(Keys.BACK_SPACE);
+					ele.sendKeys(Keys.ENTER);
+					ThreadSleep(1000);
 					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask6Subject, "Subject", action.SCROLLANDBOOLEAN)) {
 								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
@@ -1002,6 +1031,7 @@ public class Module2 extends BaseLib{
 			tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
 			ThreadSleep(3000);
 			if (lp.clickOnShowMoreActionDownArrow(projectName, PageName.TaskPage, ShowMoreActionDropDownList.Edit, 20)) {
+				ThreadSleep(3000);
 				boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 10);		
 				if (flag) {
 					log(LogStatus.SKIP,"Selected "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.No);
@@ -1895,7 +1925,7 @@ public class Module2 extends BaseLib{
 			layoutName.add("Company");
 			HashMap<String, String> sourceANDDestination = new HashMap<String, String>();
 			sourceANDDestination.put(PageLabel.Deal_Conversion_Date.toString(), PageLabel.Investment_Type.toString());
-			List<String> abc = setup.DragNDrop("", mode, object.Institution, ObjectFeatureName.pageLayouts, layoutName, sourceANDDestination);
+			List<String> abc = setup.DragNDrop("", mode, object.Firm, ObjectFeatureName.pageLayouts, layoutName, sourceANDDestination);
 			ThreadSleep(10000);
 			if (!abc.isEmpty()) {
 				log(LogStatus.FAIL, "field not added/already present 1", YesNo.Yes);
@@ -2111,8 +2141,8 @@ public class Module2 extends BaseLib{
 		if (home.clickOnSetUpLink()) {
 			parentID=switchOnWindow(driver);
 			if (parentID!=null) {
-				if (sp.searchStandardOrCustomObject(environment, mode,object.Institution )) {
-					if(sp.clickOnObjectFeature(environment, mode,object.Institution, ObjectFeatureName.FieldAndRelationShip)) {
+				if (sp.searchStandardOrCustomObject(environment, mode,object.Firm )) {
+					if(sp.clickOnObjectFeature(environment, mode,object.Firm, ObjectFeatureName.FieldAndRelationShip)) {
 						if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), PageLabel.Status.toString()+Keys.ENTER, "status", action.BOOLEAN)) {
 							if (sp.clickOnAlreadyCreatedLayout(PageLabel.Status.toString())) {
 								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
@@ -2275,7 +2305,7 @@ public class Module2 extends BaseLib{
 			parentID=switchOnWindow(driver);
 			if (parentID!=null) {
 				if (sp.searchStandardOrCustomObject(environment, mode,object.Institution )) {
-					if(sp.clickOnObjectFeature(environment, mode,object.Institution, ObjectFeatureName.FieldAndRelationShip)) {
+					if(sp.clickOnObjectFeature(environment, mode,object.Firm, ObjectFeatureName.FieldAndRelationShip)) {
 						if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), PageLabel.Status.toString()+Keys.ENTER, "status", action.BOOLEAN)) {
 							if (sp.clickOnAlreadyCreatedLayout(PageLabel.Status.toString())) {
 								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
@@ -4182,7 +4212,6 @@ public class Module2 extends BaseLib{
 		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()};
 		
 		String labelValues[]={Stage.Due_Diligence.toString(),Stage.Parked.toString(),String.valueOf(dealQualityScore)};
-		String labelValues2[]={String.valueOf(dealQualityScore),String.valueOf(totalDealsshown)};
 
 		String temp[];
 		
@@ -4229,8 +4258,11 @@ public class Module2 extends BaseLib{
 						}
 							
 						else{
+							
 							totalDealsshown=3;
 							averageDealQualityScore=(parkedScore+closedScore+loiScore)/totalDealsshown;
+							String labelValues2[]={String.valueOf(dealQualityScore),String.valueOf(totalDealsshown)};
+
 							temp=labelValues2;
 						}
 						for (int i =0;i<labelName1.length;i++) {
@@ -4291,7 +4323,7 @@ public class Module2 extends BaseLib{
 										sendKeys(driver, sp.getFieldLabelTextBox1(10), newAndOldStage[i][1], "label", action.BOOLEAN);
 											
 
-										if (click(driver, fp.getCustomTabSaveBtn(10), "save", action.BOOLEAN)) {
+										if (clickUsingJavaScript(driver, fp.getCustomTabSaveBtn(10), "save", action.BOOLEAN)) {
 
 											log(LogStatus.INFO, "successfully changed watchlist label", YesNo.No);
 										}else {
@@ -4442,7 +4474,7 @@ public class Module2 extends BaseLib{
 		String temp[];
 		
 		TabName tabName[]={TabName.Object1Tab,TabName.Object2Tab};
-		String records[]={M2_HSRPipeline4Company,M2_HSRPipeline4SourceContact};
+		String records[]={M2_HSRPipeline4SourceFirm,M2_HSRPipeline4SourceContact};
 		int j=0;
 		WebElement ele;
 		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
@@ -4637,7 +4669,7 @@ public class Module2 extends BaseLib{
 		String temp[];
 		
 		TabName tabName[]={TabName.Object1Tab,TabName.Object2Tab};
-		String records[]={M2_HSRPipeline5Company,M2_HSRPipeline5SourceContact};
+		String records[]={M2_HSRPipeline5SourceFirm,M2_HSRPipeline5SourceContact};
 		int j=0;
 		WebElement ele;
 		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
@@ -4708,9 +4740,9 @@ public class Module2 extends BaseLib{
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
-			if (dp.clickOnAlreadyCreatedItem(projectName, M2_DQSPipeline5Name, 10)) {
+			if (dp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline5Name, 10)) {
 				if (click(driver, dp.getconvertToPortfolio(10), "convert to portfolio button", action.BOOLEAN)) {
-					if (dp.getconvertToPortfolioMessage(M2_DQSPipeline5Company,10)!=null) {
+					if (dp.getconvertToPortfolioMessage(M2_HSRPipeline5Company,10)!=null) {
 						log(LogStatus.INFO, "successfully verified convert to portfolio text message", YesNo.No);
 					}else {
 						sa.assertTrue(false,"could not verify convert to portfolio text message");
@@ -4735,8 +4767,8 @@ public class Module2 extends BaseLib{
 					log(LogStatus.SKIP,"not able to click on convert to portfolio button",YesNo.Yes);
 				}
 			}else {
-				sa.assertTrue(false,"not able to click on "+M2_DQSPipeline5Name);
-				log(LogStatus.SKIP,"not able to click on "+M2_DQSPipeline5Name,YesNo.Yes);
+				sa.assertTrue(false,"not able to click on "+M2_HSRPipeline5Name);
+				log(LogStatus.SKIP,"not able to click on "+M2_HSRPipeline5Name,YesNo.Yes);
 			}
 		}else {
 			sa.assertTrue(false,"not able to click on deal tab");
@@ -4762,11 +4794,11 @@ public class Module2 extends BaseLib{
 		String labelName1[]={excelLabel.Average_Deal_Quality_Score.toString(),excelLabel.Total_Deals_Shown.toString()
 		};
 		String labelValues1[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
-		ExcelUtils.writeData(phase1DataSheetFilePath, Stage.Closed.toString(), "Deal", excelLabel.Variable_Name, "M2DQSPIP5",excelLabel.Stage);
+		ExcelUtils.writeData(phase1DataSheetFilePath, Stage.Closed.toString(), "Deal", excelLabel.Variable_Name, "M2HSRPIP5",excelLabel.Stage);
 		WebElement ele;
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
-			if (dp.clickOnAlreadyCreatedItem(projectName, M2_DQSPipeline5Name, 10)) {
+			if (dp.clickOnAlreadyCreatedItem(projectName, M2_HSRPipeline5Name, 10)) {
 				ele=ip.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 				if (click(driver, ele, "details tab", action.SCROLLANDBOOLEAN)) {
 					for (int i =0;i<labelName.length;i++) {
@@ -4784,8 +4816,8 @@ public class Module2 extends BaseLib{
 					log(LogStatus.SKIP,"not able to click on details tab",YesNo.Yes);
 				}
 			}else {
-				sa.assertTrue(false,"Not Able to click "+M2_DQSPipeline5Name);
-				log(LogStatus.SKIP,"Not Able to click "+M2_DQSPipeline5Name,YesNo.Yes);
+				sa.assertTrue(false,"Not Able to click "+M2_HSRPipeline5Name);
+				log(LogStatus.SKIP,"Not Able to click "+M2_HSRPipeline5Name,YesNo.Yes);
 			}
 		}else {
 			sa.assertTrue(false,"not able to click on deal tab");
@@ -4793,7 +4825,7 @@ public class Module2 extends BaseLib{
 		}
 		
 		TabName tabName[]={TabName.Object1Tab,TabName.Object2Tab};
-		String records[]={M2_DQSPipeline5SourceFirm,M2_DQSPipeline5SourceContact};
+		String records[]={M2_HSRPipeline5SourceFirm,M2_HSRPipeline5SourceContact};
 		int j=0;
 		for (TabName tab:tabName) {
 			if (lp.clickOnTab(projectName, tab)) {
@@ -4863,7 +4895,7 @@ public class Module2 extends BaseLib{
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		dealQualityScore=5;
 		totalDealsshown=2;
-		averageDealQualityScore=dealQualityScore/totalDealsshown;
+		averageDealQualityScore=dealQualityScore;
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
 				,excelLabel.Deal_Quality_Score.toString()};
 		String labelValues[]={Stage.LOI.toString(),Stage.LOI.toString(),String.valueOf(dealQualityScore)};
@@ -4971,6 +5003,7 @@ public class Module2 extends BaseLib{
 								for (int i = 0;i<newAndOldStage.length;i++) {
 									switchToDefaultContent(driver);
 									switchToFrame(driver, 10, sp.getFrame(PageName.PipelineCustomPage, 10));
+									ThreadSleep(3000);
 									WebElement ele=sp.clickOnEditInFrontOfFieldValues(projectName, newAndOldStage[i][0]);
 									if (click(driver, ele, "watchlist", action.BOOLEAN)) {
 										switchToDefaultContent(driver);

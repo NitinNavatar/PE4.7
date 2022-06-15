@@ -243,7 +243,7 @@ public class PECloudSmoke extends BaseLib{
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		LoginPageBusinessLayer lp= new LoginPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
-		String tabs	=tabObj1+"s,"+tabObj2+"s,"+tabObj3+"s,"+tabObj4+"s,"+"Fundraisings"+","+"Navatar Setup"+","+"Reports"+","+"Dashboards"+","+"Deal Center"+","+"Fund Center";
+		String tabs	=tabObj1+"s,"+tabObj2+"s,"+tabObj3+"s,"+tabObj4+"s,"+"Fundraisings"+","+"Reports"+","+"Dashboards"+","+"Deal Center"+","+"Fund Center";
 
 		if(mode.equalsIgnoreCase(Mode.Lightning.toString())){
 			
@@ -1382,9 +1382,9 @@ public class PECloudSmoke extends BaseLib{
 					if(home.clickOnShowMoreActionDownArrow(projectName, PageName.DealPage, ShowMoreActionDropDownList.Delete, 30)){
 						log(LogStatus.PASS, "click on delete button of deal:" + SMOKDeal2DealName, YesNo.No);
 
-						ThreadSleep(3000);
+						ThreadSleep(5000);
 						if(click(driver, home.getDeleteButtonOnDeletePopUp(projectName, 30), "Delete popup buttton", action.BOOLEAN)){
-							
+							ThreadSleep(5000);
 							log(LogStatus.PASS, "click on delete confirm popup button of deal:" + SMOKDeal2DealName, YesNo.No);
 
 							driver.close();
@@ -3167,7 +3167,6 @@ public class PECloudSmoke extends BaseLib{
 		String task = SmokeCTTask2Subject;
 		String[][] task1 = {{PageLabel.Subject.toString(),task},
 				{PageLabel.Name.toString(),contactName},
-				{PageLabel.Related_To.toString(),SmokeCTContact2Inst},
 				{PageLabel.Due_Date.toString(),SmokeCTTask2dueDate},
 				{PageLabel.Priority.toString(),SmokeCTTask2Priority}};
 	
@@ -3185,10 +3184,22 @@ public class PECloudSmoke extends BaseLib{
 			sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2);
 			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2,YesNo.Yes);
 		}
-
+		boolean flag= false;
+		String relatedValue=null;
 		if (gp.clickOnGlobalActionAndEnterValue(projectName, GlobalActionItem.New_Task, task1)) {
 			log(LogStatus.INFO,"Able to Enter Value for : "+task,YesNo.No);
 			ExcelUtils.writeData(phase1DataSheetFilePath,SmokeCTTask1dueDate, "Task1", excelLabel.Variable_Name, "SmokeCTTask1", excelLabel.Due_Date);
+			 relatedValue=SmokeCTContact2Inst;
+			flag = lp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Related_To.toString(), TabName.Object1Tab, relatedValue, action.SCROLLANDBOOLEAN, 10);		
+			if (flag) {
+				log(LogStatus.INFO,"Selected "+relatedValue+" For Label "+PageLabel.Related_Associations,YesNo.No);
+
+			} else {
+				sa.assertTrue(false,"Not Able to Select "+relatedValue+" For Label "+PageLabel.Related_Associations);
+				log(LogStatus.SKIP,"Not Able to Select "+relatedValue+" For Label "+PageLabel.Related_Associations,YesNo.Yes);
+
+			}
+			
 			if (click(driver, gp.getSaveButtonForEvent(projectName, 10), "Save Button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);		
 				
@@ -3206,7 +3217,7 @@ public class PECloudSmoke extends BaseLib{
 		SmokeCTEvent2EndDate=tomorrowsDate;
 		task = SmokeCTEvent2Subject;
 		String[][] event1 = {{PageLabel.Subject.toString(),task},
-				{PageLabel.Name.toString(),contactName},{PageLabel.Related_To.toString(),SmokeCTContact2Inst},
+				{PageLabel.Name.toString(),contactName},
 				{PageLabel.Start_Date.toString(),SmokeCTEvent2StartDate},
 				{PageLabel.End_Date.toString(),SmokeCTEvent1EndDate},
 				{PageLabel.Location.toString(),SmokeCTEvent2Location}};
@@ -3215,7 +3226,17 @@ public class PECloudSmoke extends BaseLib{
 			log(LogStatus.INFO,"Able to Enter Value for : "+task,YesNo.No);
 			ExcelUtils.writeData(phase1DataSheetFilePath,SmokeCTEvent2StartDate, "Events", excelLabel.Variable_Name, "SmokeCTEvent2", excelLabel.Start_Date);
 			ExcelUtils.writeData(phase1DataSheetFilePath,SmokeCTEvent2EndDate, "Events", excelLabel.Variable_Name, "SmokeCTEvent2", excelLabel.End_Date);
+			relatedValue=SmokeCTContact2Inst;
+			flag = lp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Related_To.toString(), TabName.Object1Tab, relatedValue, action.SCROLLANDBOOLEAN, 10);		
+			if (flag) {
+				log(LogStatus.INFO,"Selected "+relatedValue+" For Label "+PageLabel.Related_Associations,YesNo.No);
 
+			} else {
+				sa.assertTrue(false,"Not Able to Select "+relatedValue+" For Label "+PageLabel.Related_Associations);
+				log(LogStatus.SKIP,"Not Able to Select "+relatedValue+" For Label "+PageLabel.Related_Associations,YesNo.Yes);
+
+			}
+			
 			if (click(driver, gp.getSaveButtonForEvent(projectName, 10), "Save Button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);		
 				
@@ -3230,11 +3251,21 @@ public class PECloudSmoke extends BaseLib{
 
 		task = SmokeCTLogACall2Subject;
 		String[][] logACall = {{PageLabel.Subject.toString(),task},
-				{PageLabel.Name.toString(),contactName},{PageLabel.Related_To.toString(),SmokeCTContact2Inst},
+				{PageLabel.Name.toString(),contactName},
 				{PageLabel.Comments.toString(),SmokeCTLogACall2Comment}};
 
 		if (gp.clickOnGlobalActionAndEnterValue(projectName, GlobalActionItem.Log_a_Call, logACall)) {
 			log(LogStatus.INFO,"Able to Enter Value for : "+task,YesNo.No);
+			relatedValue=SmokeCTContact2Inst;
+			flag = lp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Related_To.toString(), TabName.Object1Tab, relatedValue, action.SCROLLANDBOOLEAN, 10);		
+			if (flag) {
+				log(LogStatus.INFO,"Selected "+relatedValue+" For Label "+PageLabel.Related_Associations,YesNo.No);
+
+			} else {
+				sa.assertTrue(false,"Not Able to Select "+relatedValue+" For Label "+PageLabel.Related_Associations);
+				log(LogStatus.SKIP,"Not Able to Select "+relatedValue+" For Label "+PageLabel.Related_Associations,YesNo.Yes);
+
+			}
 			if (click(driver, gp.getSaveButtonForEvent(projectName, 10), "Save Button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);		
 				
@@ -3655,9 +3686,9 @@ public class PECloudSmoke extends BaseLib{
 				if (click(driver, ele, "details tab", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO,"click on details tab",YesNo.No);
 
-					String labelWithValues[][] = {{excelLabel.Highest_Stage_Reached.toString(),SmokeDeal1Stage},
-							{excelLabel.Stage.toString(),SmokeDeal1Stage},
-							{excelLabel.Deal_Quality_Score.toString(),String.valueOf(stageValue)}};
+					String labelWithValues[][] = {{excelLabel.Highest_Stage_Reached.toString(),SmokeDeal1UpdatedStage},
+							{excelLabel.Stage.toString(),SmokeDeal1UpdatedStage},
+							{excelLabel.Deal_Quality_Score.toString(),String.valueOf(dealQualityScore)}};
 
 					for (String[] lbWithValue : labelWithValues) {
 						label=lbWithValue[0];
@@ -3949,12 +3980,12 @@ public class PECloudSmoke extends BaseLib{
 			sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2);
 			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2,YesNo.Yes);
 		}
-
+		navigationMenuName = NavigationMenuItems.Create_New.toString();
 		boolean flag = false;
 		WebElement ele=null;
-		String createNewNavigationLink=CreateNew_DefaultValues.New_Deal.toString();
+		String createNewNavigationLink = CreateNew_DefaultValues.New_Deal.toString();
 		flag=false;
-		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName,navigationMenuName, action.BOOLEAN, 30)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName+" Going to click on : "+createNewNavigationLink+" for creation ", YesNo.No);
 
 			ele = npbl.getNavigationLabel(projectName, createNewNavigationLink, action.BOOLEAN, 10);
@@ -4035,7 +4066,7 @@ public class PECloudSmoke extends BaseLib{
 
 						if (click(driver, dp.getfinishButton(10), "finish", action.BOOLEAN)) {
 							log(LogStatus.INFO, "successfully verified finish button after convert to portfolio", YesNo.No);
-							
+							ThreadSleep(2000);
 							String labelWithValues[][] = {{excelLabel.Stage.toString(),Stage.Closed.toString()}};
 
 							for (String[] lbWithValue : labelWithValues) {
@@ -4908,6 +4939,7 @@ public class PECloudSmoke extends BaseLib{
 		GlobalActionPageBusinessLayer gp = new GlobalActionPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String contactName=SmokeLTPContact1FName+" "+SmokeLTPContact1LName;
 		String contactName2=SmokeLTPContact2FName+" "+SmokeLTPContact2LName;
@@ -4956,7 +4988,8 @@ public class PECloudSmoke extends BaseLib{
 				ThreadSleep(3000);
 				
 				String value= cp.getlastTouchPointValue(projectName, 30).getText();
-				if(cp.verifyDate(SmokeLTPLogACall1dueDate, value)){
+//				if(cp.verifyDate(SmokeLTPLogACall1dueDate, value)){
+					if(bp.verifyDate(SmokeLTPLogACall1dueDate, null, "M/d/yyyy")){
 					log(LogStatus.INFO,"Last touch point value is matched in :"+contactName2,YesNo.No);	
 
 				}else{
@@ -4983,6 +5016,7 @@ public class PECloudSmoke extends BaseLib{
 		GlobalActionPageBusinessLayer gp = new GlobalActionPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String contactName=SmokeLTPContact3FName+" "+SmokeLTPContact3LName;
 		
@@ -5022,7 +5056,8 @@ public class PECloudSmoke extends BaseLib{
 				refresh(driver);
 				ThreadSleep(5000);
 				String value= cp.getlastTouchPointValue(projectName, 30).getText();
-				if(cp.verifyDate(todaysDate, value)){
+//				if(cp.verifyDate(todaysDate, value)){
+					if(bp.verifyDate(todaysDate, null, "M/d/yyyy")){
 					log(LogStatus.INFO,"Last touch point value is matched in :"+contactName,YesNo.No);	
 
 				}else{
@@ -5051,6 +5086,7 @@ public class PECloudSmoke extends BaseLib{
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String contactName=SmokeNTPContact1FName+" "+SmokeNTPContact1LName;
 				
@@ -5089,8 +5125,9 @@ public class PECloudSmoke extends BaseLib{
 			
 			int days=120;
 			String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-			String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
-			if(cp.verifyDate(expectedDate, actualDate)){
+			String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/d/yyyy", "America/Los_Angles");
+		if(cp.verifyDate(expectedDate, actualDate)){
+//				if(bp.verifyDate(expectedDate, null,actualDate)){
 				log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 
 			}else{
@@ -5129,7 +5166,7 @@ public class PECloudSmoke extends BaseLib{
 				
 				int days=90;
 				String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/d/yyyy", "America/Los_Angles");
 				if(cp.verifyDate(expectedDate, actualDate)){
 					log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 
@@ -5174,7 +5211,7 @@ public class PECloudSmoke extends BaseLib{
 				
 				int days=120;
 				String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/d/yyyy", "America/Los_Angles");
 				if(cp.verifyDate(expectedDate, actualDate)){
 					log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 
@@ -5219,7 +5256,7 @@ public class PECloudSmoke extends BaseLib{
 				
 				int days=180;
 				String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/d/yyyy", "America/Los_Angles");
 				if(cp.verifyDate(expectedDate, actualDate)){
 					log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 
@@ -5252,6 +5289,7 @@ public class PECloudSmoke extends BaseLib{
 		GlobalActionPageBusinessLayer gp = new GlobalActionPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String contactName=SmokeNTPContact1FName+" "+SmokeNTPContact1LName;
 		
@@ -5291,7 +5329,8 @@ public class PECloudSmoke extends BaseLib{
 				refresh(driver);
 				ThreadSleep(5000);
 				String value= cp.getlastTouchPointValue(projectName, 30).getText();
-				if(cp.verifyDate(SmokeNTPEvent1EndDate, value)){
+//				if(cp.verifyDate(SmokeNTPEvent1EndDate, value)){
+					if(bp.verifyDate(SmokeNTPEvent1EndDate, null, "M/d/yyyy")){
 					log(LogStatus.INFO,"Last touch point value is matched in :"+contactName,YesNo.No);	
 
 				}else{
@@ -5301,7 +5340,7 @@ public class PECloudSmoke extends BaseLib{
 				
 				int days=183;
 				String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/d/yyyy", "America/Los_Angles");
 				if(cp.verifyDate(expectedDate, actualDate)){
 					log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 
@@ -5650,7 +5689,8 @@ public class PECloudSmoke extends BaseLib{
 				{PageLabel.Name.toString(),SmokeCCContact3FName+" "+SmokeCCContact3LName},
 				{PageLabel.Related_To.toString(),SmokeCCIns1},
 				{PageLabel.Due_Date.toString(),SmokeCCTask1dueDate},
-				{PageLabel.Priority.toString(),SmokeCCTask1Priority}};
+				{PageLabel.Priority.toString(),SmokeCCTask1Priority},
+				{PageLabel.Status.toString(),SmokeCCTask1Status}};
 		
 
 		if (lp.clickOnTab(projectName, tabObj1)) {
@@ -6146,7 +6186,9 @@ public class PECloudSmoke extends BaseLib{
 								sa.assertTrue(false, "Not Able to send value to Search TextBox : "+sValue);
 								log(LogStatus.FAIL,"Not Able to send value to Search TextBox : "+sValue,YesNo.Yes);
 							}
+							ThreadSleep(2000);
 							switchToDefaultContent(driver);
+							ThreadSleep(2000);
 							switchToFrame(driver, 30, edit.getEditPageFrame(projectName,30));
 							System.err.println(">>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 							// scn.nextLine();
@@ -6217,7 +6259,7 @@ public class PECloudSmoke extends BaseLib{
 										log(LogStatus.INFO,"Click on Sub Tab : "+relatedTab,YesNo.No);
 										ThreadSleep(10000);
 
-										toggleButton = toggles[0];
+										toggleButton = toggles[1];
 										ele = ip.toggleButton(projectName, toggleButton, action.BOOLEAN, 30);
 										if (ele!=null) {
 											log(LogStatus.INFO,"Toggle is present : "+toggleButton,YesNo.No);
@@ -6234,7 +6276,7 @@ public class PECloudSmoke extends BaseLib{
 											log(LogStatus.FAIL,"After Save "+toggleButton+" should be selected by default",YesNo.Yes);
 										}
 										
-										toggleButton = toggles[1];
+										toggleButton = toggles[0];
 										
 										ele = ip.toggleButton(projectName, toggleButton, action.BOOLEAN, 30);
 										if (ele!=null) {
