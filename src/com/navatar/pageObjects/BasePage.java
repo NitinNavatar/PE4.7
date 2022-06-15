@@ -5567,5 +5567,23 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	
+	@FindBy(xpath = "//button[@title='Show filters']")
+	private WebElement showFilter;
+
+	public WebElement getshowFilter(int timeOut) {
+		return isDisplayed(driver, showFilter, "Visibility", timeOut, "Show Filter");
+	
+	}	
+	
+	@FindBy(xpath = "//a[text()='Remove All']")
+	private WebElement removeAll;
+
+	public WebElement getremoveAll(int timeOut) {
+		return isDisplayed(driver, removeAll, "Visibility", timeOut, "Remove All");
+	
+	}	
+	
+	
+	
 	
 }

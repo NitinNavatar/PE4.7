@@ -30,17 +30,18 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		// TODO Auto-generated constructor stub
 	}
 
-	public boolean CreateAppPage(String environment, String mode, String LabelName,String tableName,String parentWindowID)
+	public boolean CreateAppPage(String environment, String mode, String LabelName,String tableName,String dataProvider,String parentWindowID)
 	{
 		boolean flag=false;
 		BasePageBusinessLayer BP=new BasePageBusinessLayer(driver);
 		SoftAssert sa= new SoftAssert();
 
-		CommonLib.switchToFrame(driver, 50, getLocator());
-
+		CommonLib.switchToFrame(driver, 50, getLocator(100));
+		CommonLib.ThreadSleep(2000);
 		if (CommonLib.click(driver, getnewButton(80), "New Button", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on the new button", YesNo.No);
 			CommonLib.switchToDefaultContent(driver);
+			CommonLib.ThreadSleep(2000);
 			if (CommonLib.click(driver, getnextButton(80), "Next Button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on the next button", YesNo.No);
 				if (CommonLib.sendKeys(driver, getlabelName(80), LabelName, "Label Name", action.SCROLLANDBOOLEAN)) {
@@ -76,13 +77,14 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 							}
 
 							CommonLib.switchToDefaultContent(driver);
+							CommonLib.ThreadSleep(2000);
 							if (CommonLib.sendKeys(driver, getSearchonAppBuilder(50), "Navatar SDG", "SearchBox", action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Navatar SDG has been Search", YesNo.No);
 								if (CommonLib.click(driver, getNavatarSDGBtn(50), "Navatar SDG Button", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "Navatar SDG Button has been clicked", YesNo.No);
 									if (CommonLib.sendKeys(driver, getTitle(50),tableName , "Title", action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.INFO, "Title has been Entered", YesNo.No);
-										if (CommonLib.getSelectedOptionOfDropDown(driver, getDataProvider(50), getDataProviderDropDownList(30), "Data Provider", "CustomObject:SDG_GROUPBY_1"))  {
+										if (CommonLib.getSelectedOptionOfDropDown(driver, getDataProvider(50), getDataProviderDropDownList(30), "Data Provider",dataProvider ))  {
 											log(LogStatus.INFO, "SDG Data Provider has been searched", YesNo.No);
 											if (CommonLib.click(driver, getSaveButton(50), "App builder Save Button", action.SCROLLANDBOOLEAN)) {
 												log(LogStatus.INFO, "App Builder save button has been clicked", YesNo.No);
@@ -192,18 +194,10 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 	public  ArrayList<String> verifySDGDataOnAppPage(String environment, String mode, String appPageName,String sdgtableName,String[][] sdgTableData)
 	{
 		String sdgData=null;
-		boolean flag=false;
-		int status=0;
 		WebElement pageSizeElement=null;
-		BasePageBusinessLayer BP=new BasePageBusinessLayer(driver);
-		ArrayList<String> verifyData = new ArrayList<String>();
-		//	String pageSizeXpath="//a[text()='"+sdgtableName+"']/ancestor::div[contains(@class,'slds-card__header')]/following-sibling::div//select[@name='PagerSize']";
-		//	String pageSizeXpath="//select[@name='PagerSize']";
-		//	WebElement pageSizeElement=CommonLib.FindElement(driver, pageSizeXpath, "Page size", action.SCROLLANDBOOLEAN, 50);	
-		int row = sdgTableData.length;	
-		int col= sdgTableData[0].length+1;
-		int totalData=row*col;
 
+		ArrayList<String> verifyData = new ArrayList<String>();
+		int row = sdgTableData.length;	
 		ArrayList<String> sdgDataFromExcel=new ArrayList<String>();
 		for(int i=0;i<row;i++)
 		{
@@ -224,7 +218,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 			pageSizeElement=CommonLib.FindElement(driver, pageSizeXpath, "Page size", action.SCROLLANDBOOLEAN, 50);
 			if(CommonLib.selectVisibleTextFromDropDown(driver, pageSizeElement, "Page Size","20"))
 			{
-				log(LogStatus.INFO, "Page size 20 is Selected", YesNo.No);
+				log(LogStatus.INFO, "Page size 20 has been Selected", YesNo.No);
 			}
 			else
 			{					
@@ -264,16 +258,15 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 			}
 		}
 
-		CommonLib.ThreadSleep(20000);
+		CommonLib.ThreadSleep(25000);
 		String xpath="//a[text()='"+sdgtableName+"']/ancestor::div[contains(@class,'slds-card__header')]/following-sibling::div//tbody//td";
-
 		List<WebElement> ele=CommonLib.FindElements(driver, xpath, "SDG Data");
 		ArrayList<String> sdgDataFromOrg=new ArrayList<String>();
 		for(int i=0;i<ele.size();i++)
 		{
 			try
 			{
-				sdgData=CommonLib.getText(driver, ele.get(i), "SDG Table", action.SCROLLANDBOOLEAN); 
+				sdgData=CommonLib.getText(driver, ele.get(i), ele.get(i)+" from SDG table", action.SCROLLANDBOOLEAN); 
 
 				if(sdgData!="")
 				{
@@ -284,8 +277,8 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 			catch(Exception ex)
 			{
 				ex.printStackTrace();
-				log(LogStatus.ERROR, "Could not get the text from the SDG", YesNo.Yes);
-				verifyData.add("Could not get the text from the SDG");
+				log(LogStatus.ERROR, "Could not get the "+ele.get(i)+" Data from the SDG", YesNo.Yes);
+				verifyData.add("Could not get the "+ele.get(i)+" from the SDG");
 
 			}
 		}	
@@ -320,7 +313,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		BasePageBusinessLayer BP=new BasePageBusinessLayer(driver);
 		SoftAssert sa= new SoftAssert();
 
-		CommonLib.switchToFrame(driver, 50, getLocator());
+		CommonLib.switchToFrame(driver, 50, getLocator(50));
 
 		if (CommonLib.click(driver, getnewButton(80), "New Button", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on the new button", YesNo.No);
@@ -643,6 +636,8 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 	}
 
 
+
+
 	public int numberOfRecords(String Title,String pageSize) 
 	{
 		boolean flag=false;
@@ -737,9 +732,9 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 
 	public boolean verifyRecordfilterfieldvisibility()
 	{
-		
+
 		CommonLib.refresh(driver);
-		
+
 		if(CommonLib.checkElementVisibility(driver, getrecordFilter(50), "Record Filter", 50))
 		{
 			log(LogStatus.INFO,"Record Filter fild is visible",YesNo.No);
@@ -754,7 +749,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		}
 
 	}
-	
+
 	public ArrayList<String> verifyDropDownOptionValue(String fieldLabel, ArrayList<String> optionvalue)
 	{
 		WebElement ele=null;
@@ -777,15 +772,15 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 			log(LogStatus.INFO, "Clicked on the "+fieldLabel, YesNo.No);
 			xPath="//label[text()='"+fieldLabel+"']/parent::lightning-combobox//span[not(text()='All')]/parent::span/parent::lightning-base-combobox-item";
 			List<WebElement> elements=CommonLib.FindElements(driver, xPath, fieldLabel);
-			
+
 			ArrayList<String> dropDownOptionvalue = new ArrayList<String>();
-			
+
 			for(WebElement eles:elements)
 			{
 				String val=CommonLib.getText(driver, eles, fieldLabel, action.SCROLLANDBOOLEAN);
 				dropDownOptionvalue.add(val);
 			}
-			
+
 			for(int i=0;i<optionvalue.size();i++)
 			{
 				if(optionvalue.get(i).equals(dropDownOptionvalue.get(i)))
@@ -799,21 +794,42 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 				}
 			}
 
-			
+
 		}
 		else
 		{
 			log(LogStatus.ERROR, "Could not click on the Record filter field", YesNo.No);
 			result.add("Could not click on the Record filter field");					
-	
+
 		}
-		
-		
+
+
 		return result;
 
-		
+
 	}
 
+	public boolean pageSelect(String Title, String pageSize)
+	{
+
+		boolean flag = false;
+		WebElement pageSizeSelect = FindElement(driver,
+				"//a[text()='" + Title
+				+ "']/ancestor::article//span[text()='Page']/../parent::div//select",
+				"Page Size Select ", action.SCROLLANDBOOLEAN, 10);
+		if (CommonLib.selectVisibleTextFromDropDown(driver, pageSizeSelect, "Page Size Select", pageSize)) {
+			log(LogStatus.INFO, "Selected the Page", YesNo.No);
+			CommonLib.ThreadSleep(25000);
+			flag=true;
+		}
+		else {
+			log(LogStatus.ERROR, "Not Able To Select Page", YesNo.No);
+			return flag;
+
+		}
+
+		return flag;
+	}
 
 
 }
