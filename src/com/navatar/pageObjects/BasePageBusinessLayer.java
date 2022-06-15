@@ -3479,9 +3479,9 @@ public WebElement getStep3SendBtn(PageName pageName,TopOrBottom topOrBottom,int 
 		String btname = btnName.toString();
 		String xpath = "";
 		if (isInside) {
-			xpath = "//button[text()='" + toggleTab + "' or @title='" + toggleTab + "']";
+			xpath = "//header//a[text()='"+toggleTab+"' or @title='"+toggleTab+"']" ;
 		} else {
-			xpath = "//button[text()='" + toggleTab + "' or @title='" + toggleTab + "']";
+			xpath = "//header//a[text()='"+toggleTab+"' or @title='"+toggleTab+"']" ;
 		}
 		WebElement ele = FindElement(driver, xpath, toggleTab + " >> " + btname, action, timeOut);
 		scrollDownThroughWebelement(driver, ele, "Toggle Button : " + btname);

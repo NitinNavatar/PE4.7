@@ -929,8 +929,9 @@ public boolean clickOnCreatedFund(String environment, String mode,String fundNam
 	public boolean changeStage(String projectName, String stage, int timeOut) {
 		boolean flag=true;
 		stage=stage.replace("_", " ");
+		ThreadSleep(2000);
 		if (clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Edit, 10)) {
-		
+			ThreadSleep(2000);
 		if (click(driver, getDealStage(projectName, timeOut), "Deal stage : "+stage, action.SCROLLANDBOOLEAN)) {
 			ThreadSleep(2000);
 			appLog.error("Clicked on Deal stage");
@@ -947,10 +948,11 @@ public boolean clickOnCreatedFund(String environment, String mode,String fundNam
 		} else {
 			appLog.error("Not able to Click on Deal stage : ");
 		}
-		
+		ThreadSleep(2000);
 		if (click(driver, getCustomTabSaveBtn(projectName,30), "Save Button", action.SCROLLANDBOOLEAN)) {
 			appLog.error("Click on save Button");	
 			flag = true;
+			ThreadSleep(2000);
 		}else{
 			appLog.error("Not Able to Click on save Button");	
 		}
