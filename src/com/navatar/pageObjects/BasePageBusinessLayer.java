@@ -2187,7 +2187,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			} else {
 				// log(LogStatus.ERROR, "Not able to click on "+actionDropDown+" link",
 				// YesNo.Yes);
-				xpath = "//button[@name='" + actionDropDown + "']";
+				xpath = "//button[@name='" + actionDropDown + "' or text()='" + actionDropDown + "']";
 				ele = FindElement(driver, xpath, actionDropDown, action.BOOLEAN, 10);
 				if (click(driver, ele, actionDropDown, action.SCROLLANDBOOLEAN)) {
 					flag = true;

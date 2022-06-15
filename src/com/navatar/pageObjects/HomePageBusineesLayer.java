@@ -1821,9 +1821,12 @@ public class HomePageBusineesLayer extends HomePage {
 				switchToFrame(driver, 60, getCreateCommitmentFrame_Lightning(120));
 
 			}
+			WebElement element=null;
 			List<WebElement> ele1 = getCommitmentCreationContinueBtn(2);
 			for (int i = 0; i < ele1.size(); i++) {
-				if (click(driver, ele1.get(i), "continue button", action.SCROLLANDBOOLEAN)) {
+				element=isDisplayed(driver, ele1.get(i), "Visibility", 10, "");
+				if(element!=null) {
+				if (click(driver, element, "continue button", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "clicked on continue button", YesNo.No);
 					break;
 				} else {
@@ -1832,6 +1835,7 @@ public class HomePageBusineesLayer extends HomePage {
 								YesNo.Yes);
 						flag = false;
 					}
+				}
 				}
 			}
 		}
