@@ -612,6 +612,7 @@ public class CommonVariables {
  	public static String SmokeFRIns1,SmokeFRIns1RecordType;
 
 
+
 	public static String SmokeFSIns1,SmokeFSIns1RecordType;
 
 	public static String SmokePFContact1FName,SmokePFContact1LName,SmokePFContact1Inst,SmokePFContact1EmailID,SmokePFContact1RecordType;
@@ -2575,8 +2576,6 @@ public class CommonVariables {
 			
 			SmokeLTPIns1=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKELTPINS1", excelLabel.Institutions_Name);
 			SmokeLTPIns1RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKELTPINS1", excelLabel.Record_Type);
-
-
 			SmokeLTPContact1FName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON1", excelLabel.Contact_FirstName);
 			SmokeLTPContact1LName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON1", excelLabel.Contact_LastName);
 			SmokeLTPContact1Inst=SmokeLTPIns1;
@@ -3021,10 +3020,9 @@ public class CommonVariables {
  			SmokeDeal1CompanyName=SmokeDealIns1;
  			SmokeDeal1RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKEDEAL1", excelLabel.Record_Type);
  			SmokeDeal1Stage=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKEDEAL1", excelLabel.Stage);
- 			SmokeDeal1UpdatedStage=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKEDEAL1", excelLabel.Updated_Stage);
 
- 
- 			
+ 			SmokeDeal1UpdatedStage=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKEDEAL1", excelLabel.Updated_Stage);
+	
  			SmokeDeal2=SmokePFIns1+ "2222";
  			SmokeDeal2CompanyName=SmokePFIns1;
  			SmokeDeal2RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKEDEAL2", excelLabel.Record_Type);
