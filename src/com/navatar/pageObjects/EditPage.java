@@ -629,9 +629,27 @@ public class EditPage extends BasePageBusinessLayer {
 
 	public WebElement getcustomFilterComponent(int timeOut) {
 		return isDisplayed(driver, customFilterComponent, "Visibility", timeOut, "Custom Filter Component");
-
-
-
 	}
+	
+	
+//	@FindBy(xpath="//span[text()='My Record filter']/preceding-sibling::span")
+	@FindBy(xpath="//span[text()='My Record filter']/parent::label/preceding-sibling::input")
+	private WebElement myRecordFilterCheckbox;
+
+	public WebElement getmyRecordFilterCheckbox(int timeOut) {
+		return isDisplayed(driver, myRecordFilterCheckbox, "Visibility", timeOut, "My Record Filter Checkbox");
+	}
+	
+	@FindBy(xpath="//label[text()='Show']")
+	private WebElement customFilterLabel;
+
+	public WebElement getcustomFilterLabel(int timeOut) {
+		return isDisplayed(driver, customFilterLabel, "Visibility", timeOut, "Custom Filter Label");
+	}
+	
+	
+	
+	
+
 
 }

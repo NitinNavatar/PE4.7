@@ -21,6 +21,7 @@ import com.navatar.generic.EnumConstants.ContactPageFieldLabelText;
 import com.navatar.generic.EnumConstants.LimitedPartnerPageFieldLabelText;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.RecordType;
+import com.navatar.generic.EnumConstants.RelatedTab;
 import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
@@ -241,7 +242,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		if(creationPage.toString().equalsIgnoreCase(CreationPage.AccountPage.toString())) {
 			
 				
-				if(ClickonRelatedTab_Lighting(projectName, RecordType.Contact)) {
+				if(ClickonRelatedTab_Lighting(projectName, RecordType.Contact, RelatedTab.Contacts.toString())) {
 					appLog.info("clicked on related list tab");
 				}else {
 					appLog.error("Not able to click on related list tab so cannot create contact: "+contactFirstName+" "+contactLastName);
