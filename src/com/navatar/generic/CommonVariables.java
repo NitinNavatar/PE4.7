@@ -847,62 +847,15 @@ public class CommonVariables {
 		long StartTime = System.currentTimeMillis();
 		URL = ExcelUtils.readDataFromPropertyFile("URL");
 		browserToLaunch = ExcelUtils.readDataFromPropertyFile("Browser");
-		appName=ExcelUtils.readDataFromPropertyFile("AppName");
-		appVersion=ExcelUtils.readDataFromPropertyFile("AppVersion");
 		superAdminUserName=ExcelUtils.readDataFromPropertyFile("SuperAdminUsername");
 		superAdminRegistered=ExcelUtils.readDataFromPropertyFile("SuperAdminRegistered");
-		appName=ExcelUtils.readDataFromPropertyFile("AppName");
 		tabCustomObj=ExcelUtils.readDataFromPropertyFile("CustomTabName");
-		tabCustomObjAPIName=tabCustomObj.replace(" ", "_")+"__c";
-		tabObj1=ExcelUtils.readDataFromPropertyFile("Object1");
-		tabObj2=ExcelUtils.readDataFromPropertyFile("Object2");
-		tabObj3=ExcelUtils.readDataFromPropertyFile("Object3");
-		tabObj4=ExcelUtils.readDataFromPropertyFile("Object4");
-		tabObj5=ExcelUtils.readDataFromPropertyFile("Object5");
-		tabObj6=ExcelUtils.readDataFromPropertyFile("Object6");
-		tabObj7=ExcelUtils.readDataFromPropertyFile("Object7");
-
-
-		tabCustomObjField=ExcelUtils.readDataFromPropertyFile("CustomTabFieldName");
-		environment=ExcelUtils.readDataFromPropertyFile("Environment");
-		mode=ExcelUtils.readDataFromPropertyFile("Mode");
-		todaysDate=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "MM/dd/YYYY");
-		todaysDateEurope=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M.d.YYYY");
-		todaysDateSingleDigit=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY");
-		todaysDateNewZealand=getDateAccToTimeZone(BasePageErrorMessage.NewZealandTimeZone, "M/d/YYYY");
-		todaysDateddmm=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "dd/MM/YYYY");
-
-		tomorrowsDate=previousOrForwardDate(1, "M/d/YYYY");
-		yesterdaysDate=previousOrForwardDate(-1, "M/d/YYYY");
-		todaysDate1=previousOrForwardDate(0, "M/d/YYYY");
-
-		AdminUserFirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_First_Name);
-		AdminUserLastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_Last_Name);
-		AdminUserEmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_Email);
-		AdminUserProfile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "AdminUser", excelLabel.User_Profile);
-
-		adminPassword=ExcelUtils.readDataFromPropertyFile("password");
-		gmailUserName=ExcelUtils.readDataFromPropertyFile("gmailUserName");
-		gmailUserName2=ExcelUtils.readDataFromPropertyFile("gmailUserName2");
-		gmailPassword=ExcelUtils.readDataFromPropertyFile("gmailPassword");
-		crmUser1FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User1", excelLabel.User_First_Name);
-		crmUser1LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User1", excelLabel.User_Last_Name);
-		crmUser1EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User1", excelLabel.User_Email);
-		crmUserProfile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User1", excelLabel.User_Profile);
-		crmUserLience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User1", excelLabel.User_License);
-
+		tabCustomObjAPIName=tabCustomObj.replace(" ", "_")+"__c";		
 		crmUser2FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User2", excelLabel.User_First_Name);
 		crmUser2LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User2", excelLabel.User_Last_Name);
 		crmUser2EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User2", excelLabel.User_Email);
 
-		tabCustomObjField=ExcelUtils.readDataFromPropertyFile("CustomTabFieldName");
-
-		tabCustomObj=ExcelUtils.readDataFromPropertyFile("CustomTabName");
-		tabObj1=ExcelUtils.readDataFromPropertyFile("Object1");
-		tabObj2=ExcelUtils.readDataFromPropertyFile("Object2");
-		tabObj3=ExcelUtils.readDataFromPropertyFile("Object3");
-		tabObj4=ExcelUtils.readDataFromPropertyFile("Object4");
-		tabObj8Coverage=ExcelUtils.readDataFromPropertyFile("Object8");
+		
 
 		SDG = "Sortable Data Grids";
 
@@ -911,6 +864,9 @@ public class CommonVariables {
 
 
 		//****************************************************************	Toggle Variable **********************************************************//
+
+		FileInputStream fis = null;
+		Workbook wb = null;
 
 		switch (obj.getClass().getSimpleName()) {
 
@@ -1197,6 +1153,7 @@ public class CommonVariables {
 
 		case "Module2" :
 
+
 			Smoke_TWINS1Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS1", excelLabel.Institutions_Name);
 			Smoke_TWINS1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS1", excelLabel.Record_Type);
 			Smoke_TWINS1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS1", excelLabel.Status);
@@ -1223,6 +1180,7 @@ public class CommonVariables {
 			Smoke_TWINS4Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS4", excelLabel.Institutions_Name);
 			Smoke_TWINS4RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS4", excelLabel.Record_Type);
 			Smoke_TWINS4Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS4", excelLabel.Status);
+
 
 			M2_HSRINS1Name=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M2HSRINS1", excelLabel.Institutions_Name);
 			M2_HSRINS1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "M2HSRINS1", excelLabel.Record_Type);
@@ -1422,12 +1380,6 @@ public class CommonVariables {
 			M3Fund1Category=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "M3FUND1", excelLabel.Investment_Category);
 			M3Fund1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "M3FUND1", excelLabel.Record_Type);
 
-
-			SmokeReportFolderName=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Report_Folder_Name);
-			SmokeReportName=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Report_Name);	
-			SmokeReportType=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Select_Report_Type);
-			SmokeReportShow=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Show);
-			SmokeReportRange=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Range);
 
 
 			//**********************************************************Email Template ******************************************************/
@@ -2369,121 +2321,177 @@ public class CommonVariables {
 
 		case "PECloudSmoke"  :
 
-			SmokeSdg1Name=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "SMOKESDG1", excelLabel.SDG_Name);
-			SmokeSdg1TagName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "SMOKESDG1", excelLabel.SDG_Tag);;
-			SmokeSdg1ObjectName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "SMOKESDG1", excelLabel.sObjectName);
-			SmokeSdg1ParentName=ExcelUtils.readData(phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "SMOKESDG1", excelLabel.Parent_Field_Name);
+		case "OldSmokeTestCases"  :
+			
+		try {
+			fis=new FileInputStream(new File(phase1DataSheetFilePath));
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			wb=WorkbookFactory.create(fis);
+		} catch (EncryptedDocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
 
-			SMOKIns1InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS1", excelLabel.Institutions_Name);
-			SMOKIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS1", excelLabel.Record_Type);
+			SmokeReportFolderName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Report_Folder_Name);
+			SmokeReportName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Report_Name);	
+			SmokeReportType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Select_Report_Type);
+			SmokeReportShow=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Show);
+			SmokeReportRange=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Range);
 
-			SMOKIns2InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS2", excelLabel.Institutions_Name);
-			SMOKIns2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS2", excelLabel.Record_Type);
+			
+			Smoke_TWINS1Name=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS1", excelLabel.Institutions_Name);
+			Smoke_TWINS1RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS1", excelLabel.Record_Type);
+			Smoke_TWINS1Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS1", excelLabel.Status);
+			Smoke_CDINS1Name=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS1", excelLabel.Institutions_Name);
+			Smoke_CDINS1RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS1", excelLabel.Record_Type);
+			Smoke_CDINS1Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS1", excelLabel.Status);
+			Smoke_CDINS2Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS2", excelLabel.Status);
 
-			SMOKIns3InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS3", excelLabel.Institutions_Name);
-			SMOKIns3RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS3", excelLabel.Record_Type);
+			// TASK INS2..............
+			Smoke_TWINS2Name=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS2", excelLabel.Institutions_Name);
+			Smoke_TWINS2RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS2", excelLabel.Record_Type);
+			Smoke_TWINS2Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS2", excelLabel.Status);
+			Smoke_CDINS2Name=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS2", excelLabel.Institutions_Name);
+			Smoke_CDINS2RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS2", excelLabel.Record_Type);
+			Smoke_CDINS3Name=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS3", excelLabel.Institutions_Name);
+			Smoke_CDINS3RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "CDINS3", excelLabel.Record_Type);
 
+			// TASK INS3..............
+			Smoke_TWINS3Name=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS3", excelLabel.Institutions_Name);
+			Smoke_TWINS3RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS3", excelLabel.Record_Type);
+			Smoke_TWINS3Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS3", excelLabel.Status);
 
-			SMOKIns4InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS4", excelLabel.Institutions_Name);
-			SMOKIns4RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS4", excelLabel.Record_Type);
+			// TASK INS4..............
+			Smoke_TWINS4Name=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS4", excelLabel.Institutions_Name);
+			Smoke_TWINS4RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS4", excelLabel.Record_Type);
+			Smoke_TWINS4Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "TWINS4", excelLabel.Status);
 
-			SMOKIns5InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS5", excelLabel.Institutions_Name);
-			SMOKIns5RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS5", excelLabel.Record_Type);
+			SmokeSdg1Name=ExcelUtils.readData(wb,phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "SMOKESDG1", excelLabel.SDG_Name);
+			SmokeSdg1TagName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "SMOKESDG1", excelLabel.SDG_Tag);;
+			SmokeSdg1ObjectName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "SMOKESDG1", excelLabel.sObjectName);
+			SmokeSdg1ParentName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"CustomSDG",excelLabel.Variable_Name, "SMOKESDG1", excelLabel.Parent_Field_Name);
+			
+			SMOKIns1InsName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS1", excelLabel.Institutions_Name);
+			SMOKIns1RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS1", excelLabel.Record_Type);
 
-			SMOKIns6InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS6", excelLabel.Institutions_Name);
-			SMOKIns6RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS6", excelLabel.Record_Type);
+			SMOKIns2InsName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS2", excelLabel.Institutions_Name);
+			SMOKIns2RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS2", excelLabel.Record_Type);
 
-			SMOKIns7InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS7", excelLabel.Institutions_Name);
-			SMOKIns7RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS7", excelLabel.Record_Type);
-
-			SMOKIns8InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS8", excelLabel.Institutions_Name);
-			SMOKIns8RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS8", excelLabel.Record_Type);
-
-			SMOKIns9InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS9", excelLabel.Institutions_Name);
-			SMOKIns9RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS9", excelLabel.Record_Type);
-
-			SMOKIns10InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS10", excelLabel.Institutions_Name);
-			SMOKIns10RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS10", excelLabel.Record_Type);
-			SMOKIns10Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS10", excelLabel.Phone);
-
-			SMOKIns11InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS11", excelLabel.Institutions_Name);
-			SMOKIns11RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS11", excelLabel.Record_Type);
-			SMOKIns11Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS11", excelLabel.Phone);
-			SMOKIns11Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS11", excelLabel.Status);
-			SMOKIns11EntityType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS11", excelLabel.Entity_Type);
-			SMOKIns11ParentInstitution=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS11", excelLabel.Parent_Institution);
-
-
-			SMOKIns12InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS12", excelLabel.Institutions_Name);
-			SMOKIns12RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS12", excelLabel.Record_Type);
-			SMOKIns12Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS12", excelLabel.Phone);
-			SMOKIns12Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS12", excelLabel.Status);
-			SMOKIns12EntityType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS12", excelLabel.Entity_Type);
-			SMOKIns12ParentInstitution=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS12", excelLabel.Parent_Institution);
-
-
-			SMOKIns13InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS13", excelLabel.Institutions_Name);
-			SMOKIns13RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS13", excelLabel.Record_Type);
-			SMOKIns13Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS13", excelLabel.Phone);
-			SMOKIns13Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS13", excelLabel.Status);
-			SMOKIns13EntityType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS13", excelLabel.Entity_Type);
-			SMOKIns13ParentInstitution=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS13", excelLabel.Parent_Institution);
-
-
-			SMOKIns14InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS14", excelLabel.Institutions_Name);
-			SMOKIns14RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS14", excelLabel.Record_Type);
-			SMOKIns14Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS14", excelLabel.Phone);
-			SMOKIns14Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS14", excelLabel.Status);
-			SMOKIns14EntityType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS14", excelLabel.Entity_Type);
-			SMOKIns14ParentInstitution=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS14", excelLabel.Parent_Institution);
-
-
-			SMOKIns15InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS15", excelLabel.Institutions_Name);
-			SMOKIns15RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS15", excelLabel.Record_Type);
-			SMOKIns15Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS15", excelLabel.Phone);
-			SMOKIns15Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS15", excelLabel.Status);
-			SMOKIns15EntityType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS15", excelLabel.Entity_Type);
-			SMOKIns15ParentInstitution=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS15", excelLabel.Parent_Institution);
+			SMOKIns3InsName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS3", excelLabel.Institutions_Name);
+			SMOKIns3RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS3", excelLabel.Record_Type);
 
 
-			SMOKIns16InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS16", excelLabel.Institutions_Name);
-			SMOKIns16RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS16", excelLabel.Record_Type);
-			SMOKIns16Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS16", excelLabel.Phone);
-			SMOKIns16Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS16", excelLabel.Status);
-			SMOKIns16EntityType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS16", excelLabel.Entity_Type);
-			SMOKIns16ParentInstitution=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS16", excelLabel.Parent_Institution);
+			SMOKIns4InsName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS4", excelLabel.Institutions_Name);
+			SMOKIns4RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS4", excelLabel.Record_Type);
+
+			SMOKIns5InsName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS5", excelLabel.Institutions_Name);
+			SMOKIns5RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS5", excelLabel.Record_Type);
+
+			SMOKIns6InsName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS6", excelLabel.Institutions_Name);
+			SMOKIns6RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS6", excelLabel.Record_Type);
+
+			SMOKIns7InsName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS7", excelLabel.Institutions_Name);
+			SMOKIns7RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS7", excelLabel.Record_Type);
+
+			SMOKIns8InsName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS8", excelLabel.Institutions_Name);
+			SMOKIns8RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS8", excelLabel.Record_Type);
+
+			SMOKIns9InsName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS9", excelLabel.Institutions_Name);
+			SMOKIns9RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS9", excelLabel.Record_Type);
+			
+			SMOKIns10InsName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS10", excelLabel.Institutions_Name);
+			SMOKIns10RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS10", excelLabel.Record_Type);
+			SMOKIns10Phone=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS10", excelLabel.Phone);
+
+			SMOKIns11InsName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS11", excelLabel.Institutions_Name);
+			SMOKIns11RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS11", excelLabel.Record_Type);
+			SMOKIns11Phone=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS11", excelLabel.Phone);
+			SMOKIns11Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS11", excelLabel.Status);
+			SMOKIns11EntityType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS11", excelLabel.Entity_Type);
+			SMOKIns11ParentInstitution=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS11", excelLabel.Parent_Institution);
+
+			
+			SMOKIns12InsName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS12", excelLabel.Institutions_Name);
+			SMOKIns12RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS12", excelLabel.Record_Type);
+			SMOKIns12Phone=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS12", excelLabel.Phone);
+			SMOKIns12Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS12", excelLabel.Status);
+			SMOKIns12EntityType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS12", excelLabel.Entity_Type);
+			SMOKIns12ParentInstitution=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS12", excelLabel.Parent_Institution);
 
 
-			SMOKIns17InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS17", excelLabel.Institutions_Name);
-			SMOKIns17RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS17", excelLabel.Record_Type);
-			SMOKIns17Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS17", excelLabel.Phone);
-			SMOKIns17Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS17", excelLabel.Status);
-			SMOKIns17EntityType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS17", excelLabel.Entity_Type);
-			SMOKIns17ParentInstitution=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS17", excelLabel.Parent_Institution);
+			SMOKIns13InsName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS13", excelLabel.Institutions_Name);
+			SMOKIns13RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS13", excelLabel.Record_Type);
+			SMOKIns13Phone=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS13", excelLabel.Phone);
+			SMOKIns13Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS13", excelLabel.Status);
+			SMOKIns13EntityType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS13", excelLabel.Entity_Type);
+			SMOKIns13ParentInstitution=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS13", excelLabel.Parent_Institution);
 
 
-			SMOKIns18InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS18", excelLabel.Institutions_Name);
-			SMOKIns18RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS18", excelLabel.Record_Type);
-			SMOKIns18Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS18", excelLabel.Phone);
-			SMOKIns18Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS18", excelLabel.Status);
-			SMOKIns18EntityType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS18", excelLabel.Entity_Type);
-			SMOKIns18ParentInstitution=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS18", excelLabel.Parent_Institution);
+			SMOKIns14InsName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS14", excelLabel.Institutions_Name);
+			SMOKIns14RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS14", excelLabel.Record_Type);
+			SMOKIns14Phone=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS14", excelLabel.Phone);
+			SMOKIns14Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS14", excelLabel.Status);
+			SMOKIns14EntityType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS14", excelLabel.Entity_Type);
+			SMOKIns14ParentInstitution=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS14", excelLabel.Parent_Institution);
 
 
-			SMOKIns19InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS19", excelLabel.Institutions_Name);
-			SMOKIns19RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS19", excelLabel.Record_Type);
-			SMOKIns19Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS19", excelLabel.Phone);
-			SMOKIns19Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS19", excelLabel.Status);
-			SMOKIns19EntityType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS19", excelLabel.Entity_Type);
-			SMOKIns19ParentInstitution=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS19", excelLabel.Parent_Institution);
+			SMOKIns15InsName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS15", excelLabel.Institutions_Name);
+			SMOKIns15RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS15", excelLabel.Record_Type);
+			SMOKIns15Phone=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS15", excelLabel.Phone);
+			SMOKIns15Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS15", excelLabel.Status);
+			SMOKIns15EntityType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS15", excelLabel.Entity_Type);
+			SMOKIns15ParentInstitution=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS15", excelLabel.Parent_Institution);
 
 
-			SMOKIns20InsName=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS20", excelLabel.Institutions_Name);
-			SMOKIns20RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS20", excelLabel.Record_Type);
-			SMOKIns20Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS20", excelLabel.Phone);
-			SMOKIns20Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS20", excelLabel.Status);
-			SMOKIns20EntityType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS20", excelLabel.Entity_Type);
-			SMOKIns20ParentInstitution=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS20", excelLabel.Parent_Institution);
+			SMOKIns16InsName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS16", excelLabel.Institutions_Name);
+			SMOKIns16RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS16", excelLabel.Record_Type);
+			SMOKIns16Phone=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS16", excelLabel.Phone);
+			SMOKIns16Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS16", excelLabel.Status);
+			SMOKIns16EntityType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS16", excelLabel.Entity_Type);
+			SMOKIns16ParentInstitution=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS16", excelLabel.Parent_Institution);
+
+
+			SMOKIns17InsName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS17", excelLabel.Institutions_Name);
+			SMOKIns17RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS17", excelLabel.Record_Type);
+			SMOKIns17Phone=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS17", excelLabel.Phone);
+			SMOKIns17Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS17", excelLabel.Status);
+			SMOKIns17EntityType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS17", excelLabel.Entity_Type);
+			SMOKIns17ParentInstitution=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS17", excelLabel.Parent_Institution);
+
+
+			SMOKIns18InsName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS18", excelLabel.Institutions_Name);
+			SMOKIns18RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS18", excelLabel.Record_Type);
+			SMOKIns18Phone=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS18", excelLabel.Phone);
+			SMOKIns18Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS18", excelLabel.Status);
+			SMOKIns18EntityType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS18", excelLabel.Entity_Type);
+			SMOKIns18ParentInstitution=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS18", excelLabel.Parent_Institution);
+
+
+			SMOKIns19InsName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS19", excelLabel.Institutions_Name);
+			SMOKIns19RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS19", excelLabel.Record_Type);
+			SMOKIns19Phone=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS19", excelLabel.Phone);
+			SMOKIns19Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS19", excelLabel.Status);
+			SMOKIns19EntityType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS19", excelLabel.Entity_Type);
+			SMOKIns19ParentInstitution=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS19", excelLabel.Parent_Institution);
+
+
+			SMOKIns20InsName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS20", excelLabel.Institutions_Name);
+			SMOKIns20RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS20", excelLabel.Record_Type);
+			SMOKIns20Phone=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS20", excelLabel.Phone);
+			SMOKIns20Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS20", excelLabel.Status);
+			SMOKIns20EntityType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS20", excelLabel.Entity_Type);
+			SMOKIns20ParentInstitution=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKINS20", excelLabel.Parent_Institution);
 
 
 
@@ -2492,523 +2500,560 @@ public class CommonVariables {
 
 			////////////////////CT
 
-			SmokeCTIns=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS", excelLabel.Institutions_Name);
-			SmokeCTInsRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS", excelLabel.Record_Type);
-
-			SmokeCTIns1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS1", excelLabel.Institutions_Name);
-			SmokeCTIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS1", excelLabel.Record_Type);
-
-			SmokeCTIns2=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS2", excelLabel.Institutions_Name);
-			SmokeCTIns2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS2", excelLabel.Record_Type);
-
-			SmokeCTIns3=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS3", excelLabel.Institutions_Name);
-			SmokeCTIns3RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS3", excelLabel.Record_Type);
-
-			SmokeCTIns4=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS4", excelLabel.Institutions_Name);
-			SmokeCTIns4RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS4", excelLabel.Record_Type);
+			
+			SmokeCTIns=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS", excelLabel.Institutions_Name);
+			SmokeCTInsRecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS", excelLabel.Record_Type);
 
 
-			SmokeLTPIns1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKELTPINS1", excelLabel.Institutions_Name);
-			SmokeLTPIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKELTPINS1", excelLabel.Record_Type);
+			SmokeCTIns1=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS1", excelLabel.Institutions_Name);
+			SmokeCTIns1RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS1", excelLabel.Record_Type);
 
-			SmokeLTPContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON1", excelLabel.Contact_FirstName);
-			SmokeLTPContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON1", excelLabel.Contact_LastName);
+
+			SmokeCTIns2=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS2", excelLabel.Institutions_Name);
+			SmokeCTIns2RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS2", excelLabel.Record_Type);
+			
+			SmokeCTIns3=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS3", excelLabel.Institutions_Name);
+			SmokeCTIns3RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS3", excelLabel.Record_Type);
+
+			SmokeCTIns4=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS4", excelLabel.Institutions_Name);
+			SmokeCTIns4RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECTINS4", excelLabel.Record_Type);
+
+
+			
+			SmokeLTPIns1=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKELTPINS1", excelLabel.Institutions_Name);
+			SmokeLTPIns1RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKELTPINS1", excelLabel.Record_Type);
+
+
+			SmokeLTPContact1FName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON1", excelLabel.Contact_FirstName);
+			SmokeLTPContact1LName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON1", excelLabel.Contact_LastName);
 			SmokeLTPContact1Inst=SmokeLTPIns1;
-			SmokeLTPContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON1", excelLabel.Contact_EmailId);
-			SmokeLTPContact1Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON1", excelLabel.Contact_Tier);
+			SmokeLTPContact1EmailID=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON1", excelLabel.Contact_EmailId);
+			SmokeLTPContact1Tier=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON1", excelLabel.Contact_Tier);
 
-			SmokeLTPContact2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON2", excelLabel.Contact_FirstName);
-			SmokeLTPContact2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON2", excelLabel.Contact_LastName);
+			SmokeLTPContact2FName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON2", excelLabel.Contact_FirstName);
+			SmokeLTPContact2LName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON2", excelLabel.Contact_LastName);
 			SmokeLTPContact2Inst=SmokeLTPIns1;
-			SmokeLTPContact2EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON2", excelLabel.Contact_EmailId);
-			SmokeLTPContact2Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON2", excelLabel.Contact_Tier);
+			SmokeLTPContact2EmailID=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON2", excelLabel.Contact_EmailId);
+			SmokeLTPContact2Tier=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON2", excelLabel.Contact_Tier);
 
-			SmokeLTPContact3FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON3", excelLabel.Contact_FirstName);
-			SmokeLTPContact3LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON3", excelLabel.Contact_LastName);
+			SmokeLTPContact3FName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON3", excelLabel.Contact_FirstName);
+			SmokeLTPContact3LName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON3", excelLabel.Contact_LastName);
 			SmokeLTPContact3Inst=SmokeLTPIns1;
-			SmokeLTPContact3EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON3", excelLabel.Contact_EmailId);
-			SmokeLTPContact3Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON3", excelLabel.Contact_Tier);
+			SmokeLTPContact3EmailID=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON3", excelLabel.Contact_EmailId);
+			SmokeLTPContact3Tier=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKELTPCON3", excelLabel.Contact_Tier);
 
-			SmokeNTPIns1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKENTPINS1", excelLabel.Institutions_Name);
-			SmokeNTPIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKENTPINS1", excelLabel.Record_Type);
+			SmokeNTPIns1=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKENTPINS1", excelLabel.Institutions_Name);
+			SmokeNTPIns1RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKENTPINS1", excelLabel.Record_Type);
 
-			SmokeNTPContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKENTPCON1", excelLabel.Contact_FirstName);
-			SmokeNTPContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKENTPCON1", excelLabel.Contact_LastName);
+			SmokeNTPContact1FName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKENTPCON1", excelLabel.Contact_FirstName);
+			SmokeNTPContact1LName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKENTPCON1", excelLabel.Contact_LastName);
 			SmokeNTPContact1Inst=SmokeNTPIns1;
-			SmokeNTPContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKENTPCON1", excelLabel.Contact_EmailId);
-			SmokeNTPContact1Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKENTPCON1", excelLabel.Contact_Tier);
+			SmokeNTPContact1EmailID=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKENTPCON1", excelLabel.Contact_EmailId);
+			SmokeNTPContact1Tier=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKENTPCON1", excelLabel.Contact_Tier);
 
 
-			SmokeACDContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Contact_FirstName);
-			SmokeACDContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Contact_LastName);
-			SmokeACDContact1Inst=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Institutions_Name);;
-			SmokeACDContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Contact_EmailId);
-			SmokeACDContact1Title=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Title);
-			SmokeACDContact1Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Phone);
+			
+			SmokeACDContact1FName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Contact_FirstName);
+			SmokeACDContact1LName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Contact_LastName);
+			SmokeACDContact1Inst=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Institutions_Name);;
+			SmokeACDContact1EmailID=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Contact_EmailId);
+			SmokeACDContact1Title=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Title);
+			SmokeACDContact1Phone=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Phone);
 
-			SmokeCCIns1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECCINS1", excelLabel.Institutions_Name);
-			SmokeCCIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECCINS1", excelLabel.Record_Type);
 
-			SmokeCCContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECCCON1", excelLabel.Contact_FirstName);
-			SmokeCCContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECCCON1", excelLabel.Contact_LastName);
+			SmokeCCIns1=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECCINS1", excelLabel.Institutions_Name);
+			SmokeCCIns1RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECCINS1", excelLabel.Record_Type);
+
+			SmokeCCContact1FName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECCCON1", excelLabel.Contact_FirstName);
+			SmokeCCContact1LName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECCCON1", excelLabel.Contact_LastName);
 			SmokeCCContact1Inst=SmokeCCIns1;
-
-			SmokeCCContact2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECCCON2", excelLabel.Contact_FirstName);
-			SmokeCCContact2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECCCON2", excelLabel.Contact_LastName);
+	
+			SmokeCCContact2FName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECCCON2", excelLabel.Contact_FirstName);
+			SmokeCCContact2LName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECCCON2", excelLabel.Contact_LastName);
 			SmokeCCContact2Inst=SmokeCCIns1;
-
-			SmokeCCContact3FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECCCON3", excelLabel.Contact_FirstName);
-			SmokeCCContact3LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECCCON3", excelLabel.Contact_LastName);
+			
+			SmokeCCContact3FName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECCCON3", excelLabel.Contact_FirstName);
+			SmokeCCContact3LName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECCCON3", excelLabel.Contact_LastName);
 			SmokeCCContact3Inst=SmokeCCIns1;
+			
+			SmokeCTContactFName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON", excelLabel.Contact_FirstName);
+			SmokeCTContactLName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON", excelLabel.Contact_LastName);
 
-			SmokeCTContactFName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON", excelLabel.Contact_FirstName);
-			SmokeCTContactLName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON", excelLabel.Contact_LastName);
 			SmokeCTContactInst=SmokeCTIns;
-			SmokeCTContactEmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON", excelLabel.Contact_EmailId);
-			SmokeCTContactRecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON", excelLabel.Record_Type);
+			SmokeCTContactEmailID=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON", excelLabel.Contact_EmailId);
+			SmokeCTContactRecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON", excelLabel.Record_Type);
 
-			SmokeCTContact2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON2", excelLabel.Contact_FirstName);
-			SmokeCTContact2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON2", excelLabel.Contact_LastName);
+			SmokeCTContact2FName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON2", excelLabel.Contact_FirstName);
+			SmokeCTContact2LName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON2", excelLabel.Contact_LastName);
 			SmokeCTContact2Inst=SmokeCTIns3;
-			SmokeCTContact2EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON2", excelLabel.Contact_EmailId);
-			SmokeCTContact2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON2", excelLabel.Record_Type);
+			SmokeCTContact2EmailID=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON2", excelLabel.Contact_EmailId);
+			SmokeCTContact2RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKECTCON2", excelLabel.Record_Type);
 
-			SmokeCTTask1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTTask1", excelLabel.Subject);
-			SmokeCTTask1Priority=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTTask1", excelLabel.Priority);
-			SmokeCTTask1dueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTTask1", excelLabel.Due_Date);
 
-			SmokeCTTask2Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTTask2", excelLabel.Subject);
-			SmokeCTTask2Priority=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTTask2", excelLabel.Priority);
-			SmokeCTTask2dueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTTask2", excelLabel.Due_Date);
+			SmokeCTTask1Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTTask1", excelLabel.Subject);
+			SmokeCTTask1Priority=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTTask1", excelLabel.Priority);
+			SmokeCTTask1dueDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTTask1", excelLabel.Due_Date);
+			
+			SmokeCTTask2Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTTask2", excelLabel.Subject);
+			SmokeCTTask2Priority=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTTask2", excelLabel.Priority);
+			SmokeCTTask2dueDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTTask2", excelLabel.Due_Date);
 
-			SmokeWLTask1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLTask1", excelLabel.Subject);
-			SmokeWLTask1Priority=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLTask1", excelLabel.Priority);
-			SmokeWLTask1dueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLTask1", excelLabel.Due_Date);
-			SmokeWLTask1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLTask1", excelLabel.Status);
 
-			SmokeWLTask2Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLTask2", excelLabel.Subject);
-			SmokeWLTask2Priority=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLTask2", excelLabel.Priority);
-			SmokeWLTask2dueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLTask2", excelLabel.Due_Date);
-			SmokeWLTask2Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLTask2", excelLabel.Status);
+			SmokeWLTask1Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLTask1", excelLabel.Subject);
+			SmokeWLTask1Priority=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLTask1", excelLabel.Priority);
+			SmokeWLTask1dueDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLTask1", excelLabel.Due_Date);
+			SmokeWLTask1Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLTask1", excelLabel.Status);
 
-			SmokeCTLogACall1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall1", excelLabel.Subject);
-			SmokeCTLogACall1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall1", excelLabel.Status);
-			SmokeCTLogACall1dueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall1", excelLabel.Due_Date);
-			SmokeCTLogACall1MeetingType=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall1", excelLabel.Meeting_Type);
-			SmokeCTLogACall1Comment=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall1", excelLabel.Comment);
 
-			SmokeCTLogACall2Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall2", excelLabel.Subject);
-			SmokeCTLogACall2Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall2", excelLabel.Status);
-			SmokeCTLogACall2dueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall2", excelLabel.Due_Date);
-			SmokeCTLogACall2MeetingType=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall2", excelLabel.Meeting_Type);
-			SmokeCTLogACall2Comment=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall2", excelLabel.Comment);
+			SmokeWLTask2Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLTask2", excelLabel.Subject);
+			SmokeWLTask2Priority=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLTask2", excelLabel.Priority);
+			SmokeWLTask2dueDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLTask2", excelLabel.Due_Date);
+			SmokeWLTask2Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLTask2", excelLabel.Status);
+			
+			SmokeCTLogACall1Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall1", excelLabel.Subject);
+			SmokeCTLogACall1Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall1", excelLabel.Status);
+			SmokeCTLogACall1dueDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall1", excelLabel.Due_Date);
+			SmokeCTLogACall1MeetingType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall1", excelLabel.Meeting_Type);
+			SmokeCTLogACall1Comment=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall1", excelLabel.Comment);
 
-			SmokeLTPLogACall1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeLTPLogACall1", excelLabel.Subject);
-			SmokeLTPLogACall1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeLTPLogACall1", excelLabel.Status);
-			SmokeLTPLogACall1dueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeLTPLogACall1", excelLabel.Due_Date);
-			SmokeLTPLogACall1MeetingType=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeLTPLogACall1", excelLabel.Meeting_Type);
-			SmokeLTPLogACall1Comment=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeLTPLogACall1", excelLabel.Comment);
 
-			SmokeWLLogACall1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLLogACall1", excelLabel.Subject);
-			SmokeWLLogACall1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLLogACall1", excelLabel.Status);
-			SmokeWLLogACall1dueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLLogACall1", excelLabel.Due_Date);
-			SmokeWLLogACall1MeetingType=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLLogACall1", excelLabel.Meeting_Type);
-			SmokeWLLogACall1Comment=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLLogACall1", excelLabel.Comment);
+			SmokeCTLogACall2Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall2", excelLabel.Subject);
+			SmokeCTLogACall2Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall2", excelLabel.Status);
+			SmokeCTLogACall2dueDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall2", excelLabel.Due_Date);
+			SmokeCTLogACall2MeetingType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall2", excelLabel.Meeting_Type);
+			SmokeCTLogACall2Comment=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCTLogACall2", excelLabel.Comment);
 
-			SmokeWLLogACall2Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLLogACall2", excelLabel.Subject);
-			SmokeWLLogACall2Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLLogACall2", excelLabel.Status);
-			SmokeWLLogACall2dueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLLogACall2", excelLabel.Due_Date);
-			SmokeWLLogACall2MeetingType=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLLogACall2", excelLabel.Meeting_Type);
-			SmokeWLLogACall2Comment=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLLogACall2", excelLabel.Comment);
+			SmokeLTPLogACall1Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeLTPLogACall1", excelLabel.Subject);
+			SmokeLTPLogACall1Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeLTPLogACall1", excelLabel.Status);
+			SmokeLTPLogACall1dueDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeLTPLogACall1", excelLabel.Due_Date);
+			SmokeLTPLogACall1MeetingType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeLTPLogACall1", excelLabel.Meeting_Type);
+			SmokeLTPLogACall1Comment=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeLTPLogACall1", excelLabel.Comment);
 
-			SmokeCCTask1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCCTask1", excelLabel.Subject);
-			SmokeCCTask1Priority=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCCTask1", excelLabel.Priority);
-			SmokeCCTask1dueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCCTask1", excelLabel.Due_Date);
-			SmokeCCTask1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCCTask1", excelLabel.Status);
+			SmokeWLLogACall1Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLLogACall1", excelLabel.Subject);
+			SmokeWLLogACall1Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLLogACall1", excelLabel.Status);
+			SmokeWLLogACall1dueDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLLogACall1", excelLabel.Due_Date);
+			SmokeWLLogACall1MeetingType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLLogACall1", excelLabel.Meeting_Type);
+			SmokeWLLogACall1Comment=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLLogACall1", excelLabel.Comment);
 
-			SmokeCTEvent1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent1", excelLabel.Subject);
-			SmokeCTEvent1StartDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent1", excelLabel.Start_Date);
-			SmokeCTEvent1StartTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent1", excelLabel.Start_Time);
-			SmokeCTEvent1EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent1", excelLabel.End_Date);
-			SmokeCTEvent1EndTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent1", excelLabel.End_Time);
-			SmokeCTEvent1Location=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent1", excelLabel.Location);
 
-			SmokeCTEvent2Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent2", excelLabel.Subject);
-			SmokeCTEvent2StartDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent2", excelLabel.Start_Date);
-			SmokeCTEvent2StartTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent2", excelLabel.Start_Time);
-			SmokeCTEvent2EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent2", excelLabel.End_Date);
-			SmokeCTEvent2EndTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent2", excelLabel.End_Time);
-			SmokeCTEvent2Location=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent2", excelLabel.Location);
+			SmokeWLLogACall2Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLLogACall2", excelLabel.Subject);
+			SmokeWLLogACall2Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLLogACall2", excelLabel.Status);
+			SmokeWLLogACall2dueDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLLogACall2", excelLabel.Due_Date);
+			SmokeWLLogACall2MeetingType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLLogACall2", excelLabel.Meeting_Type);
+			SmokeWLLogACall2Comment=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeWLLogACall2", excelLabel.Comment);
+			
+			SmokeCCTask1Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCCTask1", excelLabel.Subject);
+			SmokeCCTask1Priority=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCCTask1", excelLabel.Priority);
+			SmokeCCTask1dueDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCCTask1", excelLabel.Due_Date);
+			SmokeCCTask1Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SmokeCCTask1", excelLabel.Status);
+			
+			SmokeCTEvent1Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent1", excelLabel.Subject);
+			SmokeCTEvent1StartDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent1", excelLabel.Start_Date);
+			SmokeCTEvent1StartTime=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent1", excelLabel.Start_Time);
+			SmokeCTEvent1EndDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent1", excelLabel.End_Date);
+			SmokeCTEvent1EndTime=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent1", excelLabel.End_Time);
+			SmokeCTEvent1Location=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent1", excelLabel.Location);
 
-			SmokeWLEvent1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent1", excelLabel.Subject);
-			SmokeWLEvent1StartDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent1", excelLabel.Start_Date);
-			SmokeWLEvent1StartTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent1", excelLabel.Start_Time);
-			SmokeWLEvent1EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent1", excelLabel.End_Date);
-			SmokeWLEvent1EndTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent1", excelLabel.End_Time);
-			SmokeWLEvent1Location=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent1", excelLabel.Location);
 
-			SmokeWLEvent2Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent2", excelLabel.Subject);
-			SmokeWLEvent2StartDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent2", excelLabel.Start_Date);
-			SmokeWLEvent2StartTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent2", excelLabel.Start_Time);
-			SmokeWLEvent2EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent2", excelLabel.End_Date);
-			SmokeWLEvent2EndTime=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent2", excelLabel.End_Time);
-			SmokeWLEvent2Location=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent2", excelLabel.Location);
+			SmokeCTEvent2Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent2", excelLabel.Subject);
+			SmokeCTEvent2StartDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent2", excelLabel.Start_Date);
+			SmokeCTEvent2StartTime=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent2", excelLabel.Start_Time);
+			SmokeCTEvent2EndDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent2", excelLabel.End_Date);
+			SmokeCTEvent2EndTime=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent2", excelLabel.End_Time);
+			SmokeCTEvent2Location=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeCTEvent2", excelLabel.Location);
 
-			SmokeLTPEvent1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeLTPEvent1", excelLabel.Subject);
-			SmokeLTPEvent1StartDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeLTPEvent1", excelLabel.Start_Date);
-			SmokeLTPEvent1EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeLTPEvent1", excelLabel.End_Date);
-			SmokeLTPEvent1Contact=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeLTPEvent1", excelLabel.Name);
+			SmokeWLEvent1Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent1", excelLabel.Subject);
+			SmokeWLEvent1StartDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent1", excelLabel.Start_Date);
+			SmokeWLEvent1StartTime=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent1", excelLabel.Start_Time);
+			SmokeWLEvent1EndDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent1", excelLabel.End_Date);
+			SmokeWLEvent1EndTime=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent1", excelLabel.End_Time);
+			SmokeWLEvent1Location=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent1", excelLabel.Location);
 
-			SmokeNTPEvent1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeNTPEvent1", excelLabel.Subject);
-			SmokeNTPEvent1StartDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeNTPEvent1", excelLabel.Start_Date);
-			SmokeNTPEvent1EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeNTPEvent1", excelLabel.End_Date);
-			SmokeNTPEvent1Contact=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeNTPEvent1", excelLabel.Name);
+			SmokeWLEvent2Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent2", excelLabel.Subject);
+			SmokeWLEvent2StartDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent2", excelLabel.Start_Date);
+			SmokeWLEvent2StartTime=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent2", excelLabel.Start_Time);
+			SmokeWLEvent2EndDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent2", excelLabel.End_Date);
+			SmokeWLEvent2EndTime=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent2", excelLabel.End_Time);
+			SmokeWLEvent2Location=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeWLEvent2", excelLabel.Location);
+
+			SmokeLTPEvent1Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeLTPEvent1", excelLabel.Subject);
+			SmokeLTPEvent1StartDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeLTPEvent1", excelLabel.Start_Date);
+			SmokeLTPEvent1EndDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeLTPEvent1", excelLabel.End_Date);
+			SmokeLTPEvent1Contact=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeLTPEvent1", excelLabel.Name);
+
+			SmokeNTPEvent1Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeNTPEvent1", excelLabel.Subject);
+			SmokeNTPEvent1StartDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeNTPEvent1", excelLabel.Start_Date);
+			SmokeNTPEvent1EndDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeNTPEvent1", excelLabel.End_Date);
+			SmokeNTPEvent1Contact=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SmokeNTPEvent1", excelLabel.Name);
 
 			///////////////////////
 
 			//con
-			SMOKCon1FirstName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON1", excelLabel.Contact_FirstName);
-			SMOKCon1LastName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON1", excelLabel.Contact_LastName);
-			SMOKCon1InstitutionName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON1", excelLabel.Institutions_Name);
-			SMOKCon1Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON1", excelLabel.Phone);
-			SMOKCon1Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON1", excelLabel.Contact_Tier);
-			SMOKCon1ContactEmail=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON1", excelLabel.Contact_EmailId);
+			SMOKCon1FirstName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON1", excelLabel.Contact_FirstName);
+			SMOKCon1LastName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON1", excelLabel.Contact_LastName);
+			SMOKCon1InstitutionName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON1", excelLabel.Institutions_Name);
+			SMOKCon1Phone=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON1", excelLabel.Phone);
+			SMOKCon1Tier=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON1", excelLabel.Contact_Tier);
+			SMOKCon1ContactEmail=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON1", excelLabel.Contact_EmailId);
 
-			SMOKCon2FirstName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON2", excelLabel.Contact_FirstName);
-			SMOKCon2LastName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON2", excelLabel.Contact_LastName);
-			SMOKCon2InstitutionName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON2", excelLabel.Institutions_Name);
-			SMOKCon2Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON2", excelLabel.Phone);
-			SMOKCon2Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON2", excelLabel.Contact_Tier);
-			SMOKCon2ContactEmail=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON2", excelLabel.Contact_EmailId);
-
-
-			SMOKCon3FirstName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON3", excelLabel.Contact_FirstName);
-			SMOKCon3LastName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON3", excelLabel.Contact_LastName);
-			SMOKCon3InstitutionName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON3", excelLabel.Institutions_Name);
-			SMOKCon3Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON3", excelLabel.Phone);
-			SMOKCon3Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON3", excelLabel.Contact_Tier);
-			SMOKCon3ContactEmail=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON3", excelLabel.Contact_EmailId);
+			SMOKCon2FirstName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON2", excelLabel.Contact_FirstName);
+			SMOKCon2LastName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON2", excelLabel.Contact_LastName);
+			SMOKCon2InstitutionName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON2", excelLabel.Institutions_Name);
+			SMOKCon2Phone=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON2", excelLabel.Phone);
+			SMOKCon2Tier=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON2", excelLabel.Contact_Tier);
+			SMOKCon2ContactEmail=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON2", excelLabel.Contact_EmailId);
 
 
-			SMOKCon4FirstName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON4", excelLabel.Contact_FirstName);
-			SMOKCon4LastName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON4", excelLabel.Contact_LastName);
-			SMOKCon4InstitutionName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON4", excelLabel.Institutions_Name);
-			SMOKCon4Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON4", excelLabel.Phone);
-			SMOKCon4Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON4", excelLabel.Contact_Tier);
-			SMOKCon4ContactEmail=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON4", excelLabel.Contact_EmailId);
+			
+			SMOKCon3FirstName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON3", excelLabel.Contact_FirstName);
+			SMOKCon3LastName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON3", excelLabel.Contact_LastName);
+			SMOKCon3InstitutionName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON3", excelLabel.Institutions_Name);
+			SMOKCon3Phone=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON3", excelLabel.Phone);
+			SMOKCon3Tier=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON3", excelLabel.Contact_Tier);
+			SMOKCon3ContactEmail=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON3", excelLabel.Contact_EmailId);
 
-			SmokeToggleCheck1TabName=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "SMOKETOGGLE1", excelLabel.TabName);
-			SmokeToggleCheck1ItemName=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "SMOKETOGGLE1", excelLabel.Item);;
-			SmokeToggleCheck1RelatedTab=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "SMOKETOGGLE1", excelLabel.RelatedTab);
-			SmokeToggleCheck1ToggleButtons=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "SMOKETOGGLE1", excelLabel.ToggleButton);
-			SmokeToggleCheck1ColumnName=ExcelUtils.readData(phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "SMOKETOGGLE1", excelLabel.Column_Name);
-
-
-			SMOKCon5FirstName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON5", excelLabel.Contact_FirstName);
-			SMOKCon5LastName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON5", excelLabel.Contact_LastName);
-			SMOKCon5InstitutionName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON5", excelLabel.Institutions_Name);
-			SMOKCon5Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON5", excelLabel.Phone);
-			SMOKCon5Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON5", excelLabel.Contact_Tier);
-			SMOKCon5ContactEmail=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON5", excelLabel.Contact_EmailId);
+			
+			SMOKCon4FirstName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON4", excelLabel.Contact_FirstName);
+			SMOKCon4LastName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON4", excelLabel.Contact_LastName);
+			SMOKCon4InstitutionName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON4", excelLabel.Institutions_Name);
+			SMOKCon4Phone=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON4", excelLabel.Phone);
+			SMOKCon4Tier=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON4", excelLabel.Contact_Tier);
+			SMOKCon4ContactEmail=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON4", excelLabel.Contact_EmailId);
 
 
-			SMOKCon6FirstName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON6", excelLabel.Contact_FirstName);
-			SMOKCon6LastName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON6", excelLabel.Contact_LastName);
-			SMOKCon6InstitutionName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON6", excelLabel.Institutions_Name);
-			SMOKCon6Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON6", excelLabel.Phone);
-			SMOKCon6Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON6", excelLabel.Contact_Tier);
-			SMOKCon6ContactEmail=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON6", excelLabel.Contact_EmailId);
+			SmokeToggleCheck1TabName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "SMOKETOGGLE1", excelLabel.TabName);
+			SmokeToggleCheck1ItemName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "SMOKETOGGLE1", excelLabel.Item);;
+			SmokeToggleCheck1RelatedTab=ExcelUtils.readData(wb,phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "SMOKETOGGLE1", excelLabel.RelatedTab);
+			SmokeToggleCheck1ToggleButtons=ExcelUtils.readData(wb,phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "SMOKETOGGLE1", excelLabel.ToggleButton);
+			SmokeToggleCheck1ColumnName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"ToggleButtonCheck",excelLabel.Variable_Name, "SMOKETOGGLE1", excelLabel.Column_Name);
 
 
-			SMOKCon7FirstName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON7", excelLabel.Contact_FirstName);
-			SMOKCon7LastName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON7", excelLabel.Contact_LastName);
-			SMOKCon7InstitutionName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON7", excelLabel.Institutions_Name);
-			SMOKCon7Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON7", excelLabel.Phone);
-			SMOKCon7Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON7", excelLabel.Contact_Tier);
-			SMOKCon7ContactEmail=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON7", excelLabel.Contact_EmailId);
+			
+			SMOKCon5FirstName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON5", excelLabel.Contact_FirstName);
+			SMOKCon5LastName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON5", excelLabel.Contact_LastName);
+			SMOKCon5InstitutionName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON5", excelLabel.Institutions_Name);
+			SMOKCon5Phone=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON5", excelLabel.Phone);
+			SMOKCon5Tier=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON5", excelLabel.Contact_Tier);
+			SMOKCon5ContactEmail=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON5", excelLabel.Contact_EmailId);
+
+			
+			SMOKCon6FirstName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON6", excelLabel.Contact_FirstName);
+			SMOKCon6LastName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON6", excelLabel.Contact_LastName);
+			SMOKCon6InstitutionName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON6", excelLabel.Institutions_Name);
+			SMOKCon6Phone=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON6", excelLabel.Phone);
+			SMOKCon6Tier=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON6", excelLabel.Contact_Tier);
+			SMOKCon6ContactEmail=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON6", excelLabel.Contact_EmailId);
+
+			
+			SMOKCon7FirstName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON7", excelLabel.Contact_FirstName);
+			SMOKCon7LastName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON7", excelLabel.Contact_LastName);
+			SMOKCon7InstitutionName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON7", excelLabel.Institutions_Name);
+			SMOKCon7Phone=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON7", excelLabel.Phone);
+			SMOKCon7Tier=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON7", excelLabel.Contact_Tier);
+			SMOKCon7ContactEmail=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON7", excelLabel.Contact_EmailId);
+
+			
+			SMOKCon8FirstName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON8", excelLabel.Contact_FirstName);
+			SMOKCon8LastName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON8", excelLabel.Contact_LastName);
+			SMOKCon8InstitutionName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON8", excelLabel.Institutions_Name);
+			SMOKCon8Phone=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON8", excelLabel.Phone);
+			SMOKCon8Tier=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON8", excelLabel.Contact_Tier);
+			SMOKCon8ContactEmail=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON8", excelLabel.Contact_EmailId);
+
+			
+			SMOKCon9FirstName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON9", excelLabel.Contact_FirstName);
+			SMOKCon9LastName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON9", excelLabel.Contact_LastName);
+			SMOKCon9InstitutionName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON9", excelLabel.Institutions_Name);
+			SMOKCon9Phone=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON9", excelLabel.Phone);
+			SMOKCon9Tier=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON9", excelLabel.Contact_Tier);
 
 
-			SMOKCon8FirstName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON8", excelLabel.Contact_FirstName);
-			SMOKCon8LastName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON8", excelLabel.Contact_LastName);
-			SMOKCon8InstitutionName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON8", excelLabel.Institutions_Name);
-			SMOKCon8Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON8", excelLabel.Phone);
-			SMOKCon8Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON8", excelLabel.Contact_Tier);
-			SMOKCon8ContactEmail=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON8", excelLabel.Contact_EmailId);
-
-
-			SMOKCon9FirstName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON9", excelLabel.Contact_FirstName);
-			SMOKCon9LastName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON9", excelLabel.Contact_LastName);
-			SMOKCon9InstitutionName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON9", excelLabel.Institutions_Name);
-			SMOKCon9Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON9", excelLabel.Phone);
-			SMOKCon9Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON9", excelLabel.Contact_Tier);
-
-			SMOKCon10FirstName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON10", excelLabel.Contact_FirstName);
-			SMOKCon10LastName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON10", excelLabel.Contact_LastName);
-			SMOKCon10InstitutionName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON10", excelLabel.Institutions_Name);
-			SMOKCon10Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON10", excelLabel.Phone);
-			SMOKCon10Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON10", excelLabel.Contact_Tier);
+			SMOKCon10FirstName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON10", excelLabel.Contact_FirstName);
+			SMOKCon10LastName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON10", excelLabel.Contact_LastName);
+			SMOKCon10InstitutionName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON10", excelLabel.Institutions_Name);
+			SMOKCon10Phone=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON10", excelLabel.Phone);
+			SMOKCon10Tier=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKCON10", excelLabel.Contact_Tier);
 
 
 			//deal
-			SMOKDeal1DealName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal1", excelLabel.Deal_Name);
-			SMOKDeal1CompanyName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal1", excelLabel.Company_Name);
-			SMOKDeal1SourceFirm=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal1", excelLabel.Source_Firm);
-			SMOKDeal1Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal1", excelLabel.Stage);
-			SMOKDeal1SourceContact=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal1", excelLabel.Source_Contact);
-			SMOKDeal1PipelineComments=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal1", excelLabel.Pipeline_Comments);
-			SMOKDeal1LogInDate=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal1", excelLabel.Log_In_Date);
-			SMOKDeal1InvestmentSize=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal1", excelLabel.Investment_Size);
-			SMOKDeal1UpdatedInvestmentSize=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal1", excelLabel.Updated_Investment_Size);
+			SMOKDeal1DealName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal1", excelLabel.Deal_Name);
+			SMOKDeal1CompanyName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal1", excelLabel.Company_Name);
+			SMOKDeal1SourceFirm=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal1", excelLabel.Source_Firm);
+			SMOKDeal1Stage=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal1", excelLabel.Stage);
+			SMOKDeal1SourceContact=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal1", excelLabel.Source_Contact);
+			SMOKDeal1PipelineComments=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal1", excelLabel.Pipeline_Comments);
+			SMOKDeal1LogInDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal1", excelLabel.Log_In_Date);
+			SMOKDeal1InvestmentSize=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal1", excelLabel.Investment_Size);
+			SMOKDeal1UpdatedInvestmentSize=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal1", excelLabel.Updated_Investment_Size);
 
 
-			SMOKDeal2DealName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal2", excelLabel.Deal_Name);
-			SMOKDeal2CompanyName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal2", excelLabel.Company_Name);
-			SMOKDeal2SourceFirm=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal2", excelLabel.Source_Firm);
-			SMOKDeal2Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal2", excelLabel.Stage);
-			SMOKDeal2SourceContact=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal2", excelLabel.Source_Contact);
-			SMOKDeal2LogInDate=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal2", excelLabel.Log_In_Date);
-			SMOKDeal2InvestmentSize=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal2", excelLabel.Investment_Size);
-			SMOKDeal2UpdatedInvestmentSize=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal2", excelLabel.Updated_Investment_Size);
-
-			SMOKDeal3DealName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal3", excelLabel.Deal_Name);
-			SMOKDeal3CompanyName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal3", excelLabel.Company_Name);
-			SMOKDeal3SourceFirm=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal3", excelLabel.Source_Firm);
-			SMOKDeal3Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal3", excelLabel.Stage);
-			SMOKDeal3LogInDate=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal3", excelLabel.Log_In_Date);
-			SMOKDeal3InvestmentSize=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal3", excelLabel.Investment_Size);
+			
+			SMOKDeal2DealName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal2", excelLabel.Deal_Name);
+			SMOKDeal2CompanyName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal2", excelLabel.Company_Name);
+			SMOKDeal2SourceFirm=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal2", excelLabel.Source_Firm);
+			SMOKDeal2Stage=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal2", excelLabel.Stage);
+			SMOKDeal2SourceContact=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal2", excelLabel.Source_Contact);
+			SMOKDeal2LogInDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal2", excelLabel.Log_In_Date);
+			SMOKDeal2InvestmentSize=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal2", excelLabel.Investment_Size);
+			SMOKDeal2UpdatedInvestmentSize=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKSDGDeal2", excelLabel.Updated_Investment_Size);
 
 
-			SMOKDeal4DealName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal4", excelLabel.Deal_Name);
-			SMOKDeal4CompanyName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal4", excelLabel.Company_Name);
-			SMOKDeal4SourceFirm=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal4", excelLabel.Source_Firm);
-			SMOKDeal4Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal4", excelLabel.Stage);
-			SMOKDeal4LogInDate=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal4", excelLabel.Log_In_Date);
-			SMOKDeal4InvestmentSize=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal4", excelLabel.Investment_Size);
+			SMOKDeal3DealName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal3", excelLabel.Deal_Name);
+			SMOKDeal3CompanyName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal3", excelLabel.Company_Name);
+			SMOKDeal3SourceFirm=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal3", excelLabel.Source_Firm);
+			SMOKDeal3Stage=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal3", excelLabel.Stage);
+			SMOKDeal3LogInDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal3", excelLabel.Log_In_Date);
+			SMOKDeal3InvestmentSize=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal3", excelLabel.Investment_Size);
 
-			SMOKDeal5DealName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal5", excelLabel.Deal_Name);
-			SMOKDeal5CompanyName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal5", excelLabel.Company_Name);
-			SMOKDeal5SourceFirm=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal5", excelLabel.Source_Firm);
-			SMOKDeal5Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal5", excelLabel.Stage);
-			SMOKDeal5LogInDate=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal5", excelLabel.Log_In_Date);
-			SMOKDeal5InvestmentSize=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal5", excelLabel.Investment_Size);
 
-			SMOKDeal6DealName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal6", excelLabel.Deal_Name);
-			SMOKDeal6CompanyName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal6", excelLabel.Company_Name);
-			SMOKDeal6SourceFirm=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal6", excelLabel.Source_Firm);
-			SMOKDeal6Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal6", excelLabel.Stage);
-			SMOKDeal6LogInDate=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal6", excelLabel.Log_In_Date);
-			SMOKDeal6InvestmentSize=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal6", excelLabel.Investment_Size);
+			
+			SMOKDeal4DealName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal4", excelLabel.Deal_Name);
+			SMOKDeal4CompanyName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal4", excelLabel.Company_Name);
+			SMOKDeal4SourceFirm=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal4", excelLabel.Source_Firm);
+			SMOKDeal4Stage=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal4", excelLabel.Stage);
+			SMOKDeal4LogInDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal4", excelLabel.Log_In_Date);
+			SMOKDeal4InvestmentSize=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal4", excelLabel.Investment_Size);
 
-			SMOKDeal7DealName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal7", excelLabel.Deal_Name);
-			SMOKDeal7CompanyName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal7", excelLabel.Company_Name);
-			SMOKDeal7SourceFirm=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal7", excelLabel.Source_Firm);
-			SMOKDeal7Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal7", excelLabel.Stage);
-			SMOKDeal7LogInDate=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal7", excelLabel.Log_In_Date);
-			SMOKDeal7InvestmentSize=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal7", excelLabel.Investment_Size);
 
-			SMOKDeal8DealName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal8", excelLabel.Deal_Name);
-			SMOKDeal8CompanyName=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal8", excelLabel.Company_Name);
-			SMOKDeal8SourceFirm=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal8", excelLabel.Source_Firm);
-			SMOKDeal8Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal8", excelLabel.Stage);
-			SMOKDeal8LogInDate=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal8", excelLabel.Log_In_Date);
-			SMOKDeal8InvestmentSize=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal8", excelLabel.Investment_Size);
+			SMOKDeal5DealName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal5", excelLabel.Deal_Name);
+			SMOKDeal5CompanyName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal5", excelLabel.Company_Name);
+			SMOKDeal5SourceFirm=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal5", excelLabel.Source_Firm);
+			SMOKDeal5Stage=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal5", excelLabel.Stage);
+			SMOKDeal5LogInDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal5", excelLabel.Log_In_Date);
+			SMOKDeal5InvestmentSize=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal5", excelLabel.Investment_Size);
+
+			SMOKDeal6DealName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal6", excelLabel.Deal_Name);
+			SMOKDeal6CompanyName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal6", excelLabel.Company_Name);
+			SMOKDeal6SourceFirm=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal6", excelLabel.Source_Firm);
+			SMOKDeal6Stage=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal6", excelLabel.Stage);
+			SMOKDeal6LogInDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal6", excelLabel.Log_In_Date);
+			SMOKDeal6InvestmentSize=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal6", excelLabel.Investment_Size);
+
+			SMOKDeal7DealName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal7", excelLabel.Deal_Name);
+			SMOKDeal7CompanyName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal7", excelLabel.Company_Name);
+			SMOKDeal7SourceFirm=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal7", excelLabel.Source_Firm);
+			SMOKDeal7Stage=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal7", excelLabel.Stage);
+			SMOKDeal7LogInDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal7", excelLabel.Log_In_Date);
+			SMOKDeal7InvestmentSize=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal7", excelLabel.Investment_Size);
+
+			SMOKDeal8DealName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal8", excelLabel.Deal_Name);
+			SMOKDeal8CompanyName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal8", excelLabel.Company_Name);
+			SMOKDeal8SourceFirm=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal8", excelLabel.Source_Firm);
+			SMOKDeal8Stage=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal8", excelLabel.Stage);
+			SMOKDeal8LogInDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal8", excelLabel.Log_In_Date);
+			SMOKDeal8InvestmentSize=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKDeal8", excelLabel.Investment_Size);
 
 
 			//fund
-			SMOKFund1FundName=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund1", excelLabel.Fund_Name);
-			SMOKFund1FundType=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund1", excelLabel.Fund_Type);
-			SMOKFund1VintageYear=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund1", excelLabel.Vintage_Year);
-			SMOKFund1InvestmentCategory=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund1", excelLabel.Investment_Category);
+			SMOKFund1FundName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund1", excelLabel.Fund_Name);
+			SMOKFund1FundType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund1", excelLabel.Fund_Type);
+			SMOKFund1VintageYear=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund1", excelLabel.Vintage_Year);
+			SMOKFund1InvestmentCategory=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund1", excelLabel.Investment_Category);
 
-			SMOKFund2FundName=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund2", excelLabel.Fund_Name);
-			SMOKFund2FundType=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund2", excelLabel.Fund_Type);
-			SMOKFund2VintageYear=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund2", excelLabel.Vintage_Year);
-			SMOKFund2InvestmentCategory=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund2", excelLabel.Investment_Category);
+			SMOKFund2FundName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund2", excelLabel.Fund_Name);
+			SMOKFund2FundType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund2", excelLabel.Fund_Type);
+			SMOKFund2VintageYear=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund2", excelLabel.Vintage_Year);
+			SMOKFund2InvestmentCategory=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund2", excelLabel.Investment_Category);
 
-			SMOKFund3FundName=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund3", excelLabel.Fund_Name);
-			SMOKFund3FundType=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund3", excelLabel.Fund_Type);
-			SMOKFund3VintageYear=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund3", excelLabel.Vintage_Year);
-			SMOKFund3InvestmentCategory=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund3", excelLabel.Investment_Category);
+			SMOKFund3FundName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund3", excelLabel.Fund_Name);
+			SMOKFund3FundType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund3", excelLabel.Fund_Type);
+			SMOKFund3VintageYear=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund3", excelLabel.Vintage_Year);
+			SMOKFund3InvestmentCategory=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKFund3", excelLabel.Investment_Category);
 
 			//FR
-			SMOKFR1FundraisingName=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKFRSDG1", excelLabel.FundRaising_Name);
-			SMOKFR1FundName=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKFRSDG1", excelLabel.Fund_Name);
-			SMOKFR1InstitutionName=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKFRSDG1", excelLabel.Institutions_Name);
-			SMOKFR1Satge=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKFRSDG1", excelLabel.Stage);
-			SMOKFR1Closing=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKFRSDG1", excelLabel.Closing);
-			SMOKFR1InvestmentLikelyAmountMN=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKFRSDG1", excelLabel.Investment_Likely_Amount);
-			SMOKFR1Note=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKFRSDG1", excelLabel.Notes);
 
-			SMOKFR2FundraisingName=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKFR2", excelLabel.FundRaising_Name);
-			SMOKFR2FundName=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKFR2", excelLabel.Fund_Name);
-			SMOKFR2InstitutionName=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKFR2", excelLabel.Institutions_Name);
-
+			SMOKFR1FundraisingName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKFRSDG1", excelLabel.FundRaising_Name);
+			SMOKFR1FundName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKFRSDG1", excelLabel.Fund_Name);
+			SMOKFR1InstitutionName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKFRSDG1", excelLabel.Institutions_Name);
+			SMOKFR1Satge=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKFRSDG1", excelLabel.Stage);
+			SMOKFR1Closing=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKFRSDG1", excelLabel.Closing);
+			SMOKFR1InvestmentLikelyAmountMN=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKFRSDG1", excelLabel.Investment_Likely_Amount);
+			SMOKFR1Note=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKFRSDG1", excelLabel.Notes);
+			
+			SMOKFR2FundraisingName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKFR2", excelLabel.FundRaising_Name);
+			SMOKFR2FundName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKFR2", excelLabel.Fund_Name);
+			SMOKFR2InstitutionName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKFR2", excelLabel.Institutions_Name);
+			
 			//task
-			SMOKTask1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask1", excelLabel.Status);
-			SMOKTask1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask1", excelLabel.Subject);
-			SMOKTask1Name=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask1", excelLabel.Name);
-			SMOKTask1DueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask1", excelLabel.Due_Date);
+			SMOKTask1Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask1", excelLabel.Status);
+			SMOKTask1Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask1", excelLabel.Subject);
+			SMOKTask1Name=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask1", excelLabel.Name);
+			SMOKTask1DueDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask1", excelLabel.Due_Date);
+			
+			SMOKTask2Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask2", excelLabel.Status);
+			SMOKTask2Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask2", excelLabel.Subject);
+			SMOKTask2Name=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask2", excelLabel.Name);
+			SMOKTask2DueDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask2", excelLabel.Due_Date);
 
-			SMOKTask2Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask2", excelLabel.Status);
-			SMOKTask2Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask2", excelLabel.Subject);
-			SMOKTask2Name=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask2", excelLabel.Name);
-			SMOKTask2DueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask2", excelLabel.Due_Date);
+			SMOKTask3Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask3", excelLabel.Status);
+			SMOKTask3Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask3", excelLabel.Subject);
+			SMOKTask3Name=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask3", excelLabel.Name);
+			SMOKTask3DueDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask3", excelLabel.Due_Date);
 
-			SMOKTask3Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask3", excelLabel.Status);
-			SMOKTask3Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask3", excelLabel.Subject);
-			SMOKTask3Name=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask3", excelLabel.Name);
-			SMOKTask3DueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask3", excelLabel.Due_Date);
+			SMOKTask4Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask4", excelLabel.Status);
+			SMOKTask4Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask4", excelLabel.Subject);
+			SMOKTask4Name=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask4", excelLabel.Name);
+			SMOKTask4DueDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask4", excelLabel.Due_Date);
 
-			SMOKTask4Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask4", excelLabel.Status);
-			SMOKTask4Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask4", excelLabel.Subject);
-			SMOKTask4Name=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask4", excelLabel.Name);
-			SMOKTask4DueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask4", excelLabel.Due_Date);
+			SMOKTask5Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask5", excelLabel.Status);
+			SMOKTask5Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask5", excelLabel.Subject);
+			SMOKTask5Name=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask5", excelLabel.Name);
+			SMOKTask5DueDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask5", excelLabel.Due_Date);
 
-			SMOKTask5Status=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask5", excelLabel.Status);
-			SMOKTask5Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask5", excelLabel.Subject);
-			SMOKTask5Name=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask5", excelLabel.Name);
-			SMOKTask5DueDate=ExcelUtils.readData(phase1DataSheetFilePath,"Task1",excelLabel.Variable_Name, "SMOKTask5", excelLabel.Due_Date);
-
-			SmokeReport2FolderName=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport2", excelLabel.Report_Folder_Name);
-			SmokeReport2Name=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport2", excelLabel.Report_Name);	
-			SmokeReport2Type=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport2", excelLabel.Select_Report_Type);
-			SmokeReport2Show=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport2", excelLabel.Show);
-			SmokeReport2Range=ExcelUtils.readData(phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport2", excelLabel.Range);
+			SmokeReport2FolderName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport2", excelLabel.Report_Folder_Name);
+			SmokeReport2Name=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport2", excelLabel.Report_Name);	
+			SmokeReport2Type=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport2", excelLabel.Select_Report_Type);
+			SmokeReport2Show=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport2", excelLabel.Show);
+			SmokeReport2Range=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport2", excelLabel.Range);
 
 
 			//event
-			SMOKEvent1Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent1", excelLabel.Subject);
-			SMOKEvent1StartDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent1", excelLabel.Start_Date);
-			SMOKEvent1Name=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent1", excelLabel.Name);
-			SMOKEvent1EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent1", excelLabel.End_Date);
+			SMOKEvent1Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent1", excelLabel.Subject);
+			SMOKEvent1StartDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent1", excelLabel.Start_Date);
+			SMOKEvent1Name=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent1", excelLabel.Name);
+			SMOKEvent1EndDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent1", excelLabel.End_Date);
 
-			SMOKEvent2Subject=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent2", excelLabel.Subject);
-			SMOKEvent2StartDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent2", excelLabel.Start_Date);
-			SMOKEvent2Name=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent2", excelLabel.Name);
-			SMOKEvent2EndDate=ExcelUtils.readData(phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent2", excelLabel.End_Date);
-
-
-			SmokeDealIns1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEDEALINS1", excelLabel.Institutions_Name);
-			SmokeDealIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEDEALINS1", excelLabel.Record_Type);
-
-			SmokeDealIns2=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEDEALINS2", excelLabel.Institutions_Name);
-			SmokeDealIns2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEDEALINS2", excelLabel.Record_Type);
-
-			SmokePFIns1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEPFINS1", excelLabel.Institutions_Name);
-			SmokePFIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEPFINS1", excelLabel.Record_Type);
-
-			SmokePFIns2=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEPFINS2", excelLabel.Institutions_Name);
-			SmokePFIns2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEPFINS2", excelLabel.Record_Type);
-
-			SmokeFSIns1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEFSINS1", excelLabel.Institutions_Name);
-			SmokeFSIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEFSINS1", excelLabel.Record_Type);
-
-			FS_Object6=ExcelUtils.readData(phase1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS6", excelLabel.Object_Name);
-			FS_FieldSetLabel6=ExcelUtils.readData(phase1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS6", excelLabel.Field_Set_Label);
-			FS_NameSpacePrefix6=ExcelUtils.readData(phase1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS6", excelLabel.NameSpace_PreFix);
-			FS_FieldsName6=ExcelUtils.readData(phase1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS6", excelLabel.Fields_Name);
-
-			SmokeFRIns1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEFRINS1", excelLabel.Institutions_Name);
-			SmokeFRIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEFRINS1", excelLabel.Record_Type);
-
-			SmokeCdIns1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECDINS1", excelLabel.Institutions_Name);
-			SmokeCdIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECDINS1", excelLabel.Record_Type);
-			SmokeCdIns1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECDINS1", excelLabel.Status);
-
-			SmokeCdIns2=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECDINS2", excelLabel.Institutions_Name);
-			SmokeCdIns2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECDINS2", excelLabel.Record_Type);
-			SmokeCdIns2Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECDINS2", excelLabel.Status);
-
-			SmokeDealContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEDEALCON1", excelLabel.Contact_FirstName);
-			SmokeDealContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEDEALCON1", excelLabel.Contact_LastName);
-			SmokeDealContact1Inst=SmokeDealIns2;
-			SmokeDealContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEDEALCON1", excelLabel.Contact_EmailId);
-			SmokeDealContact1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEDEALCON1", excelLabel.Record_Type);
-
-			SmokePFContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEPFCON1", excelLabel.Contact_FirstName);
-			SmokePFContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEPFCON1", excelLabel.Contact_LastName);
-			SmokePFContact1Inst=SmokePFIns2;
-			SmokePFContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEPFCON1", excelLabel.Contact_EmailId);
-			SmokePFContact1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEPFCON1", excelLabel.Record_Type);
+			SMOKEvent2Subject=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent2", excelLabel.Subject);
+			SMOKEvent2StartDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent2", excelLabel.Start_Date);
+			SMOKEvent2Name=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent2", excelLabel.Name);
+			SMOKEvent2EndDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Events",excelLabel.Variable_Name, "SMOKEvent2", excelLabel.End_Date);
 
 
-			SmokeDeal1=SmokeDealIns1+ "1121";
-			SmokeDeal1CompanyName=SmokeDealIns1;
-			SmokeDeal1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKEDEAL1", excelLabel.Record_Type);
-			SmokeDeal1Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKEDEAL1", excelLabel.Stage);
+			
+			SmokeDealIns1=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEDEALINS1", excelLabel.Institutions_Name);
+ 			SmokeDealIns1RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEDEALINS1", excelLabel.Record_Type);
+ 
+ 			SmokeDealIns2=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEDEALINS2", excelLabel.Institutions_Name);
+ 			SmokeDealIns2RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEDEALINS2", excelLabel.Record_Type);
+ 
+ 			SmokePFIns1=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEPFINS1", excelLabel.Institutions_Name);
+ 			SmokePFIns1RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEPFINS1", excelLabel.Record_Type);
+ 
+ 			SmokePFIns2=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEPFINS2", excelLabel.Institutions_Name);
+ 			SmokePFIns2RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEPFINS2", excelLabel.Record_Type);
+
+ 			SmokeFSIns1=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEFSINS1", excelLabel.Institutions_Name);
+ 			SmokeFSIns1RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEFSINS1", excelLabel.Record_Type);
+ 
+ 			FS_Object6=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS6", excelLabel.Object_Name);
+			FS_FieldSetLabel6=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS6", excelLabel.Field_Set_Label);
+			FS_NameSpacePrefix6=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS6", excelLabel.NameSpace_PreFix);
+			FS_FieldsName6=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FieldSet",excelLabel.Variable_Name, "FS6", excelLabel.Fields_Name);
+
+ 			SmokeFRIns1=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEFRINS1", excelLabel.Institutions_Name);
+ 			SmokeFRIns1RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEFRINS1", excelLabel.Record_Type);
+ 
+ 			SmokeCdIns1=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECDINS1", excelLabel.Institutions_Name);
+ 			SmokeCdIns1RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECDINS1", excelLabel.Record_Type);
+ 			SmokeCdIns1Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECDINS1", excelLabel.Status);
+ 			
+ 			SmokeCdIns2=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECDINS2", excelLabel.Institutions_Name);
+ 			SmokeCdIns2RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECDINS2", excelLabel.Record_Type);
+ 			SmokeCdIns2Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKECDINS2", excelLabel.Status);
+ 		
+ 			SmokeDealContact1FName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEDEALCON1", excelLabel.Contact_FirstName);
+ 			SmokeDealContact1LName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEDEALCON1", excelLabel.Contact_LastName);
+ 			SmokeDealContact1Inst=SmokeDealIns2;
+ 			SmokeDealContact1EmailID=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEDEALCON1", excelLabel.Contact_EmailId);
+ 			SmokeDealContact1RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEDEALCON1", excelLabel.Record_Type);
+ 
+ 			SmokePFContact1FName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEPFCON1", excelLabel.Contact_FirstName);
+ 			SmokePFContact1LName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEPFCON1", excelLabel.Contact_LastName);
+ 			SmokePFContact1Inst=SmokePFIns2;
+ 			SmokePFContact1EmailID=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEPFCON1", excelLabel.Contact_EmailId);
+ 			SmokePFContact1RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEPFCON1", excelLabel.Record_Type);
+ 
+ 			
+ 			SmokeDeal1=SmokeDealIns1+ "1121";
+ 			SmokeDeal1CompanyName=SmokeDealIns1;
+ 			SmokeDeal1RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKEDEAL1", excelLabel.Record_Type);
+ 			SmokeDeal1Stage=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKEDEAL1", excelLabel.Stage);
+ 
+ 			
+ 			SmokeDeal2=SmokePFIns1+ "2222";
+ 			SmokeDeal2CompanyName=SmokePFIns1;
+ 			SmokeDeal2RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKEDEAL2", excelLabel.Record_Type);
+ 			SmokeDeal2Stage=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKEDEAL2", excelLabel.Stage);
+ 
+ 			
+ 			SmokeWlIns1RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEWLINS1", excelLabel.Record_Type);
+ 			SmokeWlIns1=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEWLINS1", excelLabel.Institutions_Name);
+ 			SmokeWlIns1Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEWLINS1", excelLabel.Status);
+ 		
+ 			SmokeWlIns2RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEWLINS2", excelLabel.Record_Type);
+ 			SmokeWlIns2=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEWLINS2", excelLabel.Institutions_Name);
+ 			SmokeWlIns2Status=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEWLINS2", excelLabel.Status);
+ 		
+ 			SmokeWlContact1FName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEWLCON1", excelLabel.Contact_FirstName);
+ 			SmokeWlContact1LName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEWLCON1", excelLabel.Contact_LastName);
+ 			SmokeWlContact1Inst=SmokeWlIns1;
+ 			SmokeWlContact1EmailID=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEWLCON1", excelLabel.Contact_EmailId);
+ 			SmokeWlContact1Tier=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEWLCON1", excelLabel.Contact_Tier);
+
+ 			
+ 			SmokeWlContact2FName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEWLCON2", excelLabel.Contact_FirstName);
+ 			SmokeWlContact2LName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEWLCON2", excelLabel.Contact_LastName);
+ 			SmokeWlContact2Inst=SmokeWlIns2;
+ 			SmokeWlContact2EmailID=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEWLCON2", excelLabel.Contact_EmailId);
+ 			SmokeWlContact2Tier=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEWLCON2", excelLabel.Contact_Tier);
+
+ 			
+ 			SmokeFund3=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFUND3", excelLabel.Fund_Name);
+			SmokeFund3Type=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFUND3", excelLabel.Fund_Type);
+			SmokeFund3Category=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFUND3", excelLabel.Investment_Category);
+			SmokeFund3RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFUND3", excelLabel.Record_Type);
 
 
-			SmokeDeal2=SmokePFIns1+ "2222";
-			SmokeDeal2CompanyName=SmokePFIns1;
-			SmokeDeal2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKEDEAL2", excelLabel.Record_Type);
-			SmokeDeal2Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Deal",excelLabel.Variable_Name, "SMOKEDEAL2", excelLabel.Stage);
+			SmokeFund4=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFUND4", excelLabel.Fund_Name);
+			SmokeFund4Type=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFUND4", excelLabel.Fund_Type);
+			SmokeFund4Category=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFUND4", excelLabel.Investment_Category);
+			SmokeFund4RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFUND4", excelLabel.Record_Type);
+
+			SmokeFRFund1=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFRFUND1", excelLabel.Fund_Name);
+			SmokeFRFund1Type=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFRFUND1", excelLabel.Fund_Type);
+			SmokeFRFund1Category=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFRFUND1", excelLabel.Investment_Category);
+			SmokeFRFund1RecordType=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFRFUND1", excelLabel.Record_Type);
 
 
-			SmokeWlIns1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEWLINS1", excelLabel.Record_Type);
-			SmokeWlIns1=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEWLINS1", excelLabel.Institutions_Name);
-			SmokeWlIns1Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEWLINS1", excelLabel.Status);
-
-			SmokeWlIns2RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEWLINS2", excelLabel.Record_Type);
-			SmokeWlIns2=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEWLINS2", excelLabel.Institutions_Name);
-			SmokeWlIns2Status=ExcelUtils.readData(phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "SMOKEWLINS2", excelLabel.Status);
-
-			SmokeWlContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEWLCON1", excelLabel.Contact_FirstName);
-			SmokeWlContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEWLCON1", excelLabel.Contact_LastName);
-			SmokeWlContact1Inst=SmokeWlIns1;
-			SmokeWlContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEWLCON1", excelLabel.Contact_EmailId);
-			SmokeWlContact1Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEWLCON1", excelLabel.Contact_Tier);
-
-
-			SmokeWlContact2FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEWLCON2", excelLabel.Contact_FirstName);
-			SmokeWlContact2LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEWLCON2", excelLabel.Contact_LastName);
-			SmokeWlContact2Inst=SmokeWlIns2;
-			SmokeWlContact2EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEWLCON2", excelLabel.Contact_EmailId);
-			SmokeWlContact2Tier=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEWLCON2", excelLabel.Contact_Tier);
-
-
-			SmokeFund3=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFUND3", excelLabel.Fund_Name);
-			SmokeFund3Type=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFUND3", excelLabel.Fund_Type);
-			SmokeFund3Category=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFUND3", excelLabel.Investment_Category);
-			SmokeFund3RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFUND3", excelLabel.Record_Type);
-
-			SmokeFund4=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFUND4", excelLabel.Fund_Name);
-			SmokeFund4Type=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFUND4", excelLabel.Fund_Type);
-			SmokeFund4Category=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFUND4", excelLabel.Investment_Category);
-			SmokeFund4RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFUND4", excelLabel.Record_Type);
-
-			SmokeFRFund1=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFRFUND1", excelLabel.Fund_Name);
-			SmokeFRFund1Type=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFRFUND1", excelLabel.Fund_Type);
-			SmokeFRFund1Category=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFRFUND1", excelLabel.Investment_Category);
-			SmokeFRFund1RecordType=ExcelUtils.readData(phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "SMOKEFRFUND1", excelLabel.Record_Type);
-
-
-			SmokeFR1=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKEFR1", excelLabel.FundRaising_Name);
+			
+			SmokeFR1=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKEFR1", excelLabel.FundRaising_Name);
 			SmokeFR1Fund=SmokeFund3;
 			SmokeFR1LegalName=SmokeCTIns;
-			SmokeFR1Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKEFR2", excelLabel.Stage);
-
-			SmokeFR2=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKEFR2", excelLabel.FundRaising_Name);
+			SmokeFR1Stage=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKEFR2", excelLabel.Stage);
+			
+			SmokeFR2=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKEFR2", excelLabel.FundRaising_Name);
 			SmokeFR2Fund=SmokeFRFund1;
 			SmokeFR2LegalName=SmokeFRIns1;
-			SmokeFR2Stage=ExcelUtils.readData(phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKEFR2", excelLabel.Stage);
+			SmokeFR2Stage=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "SMOKEFR2", excelLabel.Stage);
+			
+
+			SMOKPartnership1Name=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Partnerships",excelLabel.Variable_Name, "SMOKPARTNERSHIP1", excelLabel.PartnerShip_Name);
+			SMOKPartnership1FundName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Partnerships",excelLabel.Variable_Name, "SMOKPARTNERSHIP1", excelLabel.Fund_Name);
+			
+			SMOKCommitment1LimitedPartner=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "SMOKCOMM1", excelLabel.Limited_Partner);
+			SMOKCommitment1PartnershipName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "SMOKCOMM1", excelLabel.PartnerShip_Name);
+			SMOKCommitment1FinalCommitmentDate=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "SMOKCOMM1", excelLabel.Final_Commitment_Date);
+			SMOKCommitment1CommitmentAmount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "SMOKCOMM1", excelLabel.Commitment_Amount);
+			SMOKCommitment1CommitmentId=ExcelUtils.readData(wb,phase1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "SMOKCOMM1", excelLabel.Commitment_ID);
 
 
-			SMOKPartnership1Name=ExcelUtils.readData(phase1DataSheetFilePath,"Partnerships",excelLabel.Variable_Name, "SMOKPARTNERSHIP1", excelLabel.PartnerShip_Name);
-			SMOKPartnership1FundName=ExcelUtils.readData(phase1DataSheetFilePath,"Partnerships",excelLabel.Variable_Name, "SMOKPARTNERSHIP1", excelLabel.Fund_Name);
-
-			SMOKCommitment1LimitedPartner=ExcelUtils.readData(phase1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "SMOKCOMM1", excelLabel.Limited_Partner);
-			SMOKCommitment1PartnershipName=ExcelUtils.readData(phase1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "SMOKCOMM1", excelLabel.PartnerShip_Name);
-			SMOKCommitment1FinalCommitmentDate=ExcelUtils.readData(phase1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "SMOKCOMM1", excelLabel.Final_Commitment_Date);
-			SMOKCommitment1CommitmentAmount=ExcelUtils.readData(phase1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "SMOKCOMM1", excelLabel.Commitment_Amount);
-			SMOKCommitment1CommitmentId=ExcelUtils.readData(phase1DataSheetFilePath,"Commitments",excelLabel.Variable_Name, "SMOKCOMM1", excelLabel.Commitment_ID);
-
-
-
-			SmokeMI1=ExcelUtils.readData(phase1DataSheetFilePath,"MI",excelLabel.Variable_Name, "SmokeMI1", excelLabel.Marketing_InitiativeName);
-
-
-
-
+		
+			SmokeMI1=ExcelUtils.readData(wb,phase1DataSheetFilePath,"MI",excelLabel.Variable_Name, "SmokeMI1", excelLabel.Marketing_InitiativeName);
+			
+			try {
+				fis.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				wb.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
 			break;
 
 		case "FSTG":
@@ -3098,6 +3143,7 @@ public class CommonVariables {
 
 			FSTG_PLField22PageLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGPageLayoutField",excelLabel.Variable_Name, "FieldVar22", excelLabel.Fields_Name);
 
+
 			// FSTG compact layout
 
 			FSTG_CLField1CompactLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGCompactLayoutField",excelLabel.Variable_Name, "FieldVar1", excelLabel.Fields_Name);
@@ -3106,15 +3152,13 @@ public class CommonVariables {
 			FSTG_CLField4CompactLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGCompactLayoutField",excelLabel.Variable_Name, "FieldVar4", excelLabel.Fields_Name);
 			FSTG_CLField5CompactLayoutFields=ExcelUtils.readData(phase1DataSheetFilePath,"FSTGCompactLayoutField",excelLabel.Variable_Name, "FieldVar5", excelLabel.Fields_Name);
 
-
-
-			/**
-			 * @author Ankur Huria
-			 * 	
-			 */
-		case "Module9":
-			FileInputStream fis = null;
-			Workbook wb = null;
+			
+			 /**
+			  * @author Ankur Huria
+			  * 	
+			  */
+			case "Module9":
+				
 			try {
 				fis=new FileInputStream(new File(phase1DataSheetFilePath));
 			} catch (FileNotFoundException e1) {

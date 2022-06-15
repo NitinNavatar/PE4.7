@@ -272,75 +272,76 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 
 		scrollDownThroughWebelement(driver, getFundCommitmentDetailsLabelText(environment, mode, 30), "");
 		//switchToFrame(driver, 10, getCommitmentDetailsFrame(environment, mode, 30));
-		List<WebElement> commitmentIDList=getCommitmentIDList(environment, mode);
+		List<WebElement> fundNamelist=getFundNameList(environment, mode);
 		List<WebElement> commitmentAmountList=getCommitmentAmountList(environment, mode);
 		List<WebElement> LPList=getLimitedPartnerList(environment, mode);
-		List<WebElement> partnershipList=getPartnerShipList(environment, mode);
-		List<WebElement> createdDateList=createdDateList(environment, mode);
-		if(!commitmentIDList.isEmpty()) {
+
+		if(!fundNamelist.isEmpty()) {
 			for (String[] commitmentRowData : commitmentRowRecord) {
-				for(int i=0; i<commitmentIDList.size(); i++) {
-					String id=commitmentIDList.get(i).getText().trim();
-					String amount=	commitmentAmountList.get(i).getText().trim();
+				for(int i=0; i<fundNamelist.size(); i++) {
+					String fund=fundNamelist.get(i).getText().trim();
+					String amount= commitmentAmountList.get(i).getText().trim();
 					String lp = LPList.get(i).getText().trim();
-					String partnership = partnershipList.get(i).getText().trim();
-					String createdDate=createdDateList.get(i).getText().trim();
+
 					String CommitAmount=convertNumberAccordingToFormatWithCurrencySymbol(commitmentRowData[1],"0,000.00");
-					if(commitmentRowData[0].contains(id) && CommitAmount.contains(amount) && commitmentRowData[2].contains(lp) ) {
+
+					if(commitmentRowData[0].contains(fund) && CommitAmount.contains(amount) && commitmentRowData[2].contains(lp) ) {
 						/*&& createdDate.contains(commitmentRowData[5]*/
-						log(LogStatus.INFO, "Commitment ID : "+commitmentRowData[0]+", Commitment Amount :"+commitmentRowData[1]+", LP Name : "+commitmentRowData[2]
+						log(LogStatus.INFO, "Commitment Fund : "+commitmentRowData[0]+", Commitment Amount :"+commitmentRowData[1]+", LP Name : "+commitmentRowData[2]
 								+", created Date : "+commitmentRowData[3]+" is matched ", YesNo.No);
 						break;
 
+
+
 					}else {
-						if(i==commitmentIDList.size()-1) {
-							log(LogStatus.ERROR, "Commitment ID : "+commitmentRowData[0]+", Commitment Amount :"+commitmentRowData[1]+", LP Name : "+commitmentRowData[2]
+						if(i==fundNamelist.size()-1) {
+							log(LogStatus.ERROR, "Commitment Fund : "+commitmentRowData[0]+", Commitment Amount :"+commitmentRowData[1]+", LP Name : "+commitmentRowData[2]
 									+" created Date : "+commitmentRowData[3]+" is not matched ", YesNo.Yes);
-							result.add("Commitment ID : "+commitmentRowData[0]+", Commitment Amount :"+commitmentRowData[1]+", LP Name : "+commitmentRowData[2]
+							result.add("Commitment Fund : "+commitmentRowData[0]+", Commitment Amount :"+commitmentRowData[1]+", LP Name : "+commitmentRowData[2]
 									+",created Date : "+commitmentRowData[3]+" is not matched ");
 						}
 					}
 				}
-				if(commitmentRowData[4]!=null&& !commitmentRowData[4].isEmpty() &&!commitmentRowData[4].isBlank()) {
-					ele=FindElement(driver, xpath, "company name", action.SCROLLANDBOOLEAN, 20);
-					if(ele!=null) {
-						String aa = ele.getText().trim();
-						if(aa.contains(commitmentRowData[4])) {
-							log(LogStatus.INFO, "Company name "+commitmentRowData[4]+" is matched ", YesNo.No);
-						}else {
-							log(LogStatus.ERROR, "Company Name "+commitmentRowData[4]+" is not matched ", YesNo.Yes);
-							result.add("Company Name "+commitmentRowData[4]+" is not matched");
-						}
-					}else {
-						log(LogStatus.ERROR, "Company Name is not visible so cannot verify it ", YesNo.No);
-						result.add("Company Name is not visible so cannot verify it ");
-					}
-				}
+				// if(commitmentRowData[4]!=null&& !commitmentRowData[4].isEmpty() &&!commitmentRowData[4].equalsIgnoreCase("")) {
+				// ele=FindElement(driver, xpath, "company name", action.SCROLLANDBOOLEAN, 20);
+				// if(ele!=null) {
+				// String aa = ele.getText().trim();
+				// if(aa.contains(commitmentRowData[4])) {
+				// log(LogStatus.INFO, "Company name "+commitmentRowData[4]+" is matched ", YesNo.No);
+				// }else {
+				// log(LogStatus.ERROR, "Company Name "+commitmentRowData[4]+" is not matched ", YesNo.Yes);
+				// result.add("Company Name "+commitmentRowData[4]+" is not matched");
+				// }
+				// }else {
+				// log(LogStatus.ERROR, "Company Name is not visible so cannot verify it ", YesNo.No);
+				// result.add("Company Name is not visible so cannot verify it ");
+				// }
+				// }
 
 			}
-			if(totalAmount!=null&& !totalAmount.isEmpty()&&!totalAmount.isBlank()) {
-				totalAmount=convertNumberAccordingToFormatWithCurrencySymbol(totalAmount,"0,000.00");	
-				String xPath="//span[contains(@id,'grid_dealalert-cell-0-')]//a[contains(text(),'"+fundName+"')]/../../following-sibling::span[2]/span[text()='"+totalAmount+"']";
-				ele = FindElement(driver, xPath, "fund name and total amount", action.SCROLLANDBOOLEAN, 20);
-				if(ele!=null) {
-					log(LogStatus.INFO, "fund name "+fundName+" total commitment amount "+totalAmount+" is verified ", YesNo.No);
-				}else {
-					log(LogStatus.ERROR, "fund name "+fundName+" total commitment amount "+totalAmount+" is not verified ", YesNo.No);
-					result.add("fund name "+fundName+" total commitment amount "+totalAmount+" is not verified ");
-				}
-			}else if (fundName!=null) {
-				xpath="//a[text()='Fund Commitments']/ancestor::article//a[text()='"+fundName+"']";
-				ele = FindElement(driver, xpath, "fund name", action.SCROLLANDBOOLEAN, 20);
-				if(ele!=null) {
-					log(LogStatus.INFO, "fund name "+fundName+" is verified ", YesNo.No);
-				}else {
-					log(LogStatus.ERROR, "fund name "+fundName+" is verified ", YesNo.No);
-					result.add("fund name "+fundName+" is verified ");
-				}
-			}
+			// if(totalAmount!=null&& !totalAmount.isEmpty()&&!totalAmount.equalsIgnoreCase("")) {
+			// totalAmount=convertNumberAccordingToFormatWithCurrencySymbol(totalAmount,"0,000.00");
+			// String xPath="//span[contains(@id,'grid_dealalert-cell-0-')]//a[contains(text(),'"+fundName+"')]/../../following-sibling::span[2]/span[text()='"+totalAmount+"']";
+			// ele = FindElement(driver, xPath, "fund name and total amount", action.SCROLLANDBOOLEAN, 20);
+			// if(ele!=null) {
+			// log(LogStatus.INFO, "fund name "+fundName+" total commitment amount "+totalAmount+" is verified ", YesNo.No);
+			// }else {
+			// log(LogStatus.ERROR, "fund name "+fundName+" total commitment amount "+totalAmount+" is not verified ", YesNo.No);
+			// result.add("fund name "+fundName+" total commitment amount "+totalAmount+" is not verified ");
+			// }
+			// }else if (fundName!=null) {
+			// xpath="//a[text()='Fund Commitments']/ancestor::article//a[text()='"+fundName+"']";
+			// ele = FindElement(driver, xpath, "fund name", action.SCROLLANDBOOLEAN, 20);
+			// if(ele!=null) {
+			// log(LogStatus.INFO, "fund name "+fundName+" is verified ", YesNo.No);
+			// }else {
+			// log(LogStatus.ERROR, "fund name "+fundName+" is verified ", YesNo.No);
+			// result.add("fund name "+fundName+" is verified ");
+			// }
+			// }
 		}else {
-			log(LogStatus.ERROR, "Commitment ID list is not visible on institution Page so cannot verify commitment details", YesNo.Yes);
-			result.add("Commitment ID list is not visible on institution Page so cannot verify commitment details");
+			log(LogStatus.ERROR, "Commitment fund list is not visible on institution Page so cannot verify commitment details", YesNo.Yes);
+			result.add("Commitment fund list is not visible on institution Page so cannot verify commitment details");
 		}
 		switchToDefaultContent(driver);
 		return result;
