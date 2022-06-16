@@ -91,11 +91,11 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 	public static int clickRetryCount=0;
 	/********************************************* ENUM **************************************************************/
 
-	
-	
-	
-	
-	
+
+
+
+
+
 	/*****************************************Common Utilities***********************************************************/
 
 	/**
@@ -122,8 +122,8 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 			public Boolean apply(WebDriver driver) {
 				if(isAlertPresent(driver)){
 					AppListeners.appLog.info("Message of the alert: "+switchToAlertAndGetMessage(driver, 10, action.GETTEXT));
-//					switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
-//					driver.navigate().refresh();
+					//					switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+					//					driver.navigate().refresh();
 					return true;
 				}
 				return String.valueOf(((JavascriptExecutor) driver).executeScript("return document.readyState"))
@@ -188,7 +188,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * @author Ankur Rana
 	 * @param driver
@@ -200,16 +200,16 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 	 */
 	public static String getSelectedOptionOfDropDown(WebDriver driver, WebElement element, String elementName, String attributeOrText){
 		if(checkElementVisibility(driver, element, elementName, 60)){
-		Select select=new Select(element);
-		if(attributeOrText.equalsIgnoreCase("text"))
-			return select.getFirstSelectedOption().getText().trim();
-		else
-			return select.getFirstSelectedOption().getAttribute(attributeOrText);
+			Select select=new Select(element);
+			if(attributeOrText.equalsIgnoreCase("text"))
+				return select.getFirstSelectedOption().getText().trim();
+			else
+				return select.getFirstSelectedOption().getAttribute(attributeOrText);
 		} else {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * @author Ankur Rana
 	 * @param driver
@@ -319,7 +319,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		}
 		return true;
 	}
-	
+
 	public static boolean mouseOverClickOperation(WebDriver driver, WebElement webElement) {
 		Actions actions = new Actions(driver);
 		try {
@@ -382,6 +382,24 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		}
 	}
 	
+	public static boolean scrollDownThroughWebelementInCenter(WebDriver driver, WebElement Element, String elementName) {
+		try {
+			JavascriptExecutor j = (JavascriptExecutor)driver;
+			j.executeScript ("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'})", Element);
+			if (elementName != "")
+				System.out.println("Window Scrolled to " + elementName);
+			return true;
+		} catch (Exception e) {
+			if (elementName != "")
+				System.err.println("Can not scrolled Window to " + elementName);
+			return false;
+		}
+	}
+
+	
+	
+	
+	
 	/**
 	 * @author Ankit Jaiswal
 	 * @param driver
@@ -392,15 +410,15 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 	public static String getValueFromElementUsingJavaScript(WebDriver driver, WebElement element,String elementName) {
 		String text =null;
 		try {
-		//text=(String) ((JavascriptExecutor) driver).executeScript("return $('"+Jquery+"')[0].value");
-		text=(String) ((JavascriptExecutor) driver).executeScript("return arguments[0].value;",element);
+			//text=(String) ((JavascriptExecutor) driver).executeScript("return $('"+Jquery+"')[0].value");
+			text=(String) ((JavascriptExecutor) driver).executeScript("return arguments[0].value;",element);
 		}catch (Exception e) {
 			// TODO: handle exception
 			System.err.println("Cannot get the value from Element: "+elementName);
 		}
 		return text;
 	}
-	
+
 	/**
 	 * @author Ankur Rana
 	 * @param filesFromExcel
@@ -446,7 +464,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 							break;
 						} else if (j == listOfFileName.size() - 1) {
 							AppListeners.appLog.info("Document: " + fileName[i] + " is not matched.");
-//							BaseLib.sa.assertTrue(false,"Document: " + fileName[i] + " is not matched.");
+							//							BaseLib.sa.assertTrue(false,"Document: " + fileName[i] + " is not matched.");
 						}
 					}
 				}
@@ -549,7 +567,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		return date;
 
 	}
-	
+
 	/**
 	 * @author Ankur Rana
 	 * @param format
@@ -736,14 +754,14 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 				WebElement ele = null;
 				if(ExcelUtils.readDataFromPropertyFile("Browser").equalsIgnoreCase("IE Edge")){
 					System.out.println("broswer: IE");
-					
+
 					WebDriverWait waitIE=new WebDriverWait(driver, timeout/4);
 					try{
 						waitIE.until(ExpectedConditions.visibilityOf(element));
 						return element;
 					} catch(TimeoutException | NoSuchElementException e){
 						if(wait.until(new Function<WebDriver, Boolean>() {
-							
+
 							@Override
 							public Boolean apply(WebDriver t) {
 								// TODO Auto-generated method stub
@@ -773,7 +791,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 			}
 		} catch (Exception e) {
 			Exception e1=e;
-//			e.printStackTrace();
+			//			e.printStackTrace();
 			BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 			if(bp.getScheduledMaintenancePopUp(5)!=null){
 				bp.getScheduledMaintenanceContinueLink(20).click();
@@ -786,14 +804,14 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 				if(xpath!=null){
 					WebElement ele=FindElement(driver, xpath, elementName, action.BOOLEAN, 10);
 					if(ele!=null){
-							AppListeners.appLog.info("\n\n\n*****Successfully recovered from the stale state.*****\n\n\n");
-							return ele;
+						AppListeners.appLog.info("\n\n\n*****Successfully recovered from the stale state.*****\n\n\n");
+						return ele;
 					} else {
 						AppListeners.appLog.info("\n\n\n\n*****Not able to recover from stale element reference error.******\n\n\n\n");
 					}
 				}
 			}
-//			String[] causes=e.getCause().getMessage().split("(");
+			//			String[] causes=e.getCause().getMessage().split("(");
 			// String[] causes=e.getCause().getMessage().split("(");
 			errorMessage="Element not found: " + elementName + "\nReason: " + e.getMessage() + "\nCause: ";
 			appLog.info("Element not found: " + elementName + "\nReason: " + e.getMessage() + "\nCause: "
@@ -839,10 +857,10 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 				return null;
 			}
 		} catch (Exception e) {
-//			AppListeners.appLog.info("Element not found: " + elementName + "\nReason: " + e.getMessage() + "\nCause: "
-//					+ e.getCause().getMessage());
+			//			AppListeners.appLog.info("Element not found: " + elementName + "\nReason: " + e.getMessage() + "\nCause: "
+			//					+ e.getCause().getMessage());
 			failedMethod(e);
-//			e.printStackTrace();
+			//			e.printStackTrace();
 			//System.out.println("Kindly show this exception to ankur.");
 			return null;
 		}
@@ -870,21 +888,21 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @author Parul Singh
 	 * @description- This method is used to verify whether the button or checkbox is selected or not.
 	 */
 	public static boolean isSelected(WebDriver driver, WebElement element, String elementName) {
-			if (element != null) {
-				return element.isSelected();
-			} else {
-				appLog.info(elementName + " is not visible on this page.");
-				return false;
-			}
+		if (element != null) {
+			return element.isSelected();
+		} else {
+			appLog.info(elementName + " is not visible on this page.");
+			return false;
+		}
 	}
-	
+
 	/**
 	 * @author Ankur Rana
 	 * @param driver
@@ -894,14 +912,14 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 	 * @description scroll the active widget
 	 */
 	public static boolean scrollActiveWidget(WebDriver driver, WebElement widgetScrollingElement, By elementToSearch) {
-//		ThreadSleep(5000);
+		//		ThreadSleep(5000);
 		int widgetTotalScrollingHeight = Integer.parseInt(String.valueOf(((JavascriptExecutor) driver)
 				.executeScript("return arguments[0].scrollHeight", widgetScrollingElement)));
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(0,0)",widgetScrollingElement);
 		int j = 0;
 		for (int i = 0; i <= widgetTotalScrollingHeight / 25; i++) {
 			if (!driver.findElements(elementToSearch).isEmpty()) {
-//				ThreadSleep(1000);
+				//				ThreadSleep(1000);
 				CommonLib.scrollDownThroughWebelement(driver, driver.findElement(elementToSearch), elementToSearch.toString());
 				ThreadSleep(500);
 				break;
@@ -936,7 +954,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		try {
 			if (element != null) {
 				if(action==CommonLib.action.SCROLLANDTHROWEXCEPTION || action==CommonLib.action.SCROLLANDBOOLEAN)
-				scrollDownThroughWebelement(driver, element, elementName);
+					scrollDownThroughWebelement(driver, element, elementName);
 				// ThreadSleep(3000);
 				element.click();
 				if(elementName!=null && !elementName.isEmpty())
@@ -975,7 +993,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 								AppListeners.appLog.info("************Recovered from element overlay problem*************");
 								return true;
 							} catch(Exception e1){
-//								System.out.println("Most Inner Catch");
+								//								System.out.println("Most Inner Catch");
 							}
 						} else {
 							AppListeners.appLog.info("*******Cannot recover from overlay problem**********");
@@ -1008,7 +1026,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		try {
 			if (element != null) {
 				if(action==CommonLib.action.SCROLLANDTHROWEXCEPTION || action==CommonLib.action.SCROLLANDBOOLEAN)
-				scrollDownThroughWebelement(driver, element, elementName);
+					scrollDownThroughWebelement(driver, element, elementName);
 				try{
 					element.clear();
 					appLog.info("Successfully cleared the text box.");
@@ -1025,7 +1043,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 				return false;
 			}
 		} catch (Exception e) {
-//			AppListeners.appLog.info("Cannot enter text in " + elementName + "\nReason: " + e.getMessage());
+			//			AppListeners.appLog.info("Cannot enter text in " + elementName + "\nReason: " + e.getMessage());
 			errorMessage="Cannot enter text in " + elementName + "\nReason: " + e.getMessage();
 			failedMethod(e);
 			if (action == CommonLib.action.THROWEXCEPTION || action == CommonLib.action.SCROLLANDTHROWEXCEPTION)
@@ -1039,8 +1057,8 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		try {
 			if (element != null) {
 				if(action==CommonLib.action.SCROLLANDTHROWEXCEPTION || action==CommonLib.action.SCROLLANDBOOLEAN)
-				scrollDownThroughWebelement(driver, element, elementName);
-				
+					scrollDownThroughWebelement(driver, element, elementName);
+
 				act.moveToElement(element).sendKeys(value).build().perform();;
 				AppListeners.appLog.info("Passed value to element: " + elementName + "\nPassed Value: " + value);
 				return true;
@@ -1051,7 +1069,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 				return false;
 			}
 		} catch (Exception e) {
-//			AppListeners.appLog.info("Cannot enter text in " + elementName + "\nReason: " + e.getMessage());
+			//			AppListeners.appLog.info("Cannot enter text in " + elementName + "\nReason: " + e.getMessage());
 			errorMessage="Cannot enter text in " + elementName + "\nReason: " + e.getMessage();
 			failedMethod(e);
 			if (action == CommonLib.action.THROWEXCEPTION || action == CommonLib.action.SCROLLANDTHROWEXCEPTION)
@@ -1059,15 +1077,15 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 			return false;
 		}
 	}
-	
+
 	public static boolean sendKeysUsingJavaScript(WebDriver driver, WebElement element, String value, String elementName,
 			action action) {
 		JavascriptExecutor js=  (JavascriptExecutor) driver;
 		try {
 			if (element != null) {
 				if(action==CommonLib.action.SCROLLANDTHROWEXCEPTION || action==CommonLib.action.SCROLLANDBOOLEAN)
-				scrollDownThroughWebelement(driver, element, elementName);
-				
+					scrollDownThroughWebelement(driver, element, elementName);
+
 				js.executeScript("arguments[0].value='"+ value +"';", element);
 				AppListeners.appLog.info("Passed value to element: " + elementName + "\nPassed Value: " + value);
 				return true;
@@ -1078,7 +1096,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 				return false;
 			}
 		} catch (Exception e) {
-//			AppListeners.appLog.info("Cannot enter text in " + elementName + "\nReason: " + e.getMessage());
+			//			AppListeners.appLog.info("Cannot enter text in " + elementName + "\nReason: " + e.getMessage());
 			errorMessage="Cannot enter text in " + elementName + "\nReason: " + e.getMessage();
 			failedMethod(e);
 			if (action == CommonLib.action.THROWEXCEPTION || action == CommonLib.action.SCROLLANDTHROWEXCEPTION)
@@ -1086,13 +1104,13 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 			return false;
 		}
 	}
-	
+
 	public static boolean sendKeysAndPressEnter(WebDriver driver, WebElement element, String value, String elementName,
 			action action) {
 		try {
 			if (element != null) {
 				if(action==CommonLib.action.SCROLLANDTHROWEXCEPTION || action==CommonLib.action.SCROLLANDBOOLEAN)
-				scrollDownThroughWebelement(driver, element, elementName);
+					scrollDownThroughWebelement(driver, element, elementName);
 				try{
 					element.clear();
 					appLog.info("Successfully cleared the text box.");
@@ -1109,7 +1127,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 				return false;
 			}
 		} catch (Exception e) {
-//			AppListeners.appLog.info("Cannot enter text in " + elementName + "\nReason: " + e.getMessage());
+			//			AppListeners.appLog.info("Cannot enter text in " + elementName + "\nReason: " + e.getMessage());
 			errorMessage="Cannot enter text in " + elementName + "\nReason: " + e.getMessage();
 			failedMethod(e);
 			if (action == CommonLib.action.THROWEXCEPTION || action == CommonLib.action.SCROLLANDTHROWEXCEPTION)
@@ -1117,16 +1135,16 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 			return false;
 		}
 	}
-	
-	
+
+
 	public static boolean sendKeysWithoutClearingTextBox(WebDriver driver, WebElement element, String value, String elementName,
 			action action) {
 		try {
 			if (element != null) {
 				if(action==CommonLib.action.SCROLLANDTHROWEXCEPTION || action==CommonLib.action.SCROLLANDBOOLEAN)
-				scrollDownThroughWebelement(driver, element, elementName);
+					scrollDownThroughWebelement(driver, element, elementName);
 				try{
-//					element.clear();
+					//					element.clear();
 					appLog.info("Successfully cleared the text box.");
 				} catch (Exception e){
 					appLog.error("Not able to clear the text box.");
@@ -1141,7 +1159,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 				return false;
 			}
 		} catch (Exception e) {
-//			AppListeners.appLog.info("Cannot enter text in " + elementName + "\nReason: " + e.getMessage());
+			//			AppListeners.appLog.info("Cannot enter text in " + elementName + "\nReason: " + e.getMessage());
 			errorMessage="Cannot enter text in " + elementName + "\nReason: " + e.getMessage();
 			failedMethod(e);
 			if (action == CommonLib.action.THROWEXCEPTION || action == CommonLib.action.SCROLLANDTHROWEXCEPTION)
@@ -1202,15 +1220,15 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 	public static boolean isAlertPresent(WebDriver driver) {
 		try {
 			Alert alert = driver.switchTo().alert();
-//			AppListeners.appLog.info("Message in alert: " + alert.getText());
+			//			AppListeners.appLog.info("Message in alert: " + alert.getText());
 			return true;
 		} catch (NoAlertPresentException e) {
-//			failedMethod(e);
-//			AppListeners.appLog.info("There is no alert.");
+			//			failedMethod(e);
+			//			AppListeners.appLog.info("There is no alert.");
 			return false;
 		}
 	}
-	
+
 	/**
 	 * @author Ankur Rana
 	 * @param driver
@@ -1311,7 +1329,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 					ele = driver.findElement(By.xpath(xpath));
 					break;
 				} catch (Exception e) {
-//					System.out.println("nhi milra element");
+					//					System.out.println("nhi milra element");
 					ThreadSleep(250);
 					timeout++;
 					if (timeout > timeOut * 4) {
@@ -1325,7 +1343,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 			return ele;
 		} catch (Exception e) {
 			if(elementName!=null && !elementName.isEmpty())
-			failedMethod(e);
+				failedMethod(e);
 			errorMessage="Element not found: " + elementName + "\nReason: " + e.getStackTrace()[0].getMethodName()+" "+e.getMessage();
 			if (action == CommonLib.action.THROWEXCEPTION)
 				throw new AppException("Element not found: " + elementName + "\nReason: " + e.getStackTrace()[0].getMethodName()+" "+e.getMessage());
@@ -1334,7 +1352,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 			return null;
 		}
 	}
-	
+
 	public static WebElement FindElementSingleQuotes(WebDriver driver, String xpath, String elementName, action action,
 			int timeOut) {
 		appLog.info("String change: "+xpath);
@@ -1359,7 +1377,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 			return ele;
 		} catch (Exception e) {
 			if(elementName!=null && !elementName.isEmpty())
-			failedMethod(e);
+				failedMethod(e);
 			errorMessage="Element not found: " + elementName + "\nReason: " + e.getStackTrace()[0].getMethodName()+" "+e.getMessage();
 			if (action == CommonLib.action.THROWEXCEPTION)
 				throw new AppException("Element not found: " + elementName + "\nReason: " + e.getStackTrace()[0].getMethodName()+" "+e.getMessage());
@@ -1452,15 +1470,15 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 			}
 		}
 	}
-	
+
 	public static void checkForLoaderImage(WebDriver driver, List<WebElement> elements, int waitLimitInSeconds) {
 		int limit = waitLimitInSeconds * 2;
-//		System.err.println("size: "+elements.size());
+		//		System.err.println("size: "+elements.size());
 		while (true) {
 			try {
 				for(int i = 0; i < elements.size(); i++){
 					isAlertPresent(driver);
-//					System.err.println("iteration: "+i);
+					//					System.err.println("iteration: "+i);
 					if (elements.get(i).isDisplayed()) {
 						System.out.println("please wait image is appearing");
 						ThreadSleep(500);
@@ -1487,7 +1505,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		try{
 			driver.switchTo().defaultContent();
 		} catch(Exception e){
-			
+
 		}
 	}
 
@@ -1503,7 +1521,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		List<String> value = new ArrayList<String>();
 		System.err.println("path of excel "+excelPath);
 		System.err.println(getSystemDate("hh:mm:ss"));
-		
+
 		for (int i = 0; i >= 0; i++) {
 			if (ExcelUtils.readData(excelPath,sheetName, startFrom, i).equalsIgnoreCase(label.toString())) {
 				columnNumber = i;
@@ -1526,7 +1544,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		System.err.println(getSystemDate("hh:mm:ss"));
 		return value;
 	}
-	
+
 	/**
 	 * @author Ankur Rana
 	 * @description scroll the webpage using PageDown Key
@@ -1575,7 +1593,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		}
 		return url;
 	}
-	
+
 	/**
 	 * @author Ankur Rana
 	 * @param driver
@@ -1585,23 +1603,23 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 	 * @description returns the list of webelement based on the xpath passed
 	 */
 	public static List<WebElement> FindElements(WebDriver driver, String xpath, String elementName){
-			//xpath=replaceApostrophyWithQuotes(xpath);
-			for(int i=0;i<41;i++){
-				if(driver.findElements(By.xpath(xpath)).isEmpty()){
-					ThreadSleep(250);
-					CommonLib.waitForPageLoad(driver);
-//					CommonLib.checkForLoaderImage(driver, "//img[@src='/resource/1499340792000/DR_CRMFinal/DR_CRMFinal/images/processing-image.gif']", 120);
-//					CommonLib.checkForLoaderImage(driver, "//div[@id='blurred']", 120);
-//					CommonLib.checkForLoaderImage(driver, "//img[contains(@src,'processing-image.gif')]", 120);
-//					CommonLib.checkForLoaderImage(driver, "//div[@id='blurred_procss_imaz']", 120);
-//					CommonLib.checkForLoaderImage(driver, "//div[@class='waitingSearchDiv']", 120);
-//					CommonLib.checkForLoaderImage(driver, "//img[contains(@src,'images/processing-image.gif')]", 120);
-				} else {
-					break;
-				}
+		//xpath=replaceApostrophyWithQuotes(xpath);
+		for(int i=0;i<41;i++){
+			if(driver.findElements(By.xpath(xpath)).isEmpty()){
+				ThreadSleep(250);
+				CommonLib.waitForPageLoad(driver);
+				//					CommonLib.checkForLoaderImage(driver, "//img[@src='/resource/1499340792000/DR_CRMFinal/DR_CRMFinal/images/processing-image.gif']", 120);
+				//					CommonLib.checkForLoaderImage(driver, "//div[@id='blurred']", 120);
+				//					CommonLib.checkForLoaderImage(driver, "//img[contains(@src,'processing-image.gif')]", 120);
+				//					CommonLib.checkForLoaderImage(driver, "//div[@id='blurred_procss_imaz']", 120);
+				//					CommonLib.checkForLoaderImage(driver, "//div[@class='waitingSearchDiv']", 120);
+				//					CommonLib.checkForLoaderImage(driver, "//img[contains(@src,'images/processing-image.gif')]", 120);
+			} else {
+				break;
 			}
-		  return driver.findElements(By.xpath(xpath));
-		 }
+		}
+		return driver.findElements(By.xpath(xpath));
+	}
 
 	/**
 	 * @author Ankur Rana
@@ -1619,17 +1637,17 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		}
 		return o1.compareToIgnoreCase(o2);
 	}
-	
+
 	/**
 	 * @author Ankur Rana
 	 * @param string
 	 * @description copy the data to the clipboard
 	 */
 	public static void setClipboardData(String string) {
-        StringSelection stringSelection = new StringSelection(string);
-        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
-    }
-	
+		StringSelection stringSelection = new StringSelection(string);
+		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+	}
+
 	/**
 	 * @author Ankur Rana
 	 * @description extracts the xpath from the webelement
@@ -1643,9 +1661,9 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		} catch (Exception e){
 			return null;
 		}
-		
+
 	}
-	
+
 	/**
 	 * 
 	 * @author Parul Singh
@@ -1653,10 +1671,10 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 	 */
 	public static String getDateAccToTimeZone(String timeZone,String format){
 		try{
-			  DateFormat formatter= new SimpleDateFormat(format);
-			    formatter.setTimeZone(TimeZone.getTimeZone(timeZone));
-			 return (formatter.format(new Date()));
-		     
+			DateFormat formatter= new SimpleDateFormat(format);
+			formatter.setTimeZone(TimeZone.getTimeZone(timeZone));
+			return (formatter.format(new Date()));
+
 		}catch(Exception e){
 			return null;
 		}
@@ -1669,9 +1687,9 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 	 */
 	public static String[] removeNumbersFromString(String value){ 
 		return value.split("(?<=\\D)(?=\\d)");
-		
+
 	}
-	
+
 	public static String replaceApostrophyWithQuotes(String xpath){
 		int len = xpath.length();
 		StringBuilder str = new StringBuilder(xpath);
@@ -1687,12 +1705,12 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		System.out.println("Original Xpath: "+xpath+"\tString builder: "+str);
 		return String.valueOf(str);
 	}
-	
+
 	public static String getText(WebDriver driver, WebElement element,String elementName,action action) {
 		try {
 			if (element != null) {
 				if(action==CommonLib.action.SCROLLANDTHROWEXCEPTION || action==CommonLib.action.SCROLLANDBOOLEAN)
-				scrollDownThroughWebelement(driver, element, elementName);
+					scrollDownThroughWebelement(driver, element, elementName);
 				String ele=element.getText().trim();
 				AppListeners.appLog.info("getText value to element: " + elementName + "\nPassed is: " + ele);
 				return ele;
@@ -1709,9 +1727,9 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		}	
 		return "";	
 	}
-	
+
 	public static String getAttribute(WebDriver driver, WebElement element,String elementName,String attributeName){
-		
+
 		try {
 			if (element != null) {
 				scrollDownThroughWebelement(driver, element, elementName);
@@ -1727,7 +1745,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		}	
 		return null;	
 	}
-			
+
 	public static String trim(String text){
 		try{
 			String ele=text.trim();
@@ -1738,12 +1756,12 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		}
 		return null;
 	}
-		
+
 	public static void refresh(WebDriver driver){
 		ThreadSleep(1000);
 		driver.navigate().refresh();
 	}
-	
+
 	/**
 	 * @author Ankit Jaiswal
 	 * @param filesName
@@ -1844,8 +1862,8 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		}
 		return result;
 	}	
-	
-	
+
+
 	/**
 	 * @author Ankit Jaiswal
 	 * @param filesName
@@ -1896,8 +1914,8 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		}
 		return result;
 	}	
-		
-		
+
+
 	public static String createStringOutOfList(List<String> listOfString) {
 		StringBuilder str = new StringBuilder();
 		if(!listOfString.isEmpty()){
@@ -1913,7 +1931,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 			return null;
 		}
 	}
-	
+
 	public static List<String> createListOutOfString(String string) {
 		List<String> list= new ArrayList<String>();
 		if(!string.isEmpty()){
@@ -1948,41 +1966,41 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		}
 		return listOfString;
 	}
-	
+
 	public static String previousOrForwardDate(int howManyDaysBeforeOrAfter, String dateFormat) {
-	    final Calendar cal = Calendar.getInstance();
-	    cal.add(Calendar.DATE, howManyDaysBeforeOrAfter);
-	 //   return new SimpleDateFormat(dateFormat).format(cal.getTime());
-	    return previousOrForwardDateAccordingToTimeZone(howManyDaysBeforeOrAfter,dateFormat,BasePageErrorMessage.AmericaLosAngelesTimeZone);
+		final Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, howManyDaysBeforeOrAfter);
+		//   return new SimpleDateFormat(dateFormat).format(cal.getTime());
+		return previousOrForwardDateAccordingToTimeZone(howManyDaysBeforeOrAfter,dateFormat,BasePageErrorMessage.AmericaLosAngelesTimeZone);
 	}
-	
-//	public static String unzipFolder(String src , String dest){
-//		try {
-//			ZipFile zipfile = new ZipFile(new File(src));
-//			zipfile.extractAll(dest);
-//		} catch (ZipException e) {
-//			e.printStackTrace();
-//			appLog.error("Kindly Check source and destination folder path.\nSource: "+src+"\nDestination: "+dest);
-////			System.out.println("Kindly Check source and destination folder path.\nSource: "+src+"\nDestination: "+dest);
-//			return null;
-//		}
-//		return dest;
-//	}
-//	
+
+	//	public static String unzipFolder(String src , String dest){
+	//		try {
+	//			ZipFile zipfile = new ZipFile(new File(src));
+	//			zipfile.extractAll(dest);
+	//		} catch (ZipException e) {
+	//			e.printStackTrace();
+	//			appLog.error("Kindly Check source and destination folder path.\nSource: "+src+"\nDestination: "+dest);
+	////			System.out.println("Kindly Check source and destination folder path.\nSource: "+src+"\nDestination: "+dest);
+	//			return null;
+	//		}
+	//		return dest;
+	//	}
+	//	
 	public static List<String> listFilesForFolder(File folder) {
 		List<String> filesAndFolderPath = new ArrayList<String>();
 		for (final File fileEntry : folder.listFiles()) {
-	        if (fileEntry.isDirectory()) {
-	            listFilesForFolder(fileEntry);
-	        } else {
-	        	filesAndFolderPath.add(fileEntry.getName());
-//	        	filesAndFolderPath.add(fileEntry.getAbsolutePath());
-	        }
-	    }
+			if (fileEntry.isDirectory()) {
+				listFilesForFolder(fileEntry);
+			} else {
+				filesAndFolderPath.add(fileEntry.getName());
+				//	        	filesAndFolderPath.add(fileEntry.getAbsolutePath());
+			}
+		}
 		return filesAndFolderPath;
 	}
-	
-	
+
+
 	public static List<Integer> getIntegerFromString(String value){ 
 		List<Integer> integerValue = new ArrayList<Integer>(); 
 		String[] Value = value.split("[^0-9]");
@@ -1992,9 +2010,9 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 			}
 		}
 		return integerValue;
-		
+
 	}
-	
+
 	public static HashSet<String> scrollActiveWidgetforSetofFiles(WebDriver driver, WebElement widgetScrollingElement,
 			By elementToSearch) {
 		HashSet<String> abc = new HashSet<String>();
@@ -2006,25 +2024,25 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		for (int i = 0; i <= widgetTotalScrollingHeight / 10; i++) {
 			ThreadSleep(2000);
 			List<WebElement> files = driver.findElements(elementToSearch);;
-	//		System.out.println("iteration :" + i);
+			//		System.out.println("iteration :" + i);
 			if (!files.isEmpty()) {
-			//	System.out.println("Files size : " + files.size());
+				//	System.out.println("Files size : " + files.size());
 				for (int k = 0; k < files.size(); k++) {
-				//	System.out.println("Names  " + files.get(k).getText());
+					//	System.out.println("Names  " + files.get(k).getText());
 					abc.add(files.get(k).getText());
-				
+
 				}
 			}
 			((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(" + j + "," + (j = j + 5) + ")",
 					widgetScrollingElement);
-			
+
 		}
 		abc.remove("");
 		((JavascriptExecutor) driver)
 		.executeScript("return arguments[0].scrollHeight", widgetScrollingElement);
 		return abc;
 	}
-	
+
 	public boolean recoverFromClickFaliures(WebDriver driver, WebElement element, Exception e, String elementName, int timeOut){
 		for(int i=0 ; i<=clickRetryCount ; i++)
 			if(e instanceof StaleElementReferenceException){
@@ -2064,11 +2082,11 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 			}
 		return false;
 	}
-	
+
 	public static String getTitle(WebDriver driver){
 		return driver.getTitle();
 	}
-		
+
 	/**
 	 * @author Ankur Rana
 	 * @return clipboard data as String
@@ -2079,12 +2097,12 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 			data = Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor).toString();
 		} catch (HeadlessException | UnsupportedFlavorException | IOException e) {
 			// TODO Auto-generated catch block
-//			e.printStackTrace();
+			//			e.printStackTrace();
 		}
 		return data;
 	}
 
-	
+
 	public static boolean checkSorting(WebDriver driver, SortOrder sortOrder, List<WebElement> elements){
 		List<String> ts=new ArrayList<String>();
 		List<String> actual=new ArrayList<String>();
@@ -2119,7 +2137,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		} 
 		return flag;
 	}
-	
+
 	public static boolean clearTextBox(WebElement element){
 		try {
 			element.clear();
@@ -2131,86 +2149,86 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 	}
 
 	public static List<String> scrollActiveWidgetforListofFiles(WebDriver driver, WebElement widgetScrollingElement,
-				By elementToSearch) {
-			List<String> abc = new ArrayList<String>();
-			List<String> parentTagId = new ArrayList<String>();
+			By elementToSearch) {
+		List<String> abc = new ArrayList<String>();
+		List<String> parentTagId = new ArrayList<String>();
 
-			int widgetTotalScrollingHeight = Integer.parseInt(String.valueOf(((JavascriptExecutor) driver)
-					.executeScript("return arguments[0].scrollHeight", widgetScrollingElement)));
-			Actions act = new Actions(driver);
-			int j = 0;
-			for (int i = 0; i <= widgetTotalScrollingHeight / 15; i++) {
-				ThreadSleep(2000);
-				for(int k = 0; k >= 0; k++){
-					List<WebElement>eles = driver.findElements(elementToSearch);
-					String xpath = null;
-					try{
-						xpath = "("+getXpath(eles.get(k))+")["+(k+1)+"]";
+		int widgetTotalScrollingHeight = Integer.parseInt(String.valueOf(((JavascriptExecutor) driver)
+				.executeScript("return arguments[0].scrollHeight", widgetScrollingElement)));
+		Actions act = new Actions(driver);
+		int j = 0;
+		for (int i = 0; i <= widgetTotalScrollingHeight / 15; i++) {
+			ThreadSleep(2000);
+			for(int k = 0; k >= 0; k++){
+				List<WebElement>eles = driver.findElements(elementToSearch);
+				String xpath = null;
+				try{
+					xpath = "("+getXpath(eles.get(k))+")["+(k+1)+"]";
 
-					} catch (Exception e){
-						break;
-					}
-					WebElement ele = isDisplayed(driver, FindElement(driver, xpath, "", action.BOOLEAN, 0), "Visibility", 1, "File Name in grid");
-					scrollDownThroughWebelement(driver, ele, "");
-					if(ele!=null){
-						if(parentTagId.isEmpty()){
-							String id = FindElement(driver, xpath+"/..", "Parent Tag ID", action.BOOLEAN, 0).getAttribute("id");
-							parentTagId.add(id);
-							abc.add(ele.getText());
-							continue;
-						} else {
-							String id = FindElement(driver, xpath+"/..", "Parent Tag ID", action.BOOLEAN, 0).getAttribute("id");
-							for(int m = 0; m < parentTagId.size(); m++){
-								if(id.equalsIgnoreCase(parentTagId.get(m))){
-									System.err.println("ID Found");
-									break;
+				} catch (Exception e){
+					break;
+				}
+				WebElement ele = isDisplayed(driver, FindElement(driver, xpath, "", action.BOOLEAN, 0), "Visibility", 1, "File Name in grid");
+				scrollDownThroughWebelement(driver, ele, "");
+				if(ele!=null){
+					if(parentTagId.isEmpty()){
+						String id = FindElement(driver, xpath+"/..", "Parent Tag ID", action.BOOLEAN, 0).getAttribute("id");
+						parentTagId.add(id);
+						abc.add(ele.getText());
+						continue;
+					} else {
+						String id = FindElement(driver, xpath+"/..", "Parent Tag ID", action.BOOLEAN, 0).getAttribute("id");
+						for(int m = 0; m < parentTagId.size(); m++){
+							if(id.equalsIgnoreCase(parentTagId.get(m))){
+								System.err.println("ID Found");
+								break;
+							} else {
+								if(m == parentTagId.size()-1){
+									parentTagId.add(id);
+									abc.add(ele.getText());
+									System.err.println("File Name: "+abc.get(abc.size()-1));
 								} else {
-									if(m == parentTagId.size()-1){
-										parentTagId.add(id);
-										abc.add(ele.getText());
-										System.err.println("File Name: "+abc.get(abc.size()-1));
-									} else {
-										continue;
-									}
+									continue;
 								}
 							}
 						}
-					} else {
-						break;
 					}
+				} else {
+					break;
 				}
-				//			List<WebElement> files = driver.findElements(elementToSearch);;
-				//	//		System.out.println("iteration :" + i);
-				//			if (!files.isEmpty()) {
-				//			//	System.out.println("Files size : " + files.size());
-				//				for (int k = 0; k < files.size(); k++) {
-				//				//	System.out.println("Names  " + files.get(k).getText());
-				//					abc.add(files.get(k).getText());
-				//				
-				//				}
-				//			}
-				((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(" + j + "," + (j = j + 10) + ")",
-						widgetScrollingElement);
-
 			}
-			//		abc.remove("");
-			((JavascriptExecutor) driver)
-			.executeScript("return arguments[0].scrollHeight", widgetScrollingElement);
-			return abc;
+			//			List<WebElement> files = driver.findElements(elementToSearch);;
+			//	//		System.out.println("iteration :" + i);
+			//			if (!files.isEmpty()) {
+			//			//	System.out.println("Files size : " + files.size());
+			//				for (int k = 0; k < files.size(); k++) {
+			//				//	System.out.println("Names  " + files.get(k).getText());
+			//					abc.add(files.get(k).getText());
+			//				
+			//				}
+			//			}
+			((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(" + j + "," + (j = j + 10) + ")",
+					widgetScrollingElement);
+
 		}
-	
+		//		abc.remove("");
+		((JavascriptExecutor) driver)
+		.executeScript("return arguments[0].scrollHeight", widgetScrollingElement);
+		return abc;
+	}
+
 	public static Integer[] scrollActiveWidget(WebDriver driver, WebElement widgetScrollingElement, int pixelsToScroll, int iterationNumber) {
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(" + iterationNumber + "," + (iterationNumber + pixelsToScroll) + ")",
-						widgetScrollingElement);
+				widgetScrollingElement);
 		Integer[] widgetTotalScrollingHeightAndValueOfiterationNumber = {Integer.parseInt(String.valueOf(((JavascriptExecutor) driver)
 				.executeScript("return arguments[0].scrollHeight", widgetScrollingElement))),iterationNumber};
-				
+
 		return widgetTotalScrollingHeightAndValueOfiterationNumber;
 	}
-	
 
-	 /**
-	  * @author Ankur Rana
+
+	/**
+	 * @author Ankur Rana
 	 * Scans all classes accessible from the context class loader which belong to the given package and subpackages.
 	 *
 	 * @param packageName The base package
@@ -2219,12 +2237,12 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 	 */
 	@SuppressWarnings("rawtypes")
 	public static Class[] getClasses(String packageName) {
-	    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-	    assert classLoader != null;
-	    String path = packageName.replace('.', '/');
-	    Enumeration<URL> resources;
-	    List<Class> classes = null;
-	    String folderPath = null;
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		assert classLoader != null;
+		String path = packageName.replace('.', '/');
+		Enumeration<URL> resources;
+		List<Class> classes = null;
+		String folderPath = null;
 		try {
 			resources = classLoader.getResources(path);
 			List<File> dirs = new ArrayList<File>();
@@ -2250,9 +2268,9 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    return classes.toArray(new Class[classes.size()]);
+		return classes.toArray(new Class[classes.size()]);
 	}
-	
+
 	/**
 	 * @author Ankur Rana
 	 * Recursive method used to find all classes in a given directory and subdirs.
@@ -2264,24 +2282,24 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 	 */
 	@SuppressWarnings("rawtypes")
 	public static List<Class> findClasses(File directory, String packageName) throws ClassNotFoundException {
-	    List<Class> classes = new ArrayList<Class>();
-	    if (!directory.exists()) {
-	    	System.err.println("Directory not found: "+directory);
-	    	AppListeners.appLog.fatal("Directory not found: "+directory);
-	        return classes;
-	    }
-	    File[] files = directory.listFiles();
-	    for (File file : files) {
-	        if (file.isDirectory()) {
-	            assert !file.getName().contains(".");
-	            classes.addAll(findClasses(file, packageName + "." + file.getName()));
-	        } else if (file.getName().endsWith(".class")) {
-	            classes.add(Class.forName(packageName + '.' + file.getName().substring(0, file.getName().length() - 6)));
-	        }
-	    }
-	    return classes;
+		List<Class> classes = new ArrayList<Class>();
+		if (!directory.exists()) {
+			System.err.println("Directory not found: "+directory);
+			AppListeners.appLog.fatal("Directory not found: "+directory);
+			return classes;
+		}
+		File[] files = directory.listFiles();
+		for (File file : files) {
+			if (file.isDirectory()) {
+				assert !file.getName().contains(".");
+				classes.addAll(findClasses(file, packageName + "." + file.getName()));
+			} else if (file.getName().endsWith(".class")) {
+				classes.add(Class.forName(packageName + '.' + file.getName().substring(0, file.getName().length() - 6)));
+			}
+		}
+		return classes;
 	}
-	
+
 	public static void log(LogStatus logStatus, String message, YesNo takeScreenshot){
 		if(takeScreenshot.toString().equalsIgnoreCase(YesNo.No.toString())){
 			extentLog.log(logStatus, message, "");
@@ -2298,8 +2316,8 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 			appLog.error(message + " " + logLineNumber(new Throwable()));
 		}
 	}
-	
-	
+
+
 	public static boolean dragNDropOperation(WebDriver driver,WebElement source, WebElement target) {
 		Actions actions = new Actions(driver);
 		try {
@@ -2352,7 +2370,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		return logLineNumber;
 	}
 
-	
+
 
 	/**
 	 * @author Ankit Jaiswal
@@ -2364,7 +2382,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 	public static boolean clickUsingJavaScript(WebDriver driver, WebElement element,String elementName,action action) {
 		String text =null;
 		try {
-		//text=(String) ((JavascriptExecutor) driver).executeScript("return $('"+Jquery+"')[0].value");
+			//text=(String) ((JavascriptExecutor) driver).executeScript("return $('"+Jquery+"')[0].value");
 			scrollDownThroughWebelement(driver, element, "");
 			((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
 			appLog.info("Able to Clicked using JavaScript");
@@ -2377,7 +2395,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		appLog.info("Not Able to Click using JavaScript");
 		return false;
 	}
-	
+
 	public static WebElement FindElement(WiniumDriver driver, Locator locator, String using){
 		WebElement ele = null;
 		try{
@@ -2387,12 +2405,12 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 				ele = driver.findElementByXPath(using);
 			}
 		} catch (Exception e){
-			
+
 		}
 		return ele;
 	}
-	
-	
+
+
 	public static WiniumDriver winiumDriverObject(){
 		String appPath = System.getProperty("user.dir")+"\\configFiles\\salesforce.com\\Data Loader\\dataloader-44.0.0.exe";
 		try {
@@ -2464,18 +2482,18 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		}
 		return result;
 	}
-	
+
 	public static Date convertStringIntoDate(String date, String formatOfTheDatePassed){
-		 try {
+		try {
 			Date dateFormat =new SimpleDateFormat(formatOfTheDatePassed).parse(date);
 			return dateFormat;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		 return null;
+		return null;
 	}
-	
+
 	public static List<WebElement> getAllDataUnderHeaderName(WebDriver driver, String relatedListName, String headerName, Mode mode){
 		String xpath = "//h3[text()='"+relatedListName+"']/../../../../../following-sibling::div//tr[@class='headerRow']//th";
 		if(mode.toString().equalsIgnoreCase(Mode.Lightning.toString())){
@@ -2495,7 +2513,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @author Ankur Rana
 	 * @param fileName
@@ -2529,13 +2547,13 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 	 */
 	public static void scrollThroughOutWindow(WebDriver driver) {
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
-	
+
 		jse.executeScript("window.scrollTo(0,document.scrollingElement.scrollHeight/2)");
 		ThreadSleep(1000);
 		jse.executeScript("window.scrollTo(0,document.scrollingElement.scrollHeight)");
 		ThreadSleep(1000);
 	}
-	
+
 	/**
 	 * @author Ankit Jaiswal
 	 * @param number
@@ -2546,7 +2564,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		System.out.println("Change US Number Formate >>>>> "+number);
 		return s;
 	}
-	
+
 	/**
 	 * @author Ravi Kumar
 	 * @param number
@@ -2558,9 +2576,9 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		System.out.println("Change US Number Formate >>>>> "+number+"into :"+s);
 		return s;
 	}
-	
-	
-	
+
+
+
 	public static List<String> compareMultipleListContainsByTitle(WebDriver driver,String filesName, List<WebElement> listOfFileName) {
 		List<String> result = new ArrayList<String>();
 		String[] fileName = filesName.split(",");
@@ -2605,13 +2623,13 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		}
 		return result;
 	}	
-	
-	
+
+
 	public static boolean clickUsingJavaScript(WebDriver driver, WebElement element,String elementName) {
 		String text =null;
 		ThreadSleep(5000);
 		try {
-		//text=(String) ((JavascriptExecutor) driver).executeScript("return $('"+Jquery+"')[0].value");
+			//text=(String) ((JavascriptExecutor) driver).executeScript("return $('"+Jquery+"')[0].value");
 			((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
 			appLog.info("Able to Clicked using JavaScript");
 			return true;
@@ -2623,58 +2641,58 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		appLog.info("Not Able to Click using JavaScript");
 		return false;
 	}
-	
+
 	public static boolean uploadFileAutoIT(String filepath) {
-        String exePath=System.getProperty("user.dir")+"\\AutoIT\\NewUploadFile.exe";
-        ProcessBuilder process = new ProcessBuilder(exePath,filepath);
-        try {
-            process.start();
-            ThreadSleep(500);
-            log(LogStatus.PASS, "File is uploaded successfully "+filepath, YesNo.No);
-            return true;
-        }catch (Exception e) {
-            log(LogStatus.FAIL, "File is not uploaded "+filepath, YesNo.Yes);
-        }
-        return false;
-    }
-	
+		String exePath=System.getProperty("user.dir")+"\\AutoIT\\NewUploadFile.exe";
+		ProcessBuilder process = new ProcessBuilder(exePath,filepath);
+		try {
+			process.start();
+			ThreadSleep(500);
+			log(LogStatus.PASS, "File is uploaded successfully "+filepath, YesNo.No);
+			return true;
+		}catch (Exception e) {
+			log(LogStatus.FAIL, "File is not uploaded "+filepath, YesNo.Yes);
+		}
+		return false;
+	}
+
 	public static boolean clickUsingActionClass(WebDriver driver,WebElement ele) {
 
-        Actions ac = new Actions(driver);
-        try {
-        	
-        ac.clickAndHold(ele).build().perform();
-        ThreadSleep(500);
-        ac.release(ele).click().build().perform();
-        appLog.info("successfully clicked ele using actions class");
-        }
-        catch(Exception e) {
-            log(LogStatus.ERROR, e.toString(), YesNo.Yes);
-            return false;
-        }
-        return true;
-    }
-	
+		Actions ac = new Actions(driver);
+		try {
+
+			ac.clickAndHold(ele).build().perform();
+			ThreadSleep(500);
+			ac.release(ele).click().build().perform();
+			appLog.info("successfully clicked ele using actions class");
+		}
+		catch(Exception e) {
+			log(LogStatus.ERROR, e.toString(), YesNo.Yes);
+			return false;
+		}
+		return true;
+	}
+
 	public static boolean doubleClickUsingAction(WebDriver driver,WebElement ele) {
 
-        Actions ac = new Actions(driver);
-        try {
-        	
-        ac.moveToElement(ele).build().perform();
-        ThreadSleep(500);
-        ac.doubleClick().build().perform();
-        appLog.info("successfully  double clicked on ele using actions class");
-        }
-        catch(Exception e) {
-            log(LogStatus.ERROR, e.toString(), YesNo.Yes);
-            return false;
-        }
-        return true;
-    }
+		Actions ac = new Actions(driver);
+		try {
+
+			ac.moveToElement(ele).build().perform();
+			ThreadSleep(500);
+			ac.doubleClick().build().perform();
+			appLog.info("successfully  double clicked on ele using actions class");
+		}
+		catch(Exception e) {
+			log(LogStatus.ERROR, e.toString(), YesNo.Yes);
+			return false;
+		}
+		return true;
+	}
 
 	public static String capitalize(String str) {
 		return str.substring(0,1).toUpperCase()+str.substring(1).toLowerCase();
-		
+
 	}
 	public static String findThreeLetterMonthName(String date) {
 		String mon=date.split("/")[0];
@@ -2693,7 +2711,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		}
 		//return a+" "+date.split("/")[1];
 	}
-	
+
 	public static String findMonthNameAndYear(String date) {
 		String mon=date.split("/")[0];
 		int m=Integer.parseInt(mon);
@@ -2703,7 +2721,7 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		a = a+" "+date.split("/")[2];
 		return a;
 	}
-	
+
 	public static String findMonthDateCommaYear(String date) {
 		String mon=date.split("/")[0];
 		int m=Integer.parseInt(mon);
@@ -2713,90 +2731,90 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 		a = a+" "+date.split("/")[1]+", "+date.split("/")[2];
 		return a;
 	}
-	 public static String dateAndTimeAccordingToTimeZone(int howManyMinuteBeforeOrAfter, String dateFormat,String zone) {
-	       
-	       
-	        final Calendar cal = Calendar.getInstance();
-	        cal.add(Calendar.MINUTE, howManyMinuteBeforeOrAfter);
-	        SimpleDateFormat date = new SimpleDateFormat(dateFormat);
-	        date.setTimeZone(TimeZone.getTimeZone(zone));
-	        return date.format(cal.getTime());
-	    }
-	 public static String findCurrentWeek( String dateFormat,String zone) {
-	       
-	       
-	        Calendar cal = Calendar.getInstance();
-	        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-	        SimpleDateFormat date = new SimpleDateFormat(dateFormat);
-	        date.setTimeZone(TimeZone.getTimeZone(zone));
-	        String date1=date.format(cal.getTime());
-	        System.out.println();
-	        
-	        cal.add(Calendar.DATE, 6);
-	        date = new SimpleDateFormat(dateFormat);
-	        date.setTimeZone(TimeZone.getTimeZone(zone));
-	        String date2=date.format(cal.getTime());
-	        System.out.println(date2);
-	        String monthName1=findThreeLetterMonthName(date1).split(" ")[0];
-	        String monthName2=findThreeLetterMonthName(date2).split(" ")[0];
-	        if (monthName1.equalsIgnoreCase(monthName2))
-	        	return findThreeLetterMonthName(date1)+" – "+date2.split("/")[1]+", "+date1.split("/")[2];
-	        else
-	        	return findThreeLetterMonthName(date1)+" – "+findThreeLetterMonthName(date2)+", "+date1.split("/")[2];
-	 }
-	 public static String previousOrForwardDateAccordingToTimeZone(int howManyDaysBeforeOrAfter, String dateFormat,String zone) {
+	public static String dateAndTimeAccordingToTimeZone(int howManyMinuteBeforeOrAfter, String dateFormat,String zone) {
 
 
-			final Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.DATE, howManyDaysBeforeOrAfter);
-			SimpleDateFormat date = new SimpleDateFormat(dateFormat);
-			date.setTimeZone(TimeZone.getTimeZone(zone));
-			return date.format(cal.getTime());
+		final Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MINUTE, howManyMinuteBeforeOrAfter);
+		SimpleDateFormat date = new SimpleDateFormat(dateFormat);
+		date.setTimeZone(TimeZone.getTimeZone(zone));
+		return date.format(cal.getTime());
+	}
+	public static String findCurrentWeek( String dateFormat,String zone) {
+
+
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+		SimpleDateFormat date = new SimpleDateFormat(dateFormat);
+		date.setTimeZone(TimeZone.getTimeZone(zone));
+		String date1=date.format(cal.getTime());
+		System.out.println();
+
+		cal.add(Calendar.DATE, 6);
+		date = new SimpleDateFormat(dateFormat);
+		date.setTimeZone(TimeZone.getTimeZone(zone));
+		String date2=date.format(cal.getTime());
+		System.out.println(date2);
+		String monthName1=findThreeLetterMonthName(date1).split(" ")[0];
+		String monthName2=findThreeLetterMonthName(date2).split(" ")[0];
+		if (monthName1.equalsIgnoreCase(monthName2))
+			return findThreeLetterMonthName(date1)+" – "+date2.split("/")[1]+", "+date1.split("/")[2];
+		else
+			return findThreeLetterMonthName(date1)+" – "+findThreeLetterMonthName(date2)+", "+date1.split("/")[2];
+	}
+	public static String previousOrForwardDateAccordingToTimeZone(int howManyDaysBeforeOrAfter, String dateFormat,String zone) {
+
+
+		final Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, howManyDaysBeforeOrAfter);
+		SimpleDateFormat date = new SimpleDateFormat(dateFormat);
+		date.setTimeZone(TimeZone.getTimeZone(zone));
+		return date.format(cal.getTime());
+	}
+	public static String previousOrForwardMonthAccordingToTimeZone(int howManyDaysBeforeOrAfter, String dateFormat,String zone) {
+
+
+		final Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, howManyDaysBeforeOrAfter);
+		SimpleDateFormat date = new SimpleDateFormat(dateFormat);
+		date.setTimeZone(TimeZone.getTimeZone(zone));
+		return date.format(cal.getTime());
+	}
+
+	public static ActivityType isPastDate(String date,String zone) {
+		boolean flag=false;
+		ActivityType activityType = null;
+		SimpleDateFormat sdformat = new SimpleDateFormat("MM-dd-yyyy");
+		try {
+			Date d1 = sdformat.parse((date).replace("/", "-"));
+			//	 appLog.info("Passed Date : "+sdformat.format(d1));
+			System.out.println("Passed Date :              "+sdformat.format(d1));
+
+			Date d2 = sdformat.parse((previousOrForwardDateAccordingToTimeZone(0,"MM/dd/YYYY",zone)).replace("/", "-"));
+			//	 appLog.info(zone+" Date : "+sdformat.format(d2));
+			System.out.println(zone+" Date : "+sdformat.format(d2));
+
+			if(d1.compareTo(d2) == 0 || d1.compareTo(d2) > 0) {
+				//		 appLog.info("Passed Date is equal/greater than "+zone+" date");
+				activityType = ActivityType.Next;
+				System.out.println("Passed Date is equal/greater than "+zone+" date");
+			} else if(d1.compareTo(d2) < 0) {
+				//		 appLog.info("Passed Date is smaller than "+zone+" date");
+				System.out.println("Passed Date is smaller than "+zone+" date");
+				activityType = ActivityType.Past;
+				flag=true;
+			} 
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-	 public static String previousOrForwardMonthAccordingToTimeZone(int howManyDaysBeforeOrAfter, String dateFormat,String zone) {
+		return activityType;
+	}
 
-
-			final Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.MONTH, howManyDaysBeforeOrAfter);
-			SimpleDateFormat date = new SimpleDateFormat(dateFormat);
-			date.setTimeZone(TimeZone.getTimeZone(zone));
-			return date.format(cal.getTime());
-		}
-	 
-	 public static ActivityType isPastDate(String date,String zone) {
-		 boolean flag=false;
-		 ActivityType activityType = null;
-		 SimpleDateFormat sdformat = new SimpleDateFormat("MM-dd-yyyy");
-		 try {
-			 Date d1 = sdformat.parse((date).replace("/", "-"));
-		//	 appLog.info("Passed Date : "+sdformat.format(d1));
-			 System.out.println("Passed Date :              "+sdformat.format(d1));
-
-			 Date d2 = sdformat.parse((previousOrForwardDateAccordingToTimeZone(0,"MM/dd/YYYY",zone)).replace("/", "-"));
-		//	 appLog.info(zone+" Date : "+sdformat.format(d2));
-			 System.out.println(zone+" Date : "+sdformat.format(d2));
-
-			 if(d1.compareTo(d2) == 0 || d1.compareTo(d2) > 0) {
-		//		 appLog.info("Passed Date is equal/greater than "+zone+" date");
-				 activityType = ActivityType.Next;
-				 System.out.println("Passed Date is equal/greater than "+zone+" date");
-			 } else if(d1.compareTo(d2) < 0) {
-		//		 appLog.info("Passed Date is smaller than "+zone+" date");
-				 System.out.println("Passed Date is smaller than "+zone+" date");
-				 activityType = ActivityType.Past;
-				 flag=true;
-			 } 
-		 } catch (ParseException e) {
-			 // TODO Auto-generated catch block
-			 e.printStackTrace();
-		 }
-		 return activityType;
-	 }
-	
-	 public static boolean mouseHoverJScript(WebDriver driver,WebElement HoverElement) {
-			try {
-				if (isElementPresent(HoverElement)) {
-					String mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover', true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}";
+	public static boolean mouseHoverJScript(WebDriver driver,WebElement HoverElement) {
+		try {
+			if (isElementPresent(HoverElement)) {
+				String mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover', true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}";
 				((JavascriptExecutor) driver).executeScript(mouseOverScript,HoverElement);
 				return true;
 
@@ -2804,171 +2822,199 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 				System.out.println("Element was not visible to hover " + "\n");
 			}
 		} catch (StaleElementReferenceException e) {
-				System.out.println("Element with " + HoverElement
-						+ "is not attached to the page document"
-						+ e.getStackTrace());
-			} catch (NoSuchElementException e) {
-				System.out.println("Element " + HoverElement + " was not found in DOM"
-						+ e.getStackTrace());
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("Error occurred while hovering"
-						+ e.getStackTrace());
-			}
-			return false;
+			System.out.println("Element with " + HoverElement
+					+ "is not attached to the page document"
+					+ e.getStackTrace());
+		} catch (NoSuchElementException e) {
+			System.out.println("Element " + HoverElement + " was not found in DOM"
+					+ e.getStackTrace());
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error occurred while hovering"
+					+ e.getStackTrace());
 		}
-		
-		
-		public static boolean isElementPresent(WebElement element) {
-			boolean flag = false;
+		return false;
+	}
+
+
+	public static boolean isElementPresent(WebElement element) {
+		boolean flag = false;
+		try {
+			if (element.isDisplayed()
+					|| element.isEnabled())
+				flag = true;
+		} catch (NoSuchElementException e) {
+			flag = false;
+		} catch (StaleElementReferenceException e) {
+			flag = false;
+		}
+		return flag;
+	}
+
+
+	public static String reverseString(String reverseString) {
+		String[] myarraStrings = reverseString.split("<break>");
+		String newString="";
+		for(int i=myarraStrings.length-1;i>=0;i--) {
+			System.out.print(myarraStrings[i] + "  ");
+			if(i==myarraStrings.length-1) {
+				newString=newString+myarraStrings[i];
+			}else {
+				newString=newString+"<break>"+myarraStrings[i];
+			}
+		}
+		return newString;
+
+	}
+
+
+	public static boolean uploadFile(String filepath) {
+		String exePath=System.getProperty("user.dir")+"\\AutoIT\\NewUploadFile.exe";
+		ProcessBuilder process = new ProcessBuilder(exePath,filepath);
+		try {
+			process.start();
+			ThreadSleep(500);
+			log(LogStatus.PASS, "File is uploaded successfully "+filepath, YesNo.No);
+			return true;
+		}catch (Exception e) {
+			log(LogStatus.FAIL, "File is not uploaded "+filepath, YesNo.Yes);
+		}
+		return false;
+	}
+
+	/**
+	 * @author ANKIT JAISWAL
+	 * @param imagePath
+	 * @param textMessage
+	 * @return true/false
+	 */
+	public static boolean mouseHoveAndClickAction(String imagePath, String textMessage) {
+		Pattern fileInputTextBox = new Pattern(System.getProperty("user.dir")+imagePath);
+		Screen scn = new Screen();
+		try {
+			scn.hover(fileInputTextBox);
+			log(LogStatus.INFO, "Mouse hover on "+textMessage,YesNo.No);
+			ThreadSleep(2000);
 			try {
-				if (element.isDisplayed()
-						|| element.isEnabled())
-					flag = true;
-			} catch (NoSuchElementException e) {
-				flag = false;
-			} catch (StaleElementReferenceException e) {
-				flag = false;
-			}
-			return flag;
-		}
-		
-		
-		public static String reverseString(String reverseString) {
-			String[] myarraStrings = reverseString.split("<break>");
-			String newString="";
-			for(int i=myarraStrings.length-1;i>=0;i--) {
-				System.out.print(myarraStrings[i] + "  ");
-				if(i==myarraStrings.length-1) {
-					newString=newString+myarraStrings[i];
-				}else {
-					newString=newString+"<break>"+myarraStrings[i];
-				}
-			}
-			return newString;
-			
-		}
-	 
-		
-		public static boolean uploadFile(String filepath) {
-			String exePath=System.getProperty("user.dir")+"\\AutoIT\\NewUploadFile.exe";
-			ProcessBuilder process = new ProcessBuilder(exePath,filepath);
-			try {
-				process.start();
-				ThreadSleep(500);
-				log(LogStatus.PASS, "File is uploaded successfully "+filepath, YesNo.No);
+				scn.click(fileInputTextBox);
+				log(LogStatus.INFO, "Clicked on "+textMessage,YesNo.No);
 				return true;
-			}catch (Exception e) {
-				log(LogStatus.FAIL, "File is not uploaded "+filepath, YesNo.Yes);
-			}
-			return false;
-		}
-		
-		/**
-		 * @author ANKIT JAISWAL
-		 * @param imagePath
-		 * @param textMessage
-		 * @return true/false
-		 */
-		public static boolean mouseHoveAndClickAction(String imagePath, String textMessage) {
-			Pattern fileInputTextBox = new Pattern(System.getProperty("user.dir")+imagePath);
-			Screen scn = new Screen();
-			try {
-				scn.hover(fileInputTextBox);
-				log(LogStatus.INFO, "Mouse hover on "+textMessage,YesNo.No);
-				ThreadSleep(2000);
-				try {
-					scn.click(fileInputTextBox);
-					log(LogStatus.INFO, "Clicked on "+textMessage,YesNo.No);
-					return true;
-				} catch (FindFailed e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					log(LogStatus.INFO, "Not able to clicked on "+textMessage,YesNo.Yes);
-				}
 			} catch (FindFailed e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				log(LogStatus.INFO, "Not able to mouse hover on "+textMessage,YesNo.Yes);
+				log(LogStatus.INFO, "Not able to clicked on "+textMessage,YesNo.Yes);
 			}
-			return false;
+		} catch (FindFailed e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log(LogStatus.INFO, "Not able to mouse hover on "+textMessage,YesNo.Yes);
 		}
-		
-		/**
-		 * @author ANKIT JAISWAL
-		 * @param ls1
-		 * @param ls2
-		 * @return
-		 */
-		public static boolean compareList(List ls1, List ls2){
-		    return ls1.containsAll(ls2) && ls1.size() == ls2.size() ? true :false;
-		     }
-		
-		
-		
-		public static boolean getSelectedOptionOfDropDown(WebDriver driver, WebElement dropDownElement,List<WebElement> listElements, String elementName, String textToSelect){
-			boolean flag=false;
-			if(checkElementVisibility(driver, dropDownElement, elementName, 60)){
+		return false;
+	}
+
+	/**
+	 * @author ANKIT JAISWAL
+	 * @param ls1
+	 * @param ls2
+	 * @return
+	 */
+	public static boolean compareList(List ls1, List ls2){
+		return ls1.containsAll(ls2) && ls1.size() == ls2.size() ? true :false;
+	}
+
+
+
+	public static boolean getSelectedOptionOfDropDown(WebDriver driver, WebElement dropDownElement,List<WebElement> listElements, String elementName, String textToSelect){
+		boolean flag=false;
+		if(checkElementVisibility(driver, dropDownElement, elementName, 60)){
 
 			if(click(driver,dropDownElement,elementName,action.BOOLEAN))
 			{
-			log(LogStatus.INFO, "successfully click on "+elementName, YesNo.No);
+				log(LogStatus.INFO, "successfully click on "+elementName, YesNo.No);
 
-			for(WebElement val :listElements )
-			{
+				CommonLib.ThreadSleep(4000);
 
-			if(val.getText().trim().equalsIgnoreCase(textToSelect))
-			{
-			clickUsingJavaScript(driver,val,val.getText(),action.BOOLEAN);
-			flag=true;
-			break;
-			}
+				for(WebElement val :listElements )
+				{
 
-			}
+					if(val.getText().trim().equalsIgnoreCase(textToSelect))
+					{
+						clickUsingJavaScript(driver,val,val.getText(),action.BOOLEAN);
+						flag=true;
+						break;
+					}
+
+				}
 
 			}
 			else
 			{
-			log(LogStatus.ERROR, elementName+" button is not clickable", YesNo.No);
+				log(LogStatus.ERROR, elementName+" button is not clickable", YesNo.No);
 
 			}
 
-			}
-			else {
+		}
+		else {
 			log(LogStatus.ERROR, elementName+" is not visible", YesNo.No);
+		}
+		return flag;
+	}
+
+
+	public static boolean getSelectedOptionOfDropDown(WebDriver driver, List<WebElement> listElements, String elementName, String textToSelect){
+		boolean flag=false;		
+		for(WebElement val :listElements )
+		{
+
+			if(val.getText().trim().equalsIgnoreCase(textToSelect))
+			{
+				clickUsingJavaScript(driver,val,val.getText(),action.BOOLEAN);
+				flag=true;
+				break;
 			}
-			return flag;
-			}
-		
-		
-		
-		/**
-		 * @author Ankur Huria
-		 * @param driver
-		 * @param xpath
-		 * @param elementName
-		 * @return list<webelement>
-		 * @description returns the list of webelement based on the xpath passed
-		 */
-		public static List<WebElement> FindElements(WebDriver driver, List<WebElement> elements, String elementName){
-				
-			try {
-				if (elements != null) {
-			Wait<WebDriver> wait = new WebDriverWait(driver, 25);
-			 wait.until(ExpectedConditions.visibilityOf(elements.get(1)));
-			 return elements;
-				}
+
+		}
+		return flag;
+
+	}
+
+
+
+
+
+
+
+
+
+
+	/**
+	 * @author Ankur Huria
+	 * @param driver
+	 * @param xpath
+	 * @param elementName
+	 * @return list<webelement>
+	 * @description returns the list of webelement based on the xpath passed
+	 */
+	public static List<WebElement> FindElements(WebDriver driver, List<WebElement> elements, String elementName){
+
+		try {
+			if (elements != null) {
+				Wait<WebDriver> wait = new WebDriverWait(driver, 25);
+				wait.until(ExpectedConditions.visibilityOf(elements.get(1)));
 				return elements;
-				}
-				catch(Exception e)
-				{
-					log(LogStatus.ERROR, elementName+" is not visible", YesNo.No);
-					return elements;
-				}
-}
-		public static boolean getSelectedOptionOfDropDown(WebDriver driver, WebElement dropDownElement,String elementToSelect, String elementName, String nothing) {
+			}
+			return elements;
+		}
+		catch(Exception e)
+		{
+			log(LogStatus.ERROR, elementName+" is not visible", YesNo.No);
+			return elements;
+		}
+	}
+
+	public static boolean getSelectedOptionOfDropDown(WebDriver driver, WebElement dropDownElement,String elementToSelect, String elementName, String nothing) {
 		boolean flag = false;
-			if (dropDownElement != null) {
+		if (dropDownElement != null) {
 			if (click(driver,dropDownElement, "Show Icon",
 					action.SCROLLANDBOOLEAN)) {
 				appLog.info("Click on Range Icon");
@@ -2982,15 +3028,15 @@ public class CommonLib extends EnumConstants implements Comparator<String>  {
 				} else {
 					appLog.error(
 							"Not Able to Select on Value of Range drop down : " + elementToSelect);
-					
+
 				}
 
 			} else {
 				appLog.error("Not Able to Click on Show Value Icon");
 			}
 		}
-			return flag;
-			}
-		
-		
+		return flag;
+	}
+
+
 }

@@ -21,13 +21,15 @@ public class LightningAppBuilderPage extends BasePageBusinessLayer {
 
 
 
+	
+
 	@FindBy(xpath="//iframe[@title='Salesforce - Enterprise Edition']")
 	private WebElement locator;
 
-	public WebElement getLocator() {
-		return locator;
-	}
+	public WebElement getLocator(int timeOut) {
+		return isDisplayed(driver, locator, "Visibility", timeOut, "New Button");
 
+	}
 
 
 
@@ -209,6 +211,38 @@ public class LightningAppBuilderPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, sldHeader, "Visibility", timeOut, "SLD Headers");
 
 	}
+	
+	
+	
+	@FindBy(xpath="//label[text()='Fund']/parent::lightning-combobox//button/span[text()='All']")
+	private WebElement FundDropDown;
+
+	public WebElement getFundDropDown(int timeOut) {
+		return isDisplayed(driver, FundDropDown, "Visibility", timeOut, "Fund drop down");
+
+	}
+	
+	
+	@FindBy(xpath="//label[text()='Fund']/parent::lightning-combobox//lightning-base-combobox-item")
+	private List<WebElement> FundDropDownList;
+
+	public List<WebElement> getFundDropDownList() {
+		return FundDropDownList;
+
+	}
+	
+	
+	
+	@FindBy(xpath="//label[text()='Show']")
+	private WebElement recordFilter;
+
+	public WebElement getrecordFilter(int timeOut) {
+		return isDisplayed(driver, recordFilter, "Visibility", timeOut, "Record Filter");
+
+	}
+	
+	
+	
 	
 	
 

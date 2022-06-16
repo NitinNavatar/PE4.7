@@ -486,8 +486,44 @@ public class ReportsTab extends BasePageBusinessLayer {
 	public WebElement customFilterFieldValueInputBoxLightning(int timeOut) {
 		return isDisplayed(driver, customFilterFieldValueInputBoxLightning, "Visibility", timeOut, "Report Type Search Box");
 	}
+
 	
+	public WebElement getreportName(String reportName) {
+		String xpath="//span[text()='"+reportName+"']";
+		return isDisplayed(driver, FindElement(driver, xpath, "report Name: "+reportName, action.SCROLLANDBOOLEAN,20),"visibility",20,"report name "+reportName);
+	}
 	
+	@FindBy(xpath="//div[text()='Total Records']/following-sibling::div")
+	private WebElement reportRecordsCount;
+
+	public WebElement reportRecordsCount(int timeOut) {
+		return isDisplayed(driver, reportRecordsCount, "Visibility", timeOut, "Report Records Count");
+	}
+	
+	@FindBy(xpath="//tbody/tr[1]/th[contains(@id,'full-data')]/div/div/span[contains(@class,'wave-table')]/preceding-sibling::span")
+	private List <WebElement> reportColumnHeaders;
+
+	public List <WebElement> reportColumnHeaders() {
+		
+		return FindElements(driver, reportColumnHeaders, "Report Headers");
+	}
+	
+	@FindBy(xpath="//tbody/tr[not(contains(@class,'header'))]")
+	private List <WebElement> reportRecordsRowsCount;
+
+	public List <WebElement> reportRecordsRowsCount() {
+		return FindElements(driver, reportRecordsRowsCount, "Report Records Rows Count");
+
+	}
+	
+
+	
+	@FindBy(xpath="//iframe[@title='Report Viewer']")
+	private WebElement reportViewerIFrame;
+
+	public WebElement reportViewerIFrame(int timeOut) {
+		return isDisplayed(driver, reportViewerIFrame, "Visibility", timeOut, "Report Viewer IFrame");
+	}
 	
 	
 	}

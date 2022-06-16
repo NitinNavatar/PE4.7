@@ -65,7 +65,14 @@ public class SetupPage extends BasePageBusinessLayer {
 		
 		return FindElements(driver, "//*[@class='compactLayoutFields']/li", "Compact layout field item");
 	}
+	
+	@FindBy(xpath = "//*[text()='Organization Name']/following-sibling::*[1]")
+	private WebElement orgCompanyName;
 
+	public WebElement getOrgCompanyName(int timeOut) {
+		return isDisplayed(driver, orgCompanyName, "Visibility", timeOut, "org Company Name");
+	}
+	
 	@FindBy(xpath="//input[@id='quickfind']")
 	private WebElement quickFindInPageLayout_Lighting;
 
@@ -802,6 +809,83 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getallUserHeading(int timeOut) {
 		return isDisplayed(driver, allUserHeading, "Visibility", timeOut, "All user heading");
 	}
+	
+	
+	public WebElement getfieldAccessOptionLinkcell( String profileName, int recordType, int timeOut) {
+		String xpath="//div[contains(@style,'block')]//th[text()='"+profileName+"']/following-sibling::td["+recordType+"]//a";
+		WebElement ele= FindElement(driver, xpath,profileName+" link xpath", action.SCROLLANDBOOLEAN, timeOut);
+		return isDisplayed(driver, ele, "visibility", timeOut,profileName+" link xpath");
+	}
+	
+	
+	@FindBy(xpath = "//input[@id='p12']")
+	private WebElement pageLayourSecurityVisibleCheckBox;
+
+	public WebElement getpageLayourSecurityVisibleCheckBox(int timeOut) {
+		return isDisplayed(driver, pageLayourSecurityVisibleCheckBox, "Visibility", timeOut, "Page layout Security Visible CheckBox");
+	}
+	
+	@FindBy(xpath = "//input[@title='New Field Dependencies']")
+	private WebElement fieldDependenciesNewBtn;
+
+	public WebElement getfieldDependenciesNewBtn(int timeOut) {
+		return isDisplayed(driver, fieldDependenciesNewBtn, "Visibility", timeOut, "Field dependency new button");
+	}
+	
+	@FindBy(xpath = "//select[@id='controller']")
+	private WebElement controllerDropDown;
+
+	public WebElement getcontrollerDropDown(int timeOut) {
+		return isDisplayed(driver, controllerDropDown, "Visibility", timeOut, "controller Drop Down field");
+	}
+	
+	@FindBy(xpath = "//select[@id='dependent']")
+	private WebElement dependentDropDown;
+
+	public WebElement getdependentDropDown(int timeOut) {
+		return isDisplayed(driver, dependentDropDown, "Visibility", timeOut, "dependent Drop Down field");
+	}
+	
+	@FindBy(xpath = "//div[@class='pbBottomButtons']//input[@title='Continue']")
+	private WebElement dependencyContinueBtn;
+
+	public WebElement getdependencyContinueBtn(int timeOut) {
+		return isDisplayed(driver, dependencyContinueBtn, "Visibility", timeOut, "Dependency continue button");
+	}
+	
+	@FindBy(xpath = "//tr[@class='last detailRow']//input[@value='Include Values']")
+	private WebElement includeValueBtn;
+
+	public WebElement getincludeValueBtn(int timeOut) {
+		return isDisplayed(driver, includeValueBtn, "Visibility", timeOut, "Include value button");
+	}
+	
+	@FindBy(xpath = "//div[@class='pbBottomButtons']//input[@title='Save']")
+	private WebElement footerSaveBtn;
+
+	public WebElement getfooterSaveBtn(int timeOut) {
+		return isDisplayed(driver, footerSaveBtn, "Visibility", timeOut, "footer save button");
+	}
+	
+	@FindBy(xpath = "//span[text()='Fields & Relationships']")
+	private WebElement fieldandRelationshipHeading;
+
+	public WebElement getfieldandRelationshipHeading(int timeOut) {
+		return isDisplayed(driver, fieldandRelationshipHeading, "Visibility", timeOut, "Field and relationship heading");
+	}
+	
+	@FindBy(xpath = "//span[text()='Fields & Relationships']/ancestor::div[@class='slds-page-header']//input[@placeholder='Quick Find']")
+	private WebElement fieldandRelationshipQuickSearch;
+
+	public WebElement getfieldandRelationshipQuickSearch(int timeOut) {
+		return isDisplayed(driver, fieldandRelationshipQuickSearch, "Visibility", timeOut, "Field and relationship Quick Search");
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	

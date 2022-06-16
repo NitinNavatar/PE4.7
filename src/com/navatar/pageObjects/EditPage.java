@@ -44,6 +44,50 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, sdgConfigDataProviderTextBox, "Visibility", timeOut,
 				"sdg Config Data Provider TextBox");
 	}
+	
+	@FindBy(xpath="//button[text()='Add Tab']")
+	private WebElement addTab;
+	
+
+
+	
+	public WebElement getAddTab(int timeOut) {
+		return isDisplayed(driver, addTab, "Visibility", timeOut, "Add Tab");
+	}
+	
+
+	/**
+	 * @return the editPageFrame
+	 */
+	public WebElement getPageTabEle(String tabName,int timeOut) {
+		String 	xpath= "(//*[@class='uiOutputText']/../..//*[@title='"+tabName+"'])[2]";
+		WebElement ele = FindElement(driver, xpath, tabName, action.BOOLEAN, timeOut);
+		if (ele!=null) {
+			return isDisplayed(driver, ele, "Visibility", timeOut, tabName);
+		} else {
+			xpath= "(//*[@class='uiOutputText']/../..//*[@title='tabName'])[1]";
+			ele = FindElement(driver, xpath, tabName, action.BOOLEAN, timeOut);
+			return isDisplayed(driver, ele, "Visibility", timeOut,tabName);
+		}
+
+	}
+	
+	@FindBy(xpath="//*[text()='Tab Label']/../following-sibling::*//select[@class='slds-select']")
+	private WebElement subTabDropdownList;
+
+	/**
+	 * @return the userProfileDropDownList
+	 */
+	public WebElement getSubTabDropdownListt(int timeOut) {
+		return isDisplayed(driver, subTabDropdownList, "Visibility", timeOut, "Sub Tab Drop Down List");
+	}
+
+	@FindBy(xpath="//button[text()='Done']")
+	private WebElement doneButton;
+	
+	public WebElement getdoneButton(int timeOut) {
+		return isDisplayed(driver, doneButton, "Visibility", timeOut, "Done Button");
+	}
 
 	@FindBy(xpath = "//*[text()='Default SDG Toggle']/following-sibling::div/input")
 	private WebElement defaultSDGToggleTextBox;
@@ -513,5 +557,99 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, backIcon, "Visibility", timeOut, "Back icon");
 
 	}
+	
+
+	@FindBy(xpath = "//input[@name='label1']")
+	private WebElement label1;
+
+	public WebElement getlabel1(int timeOut) {
+		return isDisplayed(driver, label1, "Visibility", timeOut, "Label 1");
+
+	}
+	
+	@FindBy(xpath = "//input[@name='query1']")
+	private WebElement query1;
+
+	public WebElement getquery1(int timeOut) {
+		return isDisplayed(driver, query1, "Visibility", timeOut, "Query 1");
+
+	}
+	
+	@FindBy(xpath = "//input[@name='label2']")
+	private WebElement label2;
+
+	public WebElement getlabel2(int timeOut) {
+		return isDisplayed(driver, label2, "Visibility", timeOut, "Label 2");
+
+	}
+	
+	@FindBy(xpath = "//input[@name='query2']")
+	private WebElement query2;
+
+	public WebElement getquery2(int timeOut) {
+		return isDisplayed(driver, query2, "Visibility", timeOut, "Query 2");
+
+	}
+	
+	@FindBy(xpath = "//input[@name='label3']")
+	private WebElement label3;
+
+	public WebElement getlabel3(int timeOut) {
+		return isDisplayed(driver, label3, "Visibility", timeOut, "Label 3");
+
+	}
+	
+	@FindBy(xpath = "//input[@name='query3']")
+	private WebElement query3;
+
+	public WebElement getquery3(int timeOut) {
+		return isDisplayed(driver, query3, "Visibility", timeOut, "Query 3");
+
+	}
+	
+	@FindBy(xpath="//h2[@class='slds-card__header-title']")
+	private WebElement sldHeader;
+
+	public WebElement getsldHeader(int timeOut) {
+		return isDisplayed(driver, sldHeader, "Visibility", timeOut, "SLD Headers");
+
+	}
+	
+	@FindBy(xpath="//span[text()='Navatar Custom Filter For SDG']")
+	private WebElement customFilterForSDGButton;
+
+	public WebElement getcustomFilterForSDGButton(int timeOut) {
+		return isDisplayed(driver, customFilterForSDGButton, "Visibility", timeOut, "Custon field for sdg");
+
+	}
+	
+	
+	@FindBy(xpath="//div[@class='navpeIICustomFilterCompForSDG']")
+	private WebElement customFilterComponent;
+
+	public WebElement getcustomFilterComponent(int timeOut) {
+		return isDisplayed(driver, customFilterComponent, "Visibility", timeOut, "Custom Filter Component");
+	}
+	
+	
+//	@FindBy(xpath="//span[text()='My Record filter']/preceding-sibling::span")
+	@FindBy(xpath="//span[text()='My Record filter']/parent::label/preceding-sibling::input")
+	private WebElement myRecordFilterCheckbox;
+
+	public WebElement getmyRecordFilterCheckbox(int timeOut) {
+		return isDisplayed(driver, myRecordFilterCheckbox, "Visibility", timeOut, "My Record Filter Checkbox");
+	}
+	
+	@FindBy(xpath="//label[text()='Show']")
+	private WebElement customFilterLabel;
+
+	public WebElement getcustomFilterLabel(int timeOut) {
+		return isDisplayed(driver, customFilterLabel, "Visibility", timeOut, "Custom Filter Label");
+	}
+	
+	
+	
+	
+
 
 }

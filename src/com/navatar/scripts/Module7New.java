@@ -5392,7 +5392,6 @@ public void M7NTc053_1_UpdateTerryContactswithEventandAndVerifyVerifyLastTouchPo
 	String[][] Event4 = {{PageLabel.Subject.toString(),task},
 			{PageLabel.Start_Date.toString(),M7NEvent14StartDate},
 			{PageLabel.End_Date.toString(),M7NEvent14EndDate},
-			{PageLabel.Name.toString(),contactName},
 			{PageLabel.All_Day_Event.toString(),"true"}};
 	if (cp.clickOnTab(projectName, tabObj2)) {
 		log(LogStatus.INFO,"Clicked on Tab : "+tabObj2+" For : "+contactName,YesNo.No);
@@ -5441,21 +5440,22 @@ public void M7NTc053_1_UpdateTerryContactswithEventandAndVerifyVerifyLastTouchPo
 		}}
 	refresh(driver);		
 	ThreadSleep(5000);
-	 ele=cp.getlastTouchPointValue(projectName, 10);
-		if (ele!=null) {
-			String expectedValue = M7NEvent14EndDate; 
-			String actualValue = ele.getText().trim();
-			if (cp.verifyDate(expectedValue, actualValue)) {
-				log(LogStatus.INFO,expectedValue+" successfully verified last touch point date For : "+contactName, YesNo.No);
-			}
-		else {
-				log(LogStatus.ERROR, "Last touch point value is not matched For : "+contactName+" Actual : "+actualValue+" /t Expected : "+expectedValue, YesNo.Yes);
-				sa.assertTrue(false,"last touch point value is not matched For : "+contactName+" Actual : "+actualValue+" /t Expected : "+expectedValue );
-			}
-		}else {
-			log(LogStatus.ERROR, "last touch point value is not visible For : "+contactName, YesNo.Yes);
-			sa.assertTrue(false,"last touch point value is not visible For : "+contactName );
+	ele=cp.getlastTouchPointValue(projectName, 10);
+	String value="";
+	if (ele!=null) {
+		value=ele.getText().trim();
+		if (value.isEmpty() || value.equals("")) {
+			log(LogStatus.INFO,"Last Touch Point is Blank for "+contactName, YesNo.No);
 		}
+		else {
+			log(LogStatus.ERROR, "Last Touch Point should be Blank for "+contactName, YesNo.Yes);
+			sa.assertTrue(false,"Last Touch Point should be Blank for "+contactName );
+		}
+	}else {
+		log(LogStatus.ERROR, "last touch point value is not visible For : "+contactName, YesNo.Yes);
+		sa.assertTrue(false,"last touch point value is not visible For : "+contactName );
+	}
+
 		refresh(driver);	
 		ThreadSleep(10000);
 		int days=180;

@@ -14,8 +14,10 @@ import com.navatar.generic.EnumConstants.Header;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.PageName;
+import com.navatar.generic.EnumConstants.RelatedList;
 import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
 import com.navatar.generic.EnumConstants.TabName;
+import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.relevantcodes.extentreports.LogStatus;
 
@@ -64,7 +66,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		
 					if (click(driver, getFundType(projectName, 60), "Fund Type ", action.SCROLLANDBOOLEAN)) {
 						WebElement fundTypeEle = FindElement(driver,
-								"(//div[@class='select-options'])[2]//a[@title='" + fundType + "']", fundType,
+								"//*[text()='Fund Type']/following-sibling::div//span[@title='"+fundType+"']", fundType,
 								action.SCROLLANDBOOLEAN, 10);
 						ThreadSleep(500);
 						if (click(driver, fundTypeEle, fundType, action.SCROLLANDBOOLEAN)) {
@@ -79,7 +81,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 					if (click(driver, getInvestmentCategory(projectName, 60), "Investment Category",
 							action.SCROLLANDBOOLEAN)) {
 						WebElement InvsCatgEle = FindElement(driver,
-								"(//div[@class='select-options'])[2]//a[@title='" + investmentCategory + "']",
+								"//*[text()='Investment Category']/following-sibling::div//span[@title='"+investmentCategory+"']",
 								investmentCategory, action.SCROLLANDBOOLEAN, 10);
 						ThreadSleep(500);
 						if (click(driver, InvsCatgEle, investmentCategory, action.SCROLLANDBOOLEAN)) {
@@ -140,6 +142,146 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 //		}
 		return false;
 	}
+	public WebElement getFirstValueFromRelatedList(String environment,String mode, String relatedList) {
+		WebElement ele=null;
+		String xpath = "";
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			ele= isDisplayed(driver,FindElement(driver,  "//h3[text()='"+relatedList+"']/../../../../../following-sibling::div//th//a", "fund drawdown id", action.SCROLLANDBOOLEAN, 30),"visibility", 30,"fund drawdown id" );
+		
+		}else {
+			if (RelatedList.FundDrawdown.toString().equals(relatedList)) {
+				xpath = "//*[text()='DD No']/../../../../following-sibling::tbody//tr//a";
+			} else {
+				xpath = "//*[text()='FD No']/../../../../following-sibling::tbody//tr//a";
+			}
+			ele=isDisplayed(driver, FindElement(driver, xpath,relatedList+" id", action.SCROLLANDBOOLEAN, 30), "visibility", 30, relatedList+" id");
+		
+		}
+		if (ele!=null) {
+			return ele;
+		}
+		else
+			return null;
+		
+	}
+	public List<String> returnAllValuesInRelatedList(String environment, String mode, String relatedList) {
+		List<WebElement> ele=null;
+		List<String> s = new ArrayList<String>();
+		
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+		ele= FindElements(driver, "//h3[text()='"+relatedList+"']/../../../../../following-sibling::div//th//a","related list all elements");
+		}
+		else
+			ele = FindElements(driver, "//table[@data-aura-class='uiVirtualDataTable']/tbody/tr//th[1]//a","list of all elements");
+		
+		if (ele!=null) {
+		for (int i = 0;i<ele.size();i++) {
+			s.add(ele.get(i).getText().trim());
+		}
+		
+		}
+		else {
+			log(LogStatus.ERROR, "could not find row in related list", YesNo.Yes);
+		}
+	return s;
+	}
+	public boolean clickOncreatedPartnershipFromRelatedList(String environment, String mode,String partnershipName) {
+		WebElement ele=null;
+		boolean flag = false;
+		String xpath="";
+		if(mode.toString().equalsIgnoreCase(Mode.Lightning.toString())) {
+			xpath="//*[text()='Partnership']/../../../../following-sibling::tbody/tr//td//*[@title='"+partnershipName+"' or text()='"+partnershipName+"']";
+		}else {
+			xpath="//h3[text()='Partnerships']/../../../../../following-sibling::div//tr/th/a[text()='"+partnershipName+"']";
+		}
+		ele = FindElement(driver, xpath, partnershipName + " label text in "+mode, action.SCROLLANDBOOLEAN, 30);
+		//	ele = isDisplayed(driver, FindElement(driver, xpath, partnershipName + " label text in "+mode, action.SCROLLANDBOOLEAN, 30), "visibility", 30, partnershipName + " label text in "+mode);
+		
+		if(ele!=null) {
+			if(clickUsingJavaScript(driver, ele, partnershipName+" label text", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "clicked on "+partnershipName+" label text", YesNo.No);
+				flag=true;
+			}else {
+				log(LogStatus.ERROR, "Not able to click on "+partnershipName+" label text", YesNo.Yes);
+			}
+		}else {
+			log(LogStatus.ERROR, partnershipName+" label text is not visible so cannot click on it ", YesNo.Yes);
+		}
+		return flag;
+	}
+	
+public boolean clickOnCreatedFund(String environment, String mode,String fundName) {
+		
+		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
+		int i=1;
+		if (getSelectedOptionOfDropDown(driver, getViewDropdown(60), "View dropdown", "text").equalsIgnoreCase("All")) {
+			if (click(driver, getGoButton(60), "Go button", action.BOOLEAN)) {
+
+			}
+			else {
+				appLog.error("Go button not found");
+				return false;
+			}
+		}
+		else{
+			if (selectVisibleTextFromDropDown(driver, getViewDropdown(60),"View dropdown","All") ){
+			}
+			else {
+				appLog.error("All Funds not found in dropdown");
+				return false;
+			}
+
+		}
+	
+			WebElement fund = getFundNameAtFundPage(fundName, 20);
+			if (fund != null) {
+				if (click(driver, fund, "Fund Name", action.SCROLLANDBOOLEAN)) {
+					appLog.info("Clicked on fund name : " + fundName);
+					return true;
+					} 
+			} else {
+		
+				//
+				
+				while (true) {
+					appLog.error("Fund Name is not Displaying on "+i+ " Page:" + fundName);
+					if (click(driver, getNextImageonPage(10), "Fund Page Next Button",
+							action.SCROLLANDBOOLEAN)) {
+
+						appLog.info("Clicked on Next Button");
+						 fund = getFundNameAtFundPage(fundName, 20);
+						if (fund != null) {
+							if (click(driver, fund, "Fund Name", action.SCROLLANDBOOLEAN)) {
+								appLog.info("Clicked on fund name : " + fundName);
+								return true;
+								
+							}
+						}
+
+						
+
+					} else {
+						appLog.error("Fund Not Available : " + fundName);
+						return false;
+					}
+					i++;
+				}
+				
+				//
+				
+			}
+	}else{
+		if(clickOnAlreadyCreated_Lighting(environment, mode, TabName.FundsTab, fundName, 30)){
+			appLog.info("Clicked on fund name : " + fundName);
+			return true;
+		}else{
+			appLog.error("Fund Not Available : " + fundName);	
+		}
+	}
+			return false;
+		
+		
+	}
 
 	/**
 	 * @author Akul Bhutani
@@ -172,7 +314,9 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 
 			}else if(labelName.equalsIgnoreCase(excelLabel.Record_Type.toString())){
 				xpath = "//span[@class='test-id__field-label'][text()='"+finalLabelName+"']/../following-sibling::div//div[contains(@class,'recordTypeName')]/span";
-			}
+			}else if(labelName.equalsIgnoreCase(excelLabel.Target_Commitments.toString())){
+				xpath = "//span[@class='test-id__field-label'][contains(text(),'" + finalLabelName
+						+ "')]/../following-sibling::div//*[contains(@class,'field-value')]";			}
 			
 		ele = isDisplayed(driver,
 				FindElement(driver, xpath, labelName + " label text in " + projectName, action.SCROLLANDBOOLEAN, 60),
@@ -787,8 +931,9 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 	public boolean changeStage(String projectName, String stage, int timeOut) {
 		boolean flag=true;
 		stage=stage.replace("_", " ");
+		ThreadSleep(2000);
 		if (clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Edit, 10)) {
-		
+			ThreadSleep(2000);
 		if (click(driver, getDealStage(projectName, timeOut), "Deal stage : "+stage, action.SCROLLANDBOOLEAN)) {
 			ThreadSleep(2000);
 			appLog.error("Clicked on Deal stage");
@@ -805,10 +950,11 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		} else {
 			appLog.error("Not able to Click on Deal stage : ");
 		}
-		
+		ThreadSleep(2000);
 		if (click(driver, getCustomTabSaveBtn(projectName,30), "Save Button", action.SCROLLANDBOOLEAN)) {
 			appLog.error("Click on save Button");	
 			flag = true;
+			ThreadSleep(2000);
 		}else{
 			appLog.error("Not Able to Click on save Button");	
 		}
