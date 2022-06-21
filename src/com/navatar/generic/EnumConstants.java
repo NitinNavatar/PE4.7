@@ -148,7 +148,7 @@ public class EnumConstants {
 		
 		}, 
 		NavatarInvestorAddOns, CurrentInvesment, PotentialInvesment, RecentActivities, AllDocuments, HomeTab, 
-		FolderTemplate, FundDistributions, FundOfFundsTransactions,InvestorDistributions, MarketingInitiatives, MarketingProspects,Affiliations,AgreementsAmendments{
+		FolderTemplate, FundDistributions, FundOfFundsTransactions,OfficeLocations,InvestorDistributions, MarketingInitiatives, MarketingProspects,Affiliations,AgreementsAmendments{
 			@Override
 			public String toString() {
 				return "Agreements/Amendments";
@@ -814,7 +814,7 @@ public static enum PermissionType{
 	};
 	
 	public static enum OfficeLocationLabel{
-		Office_Location_Name,Street,City,ZIP,Country,Phone,Fax,Primary,State_Province{
+		Office_Location_Name,Street,City,ZIP,Organization_Name,Country,Phone,Fax,Primary,State_Province{
 			@Override
 			public String toString() {
 				return "State/Province";
@@ -1456,6 +1456,14 @@ public static enum PermissionType{
 			@Override
 			public String toString() {
 				return "Sortable Data Grid Fields";
+		}},Fund_Drawdowns{
+			@Override
+			public String toString() {
+				return "Fund Drawdowns";
+		}},Fund_Distributions{
+			@Override
+			public String toString() {
+				return "Fund Distributions";
 		}}};
 	public static enum ObjectType{
 		Standard,Custom;

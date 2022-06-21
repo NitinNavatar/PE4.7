@@ -1196,6 +1196,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case FundraisingContacts:
 			viewList = "All";
 			break;
+		case OfficeLocations:
+			viewList = "All";
+			break;
 		default:
 			return false;
 		}
@@ -2187,7 +2190,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			} else {
 				// log(LogStatus.ERROR, "Not able to click on "+actionDropDown+" link",
 				// YesNo.Yes);
-				xpath = "//button[@name='" + actionDropDown + "']";
+				xpath = "//button[@name='" + actionDropDown + "' or text()='" + actionDropDown + "']";
 				ele = FindElement(driver, xpath, actionDropDown, action.BOOLEAN, 10);
 				if (click(driver, ele, actionDropDown, action.SCROLLANDBOOLEAN)) {
 					flag = true;
@@ -2274,8 +2277,16 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			xpath = "//span[text()='" + labelFieldTextBox + "']/ancestor::div//*[@title='" + name + "']";
 		}
 
-		ele = FindElement(driver, xpath, labelFieldTextBox, action, timeOut);
-		ele = isDisplayed(driver, ele, "Visibility", timeOut, labelFieldTextBox);
+		List<WebElement> list = FindElements(driver, xpath,"");
+		for(WebElement element:list) {
+			
+			ele = isDisplayed(driver, element, "Visibility", timeOut, labelFieldTextBox);
+			if(ele!=null){
+				ele=element;
+				break;
+			}
+		}
+		
 		return ele;
 	}
 
@@ -2322,6 +2333,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			ThreadSleep(2000);
 
 			ele = getContactNameOrRelatedAssociationNameOnTask(projectName, pageName, label, textValue, action, timOut);
+			ThreadSleep(2000);
 			if (clickUsingJavaScript(driver, ele, "Selected " + textValue + " From Label : " + label, action)) {
 				log(LogStatus.INFO, "Clicked on : " + textValue, YesNo.No);
 				ThreadSleep(2000);
@@ -3474,9 +3486,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String btname = btnName.toString();
 		String xpath = "";
 		if (isInside) {
-			xpath = "//button[text()='" + toggleTab + "' or @title='" + toggleTab + "']";
+			xpath = "//header//a[text()='"+toggleTab+"' or @title='"+toggleTab+"']" ;
 		} else {
-			xpath = "//button[text()='" + toggleTab + "' or @title='" + toggleTab + "']";
+			xpath = "//header//a[text()='"+toggleTab+"' or @title='"+toggleTab+"']" ;
 		}
 		WebElement ele = FindElement(driver, xpath, toggleTab + " >> " + btname, action, timeOut);
 		scrollDownThroughWebelement(driver, ele, "Toggle Button : " + btname);
@@ -4412,6 +4424,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case Object2Tab:
 			tabName = "Contacts";
 			break;
+		case OfficeLocations:
+			tabName = "Office Locations";
+			break;
 		default:
 			return flag;
 		}
@@ -5021,7 +5036,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					xpath = "//div[contains(@class,'slds-section__content')]//a[text()='" + subject
 							+ "']/ancestor::div[@class='slds-media']//a[text()='" + relatedTo + "']";
 				}
-				xpath = "//div[@class='Next_steps']/following-sibling::div[@class='activity-timeline']//a[text()='"
+				xpath = "//div[contains(@id,'upcoming-activities')]//a[text()='"
 						+ subject + "']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			}
@@ -5051,7 +5066,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				}
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			} else {
-				xpath = "//div[@class='Next_steps']/following-sibling::div[@class='activity-timeline']//a[text()='"
+				xpath = "//div[contains(@id,'upcoming-activities')]//a[text()='"
 						+ subject + "']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			}
@@ -5076,7 +5091,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						+ subject + "')]/../following-sibling::td/a[text()='" + relatedTo + "']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			} else {
-				xpath = "//div[@class='slds-section__title  past_activity']/following-sibling::div[@class='activity-timeline']//a[text()='"
+				xpath = "//div[contains(@class,'past-activity')]//a[text()='"
 						+ subject + "']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			}
@@ -5087,7 +5102,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						+ "']/../following-sibling::td/a[text()='" + relatedTo + "']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			} else {
-				xpath = "//div[@class='slds-section__title  past_activity']/following-sibling::div[@class='activity-timeline']//a[text()='"
+				xpath = "//div[contains(@class,'past-activity')]//a[text()='"
 						+ subject + "']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			}
@@ -5112,8 +5127,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						+ institutionName + "']/../following-sibling::td[text()='Former Employee']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			} else {
-				xpath = "(//table[@data-aura-class='uiVirtualDataTable'])[1]/tbody/tr/th/span/a[contains(text(),'AF')]/../../following-sibling::td/span/a[text()='"
-						+ institutionName + "']/../../following-sibling::td/span/span[text()='Former Employee']";
+				xpath ="//div[@class='navpeIISdgBase navpeIISdg']//a[text()='"+institutionName+"']/ancestor::tr//*[text()='Former Employee']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			}
 		} else {
@@ -6123,12 +6137,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					ThreadSleep(7000);
 
-					String fullXpath = "//h2[text()='" + objectName + "']";
+					String fullXpath = "//div[contains(@class,'page-header')]//span[text()='"+objectName+"']";
 
 					WebElement ele = FindElement(driver, fullXpath, " App Name", action.BOOLEAN, timeOut);
 
-					String pageName = ele.getText();
-					if (pageName.equals(objectName)) {
+					
+					if (ele!=null) {
 						AppListeners.appLog.info(objectName + " page successfully loaded");
 						flag = true;
 

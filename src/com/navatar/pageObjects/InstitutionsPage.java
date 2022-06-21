@@ -304,7 +304,7 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 	@FindBy(xpath="//h3[text()='Office Locations']/../following-sibling::td/input[@title='New Office Location']")
 	private WebElement newOfficeLocationBtn_Classic;
 
-	@FindBy(xpath="//span[text()='Office Locations']/ancestor::article//a/div[@title='New']")
+	@FindBy(xpath="//a[@title='New']")
 	private WebElement newofficeLocationBtn_Lighting;
 
 
@@ -347,21 +347,26 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 		//return editofficeLocationBtn_Lighting;
 	}
 
+	
+	
+//	PUBLIC LIST<WEBELEMENT> GETCOMMITMENTIDLIST(STRING ENVIRONMENT, STRING MODE){
+//		RETURN FINDELEMENTS(DRIVER, "//SPAN[CONTAINS(@ID,'GRID_DEALALERT-CELL-1-')]", "COMMITMENT ID LIST");
+//	}
+	
 	public List<WebElement> getFundNameList(String environment, String mode){
 		String xpath="//div[contains(@class,'windowViewMode-normal')]//a[text()='Fund Commitments']/ancestor::article//td[contains(@class,'Fund')]";
 		return FindElements(driver,xpath, "fund name in commitment list");
-	}
 
-	public List<WebElement> getCommitmentIDList(String environment, String mode){
-		return FindElements(driver, "//span[contains(@id,'grid_dealalert-cell-1-')]", "commitment id list");
 	}
 
 	public List<WebElement> getCommitmentAmountList(String environment, String mode){
-		return FindElements(driver, "//span[contains(@id,'grid_dealalert-cell-2-')]", "commitment id list");
+		String xpath="//div[contains(@class,'windowViewMode-normal')]//a[text()='Fund Commitments']/ancestor::article//td[contains(@class,'Commitment_Amount')]";
+		return FindElements(driver,xpath, "commitment amount in commitment list");
 	}
 
 	public List<WebElement> getLimitedPartnerList(String environment, String mode){
-		return FindElements(driver, "//span[contains(@id,'grid_dealalert-cell-3-')]", "commitment id list");
+		String xpath="//div[contains(@class,'windowViewMode-normal')]//a[text()='Fund Commitments']/ancestor::article//td[contains(@class,'Limited_Partner')]";
+		return FindElements(driver, xpath, "LP in commitment  list");
 	}
 
 	public List<WebElement> getPartnerShipList(String environment, String mode){

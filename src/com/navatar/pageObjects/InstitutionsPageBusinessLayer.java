@@ -1,5 +1,7 @@
 package com.navatar.pageObjects;
 
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -166,7 +168,24 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 
 		return flag;
 	}
-	public boolean clickOnCreatedInstitution(String environment,String mode,String inst_name) {
+	
+	
+public boolean clickOnCreatedOfficeLocation(String environment,String mode,String officeLocation) {
+		
+
+			if(clickOnAlreadyCreated_Lighting(environment, mode, TabName.OfficeLocations, officeLocation, 30)){
+				appLog.info("Clicked on office location name : " + officeLocation);
+				return true;
+			}else{
+				appLog.error("office location Not Available : " + officeLocation);
+			}	
+		
+		return false;
+	}
+
+	
+public boolean clickOnCreatedInstitution(String environment,String mode,String inst_name) {
+		
 
 		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
 
@@ -256,6 +275,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 		}
 		return false;
 	}
+
 	/**
 	 * @author Ankit Jaiswal
 	 * @param environment
@@ -300,6 +320,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 							result.add("Commitment Fund : "+commitmentRowData[0]+", Commitment Amount :"+commitmentRowData[1]+", LP Name : "+commitmentRowData[2]
 									+",created Date : "+commitmentRowData[3]+" is not matched ");
 						}
+
 					}
 				}
 				// if(commitmentRowData[4]!=null&& !commitmentRowData[4].isEmpty() &&!commitmentRowData[4].equalsIgnoreCase("")) {
@@ -617,7 +638,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 				if (finalLabelName.contains("Street")) {
 					xpath = "//*[text()='Street']//following-sibling::div/textarea";
 				}else if(finalLabelName.contains("Organization Name")) {
-					xpath = "//*[text()='Organization Name']//following-sibling::div";
+					xpath = "//*[text()='Organization Name']//following-sibling::div//input";
 				}else if(finalLabelName.contains("Primary"))
 					xpath="//label/span[text()='Primary']/..//following-sibling::div//input";
 				else{
@@ -640,6 +661,24 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 
 				} 
 
+			}else if(finalLabelName.contains("Organization Name")){
+
+				if (sendKeysWithoutClearingTextBox(driver, ele, labelWithValue[1], labelWithValue[1], action.BOOLEAN)) {
+					log(LogStatus.INFO, "Enter value : "+labelWithValue[1]+" For Label : "+labelWithValue[0], YesNo.No);
+					ThreadSleep(2000);
+				WebElement element=	FindElement(driver, "//*[@title='"+labelWithValue[1]+"']", "", action.BOOLEAN, 10);
+				if (click(driver, element, finalLabelName, action.BOOLEAN)) {
+					log(LogStatus.INFO, "able to select organization:"+labelWithValue[1], YesNo.No);
+				}else{
+					saa.assertTrue(false, "Not able to select organization:"+labelWithValue[1]);
+					log(LogStatus.FAIL, "Not able to select organization:"+labelWithValue[1], YesNo.Yes);
+				}
+
+					
+				}else{
+					saa.assertTrue(false, "Not Enter value : "+labelWithValue[1]+" For Label : "+labelWithValue[0]);
+					log(LogStatus.FAIL, "Not Enter value : "+labelWithValue[1]+" For Label : "+labelWithValue[0], YesNo.Yes);
+				}
 			}else{
 
 				if (sendKeys(driver, ele, labelWithValue[1], labelWithValue[1], action.BOOLEAN)) {
@@ -1230,6 +1269,127 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 			appLog.error(finalLabelName + " Value is not visible so cannot matched  label Value "+labelValue);
 		}
 		return false;
+
+	}
+	
+	/**
+	 * @author Ankit Jaiswal
+	 * @param environment
+	 * @param mode
+	 * @param tabName
+	 * @param labelName
+	 * @param labelValue
+	 * @return true if field Value Verified On Institution Page successfully
+	 */
+	public boolean fieldValueVerificationOnOfficeLocationPage(String environment, String mode, 
+			String labelName,String labelValue) {
+		String finalLabelName;
+		labelValue=labelValue.replace("_", " ");
+
+		if (labelName.contains("_")) {
+			finalLabelName = labelName.replace("_", " ");
+		} else {
+			finalLabelName = labelName;
+		}
+		String xpath = "";
+		WebElement ele = null;
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+			if(finalLabelName.equalsIgnoreCase(excelLabel.Institution_Type.toString().replace("_", " "))) {
+
+				xpath = "(//span[text()='" + finalLabelName + "']/../following-sibling::td/div)[1]";
+			}else {
+				xpath = "//td[text()='"+finalLabelName+"']/following-sibling::td/div";
+			}
+
+		} else {
+			/////////////////  Lighting New Start /////////////////////////////////////
+			if(labelName.equalsIgnoreCase(excelLabel.Phone.toString()) || labelName.equalsIgnoreCase(excelLabel.Fax.toString())|| labelName.equalsIgnoreCase("Organization Name")) {
+				xpath="//span[text()='"+finalLabelName+"']/../following-sibling::div//a";
+
+			}
+			else if(labelName.equalsIgnoreCase(excelLabel.Primary.toString()) ){
+
+				xpath="//div[contains(@class,'windowViewMode-normal')]//span[text()='"+finalLabelName+"']/../following-sibling::div//input";
+			}
+			else{
+
+				xpath="//span[text()='"+finalLabelName+"']/../following-sibling::div//lightning-formatted-text";
+			}
+			
+			if (labelValue.isEmpty() || labelValue.equals("")) {
+				xpath = "//span[text()='"+finalLabelName+"']/../following-sibling::div//*";
+				ele = 		FindElement(driver, xpath, finalLabelName + " label text with  " + labelValue, action.SCROLLANDBOOLEAN, 10);
+				scrollDownThroughWebelement(driver, ele, finalLabelName + " label text with  " + labelValue);
+				if (ele!=null) {
+					String aa = ele.getText().trim();
+					System.err.println("Value  "+aa);
+
+					if (aa.isEmpty() || aa.equals(labelValue)) {
+
+						return true;	
+					}else {
+						return false;
+					}
+
+				}else {
+					return false;
+				}
+
+			}
+			List<WebElement> list =new ArrayList<>();
+
+			list = FindElements(driver, xpath, "");
+			for(WebElement element:list){
+
+				element=isDisplayed(driver,element,"Visibility", 10, "");
+				if(element!=null){
+					ele =element;
+					break;
+				}
+			}
+			scrollDownThroughWebelement(driver, ele, finalLabelName + " label text with  " + labelValue);
+			ele = 	isDisplayed(driver,ele,"Visibility", 10, finalLabelName + " label text with  " + labelValue);
+			if (ele != null) {
+				if(labelName.equalsIgnoreCase("primary")) {
+					boolean status=isSelected(driver, ele, "");
+					if(labelValue.equalsIgnoreCase("checked")) {
+						if(status) {
+							appLog.info(finalLabelName + " label text with  " + labelValue+" verified");
+
+							return true;
+						}else {
+							
+							appLog.info(finalLabelName + " label text with  " + labelValue+"not matched verified");
+	
+						}
+					}else {
+						if(!status) {
+							appLog.info(finalLabelName + " label text with  " + labelValue+" verified");
+
+							return true;
+						}else {
+							
+							appLog.info(finalLabelName + " label text with  " + labelValue+"not matched verified");
+	
+						}
+					}
+					return true;
+				}
+				String aa = ele.getText().trim();
+				System.err.println("Value  "+aa);
+
+				appLog.info(finalLabelName + " label text with  " + labelValue+" verified");
+				return true;
+
+			} else {
+				appLog.error("<<<<<<   "+finalLabelName + " label text with  " + labelValue+" not verified "+"   >>>>>>");
+			}
+			return false;
+
+
+			/////////////////  Lighting New End /////////////////////////////////////
+		}
+	return false;
 
 	}
 

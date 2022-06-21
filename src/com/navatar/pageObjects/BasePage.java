@@ -4631,7 +4631,7 @@ public abstract class BasePage extends BaseLib {
 		return ele;
 	}
 
-	@FindBy(xpath="//h2[contains(text(),'Delete')]/../following-sibling::div//*[@title='Delete']")
+	@FindBy(xpath="//div[contains(@class,'forceModalActionContainer')]//button[@title='Delete']")
 	private WebElement deleteButtonOnDeletePopUp;
 
 
