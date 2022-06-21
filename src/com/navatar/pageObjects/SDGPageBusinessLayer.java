@@ -5,6 +5,7 @@ import static com.navatar.generic.AppListeners.appLog;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -673,65 +674,76 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		if(openSDG(projectName,sdgName))
 		{
 			if (click(driver, getrelatedTabOnSDG(40), "Related tab on SDG", action.BOOLEAN)) {
-				log(LogStatus.INFO,"Clicked on the Related Button",YesNo.Yes);	
+				log(LogStatus.INFO,"Clicked on the Related Button",YesNo.No);	
 				CommonLib.ThreadSleep(3000);
-				xpath="//tbody//lst-formatted-text[text()='"+apiNameOrOverrideLabelName+"']/ancestor::td/following-sibling::td//button";
-				ele=CommonLib.FindElement(driver, xpath, "Ero Button", action.SCROLLANDBOOLEAN, 50);
-				if (click(driver, ele, "Name button", action.BOOLEAN)) {
-					log(LogStatus.INFO,"Clicked on the name button",YesNo.Yes);				
-					CommonLib.ThreadSleep(8000);
-					if (click(driver, getsdgPageEditButton(40), "Edit button", action.BOOLEAN)) {
-						log(LogStatus.INFO,"Clicked on the edit button",YesNo.Yes);	
-						CommonLib.ThreadSleep(3000);
-						if (click(driver, getfilterSequenceButton(40), "Filter sequence button", action.BOOLEAN)) {
-							log(LogStatus.INFO,"Clicked on the filter sequence button",YesNo.Yes);
+
+				if (CommonLib.clickUsingJavaScript(driver, getsortableDataGridFields(50), "View all button", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO,"Clicked on the View all button",YesNo.No);	
+
+				//	xpath="//tbody//lst-formatted-text[text()='"++"']/ancestor::td/following-sibling::td//button";
+					xpath="//tbody//span[text()='"+apiNameOrOverrideLabelName+"']/ancestor::td//following-sibling::td//a[@role='button']";
+					ele=CommonLib.FindElement(driver, xpath, "Ero Button", action.SCROLLANDBOOLEAN, 50);
+					if (click(driver, ele, "Ero button", action.BOOLEAN)) {
+						log(LogStatus.INFO,"Clicked on the Ero button",YesNo.No);				
+						CommonLib.ThreadSleep(8000);
+						if (click(driver, getsdgPageEditButton(40), "Edit button", action.BOOLEAN)) {
+							log(LogStatus.INFO,"Clicked on the edit button",YesNo.No);	
 							CommonLib.ThreadSleep(3000);
-							if(CommonLib.getSelectedOptionOfDropDown(driver, getfilterSequenceDropdownList(), "Filter Sequence list", sequenceFilterOptionValue))
-							{
-								log(LogStatus.INFO,"Option has been selected from the sequence filter field drop down",YesNo.Yes);
-								if (click(driver, getsdgSaveBtn(40), "save button", action.BOOLEAN)) {
-									log(LogStatus.INFO,"Clicked on the save button",YesNo.Yes);
-									if(CommonLib.checkElementVisibility(driver, getsdgSaveConfirmationMsg(50), "Confirmation message after click on the save button", 50))
-									{
-										log(LogStatus.INFO,"Sequence filter has been saved",YesNo.No);
-										return true;
+							if (click(driver, getfilterSequenceButton(40), "Filter sequence button", action.BOOLEAN)) {
+								log(LogStatus.INFO,"Clicked on the filter sequence button",YesNo.No);
+								CommonLib.ThreadSleep(3000);
+								if(CommonLib.getSelectedOptionOfDropDown(driver, getfilterSequenceDropdownList(), "Filter Sequence list", sequenceFilterOptionValue))
+								{
+									log(LogStatus.INFO,"Option has been selected from the sequence filter field drop down",YesNo.No);
+									if (click(driver, getsdgSaveBtn(40), "save button", action.BOOLEAN)) {
+										log(LogStatus.INFO,"Clicked on the save button",YesNo.No);
+										if(CommonLib.checkElementVisibility(driver, getsdgSaveConfirmationMsg(50), "Confirmation message after click on the save button", 50))
+										{
+											log(LogStatus.INFO,"Sequence filter has been saved",YesNo.No);
+											return true;
+										}
+										else
+										{
+											log(LogStatus.ERROR,"Sequence filter is not saved",YesNo.Yes);
+											return false;
+										}				
 									}
 									else
 									{
-										log(LogStatus.ERROR,"Sequence filter is not saved",YesNo.Yes);
+										log(LogStatus.ERROR,"could not click on the save button",YesNo.Yes);
 										return false;
-									}				
+									}
 								}
 								else
 								{
-									log(LogStatus.ERROR,"could not click on the save button",YesNo.Yes);
+									log(LogStatus.ERROR,"could not select the option value from the sequence filter field drop down",YesNo.Yes);
 									return false;
 								}
+
 							}
 							else
 							{
-								log(LogStatus.ERROR,"could not select the option value from the sequence filter field drop down",YesNo.Yes);
+								log(LogStatus.ERROR,"could not click on the filter sequence button",YesNo.Yes);
 								return false;
 							}
 
 						}
+
 						else
 						{
-							log(LogStatus.ERROR,"could not click on the filter sequence button",YesNo.Yes);
+							log(LogStatus.ERROR,"could not click on the edit button",YesNo.Yes);
 							return false;
 						}
-
 					}
-
 					else
 					{
-						log(LogStatus.ERROR,"could not click on the edit button",YesNo.Yes);
+						log(LogStatus.ERROR,"could not click on the name button",YesNo.Yes);
 						return false;
 					}
 				}
 				else
 				{
-					log(LogStatus.ERROR,"could not click on the name button",YesNo.Yes);
+					log(LogStatus.ERROR,"could not click on the view all button",YesNo.Yes);
 					return false;
 				}
 
@@ -778,7 +790,7 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		WebElement ele;
 		String xpath;
 		xpath="//a[text()='"+sdgName+"']/ancestor::div[contains(@class,'slds-card__header')]/following-sibling::div//span[text()='No data returned']";
-		ele=CommonLib.FindElement(driver, xpath, elementName, action.SCROLLANDBOOLEAN, 30);
+		ele=CommonLib.FindElement(driver, xpath, elementName, action.SCROLLANDBOOLEAN, 20);
 		if(ele!=null)
 		{
 			log(LogStatus.INFO, elementName+ " element has been Found",YesNo.No);
@@ -1311,8 +1323,11 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 							log(LogStatus.INFO,value+ " has been passed in "+recordName,YesNo.No);
 
 							ThreadSleep(3000);
+							
 							xPath="//a[text()='"+sdgGridName+"']/ancestor::article//span[text()='Page Size']";
 							ele=FindElement(driver, xPath,"pagesize text of "+sdgGridName , action.BOOLEAN, 50);
+							
+							ThreadSleep(1000);
 							CommonLib.scrollDownThroughWebelementInCenter(driver, ele, "pagesize text of "+sdgGridName );
 							if(CommonLib.doubleClickUsingAction(driver, ele)) {
 								log(LogStatus.INFO,"Clicked on the "+sdgGridName+" body",YesNo.No);
@@ -1539,7 +1554,10 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 							{
 								log(LogStatus.INFO, "values are persent in the chosen textarea",YesNo.No);
 								ThreadSleep(3000);
-
+								xPath="//a[text()='"+sdgGridName+"']/ancestor::article//header";
+								ele=FindElement(driver, xPath,"Custom App Page Heading" , action.BOOLEAN, 50);
+								CommonLib.click(driver, ele, xPath, action.SCROLLANDBOOLEAN);
+								CommonLib.doubleClickUsingAction(driver, ele);
 								xPath="//a[text()='"+sdgGridName+"']/ancestor::article//span[text()='Page Size']";
 								ele=FindElement(driver, xPath,recordName , action.BOOLEAN, 50);
 								if(CommonLib.doubleClickUsingAction(driver, ele)) {
@@ -1621,6 +1639,12 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 						{
 							log(LogStatus.INFO,value+ " has been passed in "+recordName,YesNo.No);
 							ThreadSleep(5000);
+							
+							xPath="//a[text()='"+sdgGridName+"']/ancestor::article//header";
+							ele=FindElement(driver, xPath,"Custom App Page Heading" , action.BOOLEAN, 50);
+							CommonLib.click(driver, ele, xPath, action.SCROLLANDBOOLEAN);
+							CommonLib.doubleClickUsingAction(driver, ele);
+							
 							xPath="//a[text()='"+sdgGridName+"']/ancestor::article//span[text()='Page Size']";
 							ele=FindElement(driver, xPath,recordName , action.BOOLEAN, 50);
 
@@ -2004,14 +2028,14 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 			xPath="//a[text()='"+sdgName+"']//ancestor::article//td//a[text()='"+firstSDGColumnName+"']//ancestor::td//following-sibling::td[@data-Label='"+fieldName+": ']";
 			ele=FindElement(driver, xPath, fieldName+" Record Name", action.BOOLEAN, 50);
 			String text=CommonLib.getText(driver, ele, fieldName+" value", action.BOOLEAN);
-			if(text.equals(fieldValue))
+			if(!text.equals(fieldValue))
 			{
 				log(LogStatus.INFO,"Page has been refreash and data has been matched",YesNo.No);
 				flag=true;
 			}
 			else
 			{
-				log(LogStatus.INFO,"Page is not refreash and data is not matched",YesNo.No);
+				log(LogStatus.ERROR,"Page is not refreash and data is not matched",YesNo.No);
 			}
 
 		}
@@ -2652,6 +2676,7 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		return notMatchedData;
 
 	}
+	
 
 	public ArrayList<String> verifySDGRecord(String sdgName,String firstSDGColumnName,ArrayList<String> fieldName,ArrayList<String> fieldValue)
 	{
@@ -3017,7 +3042,7 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 							CommonLib.scrollDownThroughWebelementInCenter(driver, ele, recordName+" value");
 							String text=CommonLib.getText(driver, ele, recordName+" value", action.BOOLEAN);
 
-							if(val1.equals(text))
+							if(text.trim().equals(""))
 							{
 								log(LogStatus.INFO,"Value is not changed. So we are not able to enter the character",YesNo.No);
 								flag=true;
@@ -3444,5 +3469,144 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 	}
 
 
+
+	public boolean sdgFilterSendDataAndFound(String SDGName,String labelName, String value,String dropdown) {
+		boolean flag = false;
+
+
+		String xPath="//a[text()='"+SDGName+"']/ancestor::article//button[@title='Toggle Filters.']";
+		WebElement ele=CommonLib.FindElement(driver, xPath, "Filter Icon", action.SCROLLANDBOOLEAN,50);
+		if(CommonLib.click(driver, ele, "Filter Icon", action.BOOLEAN))
+		{
+			List<WebElement> filterLabelsList = getLabelsForFilters(SDGName);
+			List<String> filterLabelsListText = filterLabelsList.stream().map(s -> s.getText()).collect(Collectors.toList())
+					.stream().map(t -> t.trim()).collect(Collectors.toList());
+
+			if (filterLabelsListText.contains(labelName)) {
+				log(LogStatus.INFO, "--------Filter available: " + labelName + " --------", YesNo.No);
+				if (CommonLib.selectVisibleTextFromDropDown(driver, selectTagForSDGFilterName(labelName, 25),
+						dropdown + " Select DropDown", dropdown)) {
+					log(LogStatus.INFO, "Select the Value From DropDown: " + dropdown, YesNo.No);
+					CommonLib.ThreadSleep(20000);
+					if (sendKeysAndPressEnter(driver, inputBoxForSDGFilterName(labelName, 20), value,
+							labelName + " Input Box", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Pass the Value to Input Box: " + value, YesNo.No);
+						CommonLib.ThreadSleep(2000);	
+						flag=true;
+
+					} else {
+						log(LogStatus.ERROR, "--------Not able to Pass the Value to Input Box: " + value + "--------",
+								YesNo.Yes);
+						sa.assertTrue(false,
+								"--------Not able to Pass the Value to Input Box: " + value + "--------");
+					}
+				} else {
+					log(LogStatus.ERROR, "--------Not able to Select the Value From DropDown: " + dropdown + "--------",
+							YesNo.Yes);
+					sa.assertTrue(false, "--------Not able to Select the Value From DropDown: " + dropdown + "--------");
+				}
+			} else {
+				log(LogStatus.ERROR, "--------Filter Not available: " + value + "--------", YesNo.Yes);
+				sa.assertTrue(false, "--------Filter Not available: " +value + "--------");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "--------Not able to click on the Filter Icon--------", YesNo.Yes);
+			sa.assertTrue(false, "--------Not able to click on the Filter Icon--------");
+		}
+
+		return flag;
+	}
+
+	
+	public boolean sdgFilterSendDataAndFound(String SDGName,String labelName, String dropdown) {
+		boolean flag = false;
+
+
+		String xPath="//a[text()='"+SDGName+"']/ancestor::article//button[@title='Toggle Filters.']";
+		WebElement ele=CommonLib.FindElement(driver, xPath, "Filter Icon", action.SCROLLANDBOOLEAN,50);
+		if(CommonLib.click(driver, ele, "Filter Icon", action.BOOLEAN))
+		{
+			List<WebElement> filterLabelsList = getLabelsForFilters(SDGName);
+			List<String> filterLabelsListText = filterLabelsList.stream().map(s -> s.getText()).collect(Collectors.toList())
+					.stream().map(t -> t.trim()).collect(Collectors.toList());
+
+			if (filterLabelsListText.contains(labelName)) {
+				log(LogStatus.INFO, "--------Filter available: " + labelName + " --------", YesNo.No);
+				if (CommonLib.selectVisibleTextFromDropDown(driver, selectTagForSDGFilterName(labelName, 25),
+						dropdown + " Select DropDown", dropdown)) {
+					log(LogStatus.INFO, "Select the Value From DropDown: " + dropdown, YesNo.No);
+					CommonLib.ThreadSleep(20000);
+					flag=true;
+					
+				} else {
+					log(LogStatus.ERROR, "--------Not able to Select the Value From DropDown: " + dropdown + "--------",
+							YesNo.Yes);
+					sa.assertTrue(false, "--------Not able to Select the Value From DropDown: " + dropdown + "--------");
+				}
+			} else {
+				log(LogStatus.ERROR, "--------Filter Not available: " + dropdown + "--------", YesNo.Yes);
+				sa.assertTrue(false, "--------Filter Not available: " +dropdown + "--------");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "--------Not able to click on the Filter Icon--------", YesNo.Yes);
+			sa.assertTrue(false, "--------Not able to click on the Filter Icon--------");
+		}
+
+		return flag;
+	}
+
+	public ArrayList<String> clickCancelBtnAndVerifyRecordNotMatched(String sdgName,String firstSDGColumnName,ArrayList<String> fieldName,ArrayList<String> fieldValue)
+	{
+		String xPath="";
+		WebElement ele=null;
+		boolean flag=false;
+		ArrayList<String> valueFromSDG=new ArrayList<String>();
+		ArrayList<String> notMatchedData=new ArrayList<String>();
+
+		xPath="//a[text()='"+sdgName+"']//ancestor::article//button[text()='Cancel']";
+		WebElement	cancelBtnElement=FindElement(driver, xPath, "Save button of "+sdgName, action.BOOLEAN, 50);								
+		CommonLib.scrollDownThroughWebelementInCenter(driver, cancelBtnElement, "Cancel button");
+
+		if(click(driver, cancelBtnElement, "Cancel Button" , action.BOOLEAN))
+		{							
+			log(LogStatus.INFO,"Cancel button has been clicked",YesNo.No);
+
+			CommonLib.ThreadSleep(10000);
+			for(int i=0;i<fieldName.size();i++)
+			{
+				xPath="//a[text()='"+sdgName+"']//ancestor::article//td//a[text()='"+firstSDGColumnName+"']//ancestor::td//following-sibling::td[@data-Label='"+fieldName.get(i)+": ']//span[@class='slds-truncate']";
+				ele=FindElement(driver, xPath, fieldName.get(i)+" Record Name", action.BOOLEAN, 50);
+				CommonLib.scrollDownThroughWebelementInCenter(driver, ele, fieldName.get(i)+" value");
+				String text=CommonLib.getText(driver, ele, fieldName.get(i)+" value", action.BOOLEAN);
+				valueFromSDG.add(text);
+			}
+
+			for(int i=0;i<fieldValue.size();i++)
+			{
+				if(!valueFromSDG.get(i).equals(fieldValue.get(i)))
+				{
+					log(LogStatus.INFO,valueFromSDG.get(i)+" is not matched with the "+fieldValue.get(i),YesNo.No);
+
+				}
+				else
+				{
+					log(LogStatus.ERROR,valueFromSDG.get(i)+" is matched with the "+fieldValue.get(i),YesNo.Yes);
+					notMatchedData.add(valueFromSDG.get(i)+" is matched with the "+fieldValue.get(i));
+				}
+			}
+
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Not able to click on the Cancel button",YesNo.No);
+		}
+
+		return notMatchedData;
+
+	}
 
 }

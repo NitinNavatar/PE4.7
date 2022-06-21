@@ -46,6 +46,7 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 				log(LogStatus.INFO, "clicked on Field" + fieldName, YesNo.No);
 				CommonLib.ThreadSleep(7000);
 				CommonLib.switchToFrame(driver, 40, getfieldsAndRelationshipsIframe(30));
+				CommonLib.ThreadSleep(2000);
 				try
 				{
 					ele=new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//th[@scope='row' and text()='"+value+"']/preceding-sibling::td//a[contains(@title,'ctivate')]")));
@@ -61,23 +62,20 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 
 				if(condition.toString().equals("activate"))
 				{
-					if(!actionStatus.equals("Activate"))
+					if(!actionStatus.equals("Deactivate"))
 					{
-						if (CommonLib.click(driver, ele,value+" Deactivate button" , action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "clicked on the Deactivate button of " +value, YesNo.No);
-							if(!CommonLib.isAlertPresent(driver))
-							{		
-								CommonLib.clickUsingJavaScript(driver, ele,value+" field" , action.SCROLLANDBOOLEAN);
-
-							}
+						if (CommonLib.click(driver, ele,value+" activate button" , action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on the activate button of " +value, YesNo.No);
+							CommonLib.ThreadSleep(20000);
 							CommonLib.switchToDefaultContent(driver);
-							CommonLib.switchToAlertAndAcceptOrDecline(driver, 20, action.ACCEPT);
+							CommonLib.ThreadSleep(3000);
 							flag =true;
 						}					
 					}
 					else
 					{
 						CommonLib.switchToDefaultContent(driver);
+						CommonLib.ThreadSleep(3000);
 						log(LogStatus.INFO, value+" is already Activated", YesNo.No);
 
 						flag=true;
@@ -85,10 +83,20 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 				}
 				else if(condition.toString().equals("deactivate"))
 				{
-					if(!actionStatus.equals("Deactivate"))
+					if(!actionStatus.equals("Activate"))
 					{
 						if (CommonLib.click(driver, ele,value+" Activate button" , action.SCROLLANDBOOLEAN)) {
+
+							if(!CommonLib.isAlertPresent(driver))
+							{		
+								CommonLib.clickUsingJavaScript(driver, ele,value+" field" , action.SCROLLANDBOOLEAN);
+
+							}
+							
+							CommonLib.switchToAlertAndAcceptOrDecline(driver, 20, action.ACCEPT);
+							CommonLib.ThreadSleep(20000);
 							CommonLib.switchToDefaultContent(driver);
+							CommonLib.ThreadSleep(3000);
 							log(LogStatus.INFO, "clicked on the Activate button of " +value, YesNo.No);	
 
 							flag=true;
@@ -98,11 +106,10 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 					{
 						log(LogStatus.INFO, value+" is already Deactivated", YesNo.No);
 						CommonLib.switchToDefaultContent(driver);
+						CommonLib.ThreadSleep(3000);
 						flag=true;
 					}
-				}
-
-				CommonLib.ThreadSleep(15000);
+				}			
 			}
 
 			else

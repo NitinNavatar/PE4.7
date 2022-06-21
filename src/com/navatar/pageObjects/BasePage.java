@@ -5585,5 +5585,13 @@ public abstract class BasePage extends BaseLib {
 	
 	
 	
+	@FindBy(xpath = "//a[text()='Users']/ancestor::li[@aria-expanded='false']")
+	private WebElement userarialextendedicon;
+
+	public WebElement getuserarialextendedicon(int timeOut) {
+		return isDisplayed(driver, userarialextendedicon, "Visibility", timeOut, "User tab Arial extended icon");
+	
+	}	
+	
 	
 }

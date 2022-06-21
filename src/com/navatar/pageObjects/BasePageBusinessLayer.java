@@ -6682,5 +6682,117 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	}
 
 
+	public boolean clickOnAlreadyCreatedItem(String projectName, String alreadyCreated,TabName tabName, int timeout) {
+		boolean flag = false;
+		String xpath = "";
+		String viewList = null;
+		switch (tabName) {
+		case InstituitonsTab:
+
+			if (ProjectName.MNA.toString().equals(projectName)) {
+				viewList = "All Accounts";
+			} else {
+				viewList = "All Firms";
+			}
+			break;
+
+		case TestCustomObjectTab:
+			viewList = "Automation All";
+			break;
+		case CompaniesTab:
+			viewList = "All Companies";
+			break;
+		case Navigation:
+			viewList = "All";
+			break;
+		case ContactTab:
+			viewList = "All";
+			break;
+		case FundsTab:
+			viewList = "All";
+			break;
+		case DealTab:
+			viewList = "All";
+			break;
+		case Object1Tab:
+			viewList = "All";
+			break;
+		case Object2Tab:
+			viewList = "All";
+			break;
+		case Object3Tab:
+			viewList = "All";
+			break;
+		case Object4Tab:
+			viewList = "All";
+			break;
+		case Object5Tab:
+			viewList = "All";
+			break;
+		case Object6Tab:
+			viewList = "All";
+			break;
+		case Object7Tab:
+			viewList = "All";
+			break;
+		case NavatarSetup:
+			viewList = "All";
+			break;
+		case RecycleBinTab:
+			viewList = "My Recycle Bin";
+			break;
+		case SDGTab:
+			viewList = "All";
+			break;
+		default:
+			return false;
+		}
+		System.err.println("Passed switch statement");
+		WebElement ele, selectListView;
+		ele = null;
+
+		refresh(driver);
+		if (TabName.RecycleBinTab.equals(tabName)) {
+
+		} else {
+			if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(3000);
+				xpath = "//div[@class='listContent']//li/a/span[contains(text(),'" + viewList + "')]";
+				selectListView = FindElement(driver, xpath, "Select List View : " + viewList, action.SCROLLANDBOOLEAN,
+						30);
+				if (click(driver, selectListView, "select List View : " + viewList, action.SCROLLANDBOOLEAN)) {
+				} else {
+					appLog.error("Not able to select on Select View List : " + viewList);
+				}
+			} else {
+				appLog.error("Not able to click on Select List Icon");
+			}
+		}
+
+		ThreadSleep(3000);
+		ThreadSleep(5000);
+
+		if (sendKeys(driver, getSearchIcon_Lighting(20), alreadyCreated + "\n", "Search Icon Text",
+				action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(5000);
+
+			xpath = "//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//*[text()='" + alreadyCreated
+					+ "']";
+			ele = FindElement(driver, xpath, alreadyCreated, action.BOOLEAN, 30);
+			ThreadSleep(2000);
+
+			if (click(driver, ele, alreadyCreated, action.BOOLEAN)) {
+				ThreadSleep(3000);
+				click(driver, getPagePopUp(projectName, 5), "Page PopUp", action.BOOLEAN);
+				flag = true;
+			} else {
+				appLog.error("Not able to Click on Already Created : " + alreadyCreated);
+			}
+		} else {
+			appLog.error("Not able to enter value on Search Box");
+		}
+
+		return flag;
+	}
 
 }

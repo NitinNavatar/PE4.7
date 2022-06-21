@@ -67,7 +67,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 public class Module9 extends BaseLib {
 
-	/*	
+	
 	@Parameters({ "projectName" })
 
 	@Test
@@ -323,7 +323,7 @@ public class Module9 extends BaseLib {
 		sa.assertAll();
 
 	}
-	 */
+	 
 	/*
 	 * @Parameters({"projectName"})
 	 * 
@@ -459,7 +459,7 @@ public class Module9 extends BaseLib {
 	 * 
 	 * }
 	 */	 
-	/*		
+		
 	@Parameters({ "projectName" })
 
 	@Test
@@ -1341,7 +1341,7 @@ public class Module9 extends BaseLib {
 
 		sa.assertAll();
 	}
-	 */
+
 	@Parameters({ "projectName" })
 
 	@Test
@@ -1787,7 +1787,7 @@ public class Module9 extends BaseLib {
 		sa.assertAll();
 
 	}
-	
+
 	@Parameters({ "projectName" })
 
 	@Test
@@ -1871,7 +1871,7 @@ public class Module9 extends BaseLib {
 						if (BP.openAppFromAppLauchner(appPage, 50)) {
 							ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage,
 									tableName, val);
-							if (Data == null) {
+							if (Data.isEmpty()) {
 								log(LogStatus.PASS, "SDG Data has been Matched", YesNo.No);
 								sa.assertTrue(true, "SDG Data has been Matched");
 							} else {
@@ -1963,6 +1963,7 @@ public class Module9 extends BaseLib {
 				{ M9SDGD_80_AccountIndustry, M9SDGD_80_Totalfirm, M9SDGD_80_Task_as_per_Industries,
 																								M9SDGD_80_Individuals, M9SDGD_80_Fundraising_as_per_Industries } };
 
+
 		String value = "BiotechnologyUP";
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
@@ -1991,7 +1992,7 @@ public class Module9 extends BaseLib {
 						if (BP.openAppFromAppLauchner(appPage, 50)) {
 							ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage,
 									tableName, val);
-							if (Data == null) {
+							if (Data.isEmpty()) {
 								log(LogStatus.PASS, "SDG Data has been Matched", YesNo.No);
 								sa.assertTrue(true, "SDG Data has been Matched");
 							} else {
@@ -2110,7 +2111,7 @@ public class Module9 extends BaseLib {
 						if (BP.openAppFromAppLauchner(appPage, 50)) {
 							ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage,
 									tableName, val);
-							if (Data == null) {
+							if (Data.isEmpty()) {
 								log(LogStatus.PASS, "SDG Data has been Matched", YesNo.No);
 								sa.assertTrue(true, "SDG Data has been Matched");
 							} else {
@@ -2156,7 +2157,7 @@ public class Module9 extends BaseLib {
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 		FieldAndRelationshipPageBusinessLayer fr = new FieldAndRelationshipPageBusinessLayer(driver);
 		String field = "Industry";
-		String picklistvalue = "Retail";
+		String picklistvalue = "Banking";
 		String replaceValueName = "Consulting";
 
 		String[][] val = {
@@ -2199,6 +2200,15 @@ public class Module9 extends BaseLib {
 				{ M9SDGD_99_AccountIndustry, M9SDGD_99_Totalfirm, M9SDGD_99_Task_as_per_Industries,
 																							M9SDGD_99_Individuals, M9SDGD_99_Fundraising_as_per_Industries } };
 
+		for(int i=0;i<val.length;i++)
+		{
+			for(int j=0; j<val[i].length;j++)
+			{
+				System.out.print(" "+val[i][j]);
+			}
+			System.out.println();
+
+		}
 		String appPage = M9Tc057_AppPageName;
 		String tableName = M9Tc057_SDGTableName;
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
@@ -2229,7 +2239,7 @@ public class Module9 extends BaseLib {
 						if (BP.openAppFromAppLauchner(appPage, 50)) {
 							ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage,
 									tableName, val);
-							if (Data == null) {
+							if (Data.isEmpty()) {
 								log(LogStatus.PASS, "SDG Data has been Matched", YesNo.No);
 								sa.assertTrue(true, "SDG Data has been Matched");
 							} else {
@@ -2278,8 +2288,8 @@ public class Module9 extends BaseLib {
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 		FieldAndRelationshipPageBusinessLayer fr = new FieldAndRelationshipPageBusinessLayer(driver);
 		String field = "Industry";
-		String picklistvalue = "Utilities";
-		String replaceValueName = "Consulting";
+		String picklistvalue = "Agriculture";
+		String replaceValueName = "";
 		String appPage = M9Tc058_AppPageName;
 		String tableName = M9Tc058_SDGTableName;
 
@@ -2348,7 +2358,7 @@ public class Module9 extends BaseLib {
 						if (BP.openAppFromAppLauchner(appPage, 50)) {
 							ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage,
 									tableName, val);
-							if (Data == null) {
+							if (Data.isEmpty()) {
 								log(LogStatus.PASS, "SDG Data has been Matched", YesNo.No);
 								sa.assertTrue(true, "SDG Data has been Matched");
 							} else {
@@ -2465,7 +2475,7 @@ public class Module9 extends BaseLib {
 							if (BP.openAppFromAppLauchner(appPage, 50)) {
 								ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage,
 										tableName, val);
-								if (Data == null) {
+								if (Data.isEmpty()) {
 									log(LogStatus.PASS, "SDG Data has been Matched", YesNo.No);
 									sa.assertTrue(true, "SDG Data has been Matched");
 								} else {
@@ -2525,9 +2535,9 @@ public class Module9 extends BaseLib {
 		{
 		tableNames.add(table[i]);
 		}
-		
+
 		String[] data=M9Tc060_SDGDataProvider.split("<BreakOn>");
-		
+
 		ArrayList<String> dataProviderName = new ArrayList<String>();
 		for(int i=0; i<data.length; i++)
 		{
@@ -2540,8 +2550,8 @@ public class Module9 extends BaseLib {
 				if (EP.editPageAndAddSDG(appPage, tableNames.get(i), dataProviderName.get(i))) {
 
 				} else {
-					log(LogStatus.ERROR, "Could not edit the Page and add the SDG", YesNo.Yes);
-					sa.assertTrue(false, "Could not edit the Page and add the SDG");
+					log(LogStatus.PASS, "App page has been edited and "+dataProviderName.get(i)+" has been added", YesNo.No);
+					sa.assertTrue(true, "App page has been edited and "+dataProviderName.get(i)+" has been added");
 				}
 
 			} else {
@@ -2562,7 +2572,7 @@ public class Module9 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
-		
+
 		String appPage = M9Tc061_AppPageName;
 		String[] tableName=M9Tc061_SDGTableName.split("<BreakOn>");
 		String[][] SDG_GROUPBY_2_SDG = { { M9SDGD_136_Fundraising_Stage, M9SDGD_136_Count_as_per_fundraising_stage },
@@ -2578,11 +2588,11 @@ public class Module9 extends BaseLib {
 				{ M9SDGD_145_Fundraising, M9SDGD_145_Fundraising_Count } };
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		
+
 		if (BP.openAppFromAppLauchner(appPage, 50)) {
 			ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage, tableName[0],
 					SDG_GROUPBY_2_SDG);
-			if (Data == null) {
+			if (Data.isEmpty()) {
 				log(LogStatus.PASS, "SDG Data has been Matched", YesNo.No);
 				sa.assertTrue(true, "SDG Data has been Matched");
 			} else {
@@ -2598,11 +2608,11 @@ public class Module9 extends BaseLib {
 		lp.CRMlogout();
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		
+
 		if (BP.openAppFromAppLauchner(appPage, 50)) {
 			ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage, tableName[1],
 					SDG_GROUPBY_3_SDG);
-			if (Data == null) {
+			if (Data.isEmpty()) {
 				log(LogStatus.PASS, "SDG Data has been Matched", YesNo.No);
 				sa.assertTrue(true, "SDG Data has been Matched");
 			} else {
@@ -2620,7 +2630,7 @@ public class Module9 extends BaseLib {
 		sa.assertAll();
 	}
 
-/*	
+
 	@Parameters({ "projectName" })
 
 	@Test
@@ -2646,12 +2656,17 @@ public class Module9 extends BaseLib {
 			ThreadSleep(3000);
 
 			data = M9AFTPL_13_FieldNames;
-			System.out.println(data);
+
 			String[] fields = data.split(",");
 
 			ArrayList<String> userEmail = new ArrayList<String>();
+			ArrayList<String> adminEmail = new ArrayList<String>();
+			
+			
 			userEmail.add(crmUser1EmailID);
 			userEmail.add(crmUser2EmailID);
+			
+			adminEmail.add(superAdminUserName);
 
 			ArrayList<String> columns = new ArrayList<String>();
 			for (String column : fields) {
@@ -2662,12 +2677,12 @@ public class Module9 extends BaseLib {
 			layoutName.add(M9AFTPL_13_PageLayoutName);
 			HashMap<String, String> sourceANDDestination = new HashMap<String, String>();
 			for (String column : columns) {
-				sourceANDDestination.put(column, "Identifier");
+				sourceANDDestination.put(column, "");
 
 			}
 			if (dataload.addFieldToLayoutPage("", mode, layoutName, sourceANDDestination, object.User)) {
 				CommonLib.switchToDefaultContent(driver);
-
+				ThreadSleep(2000);
 				if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.User,
 						ObjectFeatureName.FieldAndRelationShip, "Team", PermissionType.givePermission,
 						"System Administrator")) {
@@ -2675,23 +2690,38 @@ public class Module9 extends BaseLib {
 
 					for (String email : userEmail) {
 						CommonLib.switchToDefaultContent(driver);
+						ThreadSleep(2000);
 						CommonLib.refresh(driver);
 						if (setup.EditPEUser(email, "Team", HTMLTAG.select, "Origination")) {
 							log(LogStatus.INFO, "Origination has been added in the Team for user :" + email, YesNo.No);
 							sa.assertTrue(true, "Origination has been added in the Team for user :" + email);
 						} else {
-							log(LogStatus.INFO, "Origination is not added in the Team field for user :" + email,
+							log(LogStatus.ERROR, "Origination is not added in the Team field for user :" + email,
 									YesNo.Yes);
 							sa.assertTrue(false, "Origination is not added in the Team field for user :" + email);
 						}
 					}
+					for (String email : adminEmail) {
+						CommonLib.switchToDefaultContent(driver);
+						ThreadSleep(2000);
+						CommonLib.refresh(driver);
+						if (setup.EditPEUser(email, "Team", HTMLTAG.select, "Portfolio")) {
+							log(LogStatus.INFO, "Portfolio has been added in the Team for user :" + email, YesNo.No);
+							sa.assertTrue(true, "Portfolio has been added in the Team for user :" + email);
+						} else {
+							log(LogStatus.ERROR, "Portfolio is not added in the Team field for user :" + email,
+									YesNo.Yes);
+							sa.assertTrue(false, "Portfolio is not added in the Team field for user :" + email);
+						}
+					}
+					
 
 				} else {
-					log(LogStatus.INFO, "Not able to give the permission", YesNo.Yes);
+					log(LogStatus.ERROR, "Not able to give the permission", YesNo.Yes);
 					sa.assertTrue(false, "Not able to give the permission");
 				}
 			} else {
-				log(LogStatus.INFO, "Not able to add the field on the Layout", YesNo.Yes);
+				log(LogStatus.ERROR, "Not able to add the field on the Layout", YesNo.Yes);
 				sa.assertTrue(false, "Not able to add the field on the Layout");
 			}
 		}
@@ -2714,18 +2744,20 @@ public class Module9 extends BaseLib {
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
+		String[] dataProvider=M9Tc063_SDGDataProvider.split("<BreakOn>");
 		ArrayList<String> dataProviderName = new ArrayList<String>();
-		dataProviderName.add("CustomObject:Account Filter Grid");
-		dataProviderName.add("CustomObject:Contact Filter Grid");
-		dataProviderName.add("CustomObject:Fund Filter Grid");
-		dataProviderName.add("CustomObject:Fundraising Filter Grid");
+		for(int i=0; i<dataProvider.length;i++)
+		{
+			dataProviderName.add(dataProvider[i]);
+		}
+
+        String[] name=M9Tc063_SDGTableName.split("<BreakOn>");
 
 		ArrayList<String> tableName = new ArrayList<String>();
-		tableName.add("Account Filter Grid");
-		tableName.add("Contact Filter Grid");
-		tableName.add("Fund Filter Grid");
-		tableName.add("Fundraising Filter Grid");
-
+		for(int i=0; i<name.length;i++)
+		{
+			tableName.add(name[i]);
+		}
 		if (home.clickOnSetUpLink()) {
 
 			String parentWindowID = switchOnWindow(driver);
@@ -2742,7 +2774,7 @@ public class Module9 extends BaseLib {
 				if (AppBuilder.CreateAppPage(projectName, mode, labelName, tableName, dataProviderName,
 						parentWindowID)) {
 					log(LogStatus.PASS, "App Page has been Created : " + labelName, YesNo.Yes);
-					sa.assertTrue(true, "App Page has been Created");
+					sa.assertTrue(true, "App Page has been Created : "+ labelName);
 				} else {
 					log(LogStatus.ERROR, "App Page is not created : " + labelName, YesNo.Yes);
 					sa.assertTrue(false, "App Page is not created : " + labelName);
@@ -3302,7 +3334,7 @@ public class Module9 extends BaseLib {
 		if (flag) {
 			if (lp.clickOnTab(projectName, TabName.HomeTab)) {
 				log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
-				if (edit.editPageAndAddFilter("Fund", globalFilterQuery, "", "", "", "")) {
+				if (edit.editPageAndAddFilter("Fund", globalFilterQuery, "", "", "", "",Condition.SelectCheckbox)) {
 					log(LogStatus.INFO, "Global Filter Added to: " + TabName.HomeTab.toString(), YesNo.No);
 					globalFilterFlag = true;
 
@@ -3452,12 +3484,12 @@ public class Module9 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		EditPageBusinessLayer EP = new EditPageBusinessLayer(driver);
-		String appPage = "Custom App Page";
+		String appPage = M9Tc064_AppPageName;
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
 		if (BP.openAppFromAppLauchner(appPage, 50)) {
 			if (EP.editPageAndAddFilter("Fund", "Select Name from navpeII__Fund__c ORDER BY Name ASC", "Firm",
-					"Select Name from Account where RecordType.Name = 'Institution' ORDER BY Name ASC", "", "")) {
+					"Select Name from Account where RecordType.Name = 'Institution' ORDER BY Name ASC", "", "",Condition.UnSelectCheckbox)) {
 				log(LogStatus.PASS, "Filter has been added on the page", YesNo.Yes);
 				sa.assertTrue(true, "Filter has been added on the page");
 			} else {
@@ -3474,6 +3506,7 @@ public class Module9 extends BaseLib {
 		sa.assertAll();
 	}
 
+
 	@Parameters({ "projectName" })
 
 	@Test
@@ -3482,8 +3515,8 @@ public class Module9 extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 
-		String appPage = "Custom App Page";
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		String appPage = M9Tc065_AppPageName;
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		ArrayList<String> labelName = new ArrayList<String>();
 		labelName.add("Fund");
 		labelName.add("Firm");
@@ -3497,13 +3530,15 @@ public class Module9 extends BaseLib {
 
 			if (AppBuilder.VerifyDropdownCountandAscendingOrder(labelName, count)) {
 				log(LogStatus.INFO, "Dropdown count and Ascending order has been matched", YesNo.No);
+				sa.assertTrue(true, "Dropdown count and Ascending order has been matched");
 
 			} else {
-				log(LogStatus.INFO, "Dropdown count and Ascending order is not matched of ", YesNo.No);
+				log(LogStatus.ERROR, "Dropdown count and Ascending order is not matched ", YesNo.Yes);
+				sa.assertTrue(false, "Dropdown count and Ascending order is not matched ");
 			}
 
 		} else {
-			log(LogStatus.ERROR, "Could not open the App page", YesNo.No);
+			log(LogStatus.ERROR, "Could not open the App page from the App Launcher", YesNo.No);
 		}
 
 		lp.CRMlogout();
@@ -3511,7 +3546,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
 	@Test
 	public void M9Tc066_VerifyGlobalFilterForFundAndFirm(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -3519,14 +3553,15 @@ public class Module9 extends BaseLib {
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 
 
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
-		String appPage = "Custom App Page";
+		String appPage = M9Tc066_AppPageName;
 		String pageSize = "100";
-		String fundSDGName = "Fund Filter Grid";
-		String accountSDGName = "Account Filter Grid";
-		String fundraisingSDGName = "Fundraising Filter Grid";
-		String contactSDGName = "Contact Filter Grid";
+		String[] table=M9Tc066_SDGTableName.split("<BreakOn>");
+		String fundSDGName = table[2];
+		String accountSDGName = table[0];
+		String fundraisingSDGName = table[3];
+		String contactSDGName = table[1];
 
 		int fundRowCountBeforeFilter, fundraisingRowCountBeforeFilter, accountFilterRowCountBeforeFilter,
 		contactFilterRowCountBeforeFilter;
@@ -3547,7 +3582,7 @@ public class Module9 extends BaseLib {
 						+ fundraisingRowCountBeforeFilter + " \n Contact : " + contactFilterRowCountBeforeFilter,
 						YesNo.No);
 
-				if (AppBuilder.selectFilter("Fund", "Appfluent Technology")) {
+				if (AppBuilder.selectFilter("Fund", "Centrient Pharmaceuticals -2018")) {
 					log(LogStatus.INFO, "Filter has been selected of the fund", YesNo.No);
 					CommonLib.ThreadSleep(8000);
 
@@ -3736,20 +3771,23 @@ public class Module9 extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
-		String appPage = "Custom App Page";
-		String fundraisingSDGName = "Fundraising Filter Grid";
+		String appPage = M9Tc067_AppPageName;
+		String[] table=M9Tc067_SDGTableName.split("<BreakOn>");
+		String fundraisingSDGName = table[1];
+		String fundSDGName=table[0];
 		int fundraisingRowCountBeforeFilter, fundraisingRowCountAfterFilter;
 		String pageSize = "100";
 		int status=0;
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
 		if (BP.openAppFromAppLauchner(60, "Sortable Data Grids")) {
-			if (SB.sequenceFilter(projectName, "Fund Filter Grid","Name","1")) {
+			if (SB.sequenceFilter(projectName, fundSDGName,"Name","1")) {
 				log(LogStatus.INFO,
 						"Sequence Filter has been saved",
 						YesNo.No);
 				sa.assertTrue(true, "Sequence Filter has been saved");
-
+				lp.CRMlogout();
+				lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 				if (BP.openAppFromAppLauchner(appPage, 50)) {
 					fundraisingRowCountBeforeFilter = AppBuilder.numberOfRecords(fundraisingSDGName, pageSize);
 					if (fundraisingRowCountBeforeFilter != 0) {
@@ -3760,7 +3798,7 @@ public class Module9 extends BaseLib {
 						log(LogStatus.ERROR, "Could not open the App page", YesNo.No);
 						sa.assertTrue(false, "Could not get the Fundraising Count");
 					}
-					if (AppBuilder.selectFilter("Fund", "Appfluent Technology")) {
+					if (AppBuilder.selectFilter("Fund", "Centrient Pharmaceuticals -2018")) {
 						log(LogStatus.INFO, "Filter has been selected from the fund", YesNo.No);
 						CommonLib.ThreadSleep(8000);
 						fundraisingRowCountAfterFilter = AppBuilder.numberOfRecords(fundraisingSDGName, pageSize);
@@ -3778,14 +3816,14 @@ public class Module9 extends BaseLib {
 						{
 							for(int i=0; i<list.size();i++)
 							{
-								if(list.get(i).equals("Appfluent Technology"))
+								if(list.get(i).equals("Centrient Pharmaceuticals -2018"))
 								{
 									log(LogStatus.INFO, list.get(i)+" has been matched", YesNo.No);
 
 								}
 								else
 								{
-									log(LogStatus.ERROR, list.get(i)+" is not matched with the Appfluent Technology", YesNo.No);
+									log(LogStatus.ERROR, list.get(i)+" is not matched with the Centrient Pharmaceuticals -2018", YesNo.No);
 									status++;
 								}
 							}
@@ -3797,8 +3835,8 @@ public class Module9 extends BaseLib {
 							}
 							else
 							{
-								log(LogStatus.ERROR, "Sequence filter has been Applied but Fund data is not matched", YesNo.No);
-								sa.assertTrue(false, "Could not select the filter from the fund data is not matched");
+								log(LogStatus.ERROR, "Sequence filter has been Applied but Fund data is not matched", YesNo.Yes);
+								sa.assertTrue(false, "Sequence filter has been Applied but Fund data is not matched");
 							}
 
 						}
@@ -3947,7 +3985,7 @@ public class Module9 extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void M9Tc068_AddFilterSequenceForFundAndVerifyRecord(String projectName) {
@@ -3956,18 +3994,27 @@ public class Module9 extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
-		String appPage = "Custom App Page";
-		String fundraisingSDGName = "Fundraising Filter Grid";
+		String appPage = M9Tc068_AppPageName;
+		String[] table=M9Tc068_SDGTableName.split("<BreakOn>");
+		String fundraisingSDGName = table[1];
 		String filterOptionValue="Appfluent Technology";
-		String fundSDGName="Fund Filter Grid";
-
+		String filterOptionValue1="Sumo Logic - Nov 2017";
+		String fundSDGName=table[0];
+		String pageSize="100";
+		int fundRecordCountBeforeFilter,fundRecordCountAfterFilter,fundraisingRecordCountAfterFilter,fundraisingRecordCountBeforeFilter;
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
-		if (BP.openAppFromAppLauchner(60, "Sortable Data Grids")) {
+		if (BP.openAppFromAppLauchner(60, "Sortable Data Grids")) {		
+
 			if (SB.sequenceFilter(projectName, "Fundraising Filter Grid","Fund Name","1")) {
 				log(LogStatus.INFO,"Sequence Filter has been saved",YesNo.No);
 				sa.assertTrue(true, "Sequence Filter has been saved");
+
+				lp.CRMlogout();
+				lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+
 				if (BP.openAppFromAppLauchner(appPage, 50)) {
+
 					if (AppBuilder.selectFilter("Fund", filterOptionValue)) {
 						log(LogStatus.INFO, "Filter has been selected from the fund", YesNo.No);
 						CommonLib.ThreadSleep(8000);
@@ -3980,13 +4027,13 @@ public class Module9 extends BaseLib {
 							}
 							else
 							{
-								log(LogStatus.ERROR, "Sequence filter has been Applied but Record is not matched", YesNo.No);
+								log(LogStatus.ERROR, "Sequence filter has been Applied but Record is not matched", YesNo.Yes);
 								sa.assertTrue(false, "Sequence filter has been Applied but Record is not matched");
 							}				
 						}
 						else
 						{
-							log(LogStatus.PASS, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully", YesNo.No);
+							log(LogStatus.PASS, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully", YesNo.Yes);
 							sa.assertTrue(true, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully");
 
 						}
@@ -4000,13 +4047,13 @@ public class Module9 extends BaseLib {
 							}
 							else
 							{
-								log(LogStatus.ERROR, "Sequence filter has been Applied but Record is not matched", YesNo.No);
+								log(LogStatus.ERROR, "Sequence filter has been Applied but Record is not matched", YesNo.Yes);
 								sa.assertTrue(false, "Sequence filter has been Applied but Record is not matched");
 							}				
 						}
 						else
 						{
-							log(LogStatus.PASS, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully", YesNo.No);
+							log(LogStatus.PASS, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully", YesNo.Yes);
 							sa.assertTrue(true, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully");
 
 						}
@@ -4014,27 +4061,124 @@ public class Module9 extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.ERROR,"Could not select the filter",YesNo.No);
+						log(LogStatus.ERROR,"Could not select the filter",YesNo.Yes);
 						sa.assertTrue(false, "Could not select the filter");
 					}
 
 				}			
 				else
 				{
-					log(LogStatus.ERROR,"Could not open the app from the app launcher",YesNo.No);
+					log(LogStatus.ERROR,"Could not open the app from the app launcher",YesNo.Yes);
+					sa.assertTrue(false, "Could not open the app from the app launcher");
+				}		
+
+				if (BP.openAppFromAppLauchner(appPage, 50)) {
+					CommonLib.refresh(driver);
+					if (AppBuilder.selectFilter("Fund", filterOptionValue1)) {
+						log(LogStatus.INFO, "Filter has been selected from the fund", YesNo.No);
+						CommonLib.ThreadSleep(8000);
+						if(!SB.verifyRecordExistOrNotOnSDG(fundraisingSDGName,"Fundraising SDG"))
+						{
+							if(SB.verifyRecordAfterApplyingGlobalFilter(fundraisingSDGName,filterOptionValue1, "Fund Name","Fundraising SDG"))
+							{
+								log(LogStatus.PASS, "Sequence filter has been Applied Records are matched", YesNo.No);
+								sa.assertTrue(true, "Sequence filter has been Applied Records are matched");
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Sequence filter has been Applied but Record is not matched", YesNo.Yes);
+								sa.assertTrue(false, "Sequence filter has been Applied but Record is not matched");
+							}				
+						}
+						else
+						{
+							log(LogStatus.PASS, "Record is not persent against "+filterOptionValue1+" Filter on Fund But Filter has been applied successfully", YesNo.No);
+							sa.assertTrue(true, "Record is not persent against "+filterOptionValue1+" Filter on Fund But Filter has been applied successfully");
+
+						}
+
+						if(!SB.verifyRecordExistOrNotOnSDG(fundSDGName,"Fund SDG"))
+						{
+							if(SB.verifyRecordAfterApplyingGlobalFilter(fundSDGName,filterOptionValue1, "Fund","Fund SDG"))
+							{
+								log(LogStatus.PASS, "Sequence filter has been Applied Records are matched", YesNo.No);
+								sa.assertTrue(true, "Sequence filter has been Applied Records are matched");
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Sequence filter has been Applied but Record is not matched", YesNo.Yes);
+								sa.assertTrue(false, "Sequence filter has been Applied but Record is not matched");
+							}				
+						}
+						else
+						{
+							log(LogStatus.PASS, "Record is not persent against "+filterOptionValue1+" Filter on Fund But Filter has been applied successfully", YesNo.Yes);
+							sa.assertTrue(true, "Record is not persent against "+filterOptionValue1+" Filter on Fund But Filter has been applied successfully");
+
+						}
+
+					}
+					else
+					{
+						log(LogStatus.ERROR,"Could not select the filter",YesNo.Yes);
+						sa.assertTrue(false, "Could not select the filter");
+					}
+
+				}			
+				else
+				{
+					log(LogStatus.ERROR,"Could not open the app from the app launcher",YesNo.Yes);
 					sa.assertTrue(false, "Could not open the app from the app launcher");
 				}
+
+
+				if (BP.openAppFromAppLauchner(appPage, 50)) {
+					CommonLib.refresh(driver);
+					fundRecordCountBeforeFilter=AppBuilder.numberOfRecords(fundSDGName, pageSize);
+					fundraisingRecordCountBeforeFilter=AppBuilder.numberOfRecords(fundraisingSDGName, pageSize);
+					if (AppBuilder.selectFilter("Fund", "All")) {
+						log(LogStatus.INFO, "Filter has been selected from the fund", YesNo.No);
+						CommonLib.ThreadSleep(8000);
+						fundRecordCountAfterFilter=AppBuilder.numberOfRecords(fundSDGName, pageSize);
+						fundraisingRecordCountAfterFilter=AppBuilder.numberOfRecords(fundraisingSDGName, pageSize);
+
+						if(fundRecordCountBeforeFilter==fundRecordCountAfterFilter && fundraisingRecordCountBeforeFilter==fundraisingRecordCountAfterFilter)
+						{
+
+							log(LogStatus.PASS, "Records are matched After Selecting All from the Fund", YesNo.No);
+							sa.assertTrue(true, "Records are matched After Selecting All from the Fund");
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Records are not matched After Selecting All from the Fund", YesNo.Yes);
+							sa.assertTrue(false, "Records are not matched After Selecting All from the Fund");
+						}									
+
+					}
+					else
+					{
+						log(LogStatus.ERROR,"Could not select the filter",YesNo.Yes);
+						sa.assertTrue(false, "Could not select the filter");
+					}
+
+				}			
+				else
+				{
+					log(LogStatus.ERROR,"Could not open the app from the app launcher",YesNo.Yes);
+					sa.assertTrue(false, "Could not open the app from the app launcher");
+				}
+
 			}
 			else
 			{
-				log(LogStatus.ERROR,"Sequence Filter is not saved",YesNo.No);
+				log(LogStatus.ERROR,"Sequence Filter is not saved",YesNo.Yes);
 				sa.assertTrue(false, "Sequence Filter is not saved");
 			}
 
 		}
 		else
 		{
-			log(LogStatus.ERROR,"Could not open the app from the App Launcher",YesNo.No);
+			log(LogStatus.ERROR,"Could not open the app from the App Launcher",YesNo.Yes);
 			sa.assertTrue(false, "Could not open the app from the App Launcher");
 		}
 
@@ -4043,7 +4187,7 @@ public class Module9 extends BaseLib {
 		sa.assertAll();
 	}
 
-
+	
 	@Parameters({ "projectName" })
 
 	@Test
@@ -4346,7 +4490,7 @@ public class Module9 extends BaseLib {
 		sa.assertAll();
 
 	}
-
+	 
 
 	@Parameters({ "projectName" })
 	@Test
@@ -4356,15 +4500,16 @@ public class Module9 extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
-		String appPage = "Custom App Page";
-		String accountSDGName = "Account Filter Grid";
-		String contactSDGName="Contact Filter Grid";
+		String appPage = M9Tc069_AppPageName;
+		String[] table=M9Tc069_SDGTableName.split("<BreakOn>");
+		String accountSDGName = table[0];
+		String contactSDGName=table[1];
 		int status=0,fundraisingRowCountBeforeFilter,fundraisingRowCountAfterFilter;
-		String fundraisingSDGName="Fundraising Filter Grid";
+		String fundraisingSDGName=table[2];
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
 		if (BP.openAppFromAppLauchner(60, "Sortable Data Grids")) {
-			if (SB.sequenceFilter(projectName, "Account Filter Grid","Account Name","2")) 		
+			if (SB.sequenceFilter(projectName, accountSDGName,"Account Name","2")) 		
 			{
 				log(LogStatus.INFO,"Sequence Filter has been saved",YesNo.No);
 				sa.assertTrue(true, "Sequence Filter has been saved");
@@ -4382,7 +4527,7 @@ public class Module9 extends BaseLib {
 
 		if (BP.openAppFromAppLauchner(60, "Sortable Data Grids")) {
 			CommonLib.refresh(driver);
-			if (SB.sequenceFilter(projectName, "Contact Filter Grid","Contact Name","2")) 		
+			if (SB.sequenceFilter(projectName, contactSDGName,"Contact Name","2")) 		
 			{
 				log(LogStatus.INFO,"Sequence Filter has been saved",YesNo.No);
 				sa.assertTrue(true, "Sequence Filter has been saved");
@@ -4424,8 +4569,8 @@ public class Module9 extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.PASS, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully", YesNo.No);
-						sa.assertTrue(true, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully");
+						log(LogStatus.PASS, "Record is not persent against AIG Group Filter on Fund But Filter has been applied successfully", YesNo.No);
+						sa.assertTrue(true, "Record is not persent against AIG Group Filter on Fund But Filter has been applied successfully");
 
 					}
 
@@ -4444,8 +4589,8 @@ public class Module9 extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.PASS, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully", YesNo.No);
-						sa.assertTrue(true, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully");
+						log(LogStatus.PASS, "Record is not persent against AIG Group Filter on Fund But Filter has been applied successfully", YesNo.No);
+						sa.assertTrue(true, "Record is not persent against AIG Group Filter on Fund But Filter has been applied successfully");
 
 					}
 
@@ -4474,8 +4619,8 @@ public class Module9 extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.PASS, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully", YesNo.No);
-						sa.assertTrue(true, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully");
+						log(LogStatus.PASS, "Record is not persent against Applied Systems, Inc. Filter on Fund But Filter has been applied successfully", YesNo.No);
+						sa.assertTrue(true, "Record is not persent against Applied Systems, Inc. Filter on Fund But Filter has been applied successfully");
 
 					}
 
@@ -4494,22 +4639,21 @@ public class Module9 extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.PASS, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully", YesNo.No);
-						sa.assertTrue(true, "Record is not persent against Appfluent Technology Filter on Fund But Filter has been applied successfully");
+						log(LogStatus.PASS, "Record is not persent against Applied Systems, Inc. Filter on Fund But Filter has been applied successfully", YesNo.No);
+						sa.assertTrue(true, "Record is not persent against Applied Systems, Inc. Filter on Fund But Filter has been applied successfully");
 
 					}
-
 
 					fundraisingRowCountAfterFilter = AppBuilder.numberOfRecords(fundraisingSDGName, "100");
 					if(fundraisingRowCountAfterFilter==fundraisingRowCountBeforeFilter)
 					{
-						log(LogStatus.INFO,"Fundraising grid is not filtered",YesNo.No);
-						sa.assertTrue(true, "Fundraising grid is not filtered");
+						log(LogStatus.INFO,"Fundraising grid is not filter based on the Applied Systems, Inc",YesNo.No);
+						sa.assertTrue(true, "Fundraising grid is not filter based on the Applied Systems, Inc");
 					}
 					else
 					{
-						log(LogStatus.INFO,"Fundraising grid filtered",YesNo.No);
-						sa.assertTrue(true, "Fundraising grid filtered");
+						log(LogStatus.ERROR,"Fundraising grid is filtered",YesNo.No);
+						sa.assertTrue(false, "Fundraising grid is filtered");
 					}
 
 				}
@@ -4534,7 +4678,7 @@ public class Module9 extends BaseLib {
 
 	}
 
-
+	
 	@Parameters({ "projectName" })
 
 	@Test
@@ -4689,13 +4833,14 @@ public class Module9 extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
-		String appPage = "Custom App Page";
-		String fundraisingSDGName = "Fundraising Filter Grid";
-		String fundSDGName="Fund Filter Grid";
-		String accountSDGName="Account Filter Grid";
-		String contactSDGName="Contact Filter Grid";
+		String appPage = M9Tc070_AppPageName;
+		String[] table=M9Tc070_SDGTableName.split("<BreakOn>");
+		String fundraisingSDGName =table[3] ;
+		String fundSDGName=table[2];
+		String accountSDGName=table[1];
+		String contactSDGName=table[1];
 
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
 		if (BP.openAppFromAppLauchner(appPage, 50)) {
 			if (AppBuilder.selectFilter("Fund", "VMWare- Capital Raise 2018")) {
@@ -4818,7 +4963,7 @@ public class Module9 extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 		EditPageBusinessLayer EB=new EditPageBusinessLayer(driver);
-		String appPage = "Custom App Page";
+		String appPage = M9Tc071_AppPageName;
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
@@ -4892,15 +5037,17 @@ public class Module9 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
-		String appPage = "Custom App Page";
-		String fundraisingSDGName = "Fundraising Filter Grid";
-		String fundSDGName="Fund Filter Grid";
-		String accountSDGName="Account Filter Grid";
-		String contactSDGName="Contact Filter Grid";
+		String appPage = M9Tc072_AppPageName;
+		String[] sdgName=M9Tc072_SDGTableName.split("<BreakOn>");
+				
+		String fundraisingSDGName =sdgName[3];
+		String fundSDGName=sdgName[2];
+		String accountSDGName=sdgName[0];
+		String contactSDGName=sdgName[1];
 		int fundRowCount,accountFilterRowCount,fundraisingRowCount,contactFilterRowCount;
 		String pageSize="100";
 
-		String[] sdgDataCount=M9Tc076_SDGCount.split("<break>");
+		String[] sdgDataCount=M9Tc072_SDGCount.split("<break>");
 
 		 int[] values = Arrays.stream(sdgDataCount)
                  .mapToInt(Integer::parseInt)
@@ -5067,15 +5214,17 @@ public class Module9 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
-		String appPage = "Custom App Page";
-		String fundraisingSDGName = "Fundraising Filter Grid";
-		String fundSDGName="Fund Filter Grid";
-		String accountSDGName="Account Filter Grid";
-		String contactSDGName="Contact Filter Grid";
+		String appPage = M9Tc073_AppPageName;
+		String[] sdgName=M9Tc073_SDGTableName.split("<BreakOn>");
+		
+		String fundraisingSDGName =sdgName[3];
+		String fundSDGName=sdgName[2];
+		String accountSDGName=sdgName[0];
+		String contactSDGName=sdgName[1];
 		int fundRowCount,accountFilterRowCount,fundraisingRowCount,contactFilterRowCount;
 		String pageSize="100";
 
-		String[] sdgDataCount=M9Tc077_SDGCount.split("<break>");
+		String[] sdgDataCount=M9Tc073_SDGCount.split("<break>");
 
 		 int[] values = Arrays.stream(sdgDataCount)
                 .mapToInt(Integer::parseInt)
@@ -5171,16 +5320,18 @@ public class Module9 extends BaseLib {
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		String appPage = "Custom App Page";
-		String fundraisingSDGName = "Fundraising Filter Grid";
-		String fundSDGName="Fund Filter Grid";
-		String accountSDGName="Account Filter Grid";
-		String contactSDGName="Contact Filter Grid";
+		String appPage = M9Tc074_AppPageName;
+		String[] sdgName=M9Tc074_SDGTableName.split("<BreakOn>");
+		
+		String fundraisingSDGName =sdgName[3];
+		String fundSDGName=sdgName[2];
+		String accountSDGName=sdgName[0];
+		String contactSDGName=sdgName[1];
 		int fundRowCount,accountFilterRowCount,fundraisingRowCount,contactFilterRowCount;
 		String pageSize="100";
 		String parentWindow="";
 
-		String[] sdgDataCount=M9Tc078_SDGCount.split("<break>");
+		String[] sdgDataCount=M9Tc074_SDGCount.split("<break>");
 
 		int[] values = Arrays.stream(sdgDataCount)
 				.mapToInt(Integer::parseInt)
@@ -5308,16 +5459,18 @@ public class Module9 extends BaseLib {
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		String appPage = "Custom App Page";
-		String fundraisingSDGName = "Fundraising Filter Grid";
-		String fundSDGName="Fund Filter Grid";
-		String accountSDGName="Account Filter Grid";
-		String contactSDGName="Contact Filter Grid";
+		String appPage = M9Tc075_AppPageName;
+		String[] sdgName=M9Tc075_SDGTableName.split("<BreakOn>");
+		
+		String fundraisingSDGName =sdgName[3];
+		String fundSDGName=sdgName[2];
+		String accountSDGName=sdgName[0];
+		String contactSDGName=sdgName[1];
 		int fundRowCount,accountFilterRowCount,fundraisingRowCount,contactFilterRowCount;
 		String pageSize="100";
 		String parentWindow="";
 
-		String[] sdgDataCount=M9Tc079_SDGCount.split("<break>");
+		String[] sdgDataCount=M9Tc075_SDGCount.split("<break>");
 
 		int[] values = Arrays.stream(sdgDataCount)
 				.mapToInt(Integer::parseInt)
@@ -5519,16 +5672,18 @@ public class Module9 extends BaseLib {
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		String appPage = "Custom App Page";
-		String fundraisingSDGName = "Fundraising Filter Grid";
-		String fundSDGName="Fund Filter Grid";
-		String accountSDGName="Account Filter Grid";
-		String contactSDGName="Contact Filter Grid";
+		String appPage = M9Tc076_AppPageName;
+		String[] sdgName=M9Tc076_SDGTableName.split("<BreakOn>");
+		
+		String fundraisingSDGName =sdgName[3];
+		String fundSDGName=sdgName[2];
+		String accountSDGName=sdgName[0];
+		String contactSDGName=sdgName[1];
 		int fundRowCount,accountFilterRowCount,fundraisingRowCount,contactFilterRowCount;
 		String pageSize="100";
 		String parentWindow="";
 
-		String[] sdgDataCount=M9Tc080_SDGCount.split("<break>");
+		String[] sdgDataCount=M9Tc076_SDGCount.split("<break>");
 
 		int[] values = Arrays.stream(sdgDataCount)
 				.mapToInt(Integer::parseInt)
@@ -5655,7 +5810,7 @@ public class Module9 extends BaseLib {
 			BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 
 			SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
-			String appPage = "Custom App Page";
+			String appPage = M9Tc077_AppPageName;
 			lp.CRMLogin(superAdminUserName, adminPassword, appName);
 			if (BP.openAppFromAppLauchner(appPage, 50)) {
 				log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
@@ -5668,7 +5823,7 @@ public class Module9 extends BaseLib {
 				}
 				else
 				{
-					log(LogStatus.ERROR,"Edit icon is not visible on Account Name",YesNo.No);
+					log(LogStatus.ERROR,"Edit icon is not visible on Account Name",YesNo.Yes);
 					sa.assertTrue(false, "Edit icon is not visible on Account Name");
 				}
 
@@ -5679,7 +5834,7 @@ public class Module9 extends BaseLib {
 				}
 				else
 				{
-					log(LogStatus.ERROR,"Edit icon is not visible on Phone",YesNo.No);
+					log(LogStatus.ERROR,"Edit icon is not visible on Phone",YesNo.Yes);
 					sa.assertTrue(false, "Edit icon is not visible on Phone");
 				}
 
@@ -5690,7 +5845,7 @@ public class Module9 extends BaseLib {
 				}
 				else
 				{
-					log(LogStatus.ERROR,"Edit icon is not visible on Website",YesNo.No);
+					log(LogStatus.ERROR,"Edit icon is not visible on Website",YesNo.Yes);
 					sa.assertTrue(false, "Edit icon is not visible on Website");
 				}
 
@@ -5701,7 +5856,7 @@ public class Module9 extends BaseLib {
 				}
 				else
 				{
-					log(LogStatus.ERROR,"Edit icon is not visible on Description",YesNo.No);
+					log(LogStatus.ERROR,"Edit icon is not visible on Description",YesNo.Yes);
 					sa.assertTrue(false, "Edit icon is not visible on Description");
 				}
 
@@ -5712,7 +5867,7 @@ public class Module9 extends BaseLib {
 				}
 				else
 				{
-					log(LogStatus.ERROR,"Edit icon is not visible on Revenue",YesNo.No);
+					log(LogStatus.ERROR,"Edit icon is not visible on Revenue",YesNo.Yes);
 					sa.assertTrue(false, "Edit icon is not visible on Revenue");
 				}
 
@@ -5723,7 +5878,7 @@ public class Module9 extends BaseLib {
 				}
 				else
 				{
-					log(LogStatus.ERROR,"Locked icon is not visible on Address",YesNo.No);
+					log(LogStatus.ERROR,"Locked icon is not visible on Address",YesNo.Yes);
 					sa.assertTrue(false, "Locked icon is not visible on Address");
 				}
 
@@ -5734,7 +5889,7 @@ public class Module9 extends BaseLib {
 				}
 				else
 				{
-					log(LogStatus.ERROR,"Locked icon is not visible on Record Type",YesNo.No);
+					log(LogStatus.ERROR,"Locked icon is not visible on Record Type",YesNo.Yes);
 					sa.assertTrue(false, "Locked icon is not visible on Record Type");
 				}
 
@@ -5760,8 +5915,8 @@ public class Module9 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);		
 		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
-		String appPage = "Custom App Page";
-		String sdgName="Account Filter Grid";
+		String appPage = M9Tc078_AppPageName;
+		String sdgName=M9Tc078_SDGTableName;
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (BP.openAppFromAppLauchner(appPage, 50)) {
 
@@ -5777,8 +5932,8 @@ public class Module9 extends BaseLib {
 				}
 				else
 				{
-					log(LogStatus.PASS,"The count of selected checkbox is "+count+" in "+sdgName+ " Grid",YesNo.Yes);
-					sa.assertTrue(true, "The count of selected checkbox is "+count+" in "+sdgName+ " Grid");
+					log(LogStatus.ERROR,"The count of selected checkbox is "+count+" in "+sdgName+ " Grid",YesNo.Yes);
+					sa.assertTrue(false, "The count of selected checkbox is "+count+" in "+sdgName+ " Grid");
 				}
 			}
 			else
@@ -5797,8 +5952,8 @@ public class Module9 extends BaseLib {
 				}
 				else
 				{
-					log(LogStatus.PASS,"The count of selected checkbox is "+count+" in "+sdgName+ " Grid",YesNo.Yes);
-					sa.assertTrue(true, "The count of selected checkbox is "+count+" in "+sdgName+ " Grid");
+					log(LogStatus.FAIL,"The count of selected checkbox is "+count+" in "+sdgName+ " Grid",YesNo.Yes);
+					sa.assertTrue(false, "The count of selected checkbox is "+count+" in "+sdgName+ " Grid");
 				}
 			}
 			else
@@ -5818,8 +5973,8 @@ public class Module9 extends BaseLib {
 				}
 				else
 				{
-					log(LogStatus.PASS,"The count of selected checkbox is "+count+" in "+sdgName+ " Grid",YesNo.Yes);
-					sa.assertTrue(true, "The count of selected checkbox is "+count+" in "+sdgName+ " Grid");
+					log(LogStatus.FAIL,"The count of selected checkbox is "+count+" in "+sdgName+ " Grid",YesNo.Yes);
+					sa.assertTrue(false, "The count of selected checkbox is "+count+" in "+sdgName+ " Grid");
 				}
 			}
 			else
@@ -5838,8 +5993,8 @@ public class Module9 extends BaseLib {
 				}
 				else
 				{
-					log(LogStatus.PASS,"The count of selected checkbox is "+count+" in "+sdgName+ " Grid",YesNo.Yes);
-					sa.assertTrue(true, "The count of selected checkbox is "+count+" in "+sdgName+ " Grid");
+					log(LogStatus.FAIL,"The count of selected checkbox is "+count+" in "+sdgName+ " Grid",YesNo.Yes);
+					sa.assertTrue(false, "The count of selected checkbox is "+count+" in "+sdgName+ " Grid");
 				}
 			}
 			else
@@ -5862,11 +6017,9 @@ public class Module9 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);		
 		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
-		String appPage = "Custom App Page";
-		String sdgName="Account Filter Grid";
+		String appPage = M9Tc079_AppPageName;
+		String sdgName=M9Tc079_SDGTableName;
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-
-
 
 		if (BP.openAppFromAppLauchner(appPage, 50)) {
 
@@ -5881,15 +6034,15 @@ public class Module9 extends BaseLib {
 				{
 					log(LogStatus.PASS,"Error Message is visible",YesNo.Yes);
 					sa.assertTrue(true, "Error Message is visible");		
-					if(SB.updateRecordAndVerifyMessage(sdgName,"Account Name","Account 1"))
+					if(SB.updateRecordAndVerifyMessage(sdgName,"Account Name","Account 1 Updated"))
 					{
-						log(LogStatus.PASS,"\"Your changes are saved.\" Error Message is visible",YesNo.Yes);
-						sa.assertTrue(true, "\"Your changes are saved.\" Error Message is visible");
+						log(LogStatus.PASS,"\"Your changes are saved.\" Update Mesage is visible",YesNo.Yes);
+						sa.assertTrue(true, "\"Your changes are saved.\" Update Mesage is visible");
 					}
 					else
 					{
-						log(LogStatus.ERROR,"\"Your changes are saved.\" Error Message is not visible",YesNo.Yes);
-						sa.assertTrue(false, "\"Your changes are saved.\" Error Message is not visible");
+						log(LogStatus.ERROR,"\"Your changes are saved.\" Update Mesage is not visible",YesNo.Yes);
+						sa.assertTrue(false, "\"Your changes are saved.\" Update Mesage is not visible");
 
 					}
 
@@ -5922,8 +6075,8 @@ public class Module9 extends BaseLib {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		InstitutionsPageBusinessLayer IB=new InstitutionsPageBusinessLayer(driver);
-		String appPage = "Custom App Page";
-		String sdgName="Account Filter Grid";
+		String appPage = M9Tc080_AppPageName;
+		String sdgName=M9Tc080_SDGTableName;
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		String parentWindow="";
 		if (home.clickOnSetUpLink()) {
@@ -5972,7 +6125,7 @@ public class Module9 extends BaseLib {
 					ObjectFeatureName.FieldAndRelationShip, "Source", PermissionType.givePermission,
 					"System Administrator",RecordType.Institution)) {
 				log(LogStatus.PASS, "Source field Permission is given from the Firm Object Manager for Institution Record Type", YesNo.No);
-				sa.assertTrue(true, "Annual Revenue field Permission is given from the Firm Object Manager for Intermediary Record Type");
+				sa.assertTrue(true, "Source field Permission is given from the Firm Object Manager for Intermediary Record Type");
 
 			}
 			else
@@ -6078,7 +6231,7 @@ public class Module9 extends BaseLib {
 				}
 				else
 				{
-					log(LogStatus.FAIL, "\"Account 2\" Revenue record is not updated to 70000", YesNo.No);
+					log(LogStatus.ERROR, "\"Account 2\" Revenue record is not updated to 70000", YesNo.No);
 					sa.assertTrue(false, "\"Account 2\" Revenue record is not updated to 70000");
 				}
 			}
@@ -6217,7 +6370,7 @@ public class Module9 extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab is not open", YesNo.No);
+						log(LogStatus.ERROR, TabName.InstituitonsTab.toString()+" tab is not open", YesNo.No);
 					}
 
 				}
@@ -6303,7 +6456,7 @@ public class Module9 extends BaseLib {
 							}
 							else
 							{
-								log(LogStatus.INFO,  "\"Description - The company was founded in 1999 by former Oracle executive Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a software as a service (SaaS) company.\" data is not matched", YesNo.No);
+								log(LogStatus.ERROR,  "\"Description - The company was founded in 1999 by former Oracle executive Marc Benioff, Parker Harris, Dave Moellenhoff, and Frank Dominguez as a software as a service (SaaS) company.\" data is not matched", YesNo.No);
 
 							}
 
@@ -6316,7 +6469,7 @@ public class Module9 extends BaseLib {
 					else
 
 					{
-						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab is not open", YesNo.No);
+						log(LogStatus.ERROR, TabName.InstituitonsTab.toString()+" tab is not open", YesNo.No);
 					}
 
 				}
@@ -6352,7 +6505,7 @@ public class Module9 extends BaseLib {
 							}
 							else
 							{
-								log(LogStatus.INFO,  "\"Website - www.google.com\" data is not matched", YesNo.No);
+								log(LogStatus.ERROR,  "\"Website - www.google.com\" data is not matched", YesNo.Yes);
 
 							}
 
@@ -6365,7 +6518,7 @@ public class Module9 extends BaseLib {
 					else
 
 					{
-						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab is not open", YesNo.No);
+						log(LogStatus.ERROR, TabName.InstituitonsTab.toString()+" tab is not open", YesNo.No);
 					}
 
 				}
@@ -6520,6 +6673,7 @@ public class Module9 extends BaseLib {
 				}
 
 			}
+			
 			if (BP.openAppFromAppLauchner(appPage, 50)) {
 
 				log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
@@ -6527,7 +6681,7 @@ public class Module9 extends BaseLib {
 
 				ArrayList<String> val= new ArrayList<String>();
 				val.add("Far East");
-				if(SB.updateSDGRecordAndVerifySaveCancelButton(sdgName,"Account 8","Location","null","Multipicklist",val))
+				if(SB.updateSDGRecordAndVerifySaveCancelButton(sdgName,"Account 1 Updated","Location","null","Multipicklist",val))
 				{
 					log(LogStatus.INFO,"\"Account 1 Updated\" Location record has been updated to Far East", YesNo.No);
 					sa.assertTrue(true, "\"Account Updated\" Location record has been updated to Far East");
@@ -6536,7 +6690,7 @@ public class Module9 extends BaseLib {
 					{
 						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab has been open", YesNo.No);
 						if(BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab,
-								"Account 8", 50))
+								"Account 1 Updated", 50))
 						{
 
 							log(LogStatus.INFO, "Clicked on the Account 1 Updated name", YesNo.No);
@@ -6559,7 +6713,7 @@ public class Module9 extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab is not open", YesNo.No);
+						log(LogStatus.ERROR, TabName.InstituitonsTab.toString()+" tab is not open", YesNo.No);
 					}
 
 				}
@@ -6580,14 +6734,14 @@ public class Module9 extends BaseLib {
 				val1.add("Global");
 				if(SB.updateSDGRecordAndVerifySaveCancelButton(sdgName,"Account 1 Updated","Location",null,"Multipicklist",val1))
 				{
-					log(LogStatus.INFO,"\"Account 8\" Location record has been updated to Far Asia, Global, Middle East", YesNo.No);
-					sa.assertTrue(true, "\"Account 8\" Location record is not updated to Far Asia, Global, Middle East");
+					log(LogStatus.INFO,"\"Account 1 Updated\" Location record has been updated to Far Asia, Global, Middle East", YesNo.No);
+					sa.assertTrue(true, "\"Account 1 Updated\" Location record is not updated to Far Asia, Global, Middle East");
 
 					if(BP.clickOnTab(projectName,TabName.InstituitonsTab))
 					{
 						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab has been open", YesNo.No);
 						if(BP.clickOnAlreadyCreated(environment, mode, TabName.InstituitonsTab,
-								"Account 8", 50))
+								"Account 1 Updated", 50))
 						{
 
 							log(LogStatus.INFO, "Clicked on the name Account 1 Updated", YesNo.No);
@@ -6621,6 +6775,7 @@ public class Module9 extends BaseLib {
 				}
 
 			}
+		
 			if (BP.openAppFromAppLauchner(appPage, 50)) {
 
 				log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
@@ -6658,7 +6813,7 @@ public class Module9 extends BaseLib {
 					else
 
 					{
-						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab is not open", YesNo.No);
+						log(LogStatus.ERROR, TabName.InstituitonsTab.toString()+" tab is not open", YesNo.Yes);
 					}
 
 				}
@@ -6694,7 +6849,7 @@ public class Module9 extends BaseLib {
 							}
 							else
 							{
-								log(LogStatus.INFO,  "\"Website - www.google.com\" data is not matched", YesNo.No);
+								log(LogStatus.ERROR,  "\"Website - www.google.com\" data is not matched", YesNo.Yes);
 
 							}
 
@@ -6707,7 +6862,7 @@ public class Module9 extends BaseLib {
 					else
 
 					{
-						log(LogStatus.INFO, TabName.InstituitonsTab.toString()+" tab is not open", YesNo.No);
+						log(LogStatus.ERROR, TabName.InstituitonsTab.toString()+" tab is not open", YesNo.Yes);
 					}
 
 				}
@@ -6719,9 +6874,6 @@ public class Module9 extends BaseLib {
 
 
 			}
-
-
-
 		}
 
 
@@ -6740,8 +6892,8 @@ public class Module9 extends BaseLib {
 		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		String appPage = "Custom App Page";
-		String sdgName="Account Filter Grid";
+		String appPage = M9Tc081_AppPageName;
+		String sdgName=M9Tc081_SDGTableName;
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		String parentWindow="";
 		if (home.clickOnSetUpLink()) {
@@ -6790,7 +6942,7 @@ public class Module9 extends BaseLib {
 					log(LogStatus.PASS, "Error message is visible on the hover to the triangle icon", YesNo.No);
 					sa.assertTrue(true, "Error message is visible on the hover to the triangle icon");
 
-					if(SB.clickCancelBtnAndVerifyRecord(sdgName, "Account 1 Updated", "Website", "www.allsec.com"))
+					if(SB.clickCancelBtnAndVerifyRecord(sdgName, "Account 1 Updated", "Website", "www.yahoo.com"))
 					{
 						log(LogStatus.PASS, "Page has been refreash and data is matched", YesNo.No);
 						sa.assertTrue(true, "Page has been refreash and data is matched");
@@ -6798,13 +6950,13 @@ public class Module9 extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.FAIL,"Page is not refeash and data is not matched", YesNo.No);
+						log(LogStatus.ERROR,"Page is not refeash and data is not matched", YesNo.No);
 						sa.assertTrue(false, "Page is not refeash and data is not matched");
 					}
 				}
 				else
 				{
-					log(LogStatus.PASS, "Error message is not visible on the hover to the triangle icon", YesNo.No);
+					log(LogStatus.ERROR, "Error message is not visible on the hover to the triangle icon", YesNo.No);
 					sa.assertTrue(false, "Error message is not visible on the hover to the triangle icon");
 
 				}
@@ -6812,7 +6964,7 @@ public class Module9 extends BaseLib {
 			}
 			else
 			{
-				log(LogStatus.FAIL, "\"1 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible", YesNo.No);
+				log(LogStatus.ERROR, "\"1 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible", YesNo.No);
 				sa.assertTrue(false, "\"1 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible");
 
 			}
@@ -6826,7 +6978,7 @@ public class Module9 extends BaseLib {
 				CommonLib.ThreadSleep(7000);
 
 
-				if(SB.clickCancelBtnAndVerifyRecord(sdgName, "Account 1 Updated", "Website", "www.allsec.com"))
+				if(SB.clickCancelBtnAndVerifyRecord(sdgName, "Account 1 Updated", "Website", "www.yahoo.com"))
 				{
 					log(LogStatus.PASS, "Page has been refreash and data is matched", YesNo.No);
 					sa.assertTrue(true, "Page has been refreash and data is matched");
@@ -6834,18 +6986,16 @@ public class Module9 extends BaseLib {
 				}
 				else
 				{
-					log(LogStatus.FAIL,"Page is not refeash and data is not matched", YesNo.No);
+					log(LogStatus.ERROR,"Page is not refeash and data is not matched", YesNo.No);
 					sa.assertTrue(false, "Page is not refeash and data is not matched");
 				}			
 			}
 			else
 			{
-				log(LogStatus.FAIL, "\"1 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible", YesNo.No);
+				log(LogStatus.ERROR, "\"1 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible", YesNo.No);
 				sa.assertTrue(false, "\"1 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible");
 
 			}
-
-
 
 			if(SB.clickTwoCheckboxupadatePhoneWebsiteRevenueAndVerifyErrorMessageSaveCancelButton(sdgName, "Account 1 Updated", "Account 2", "Phone","6532145698","Website","www.yahoo.com" ,"Revenue","1000000"))
 			{
@@ -6857,26 +7007,26 @@ public class Module9 extends BaseLib {
 				fieldName.add("Website");
 				fieldName.add("Revenue");
 
-				value.add("");
-				value.add("www.allsec.com");
-				value.add("");
+				value.add("(653) 214-5698");
+				value.add("www.yahoo.com");
+				value.add("$1,000,000");
 
-				ArrayList<String> data= SB.clickCancelBtnAndVerifyRecord(sdgName,"Account 1 Updated",fieldName,value);
+				ArrayList<String> data= SB.clickCancelBtnAndVerifyRecordNotMatched(sdgName,"Account 1 Updated",fieldName,value);
 				if(data.isEmpty())
 				{
-					log(LogStatus.PASS, "Page has been refreash and data is matched", YesNo.No);
-					sa.assertTrue(true, "Page has been refreash and data is matched");
+					log(LogStatus.PASS, "Page has been refreash and data is not updated in the Account 1 Updated Field", YesNo.No);
+					sa.assertTrue(true, "Page has been refreash and data is not updated in the Account 1 Updated Field");
 				}
 				else
 				{
-					log(LogStatus.FAIL,"Either Page is not refresh or data is not matched" +data, YesNo.No);
-					sa.assertTrue(false, "Either Page is not refresh or data is not matched" +data);
+					log(LogStatus.ERROR,"Either Page is not refresh or data has been updated in the Account 1 Updated Record" +data, YesNo.Yes);
+					sa.assertTrue(false, "Either Page is not refresh or data has been updated in the Account 1 Updated Record"+data);
 				}
 
 			}
 			else
 			{
-				log(LogStatus.FAIL, "\"2 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible", YesNo.No);
+				log(LogStatus.ERROR, "\"2 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible", YesNo.No);
 				sa.assertTrue(false, "\"2 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible");
 
 			}
@@ -6900,27 +7050,27 @@ public class Module9 extends BaseLib {
 					fieldName.add("Website");
 					fieldName.add("Revenue");
 
-					value1.add("");
-					value1.add("www.allsec.com");
-					value1.add("");
+					value1.add("(653) 214-5698");
+					value1.add("www.yahoo.com");
+					value1.add("$1,000,000");
 
-					ArrayList<String> data= SB.clickCancelBtnAndVerifyRecord(sdgName,"Account 1 Updated",fieldName,value1);
+					ArrayList<String> data= SB.clickCancelBtnAndVerifyRecordNotMatched(sdgName,"Account 1 Updated",fieldName,value1);
 					if(data.isEmpty())
 					{
-						log(LogStatus.PASS, "Page has been refreash and data is matched", YesNo.No);
-						sa.assertTrue(true, "Page has been refreash and data is matched");
+						log(LogStatus.PASS, "Page has been refreash and data is not updated in the Account 1 Updated Field", YesNo.No);
+						sa.assertTrue(true, "Page has been refreash and data is not updated in the Account 1 Updated Field");
 					}
 					else
 					{
-						log(LogStatus.FAIL,"Either Page is not refresh or data is not matched" +data, YesNo.No);
-						sa.assertTrue(false, "Either Page is not refresh or data is not matched" +data);
+						log(LogStatus.ERROR,"Either Page is not refresh or data has been updated in the Account 1 Updated Record" +data, YesNo.No);
+						sa.assertTrue(false, "Either Page is not refresh or data has been updated in the Account 1 Updated Record" +data);
 					}
 
 					ArrayList<String> value2=new ArrayList<String>();
-					value2.add("(653) 214-5698)");
+					value2.add("(653) 214-5698");
 					value2.add("www.yahoo.com");
-					value2.add("1000000");
-					ArrayList<String> data1= SB.verifySDGRecord(sdgName,"Account 5",fieldName,value1);
+					value2.add("$1,000,000");
+					ArrayList<String> data1= SB.verifySDGRecord(sdgName,"Account 5",fieldName,value2);
 					if(data1.isEmpty())
 					{
 						log(LogStatus.PASS, "Page has been refreash and data is matched", YesNo.No);
@@ -6928,29 +7078,28 @@ public class Module9 extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.FAIL,"Either Page is not refresh or data is not matched" +data1, YesNo.No);
+						log(LogStatus.ERROR,"Either Page is not refresh or data is not matched" +data1, YesNo.No);
 						sa.assertTrue(false, "Either Page is not refresh or data is not matched" +data1);
 					}
 
 				}
 				else
 				{
-					log(LogStatus.PASS, "Error message is not visible on the hover to the triangle icon", YesNo.No);
+					log(LogStatus.ERROR, "Error message is not visible on the hover to the triangle icon", YesNo.No);
 					sa.assertTrue(false, "Error message is not visible on the hover to the triangle icon");
 				}
 			}
 			else
 			{
-				log(LogStatus.FAIL, "\"2 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible", YesNo.No);
+				log(LogStatus.ERROR, "\"2 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible", YesNo.No);
 				sa.assertTrue(false, "\"2 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible");
 
 			}
 		}
 
-
 		else
 		{
-			log(LogStatus.FAIL, "Could not open the "+appPage+" from the App Launcher", YesNo.No);
+			log(LogStatus.ERROR, "Could not open the "+appPage+" from the App Launcher", YesNo.No);
 			sa.assertTrue(false, "Could not open the "+appPage+" from the App Launcher");
 
 		}
@@ -6972,8 +7121,8 @@ public class Module9 extends BaseLib {
 		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 
-		String appPage = "Custom App Page";
-		String sdgName="Account Filter Grid";
+		String appPage = M9Tc082_AppPageName;
+		String sdgName=M9Tc082_SDGTableName;
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (BP.openAppFromAppLauchner(appPage, 50)) {
@@ -7005,14 +7154,14 @@ public class Module9 extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.FAIL,"Either Page is not refresh or data is not matched" +data, YesNo.No);
+						log(LogStatus.ERROR,"Either Page is not refresh or data is not matched" +data, YesNo.No);
 						sa.assertTrue(false, "Either Page is not refresh or data is not matched" +data);
 					}
 
 				}
 				else
 				{
-					log(LogStatus.PASS, "Error message is not visible on the hover to the triangle icon", YesNo.No);
+					log(LogStatus.ERROR, "Error message is not visible on the hover to the triangle icon", YesNo.No);
 					sa.assertTrue(false, "Error message is not visible on the hover to the triangle icon");
 
 				}
@@ -7020,14 +7169,14 @@ public class Module9 extends BaseLib {
 			}
 			else
 			{
-				log(LogStatus.FAIL, "\"1 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible", YesNo.No);
+				log(LogStatus.ERROR, "\"1 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible", YesNo.No);
 				sa.assertTrue(false, "\"1 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible");
 
 			}
 		}
 		else
 		{
-			log(LogStatus.FAIL,"Could not open the App from the App Launcher", YesNo.No);
+			log(LogStatus.ERROR,"Could not open the App from the App Launcher", YesNo.No);
 			sa.assertTrue(false, "Could not open the App from the App Launcher");
 		}
 
@@ -7044,8 +7193,8 @@ public class Module9 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);		
 		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
-		String appPage = "Custom App Page";
-		String sdgName="Account Filter Grid";
+		String appPage = M9Tc083_AppPageName;
+		String sdgName=M9Tc083_SDGTableName;
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (BP.openAppFromAppLauchner(appPage, 50)) {
@@ -7073,38 +7222,40 @@ public class Module9 extends BaseLib {
 						fieldName.add("Revenue");
 
 						ArrayList<String> value=new ArrayList<String>();
-						value.add("");
+						value.add("(653) 214-5698");
 						value.add("www.allsec.com");
-						value.add("");
-						ArrayList<String> data= SB.verifySDGRecord(sdgName,"Account 1 Updated",fieldName,value);
+						value.add("$1,000,000");
+						
+	
+						ArrayList<String> data= SB.clickCancelBtnAndVerifyRecordNotMatched(sdgName,"Account 1 Updated",fieldName,value);
 						if(data.isEmpty())
 						{
-							log(LogStatus.PASS, "Page has been refreash and data is matched", YesNo.No);
-							sa.assertTrue(true, "Page has been refreash and data is matched");
+							log(LogStatus.PASS, "Page has been refreash and data is not updated in the Account 1 Updated Field", YesNo.No);
+							sa.assertTrue(true, "Page has been refreash and data is not updated in the Account 1 Updated Field");
 						}
 						else
 						{
-							log(LogStatus.FAIL,"Either Page is not refresh or data is not matched" +data, YesNo.No);
-							sa.assertTrue(false, "Either Page is not refresh or data is not matched" +data);
+							log(LogStatus.ERROR,"Either Page is not refresh or data has been updated in the Account 1 Updated Record" +data, YesNo.No);
+							sa.assertTrue(false, "Either Page is not refresh or data has been updated in the Account 1 Updated Record" +data);
 						}
 					}
 					else
 					{
-						log(LogStatus.FAIL,"Could not refresh the page", YesNo.Yes);
+						log(LogStatus.ERROR,"Could not refresh the page", YesNo.Yes);
 						sa.assertTrue(false, "Could not refresh the page");
 					}
 
 				}
 				else
 				{
-					log(LogStatus.FAIL, "Error message is not visible on the hover to the triangle icon", YesNo.No);
+					log(LogStatus.ERROR, "Error message is not visible on the hover to the triangle icon", YesNo.No);
 					sa.assertTrue(false, "Error message is not visible on the hover to the triangle icon");
 				}
 			}
 
 			else
 			{
-				log(LogStatus.FAIL, "\"1 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible", YesNo.No);
+				log(LogStatus.ERROR, "\"1 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible", YesNo.No);
 				sa.assertTrue(false, "\"1 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible");
 
 			}
@@ -7112,7 +7263,7 @@ public class Module9 extends BaseLib {
 		}
 		else
 		{
-			log(LogStatus.FAIL, "Could not open the App from the App Launcher", YesNo.Yes);
+			log(LogStatus.ERROR, "Could not open the App from the App Launcher", YesNo.Yes);
 			sa.assertTrue(false, "Could not open the App from the App Launcher");
 
 		}
@@ -7129,8 +7280,8 @@ public class Module9 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);		
 		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
-		String appPage = "Custom App Page";
-		String sdgName="Account Filter Grid";
+		String appPage = M9Tc084_AppPageName;
+		String sdgName=M9Tc084_SDGTableName;
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (BP.openAppFromAppLauchner(appPage, 50)) {
@@ -7168,20 +7319,20 @@ public class Module9 extends BaseLib {
 					fieldName.add("Website");
 					fieldName.add("Revenue");
 
-					value1.add("");
-					value1.add("www.allsec.com");
-					value1.add("");
+					value1.add("(653) 214-5698");
+					value1.add("www.yahoo.com");
+					value1.add("$1,000,000");
 
-					ArrayList<String> data= SB.clickCancelBtnAndVerifyRecord(sdgName,"Account 1 Updated",fieldName,value1);
+					ArrayList<String> data= SB.clickCancelBtnAndVerifyRecordNotMatched(sdgName,"Account 1 Updated",fieldName,value1);
 					if(data.isEmpty())
 					{
-						log(LogStatus.PASS, "Page has been refreash and data is matched", YesNo.No);
-						sa.assertTrue(true, "Page has been refreash and data is matched");
+						log(LogStatus.PASS, "Page has been refreash and data is not updated in the Account 1 Updated Field", YesNo.No);
+						sa.assertTrue(true, "Page has been refreash and data is not updated in the Account 1 Updated Field");
 					}
 					else
 					{
-						log(LogStatus.FAIL,"Either Page is not refresh or data is not matched" +data, YesNo.No);
-						sa.assertTrue(false, "Either Page is not refresh or data is not matched" +data);
+						log(LogStatus.ERROR,"Either Page is not refresh or data has been updated in the Account 1 Updated Record" +data, YesNo.Yes);
+						sa.assertTrue(false, "Either Page is not refresh or data has been updated in the Account 1 Updated Record" +data);
 					}
 
 					ArrayList<String> value2=new ArrayList<String>();
@@ -7196,20 +7347,20 @@ public class Module9 extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.FAIL,"Either Page is not refresh or data is not matched" +data1, YesNo.No);
+						log(LogStatus.ERROR,"Either Page is not refresh or data is not matched" +data1, YesNo.No);
 						sa.assertTrue(false, "Either Page is not refresh or data is not matched" +data1);
 					}
 
 				}
 				else
 				{
-					log(LogStatus.PASS, "Error message is not visible on the hover to the triangle icon", YesNo.No);
+					log(LogStatus.ERROR, "Error message is not visible on the hover to the triangle icon", YesNo.No);
 					sa.assertTrue(false, "Error message is not visible on the hover to the triangle icon");
 				}
 			}
 			else
 			{
-				log(LogStatus.FAIL, "\"2 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible", YesNo.No);
+				log(LogStatus.ERROR, "\"2 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible", YesNo.No);
 				sa.assertTrue(false, "\"2 records has error. Kindly resolve them and try again.\", error message is not visible on record update of Legal Name, Website, Revenue field. Save and Cancel Button are also not visible");
 
 			}
@@ -7218,7 +7369,7 @@ public class Module9 extends BaseLib {
 
 		else
 		{
-			log(LogStatus.FAIL, "Could not open the App from the App Launcher", YesNo.Yes);
+			log(LogStatus.ERROR, "Could not open the App from the App Launcher", YesNo.Yes);
 			sa.assertTrue(false, "Could not open the App from the App Launcher");
 
 		}
@@ -7237,8 +7388,8 @@ public class Module9 extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);		
 		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer IB=new InstitutionsPageBusinessLayer(driver);
-		String appPage = "Custom App Page";
-		String sdgName="Account Filter Grid";
+		String appPage = M9Tc085_AppPageName;
+		String sdgName=M9Tc085_SDGTableName;
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (BP.openAppFromAppLauchner(appPage, 50)) {
@@ -7313,14 +7464,14 @@ public class Module9 extends BaseLib {
 			}
 			else
 			{
-				log(LogStatus.FAIL, "Data is not saved in all field at the same time. Save and Cancel Button are also visible", YesNo.No);
+				log(LogStatus.ERROR, "Data is not saved in all field at the same time. Save and Cancel Button are also visible", YesNo.No);
 				sa.assertTrue(false, "Data is not saved in all field at the same time. Save and Cancel Button are also visible");
 
 			}
 		}
 		else
 		{
-			log(LogStatus.PASS, "Not able to open the app from the App launcher", YesNo.No);
+			log(LogStatus.ERROR, "Not able to open the app from the App launcher", YesNo.No);
 			sa.assertTrue(false, "Not able to open the app from the App launcher");
 
 		}
@@ -7359,9 +7510,9 @@ public class Module9 extends BaseLib {
 				if (setup.addCustomFieldforFormula(environment, mode, objects[4],
 						ObjectFeatureName.FieldAndRelationShip, objects[0], objects[1], valuesandLabel, null, null)) {
 					log(LogStatus.PASS, "Field Object is created for :" + objects[1], YesNo.No);
-					sa.assertTrue(false, "Field Object is created for :" + objects[1]);
+					sa.assertTrue(true, "Field Object is created for :" + objects[1]);
 				} else {
-					log(LogStatus.PASS, "Field Object is not created for :" + objects[1], YesNo.Yes);
+					log(LogStatus.ERROR, "Field Object is not created for :" + objects[1], YesNo.Yes);
 					sa.assertTrue(false, "Field Object is not created for :" + objects[1]);
 				}
 			}
@@ -7375,9 +7526,6 @@ public class Module9 extends BaseLib {
 				if(setup.clickOnObjectFeature(environment, mode, object.Firm, ObjectFeatureName.FieldAndRelationShip))
 				{
 					log(LogStatus.INFO, "Field and relationship Feature has been open", YesNo.No);
-
-
-
 					ArrayList<String> val=new ArrayList<String>();
 					val.add("Under Evaluation");
 					val.add("Portfolio Company");
@@ -7389,7 +7537,7 @@ public class Module9 extends BaseLib {
 					val.add("Investment");
 					val.add("Watchlist");
 
-					if(setup.fieldDependencies("Custom_Status","Source","Custom_Status", val))
+					if(setup.fieldDependencies(M9FC_12_FieldLabel,"Source",M9FC_12_FieldLabel, val))
 					{
 						log(LogStatus.INFO, "Field Dependency has been created", YesNo.Yes);
 
@@ -7397,23 +7545,25 @@ public class Module9 extends BaseLib {
 					else
 					{
 						log(LogStatus.ERROR, "Not able to create the field Dependency", YesNo.Yes);
-
+						sa.assertTrue(false, "Not able to create the field Dependency");
 					}
 
 				}
 				else
 				{
 					log(LogStatus.ERROR, "Not able click on the field and relationship Feature Name", YesNo.Yes);
+					sa.assertTrue(false,  "Not able click on the field and relationship Feature Name");
 				}
 			}
 			else
 			{
 				log(LogStatus.ERROR, "Not able to search the object", YesNo.Yes);
+				sa.assertTrue(false,  "Not able to search the object");
 			}
 		}
 		else
 		{
-			log(LogStatus.FAIL, "Could not click on the setup Link", YesNo.Yes);
+			log(LogStatus.ERROR, "Could not click on the setup Link", YesNo.Yes);
 			sa.assertTrue(false, "Could not click on the setup Link");
 		}
 		lp.CRMlogout();
@@ -7429,7 +7579,7 @@ public class Module9 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);		
 		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
-		String sdgName="Account Filter Grid";
+		String sdgName=M9Tc087_SDGTableName;
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (BP.openAppFromAppLauchner(50,"Sortable Data Grids")) {
 
@@ -7445,7 +7595,7 @@ public class Module9 extends BaseLib {
 
 				} else {
 
-					log(LogStatus.FAIL, "Not Able to add fields on SDG : " + sdgName, YesNo.Yes);
+					log(LogStatus.ERROR, "Not Able to add fields on SDG : " + sdgName, YesNo.Yes);
 					sa.assertTrue(false, "Not Able to add fields on SDG : " + sdgName);
 
 				}
@@ -7475,8 +7625,8 @@ public class Module9 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
-		String appPage = "Custom App Page";
-		String sdgName="Account Filter Grid";
+		String appPage = M9Tc088_AppPageName;
+		String sdgName=M9Tc088_SDGTableName;
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (BP.openAppFromAppLauchner(appPage, 50)) {
@@ -7485,24 +7635,24 @@ public class Module9 extends BaseLib {
 			CommonLib.ThreadSleep(10000);
 			if(SB.verifyEditOrLockedIconOnSDGData(sdgName,"Status", IconType.Locked))
 			{
-				log(LogStatus.PASS,"Locked icon is visible on Account Name",YesNo.No);
-				sa.assertTrue(true, "Locked icon is visible on Account Name");
+				log(LogStatus.PASS,"Locked icon is visible on status",YesNo.No);
+				sa.assertTrue(true, "Locked icon is visible on status");
 			}
 			else
 			{
-				log(LogStatus.ERROR,"Locked icon is not visible on Account Name",YesNo.No);
-				sa.assertTrue(false, "Locked icon is not visible on Account Name");
+				log(LogStatus.ERROR,"Locked icon is not visible on status",YesNo.No);
+				sa.assertTrue(false, "Locked icon is not visible on status");
 			}
 
 			if(SB.verifyEditOrLockedIconOnSDGData(sdgName,"Source", IconType.Locked))
 			{
 				log(LogStatus.PASS,"Locked icon is visible on Source",YesNo.No);
-				sa.assertTrue(true, "Locked icon is visible on Phone");
+				sa.assertTrue(true, "Locked icon is visible on Source");
 			}
 			else
 			{
-				log(LogStatus.ERROR,"Locked icon is not visible on Phone",YesNo.No);
-				sa.assertTrue(false, "Locked icon is not visible on Phone");
+				log(LogStatus.ERROR,"Locked icon is not visible on Source",YesNo.No);
+				sa.assertTrue(false, "Locked icon is not visible on Source");
 			}
 		}
 		else
@@ -7523,8 +7673,8 @@ public class Module9 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);		
 		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
-		String appPage = "Custom App Page";
-		String sdgName="Account Filter Grid";
+		String appPage = M9Tc089_AppPageName;
+		String sdgName=M9Tc089_SDGTableName;
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
 
@@ -7601,14 +7751,15 @@ public class Module9 extends BaseLib {
 		sa.assertAll();
 	}
 
-
+@Parameters({ "projectName" })
+	@Test
 	public void M9Tc090_verifyLockedIconOnNumberOfContactField(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
-		String appPage = "Custom App Page";
-		String sdgName="Account Filter Grid";
+		String appPage = M9Tc090_AppPageName;
+		String sdgName=M9Tc090_SDGTableName;
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (BP.openAppFromAppLauchner(appPage, 50)) {
@@ -7634,14 +7785,15 @@ public class Module9 extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-
+@Parameters({ "projectName" })
+	@Test
 	public void M9Tc091_verifyLockedIconOnIntroducedByField(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 	    SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
-		String appPage = "Custom App Page";
-		String sdgName="Account Filter Grid";
+	    String appPage = M9Tc091_AppPageName;
+		String sdgName=M9Tc091_SDGTableName;
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (BP.openAppFromAppLauchner(appPage, 50)) {
@@ -7667,8 +7819,197 @@ public class Module9 extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-*/
+
+	@Parameters({ "projectName" })
+	@Test
+	public void M9Tc038_EditTabAndAddFundPrepSDG(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	    SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+	    EditPageBusinessLayer EB = new EditPageBusinessLayer(driver);
+	    String tabName = "Home";
+		String sdgName="Account Filter Grid";
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (BP.clickOnTab(projectName, "Home")) {
+			log(LogStatus.INFO,tabName+" has been open",YesNo.No);
+			if(EB.editPageAndAddSDG("Home Tab","Fund Prep","CustomObject:Fund Prep"))
+			{
+				log(LogStatus.INFO,"Fund Prep sdg has been added",YesNo.No);
+
+				CommonLib.refresh(driver);
+				if(EB.editPageAndAddFilter("Fund Records", "Select Name from navpeII__Fund__c ORDER BY Name ASC", "", "", "", "",Condition.SelectCheckbox))
+				{
+					log(LogStatus.INFO,"Global Filter has been added",YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Global filter is not added",YesNo.Yes);
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Not able to add the Fund Prep SDG",YesNo.Yes);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Not able to open the "+tabName+"",YesNo.Yes);
+			sa.assertTrue(false, "Not able to open the "+tabName+"");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+	public void M9Tc039_VerifySDGFilterAlongWithInnerQueryInMyRecords(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	    SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+	    EditPageBusinessLayer EB = new EditPageBusinessLayer(driver);
+	    LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
+
+	    String tabName = "Home";
+		String sdgName="Account Filter Grid";
+		int accountFilterRowCount,rowCountAfterFilter;
+		String pageSize="100";
+		String xPath="";
+		WebElement ele=null;
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (BP.clickOnTab(projectName, "Home")) {
+			log(LogStatus.INFO,tabName+" has been open",YesNo.No);
+			
+			xPath="//a[text()='Fund Prep']/ancestor::article/preceding-sibling::lightning-icon[@title='Expand']";
+			ele= CommonLib.FindElement(driver, xPath, "Fund Prep SDg", action.SCROLLANDBOOLEAN, 20);
+			
+			if(ele!=null)
+			{
+				if(CommonLib.clickUsingJavaScript(driver, ele, "Fund Prep Expend icon"))
+				{
+					log(LogStatus.INFO,"Clicked on the Fund Prep SDG Expend icon",YesNo.No);
+					sa.assertTrue(true, "Clicked on the Fund Prep SDG Expend icon");
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Could not click on the Fund Prep SDG Expend icon",YesNo.No);
+					sa.assertTrue(false, "Could not click on the Fund Prep SDG Expend icon");
+				}
+			}
+					
+			if(SB.sdgFilterSendDataAndFound("Fund Prep","Fund Name","Centrient Pharmaceuticals -2018","Equals"))
+			{
+				log(LogStatus.PASS,"Centrient Pharmaceuticals -2018 has been filtered in the Fund Prep",YesNo.No);
+				sa.assertTrue(true, "Centrient Pharmaceuticals -2018 Filter has been filtered in the Fund Prep");
+				CommonLib.ThreadSleep(20000);
+				accountFilterRowCount = AppBuilder.numberOfRecordsWithoutClickOnExpendIcon("Fund Prep", pageSize);
+				System.out.println("Sou "+accountFilterRowCount);
+				if(accountFilterRowCount==1)
+				{
+					log(LogStatus.PASS,"Filter Successfully, count is matched",YesNo.No);
+					sa.assertTrue(true, "Filter Successfully and count is matched");
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Filtered not successfully, Count is not matched",YesNo.No);
+					sa.assertTrue(false, "Filtered not successfully,Count is not matched");
+				}
+
+
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Centrient Pharmaceuticals -2018 is not filtered in the Fund Prep",YesNo.Yes);
+				sa.assertTrue(false, "Centrient Pharmaceuticals -2018 is not filtered in the Fund Prep");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Not able to open the "+tabName+"",YesNo.Yes);
+			sa.assertTrue(false, "Not able to open the "+tabName+"");
+		}
+		
+		
+		if (BP.clickOnTab(projectName, "Home")) {
+			log(LogStatus.INFO,tabName+" has been open",YesNo.No);
+			CommonLib.refresh(driver);
+			if (AppBuilder.selectFilter("Show", "My Records")) {
+				log(LogStatus.INFO, "Filter has been selected: ", YesNo.No);
+				CommonLib.ThreadSleep(20000);
+				
+				rowCountAfterFilter = AppBuilder.numberOfRecordsWithoutClickOnExpendIcon(sdgName, pageSize);
+
+				System.out.println("Sou  row count"+rowCountAfterFilter);
+				if(rowCountAfterFilter==1)
+				{
+					log(LogStatus.PASS,"Record has been matched on the basis of the My Record FIlter",YesNo.No);
+					sa.assertTrue(true, "Record has been matched on the basis of the My Record FIlter");
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Record is not matched on the basis of the My Record FIlter",YesNo.Yes);
+					sa.assertTrue(false, "Record is not matched on the basis of the My Record FIlter");
+				}
+
+
+			}
+			else
+			{
+				log(LogStatus.ERROR,"My Record is not filtered from the global filter",YesNo.Yes);
+				sa.assertTrue(false, "My Record is not filtered from the global filter");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Not able to open the "+tabName+"",YesNo.Yes);
+			sa.assertTrue(false, "Not able to open the "+tabName+"");
+		}
+			
+		
+		if (BP.clickOnTab(projectName, "Home")) {
+			log(LogStatus.INFO,tabName+" has been open",YesNo.No);
+			CommonLib.refresh(driver);
+			if(SB.sdgFilterSendDataAndFound("Fund Prep","Fund Type","Fund"))
+			{
+				log(LogStatus.PASS,"Fund type has been filtered in the Fund Prep",YesNo.No);
+				sa.assertTrue(true, "Fund type has been filtered in the Fund Prep");
+				accountFilterRowCount = AppBuilder.numberOfRecords("Fund Prep", pageSize);
+				System.out.println("Sou "+accountFilterRowCount);
+				if(accountFilterRowCount==1)
+				{
+					log(LogStatus.PASS,"Filter Successfully, count is matched",YesNo.No);
+					sa.assertTrue(true, "Filter Successfully and count is matched");
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Filtered not successfully, Count is not matched",YesNo.No);
+					sa.assertTrue(false, "Filtered not successfully,Count is not matched");
+				}
+
+
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Fund type is not filtered in the Fund Prep",YesNo.Yes);
+				sa.assertTrue(false, "Fund type is not filtered in the Fund Prep");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Not able to open the "+tabName+"",YesNo.Yes);
+			sa.assertTrue(false, "Not able to open the "+tabName+"");
+		}
+				
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
 	 
+
 }
 
 

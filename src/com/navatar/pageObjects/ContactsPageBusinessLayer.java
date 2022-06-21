@@ -616,7 +616,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		} else {
 			concatFullName=contactFirstName+" "+contactLastName;
 		}
-		if(clickOnAlreadyCreatedItem(projectName, TabName.Object2Tab, concatFullName, 20)){
+		if(clickOnAlreadyCreatedItem(projectName, concatFullName,TabName.Object2Tab, 20)){
 			appLog.info("Clicked on Contact name : " + concatFullName);
 			return true;
 		}else{

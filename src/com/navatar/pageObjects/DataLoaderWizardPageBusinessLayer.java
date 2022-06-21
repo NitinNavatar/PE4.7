@@ -972,7 +972,7 @@ public class DataLoaderWizardPageBusinessLayer extends DataLoaderWizardPage {
 
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 
-		List<String> abc = setup.DragNDrop("", mode, obj, ObjectFeatureName.pageLayouts, pageLayoutsName,
+		List<String> abc = setup.DragNDropIfNoDestination("", mode, obj, ObjectFeatureName.pageLayouts, pageLayoutsName,
 				sourceANDDestination);
 		ThreadSleep(10000);
 

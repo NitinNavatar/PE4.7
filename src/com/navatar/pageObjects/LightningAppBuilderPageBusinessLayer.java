@@ -301,23 +301,20 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 	}
 
 
-
-
-
-
-
 	public boolean CreateAppPage(String environment, String mode, String LabelName,ArrayList<String> tableName,ArrayList<String> dataProviderName,String parentWindowID)
 	{
 		String xPath="";
 		boolean flag=false;
 		BasePageBusinessLayer BP=new BasePageBusinessLayer(driver);
 		SoftAssert sa= new SoftAssert();
-
+		CommonLib.ThreadSleep(15000);
 		CommonLib.switchToFrame(driver, 50, getLocator(50));
-
-		if (CommonLib.click(driver, getnewButton(80), "New Button", action.SCROLLANDBOOLEAN)) {
+		CommonLib.ThreadSleep(7000);
+		if (CommonLib.click(driver, getnewButton(80), "New Button", action.BOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on the new button", YesNo.No);
+			CommonLib.ThreadSleep(20000);
 			CommonLib.switchToDefaultContent(driver);
+			CommonLib.ThreadSleep(5000);
 			if (CommonLib.click(driver, getnextButton(80), "Next Button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on the next button", YesNo.No);
 				if (CommonLib.sendKeys(driver, getlabelName(80), LabelName, "Label Name", action.SCROLLANDBOOLEAN)) {
@@ -515,7 +512,6 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 						log(LogStatus.ERROR, "Dropdown lists are not in the ascending order "+fieldLabel.get(i), YesNo.No);
 						sa.assertTrue(false, "Dropdown lists are not in the ascending order "+fieldLabel.get(i));
 						flag=true;
-
 					}
 
 					flag= true;
@@ -620,16 +616,24 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		WebElement pageSizeSelect = FindElement(driver,
 				"//a[text()='" + Title
 				+ "']/ancestor::article//span[text()='Page Size']/../parent::div//select",
-				"Page Size Select ", action.SCROLLANDBOOLEAN, 10);
-		if (CommonLib.selectVisibleTextFromDropDown(driver, pageSizeSelect, "Page Size Select", pageSize)) {
-			log(LogStatus.INFO, "Selected the Page Size", YesNo.No);
-			CommonLib.ThreadSleep(25000);
-			flag=true;
-		}
-		else {
-			log(LogStatus.ERROR, "Not Able To Select Page Size ", YesNo.No);
-			return flag;
+				"Page Size Select ", action.SCROLLANDBOOLEAN, 20);
+		if(CommonLib.checkElementVisibility(driver, pageSizeSelect, "Paze size",20))
+		{
+			if (CommonLib.selectVisibleTextFromDropDown(driver, pageSizeSelect, "Page Size Select", pageSize)) {
+				log(LogStatus.INFO, "Selected the Page Size", YesNo.No);
+				CommonLib.ThreadSleep(25000);
+				flag=true;
+			}
+			else {
+				log(LogStatus.ERROR, "Not Able To Select Page Size ", YesNo.No);
+				return flag;
 
+			}
+		}
+		else
+		{
+			log(LogStatus.INFO, "Row count is less the or equal to 10", YesNo.No);
+			flag=true;
 		}
 
 		return flag;
@@ -681,9 +685,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		try
 		{
 
-			//	ele = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='"+fieldLabel+"']/parent::lightning-combobox//button/span[text()='All']")));
-			ele = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='"+fieldLabel+"']/parent::lightning-combobox//button")));		
-
+    		ele = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='"+fieldLabel+"']/parent::lightning-combobox//button")));		
 			log(LogStatus.INFO, "Element has been found for the "+fieldLabel, YesNo.No);
 		}
 		catch(Exception ex)
@@ -831,6 +833,30 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		return flag;
 	}
 
+	public int numberOfRecordsWithoutClickOnExpendIcon(String Title,String pageSize) 
+	{
+		boolean flag=false;
+		int size=0;
+			if(pageSizeSelect(Title, pageSize))
+			{
+				log(LogStatus.INFO, "Page size "+pageSize+" has been selected", YesNo.No);	   
+				CommonLib.ThreadSleep(5000);
+				List<WebElement> records = FindElements(driver,
+						"//a[text()='" + Title + "']/ancestor::article//tbody/tr", "Records");
+				System.out.println("No. of Records Present: " + records.size());
+				size= records.size();
+				flag=true;
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Could not select the Pagesize",YesNo.No);
+				flag= false;
+			}
+		
+		
+		return size;
+
+	}
 
 }
 

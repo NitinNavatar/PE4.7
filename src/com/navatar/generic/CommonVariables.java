@@ -813,17 +813,17 @@ public class CommonVariables {
 	public static String M9SDGD_144_Fundraising_Count,M9SDGD_145_Fundraising_Count;
 
 	//SDG Count 
-	public static String M9Tc076_SDGCount,M9Tc077_SDGCount,M9Tc078_SDGCount,M9Tc079_SDGCount,M9Tc080_SDGCount;
+	public static String M9Tc072_SDGCount,M9Tc073_SDGCount,M9Tc074_SDGCount,M9Tc075_SDGCount,M9Tc076_SDGCount;
 
 	//AppPage Name
-	public static String M9Tc049_AppPageName,M9Tc050_AppPageName,M9Tc051_AppPageName,M9Tc052_AppPageName,M9Tc053_AppPageName,M9Tc054_AppPageName,M9Tc055_AppPageName,M9Tc056_AppPageName,M9Tc057_AppPageName,M9Tc058_AppPageName,M9Tc059_AppPageName,M9Tc060_AppPageName,M9Tc061_AppPageName;
+	public static String M9Tc049_AppPageName,M9Tc050_AppPageName,M9Tc051_AppPageName,M9Tc052_AppPageName,M9Tc053_AppPageName,M9Tc054_AppPageName,M9Tc055_AppPageName,M9Tc056_AppPageName,M9Tc057_AppPageName,M9Tc058_AppPageName,M9Tc059_AppPageName,M9Tc060_AppPageName,M9Tc061_AppPageName,M9Tc063_AppPageName,M9Tc064_AppPageName,M9Tc065_AppPageName,M9Tc066_AppPageName,M9Tc067_AppPageName,M9Tc068_AppPageName,M9Tc069_AppPageName,M9Tc070_AppPageName,M9Tc071_AppPageName,M9Tc072_AppPageName,M9Tc073_AppPageName,M9Tc074_AppPageName,M9Tc075_AppPageName,M9Tc076_AppPageName,M9Tc077_AppPageName,M9Tc078_AppPageName,M9Tc079_AppPageName,M9Tc080_AppPageName,M9Tc081_AppPageName,M9Tc082_AppPageName,M9Tc083_AppPageName,M9Tc084_AppPageName,M9Tc085_AppPageName,M9Tc086_AppPageName,M9Tc087_AppPageName,M9Tc088_AppPageName,M9Tc089_AppPageName,M9Tc090_AppPageName,M9Tc091_AppPageName;
 	
 	//SDG Table Name
-	public static String M9Tc049_SDGTableName,M9Tc050_SDGTableName,M9Tc051_SDGTableName,M9Tc052_SDGTableName,M9Tc053_SDGTableName,M9Tc054_SDGTableName,M9Tc055_SDGTableName,M9Tc056_SDGTableName,M9Tc057_SDGTableName,M9Tc058_SDGTableName,M9Tc059_SDGTableName,M9Tc060_SDGTableName,M9Tc061_SDGTableName;
+	public static String M9Tc049_SDGTableName,M9Tc050_SDGTableName,M9Tc051_SDGTableName,M9Tc052_SDGTableName,M9Tc053_SDGTableName,M9Tc054_SDGTableName,M9Tc055_SDGTableName,M9Tc056_SDGTableName,M9Tc057_SDGTableName,M9Tc058_SDGTableName,M9Tc059_SDGTableName,M9Tc060_SDGTableName,M9Tc061_SDGTableName,M9Tc063_SDGTableName,M9Tc066_SDGTableName,M9Tc067_SDGTableName,M9Tc068_SDGTableName,M9Tc069_SDGTableName,M9Tc070_SDGTableName,M9Tc072_SDGTableName,M9Tc073_SDGTableName,M9Tc074_SDGTableName,M9Tc075_SDGTableName,M9Tc076_SDGTableName,M9Tc078_SDGTableName,M9Tc079_SDGTableName,M9Tc080_SDGTableName,M9Tc081_SDGTableName,M9Tc082_SDGTableName,M9Tc083_SDGTableName,M9Tc084_SDGTableName,M9Tc085_SDGTableName,M9Tc086_SDGTableName,M9Tc087_SDGTableName,M9Tc088_SDGTableName,M9Tc089_SDGTableName,M9Tc090_SDGTableName,M9Tc091_SDGTableName;
 	
 	//SDG Data Provider Name
 	
-	public static String M9Tc049_SDGDataProvider,M9Tc060_SDGDataProvider;
+	public static String M9Tc049_SDGDataProvider,M9Tc060_SDGDataProvider,M9Tc063_SDGDataProvider;
 	
 	
 	
@@ -3488,7 +3488,7 @@ public class CommonVariables {
 			M9SDGD_59_AccountIndustry=ExcelUtils.readData(wb,phase1DataSheetFilePath,"SDGData",excelLabel.Variable_Name, "M9SDGD_59", excelLabel.Account_Industry);
 			M9SDGD_60_AccountIndustry=ExcelUtils.readData(wb,phase1DataSheetFilePath,"SDGData",excelLabel.Variable_Name, "M9SDGD_60", excelLabel.Account_Industry);
 			M9SDGD_61_AccountIndustry=ExcelUtils.readData(wb,phase1DataSheetFilePath,"SDGData",excelLabel.Variable_Name, "M9SDGD_61", excelLabel.Account_Industry);
-			M9SDGD_62_AccountIndustry=ExcelUtils.readData(wb,phase1DataSheetFilePath,"SDGData",excelLabel.Variable_Name, "M9SDGD_61", excelLabel.Account_Industry);
+			M9SDGD_62_AccountIndustry=ExcelUtils.readData(wb,phase1DataSheetFilePath,"SDGData",excelLabel.Variable_Name, "M9SDGD_62", excelLabel.Account_Industry);
 			M9SDGD_63_AccountIndustry=ExcelUtils.readData(wb,phase1DataSheetFilePath,"SDGData",excelLabel.Variable_Name, "M9SDGD_63", excelLabel.Account_Industry);
 			M9SDGD_64_AccountIndustry=ExcelUtils.readData(wb,phase1DataSheetFilePath,"SDGData",excelLabel.Variable_Name, "M9SDGD_64", excelLabel.Account_Industry);
 			M9SDGD_65_AccountIndustry=ExcelUtils.readData(wb,phase1DataSheetFilePath,"SDGData",excelLabel.Variable_Name, "M9SDGD_65", excelLabel.Account_Industry);
@@ -4148,11 +4148,11 @@ public class CommonVariables {
 
 			//SDG Count
 
-			M9Tc076_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "M9Tc076_verifyMyTeamRecordUser", excelLabel.SDG_Data_Count);
-			M9Tc077_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "M9Tc077_verifyMyTeamRecordAdmin", excelLabel.SDG_Data_Count);
-			M9Tc078_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "M9Tc078_updateTeamBlankAndVerifyMyTeamRecordFilterRecord", excelLabel.SDG_Data_Count);
-			M9Tc079_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "M9Tc079_updateTeamToOriginationAndVerifyMyTeamRecordFilterRecords", excelLabel.SDG_Data_Count);
-			M9Tc080_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "M9Tc080_updateTeamBlankAndVerifyMyTeamRecordFilterRecord", excelLabel.SDG_Data_Count);
+			M9Tc072_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "M9Tc072_verifyMyTeamRecordUser", excelLabel.SDG_Data_Count);
+			M9Tc073_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "M9Tc073_verifyMyTeamRecordAdmin", excelLabel.SDG_Data_Count);
+			M9Tc074_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "M9Tc074_updateTeamBlankAndVerifyMyTeamRecordFilterRecord", excelLabel.SDG_Data_Count);
+			M9Tc075_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "M9Tc075_updateTeamToOriginationForUser1AndVerifyMyTeamRecordFilterRecords", excelLabel.SDG_Data_Count);
+			M9Tc076_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "M9Tc076_updateTeamBlankAndVerifyMyTeamRecordFilterRecord", excelLabel.SDG_Data_Count);
             
 			//SDGName		
 			M9Tc049_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc049", excelLabel.AppPage_Name);
@@ -4168,7 +4168,36 @@ public class CommonVariables {
 			M9Tc059_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc059", excelLabel.AppPage_Name);
 			M9Tc060_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc060", excelLabel.AppPage_Name);
 			M9Tc061_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc061", excelLabel.AppPage_Name);
-	           
+			M9Tc063_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc063", excelLabel.AppPage_Name);
+			M9Tc064_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc064", excelLabel.AppPage_Name);
+			M9Tc065_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc065", excelLabel.AppPage_Name);
+			M9Tc066_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc066", excelLabel.AppPage_Name);
+			M9Tc067_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc067", excelLabel.AppPage_Name);
+			M9Tc068_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc068", excelLabel.AppPage_Name);
+			M9Tc069_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc069", excelLabel.AppPage_Name);
+			M9Tc070_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc070", excelLabel.AppPage_Name);
+			M9Tc071_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc071", excelLabel.AppPage_Name);
+			M9Tc072_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc072", excelLabel.AppPage_Name);
+			M9Tc073_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc073", excelLabel.AppPage_Name);
+			M9Tc074_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc074", excelLabel.AppPage_Name);
+			M9Tc075_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc075", excelLabel.AppPage_Name);
+			M9Tc076_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc076", excelLabel.AppPage_Name);
+			M9Tc077_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc077", excelLabel.AppPage_Name);
+			M9Tc078_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc078", excelLabel.AppPage_Name);
+			M9Tc079_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc079", excelLabel.AppPage_Name);
+			M9Tc080_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc080", excelLabel.AppPage_Name);
+			M9Tc081_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc081", excelLabel.AppPage_Name);
+			M9Tc082_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc082", excelLabel.AppPage_Name);
+			M9Tc083_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc083", excelLabel.AppPage_Name);
+			M9Tc084_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc084", excelLabel.AppPage_Name);
+			M9Tc085_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc085", excelLabel.AppPage_Name);
+			M9Tc086_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc086", excelLabel.AppPage_Name);
+			M9Tc087_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc087", excelLabel.AppPage_Name);
+			M9Tc088_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc088", excelLabel.AppPage_Name);
+			M9Tc089_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc089", excelLabel.AppPage_Name);
+			M9Tc090_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc090", excelLabel.AppPage_Name);
+			M9Tc091_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc091", excelLabel.AppPage_Name);
+			          
 			//SDG Table Name
 			M9Tc049_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc049", excelLabel.SDG_TableName);
 			M9Tc050_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc050", excelLabel.SDG_TableName);
@@ -4183,12 +4212,38 @@ public class CommonVariables {
 			M9Tc059_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc059", excelLabel.SDG_TableName);
 			M9Tc060_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc060", excelLabel.SDG_TableName);
 			M9Tc061_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc061", excelLabel.SDG_TableName);
+			M9Tc063_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc063", excelLabel.SDG_TableName);
+			M9Tc066_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc066", excelLabel.SDG_TableName);
+			M9Tc067_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc067", excelLabel.SDG_TableName);
+			M9Tc068_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc068", excelLabel.SDG_TableName);
+			M9Tc069_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc069", excelLabel.SDG_TableName);
+			M9Tc070_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc070", excelLabel.SDG_TableName);
+			M9Tc072_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc072", excelLabel.SDG_TableName);
+			M9Tc073_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc073", excelLabel.SDG_TableName);
+			M9Tc074_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc074", excelLabel.SDG_TableName);
+			M9Tc075_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc075", excelLabel.SDG_TableName);
+			M9Tc076_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc076", excelLabel.SDG_TableName);
+			M9Tc078_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc078", excelLabel.SDG_TableName);
+			M9Tc079_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc079", excelLabel.SDG_TableName);
+			M9Tc080_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc080", excelLabel.SDG_TableName);
+			M9Tc081_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc081", excelLabel.SDG_TableName);
+			M9Tc082_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc082", excelLabel.SDG_TableName);
+			M9Tc083_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc083", excelLabel.SDG_TableName);
+			M9Tc084_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc084", excelLabel.SDG_TableName);
+			M9Tc085_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc085", excelLabel.SDG_TableName);
+			M9Tc086_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc086", excelLabel.SDG_TableName);
+			M9Tc087_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc087", excelLabel.SDG_TableName);
+			M9Tc088_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc088", excelLabel.SDG_TableName);
+			M9Tc089_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc089", excelLabel.SDG_TableName);
+			M9Tc090_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc090", excelLabel.SDG_TableName);
+			M9Tc091_SDGTableName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc091", excelLabel.SDG_TableName);
 			
 			
 		   //SDG Data Provider
 			M9Tc049_SDGDataProvider=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc049", excelLabel.SDG_DataProviderName);
 			M9Tc060_SDGDataProvider=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc060", excelLabel.SDG_DataProviderName);
-			
+			M9Tc063_SDGDataProvider=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc063", excelLabel.SDG_DataProviderName);
+
 			
             
 			
