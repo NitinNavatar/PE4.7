@@ -8396,61 +8396,72 @@ public class OldSmokeTestCases extends BaseLib {
 								sa.assertTrue(false, "cAPITAL CALL Grid is empty");
 							}
 							
-							if (click(driver, fd.getGenerateCapitalCall(30), "generate capital call", action.SCROLLANDBOOLEAN)) {
-								//fund detail page
-								ThreadSleep(3000);
-								
-								if (fd.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.FundDrawdown, RelatedTab.Fund_Management.toString())) {
-									
-									
-								} else {
-									log(LogStatus.ERROR, "Not Able to Click on Related List ", YesNo.Yes);
-									sa.assertTrue(false, "Not Able to Click on Related List ");
-								}
-								
-								String FDID= fp.getFirstValueFromRelatedList(environment,mode,RelatedList.FundDrawdown.toString()).getText().trim();
-								ExcelUtils.writeData(smokeFilePath, FDID, "FundDrawdown", excelLabel.Variable_Name, "DD1", excelLabel.DrawdownID);
-								for (int i = 0;i<5;i++) {
-									ExcelUtils.writeData(smokeFilePath, FDID, "CapitalCall", excelLabel.Variable_Name, "CC"+(i+1), excelLabel.DrawdownID);
-									
-								}
-								ThreadSleep(2000);
-								if (clickUsingJavaScript(driver, fp.getFirstValueFromRelatedList(environment,mode,RelatedList.FundDrawdown.toString()), "fund drawdown id", action.SCROLLANDBOOLEAN)) {
-									ThreadSleep(2000);
-									String parentId=switchOnWindow(driver);
-									if (parentId!=null) {
-										log(LogStatus.INFO, "New window is open after click on FundDrawdown ", YesNo.Yes);
-										
+						if (click(driver, fd.getGenerateCapitalCall(30), "generate capital call",
+								action.SCROLLANDBOOLEAN)) {
+							// fund detail page
+							ThreadSleep(3000);
+							String FDID = null;
+							if (fd.openAppFromAppLauchner(ObjectName.Fund_Drawdowns.toString(), 10)) {
 
-										if (fd.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.CapitalCalls, null)) {
-											
-											if (bp.clickOnViewAllRelatedList(environment, mode, RelatedList.CapitalCalls)) {
-												
-											}else{
-												log(LogStatus.ERROR, "Not Able to Click on View All for "+RelatedList.CapitalCalls, YesNo.Yes);
-												sa.assertTrue(false, "Not Able to Click on View All for "+RelatedList.CapitalCalls);	
-											}
-											
+								log(LogStatus.PASS, "Able to open fund drawdown object ", YesNo.No);
+								FDID = fp.getFirstValueFromRelatedList(environment, mode,
+										RelatedList.FundDrawdown.toString(), Smoke_Fund1).getText().trim();
+
+							} else {
+								log(LogStatus.ERROR, "Not Able to open fund drawdown object ", YesNo.Yes);
+								sa.assertTrue(false, "Not Able to open fund drawdown object ");
+							}
+
+							ThreadSleep(2000);
+							if (FDID != null || !FDID.isEmpty() || !FDID.equalsIgnoreCase("")) {
+
+								ExcelUtils.writeData(smokeFilePath, FDID, "FundDrawdown", excelLabel.Variable_Name,
+										"DD1", excelLabel.DrawdownID);
+								for (int i = 0; i < 5; i++) {
+									ExcelUtils.writeData(smokeFilePath, FDID, "CapitalCall", excelLabel.Variable_Name,
+											"CC" + (i + 1), excelLabel.DrawdownID);
+
+								}
+
+								ThreadSleep(2000);
+
+								if (clickUsingJavaScript(driver,fp.getFirstValueFromRelatedList(environment, mode,RelatedList.FundDrawdown.toString(), Smoke_Fund1),
+										"fund drawdown id", action.SCROLLANDBOOLEAN)) {
+									ThreadSleep(4000);
+
+									if (fd.ClickonRelatedTab_Lighting(environment, RecordType.Fund, null)) {
+
+										if (bp.clickOnViewAllRelatedList(environment, mode, RelatedList.CapitalCalls)) {
+											log(LogStatus.PASS,
+													" Able to Click on View All for " + RelatedList.CapitalCalls,
+													YesNo.No);
 										} else {
-											log(LogStatus.ERROR, "Not Able to Click on Related List ", YesNo.Yes);
-											sa.assertTrue(false, "Not Able to Click on Related List ");
+											log(LogStatus.ERROR,
+													"Not Able to Click on View All for " + RelatedList.CapitalCalls,
+													YesNo.Yes);
+											sa.assertTrue(false,
+													"Not Able to Click on View All for " + RelatedList.CapitalCalls);
 										}
-										List<String> s = fp.returnAllValuesInRelatedList(environment, mode, RelatedList.CapitalCalls.toString());
-										for (int i =0;i<5;i++) {
-											ExcelUtils.writeData(smokeFilePath,s.get(i) ,"CapitalCall",excelLabel.Variable_Name, "CC"+(i+1), excelLabel.CapitalCalllID);
-										}
-										
-											driver.close();
-										driver.switchTo().window(parentId);
+
 									} else {
-										log(LogStatus.ERROR, "No New is open after click on FundDrawdown ", YesNo.Yes);
-										sa.assertTrue(false, "No New is open after click on FundDrawdown ");
+										log(LogStatus.ERROR, "Not Able to Click on Related List ", YesNo.Yes);
+										sa.assertTrue(false, "Not Able to Click on Related List ");
 									}
-									
+									List<String> s = fp.returnAllValuesInRelatedList(environment, mode,
+											RelatedList.CapitalCalls.toString());
+									for (int i = 0; i < 5; i++) {
+										ExcelUtils.writeData(smokeFilePath, s.get(i), "CapitalCall",
+												excelLabel.Variable_Name, "CC" + (i + 1), excelLabel.CapitalCalllID);
+									}
+
 								}
 								else {
 									log(LogStatus.ERROR, "fund drawdown link is not clickable", YesNo.Yes);
 									sa.assertTrue(false, "fund drawdown link is not clickable");
+								}
+								}else {
+									log(LogStatus.ERROR, "fund drawdown is not present so cannot verify ", YesNo.Yes);
+									sa.assertTrue(false, "fund drawdown is not present so cannot verify ");
 								}
 							}
 							else {
@@ -8849,7 +8860,7 @@ public class OldSmokeTestCases extends BaseLib {
 		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "MM/dd/YYYY");
 		if (bp.clickOnTab(environment, mode, TabName.CapitalCalls)) {
 			if (ccp.clickOnCreatedCapitalCall(environment, mode, SmokeCC3_ID)) {
-				if (click(driver, bp.getEditButton(environment, mode,60), "edit button", action.BOOLEAN)) {
+				if (ccp.clickOnShowMoreActionDownArrow("PE", PageName.CapitalCall, ShowMoreActionDropDownList.Edit, 20)) {
 					for (int i = 0;i<=3;i++) {
 						if (ccp.fieldValueVerificationOnCapitalCalls(environment, mode, TabName.CapitalCalls,labels[i] , SmokeCC3Data[i], EditViewMode.Edit)) {
 							log(LogStatus.PASS, "successfully verified "+labels[i], YesNo.No);
@@ -9205,8 +9216,10 @@ public class OldSmokeTestCases extends BaseLib {
 				ThreadSleep(5000);
 				if (bp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Correspondence_Lists, RelatedTab.Investor_Relations.toString())) {
 					log(LogStatus.INFO, "clicked on Investor Relations Tab", YesNo.No);
+					ThreadSleep(3000);
 					if (click(driver, crp.getNewCorrespondenceListButton(30),"New Correspondence List Button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.PASS, "clicked on new button on correspondence list related list", YesNo.No);
+						ThreadSleep(5000);
 						if (crp.createNewCorrList( "",mode,environment, SmokeC1_FName, SmokeC1_LName, SmokeCOMM8_ID,corrList )) {
 							log(LogStatus.PASS, "successfully created new correspondence list", YesNo.No);
 							if (cp.verifyPresenceOfCorrespondenceRelatedList(mode, environment,SmokeC1_FName+" "+SmokeC1_LName, Smoke_LP1, Smoke_P1, SmokeCOMM8_ID, 30)) {
@@ -10132,7 +10145,7 @@ public class OldSmokeTestCases extends BaseLib {
 		lp.CRMlogout(environment, mode);
 		boolean flag = false;
 		for (int i=0;i<10;i++) {
-			if (EmailLib.mailReceived(gmailUserName,adminPassword, crmUser1EmailID, SmokeC1_EmailID,subjectWithoutEmail , "")) {
+			if (EmailLib.mailReceived(gmailUserName,gmailPassword, crmUser1EmailID, SmokeC1_EmailID,subjectWithoutEmail , "")) {
 				log(LogStatus.INFO, "successfully verified email present", YesNo.No);
 				flag = true;
 				break;
@@ -10145,7 +10158,7 @@ public class OldSmokeTestCases extends BaseLib {
 		flag = false;
 		//check user bcc
 		for (int i=0;i<10;i++) {
-			if (EmailLib.mailReceived(gmailUserName2,adminPassword, crmUser1EmailID, SmokeC1_EmailID,subjectWithoutEmail , "")) {
+			if (EmailLib.mailReceived(gmailUserName2,gmailPassword, crmUser1EmailID, SmokeC1_EmailID,subjectWithoutEmail , "")) {
 				log(LogStatus.INFO, "successfully verified email present", YesNo.No);
 				flag = true;
 				break;
@@ -10609,7 +10622,7 @@ public class OldSmokeTestCases extends BaseLib {
 		
 		boolean flag = false;
 		for (int i=0;i<10;i++) {
-			if (EmailLib.mailReceived(gmailUserName,adminPassword, crmUser1EmailID, SmokeC2_EmailID,subject , emailBody)) {
+			if (EmailLib.mailReceived(gmailUserName,gmailPassword, crmUser1EmailID, SmokeC2_EmailID,subject , emailBody)) {
 				log(LogStatus.INFO, "successfully verified email present", YesNo.No);
 				flag = true;
 				break;
@@ -11130,25 +11143,27 @@ public class OldSmokeTestCases extends BaseLib {
 							if (click(driver, fdi.getGenerateInvDist(30), "generate inv dist", action.SCROLLANDBOOLEAN)) {
 								//fund detail page
 								ThreadSleep(3000);
-								if(bp.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.FundDistribution, RelatedTab.Fund_Management.toString())) {
-									appLog.info("clicked on related list tab");
+								String FDID=null;
+								if(bp.openAppFromAppLauchner(ObjectName.Fund_Distributions.toString(), 20)) {
+									appLog.info("able to open fund distribution form app laucnher");
+									 FDID= fp.getFirstValueFromRelatedList(environment,mode,RelatedList.FundDistribution.toString(), Smoke_Fund1).getText().trim();
+
 								}else {
-									appLog.error("could not click on related tab");
+									log(LogStatus.ERROR, "Not able to open fund distribution form app laucnher", YesNo.Yes);
+									sa.assertTrue(false, "Not able to open fund distribution form app laucnher");
 								}
 								
 							
-								String FDID= fp.getFirstValueFromRelatedList(environment,mode,RelatedList.FundDistribution.toString()).getText().trim();
-								ExcelUtils.writeData(smokeFilePath, FDID, "FundDistribution", excelLabel.Variable_Name, "FD1", excelLabel.FundDistributionID);
-								for (int i = 0;i<5;i++) {
-									ExcelUtils.writeData(smokeFilePath, FDID, "InvestorDistribution", excelLabel.Variable_Name, "ID"+(i+1), excelLabel.FundDistributionID);
-
-								}
-								if (clickUsingJavaScript(driver, fp.getFirstValueFromRelatedList(environment,mode,RelatedList.FundDistribution.toString()), "FundDistribution id", action.SCROLLANDBOOLEAN)) {
+								if(FDID!=null) {
+								if (clickUsingJavaScript(driver, fp.getFirstValueFromRelatedList(environment,mode,RelatedList.FundDistribution.toString(), Smoke_Fund1), "FundDistribution id", action.SCROLLANDBOOLEAN)) {
 									
-									String parentId=switchOnWindow(driver);
-									if (parentId!=null) {
-										log(LogStatus.ERROR, "New window is open after click on FundDistribution "+FDID, YesNo.Yes);
-										if(bp.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.FundDistribution, null)) {
+									ExcelUtils.writeData(smokeFilePath, FDID, "FundDistribution", excelLabel.Variable_Name, "FD1", excelLabel.FundDistributionID);
+									for (int i = 0;i<5;i++) {
+										ExcelUtils.writeData(smokeFilePath, FDID, "InvestorDistribution", excelLabel.Variable_Name, "ID"+(i+1), excelLabel.FundDistributionID);
+
+									}
+									
+										if(bp.ClickonRelatedTab_Lighting(environment, RecordType.Fund, null)) {
 											appLog.info("clicked on related list tab");
 										}else {
 											appLog.error("could not click on related tab");
@@ -11174,18 +11189,15 @@ public class OldSmokeTestCases extends BaseLib {
 											log(LogStatus.INFO, s.get(i)+" id of investor distribution", YesNo.No);
 											ExcelUtils.writeData(smokeFilePath,s.get(i) ,"InvestorDistribution",excelLabel.Variable_Name, "ID"+(i+1), excelLabel.InvestorDistributionID);
 										}	
-										driver.close();
-										driver.switchTo().window(parentId);
-									} else {
-										log(LogStatus.ERROR, "No New is open after click on FundDistribution "+FDID, YesNo.Yes);
-										sa.assertTrue(false, "No New is open after click on FundDistribution "+FDID);
-									}
-									
-									
+					
 								}
 								else {
 									log(LogStatus.ERROR, "fund distribution link is not clickable "+FDID, YesNo.Yes);
 									sa.assertTrue(false, "fund distribution link is not clickable "+FDID);
+								}
+								}else {
+									log(LogStatus.ERROR, "fund distribution link is not present so cannot conitnue "+FDID, YesNo.Yes);
+									sa.assertTrue(false, "fund distribution link is not present so cannot conitnue "+FDID);
 								}
 							}
 							else {
@@ -12066,7 +12078,7 @@ public class OldSmokeTestCases extends BaseLib {
 								if (parentId!=null) {
 									ThreadSleep(2000);
 									if (Mode.Lightning.toString().equalsIgnoreCase(mode)) {
-										xpath = "//div/span[contains(text(),'"+linkClick[j]+"')]";
+										xpath = "//div/*[contains(text(),'"+linkClick[j]+"')]";
 										}else{
 											xpath = "//h2[contains(text(),'"+linkClick[j]+"')]";	
 										}
@@ -12899,126 +12911,9 @@ public class OldSmokeTestCases extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Parameters({"projectName", "environment", "mode" })
-	@Test
-	public void PESmokeTc062_1_AddRelatedTabAndRelatedList(String projectName,String environment, String mode) {
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
-		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
-		lp.CRMLogin(superAdminUserName, adminPassword);
-		String subTab="Related";
-		String searchText=EditPageErrorMessage.RelatedLists;
-		String sourceImage=".\\AutoIT\\EditPage\\RelatedListImg.PNG";
-		String targetImage=".\\AutoIT\\EditPage\\AddComponent.PNG";
-		appLog.info("Login with User");
-		appLog.info("Going on Contact Tab");
-		if (bp.clickOnTab(environment, mode, TabName.ContactTab)) {
-			log(LogStatus.INFO, "Click on Contact Tab", YesNo.Yes);
-			if (cp.clickOnCreatedContact(environment,  SmokeC5_FName, SmokeC5_LName)) {
-				log(LogStatus.INFO, "Click on Created Contact : " + SmokeC5_FName + " " + SmokeC5_LName, YesNo.No);
-
-				if (edit.addingSubTab(subTab, searchText, sourceImage, targetImage)) {
-					log(LogStatus.INFO,  " Able to add sub tab "+subTab, YesNo.No);
-					
-						if(click(driver, edit.getEditPageBackButton(projectName, 20), "edit page back button", action.BOOLEAN)) {
-							log(LogStatus.INFO,  " Able to click on back button ", YesNo.No);
-													
-						}else {
-							sa.assertTrue(false, "Not  Able to click on back button ");
-							log(LogStatus.SKIP,  "Not  Able to click on back button ", YesNo.Yes);
-						}					
-					
-				} else {
-					sa.assertTrue(false, "Not Able to add sub tab "+subTab);
-					log(LogStatus.SKIP,  "Not Able to add sub tab "+subTab, YesNo.Yes);
-				}
-			} else {
-				sa.assertTrue(false, "Not Able to Click on Created Contact : " + SmokeC5_FName + " " + SmokeC5_LName);
-				log(LogStatus.SKIP, "Not Able to Click on Created Contact : " + SmokeC5_FName + " " + SmokeC5_LName,YesNo.Yes);
-
-			}
-		} else {
-			sa.assertTrue(false, "Not Able to Click on Contact Tab");
-			log(LogStatus.SKIP, "Not Able to Click on Contact Tab", YesNo.Yes);
-		}
-		switchToDefaultContent(driver);
-		if (ip.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-			log(LogStatus.INFO, "Clicked on Institution Tab", YesNo.No);
-			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS2)) {
-				log(LogStatus.INFO, "Clicked on Created Institution : " + SmokeINS2, YesNo.No);
-
-				if (edit.addingSubTab(subTab, searchText, sourceImage, targetImage)) {
-					log(LogStatus.INFO,  "Not Able to add sub tab "+subTab, YesNo.No);
-					
-					
-						if(click(driver, edit.getEditPageBackButton(projectName, 20), "edit page back button", action.BOOLEAN)) {
-							log(LogStatus.INFO,  " Able to click on back button ", YesNo.No);
-													
-						}else {
-							sa.assertTrue(false, "Not  Able to click on back button ");
-							log(LogStatus.SKIP,  "Not  Able to click on back button ", YesNo.Yes);
-						}					
-					
-				} else {
-					sa.assertTrue(false, "Not Able to add sub tab "+subTab);
-					log(LogStatus.SKIP,  "Not Able to add sub tab "+subTab, YesNo.Yes);
-				}
-			} else {
-				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINS2);
-				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2, YesNo.Yes);
-			}
-
-		} else {
-			sa.assertTrue(false, "Not Able to Click on Institution Tab");
-			log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
-		}
-		
-		switchToDefaultContent(driver);
-		if (ip.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-			log(LogStatus.INFO, "Clicked on Institution Tab", YesNo.No);
-			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINDINV2)) {
-				log(LogStatus.INFO, "Clicked on Created Institution : " + SmokeINDINV2, YesNo.No);
-
-				if (edit.addingSubTab(subTab, searchText, sourceImage, targetImage)) {
-					log(LogStatus.INFO,  "Not Able to add sub tab "+subTab, YesNo.No);
-					
-					
-						if(click(driver, edit.getEditPageBackButton(projectName, 20), "edit page back button", action.BOOLEAN)) {
-							log(LogStatus.INFO,  " Able to click on back button ", YesNo.No);
-													
-						}else {
-							sa.assertTrue(false, "Not  Able to click on back button ");
-							log(LogStatus.SKIP,  "Not  Able to click on back button ", YesNo.Yes);
-						}					
-					
-				} else {
-					sa.assertTrue(false, "Not Able to add sub tab "+subTab);
-					log(LogStatus.SKIP,  "Not Able to add sub tab "+subTab, YesNo.Yes);
-				}
-			} else {
-				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINDINV2);
-				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINDINV2, YesNo.Yes);
-			}
-
-		} else {
-			sa.assertTrue(false, "Not Able to Click on Institution Tab");
-			log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
-		}
-		
-		
-
-		switchToDefaultContent(driver);
-		lp.CRMlogout(environment, mode);
-		sa.assertAll();
-		appLog.info("Pass");
-	}
-	
 	@Parameters({ "environment", "mode" })
 	@Test
-	public void PESmokeTc062_2_VerifyContactTransferButtonAtContactPageAndOfficeLocationRelatedListAtAccountPage(
+	public void PESmokeTc062_VerifyContactTransferButtonAtContactPageAndOfficeLocationRelatedListAtAccountPage(
 			String environment, String mode) {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -13046,7 +12941,7 @@ public class OldSmokeTestCases extends BaseLib {
 					log(LogStatus.ERROR, "Contact Transfer Button is Present", YesNo.Yes);
 				}
 
-				if (click(driver, cp.getEditButton(environment, mode, 10), "Edit Button", action.SCROLLANDBOOLEAN)) {
+				if (cp.clickOnShowMoreActionDownArrow("PE", PageName.ContactPage, ShowMoreActionDropDownList.Edit, 20)) {
 					log(LogStatus.INFO, "Clicked on Edit Button", YesNo.No);
 
 					WebElement officeLocEle = FindElement(driver, officeLocationLabel, "Office Location Label",
@@ -13588,7 +13483,7 @@ public class OldSmokeTestCases extends BaseLib {
 					log(LogStatus.ERROR, "Contact Transfer Button is NOT Present", YesNo.Yes);
 				}
 
-				if (click(driver, cp.getEditButton(environment, mode, 10), "Edit Button", action.SCROLLANDBOOLEAN)) {
+				if (cp.clickOnShowMoreActionDownArrow("PE", PageName.ContactPage, ShowMoreActionDropDownList.Edit, 20)) {
 					log(LogStatus.INFO, "Clicked on Edit Button", YesNo.No);
 
 					WebElement officeLocEle = FindElement(driver, officeLocationLabel, "Office Location Label",
@@ -13617,49 +13512,7 @@ public class OldSmokeTestCases extends BaseLib {
 			log(LogStatus.SKIP, "Not Able to Click on Contact Tab", YesNo.Yes);
 		}
 		switchToDefaultContent(driver);
-		if (ip.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-			log(LogStatus.INFO, "Clicked on Institution Tab", YesNo.No);
-			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS2)) {
-				log(LogStatus.INFO, "Clicked on Created Institution : " + SmokeINS2, YesNo.No);
-				if (bp.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Office_Locations, RelatedTab.Details.toString())) {
-					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-						((JavascriptExecutor) driver)
-						.executeScript("window.scrollTo(0,0);");
-						int widgetTotalScrollingWidth = Integer.parseInt(String.valueOf(((JavascriptExecutor) driver)
-								.executeScript("return window.outerHeight")));
-						int j = 200;
-						int i = 0;
-						WebElement el=null;
-						while (el==null) {
-							el=isDisplayed(driver,FindElement(driver, "//a[text()='Office Location']", "Office Locations", action.BOOLEAN, 2) , "visibility", 2, "Office Locations");
-							((JavascriptExecutor) driver).executeScript("window.scrollBy( 0 ,"+j+")");
-							i+=j;
-							if (i >= widgetTotalScrollingWidth) {
-								sa.assertTrue(false, "Office Location Related List is not Available");
-								log(LogStatus.ERROR, "Office Location Related List is not Available", YesNo.Yes);
-								break;
-							}
-							else if (el!=null) {
-								log(LogStatus.INFO, "Office Location Related List is Available", YesNo.Yes);
-								break;
-							}
-						}
-					}
-				}
-				else {
-					log(LogStatus.ERROR, "could not click on related list button",YesNo.Yes);
-					sa.assertTrue(false,"could not click on related list button" );
-				}
-				
-			} else {
-				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINS2);
-				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2, YesNo.Yes);
-			}
 
-		} else {
-			sa.assertTrue(false, "Not Able to Click on Institution Tab");
-			log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
-		}
 
 		switchToDefaultContent(driver);
 		lp.CRMlogout(environment, mode);
@@ -13682,7 +13535,8 @@ public class OldSmokeTestCases extends BaseLib {
 				{ OfficeLocationLabel.Primary.toString(), Smoke_OFFLoc1Primary },
 				{ OfficeLocationLabel.State_Province.toString(), Smoke_OFFLoc1StateProvince },
 				{ OfficeLocationLabel.Country.toString(), Smoke_OFFLoc1Country },
-				{ OfficeLocationLabel.ZIP.toString(), Smoke_OFFLoc1ZIP } };
+				{ OfficeLocationLabel.ZIP.toString(), Smoke_OFFLoc1ZIP },
+				{ OfficeLocationLabel.Organization_Name.toString(), Smoke_OFFLoc1OrgName }};
 
 		String[][] officeLocation2 = { { OfficeLocationLabel.Office_Location_Name.toString(), Smoke_OFFLoc2Name },
 				{ OfficeLocationLabel.Phone.toString(), Smoke_OFFLoc2Phone },
@@ -13692,16 +13546,15 @@ public class OldSmokeTestCases extends BaseLib {
 				{ OfficeLocationLabel.Primary.toString(), Smoke_OFFLoc2Primary },
 				{ OfficeLocationLabel.State_Province.toString(), Smoke_OFFLoc2StateProvince },
 				{ OfficeLocationLabel.Country.toString(), Smoke_OFFLoc2Country },
-				{ OfficeLocationLabel.ZIP.toString(), Smoke_OFFLoc2ZIP } };
+				{ OfficeLocationLabel.ZIP.toString(), Smoke_OFFLoc2ZIP },
+				{ OfficeLocationLabel.Organization_Name.toString(), Smoke_OFFLoc2OrgName }};
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		log(LogStatus.INFO, "Login with CRM User", YesNo.No);
 		log(LogStatus.INFO, "Going to Enter information about Office Location 1", YesNo.No);
-		if (ip.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-			log(LogStatus.INFO, "Clicked on Institution Tab", YesNo.No);
-			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS2)) {
-				log(LogStatus.INFO, "Clicked on Created Institution : " + SmokeINS2, YesNo.No);
-
+		if (ip.clickOnTab(environment, mode, TabName.OfficeLocations)) {
+			log(LogStatus.INFO, "Clicked on office locations Tab", YesNo.No);
+			
 				if (click(driver, ip.getNewOfficeLocationButton(environment, mode, RecordType.Institution, 10),
 						"New Office Location", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.SKIP, "Clicked on New Office Location  : " + SmokeINS2, YesNo.Yes);
@@ -13713,22 +13566,16 @@ public class OldSmokeTestCases extends BaseLib {
 					log(LogStatus.SKIP, "Not Able to Click on New Office Location  : " + SmokeINS2, YesNo.Yes);
 				}
 
-			} else {
-				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINS2);
-				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2, YesNo.Yes);
-			}
-
+			
 		} else {
 			sa.assertTrue(false, "Not Able to Click on Institution Tab");
 			log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
 		}
 
 		log(LogStatus.INFO, "Going to Enter information about Office Location 2", YesNo.No);
-		if (ip.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-			log(LogStatus.INFO, "Clicked on Institution Tab", YesNo.No);
-			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS2)) {
-				log(LogStatus.INFO, "Clicked on Created Institution : " + SmokeINS2, YesNo.No);
-
+		if (ip.clickOnTab(environment, mode, TabName.OfficeLocations)) {
+			log(LogStatus.INFO, "Clicked on office locations Tab", YesNo.No);
+			
 				if (click(driver, ip.getNewOfficeLocationButton(environment, mode, RecordType.Institution, 10),
 						"New Office Location", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.SKIP, "Clicked on New Office Location  : " + SmokeINS2, YesNo.Yes);
@@ -13740,76 +13587,59 @@ public class OldSmokeTestCases extends BaseLib {
 					log(LogStatus.SKIP, "Not Able to Click on New Office Location  : " + SmokeINS2, YesNo.Yes);
 				}
 
-			} else {
-				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINS2);
-				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2, YesNo.Yes);
-			}
-
+			
 		} else {
 			sa.assertTrue(false, "Not Able to Click on Institution Tab");
 			log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
 		}
-
+		String[] label= {excelLabel.Office_Location_Name.toString(),
+				excelLabel.Street.toString(),
+				excelLabel.City.toString(),
+				"State/Province",excelLabel.Country.toString(),
+				excelLabel.Primary.toString()};
+		
 		log(LogStatus.INFO, "Going to Verify Office Location 1 & 2", YesNo.No);
-
-		if (ip.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-			log(LogStatus.INFO, "Clicked on Institution Tab", YesNo.No);
-			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS2)) {
-				log(LogStatus.INFO, "Clicked on Created Institution : " + SmokeINS2, YesNo.No);
-
-				
+		
+		String[][] locations = {{Smoke_OFFLoc1Name,Smoke_OFFLoc1Street,Smoke_OFFLoc1City,Smoke_OFFLoc1StateProvince,Smoke_OFFLoc1Country,Smoke_OFFLoc1Primary},
+				{Smoke_OFFLoc2Name,Smoke_OFFLoc2Street,Smoke_OFFLoc2City,Smoke_OFFLoc2StateProvince,Smoke_OFFLoc2Country,Smoke_OFFLoc2Primary}};
+		
+		for(String[] location:locations) {
+		if (ip.clickOnTab(environment, mode, TabName.OfficeLocations)) {
+			log(LogStatus.INFO, "Clicked on office location Tab", YesNo.No);
+			if (ip.clickOnCreatedOfficeLocation(environment, mode, location[0])) {
+				log(LogStatus.INFO, "Clicked on Created office location : " + location[0], YesNo.No);
+	
 				if (ip.clickOnRelatedList(environment, mode, RecordType.IndividualInvestor, RelatedList.Office_Locations, RelatedTab.Details.toString())) {
 					
 					log(LogStatus.PASS, "Clicked on Details TAB : "+RelatedList.Office_Locations, YesNo.No);
 					
-					if (click(driver, ip.getOfficeLocationSDGLink(30), "office location link ",action.SCROLLANDBOOLEAN)) {
-						
-						log(LogStatus.PASS, "Clicked on link : "+RelatedList.Office_Locations, YesNo.No);
-						
+					
 
-						if (ip.verifyOfficeLocationRelatedListGrid(environment, mode, Smoke_OFFLoc1Name,
-								Smoke_OFFLoc1Street, Smoke_OFFLoc1City, Smoke_OFFLoc1StateProvince, Smoke_OFFLoc1Country,
-								Smoke_OFFLoc1Primary)) {
-							log(LogStatus.FAIL, "Grid Verified for : " + Smoke_OFFLoc1Name, YesNo.Yes);
-						} else {
-							sa.assertTrue(false, "Grid Not Verified for : " + Smoke_OFFLoc1Name);
-							log(LogStatus.FAIL, "Grid Not Verified for : " + Smoke_OFFLoc1Name, YesNo.Yes);
+					for(int i=0;i<location.length;i++) {
+						if(ip.fieldValueVerificationOnOfficeLocationPage(environment, mode, label[i], location[i])) {
+							log(LogStatus.FAIL, "value Verified for : " + location[i], YesNo.Yes);
+							
+						}else {
+							sa.assertTrue(false, "value Not Verified for : " + location[i]);
+							log(LogStatus.FAIL, "value Not Verified for : " + location[i], YesNo.Yes);
 						}
-
-						if (ip.verifyOfficeLocationRelatedListGrid(environment, mode, Smoke_OFFLoc2Name,
-								Smoke_OFFLoc2Street, Smoke_OFFLoc2City, Smoke_OFFLoc2StateProvince, Smoke_OFFLoc2Country,
-								Smoke_OFFLoc2Primary)) {
-							log(LogStatus.FAIL, "Grid Verified for : " + Smoke_OFFLoc2Name, YesNo.Yes);
-						} else {
-							sa.assertTrue(false, "Grid Not Verified for : " + Smoke_OFFLoc2Name);
-							log(LogStatus.FAIL, "Grid Not Verified for : " + Smoke_OFFLoc2Name, YesNo.Yes);
-						}
-						
-						} else {
-						sa.assertTrue(false, "Not Able to Click on Related List View All for " + RelatedList.Office_Locations);
-						log(LogStatus.FAIL, "Not Able to Click on Related List View All for " + RelatedList.Office_Locations, YesNo.Yes);
+			
 					}
-					
-					
 				} else {
 					sa.assertTrue(false, "Not Able to Clicked on link : " + RelatedList.Office_Locations);
 					log(LogStatus.FAIL, "Not Able to Clicked on link : " + RelatedList.Office_Locations, YesNo.Yes);
 				}
 	
-
-
-				
-
 			} else {
-				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINS2);
-				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to Click on Created office location : " + location[0]);
+				log(LogStatus.SKIP, "Not Able to Click on Created office location : " + location[0], YesNo.Yes);
 			}
 
 		} else {
 			sa.assertTrue(false, "Not Able to Click on Institution Tab");
 			log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
 		}
-
+		}
 		switchToDefaultContent(driver);
 		lp.CRMlogout(environment, mode);
 		sa.assertAll();
@@ -13854,7 +13684,7 @@ public class OldSmokeTestCases extends BaseLib {
 					}
 				}
 
-				if (click(driver, ip.getEditButton(environment, mode, 10), "Edit Button", action.SCROLLANDBOOLEAN)) {
+				if (ip.clickOnShowMoreActionDownArrow("PE", PageName.InstitutionsPage, ShowMoreActionDropDownList.Edit, 20)) {
 					log(LogStatus.INFO, "Edit Button", YesNo.No);
 					ThreadSleep(2000);
 					WebElement ele;
@@ -13975,7 +13805,7 @@ public class OldSmokeTestCases extends BaseLib {
 			if (cp.clickOnCreatedContact(environment, SmokeC5_FName, SmokeC5_LName)) {
 				log(LogStatus.INFO, "Clicked on Created Contact : " + SmokeC5_FName + " " + SmokeC5_LName, YesNo.No);
 
-				if (click(driver, cp.getEditButton(environment, mode, 10), "Edit Button", action.SCROLLANDBOOLEAN)) {
+				if (cp.clickOnShowMoreActionDownArrow("PE", PageName.ContactPage, ShowMoreActionDropDownList.Edit, 20)) {
 					log(LogStatus.INFO, "Clicked on Edit Button", YesNo.No);
 					if (cp.ClickOnLookUpAndSelectValueFromLookUpWindow(environment, mode, LookUpIcon.OfficeLocation,
 							"Office Location", Smoke_OFFLoc1Name + "," + Smoke_OFFLoc2Name)) {
@@ -14050,52 +13880,29 @@ public class OldSmokeTestCases extends BaseLib {
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		log(LogStatus.INFO, "Login with CRM User", YesNo.No);
 		log(LogStatus.INFO, "Going to Enter information about Office Location 1", YesNo.No);
-		if (ip.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-			log(LogStatus.INFO, "Clicked on Institution Tab", YesNo.No);
-			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS2)) {
-				log(LogStatus.INFO, "Clicked on Created Institution : " + SmokeINS2, YesNo.No);
+		if (ip.clickOnTab(environment, mode, TabName.OfficeLocations)) {
+			log(LogStatus.INFO, "Clicked on office location Tab", YesNo.No);
+			if (ip.clickOnCreatedOfficeLocation(environment, mode, Smoke_OFFLoc1Name)) {
+				log(LogStatus.INFO, "Clicked on Created office location : " + Smoke_OFFLoc1Name, YesNo.No);
 
 				if (ip.clickOnRelatedList(environment, mode, RecordType.IndividualInvestor, RelatedList.Office_Locations, RelatedTab.Details.toString())) {
 					
 					log(LogStatus.PASS, "Clicked on details TAB : "+RelatedList.Office_Locations, YesNo.No);
 					
-					if (click(driver, ip.getOfficeLocationSDGLink(30), "office location link ",action.SCROLLANDBOOLEAN)) {
-						
-						log(LogStatus.PASS, "Clicked on link : "+RelatedList.Office_Locations, YesNo.No);
-						
+					
 						String[][] officeLocation1 = {
 								{ OfficeLocationLabel.Primary.toString(), Smoke_OFFLoc1UpdatedPrimary } };
-						if (ip.clickOnLinkForOfficeLocation(environment, mode, RecordType.Institution,
-								Smoke_OFFLoc1Name, 30)) {
-							log(LogStatus.INFO, "Clicked on Office Location : " + Smoke_OFFLoc1Name, YesNo.No);
-							
-							String parentWindow=switchOnWindow(driver);
-							
 							ThreadSleep(2000);
-							if (clickUsingJavaScript(driver, ip.getEditButton(environment, mode, 30), " Edit",action.SCROLLANDBOOLEAN)) {
+							if (ip.clickOnShowMoreActionDownArrow("PE", PageName.ContactPage, ShowMoreActionDropDownList.Edit, 10)) {
 								
 								tsa = ip.EnterValueForLabelonOfficeLocation(environment, mode, officeLocation1);
 								sa.combineAssertions(tsa);
-								driver.close();
 								switchToDefaultContent(driver);
 							}else {
 								sa.assertTrue(false, "Not Able to Click on edit button on new window: " + Smoke_OFFLoc1Name);
 								log(LogStatus.SKIP, "Not Able to Click on edit button on new window  : " + Smoke_OFFLoc1Name, YesNo.Yes);
 							}
 
-							
-						} else {
-							sa.assertTrue(false, "Not Able to Click on Office Location : " + Smoke_OFFLoc1Name);
-							log(LogStatus.SKIP, "Not Able to Click on Office Location  : " + Smoke_OFFLoc1Name, YesNo.Yes);
-						}
-					
-						
-							} else {
-						sa.assertTrue(false, "Not Able to Click on link " + RelatedList.Office_Locations);
-						log(LogStatus.FAIL, "Not Able to Click on lnik " + RelatedList.Office_Locations, YesNo.Yes);
-					}
-					
-					
 				} else {
 					sa.assertTrue(false, "Not Able to Click on Related List " + RelatedList.Office_Locations);
 					log(LogStatus.FAIL, "Not Able to Click on Related List " + RelatedList.Office_Locations, YesNo.Yes);
@@ -14104,70 +13911,62 @@ public class OldSmokeTestCases extends BaseLib {
 					
 
 			} else {
-				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINS2);
-				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to Click on Created office location : " + Smoke_OFFLoc1Name);
+				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + Smoke_OFFLoc1Name, YesNo.Yes);
+			}
+
+		} else {
+			sa.assertTrue(false, "Not Able to Click on office location Tab");
+			log(LogStatus.SKIP, "Not Able to Click on office location Tab", YesNo.Yes);
+		}
+
+		String[] label= {excelLabel.Office_Location_Name.toString(),
+				excelLabel.Street.toString(),
+				excelLabel.City.toString(),
+				"State/Province",excelLabel.Country.toString(),
+				excelLabel.Primary.toString()};
+		
+		log(LogStatus.INFO, "Going to Verify Office Location 1 & 2", YesNo.No);
+		
+		String[][] locations = {{Smoke_OFFLoc1Name,Smoke_OFFLoc1Street,Smoke_OFFLoc1City,Smoke_OFFLoc1StateProvince,Smoke_OFFLoc1Country,Smoke_OFFLoc1UpdatedPrimary},
+				{Smoke_OFFLoc2Name,Smoke_OFFLoc2Street,Smoke_OFFLoc2City,Smoke_OFFLoc2StateProvince,Smoke_OFFLoc2Country,Smoke_OFFLoc2UpdatedPrimary}};
+		
+		for(String[] location:locations) {
+		if (ip.clickOnTab(environment, mode, TabName.OfficeLocations)) {
+			log(LogStatus.INFO, "Clicked on office location Tab", YesNo.No);
+			if (ip.clickOnCreatedOfficeLocation(environment, mode, location[0])) {
+				log(LogStatus.INFO, "Clicked on Created office location : " + location[0], YesNo.No);
+	
+				if (ip.clickOnRelatedList(environment, mode, RecordType.IndividualInvestor, RelatedList.Office_Locations, RelatedTab.Details.toString())) {
+					
+					log(LogStatus.PASS, "Clicked on Details TAB : "+RelatedList.Office_Locations, YesNo.No);
+					
+					
+
+					for(int i=0;i<location.length;i++) {
+						if(ip.fieldValueVerificationOnOfficeLocationPage(environment, mode, label[i], location[i])) {
+							log(LogStatus.FAIL, "value Verified for : " + location[i], YesNo.Yes);
+							
+						}else {
+							sa.assertTrue(false, "value Not Verified for : " + location[i]);
+							log(LogStatus.FAIL, "value Not Verified for : " + location[i], YesNo.Yes);
+						}
+			
+					}
+				} else {
+					sa.assertTrue(false, "Not Able to Clicked on link : " + RelatedList.Office_Locations);
+					log(LogStatus.FAIL, "Not Able to Clicked on link : " + RelatedList.Office_Locations, YesNo.Yes);
+				}
+	
+			} else {
+				sa.assertTrue(false, "Not Able to Click on Created office location : " + location[0]);
+				log(LogStatus.SKIP, "Not Able to Click on Created office location : " + location[0], YesNo.Yes);
 			}
 
 		} else {
 			sa.assertTrue(false, "Not Able to Click on Institution Tab");
 			log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
 		}
-
-		log(LogStatus.INFO, "Going to Verify Office Location 1 & 2", YesNo.No);
-
-		if (ip.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-			log(LogStatus.INFO, "Clicked on Institution Tab", YesNo.No);
-			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS2)) {
-				log(LogStatus.INFO, "Clicked on Created Institution : " + SmokeINS2, YesNo.No);
-
-				if (ip.clickOnRelatedList(environment, mode, RecordType.IndividualInvestor, RelatedList.Office_Locations, RelatedTab.Details.toString())) {
-					
-					log(LogStatus.PASS, "Clicked on details TAB : "+RelatedList.Office_Locations, YesNo.No);
-					
-					if (click(driver, ip.getOfficeLocationSDGLink(30), "office location link ",action.SCROLLANDBOOLEAN)) {
-						
-						log(LogStatus.PASS, "Clicked on detail : "+RelatedList.Office_Locations, YesNo.No);
-						
-
-						if (ip.verifyOfficeLocationRelatedListGrid(environment, mode, Smoke_OFFLoc1Name,
-								Smoke_OFFLoc1Street, Smoke_OFFLoc1City, Smoke_OFFLoc1StateProvince, Smoke_OFFLoc1Country,
-								Smoke_OFFLoc1UpdatedPrimary)) {
-							log(LogStatus.PASS, "Grid Verified for : " + Smoke_OFFLoc1Name, YesNo.Yes);
-						} else {
-							sa.assertTrue(false, "Grid Not Verified for : " + Smoke_OFFLoc1Name);
-							log(LogStatus.FAIL, "Grid Not Verified for : " + Smoke_OFFLoc1Name, YesNo.Yes);
-						}
-
-						if (ip.verifyOfficeLocationRelatedListGrid(environment, mode, Smoke_OFFLoc2Name,
-								Smoke_OFFLoc2Street, Smoke_OFFLoc2City, Smoke_OFFLoc2StateProvince, Smoke_OFFLoc2Country,
-								Smoke_OFFLoc2UpdatedPrimary)) {
-							log(LogStatus.PASS, "Grid Verified for : " + Smoke_OFFLoc2Name, YesNo.Yes);
-						} else {
-							sa.assertTrue(false, "Grid Not Verified for : " + Smoke_OFFLoc2Name);
-							log(LogStatus.FAIL, "Grid Not Verified for : " + Smoke_OFFLoc2Name, YesNo.Yes);
-						}
-
-						
-							} else {
-						sa.assertTrue(false, "Not Able to Click on Related List View All for " + RelatedList.Office_Locations);
-						log(LogStatus.FAIL, "Not Able to Click on Related List View All for " + RelatedList.Office_Locations, YesNo.Yes);
-					}
-					
-					
-				} else {
-					sa.assertTrue(false, "Not Able to Click on Related List " + RelatedList.Office_Locations);
-					log(LogStatus.FAIL, "Not Able to Click on Related List " + RelatedList.Office_Locations, YesNo.Yes);
-				}
-
-
-			} else {
-				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINS2);
-				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2, YesNo.Yes);
-			}
-
-		} else {
-			sa.assertTrue(false, "Not Able to Click on Institution Tab");
-			log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
 		}
 
 		log(LogStatus.PASS, "Going to Verify Address Information ", YesNo.Yes);
@@ -14246,46 +14045,26 @@ public class OldSmokeTestCases extends BaseLib {
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		log(LogStatus.INFO, "Login with CRM User", YesNo.No);
 		log(LogStatus.INFO, "Going to Update information about Office Location 1", YesNo.No);
-		if (ip.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-			log(LogStatus.INFO, "Clicked on Institution Tab", YesNo.No);
-			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS2)) {
-				log(LogStatus.INFO, "Clicked on Created Institution : " + SmokeINS2, YesNo.No);
+		if (ip.clickOnTab(environment, mode, TabName.OfficeLocations)) {
+			log(LogStatus.INFO, "Clicked on office location Tab", YesNo.No);
+			if (ip.clickOnCreatedOfficeLocation(environment, mode, Smoke_OFFLoc1Name)) {
+				log(LogStatus.INFO, "Clicked on Created office location : " + Smoke_OFFLoc1Name, YesNo.No);
 
 				if (ip.clickOnRelatedList(environment, mode, RecordType.IndividualInvestor, RelatedList.Office_Locations, RelatedTab.Details.toString())) {
 					
 					log(LogStatus.PASS, "Clicked on detail TAB : "+RelatedList.Office_Locations, YesNo.No);
 					
-					if (click(driver, ip.getOfficeLocationSDGLink(30), "office location link ",action.SCROLLANDBOOLEAN)) {
-						
-						log(LogStatus.PASS, "Clicked on Related : "+RelatedList.Office_Locations, YesNo.No);
-						if (ip.clickOnLinkForOfficeLocation(environment, mode, RecordType.Institution,
-								Smoke_OFFLoc1Name, 10)) {
-							log(LogStatus.INFO,
-									"Clicked on Office Location and Going to Update Value: " + Smoke_OFFLoc1Name, YesNo.No);
-							
-							String parentWindow=switchOnWindow(driver);
-							
 							ThreadSleep(2000);
-							if (clickUsingJavaScript(driver, ip.getEditButton(environment, mode, 30), " Edit",action.SCROLLANDBOOLEAN)) {
-	
+							if (cp.clickOnShowMoreActionDownArrow("PE", PageName.ContactPage, ShowMoreActionDropDownList.Edit, 10)) {
+								log(LogStatus.INFO, "Clicked on edit button", YesNo.No);
 							tsa = ip.EnterValueForLabelonOfficeLocation(environment, mode, updatedOfficeLocation1);
 							sa.combineAssertions(tsa);
 							flag=true;
-							driver.close();
-							driver.switchTo().window(parentWindow);
 							}else {
 								sa.assertTrue(false, "Not Able to Click on edit button on new window: " + Smoke_OFFLoc1Name);
 								log(LogStatus.SKIP, "Not Able to Click on edit button on new window  : " + Smoke_OFFLoc1Name, YesNo.Yes);
 							}
-						} else {
-							sa.assertTrue(false, "Not Able to Click on Office Location : " + Smoke_OFFLoc1Name);
-							log(LogStatus.SKIP, "Not Able to Click on Office Location  : " + Smoke_OFFLoc1Name, YesNo.Yes);
-						}
-							} else {
-						sa.assertTrue(false, "Not Able to Click on Related List View All for " + RelatedList.Office_Locations);
-						log(LogStatus.FAIL, "Not Able to Click on Related List View All for " + RelatedList.Office_Locations, YesNo.Yes);
-					}
-					
+						
 					
 				} else {
 					sa.assertTrue(false, "Not Able to Click on Related List " + RelatedList.Office_Locations);
@@ -14296,62 +14075,63 @@ public class OldSmokeTestCases extends BaseLib {
 				
 
 			} else {
-				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINS2);
-				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to Click on Created office location : " + Smoke_OFFLoc1Name);
+				log(LogStatus.SKIP, "Not Able to Click on Created office location : " + Smoke_OFFLoc1Name, YesNo.Yes);
 			}
 
 		} else {
-			sa.assertTrue(false, "Not Able to Click on Institution Tab");
-			log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
+			sa.assertTrue(false, "Not Able to Click on office location Tab");
+			log(LogStatus.SKIP, "Not Able to Click on office location Tab", YesNo.Yes);
 		}
 		if (flag) {
 			
+			String[] label= {excelLabel.Office_Location_Name.toString(),
+					excelLabel.Street.toString(),
+					excelLabel.City.toString(),
+					"State/Province",excelLabel.Country.toString(),
+					excelLabel.Primary.toString()};
+			
 			log(LogStatus.INFO, "Going to Verify Office Location 1", YesNo.No);
 
-			if (ip.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-				log(LogStatus.INFO, "Clicked on Institution Tab", YesNo.No);
-				if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS2)) {
-					log(LogStatus.INFO, "Clicked on Created Institution : " + SmokeINS2, YesNo.No);
-
+			String[][] locations = {{Smoke_OFFLoc1UpdName,Smoke_OFFLoc1UpdStreet,Smoke_OFFLoc1UpdCity,Smoke_OFFLoc1UpdStateProvince,Smoke_OFFLoc1UpdCountry,Smoke_OFFLoc1UpdatedPrimary}
+				};
+			
+			for(String[] location:locations) {
+			if (ip.clickOnTab(environment, mode, TabName.OfficeLocations)) {
+				log(LogStatus.INFO, "Clicked on office location Tab", YesNo.No);
+				if (ip.clickOnCreatedOfficeLocation(environment, mode, location[0])) {
+					log(LogStatus.INFO, "Clicked on Created office location : " + location[0], YesNo.No);
+		
 					if (ip.clickOnRelatedList(environment, mode, RecordType.IndividualInvestor, RelatedList.Office_Locations, RelatedTab.Details.toString())) {
 						
-						log(LogStatus.PASS, "Clicked on Related TAB : "+RelatedList.Office_Locations, YesNo.No);
+						log(LogStatus.PASS, "Clicked on Details TAB : "+RelatedList.Office_Locations, YesNo.No);
 						
-						if (click(driver, ip.getOfficeLocationSDGLink(30), "office location link ",action.SCROLLANDBOOLEAN)) {
-							
-							log(LogStatus.PASS, "Clicked on Related : "+RelatedList.Office_Locations, YesNo.No);
-							
-							if (ip.verifyOfficeLocationRelatedListGrid(environment, mode, Smoke_OFFLoc1UpdName,
-									Smoke_OFFLoc1UpdStreet, Smoke_OFFLoc1UpdCity, Smoke_OFFLoc1UpdStateProvince,
-									Smoke_OFFLoc1UpdCountry, Smoke_OFFLoc1UpdPrimary)) {
-								log(LogStatus.PASS, "Grid Verified for : " + Smoke_OFFLoc1UpdName, YesNo.Yes);
-							} else {
-								sa.assertTrue(false, "Grid Not Verified for : " + Smoke_OFFLoc1UpdName);
-								log(LogStatus.FAIL, "Grid Not Verified for : " + Smoke_OFFLoc1UpdName, YesNo.Yes);
+						
+
+						for(int i=0;i<location.length;i++) {
+							if(ip.fieldValueVerificationOnOfficeLocationPage(environment, mode, label[i], location[i])) {
+								log(LogStatus.FAIL, "value Verified for : " + location[i], YesNo.Yes);
+								
+							}else {
+								sa.assertTrue(false, "value Not Verified for : " + location[i]);
+								log(LogStatus.FAIL, "value Not Verified for : " + location[i], YesNo.Yes);
 							}
-							
-							} else {
-							sa.assertTrue(false, "Not Able to Click on Related List View All for " + RelatedList.Office_Locations);
-							log(LogStatus.FAIL, "Not Able to Click on Related List View All for " + RelatedList.Office_Locations, YesNo.Yes);
+				
 						}
-						
-						
 					} else {
-						sa.assertTrue(false, "Not Able to Click on Related List " + RelatedList.Office_Locations);
-						log(LogStatus.FAIL, "Not Able to Click on Related List " + RelatedList.Office_Locations, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Clicked on link : " + RelatedList.Office_Locations);
+						log(LogStatus.FAIL, "Not Able to Clicked on link : " + RelatedList.Office_Locations, YesNo.Yes);
 					}
-
-						
-
-
+		
 				} else {
-					sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINS2);
-					log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2, YesNo.Yes);
+					sa.assertTrue(false, "Not Able to Click on Created office location : " + location[0]);
+					log(LogStatus.SKIP, "Not Able to Click on Created office location : " + location[0], YesNo.Yes);
 				}
 
 			} else {
 				sa.assertTrue(false, "Not Able to Click on Institution Tab");
 				log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
+			}
 			}
 
 			log(LogStatus.INFO, "Going to Verify Address Information on INstitution ", YesNo.No);
@@ -14503,7 +14283,7 @@ public class OldSmokeTestCases extends BaseLib {
 
 		if (gp.clickOnGlobalActionAndEnterValue("", GlobalActionItem.Log_a_Call, event3)) {
 			log(LogStatus.INFO,"Able to Enter Value for : "+task,YesNo.No);
-			gp.enterValueOnRelatedTo("", PageName.GlobalActtion_TaskPOpUp, TabName.FundsTab, Smoke_Fund1);
+			gp.enterValueOnRelatedTo("", PageName.GlobalActtion_TaskPOpUp, TabName.Object3Tab, Smoke_Fund1);
 			if (click(driver, gp.getSaveButtonForEvent("", 10), "Save Button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);		
 			}else {
@@ -14582,7 +14362,7 @@ public class OldSmokeTestCases extends BaseLib {
 				log(LogStatus.INFO, "Click on Created Contact : " + SmokeC5_FName + " " + SmokeC5_LName, YesNo.No);
 
 				// Azhar Start
-				if (clickUsingJavaScript(driver, cp.getContactTransfer(environment,  10), "Contact Transfer Button for Cancel")) {
+				if (cp.clickOnShowMoreActionDownArrow("PE", PageName.InstitutionsPage, ShowMoreActionDropDownList.Contact_Transfer, 10)) {
 					log(LogStatus.INFO, "Clicked on Contact Transfer for Cancel Button", YesNo.No);	
 					ThreadSleep(2000);
 					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
@@ -14601,7 +14381,7 @@ public class OldSmokeTestCases extends BaseLib {
 				// Azhar End
 				ThreadSleep(5000);
 				switchToDefaultContent(driver);
-				if (clickUsingJavaScript(driver, cp.getContactTransfer(environment, 10), "Contact Transfer Button")) {
+				if (cp.clickOnShowMoreActionDownArrow("PE", PageName.InstitutionsPage, ShowMoreActionDropDownList.Contact_Transfer, 10)) {
 					log(LogStatus.INFO, "Clicked on Contact Transfer", YesNo.No);	
 					
 					if (cp.verifyContactTransferUIonContactPage(environment, mode,SmokeC5_FName+" "+SmokeC5_LName, SmokeINS2, 10)) {
@@ -14654,67 +14434,54 @@ public class OldSmokeTestCases extends BaseLib {
 								}
 							}
 							
-							if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, null)) {
-								log(LogStatus.INFO, "Click on Affiliations", YesNo.Yes);	
-								if (bp.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Affiliations, true)) {
-									log(LogStatus.INFO, "successfully scrolled to related list affiliations", YesNo.No);
-								}
-								else {
-									log(LogStatus.ERROR, "could not scroll to affiliations related list", YesNo.Yes);
-									sa.assertTrue(false, "could not scroll to affiliations related list");
-								}
-								
-								if (cp.verifyOpenActivityRelatedList(environment, mode,TabName.ContactTab, Smoke_NewTask1Subject, SmokeINS2, null)) {
-									log(LogStatus.INFO, "Open Activity Grid  Verified For "+Smoke_NewTask1Subject, YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Open Activity Grid Not Verified For "+Smoke_NewTask1Subject);
-									log(LogStatus.FAIL, "Open Activity Grid Not Verified For "+Smoke_NewTask1Subject, YesNo.Yes);
-								}
-								
-								if (cp.verifyOpenActivityRelatedList(environment, mode,TabName.ContactTab, Smoke_NewEvent1Subject, SmokeINS2, null)) {
-									log(LogStatus.INFO, "Open Activity Grid Verified For "+Smoke_NewEvent1Subject, YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Open Activity Grid Not Verified For "+Smoke_NewEvent1Subject);
-									log(LogStatus.FAIL, "Open Activity  Grid Not Verified For "+Smoke_NewEvent1Subject, YesNo.Yes);
-								}
-								
-								if (cp.verifyActivityHistoryRelatedList(environment, mode,TabName.ContactTab, Smoke_CallLog1Subject, Smoke_Fund1, null)) {
-									log(LogStatus.INFO, "Activity History Grid Verified For "+Smoke_CallLog1Subject, YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Activity History Grid Not Verified For "+Smoke_CallLog1Subject);
-									log(LogStatus.FAIL, "Activity History Grid Not Verified For "+Smoke_CallLog1Subject, YesNo.Yes);
-								}
-								
-								
-								if (cp.clickOnViewAllRelatedList(environment, mode,RelatedList.Affiliations)) {
-									log(LogStatus.INFO, "Click on View All Affiliations", YesNo.No);
-									
-									if (cp.verifyAffliationRelatedList(environment, mode,TabName.ContactTab, SmokeINS2)) {
-										log(LogStatus.PASS, "Affialition Grid Verified For "+SmokeINS2, YesNo.Yes);	
-									} else {
-										sa.assertTrue(false, "Affialition Grid Not Verified For "+SmokeINS2);
-										log(LogStatus.FAIL, "Affialition Grid Not Verified For "+SmokeINS2, YesNo.Yes);
-									}
-								} else {
-									sa.assertTrue(false, "Not Able to Click on View All Affiliations");
-									log(LogStatus.SKIP, "Not Able to Click on View All Affiliations", YesNo.Yes);
-								}
-								
-								
-								
-								
-								
-							} else {
-								sa.assertTrue(false, "Not Able to Click on Affiliations");
-								log(LogStatus.SKIP, "Not Able to Click on Affiliations", YesNo.Yes);
-							}
+					if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, RelatedTab.Affiliations.toString())) {
+						log(LogStatus.INFO, "Click on Affiliations", YesNo.Yes);
 
+						if (cp.verifyOpenActivityRelatedList(environment, mode, TabName.ContactTab,
+								Smoke_NewTask1Subject, SmokeINS2, null)) {
+							log(LogStatus.INFO, "Open Activity Grid  Verified For " + Smoke_NewTask1Subject, YesNo.No);
+						} else {
+							sa.assertTrue(false, "Open Activity Grid Not Verified For " + Smoke_NewTask1Subject);
+							log(LogStatus.FAIL, "Open Activity Grid Not Verified For " + Smoke_NewTask1Subject,
+									YesNo.Yes);
+						}
+
+						if (cp.verifyOpenActivityRelatedList(environment, mode, TabName.ContactTab,
+								Smoke_NewEvent1Subject, SmokeINS2, null)) {
+							log(LogStatus.INFO, "Open Activity Grid Verified For " + Smoke_NewEvent1Subject, YesNo.No);
+						} else {
+							sa.assertTrue(false, "Open Activity Grid Not Verified For " + Smoke_NewEvent1Subject);
+							log(LogStatus.FAIL, "Open Activity  Grid Not Verified For " + Smoke_NewEvent1Subject,
+									YesNo.Yes);
+						}
+
+						if (cp.verifyActivityHistoryRelatedList(environment, mode, TabName.ContactTab,
+								Smoke_CallLog1Subject, Smoke_Fund1, null)) {
+							log(LogStatus.INFO, "Activity History Grid Verified For " + Smoke_CallLog1Subject,
+									YesNo.No);
+						} else {
+							sa.assertTrue(false, "Activity History Grid Not Verified For " + Smoke_CallLog1Subject);
+							log(LogStatus.FAIL, "Activity History Grid Not Verified For " + Smoke_CallLog1Subject,
+									YesNo.Yes);
+						}
+
+						if (cp.verifyAffliationRelatedList(environment, mode, TabName.ContactTab, SmokeINS2)) {
+							log(LogStatus.PASS, "Affialition Grid Verified For " + SmokeINS2, YesNo.Yes);
+						} else {
+							sa.assertTrue(false, "Affialition Grid Not Verified For " + SmokeINS2);
+							log(LogStatus.FAIL, "Affialition Grid Not Verified For " + SmokeINS2, YesNo.Yes);
+						}
+
+					} else {
+						sa.assertTrue(false, "Not Able to Click on Affiliations");
+						log(LogStatus.SKIP, "Not Able to Click on Affiliations", YesNo.Yes);
+					}
 
 				} else {
 					sa.assertTrue(false, "Not Able to Click on Contact Transfer");
 					log(LogStatus.SKIP, "Not Able to Click on Contact Transfer", YesNo.Yes);
 				}
-				
+
 			} else {
 				sa.assertTrue(false, "Not Able to Click on Created Contact : " + SmokeC5_FName + " " + SmokeC5_LName);
 				log(LogStatus.SKIP, "Not Able to Click on Created Contact : " + SmokeC5_FName + " " + SmokeC5_LName,
@@ -14725,7 +14492,7 @@ public class OldSmokeTestCases extends BaseLib {
 			sa.assertTrue(false, "Not Able to Click on Contact Tab");
 			log(LogStatus.SKIP, "Not Able to Click on Contact Tab", YesNo.Yes);
 		}
-	
+
 		switchToDefaultContent(driver);
 		lp.CRMlogout(environment, mode);
 		sa.assertAll();
@@ -14744,79 +14511,33 @@ public class OldSmokeTestCases extends BaseLib {
 		if (bp.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS2)) {
 				log(LogStatus.INFO, "Click on Created Inst : " + SmokeINS2, YesNo.No);
-							
-							if (ip.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Activities, null)) {
-								log(LogStatus.INFO, "Click on Activities", YesNo.Yes);	
-								if (bp.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Activities, true)) {
-									log(LogStatus.INFO,"successfully scrolled to activities related list", YesNo.No);
-								}
-								else {
-									log(LogStatus.ERROR,"could not scroll to activities related list", YesNo.Yes);
-									sa.assertTrue(false, "could not scroll to activities related list");
-								}
-								
-								if (ip.verifyOpenActivityRelatedList(environment, mode,TabName.InstituitonsTab, Smoke_NewTask1Subject, SmokeINS2, SmokeC5_FName + " " + SmokeC5_LName)) {
-									log(LogStatus.INFO, "Open Activity Grid  Verified For "+Smoke_NewTask1Subject, YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Open Activity Grid Not Verified For "+Smoke_NewTask1Subject);
-									log(LogStatus.FAIL, "Open Activity Grid Not Verified For "+Smoke_NewTask1Subject, YesNo.Yes);
-								}
-								
-								if (ip.verifyOpenActivityRelatedList(environment, mode,TabName.InstituitonsTab, Smoke_NewEvent1Subject, SmokeINS2, SmokeC5_FName + " " + SmokeC5_LName)) {
-									log(LogStatus.INFO, "Open Activity Grid Verified For "+Smoke_NewEvent1Subject, YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Open Activity Grid Not Verified For "+Smoke_NewEvent1Subject);
-									log(LogStatus.FAIL, "Open Activity  Grid Not Verified For "+Smoke_NewEvent1Subject, YesNo.Yes);
-								}
-								
-								if (ip.verifyNoDataAtActivityHistorySection(environment, mode, TabName.InstituitonsTab, 10)) {
-									log(LogStatus.INFO, "Activity History Grid Verified For No Records/No Past Activity Msg", YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Activity History Grid Not Verified For No Records/No Past Activity Msg");
-									log(LogStatus.FAIL, "Activity History Grid Not Verified For No Records/No Past Activity Msg", YesNo.Yes);
-								}
-								
-								if (ip.clickOnViewAllRelatedList(environment, mode,RelatedList.Activities)) {
-									log(LogStatus.INFO, "Click on View All Affiliations", YesNo.No);
-									
-									String[][] activitiesRecords ={{Smoke_NewTask1Subject,SmokeC5_FName + " " + SmokeC5_LName,SmokeINS2},
-															{Smoke_NewEvent1Subject,SmokeC5_FName + " " + SmokeC5_LName,SmokeINS2},
-															{Smoke_CallLog1Subject,SmokeC5_FName + " " + SmokeC5_LName,Smoke_Fund1}};
-									
-									for (String[] activityRecord : activitiesRecords) {
-										
-										if (ip.verifyActivitiesRelatedList(environment, mode, TabName.InstituitonsTab, activityRecord[0], activityRecord[1], activityRecord[2])) {
-											log(LogStatus.PASS, "Activities Grid Verified For "+activityRecord[0], YesNo.Yes);	
-										} else {
-											sa.assertTrue(false, "Activities Grid Not Verified For "+activityRecord[0]);
-											log(LogStatus.FAIL, "Activities Grid Not Verified For "+activityRecord[0], YesNo.Yes);
-										}	
-									}
-									
-									
-								} else {
-									sa.assertTrue(false, "Not Able to Click on View All Activities");
-									log(LogStatus.SKIP, "Not Able to Click on View All Activities", YesNo.Yes);
-								}
-								
-								
-							} else {
-								sa.assertTrue(false, "Not Able to Click on Activities");
-								log(LogStatus.SKIP, "Not Able to Click on Activities", YesNo.Yes);
-							}
 
+				if (ip.verifyOpenActivityRelatedList(environment, mode, TabName.InstituitonsTab, Smoke_NewTask1Subject,
+						SmokeINS2, SmokeC5_FName + " " + SmokeC5_LName)) {
+					log(LogStatus.INFO, "Open Activity Grid  Verified For " + Smoke_NewTask1Subject, YesNo.No);
+				} else {
+					sa.assertTrue(false, "Open Activity Grid Not Verified For " + Smoke_NewTask1Subject);
+					log(LogStatus.FAIL, "Open Activity Grid Not Verified For " + Smoke_NewTask1Subject, YesNo.Yes);
+				}
 
-				
+				if (ip.verifyOpenActivityRelatedList(environment, mode, TabName.InstituitonsTab, Smoke_NewEvent1Subject,
+						SmokeINS2, SmokeC5_FName + " " + SmokeC5_LName)) {
+					log(LogStatus.INFO, "Open Activity Grid Verified For " + Smoke_NewEvent1Subject, YesNo.No);
+				} else {
+					sa.assertTrue(false, "Open Activity Grid Not Verified For " + Smoke_NewEvent1Subject);
+					log(LogStatus.FAIL, "Open Activity  Grid Not Verified For " + Smoke_NewEvent1Subject, YesNo.Yes);
+				}
+
 			} else {
 				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINS2);
-				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2,YesNo.Yes);
+				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2, YesNo.Yes);
 
 			}
 		} else {
 			sa.assertTrue(false, "Not Able to Click on Institution Tab");
 			log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
 		}
-	
+
 		switchToDefaultContent(driver);
 		lp.CRMlogout(environment, mode);
 		sa.assertAll();
@@ -14835,12 +14556,7 @@ public class OldSmokeTestCases extends BaseLib {
 		if (bp.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINDINV2)) {
 				log(LogStatus.INFO, "Click on Created Inst : " + SmokeINDINV2, YesNo.No);
-							
-							if (ip.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Activities, null)) {
-								log(LogStatus.INFO, "Click on Related Tab", YesNo.No);	
-								windowScrollYAxis(driver, 0, 1400);
-								log(LogStatus.INFO, "Scroll >>>>>", YesNo.No);
-								ThreadSleep(2000);
+						
 								if (ip.verifyOpenActivityRelatedList(environment, mode,TabName.InstituitonsTab, Smoke_NewTask1Subject, SmokeINS2, SmokeC5_FName + " " + SmokeC5_LName)) {
 									log(LogStatus.INFO, "Open Activity Grid  Verified For "+Smoke_NewTask1Subject, YesNo.No);	
 								} else {
@@ -14863,17 +14579,7 @@ public class OldSmokeTestCases extends BaseLib {
 								}
 								
 							
-								if (ip.verifyNoDataAtActivitiesSection(environment, mode, TabName.InstituitonsTab, 10)) {
-									log(LogStatus.INFO, " Activities Grid Verified For No Records/No Activities Msg", YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Activities Grid Not Verified For No Records/No Activities Msg");
-									log(LogStatus.FAIL, "Activities Grid Not Verified For No Records/No Activities Msg", YesNo.Yes);
-								}
-								
-							} else {
-								sa.assertTrue(false, "Not Able to Click on Related Tab");
-								log(LogStatus.SKIP, "Not Able to Click on Related Tab", YesNo.Yes);
-							}
+						
 			} else {
 				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINDINV2);
 				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINDINV2,YesNo.Yes);
@@ -14904,7 +14610,7 @@ public class OldSmokeTestCases extends BaseLib {
 				log(LogStatus.INFO, "Click on Created Contact : " + SmokeC5_FName + " " + SmokeC5_LName, YesNo.No);
 
 				
-				if (clickUsingJavaScript(driver, cp.getContactTransfer(environment,  10), "Contact Transfer Button")) {
+				if (cp.clickOnShowMoreActionDownArrow("PE", PageName.ContactPage, ShowMoreActionDropDownList.Contact_Transfer, 10)) {
 					log(LogStatus.INFO, "Clicked on Contact Transfer", YesNo.No);	
 					
 					if (cp.verifyContactTransferUIonContactPage(environment, mode, SmokeC5_FName+" "+SmokeC5_LName, SmokeINDINV2, 10)) {
@@ -14964,16 +14670,10 @@ public class OldSmokeTestCases extends BaseLib {
 										}
 									}
 							
-							if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, null)) {
+							if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, RelatedTab.Affiliations.toString())) {
 								log(LogStatus.INFO, "Click on Affiliations", YesNo.Yes);	
 								
-								if (bp.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Affiliations, true)) {
-									log(LogStatus.INFO, "successfully found affiliations related list", YesNo.No);
-								}
-								else {
-									log(LogStatus.ERROR, "could not find affiliations related list", YesNo.Yes);
-									sa.assertTrue(false, "could not find affiliations related list");
-								}
+								
 								if (cp.verifyOpenActivityRelatedList(environment, mode,TabName.ContactTab, Smoke_NewTask1Subject, SmokeINS2, null)) {
 									log(LogStatus.INFO, "Open Activity Grid  Verified For "+Smoke_NewTask1Subject, YesNo.No);	
 								} else {
@@ -14995,9 +14695,7 @@ public class OldSmokeTestCases extends BaseLib {
 									log(LogStatus.FAIL, "Activity History Grid Not Verified For "+Smoke_CallLog1Subject, YesNo.Yes);
 								}
 								
-								if (cp.clickOnViewAllRelatedList(environment, mode,RelatedList.Affiliations)) {
-									log(LogStatus.INFO, "Click on View All Affiliations", YesNo.No);
-									
+								
 									if (cp.verifyAffliationRelatedList(environment, mode,TabName.ContactTab, SmokeINS2)) {
 										log(LogStatus.PASS, "Affialition Grid Verified For "+SmokeINS2, YesNo.Yes);	
 									} else {
@@ -15012,10 +14710,7 @@ public class OldSmokeTestCases extends BaseLib {
 										log(LogStatus.FAIL, "Affialition Grid Not Verified For "+SmokeINDINV2, YesNo.Yes);
 									}
 									
-								} else {
-									sa.assertTrue(false, "Not Able to Click on View All Affiliations");
-									log(LogStatus.SKIP, "Not Able to Click on View All Affiliations", YesNo.Yes);
-								}
+								
 								
 								
 							} else {
@@ -15059,10 +14754,7 @@ public class OldSmokeTestCases extends BaseLib {
 			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS2)) {
 				log(LogStatus.INFO, "Click on Created Inst : " + SmokeINS2, YesNo.No);
 							
-							if (ip.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Activities, null)) {
-								log(LogStatus.INFO, "Click on Activities", YesNo.Yes);	
-								
-								
+							
 								if (ip.verifyOpenActivityRelatedList(environment, mode,TabName.InstituitonsTab, Smoke_NewTask1Subject, SmokeINS2, SmokeC5_FName + " " + SmokeC5_LName)) {
 									log(LogStatus.INFO, "Open Activity Grid  Verified For "+Smoke_NewTask1Subject, YesNo.No);	
 								} else {
@@ -15077,50 +14769,6 @@ public class OldSmokeTestCases extends BaseLib {
 									log(LogStatus.FAIL, "Open Activity  Grid Not Verified For "+Smoke_NewEvent1Subject, YesNo.Yes);
 								}
 								
-								if (ip.verifyNoDataAtActivityHistorySection(environment, mode, TabName.InstituitonsTab, 10)) {
-									log(LogStatus.INFO, "Activity History Grid Verified For No Records/No Past Activity Msg", YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Activity History Grid Not Verified For No Records/No Past Activity Msg");
-									log(LogStatus.FAIL, "Activity History Grid Not Verified For No Records/No Past Activity Msg", YesNo.Yes);
-								}
-								if (bp.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Activities, true)) {
-									log(LogStatus.INFO, "successfully scrolled to activities related list", YesNo.No);
-								}
-								else {
-									log(LogStatus.ERROR, "could not scroll to activities related list",YesNo.Yes);
-									sa.assertTrue(false,  "could not scroll to activities related list");
-								}
-								if (ip.clickOnViewAllRelatedList(environment, mode,RelatedList.Activities)) {
-									log(LogStatus.INFO, "Click on View All Affiliations", YesNo.No);
-									
-									String[][] activitiesRecords ={{Smoke_NewTask1Subject,SmokeC5_FName + " " + SmokeC5_LName,SmokeINS2},
-															{Smoke_NewEvent1Subject,SmokeC5_FName + " " + SmokeC5_LName,SmokeINS2},
-															{Smoke_CallLog1Subject,SmokeC5_FName + " " + SmokeC5_LName,Smoke_Fund1}};
-									
-									for (String[] activityRecord : activitiesRecords) {
-										
-										if (ip.verifyActivitiesRelatedList(environment, mode, TabName.InstituitonsTab, activityRecord[0], activityRecord[1], activityRecord[2])) {
-											log(LogStatus.PASS, "Activities Grid Verified For "+activityRecord[0], YesNo.Yes);	
-										} else {
-											sa.assertTrue(false, "Activities Grid Not Verified For "+activityRecord[0]);
-											log(LogStatus.FAIL, "Activities Grid Not Verified For "+activityRecord[0], YesNo.Yes);
-										}	
-									}
-									
-									
-								} else {
-									sa.assertTrue(false, "Not Able to Click on View All Activities");
-									log(LogStatus.SKIP, "Not Able to Click on View All Activities", YesNo.Yes);
-								}
-								
-								
-							} else {
-								sa.assertTrue(false, "Not Able to Click on Activities");
-								log(LogStatus.SKIP, "Not Able to Click on Activities", YesNo.Yes);
-							}
-
-
-				
 			} else {
 				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINS2);
 				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2,YesNo.Yes);
@@ -15509,7 +15157,7 @@ public class OldSmokeTestCases extends BaseLib {
 				log(LogStatus.INFO, "Click on Created Contact : " + SmokeC6_FName + " " + SmokeC6_LName, YesNo.No);
 
 				
-				if (clickUsingJavaScript(driver, cp.getContactTransfer(environment,  10), "Contact Transfer Button")) {
+				if (cp.clickOnShowMoreActionDownArrow("PE", PageName.ContactPage, ShowMoreActionDropDownList.Contact_Transfer, 10)) {
 					log(LogStatus.INFO, "Clicked on Contact Transfer", YesNo.No);	
 					
 					if (cp.verifyContactTransferUIonContactPage(environment, mode, SmokeC6_FName+" "+SmokeC6_LName, SmokeINS4, 10)) {
@@ -15798,7 +15446,7 @@ public class OldSmokeTestCases extends BaseLib {
 				log(LogStatus.INFO, "Click on Created Contact : " + SmokeC6_FName + " " + SmokeC6_LName, YesNo.No);
 
 				
-				if (clickUsingJavaScript(driver, cp.getContactTransfer(environment,  10), "Contact Transfer Button")) {
+				if (cp.clickOnShowMoreActionDownArrow("PE", PageName.ContactPage, ShowMoreActionDropDownList.Contact_Transfer, 10)) {
 					log(LogStatus.INFO, "Clicked on Contact Transfer", YesNo.No);	
 					
 					if (cp.verifyContactTransferUIonContactPage(environment, mode, SmokeC6_FName+" "+SmokeC6_LName, SmokeINDINV3, 10)) {

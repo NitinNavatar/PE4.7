@@ -142,7 +142,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 //		}
 		return false;
 	}
-	public WebElement getFirstValueFromRelatedList(String environment,String mode, String relatedList) {
+	public WebElement getFirstValueFromRelatedList(String environment,String mode, String relatedList, String fundName) {
 		WebElement ele=null;
 		String xpath = "";
 		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
@@ -150,9 +150,9 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		
 		}else {
 			if (RelatedList.FundDrawdown.toString().equals(relatedList)) {
-				xpath = "//*[text()='DD No']/../../../../following-sibling::tbody//tr//a";
+				xpath = "//a[@title='"+fundName+"']/ancestor::tr//th//a";
 			} else {
-				xpath = "//*[text()='FD No']/../../../../following-sibling::tbody//tr//a";
+				xpath = "//a[@title='"+fundName+"']/ancestor::tr//th//a";
 			}
 			ele=isDisplayed(driver, FindElement(driver, xpath,relatedList+" id", action.SCROLLANDBOOLEAN, 30), "visibility", 30, relatedList+" id");
 		
