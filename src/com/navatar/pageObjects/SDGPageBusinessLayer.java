@@ -547,6 +547,13 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 	}
 
 
+	/**
+	 * @author Sourabh saini
+	 * @param projectName
+	 * @param sdgName
+	 * @return true if able to add Field on SDG
+	 */
+
 	public boolean openSDG(String projectName, String sdgName) {
 		String xpath = "";
 		if (click(driver, getSelectListIcon(60), "List View Button", action.SCROLLANDBOOLEAN)) {
@@ -665,6 +672,14 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 	}
 
 
+	/**
+	 * @author Sourabh saini
+	 * @param projectName
+	 * @param sdgName
+	 * @param apiNameOrOverrideLabelName
+	 * @param sequenceFilterOptionValue
+	 * @return true if able to add Field on SDG
+	 */
 
 
 	public boolean sequenceFilter(String projectName, String sdgName,String apiNameOrOverrideLabelName,String sequenceFilterOptionValue)
@@ -805,6 +820,17 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 
 
 	}
+	
+
+	/**
+	 * @author Sourabh saini
+	 * @param sdgName
+	 * @param filterOptionValue
+	 * @param fieldName
+	 * @param elementName
+	 * @return true if able to add Field on SDG
+	 */
+	
 	public boolean verifyRecordAfterApplyingGlobalFilter(String sdgName,String filterOptionValue, String fieldName,String elementName)
 	{
 		int status=0;
@@ -913,6 +939,15 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		return flag;
 	}
 
+	
+	/**
+	 * @author Sourabh saini
+	 * @param sdgName
+	 * @param recordName
+	 * @param icon
+	 * @return true if able to add Field on SDG
+	 */
+	
 	public boolean verifyEditOrLockedIconOnSDGData(String sdgName,String recordName,IconType icon)
 	{
 		String xPath="";
@@ -977,7 +1012,13 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		return flag;
 	}
 
-
+	/**
+	 * @author Sourabh saini
+	 * @param sdgName
+	 * @param condition
+	 * @return true if able to add Field on SDG
+	 */
+	
 	public boolean CheckedOrUncheckedCheckox(String sdgGridName, Condition condition)
 	{
 		boolean flag=false;
@@ -1028,6 +1069,14 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 
 	}
 
+
+	/**
+	 * @author Sourabh saini
+	 * @param sdgName
+	 * @param condition
+	 * @return true if able to add Field on SDG
+	 */
+	
 	public int CheckedOrUncheckedCheckboxCountOnSDGGrid(String sdgGridName, Condition condition)
 	{
 		String xPath="";
@@ -1074,6 +1123,14 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		return count;
 	}
 
+
+	/**
+	 * @author Sourabh saini
+	 * @param sdgName
+	 * @param recordName
+	 * @return boolean
+	 */
+	
 	public boolean removeRecordAndVerifyErrorMessage(String sdgName,String recordName)
 	{
 		boolean flag=false;
@@ -1155,6 +1212,13 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 
 	}
 
+	/**
+	 * @author Sourabh saini
+	 * @param sdgName
+	 * @param recordName
+	 * @return boolean
+	 */
+	
 	public boolean verifyErrorMessage(String sdgName,String recordName)
 	{
 		boolean flag=false;
@@ -1205,6 +1269,13 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 
 	}
 
+	/**
+	 * @author Sourabh saini
+	 * @param sdgName
+	 * @param recordName
+	 * @param value
+	 * @return boolean
+	 */
 
 	public boolean updateRecordAndVerifyMessage(String sdgName,String recordName,String value)
 	{
@@ -1288,6 +1359,16 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 
 	}
 
+	/**
+	 * @author Sourabh saini
+	 * @param sdgName
+	 * @param firstSDGRowName
+	 * @param recordName
+	 * @param value
+	 * @param inputType
+	 * @param multiPiclistValue
+	 * @return boolean
+	 */
 
 	public boolean updateSDGRecordAndVerifySaveCancelButton(String sdgGridName,String firstSDGRowName,String recordName,String value,String inputType,ArrayList<String> multiPiclistValue)
 	{
@@ -1732,6 +1813,20 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 	}
 
 
+	/**
+	 * @author Sourabh saini
+	 * @param sdgGridName
+	 * @param firstSDGColumnName
+	 * @param legalfieldName
+	 * @param legalfieldValue
+	 * @param websiteFieldName
+	 * @param websiteFieldValue
+	 * @param revenueFieldName
+	 * @param revenueFieldValue
+	 * @return boolean
+	 */
+
+
 	public boolean upadateLegalNameWebsiteRevenueAndVerifyErrorMessageSaveCancelButton(String sdgGridName,String firstSDGColumnName,String legalfieldName,String legalfieldValue,  String websiteFieldName,String websiteFieldValue ,String revenueFieldName,String revenueFieldValue)
 	{
 		String xPath="";
@@ -1962,6 +2057,13 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 	}
 
 
+	/**
+	 * @author Sourabh saini
+	 * @param sdgName
+	 * @param recordName
+	 * @return boolean
+	 */
+	
 	public boolean verifyErrorMessageOnTriangleIcon(String sdgName,String recordName)
 
 	{
@@ -2009,6 +2111,15 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 
 	}
 
+	/**
+	 * @author Sourabh saini
+	 * @param sdgName
+	 * @param firstSDGColumnName
+	 * @param fieldName
+	 * @param fieldValue
+	 * @return boolean
+	 */
+	
 	public boolean clickCancelBtnAndVerifyRecord(String sdgName,String firstSDGColumnName,String fieldName,String fieldValue)
 	{
 		String xPath="";
@@ -2047,6 +2158,19 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		return flag;
 
 	}
+
+	/**
+	 * @author Sourabh saini
+	 * @param sdgGridName
+	 * @param firstSDGColumnName
+	 * @param phoneFieldName
+	 * @param phoneFieldValue
+	 * @param websiteFieldName
+	 * @param websiteFieldValue
+	 * @param revenueFieldName
+	 * @param revenueFieldValue
+	 * @return boolean
+	 */
 
 
 	public boolean upadatePhoneWebsiteRevenueAndVerifyErrorMessageSaveCancelButton(String sdgGridName,String firstSDGColumnName,String phoneFieldName,String phoneFieldValue,  String websiteFieldName,String websiteFieldValue ,String revenueFieldName,String revenueFieldValue)
@@ -2315,6 +2439,20 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		return flag;
 
 	}
+	
+	/**
+	 * @author Sourabh saini
+	 * @param sdgGridName
+	 * @param firstSDGColumnNamerow1
+	 * @param firstSDGColumnNamerow2
+	 * @param phoneFieldName
+	 * @param phoneFieldValue
+	 * @param websiteFieldName
+	 * @param websiteFieldValue
+	 * @param revenueFieldName
+	 * @param revenueFieldValue
+	 * @return boolean
+	 */
 
 	public boolean clickTwoCheckboxupadatePhoneWebsiteRevenueAndVerifyErrorMessageSaveCancelButton(String sdgGridName,String firstSDGColumnNamerow1,String firstSDGColumnNamerow2,String phoneFieldName,String phoneFieldValue,  String websiteFieldName,String websiteFieldValue ,String revenueFieldName,String revenueFieldValue)
 	{
@@ -2996,6 +3134,15 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 
 	}
 
+
+	/**
+	 * @author Sourabh saini
+	 * @param sdgGridName
+	 * @param firstSDGRowName
+	 * @param recordName
+	 * @param value
+	 * @return boolean
+	 */
 
 
 	public boolean VerifyValidationUpdateSDGRecordButValueshouldnotUpdate(String sdgGridName,String firstSDGRowName,String recordName,String value)

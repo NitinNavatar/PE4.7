@@ -29,6 +29,19 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		super(driver);
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	/**
+	 * @author Sourabh Saini
+	 * @param environment
+	 * @param mode
+	 * @param LabelName
+	 * @param tableName
+	 * @param dataProvider
+	 * @param parentWindowID
+	 * @return boolean value
+	 */
+	
 
 	public boolean CreateAppPage(String environment, String mode, String LabelName,String tableName,String dataProvider,String parentWindowID)
 	{
@@ -190,6 +203,15 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 
 
 
+	/**
+	 * @author Sourabh Saini
+	 * @param environment
+	 * @param mode
+	 * @param appPageName
+	 * @param sdgtableName
+	 * @param sdgTableData
+	 * @return ArrayList<String>
+	 */
 
 	public  ArrayList<String> verifySDGDataOnAppPage(String environment, String mode, String appPageName,String sdgtableName,String[][] sdgTableData)
 	{
@@ -300,7 +322,16 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		return verifyData;
 	}
 
-
+	/**
+	 * @author Sourabh Saini
+	 * @param environment
+	 * @param mode
+	 * @param LabelName
+	 * @param tableName
+	 * @param dataProviderName
+	 * @param parentWindowID
+	 * @return boolean
+	 	 */
 	public boolean CreateAppPage(String environment, String mode, String LabelName,ArrayList<String> tableName,ArrayList<String> dataProviderName,String parentWindowID)
 	{
 		String xPath="";
@@ -468,6 +499,12 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 
 	}
 
+	/**
+	 * @author Sourabh Saini
+	 * @param fieldLabel
+	 * @param size
+	 * @return boolean
+	 	 */
 
 	public boolean VerifyDropdownCountandAscendingOrder(ArrayList<String> fieldLabel,ArrayList<Integer> size)
 	{
@@ -640,7 +677,12 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 	}
 
 
-
+	/**
+	 * @author Sourabh Saini
+	 * @param sdgName
+	 * @param pazeSize
+	 * @return boolean
+	 	 */
 
 	public int numberOfRecords(String Title,String pageSize) 
 	{
@@ -675,6 +717,13 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 
 	}
 
+
+	/**
+	 * @author Sourabh Saini
+	 * @param fieldLabel
+	 * @param filterName
+	 * @return boolean
+	 	 */
 	public boolean selectFilter(String fieldLabel,String filterName)
 	{
 		WebElement ele;
@@ -751,6 +800,13 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		}
 
 	}
+	
+	/**
+	 * @author Sourabh Saini
+	 * @param fieldLabel
+	 * @param optionvalue
+	 * @return boolean
+	 	 */
 
 	public ArrayList<String> verifyDropDownOptionValue(String fieldLabel, ArrayList<String> optionvalue)
 	{
