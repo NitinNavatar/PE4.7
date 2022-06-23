@@ -292,6 +292,23 @@ public class SDGPage extends BasePageBusinessLayer {
 
 	}
 
+	public WebElement editSDGCheckBox(String editSDGCheckBoxLabel, int timeOut) {
+
+
+
+		String xpath = "//span[text()='" + editSDGCheckBoxLabel
+		+ "']/parent::label/following-sibling::div//input[@type='checkbox']";
+		try {
+		return FindElement(driver, xpath, "Edit SDG CheckBox Label: " + editSDGCheckBoxLabel,
+		action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+		return FindElement(driver, xpath, "Edit SDG CheckBox Label: " + editSDGCheckBoxLabel,
+		action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+
+
+		}
 
 
 

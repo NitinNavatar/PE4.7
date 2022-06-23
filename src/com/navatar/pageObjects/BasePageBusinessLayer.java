@@ -6136,8 +6136,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					AppListeners.appLog.info("click on label in app launcher" + objectName);
 
 					ThreadSleep(7000);
-
-					String fullXpath = "//div[contains(@class,'page-header')]//span[text()='"+objectName+"']";
+					String fullXpath = "//div[contains(@class,'header')]//*[text()='"+objectName+"']";
 
 					WebElement ele = FindElement(driver, fullXpath, " App Name", action.BOOLEAN, timeOut);
 

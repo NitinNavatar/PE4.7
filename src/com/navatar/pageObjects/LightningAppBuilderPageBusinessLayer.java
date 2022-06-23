@@ -48,13 +48,14 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		boolean flag=false;
 		BasePageBusinessLayer BP=new BasePageBusinessLayer(driver);
 		SoftAssert sa= new SoftAssert();
-
+		CommonLib.ThreadSleep(15000);
 		CommonLib.switchToFrame(driver, 50, getLocator(100));
-		CommonLib.ThreadSleep(2000);
+		CommonLib.ThreadSleep(10000);
 		if (CommonLib.click(driver, getnewButton(80), "New Button", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on the new button", YesNo.No);
+			CommonLib.ThreadSleep(20000);
 			CommonLib.switchToDefaultContent(driver);
-			CommonLib.ThreadSleep(2000);
+			CommonLib.ThreadSleep(10000);
 			if (CommonLib.click(driver, getnextButton(80), "Next Button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on the next button", YesNo.No);
 				if (CommonLib.sendKeys(driver, getlabelName(80), LabelName, "Label Name", action.SCROLLANDBOOLEAN)) {

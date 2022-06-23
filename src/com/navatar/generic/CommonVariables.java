@@ -4149,11 +4149,11 @@ public class CommonVariables {
 
 			//SDG Count
 
-			M9Tc072_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "M9Tc072_verifyMyTeamRecordUser", excelLabel.SDG_Data_Count);
-			M9Tc073_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "M9Tc073_verifyMyTeamRecordAdmin", excelLabel.SDG_Data_Count);
-			M9Tc074_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "M9Tc074_updateTeamBlankAndVerifyMyTeamRecordFilterRecord", excelLabel.SDG_Data_Count);
-			M9Tc075_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "M9Tc075_updateTeamToOriginationForUser1AndVerifyMyTeamRecordFilterRecords", excelLabel.SDG_Data_Count);
-			M9Tc076_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "M9Tc076_updateTeamBlankAndVerifyMyTeamRecordFilterRecord", excelLabel.SDG_Data_Count);
+			M9Tc072_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, "M9Tc072_verifyMyTeamRecordUser", excelLabel.SDG_Data_Count);
+			M9Tc073_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, "M9Tc073_verifyMyTeamRecordAdmin", excelLabel.SDG_Data_Count);
+			M9Tc074_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, "M9Tc074_updateTeamBlankAndVerifyMyTeamRecordFilterRecord", excelLabel.SDG_Data_Count);
+			M9Tc075_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, "M9Tc075_updateTeamToOriginationForUser1AndVerifyMyTeamRecordFilterRecords", excelLabel.SDG_Data_Count);
+			M9Tc076_SDGCount=ExcelUtils.readData(wb,phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, "M9Tc076_updateTeamBlankAndVerifyMyTeamRecordFilterRecord", excelLabel.SDG_Data_Count);
             
 			//SDGName		
 			M9Tc049_AppPageName=ExcelUtils.readData(wb,phase1DataSheetFilePath,"AppPage",excelLabel.Variable_Name, "M9Tc049", excelLabel.AppPage_Name);

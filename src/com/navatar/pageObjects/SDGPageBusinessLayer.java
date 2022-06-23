@@ -3755,5 +3755,71 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 		return notMatchedData;
 
 	}
+	
+	
+	public boolean editCheckBoxOfSDGAfterClickOnOpenSDGRecord(String projectName, String sdgName, Condition condition,
+			String editSDGCheckBoxLabel, int timeOut) {
+		if (click(driver, sdgEditButton(40), "Edit Button", action.BOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on the Edit Button", YesNo.Yes);
+			ThreadSleep(5000);
+			boolean status = isSelected(driver, editSDGCheckBox(editSDGCheckBoxLabel, timeOut), editSDGCheckBoxLabel);
+
+
+
+			if (condition.toString().equals("SelectCheckbox")) {
+				if (status == false) {
+
+
+
+					if (click(driver, editSDGCheckBox(editSDGCheckBoxLabel, timeOut),
+							editSDGCheckBoxLabel + " checkbox", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on the " + editSDGCheckBoxLabel + " checkbox", YesNo.Yes);
+					} else {
+						log(LogStatus.ERROR, "could not click on " + editSDGCheckBoxLabel + " checkbox button",
+								YesNo.Yes);
+						return false;
+					}
+				}
+			} else if (condition.toString().equals("UnSelectCheckbox")) {
+				if (status == true) {
+					if (click(driver, editSDGCheckBox(editSDGCheckBoxLabel, timeOut), editSDGCheckBoxLabel + "checkbox",
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on the " + editSDGCheckBoxLabel + " checkbox", YesNo.Yes);
+					} else {
+						log(LogStatus.ERROR, "could not click on " + editSDGCheckBoxLabel + " checkbox button",
+								YesNo.Yes);
+						return false;
+					}
+				}
+			} else {
+				log(LogStatus.ERROR, "Please pass the correct value on condition. could not click on the checkbox",
+						YesNo.Yes);
+				return false;
+			}
+			if (click(driver, getSaveButton(projectName, 40), "Save Button", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on the save button", YesNo.Yes);
+				if (checkElementVisibility(driver, getconfirmationSaveMessage(projectName, 50),
+						"Save Confirmation Message", 50)) {
+					appLog.info("save confirmation Message is visible so " + editSDGCheckBoxLabel
+							+ " checkbox has been clicked");
+					ThreadSleep(7000);
+					return true;
+				} else {
+					log(LogStatus.ERROR, "save confirmation message is not visible so " + editSDGCheckBoxLabel
+							+ " checkbox is not clicked", YesNo.Yes);
+					return false;
+				}
+			} else {
+				log(LogStatus.ERROR, "could not click on save button", YesNo.Yes);
+				return false;
+			}
+		} else {
+			log(LogStatus.ERROR, "could not click on edit button", YesNo.Yes);
+			return false;
+		}
+
+
+
+	}
 
 }
