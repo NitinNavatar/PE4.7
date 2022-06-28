@@ -1401,6 +1401,8 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 						ele=FindElement(driver, xPath, recordName+" Textbox", action.BOOLEAN, 50);
 						if(sendKeys(driver, ele, value, recordName, action.BOOLEAN))
 						{
+							CommonLib.scrollDownThroughWebelementInCenter(driver, ele, recordName+ "record" );
+							
 							log(LogStatus.INFO,value+ " has been passed in "+recordName,YesNo.No);
 
 							ThreadSleep(3000);
@@ -1492,11 +1494,20 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 								log(LogStatus.INFO,value+" has been selected from the "+recordName+" record list",YesNo.No);
 
 								ThreadSleep(5000);
+								xPath="//a[text()='"+sdgGridName+"']//ancestor::article//td//a[text()='"+firstSDGRowName+"']";
+								ele=FindElement(driver, xPath,"Custom App Page Heading" , action.BOOLEAN, 50);
+								CommonLib.mouseOverOperation(driver, ele);
+								ThreadSleep(1000);
+								xPath="//a[text()='"+sdgGridName+"']/ancestor::article//header";
+								ele=FindElement(driver, xPath,"Custom App Page Heading" , action.BOOLEAN, 50);
+								CommonLib.click(driver, ele, xPath, action.SCROLLANDBOOLEAN);
+								CommonLib.doubleClickUsingAction(driver, ele);
+								ThreadSleep(1500);
 								xPath="//a[text()='"+sdgGridName+"']/ancestor::article//span[text()='Page Size']";
 								ele=FindElement(driver, xPath,sdgGridName+" page Size text" , action.BOOLEAN, 50);
 								if(CommonLib.doubleClickUsingAction(driver, ele)) {
 									log(LogStatus.INFO,"Clicked on the "+sdgGridName+" page size text",YesNo.No);
-									ThreadSleep(5000);
+									ThreadSleep(3000);
 									xPath="//a[text()='"+sdgGridName+"']//ancestor::article//button[text()='Save']";
 									WebElement	saveBtnElement=FindElement(driver, xPath, "Save button of "+sdgGridName, action.BOOLEAN, 50);
 									xPath="//a[text()='"+sdgGridName+"']//ancestor::article//button[text()='Cancel']";
@@ -1857,12 +1868,7 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 						log(LogStatus.INFO,websiteFieldValue+ " has been passed in "+websiteFieldName,YesNo.No);
 
 						ThreadSleep(3000);
-						xPath="//a[text()='"+sdgGridName+"']/ancestor::article//span[text()='Page Size']";
-						ele=FindElement(driver, xPath,"pagesize text of "+sdgGridName , action.BOOLEAN, 50);
-						CommonLib.scrollDownThroughWebelementInCenter(driver, ele, "pagesize text of "+sdgGridName );
-						if(CommonLib.doubleClickUsingAction(driver, ele)) {
-							log(LogStatus.INFO,"Clicked on the "+sdgGridName+" body",YesNo.No);
-
+				
 							xPath="//a[text()='"+sdgGridName+"']//ancestor::article//td//a[text()='"+firstSDGColumnName+"']//ancestor::td//following-sibling::td[@data-Label='"+revenueFieldName+": ']";
 							ele=FindElement(driver, xPath, revenueFieldName+" Record Name", action.BOOLEAN, 50);
 							if(CommonLib.scrollDownThroughWebelementInCenter(driver, ele, "Element"))
@@ -1884,14 +1890,9 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 										if(sendKeys(driver, ele, revenueFieldValue, revenueFieldName, action.BOOLEAN))
 										{
 											log(LogStatus.INFO,revenueFieldValue+ " has been passed in "+revenueFieldName,YesNo.No);
-
-											ThreadSleep(3000);
-											xPath="//a[text()='"+sdgGridName+"']/ancestor::article//span[text()='Page Size']";
-											ele=FindElement(driver, xPath,"pagesize text of "+sdgGridName , action.BOOLEAN, 50);
-											CommonLib.scrollDownThroughWebelementInCenter(driver, ele, "pagesize text of "+sdgGridName );
-											if(CommonLib.doubleClickUsingAction(driver, ele)) {
-												log(LogStatus.INFO,"Clicked on the "+sdgGridName+" body",YesNo.No);
-
+								
+										ThreadSleep(3000);
+						
 												xPath="//a[text()='"+sdgGridName+"']//ancestor::article//td//a[text()='"+firstSDGColumnName+"']";
 												ele=FindElement(driver, xPath, legalfieldName+" Record Name", action.BOOLEAN, 50);
 												if(CommonLib.scrollDownThroughWebelementInCenter(driver, ele, "Element"))
@@ -1914,7 +1915,13 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 															{
 																log(LogStatus.INFO,legalfieldValue+ " has been passed in "+legalfieldName,YesNo.No);
 
+																
 																ThreadSleep(3000);
+																xPath="//a[text()='"+sdgGridName+"']/ancestor::article//header";
+																ele=FindElement(driver, xPath,"Custom App Page Heading" , action.BOOLEAN, 50);
+																CommonLib.click(driver, ele, xPath, action.SCROLLANDBOOLEAN);
+																CommonLib.doubleClickUsingAction(driver, ele);
+																ThreadSleep(1000);
 																xPath="//a[text()='"+sdgGridName+"']/ancestor::article//span[text()='Page Size']";
 																ele=FindElement(driver, xPath,"pagesize text of "+sdgGridName , action.BOOLEAN, 50);
 																CommonLib.scrollDownThroughWebelementInCenter(driver, ele, "pagesize text of "+sdgGridName );
@@ -1998,13 +2005,8 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 													log(LogStatus.ERROR, "Window has been scrolled to "+firstSDGColumnName, YesNo.Yes);
 												}
 
-
 											}
-											else
-											{
-												log(LogStatus.ERROR,"Could not click on the "+sdgGridName+" body",YesNo.No);
-											}
-										}
+										
 										else
 										{
 											log(LogStatus.ERROR, "Could not enter the "+revenueFieldValue+" in the inputbox", YesNo.Yes);
@@ -2027,11 +2029,7 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 								log(LogStatus.ERROR, "Window has been scrolled to "+firstSDGColumnName, YesNo.Yes);
 							}
 						}
-						else
-						{
-							log(LogStatus.ERROR,"Could not click on the "+sdgGridName+" body",YesNo.No);
-						}
-					}
+				
 					else
 					{
 						log(LogStatus.ERROR, "Could not enter the "+websiteFieldName+" in the inputox", YesNo.Yes);
@@ -2203,12 +2201,7 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 						log(LogStatus.INFO,websiteFieldValue+ " has been passed in "+websiteFieldName,YesNo.No);
 
 						ThreadSleep(3000);
-						xPath="//a[text()='"+sdgGridName+"']/ancestor::article//span[text()='Page Size']";
-						ele=FindElement(driver, xPath,"pagesize text of "+sdgGridName , action.BOOLEAN, 50);
-						CommonLib.scrollDownThroughWebelementInCenter(driver, ele, "pagesize text of "+sdgGridName );
-						if(CommonLib.doubleClickUsingAction(driver, ele)) {
-							log(LogStatus.INFO,"Clicked on the "+sdgGridName+" body",YesNo.No);
-
+			
 							xPath="//a[text()='"+sdgGridName+"']//ancestor::article//td//a[text()='"+firstSDGColumnName+"']//ancestor::td//following-sibling::td[@data-Label='"+revenueFieldName+": ']";
 							ele=FindElement(driver, xPath, revenueFieldName+" Record Name", action.BOOLEAN, 50);
 							if(CommonLib.scrollDownThroughWebelementInCenter(driver, ele, "Element"))
@@ -2232,12 +2225,7 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 											log(LogStatus.INFO,revenueFieldValue+ " has been passed in "+revenueFieldName,YesNo.No);
 
 											ThreadSleep(3000);
-											xPath="//a[text()='"+sdgGridName+"']/ancestor::article//span[text()='Page Size']";
-											ele=FindElement(driver, xPath,"pagesize text of "+sdgGridName , action.BOOLEAN, 50);
-											CommonLib.scrollDownThroughWebelementInCenter(driver, ele, "pagesize text of "+sdgGridName );
-											if(CommonLib.doubleClickUsingAction(driver, ele)) {
-												log(LogStatus.INFO,"Clicked on the "+sdgGridName+" body",YesNo.No);
-
+									
 												xPath="//a[text()='"+sdgGridName+"']//ancestor::article//td//a[text()='"+firstSDGColumnName+"']";
 												ele=FindElement(driver, xPath, phoneFieldName+" Record Name", action.BOOLEAN, 50);
 												if(CommonLib.scrollDownThroughWebelementInCenter(driver, ele, "Element"))
@@ -2263,6 +2251,11 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 																log(LogStatus.INFO,phoneFieldValue+ " has been passed in "+phoneFieldName,YesNo.No);
 
 																ThreadSleep(3000);
+																xPath="//a[text()='"+sdgGridName+"']/ancestor::article//header";
+																ele=FindElement(driver, xPath,"Custom App Page Heading" , action.BOOLEAN, 50);
+																CommonLib.click(driver, ele, xPath, action.SCROLLANDBOOLEAN);
+																CommonLib.doubleClickUsingAction(driver, ele);
+																ThreadSleep(1000);
 																xPath="//a[text()='"+sdgGridName+"']/ancestor::article//span[text()='Page Size']";
 																ele=FindElement(driver, xPath,"pagesize text of "+sdgGridName , action.BOOLEAN, 50);
 																CommonLib.scrollDownThroughWebelementInCenter(driver, ele, "pagesize text of "+sdgGridName );
@@ -2348,11 +2341,7 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 
 
 											}
-											else
-											{
-												log(LogStatus.ERROR,"Could not click on the "+sdgGridName+" body",YesNo.No);
-											}
-										}
+										
 										else
 										{
 											log(LogStatus.ERROR, "Could not enter the "+revenueFieldValue+" in the inputbox", YesNo.Yes);
@@ -2375,11 +2364,7 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 								log(LogStatus.ERROR, "Window has been scrolled to "+firstSDGColumnName, YesNo.Yes);
 							}
 						}
-						else
-						{
-							log(LogStatus.ERROR,"Could not click on the "+sdgGridName+" body",YesNo.No);
-						}
-					}
+				
 					else
 					{
 						log(LogStatus.ERROR, "Could not enter the "+websiteFieldValue+" in the inputox", YesNo.Yes);
@@ -3821,5 +3806,84 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 
 
 	}
+	
+	public ArrayList<String> VerifyRecordNotMatchedOnSDG(String sdgName,String firstSDGColumnName,ArrayList<String> fieldName,ArrayList<String> fieldValue)
+	{
+		String xPath="";
+		WebElement ele=null;
+		boolean flag=false;
+		ArrayList<String> valueFromSDG=new ArrayList<String>();
+		ArrayList<String> notMatchedData=new ArrayList<String>();
+
+			CommonLib.ThreadSleep(10000);
+			for(int i=0;i<fieldName.size();i++)
+			{
+				xPath="//a[text()='"+sdgName+"']//ancestor::article//td//a[text()='"+firstSDGColumnName+"']//ancestor::td//following-sibling::td[@data-Label='"+fieldName.get(i)+": ']//span[@class='slds-truncate']";
+				ele=FindElement(driver, xPath, fieldName.get(i)+" Record Name", action.BOOLEAN, 50);
+				CommonLib.scrollDownThroughWebelementInCenter(driver, ele, fieldName.get(i)+" value");
+				String text=CommonLib.getText(driver, ele, fieldName.get(i)+" value", action.BOOLEAN);
+				valueFromSDG.add(text);
+			}
+
+			for(int i=0;i<fieldValue.size();i++)
+			{
+				if(!valueFromSDG.get(i).equals(fieldValue.get(i)))
+				{
+					log(LogStatus.INFO,valueFromSDG.get(i)+" is not matched with the "+fieldValue.get(i),YesNo.No);
+
+				}
+				else
+				{
+					log(LogStatus.ERROR,valueFromSDG.get(i)+" is matched with the "+fieldValue.get(i),YesNo.Yes);
+					notMatchedData.add(valueFromSDG.get(i)+" is matched with the "+fieldValue.get(i));
+				}
+			}
+
+		
+		return notMatchedData;
+
+	}
+	
+	public boolean verifyFilter(String sdgName, String filterLabelName,String filerOptionValue)
+	{
+		boolean flag=false;
+		String xPath="//a[text()='"+sdgName+"']/ancestor::article//button[@title='Toggle Filters.']";
+		WebElement ele=CommonLib.FindElement(driver, xPath, "Filter Icon", action.SCROLLANDBOOLEAN,50);
+		if(CommonLib.click(driver, ele, "Filter Icon", action.BOOLEAN))
+		{
+			List<WebElement> filterLabelsList = getLabelsForFilters(sdgName);
+			List<String> filterLabelsListText = filterLabelsList.stream().map(s -> s.getText()).collect(Collectors.toList())
+					.stream().map(t -> t.trim()).collect(Collectors.toList());
+
+			if (filterLabelsListText.contains(filterLabelName)) {
+				log(LogStatus.INFO, "--------Filter available: " + filterLabelName + " --------", YesNo.No);
+				
+				String text=CommonLib.getText(driver, inputBoxForSDGFilterName(filterLabelName, 20), filterLabelName+" value", action.SCROLLANDBOOLEAN);
+				if(text.equals("filerOptionValue"))
+				{
+					log(LogStatus.INFO, "--------Filter available: " + filterLabelName + " --------", YesNo.No);
+					flag=true;
+				}
+				else
+				{
+					log(LogStatus.ERROR, "--------Filter is not available: " + filterLabelName + " --------", YesNo.Yes);
+				}
+				
+				
+			} else {
+				log(LogStatus.ERROR, "--------Filter Not available: " + filterLabelName + "--------", YesNo.Yes);
+				sa.assertTrue(false, "--------Filter Not available: " +filterLabelName + "--------");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "--------Not able to click on the Filter Icon--------", YesNo.Yes);
+			sa.assertTrue(false, "--------Not able to click on the Filter Icon--------");
+		}
+
+		return flag;
+	
+	}
+	
 
 }

@@ -815,6 +815,8 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		boolean flag= false;
 		String xPath;
 		ArrayList<String> result=new ArrayList<String>();
+		
+		CommonLib.ThreadSleep(5000);
 		try
 		{
 			ele = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[text()='"+fieldLabel+"']/parent::lightning-combobox//button")));
@@ -828,6 +830,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		}
 		if(CommonLib.click(driver, ele,fieldLabel , action.SCROLLANDBOOLEAN))
 		{
+			CommonLib.ThreadSleep(5000);
 			log(LogStatus.INFO, "Clicked on the "+fieldLabel, YesNo.No);
 			xPath="//label[text()='"+fieldLabel+"']/parent::lightning-combobox//span[not(text()='All')]/parent::span/parent::lightning-base-combobox-item";
 			List<WebElement> elements=CommonLib.FindElements(driver, xPath, fieldLabel);
@@ -861,8 +864,6 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 			result.add("Could not click on the Record filter field");					
 
 		}
-
-
 		return result;
 
 

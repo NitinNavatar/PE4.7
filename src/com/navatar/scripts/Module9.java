@@ -12,6 +12,7 @@ import static com.navatar.generic.CommonLib.removeNumbersFromString;
 import static com.navatar.generic.CommonLib.switchOnWindow;
 import static com.navatar.generic.CommonVariables.*;
 
+import java.sql.DriverAction;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -1395,6 +1396,7 @@ public class Module9 extends BaseLib {
 		String appPage = M9Tc050_AppPageName;
 		String tableName = M9Tc050_SDGTableName;
 		String text=crmUser1EmailID;
+		
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
 		String[][] val = {
@@ -1452,8 +1454,9 @@ public class Module9 extends BaseLib {
 			log(LogStatus.ERROR, "Could not opened the App from the App Launcher", YesNo.Yes);
 			sa.assertTrue(false, "Could not opened the App from the App Launcher");
 		}
-		lp.CRMlogout();
+		lp.CRMlogout();	
 		sa.assertAll();
+		
 	}
 
 	@Parameters({ "projectName" })
@@ -1510,6 +1513,7 @@ public class Module9 extends BaseLib {
 				{ M9SDGD_40_AccountIndustry, M9SDGD_40_Totalfirm, M9SDGD_40_Task_as_per_Industries,
 																								M9SDGD_40_Individuals, M9SDGD_40_Fundraising_as_per_Industries } };
 
+		
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
 			if (con.clickOnCreatedContact(projectName, M9_Con1_FName, M9_Con1_LName)) {
@@ -1733,6 +1737,8 @@ public class Module9 extends BaseLib {
 								if (sd.editAllRowOnSDG(projectName, "SDG_GROUPBY_1", Condition.UnSelectCheckbox)) {
 
 									lp.CRMlogout();
+									CommonLib.ThreadSleep(4000);
+									CommonLib.refresh(driver);
 									lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 									if (BP.openAppFromAppLauchner(appPage, 50)) {
 										ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage,
@@ -1783,8 +1789,10 @@ public class Module9 extends BaseLib {
 			sa.assertTrue(false, "Not Able to open the Recycle been tab");
 
 		}
-		lp.CRMlogout();
+		lp.CRMlogout();	
 		sa.assertAll();
+		CommonLib.ThreadSleep(4000);
+		CommonLib.refresh(driver);
 
 	}
 
@@ -1844,6 +1852,7 @@ public class Module9 extends BaseLib {
 				{ M9SDGD_60_AccountIndustry, M9SDGD_60_Totalfirm, M9SDGD_60_Task_as_per_Industries,
 																								M9SDGD_60_Individuals, M9SDGD_60_Fundraising_as_per_Industries } };
 
+    	CommonLib.refresh(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (home.clickOnSetUpLink()) {
 
@@ -1867,6 +1876,8 @@ public class Module9 extends BaseLib {
 						driver.switchTo().window(parentWindowID);
 						CommonLib.refresh(driver);
 						lp.CRMlogout();
+						CommonLib.ThreadSleep(4000);
+						CommonLib.refresh(driver);
 						lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 						if (BP.openAppFromAppLauchner(appPage, 50)) {
 							ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage,
@@ -1904,6 +1915,7 @@ public class Module9 extends BaseLib {
 		}
 
 		lp.CRMlogout();
+		CommonLib.refresh(driver);
 		sa.assertAll();
 
 	}
@@ -1965,7 +1977,7 @@ public class Module9 extends BaseLib {
 
 
 		String value = "BiotechnologyUP";
-
+	
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (home.clickOnSetUpLink()) {
 
@@ -1988,6 +2000,8 @@ public class Module9 extends BaseLib {
 						driver.switchTo().window(parentWindowID);
 						CommonLib.refresh(driver);
 						lp.CRMlogout();
+						CommonLib.ThreadSleep(4000);
+						CommonLib.refresh(driver);
 						lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 						if (BP.openAppFromAppLauchner(appPage, 50)) {
 							ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage,
@@ -2022,6 +2036,8 @@ public class Module9 extends BaseLib {
 			sa.assertTrue(false, "Not Able to open the setup page");
 		}
 		lp.CRMlogout();
+		CommonLib.ThreadSleep(4000);
+		CommonLib.refresh(driver);
 		sa.assertAll();
 
 	}
@@ -2083,7 +2099,7 @@ public class Module9 extends BaseLib {
 																								M9SDGD_80_Individuals, M9SDGD_80_Fundraising_as_per_Industries } };
 
 		String value = "BiotechnologyUP";
-
+	
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (home.clickOnSetUpLink()) {
 			String parentWindowID = switchOnWindow(driver);
@@ -2107,6 +2123,8 @@ public class Module9 extends BaseLib {
 						driver.switchTo().window(parentWindowID);
 						CommonLib.refresh(driver);
 						lp.CRMlogout();
+						CommonLib.ThreadSleep(4000);
+						CommonLib.refresh(driver);
 						lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 						if (BP.openAppFromAppLauchner(appPage, 50)) {
 							ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage,
@@ -3985,7 +4003,7 @@ public class Module9 extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-	
+
 	@Parameters({ "projectName" })
 	@Test
 	public void M9Tc068_AddFilterSequenceForFundAndVerifyRecord(String projectName) {
@@ -4974,6 +4992,7 @@ public class Module9 extends BaseLib {
 				log(LogStatus.PASS, "My Record checkbox has been unselect", YesNo.No);
 				sa.assertTrue(true, "My Record checkbox has been unselect");
 				lp.CRMlogout();
+				ThreadSleep(12000);
 				lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 				if (BP.openAppFromAppLauchner(appPage, 50)) {
 
@@ -5131,7 +5150,7 @@ public class Module9 extends BaseLib {
 
 		lp.CRMlogout();
 
-
+		ThreadSleep(12000);
 
 		lp.CRMLogin(crmUser2EmailID, adminPassword, appName);
 
@@ -5367,6 +5386,7 @@ public class Module9 extends BaseLib {
 				driver.close();
 				driver.switchTo().window(parentWindow);
 				lp.CRMlogout();
+				ThreadSleep(12000);
 				lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
 				if (BP.openAppFromAppLauchner(appPage, 50)) {
@@ -5506,6 +5526,7 @@ public class Module9 extends BaseLib {
 				driver.close();
 				driver.switchTo().window(parentWindow);
 				lp.CRMlogout();
+				ThreadSleep(12000);
 				lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
 				if (BP.openAppFromAppLauchner(appPage, 50)) {
@@ -5579,6 +5600,7 @@ public class Module9 extends BaseLib {
 
 
 				lp.CRMlogout();
+				ThreadSleep(12000);
 				lp.CRMLogin(crmUser2EmailID, adminPassword, appName);
 
 				if (BP.openAppFromAppLauchner(appPage, 50)) {
@@ -5719,6 +5741,7 @@ public class Module9 extends BaseLib {
 				driver.close();
 				driver.switchTo().window(parentWindow);
 				lp.CRMlogout();
+				ThreadSleep(12000);
 				lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
 				if (BP.openAppFromAppLauchner(appPage, 50)) {
@@ -6105,6 +6128,7 @@ public class Module9 extends BaseLib {
 			}
 
 			CommonLib.switchToDefaultContent(driver);
+			ThreadSleep(2000);
 			if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Firm,
 					ObjectFeatureName.FieldAndRelationShip, "Annual Revenue", PermissionType.givePermission,
 					"System Administrator",RecordType.Intermediary)) {
@@ -6120,7 +6144,7 @@ public class Module9 extends BaseLib {
 			}
 
 			CommonLib.switchToDefaultContent(driver);
-
+			ThreadSleep(2000);
 			if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Firm,
 					ObjectFeatureName.FieldAndRelationShip, "Source", PermissionType.givePermission,
 					"System Administrator",RecordType.Institution)) {
@@ -6136,7 +6160,7 @@ public class Module9 extends BaseLib {
 			}
 
 			CommonLib.switchToDefaultContent(driver);
-
+			ThreadSleep(2000);
 			if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Firm,
 					ObjectFeatureName.FieldAndRelationShip, "Source", PermissionType.givePermission,
 					"System Administrator",RecordType.Intermediary)) {
@@ -6152,7 +6176,7 @@ public class Module9 extends BaseLib {
 			}
 
 			CommonLib.switchToDefaultContent(driver);
-
+			ThreadSleep(2000);
 			if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Firm,
 					ObjectFeatureName.FieldAndRelationShip, "Location Preferences", PermissionType.givePermission,
 					"System Administrator",RecordType.Institution)) {
@@ -6168,7 +6192,7 @@ public class Module9 extends BaseLib {
 			}
 
 			CommonLib.switchToDefaultContent(driver);
-
+			ThreadSleep(2000);
 			if (setup.giveAndRemoveObjectPermissionFromObjectManager(object.Firm,
 					ObjectFeatureName.FieldAndRelationShip, "Location Preferences", PermissionType.givePermission,
 					"System Administrator",RecordType.Intermediary)) {
@@ -6182,7 +6206,8 @@ public class Module9 extends BaseLib {
 				sa.assertTrue(false, "Location Preferences field Permission is not given from the Firm Object Manager for Intermediary Record Type");
 
 			}
-
+			CommonLib.switchToDefaultContent(driver);
+			ThreadSleep(2000);
 			driver.close();
 			driver.switchTo().window(parentWindow);
 
@@ -6284,6 +6309,7 @@ public class Module9 extends BaseLib {
 				}
 			}
 
+		
 			if (BP.openAppFromAppLauchner(appPage, 50)) {
 
 				log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
@@ -6871,8 +6897,6 @@ public class Module9 extends BaseLib {
 					log(LogStatus.FAIL, "\"Website\" record is not updated to www.google.com", YesNo.No);
 					sa.assertTrue(false, "\"Website\" record is not updated to www.google.com");
 				}
-
-
 			}
 		}
 
@@ -7227,7 +7251,7 @@ public class Module9 extends BaseLib {
 						value.add("$1,000,000");
 						
 	
-						ArrayList<String> data= SB.clickCancelBtnAndVerifyRecordNotMatched(sdgName,"Account 1 Updated",fieldName,value);
+						ArrayList<String> data= SB.VerifyRecordNotMatchedOnSDG(sdgName,"Account 1 Updated",fieldName,value);
 						if(data.isEmpty())
 						{
 							log(LogStatus.PASS, "Page has been refreash and data is not updated in the Account 1 Updated Field", YesNo.No);
@@ -7295,8 +7319,8 @@ public class Module9 extends BaseLib {
 			}
 			else
 			{
-				log(LogStatus.PASS, "Multiple field is editable on the multiple page", YesNo.No);
-				sa.assertTrue(true, "Multiple field is editable on the multiple page");
+				log(LogStatus.FAIL, "Multiple field is editable on the multiple page", YesNo.No);
+				sa.assertTrue(false, "Multiple field is editable on the multiple page");
 
 			}	
 
@@ -7541,7 +7565,9 @@ public class Module9 extends BaseLib {
 					{
 						log(LogStatus.INFO, "Field Dependency has been created", YesNo.Yes);
 
-					}
+						driver.close();
+					    driver.switchTo().window(parentWindow);		
+					    }
 					else
 					{
 						log(LogStatus.ERROR, "Not able to create the field Dependency", YesNo.Yes);
@@ -7633,7 +7659,7 @@ public class Module9 extends BaseLib {
 			log(LogStatus.INFO,appPage+" has been open from the App launcher",YesNo.No);
 			CommonLib.refresh(driver);
 			CommonLib.ThreadSleep(10000);
-			if(SB.verifyEditOrLockedIconOnSDGData(sdgName,"Status", IconType.Locked))
+			if(SB.verifyEditOrLockedIconOnSDGData(sdgName,M9FC_12_FieldLabel, IconType.Locked))
 			{
 				log(LogStatus.PASS,"Locked icon is visible on status",YesNo.No);
 				sa.assertTrue(true, "Locked icon is visible on status");
@@ -7820,6 +7846,7 @@ public class Module9 extends BaseLib {
 		sa.assertAll();
 	}
 
+
 	@Parameters({ "projectName" })
 	@Test
 	public void M9Tc038_EditTabAndAddFundPrepSDG(String projectName) {
@@ -7874,7 +7901,7 @@ public class Module9 extends BaseLib {
 	    LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 
 	    String tabName = "Home";
-		String sdgName="Account Filter Grid";
+		String sdgName="Fund Prep";
 		int accountFilterRowCount,rowCountAfterFilter;
 		String pageSize="100";
 		String xPath="";
@@ -7884,7 +7911,7 @@ public class Module9 extends BaseLib {
 		if (BP.clickOnTab(projectName, "Home")) {
 			log(LogStatus.INFO,tabName+" has been open",YesNo.No);
 			
-			xPath="//a[text()='Fund Prep']/ancestor::article/preceding-sibling::lightning-icon[@title='Expand']";
+			xPath="//a[text()='"+sdgName+"']/ancestor::article/preceding-sibling::lightning-icon[@title='Expand']";
 			ele= CommonLib.FindElement(driver, xPath, "Fund Prep SDg", action.SCROLLANDBOOLEAN, 20);
 			
 			if(ele!=null)
@@ -7901,12 +7928,12 @@ public class Module9 extends BaseLib {
 				}
 			}
 					
-			if(SB.sdgFilterSendDataAndFound("Fund Prep","Fund Name","Centrient Pharmaceuticals -2018","Equals"))
+			if(SB.sdgFilterSendDataAndFound(sdgName,"Fund Name","Centrient Pharmaceuticals -2018","Equals"))
 			{
 				log(LogStatus.PASS,"Centrient Pharmaceuticals -2018 has been filtered in the Fund Prep",YesNo.No);
 				sa.assertTrue(true, "Centrient Pharmaceuticals -2018 Filter has been filtered in the Fund Prep");
 				CommonLib.ThreadSleep(20000);
-				accountFilterRowCount = AppBuilder.numberOfRecordsWithoutClickOnExpendIcon("Fund Prep", pageSize);
+				accountFilterRowCount = AppBuilder.numberOfRecordsWithoutClickOnExpendIcon(sdgName, pageSize);
 				System.out.println("Sou "+accountFilterRowCount);
 				if(accountFilterRowCount==1)
 				{
@@ -7943,7 +7970,7 @@ public class Module9 extends BaseLib {
 				
 				rowCountAfterFilter = AppBuilder.numberOfRecordsWithoutClickOnExpendIcon(sdgName, pageSize);
 
-				System.out.println("Sou  row count"+rowCountAfterFilter);
+				
 				if(rowCountAfterFilter==1)
 				{
 					log(LogStatus.PASS,"Record has been matched on the basis of the My Record FIlter",YesNo.No);
@@ -7973,12 +8000,30 @@ public class Module9 extends BaseLib {
 		if (BP.clickOnTab(projectName, "Home")) {
 			log(LogStatus.INFO,tabName+" has been open",YesNo.No);
 			CommonLib.refresh(driver);
-			if(SB.sdgFilterSendDataAndFound("Fund Prep","Fund Type","Fund"))
+			if(SB.sdgFilterSendDataAndFound(sdgName,"Fund Type","Fund"))
 			{
 				log(LogStatus.PASS,"Fund type has been filtered in the Fund Prep",YesNo.No);
 				sa.assertTrue(true, "Fund type has been filtered in the Fund Prep");
-				accountFilterRowCount = AppBuilder.numberOfRecords("Fund Prep", pageSize);
-				System.out.println("Sou "+accountFilterRowCount);
+				
+				xPath="//a[text()='"+sdgName+"']/ancestor::article/preceding-sibling::lightning-icon[@title='Expand']";
+				ele= CommonLib.FindElement(driver, xPath, "Fund Prep SDg", action.SCROLLANDBOOLEAN, 20);
+				
+				if(ele!=null)
+				{
+					if(CommonLib.clickUsingJavaScript(driver, ele, "Fund Prep Expend icon"))
+					{
+						log(LogStatus.INFO,"Clicked on the Fund Prep SDG Expend icon",YesNo.No);
+						sa.assertTrue(true, "Clicked on the Fund Prep SDG Expend icon");
+					}
+					else
+					{
+						log(LogStatus.ERROR,"Could not click on the Fund Prep SDG Expend icon",YesNo.No);
+						sa.assertTrue(false, "Could not click on the Fund Prep SDG Expend icon");
+					}
+				}
+				
+				accountFilterRowCount = AppBuilder.numberOfRecords(sdgName, pageSize);
+				
 				if(accountFilterRowCount==1)
 				{
 					log(LogStatus.PASS,"Filter Successfully, count is matched",YesNo.No);
@@ -8008,18 +8053,257 @@ public class Module9 extends BaseLib {
 		sa.assertAll();
 	}
 
-	 
+
+	@Parameters({ "projectName" })
+	@Test
+	public void M9Tc040_ChecktheCheckboxforRememberFilterandverifyimpactonfilter(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	    SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
+	    EditPageBusinessLayer EB = new EditPageBusinessLayer(driver);
+	    LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
+
+	    String tabName = "Home";
+		String sdgName="Fund Prep";
+		String fundName="Centrient Pharmaceuticals -2018";
+		String pageSize="100";
+		String xPath="";
+		WebElement ele=null;
+		int rowCountAfterFilter;
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);	
+		if (BP.openAppFromAppLauchner(60, "Sortable Data Grids")) 
+		{
+			
+			log(LogStatus.INFO,"sortable data grid has been open from the app launcher",YesNo.No);
+			if(SB.openSDG(projectName, sdgName))
+			{
+				log(LogStatus.INFO,sdgName+" has been open from the App Launcher",YesNo.No);
+				CommonLib.refresh(driver);
+				if(SB.editCheckBoxOfSDGAfterClickOnOpenSDGRecord(projectName,sdgName, Condition.SelectCheckbox,
+						"Remember Filter", 50))
+				{
+					log(LogStatus.ERROR,"Remember filter has been selected",YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.INFO,"Remember filter has been selected",YesNo.Yes);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Not able to open the "+sdgName+" SDG",YesNo.Yes);
+				sa.assertTrue(false, "Not able to open the "+sdgName+" SDG");
+			}
+			
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Not able to open the sortable data grid from the app launcher",YesNo.Yes);
+			sa.assertTrue(false, "Not able to open the sortable data grid from the app launcher");
+		}
+		
+		lp.CRMlogout();
+		CommonLib.ThreadSleep(12000);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (BP.clickOnTab(projectName, "Home")) {
+			log(LogStatus.INFO,tabName+" has been open",YesNo.No);
+			
+			xPath="//a[text()='"+sdgName+"']/ancestor::article/preceding-sibling::lightning-icon[@title='Expand']";
+			ele= CommonLib.FindElement(driver, xPath, "Fund Prep SDg", action.SCROLLANDBOOLEAN, 20);
+			
+			if(ele!=null)
+			{
+				if(CommonLib.clickUsingJavaScript(driver, ele, "Fund Prep Expend icon"))
+				{
+					log(LogStatus.INFO,"Clicked on the Fund Prep SDG Expend icon",YesNo.No);
+					sa.assertTrue(true, "Clicked on the Fund Prep SDG Expend icon");
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Could not click on the Fund Prep SDG Expend icon",YesNo.No);
+					sa.assertTrue(false, "Could not click on the Fund Prep SDG Expend icon");
+				}
+			}
+					
+			if(SB.sdgFilterSendDataAndFound(sdgName,"Fund Name",fundName,"Equals"))
+			{ 
+				log(LogStatus.PASS,fundName+" has been filtered in the Fund Prep",YesNo.No);
+				sa.assertTrue(true, fundName+" Filter has been filtered in the Fund Prep");
+				CommonLib.ThreadSleep(20000);	
+				if(!SB.verifyRecordExistOrNotOnSDG(sdgName,"Fund Prep SDG"))
+				{
+					if(SB.verifyRecordAfterApplyingGlobalFilter(sdgName,fundName, "Fund Name","Fund Prep SDG"))
+					{
+						log(LogStatus.PASS, fundName+" filter has been applied", YesNo.No);
+						sa.assertTrue(true, fundName+" filter has been applied");
+						
+						CommonLib.refresh(driver);
+						
+						if(SB.verifyFilter(sdgName,"Fund Name",fundName))
+						{
+							log(LogStatus.PASS, fundName+" filter is available after refresh the page", YesNo.No);
+							sa.assertTrue(true, fundName+" filter is available after refresh the page");
+						
+							
+						}
+						else
+						{
+							log(LogStatus.ERROR, fundName+" filter is not available after refresh the page", YesNo.Yes);
+							sa.assertTrue(false, fundName+" filter is not available after refresh the page");
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, fundName+" filter is not applied", YesNo.Yes);
+						sa.assertTrue(false, fundName+" filter is not applied");
+					}				
+				}
+				else
+				{
+					log(LogStatus.PASS, "Record is not persent against "+fundName+" Filter on Fund But Filter has been applied successfully", YesNo.Yes);
+					sa.assertTrue(true, "Record is not persent against "+fundName+" Filter on Fund But Filter has been applied successfully");
+
+				}
+				
+
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Centrient Pharmaceuticals -2018 is not filtered in the Fund Prep",YesNo.Yes);
+				sa.assertTrue(false, "Centrient Pharmaceuticals -2018 is not filtered in the Fund Prep");
+			}
+			
+			
+			if (BP.clickOnTab(projectName, "Home")) {
+				log(LogStatus.INFO,tabName+" has been open",YesNo.No);
+				CommonLib.refresh(driver);
+				if (AppBuilder.selectFilter("Show", "My Records")) {
+					log(LogStatus.INFO, "Filter has been selected: ", YesNo.No);
+					CommonLib.ThreadSleep(20000);
+					
+					rowCountAfterFilter = AppBuilder.numberOfRecordsWithoutClickOnExpendIcon(sdgName, pageSize);					
+					if(rowCountAfterFilter==1)
+					{
+						log(LogStatus.PASS,"Record has been matched on the basis of the My Record FIlter",YesNo.No);
+						sa.assertTrue(true, "Record has been matched on the basis of the My Record FIlter");
+					}
+					else
+					{
+						log(LogStatus.ERROR,"Record is not matched on the basis of the My Record FIlter",YesNo.Yes);
+						sa.assertTrue(false, "Record is not matched on the basis of the My Record FIlter");
+					}
+
+
+				}
+				else
+				{
+					log(LogStatus.ERROR,"My Record is not filtered from the global filter",YesNo.Yes);
+					sa.assertTrue(false, "My Record is not filtered from the global filter");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Not able to open the "+tabName+"",YesNo.Yes);
+				sa.assertTrue(false, "Not able to open the "+tabName+"");
+			}
+			
+			if (BP.clickOnTab(projectName, "Home")) {
+				rowCountAfterFilter=0;
+				log(LogStatus.INFO,tabName+" has been open",YesNo.No);
+				CommonLib.refresh(driver);
+				if(SB.sdgFilterSendDataAndFound(sdgName,"Fund Type","Fund of Funds"))
+				{
+					log(LogStatus.PASS,"Fund type has been filtered in the Fund Prep",YesNo.No);
+					sa.assertTrue(true, "Fund type has been filtered in the Fund Prep");
+					
+					xPath="//a[text()='"+sdgName+"']/ancestor::article/preceding-sibling::lightning-icon[@title='Expand']";
+					ele= CommonLib.FindElement(driver, xPath, "Fund Prep SDg", action.SCROLLANDBOOLEAN, 20);
+					
+					if(ele!=null)
+					{
+						if(CommonLib.clickUsingJavaScript(driver, ele, "Fund Prep Expend icon"))
+						{
+							log(LogStatus.INFO,"Clicked on the Fund Prep SDG Expend icon",YesNo.No);
+							sa.assertTrue(true, "Clicked on the Fund Prep SDG Expend icon");
+						}
+						else
+						{
+							log(LogStatus.ERROR,"Could not click on the Fund Prep SDG Expend icon",YesNo.No);
+							sa.assertTrue(false, "Could not click on the Fund Prep SDG Expend icon");
+						}
+					}
+					
+					rowCountAfterFilter = AppBuilder.numberOfRecords(sdgName, pageSize);
+					
+					if(rowCountAfterFilter==1)
+					{
+						log(LogStatus.PASS,"Filter Successfully, count is matched",YesNo.No);
+						sa.assertTrue(true, "Filter Successfully and count is matched");
+					}
+					else
+					{
+						log(LogStatus.ERROR,"Filtered not successfully, Count is not matched",YesNo.No);
+						sa.assertTrue(false, "Filtered not successfully,Count is not matched");
+					}
+
+
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Fund type is not filtered in the Fund Prep",YesNo.Yes);
+					sa.assertTrue(false, "Fund type is not filtered in the Fund Prep");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Not able to open the "+tabName+"",YesNo.Yes);
+				sa.assertTrue(false, "Not able to open the "+tabName+"");
+			}
+			lp.CRMlogout();
+			ThreadSleep(12000);				
+			lp.CRMLogin(superAdminUserName, adminPassword, appName);	
+			if (BP.openAppFromAppLauchner(60, "Sortable Data Grids")) 
+			{
+				
+				log(LogStatus.INFO,"sortable data grid has been open from the app launcher",YesNo.No);
+				if(SB.openSDG(projectName, sdgName))
+				{
+					log(LogStatus.INFO,sdgName+" has been open from the App Launcher",YesNo.No);
+					CommonLib.refresh(driver);
+					if(SB.editCheckBoxOfSDGAfterClickOnOpenSDGRecord(projectName,sdgName, Condition.UnSelectCheckbox,
+							"Remember Filter", 50))
+					{
+						log(LogStatus.ERROR,"Remember filter has been selected",YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.INFO,"Remember filter has been selected",YesNo.Yes);
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Not able to open the "+sdgName+" SDG",YesNo.Yes);
+					sa.assertTrue(false, "Not able to open the "+sdgName+" SDG");
+				}
+				
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Not able to open the sortable data grid from the app launcher",YesNo.Yes);
+				sa.assertTrue(false, "Not able to open the sortable data grid from the app launcher");
+			}
+			
+		}
+
+		
+			
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
 

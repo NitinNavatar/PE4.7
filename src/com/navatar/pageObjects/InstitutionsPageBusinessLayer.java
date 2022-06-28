@@ -2152,20 +2152,30 @@ public boolean clickOnCreatedInstitution(String environment,String mode,String i
 		boolean flag=false;
 		String xPath="";
 		WebElement ele=null;
-		xPath="//a[text()='Details']/ancestor::div[@class='slds-tabs_default']//span[text()='"+labelName+"']/parent::div/following-sibling::div";
-		ele =FindElement(driver, xPath, "field Value", action.SCROLLANDBOOLEAN, 50);
 
-		CommonLib.scrollDownThroughWebelementInCenter(driver, ele, labelName);
-		String val=CommonLib.getText(driver, ele, "field Value", action.SCROLLANDBOOLEAN);
+		if (click(driver, getdetailsTab(60), "Detals Tab", action.SCROLLANDBOOLEAN)) {
+			appLog.info("clicked on Details Tab button");
 
-		if(val.trim().toLowerCase().contains(value.toLowerCase()))
-		{
-			log(LogStatus.INFO, value+" has been matched", YesNo.No);
-			flag=true;
+
+			xPath="//a[text()='Details']/ancestor::div[@class='slds-tabs_default']//span[text()='"+labelName+"']/parent::div/following-sibling::div";
+			ele =FindElement(driver, xPath, "field Value", action.SCROLLANDBOOLEAN, 50);
+
+			CommonLib.scrollDownThroughWebelementInCenter(driver, ele, labelName);
+			String val=CommonLib.getText(driver, ele, "field Value", action.SCROLLANDBOOLEAN);
+
+			if(val.trim().toLowerCase().contains(value.toLowerCase()))
+			{
+				log(LogStatus.INFO, value+" has been matched", YesNo.No);
+				flag=true;
+			}
+			else
+			{
+				log(LogStatus.ERROR, value+" is not matched", YesNo.Yes);
+			}
 		}
 		else
 		{
-			log(LogStatus.ERROR, value+" is not matched", YesNo.Yes);
+			log(LogStatus.ERROR, "Could not click on the Details Tab", YesNo.Yes);
 		}
 
 
@@ -2185,22 +2195,30 @@ public boolean clickOnCreatedInstitution(String environment,String mode,String i
 		{
 			for(int i=0; i<labelName.size();i++)
 			{
-				xPath="//a[text()='Details']/ancestor::div[@class='slds-tabs_default']//span[text()='"+labelName.get(i)+"']/parent::div/following-sibling::div";
-				ele =FindElement(driver, xPath, "field Value", action.SCROLLANDBOOLEAN, 50);
+				if (click(driver, getdetailsTab(60), "Detals Tab", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on Details Tab button");
 
-				CommonLib.scrollDownThroughWebelementInCenter(driver, ele, labelName.get(i));
-				String val=CommonLib.getText(driver, ele, "field Value", action.SCROLLANDBOOLEAN);
+					xPath="//a[text()='Details']/ancestor::div[@class='slds-tabs_default']//span[text()='"+labelName.get(i)+"']/parent::div/following-sibling::div";
+					ele =FindElement(driver, xPath, "field Value", action.SCROLLANDBOOLEAN, 50);
 
-				if(val.trim().toLowerCase().contains(value.get(i).toLowerCase()))
-				{
-					log(LogStatus.INFO, value.get(i)+" has been matched", YesNo.No);
+					CommonLib.scrollDownThroughWebelementInCenter(driver, ele, labelName.get(i));
+					String val=CommonLib.getText(driver, ele, "field Value", action.SCROLLANDBOOLEAN);
 
+					if(val.trim().toLowerCase().contains(value.get(i).toLowerCase()))
+					{
+						log(LogStatus.INFO, value.get(i)+" has been matched", YesNo.No);
+
+					}
+					else
+					{
+
+						log(LogStatus.ERROR, value.get(i)+" is not matched", YesNo.Yes);
+						status++;
+					}
 				}
 				else
 				{
-
-					log(LogStatus.ERROR, value.get(i)+" is not matched", YesNo.Yes);
-					status++;
+					log(LogStatus.ERROR, "Could not click on the Details Tab", YesNo.Yes);
 				}
 			}
 			if(status==0)

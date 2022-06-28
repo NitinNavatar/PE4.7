@@ -4165,10 +4165,12 @@ public class SetupPageBusinessLayer extends SetupPage {
 						}
 
 					}
-					
-					if (click(driver, geteditPageSaveButton(50), "save Button", action.SCROLLANDBOOLEAN)) {
+					CommonLib.ThreadSleep(1000);
+					CommonLib.scrollDownThroughWebelementInCenter(driver, geteditPageSaveButton(50), "save Button");
+					CommonLib.ThreadSleep(2000);
+					if (CommonLib.clickUsingJavaScript(driver, geteditPageSaveButton(50),"save Button", action.BOOLEAN)) {
+						CommonLib.ThreadSleep(20000);
 						appLog.info("Clicked on the save button against "+email);
-						CommonLib.ThreadSleep(15000);
 						flag=true;
 						CommonLib.switchToDefaultContent(driver);
 
@@ -4299,8 +4301,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 						if (click(driver, ele, "field label text link", action.BOOLEAN)) {
 							log(LogStatus.INFO, "clicked on field label " + fieldLabel, YesNo.No);
 							switchToFrame(driver, 50, getFieldAndRelationShipFrame(50));
-							ThreadSleep(2000);
-							if (click(driver,
+							ThreadSleep(6000);
+							if (CommonLib.clickUsingJavaScript(driver,
 									getObjectEditOrSetFieldSecurityOrViewFieldAccessbilityBtn(
 											"View Field Accessibility", 50),
 									"view field accessbility button xpath", action.BOOLEAN)) {
@@ -4327,9 +4329,10 @@ public class SetupPageBusinessLayer extends SetupPage {
 												if (click(driver, getpageLayourSecurityVisibleCheckBox(40), "check box",
 														action.BOOLEAN)) {
 													log(LogStatus.INFO, "Clicked on field level security check box", YesNo.No);
-													ThreadSleep(5000);
+													ThreadSleep(4000);
 													if (clickUsingJavaScript(driver, getsaveButtonHeader(50), "save button",action.BOOLEAN)) {
 														log(LogStatus.INFO, "save button", YesNo.No);
+														ThreadSleep(8000);
 														flag=true;
 
 													} else {
@@ -4348,6 +4351,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 											else
 											{
 												log(LogStatus.INFO, "Permission is already given", YesNo.No);
+												ThreadSleep(2000);
 												flag=true;
 											}
 										}
@@ -4362,6 +4366,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 													if (clickUsingJavaScript(driver, getsaveButtonHeader(50), "save button",
 															action.BOOLEAN)) {
 														log(LogStatus.INFO, "save button", YesNo.No);
+														ThreadSleep(8000);
 														flag=true;
 
 													} else {
@@ -4384,6 +4389,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 											else
 											{
 												log(LogStatus.INFO, "Permission is already removed", YesNo.No);
+												ThreadSleep(2000);
 												flag=true;
 											}
 
@@ -4592,7 +4598,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 		}
 
 
-		return false;
+		return flag;
 
 	}
 

@@ -733,5 +733,17 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 
 		return null;
 	}
+	
+	@FindBy(xpath = "//ul[@role='tablist']//a[text()='Details']")
+	private WebElement detailsTab;
+
+	public WebElement getdetailsTab(int timeOut) {
+
+		return isDisplayed(driver, detailsTab, "Visibility", timeOut, "Details Tab");
+
+	}
+	
+	
+	
 
 }
