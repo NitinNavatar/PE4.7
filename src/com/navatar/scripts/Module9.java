@@ -1737,8 +1737,8 @@ public class Module9 extends BaseLib {
 								if (sd.editAllRowOnSDG(projectName, "SDG_GROUPBY_1", Condition.UnSelectCheckbox)) {
 
 									lp.CRMlogout();
-									CommonLib.ThreadSleep(4000);
-									CommonLib.refresh(driver);
+									CommonLib.ThreadSleep(14000);
+									
 									lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 									if (BP.openAppFromAppLauchner(appPage, 50)) {
 										ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage,
@@ -1791,8 +1791,7 @@ public class Module9 extends BaseLib {
 		}
 		lp.CRMlogout();	
 		sa.assertAll();
-		CommonLib.ThreadSleep(4000);
-		CommonLib.refresh(driver);
+		
 
 	}
 
@@ -1876,8 +1875,8 @@ public class Module9 extends BaseLib {
 						driver.switchTo().window(parentWindowID);
 						CommonLib.refresh(driver);
 						lp.CRMlogout();
-						CommonLib.ThreadSleep(4000);
-						CommonLib.refresh(driver);
+						CommonLib.ThreadSleep(14000);
+						
 						lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 						if (BP.openAppFromAppLauchner(appPage, 50)) {
 							ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage,
@@ -1915,7 +1914,7 @@ public class Module9 extends BaseLib {
 		}
 
 		lp.CRMlogout();
-		CommonLib.refresh(driver);
+		
 		sa.assertAll();
 
 	}
@@ -2000,8 +1999,8 @@ public class Module9 extends BaseLib {
 						driver.switchTo().window(parentWindowID);
 						CommonLib.refresh(driver);
 						lp.CRMlogout();
-						CommonLib.ThreadSleep(4000);
-						CommonLib.refresh(driver);
+						CommonLib.ThreadSleep(14000);
+					
 						lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 						if (BP.openAppFromAppLauchner(appPage, 50)) {
 							ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage,
@@ -2036,8 +2035,8 @@ public class Module9 extends BaseLib {
 			sa.assertTrue(false, "Not Able to open the setup page");
 		}
 		lp.CRMlogout();
-		CommonLib.ThreadSleep(4000);
-		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(14000);
+		
 		sa.assertAll();
 
 	}
@@ -2123,8 +2122,8 @@ public class Module9 extends BaseLib {
 						driver.switchTo().window(parentWindowID);
 						CommonLib.refresh(driver);
 						lp.CRMlogout();
-						CommonLib.ThreadSleep(4000);
-						CommonLib.refresh(driver);
+						CommonLib.ThreadSleep(14000);
+					
 						lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 						if (BP.openAppFromAppLauchner(appPage, 50)) {
 							ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage,
@@ -2253,6 +2252,7 @@ public class Module9 extends BaseLib {
 						driver.switchTo().window(parentWindowID);
 						CommonLib.refresh(driver);
 						lp.CRMlogout();
+						ThreadSleep(14000);
 						lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 						if (BP.openAppFromAppLauchner(appPage, 50)) {
 							ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage,
@@ -2372,6 +2372,7 @@ public class Module9 extends BaseLib {
 						driver.switchTo().window(parentWindowID);
 						CommonLib.refresh(driver);
 						lp.CRMlogout();
+						ThreadSleep(14000);
 						lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 						if (BP.openAppFromAppLauchner(appPage, 50)) {
 							ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage,
@@ -2489,6 +2490,7 @@ public class Module9 extends BaseLib {
 							driver.switchTo().window(parentWindowID);
 							CommonLib.refresh(driver);
 							lp.CRMlogout();
+							ThreadSleep(14000);
 							lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 							if (BP.openAppFromAppLauchner(appPage, 50)) {
 								ArrayList<String> Data = AppBuilder.verifySDGDataOnAppPage(projectName, mode, appPage,
@@ -2624,7 +2626,7 @@ public class Module9 extends BaseLib {
 		}
 
 		lp.CRMlogout();
-
+		ThreadSleep(14000);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
 		if (BP.openAppFromAppLauchner(appPage, 50)) {
@@ -3805,6 +3807,7 @@ public class Module9 extends BaseLib {
 						YesNo.No);
 				sa.assertTrue(true, "Sequence Filter has been saved");
 				lp.CRMlogout();
+				ThreadSleep(14000);
 				lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 				if (BP.openAppFromAppLauchner(appPage, 50)) {
 					fundraisingRowCountBeforeFilter = AppBuilder.numberOfRecords(fundraisingSDGName, pageSize);
@@ -4029,6 +4032,7 @@ public class Module9 extends BaseLib {
 				sa.assertTrue(true, "Sequence Filter has been saved");
 
 				lp.CRMlogout();
+				ThreadSleep(14000);
 				lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
 				if (BP.openAppFromAppLauchner(appPage, 50)) {
@@ -4566,6 +4570,7 @@ public class Module9 extends BaseLib {
 		if(status==0)
 		{
 			lp.CRMlogout();
+			ThreadSleep(14000);
 			lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 			if (BP.openAppFromAppLauchner(appPage, 50)) {
 				fundraisingRowCountBeforeFilter = AppBuilder.numberOfRecords(fundraisingSDGName, "100");
@@ -8297,10 +8302,7 @@ public class Module9 extends BaseLib {
 			}
 			
 		}
-
-		
-			
-		
+	
 		lp.CRMlogout();
 		sa.assertAll();
 	}

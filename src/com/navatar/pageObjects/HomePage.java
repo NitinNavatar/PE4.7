@@ -2017,4 +2017,12 @@ public class HomePage extends BasePageBusinessLayer {
 		return isDisplayed(driver, setupComponentIFrame, "Visibility", timeOut, "setupComponentIFrame");
 	}
 	
+	@FindBy(xpath = "//span[@title='PE Cloud']")
+	private WebElement PECloudOnHomePage;
+
+	public WebElement getPECloudOnHomePage(int timeOut) {
+		return isDisplayed(driver, PECloudOnHomePage, "Visibility", timeOut, "PE Cloud");
+	}
+	
+	
 }

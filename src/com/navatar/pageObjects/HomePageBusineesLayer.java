@@ -3246,6 +3246,31 @@ public class HomePageBusineesLayer extends HomePage {
 		return null;
 
 	}
+	
+	public boolean verifyPECloudOnHomePage()
+	{
+		boolean flag=false;
+		if(checkElementVisibility(driver, getPECloudOnHomePage(50), "PE Cloud Text",50))
+		{
+			String text=CommonLib.getText(driver, getPECloudOnHomePage(50), "PE Cloud", action.BOOLEAN);
+			if(text.equals("PE Cloud"))
+			{
+				log(LogStatus.INFO, "PE Cloud has been verified in the home page",YesNo.No);
+				flag=true;
+			}
+			else
+			{
+				log(LogStatus.ERROR, "PE Cloud is not availabel in the home page",YesNo.Yes); 	
+			}
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "PE Cloud is not visible in the home page",YesNo.Yes); 
+		}
+		return flag;
+
+	}
 
 	
 	
