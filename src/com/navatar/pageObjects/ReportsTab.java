@@ -2,6 +2,8 @@ package com.navatar.pageObjects;
 
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.EnumConstants.*;
+
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,6 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.SmokeCommonVariables;
+import com.navatar.generic.EnumConstants.action;
 
 public class ReportsTab extends BasePageBusinessLayer {
 
@@ -523,6 +526,36 @@ public class ReportsTab extends BasePageBusinessLayer {
 
 	public WebElement reportViewerIFrame(int timeOut) {
 		return isDisplayed(driver, reportViewerIFrame, "Visibility", timeOut, "Report Viewer IFrame");
+	}
+	
+	
+	
+	@FindBy(xpath="//ul//li//a[text()='All']")
+	private WebElement allLinkInReportType;
+
+	public WebElement allLinkInReportType(int timeOut) {
+		return isDisplayed(driver, allLinkInReportType, "Visibility", timeOut, "allLinkInReportType");
+	}
+	
+	@FindBy(xpath="//button[text()='Start Report']")
+	private WebElement startReportButton;
+
+	public WebElement startReportButton(int timeOut) {
+		return isDisplayed(driver, startReportButton, "Visibility", timeOut, "startReportButton");
+	}
+	@FindBy(xpath="//label[text()='Relative Date']/parent::div/div/input")
+	private WebElement relativeDateInputBox;
+
+	public WebElement relativeDateInputBox(int timeOut) {
+		return isDisplayed(driver, relativeDateInputBox, "Visibility", timeOut, "relativeDateInputBox");
+	}
+	
+	
+	@FindBy(xpath="//span[text()='Use relative date']/parent::a")
+	private WebElement useRelativeDateLink;
+
+	public WebElement useRelativeDateLink(int timeOut) {
+		return isDisplayed(driver, useRelativeDateLink, "Visibility", timeOut, "useRelativeDateLink");
 	}
 	
 	

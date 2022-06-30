@@ -1910,11 +1910,11 @@ public class HomePage extends BasePageBusinessLayer {
 		return columnData = FindElements(driver, xpath, "Column Data");
 	}
 
-	public List<WebElement> sdgGridColumnsDataList(String Title, int DealsCloumnIndex) {
+	public List<WebElement> sdgGridColumnsDataList(String Title, int CloumnIndex) {
 		// index start from 2 in Deal SDG grid.
 
 		String xpath = "//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='" + Title
-				+ "']/../../../../../following-sibling::div//table/tbody/tr/td[" + DealsCloumnIndex + "]";
+				+ "']/../../../../../following-sibling::div//table/tbody/tr/td[" + CloumnIndex + "]";
 		List<WebElement> ele = FindElements(driver, xpath, "SDG grid " + Title + " column data ");
 
 		return ele;
@@ -1990,21 +1990,369 @@ public class HomePage extends BasePageBusinessLayer {
 					"Visibility", timeOut, "textToSearch");
 		}
 	}
-	
-	
+
 	@FindBy(xpath = "//div[@id='setupComponent']")
 	private WebElement setupComponent;
 
 	public WebElement setupComponent(int timeOut) {
 		return isDisplayed(driver, setupComponent, "Visibility", timeOut, "setupComponent");
 	}
-	
-	
+
 	@FindBy(xpath = "//div[@id='setupComponent']//iframe")
 	private WebElement setupComponentIFrame;
 
 	public WebElement setupComponentIFrame(int timeOut) {
 		return isDisplayed(driver, setupComponentIFrame, "Visibility", timeOut, "setupComponentIFrame");
 	}
+
+	public WebElement gtFilterButton(String SDGName, int timeOut) {
+
+		String xpath = "//a[text()='" + SDGName + "']/ancestor::header//div/button[@title='Toggle Filters.']";
+		return isDisplayed(driver, FindElement(driver, xpath, "Visibility", action.SCROLLANDBOOLEAN, timeOut),
+				"Visibility", timeOut, "Filter Button on SDG: " + SDGName);
+	}
+
+	public List<WebElement> getLabelsForFilters(String SDGName) {
+
+		String xpath = "//article//a[text()='" + SDGName
+				+ "']/ancestor::header/parent::div/following-sibling::div//div[@class=' slds-col slds-size_6-of-12']//div[@class='slds-form-element']//label";
+		return FindElements(driver, xpath, "Labels For Filters");
+
+	}
+
+	public List<WebElement> optionsOfCustomMPicklist() {
+		return FindElements(driver, "//span[text()='Custom Mpick_list']/parent::label/following-sibling::div//option",
+				"optionsOfCustomMPicklist");
+	}
+
+	@FindBy(xpath = "//span[text()='Custom Mpick_list']/parent::label/following-sibling::div//select")
+	private WebElement selectTagCustomMPicklist;
+
+	public WebElement selectTagCustomMPicklist(int timeOut) {
+		return isDisplayed(driver, selectTagCustomMPicklist, "Visibility", timeOut, "selectTagCustomMPicklist");
+	}
+
+	@FindBy(xpath = "//span[text()='Custom Mpick_list']/parent::label/../../following-sibling::div//input")
+	private WebElement inputBoxCustomMPickList;
+
+	public WebElement inputBoxCustomMPickList(int timeOut) {
+		return isDisplayed(driver, inputBoxCustomMPickList, "Visibility", timeOut, "inputBoxCustomMPickList");
+	}
+
+	public List<WebElement> selectedOptionsOfCustomMPicklist() {
+		return FindElements(driver,
+				"//span[text()='Custom Mpick_list']/parent::label/following-sibling::div//option[@selected='selected']",
+				"selectedOptionsOfCustomMPicklist");
+	}
+
+	public List<WebElement> selectedOptionsOfCustomMPicklist(String FilterLabelName) {
+		return FindElements(driver,
+				"//span[text()='" + FilterLabelName
+						+ "']/parent::label/following-sibling::div//option[@selected='selected']",
+				"selectedOptionsOfCustomMPicklist");
+	}
+
+	public WebElement SDGFilterSelectElement(String SDGFilterLabel, int timeOut) {
+
+		String xpath = "//span[text()='" + SDGFilterLabel + "']/parent::label/following-sibling::div//select";
+		try {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + SDGFilterLabel, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "textToSearch");
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + SDGFilterLabel, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "textToSearch");
+		}
+	}
+
+	public WebElement SDGErrorHeader(String sdgName, int timeOut) {
+
+		String xpath = "//a[text()='" + sdgName + "']/ancestor::article//div[@class='slds-card__body']//h2";
+		try {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "SDG Error Header: ", action.SCROLLANDBOOLEAN, timeOut), "Visibility",
+					timeOut, "SDG Error Header: ");
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "SDG Error Header: ", action.SCROLLANDBOOLEAN, timeOut), "Visibility",
+					timeOut, "SDG Error Header: ");
+		}
+	}
+
+	public List<WebElement> sdgGridAllHeadersLabelNameList(String sdgGridName) {
+
+		String xpath = "//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='" + sdgGridName
+				+ "']/../../../../../following-sibling::div//table/thead/tr/th";
+		List<WebElement> ele = FindElements(driver, xpath, "SDG grid header label name " + sdgGridName);
+
+		return ele;
+	}
+
+	public WebElement SDGFilterValueErrorElement(String SDGFilterLabel, int timeOut) {
+
+		String xpath = "//span[text()='" + SDGFilterLabel
+				+ "']/parent::label/../../following-sibling::div//input/following-sibling::div[@class='clsErrorDiv']";
+		try {
+			return isDisplayed(driver, FindElement(driver, xpath, "Error ElementFound for " + SDGFilterLabel,
+					action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "Error ElementFound for");
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, FindElement(driver, xpath, "Error ElementFound for " + SDGFilterLabel,
+					action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "Error ElementFound");
+		}
+	}
+
+	public WebElement sdgBorderElement(String sdgName, int timeOut) {
+
+		String xpath = "//a[text()='" + sdgName + "']/ancestor::div[contains(@class,'sdgborder')]";
+		try {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "sdgBorderElement of SDG: " + sdgName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "sdgBorderElement of SDG: " + sdgName);
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "sdgBorderElement of SDG: " + sdgName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "sdgBorderElement of SDG: " + sdgName);
+		}
+	}
+
+	public WebElement sdgGridElement(String sdgName, int timeOut) {
+
+		String xpath = "//a[text()='" + sdgName + "']/ancestor::article";
+		try {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "sdgGridElement of SDG: " + sdgName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "sdgGridElement of SDG: " + sdgName);
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "sdgGridElement of SDG: " + sdgName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "sdgGridElement of SDG: " + sdgName);
+		}
+
+	}
+
+	public WebElement selectTagOfFilterInSDG(String FilterLabelName, int timeOut) {
+
+		String xpath = "//span[text()='" + FilterLabelName + "']/parent::label/following-sibling::div//select";
+		try {
+			return FindElement(driver, xpath, "SelectTagOfFilterInSDG", action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "SelectTagOfFilterInSDG", action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+
+	public WebElement listButtonOnSDG(String sdgName, String buttonText, int timeOut) {
+
+		String xpath = "//a[text()='" + sdgName + "']/ancestor::header//div//button[text()='" + buttonText + "']";
+		try {
+			return FindElement(driver, xpath, "SelectTagOfFilterInSDG", action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "SelectTagOfFilterInSDG", action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+
+	public List<WebElement> rowButtonsInSDGGrid(String sdgGridName, String ButtonTextInRows) {
+
+		String xpath = "//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='" + sdgGridName
+				+ "']/../../../../../following-sibling::div//table/tbody/tr/td//button[text()='" + ButtonTextInRows
+				+ "']";
+		List<WebElement> ele = FindElements(driver, xpath,
+				"Buttons: " + ButtonTextInRows + " on SDGGrid:  " + sdgGridName);
+
+		return ele;
+	}
+
+	public WebElement rowButtonCorrespondingToSDG(String sdgName, String fundName, String buttonText, int timeOut) {
+
+		String xpath = "//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='" + sdgName
+				+ "']/../../../../../following-sibling::div//table/tbody/tr/td//a[text()='" + fundName
+				+ "']/ancestor::td/following-sibling::td//button[text()='" + buttonText + "']";
+		try {
+			return FindElement(driver, xpath, "rowButtonCorrespondingToSDG", action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "rowButtonCorrespondingToSDG", action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+
+	public WebElement fundNameCorrespondingToSDG(String sdgName, String fundName, int timeOut) {
+
+		String xpath = "//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='" + sdgName
+				+ "']/../../../../../following-sibling::div//table/tbody/tr/td//a[text()='" + fundName + "']";
+		try {
+			return FindElement(driver, xpath, "fundNameCorrespondingToSDG", action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "fundNameCorrespondingToSDG", action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+
+	public List<WebElement> fundNamesCorrespondingToSDG(String sdgName, String fundName) {
+
+		String xpath = "//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='" + sdgName
+				+ "']/../../../../../following-sibling::div//table/tbody/tr/td//a[text()='" + fundName + "']";
+		try {
+			return FindElements(driver, xpath, "fundNamesCorrespondingToSDG, FundName: " + fundName);
+		} catch (StaleElementReferenceException e) {
+			return FindElements(driver, xpath, "fundNamesCorrespondingToSDG, FundName: " + fundName);
+		}
+
+	}
+
+	public WebElement selectTagForSDGFilterName(String filterName, int timeOut) {
+
+		String xpath = "//span[text()='" + filterName + "']/parent::label/following-sibling::div//select";
+		try {
+			return FindElement(driver, xpath, "selectTagForSDGFilterName", action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "selectTagForSDGFilterName", action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+
+	public WebElement inputBoxForSDGFilterName(String filterName, int timeOut) {
+
+		String xpath = "//span[text()='" + filterName + "']/parent::label/../../following-sibling::div//input";
+		try {
+			return FindElement(driver, xpath, "inputBoxForSDGFilterName", action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "inputBoxForSDGFilterName", action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+
+	public WebElement getFilterFirstSDG_Grid(int timeOut, String TitleOfSDG) {
+		String xpath = "//a[text()='" + TitleOfSDG + "']/ancestor::header//div/button[@title='Toggle Filters.']";
+		return isDisplayed(driver, FindElement(driver, xpath, "Filter Button", action.SCROLLANDBOOLEAN, 30),
+				"Visibility", timeOut, "Click on Filter Button of  Fund First SDG Grid");
+	}
+
+	public WebElement getFundFirstSDG_Setup(int timeOut, String TitleOfSDG) {
+		String xpath = "//a[text()='" + TitleOfSDG + "']/ancestor::header//div//button[@title='Open SDG record.']";
+
+		return isDisplayed(driver, FindElement(driver, xpath, "Setup Button", action.SCROLLANDBOOLEAN, 30),
+				"Visibility", timeOut, "Clicked on Setup button of Fund First SDG Grid");
+	}
+
+	public WebElement getFundFirstSDG_ExportWizard(int timeOut) {
+		String xpath = "//button[text()='Export Wizard']";
+
+		return isDisplayed(driver, FindElement(driver, xpath, "Export Wizard Button", action.SCROLLANDBOOLEAN, 30),
+				"Visibility", timeOut, "Clicked on Export Wizard");
+	}
+
+	public WebElement getFundFirstSDG_ExportTextArea(int timeOut) {
+		String xpath = "//textarea[@class='slds-textarea']";
+
+		return isDisplayed(driver, FindElement(driver, xpath, "Text Area", action.SCROLLANDBOOLEAN, 30), "Visibility",
+				timeOut, "Clicked on Select Area");
+	}
+
+	public WebElement getFundFirstSDG_ImportTab(int timeOut) {
+		String xpath = "//a[text()='Import']";
+
+		return isDisplayed(driver, FindElement(driver, xpath, "Import Tab", action.SCROLLANDBOOLEAN, 30), "Visibility",
+				timeOut, "Clicked on Import Tab");
+
+	}
+
+	public WebElement getFundFirstSDG_SelectImportTextArea(int timeOut) {
+		String xpath = "//p[contains(text(),'Paste the text')]/..//div/textarea";
+
+		return isDisplayed(driver, FindElement(driver, xpath, "Import Text Area", action.SCROLLANDBOOLEAN, 30),
+				"Visibility", timeOut, "Clicked on Import TextArea");
+
+	}
+
+	public WebElement getFundFirstSDG_SelectImportButton(int timeOut) {
+		String xpath = "//button[text()='Import']";
+
+		return isDisplayed(driver, FindElement(driver, xpath, "Import Button", action.SCROLLANDBOOLEAN, 30),
+				"Visibility", timeOut, "Clicked on Import Button");
+
+	}
+
+	public WebElement getVerifyClonnedSDG(int timeOut) {
+		String xpath = "//h1//slot/lightning-formatted-text[text()='Clonned SDG']";
+
+		return isDisplayed(driver, FindElement(driver, xpath, "Verify Clonned SDG", action.SCROLLANDBOOLEAN, 30),
+				"Visibility", timeOut, "Verify Clonned SDG");
+
+	}
+
+	public List<WebElement> getFundFirstSDGColumns(String TitleOfSDG, int timeOut) {
+		String xpath = "//h2/span/a[text()='" + TitleOfSDG
+				+ "']/../../../../../following-sibling::div/div/following-sibling::div//tr/th/following-sibling::th//span";
+		List<WebElement> FundFirst = FindElements(driver, xpath, "Fund First SDG Columns");
+		return FundFirst;
+	}
+
+	public WebElement getClonnedSDGRelatedTab(int timeOut) {
+		String xpath = "//ul[@role='tablist']//li[@data-label='Related']//a";
+
+		return isDisplayed(driver, FindElement(driver, xpath, "Related Clonned SDG", action.SCROLLANDBOOLEAN, 30),
+				"Visibility", timeOut, "Related Clonned SDG");
+
+	}
+
+	public WebElement getClonnedSDGViewAllClick(int timeOut) {
+		// String xpath ="//a//div//span[text()='Sortable Data Grid Fields']/..";
+		String xpath = "//a//div//span[text()=\"Sortable Data Grid Fields\"]//ancestor::a";
+
+		return isDisplayed(driver, FindElement(driver, xpath, "View All Click", action.SCROLL, 30), "Visibility",
+				timeOut, "Clonned SDG View All Click");
+
+	}
+
+	public List<WebElement> getClonnedSDGColumns(int timeOut) {
+		String xpath = "//span[@title='Override Label']//ancestor::table//td[3]/span/span";
+		return FindElements(driver, xpath, "Clonned SDG Columns");
+	}
+
+	public WebElement getHomeTab(int timeOut) {
+		String xpath = "//a/span[text()='Home']";
+
+		return isDisplayed(driver, FindElement(driver, xpath, "Home Tab", action.SCROLLANDBOOLEAN, 30), "Visibility",
+				timeOut, "Home Tab");
+
+	}
+
+	public List<WebElement> sdgGridAllHeadersNameList(SDGGridName sdgGridName) {
+
+		String xpath = "//a[text()='" + sdgGridName.toString()
+				+ "']/../../../../../following-sibling::div//table/thead/tr/th";
+		List<WebElement> ele = FindElements(driver, xpath, "SDG grid header label name " + sdgGridName.toString());
+
+		return ele;
+	}
+
+	public List<WebElement> columnDataOfSDG(String Title, int index) {
+		List<WebElement> columnData;
+		String xpath = "//a[text()='" + Title + "']/../../../../../following-sibling::div//table/tbody/tr/td[" + index
+				+ "]";
+		return columnData = FindElements(driver, xpath, "Column Data");
+	}
 	
+	
+	
+	public WebElement columnDataCorrespondToDataOfSDG(String Title, String columnData, String columnDataCorrespondToFirst,int timeOut) {
+
+		String xpath = "//a[text()='" + Title
+				+ "']/../../../../../following-sibling::div//table/tbody/tr//td//a[text()='" + columnData
+				+ "']/ancestor::td/following-sibling::td//a[text()='" + columnDataCorrespondToFirst + "']";
+		try {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + columnDataCorrespondToFirst, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, columnDataCorrespondToFirst);
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + columnDataCorrespondToFirst, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, columnDataCorrespondToFirst);
+		}
+	}
+
+
+
 }

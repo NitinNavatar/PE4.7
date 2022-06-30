@@ -47,7 +47,10 @@ public abstract class HomePageErrorMessage {
 	
 	public static String FieldPopUpToastErrorMessage(String selectFieldName) {
 		return  "'"+selectFieldName+"' field already added.";
+	
 	}
+	
+	public static String customMPicklistErrorMsg ="field 'custom_mpick_list__c' can not be sorted in a query call";
 	
 	
 }

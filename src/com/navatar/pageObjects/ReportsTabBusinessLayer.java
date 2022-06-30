@@ -416,278 +416,325 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 
 				if (switchToFrame(driver, 40, iFrameReportTypeLightning(40))) {
 					appLog.info("Successfully Switched into frame : ");
-					if (sendKeys(driver, ReportTypeSearchBox_Lightning(30), reportType, "search : " + reportType,
-							action.SCROLLANDBOOLEAN)) {
-						appLog.info("Entered value on Search Box : " + reportType);
-						ThreadSleep(3000);
-						WebElement reportTypeEle = FindElement(driver, "//a[text()='" + reportType + "']", reportType,
-								action.SCROLLANDBOOLEAN, 20);
-						if (click(driver, reportTypeEle, "Clicked : " + reportType, action.SCROLLANDBOOLEAN)) {
-							ThreadSleep(2000);
-							appLog.info("Click on Report Type : " + reportType);
-							if (click(driver, continueButton_Lightning(10), "Continue Button",
-									action.SCROLLANDBOOLEAN)) {
+					if (click(driver, allLinkInReportType(60), "All Link in Report Type", action.SCROLLANDBOOLEAN)) {
+						appLog.info("Click on All Link in Report Type");
+						if (sendKeys(driver, ReportTypeSearchBox_Lightning(30), reportType, "search : " + reportType,
+								action.SCROLLANDBOOLEAN)) {
+							appLog.info("Entered value on Search Box : " + reportType);
+							ThreadSleep(3000);
+							WebElement reportTypeEle = FindElement(driver, "//p[text()='" + reportType + "']/parent::a",
+									reportType, action.SCROLLANDBOOLEAN, 20);
+							if (click(driver, reportTypeEle, "Clicked : " + reportType, action.SCROLLANDBOOLEAN)) {
 								ThreadSleep(2000);
-								appLog.info("Click on Continue Button");
-								if (showValue != null) {
-									if (click(driver, getShowIcon_Classic(environment, 10), "Show Icon",
-											action.SCROLLANDBOOLEAN)) {
-										appLog.info("Click on Shown Icon");
-										WebElement showValueEle = FindElement(driver,
-												"//div[text()='" + showValue + "']", "Show value : " + showValue,
-												action.SCROLLANDBOOLEAN, 10);
-										if (click(driver, showValueEle, "Show value : " + showValue,
+								appLog.info("Click on Report Type : " + reportType);
+								if (click(driver, startReportButton(10), "Start Report Button",
+										action.SCROLLANDBOOLEAN)) {
+									ThreadSleep(2000);
+									appLog.info("Click on Start Report Button");
+									if (showValue != null) {
+										if (click(driver, getShowIcon_Classic(environment, 10), "Show Icon",
 												action.SCROLLANDBOOLEAN)) {
-											appLog.info("Selected Shown Value : " + showValue);
-										} else {
-											appLog.error(
-													"Not Able to Select on Value of Show drop down : " + showValue);
-											flag = false;
-										}
-
-									} else {
-										appLog.error("Not Able to Click on Show Value Icon");
-									}
-								}
-
-								if (rangeValue != null) {
-									if (click(driver, getRangeIcon_Classic(environment, 10), "Show Icon",
-											action.SCROLLANDBOOLEAN)) {
-										appLog.info("Click on Range Icon");
-										WebElement rangeValueEle = FindElement(driver,
-												"//div[text()='" + rangeValue + "']", "Range value : " + rangeValue,
-												action.SCROLLANDBOOLEAN, 10);
-										if (click(driver, rangeValueEle, "Show value : " + rangeValue,
-												action.SCROLLANDBOOLEAN)) {
-											appLog.info("Selected Range Value : " + rangeValue);
-										} else {
-											appLog.error(
-													"Not Able to Select on Value of Range drop down : " + rangeValue);
-											flag = false;
-										}
-
-									} else {
-										appLog.error("Not Able to Click on Show Value Icon");
-									}
-								}
-								if (reportField != null) {
-									for (ReportField report : reportField) {
-										flag = false;
-										ThreadSleep(2000);
-										String value = report.toString().replaceAll("_", " ");
-
-										if (FieldsAlreadyAdded(30).getAttribute("innerHTML").contains(value)) {
-											appLog.info(value + " :Field Already there in report");
-											flag = true;
-										} else {
-											flag = false;
-											appLog.info(value + " :Field Not there in report");
-											appLog.info(value + " :So, adding to report");
-
-											if (sendKeys(driver, addColumnSearchBoxLightning(30), value,
-													"search : " + value, action.SCROLLANDBOOLEAN)) {
-												appLog.info("Entered value on Search Box : " + value);
-												WebElement columnToSelect = FindElement(driver,
-														"//span[@title='" + value + "']", "Column to Add : " + value,
-														action.SCROLLANDBOOLEAN, 10);
-												if (columnToSelect != null) {
-
-													if (click(driver, columnToSelect, "Show value : " + value,
-															action.SCROLLANDBOOLEAN)) {
-														appLog.info("Selected Value : " + value);
-
-														if (FieldsAlreadyAdded(30).getAttribute("innerHTML")
-																.contains(value)) {
-															appLog.info("Column Successfully added: " + value);
-															flag = true;
-														} else
-															appLog.error("Column not Successfully added: " + value);
-													} else
-														appLog.error("Column not Clickable: " + value);
-												} else
-													appLog.error("Column not there in drop down: " + value);
+											appLog.info("Click on Shown Icon");
+											WebElement showValueEle = FindElement(driver,
+													"//div[text()='" + showValue + "']", "Show value : " + showValue,
+													action.SCROLLANDBOOLEAN, 10);
+											if (click(driver, showValueEle, "Show value : " + showValue,
+													action.SCROLLANDBOOLEAN)) {
+												appLog.info("Selected Shown Value : " + showValue);
+											} else {
+												appLog.error(
+														"Not Able to Select on Value of Show drop down : " + showValue);
+												sa.assertTrue(false, "Not Able to Select on Value of Show drop down : " + showValue);
+												flag = false;
 											}
+
+										} else {
+											appLog.error("Not Able to Click on Show Value Icon");
+											sa.assertTrue(false, "Not Able to Click on Show Value Icon");
 										}
-
 									}
-								}
-								/*
-								 * else { appLog.info("creating report without contact id"); }
-								 */
-								/*
-								 * if
-								 * (!reportFormatName.toString().equalsIgnoreCase(ReportFormatName.Null.toString
-								 * ())) { if (click(driver, getReportFormatName(20), "report format drop down",
-								 * action.SCROLLANDBOOLEAN)) {
-								 * appLog.info("clicked on report format drop down"); ThreadSleep(500); if
-								 * (click(driver, getreportFormatName(reportFormatName), "report format name ",
-								 * action.SCROLLANDBOOLEAN)) { appLog.info( "clicked on report format name : " +
-								 * reportFormatName.toString()); } else {
-								 * appLog.error("Not able to select report format name " +
-								 * reportFormatName.toString() + " so cannot create report"); return false; } }
-								 * else { appLog.error(
-								 * "Not able to click on report format drop down so cannot create report");
-								 * return false; } }
-								 */
 
-								if (flag) {
-									flag = false;
+									if (rangeValue != null) {
+										if (click(driver, getRangeIcon_Classic(environment, 10), "Show Icon",
+												action.SCROLLANDBOOLEAN)) {
+											appLog.info("Click on Range Icon");
+											WebElement rangeValueEle = FindElement(driver,
+													"//div[text()='" + rangeValue + "']", "Range value : " + rangeValue,
+													action.SCROLLANDBOOLEAN, 10);
+											if (click(driver, rangeValueEle, "Show value : " + rangeValue,
+													action.SCROLLANDBOOLEAN)) {
+												appLog.info("Selected Range Value : " + rangeValue);
+											} else {
+												appLog.error("Not Able to Select on Value of Range drop down : "
+														+ rangeValue);
+												sa.assertTrue(false, "Not Able to Select on Value of Range drop down : "
+														+ rangeValue);
+												flag = false;
+											}
 
-									if (click(driver, getSaveBtn_Classic(environment, 10), "Save Button",
-											action.SCROLLANDBOOLEAN)) {
+										} else {
+											appLog.error("Not Able to Click on Show Value Icon");
+											sa.assertTrue(false, "Not Able to Click on Show Value Icon");
+											
+										}
+									}
+									if (reportField != null) {
+										for (ReportField report : reportField) {
+											flag = false;
+											ThreadSleep(2000);
+											String value = report.toString().replaceAll("_", " ");
 
-										appLog.info("Clicked on Save Button");
-										Thread.sleep(3000);
+											if (FieldsAlreadyAdded(30).getAttribute("innerHTML").contains(value)) {
+												appLog.info(value + " :Field Already there in report");
+												flag = true;
+											} else {
+												flag = false;
+												appLog.info(value + " :Field Not there in report");
+												appLog.info(value + " :So, adding to report");
 
-										if (CommonLib.clearTextBox(reportNameInputBoxLightning(20))) {
+												if (sendKeys(driver, addColumnSearchBoxLightning(30), value,
+														"search : " + value, action.SCROLLANDBOOLEAN)) {
+													appLog.info("Entered value on Search Box : " + value);
+													WebElement columnToSelect = FindElement(driver,
+															"//span[@title='" + value + "']",
+															"Column to Add : " + value, action.SCROLLANDBOOLEAN, 10);
+													if (columnToSelect != null) {
 
-											String s = Keys.chord(Keys.CONTROL, "a");
-											reportNameInputBoxLightning(20).sendKeys(s);
-											// sending DELETE key
-											reportNameInputBoxLightning(20).sendKeys(Keys.DELETE);
-											if (sendKeys(driver, reportNameInputBoxLightning(20), reportName,
-													"Report Name Text Box : " + reportName, action.SCROLLANDBOOLEAN)) {
+														if (click(driver, columnToSelect, "Show value : " + value,
+																action.SCROLLANDBOOLEAN)) {
+															appLog.info("Selected Value : " + value);
 
-												appLog.info("Entered value for Report Name : " + reportName);
+															if (FieldsAlreadyAdded(30).getAttribute("innerHTML")
+																	.contains(value)) {
+																appLog.info("Column Successfully added: " + value);
+																flag = true;
+															} else {
+																appLog.error("Column not Successfully added: " + value);
+																sa.assertTrue(false, "Column not Successfully added: " + value);	
+															}
+														} else {
+															appLog.error("Column not Clickable: " + value);
+														sa.assertTrue(false, "Column not Clickable: " + value);	
+														}
+													} else {
+														appLog.error("Column not there in drop down: " + value);
+														sa.assertTrue(false, "Column not there in drop down: " + value);	
+													}
+												}
+											}
 
-												reportUniqueNameInputBoxLightning(20).sendKeys(s);
+										}
+									}
+									/*
+									 * else { appLog.info("creating report without contact id"); }
+									 */
+									/*
+									 * if
+									 * (!reportFormatName.toString().equalsIgnoreCase(ReportFormatName.Null.toString
+									 * ())) { if (click(driver, getReportFormatName(20), "report format drop down",
+									 * action.SCROLLANDBOOLEAN)) {
+									 * appLog.info("clicked on report format drop down"); ThreadSleep(500); if
+									 * (click(driver, getreportFormatName(reportFormatName), "report format name ",
+									 * action.SCROLLANDBOOLEAN)) { appLog.info( "clicked on report format name : " +
+									 * reportFormatName.toString()); } else {
+									 * appLog.error("Not able to select report format name " +
+									 * reportFormatName.toString() + " so cannot create report"); return false; } }
+									 * else { appLog.error(
+									 * "Not able to click on report format drop down so cannot create report");
+									 * return false; } }
+									 */
+
+									if (flag) {
+										flag = false;
+
+										if (click(driver, getSaveBtn_Classic(environment, 10), "Save Button",
+												action.SCROLLANDBOOLEAN)) {
+
+											appLog.info("Clicked on Save Button");
+											Thread.sleep(3000);
+
+											if (CommonLib.clearTextBox(reportNameInputBoxLightning(20))) {
+
+												String s = Keys.chord(Keys.CONTROL, "a");
+												reportNameInputBoxLightning(20).sendKeys(s);
 												// sending DELETE key
-												reportUniqueNameInputBoxLightning(20).sendKeys(Keys.DELETE);
-												if (CommonLib.clearTextBox(reportUniqueNameInputBoxLightning(20))) {
+												reportNameInputBoxLightning(20).sendKeys(Keys.DELETE);
+												if (sendKeys(driver, reportNameInputBoxLightning(20), reportName,
+														"Report Name Text Box : " + reportName,
+														action.SCROLLANDBOOLEAN)) {
 
-													if (sendKeys(driver, reportDescriptionBoxLightning(10),
-															reportDescription,
-															"Report Description : " + reportDescription,
-															action.SCROLLANDBOOLEAN)) {
+													appLog.info("Entered value for Report Name : " + reportName);
 
-														appLog.info(
-																"Entered value for Report Description : " + reportName);
-														if (click(driver, selectReportFolderButtonLightning(10),
-																"Report Folder Icon", action.SCROLLANDBOOLEAN)) {
+													reportUniqueNameInputBoxLightning(20).sendKeys(s);
+													// sending DELETE key
+													reportUniqueNameInputBoxLightning(20).sendKeys(Keys.DELETE);
+													if (CommonLib.clearTextBox(reportUniqueNameInputBoxLightning(20))) {
 
-															ThreadSleep(3000);
-															appLog.info("Clicked on Report Folder Icon on Save Report");
+														if (sendKeys(driver, reportDescriptionBoxLightning(10),
+																reportDescription,
+																"Report Description : " + reportDescription,
+																action.SCROLLANDBOOLEAN)) {
 
-															CommonLib.switchToDefaultContent(driver);
-															WebElement reportFolderValueEle = FindElement(driver,
-																	"//button[@title='" + folderName + "']",
-																	"Folder value : " + folderName,
-																	action.SCROLLANDBOOLEAN, 10);
+															appLog.info("Entered value for Report Description : "
+																	+ reportName);
+															if (click(driver, selectReportFolderButtonLightning(10),
+																	"Report Folder Icon", action.SCROLLANDBOOLEAN)) {
 
-															if (click(driver, reportFolderValueEle,
-																	"Folder value : " + folderName,
-																	action.SCROLLANDBOOLEAN)) {
-
+																ThreadSleep(3000);
 																appLog.info(
-																		"Selected Report Folder Value : " + folderName);
+																		"Clicked on Report Folder Icon on Save Report");
 
-																if (click(driver, selectReportFolderButtonLightning(20),
-																		"Select Folder Button ",
+																CommonLib.switchToDefaultContent(driver);
+																WebElement reportFolderValueEle = FindElement(driver,
+																		"//button[@title='" + folderName + "']",
+																		"Folder value : " + folderName,
+																		action.SCROLLANDBOOLEAN, 10);
+
+																if (click(driver, reportFolderValueEle,
+																		"Folder value : " + folderName,
 																		action.SCROLLANDBOOLEAN)) {
 
-																	appLog.info("Clicked on Select Folder Button  ");
-																	if (switchToFrame(driver, 30,
-																			iFrameReportTypeLightning(30))) {
+																	appLog.info("Selected Report Folder Value : "
+																			+ folderName);
+
+																	if (click(driver,
+																			selectReportFolderButtonLightning(20),
+																			"Select Folder Button ",
+																			action.SCROLLANDBOOLEAN)) {
+
 																		appLog.info(
-																				"Successfully Switched into frame : ");
-
-																		if (click(driver,
-																				saveButtonInSaveReportPopUpLightning(
-																						20),
-																				"Save Button on Save Report",
-																				action.SCROLLANDBOOLEAN)) {
-
+																				"Clicked on Select Folder Button  ");
+																		if (switchToFrame(driver, 30,
+																				iFrameReportTypeLightning(30))) {
 																			appLog.info(
-																					"Clicked on Save Button on Save Report");
+																					"Successfully Switched into frame : ");
 
-																			WebElement reportNameHeaderEle = FindElement(
-																					driver,
-																					"//h1[contains(text(),'"
-																							+ reportName + "')]",
-																					"Heading : " + reportName,
-																					action.SCROLLANDBOOLEAN, 30);
+																			if (click(driver,
+																					saveButtonInSaveReportPopUpLightning(
+																							20),
+																					"Save Button on Save Report",
+																					action.SCROLLANDBOOLEAN)) {
 
-																			if (reportNameHeaderEle != null) {
 																				appLog.info(
-																						"Report Created and Matched: "
-																								+ reportName);
+																						"Clicked on Save Button on Save Report");
 
-																				flag = true;
+																				WebElement reportNameHeaderEle = FindElement(
+																						driver,
+																						"//h1[contains(text(),'"
+																								+ reportName + "')]",
+																						"Heading : " + reportName,
+																						action.SCROLLANDBOOLEAN, 30);
+
+																				if (reportNameHeaderEle != null) {
+																					appLog.info(
+																							"Report Created and Matched: "
+																									+ reportName);
+
+																					flag = true;
+																				} else {
+																					appLog.error(
+																							"Report Created but not Matched: "
+																									+ reportName);
+																					sa.assertTrue(false, "Report Created but not Matched: "
+																							+ reportName);
+
+																				}
+
 																			} else {
 																				appLog.error(
-																						"Report Created but not Matched: "
-																								+ reportName);
-
+																						"Not Able to click on Save Button on Save Report ");
+																				sa.assertTrue(false, "Not Able to click on Save Button on Save Report ");
 																			}
-
 																		} else {
 																			appLog.error(
-																					"Not Able to click on Save Button on Svae Report ");
+																					"Not Able to Switch to IFrame ");
+																			sa.assertTrue(false, "Not Able to Switch to IFrame ");
+
 																		}
 																	} else {
-																		appLog.error("Not Able to Switch to IFrame ");
-
+																		appLog.error(
+																				"Not Able to Select on 'Select Folder' Button ");
+																		sa.assertTrue(false, "Not Able to Select on 'Select Folder' Button ");
 																	}
+
 																} else {
 																	appLog.error(
-																			"Not Able to Select on 'Select Folder' Button ");
+																			"Not Able to Select on Report Folder Value of Show drop down : "
+																					+ folderName);
+																	sa.assertTrue(false, "Not Able to Select on Report Folder Value of Show drop down : "
+																			+ folderName);
 																}
 
 															} else {
 																appLog.error(
-																		"Not Able to Select on Report Folder Value of Show drop down : "
-																				+ folderName);
+																		"Not Able to click on Report Folder Icon on Save Report ");
+																sa.assertTrue(false, "Not Able to click on Report Folder Icon on Save Report ");
 															}
-
 														} else {
 															appLog.error(
-																	"Not Able to click on Report Folder Icon on Save Report ");
+																	"Not Able to Enter value on Report Description Text Aread :  "
+																			+ reportDescription);
+															sa.assertTrue(false, "Not Able to Enter value on Report Description Text Aread :  "
+																	+ reportDescription);
 														}
 													} else {
 														appLog.error(
-																"Not Able to Enter value on Report Description Text Aread :  "
-																		+ reportDescription);
+																"Not Able to CLear Report Unique Name Text Box   ");
+														sa.assertTrue(false, "Not Able to CLear Report Unique Name Text Box   ");
 													}
+
 												} else {
-													appLog.error("Not Able to CLear Report Unique Name Text Box   ");
+													appLog.error("Not Able to Enter value on Report Name Text Box :  "
+															+ reportName);
+													sa.assertTrue(false, "Not Able to Enter value on Report Name Text Box :  "
+															+ reportName);
 												}
 
 											} else {
-												appLog.error("Not Able to Enter value on Report Name Text Box :  "
-														+ reportName);
+												appLog.error("Not Able to CLear Report Name Text Box   ");
+												sa.assertTrue(false, "Not Able to CLear Report Name Text Box   ");
 											}
-
-										} else {
-											appLog.error("Not Able to CLear Report Name Text Box   ");
 										}
+
+										else {
+											appLog.error("Not Able to click ON Save Btn ");
+											sa.assertTrue(false, "Not Able to click ON Save Btn ");
+										}
+									} else {
+										appLog.error("Not Able to Add Columns to report ");
+									sa.assertTrue(false, "Not Able to Add Columns to report ");
 									}
 
-									else {
-										appLog.error("Not Able to click ON Save Btn ");
-									}
-								} else
-									appLog.error("Not Able to Add Columns to report ");
+								} else {
+									appLog.error("Not Able to Click on Start Report Button");
+									sa.assertTrue(false,"Not Able to Click on Start Report Button");
+								}
 
 							} else {
-								appLog.error("Not Able to Click on Create Button");
+								appLog.error("Not Able to Select Report Type : " + reportType);
+								sa.assertTrue(false, "Not Able to Select Report Type : " + reportType);
 							}
-
 						} else {
-							appLog.error("Not Able to Select Report Type : " + reportType);
+							appLog.error("Not Able to enter value on search box so cannot create Report for Folder");
+							sa.assertTrue(false, "Not Able to enter value on search box so cannot create Report for Folder ");
 						}
 					} else {
-						appLog.error("Not Able to enter value on search box so cannot create Report for Folder");
+						appLog.error("Not Able to Click on All Link in Report Type");
+						sa.assertTrue(false, "Not Able to Click on All Link in Report Type");
 					}
 				} else {
 					appLog.error("Not able to Switched to Frame");
+					sa.assertTrue(false, "Not able to Switched to Frame");
 				}
 
 			} else {
 				appLog.error("Not Able to click on New Report Button so cannot create Report for Folder");
+				sa.assertTrue(false, "Not Able to click on New Report Button so cannot create Report for Folder");
 			}
 
 		} else {
 			appLog.error("Not Able to click on Report Tab so cannot create Report for Folder");
+			sa.assertTrue(false, "Not Able to click on Report Tab so cannot create Report for Folder");
 		}
 
 		CommonLib.switchToDefaultContent(driver);
@@ -734,18 +781,30 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 									appLog.info("Show Me Filter Applied");
 									flag = true;
 
-								} else
+								} else {
 									appLog.error("Not able to Click on Apply Button");
-							} else
+								sa.assertTrue(false, "Not able to Click on Apply Button");
+							}
+							} else {
 								appLog.error("Not able to Click on Show Me Filter Value: " + showDropDownValue);
-						} else
+								sa.assertTrue(false, "Not able to Click on Show Me Filter Value: " + showDropDownValue);
+							}
+						} else {
 							appLog.error("Not able to Click on Show Me Filter Drop Down Button");
-					} else
+							sa.assertTrue(false, "Not able to Click on Show Me Filter Drop Down Button");
+							
+						}
+					} else {
 						appLog.error("Not able to Click on Show Me Filter Button");
+						sa.assertTrue(false, "Not able to Click on Show Me Filter Button");
+					}
 				}
 
 				else
+				{
 					appLog.error("Show Me Filter Value null, So Not Performing action on Show Me Filter");
+					sa.assertTrue(false, "Show Me Filter Value null, So Not Performing action on Show Me Filter");
+				}
 
 				if (dateFieldDropDownValue != null) {
 
@@ -775,18 +834,31 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 									appLog.info("Clicked on Apply Button");
 									appLog.info("Date Filter Applied SUccessfully to :" + dateFieldDropDownValue);
 									flag = true;
-								} else
+								} else {
 									appLog.error("Not able to Click on Apply Button");
-							} else
+									sa.assertTrue(false, "Not able to Click on Apply Button");
+								}
+							} else {
 								appLog.error("Not able to Click on Date Filter Value: " + dateFieldDropDownValue);
-						} else
+								sa.assertTrue(false, "Not able to Click on Date Filter Value: " + dateFieldDropDownValue);
+								
+							}
+						} else {
 							appLog.error("Not able to Click on Date Filter Drop Down Button");
-					} else
+							sa.assertTrue(false, "Not able to Click on Date Filter Drop Down Button");
+							
+						}
+					} else {
 						appLog.error("Not able to Click on Date Filter Button");
+						sa.assertTrue(false, "Not able to Click on Date Filter Button");
+						
+					}
 				}
 
-				else
+				else {
 					appLog.error("Date Filter Value null, So Not Performing action on Filter");
+					sa.assertTrue(false, "Date Filter Value null, So Not Performing action on Filter");	
+				}
 
 				if (rangeDropDownValue != null) {
 
@@ -815,18 +887,32 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 									appLog.info("Clicked on Apply Button");
 									appLog.info("Range Filter Applied SUccessfully to :" + rangeDropDownValue);
 									flag = true;
-								} else
+								} else {
 									appLog.error("Not able to Click on Apply Button");
-							} else
+									sa.assertTrue(false, "Not able to Click on Apply Button");	
+								}
+							} else {
 								appLog.error("Not able to Click on Range Filter Value: " + rangeDropDownValue);
-						} else
+								sa.assertTrue(false, "Not able to Click on Range Filter Value: " + rangeDropDownValue);	
+								
+							}
+						} else {
 							appLog.error("Not able to Click on Range Filter Drop Down Button");
-					} else
+							sa.assertTrue(false, "Not able to Click on Range Filter Drop Down Button");	
+							
+						}
+					} else {
 						appLog.error("Not able to Click on Range Filter Button");
+						sa.assertTrue(false, "Not able to Click on Range Filter Button");	
+						
+					}
 				}
 
-				else
+				else {
 					appLog.error("Range Filter Value null, So Not Performing action on Filter");
+					sa.assertTrue(false, "Range Filter Value null, So Not Performing action on Filter");	
+					
+				}
 
 				if (customFieldDrpDownValue != null) {
 
@@ -838,20 +924,22 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 					for (String customFieldDrpDwnVal : customFieldDrpDownVal) {
 
 						flag = false;
+						CommonLib.ThreadSleep(2000);
 						if (click(driver, adFilterSearchBoxLightning(30), "Add Filter Search Box",
 								action.SCROLLANDBOOLEAN)) {
-
+							CommonLib.ThreadSleep(2000);
 							appLog.info("Clicked on Add Filter Search Box");
 
 							WebElement cusomFilterValueEle = FindElement(driver,
 									"//div[@id='report-main']/div/following::span//span[@title='" + customFieldDrpDwnVal
 											+ "']",
 									"Range Filter value : " + customFieldDrpDwnVal, action.SCROLLANDBOOLEAN, 15);
-
+							CommonLib.ThreadSleep(2000);
 							if (click(driver, cusomFilterValueEle, "Custom Field Filter Drop Down Value",
 									action.SCROLLANDBOOLEAN)) {
 
 								appLog.info("Custom Field Filter Drop Down Value: " + customFieldDrpDwnVal);
+								CommonLib.ThreadSleep(2000);
 								if (click(driver, operatorDropDownLinkLightning(20), "Operator Drop Down Link ",
 										action.SCROLLANDBOOLEAN)) {
 
@@ -864,7 +952,7 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 
 											"Range Filter value : " + operatorDrpDownVal[j], action.SCROLLANDBOOLEAN,
 											10);
-
+									CommonLib.ThreadSleep(2000);
 									if (click(driver, operatorFilterValueEle,
 											"Operator Filter value : " + operatorDrpDownVal[j],
 											action.SCROLLANDBOOLEAN)) {
@@ -876,8 +964,8 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 
 										{
 											WebElement customFilterValueEle = FindElement(driver,
-													"//span[text()=\"" + fieldFilterVal[j]
-															+ "\"]/parent::span/ancestor::a",
+													"//button//div[@class=\"option-label\"][text()=\""
+															+ fieldFilterVal[j] + "\"]/ancestor::button",
 
 													"Field Filter Value Selection : " + fieldFilterVal[j],
 													action.SCROLLANDBOOLEAN, 10);
@@ -895,12 +983,56 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 															+ " Applied SUccessfully to :" + fieldFilterVal[j]
 															+ " with Operator: " + operatorDrpDownVal[j]);
 													flag = true;
-												} else
+												} else {
 													appLog.error("Not able to Click on Apply Button");
-											} else
+													sa.assertTrue(false, "Not able to Click on Apply Button");
+													
+												}
+											} else {
 												appLog.error(
 														"Not able to Enter Custom Filter Value " + fieldFilterVal[j]);
+												sa.assertTrue(false, "Not able to Enter Custom Filter Value " + fieldFilterVal[j]);
+												
+											}
 
+										}
+										
+										else if(customFieldDrpDwnVal.equals("Target Close Date")) {
+
+											if (click(driver, useRelativeDateLink(30), "Use relative Date Link ",
+													action.SCROLLANDBOOLEAN)) {
+
+												appLog.info("Clicked on Use Relative Date Link");
+											
+											if (sendKeys(driver, relativeDateInputBox(30),
+													fieldFilterVal[j], "Field Filter Value Input Box",
+													action.SCROLLANDBOOLEAN)) {
+
+												appLog.info("Pass the Custom Filter value in text box : "
+														+ fieldFilterVal[j]);
+												if (click(driver, applyButtonLightning(30), "Apply Button ",
+														action.SCROLLANDBOOLEAN)) {
+
+													appLog.info("Clicked on Apply Button");
+													appLog.info("Custom Filter " + customFieldDrpDwnVal
+															+ " Applied SUccessfully to :" + fieldFilterVal[j]
+															+ " with Operator: " + operatorDrpDownVal[j]);
+													flag = true;
+												} else {
+													appLog.error("Not able to Click on Apply Button");
+													sa.assertTrue(false, "Not able to Click on Apply Button");
+												}
+											} else {
+												appLog.error(
+														"Not able to Enter Custom Filter Value " + fieldFilterVal[j]);
+												sa.assertTrue(false, "Not able to Enter Custom Filter Value " + fieldFilterVal[j]);
+											}
+											} else {
+												appLog.error("Not able to Click on Use Relative Date Link");
+												sa.assertTrue(false, "Not able to Click on Use Relative Date Link");
+												
+											}
+											
 										}
 
 										else {
@@ -919,46 +1051,76 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 															+ " Applied SUccessfully to :" + fieldFilterVal[j]
 															+ " with Operator: " + operatorDrpDownVal[j]);
 													flag = true;
-												} else
+												} else {
 													appLog.error("Not able to Click on Apply Button");
-											} else
+													sa.assertTrue(false, "Not able to Click on Apply Button");
+													
+												}
+											} else {
 												appLog.error(
 														"Not able to Enter Custom Filter Value " + fieldFilterVal[j]);
+												sa.assertTrue(false, "Not able to Enter Custom Filter Value " + fieldFilterVal[j]);
+												
+											}
 
 										}
 
-									} else
+									} else {
 										appLog.error(
 												"Not Able to Select Operator Filter value : " + operatorDrpDownVal[j]);
-								} else
+										sa.assertTrue(false, "Not Able to Select Operator Filter value : " + operatorDrpDownVal[j]);
+										
+									}
+								} else {
 									appLog.error("Not Able to CLick on Operator Filter DropDown Button : ");
-							} else
+									sa.assertTrue(false, "Not Able to CLick on Operator Filter DropDown Button : ");
+									
+								}
+							} else {
 								appLog.error("Not able to click on Custom Field Filter Drop Down Value: "
 										+ customFieldDrpDwnVal);
-						} else
+								sa.assertTrue(false, "Not able to click on Custom Field Filter Drop Down Value: "
+										+ customFieldDrpDwnVal);
+								
+							}
+						} else {
 							appLog.error("Not able to Click on Add Filter Search Box");
+							sa.assertTrue(false, "Not able to Click on Add Filter Search Box");
+							
+						}
 						j++;
 					}
 				}
 
-				else
+				else {
 					appLog.error("Custom Field Filter Value null, So Not Performing action on Filter");
-
+					sa.assertTrue(false, "Custom Field Filter Value null, So Not Performing action on Filter");
+					
+				}
 			}
 
-			else
+			else {
 				appLog.error("Not able to Click on Filter Button");
+				sa.assertTrue(false, "Not able to Click on Filter Button");
+				
+			}
 		}
 
-		else
+		else {
 			appLog.error("Not able to Switch to Iframe");
+			sa.assertTrue(false,"Not able to Switch to Iframe");
+			
+		}
 
 		if (flag) {
 			if (click(driver, getSaveBtn_Classic("", 20), "Save Button ", action.SCROLLANDBOOLEAN))
 
 				appLog.info("Clicked on Save Button");
-			else
+			else {
 				appLog.error("Not able to Click on Save Button");
+				sa.assertTrue(false, "Not able to Click on Save Button");
+				
+			}
 		}
 
 		CommonLib.switchToDefaultContent(driver);
@@ -1055,7 +1217,6 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 
 	}
 
-	
 	/**
 	 * @author Ankur Huria
 	 * @param reportName

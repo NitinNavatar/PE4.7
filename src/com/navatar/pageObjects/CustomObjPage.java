@@ -35,4 +35,6 @@ public class CustomObjPage extends BasePageBusinessLayer{
 		return isDisplayed(driver, FindElement(driver, xpath, "record name", action.SCROLLANDBOOLEAN,30), "Visibility", timeOut, "record Name in View Mode Lighting");
 		
 	}
+	
+	
 }

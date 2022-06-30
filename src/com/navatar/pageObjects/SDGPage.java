@@ -1,5 +1,6 @@
 package com.navatar.pageObjects;
 
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -92,8 +93,8 @@ public class SDGPage extends BasePageBusinessLayer {
 		WebElement ele;
 		String xpath = "//span[text()='" + SDGCreationLabel
 				+ "']/parent::div/following-sibling::div//lightning-formatted-text";
-		return ele = FindElement(driver, xpath, "SDGLabelValue Element, Label: " + SDGCreationLabel, action.SCROLLANDBOOLEAN,
-				timeOut);
+		return ele = FindElement(driver, xpath, "SDGLabelValue Element, Label: " + SDGCreationLabel,
+				action.SCROLLANDBOOLEAN, timeOut);
 
 	}
 
@@ -131,7 +132,6 @@ public class SDGPage extends BasePageBusinessLayer {
 	public WebElement getsdgSearchbox(String projectName, int timeOut) {
 		return isDisplayed(driver, sdgSearchbox, "Visibility", timeOut, "SDG Searchbox");
 	}
-	
 
 	@FindBy(xpath = "//a[@id='relatedListsTab__item']")
 	private WebElement relatedTabOnSDG;
@@ -139,67 +139,151 @@ public class SDGPage extends BasePageBusinessLayer {
 	public WebElement getrelatedTabOnSDG(int timeOut) {
 		return isDisplayed(driver, relatedTabOnSDG, "Visibility", timeOut, "Related tab on SDG");
 	}
-	
+
 	@FindBy(xpath = "//tr[@class='slds-hint-parent']/th[@tabindex='0']//span[@id='window']")
 	private WebElement nameFieldButton;
 
 	public WebElement getnameFieldButton(int timeOut) {
 		return isDisplayed(driver, nameFieldButton, "Visibility", timeOut, "Name Field Button");
 	}
-	
+
 	@FindBy(xpath = "//label[text()='Filter Sequence']/parent::lightning-combobox//button")
 	private WebElement filterSequenceButton;
 
 	public WebElement getfilterSequenceButton(int timeOut) {
 		return isDisplayed(driver, filterSequenceButton, "Visibility", timeOut, "Filter Sequence Button");
 	}
-	
+
 	@FindBy(xpath = "//label[text()='Filter Sequence']/parent::lightning-combobox//lightning-base-combobox-item//span[@class='slds-truncate']")
 	private List<WebElement> filterSequenceDropdownList;
 
 	public List<WebElement> getfilterSequenceDropdownList() {
 		return filterSequenceDropdownList;
 	}
-	
+
 	@FindBy(xpath = "//span[contains(@class,'toastMessage')]")
 	private WebElement sdgSaveConfirmationMsg;
 
 	public WebElement getsdgSaveConfirmationMsg(int timeOut) {
 		return isDisplayed(driver, sdgSaveConfirmationMsg, "Visibility", timeOut, "SDG save button");
 	}
-	
+
 	@FindBy(xpath = "//button[text()='Save']")
 	private WebElement sdgSaveBtn;
 
 	public WebElement getsdgSaveBtn(int timeOut) {
 		return isDisplayed(driver, sdgSaveBtn, "Visibility", timeOut, "SDG save button");
 	}
-	
-	
-	
-	
+
 	@FindBy(xpath = "//tbody//lst-formatted-text[text()='Name']/ancestor::td/following-sibling::td//button")
 	private WebElement nameEroBtn;
 
 	public WebElement getnameEroBtn(int timeOut) {
 		return isDisplayed(driver, nameEroBtn, "Visibility", timeOut, "Name ero button");
 	}
-	
+
 	@FindBy(xpath = "//a[@title='Edit']")
 	private WebElement sdgPageEditButton;
 
 	public WebElement getsdgPageEditButton(int timeOut) {
 		return isDisplayed(driver, sdgPageEditButton, "Visibility", timeOut, "Edit button");
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	public WebElement editSDGCheckBox(String editSDGCheckBoxLabel, int timeOut) {
+
+		String xpath = "//span[text()='" + editSDGCheckBoxLabel
+				+ "']/parent::label/following-sibling::div//input[@type='checkbox']";
+		try {
+			return FindElement(driver, xpath, "Edit SDG CheckBox Label: " + editSDGCheckBoxLabel,
+					action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Edit SDG CheckBox Label: " + editSDGCheckBoxLabel,
+					action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+
+	@FindBy(xpath = "//span[contains(@title,'Actions')]/ancestor::article//button[text()='New']")
+	private WebElement actionsNewButton;
+
+	public WebElement actionsNewButton(String projectName, int timeOut) {
+		return isDisplayed(driver, actionsNewButton, "Visibility", timeOut, "actionsNewButton");
+	}
+
+	public WebElement sdgActionAndFieldDropDownValue(String label, String value, int timeOut) {
+
+		String xpath = "//*[text()='" + label
+				+ "']/following-sibling::div//button/parent::div/following-sibling::div//lightning-base-combobox-item//span[text()='"
+				+ value + "']";
+		try {
+			return FindElement(driver, xpath, "SDG Action/Field Dropdown value: " + value, action.SCROLLANDBOOLEAN,
+					timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "SDG Action/Field Dropdown value: " + value, action.SCROLLANDBOOLEAN,
+					timeOut);
+		}
+
+	}
+
+	public WebElement sdgActionAndFieldDropDownButton(String label, int timeOut) {
+
+		String xpath = "//*[text()='" + label + "']/following-sibling::div//button";
+		try {
+			return FindElement(driver, xpath, "SDG Action/Field Dropdown Label: " + label, action.SCROLLANDBOOLEAN,
+					timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "SDG Action/Field Dropdown Label: " + label, action.SCROLLANDBOOLEAN,
+					timeOut);
+		}
+
+	}
+
+	public WebElement sdgActionAndFieldTextArea(String label, int timeOut) {
+
+		String xpath = "//*[text()='" + label + "']/following-sibling::div/textarea";
+		try {
+			return FindElement(driver, xpath, "SDG Action/Field TextArea Label: " + label, action.SCROLLANDBOOLEAN,
+					timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "SDG Action/Field TextArea Label: " + label, action.SCROLLANDBOOLEAN,
+					timeOut);
+		}
+
+	}
+
+	@FindBy(xpath = "//select[@name='fieldSelect']")
+	private WebElement sdgFieldSelectElement;
+
+	public WebElement sdgFieldSelectElement(int timeOut) {
+		return isDisplayed(driver, sdgFieldSelectElement, "Visibility", timeOut, "sdgFieldSelectElement");
+	}
+
+	public WebElement selectTagForSDGFilterName(String filterName, int timeOut) {
+		String xpath = "//span[text()='" + filterName + "']/parent::label/following-sibling::div//select";
+		try {
+			return FindElement(driver, xpath, "selectTagForSDGFilterName", action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "selectTagForSDGFilterName", action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+
+	public List<WebElement> getLabelsForFilters(String SDGName) {
+
+		String xpath = "//article//a[text()='" + SDGName
+				+ "']/ancestor::header/parent::div/following-sibling::div//div[@class=' slds-col slds-size_6-of-12']//div[@class='slds-form-element']//label";
+		return FindElements(driver, xpath, "Labels For Filters");
+
+	}
+
+	public WebElement inputBoxForSDGFilterName(String filterName, int timeOut) {
+		String xpath = "//span[text()='" + filterName + "']/parent::label/../../following-sibling::div//input";
+		try {
+			return FindElement(driver, xpath, "inputBoxForSDGFilterName", action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "inputBoxForSDGFilterName", action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
 
 }

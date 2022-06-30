@@ -594,7 +594,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 				WebElement TooltipElement = FindElement(driver,
 						"//a[text()='" + Title + "']/ancestor::article/preceding-sibling::lightning-icon", "Tooltip",
 						action.SCROLLANDBOOLEAN, 20);
-				if (click(driver, TooltipElement, "Collapse/Expand Element", action.SCROLLANDBOOLEAN)) {
+				if (CommonLib.clickUsingJavaScript(driver, TooltipElement, "Collapse/Expand Element", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on Collapse/Expand");
 					flag=true;
 				}
@@ -628,6 +628,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 				"//a[text()='" + Title
 				+ "']/ancestor::article//span[text()='Page Size']/../parent::div//select",
 				"Page Size Select ", action.SCROLLANDBOOLEAN, 10);
+		if(pageSizeSelect !=null) {
 		if (CommonLib.selectVisibleTextFromDropDown(driver, pageSizeSelect, "Page Size Select", pageSize)) {
 			log(LogStatus.INFO, "Selected the Page Size", YesNo.No);
 			CommonLib.ThreadSleep(25000);
@@ -636,6 +637,13 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		else {
 			log(LogStatus.ERROR, "Not Able To Select Page Size ", YesNo.No);
 			return flag;
+
+		}
+		}
+		else {
+			log(LogStatus.ERROR, "Not Able To Select Page Size As Element not Found", YesNo.No);
+			flag=true;
+			
 
 		}
 
@@ -654,7 +662,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 			if(pageSizeSelect(Title, pageSize))
 			{
 				log(LogStatus.INFO, "Page size "+pageSize+" has been selected", YesNo.No);	   
-				CommonLib.ThreadSleep(5000);
+				CommonLib.ThreadSleep(30000);
 				List<WebElement> records = FindElements(driver,
 						"//a[text()='" + Title + "']/ancestor::article//tbody/tr", "Records");
 				System.out.println("No. of Records Present: " + records.size());
@@ -682,6 +690,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		String xPath;
 
 		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(8000);
 
 		try
 		{
@@ -812,6 +821,31 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 		return result;
 
 		
+	}
+	
+	public int numberOfRecordsWithoutClickOnExpendIcon(String Title,String pageSize) 
+	{
+		boolean flag=false;
+		int size=0;
+			if(pageSizeSelect(Title, pageSize))
+			{
+				log(LogStatus.INFO, "Page size "+pageSize+" has been selected", YesNo.No);	   
+				CommonLib.ThreadSleep(5000);
+				List<WebElement> records = FindElements(driver,
+						"//a[text()='" + Title + "']/ancestor::article//tbody/tr", "Records");
+				System.out.println("No. of Records Present: " + records.size());
+				size= records.size();
+				flag=true;
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Could not select the Pagesize",YesNo.No);
+				flag= false;
+			}
+		
+		
+		return size;
+
 	}
 
 

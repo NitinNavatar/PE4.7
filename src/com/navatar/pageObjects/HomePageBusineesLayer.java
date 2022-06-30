@@ -18,6 +18,7 @@ import com.navatar.generic.EnumConstants.IndiviualInvestorFieldLabel;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.PopUpName;
+import com.navatar.generic.EnumConstants.SDGCreationLabel;
 import com.navatar.generic.EnumConstants.SDGGridName;
 import com.navatar.generic.EnumConstants.SearchBasedOnExistingFundsOptions;
 import com.navatar.generic.EnumConstants.SortOrder;
@@ -35,12 +36,19 @@ import com.navatar.generic.EnumConstants.searchContactInEmailProspectGrid;
 import com.navatar.generic.SoftAssert;
 import com.relevantcodes.extentreports.LogStatus;
 import static com.navatar.generic.EnumConstants.*;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static com.navatar.generic.CommonLib.*;
@@ -2588,7 +2596,7 @@ public class HomePageBusineesLayer extends HomePage {
 		if (expandElement != null) {
 
 			log(LogStatus.INFO, "Expand Element Found of SDG: " + Title, YesNo.Yes);
-
+			CommonLib.ThreadSleep(7000);
 			String display = CommonLib.getAttribute(driver, expandElement, "Expand Element of SDG: " + Title, "style");
 
 			if (display.contains("block")) {
@@ -2853,7 +2861,8 @@ public class HomePageBusineesLayer extends HomePage {
 	 * @param SDGGridName
 	 */
 
-	public void verifyColumnAscendingDescendingOrder(SDGGridName sdgGridName, List<String> columnNames) {
+	public void verifyColumnAscendingDescendingOrder(SDGGridName sdgGridName, List<String> columnNames,
+			List<String> dateColumns) {
 
 		List<WebElement> headerList = sdgGridAllHeadersLabelNameList(sdgGridName);
 		List<String> columnDataText = headerList.stream().map(s -> s.getText()).collect(Collectors.toList()).stream()
@@ -2881,16 +2890,44 @@ public class HomePageBusineesLayer extends HomePage {
 						log(LogStatus.PASS, "Clicked on Header" + columnName + " Clomun " + (columnIndex + 1) + " for "
 								+ SortOrder.Assecending, YesNo.No);
 						ThreadSleep(35000);
-						if (CommonLib.checkSorting(driver, SortOrder.Assecending,
-								sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
-							log(LogStatus.PASS, SortOrder.Assecending + " Check Sorting on " + sdgGridName.toString()
-									+ " Columns " + columnName, YesNo.No);
-						} else {
-							log(LogStatus.FAIL, SortOrder.Assecending + " Not Checked Sorting on "
-									+ sdgGridName.toString() + " Columns " + columnName, YesNo.No);
-							sa.assertTrue(false, SortOrder.Assecending + " Not Checked Sorting on "
-									+ sdgGridName.toString() + " Columns " + columnName);
+
+						if (!dateColumns.contains(columnName)) {
+
+							if (CommonLib.checkSorting(driver, SortOrder.Assecending,
+									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+								log(LogStatus.PASS, SortOrder.Assecending + " Check Sorting on "
+										+ sdgGridName.toString() + " Columns " + columnName, YesNo.No);
+							} else {
+								log(LogStatus.FAIL, SortOrder.Assecending + " Not Checked Sorting on "
+										+ sdgGridName.toString() + " Columns " + columnName, YesNo.No);
+								sa.assertTrue(false, SortOrder.Assecending + " Not Checked Sorting on "
+										+ sdgGridName.toString() + " Columns " + columnName);
+							}
+
 						}
+
+						else {
+							List<String> expectedDateListText = new ArrayList<String>();
+							List<String> actualDateListText = new ArrayList<String>();
+							List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
+									columnIndex + 1);
+							actualDateListText = actualDateListWebElement.stream().map(date -> date.getText())
+									.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
+									.collect(Collectors.toList());
+							expectedDateListText = dateToAscendingOrder(actualDateListWebElement);
+
+							if (actualDateListText.equals(expectedDateListText)) {
+								log(LogStatus.PASS, SortOrder.Assecending + " Check Sorting on "
+										+ sdgGridName.toString() + " Columns " + columnName, YesNo.No);
+							} else {
+								log(LogStatus.FAIL, SortOrder.Assecending + " Not Checked Sorting on "
+										+ sdgGridName.toString() + " Columns " + columnName, YesNo.No);
+								sa.assertTrue(false, SortOrder.Assecending + " Not Checked Sorting on "
+										+ sdgGridName.toString() + " Columns " + columnName);
+							}
+
+						}
+
 					} else {
 						log(LogStatus.PASS, "Not able to click on " + sdgGridName.toString() + " SDG Grid header "
 								+ columnName + " so cannot check Sorting " + SortOrder.Assecending, YesNo.Yes);
@@ -2929,15 +2966,41 @@ public class HomePageBusineesLayer extends HomePage {
 						ThreadSleep(35000);
 						log(LogStatus.PASS, "Clicked on Header " + columnName + " Clomun " + (columnIndex + 1)
 								+ SortOrder.Decending, YesNo.No);
-						if (CommonLib.checkSorting(driver, SortOrder.Decending,
-								sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
-							log(LogStatus.PASS, SortOrder.Decending + " Check Sorting on " + columnName
-									+ " Columns on SDG Grid " + sdgGridName.toString(), YesNo.No);
-						} else {
-							log(LogStatus.FAIL, "Not Checked " + SortOrder.Decending + " Sorting on "
-									+ sdgGridName.toString() + " Columns " + columnName, YesNo.No);
-							sa.assertTrue(false, "Not Checked " + SortOrder.Decending + " Sorting on "
-									+ sdgGridName.toString() + " Columns " + columnName);
+
+						if (!dateColumns.contains(columnName)) {
+							if (CommonLib.checkSorting(driver, SortOrder.Decending,
+									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+								log(LogStatus.PASS, SortOrder.Decending + " Check Sorting on " + columnName
+										+ " Columns on SDG Grid " + sdgGridName.toString(), YesNo.No);
+							} else {
+								log(LogStatus.FAIL, "Not Checked " + SortOrder.Decending + " Sorting on "
+										+ sdgGridName.toString() + " Columns " + columnName, YesNo.No);
+								sa.assertTrue(false, "Not Checked " + SortOrder.Decending + " Sorting on "
+										+ sdgGridName.toString() + " Columns " + columnName);
+							}
+
+						}
+
+						else {
+							List<String> expectedDateListText = new ArrayList<String>();
+							List<String> actualDateListText = new ArrayList<String>();
+							List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
+									columnIndex + 1);
+							actualDateListText = actualDateListWebElement.stream().map(date -> date.getText())
+									.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
+									.collect(Collectors.toList());
+							expectedDateListText = dateToDescendingOrder(actualDateListWebElement);
+
+							if (actualDateListText.equals(expectedDateListText)) {
+								log(LogStatus.PASS, SortOrder.Decending + " Check Sorting on " + columnName
+										+ " Columns on SDG Grid " + sdgGridName.toString(), YesNo.No);
+							} else {
+								log(LogStatus.FAIL, "Not Checked " + SortOrder.Decending + " Sorting on "
+										+ sdgGridName.toString() + " Columns " + columnName, YesNo.No);
+								sa.assertTrue(false, "Not Checked " + SortOrder.Decending + " Sorting on "
+										+ sdgGridName.toString() + " Columns " + columnName);
+							}
+
 						}
 					} else {
 						log(LogStatus.PASS, "Not able to click on " + sdgGridName.toString() + " SDG Grid header "
@@ -2964,6 +3027,7 @@ public class HomePageBusineesLayer extends HomePage {
 	 */
 	public boolean sdgGridExpandedByDefaultIfNotThenExpand(String Title) {
 		boolean flag = false;
+		CommonLib.ThreadSleep(8000);
 		WebElement alreadyAddedComponentToHomePage = FindElement(driver, "//a[text()='" + Title + "']",
 				"Component Title ", action.SCROLLANDBOOLEAN, 10);
 		if (alreadyAddedComponentToHomePage != null) {
@@ -3006,17 +3070,24 @@ public class HomePageBusineesLayer extends HomePage {
 	 */
 
 	public boolean pageSizeSelect(String Title, String pageSize) {
+
 		boolean flag = false;
 		WebElement pageSizeSelect = FindElement(driver,
 				"//a[text()='" + Title + "']/ancestor::article//span[text()='Page Size']/../parent::div//select",
 				"Page Size Select ", action.SCROLLANDBOOLEAN, 10);
-		if (CommonLib.selectVisibleTextFromDropDown(driver, pageSizeSelect, "Page Size Select", pageSize)) {
-			log(LogStatus.INFO, "Selected the Page Size", YesNo.No);
-			CommonLib.ThreadSleep(30000);
-			flag = true;
+		if (pageSizeSelect != null) {
+			if (CommonLib.selectVisibleTextFromDropDown(driver, pageSizeSelect, "Page Size Select", pageSize)) {
+				log(LogStatus.INFO, "Selected the Page Size", YesNo.No);
+				CommonLib.ThreadSleep(25000);
+				flag = true;
+			} else {
+				log(LogStatus.ERROR, "Not Able To Select Page Size ", YesNo.No);
+				return flag;
+
+			}
 		} else {
-			log(LogStatus.ERROR, "Not Able To Select Page Size ", YesNo.No);
-			return flag;
+			log(LogStatus.ERROR, "Not Able To Select Page Size As Element not Found", YesNo.No);
+			flag = true;
 
 		}
 
@@ -3133,7 +3204,7 @@ public class HomePageBusineesLayer extends HomePage {
 	 */
 	public boolean verifyColumnRecordsRedirecting(SDGGridName sdgGridName, List<String> columnNames) {
 
-		List<WebElement> headerList = sdgGridAllHeadersLabelNameList(sdgGridName);
+		List<WebElement> headerList = sdgGridAllHeadersNameList(sdgGridName);
 		List<String> columnDataText = headerList.stream().map(s -> s.getText()).collect(Collectors.toList()).stream()
 				.map(t -> t.trim()).collect(Collectors.toList());
 		boolean flag = false;
@@ -3188,52 +3259,48 @@ public class HomePageBusineesLayer extends HomePage {
 				.map(t -> t.trim()).collect(Collectors.toList());
 		String parentWindowId = null;
 		if (!headerList.isEmpty()) {
-			
-				int columnIndex = columnDataText.indexOf(columnName);
-				if (sdgGridColumnsDataListAnchorTag(sdgGridName.toString(), columnIndex + 1).size() != 0) {
-					log(LogStatus.PASS, "------Column : " + columnName + " contains Redirect URL Data--------",
-							YesNo.No);
-					for (WebElement columnData : sdgGridColumnsDataListAnchorTag(sdgGridName.toString(),
-							columnIndex + 1)) {
 
-						if (columnData.getText().equals(columnRecordToVerify.get(indexColumnDataFromList))) {
-							if (CommonLib.getAttribute(driver, columnData, columnData.getText(), "target")
-									.equals("_blank")) {
-								log(LogStatus.PASS,
-										"Column Data: " + columnData.getText() + " will Redirect to New Tab", YesNo.No);
-								if (clickUsingJavaScript(driver, columnData, columnData.getText(),
-										action.SCROLLANDBOOLEAN)) {
-									log(LogStatus.INFO, "Clicked on :" + columnData.getText(), YesNo.No);
-									parentWindowId = CommonLib.switchOnWindow(driver);
-									if (parentWindowId != null) {
-										log(LogStatus.INFO, "Switched to New Tab", YesNo.No);
-										return parentWindowId;
-									} else {
-										log(LogStatus.ERROR, "New Tab not Open After click on: " + columnData.getText(),
-												YesNo.No);
-									}
+			int columnIndex = columnDataText.indexOf(columnName);
+			if (sdgGridColumnsDataListAnchorTag(sdgGridName.toString(), columnIndex + 1).size() != 0) {
+				log(LogStatus.PASS, "------Column : " + columnName + " contains Redirect URL Data--------", YesNo.No);
+				for (WebElement columnData : sdgGridColumnsDataListAnchorTag(sdgGridName.toString(), columnIndex + 1)) {
 
+					if (columnData.getText().equals(columnRecordToVerify.get(indexColumnDataFromList))) {
+						if (CommonLib.getAttribute(driver, columnData, columnData.getText(), "target")
+								.equals("_blank")) {
+							log(LogStatus.PASS, "Column Data: " + columnData.getText() + " will Redirect to New Tab",
+									YesNo.No);
+							if (clickUsingJavaScript(driver, columnData, columnData.getText(),
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on :" + columnData.getText(), YesNo.No);
+								parentWindowId = CommonLib.switchOnWindow(driver);
+								if (parentWindowId != null) {
+									log(LogStatus.INFO, "Switched to New Tab", YesNo.No);
+									return parentWindowId;
 								} else {
-									log(LogStatus.ERROR, "Not Able to Click on :" + columnData.getText(), YesNo.No);
+									log(LogStatus.ERROR, "New Tab not Open After click on: " + columnData.getText(),
+											YesNo.No);
 								}
 
 							} else {
-								log(LogStatus.FAIL,
-										"Column Data: " + columnData.getText() + " will Not Redirect to New Tab",
-										YesNo.No);
-								sa.assertTrue(false,
-										"Column Data: " + columnData.getText() + " will Not Redirect to New Tab");
-
+								log(LogStatus.ERROR, "Not Able to Click on :" + columnData.getText(), YesNo.No);
 							}
+
+						} else {
+							log(LogStatus.FAIL,
+									"Column Data: " + columnData.getText() + " will Not Redirect to New Tab", YesNo.No);
+							sa.assertTrue(false,
+									"Column Data: " + columnData.getText() + " will Not Redirect to New Tab");
+
 						}
-
 					}
-				} else {
-					log(LogStatus.INFO, "-------Column : " + columnName + " not contains any Redirect URL Data--------",
-							YesNo.No);
-				}
 
-			
+				}
+			} else {
+				log(LogStatus.INFO, "-------Column : " + columnName + " not contains any Redirect URL Data--------",
+						YesNo.No);
+			}
+
 		} else {
 			log(LogStatus.ERROR, "-----No Column Present for SDG: " + sdgGridName + " -----", YesNo.No);
 			sa.assertTrue(false, "-----No Column Present for SDG: " + sdgGridName + " -----");
@@ -3243,7 +3310,1217 @@ public class HomePageBusineesLayer extends HomePage {
 
 	}
 
-	
-	
-	 
+	/**
+	 * @author Ankur Huria
+	 * @param SDGName
+	 * @param Filter
+	 */
+	public boolean verifyFilterNotAvailable(String SDGName, String Filter) {
+
+		boolean flag = false;
+		if (click(driver, gtFilterButton(SDGName, 20), "Filter Button on SDG: " + SDGName, action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on Filter Button on SDG: " + SDGName, YesNo.No);
+			List<WebElement> filterLabelsList = getLabelsForFilters(SDGName);
+			List<String> filterLabelsListText = filterLabelsList.stream().map(s -> s.getText())
+					.collect(Collectors.toList()).stream().map(t -> t.trim()).collect(Collectors.toList());
+			if (!filterLabelsListText.contains(Filter)) {
+				log(LogStatus.INFO, "List Of Filters " + filterLabelsListText, YesNo.No);
+				log(LogStatus.INFO, "Filter: " + Filter + " is not avaialble on Filter Grid of SDG: " + SDGName,
+						YesNo.No);
+				flag = true;
+			} else {
+				log(LogStatus.ERROR, "Filter: " + Filter + " is avaialble on Filter Grid of SDG: " + SDGName,
+						YesNo.Yes);
+				sa.assertTrue(false, "Filter: " + Filter + " is avaialble on Filter Grid of SDG: " + SDGName);
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not able to click on Filter Button on SDG: " + SDGName, YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on Filter Button on SDG: " + SDGName);
+		}
+
+		return flag;
+
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param SDGName
+	 * @param datas
+	 */
+	public boolean VerifyMultipicklistFilterInSDG(String SDGName, String[][] datas,
+			List<String> expectedPickListOptionValues, List<String> expectedDefaultPickListOptionSelected) {
+
+		boolean flag = false;
+		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
+		String pageSize = "100";
+
+		List<WebElement> filterLabelsList = getLabelsForFilters(SDGName);
+		List<String> filterLabelsListText = filterLabelsList.stream().map(s -> s.getText()).collect(Collectors.toList())
+				.stream().map(t -> t.trim()).collect(Collectors.toList());
+		if (filterLabelsListText.contains("Custom Mpick_list")) {
+			log(LogStatus.INFO, "--------Filter available: Custom Mpick_list --------", YesNo.No);
+
+			List<String> actualPickListOptionValues = optionsOfCustomMPicklist().stream().map(s -> s.getText())
+					.collect(Collectors.toList());
+
+			if (actualPickListOptionValues.equals(expectedPickListOptionValues)) {
+				log(LogStatus.INFO,
+						"--------Custom MPickList Contains options: " + actualPickListOptionValues + "--------",
+						YesNo.No);
+				flag = true;
+			} else {
+				log(LogStatus.ERROR,
+						"--------Custom MPickList not Contains options: " + actualPickListOptionValues + "--------",
+						YesNo.Yes);
+				sa.assertTrue(false,
+						"--------Custom MPickList not Contains options: " + actualPickListOptionValues + "--------");
+			}
+
+			List<String> actualSelectedOptionsOfCustomMPicklist = selectedOptionsOfCustomMPicklist().stream()
+					.map(s -> s.getText()).collect(Collectors.toList());
+
+			if (actualSelectedOptionsOfCustomMPicklist.equals(expectedDefaultPickListOptionSelected)) {
+				log(LogStatus.INFO, "--------Custom MPickList Default Value: " + actualSelectedOptionsOfCustomMPicklist
+						+ "--------", YesNo.No);
+				flag = true;
+			} else {
+				log(LogStatus.ERROR,
+						"--------Custom MPickList Default Value not Matched, Actual: "
+								+ actualSelectedOptionsOfCustomMPicklist + ", Expected: "
+								+ expectedDefaultPickListOptionSelected + "--------",
+						YesNo.Yes);
+				sa.assertTrue(false,
+						"--------Custom MPickList Default Value not Matched, Actual: "
+								+ actualSelectedOptionsOfCustomMPicklist + ", Expected: "
+								+ expectedDefaultPickListOptionSelected + "--------");
+			}
+
+			for (String[] data : datas) {
+				if (CommonLib.selectVisibleTextFromDropDown(driver, selectTagCustomMPicklist(25),
+						"Custom M PickList Select DropDown", data[2])) {
+					log(LogStatus.INFO, "Select the Value From DropDown: " + data[2], YesNo.No);
+					CommonLib.ThreadSleep(20000);
+					if (sendKeysAndPressEnter(driver, inputBoxCustomMPickList(20), data[0],
+							"Custom MPicklist Input Box", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Pass the Value to Input Box: " + data[0], YesNo.No);
+						CommonLib.ThreadSleep(30000);
+						int numberOfRecords = AppBuilder.numberOfRecords(SDGName, pageSize);
+						if (numberOfRecords == Integer.parseInt(data[1])) {
+							log(LogStatus.INFO, "--------Number of Records Matched for " + data[0]
+									+ " in CustomMPicklist: " + data[1] + " for Operator: " + data[2] + "--------",
+									YesNo.No);
+							flag = true;
+						} else {
+							log(LogStatus.ERROR,
+									"--------Number of Records Not Matched for " + data[0]
+											+ " in CustomMPicklist, Expected: " + data[1] + " ,but Actual: "
+											+ numberOfRecords + " for Operator: " + data[2] + "--------",
+									YesNo.Yes);
+							sa.assertTrue(false,
+									"--------Number of Records Not Matched for " + data[0]
+											+ " in CustomMPicklist, Expected: " + data[1] + " ,but Actual: "
+											+ numberOfRecords + " for Operator: " + data[2] + "--------");
+						}
+
+					} else {
+						log(LogStatus.ERROR, "--------Not able to Pass the Value to Input Box: " + data[0] + "--------",
+								YesNo.Yes);
+						sa.assertTrue(false,
+								"--------Not able to Pass the Value to Input Box: " + data[0] + "--------");
+					}
+				} else {
+					log(LogStatus.ERROR, "--------Not able to Select the Value From DropDown: " + data[2] + "--------",
+							YesNo.Yes);
+					sa.assertTrue(false, "--------Not able to Select the Value From DropDown: " + data[2] + "--------");
+				}
+
+			}
+
+		} else {
+			log(LogStatus.ERROR, "--------Filter Not available: Custom Mpick_list--------", YesNo.Yes);
+			sa.assertTrue(false, "--------Filter Not available: Custom Mpick_list--------");
+		}
+
+		return flag;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param SDGName
+	 * @param datas
+	 */
+	public boolean VerifySDGFilterSelectAllValues(String SDGName, String FilterLabel,
+			List<String> expectedPickListOptionValues) {
+
+		boolean flag = false;
+
+		if (CommonLib.isElementPresent(SDGFilterSelectElement(FilterLabel, 20))) {
+			log(LogStatus.INFO, "SDG Select Filter Available: " + FilterLabel, YesNo.No);
+			if (click(driver, gtFilterButton(SDGName, 20), "Filter Button on SDG: " + SDGName,
+					action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Filter Button on SDG: " + SDGName, YesNo.No);
+				if (CommonLib.isElementPresent(SDGFilterSelectElement(FilterLabel, 20))) {
+					log(LogStatus.INFO, "SDG Select Filter Available: " + FilterLabel, YesNo.No);
+
+					List<WebElement> filterLabelsList = getLabelsForFilters(SDGName);
+					List<String> filterLabelsListText = filterLabelsList.stream().map(s -> s.getText())
+							.collect(Collectors.toList()).stream().map(t -> t.trim()).collect(Collectors.toList());
+					if (filterLabelsListText.contains("Custom Mpick_list")) {
+						log(LogStatus.INFO, "--------Filter available: Custom Mpick_list --------", YesNo.No);
+
+						List<String> actualPickListOptionValues = optionsOfCustomMPicklist().stream()
+								.map(s -> s.getText()).collect(Collectors.toList());
+
+						if (actualPickListOptionValues.equals(expectedPickListOptionValues)) {
+							log(LogStatus.INFO, "--------Custom MPickList Contains options: "
+									+ actualPickListOptionValues + "--------", YesNo.No);
+							flag = true;
+						} else {
+							log(LogStatus.ERROR, "--------Custom MPickList not Contains options: "
+									+ actualPickListOptionValues + "--------", YesNo.Yes);
+							sa.assertTrue(false, "--------Custom MPickList not Contains options: "
+									+ actualPickListOptionValues + "--------");
+						}
+
+					} else {
+						log(LogStatus.ERROR, "--------Filter Not available: Custom Mpick_list--------", YesNo.Yes);
+						sa.assertTrue(false, "--------Filter Not available: Custom Mpick_list--------");
+					}
+
+				} else {
+					log(LogStatus.ERROR, "SDG Select Not Filter Available: " + FilterLabel, YesNo.Yes);
+					sa.assertTrue(false, "SDG Select Not Filter Available: " + FilterLabel);
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to click on Filter Button on SDG: " + SDGName, YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on Filter Button on SDG: " + SDGName);
+			}
+		} else {
+			log(LogStatus.ERROR, "SDG Select Not Filter Available: " + FilterLabel, YesNo.Yes);
+		}
+
+		return flag;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param SDGName
+	 * @param datas
+	 */
+	@SuppressWarnings("unlikely-arg-type")
+	public boolean VerifySDGFilterSelectDefaultSelectedValue(String SDGName, String FilterLabel,
+			List<String> expectedDefaultPickListOptionSelected) {
+
+		boolean flag = false;
+
+		List<WebElement> filterLabelsList = getLabelsForFilters(SDGName);
+		List<String> filterLabelsListText = filterLabelsList.stream().map(s -> s.getText()).collect(Collectors.toList())
+				.stream().map(t -> t.trim()).collect(Collectors.toList());
+		if (filterLabelsListText.contains(FilterLabel)) {
+			log(LogStatus.INFO, "--------Filter available: " + FilterLabel + " --------", YesNo.No);
+
+			String actualSelectedOption = CommonLib.getSelectedOptionOfDropDown(driver,
+					selectTagOfFilterInSDG(FilterLabel, 30), "selectTagOfFilterInSDG", "text");
+			if (actualSelectedOption.equals(expectedDefaultPickListOptionSelected.get(0))) {
+				log(LogStatus.INFO, "--------" + FilterLabel + " Default Value: " + actualSelectedOption + "--------",
+						YesNo.No);
+				flag = true;
+			} else {
+				log(LogStatus.ERROR, "--------" + FilterLabel + " Default Value not Matched, Actual: "
+						+ actualSelectedOption + ", Expected: " + expectedDefaultPickListOptionSelected + "--------",
+						YesNo.Yes);
+				sa.assertTrue(false, "--------" + FilterLabel + " Default Valuenot Matched, Actual: "
+						+ actualSelectedOption + ", Expected: " + expectedDefaultPickListOptionSelected + "--------");
+			}
+		} else {
+			log(LogStatus.ERROR, "--------Filter Not available: " + FilterLabel + "--------", YesNo.Yes);
+			sa.assertTrue(false, "--------Filter Not available: " + FilterLabel + "--------");
+		}
+
+		return flag;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param SDGName
+	 * @param datas
+	 */
+	public boolean VerifySelectOptionInFilter(String SDGName, String FilterLabel, String FilterValue) {
+
+		boolean flag = false;
+
+		if (CommonLib.selectVisibleTextFromDropDown(driver, SDGFilterSelectElement(FilterLabel, 20),
+				"Select DropDown Value: " + FilterLabel, FilterValue)) {
+			log(LogStatus.INFO, "Select the Value From DropDown: " + FilterValue, YesNo.No);
+			flag = true;
+			CommonLib.ThreadSleep(20000);
+		} else {
+			log(LogStatus.ERROR, "--------Not able to Select the Value From DropDown: " + FilterValue + "--------",
+					YesNo.Yes);
+			sa.assertTrue(false, "--------Not able to Select the Value From DropDown: " + FilterValue + "--------");
+		}
+
+		return flag;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param SDGName
+	 * @param datas
+	 */
+	public boolean VerifyMultipicklistFilterSelectAndValues(String SDGName, String[][] datas) {
+
+		boolean flag = false;
+		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
+		String pageSize = "100";
+
+		List<WebElement> filterLabelsList = getLabelsForFilters(SDGName);
+		List<String> filterLabelsListText = filterLabelsList.stream().map(s -> s.getText()).collect(Collectors.toList())
+				.stream().map(t -> t.trim()).collect(Collectors.toList());
+		if (filterLabelsListText.contains("Custom Mpick_list")) {
+			log(LogStatus.INFO, "--------Filter available: Custom Mpick_list --------", YesNo.No);
+
+			for (String[] data : datas) {
+				if (CommonLib.selectVisibleTextFromDropDown(driver, selectTagCustomMPicklist(25),
+						"Custom M PickList Select DropDown", data[2])) {
+					log(LogStatus.INFO, "Select the Value From DropDown: " + data[2], YesNo.No);
+					CommonLib.ThreadSleep(20000);
+					if (sendKeysAndPressEnter(driver, inputBoxCustomMPickList(20), data[0],
+							"Custom MPicklist Input Box", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Pass the Value to Input Box: " + data[0], YesNo.No);
+						CommonLib.ThreadSleep(30000);
+						int numberOfRecords = AppBuilder.numberOfRecords(SDGName, pageSize);
+						if (numberOfRecords == Integer.parseInt(data[1])) {
+							log(LogStatus.INFO, "--------Number of Records Matched for " + data[0]
+									+ " in CustomMPicklist: " + data[1] + " for Operator: " + data[2] + "--------",
+									YesNo.No);
+							flag = true;
+						} else {
+							log(LogStatus.ERROR,
+									"--------Number of Records Not Matched for " + data[0]
+											+ " in CustomMPicklist, Expected: " + data[1] + " ,but Actual: "
+											+ numberOfRecords + " for Operator: " + data[2] + "--------",
+									YesNo.Yes);
+							sa.assertTrue(false,
+									"--------Number of Records Not Matched for " + data[0]
+											+ " in CustomMPicklist, Expected: " + data[1] + " ,but Actual: "
+											+ numberOfRecords + " for Operator: " + data[2] + "--------");
+						}
+
+					} else {
+						log(LogStatus.ERROR, "--------Not able to Pass the Value to Input Box: " + data[0] + "--------",
+								YesNo.Yes);
+						sa.assertTrue(false,
+								"--------Not able to Pass the Value to Input Box: " + data[0] + "--------");
+					}
+				} else {
+					log(LogStatus.ERROR, "--------Not able to Select the Value From DropDown: " + data[2] + "--------",
+							YesNo.Yes);
+					sa.assertTrue(false, "--------Not able to Select the Value From DropDown: " + data[2] + "--------");
+				}
+
+			}
+
+		} else {
+			log(LogStatus.ERROR, "--------Filter Not available: Custom Mpick_list--------", YesNo.Yes);
+			sa.assertTrue(false, "--------Filter Not available: Custom Mpick_list--------");
+		}
+
+		return flag;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param SDGName
+	 * @param datas
+	 */
+	public String ClickOnOpenSDGRecordAndSwitchToNewWindow(String SDGName) {
+
+		String parentid = null;
+		if (gearIcon(SDGName) != null) {
+			log(LogStatus.INFO, "SDG Gear Icon Present on SDG: " + SDGName, YesNo.No);
+			if (click(driver, gearIcon(SDGName), SDGName + " open sdg record ", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.PASS, "Clicked on SDG Gear Icon of SDG: " + SDGName, YesNo.No);
+				parentid = switchOnWindow(driver);
+				if (parentid != null) {
+					ThreadSleep(5000);
+					WebElement sdgHeader = FindElement(driver, "//h1//*[text()='" + SDGName + "']",
+							SDGName + " tag name xpath", action.BOOLEAN, 10);
+					if (sdgHeader != null) {
+						log(LogStatus.PASS, SDGName + " tag name is displaying ", YesNo.No);
+						return parentid;
+
+					} else {
+						log(LogStatus.FAIL, SDGName + " tag name is not displaying ", YesNo.No);
+						sa.assertTrue(false, SDGName + " tag name is not displaying ");
+					}
+				} else {
+					log(LogStatus.FAIL, "Not able to switch on open sdg record window of " + SDGName, YesNo.Yes);
+					sa.assertTrue(false, "Not able to switch on open sdg record window of " + SDGName);
+				}
+			} else {
+				log(LogStatus.FAIL, "Not Able to Click on SDG Gear Icon of SDG: " + SDGName, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to Click on SDG Gear Icon of SDG: " + SDGName);
+			}
+		} else {
+			log(LogStatus.FAIL, "SDG Gear Icon not Present on SDG: " + SDGName, YesNo.Yes);
+			sa.assertTrue(false, "SDG Gear Icon not Present on SDG: " + SDGName);
+		}
+
+		return parentid;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param SDGGridName
+	 */
+
+	public boolean verifyColumnAscendingDescendingOrderShouldNotWork(String sdgGridName, List<String> columnNames) {
+
+		List<WebElement> headerList = sdgGridAllHeadersLabelNameList(sdgGridName);
+		List<String> columnDataText = headerList.stream().map(s -> s.getText()).collect(Collectors.toList()).stream()
+				.map(t -> t.trim()).collect(Collectors.toList());
+		boolean flag = false;
+		if (!headerList.isEmpty()) {
+			for (String columnName : columnNames) {
+				int columnIndex = columnDataText.indexOf(columnName);
+
+				List<WebElement> ListOfDataBeforeHeaderClick = sdgGridColumnsDataList(sdgGridName, columnIndex + 1);
+
+				if (clickUsingJavaScript(driver, headerList.get(columnIndex),
+						sdgGridName.toString() + " SDG Grid header column " + columnName, action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.PASS,
+							"Clicked on Header" + columnName + " Column " + (columnIndex + 1) + " for Sorting Check",
+							YesNo.No);
+					ThreadSleep(15000);
+					List<WebElement> ListOfDataAfterHeaderClick = sdgGridColumnsDataList(sdgGridName, columnIndex + 1);
+					if (ListOfDataBeforeHeaderClick.equals(ListOfDataAfterHeaderClick)) {
+						log(LogStatus.PASS, "Sorting of Column is not Working for Column: " + columnName, YesNo.No);
+						flag = true;
+					} else {
+						log(LogStatus.FAIL, "Sorting of Column is Working for Column: " + columnName, YesNo.No);
+						sa.assertTrue(false, "Sorting of Column is Working for Column: " + columnName);
+					}
+				} else {
+					log(LogStatus.PASS, "Not able to click on " + sdgGridName.toString() + " SDG Grid header "
+							+ columnName + " so cannot check Sorting ", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on " + sdgGridName.toString() + " SDG Grid header "
+							+ columnName + " so cannot check Sorting ");
+				}
+
+			}
+
+		} else {
+			log(LogStatus.PASS,
+					sdgGridName.toString() + " SDG Grid header cloumns list is not visible so cannot check Sorting ",
+					YesNo.Yes);
+			sa.assertTrue(false,
+					sdgGridName.toString() + " SDG Grid header cloumns list is not visible so cannot check Sorting ");
+		}
+		return flag;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param SDGName
+	 * @param datas
+	 */
+	public boolean VerifyMultipicklistFilterSelectAndCommaValuesError(String SDGName, String[][] datas,
+			String FilterLabelName) {
+
+		boolean flag = false;
+
+		List<WebElement> filterLabelsList = getLabelsForFilters(SDGName);
+		List<String> filterLabelsListText = filterLabelsList.stream().map(s -> s.getText()).collect(Collectors.toList())
+				.stream().map(t -> t.trim()).collect(Collectors.toList());
+		if (filterLabelsListText.contains(FilterLabelName)) {
+			log(LogStatus.INFO, "--------Filter available: Custom Mpick_list --------", YesNo.No);
+
+			for (String[] data : datas) {
+				if (CommonLib.selectVisibleTextFromDropDown(driver, selectTagCustomMPicklist(25),
+						"Custom M PickList Select DropDown", data[2])) {
+					log(LogStatus.INFO, "Select the Value From DropDown: " + data[2], YesNo.No);
+					CommonLib.ThreadSleep(20000);
+					if (sendKeysAndPressEnter(driver, inputBoxCustomMPickList(20), data[0],
+							"Custom MPicklist Input Box", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Pass the Value to Input Box: " + data[0], YesNo.No);
+						CommonLib.ThreadSleep(2000);
+						if (SDGFilterValueErrorElement(FilterLabelName, 25).getText().equals(data[1])) {
+							log(LogStatus.INFO,
+									"--------Error Message Found for Values:  " + data[0] + " in " + FilterLabelName
+											+ " for Operator: " + data[2] + " ,ErrorMessage: " + data[1] + "--------",
+									YesNo.No);
+							flag = true;
+						} else {
+							log(LogStatus.ERROR,
+									"--------Error Message Not Found for Values:  " + data[0] + " in " + FilterLabelName
+											+ " for Operator: " + data[2] + " ,ErrorMessage: " + data[1] + "--------",
+									YesNo.Yes);
+							sa.assertTrue(false,
+									"--------Error Message Not Found for Values:  " + data[0] + " in " + FilterLabelName
+											+ " for Operator: " + data[2] + " ,ErrorMessage: " + data[1] + "--------");
+						}
+
+					} else {
+						log(LogStatus.ERROR, "--------Not able to Pass the Value to Input Box: " + data[0] + "--------",
+								YesNo.Yes);
+						sa.assertTrue(false,
+								"--------Not able to Pass the Value to Input Box: " + data[0] + "--------");
+					}
+				} else {
+					log(LogStatus.ERROR, "--------Not able to Select the Value From DropDown: " + data[2] + "--------",
+							YesNo.Yes);
+					sa.assertTrue(false, "--------Not able to Select the Value From DropDown: " + data[2] + "--------");
+				}
+
+			}
+
+		} else {
+			log(LogStatus.ERROR, "--------Filter Not available: Custom Mpick_list--------", YesNo.Yes);
+			sa.assertTrue(false, "--------Filter Not available: Custom Mpick_list--------");
+		}
+
+		return flag;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param SDGName
+	 * @param datas
+	 */
+	public boolean ClickOnOpenSDGRecord(String SDGName) {
+
+		boolean flag = false;
+		if (gearIcon(SDGName) != null) {
+			log(LogStatus.INFO, "SDG Gear Icon Present on SDG: " + SDGName, YesNo.No);
+			if (click(driver, gearIcon(SDGName), SDGName + " open sdg record ", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.PASS, "Clicked on SDG Gear Icon of SDG: " + SDGName, YesNo.No);
+
+				flag = true;
+			} else {
+				log(LogStatus.FAIL, "Not Able to Click on SDG Gear Icon of SDG: " + SDGName, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to Click on SDG Gear Icon of SDG: " + SDGName);
+			}
+		} else {
+			log(LogStatus.FAIL, "SDG Gear Icon not Present on SDG: " + SDGName, YesNo.Yes);
+			sa.assertTrue(false, "SDG Gear Icon not Present on SDG: " + SDGName);
+		}
+
+		return flag;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param SDGName
+	 * @param datas
+	 */
+	public String SwitchToSDGWindow(String SDGName) {
+
+		String parentid = null;
+		parentid = switchOnWindow(driver);
+		if (parentid != null) {
+			ThreadSleep(5000);
+			WebElement sdgHeader = FindElement(driver, "//h1//*[text()='" + SDGName + "']", SDGName + " tag name xpath",
+					action.BOOLEAN, 10);
+			if (sdgHeader != null) {
+				log(LogStatus.PASS, SDGName + " tag name is displaying ", YesNo.No);
+				return parentid;
+
+			} else {
+				log(LogStatus.FAIL, SDGName + " tag name is not displaying ", YesNo.No);
+				sa.assertTrue(false, SDGName + " tag name is not displaying ");
+			}
+		} else {
+			log(LogStatus.FAIL, "Not able to switch on open sdg record window of " + SDGName, YesNo.Yes);
+			sa.assertTrue(false, "Not able to switch on open sdg record window of " + SDGName);
+		}
+
+		return parentid;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param SDGName
+	 * @param datas
+	 */
+	public String SwitchToWindow() {
+
+		String parentid = null;
+		parentid = switchOnWindow(driver);
+		if (parentid != null) {
+
+			log(LogStatus.PASS, "Successfully Switched to Child Window", YesNo.No);
+			return parentid;
+
+		} else {
+			log(LogStatus.FAIL, "Not Able to Switch to Child Window", YesNo.Yes);
+			sa.assertTrue(false, "Not Able to Switch to Child Window");
+		}
+
+		return parentid;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param SDGName
+	 * @param datas
+	 */
+	public boolean actionButtonAlreadyAddedOrNotOnSDG(String sdgName, String[] actions, String[] values, int timeOut,
+			String pageSize) {
+		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		List<String> actionsList = Arrays.asList(actions);
+		List<String> valuesList = Arrays.asList(values);
+		boolean nameFlag = false;
+		int loopCount = 0;
+		int status = 0;
+		if (actionsList.size() == valuesList.size()) {
+			log(LogStatus.INFO,
+					"------------No. of times Actions and Values Size Matched, So Going for Further Process----------------",
+					YesNo.No);
+			int i = 0;
+
+			for (String actionList : actionsList)
+
+			{
+				String[] labels = actionList.split("<Break>");
+				String[] value = valuesList.get(i).split("<Break>");
+				List<String> labelsList = Arrays.asList(labels);
+				List<String> valueList = Arrays.asList(value);
+				if (labelsList.size() == valueList.size()) {
+					log(LogStatus.INFO,
+							"------------Actions and Values Size Matched, So Going for Further Process----------------",
+							YesNo.No);
+
+					int k = 0;
+					for (String label : labels) {
+						if (label.equalsIgnoreCase("Action_Type")) {
+
+							break;
+
+						}
+						k++;
+					}
+					int j = 0;
+					for (String label : labels) {
+						if (label.equalsIgnoreCase("Name")) {
+							nameFlag = true;
+							break;
+
+						}
+						j++;
+					}
+					if (nameFlag) {
+
+						if (value[k].equalsIgnoreCase("List Button")) {
+							if (listButtonOnSDG(sdgName, value[j], timeOut) != null) {
+								log(LogStatus.ERROR, "------------Action List Button: " + value[j]
+										+ " Already Added to SDG Grid " + sdgName + "----------------", YesNo.Yes);
+								sa.assertTrue(false, "------------Action List Button: " + value[j]
+										+ " Already Added to SDG Grid " + sdgName + "----------------");
+								status++;
+
+							} else {
+								log(LogStatus.INFO,
+										"------------Action List Button: " + value[j]
+												+ " Not Already Added to SDG Grid " + sdgName + "----------------",
+										YesNo.No);
+								appLog.info("------------Action List Button: " + value[j]
+										+ " Not Already Added to SDG Grid " + sdgName + "----------------");
+
+							}
+						}
+
+						else if (value[k].equalsIgnoreCase("Row Button")) {
+							int rowCountAfterFilter = AppBuilder.numberOfRecords(sdgName, pageSize);
+							if (home.rowButtonsInSDGGrid(sdgName, value[j]).size() == rowCountAfterFilter) {
+								log(LogStatus.ERROR,
+										"------------Action Row Buttons: " + value[j]
+												+ " are already added to SDG Grid " + sdgName
+												+ " So, Test Case Going to fail----------------",
+										YesNo.Yes);
+								sa.assertTrue(false,
+										"------------Action Row Buttons: " + value[j]
+												+ " are already added to SDG Grid " + sdgName
+												+ " So, Test Case Going to fail----------------");
+								status++;
+
+							} else {
+								log(LogStatus.INFO,
+										"------------Action Row Buttons: " + value[j] + " are not showing to SDG Grid "
+												+ sdgName + "Expected: " + rowCountAfterFilter + " ,but Actual: "
+												+ home.rowButtonsInSDGGrid(sdgName, value[j]).size()
+												+ "----------------",
+										YesNo.No);
+								appLog.info("------------Action Row Buttons: " + value[j]
+										+ " are not showing to SDG Grid " + sdgName + "Expected: " + rowCountAfterFilter
+										+ " ,but Actual: " + home.rowButtonsInSDGGrid(sdgName, value[j]).size()
+										+ "----------------");
+								;
+
+							}
+						}
+
+					} else {
+						log(LogStatus.ERROR,
+								"------------Name Label not added in Data, So Test Case Going to fail----------------",
+								YesNo.No);
+						sa.assertTrue(false,
+								"------------Name Label not added in Data, So Test Case Going to fail----------------");
+					}
+					i++;
+				} else {
+					log(LogStatus.ERROR,
+							"------------Actions and Values Size not Matched, So Test Case Going to Fail----------------",
+							YesNo.No);
+					sa.assertTrue(false,
+							"------------Actions and Values Size not Matched, So Test Case Going to Fail---------------");
+
+				}
+				loopCount++;
+			}
+
+		}
+
+		else {
+			log(LogStatus.ERROR,
+					"------------No. of times Actions and Values Size not Matched, So Test Case Going to Fail----------------",
+					YesNo.No);
+			sa.assertTrue(false,
+					"------------No. of Times Actions and Values Size not Matched, So Test Case Going to Fail---------------");
+
+		}
+
+		if (loopCount == status)
+			return false;
+		else
+			return true;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param SDGName
+	 * @param datas
+	 */
+	public boolean createFundThroughSDG(String projectName, String sdgName, String actionButtonName,
+			String[][] sdgLabels, int timeOut) {
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+
+		boolean flag = false;
+		if (click(driver, listButtonOnSDG(sdgName, actionButtonName, timeOut), "Action Button " + actionButtonName,
+				action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on Button: " + actionButtonName + " on SDG: " + sdgName, YesNo.No);
+			if (enterValueAndDropDownForSDGForm(projectName, sdgLabels, action.SCROLLANDBOOLEAN, timeOut)) {
+				log(LogStatus.INFO, "Successfully Enter values on " + actionButtonName + " of SDG: " + sdgName,
+						YesNo.Yes);
+
+				if (click(driver, getRecordPageSettingSave(60), "Save Button", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Click on Save Button  " + sdgName, YesNo.No);
+					ThreadSleep(5000);
+					flag = true;
+				} else {
+					sa.assertTrue(false,
+							"Not Able to Click on Save Button Value so cannot create Fund on SDG:  " + sdgName);
+					log(LogStatus.SKIP,
+							"Not Able to Click on Save Button Value so cannot create Fund on SDG:  " + sdgName,
+							YesNo.Yes);
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to Enter values on " + actionButtonName + " of SDG: " + sdgName,
+						YesNo.Yes);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on Button: " + actionButtonName + " on SDG: " + sdgName, YesNo.Yes);
+
+		}
+		return flag;
+
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param projectName
+	 * @param labelWithValues
+	 * @param action
+	 * @param timeOut
+	 * @return true if able to enter value for SDG creation
+	 */
+	public boolean enterValueAndDropDownForSDGForm(String projectName, String[][] labelWithValues, action action,
+			int timeOut) {
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		boolean flag = false;
+		String label = "";
+		String value = "";
+		int status = 0;
+		WebElement ele = null;
+		int loopCount = 0;
+		for (String[] labelValues : labelWithValues) {
+			label = labelValues[0].replace("_", " ");
+			value = labelValues[1];
+			String xpath = "//lightning-base-combobox-item/span/span";
+			if (label.equalsIgnoreCase("Fund Type") || label.equalsIgnoreCase("Investment Category")) {
+				CommonLib.ThreadSleep(3000);
+				if (dropDownHandle(driver, sdg.sdgActionAndFieldDropDownButton(label, 20), xpath, "DropDown " + label,
+						value)) {
+					log(LogStatus.INFO, "Successfully Select the value:  " + value + " from " + label, YesNo.Yes);
+					status++;
+
+				} else {
+					log(LogStatus.SKIP, "Not Successfully Select the value:  " + value + " from " + label, YesNo.Yes);
+					sa.assertTrue(false, "Not Successfully Select the value:  " + value + " from " + label);
+				}
+
+			} else {
+				ele = getLabelTextBox(projectName, PageName.HomePage.toString(), label, 10);
+				if (ele != null) {
+					if (sendKeys(driver, ele, value, label, action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "successfully entered " + value + " in " + label, YesNo.Yes);
+						status++;
+
+					} else {
+						log(LogStatus.SKIP, "could not enter " + value + " in " + label, YesNo.Yes);
+						sa.assertTrue(false, "could not enter " + value + " in " + label);
+
+					}
+				} else {
+					ele = sdg.sdgActionAndFieldTextArea(label, 10);
+					if (sendKeys(driver, ele, value, label, action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "successfully entered " + value + " in " + label, YesNo.Yes);
+						status++;
+
+					} else {
+						log(LogStatus.SKIP, "could not enter " + value + " in " + label, YesNo.Yes);
+						sa.assertTrue(false, "could not enter " + value + " in " + label);
+
+					}
+
+				}
+
+			}
+			loopCount++;
+		}
+		if (status == loopCount)
+			return true;
+		else
+			return false;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param SDGName
+	 * @param datas
+	 */
+	public boolean editFundThroughSDG(String projectName, String sdgName, String actionButtonName, String[][] sdgLabels,
+			int timeOut, String beforeUpdateFundName, String pageSize) {
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+
+		boolean flag = false;
+		if (pageSizeSelect(sdgName, pageSize)) {
+			log(LogStatus.PASS, "-----------Page Size has selected to" + pageSize + " --------------", YesNo.No);
+			if (rowButtonCorrespondingToSDG(sdgName, beforeUpdateFundName, actionButtonName, timeOut) != null) {
+				log(LogStatus.INFO, "Record Found: " + beforeUpdateFundName + " in SDG: " + sdgName, YesNo.Yes);
+				if (click(driver, rowButtonCorrespondingToSDG(sdgName, beforeUpdateFundName, actionButtonName, timeOut),
+						"Action Button " + actionButtonName, action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Button: " + actionButtonName + " on SDG: " + sdgName, YesNo.No);
+					if (enterValueAndDropDownForSDGForm(projectName, sdgLabels, action.SCROLLANDBOOLEAN, timeOut)) {
+						log(LogStatus.INFO, "Successfully Enter values on " + actionButtonName + " of SDG: " + sdgName,
+								YesNo.Yes);
+
+						if (click(driver, getRecordPageSettingSave(60), "Save Button", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Click on Save Button  " + sdgName, YesNo.No);
+							ThreadSleep(5000);
+							flag = true;
+						} else {
+							sa.assertTrue(false,
+									"Not Able to Click on Save Button Value so cannot create Fund on SDG:  " + sdgName);
+							log(LogStatus.SKIP,
+									"Not Able to Click on Save Button Value so cannot create Fund on SDG:  " + sdgName,
+									YesNo.Yes);
+						}
+					} else {
+						log(LogStatus.ERROR, "Not Able to Enter values on " + actionButtonName + " of SDG: " + sdgName,
+								YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Enter values on " + actionButtonName + " of SDG: " + sdgName);
+					}
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on Button: " + actionButtonName + " on SDG: " + sdgName,
+							YesNo.Yes);
+					sa.assertTrue(false, "Not Able to Click on Button: " + actionButtonName + " on SDG: " + sdgName);
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Record Not Found: " + beforeUpdateFundName + " in SDG: " + sdgName, YesNo.Yes);
+				sa.assertTrue(false, "Record Not Found: " + beforeUpdateFundName + " in SDG: " + sdgName);
+
+			}
+		} else {
+			log(LogStatus.FAIL, "-----------Not able to Select Page Size: " + pageSize + "--------------", YesNo.No);
+			sa.assertTrue(false, "-----------Not able to Select Page Size: " + pageSize + " --------------");
+
+		}
+		return flag;
+
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param SDGName
+	 * @param datas
+	 */
+	public boolean deleteFundThroughSDG(String projectName, String sdgName, String actionButtonName, int timeOut,
+			String afterUpdateFundName, String pageSize) {
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+
+		boolean flag = false;
+		if (pageSizeSelect(sdgName, pageSize)) {
+			log(LogStatus.PASS, "-----------Page Size has selected to" + pageSize + " --------------", YesNo.No);
+			if (rowButtonCorrespondingToSDG(sdgName, afterUpdateFundName, actionButtonName, timeOut) != null) {
+				log(LogStatus.INFO, "Record Found: " + afterUpdateFundName + " in SDG: " + sdgName, YesNo.Yes);
+				if (click(driver, rowButtonCorrespondingToSDG(sdgName, afterUpdateFundName, actionButtonName, timeOut),
+						"Action Button " + actionButtonName, action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Button: " + actionButtonName + " on SDG: " + sdgName, YesNo.No);
+
+					if (click(driver, deleteRecordConfirmBtn(sdgName),
+							"Delete Confirm Button for " + afterUpdateFundName, action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Delete Confirm Button for " + afterUpdateFundName, YesNo.No);
+						ThreadSleep(5000);
+						flag = true;
+					} else {
+						sa.assertTrue(false, "Not Able to Click on Delete Confirm Button for " + afterUpdateFundName);
+						log(LogStatus.SKIP, "Not Able to Click on Delete Confirm Button for " + afterUpdateFundName,
+								YesNo.Yes);
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on Button: " + actionButtonName + " on SDG: " + sdgName,
+							YesNo.Yes);
+					sa.assertTrue(false, "Not Able to Click on Button: " + actionButtonName + " on SDG: " + sdgName);
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Record Not Found: " + afterUpdateFundName + " in SDG: " + sdgName, YesNo.Yes);
+				sa.assertTrue(false, "Record Not Found: " + afterUpdateFundName + " in SDG: " + sdgName);
+
+			}
+		} else {
+			log(LogStatus.FAIL, "-----------Not able to Select Page Size: " + pageSize + "--------------", YesNo.No);
+			sa.assertTrue(false, "-----------Not able to Select Page Size: " + pageSize + " --------------");
+
+		}
+		return flag;
+
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param SDGName
+	 * @param datas
+	 */
+	public boolean sdgFilterSendDataAndDropDownHandleAndVerifyErrorMsg(String SDGName, String[][] datas) {
+
+		boolean flag = false;
+
+		List<WebElement> filterLabelsList = getLabelsForFilters(SDGName);
+		List<String> filterLabelsListText = filterLabelsList.stream().map(s -> s.getText()).collect(Collectors.toList())
+				.stream().map(t -> t.trim()).collect(Collectors.toList());
+
+		for (String[] data : datas) {
+			if (filterLabelsListText.contains(data[3])) {
+				log(LogStatus.INFO, "--------Filter available: " + data[3] + " --------", YesNo.No);
+				if (CommonLib.selectVisibleTextFromDropDown(driver, selectTagForSDGFilterName(data[3], 25),
+						data[3] + " Select DropDown", data[2])) {
+					log(LogStatus.INFO, "Select the Value From DropDown: " + data[2], YesNo.No);
+					CommonLib.ThreadSleep(20000);
+					if (sendKeysAndPressEnter(driver, inputBoxForSDGFilterName(data[3], 20), data[0],
+							data[3] + " Input Box", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Pass the Value to Input Box: " + data[0], YesNo.No);
+						CommonLib.ThreadSleep(2000);
+
+						if (SDGErrorHeader(SDGName, 30).getText().equals(data[1])) {
+							log(LogStatus.PASS,
+									"-----------Error Msg Verified of SDG: " + SDGName + "Expected: " + data[1]
+											+ " , Actual: " + SDGErrorHeader(SDGName, 30).getText() + "--------------",
+									YesNo.No);
+							flag = true;
+						}
+
+						else {
+							log(LogStatus.FAIL,
+									"-----------Error Msg Not Verified of SDG: " + SDGName + "Expected: " + data[1]
+											+ " , Actual: " + SDGErrorHeader(SDGName, 30).getText() + "--------------",
+									YesNo.No);
+							sa.assertTrue(false,
+									"-----------Error Msg Not Verified of SDG: " + SDGName + "Expected: " + data[1]
+											+ " , Actual: " + SDGErrorHeader(SDGName, 30).getText() + "--------------");
+
+						}
+
+					} else {
+						log(LogStatus.ERROR, "--------Not able to Pass the Value to Input Box: " + data[0] + "--------",
+								YesNo.Yes);
+						sa.assertTrue(false,
+								"--------Not able to Pass the Value to Input Box: " + data[0] + "--------");
+					}
+				} else {
+					log(LogStatus.ERROR, "--------Not able to Select the Value From DropDown: " + data[2] + "--------",
+							YesNo.Yes);
+					sa.assertTrue(false, "--------Not able to Select the Value From DropDown: " + data[2] + "--------");
+				}
+			} else {
+				log(LogStatus.ERROR, "--------Filter Not available: " + data[3] + "--------", YesNo.Yes);
+				sa.assertTrue(false, "--------Filter Not available: " + data[3] + "--------");
+			}
+
+		}
+
+		return flag;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param SDGName
+	 * @param datas
+	 */
+	public boolean sdgFilterSendDataAndDropDownHandle(String SDGName, String[][] datas) {
+
+		boolean flag = false;
+
+		List<WebElement> filterLabelsList = getLabelsForFilters(SDGName);
+		List<String> filterLabelsListText = filterLabelsList.stream().map(s -> s.getText()).collect(Collectors.toList())
+				.stream().map(t -> t.trim()).collect(Collectors.toList());
+
+		for (String[] data : datas) {
+			if (filterLabelsListText.contains(data[3])) {
+				log(LogStatus.INFO, "--------Filter available: " + data[3] + " --------", YesNo.No);
+				if (CommonLib.selectVisibleTextFromDropDown(driver, selectTagForSDGFilterName(data[3], 25),
+						data[3] + " Select DropDown", data[2])) {
+					log(LogStatus.INFO, "Select the Value From DropDown: " + data[2], YesNo.No);
+					CommonLib.ThreadSleep(20000);
+					if (sendKeysAndPressEnter(driver, inputBoxForSDGFilterName(data[3], 20), data[0],
+							data[3] + " Input Box", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Pass the Value to Input Box: " + data[0], YesNo.No);
+						CommonLib.ThreadSleep(12000);
+
+						flag = true;
+
+					} else {
+						log(LogStatus.ERROR, "--------Not able to Pass the Value to Input Box: " + data[0] + "--------",
+								YesNo.Yes);
+						sa.assertTrue(false,
+								"--------Not able to Pass the Value to Input Box: " + data[0] + "--------");
+					}
+				} else {
+					log(LogStatus.ERROR, "--------Not able to Select the Value From DropDown: " + data[2] + "--------",
+							YesNo.Yes);
+					sa.assertTrue(false, "--------Not able to Select the Value From DropDown: " + data[2] + "--------");
+				}
+			} else {
+				log(LogStatus.ERROR, "--------Filter Not available: " + data[3] + "--------", YesNo.Yes);
+				sa.assertTrue(false, "--------Filter Not available: " + data[3] + "--------");
+			}
+
+		}
+
+		return flag;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param SDGName
+	 * @param datas
+	 */
+	public boolean verifyBlankDataCorrespondingToBlankData(String SDGName, int Column1Index, int Column2Index) {
+
+		int status = 0;
+		int i = 0;
+		List<WebElement> column1Data = columnDataOfSDG(SDGName, Column1Index);
+		List<WebElement> column2Data = columnDataOfSDG(SDGName, Column2Index);
+		List<String> column1DataText = column1Data.stream().map(s -> s.getText()).collect(Collectors.toList()).stream()
+				.map(t -> t.trim()).collect(Collectors.toList());
+		List<String> column2DataText = column2Data.stream().map(s -> s.getText()).collect(Collectors.toList()).stream()
+				.map(t -> t.trim()).collect(Collectors.toList());
+
+		if (column1DataText.size() == column2DataText.size()) {
+			log(LogStatus.INFO, "--------Both Column Data Size Matched --------", YesNo.No);
+			if (column1DataText.size() != 0 && column2DataText.size() != 0) {
+				log(LogStatus.INFO, "No. of Records in both Columns are more than 0", YesNo.No);
+
+				for (String col1DataText : column1DataText) {
+					if (col1DataText.equals("")) {
+						if (column2DataText.get(i).equals("")) {
+							status++;
+						} else {
+							log(LogStatus.ERROR,
+									"--------Record of Column 1 Blank, but Record of Column 2 is not Blank, Record1: "
+											+ col1DataText + " ,Record2: " + column2DataText.get(i) + "--------",
+									YesNo.Yes);
+							sa.assertTrue(false,
+									"--------Record of Column 1 Blank, but Record of Column 2 is not Blank, Record1: "
+											+ col1DataText + " ,Record2: " + column2DataText.get(i) + "--------");
+						}
+					} else {
+
+						if (!column2DataText.get(i).equals("")) {
+							status++;
+						} else {
+							log(LogStatus.ERROR,
+									"--------Record of Column 1 not Blank , but Record of Column 2 is Blank, Record1: "
+											+ col1DataText + " ,Record2: " + column2DataText.get(i) + "--------",
+									YesNo.Yes);
+							sa.assertTrue(false,
+									"--------Record of Column 1 not Blank, but Record of Column 2 is Blank, Record1: "
+											+ col1DataText + " ,Record2: " + column2DataText.get(i) + "--------");
+						}
+					}
+
+					i++;
+				}
+
+			} else {
+				log(LogStatus.ERROR,
+						"--------No. of Records in both Columns are not more than 0, So Cannot proceed further--------",
+						YesNo.Yes);
+				sa.assertTrue(false,
+						"--------No. of Records in both Columns are not more than 0, So Cannot proceed further--------");
+			}
+		} else {
+			log(LogStatus.ERROR, "--------Both Column Data Size Not Matched --------", YesNo.Yes);
+			sa.assertTrue(false, "--------Both Column Data Size Not Matched --------");
+		}
+
+		if (status == i)
+			return true;
+		else
+			return false;
+
+	}
+
+	public List<String> dateToAscendingOrder(List<WebElement> datesListElements) {
+		List<String> datesList = new ArrayList<String>();
+		datesList = datesListElements.stream().map(date -> date.getText()).collect(Collectors.toList());
+		List<String> dateResolved = new ArrayList<String>();
+		List<String> dateStringResult = new ArrayList<String>();
+		for (String dates : datesList) {
+
+			String[] dateArray = dates.split("/");
+			int monthLength = dateArray[0].length();
+			if (monthLength == 1) {
+				dates = "0" + dates;
+			}
+
+			dateResolved.add(dates);
+
+		}
+		/* Sorting the ArrayList using Collections.sort() method */
+
+		List<Date> pureDatesList = dateResolved.stream().filter(s -> !s.equals("")).map(date -> {
+			try {
+
+				return new SimpleDateFormat("MM/dd/yyyy").parse(date);
+
+			} catch (java.text.ParseException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}).collect(Collectors.toList());
+
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+
+		Collections.sort(pureDatesList, new Comparator<Date>() {
+			@Override
+			public int compare(Date lhs, Date rhs) {
+				if (lhs.getTime() < rhs.getTime())
+					return -1;
+				else if (lhs.getTime() == rhs.getTime())
+					return 0;
+				else
+					return 1;
+			}
+		});
+
+		List<String> pureDatesListInFormat = pureDatesList.stream().map(date -> formatter.format(date))
+				.collect(Collectors.toList());
+		for (String dates : pureDatesListInFormat) {
+
+			String[] dateArray = dates.split("/");
+			String[] monthArray = dateArray[0].split("");
+			if (monthArray[0].equals("0")) {
+				String month = dateArray[0].replace("0", "");
+				dates = month + "/" + dateArray[1] + "/" + dateArray[2];
+
+			}
+
+			dateStringResult.add(dates);
+
+		}
+
+		return dateStringResult;
+	}
+
+	public List<String> dateToDescendingOrder(List<WebElement> datesListElements) {
+		List<String> datesList = new ArrayList<String>();
+		datesList = datesListElements.stream().map(date -> date.getText()).collect(Collectors.toList());
+		List<String> dateResolved = new ArrayList<String>();
+		List<String> dateStringResult = new ArrayList<String>();
+		for (String dates : datesList) {
+
+			String[] dateArray = dates.split("/");
+			int monthLength = dateArray[0].length();
+			if (monthLength == 1) {
+				dates = "0" + dates;
+			}
+
+			dateResolved.add(dates);
+
+
+
+		}
+		/* Sorting the ArrayList using Collections.sort() method */
+
+		List<Date> pureDatesList = dateResolved.stream().filter(s -> !s.equals("")).map(date -> {
+			try {
+
+				return new SimpleDateFormat("MM/dd/yyyy").parse(date);
+
+			} catch (java.text.ParseException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}).collect(Collectors.toList());
+
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+
+		Collections.sort(pureDatesList, new Comparator<Date>() {
+			@Override
+			public int compare(Date lhs, Date rhs) {
+				if (lhs.getTime() < rhs.getTime())
+					return 1;
+				else if (lhs.getTime() == rhs.getTime())
+					return 0;
+				else
+					return -1;
+			}
+		});
+
+		List<String> pureDatesListInFormat = pureDatesList.stream().map(date -> formatter.format(date))
+				.collect(Collectors.toList());
+		for (String dates : pureDatesListInFormat) {
+
+			String[] dateArray = dates.split("/");
+			String[] monthArray = dateArray[0].split("");
+			if (monthArray[0].equals("0")) {
+				String month = dateArray[0].replace("0", "");
+				dates = month + "/" + dateArray[1] + "/" + dateArray[2];
+
+			}
+			dateStringResult.add(dates);
+		}
+
+		return dateStringResult;
+	}
+
 }

@@ -614,6 +614,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 											log(LogStatus.INFO,
 													"package is installed successfully: " + firstName + " " + lastName,
 													YesNo.No);
+											CommonLib.ThreadSleep(5000);
 											switchToDefaultContent(driver);
 											return true;
 
@@ -2600,13 +2601,16 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 
 					} else {
 						log(LogStatus.ERROR, "not able to select style : " + styleType, YesNo.Yes);
+						sa.assertTrue(false, "not able to select style : " + styleType);
 					}
 				} else {
 					log(LogStatus.ERROR, "not able to select OBJECT : " + objectName, YesNo.Yes);
+					sa.assertTrue(false, "not able to select OBJECT : " + objectName);
 				}
 
 			} else {
 				log(LogStatus.FAIL, "Not able to click on new button so cannot add custom object on Tab", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on new button so cannot add custom object on Tab");
 
 			}
 
@@ -2614,6 +2618,7 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 			log(LogStatus.FAIL,
 					"Not able to search object " + objectName.toString() + " so cannot add custom object on Tab",
 					YesNo.Yes);
+			sa.assertTrue(false, "Not able to search object " + objectName.toString() + " so cannot add custom object on Tab");
 		}
 		switchToDefaultContent(driver);
 		return flag;
@@ -2744,27 +2749,32 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 		ThreadSleep(2000);
 		WebElement ele = FindElement(driver, xpath, userName, action.SCROLLANDBOOLEAN, timeOut);
 		ele = isDisplayed(driver, ele, "visibility", timeOut, userName);
-		if (clickUsingJavaScript(driver, ele, userName.toString(), action.BOOLEAN)) {
+		if (clickUsingJavaScript(driver, ele, userName.toString(), action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "able to click on " + userName, YesNo.No);
+			switchToDefaultContent(driver);
 			switchToFrame(driver, 60, getSetUpPageIframe(120));
 			xpath = "//*[@id='topButtonRow']//input[@name='edit']";
 			ele = FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, timeOut);
 			ThreadSleep(5000);
-			if (click(driver, ele, "Edit Button", action.BOOLEAN)) {
+			if (clickUsingJavaScript(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "able to click on edit button", YesNo.No);
+				switchToDefaultContent(driver);
 				switchToFrame(driver, 60, getSetUpPageIframe(120));
 				String OnObject = "";
 				String permission = "";
 				for (String[] strings : LabelswithCheck) {
+					
 					OnObject = strings[0];
 					permission = strings[1];
 					xpath = "//*[text()='" + OnObject + "']/following-sibling::*//td/input[contains(@title,'"
 							+ permission + "')]";
 					ele = FindElement(driver, xpath, OnObject + " with permission " + permission,
 							action.SCROLLANDBOOLEAN, timeOut);
+					CommonLib.ThreadSleep(4000);
 					if (clickUsingJavaScript(driver, ele, OnObject + " with permission " + permission,
 							action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on checkbox " + permission + " for " + OnObject, YesNo.No);
+						CommonLib.ThreadSleep(4000);
 
 					} else {
 						log(LogStatus.ERROR, "Not Able clicked on checkbox " + permission + " for " + OnObject,
@@ -2776,16 +2786,23 @@ public boolean editRecordTypeForObject(String projectName,String[][] labelWithVa
 								YesNo.Yes);
 
 					}
+					
 
 				}
-
-				if (click(driver, getCreateUserSaveBtn_Lighting(30), "Save Button", action.SCROLLANDBOOLEAN)) {
+				switchToDefaultContent(driver);
+				switchToFrame(driver, 60, getSetUpPageIframe(120));
+				CommonLib.ThreadSleep(5000);
+				if (clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(30), "Save Button", action.SCROLLANDBOOLEAN)) {
 					flag = true;
 					log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
-					ThreadSleep(10000);
+					
+					ThreadSleep(12000);
+					switchToDefaultContent(driver);
+					CommonLib.refresh(driver);
 				} else {
 					log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
 				}
+				
 			} else {
 				log(LogStatus.ERROR, "not able to click on edit button", YesNo.Yes);
 			}

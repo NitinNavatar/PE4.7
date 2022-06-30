@@ -127,7 +127,7 @@ public class CustomObjPageBusinessLayer extends CustomObjPage {
 		return false;
 	}
 
-	public void CreateACustomObject(String projectName, String ObjectLabel) {
+	public void CreateACustomObject(String projectName, String ObjectLabel, String[] userTypesToGivePermissions) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -135,11 +135,11 @@ public class CustomObjPageBusinessLayer extends CustomObjPage {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		String customObject = ObjectLabel + "s";
-
+		String parentID = null;
 		boolean flag = false;
 		if (home.clickOnSetUpLink()) {
 			flag = false;
-			String parentID = switchOnWindow(driver);
+			 parentID = switchOnWindow(driver);
 			if (parentID != null) {
 				if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(), object.Create)) {
 					log(LogStatus.INFO, "Click on Create/Custom object so going to create : " + customObject, YesNo.No);
@@ -172,12 +172,96 @@ public class CustomObjPageBusinessLayer extends CustomObjPage {
 		switchToDefaultContent(driver);
 		refresh(driver);
 		ThreadSleep(5000);
+		parentID = null;
+		if (flag) {
+			switchToDefaultContent(driver);
+			refresh(driver);
+			ThreadSleep(5000);
+			if (home.clickOnSetUpLink()) {
+				flag = false;
+				parentID = switchOnWindow(driver);
+				if (parentID != null) {
+
+					if (sp.addObjectToTab(environment, mode, projectName, object.Tabs, ObjectLabel, "Bell", parentID)) {
+						log(LogStatus.PASS, customObject + " added to Tab", YesNo.No);
+						flag = true;
+					} else {
+						log(LogStatus.FAIL, customObject + " not added to Tab", YesNo.Yes);
+						sa.assertTrue(false, customObject + " not added to Tab");
+					}
+					driver.close();
+					driver.switchTo().window(parentID);
+				} else {
+					log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+					sa.assertTrue(false, "could not find new window to switch");
+				}
+			} else {
+				log(LogStatus.ERROR, "could not click on setup link so cannot add custom object to Tab", YesNo.Yes);
+				sa.assertTrue(false, "could not click on setup link so cannot add custom object to Tab");
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not Able to create : " + customObject + " so cannot add custom object to Tab",
+					YesNo.Yes);
+			sa.assertTrue(false, "Not Able to create : " + customObject + " so cannot add custom object to Tab");
+		}
+
+		// String[] userNames= {"PE Standard User"};
+		String onObject = customObject;
+		String permission1 = "Create";
+		String permission2 = "Delete";
+		parentID = null;
+		for (String userName : userTypesToGivePermissions) {
+			switchToDefaultContent(driver);
+			if (home.clickOnSetUpLink()) {
+				parentID = switchOnWindow(driver);
+				if (parentID != null) {
+					log(LogStatus.INFO,
+							"Able to switch on new window, so going to set" + permission1 + " for " + onObject,
+							YesNo.No);
+					ThreadSleep(500);
+					if (setup.searchStandardOrCustomObject(environment, mode, object.Profiles)) {
+						log(LogStatus.INFO, "click on Object : " + object.Profiles, YesNo.No);
+						ThreadSleep(2000);
+						if (setup.permissionChangeForUserONObject(driver, userName,
+								new String[][] { { onObject, permission1 }, { onObject, permission2 } }, 20)) {
+							log(LogStatus.PASS,
+									permission1 + " permission change for " + userName + " on object " + onObject,
+									YesNo.No);
+
+						} else {
+							sa.assertTrue(false,
+									permission1 + " permission not change for " + userName + " on object " + onObject);
+							log(LogStatus.FAIL,
+									permission1 + " permission not change for " + userName + " on object " + onObject,
+									YesNo.Yes);
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to search/click on " + object.Profiles, YesNo.Yes);
+						sa.assertTrue(false, "Not able to search/click on " + object.Profiles);
+					}
+					
+				} else {
+					log(LogStatus.FAIL,
+							"could not find new window to switch, so cannot to set" + permission1 + " for " + onObject,
+							YesNo.Yes);
+					sa.assertTrue(false,
+							"could not find new window to switch, to set" + permission1 + " for " + onObject);
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on setup link");
+			}
+		}
+
+		if(parentID !=null) {
+		driver.close();
+		driver.switchTo().window(parentID);
+		}
+
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-	
-	
-	
-
 
 }
