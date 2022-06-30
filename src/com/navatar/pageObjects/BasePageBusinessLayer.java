@@ -344,7 +344,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	public boolean verifyGridErrorMessage1(String environment, String mode, RelatedList gridSectionName,
 			String expectedMsg, int timeOut) {
 		String xpath = "//*[text()='" + gridSectionName.toString()
-				+ "']/ancestor::article//*[text()='No data returned']";
+		+ "']/ancestor::article//*[text()='No data returned']";
 		WebElement ele = isDisplayed(driver,
 				FindElement(driver, xpath, gridSectionName.toString(), action.SCROLLANDBOOLEAN, timeOut), "visiblity",
 				30, gridSectionName.toString());
@@ -1037,7 +1037,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	}
 
-////////////////////////////////////////////////  Activity Association ///////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////  Activity Association ///////////////////////////////////////////////////////////////////
 
 	public WebElement getComponentNoDataToDisplayMessage(String componentTab, int timeOut) {
 		WebElement ele = null;
@@ -1123,7 +1123,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ele = FindElement(driver,
 							"//a[contains(@href,'lightning')]/span[@class='slds-truncate']/span[contains(text(),'"
 									+ tabName + "')]",
-							tabName, action.SCROLLANDBOOLEAN, 10);
+									tabName, action.SCROLLANDBOOLEAN, 10);
 					ele = isDisplayed(driver, ele, "visibility", 10, tabName);
 					if (ele != null) {
 						if (clickUsingJavaScript(driver, ele, tabName + " :Tab")) {
@@ -1196,6 +1196,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case FundraisingContacts:
 			viewList = "All";
 			break;
+		case OfficeLocations:
+			viewList = "All";
+			break;
 		default:
 			return false;
 		}
@@ -1218,7 +1221,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ele = FindElement(driver,
 							"//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//a[text()='"
 									+ alreadyCreated + "']",
-							alreadyCreated, action.BOOLEAN, 30);
+									alreadyCreated, action.BOOLEAN, 30);
 					ThreadSleep(2000);
 					if (click(driver, ele, alreadyCreated, action.BOOLEAN)) {
 						ThreadSleep(3000);
@@ -1582,7 +1585,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 * @param isMultiple
 	 * @return true task UI verified
 	 */
-//subject,meeting type, RA, comment,date,priority,contact name, status
+	//subject,meeting type, RA, comment,date,priority,contact name, status
 	public boolean verifyUIOfCreateNewTaskWindow(String projectName, String userFullName,
 			String[] subjectMeetingAssociationsCommentsDatePriorityName, boolean isMultiple) {
 		boolean flag = true;
@@ -1651,7 +1654,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.INFO,
 							"successfully verified dueDate textbox "
 									+ subjectMeetingAssociationsCommentsDatePriorityName[4] + " contains " + name,
-							YesNo.No);
+									YesNo.No);
 				} else {
 					log(LogStatus.ERROR, "could not verify dueDate textbox, found: " + name, YesNo.No);
 					flag = false;
@@ -1742,7 +1745,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.INFO,
 							"successfully verified dueDate textbox "
 									+ subjectMeetingAssociationsCommentsDatePriorityName[4] + " contains " + name,
-							YesNo.No);
+									YesNo.No);
 				} else {
 					log(LogStatus.ERROR, "could not verify dueDate textbox, found: " + name, YesNo.No);
 					flag = false;
@@ -1879,7 +1882,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	public WebElement removeButtonInRelatedAssociations(String projectName, String record) {
 		return isDisplayed(driver, FindElement(driver,
 				"//div[@id='relatedAssociation']//span[text()='" + record
-						+ "']/../following-sibling::button[@title='Remove']",
+				+ "']/../following-sibling::button[@title='Remove']",
 				"removeButton", action.BOOLEAN, 10), "visibility", 5, "removeButton");
 	}
 
@@ -2034,7 +2037,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				|| PageName.GlobalActtion_TaskPOpUp.toString().equals(pageName.toString())) {
 			if (labelFieldTextBox.equalsIgnoreCase(PageLabel.Name.toString()))
 				xpath = "//span[text()='" + labelTextBox
-						+ "']/..//following-sibling::div//input[@title='Search Contacts']";
+				+ "']/..//following-sibling::div//input[@title='Search Contacts']";
 			else
 				xpath = "//span[text()='" + labelTextBox + "']/..//following-sibling::div//input";
 		} else {
@@ -2187,7 +2190,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			} else {
 				// log(LogStatus.ERROR, "Not able to click on "+actionDropDown+" link",
 				// YesNo.Yes);
-				xpath = "//button[@name='" + actionDropDown + "']";
+				xpath = "//button[@name='" + actionDropDown + "' or text()='" + actionDropDown + "']";
 				ele = FindElement(driver, xpath, actionDropDown, action.BOOLEAN, 10);
 				if (click(driver, ele, actionDropDown, action.SCROLLANDBOOLEAN)) {
 					flag = true;
@@ -2274,8 +2277,16 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			xpath = "//span[text()='" + labelFieldTextBox + "']/ancestor::div//*[@title='" + name + "']";
 		}
 
-		ele = FindElement(driver, xpath, labelFieldTextBox, action, timeOut);
-		ele = isDisplayed(driver, ele, "Visibility", timeOut, labelFieldTextBox);
+		List<WebElement> list = FindElements(driver, xpath,"");
+		for(WebElement element:list) {
+			
+			ele = isDisplayed(driver, element, "Visibility", timeOut, labelFieldTextBox);
+			if(ele!=null){
+				ele=element;
+				break;
+			}
+		}
+		
 		return ele;
 	}
 
@@ -2310,7 +2321,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				// sa.assertTrue(false,"Not Able to Select Drown Down Value :
 				// "+getTabName(projectName, tabName)+" For Label "+label);
 				log(LogStatus.SKIP, "Not Able to Select Drown Down Value : " + getTabName(projectName, tabName)
-						+ " For Label " + label, YesNo.Yes);
+				+ " For Label " + label, YesNo.Yes);
 				return flag;
 			}
 		}
@@ -2322,6 +2333,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			ThreadSleep(2000);
 
 			ele = getContactNameOrRelatedAssociationNameOnTask(projectName, pageName, label, textValue, action, timOut);
+			ThreadSleep(2000);
 			if (clickUsingJavaScript(driver, ele, "Selected " + textValue + " From Label : " + label, action)) {
 				log(LogStatus.INFO, "Clicked on : " + textValue, YesNo.No);
 				ThreadSleep(2000);
@@ -3212,7 +3224,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									meetingTypeValue + " not Verified for subject : " + subject + " For item : "
 											+ createdItemValue + " Actual : " + actualValue + " \t Expected : "
 											+ meetingTypeValue,
-									YesNo.Yes);
+											YesNo.Yes);
 						}
 
 					} else {
@@ -3262,7 +3274,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									descriptionValue + " not Verified for subject : " + subject + " For item : "
 											+ createdItemValue + " Actual : " + actualValue + " \t Expected : "
 											+ descriptionValue,
-									YesNo.Yes);
+											YesNo.Yes);
 						}
 
 					} else {
@@ -3331,7 +3343,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ele = FindElement(driver,
 							"//a[contains(@href,'lightning')]/span[@class='slds-truncate']/span[contains(text(),'"
 									+ tabName + "')]",
-							tabName, action.SCROLLANDBOOLEAN, 10);
+									tabName, action.SCROLLANDBOOLEAN, 10);
 					ele = isDisplayed(driver, ele, "visibility", 10, tabName);
 					if (ele != null) {
 						if (clickUsingJavaScript(driver, ele, tabName + " :Tab")) {
@@ -3474,9 +3486,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String btname = btnName.toString();
 		String xpath = "";
 		if (isInside) {
-			xpath = "//button[text()='" + toggleTab + "' or @title='" + toggleTab + "']";
+			xpath = "//header//a[text()='"+toggleTab+"' or @title='"+toggleTab+"']" ;
 		} else {
-			xpath = "//button[text()='" + toggleTab + "' or @title='" + toggleTab + "']";
+			xpath = "//header//a[text()='"+toggleTab+"' or @title='"+toggleTab+"']" ;
 		}
 		WebElement ele = FindElement(driver, xpath, toggleTab + " >> " + btname, action, timeOut);
 		scrollDownThroughWebelement(driver, ele, "Toggle Button : " + btname);
@@ -3766,7 +3778,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							} else {
 								log(LogStatus.PASS,
 										"Not able to click on save button and so cannot updtaed image from path " + path
-												+ " on " + pageName,
+										+ " on " + pageName,
 										YesNo.No);
 							}
 						} else {
@@ -4183,7 +4195,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					+ toggleOneOrTwo + "]";
 		else if (pageName == PageName.Object4Page)
 			xpath = "(//*[text()='" + record + "']/../following-sibling::span//button[@title='Edit'])[" + toggleOneOrTwo
-					+ "]";
+			+ "]";
 		WebElement ele = FindElement(driver, xpath, "edit Button : " + record, action.BOOLEAN, timeOut);
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("return arguments[0].setAttribute('Styles','display: inline-block;')", ele);
@@ -4340,7 +4352,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			tabName = "Contacts";
 			break;
 		case InstituitonsTab:
-			tabName = "Institutions";
+			tabName = "Firms";
 			break;
 		case FundraisingsTab:
 			tabName = "Fundraisings";
@@ -4412,6 +4424,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case Object2Tab:
 			tabName = "Contacts";
 			break;
+		case OfficeLocations:
+			tabName = "Office Locations";
+			break;
 		default:
 			return flag;
 		}
@@ -4466,7 +4481,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ele = isDisplayed(driver, FindElement(driver,
 							"//a[contains(@href,'lightning')]/span[@class='slds-truncate']/span[contains(text(),'"
 									+ tabName + "')]",
-							tabName, action.SCROLLANDBOOLEAN, 10), "visibility", 10, tabName);
+									tabName, action.SCROLLANDBOOLEAN, 10), "visibility", 10, tabName);
 					if (ele != null) {
 						if (clickUsingJavaScript(driver, ele, tabName + " :Tab")) {
 							appLog.info("Clicked on Tab on More Icon: " + tabName);
@@ -4568,7 +4583,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (tabName != null) {
 			ele = FindElement(driver,
 					"//a[@title='" + tabName
-							+ "']/parent::*[@class='navItem slds-context-bar__item slds-shrink-none slds-is-active']",
+					+ "']/parent::*[@class='navItem slds-context-bar__item slds-shrink-none slds-is-active']",
 					tabName, action.SCROLLANDBOOLEAN, 30);
 			ele = isDisplayed(driver, ele, "visibility", 30, tabName);
 			if (ele != null) {
@@ -5021,7 +5036,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					xpath = "//div[contains(@class,'slds-section__content')]//a[text()='" + subject
 							+ "']/ancestor::div[@class='slds-media']//a[text()='" + relatedTo + "']";
 				}
-				xpath = "//div[@class='Next_steps']/following-sibling::div[@class='activity-timeline']//a[text()='"
+				xpath = "//div[contains(@id,'upcoming-activities')]//a[text()='"
 						+ subject + "']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			}
@@ -5051,7 +5066,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				}
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			} else {
-				xpath = "//div[@class='Next_steps']/following-sibling::div[@class='activity-timeline']//a[text()='"
+				xpath = "//div[contains(@id,'upcoming-activities')]//a[text()='"
 						+ subject + "']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			}
@@ -5076,7 +5091,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						+ subject + "')]/../following-sibling::td/a[text()='" + relatedTo + "']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			} else {
-				xpath = "//div[@class='slds-section__title  past_activity']/following-sibling::div[@class='activity-timeline']//a[text()='"
+				xpath = "//div[contains(@class,'past-activity')]//a[text()='"
 						+ subject + "']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			}
@@ -5087,7 +5102,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						+ "']/../following-sibling::td/a[text()='" + relatedTo + "']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			} else {
-				xpath = "//div[@class='slds-section__title  past_activity']/following-sibling::div[@class='activity-timeline']//a[text()='"
+				xpath = "//div[contains(@class,'past-activity')]//a[text()='"
 						+ subject + "']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			}
@@ -5112,8 +5127,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						+ institutionName + "']/../following-sibling::td[text()='Former Employee']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			} else {
-				xpath = "(//table[@data-aura-class='uiVirtualDataTable'])[1]/tbody/tr/th/span/a[contains(text(),'AF')]/../../following-sibling::td/span/a[text()='"
-						+ institutionName + "']/../../following-sibling::td/span/span[text()='Former Employee']";
+				xpath ="//div[@class='navpeIISdgBase navpeIISdg']//a[text()='"+institutionName+"']/ancestor::tr//*[text()='Former Employee']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			}
 		} else {
@@ -5174,7 +5188,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					return flag;
 				} else {
 					log(LogStatus.ERROR, "Not able to click on " + gridSectionName.toString()
-							+ " link so cannot verify error message", YesNo.Yes);
+					+ " link so cannot verify error message", YesNo.Yes);
 				}
 			}
 
@@ -5204,21 +5218,21 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					flag = true;
 				}
 			}
-//			String xpath="//h2//a[text()='"+gridSectionName.toString()+"']/ancestor::div//table//tr//td/span[contains(text(),'No data')]";
-//			List<WebElement> eleList = FindElements(driver, xpath, expectedMsg);
-//			for (WebElement webElement : eleList) {
-//				ele = isDisplayed(driver, webElement,"visibility", timeOut, gridSectionName.toString()+ " error message");
-//				if (ele!=null) {
-//					return true;
-//				}
-//					
-//			}
-//			ele = isDisplayed(driver, FindElement(driver,xpath, gridSectionName.toString()+ " error message", action.SCROLLANDBOOLEAN,timeOut),"visibility", timeOut, gridSectionName.toString()+ " error message");
-//			msg = ele.getText().trim();
-//				CommonLib.log(LogStatus.INFO, "Grid Message : "+msg, YesNo.No);
-//				if (expectedMsg.equals(msg)) {
-//					flag = true;
-//				}
+			//			String xpath="//h2//a[text()='"+gridSectionName.toString()+"']/ancestor::div//table//tr//td/span[contains(text(),'No data')]";
+			//			List<WebElement> eleList = FindElements(driver, xpath, expectedMsg);
+			//			for (WebElement webElement : eleList) {
+			//				ele = isDisplayed(driver, webElement,"visibility", timeOut, gridSectionName.toString()+ " error message");
+			//				if (ele!=null) {
+			//					return true;
+			//				}
+			//					
+			//			}
+			//			ele = isDisplayed(driver, FindElement(driver,xpath, gridSectionName.toString()+ " error message", action.SCROLLANDBOOLEAN,timeOut),"visibility", timeOut, gridSectionName.toString()+ " error message");
+			//			msg = ele.getText().trim();
+			//				CommonLib.log(LogStatus.INFO, "Grid Message : "+msg, YesNo.No);
+			//				if (expectedMsg.equals(msg)) {
+			//					flag = true;
+			//				}
 		} else {
 			log(LogStatus.ERROR,
 					"Not able to click on " + gridSectionName.toString() + " link so cannot verify error message",
@@ -5476,7 +5490,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String xpath = "";
 		String head = header.toString().replace("_", " ");
 		ThreadSleep(3000);
-		xpath = "(//*[contains(text(),'" + header + "')]/following-sibling::*//*[text()='" + itemName + "'])[1]";
+		xpath = "(//*[contains(text(),'" + head + "')]/following-sibling::*//*[text()='" + itemName + "'])[1]";
 		ele = FindElement(driver, xpath, "Header : " + itemName, action.BOOLEAN, 30);
 		// ele = isDisplayed(driver, ele, "Visibility", 10, head+" : "+itemName);
 		return ele;
@@ -5790,7 +5804,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				} else {
 
 					AppListeners.appLog
-							.info("after clicking select list icon is should be in expand mode on:" + objectName);
+					.info("after clicking select list icon is should be in expand mode on:" + objectName);
 					result.add("after clicking select list icon is should be in expand mode on:" + objectName);
 				}
 
@@ -5873,7 +5887,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 							} else {
 								AppListeners.appLog
-										.info("Filter value is not present in filter panel size:" + filterName.size());
+								.info("Filter value is not present in filter panel size:" + filterName.size());
 								result.add("Filter value is not present in filter panel size:" + filterName.size());
 
 							}
@@ -5887,7 +5901,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					} else {
 
 						AppListeners.appLog
-								.info("after clicking select list icon is should be in expand mode on:" + objectName);
+						.info("after clicking select list icon is should be in expand mode on:" + objectName);
 						result.add("after clicking select list icon is should be in expand mode on:" + objectName);
 					}
 
@@ -6028,7 +6042,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 									if (filter.trim().equalsIgnoreCase("Vintage Year")
 											|| filter.trim().equalsIgnoreCase("1st Closing Date")
-											|| filter.equals("Fund Name")) {
+											|| filter.equals("Fund Name")
+											|| filter.equals("Record Name")) {
 										if (sendKeys(driver, getfilterValuefield(projectName, timeOut), filtervalues[i],
 												"value", action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "value has been entered", YesNo.No);
@@ -6147,13 +6162,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					AppListeners.appLog.info("click on label in app launcher" + objectName);
 
 					ThreadSleep(7000);
-
-					String fullXpath = "//h2[text()='" + objectName + "']";
+					
+					String fullXpath = "//div[contains(@class,'header')]//*[text()='"+objectName+"']";
 
 					WebElement ele = FindElement(driver, fullXpath, " App Name", action.BOOLEAN, timeOut);
 
-					String pageName = ele.getText();
-					if (pageName.equals(objectName)) {
+					
+					if (ele!=null) {
 						AppListeners.appLog.info(objectName + " page successfully loaded");
 						flag = true;
 
@@ -6271,13 +6286,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									if (selectListViewAfterDelete != null) {
 										log(LogStatus.FAIL,
 												"List View:" + viewList
-														+ " again present after delete, So Test Case is going to fail ",
+												+ " again present after delete, So Test Case is going to fail ",
 												YesNo.No);
 
 									} else {
 										log(LogStatus.PASS,
 												"List View:" + viewList
-														+ " not present after delete, So Confirmed delete of List View",
+												+ " not present after delete, So Confirmed delete of List View",
 												YesNo.No);
 										flag = true;
 									}
@@ -6404,5 +6419,421 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	}
 	
+
+	public boolean clickOnAlreadyCreated(String environment, String mode, TabName tabName,
+			String alreadyCreated, int timeout) {
+
+		String viewList = null;
+		switch (tabName) {
+		case ContactTab:
+			viewList = "All Contacts";
+			break;
+		case InstituitonsTab:
+			viewList = "All Firms";
+			break;
+		case CompaniesTab:
+			viewList = "All Companies";
+			break;
+		case LimitedPartner:
+			viewList = "All Limited Partners";
+			break;
+		case FundraisingsTab:
+			viewList = "All";
+			break;
+		case FundsTab:
+			viewList = "All";
+			break;
+		case CommitmentsTab:
+			viewList = "All";
+			break;
+		case PartnershipsTab:
+			viewList = "All";
+			break;
+		case FundDistributions:
+			viewList = "All";
+			break;
+		case InvestorDistributions:
+			viewList = "All";
+			break;
+		case MarketingInitiatives:
+			viewList = "All";
+			break;
+		case MarketingProspects:
+			viewList = "Marketing Prospects";
+			break;
+		case Pipelines:
+			viewList = "All";
+			break;
+		case CapitalCalls:
+			viewList = "All";
+			break;
+		case FundDrawdowns:
+			viewList = "All";
+			break;
+		case FundraisingContacts:
+			viewList = "All";
+			break;
+		default:
+			return false;
+		}
+		System.err.println("Passed switch statement");
+		WebElement ele, selectListView;
+		ele = null;
+		if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(3000);
+			selectListView = FindElement(driver, "//div[@class='listContent']//li/a/span[text()='" + viewList + "']",
+					"Select List View", action.SCROLLANDBOOLEAN, 30);
+			if (click(driver, selectListView, "select List View", action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(3000);
+				if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+					refresh(driver);
+					ThreadSleep(5000);
+				}
+				if (sendKeys(driver, getSearchIcon_Lighting(20), alreadyCreated + "\n", "Search Icon Text",
+						action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(5000);
+					ele = FindElement(driver,
+							"//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//a[text()='"
+									+ alreadyCreated + "']",
+									alreadyCreated, action.BOOLEAN, 30);
+					ThreadSleep(2000);
+					if (click(driver, ele, alreadyCreated, action.BOOLEAN)) {
+						ThreadSleep(3000);
+						return true;
+					} else {
+						appLog.error("Not able to Click on Already Created : " + alreadyCreated);
+					}
+				} else {
+					appLog.error("Not able to enter value on Search Box");
+				}
+			} else {
+				appLog.error("Not able to select on Select View List");
+			}
+		} else {
+			appLog.error("Not able to click on Select List Icon");
+		}
+		return false;
+	}
+
+
+	public boolean addListView(String projectName, String[] listViewDataRowWise, int timeOut) {
+
+		boolean flag=false;
+		String viewList = listViewDataRowWise[2], xpath = "";
+		if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(3000);
+			xpath = "//div[@class='listContent']//li/a/span[text()='" + viewList + "']";
+			WebElement selectListView = FindElement(driver, xpath, "Select List View : " + viewList,
+					action.SCROLLANDBOOLEAN, 5);
+			ThreadSleep(3000);
+			if (selectListView != null) {
+				log(LogStatus.INFO, ""+viewList+" is already present", YesNo.No);
+
+				if (click(driver, selectListView, "select List View", action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(3000);
+					log(LogStatus.INFO, ""+viewList+" has been clicked", YesNo.No);
+
+					if (click(driver, getshowFilter(50), "Show filter", action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(3000);
+						log(LogStatus.INFO, "Clicked on the show filter", YesNo.No);
+
+						if (click(driver, getremoveAll(50), "Show filter", action.SCROLLANDBOOLEAN)) {
+							ThreadSleep(3000);
+							log(LogStatus.INFO, "Clicked on the remove all button", YesNo.No);
+
+
+							if (CreateOrChangeFilterInListView(projectName, listViewDataRowWise, timeOut)) {
+								flag= true;
+							} else {
+								log(LogStatus.ERROR, "could not change filter to "+viewList+"", YesNo.Yes);
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Could not click on remove all button", YesNo.No);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Could not click on show filter", YesNo.No);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Could not click on "+viewList+"", YesNo.No);
+				}
+
+
+			} else {
+				log(LogStatus.INFO, "not found "+viewList+".. now creating", YesNo.No);
+				if (createListView(projectName, listViewDataRowWise[2], listViewDataRowWise[3], timeOut)) {
+					log(LogStatus.INFO, viewList+" has been created", YesNo.No);				
+					if (CreateOrChangeFilterInListView(projectName, listViewDataRowWise, timeOut)) {
+						flag= true;
+					} else {
+						log(LogStatus.ERROR, "could not change filter to all", YesNo.Yes);
+					}
+				}
+				else {
+					log(LogStatus.ERROR, "could not create new list", YesNo.Yes);
+				}
+			}
+		}
+		else {
+			log(LogStatus.ERROR, "list dropdown is not clickable, so cannot check presence of Automation All",
+					YesNo.Yes);
+
+		}
+
+		return flag;
+
+	}
+
+
+	public boolean CreateOrChangeFilterInListView(String projectName, String[] listViewDataRowWise, int timeOut) {
+		WebElement ele;
+		boolean flag=false;
+		String xPath="";
+		String[] filters = listViewDataRowWise[5].split("<Break>");
+		String[] operators = listViewDataRowWise[6].split("<Break>");
+		String[] filtervalues = listViewDataRowWise[7].split("<Break>");
+		if (click(driver, getfilterByOwnerBtn(projectName, 10), "filter section", action.BOOLEAN)) {
+			log(LogStatus.INFO, "successfully click on filter section", YesNo.No);
+			if (click(driver, getallCheckboxForFilter(projectName, timeOut), "all filters", action.BOOLEAN)) {
+				log(LogStatus.INFO, "successfully click on all radio button", YesNo.No);
+				if (click(driver, getdoneButtonListView(projectName, timeOut), "done", action.BOOLEAN)) {
+					log(LogStatus.INFO, "successfully click on done buton", YesNo.No);
+
+
+					for (int i=0;i<filters.length;i++)
+					{
+
+						if (click(driver, getaddFilterBtn(projectName, timeOut), "Add Filter Button", action.BOOLEAN)) {
+							log(LogStatus.INFO, "successfully click on Add Filter buton", YesNo.No);
+
+							if (getSelectedOptionOfDropDown(driver, getfilterFielddropdown(projectName, timeOut),
+									getfilterFielddropdownlist(projectName, timeOut), "Field filter", filters[i])) {
+								log(LogStatus.INFO, "successfully Select the Field", YesNo.No);
+
+								if (getSelectedOptionOfDropDown(driver, getFilterOperatordropdown(projectName, timeOut),
+										getfilterOperatordropdownlist(projectName, timeOut), "Operator filter",
+										operators[i])) {
+									log(LogStatus.INFO, "successfully Select the Operator", YesNo.No);
+
+									if (filters[i].trim().equalsIgnoreCase("Vintage Year")
+											|| filters[i].trim().equalsIgnoreCase("1st Closing Date")
+											|| filters[i].equals("Fund Name")
+											|| filters[i].equals("Record Name")) {
+										if (sendKeys(driver, getfilterValuefield(projectName, timeOut), filtervalues[i],
+												"value", action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "value has been entered", YesNo.No);
+
+
+
+										} else {
+											log(LogStatus.ERROR, "Value is not Entered", YesNo.No);
+
+										}
+
+									}
+
+									else if (filters[i].equals("Fund Type") || filters[i].equals("Investment Category")
+											|| filters[i].equals("Stage")) {
+										if (getSelectedOptionOfDropDown(driver,
+												getfilterValueDropDown(projectName, timeOut),
+												getfilterValueDropdownlist(projectName, timeOut), "Value filter list",
+												filtervalues[i])) {
+											log(LogStatus.INFO, "successfully Select the Operator", YesNo.No);
+										} else {
+											log(LogStatus.ERROR, "Value is not Selected", YesNo.No);
+										}
+
+									}
+
+									if (click(driver, getfilterDoneBtn(projectName, timeOut), "Filter Done Button",
+											action.BOOLEAN)) {
+										log(LogStatus.INFO, "successfully click on Done buton", YesNo.No);
+
+										CommonLib.ThreadSleep(3000);
+										xPath="//div[contains(@class,'SecondaryDisplayManager')]//button[text()='Save']";
+										ele=FindElement(driver, xPath, "", action.BOOLEAN, 20);
+										if(ele==null)
+										{
+											log(LogStatus.INFO, "Filter is already created", YesNo.No);
+											flag=true;
+										}
+										else
+										{
+											if (click(driver, getfilterSave(projectName, timeOut), "save", action.BOOLEAN)) {
+												log(LogStatus.INFO, "successfully click on save buton", YesNo.No);
+
+												String xPath1="//div[@class=\"fieldLabel\" and text()='"+filters[i].toString()+"']";
+												ele=FindElement(driver, xPath1, filters[i]+" value", action.BOOLEAN, 50);
+												if (ele != null) {			
+													log(LogStatus.INFO,  "Filter has been craeted in the List view", YesNo.No);
+													flag= true;
+												} else {
+													log(LogStatus.ERROR, "Filter has been craeted in the List view", YesNo.Yes);
+
+												}
+
+											} else {
+												log(LogStatus.ERROR, "save button is not clickable", YesNo.No);
+											}
+										}
+
+
+
+									} else {
+										log(LogStatus.ERROR, "done button is not clickable", YesNo.No);
+									}
+								}
+
+								else {
+									log(LogStatus.ERROR, "Operator Filter is not Selected", YesNo.No);
+								}
+
+							} else {
+								log(LogStatus.ERROR, "Field Filter is not Selected", YesNo.No);
+							}
+						} else {
+							log(LogStatus.ERROR, "Add Filter button is not clickable", YesNo.No);
+						}
+
+
+					}
+
+				}
+
+				else {
+					log(LogStatus.ERROR, "Filter Done button is not clicked", YesNo.No);
+				}
+
+			}
+
+			else {
+				log(LogStatus.ERROR, "all checkbox is not clickable", YesNo.No);
+			}
+		} else {
+			log(LogStatus.ERROR, "list filter section is not clickable", YesNo.No);
+		}
+
+		return flag;
+	}
+
+
+	public boolean clickOnAlreadyCreatedItem(String projectName, String alreadyCreated,TabName tabName, int timeout) {
+		boolean flag = false;
+		String xpath = "";
+		String viewList = null;
+		switch (tabName) {
+		case InstituitonsTab:
+
+			if (ProjectName.MNA.toString().equals(projectName)) {
+				viewList = "All Accounts";
+			} else {
+				viewList = "All Firms";
+			}
+			break;
+
+		case TestCustomObjectTab:
+			viewList = "Automation All";
+			break;
+		case CompaniesTab:
+			viewList = "All Companies";
+			break;
+		case Navigation:
+			viewList = "All";
+			break;
+		case ContactTab:
+			viewList = "All";
+			break;
+		case FundsTab:
+			viewList = "All";
+			break;
+		case DealTab:
+			viewList = "All";
+			break;
+		case Object1Tab:
+			viewList = "All";
+			break;
+		case Object2Tab:
+			viewList = "All";
+			break;
+		case Object3Tab:
+			viewList = "All";
+			break;
+		case Object4Tab:
+			viewList = "All";
+			break;
+		case Object5Tab:
+			viewList = "All";
+			break;
+		case Object6Tab:
+			viewList = "All";
+			break;
+		case Object7Tab:
+			viewList = "All";
+			break;
+		case NavatarSetup:
+			viewList = "All";
+			break;
+		case RecycleBinTab:
+			viewList = "My Recycle Bin";
+			break;
+		case SDGTab:
+			viewList = "All";
+			break;
+		default:
+			return false;
+		}
+		System.err.println("Passed switch statement");
+		WebElement ele, selectListView;
+		ele = null;
+
+		refresh(driver);
+		if (TabName.RecycleBinTab.equals(tabName)) {
+
+		} else {
+			if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(3000);
+				xpath = "//div[@class='listContent']//li/a/span[contains(text(),'" + viewList + "')]";
+				selectListView = FindElement(driver, xpath, "Select List View : " + viewList, action.SCROLLANDBOOLEAN,
+						30);
+				if (click(driver, selectListView, "select List View : " + viewList, action.SCROLLANDBOOLEAN)) {
+				} else {
+					appLog.error("Not able to select on Select View List : " + viewList);
+				}
+			} else {
+				appLog.error("Not able to click on Select List Icon");
+			}
+		}
+
+		ThreadSleep(3000);
+		ThreadSleep(5000);
+
+		if (sendKeys(driver, getSearchIcon_Lighting(20), alreadyCreated + "\n", "Search Icon Text",
+				action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(5000);
+
+			xpath = "//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//*[text()='" + alreadyCreated
+					+ "']";
+			ele = FindElement(driver, xpath, alreadyCreated, action.BOOLEAN, 30);
+			ThreadSleep(2000);
+
+			if (click(driver, ele, alreadyCreated, action.BOOLEAN)) {
+				ThreadSleep(3000);
+				click(driver, getPagePopUp(projectName, 5), "Page PopUp", action.BOOLEAN);
+				flag = true;
+			} else {
+				appLog.error("Not able to Click on Already Created : " + alreadyCreated);
+			}
+		} else {
+			appLog.error("Not able to enter value on Search Box");
+		}
+
+		return flag;
+	}
 
 }

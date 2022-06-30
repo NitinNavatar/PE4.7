@@ -66,7 +66,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		
 					if (click(driver, getFundType(projectName, 60), "Fund Type ", action.SCROLLANDBOOLEAN)) {
 						WebElement fundTypeEle = FindElement(driver,
-								"(//div[@class='select-options'])[2]//a[@title='" + fundType + "']", fundType,
+								"//*[text()='Fund Type']/following-sibling::div//span[@title='"+fundType+"']", fundType,
 								action.SCROLLANDBOOLEAN, 10);
 						ThreadSleep(500);
 						if (click(driver, fundTypeEle, fundType, action.SCROLLANDBOOLEAN)) {
@@ -81,7 +81,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 					if (click(driver, getInvestmentCategory(projectName, 60), "Investment Category",
 							action.SCROLLANDBOOLEAN)) {
 						WebElement InvsCatgEle = FindElement(driver,
-								"(//div[@class='select-options'])[2]//a[@title='" + investmentCategory + "']",
+								"//*[text()='Investment Category']/following-sibling::div//span[@title='"+investmentCategory+"']",
 								investmentCategory, action.SCROLLANDBOOLEAN, 10);
 						ThreadSleep(500);
 						if (click(driver, InvsCatgEle, investmentCategory, action.SCROLLANDBOOLEAN)) {
@@ -142,7 +142,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 //		}
 		return false;
 	}
-	public WebElement getFirstValueFromRelatedList(String environment,String mode, String relatedList) {
+	public WebElement getFirstValueFromRelatedList(String environment,String mode, String relatedList, String fundName) {
 		WebElement ele=null;
 		String xpath = "";
 		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
@@ -150,9 +150,9 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 		
 		}else {
 			if (RelatedList.FundDrawdown.toString().equals(relatedList)) {
-				xpath = "//*[text()='DD No']/../../../../following-sibling::tbody//tr//a";
+				xpath = "//a[@title='"+fundName+"']/ancestor::tr//th//a";
 			} else {
-				xpath = "//*[text()='FD No']/../../../../following-sibling::tbody//tr//a";
+				xpath = "//a[@title='"+fundName+"']/ancestor::tr//th//a";
 			}
 			ele=isDisplayed(driver, FindElement(driver, xpath,relatedList+" id", action.SCROLLANDBOOLEAN, 30), "visibility", 30, relatedList+" id");
 		
@@ -314,7 +314,9 @@ public boolean clickOnCreatedFund(String environment, String mode,String fundNam
 
 			}else if(labelName.equalsIgnoreCase(excelLabel.Record_Type.toString())){
 				xpath = "//span[@class='test-id__field-label'][text()='"+finalLabelName+"']/../following-sibling::div//div[contains(@class,'recordTypeName')]/span";
-			}
+			}else if(labelName.equalsIgnoreCase(excelLabel.Target_Commitments.toString())){
+				xpath = "//span[@class='test-id__field-label'][contains(text(),'" + finalLabelName
+						+ "')]/../following-sibling::div//*[contains(@class,'field-value')]";			}
 			
 		ele = isDisplayed(driver,
 				FindElement(driver, xpath, labelName + " label text in " + projectName, action.SCROLLANDBOOLEAN, 60),
@@ -929,8 +931,9 @@ public boolean clickOnCreatedFund(String environment, String mode,String fundNam
 	public boolean changeStage(String projectName, String stage, int timeOut) {
 		boolean flag=true;
 		stage=stage.replace("_", " ");
+		ThreadSleep(2000);
 		if (clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Edit, 10)) {
-		
+			ThreadSleep(2000);
 		if (click(driver, getDealStage(projectName, timeOut), "Deal stage : "+stage, action.SCROLLANDBOOLEAN)) {
 			ThreadSleep(2000);
 			appLog.error("Clicked on Deal stage");
@@ -947,10 +950,11 @@ public boolean clickOnCreatedFund(String environment, String mode,String fundNam
 		} else {
 			appLog.error("Not able to Click on Deal stage : ");
 		}
-		
+		ThreadSleep(2000);
 		if (click(driver, getCustomTabSaveBtn(projectName,30), "Save Button", action.SCROLLANDBOOLEAN)) {
 			appLog.error("Click on save Button");	
 			flag = true;
+			ThreadSleep(2000);
 		}else{
 			appLog.error("Not Able to Click on save Button");	
 		}

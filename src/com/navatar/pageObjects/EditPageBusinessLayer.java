@@ -1203,6 +1203,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 				CommonLib.clickUsingJavaScript(driver, getsldHeader(50), "Deal Element");
 				WebElement addComp = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By
 						.xpath("//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']")));
+
 				js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
 				CommonLib.clickUsingJavaScript(driver, driver.findElement(By.xpath(
 						"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']/a")),
@@ -1281,133 +1282,6 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 			}
 
-		}
-
-		else {
-			log(LogStatus.ERROR, "Could not click on the Edit Page", YesNo.Yes);
-			return false;
-		}
-	}
-
-	public boolean editPageAndAddFilter(String label1, String query1, String label2, String query2, String label3,
-			String query3) {
-		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		if (clickOnEditPageLink()) {
-			CommonLib.switchToFrame(driver, 50, getAppBuilderIframe(90));
-			ThreadSleep(10000);
-
-			JavascriptExecutor js = (JavascriptExecutor) driver;
-			CommonLib.clickUsingJavaScript(driver, getsldHeader(50), "SDG Header Element", action.SCROLLANDBOOLEAN);
-			WebElement addComp = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By
-					.xpath("//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']")));
-			js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
-			if (CommonLib.clickUsingJavaScript(driver, driver.findElement(By.xpath(
-					"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']/a")),
-					"Add Link")) {
-				log(LogStatus.INFO, "Add component plus icon has been clicked", YesNo.No);
-				CommonLib.switchToDefaultContent(driver);
-				if (CommonLib.sendKeys(driver, getSearchonAppBuilder(50), "Navatar Custom Filter For SDG", "SearchBox",
-						action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "Navatar SDG has been Search", YesNo.No);
-					if (CommonLib.click(driver, getcustomFilterForSDGButton(50), "Navatar cuntom filter Button",
-							action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Navatar SDG Button has been clicked", YesNo.No);
-						if (CommonLib.sendKeys(driver, getlabel1(50), label1, "label 1", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "label1 has been Entered", YesNo.No);
-							if (CommonLib.sendKeys(driver, getquery1(50), query1, "query 1", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO, "query1 has been Entered", YesNo.No);
-								if (CommonLib.sendKeys(driver, getlabel2(50), label2, "Label 2",
-										action.SCROLLANDBOOLEAN)) {
-									log(LogStatus.INFO, "label2 has been Entered", YesNo.No);
-									if (CommonLib.sendKeys(driver, getquery2(50), query2, "Query 2",
-											action.SCROLLANDBOOLEAN)) {
-										log(LogStatus.INFO, "query2 has been Entered", YesNo.No);
-										if (CommonLib.sendKeys(driver, getlabel3(50), label3, "Label 3",
-												action.SCROLLANDBOOLEAN)) {
-											log(LogStatus.INFO, "label3 has been Entered", YesNo.No);
-											if (CommonLib.sendKeys(driver, getquery3(50), query3, "Query 3",
-													action.SCROLLANDBOOLEAN)) {
-												log(LogStatus.INFO, "query3 has been Entered", YesNo.No);
-												if (CommonLib.click(driver, getEditAppSaveButton(50),
-														"App builder Save Button", action.SCROLLANDBOOLEAN)) {
-													log(LogStatus.INFO, "App Builder save button has been clicked",
-															YesNo.No);
-													if (CommonLib.checkElementVisibility(driver,
-															getsaveConfirmationMessage(90), "Save Button", 90)) {
-														log(LogStatus.INFO, "SDG has been saved", YesNo.No);
-														if (CommonLib.click(driver, getbBackIcon(50), "",
-																action.SCROLLANDBOOLEAN)) {
-															log(LogStatus.INFO, "Back icon has been clicked", YesNo.No);
-
-															CommonLib.ThreadSleep(9000);
-
-															if (CommonLib
-																	.isElementPresent(getcustomFilterComponent(50))) {
-																log(LogStatus.INFO,
-																		"Filter has been added in the the SDG",
-																		YesNo.No);
-																return true;
-															} else {
-																log(LogStatus.ERROR, "Filter is not added in the SDG",
-																		YesNo.Yes);
-																return false;
-															}
-														} else {
-															log(LogStatus.ERROR, "Could not click on back icon",
-																	YesNo.Yes);
-															return false;
-														}
-													} else {
-														log(LogStatus.ERROR, "save confirmation message is not visible",
-																YesNo.Yes);
-														return false;
-													}
-												}
-
-												else {
-													log(LogStatus.ERROR, "Could not be click on save button",
-															YesNo.Yes);
-													return false;
-												}
-											} else {
-												log(LogStatus.ERROR, "Could not entered the query 3", YesNo.Yes);
-												return false;
-											}
-										} else {
-											log(LogStatus.ERROR, "Could not entered the label 3", YesNo.Yes);
-											return false;
-										}
-									} else {
-										log(LogStatus.ERROR, "Could not entered the query 2", YesNo.Yes);
-										return false;
-									}
-								} else {
-									log(LogStatus.ERROR, "Could not entered the label 2", YesNo.Yes);
-									return false;
-								}
-							}
-
-							else {
-								log(LogStatus.ERROR, "Could not entered the query 1", YesNo.Yes);
-								return false;
-							}
-						} else {
-							log(LogStatus.ERROR, "Could not entered the label 1", YesNo.Yes);
-							return false;
-						}
-					} else {
-						log(LogStatus.ERROR, "Could not click on the navatar custom filter button", YesNo.Yes);
-						return false;
-					}
-				} else {
-					log(LogStatus.ERROR, "Could not be Search the item", YesNo.Yes);
-					return false;
-
-				}
-			} else {
-				log(LogStatus.ERROR, "Could not be click on the Add to component button", YesNo.Yes);
-				return false;
-			}
 		}
 
 		else {
@@ -1507,6 +1381,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 						log(LogStatus.INFO, "My Record Checkbox is already unselected", YesNo.No);
 
 						if (CommonLib.click(driver, getbBackIcon(50), "", action.SCROLLANDBOOLEAN)) {
+
 							log(LogStatus.INFO, "Back icon has been clicked", YesNo.No);
 							CommonLib.ThreadSleep(9000);
 							flag = true;

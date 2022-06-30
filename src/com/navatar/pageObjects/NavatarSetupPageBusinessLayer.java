@@ -101,6 +101,9 @@ public class NavatarSetupPageBusinessLayer extends NavatarSetupPage implements N
 		case DealCreation:
 			sideMenu = "Deal Creation";
 			break;
+		case CoInvestmentSettings:
+			sideMenu = "Co-investment Settings";
+			break;
 		default:
 			return false;
 		}

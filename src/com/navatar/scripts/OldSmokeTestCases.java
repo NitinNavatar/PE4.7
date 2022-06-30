@@ -1,6 +1,12 @@
 package com.navatar.scripts;
 
 import static com.navatar.generic.CommonLib.*;
+import static com.navatar.generic.CommonVariables.Smoke_TWINS1Name;
+import static com.navatar.generic.CommonVariables.Smoke_TWINS2Name;
+import static com.navatar.generic.CommonVariables.TWTask3Subject;
+import static com.navatar.generic.CommonVariables.adminPassword;
+import static com.navatar.generic.CommonVariables.appName;
+import static com.navatar.generic.CommonVariables.crmUser1EmailID;
 import static com.navatar.generic.SmokeCommonVariables.*;
 
 import java.awt.AWTException;
@@ -56,6 +62,7 @@ import com.relevantcodes.extentreports.LogStatus;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.EnumConstants.ActivityRelatedButton;
 import com.navatar.generic.EnumConstants.ActivityRelatedLabel;
+import com.navatar.generic.EnumConstants.ActivityTimeLineItem;
 import com.navatar.generic.EnumConstants.AddProspectsTab;
 import com.navatar.generic.EnumConstants.AddressAction;
 import com.navatar.generic.EnumConstants.BulkActions_DefaultValues;
@@ -125,6 +132,7 @@ import com.navatar.pageObjects.PartnershipsPageBusinessLayer;
 import com.navatar.pageObjects.PipelinesPageBusinessLayer;
 import com.navatar.pageObjects.ReportsTabBusinessLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
+import com.navatar.pageObjects.TaskPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
 import static com.navatar.generic.BaseLib.smokeFilePath;
@@ -231,40 +239,9 @@ public class OldSmokeTestCases extends BaseLib {
 		String[] splitedUserLastName = removeNumbersFromString(crmUser1LastName);
 		String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
 		String emailId = lp.generateRandomEmailId(gmailUserName2);
-		ExcelUtils.writeData(smokeFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",excelLabel.User_Last_Name);
+		ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",excelLabel.User_Last_Name);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		boolean flag = false;
-		if (home.clickOnSetUpLink(environment, mode)) {
-			String parentID = switchOnWindow(driver);
-			if (parentID!=null) {
-				if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(),object.Company_Information )) {
-					switchToFrame(driver, 20, sp.getSetUpPageIframe(20));
-					WebElement ele = sp.getOrgCompanyName(30);
-					if (ele!=null) {
-						String Organization_Name=ele.getText().trim();
-						System.err.println("getOrgCompanyName "+Organization_Name);
-						ExcelUtils.writeData(smokeFilePath, Organization_Name, "Users", excelLabel.Variable_Name, "AdminUser",excelLabel.Organization_Name);
-							
-					} else {
-						log(LogStatus.ERROR, object.Company_Information+" element could not be found at setup", YesNo.Yes);
-						sa.assertTrue(false, object.Company_Information+" element could not be found at setup");
-					}
-					
-				}else {
-					log(LogStatus.ERROR, object.Company_Information+" could not be found at setup", YesNo.Yes);
-					sa.assertTrue(false, object.Company_Information+" could not be found at setup");
-				}
-				driver.close();
-				driver.switchTo().window(parentID);
-			}else {
-				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
-				sa.assertTrue(false, "could not find new window to switch");
-			}
-		}else {
-			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
-			sa.assertTrue(false, "could not click on setup link");
-		}
-		
 		switchToDefaultContent(driver);
 		
 		for (int i = 0; i < 3; i++) {
@@ -285,9 +262,9 @@ public class OldSmokeTestCases extends BaseLib {
 					if (sp.createPEUser(crmUser1FirstName, UserLastName, emailId, crmUserLience,
 							crmUserProfile)) {
 						log(LogStatus.INFO, "CRM User is created Successfully: " + crmUser1FirstName + " " + UserLastName, YesNo.No);
-						ExcelUtils.writeData(smokeFilePath, emailId, "Users", excelLabel.Variable_Name, "User1",
+						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User1",
 								excelLabel.User_Email);
-						ExcelUtils.writeData(smokeFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",
+						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",
 								excelLabel.User_Last_Name);
 						flag = true;
 						break;
@@ -305,7 +282,7 @@ public class OldSmokeTestCases extends BaseLib {
 			}
 			
 		}
-		if (flag) {
+		if (flag && (environment.equalsIgnoreCase("Test")|| environment.equalsIgnoreCase("Testing"))) {
 			
 			if (sp.installedPackages(crmUser1FirstName, UserLastName)) {
 				appLog.info("PE Package is installed Successfully in CRM User: " + crmUser1FirstName + " "
@@ -427,7 +404,8 @@ public class OldSmokeTestCases extends BaseLib {
 	
 	@Parameters({ "environment", "mode" })
 	@Test
-	public void PESmokeTc001_3_createCustomEmailAndTemplate(String environment, String mode) {ReportsTabBusinessLayer report = new ReportsTabBusinessLayer(driver);
+	public void PESmokeTc001_3_createCustomEmailAndTemplate(String environment, String mode) {
+	ReportsTabBusinessLayer report = new ReportsTabBusinessLayer(driver);
 	EmailMyTemplatesPageBusinessLayer emailtemplate = new EmailMyTemplatesPageBusinessLayer(driver);
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -513,9 +491,7 @@ public class OldSmokeTestCases extends BaseLib {
 	@Parameters({ "environment", "mode" })
 	@Test
 	public void PESmokeTc001_4_createPreCondition(String environment, String mode) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
 		MarketingInitiativesPageBusinesslayer market = new MarketingInitiativesPageBusinesslayer(driver);
@@ -523,7 +499,7 @@ public class OldSmokeTestCases extends BaseLib {
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		String FieldLabels = excelLabel.Street.toString() + "," + excelLabel.City.toString() + ","
 				+ excelLabel.State.toString() + "," + excelLabel.Postal_Code.toString() + ","
-				+ excelLabel.Country.toString() + "," + excelLabel.Phone.toString() + "," + excelLabel.Fax.toString();
+				+ excelLabel.Country.toString() + "," + excelLabel.Phone.toString() ;
 		for (int j = 0; j < 10; j++) {
 			if (lp.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
 				ThreadSleep(2000);
@@ -538,24 +514,31 @@ public class OldSmokeTestCases extends BaseLib {
 				}
 				if (j == 1) {
 					String FielsValues = SmokeINS2_Street + "," + SmokeINS2_City + "," + SmokeINS2_State + ","
-							+ SmokeINS2_Postal_Code + "," + SmokeINS2_Country + "," + SmokeINS2_Phone + ","
-							+ SmokeINS2_Fax;
+							+ SmokeINS2_Postal_Code + "," + SmokeINS2_Country + "," + SmokeINS2_Phone ;
 					if (ins.createInstitution(environment, mode, SmokeINS2, SmokeINS2_RecordType, FieldLabels,
 							FielsValues)) {
 						appLog.info("institution is created : " + SmokeINS2);
 						String emailId = contact.generateRandomEmailId();
-						if (contact.createContact(mode, SmokeC5_FName, SmokeC5_LName, SmokeINS2, emailId,
-								SmokeC5_RecordType,null, null, CreationPage.InstitutionPage,null,null)) {
-							appLog.info("Contact is create Successfully: " + SmokeC5_FName + " " + SmokeC5_LName);
-							ExcelUtils.writeData(smokeFilePath, emailId, "Contacts", excelLabel.Variable_Name,
-									"SmokeC5", excelLabel.Contact_EmailId);
-						} else {
-							appLog.error("Not able to create Contact: " + SmokeC5_FName + " " + SmokeC5_LName);
-							sa.assertTrue(false, "Not able to create Contact: " + SmokeC5_FName + " " + SmokeC5_LName);
-							log(LogStatus.ERROR, "Not able to create Contact: " + SmokeC5_FName + " " + SmokeC5_LName,
-									YesNo.Yes);
-						}
+						if (lp.clickOnTab(environment, mode, TabName.ContactTab)) {
+							appLog.info("click on contact tab");
+							if (contact.createContact(mode, SmokeC5_FName, SmokeC5_LName, SmokeINS2, emailId,
+									SmokeC5_RecordType,null, null, CreationPage.InstitutionPage,null,null)) {
+								appLog.info("Contact is create Successfully: " + SmokeC5_FName + " " + SmokeC5_LName);
+								ExcelUtils.writeData(smokeFilePath, emailId, "Contacts", excelLabel.Variable_Name,
+										"SmokeC5", excelLabel.Contact_EmailId);
+							} else {
+								appLog.error("Not able to create Contact: " + SmokeC5_FName + " " + SmokeC5_LName);
+								sa.assertTrue(false, "Not able to create Contact: " + SmokeC5_FName + " " + SmokeC5_LName);
+								log(LogStatus.ERROR, "Not able to create Contact: " + SmokeC5_FName + " " + SmokeC5_LName,
+										YesNo.Yes);
+							}
 
+						}else {
+							appLog.error("Not able to click on related contact tab");
+							sa.assertTrue(false, "Not able to click on related contact tab");
+							log(LogStatus.ERROR, "Not able to click on related contact tab", YesNo.Yes);
+						}
+						
 					} else {
 						appLog.error("Not able to click on create Institute : " + SmokeINS2);
 						sa.assertTrue(false, "Not able to click on create Institute : " + SmokeINS2);
@@ -573,25 +556,33 @@ public class OldSmokeTestCases extends BaseLib {
 				}
 				if (j == 3) {
 					String FielsValues = SmokeINS4_Street + "," + SmokeINS4_City + "," + SmokeINS4_State + ","
-							+ SmokeINS4_Postal_Code + "," + SmokeINS4_Country + "," + SmokeINS4_Phone + ","
-							+ SmokeINS4_Fax;
+							+ SmokeINS4_Postal_Code + "," + SmokeINS4_Country + "," + SmokeINS4_Phone ;
 					if (ins.createInstitution(environment, mode, SmokeINS4, SmokeINS4_RecordType, FieldLabels,
 							FielsValues)) {
 						appLog.info("institution is created : " + SmokeINS4);
 						String emailId = contact.generateRandomEmailId();
 						String contact6FieldLabels=excelLabel.Other_Street.toString()+","+excelLabel.Other_City.toString()+","+excelLabel.Other_State.toString()+","+excelLabel.Other_Zip.toString()+","+excelLabel.Other_Country.toString();
 						String contact6FieldValues=SmokeC6_Other_Street+","+SmokeC6_Other_City+","+SmokeC6_Other_State+","+SmokeC6_Other_Zip+","+SmokeC6_Other_Country;
-						if (contact.createContact(mode, SmokeC6_FName, SmokeC6_LName, SmokeINS4, emailId,SmokeC4_RecordType,
-								contact6FieldLabels, contact6FieldValues, CreationPage.InstitutionPage,null,null)) {
-							appLog.info("Contact is create Successfully: " + SmokeC6_FName + " " + SmokeC6_LName);
-							ExcelUtils.writeData(smokeFilePath, emailId, "Contacts", excelLabel.Variable_Name,
-									"SmokeC6", excelLabel.Contact_EmailId);
-						} else {
-							appLog.error("Not able to create Contact: " + SmokeC6_FName + " " + SmokeC6_LName);
-							sa.assertTrue(false, "Not able to create Contact: " + SmokeC6_FName + " " + SmokeC6_LName);
-							log(LogStatus.ERROR, "Not able to create Contact: " + SmokeC6_FName + " " + SmokeC6_LName,
-									YesNo.Yes);
+						
+						if (lp.clickOnTab(environment, mode, TabName.ContactTab)) {
+							appLog.info("click on contact tab");
+							if (contact.createContact(mode, SmokeC6_FName, SmokeC6_LName, SmokeINS4, emailId,SmokeC4_RecordType,
+									contact6FieldLabels, contact6FieldValues, CreationPage.InstitutionPage,null,null)) {
+								appLog.info("Contact is create Successfully: " + SmokeC6_FName + " " + SmokeC6_LName);
+								ExcelUtils.writeData(smokeFilePath, emailId, "Contacts", excelLabel.Variable_Name,
+										"SmokeC6", excelLabel.Contact_EmailId);
+							} else {
+								appLog.error("Not able to create Contact: " + SmokeC6_FName + " " + SmokeC6_LName);
+								sa.assertTrue(false, "Not able to create Contact: " + SmokeC6_FName + " " + SmokeC6_LName);
+								log(LogStatus.ERROR, "Not able to create Contact: " + SmokeC6_FName + " " + SmokeC6_LName,
+										YesNo.Yes);
+							}
+						}else {
+							appLog.error("Not able to click on related contact tab");
+							sa.assertTrue(false, "Not able to click on related contact tab");
+							log(LogStatus.ERROR, "Not able to click on related contact tab", YesNo.Yes);
 						}
+						
 					} else {
 						appLog.error("Not able to click on create Institute : " + SmokeINS4);
 						sa.assertTrue(false, "Not able to click on create Institute : " + SmokeINS4);
@@ -880,12 +871,8 @@ public class OldSmokeTestCases extends BaseLib {
 	@Parameters({ "environment", "mode" })
 	@Test
 	public void PESmokeTc002_verifyAddProspectAndAddContacts(String environment, String mode) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
-		ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
 		MarketingInitiativesPageBusinesslayer market = new MarketingInitiativesPageBusinesslayer(driver);
-		FundsPageBusinessLayer fund = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		HashMap<String, String> ContactAndAccountName = new HashMap<>();
 		ContactAndAccountName.put(SmokeC1_FName + " " + SmokeC1_LName, SmokeINS1);
@@ -911,7 +898,7 @@ public class OldSmokeTestCases extends BaseLib {
 					sa.assertTrue(false, "Add prospect button is not visible on created MI: " + Smoke_MI1);
 					log(LogStatus.ERROR, "Add prospect button is not visible on created MI: " + Smoke_MI1, YesNo.Yes);
 				}
-				if (market.actionDropdownElement(environment, PageName.Marketing_Initiative, ShowMoreActionDropDownList.Email_Prospect, 10) != null) {
+				if (market.actionDropdownElement(environment, PageName.Marketing_Initiative, ShowMoreActionDropDownList.Email_Prospects, 10) != null) {
 					appLog.info("Email prospects button is displaying on MI : " + Smoke_MI1);
 				} else {
 					appLog.error("Email prospect button is not visible on created MI: " + Smoke_MI1);
@@ -1670,6 +1657,7 @@ public class OldSmokeTestCases extends BaseLib {
 									log(LogStatus.ERROR, "NOt able to click on remove button so cannot check the error message.", YesNo.Yes);
 									sa.assertTrue(false,"NOt able to click on remove button so cannot check the error message.");
 								}
+								ThreadSleep(2000);
 								if (market.selectProspectsContactAndVerifyReviewProspectList(environment,mode,AddProspectsTab.Report,
 										ContactAndAccountName, false).isEmpty()) {
 									appLog.info("Contact is selected Successfully in review prospects list");
@@ -2155,12 +2143,8 @@ public class OldSmokeTestCases extends BaseLib {
 	@Parameters({ "environment", "mode" })
 	@Test
 	public void PESmokeTc006_verifyEmailProspectAndSendEmail(String environment, String mode) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
-		ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
 		MarketingInitiativesPageBusinesslayer market = new MarketingInitiativesPageBusinesslayer(driver);
-		FundsPageBusinessLayer fund = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		HashMap<String, String> ContactAndAccountName = new HashMap<>();
 		ContactAndAccountName.put(SmokeC1_FName + " " + SmokeC1_LName, SmokeINS1);
@@ -2472,13 +2456,9 @@ public class OldSmokeTestCases extends BaseLib {
 	@Parameters({ "environment", "mode" })
 	@Test
 	public void PESmokeTc007_verifyEmailAndCreateActivity(String environment, String mode) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
-		ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
 		MarketingInitiativesPageBusinesslayer market = new MarketingInitiativesPageBusinesslayer(driver);
-		FundsPageBusinessLayer fund = new FundsPageBusinessLayer(driver);
 		String text = null;
 		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "MM/dd/YYYY");
 		lp.CRMLogin(superAdminUserName, adminPassword);
@@ -2656,12 +2636,8 @@ public class OldSmokeTestCases extends BaseLib {
 	@Parameters({ "environment", "mode" })
 	@Test
 	public void PESmokeTc008_verifyEmailProspectPageAndSendMail(String environment, String mode) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
-		ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
 		MarketingInitiativesPageBusinesslayer market = new MarketingInitiativesPageBusinesslayer(driver);
-		FundsPageBusinessLayer fund = new FundsPageBusinessLayer(driver);
 		WebElement ele = null;
 		String emailFolderName = ExcelUtils.readData(smokeFilePath, "CustomEmailFolder", excelLabel.Variable_Name,
 				"EmailTemplate1", excelLabel.Email_Template_Folder_Label);
@@ -2764,12 +2740,9 @@ public class OldSmokeTestCases extends BaseLib {
 	@Parameters({ "environment", "mode" })
 	@Test
 	public void PESmokeTc009_1_verifyEmailAndCreateActivityforContact2(String environment, String mode) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
 		MarketingInitiativesPageBusinesslayer market = new MarketingInitiativesPageBusinesslayer(driver);
-		FundsPageBusinessLayer fund = new FundsPageBusinessLayer(driver);
 		String text = null;
 		String emailFolderSubject = ExcelUtils.readData(smokeFilePath, "CustomEmailFolder", excelLabel.Variable_Name,
 				"EmailTemplate1", excelLabel.Subject);
@@ -3260,10 +3233,7 @@ public class OldSmokeTestCases extends BaseLib {
 	@Parameters({ "environment", "mode" })
 	@Test
 	public void PESmokeTc010_verifyCreateFundRaisingButton(String environment, String mode) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
-		ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		MarketingInitiativesPageBusinesslayer market = new MarketingInitiativesPageBusinesslayer(driver);
 		FundsPageBusinessLayer fund = new FundsPageBusinessLayer(driver);
@@ -3373,13 +3343,9 @@ public class OldSmokeTestCases extends BaseLib {
 	@Parameters({ "environment", "mode" })
 	@Test
 	public void PESmokeTc011_verifyCreateFundraisingsFromHomePage(String environment, String mode) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
-		ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		MarketingInitiativesPageBusinesslayer market = new MarketingInitiativesPageBusinesslayer(driver);
-		FundsPageBusinessLayer fund = new FundsPageBusinessLayer(driver);
 		FundraisingsPageBusinessLayer frpg = new FundraisingsPageBusinessLayer(driver);
 		List<String> contactNamelist= new ArrayList<String>();
 		contactNamelist.add(SmokeC1_FName+" "+SmokeC1_LName);
@@ -3626,10 +3592,7 @@ public class OldSmokeTestCases extends BaseLib {
 	@Parameters({ "environment", "mode" })
 	@Test
 	public void PESmokeTc012_1_verifyCreateFundraisingsForCoInvestment(String environment, String mode) {
-			SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 			LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-			InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
-			ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
 			HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 			MarketingInitiativesPageBusinesslayer market = new MarketingInitiativesPageBusinesslayer(driver);
 			FundsPageBusinessLayer fund = new FundsPageBusinessLayer(driver);
@@ -5269,7 +5232,7 @@ public class OldSmokeTestCases extends BaseLib {
 		if(fund.clickOnTab(environment, mode, TabName.FundsTab)) {
 			if(fund.clickOnCreatedFund(environment, mode, Smoke_Fund1)) {
 				appLog.info("clicked on Fund : " + Smoke_Fund1);
-				if(fund.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.Fundraisings, RelatedTab.Fundraising.toString())) {
+				if(fund.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.Fundraising_Contacts, RelatedTab.Fundraising_Contact.toString())) {
 					if(click(driver,fund.getEmailFundraisingContactsBtn(environment, mode, 30), "email fundraising contact button", action.SCROLLANDBOOLEAN)) {
 						if(mode.toString().equalsIgnoreCase(Mode.Lightning.toString())) {
 							switchToFrame(driver, 20, fund.getEmailFundraisingContactFrame_Lightning(20));
@@ -5428,7 +5391,7 @@ public class OldSmokeTestCases extends BaseLib {
 		if(fund.clickOnTab(environment, mode, TabName.FundsTab)) {
 			if(fund.clickOnCreatedFund(environment, mode, Smoke_Fund3)) {
 				appLog.info("clicked on Fund : " + Smoke_Fund3);
-				if(fund.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.Fundraisings, RelatedTab.Fundraising.toString())) {
+				if(fund.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.Fundraising_Contacts, RelatedTab.Fundraising_Contact.toString())) {
 					if(click(driver,fund.getEmailFundraisingContactsBtn(environment, mode, 30), "email fundraising contact button", action.SCROLLANDBOOLEAN)) {
 						if(mode.toString().equalsIgnoreCase(Mode.Lightning.toString())) {
 							switchToFrame(driver, 20, fund.getEmailFundraisingContactFrame_Lightning(20));
@@ -6064,8 +6027,8 @@ public class OldSmokeTestCases extends BaseLib {
 
 					
 					
-					String[][] commitmentRowRecord1= {{SmokeCOMM1_ID,SmokeCOMM1_CommitmentAmount,Smoke_LP1,todayDate,""},
-							{SmokeCOMM2_ID,SmokeCOMM2_CommitmentAmount,Smoke_LP2,todayDate,""}};
+					String[][] commitmentRowRecord1= {{Smoke_Fund1,SmokeCOMM1_CommitmentAmount,Smoke_LP1,todayDate,""},
+							{Smoke_Fund1,SmokeCOMM2_CommitmentAmount,Smoke_LP2,todayDate,""}};
 					//String totalAmount1=String.valueOf((Integer.parseInt(SmokeCOMM1_CommitmentAmount)+Integer.parseInt(SmokeCOMM2_CommitmentAmount)));
 					
 					if(fund.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Commitments, RelatedTab.Fundraising.toString())) {
@@ -6675,9 +6638,9 @@ public class OldSmokeTestCases extends BaseLib {
 		}
 		if(ins.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
 			if(ins.clickOnCreatedInstitution(environment, mode, SmokeINS1)) {
-				String[][] commitmentRowRecord= {{SmokeCOMM1_ID,SmokeCOMM1_CommitmentAmount,Smoke_LP1,Smoke_P1,"",todayDate},
-						{SmokeCOMM2_ID,SmokeCOMM2_CommitmentAmount,Smoke_LP2,Smoke_P1,"",todayDate},{SmokeCOMM3_ID,SmokeCOMM3_CommitmentAmount,Smoke_LP1,Smoke_P1,"",todayDate},
-						{SmokeCOMM4_ID,SmokeCOMM4_CommitmentAmount,Smoke_LP3,Smoke_P2,"",todayDate}};
+				String[][] commitmentRowRecord= {{Smoke_Fund1,SmokeCOMM1_CommitmentAmount,Smoke_LP1,Smoke_P1,"",todayDate},
+						{Smoke_Fund1,SmokeCOMM2_CommitmentAmount,Smoke_LP2,Smoke_P1,"",todayDate},{Smoke_Fund1,SmokeCOMM3_CommitmentAmount,Smoke_LP1,Smoke_P1,"",todayDate},
+						{Smoke_Fund1,SmokeCOMM4_CommitmentAmount,Smoke_LP3,Smoke_P2,"",todayDate}};
 				//String totalAmount=String.valueOf((Integer.parseInt(SmokeCOMM1_CommitmentAmount)+Integer.parseInt(SmokeCOMM2_CommitmentAmount)+Integer.parseInt(SmokeCOMM3_CommitmentAmount)+Integer.parseInt(SmokeCOMM4_CommitmentAmount)));
 				if(ins.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Commitments, RelatedTab.Fundraising.toString())) {
 					log(LogStatus.INFO, "Clicked on related tab fundraising on institution page"+SmokeINS1, YesNo.No);
@@ -7120,9 +7083,12 @@ public class OldSmokeTestCases extends BaseLib {
 									switchToFrame(driver, 30, home.getCreateCommitmentFrame_Lightning(20));
 
 								}
+								WebElement element=null;
 								List<WebElement> ele1=home.getCommitmentCreationContinueBtn(2);
 								for(int j=0; j<ele1.size(); j++) {
-									if(click(driver, ele1.get(j), "continue button", action.SCROLLANDBOOLEAN)) {
+									element=isDisplayed(driver, ele1.get(j), "Visibility", 5, "");
+									if(element!=null) {
+									if(click(driver, element, "continue button", action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.INFO, "clicked on continue button", YesNo.No);
 										flag = true;
 										break;
@@ -7132,6 +7098,7 @@ public class OldSmokeTestCases extends BaseLib {
 											sa.assertTrue(false, "Not able to click on create commitment pop up continue button");
 
 										}
+									}
 									}
 								}
 								String text= null;
@@ -7550,7 +7517,7 @@ public class OldSmokeTestCases extends BaseLib {
 					if(ins.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Commitments, RelatedTab.Fundraising.toString())) {
 						
 						log(LogStatus.INFO, "click on related fundraising tab on insitiution page"+SmokeINDINV1, YesNo.No);
-						String[][] commitmentRowRecord= {{SmokeCOMM5_ID,SmokeCOMM5_CommitmentAmount,Smoke_LP4,todayDate,""}};
+						String[][] commitmentRowRecord= {{Smoke_Fund1,SmokeCOMM5_CommitmentAmount,Smoke_LP4,todayDate,""}};
 
 						if(ins.verifyCommitmentDetails(environment, mode, commitmentRowRecord, Smoke_Fund1,SmokeCOMM5_CommitmentAmount).isEmpty()) {
 							log(LogStatus.INFO, "Commitment details are verified on Individual Investor page "+SmokeINDINV1, YesNo.No);
@@ -7559,7 +7526,7 @@ public class OldSmokeTestCases extends BaseLib {
 							sa.assertTrue(false, "Commitment details are not verified on Individual Investor page "+SmokeINS1);
 						}
 						
-						String[][] commitmentRowRecord1= {{SmokeCOMM6_ID,SmokeCOMM6_CommitmentAmount,Smoke_LP4,todayDate,""}};
+						String[][] commitmentRowRecord1= {{Smoke_Fund3,SmokeCOMM6_CommitmentAmount,Smoke_LP4,todayDate,""}};
 
 						if(ins.verifyCommitmentDetails(environment, mode, commitmentRowRecord1, Smoke_Fund3,SmokeCOMM6_CommitmentAmount).isEmpty()) {
 							log(LogStatus.INFO, "Commitment details are verified on Individual Investor page "+SmokeINDINV1, YesNo.No);
@@ -8004,3213 +7971,7 @@ public class OldSmokeTestCases extends BaseLib {
 		appLog.info("Pass");
 	}
 
-	@Parameters({ "environment", "mode" })
-	@Test
-	public void PESmokeTc030_1_CreationOfDealCreationAndIndividualnvestor(String environment, String mode) {
-
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		NavatarSetupPageBusinessLayer np= new NavatarSetupPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		navigationMenuName = NavigationMenuItems.Bulk_Actions.toString();
-
-		lp.CRMLogin(superAdminUserName, adminPassword);
-		String[] vfPage = {"Deal_Creation","IndividualInvestor"};
-		String[] navigationLabels = {BulkActions_DefaultValues.Deal_Creation.toString(),
-				BulkActions_DefaultValues.Individual_Investor_Creation.toString()};
-
-
-		boolean flag=false;
-		for (int i = 0; i < navigationLabels.length; i++) {
-			flag=false;
-			String setupSideMenuTab=navigationLabels[i];
-			switchToDefaultContent(driver);
-			if (home.clickOnNavatarEdgeLinkHomePage(navigationMenuName, action.BOOLEAN, 30)) {
-				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-				WebElement ele = home.getNavigationLabel(navigationLabels[i], action.BOOLEAN, 10);
-				if (ele==null) {
-					log(LogStatus.INFO, navigationLabels[i]+" is not present on "+navigationMenuName+" so going to create via VF page", YesNo.No);
-					String secondID;
-					HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
-					SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
-					String navigationLabel="Navigation Label";
-					String orderLabel="Order";
-					String urlLabel = "URL";
-					String navigationTypeLabel = "Navigation Type";
-
-					String navigationLabelValue=navigationLabels[i];
-					String orderLabelValue=String.valueOf(i+4);
-					String urlLabelValue="";
-					String navigationTypeLabelValue=navigationMenuName;
-					flag=false;
-					if (home.clickOnSetUpLink(environment, mode)) {
-						String parentID = switchOnWindow(driver);
-						if (parentID!=null) {
-							secondID=driver.getWindowHandle();
-							log(LogStatus.INFO, "Able to switch on new window, so going to update Navigation Label", YesNo.No);
-							if (sendKeys(driver, setup.getQucikSearchInSetupPage(120), "Visualforce Pages", "quick search", action.BOOLEAN)) {
-								ThreadSleep(3000);
-								if (click(driver, setup.getvisualForcePagesLink(120), "visual force link", action.BOOLEAN)) {
-									switchToFrame(driver,60, setup.getFrame(PageName.VisualForcePage, 120));
-									ThreadSleep(3000);
-									click(driver, FindElement(driver, "//a[@class='listItem']/span[text()='"+navigationLabels[i].charAt(0)+"']", "", action.BOOLEAN, 10), "",action.BOOLEAN);
-									ThreadSleep(3000);
-									switchToFrame(driver,60, setup.getFrame(PageName.VisualForcePage, 120));
-									ThreadSleep(3000);
-									ele = setup.VFPagePreviewLink(vfPage[i],30);
-									if (click(driver, ele, "preview link for bulk email", action.SCROLLANDBOOLEAN)) {
-										for (String handle:driver.getWindowHandles()) {
-											if(!handle.equals(secondID) && !handle.equals(parentID)) {
-												driver.switchTo().window(handle);
-												flag=true;
-												break;
-											}
-										}
-										if (!flag) {
-											log(LogStatus.ERROR, "could not switch to third window , so cannot get "+vfPage[i]+" url link", YesNo.Yes);
-											sa.assertTrue(false, "could not switch to third window , so cannot get "+vfPage[i]+" url link");
-										}
-										ThreadSleep(3000);
-										urlLabelValue=getURL(driver, 10);
-										System.err.println(urlLabelValue);
-										switchToDefaultContent(driver);
-										driver.close();
-										driver.switchTo().window(secondID);
-									}else {
-										sa.assertTrue(false, "preview link of "+vfPage[i]+" is not clickable");
-										log(LogStatus.FAIL, "preview link of "+vfPage[i]+" is not clickable", YesNo.Yes);
-									}
-								}else {
-									sa.assertTrue(false, "visual force page link is not clickable");
-									log(LogStatus.FAIL, "visual force page link is not clickable", YesNo.Yes);
-								}
-							}else {
-								sa.assertTrue(false, "search textbox is not visible");
-								log(LogStatus.FAIL, "search textbox is not visible", YesNo.Yes);
-							}
-							driver.close();
-							driver.switchTo().window(parentID);
-						}else {
-							sa.assertTrue(false, "could not find window to switch");
-							log(LogStatus.FAIL, "could not find window to switch", YesNo.Yes);
-						}
-					}else {
-						sa.assertTrue(false, "setup link is not clickable, so cannot get "+vfPage[i]+" url link");
-						log(LogStatus.FAIL, "setup link is not clickable, so cannot get "+vfPage[i]+" url link", YesNo.Yes);
-					}
-					switchToDefaultContent(driver);
-					refresh(driver);
-					String[][] labelWithValue= {{navigationLabel,navigationLabelValue},{orderLabel,orderLabelValue},
-							{urlLabel,urlLabelValue},{navigationTypeLabel,navigationTypeLabelValue}};
-
-					if (home.createNavigationItem(environment,mode,labelWithValue, 20)) {
-						log(LogStatus.INFO, "created "+navigationLabelValue, YesNo.No);
-						switchToDefaultContent(driver);
-						refresh(driver);
-						if (home.clickOnNavatarEdgeLinkHomePage(navigationMenuName, action.BOOLEAN, 30)) {
-							log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-							ele = home.getNavigationLabel(navigationLabels[i], action.BOOLEAN, 10);
-							if (ele!=null) {
-								log(LogStatus.INFO, navigationLabels[i]+" is  present on "+navigationMenuName+" after creation", YesNo.No);
-
-							} else {
-								log(LogStatus.ERROR, navigationLabels[i]+" should be present on "+navigationMenuName+" after creation", YesNo.Yes);
-								sa.assertTrue(false,navigationLabels[i]+" should be present on "+navigationMenuName+" after creation");
-
-							}
-
-						} else {
-							log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabels[i]+" after creation", YesNo.Yes);
-							sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot check presence of "+navigationLabels[i]+" after creation");
-						}
-
-
-					} else {
-						log(LogStatus.ERROR, "Not Able to create "+navigationLabelValue, YesNo.Yes);
-						sa.assertTrue(false, "Not Able to create "+navigationLabelValue);
-
-					}
-				} else {
-					log(LogStatus.ERROR, navigationLabels[i]+" is present on "+navigationMenuName, YesNo.Yes);
-
-				}
-		//		home.clickOnNavatarEdgeLinkHomePage(navigationMenuName, action.BOOLEAN, 30);
-			} else {
-				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot check absenece of "+navigationLabels[i], YesNo.Yes);
-				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot check absenece of "+navigationLabels[i]);
-			}
-
-		}
-		lp.CRMlogout(environment, mode);
-		sa.assertAll();
-	}
-	
-	@Parameters({"environment","mode"})
-	@Test
-	public void PESmokeTc030_2_VerifyOpeningofDealCreatioPageAndCreationOfCompanyPipelineSourceFirmSourceContact(String environment, String mode) {
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		DealCreationTabBusinessLayer dctb = new DealCreationTabBusinessLayer(driver);
-		PipelinesPageBusinessLayer pl = new PipelinesPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
-		NavatarSetupPageBusinessLayer np = new NavatarSetupPageBusinessLayer(driver);
-		SoftAssert tsa = new SoftAssert();
-		String month = getSystemDate("MMM");
-		String year = getSystemDate("yyyy");
-		System.err.println("month " + month);
-		System.err.println("year " + year);
-		String bulkActionNavigationLink=BulkActions_DefaultValues.Deal_Creation.toString();
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
-			appLog.info("Login with User");
-			for(int j=0; j<=2; j++) {
-				if (hp.ClickOnItemOnNavatarEdge(navigationMenuName, bulkActionNavigationLink, action.BOOLEAN, 20)) {
-					appLog.info("Clicked On Create Deal Link with Navatar Quick Link");
-					
-					if(j==0) {
-						if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-							switchToFrame(driver, 10, np.getnavatarSetUpTabFrame_Lighting(environment, 10));
-						}
-						
-						if(click(driver,dctb.dealCreationCancelBtn(TopOrBottom.TOP, 10), "Top cancel botton", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.PASS,"Clicked on Top Cancel botton", YesNo.No);
-						}else {
-							sa.assertTrue(false,"Not able to click on top cancel botton");
-							log(LogStatus.FAIL, "Not able to click on top cancel botton", YesNo.Yes);
-						}
-						
-					}
-					if(j==1) {
-						if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-							switchToFrame(driver, 10, np.getnavatarSetUpTabFrame_Lighting(environment, 10));
-						}
-						if(click(driver,dctb.dealCreationCancelBtn(TopOrBottom.BOTTOM, 10), "Bottom cancel botton", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.PASS,"Clicked on Bottom Cancel botton", YesNo.No);
-						}else {
-							sa.assertTrue(false,"Not able to click on Bottom cancel botton");
-							log(LogStatus.FAIL, "Not able to click on top Bottom botton", YesNo.Yes);
-						}
-						
-					}
-					switchToDefaultContent(driver);
-					if(j==2) {
-						switchToDefaultContent(driver);
-						tsa =dctb.createPipeLine(environment, mode, Smoke_PL1CompanyName, Smoke_PL1Stage, Smoke_PL1Source, Existing.Yes, Smoke_PL1SourceFirm, null, null, Existing.No, Smoke_PL1SourceContact_Name, null, null, null, null);
-						tsa.combineAssertions(tsa);
-						log(LogStatus.INFO, "Able to Create New Deal", YesNo.No);
-						switchToDefaultContent(driver);
-						String monthAndYear = getSystemDate("MMM") + " " + getSystemDate("yyyy");
-						String expectedPipeLineName = Smoke_PL1CompanyName + " " + "-" + " " + monthAndYear;
-						String[] labelName = "Deal Name,Company Name,Last Stage Change Date,Highest Stage Reached,Age of Current Stage,Source Contact,Source Firm".split(",");
-						String labelValue = expectedPipeLineName + "," + Smoke_PL1CompanyName + "," + getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "M/d/YYYY") + ","
-								+ Smoke_PL1Stage + "," + Smoke_PL1AgeOfCurrentStage+ "," + Smoke_PL1SourceContact_Name+","+Smoke_PL1SourceFirm;
-						String[] labelValues =  labelValue.split(",");
-						
-						for (int i = 0; i < labelName.length; i++) {
-							if (pl.fieldValueVerificationOnPipelinePage(environment, mode, TabName.Pipelines, labelName[i],
-									labelValues[i])) {
-								appLog.info(labelName[i]+" :Fields verified on PipeLine Page: "+labelValues[i]);
-								log(LogStatus.PASS, labelName[i]+" :Fields verified on PipeLine Page: "+labelValues[i], YesNo.No);
-							} else {
-								appLog.error(labelName[i]+" :Fields not verified on PipeLine Page: "+labelValues[i]);
-								sa.assertTrue(false,labelName[i]+" :Fields not verified on PipeLine Page: "+labelValues[i]);
-								log(LogStatus.FAIL, labelName[i]+" :Fields not verified on PipeLine Page: "+labelValues[i], YesNo.Yes);
-							}
-							
-						}
-						
-						ThreadSleep(3000);
-						if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Pipeline_Stage_Logs, null)) {
-							log(LogStatus.INFO, "Clicked on Realed Tab",YesNo.No);	
-							ThreadSleep(3000);
-							if (pl.isRelatedListAvailable(environment, mode, TabName.Pipelines, RelatedList.Pipeline_Stage_Logs, 10)) {
-								log(LogStatus.PASS, "Related List is Available : "+ RelatedList.Pipeline_Stage_Logs, YesNo.No);
-							} else {
-								sa.assertTrue(false, "Related List Should be Available : "+ RelatedList.Pipeline_Stage_Logs);
-								log(LogStatus.FAIL, "Related List Should be Available : "+ RelatedList.Pipeline_Stage_Logs, YesNo.Yes);
-
-
-							}
-
-						} else {
-							sa.assertTrue(false, "Not Able to Click on Related Tab");
-							log(LogStatus.SKIP, "Not Able to Click on Related Tab",YesNo.Yes);
-						}
-						
-						
-						
-						// Company
-						appLog.info("Going on Company Tab");
-						if (bp.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-							if (ip.clickOnCreatedCompany(environment, mode, Smoke_PL1CompanyName)) {
-								appLog.info("Click on Created Company : " + Smoke_PL1CompanyName);
-								
-								String[][] labelsAndValuesforComp = { { excelLabel.Legal_Name.toString(), Smoke_PL1CompanyName },
-										{ excelLabel.Record_Type.toString(), "Company" } };
-								
-								for (String[] labelAndValue : labelsAndValuesforComp) {
-									if (ip.fieldValueVerificationOnInstitutionPage(environment, mode, TabName.CompaniesTab,
-											labelAndValue[0], labelAndValue[1])) {;
-											log(LogStatus.INFO, labelAndValue[0] + " with value : " + labelAndValue[1]+ " verified on Company Page ", YesNo.No);
-									} else {
-										sa.assertTrue(false, labelAndValue[0] + " with value : " + labelAndValue[1]+ " not verified on Company Page ");
-										log(LogStatus.FAIL, labelAndValue[0] + " with value : " + labelAndValue[1]+ " not verified on Company Page ", YesNo.Yes);
-									}
-								}
-								
-								
-							} else {
-								appLog.error("Not Able to Click on Created Company : " + Smoke_PL1CompanyName);
-								sa.assertTrue(false, "Not Able to Click on Created Company : " + Smoke_PL1CompanyName);
-								log(LogStatus.ERROR, "Not Able to Click on Created Company : " + Smoke_PL1CompanyName, YesNo.Yes);
-								
-							}
-						} else {
-							appLog.error("Not Able to Click on Institution Tab");
-							sa.assertTrue(false, "Not Able to Click on Institution Tab");
-							log(LogStatus.ERROR, "Not Able to Click on Institution Tab", YesNo.Yes);
-						}
-						
-						// Institution
-						appLog.info("Going on Institution Tab");
-						if (bp.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-							if (ip.clickOnCreatedInstitution(environment, mode, Smoke_PL1SourceFirm)) {
-								appLog.info("Click on Created Institution : " + Smoke_PL1SourceFirm);
-								
-								String[][] dealSourceFieldsAndValues = {
-										{ excelLabel.Pipeline_Name.toString(), expectedPipeLineName },
-										{ "Company", Smoke_PL1CompanyName },
-										{ excelLabel.Deal_Type.toString(), "" },
-										{ excelLabel.Stage.toString(), Smoke_PL1Stage },
-										{ excelLabel.Source_Contact.toString(), Smoke_PL1SourceContact_Name }};
-								
-								if (ip.clickOnRelatedList(environment, mode, RecordType.IndividualInvestor, RelatedList.Deals_Sourced, RelatedTab.Deals.toString())) {
-									log(LogStatus.INFO, "Click on Deal Tab", YesNo.No);
-									if (ip.verifyDealSourcedRelatedList(environment, mode,expectedPipeLineName,Smoke_PL1SourceContact_Name,Smoke_PL1Stage)) {
-											log(LogStatus.PASS, "Deal Sourced Related List verified for : " + Smoke_PL1SourceFirm, YesNo.No);
-										} else {
-											sa.assertTrue(false, "Deal Sourced Related List Not verified for : " + Smoke_PL1SourceFirm);
-											log(LogStatus.FAIL, "Deal Sourced Related List Not verified for :" + Smoke_PL1SourceFirm,YesNo.Yes);
-										}
-									} else {
-										sa.assertTrue(false, "Not Able to Click on Deal Tab");
-										log(LogStatus.SKIP, "Not Able to Click on Deal tab", YesNo.Yes);
-									}
-									
-								
-							} else {
-								sa.assertTrue(false, "Not Able to Click on Created Institution : " + Smoke_PL1SourceFirm);
-								log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + Smoke_PL1SourceFirm,YesNo.Yes);
-								
-							}
-						} else {
-							sa.assertTrue(false, "Not Able to Click on Institution Tab");
-							log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
-						}
-						
-						// Contact
-						appLog.info("Going on Contact Tab");
-						if (bp.clickOnTab(environment, mode, TabName.ContactTab)) {
-							if (cp.clickOnCreatedContact(environment, null,Smoke_PL1SourceContact_Name)) {
-								appLog.info("Click on Created Contact : "+ Smoke_PL1SourceContact_Name);
-								
-								String[][] contactFieldsAndValues = {
-										{ excelLabel.Name.toString(), Smoke_PL1SourceContact_Name },
-										{ excelLabel.Legal_Name.toString(), Smoke_PL1SourceFirm } };
-								
-								for (String[] contactFieldsAndValue : contactFieldsAndValues) {
-									
-									if (cp.fieldValueVerificationOnContactPage(environment, TabName.ContactTab, contactFieldsAndValue[0], contactFieldsAndValue[1])) {
-										log(LogStatus.PASS, contactFieldsAndValue[0] + " with value : " + contactFieldsAndValue[1]+ " verified on Contact Page ", YesNo.No);
-										
-									} else {
-										sa.assertTrue(false, contactFieldsAndValue[0] + " with value : " + contactFieldsAndValue[1]+ " not verified on Contact Page ");
-										log(LogStatus.FAIL, contactFieldsAndValue[0] + " with value : " + contactFieldsAndValue[1]+ " not verified on Contact Page ", YesNo.Yes);
-									}
-									
-								}
-								
-							} else {
-								appLog.error("Not Able to Click on Created Contact : " +Smoke_PL1SourceContact_Name);
-								sa.assertTrue(false, "Not Able to Click on Created Contact : " + Smoke_PL1SourceContact_Name);
-								log(LogStatus.ERROR, "Not Able to Click on Created Contact : " + Smoke_PL1SourceContact_Name, YesNo.Yes);
-								
-							}
-						} else {
-							appLog.error("Not Able to Click on Contact Tab");
-							sa.assertTrue(false, "Not Able to Click on Contact Tab");
-							log(LogStatus.ERROR, "Not Able to Click on Contact Tab", YesNo.Yes);
-						}
-						
-					}
-					
-					
-					
-					
-				} else {
-					sa.assertTrue(false, "Not Able to Click On Create Deal Link with Navatar Quick Link");
-					log(LogStatus.INFO, "Not Able to Click On Create Deal Link with Navatar Quick Link", YesNo.Yes);
-				}
-				switchToDefaultContent(driver);
-			}
-			switchToDefaultContent(driver);
-		lp.CRMlogout(environment, mode);
-		sa.assertAll();
-	}
-
-	@Parameters({ "environment", "mode" })
-	@Test
-	public void PESmokeTc031_VerifyDealCreationSetUpPage(String environment, String mode) {
-
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		DealCreationTabBusinessLayer dctb = new DealCreationTabBusinessLayer(driver);
-		NavatarSetupPageBusinessLayer nspbl = new NavatarSetupPageBusinessLayer(driver);
-		SoftAssert tcsa = new SoftAssert();
-		String month = getSystemDate("MMM");
-		String year = getSystemDate("yyyy");
-		System.err.println("month " + month);
-		System.err.println("year " + year);
-
-		lp.CRMLogin(superAdminUserName, adminPassword);
-			appLog.info("Login with User");
-			if (bp.clickOnTab(environment, mode, TabName.NavatarSetup)) {
-				appLog.info("Able to Click on Navatar Set up Page");
-
-				if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-					switchToFrame(driver, 10, nspbl.getnavatarSetUpTabFrame_Lighting(environment, 10));
-				}
-					WebElement checkBox;
-
-					if (click(driver,
-							nspbl.getEditButtonforNavatarSetUpSideMenuTab(environment, 
-									NavatarSetupSideMenuTab.DealCreation, 10),
-							"Edit Button on Deal Creation Tab", action.SCROLLANDBOOLEAN)) {
-						appLog.info("Clicked on Deal Creation Edit Button");
-						ThreadSleep(2000);
-
-						// Deal Information 2nd
-						String expectedResult = "Company" + "," + "Fund Manager" + "," + "Fund Manager’s Fund" + ","
-								+ "Individual Investor" + "," + "Institution" + "," + "Limited Partner";
-
-						checkBox = nspbl.getEnableCheckBoxforNavatarSetUpSideMenuTab(environment, mode,
-								NavatarSetupSideMenuTab.DealCreation, EditViewMode.Edit, ClickOrCheckEnableDisableCheckBox.Click, 10);
-
-						if (isSelected(driver, checkBox, "Check Box")) {
-							log(LogStatus.PASS, "CheckBox verified and Checked", YesNo.No);
-						} else {
-							sa.assertTrue(false,"Check Box not Verified");
-							log(LogStatus.FAIL, "Check Box not Verified", YesNo.Yes);
-						}
-
-						String dealInfo_assignedRecordTypeDefaultValue = "Company";
-						String defaultvalue = getSelectedOptionOfDropDown(driver,
-								dctb.getDealInformationLayout_RecordType(environment, 10), "Company", "Text");
-						if (defaultvalue.equalsIgnoreCase(dealInfo_assignedRecordTypeDefaultValue)) {
-							log(LogStatus.PASS, "Deal Information Assigned Record type default value matched", YesNo.No);
-						} else {
-							sa.assertTrue(false, "Deal Information Assigned Record type default value not matched");
-							log(LogStatus.FAIL, "Deal Information Assigned Record type default value not matched",YesNo.Yes);
-						}
-
-						List<WebElement> dealInformation_RecordType = allOptionsInDropDrop(driver,
-								dctb.getDealInformationLayout_RecordType(environment, 10),
-								"Deal Information Record Type Drop Down");
-
-						List<String> returnlist = compareMultipleList(driver, expectedResult,
-								dealInformation_RecordType);
-						if (returnlist.isEmpty()) {
-							log(LogStatus.PASS, "Deal Information Assigned Record type matched  ", YesNo.No);
-						} else {
-							sa.assertTrue(false, "Deal Information Assigned Record type not matched");
-							log(LogStatus.FAIL, "Deal Information Assigned Record type not matched", YesNo.Yes);
-						}
-
-						String[] OtherDropDown = { "Company Name", "Deal Name", "Stage", "Source Firm",
-								"Source Contact", "Source", "Legal Name", "Last Name" };
-
-						for (String selectvalue : OtherDropDown) {
-							WebElement selectOptionEle = FindElement(driver,
-									"//select/option[text()='" + selectvalue + "']", selectvalue,
-									action.SCROLLANDBOOLEAN, 10);
-							if (selectOptionEle != null) {
-								appLog.info("Select value matched : " + selectvalue);
-							} else {
-								appLog.error("Select value Not matched : " + selectvalue);
-								sa.assertTrue(false, "Select value Not matched : " + selectvalue);
-								log(LogStatus.FAIL, "Select value Not matched : " + selectvalue, YesNo.Yes);
-							}
-						}
-
-						List<WebElement> noneValueEle = FindElements(driver, "//select/..//input", "None Element");
-						if (noneValueEle.size() == 4) {
-							appLog.info("None Value matched  ");
-						} else {
-							appLog.error("None Value Not matched  ");
-							sa.assertTrue(false, "None Value Not matched  ");
-							log(LogStatus.FAIL, "None Value Not matched  ", YesNo.Yes);
-						}
-
-						// New Source Firm DropDown Values
-						String newSourceFirm_assignedRecordTypeDefaultValue = "Institution";
-						defaultvalue = getSelectedOptionOfDropDown(driver,
-								dctb.getNewSourceFirmLayout_RecordType(environment, 10), "Institution", "Text");
-						if (defaultvalue.equalsIgnoreCase(newSourceFirm_assignedRecordTypeDefaultValue)) {
-							appLog.info("New Source Firm Assigned Record type default value matched");
-						} else {
-							appLog.error("New Source Firm Assigned Record type default value not matched Actual : "+defaultvalue);
-							sa.assertTrue(false, "New Source Firm Assigned Record type default value not matched Actual : "+defaultvalue);
-							log(LogStatus.FAIL, "New Source Firm Assigned Record type default value not matched Actual : "+defaultvalue,YesNo.Yes);
-						}
-
-						List<WebElement> newSourceFirm_RecordType = allOptionsInDropDrop(driver,
-								dctb.getNewSourceFirmLayout_RecordType(environment, 10),
-								"New Source Firm Record Type Drop Down");
-						expectedResult = "Company" + "," + "Fund Manager" + "," + "Fund Manager’s Fund" + ","
-								+ "Individual Investor" + "," + "Institution" + "," + "Limited Partner";
-						returnlist = compareMultipleList(driver, expectedResult, newSourceFirm_RecordType);
-						if (returnlist.isEmpty()) {
-							appLog.info("New Source Firm Assigned Record type matched  ");
-						} else {
-							appLog.error("New Source Firm Assigned Record type not matched");
-							sa.assertTrue(false, "New Source Firm Assigned Record type not matched");
-							log(LogStatus.FAIL, "New Source Firm Assigned Record type not matched", YesNo.Yes);
-						}
-
-						// 4th
-						// Deal Room Information Required Field
-						appLog.info("Going to Verify Deal Room Information Required Field ");
-
-						if (click(driver, dctb.getRequiredFieldListForDealInformation(environment, 10),
-								"Required Field List", action.SCROLLANDBOOLEAN)) {
-							appLog.info("Clicked on Required Field List for Deal Information Layout ");
-							ThreadSleep(5000);
-							// Institution
-							appLog.info("Going to Verify Deal Room Information Required Field for Institution");
-							String[][] insRowValues = { { "Legal Name", "Name", "string" } };
-
-							tcsa = dctb.verifyingInstitutionRequiredFieldListDealInformationLayout(environment, mode,
-									null, insRowValues);
-							sa.combineAssertions(tcsa);
-
-							// PipeLine
-							appLog.info("Going to Verify Deal Room Information Required Field for PipeLine Layout");
-							String[][] pipeLineRowValues = { { "Deal Name", "Name", "string" },
-									{ "Company Name", "navpeII__Company_Name__c", "reference" },
-									{ "Stage", "navpeII__Stage__c", "picklist" } };
-							tcsa = dctb.verifyingPipeLineRequiredFieldListDealInformationLayout(environment, mode, null,
-									pipeLineRowValues);
-							sa.combineAssertions(tcsa);
-
-						} else {
-							appLog.error("Not Able to Clicked on Required Field List for Deal Information Layout");
-							sa.assertTrue(false,
-									"Not Able to Clicked on Required Field List for Deal Information Layout");
-							log(LogStatus.FAIL,
-									"Not Able to Clicked on Required Field List for Deal Information Layout",
-									YesNo.Yes);
-
-						}
-
-						// New Source Firm Required Field
-						if (click(driver, dctb.getRequiredFieldListForNewSourceFirm(environment, 10),
-								"Required Field List for New Source Firm", action.SCROLLANDBOOLEAN)) {
-							appLog.info("Clicked on Required Field List for New Source Firm Layout ");
-							ThreadSleep(5000);
-							// New Source Firm Institution
-							appLog.info("Going to Verify New Source Firm Required Field for Institution");
-							String[][] insRowValues = { { "Legal Name", "Name", "string" } };
-
-							tcsa = dctb.verifyingInstitutionRequiredFieldListNewSourceFirmLayout(environment, mode,
-									null, insRowValues);
-							sa.combineAssertions(tcsa);
-
-						} else {
-							appLog.error("Not Able to Clicked on Required Field List for New Source Firm Layout ");
-							sa.assertTrue(false,
-									"Not Able to Clicked on Required Field List for New Source Firm Layout t");
-							log(LogStatus.SKIP,
-									"Not Able to Clicked on Required Field List for New Source Firm Layout ",
-									YesNo.Yes);
-						}
-
-						// New Source Contact Required Field
-						if (click(driver, dctb.getRequiredFieldListForNewSourceContact(environment, 10),
-								"Required Field List for New Source Contact", action.SCROLLANDBOOLEAN)) {
-							appLog.info("Clicked on Required Field List for New Source Contact Layout ");
-							ThreadSleep(5000);
-							// New Source Firm Institution
-							appLog.info("Going to Verify New Source Contact Required Field for Contact");
-							String[][] contactvalues = { { "Full Name", "Name", "string" },
-									{ "Legal Name", "AccountId", "reference" } };
-
-							tcsa = dctb.verifyingContactRequiredFieldListNewSourceContactLayout(environment, mode, null,
-									contactvalues);
-							sa.combineAssertions(tcsa);
-
-						} else {
-							appLog.error("Not Able to Clicked on Required Field List for New Source Contact Layout ");
-							sa.assertTrue(false,
-									"Not Able to Clicked on Required Field List for New Source Contact Layout t");
-							log(LogStatus.SKIP,
-									"Not Able to Clicked on Required Field List for New Source Contact Layout ",
-									YesNo.Yes);
-						}
-
-						// 5th
-
-						String dealLabelLeft = "Employees";
-						String dealLabelRight = "Deal Type";
-						if (dctb.addingMoreSelectFieldAndValuesToDealInformationLayout(environment, mode, dealLabelLeft,
-								dealLabelRight)) {
-							appLog.error(" Field Added for Deal Information");
-						} else {
-							appLog.error("Not Able to add some field for Deal Information");
-							sa.assertTrue(false, "Not Able to add some field for Deal Information");
-							log(LogStatus.FAIL, "Not Able to add some field for Deal Information ", YesNo.Yes);
-						}
-
-						String firmLabel = "Website";
-						if (dctb.addingMoreSelectFieldAndValuesToNewSourceFirmLayout(environment, mode, "Website")) {
-							appLog.error(" Field Added for New Source Firm");
-						} else {
-							appLog.error("Not Able to add some field for New Source Firm");
-							sa.assertTrue(false, "Not Able to add some field for New Source Firm");
-							log(LogStatus.FAIL, "Not Able to add some field for New Source Firm ", YesNo.Yes);
-						}
-
-						String contactLabel = "Email";
-						if (dctb.addingMoreSelectFieldAndValuesToNewSourceContactLayout(environment, mode, "Email")) {
-							appLog.error(" Field Added for New Source Contact");
-						} else {
-							appLog.error("Not Able to add some field for New Source Contact");
-							sa.assertTrue(false, "Not Able to add some field for New Source Contact");
-							log(LogStatus.FAIL, "Not Able to add some field for New Source Contact ", YesNo.Yes);
-						}
-						
-						
-						if(click(driver, dctb.getLeftAddIconforDealInformationLayout(environment, 10), "deal information plus icon", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.FAIL, "clicked on deal information plus icon ", YesNo.No);
-							ThreadSleep(1000);
-							if(click(driver, dctb.getLeftRemoveforDealInformationLayout().get(0), "deal info remove icon", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.FAIL, "clicked on deal information remove icon ", YesNo.No);
-							}else {
-								log(LogStatus.FAIL, "Not able to click on deal information remove icon ", YesNo.Yes);
-								sa.assertTrue(false,  "Not able to click on deal information remove icon ");
-							}
-						}else {
-							log(LogStatus.FAIL, "Not able to click on deal information plus icon ", YesNo.Yes);
-							sa.assertTrue(false,  "Not able to click on deal information plus icon ");
-						}
-						
-						if(click(driver, dctb.getAddIconforNewSourceFirmLayout(environment, 10), "New Source Firm plus icon", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.FAIL, "clicked on New Source Firm plus icon ", YesNo.No);
-							ThreadSleep(1000);
-							if(click(driver, dctb.getLeftRemoveforDealInformationLayout().get(0), "New Source Firm remove icon", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.FAIL, "clicked on New Source Firm remove icon ", YesNo.No);
-							}else {
-								log(LogStatus.FAIL, "Not able to click on New Source Firm remove icon ", YesNo.Yes);
-								sa.assertTrue(false,  "Not able to click on New Source Firm remove icon ");
-							}
-						}else {
-							log(LogStatus.FAIL, "Not able to click on New Source Firm plus icon ", YesNo.Yes);
-							sa.assertTrue(false,  "Not able to click on New Source Firm plus icon ");
-						}
-						
-						if(click(driver, dctb.getAddIconforNewSourceFirmLayout(environment, 10), "New Source Firm plus icon", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.FAIL, "clicked on New Source Firm plus icon ", YesNo.No);
-							ThreadSleep(1000);
-							if(click(driver, dctb.getLeftRemoveforDealInformationLayout().get(0), "New Source Firm remove icon", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.FAIL, "clicked on New Source Firm remove icon ", YesNo.No);
-							}else {
-								log(LogStatus.FAIL, "Not able to click on New Source Firm remove icon ", YesNo.Yes);
-								sa.assertTrue(false,  "Not able to click on New Source Firm remove icon ");
-							}
-						}else {
-							log(LogStatus.FAIL, "Not able to click on New Source Firm plus icon ", YesNo.Yes);
-							sa.assertTrue(false,  "Not able to click on New Source Firm plus icon ");
-						}
-						
-						if(click(driver, dctb.getAddIconforNewSourceContactLayout(environment, 10), "New Source Contact plus icon", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.FAIL, "clicked on New Source Contact plus icon ", YesNo.No);
-							ThreadSleep(1000);
-							if(click(driver, dctb.getLeftRemoveforDealInformationLayout().get(0), "New Source Contact remove icon", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.FAIL, "clicked on New Source Contact remove icon ", YesNo.No);
-							}else {
-								log(LogStatus.FAIL, "Not able to click on New Source Contact remove icon ", YesNo.Yes);
-								sa.assertTrue(false,  "Not able to click on New Source Contact remove icon ");
-							}
-						}else {
-							log(LogStatus.FAIL, "Not able to click on New Source Contact plus icon ", YesNo.Yes);
-							sa.assertTrue(false,  "Not able to click on New Source Contact plus icon ");
-						}
-
-						if (click(driver,
-								dctb.getSaveButtonforNavatarSetUpSideMenuTab(environment,
-										NavatarSetupSideMenuTab.DealCreation, 10, TopOrBottom.TOP),
-								"Save Button", action.SCROLLANDBOOLEAN)) {
-							appLog.info(" Clicked on Save Button");
-							ThreadSleep(5000);
-							if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-								switchToFrame(driver, 10, nspbl.getnavatarSetUpTabFrame_Lighting(environment, 10));
-							}
-							if (dctb.verificationOfDealCreationSideMenuTabViewMode(environment, mode,
-									DealCreationPageLayout.Deal_Information, dealLabelLeft + "," + dealLabelRight)) {
-								appLog.info("Verification of Deal Information Label dONE");
-							} else {
-								appLog.error("Verification of Deal Information Label Fail");
-								sa.assertTrue(false, "Verification of Deal Information Label Fail");
-								log(LogStatus.FAIL, "Verification of Deal Information Label Fail", YesNo.Yes);
-							}
-
-							if (dctb.verificationOfDealCreationSideMenuTabViewMode(environment, mode,
-									DealCreationPageLayout.New_Source_Firm, firmLabel)) {
-								appLog.info("Verification of New_Source_Firm Label DONE");
-							} else {
-								appLog.error("Verification of New_Source_Firm Label Fail");
-								sa.assertTrue(false, "Verification of New_Source_Firm Label Fail");
-								log(LogStatus.FAIL, "Verification of New_Source_Firm Label Fail", YesNo.Yes);
-							}
-
-							if (dctb.verificationOfDealCreationSideMenuTabViewMode(environment, mode,
-									DealCreationPageLayout.New_Source_Contact, contactLabel)) {
-								appLog.info("Verification of New_Source_Contact Label dONE");
-							} else {
-								appLog.error("Verification of New_Source_Contact Label Fail");
-								sa.assertTrue(false, "Verification of New_Source_Contact Label Fail");
-								log(LogStatus.FAIL, "Verification of New_Source_Contact Label Fail", YesNo.Yes);
-							}
-
-						} else {
-							appLog.error("Not Able to Click on Save Button so cannot perform verification");
-							sa.assertTrue(false, "Not Able to Click on Save Button so cannot perform verification");
-							log(LogStatus.SKIP, "Not Able to Click on Save Button so cannot perform verification",
-									YesNo.Yes);
-						}
-
-					} else {
-						sa.assertFalse(false,"Not Able to Click on Deal Creation Edit Button");
-						appLog.error("Not Able to Click on Deal Creation Edit Button");
-						log(LogStatus.SKIP, "Not Able to Click on Deal Creation Edit Button", YesNo.Yes);
-					}
-				
-
-			} else {
-				sa.assertFalse(false,"Not Able to Click on Navatar Set up Page");
-				appLog.error("Not Able to Click on Navatar Set up Page");
-				log(LogStatus.SKIP, "Not Able to Click on Navatar Set up Page", YesNo.Yes);
-			}
-		
-		switchToDefaultContent(driver);
-		lp.CRMlogout(environment, mode);
-		sa.assertAll();
-		appLog.info("Test Case Pass");
-	}
-
-	@Parameters({ "environment", "mode" })
-	@Test
-	public void PESmokeTc032_VerifyDealCreationPageAndCreationOfCompanyPipeLineSourceFirm(String environment,
-			String mode) {
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		DealCreationTabBusinessLayer dctb = new DealCreationTabBusinessLayer(driver);
-		PipelinesPageBusinessLayer pl = new PipelinesPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
-		String month = getSystemDate("MMM");
-		String year = getSystemDate("yyyy");
-		System.err.println("month " + month);
-		System.err.println("year " + year);
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
-			appLog.info("Login with User");
-
-			String bulkActionNavigationLink=BulkActions_DefaultValues.Deal_Creation.toString();
-			if (hp.ClickOnItemOnNavatarEdge(navigationMenuName, bulkActionNavigationLink, action.BOOLEAN, 20)) {
-								appLog.info("Clicked On Create Deal Link with Navatar Quick Link");
-
-				if (dctb.createNewDealPipeLine(environment, mode, Smoke_PL2CompanyName, Smoke_PL2Stage,
-						Smoke_PL2Source)) {
-					appLog.info("VAlue added for mandatory Field for Deal Creation");
-					String monthAndYear = getSystemDate("MMM") + " " + getSystemDate("yyyy");
-					String expectedPipeLineName = Smoke_PL2CompanyName + " " + "-" + " " + monthAndYear;
-
-					String labels = excelLabel.Website.toString();
-					String values = Smoke_PL2SourceFirm_Website;
-					ThreadSleep(2000);
-					for(int i=0; i<3; i++) {
-						if(i==0) {
-							if (dctb.addSourceFirmToDealCreation(environment, mode, Existing.No, Smoke_PL2SourceFirm, null,
-									null)) {
-								appLog.info("Source Firm Added");
-
-								if(click(driver, dctb.dealCreationSourceFirmCancelCrossBtn(CancelOrCross.Cancel, 10), "cancel button", action.BOOLEAN)) {
-									log(LogStatus.FAIL, "Clicked on Add Source Firm pop up cancel button", YesNo.No);
-								}else {
-									log(LogStatus.FAIL, "Not Able click Add Source Firm pop up cancel button", YesNo.Yes);
-									sa.assertTrue(false, "Not Able click Add Source Firm pop up cancel button");
-								}
-								ThreadSleep(2000);
-							} else {
-								appLog.error("Not Able to Add Source Firm");
-								sa.assertTrue(false, "Not Able to Add Source Firm");
-								log(LogStatus.FAIL, "Not Able to Add Source Firm", YesNo.Yes);
-							}
-
-						}
-				
-						if(i==1) {
-							if(click(driver, dctb.getSourceFirmPencilIcon(10), "source firm pencil icon", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.FAIL, "Clicked on sourceFirm pop up cross button", YesNo.No);
-								if(click(driver, dctb.dealCreationSourceFirmCancelCrossBtn(CancelOrCross.Cross, 10), "Cross button", action.BOOLEAN)) {
-									log(LogStatus.FAIL, "Clicked on Add Source Firm pop up Cross button", YesNo.No);
-								}else {
-									log(LogStatus.FAIL, "Not Able click Add Source Firm pop up Cross button", YesNo.Yes);
-									sa.assertTrue(false, "Not Able click Add Source Firm pop up Cross button");
-								}
-
-								ThreadSleep(2000);
-
-							}else {
-								log(LogStatus.FAIL, "Not Able click Add Source Firm pencil icon", YesNo.Yes);
-								sa.assertTrue(false, "Not Able click Add Source Firm pencil icon");
-							}
-						}
-
-						if(i==2) {
-							if (dctb.addSourceFirmToDealCreation(environment, mode, Existing.No, Smoke_PL2SourceFirm, labels,
-									values)) {
-								appLog.info("Source Firm Added");
-							} else {
-								appLog.error("Not Able to Add Source Firm");
-								sa.assertTrue(false, "Not Able to Add Source Firm");
-								log(LogStatus.FAIL, "Not Able to Add Source Firm", YesNo.Yes);
-							}
-
-
-
-
-
-							WebElement ele = isDisplayed(driver, dctb.getNewSourceFirmAddButton(environment, mode, 5),
-									"Visibility", 5, "Source Firm Add Button");
-							if (ele != null) {
-								appLog.info("Source Firm PopUp is Closed");
-							} else {
-								appLog.error("Source Firm PopUp is Opened after adding");
-								sa.assertTrue(false, "Source Firm PopUp is Opened after adding");
-							}
-						}
-					}
-
-					
-					
-					
-					labels = excelLabel.Email.toString();
-					values = Smoke_PL2SourceContact_Email;
-					ThreadSleep(2000);
-					
-					for(int i=0; i<3; i++) {
-						if(i==0) {
-							if (dctb.addSourceContactToDealCreation(environment, mode, Existing.No, Smoke_PL2SourceContact,
-									null, null)) {
-								log(LogStatus.FAIL, "Source Contact Added", YesNo.No);
-
-								if(click(driver, dctb.dealCreationSourceContactCancelCrossBtn(CancelOrCross.Cancel, 10), "cancel button", action.BOOLEAN)) {
-									log(LogStatus.FAIL, "Clicked on Add Source Contact pop up cancel button", YesNo.No);
-								}else {
-									log(LogStatus.FAIL, "Not Able click Add Source Contact pop up cancel button", YesNo.Yes);
-									sa.assertTrue(false, "Not Able click Add Source Contact pop up cancel button");
-								}
-								ThreadSleep(2000);
-							} else {
-								appLog.error("Not Able to Add Source Contact");
-								sa.assertTrue(false, "Not Able to Add Source Contact");
-								log(LogStatus.FAIL, "Not Able to Add Source Contact", YesNo.Yes);
-							}
-
-						}
-						if(i==1) {
-							if(click(driver, dctb.getSourceContactPencilIcon(10), "source Contact pencil icon", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.FAIL, "Clicked on sourceContact pop up cross button", YesNo.No);
-								if(click(driver, dctb.dealCreationSourceContactCancelCrossBtn(CancelOrCross.Cross, 10), "Cross button", action.BOOLEAN)) {
-									log(LogStatus.FAIL, "Clicked on Add Source Contact pop up Cross button", YesNo.No);
-								}else {
-									log(LogStatus.FAIL, "Not Able click Add Source Contact pop up Cross button", YesNo.Yes);
-									sa.assertTrue(false, "Not Able click Add Source Contact pop up Cross button");
-								}
-								ThreadSleep(2000);
-
-
-							}else {
-								log(LogStatus.FAIL, "Not Able click Add Source Contact pencil icon", YesNo.Yes);
-								sa.assertTrue(false, "Not Able click Add Source Contact pencil icon");
-							}
-						}
-
-						if(i==2) {
-							if (dctb.addSourceContactToDealCreation(environment, mode, Existing.No, Smoke_PL2SourceContact,
-									labels, values)) {
-								appLog.info("Source Contact Added");
-							} else {
-								appLog.error("Not Able to Add Source Contact");
-								sa.assertTrue(false, "Not Able to Add Source Contact");
-								log(LogStatus.FAIL, "Not Able to Add Source Contact", YesNo.Yes);
-							}
-							WebElement ele = isDisplayed(driver, dctb.getNewSourceContactAddButton(environment, mode, 5), "", 5,
-									"Source Contact Add Button");
-							if (ele != null) {
-								appLog.info("Source Contact PopUp is Closed");
-							} else {
-								appLog.error("Source Contact PopUp is Opened after adding");
-								sa.assertTrue(false, "Source Contact PopUp is Opened after adding");
-							}
-						}
-					}
-					
-					labels = excelLabel.Employees.toString() + "," + excelLabel.Deal_Type.toString();
-					values = Smoke_PL2Employees + "," + Smoke_PL2Dealtype;
-					ThreadSleep(2000);
-					List<String> failLabel = dctb.enterValuesToCustomAddedFieldForPipeLineCreation(environment, mode,
-							labels, values);
-					if (failLabel.isEmpty()) {
-						appLog.info("Added other values for Custom Field");
-					} else {
-						appLog.error("Not Able to Add other values for Custom Field");
-						sa.assertTrue(false, "Not Able to Add other values for Custom Field");
-						log(LogStatus.FAIL, "Not Able to Add other values for Custom Field", YesNo.Yes);
-					}
-
-					if (dctb.clickOnCreateDealButtonAndVerifyingLandingPage(environment, mode, Smoke_PL2CompanyName)) {
-						appLog.info("Pipe Line Created and Verifiied : ");
-						ExcelUtils.writeData(smokeFilePath, expectedPipeLineName, "PipeLine", excelLabel.Company_Name,
-								Smoke_PL2CompanyName, excelLabel.Pipeline_Name);
-
-						String[][] labelsAndValues = { { excelLabel.Deal_Name.toString(), expectedPipeLineName },
-								{ "Company Name", Smoke_PL2CompanyName },
-								{ excelLabel.Stage.toString(), Smoke_PL2Stage },
-								{ excelLabel.Source.toString(), Smoke_PL2Source },
-								{ excelLabel.Source_Firm.toString(), Smoke_PL2SourceFirm },
-								{ excelLabel.Source_Contact.toString(), Smoke_PL2SourceContact },
-								{ excelLabel.Deal_Type.toString(), Smoke_PL2Dealtype } };
-
-						for (String[] labelAndValue : labelsAndValues) {
-							if (pl.fieldValueVerificationOnPipelinePage(environment, mode, TabName.Pipelines,
-									labelAndValue[0], labelAndValue[1])) {
-								appLog.info(labelAndValue[0] + " with value : " + labelAndValue[1]
-										+ " verified on PipeLine Page ");
-							} else {
-								appLog.error(labelAndValue[0] + " with value : " + labelAndValue[1]
-										+ " not verified on PipeLine Page ");
-								sa.assertTrue(false, labelAndValue[0] + " with value : " + labelAndValue[1]
-										+ " not verified on PipeLine Page ");
-								log(LogStatus.FAIL, labelAndValue[0] + " with value : " + labelAndValue[1]
-										+ " not verified on PipeLine Page ", YesNo.Yes);
-							}
-						}
-
-						appLog.info("Going on Institution Tab");
-						if (ip.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-							
-							if (ip.clickOnCreatedInstitution(environment, mode, Smoke_PL2SourceFirm)) {
-								appLog.info("Click on Created Institution : " + Smoke_PL2SourceFirm);
-
-								String[][] labelsAndValuesforInst = {
-										{ excelLabel.Legal_Name.toString(), Smoke_PL2SourceFirm },
-										{ excelLabel.Record_Type.toString(), "Institution" },
-										{ excelLabel.Website.toString(), Smoke_PL2SourceFirm_Website } };
-
-								for (String[] labelAndValue : labelsAndValuesforInst) {
-									if (ip.fieldValueVerificationOnInstitutionPage(environment, mode,
-											TabName.InstituitonsTab, labelAndValue[0], labelAndValue[1])) {
-										appLog.info(labelAndValue[0] + " with value : " + labelAndValue[1]
-												+ " verified on Institution Page ");
-									} else {
-										appLog.error(labelAndValue[0] + " with value : " + labelAndValue[1]
-												+ " not verified on Institution Page ");
-										sa.assertTrue(false, labelAndValue[0] + " with value : " + labelAndValue[1]
-												+ " not verified on Institution Page ");
-										log(LogStatus.FAIL, labelAndValue[0] + " with value : " + labelAndValue[1]
-												+ " not verified on Institution Page ", YesNo.Yes);
-									}
-								}
-
-							} else {
-								appLog.error("Not Able to Click on Created Institution : " + Smoke_PL2SourceFirm);
-								sa.assertTrue(false, "Not Able to Click on Created Institution : " + Smoke_PL2SourceFirm);
-								log(LogStatus.ERROR, "Not Able to Click on Created Institution : " + Smoke_PL2SourceFirm,
-										YesNo.Yes);
-
-							}
-
-						
-						} else {
-							sa.assertTrue(false, "Not Able to Click on Institution Tab : ");
-							log(LogStatus.SKIP, "Not Able to Click on  Institution Tab: ",YesNo.Yes);
-						}
-						
-						appLog.info("Going on Contact Tab");
-						if (ip.clickOnTab(environment, mode, TabName.ContactTab)) {
-						if (cp.clickOnCreatedContact(environment,  null, Smoke_PL2SourceContact)) {
-							appLog.info("Click on Created Contact : " + Smoke_PL2SourceContact);
-
-							String[][] labelsAndValuesforCont = {
-									{ excelLabel.Legal_Name.toString(), Smoke_PL2SourceFirm },
-									{ excelLabel.Name.toString(), Smoke_PL2SourceContact },
-									{ excelLabel.Email.toString(), Smoke_PL2SourceContact_Email } };
-
-							for (String[] labelAndValue : labelsAndValuesforCont) {
-								if (cp.fieldValueVerificationOnContactPage(environment, TabName.ContactTab,
-										labelAndValue[0], labelAndValue[1])) {
-									appLog.info(labelAndValue[0] + " with value : " + labelAndValue[1]
-											+ " verified on Contact Page ");
-								} else {
-									appLog.error(labelAndValue[0] + " with value : " + labelAndValue[1]
-											+ " not verified on Contact Page ");
-									sa.assertTrue(false, labelAndValue[0] + " with value : " + labelAndValue[1]
-											+ " not verified on Contact Page ");
-									log(LogStatus.FAIL, labelAndValue[0] + " with value : " + labelAndValue[1]
-											+ " not verified on Contact Page ", YesNo.Yes);
-								}
-							}
-
-						} else {
-							appLog.error("Not Able to Click on Created Contact : " + Smoke_PL2SourceContact);
-							sa.assertTrue(false, "Not Able to Click on Created Contact : " + Smoke_PL2SourceContact);
-							log(LogStatus.FAIL, "Not Able to Click on Created Contact : " + Smoke_PL2SourceContact,
-									YesNo.Yes);
-
-						}} else {
-							sa.assertTrue(false, "Not Able to Click on Contact Tab : ");
-							log(LogStatus.SKIP, "Not Able to Click on  Contact Tab: ",YesNo.Yes);
-						}
-
-						appLog.info("Going on Company Tab");
-						if (ip.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-						if (ip.clickOnCreatedCompany(environment, mode, Smoke_PL2CompanyName)) {
-							appLog.info("Click on Created Contact : " + Smoke_PL2CompanyName);
-
-							String[][] labelsAndValuesforComp = {
-									{ excelLabel.Legal_Name.toString(), Smoke_PL2CompanyName },
-									{ excelLabel.Employees.toString(), Smoke_PL2Employees } };
-
-							for (String[] labelAndValue : labelsAndValuesforComp) {
-								if (ip.fieldValueVerificationOnInstitutionPage(environment, mode, TabName.CompaniesTab,
-										labelAndValue[0], labelAndValue[1])) {
-									appLog.info(labelAndValue[0] + " with value : " + labelAndValue[1]
-											+ " verified on Company Page ");
-								} else {
-									appLog.error(labelAndValue[0] + " with value : " + labelAndValue[1]
-											+ " not verified on Company Page ");
-									sa.assertTrue(false, labelAndValue[0] + " with value : " + labelAndValue[1]
-											+ " not verified on Company Page ");
-									log(LogStatus.FAIL, labelAndValue[0] + " with value : " + labelAndValue[1]
-											+ " not verified on Company Page ", YesNo.Yes);
-								}
-							}
-
-						} else {
-							appLog.error("Not Able to Click on Created Company : " + Smoke_PL2CompanyName);
-							sa.assertTrue(false, "Not Able to Click on Created Company : " + Smoke_PL2CompanyName);
-							log(LogStatus.SKIP, "Not Able to Click on Created Company : " + Smoke_PL2CompanyName,
-									YesNo.Yes);
-
-						}} else {
-							sa.assertTrue(false, "Not Able to Click on Institution Tab : ");
-							log(LogStatus.SKIP, "Not Able to Click on  Institution Tab: ",YesNo.Yes);
-						}
-						
-
-					} else {
-						appLog.error("Not Able to Click on Create Deal Button or Landing Page Not Verified");
-						sa.assertTrue(false, "Not Able to Click on Create Deal Button or Landing Page Not Verified");
-						log(LogStatus.SKIP, "Not Able to Click on Create Deal Button or Landing Page Not Verified",
-								YesNo.Yes);
-					}
-
-				} else {
-					appLog.error("Not Able to Add values for mandatory Field");
-					sa.assertTrue(false, "Not Able to Add values for mandatory Field");
-					log(LogStatus.SKIP, "Not Able to Add values for mandatory Field", YesNo.Yes);
-				}
-
-			} else {
-				appLog.error("Not Able to Click On Create Deal Link with Navatar Quick Link");
-				sa.assertTrue(false, "Not Able to Click On Create Deal Link with Navatar Quick Link");
-				log(LogStatus.SKIP, "Not Able to Click On Create Deal Link with Navatar Quick Link", YesNo.Yes);
-			}
-
-
-		
-		lp.CRMlogout(environment, mode);
-		sa.assertAll();
-		System.err.println("SONOKEuRL : " + smokeFilePath);
-	}
-
-	@Parameters({ "environment", "mode" })
-	@Test
-	public void PESmokeTc033_VerifyDealCreationWithSelectExistingSourceFirmAndSourceContact(String environment,String mode) {
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		DealCreationTabBusinessLayer dctb = new DealCreationTabBusinessLayer(driver);
-		PipelinesPageBusinessLayer pl = new PipelinesPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
-		String month = getSystemDate("MMM");
-		String year = getSystemDate("yyyy");
-		System.err.println("month " + month);
-		System.err.println("year " + year);
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
-		appLog.info("Login with User");
-		String PL3SourceContact = Smoke_PL3SourceContact_Fname + " " + Smoke_PL3SourceContact_Lname;
-		String monthAndYear = getSystemDate("MMM") + " " + getSystemDate("yyyy");
-		String expectedPipeLineName = Smoke_PL3CompanyName + " " + "-" + " " + monthAndYear;
-		String bulkActionNavigationLink=BulkActions_DefaultValues.Deal_Creation.toString();
-		if (hp.ClickOnItemOnNavatarEdge(navigationMenuName, bulkActionNavigationLink, action.BOOLEAN, 20)) {
-			appLog.info("Clicked On Create Deal Link with Navatar Quick Link");
-
-			if (dctb.createNewDealPipeLineforExistingSourceFirmAndSourceContact(environment, mode,
-					Smoke_PL3CompanyName, Smoke_PL3Stage, Smoke_PL3SourceFirm, PL3SourceContact, Smoke_PL3Source)) {
-
-				appLog.info("Pipe Line Created and Verifiied : " + expectedPipeLineName);
-				ExcelUtils.writeData(smokeFilePath, expectedPipeLineName, "PipeLine", excelLabel.Company_Name,
-						Smoke_PL3CompanyName, excelLabel.Pipeline_Name);
-
-				String[][] labelsAndValues = { { excelLabel.Deal_Name.toString(), expectedPipeLineName },
-						{ "Company Name", Smoke_PL3CompanyName },
-						{ excelLabel.Stage.toString(), Smoke_PL3Stage },
-						{ excelLabel.Source.toString(), Smoke_PL3Source },
-						{ excelLabel.Source_Firm.toString(), Smoke_PL3SourceFirm },
-						{ excelLabel.Source_Contact.toString(), PL3SourceContact } };
-
-				for (String[] labelAndValue : labelsAndValues) {
-					if (pl.fieldValueVerificationOnPipelinePage(environment, mode, TabName.Pipelines,
-							labelAndValue[0], labelAndValue[1])) {
-						appLog.info(labelAndValue[0] + " with value : " + labelAndValue[1]
-								+ " verified on PipeLine Page ");
-					} else {
-						appLog.error(labelAndValue[0] + " with value : " + labelAndValue[1]
-								+ " not verified on PipeLine Page ");
-						sa.assertTrue(false, labelAndValue[0] + " with value : " + labelAndValue[1]
-								+ " not verified on PipeLine Page ");
-						log(LogStatus.ERROR, labelAndValue[0] + " with value : " + labelAndValue[1]
-								+ " not verified on PipeLine Page ", YesNo.Yes);
-					}
-				}
-
-			} else {
-				appLog.error("Not Able to Click on Create Deal Button or Landing Page Not Verified");
-				sa.assertTrue(false, "Not Able to Click on Create Deal Button or Landing Page Not Verified");
-				log(LogStatus.INFO, "Not Able to Click on Create Deal Button or Landing Page Not Verified",
-						YesNo.Yes);
-			}
-
-		} else {
-			appLog.error("Not Able to Click On Create Deal Link with Navatar Quick Link");
-			sa.assertTrue(false, "Not Able to Click On Create Deal Link with Navatar Quick Link");
-			log(LogStatus.INFO, "Not Able to Click On Create Deal Link with Navatar Quick Link", YesNo.Yes);
-		}
-
-		// Company
-		appLog.info("Going on Company Tab");
-		if (bp.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedCompany(environment, mode, Smoke_PL3CompanyName)) {
-				appLog.info("Click on Created Company : " + Smoke_PL3CompanyName);
-
-				String[][] labelsAndValuesforComp = { { excelLabel.Legal_Name.toString(), Smoke_PL3CompanyName },
-						{ excelLabel.Record_Type.toString(), "Company" } };
-
-				for (String[] labelAndValue : labelsAndValuesforComp) {
-					if (ip.fieldValueVerificationOnInstitutionPage(environment, mode, TabName.CompaniesTab,
-							labelAndValue[0], labelAndValue[1])) {
-						appLog.info(labelAndValue[0] + " with value : " + labelAndValue[1]
-								+ " verified on Company Page ");
-					} else {
-						appLog.error(labelAndValue[0] + " with value : " + labelAndValue[1]
-								+ " not verified on Company Page ");
-						sa.assertTrue(false, labelAndValue[0] + " with value : " + labelAndValue[1]
-								+ " not verified on Company Page ");
-						log(LogStatus.ERROR, labelAndValue[0] + " with value : " + labelAndValue[1]
-								+ " not verified on Company Page ", YesNo.Yes);
-					}
-				}
-
-				String[][] pipeLineFieldsAndValues = {
-						{ excelLabel.Pipeline_Name.toString(), expectedPipeLineName },
-						{ excelLabel.Stage.toString(), Smoke_PL3Stage }, { excelLabel.Log_In_Date.toString(), "" },
-						{ excelLabel.Investment_Size.toString(), "" },
-						{ excelLabel.Source_Firm.toString(), Smoke_PL3SourceFirm },
-						{ excelLabel.Deal_Type.toString(), "" }, { excelLabel.Our_Role.toString(), "" } };
-
-				if (ip.verifyPipeLineRelatedList(environment, mode, RecordType.Company, pipeLineFieldsAndValues)) {
-					appLog.info("PipeLine Related List verified for : " + Smoke_PL3CompanyName);
-				} else {
-					appLog.error("PipeLine Related List Not verified for : " + Smoke_PL3CompanyName);
-					sa.assertTrue(false, "PipeLine Related List Not verified for : " + Smoke_PL3CompanyName);
-					log(LogStatus.ERROR, "PipeLine Related List Not verified for :" + Smoke_PL3CompanyName,
-							YesNo.Yes);
-				}
-
-			} else {
-				appLog.error("Not Able to Click on Created Company : " + Smoke_PL3CompanyName);
-				sa.assertTrue(false, "Not Able to Click on Created Company : " + Smoke_PL3CompanyName);
-				log(LogStatus.ERROR, "Not Able to Click on Created Company : " + Smoke_PL3CompanyName, YesNo.Yes);
-
-			}
-		} else {
-			appLog.error("Not Able to Click on Institution Tab");
-			sa.assertTrue(false, "Not Able to Click on Institution Tab");
-			log(LogStatus.ERROR, "Not Able to Click on Institution Tab", YesNo.Yes);
-		}
-
-		// Institution
-		appLog.info("Going on Institution Tab");
-		if (bp.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-			if (ip.clickOnCreatedInstitution(environment, mode, Smoke_PL3SourceFirm)) {
-				appLog.info("Click on Created Institution : " + Smoke_PL3SourceFirm);
-
-				String[][] dealSourceFieldsAndValues = {
-						{ excelLabel.Pipeline_Name.toString(), expectedPipeLineName },
-						{ "Company", Smoke_PL3CompanyName },
-						{ excelLabel.Deal_Type.toString(), "" }, { excelLabel.Stage.toString(), Smoke_PL3Stage } };
-
-				if (ip.clickOnRelatedList(environment, mode, RecordType.IndividualInvestor, RelatedList.Deals_Sourced, RelatedTab.Deals.toString())) {
-					log(LogStatus.INFO, "Click on Deal Tab", YesNo.No);
-					if (ip.verifyDealSourcedRelatedList(environment, mode, expectedPipeLineName,PL3SourceContact,Smoke_PL3Stage)) {
-							appLog.info("Deal Sourced Related List verified for : " + Smoke_PL3SourceFirm);
-						} else {
-							appLog.error("Deal Sourced Related List Not verified for : " + Smoke_PL3SourceFirm);
-							sa.assertTrue(false, "Deal Sourced Related List Not verified for : " + Smoke_PL3SourceFirm);
-							log(LogStatus.ERROR, "Deal Sourced Related List Not verified for :" + Smoke_PL3SourceFirm,YesNo.Yes);
-						}
-				
-
-				} else {
-					sa.assertTrue(false, "Not Able to Click on Deal Tab");
-					log(LogStatus.SKIP, "Not Able to Click on Deal Tab", YesNo.Yes);
-				}
-
-
-
-			} else {
-				appLog.error("Not Able to Click on Created Institution : " + Smoke_PL3SourceFirm);
-				sa.assertTrue(false, "Not Able to Click on Created Institution : " + Smoke_PL3SourceFirm);
-				log(LogStatus.ERROR, "Not Able to Click on Created Institution : " + Smoke_PL3SourceFirm,
-						YesNo.Yes);
-
-			}
-		} else {
-			appLog.error("Not Able to Click on Institution Tab");
-			sa.assertTrue(false, "Not Able to Click on Institution Tab");
-			log(LogStatus.ERROR, "Not Able to Click on Institution Tab", YesNo.Yes);
-		}
-
-		// Contact
-		appLog.info("Going on Contact Tab");
-		if (bp.clickOnTab(environment, mode, TabName.ContactTab)) {
-			if (cp.clickOnCreatedContact(environment,  Smoke_PL3SourceContact_Fname,
-					Smoke_PL3SourceContact_Lname)) {
-				appLog.info("Click on Created Contact : " + Smoke_PL3SourceContact_Fname + ","
-						+ Smoke_PL3SourceContact_Lname);
-
-				String[][] dealSourceFieldsAndValues = {
-						{ excelLabel.Deal_Name.toString(), expectedPipeLineName },
-						{ "Company Name", Smoke_PL3CompanyName },
-						{ excelLabel.Deal_Type.toString(), "" }, { excelLabel.Stage.toString(), Smoke_PL3Stage },
-						{ excelLabel.Source_Firm.toString(), Smoke_PL3SourceFirm },
-						{ excelLabel.Log_In_Date.toString(), "" }, { excelLabel.Investment_Size.toString(), "" } };
-
-
-				if (ip.clickOnRelatedList(environment, mode, RecordType.IndividualInvestor, RelatedList.Deals_Sourced, null)) {
-					log(LogStatus.INFO, "Click on Deal Sourced", YesNo.No);
-
-					ip.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Deals_Sourced, true);
-					if (ip.clickOnViewAllRelatedList(environment, mode,RelatedList.Deals_Sourced)) {
-						log(LogStatus.INFO, "Click on View All Deal Sourced", YesNo.No);
-
-						if (ip.verifyDealSourcedRelatedList(environment, mode, RecordType.Contact,dealSourceFieldsAndValues)) {
-							appLog.info("Deal Sourced Related List verified for : " + Smoke_PL3SourceContact_Fname + ","
-									+ Smoke_PL3SourceContact_Lname);
-						} else {
-							appLog.error("Deal Sourced Related List Not verified for :" + Smoke_PL3SourceContact_Fname + ","
-									+ Smoke_PL3SourceContact_Lname);
-							sa.assertTrue(false, "Deal Sourced Related List Not verified for : "
-									+ Smoke_PL3SourceContact_Fname + "," + Smoke_PL3SourceContact_Lname);
-							log(LogStatus.ERROR, "Deal Sourced Related List Not verified for : "
-									+ Smoke_PL3SourceContact_Fname + "," + Smoke_PL3SourceContact_Lname, YesNo.Yes);
-						}
-
-					} else {
-						sa.assertTrue(false, "Not Able to Click on View All Deal Sourced");
-						log(LogStatus.SKIP, "Not Able to Click on View All Deal Sourced", YesNo.Yes);
-					}
-
-
-				} else {
-					sa.assertTrue(false, "Not Able to Click on Deal Sourced Related List");
-					log(LogStatus.SKIP, "Not Able to Click on Deal Sourced Related List", YesNo.Yes);
-				}
-
-
-
-			} else {
-				appLog.error("Not Able to Click on Created Contact : " + Smoke_PL3SourceContact_Fname + ","
-						+ Smoke_PL3SourceContact_Lname);
-				sa.assertTrue(false, "Not Able to Click on Created Contact : " + Smoke_PL3SourceContact_Fname + ","
-						+ Smoke_PL3SourceContact_Lname);
-				log(LogStatus.ERROR, "Not Able to Click on Created Contact : " + Smoke_PL3SourceContact_Fname + ","
-						+ Smoke_PL3SourceContact_Lname, YesNo.Yes);
-
-			}
-		} else {
-			appLog.error("Not Able to Click on Contact Tab");
-			sa.assertTrue(false, "Not Able to Click on Contact Tab");
-			log(LogStatus.ERROR, "Not Able to Click on Contact Tab", YesNo.Yes);
-		}
-		lp.CRMlogout(environment, mode);
-
-
-		sa.assertAll();
-		appLog.info("TestCase Pass");
-		System.err.println("SONOKEuRL : " + smokeFilePath);
-	}
-
-	@Parameters({ "environment", "mode" })
-	@Test
-	public void PESmokeTc034_VerifyRevertToDefaultInNavatarSetup(String environment, String mode) {
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		DealCreationTabBusinessLayer dctb = new DealCreationTabBusinessLayer(driver);
-		NavatarSetupPageBusinessLayer nsp = new NavatarSetupPageBusinessLayer(driver);
-		String month = getSystemDate("MMM");
-		String year = getSystemDate("yyyy");
-		System.err.println("month " + month);
-		System.err.println("year " + year);
-		String msg;
-		lp.CRMLogin(superAdminUserName, adminPassword);
-			appLog.info("Login with User");
-			if (bp.clickOnTab(environment, mode, TabName.NavatarSetup)) {
-				appLog.info("Clicked on Navatar Set Up Tab");
-				if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-					switchToFrame(driver, 10, nsp.getnavatarSetUpTabFrame_Lighting(environment, 10));
-				}
-
-				if (click(driver, nsp.getEditButtonforNavatarSetUpSideMenuTab(environment, 
-						NavatarSetupSideMenuTab.DealCreation, 10), "Edit Button", action.BOOLEAN)) {
-
-					appLog.info("Clicked on Edit Button");
-					ThreadSleep(2000);
-					if (click(driver, nsp.getCancelButtonforNavatarSetUpSideMenuTab(environment, mode,
-							NavatarSetupSideMenuTab.DealCreation,TopOrBottom.TOP, 10), "Cancel Button", action.BOOLEAN)) {
-						appLog.info("Clicked on Cancel Button");
-						ThreadSleep(2000);
-						if (nsp.getRevertToDefaultButtonforNavatarSetUpSideMenuTab(environment, mode,
-								NavatarSetupSideMenuTab.DealCreation, TopOrBottom.TOP, 10) == null) {
-							appLog.info("Deal Creation setup page has been be closed and available in view mode");
-						} else {
-							appLog.error("Deal Creation setup page has not been closed and not available in view mode");
-							sa.assertTrue(false,
-									"Deal Creation setup page has not been closed and not available in view mode");
-							log(LogStatus.SKIP,
-									"Deal Creation setup page has not been closed and not available in view mode",
-									YesNo.Yes);
-						}
-					} else {
-						appLog.error("Not Able to Click on Cancel Button");
-						sa.assertTrue(false, "Not Able to Click on Cancel Button");
-						log(LogStatus.SKIP, "Not Able to Click on Cancel Button", YesNo.Yes);
-					}
-
-				} else {
-					appLog.error("Not Able to Click on Edit Button");
-					sa.assertTrue(false, "Not Able to Click on Edit Button");
-					log(LogStatus.SKIP, "Not Able to Click on Edit Button", YesNo.Yes);
-				}
-				
-				switchToDefaultContent(driver);
-				if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-					switchToFrame(driver, 10, nsp.getnavatarSetUpTabFrame_Lighting(environment, 10));
-				}
-				ThreadSleep(3000);
-				if (click(driver, nsp.getEditButtonforNavatarSetUpSideMenuTab(environment,
-						NavatarSetupSideMenuTab.DealCreation, 10), "Edit Button", action.BOOLEAN)) {
-
-					appLog.info("Clicked on Edit Button");
-					ThreadSleep(2000);
-					if (click(driver, nsp.getCancelButtonforNavatarSetUpSideMenuTab(environment, mode,
-							NavatarSetupSideMenuTab.DealCreation,TopOrBottom.BOTTOM, 10), "Cancel Button", action.BOOLEAN)) {
-						appLog.info("Clicked on Cancel Button");
-						ThreadSleep(2000);
-						if (nsp.getRevertToDefaultButtonforNavatarSetUpSideMenuTab(environment, mode,
-								NavatarSetupSideMenuTab.DealCreation, TopOrBottom.TOP, 10) == null) {
-							appLog.info("Deal Creation setup page has been be closed and available in view mode");
-						} else {
-							appLog.error("Deal Creation setup page has not been closed and not available in view mode");
-							sa.assertTrue(false,
-									"Deal Creation setup page has not been closed and not available in view mode");
-							log(LogStatus.SKIP,
-									"Deal Creation setup page has not been closed and not available in view mode",
-									YesNo.Yes);
-						}
-					} else {
-						appLog.error("Not Able to Click on Cancel Button");
-						sa.assertTrue(false, "Not Able to Click on Cancel Button");
-						log(LogStatus.SKIP, "Not Able to Click on Cancel Button", YesNo.Yes);
-					}
-
-				} else {
-					appLog.error("Not Able to Click on Edit Button");
-					sa.assertTrue(false, "Not Able to Click on Edit Button");
-					log(LogStatus.SKIP, "Not Able to Click on Edit Button", YesNo.Yes);
-				}
-				
-				switchToDefaultContent(driver);
-				if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-					switchToFrame(driver, 10, nsp.getnavatarSetUpTabFrame_Lighting(environment, 10));
-				}
-
-				
-				if (click(driver, nsp.getEditButtonforNavatarSetUpSideMenuTab(environment, 
-						NavatarSetupSideMenuTab.DealCreation, 10), "Edit Button", action.BOOLEAN)) {
-
-					appLog.info("Clicked on Edit Button for Cross Icon");
-					ThreadSleep(2000);
-					if (click(driver,
-							nsp.getRevertToDefaultButtonforNavatarSetUpSideMenuTab(environment, mode,
-									NavatarSetupSideMenuTab.DealCreation, TopOrBottom.BOTTOM, 10),
-							"Revert to Default Button", action.BOOLEAN)) {
-						appLog.info("Clicked on Revert to Default Button");
-
-						msg = nsp.getWarningPopUpMsg(environment, 10).getText();
-						if (msg != null) {
-							if (msg.contains(NavatarSetUpPageErrorMessage.WarningPopUpMessage1)
-									&& msg.contains(NavatarSetUpPageErrorMessage.WarningPopUpMessage2)) {
-								appLog.info("Warning PopUp MEssage Verified : " + msg);
-							} else {
-								appLog.error("Warning PopUp MEssage Not Verified :  Actual -  " + msg + "\t Expected : "
-										+ NavatarSetUpPageErrorMessage.WarningPopUpMessage1);
-								sa.assertTrue(false, "Warning PopUp MEssage Not Verified :  Actual -  " + msg
-										+ "\t Expected : " + NavatarSetUpPageErrorMessage.WarningPopUpMessage1);
-								log(LogStatus.SKIP, "Warning PopUp MEssage Not Verified :  Actual -  " + msg
-										+ "\t Expected : " + NavatarSetUpPageErrorMessage.WarningPopUpMessage1,
-										YesNo.Yes);
-							}
-						} else {
-							appLog.error("Warning PopUp Message Element is null");
-							sa.assertTrue(false, "Warning PopUp Message Element is null");
-							log(LogStatus.SKIP, "Warning PopUp Message Element is null", YesNo.Yes);
-						}
-
-						if (click(driver, nsp.getWarningPopUpCrossIcon(environment, 10), "Cross Icon",
-								action.BOOLEAN)) {
-							appLog.info("Clicked on Cross Icon");
-							ThreadSleep(2000);
-						} else {
-							appLog.error("Not Able to Click on Cross Icon");
-							sa.assertTrue(false, "Not Able to Click on Cross Icon");
-							log(LogStatus.SKIP, "Not Able to Click on Cross Icon", YesNo.Yes);
-						}
-
-						if (click(driver,
-								nsp.getRevertToDefaultButtonforNavatarSetUpSideMenuTab(environment, mode,
-										NavatarSetupSideMenuTab.DealCreation, TopOrBottom.TOP, 10),
-								"Revert to Default Button", action.BOOLEAN)) {
-							appLog.info("Clicked on Revert to Default Button");
-
-							msg = nsp.getWarningPopUpMsg(environment, 10).getText();
-							if (msg != null) {
-								if (msg.contains(NavatarSetUpPageErrorMessage.WarningPopUpMessage1)
-										&& msg.contains(NavatarSetUpPageErrorMessage.WarningPopUpMessage2)) {
-									appLog.info("Warning PopUp MEssage Verified : " + msg);
-								} else {
-									appLog.error("Warning PopUp MEssage Not Verified :  Actual -  " + msg
-											+ "\t Expected : " + NavatarSetUpPageErrorMessage.WarningPopUpMessage1);
-									sa.assertTrue(false, "Warning PopUp MEssage Not Verified :  Actual -  " + msg
-											+ "\t Expected : " + NavatarSetUpPageErrorMessage.WarningPopUpMessage1);
-									log(LogStatus.SKIP, "Warning PopUp MEssage Not Verified :  Actual -  " + msg
-											+ "\t Expected : " + NavatarSetUpPageErrorMessage.WarningPopUpMessage1,
-											YesNo.Yes);
-								}
-							} else {
-								appLog.error("Warning PopUp Message Element is null");
-								sa.assertTrue(false, "Warning PopUp Message Element is null");
-								log(LogStatus.SKIP, "Warning PopUp Message Element is null", YesNo.Yes);
-							}
-
-							if (click(driver, nsp.getWarningPopUpNoButton(environment, 20, NavatarSetupSideMenuTab.DealCreation), "No Button",
-									action.BOOLEAN)) {
-								appLog.info("Clicked on No Button");
-								ThreadSleep(2000);
-							} else {
-								appLog.error("Not Able to Click on No Button");
-								sa.assertTrue(false, "Not Able to Click on No Button");
-								log(LogStatus.SKIP, "Not Able to Click on No Button", YesNo.Yes);
-							}
-
-						} else {
-							appLog.error("Not Able to Click on Revert to Default Button");
-							sa.assertTrue(false, "Not Able to Click on Revert to Default Button");
-							log(LogStatus.SKIP, "Not Able to Click on Revert to Default Button", YesNo.Yes);
-						}
-
-						if (click(driver,
-								nsp.getRevertToDefaultButtonforNavatarSetUpSideMenuTab(environment, mode,
-										NavatarSetupSideMenuTab.DealCreation, TopOrBottom.BOTTOM, 10),
-								"Revert to Default Button", action.BOOLEAN)) {
-							appLog.info("Clicked on Revert to Default Button");
-							ThreadSleep(2000);
-							msg = nsp.getWarningPopUpMsg(environment, 10).getText();
-							if (msg != null) {
-								if (msg.contains(NavatarSetUpPageErrorMessage.WarningPopUpMessage1)
-										&& msg.contains(NavatarSetUpPageErrorMessage.WarningPopUpMessage2)) {
-									appLog.info("Warning PopUp MEssage Verified : " + msg);
-								} else {
-									appLog.error("Warning PopUp MEssage Not Verified :  Actual -  " + msg
-											+ "\t Expected : " + NavatarSetUpPageErrorMessage.WarningPopUpMessage1);
-									sa.assertTrue(false, "Warning PopUp MEssage Not Verified :  Actual -  " + msg
-											+ "\t Expected : " + NavatarSetUpPageErrorMessage.WarningPopUpMessage1);
-									log(LogStatus.SKIP, "Warning PopUp MEssage Not Verified :  Actual -  " + msg
-											+ "\t Expected : " + NavatarSetUpPageErrorMessage.WarningPopUpMessage1,
-											YesNo.Yes);
-								}
-							} else {
-								appLog.error("Warning PopUp Message Element is null");
-								sa.assertTrue(false, "Warning PopUp Message Element is null");
-								log(LogStatus.SKIP, "Warning PopUp Message Element is null", YesNo.Yes);
-							}
-
-							if (click(driver, nsp.getWarningPopUpYesButton(environment, 20, NavatarSetupSideMenuTab.DealCreation), "No Button",
-									action.BOOLEAN)) {
-								appLog.info("Clicked on Yes Button");
-								ThreadSleep(2000);
-								switchToDefaultContent(driver);
-								if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-									switchToFrame(driver, 10, nsp.getnavatarSetUpTabFrame_Lighting(environment, 10));
-								}
-								List<String> result = new ArrayList<String>();
-								String[] labels = { "Company Name",
-										excelLabel.Deal_Name.toString(), excelLabel.Stage.toString(),
-										excelLabel.Source_Firm.toString(), excelLabel.Source_Contact.toString(),
-										excelLabel.Source.toString(), excelLabel.Source_Contact.toString(),
-										excelLabel.Source.toString(), excelLabel.Employees.toString(),
-										excelLabel.Deal_Type.toString() };
-
-								result = dctb.verifyLabelInViewModeforNavatarSetUpSideMenuTab(environment, mode,NavatarSetupSideMenuTab.DealCreation,
-										NavatarSetupSideMenuTabLayoutSection.DealCreation_DealInformation, labels);
-
-								if (!result.isEmpty() || (result.contains(excelLabel.Employees.toString())
-										|| result.contains(excelLabel.Deal_Type.toString()))) {
-									appLog.info("Label Verified on Deal Information ");
-								} else {
-									appLog.error("Label Not Verified for Deal Information ");
-									sa.assertTrue(false, "Label Not Verified for Deal Information ");
-									log(LogStatus.SKIP, "Label Not Verified for Deal Information ", YesNo.Yes);
-								}
-
-								result.clear();
-								String[] l1 = { excelLabel.Legal_Name.toString(), excelLabel.Website.toString() };
-								result = dctb.verifyLabelInViewModeforNavatarSetUpSideMenuTab(environment, mode,NavatarSetupSideMenuTab.DealCreation,
-										NavatarSetupSideMenuTabLayoutSection.DealCreation_NewSourceFirm, l1);
-								if (!result.isEmpty() || (result.contains(excelLabel.Website.toString()))) {
-									appLog.info("Label Verified on New_Source_Firm ");
-								} else {
-									appLog.error("Label Not Verified for New_Source_Firm ");
-									sa.assertTrue(false, "Label Not Verified for New_Source_Firm ");
-									log(LogStatus.SKIP, "Label Not Verified for New_Source_Firm ", YesNo.Yes);
-								}
-
-								result.clear();
-								String[] l2 = { excelLabel.Last_Name.toString(), excelLabel.Email.toString() };
-								result = dctb.verifyLabelInViewModeforNavatarSetUpSideMenuTab(environment, mode,NavatarSetupSideMenuTab.DealCreation,
-										NavatarSetupSideMenuTabLayoutSection.DealCreation_NewSourceContact, l2);
-
-								if (!result.isEmpty() || (result.contains(excelLabel.Email.toString()))) {
-									appLog.info("Label Verified on New_Source_Contact ");
-								} else {
-									appLog.error("Label Not Verified for New_Source_Contact");
-									sa.assertTrue(false, "Label Not Verified for New_Source_Contact");
-									log(LogStatus.SKIP, "Label Not Verified for New_Source_Contact", YesNo.Yes);
-								}
-
-							} else {
-								appLog.error("Not Able to Click on Yes Button");
-								sa.assertTrue(false, "Not Able to Click on Yes Button");
-								log(LogStatus.SKIP, "Not Able to Click on Yes Button", YesNo.Yes);
-							}
-
-						} else {
-							appLog.error("Not Able to Click on Revert to Default Button");
-							sa.assertTrue(false, "Not Able to Click on Revert to Default Button");
-							log(LogStatus.SKIP, "Not Able to Click on Revert to Default Button", YesNo.Yes);
-						}
-
-					} else {
-						appLog.error("Not Able to Click on Revert to Default Button");
-						sa.assertTrue(false, "Not Able to Click on Revert to Default Button");
-						log(LogStatus.SKIP, "Not Able to Click on Revert to Default Button", YesNo.Yes);
-					}
-
-				} else {
-					appLog.error("Not Able to Click on Edit Button");
-					sa.assertTrue(false, "Not Able to Click on Edit Button");
-					log(LogStatus.SKIP, "Not Able to Click on Edit Button", YesNo.Yes);
-				}
-
-			} else {
-				appLog.error("Not Able to Click on Navatar Set Up Tab");
-				sa.assertTrue(false, "Not Able to Click on Navatar Set Up Tab");
-				log(LogStatus.SKIP, "Not Able to Click on Navatar Set Up Tab", YesNo.Yes);
-			}
-
-		switchToDefaultContent(driver);
-		lp.CRMlogout(environment, mode);
-		sa.assertAll();
-		appLog.info("Pass");
-	}
-
-	@Parameters({ "environment", "mode" })
-	@Test
-	public void PESmokeTc035_1_ActivatePipelineStageLogAction(String environment, String mode) {
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		NavatarSetupPageBusinessLayer nsp = new NavatarSetupPageBusinessLayer(driver);
-
-		lp.CRMLogin(superAdminUserName, adminPassword);
-			appLog.info("Login with User");
-			if (bp.clickOnTab(environment, mode, TabName.NavatarSetup)) {
-				appLog.info("Clicked on Navatar Set Up Tab");
-
-				if (nsp.clickOnNavatarSetupSideMenusTab(environment, NavatarSetupSideMenuTab.PipelineStageLog)) {
-					appLog.error("Clicked on PipeLine Stage Log");
-
-					if (click(driver, nsp.getEditButtonforNavatarSetUpSideMenuTab(environment, 
-							NavatarSetupSideMenuTab.PipelineStageLog, 10), "Edit Button", action.BOOLEAN)) {
-
-						appLog.info("Clicked on Edit Button");
-						ThreadSleep(2000);
-						if (isSelected(driver,
-								nsp.getEnableCheckBoxforNavatarSetUpSideMenuTab(environment, mode,
-										NavatarSetupSideMenuTab.PipelineStageLog, EditViewMode.Edit, ClickOrCheckEnableDisableCheckBox.Click, 10),
-								"Enabled CheckBox")) {
-							appLog.info("Enable PipeLine Stage Log is checked");	
-						} else {
-							appLog.error("Enable PipeLine Stage Log is Unchecked");
-							sa.assertTrue(false, "Enable PipeLine Stage Log is  Unchecked");
-							log(LogStatus.SKIP, "Enable PipeLine Stage Log is Unchecked", YesNo.Yes);
-							appLog.info("Enable PipeLine Stage Log is checked");
-
-							if (click(driver,
-									nsp.getEnableCheckBoxforNavatarSetUpSideMenuTab(environment, mode,
-											NavatarSetupSideMenuTab.PipelineStageLog, EditViewMode.Edit, ClickOrCheckEnableDisableCheckBox.Click, 10),
-									"Enabled PipeLine Stage Log", action.BOOLEAN)) {
-								appLog.error("Clicked on Enabled PipeLine StagE Box Checkbox");
-								ThreadSleep(2000);
-
-								if (click(driver,
-										nsp.getSaveButtonforNavatarSetUpSideMenuTab(environment, 
-												NavatarSetupSideMenuTab.PipelineStageLog, 10, TopOrBottom.TOP),
-										"Save Button", action.BOOLEAN)) {
-									ThreadSleep(2000);
-									appLog.error("Clicked on Save Button");
-									if (isSelected(driver,
-											nsp.getEnableCheckBoxforNavatarSetUpSideMenuTab(environment, mode,
-													NavatarSetupSideMenuTab.PipelineStageLog, EditViewMode.View, ClickOrCheckEnableDisableCheckBox.Click, 10),
-											"Enabled CheckBox")) {
-										appLog.info("Enable PipeLine Stage Log is Checked");
-									} else {
-										appLog.error(
-												"Enable PipeLine Stage Log is not Checked after clicking on Save Button");
-										sa.assertTrue(false,
-												"Enable PipeLine Stage Log is not Checked after clicking on Save Button");
-										log(LogStatus.SKIP,
-												"Enable PipeLine Stage Log is not Checked after clicking on Save Button",
-												YesNo.Yes);
-									}
-								} else {
-									appLog.error("Not Able to Click on Save Button");
-									sa.assertTrue(false, "Not Able to Click on Save Button");
-									log(LogStatus.SKIP, "Not Able to Click on Save Button", YesNo.Yes);
-								}
-							} else {
-								appLog.error("Not Able to Click on Enabled PipeLine StagE Box Checkbox");
-								sa.assertTrue(false, "Not Able to Click on Enabled PipeLine StagE Box Checkbox");
-								log(LogStatus.SKIP, "Not Able to Click on Enabled PipeLine StagE Box Checkbox",
-										YesNo.Yes);
-							}
-
-						
-							
-						}
-					} else {
-						appLog.error("Not Able to Click on Edit Button");
-						sa.assertTrue(false, "Not Able to Click on Edit Button");
-						log(LogStatus.SKIP, "Not Able to Click on Edit Button", YesNo.Yes);
-					}
-				} else {
-					appLog.error("Not Able to Click on PipeLine Stage Log");
-					sa.assertTrue(false, "Not Able to Click on PipeLine Stage Log");
-					log(LogStatus.SKIP, "Not Able to Click on PipeLine Stage Log", YesNo.Yes);
-				}
-
-			} else {
-				appLog.error("Not Able to Click on Navatar Set Up Tab");
-				sa.assertTrue(false, "Not Able to Click on Navatar Set Up Tab");
-				log(LogStatus.SKIP, "Not Able to Click on Navatar Set Up Tab", YesNo.Yes);
-			}
-
-		switchToDefaultContent(driver);
-		lp.CRMlogout(environment, mode);
-		sa.assertAll();
-		appLog.info("Pass");
-	}
-
-	@Parameters({ "environment", "mode" })
-	@Test
-	public void PESmokeTc035_2_ActivatePipelineStageImpact(String environment, String mode) {
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		PipelinesPageBusinessLayer pl = new PipelinesPageBusinessLayer(driver);
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
-			appLog.info("Login with User");
-			// Company
-			appLog.info("Going on PipeLine Tab");
-			if (bp.clickOnTab(environment, mode, TabName.Deal)) {
-				if (pl.clickOnCreatedPipeLine(environment, mode, Smoke_PL1Name)) {
-					appLog.info("Click on Created PipeLine : " + Smoke_PL1Name);
-
-					String[][] labelsAndValuesforComp = { { excelLabel.Deal_Name.toString(), Smoke_PL1Name },
-							{ "Company Name", Smoke_PL1CompanyName },
-							{ excelLabel.Stage.toString(), Smoke_PL1Stage },
-							{ excelLabel.Last_Stage_Change_Date.toString(), getSystemDate("M/d/yyyy") },
-							{ excelLabel.Highest_Stage_Reached.toString(), Smoke_PL1HighestStageReached },
-							{ excelLabel.Age_of_Current_Stage.toString(), Smoke_PL1AgeOfCurrentStage } };
-
-					for (String[] labelAndValue : labelsAndValuesforComp) {
-						if (pl.fieldValueVerificationOnPipelinePage(environment, mode, TabName.Pipelines,
-								labelAndValue[0], labelAndValue[1])) {
-							appLog.info(labelAndValue[0] + " with value : " + labelAndValue[1]
-									+ " verified on Company Page ");
-						} else {
-							appLog.error(labelAndValue[0] + " with value : " + labelAndValue[1]
-									+ " not verified on Company Page ");
-							sa.assertTrue(false, labelAndValue[0] + " with value : " + labelAndValue[1]
-									+ " not verified on Company Page ");
-							log(LogStatus.ERROR, labelAndValue[0] + " with value : " + labelAndValue[1]
-									+ " not verified on Company Page ", YesNo.Yes);
-						}
-					}
-					
-
-					String[][] pipeLineFieldsAndValues = { { excelLabel.Date_Stage_Changed.toString(), "" },
-							{ excelLabel.Changed_Stage.toString(), Smoke_PL3Stage },
-							{ excelLabel.Age.toString(), "0" } };
-					
-					if (pl.clickOnRelatedList(environment, mode, RecordType.PipeLine, RelatedList.Pipeline_Stage_Logs, null)) {
-						
-						log(LogStatus.PASS, "Clicked on Related TAB : "+RelatedList.Pipeline_Stage_Logs, YesNo.No);
-						if (pl.verifyRelatedListWithCount(environment, mode, TabName.Pipelines, RelatedList.Pipeline_Stage_Logs, 1, 10)) {
-							log(LogStatus.PASS, "Pipeline Stage Logs Count Verified", YesNo.No);	
-						} else {
-							sa.assertTrue(false, "Pipeline Stage Count Logs Not Verified");
-							log(LogStatus.FAIL, "Pipeline Stage Logs Count Not Verified", YesNo.Yes);
-						}
-						
-						if (pl.clickOnViewAllRelatedList(environment, mode, RelatedList.Pipeline_Stage_Logs)) {
-						
-							log(LogStatus.PASS, "Clicked on Related : "+RelatedList.Pipeline_Stage_Logs, YesNo.No);
-							ThreadSleep(2000);
-							if (pl.verifyPipeLineStageLog(environment, mode, RecordType.PipeLine, pipeLineFieldsAndValues)) {
-								appLog.info("PipeLine Stage Log verified for : " + Smoke_PL1Name);
-							} else {
-								appLog.error("PipeLine Stage Log Not verified for : " + Smoke_PL1Name);
-								sa.assertTrue(false, "PipeLine Stage Log Not verified for : " + Smoke_PL1Name);
-								log(LogStatus.FAIL, "PipeLine Stage Log Not verified for :" + Smoke_PL1Name, YesNo.Yes);
-							}							
-						} else {
-							sa.assertTrue(false, "Not Able to Click on Related List View All for " + RelatedList.Pipeline_Stage_Logs);
-							log(LogStatus.FAIL, "Not Able to Click on Related List View All for " + RelatedList.Pipeline_Stage_Logs, YesNo.Yes);
-						}
-						
-						
-					} else {
-						sa.assertTrue(false, "Not Able to Click on Related List " + RelatedList.Pipeline_Stage_Logs);
-						log(LogStatus.FAIL, "Not Able to Click on Related List " + RelatedList.Pipeline_Stage_Logs, YesNo.Yes);
-					}
-
-					
-
-				} else {
-					appLog.error("Not Able to Click on Created PipeLine : " + Smoke_PL1Name);
-					sa.assertTrue(false, "Not Able to Click on Created PipeLine : " + Smoke_PL1Name);
-					log(LogStatus.ERROR, "Not Able to Click on Created PipeLine : " + Smoke_PL1Name, YesNo.Yes);
-
-				}
-			} else {
-				appLog.error("Not Able to Click on PipeLine Tab");
-				sa.assertTrue(false, "Not Able to Click on PipeLine Tab");
-				log(LogStatus.ERROR, "Not Able to Click on PipeLine Tab", YesNo.Yes);
-			}
-
-		lp.CRMlogout(environment, mode);
-		sa.assertAll();
-		appLog.info("Pass");
-	}
-
-	@Parameters({ "environment", "mode" })
-	@Test
-	public void PESmokeTc036_EditPipelineStageAndVerifyPipelineStageLog(String environment, String mode) {
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		PipelinesPageBusinessLayer pl = new PipelinesPageBusinessLayer(driver);
-		SoftAssert tsa = new SoftAssert();
-		String date = getSystemDate("M/d/yyyy");
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
-		appLog.info("Login with User");
-		appLog.info("Going on PipeLine Tab");
-		int logValue=0;
-		if (bp.clickOnTab(environment, mode, TabName.Deal)) {
-			if (pl.clickOnCreatedPipeLine(environment, mode, Smoke_PL1Name)) {
-				appLog.info("Click on Created PipeLine : " + Smoke_PL1Name);
-
-				appLog.info("Going to Change Stage First Time");
-				if (pl.changeStageAndClickOnSaveButton(environment, mode, Smoke_PL1FirstStageChanged)) {
-					appLog.info("Succussfully change Staged : " + Smoke_PL1FirstStageChanged);
-					ThreadSleep(10000);
-					refresh(driver);
-					ThreadSleep(10000);
-					
-					String[][] labelsAndValuesforComp = { { excelLabel.Stage.toString(), Smoke_PL1FirstStageChanged },
-							{ excelLabel.Last_Stage_Change_Date.toString(), date },
-							{ excelLabel.Highest_Stage_Reached.toString(), Smoke_PL1FirstStageChanged },
-							{ excelLabel.Age_of_Current_Stage.toString(), Smoke_PL1AgeOfCurrentStage } };
-
-					for (String[] labelAndValue : labelsAndValuesforComp) {
-						if (pl.fieldValueVerificationOnPipelinePage(environment, mode, TabName.Pipelines,
-								labelAndValue[0], labelAndValue[1])) {
-							appLog.info(labelAndValue[0] + " with value : " + labelAndValue[1]
-									+ " verified on PipeLine Page ");
-						} else {
-							appLog.error(labelAndValue[0] + " with value : " + labelAndValue[1]
-									+ " not verified on PipeLine Page ");
-							sa.assertTrue(false, labelAndValue[0] + " with value : " + labelAndValue[1]
-									+ " not verified on PipeLine Page ");
-							log(LogStatus.ERROR, labelAndValue[0] + " with value : " + labelAndValue[1]
-									+ " not verified on PipeLine Page ", YesNo.Yes);
-						}
-					}
-
-					if (pl.clickOnRelatedList(environment, mode, RecordType.PipeLine, RelatedList.Pipeline_Stage_Logs, null)) {
-
-						log(LogStatus.INFO, "Clicked on Related TAB : "+RelatedList.Pipeline_Stage_Logs, YesNo.No);
-						
-						logValue=2;
-						if (bp.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Pipeline_Stage_Logs, true)) {
-							log(LogStatus.INFO, "scrolled to pipeline stage logs related list", YesNo.No);
-						}
-						else {
-							log(LogStatus.ERROR, "could not scroll to stage log related list", YesNo.Yes);
-							sa.assertTrue(false, "could not scroll to stage log related list");
-						}
-						if (pl.verifyRelatedListWithCount(environment, mode, TabName.Pipelines, RelatedList.Pipeline_Stage_Logs, logValue, 10)) {
-							log(LogStatus.PASS, "Pipeline Stage Logs Count Verified : "+logValue, YesNo.No);	
-						} else {
-							sa.assertTrue(false, "Pipeline Stage Count Logs Not Verified : "+logValue);
-							log(LogStatus.FAIL, "Pipeline Stage Logs Count Not Verified : "+logValue, YesNo.Yes);
-						}
-						
-
-						if (pl.clickOnViewAllRelatedList(environment, mode, RelatedList.Pipeline_Stage_Logs)) {
-							
-							log(LogStatus.INFO, "Clicked on Related : "+RelatedList.Pipeline_Stage_Logs, YesNo.No);
-							
-
-							String[][] pipeLineFieldsAndValues = {
-									{ "", Smoke_PL1FirstStageChanged, Smoke_PL1AgeOfCurrentStage },
-									{ date, Smoke_PL1Stage, Smoke_PL1AgeOfCurrentStage } };
-							tsa = pl.verifyPipeLineStageLogForAllRows(environment, mode, RecordType.PipeLine,
-									pipeLineFieldsAndValues);
-							sa.combineAssertions(tsa);
-							
-							} else {
-							sa.assertTrue(false, "Not Able to Click on Related List View All for " + RelatedList.Pipeline_Stage_Logs);
-							log(LogStatus.SKIP, "Not Able to Click on Related List View All for " + RelatedList.Pipeline_Stage_Logs, YesNo.Yes);
-						}
-
-					} else {
-						sa.assertTrue(false, "Not Able to Click on Related List " + RelatedList.Pipeline_Stage_Logs);
-						log(LogStatus.SKIP, "Not Able to Click on Related List " + RelatedList.Pipeline_Stage_Logs, YesNo.Yes);
-					}	
-		
-				
-
-
-				} else {
-					appLog.error("Not Able to Change Stage and Save Button : " + Smoke_PL1FirstStageChanged);
-					sa.assertTrue(false, "Not Able to Change Stage and Save Button : " + Smoke_PL1FirstStageChanged);
-					log(LogStatus.ERROR, "Not Able to Change Stage and Save Button : " + Smoke_PL1FirstStageChanged,
-							YesNo.Yes);
-				}
-
-			/*
-				if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-					driver.navigate().back();
-				}*/
-				////////////////////////////
-				appLog.info("Going to Change Stage Second Time");
-				if (bp.clickOnTab(environment, mode, TabName.Deal)) {
-					if (pl.clickOnCreatedPipeLine(environment, mode, Smoke_PL1Name)) {
-						appLog.info("Click on Created PipeLine : " + Smoke_PL1Name);
-						
-						/////////////////////////
-						
-						ThreadSleep(5000);
-						if (pl.changeStageAndClickOnSaveButton(environment, mode, Smoke_PL1SecondStageChanged)) {
-							appLog.info("Succussfully change Staged : " + Smoke_PL1SecondStageChanged);
-							ThreadSleep(5000);
-							refresh(driver);
-							ThreadSleep(5000);
-
-							String[][] labelsAndValuesforComp = { { excelLabel.Stage.toString(), Smoke_PL1SecondStageChanged },
-									{ excelLabel.Last_Stage_Change_Date.toString(), date },
-									{ excelLabel.Highest_Stage_Reached.toString(), Smoke_PL1FirstStageChanged },
-									{ excelLabel.Age_of_Current_Stage.toString(), Smoke_PL1AgeOfCurrentStage } };
-
-							for (String[] labelAndValue : labelsAndValuesforComp) {
-								if (pl.fieldValueVerificationOnPipelinePage(environment, mode, TabName.Pipelines,
-										labelAndValue[0], labelAndValue[1])) {
-									appLog.info(labelAndValue[0] + " with value : " + labelAndValue[1]
-											+ " verified on PipeLine Page ");
-								} else {
-									appLog.error(labelAndValue[0] + " with value : " + labelAndValue[1]
-											+ " not verified on PipeLine Page ");
-									sa.assertTrue(false, labelAndValue[0] + " with value : " + labelAndValue[1]
-											+ " not verified on PipeLine Page ");
-									log(LogStatus.ERROR, labelAndValue[0] + " with value : " + labelAndValue[1]
-											+ " not verified on PipeLine Page ", YesNo.Yes);
-								}
-							}
-
-							if (pl.clickOnRelatedList(environment, mode, RecordType.PipeLine, RelatedList.Pipeline_Stage_Logs, null)) {
-								
-								log(LogStatus.PASS, "Clicked on Related TAB : "+RelatedList.Pipeline_Stage_Logs, YesNo.No);
-								logValue=3;
-								if (pl.verifyRelatedListWithCount(environment, mode, TabName.Pipelines, RelatedList.Pipeline_Stage_Logs, logValue, 10)) {
-									log(LogStatus.PASS, "Pipeline Stage Logs Count Verified : "+logValue, YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Pipeline Stage Count Logs Not Verified : "+logValue);
-									log(LogStatus.FAIL, "Pipeline Stage Logs Count Not Verified : "+logValue, YesNo.Yes);
-								}
-								if (bp.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Pipeline_Stage_Logs, true)) {
-									log(LogStatus.INFO, "scrolled to pipeline stage logs related list", YesNo.No);
-								}
-								else {
-									log(LogStatus.ERROR, "could not scroll to stage log related list", YesNo.Yes);
-									sa.assertTrue(false, "could not scroll to stage log related list");
-								}
-								if (pl.clickOnViewAllRelatedList(environment, mode, RelatedList.Pipeline_Stage_Logs)) {
-									
-									log(LogStatus.PASS, "Clicked on Related : "+RelatedList.Pipeline_Stage_Logs, YesNo.No);
-									String[][] pipeLineFieldsAndValues = {
-											{ "", Smoke_PL1SecondStageChanged, Smoke_PL1AgeOfCurrentStage },
-														{ date, Smoke_PL1FirstStageChanged, Smoke_PL1AgeOfCurrentStage },
-											{ date, Smoke_PL1Stage, Smoke_PL1AgeOfCurrentStage } };
-									tsa = pl.verifyPipeLineStageLogForAllRows(environment, mode, RecordType.PipeLine,
-											pipeLineFieldsAndValues);
-									sa.combineAssertions(tsa);
-									
-									} else {
-									sa.assertTrue(false, "Not Able to Click on Related List View All for " + RelatedList.Pipeline_Stage_Logs);
-									log(LogStatus.FAIL, "Not Able to Click on Related List View All for " + RelatedList.Pipeline_Stage_Logs, YesNo.Yes);
-								}
-								
-							} else {
-								sa.assertTrue(false, "Not Able to Click on Related List " + RelatedList.Pipeline_Stage_Logs);
-								log(LogStatus.FAIL, "Not Able to Click on Related List " + RelatedList.Pipeline_Stage_Logs, YesNo.Yes);
-							}
-							
-						
-
-						} else {
-							appLog.error("Not Able to Change Stage and Save Button : " + Smoke_PL1FirstStageChanged);
-							sa.assertTrue(false, "Not Able to Change Stage and Save Button : " + Smoke_PL1FirstStageChanged);
-							log(LogStatus.ERROR, "Not Able to Change Stage and Save Button : " + Smoke_PL1FirstStageChanged,
-									YesNo.Yes);
-						}
-						
-						//////////////////////
-					} else {
-						appLog.error("Not Able to Click on Created PipeLine : " + Smoke_PL1Name);
-						sa.assertTrue(false, "Not Able to Click on Created PipeLine : " + Smoke_PL1Name);
-						log(LogStatus.ERROR, "Not Able to Click on Created PipeLine : " + Smoke_PL1Name, YesNo.Yes);
-
-					}
-				} else {
-					appLog.error("Not Able to Click on PipeLine Tab");
-					sa.assertTrue(false, "Not Able to Click on PipeLine Tab");
-					log(LogStatus.ERROR, "Not Able to Click on PipeLine Tab", YesNo.Yes);
-				}
-				
-				
-				////////////////////////////
-				
-
-			} else {
-				appLog.error("Not Able to Click on Created PipeLine : " + Smoke_PL1Name);
-				sa.assertTrue(false, "Not Able to Click on Created PipeLine : " + Smoke_PL1Name);
-				log(LogStatus.ERROR, "Not Able to Click on Created PipeLine : " + Smoke_PL1Name, YesNo.Yes);
-
-			}
-		} else {
-			appLog.error("Not Able to Click on PipeLine Tab");
-			sa.assertTrue(false, "Not Able to Click on PipeLine Tab");
-			log(LogStatus.ERROR, "Not Able to Click on PipeLine Tab", YesNo.Yes);
-		}
-		ThreadSleep(2000);
-		if (bp.clickOnTab(environment, mode, TabName.Deal)) {
-			if (pl.clickOnCreatedPipeLine(environment, mode, Smoke_PL2Name)) {
-				appLog.info("Click on Created PipeLine : " + Smoke_PL2Name);
-
-				if (pl.clickOnRelatedList(environment, mode, RecordType.PipeLine, RelatedList.Pipeline_Stage_Logs, null)) {
-					
-					log(LogStatus.PASS, Smoke_PL2Name+" : Clicked on Related TAB : "+RelatedList.Pipeline_Stage_Logs, YesNo.No);
-					logValue=1;
-					if (bp.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Pipeline_Stage_Logs, true)) {
-						log(LogStatus.INFO, Smoke_PL2Name+" : scrolled to pipeline stage logs related list", YesNo.No);
-					}
-					else {
-						log(LogStatus.ERROR, Smoke_PL2Name+" : could not scroll to stage log related list", YesNo.Yes);
-						sa.assertTrue(false, Smoke_PL2Name+" : could not scroll to stage log related list");
-					}
-					if (pl.verifyRelatedListWithCount(environment, mode, TabName.Pipelines, RelatedList.Pipeline_Stage_Logs, logValue, 10)) {
-						log(LogStatus.PASS, Smoke_PL2Name+" : Pipeline Stage Logs Count Verified : "+logValue, YesNo.No);	
-					} else {
-						sa.assertTrue(false, Smoke_PL2Name+" : Pipeline Stage Count Logs Not Verified : "+logValue);
-						log(LogStatus.FAIL, Smoke_PL2Name+" : Pipeline Stage Logs Count Not Verified : "+logValue, YesNo.Yes);
-					}
-					
-					if (pl.clickOnViewAllRelatedList(environment, mode, RelatedList.Pipeline_Stage_Logs)) {
-						
-						log(LogStatus.PASS, Smoke_PL2Name+" : Clicked on Related : "+RelatedList.Pipeline_Stage_Logs, YesNo.No);
-
-						
-						String[][] pipeLineFieldsAndValues = { { "", Smoke_PL2Stage, Smoke_PL2AgeOfCurrentStage } };
-						tsa = pl.verifyPipeLineStageLogForAllRows(environment, mode, RecordType.PipeLine,
-								pipeLineFieldsAndValues);
-						sa.combineAssertions(tsa);
-						
-						} else {
-						sa.assertTrue(false, Smoke_PL2Name+" : Not Able to Click on Related List View All for " + RelatedList.Pipeline_Stage_Logs);
-						log(LogStatus.FAIL, Smoke_PL2Name+" : Not Able to Click on Related List View All for " + RelatedList.Pipeline_Stage_Logs, YesNo.Yes);
-					}
-					
-				} else {
-					sa.assertTrue(false, Smoke_PL2Name+" : Not Able to Click on Related List " + RelatedList.Pipeline_Stage_Logs);
-					log(LogStatus.FAIL, Smoke_PL2Name+" : Not Able to Click on Related List " + RelatedList.Pipeline_Stage_Logs, YesNo.Yes);
-				}	
-				
-
-			} else {
-				appLog.error("Not Able to Click on Created PipeLine : " + Smoke_PL2Name);
-				sa.assertTrue(false, "Not Able to Click on Created PipeLine : " + Smoke_PL2Name);
-				log(LogStatus.ERROR, "Not Able to Click on Created PipeLine : " + Smoke_PL2Name, YesNo.Yes);
-
-			}
-		} else {
-			appLog.error("Not Able to Click on PipeLine Tab");
-			sa.assertTrue(false, "Not Able to Click on PipeLine Tab");
-			log(LogStatus.ERROR, "Not Able to Click on PipeLine Tab", YesNo.Yes);
-		}
-
-		switchToDefaultContent(driver);
-		lp.CRMlogout(environment, mode);
-		sa.assertAll();
-		appLog.info("Pass");
-	}
-
-	@Parameters({ "environment", "mode" })
-	@Test
-	public void PESmokeTc037_enableIndividualInvestorCreation(String environment, String mode) {
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		NavatarSetupPageBusinessLayer nsp = new NavatarSetupPageBusinessLayer(driver);
-
-		lp.CRMLogin(superAdminUserName, adminPassword);
-			appLog.info("Login with User");
-			if (bp.clickOnTab(environment, mode, TabName.NavatarSetup)) {
-				appLog.info("Clicked on Navatar Set Up Tab");
-
-				if (nsp.clickOnNavatarSetupSideMenusTab(environment, NavatarSetupSideMenuTab.IndividualInvestorCreation)) {
-					appLog.error("Clicked on Individual Investor Creation");
-					
-					if (!isSelected(driver,
-							nsp.getEnableCheckBoxforNavatarSetUpSideMenuTab(environment, mode,
-									NavatarSetupSideMenuTab.IndividualInvestorCreation, EditViewMode.View, ClickOrCheckEnableDisableCheckBox.EnableOrDisable, 10),
-							"Enabled CheckBox")) {
-						log(LogStatus.INFO, "Enable Individual Investor Creation check box is not enabled", YesNo.No);
-					}else {
-						log(LogStatus.ERROR, "Enable Individual Investor Creation check box is enabled", YesNo.Yes);
-						sa.assertTrue(false, "Enable Individual Investor Creation check box is enabled");
-					}
-					
-					if (click(driver, nsp.getEditButtonforNavatarSetUpSideMenuTab(environment, 
-							NavatarSetupSideMenuTab.IndividualInvestorCreation, 10), "Edit Button", action.BOOLEAN)) {
-
-						appLog.info("Clicked on Edit Button");
-						ThreadSleep(2000);
-						if (!isSelected(driver,
-								nsp.getEnableCheckBoxforNavatarSetUpSideMenuTab(environment, mode,
-										NavatarSetupSideMenuTab.IndividualInvestorCreation, EditViewMode.Edit, ClickOrCheckEnableDisableCheckBox.EnableOrDisable, 10),
-								"Enabled CheckBox")) {
-							appLog.info("Enable Individual Investor Creation is Unchecked");
-
-							if (click(driver,
-									nsp.getEnableCheckBoxforNavatarSetUpSideMenuTab(environment, mode,
-											NavatarSetupSideMenuTab.IndividualInvestorCreation, EditViewMode.Edit, ClickOrCheckEnableDisableCheckBox.Click, 10),
-									"Enabled PipeLine Stage Log", action.BOOLEAN)) {
-								appLog.error("Clicked on Enabled Individual Investor Creation Box Checkbox");
-								ThreadSleep(2000);
-
-								if (click(driver,
-										nsp.getSaveButtonforNavatarSetUpSideMenuTab(environment, 
-												NavatarSetupSideMenuTab.IndividualInvestorCreation, 10, TopOrBottom.TOP),
-										"Save Button", action.BOOLEAN)) {
-									ThreadSleep(2000);
-									appLog.error("Clicked on Save Button");
-									ThreadSleep(5000);
-									refresh(driver);
-									ThreadSleep(5000);
-									if(mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-										if(switchToFrame(driver, 10, nsp.getnavatarSetUpTabFrame_Lighting(environment, 10))){
-											appLog.info("Inside Frame");
-											System.err.println("Inside Frame");
-										}
-										
-									}
-									if (isSelected(driver,
-											nsp.getEnableCheckBoxforNavatarSetUpSideMenuTab(environment, mode,
-													NavatarSetupSideMenuTab.IndividualInvestorCreation, EditViewMode.View, ClickOrCheckEnableDisableCheckBox.EnableOrDisable, 30),
-											"Enabled CheckBox")) {
-										log(LogStatus.INFO, "Enable Individual Investor Creation is Checked", YesNo.No);
-									} else {
-										log(LogStatus.FAIL,
-												"Enable Individual Investor Creation is not Checked after clicking on Save Button",
-												YesNo.Yes);
-										sa.assertTrue(false,
-												"Enable Individual Investor Creation is not Checked after clicking on Save Button");
-									}
-								} else {
-									log(LogStatus.SKIP, "Not Able to Click on Save Button", YesNo.Yes);
-									sa.assertTrue(false, "Not Able to Click on Save Button");
-								}
-								if (click(driver, nsp.getEditButtonforNavatarSetUpSideMenuTab(environment, NavatarSetupSideMenuTab.IndividualInvestorCreation, 10), "Edit Button", action.BOOLEAN)) {
-									appLog.info("Clicked on Edit Button");
-									ThreadSleep(2000);
-									if (click(driver,nsp.getSaveButtonforNavatarSetUpSideMenuTab(environment, NavatarSetupSideMenuTab.IndividualInvestorCreation, 10, TopOrBottom.BOTTOM),"Save Button", action.BOOLEAN)) {
-										ThreadSleep(2000);
-										appLog.error("Clicked on Save Button");
-									} else {
-										log(LogStatus.SKIP, "Not Able to Click on Save Button", YesNo.Yes);
-										sa.assertTrue(false, "Not Able to Click on Save Button");
-									}
-								} else {
-									log(LogStatus.SKIP, "Not Able to Click on Edit Button", YesNo.Yes);
-									sa.assertTrue(false, "Not Able to Click on Edit Button");
-								}
-								
-							} else {
-								log(LogStatus.SKIP, "Not Able to Click on Individual Investor Creation Checkbox",
-										YesNo.Yes);
-								sa.assertTrue(false, "Not Able to Click on Individual Investor Creation Checkbox");
-							}
-
-						} else {
-							log(LogStatus.SKIP, "Enable Individual Investor Creation is Already checked", YesNo.Yes);
-							sa.assertTrue(false, "Enable Individual Investor Creation is Already checked");
-						}
-					} else {
-						log(LogStatus.SKIP, "Not Able to Click on Edit Button", YesNo.Yes);
-						sa.assertTrue(false, "Not Able to Click on Edit Button");
-					}
-				} else {
-					log(LogStatus.SKIP, "Not Able to Click on Individual Investor Creation", YesNo.Yes);
-					sa.assertTrue(false, "Not Able to Click on Individual Investor Creation");
-				}
-
-			} else {
-				log(LogStatus.SKIP, "Not Able to Click on Navatar Set Up Tab", YesNo.Yes);
-				sa.assertTrue(false, "Not Able to Click on Navatar Set Up Tab");
-			}
-
-		switchToDefaultContent(driver);
-		lp.CRMlogout(environment, mode);
-		sa.assertAll();
-	}
-
-	@Parameters({ "environment", "mode" })
-	@Test
-	public void PESmokeTc038_verifyCreateNewIndividualInvestorLabels(String environment, String mode) {
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		NavatarSetupPageBusinessLayer nsp = new NavatarSetupPageBusinessLayer(driver);
-		IndividualInvestorCreationTab indiviual = new IndividualInvestorCreationTab(driver);
-		List<WebElement> lst = new ArrayList<WebElement>();
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
-		String bulkActionNavigationLink=BulkActions_DefaultValues.Individual_Investor_Creation.toString();
-		for(int j=0; j<=2;j++) {
-			switchToDefaultContent(driver);
-			if (home.ClickOnItemOnNavatarEdge(navigationMenuName, bulkActionNavigationLink, action.BOOLEAN, 20)) {
-					appLog.info("Clicked On Create Individual Investor Creation Link");
-				
-				if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-					
-					switchToFrame(driver, 10,indiviual.getCreateCommitmentFrame_Lighting(20));
-				}
-				
-				if(j==0) {
-					if(click(driver, indiviual.getCancelButtonforCreateIndiviualInvestorPage(environment, mode, TopOrBottom.TOP,10), "cancel button", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clciked on Top Cancel button", YesNo.No);
-					}else {
-						log(LogStatus.ERROR, "Not able to click on top cancel button ", YesNo.Yes);
-						sa.assertTrue(false, "Not able to click on top cancel button ");
-					}
-				}
-				
-				if(j==1) {
-					if(click(driver, indiviual.getCancelButtonforCreateIndiviualInvestorPage(environment, mode, TopOrBottom.BOTTOM,10), "cancel button", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clciked on Bottom Cancel button", YesNo.No);
-					}else {
-						log(LogStatus.ERROR, "Not able to click on Bottom cancel button ", YesNo.Yes);
-						sa.assertTrue(false, "Not able to click on Bottom cancel button ");
-					}
-				}
-				
-				
-				
-				if(j==2) {
-					ThreadSleep(5000);
-					lst.clear();
-					lst=indiviual.getIndiviualInvestorFieldLabelInEditViewMode(environment, mode, IndiviualInvestorSectionsName.Contact_Information);
-					String contactInfoLabels="First Name,*Last Name,Contact Description,Business Phone,Business Fax,Mobile Phone,Email";
-					if(compareMultipleList(driver, contactInfoLabels, lst).isEmpty()) {
-						log(LogStatus.INFO, "Contact information all labels are verified", YesNo.No);
-					}else {
-						log(LogStatus.ERROR, "Contact information all labels are not verified", YesNo.Yes);
-						sa.assertTrue(false, "Contact information all labels are not verified");
-					}
-					
-					lst.clear();
-					lst=indiviual.getIndiviualInvestorFieldLabelInEditViewMode(environment, mode, IndiviualInvestorSectionsName.Address_Information);
-					String AddressInfoLabels="Mailing Street,Mailing City,Mailing State/Province,Mailing Zip/Postal Code,Mailing Country,Other Street,Other City,Other State/Province,Other Zip/Postal Code,Other Country";
-					if(compareMultipleList(driver, AddressInfoLabels, lst).isEmpty()) {
-						log(LogStatus.INFO, "Address information all labels are verified", YesNo.No);
-					}else {
-						log(LogStatus.ERROR, "Address information all labels are not verified", YesNo.Yes);
-						sa.assertTrue(false, "Address information all labels are not verified");
-					}
-					
-					lst.clear();
-					lst=indiviual.getIndiviualInvestorFieldLabelInEditViewMode(environment, mode, IndiviualInvestorSectionsName.Additional_Information);
-					String AdditionalInfoLabels="Fund Preferences,Industry Preferences,Assistant's Name,Asst. Phone";
-					if(compareMultipleList(driver, AdditionalInfoLabels, lst).isEmpty()) {
-						log(LogStatus.INFO, "Additional information all labels are verified", YesNo.No);
-					}else {
-						log(LogStatus.ERROR, "Additional information all labels are not verified", YesNo.Yes);
-						sa.assertTrue(false, "Additional information all labels are not verified");
-					}
-					
-				}
-				
-			}else {
-				log(LogStatus.ERROR, "Not able to click on  Create New Individual Investor link so cannot verify labels : "+j, YesNo.Yes);
-				sa.assertTrue(false, "Not able to click on  Create New Individual Investor link so cannot verify labels : "+j);
-			}
-		}
-		
-		switchToDefaultContent(driver);
-		lp.CRMlogout(environment, mode);
-		sa.assertAll();
-	}
-	
-	@Parameters({ "environment", "mode" })
-	@Test
-	public void PESmokeTc039_CreateNewIndividualInvestor(String environment, String mode) {
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		NavatarSetupPageBusinessLayer nsp = new NavatarSetupPageBusinessLayer(driver);
-		IndividualInvestorCreationTabBusinessLayer indiviual = new IndividualInvestorCreationTabBusinessLayer(driver);
-		ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
-		List<WebElement> lst = new ArrayList<WebElement>();
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
-		
-			ThreadSleep(5000);
-			String emailId = contact.generateRandomEmailId();
-			String[][] labelNamesAndValue= {
-					{IndiviualInvestorFieldLabel.First_Name.toString(),SmokeC7_FName},
-					{IndiviualInvestorFieldLabel.Last_Name.toString(),SmokeC7_LName},
-					{IndiviualInvestorFieldLabel.Email.toString(),emailId},
-					{IndiviualInvestorFieldLabel.Business_Phone.toString(),SmokeC7_Phone},
-					{IndiviualInvestorFieldLabel.Business_Fax.toString(),SmokeC7_Fax},
-					{IndiviualInvestorFieldLabel.Mobile_Phone.toString(),SmokeC7_Mobile},
-					{IndiviualInvestorFieldLabel.Contact_Description.toString(),SmokeC7_Description},
-					{IndiviualInvestorFieldLabel.Mailing_Street.toString(),SmokeC7_MailingStreet},
-					{IndiviualInvestorFieldLabel.Mailing_City.toString(),SmokeC7_MailingCity},
-					{IndiviualInvestorFieldLabel.Mailing_State.toString(),SmokeC7_MailingState},
-					{IndiviualInvestorFieldLabel.Mailing_Zip.toString(),SmokeC7_MailingZip},
-					{IndiviualInvestorFieldLabel.Mailing_Country.toString(),SmokeC7_MailingCountry},
-					{IndiviualInvestorFieldLabel.Other_Street.toString(),SmokeC7_OtherStreet},
-					{IndiviualInvestorFieldLabel.Other_City.toString(),SmokeC7_OtherCity},
-					{IndiviualInvestorFieldLabel.Other_State.toString(),SmokeC7_OtherState},
-					{IndiviualInvestorFieldLabel.Other_Zip.toString(),SmokeC7_OtherZip},
-					{IndiviualInvestorFieldLabel.Other_Country.toString(),SmokeC7_OtherCountry},
-					{IndiviualInvestorFieldLabel.Assistant.toString(),SmokeC7_Assistant},
-					{IndiviualInvestorFieldLabel.Asst_Phone.toString(),SmokeC7_Asst_Phone},
-					{IndiviualInvestorFieldLabel.Fund_Preferences.toString(),SmokeINDINV4_FundPreferences},
-					{IndiviualInvestorFieldLabel.Industry_Preferences.toString(),SmokeINDINV4_IndustryPreferences}};
-			if(indiviual.createIndiviualInvestor(environment, mode, labelNamesAndValue, null, TopOrBottom.TOP)) {
-				log(LogStatus.INFO, "Successfully Create Indiviual Investor "+SmokeINDINV4, YesNo.No);
-				ExcelUtils.writeData(smokeFilePath, emailId, "Contacts", excelLabel.Variable_Name,"SmokeC7", excelLabel.Contact_EmailId);
-				if(indiviual.getLabelHeaderText(environment, mode, 60).getText().trim().contains(SmokeINDINV4)) {
-					log(LogStatus.INFO, SmokeINDINV4+" header text is verified", YesNo.No);
-				}else {
-					log(LogStatus.ERROR, SmokeINDINV4+" header text is not matched ", YesNo.Yes);
-					sa.assertTrue(false, SmokeINDINV4+" header text is not matched ");
-				}
-				
-				String[][] labelAndValue= {{excelLabel.Institution_Type.toString(),SmokeINDINV4_InstitutionType},
-						{excelLabel.Phone.toString(),SmokeINDINV4_Phone},
-						{excelLabel.Fax.toString(),SmokeINDINV4_Fax},
-						{excelLabel.Description.toString(),SmokeINDINV4_Description},
-						{excelLabel.Description.toString(),SmokeINDINV4_Description},
-						{excelLabel.Street.toString(),SmokeINDINV4_Street},
-						{excelLabel.City.toString(),SmokeINDINV4_City},
-						{excelLabel.State.toString(),SmokeINDINV4_State},
-						{excelLabel.Postal_Code.toString(),SmokeINDINV4_PostalCode},
-						{excelLabel.Country.toString(),SmokeINDINV4_Country},
-						{excelLabel.Shipping_Street.toString(),SmokeINDINV4_ShippingStreet},
-						{excelLabel.Shipping_City.toString(),SmokeINDINV4_ShippingCity},
-						{excelLabel.Shipping_State.toString(),SmokeINDINV4_ShippingState},
-						{excelLabel.Shipping_Zip.toString(),SmokeINDINV4_ShippingZip},
-						{excelLabel.Shipping_Country.toString(),SmokeINDINV4_ShippingCountry},
-						{excelLabel.Fund_Preferences.toString(),SmokeINDINV4_FundPreferences},
-						{excelLabel.Industry_Preferences.toString(),SmokeINDINV4_IndustryPreferences}};
-				
-				for (String[] strings : labelAndValue) {
-					if(ins.fieldValueVerificationOnInstitutionPage(environment, mode, TabName.InstituitonsTab, strings[0],strings[1])) {
-						log(LogStatus.INFO, strings[0]+" label value "+strings[1]+" is matched ", YesNo.No);
-					}else {
-						log(LogStatus.ERROR, strings[0]+" label value "+strings[1]+" is not matched ", YesNo.Yes);
-						sa.assertTrue(false, strings[0]+" label value "+strings[1]+" is not matched ");
-					}
-					
-				}
-				if(contact.clickOnTab(environment, mode, TabName.ContactTab)) {
-					if(contact.clickOnCreatedContact(environment,  SmokeC7_FName, SmokeC7_LName)) {
-						String[][] contactLabelAndValue= {{excelLabel.Name.toString(),SmokeC7_FName+" "+SmokeC7_LName},
-								{excelLabel.Description.toString(),SmokeC7_Description},
-								{excelLabel.Fax.toString(),SmokeINDINV4_Fax},
-								{excelLabel.Description.toString(),SmokeC7_Description},
-								{excelLabel.Mailing_Street.toString(),SmokeC7_MailingStreet},
-								{excelLabel.Mailing_City.toString(),SmokeC7_MailingCity},
-								{excelLabel.Mailing_State.toString(),SmokeC7_MailingState},
-								{excelLabel.Mailing_Zip.toString(),SmokeC7_MailingZip},
-								{excelLabel.Mailing_Country.toString(),SmokeC7_MailingCountry},
-								{excelLabel.Other_Street.toString(),SmokeC7_OtherStreet},
-								{excelLabel.Other_City.toString(),SmokeC7_OtherCity},
-								{excelLabel.Other_State.toString(),SmokeC7_OtherState},
-								{excelLabel.Other_Zip.toString(),SmokeC7_OtherZip},
-								{excelLabel.Other_Country.toString(),SmokeC7_OtherCountry},
-								{excelLabel.Email.toString(),emailId},
-								{excelLabel.Assistant.toString(),SmokeC7_Assistant},
-								{excelLabel.Asst_Phone.toString(),SmokeC7_Asst_Phone},
-								{ContactPageFieldLabelText.Mobile.toString(),SmokeC7_Mobile},
-								{excelLabel.Phone.toString(),SmokeC7_Phone}};
-						
-						for (String[] strings : contactLabelAndValue) {
-							if(contact.fieldValueVerificationOnContactPage(environment,  TabName.InstituitonsTab, strings[0],strings[1])) {
-								log(LogStatus.INFO, strings[0]+" label value "+strings[1]+" is matched ", YesNo.No);
-							}else {
-								log(LogStatus.ERROR, strings[0]+" label value "+strings[1]+" is not matched ", YesNo.Yes);
-								sa.assertTrue(false, strings[0]+" label value "+strings[1]+" is not matched ");
-							}
-							
-						}
-					}else {
-						log(LogStatus.ERROR, "Not able to click on created contact "+SmokeC7_FName+" "+SmokeC7_LName, YesNo.Yes);
-						sa.assertTrue(false, "Not able to click on created contact "+SmokeC7_FName+" "+SmokeC7_LName);
-					}
-				}else {
-					log(LogStatus.ERROR, "Not able to click on Contact tab so cannot verify created contact "+SmokeC7_FName+" "+SmokeC7_LName, YesNo.No);
-					sa.assertTrue(false, "Not able to click on Contact tab so cannot verify created contact "+SmokeC7_FName+" "+SmokeC7_LName);
-				}
-				
-			}else {
-				log(LogStatus.ERROR, "Not able to Create Indiviual Investor "+SmokeINDINV4, YesNo.Yes);
-				sa.assertTrue(false, "Not able to Create Indiviual Investor "+SmokeINDINV4);
-			}
-			
-		if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-			switchToDefaultContent(driver);
-		}
-		lp.CRMlogout(environment, mode);
-		sa.assertAll();
-	}
-	
-	@Parameters({ "environment", "mode" })
-	@Test
-	public void PESmokeTc040_updateCreatedIndividualInvestorDetails(String environment, String mode) {
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		NavatarSetupPageBusinessLayer nsp = new NavatarSetupPageBusinessLayer(driver);
-		IndividualInvestorCreationTabBusinessLayer indiviual = new IndividualInvestorCreationTabBusinessLayer(driver);
-		ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
-		List<WebElement> lst = new ArrayList<WebElement>();
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
-		if(ins.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-			if(ins.clickOnCreatedInstitution(environment, mode, SmokeINDINV4)) {
-				ThreadSleep(3000);
-				ins.clickOnShowMoreDropdownOnly(environment, mode, PageName.InstitutionsPage);
-				if(click(driver,ins.getEditButton(environment, mode, 60), "edit button", action.SCROLLANDBOOLEAN)) {
-					ThreadSleep(10000);
-				String[][] labelAndValue= {{excelLabel.Street.toString(),SmokeINDINV5_Street},{excelLabel.Description.toString(),SmokeC7_Description+" Updated"},
-						{excelLabel.City.toString(),SmokeINDINV5_City},
-						{excelLabel.State.toString(),SmokeINDINV5_State},
-						{excelLabel.Postal_Code.toString(),SmokeINDINV5_PostalCode},
-						{excelLabel.Country.toString(),SmokeINDINV5_Country},
-						{excelLabel.Street.toString(),SmokeINDINV5_Street},
-						{excelLabel.Shipping_Street.toString(),SmokeINDINV5_ShippingStreet},
-						{excelLabel.Shipping_City.toString(),SmokeINDINV5_ShippingCity},
-						{excelLabel.Shipping_State.toString(),SmokeINDINV5_ShippingState},
-						{excelLabel.Shipping_Zip.toString(),SmokeINDINV5_ShippingZip},
-						{excelLabel.Shipping_Country.toString(),SmokeINDINV5_ShippingCountry},
-						{excelLabel.Shipping_Country.toString(),SmokeINDINV5_ShippingCountry}};
-				
-				for (String[] strings : labelAndValue) {
-					WebElement ele = ins.getInstitutionPageTextBoxOrRichTextBoxWebElement(environment, mode,strings[0].trim(), 30);
-					if(sendKeysAndPressEnter(driver, ele, strings[1], strings[0]+" text box", action.SCROLLANDBOOLEAN)) {
-						appLog.info("passed value "+strings[1]+" in "+strings[0]+" field");
-					}else {
-						appLog.error("Not able to pass value "+strings[1]+" in "+strings[0]+" field");
-						BaseLib.sa.assertTrue(false, "Not able to pass value "+strings[1]+" in "+strings[0]+" field");
-					}
-					ThreadSleep(500);
-					
-				}
-				//driver,ins.getSaveButton(environment, mode, 30),"save button", action.SCROLLANDBOOLEAN
-				ThreadSleep(5000);
-				if(clickUsingJavaScript(driver,ins.getSaveButton(environment, mode, 30),"save button")) {
-					ThreadSleep(5000);
-					if(contact.clickOnTab(environment, mode, TabName.ContactTab)) {
-						if(contact.clickOnCreatedContact(environment, SmokeC8_FName, SmokeC8_LName)) {
-							String[][] contactLabelAndValue= {{excelLabel.Description.toString(),SmokeC7_Description+" Updated"},
-									{excelLabel.Mailing_Street.toString(),SmokeC8_MailingStreet},
-									{excelLabel.Mailing_City.toString(),SmokeC8_MailingCity},
-									{excelLabel.Mailing_State.toString(),SmokeC8_MailingState},
-									{excelLabel.Mailing_Zip.toString(),SmokeC8_MailingZip},
-									{excelLabel.Mailing_Country.toString(),SmokeC8_MailingCountry},
-									{excelLabel.Other_Street.toString(),SmokeC8_OtherStreet},
-									{excelLabel.Other_City.toString(),SmokeC8_OtherCity},
-									{excelLabel.Other_State.toString(),SmokeC8_OtherState},
-									{excelLabel.Other_Zip.toString(),SmokeC8_OtherZip},
-									{excelLabel.Other_Country.toString(),SmokeC8_OtherCountry}};
-							
-							for (String[] strings : contactLabelAndValue) {
-								if(contact.fieldValueVerificationOnContactPage(environment,  TabName.ContactTab, strings[0],strings[1])) {
-									log(LogStatus.INFO, strings[0]+" label value "+strings[1]+" is matched ", YesNo.No);
-								}else {
-									log(LogStatus.ERROR, strings[0]+" label value "+strings[1]+" is not matched ", YesNo.Yes);
-									sa.assertTrue(false, strings[0]+" label value "+strings[1]+" is not matched ");
-								}
-								
-							}
-						}else {
-							log(LogStatus.ERROR, "Not able to click on created contact "+SmokeC7_FName+" "+SmokeC7_LName, YesNo.Yes);
-							sa.assertTrue(false, "Not able to click on created contact "+SmokeC7_FName+" "+SmokeC7_LName);
-						}
-					}else {
-						log(LogStatus.ERROR, "Not able to click on Contact tab so cannot verify created contact "+SmokeC7_FName+" "+SmokeC7_LName, YesNo.No);
-						sa.assertTrue(false, "Not able to click on Contact tab so cannot verify created contact "+SmokeC7_FName+" "+SmokeC7_LName);
-					}
-				}else {
-					log(LogStatus.ERROR, "Not able to click on save button so cannot update "+SmokeINDINV4+" details", YesNo.Yes);
-					sa.assertTrue(false,"Not able to click on save button so cannot update "+SmokeINDINV4+" details");
-				}
-			}else {
-				log(LogStatus.ERROR, "Not able to click on edit button so cannot update indiviual investor "+SmokeINDINV4+" details", YesNo.No);
-				sa.assertTrue(false, "Not able to click on edit button so cannot update indiviual investor "+SmokeINDINV4+" details");
-			}
-			}else {
-				log(LogStatus.ERROR, "Not able to Create Indiviual Investor "+SmokeINDINV4+" so cannot update details", YesNo.Yes);
-				sa.assertTrue(false, "Not able to Create Indiviual Investor "+SmokeINDINV4+" so cannot update details");
-			}
-		}else {
-			log(LogStatus.ERROR, "Not able to click on institution tab so cannot update indiviual investor : "+SmokeINDINV4+" details", YesNo.No);
-			sa.assertTrue(false, "Not able to click on institution tab so cannot update indiviual investor : "+SmokeINDINV4+" details");
-		}
-		lp.CRMlogout(environment, mode);
-		sa.assertAll();
-	}
-	
-	@Parameters({ "environment", "mode" })
-	@Test
-	public void PESmokeTc041_updateCreatedContactDetails(String environment, String mode) {
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		NavatarSetupPageBusinessLayer nsp = new NavatarSetupPageBusinessLayer(driver);
-		IndividualInvestorCreationTabBusinessLayer indiviual = new IndividualInvestorCreationTabBusinessLayer(driver);
-		ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
-		List<WebElement> lst = new ArrayList<WebElement>();
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
-		
-		if(contact.clickOnTab(environment, mode, TabName.ContactTab)) {
-			if(contact.clickOnCreatedContact(environment, SmokeC9_FName, SmokeC9_LName)) {
-				ThreadSleep(3000);
-				contact.clickOnShowMoreDropdownOnly(environment, mode, PageName.ContactsPage);
-				if(click(driver,ins.getEditButton(environment, mode, 60), "edit button", action.SCROLLANDBOOLEAN)) {
-					ThreadSleep(10000);
-				String[][] labelAndValue= {{excelLabel.Mailing_Street.toString(),SmokeC9_MailingStreet},
-						{excelLabel.Mailing_City.toString(),SmokeC9_MailingCity},
-						{excelLabel.Mailing_State.toString(),SmokeC9_MailingState},
-						{excelLabel.Mailing_Zip.toString(),SmokeC9_MailingZip},
-						{excelLabel.Mailing_Country.toString(),SmokeC9_MailingCountry},
-						{excelLabel.Other_Street.toString(),SmokeC9_OtherStreet},
-						{excelLabel.Other_City.toString(),SmokeC9_OtherCity},
-						{excelLabel.Other_State.toString(),SmokeC9_OtherState},
-						{excelLabel.Other_Zip.toString(),SmokeC9_OtherZip},
-						{excelLabel.Other_Country.toString(),SmokeC9_OtherCountry},
-						{excelLabel.Description.toString(),SmokeC9_Description},
-						{excelLabel.Phone.toString(),SmokeC9_Phone}};
-				
-				for (String[] strings : labelAndValue) {
-					WebElement ele = contact.getContactPageTextBoxOrRichTextBoxWebElement(environment,strings[0].trim(), 30);
-					if(sendKeysAndPressEnter(driver, ele, strings[1], strings[0]+" text box", action.SCROLLANDBOOLEAN)) {
-						appLog.info("passed value "+strings[1]+" in "+strings[0]+" field");
-					}else {
-						appLog.error("Not able to pass value "+strings[1]+" in "+strings[0]+" field");
-						BaseLib.sa.assertTrue(false, "Not able to pass value "+strings[1]+" in "+strings[0]+" field");
-					}
-					ThreadSleep(500);
-				}
-				ThreadSleep(5000);
-				if(clickUsingJavaScript(driver,ins.getSaveButton(environment, mode, 30),"save button")) {
-					ThreadSleep(5000);
-					if(ins.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-						if(ins.clickOnCreatedInstitution(environment, mode, SmokeINDINV6)) {
-							String[][] InstitutionPagelabelAndValue= {
-									{excelLabel.Phone.toString(),SmokeINDINV6_Phone},
-									{excelLabel.Description.toString(),SmokeINDINV6_Description},
-									{excelLabel.Street.toString(),SmokeINDINV6_Street},
-									{excelLabel.City.toString(),SmokeINDINV6_City},
-									{excelLabel.State.toString(),SmokeINDINV6_State},
-									{excelLabel.Postal_Code.toString(),SmokeINDINV6_PostalCode},
-									{excelLabel.Country.toString(),SmokeINDINV6_Country},
-									{excelLabel.Shipping_Street.toString(),SmokeINDINV6_ShippingStreet},
-									{excelLabel.Shipping_City.toString(),SmokeINDINV6_ShippingCity},
-									{excelLabel.Shipping_State.toString(),SmokeINDINV6_ShippingState},
-									{excelLabel.Shipping_Zip.toString(),SmokeINDINV6_ShippingZip},
-									{excelLabel.Shipping_Country.toString(),SmokeINDINV6_ShippingCountry}};
-							
-							for (String[] strings : InstitutionPagelabelAndValue) {
-								if(ins.fieldValueVerificationOnInstitutionPage(environment, mode, TabName.InstituitonsTab, strings[0],strings[1])) {
-									log(LogStatus.INFO, strings[0]+" label value "+strings[1]+" is matched ", YesNo.No);
-								}else {
-									log(LogStatus.ERROR, strings[0]+" label value "+strings[1]+" is not matched ", YesNo.Yes);
-									sa.assertTrue(false, strings[0]+" label value "+strings[1]+" is not matched ");
-								}
-								
-							}
-						}else {
-							log(LogStatus.ERROR, "Not able to click on created indiviual investor "+SmokeINDINV6, YesNo.Yes);
-							sa.assertTrue(false, "Not able to click on created indiviual investor "+SmokeINDINV6);
-						}
-					}else {
-						log(LogStatus.ERROR, "Not able to click on institution tab so cannot verify created indiviual investor "+SmokeINDINV6, YesNo.No);
-						sa.assertTrue(false, "Not able to click on institution tab so cannot verify created indiviual investor "+SmokeINDINV6);
-					}
-				}else {
-					log(LogStatus.ERROR, "Not able to click on save button so cannot update Contact "+SmokeC9_FName+" "+SmokeC9_LName+" details", YesNo.Yes);
-					sa.assertTrue(false,"Not able to click on save button so cannot update Contact "+SmokeC9_FName+" "+SmokeC9_LName+" details");
-				}
-				
-				
-			}else {
-				log(LogStatus.ERROR, "Not able to click on edit button so cannot update Contact "+SmokeC9_FName+" "+SmokeC9_LName+" details", YesNo.No);
-				sa.assertTrue(false, "Not able to click on edit button so cannot update Contact "+SmokeC9_FName+" "+SmokeC9_LName+" details");
-			}
-			}else {
-				log(LogStatus.ERROR, "Not able to Create Contact "+SmokeC9_FName+" "+SmokeC9_LName+" so cannot update details", YesNo.Yes);
-				sa.assertTrue(false, "Not able to Create Contact  "+SmokeC9_FName+" "+SmokeC9_LName+" so cannot update details");
-			}
-		}else {
-			log(LogStatus.ERROR, "Not able to click on contact tab so cannot update Contact : "+SmokeC9_FName+" "+SmokeC9_LName+" details", YesNo.No);
-			sa.assertTrue(false, "Not able to click on contact tab so cannot update Contact : "+SmokeC9_FName+" "+SmokeC9_LName+" details");
-		}
-		lp.CRMlogout(environment, mode);
-		sa.assertAll();
-	}
-	
-	@Parameters({ "environment", "mode" })
-	@Test
-	public void PESmokeTc042_addMoreFieldsInIndividualInvestorCreation(String environment, String mode) {
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		NavatarSetupPageBusinessLayer nsp = new NavatarSetupPageBusinessLayer(driver);
-		IndividualInvestorCreationTabBusinessLayer in = new IndividualInvestorCreationTabBusinessLayer(driver);
-		lp.CRMLogin(superAdminUserName, adminPassword);
-			appLog.info("Login with User");
-			if (bp.clickOnTab(environment, mode, TabName.NavatarSetup)) {
-				appLog.info("Clicked on Navatar Set Up Tab");
-
-				if (nsp.clickOnNavatarSetupSideMenusTab(environment, NavatarSetupSideMenuTab.IndividualInvestorCreation)) {
-					appLog.error("Clicked on Individual Investor Creation");
-					if (click(driver, nsp.getEditButtonforNavatarSetUpSideMenuTab(environment, NavatarSetupSideMenuTab.IndividualInvestorCreation, 10), "Edit Button", action.BOOLEAN)) {
-						log(LogStatus.INFO, "clicked on edit icon", YesNo.No);
-						if(click(driver, nsp.getRequiredFieldsListLink(30), "Required field link", action.SCROLLANDBOOLEAN)){
-							WebElement ele = FindElement(driver, "//span[text()='Institution']/../following-sibling::div[2]//td[text()='Legal Name']/following-sibling::td[text()='Name']/following-sibling::td[text()='string']", "Required fields intituion sectionFields", action.BOOLEAN, 30);
-							if(ele!=null){
-								log(LogStatus.INFO, "Rrequired field for institution section is verified.", YesNo.No);
-							} else {
-								log(LogStatus.ERROR, "Rrequired field for institution section is not verified.", YesNo.Yes);
-								sa.assertTrue(false, "Rrequired field for institution section is not verified.");
-							}
-							ele = FindElement(driver, "//span[text()='Contact']/../following-sibling::div[2]//td[text()='Legal Name']/following-sibling::td[text()='AccountId']/following-sibling::td[text()='reference']", "Required fields Contact section", action.BOOLEAN, 30);
-							if(ele!=null){
-								log(LogStatus.INFO, "Rrequired field Legal name for Contact section is verified.", YesNo.No);
-							} else {
-								log(LogStatus.ERROR, "Rrequired field Legal name for Contact section is not verified.", YesNo.Yes);
-								sa.assertTrue(false, "Rrequired field Legal name for Contact section is not verified.");
-							}
-							
-							ele = FindElement(driver, "//span[text()='Contact']/../following-sibling::div[2]//td[text()='Full Name']/following-sibling::td[text()='Name']/following-sibling::td[text()='string']", "Required fields Contact section", action.BOOLEAN, 30);
-							if(ele!=null){
-								log(LogStatus.INFO, "Rrequired field full name for Contact section is verified.", YesNo.No);
-							} else {
-								log(LogStatus.ERROR, "Rrequired field full name for Contact section is not verified.", YesNo.Yes);
-								sa.assertTrue(false, "Rrequired field full name for Contact section is not verified.");
-							}
-						} else {
-							log(LogStatus.ERROR, "Not able to click o required field link, So cannot check the fields.", YesNo.Yes);
-							sa.assertTrue(false, "Not able to click o required field link, So cannot check the fields.");
-						}
-						
-						if(click(driver, in.getAddIconOfAdditionalInformationPlusIcon().get(0), "Add Icon", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.ERROR, "clicked on Additional information link Add button.", YesNo.No);
-							ThreadSleep(2000);
-							if(click(driver, in.getRemoveIconOfAdditionalInformationPlusIcon().get(0), "remove Icon", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.ERROR, "clicked on Additional information link remove button.", YesNo.No);
-							}else {
-								log(LogStatus.ERROR, "Not able to click on Additional information link, So cannot check remove button.", YesNo.Yes);
-								sa.assertTrue(false, "Not able to click on Additional information link, So cannot check remove button.");
-							}
-							
-						}else {
-							log(LogStatus.ERROR, "Not able to click on Additional information link, So cannot check Add button.", YesNo.Yes);
-							sa.assertTrue(false, "Not able to click on Additional information link, So cannot check Add button.");
-						}
-						scrollDownThroughWebelement(driver, nsp.getEditButtonforNavatarSetUpSideMenuTab(environment, NavatarSetupSideMenuTab.IndividualInvestorCreation, 10), "Edit button");
-						String[] ss= {NotApplicable.NA.toString(),NotApplicable.NA.toString(),NotApplicable.NA.toString(),NotApplicable.NA.toString(),"Website","Preferred Mode of Contact"};
-						SoftAssert result=nsp.addingMoreSelectFieldAndValuesToIndiviualInvestorCreation(environment, mode, ss);
-						sa.combineAssertions(result);
-						ThreadSleep(2000);
-						
-						if(click(driver, nsp.getSaveButtonforNavatarSetUpSideMenuTab(environment, NavatarSetupSideMenuTab.IndividualInvestorCreation, 20, TopOrBottom.TOP), "save button", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "save button", YesNo.No);
-							ThreadSleep(5000);
-						}else {
-							log(LogStatus.ERROR, "Not able to click on save button so cannot add more field in indiviual investor creation", YesNo.Yes);
-							sa.assertTrue(false, "Not able to click on save button so cannot add more field in indiviual investor creation");
-						}
-					}else {
-						log(LogStatus.ERROR, "Not able to click on indiviual investor creation edit icon so cannot add more fields", YesNo.Yes);
-						sa.assertTrue(false, "Not able to click on indiviual investor creation edit icon so cannot add more fields");
-					}
-					
-				} else {
-					log(LogStatus.SKIP, "Not Able to Click on Individual Investor Creation", YesNo.Yes);
-					sa.assertTrue(false, "Not Able to Click on Individual Investor Creation");
-				}
-			} else {
-				log(LogStatus.SKIP, "Not Able to Click on Navatar Set Up Tab", YesNo.Yes);
-				sa.assertTrue(false, "Not Able to Click on Navatar Set Up Tab");
-			}
-		switchToDefaultContent(driver);
-		lp.CRMlogout(environment, mode);
-		sa.assertAll();
-	}
-
-	@Parameters({ "environment", "mode" })
-	@Test
-	public void PESmokeTc043_CreateNewIndividualInvestorAfterAddingMoreFields(String environment, String mode) {
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		NavatarSetupPageBusinessLayer nsp = new NavatarSetupPageBusinessLayer(driver);
-		IndividualInvestorCreationTabBusinessLayer indiviual = new IndividualInvestorCreationTabBusinessLayer(driver);
-		ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
-		List<WebElement> lst = new ArrayList<WebElement>();
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
-		
-			String emailId = contact.generateRandomEmailId();
-			String[][] labelNamesAndValue= {
-					{IndiviualInvestorFieldLabel.First_Name.toString(),SmokeC10_FName},
-					{IndiviualInvestorFieldLabel.Last_Name.toString(),SmokeC10_LName},
-					{IndiviualInvestorFieldLabel.Email.toString(),emailId},
-					{IndiviualInvestorFieldLabel.Business_Phone.toString(),SmokeC10_Phone},
-					{IndiviualInvestorFieldLabel.Business_Fax.toString(),SmokeC10_Fax},
-					{IndiviualInvestorFieldLabel.Mobile_Phone.toString(),SmokeC10_Mobile},
-					{IndiviualInvestorFieldLabel.Contact_Description.toString(),SmokeC10_Description},
-					{IndiviualInvestorFieldLabel.Mailing_Street.toString(),SmokeC10_MailingStreet},
-					{IndiviualInvestorFieldLabel.Mailing_City.toString(),SmokeC10_MailingCity},
-					{IndiviualInvestorFieldLabel.Mailing_State.toString(),SmokeC10_MailingState},
-					{IndiviualInvestorFieldLabel.Mailing_Zip.toString(),SmokeC10_MailingZip},
-					{IndiviualInvestorFieldLabel.Mailing_Country.toString(),SmokeC10_MailingCountry},
-					{IndiviualInvestorFieldLabel.Assistant.toString(),SmokeC10_Assistant},
-					{IndiviualInvestorFieldLabel.Asst_Phone.toString(),SmokeC10_Asst_Phone},
-					{IndiviualInvestorFieldLabel.Fund_Preferences.toString(),SmokeINDINV7_FundPreferences},
-					{IndiviualInvestorFieldLabel.Industry_Preferences.toString(),SmokeINDINV7_IndustryPreferences},
-					{IndiviualInvestorFieldLabel.Website.toString(),SmokeINDINV7_Website},
-					{IndiviualInvestorFieldLabel.Preferred_Mode_of_Contact.toString(),SmokeC10_Preferred_Mode_of_Contact}};
-//			{IndiviualInvestorFieldLabel.Other_Street.toString(),SmokeC10_OtherStreet},
-//			{IndiviualInvestorFieldLabel.Other_City.toString(),SmokeC10_OtherCity},
-//			{IndiviualInvestorFieldLabel.Other_State.toString(),SmokeC10_OtherState},
-//			{IndiviualInvestorFieldLabel.Other_Zip.toString(),SmokeC10_OtherZip},
-//			{IndiviualInvestorFieldLabel.Other_Country.toString(),SmokeC10_OtherCountry},
-			if(indiviual.createIndiviualInvestor(environment, mode, labelNamesAndValue, "Yes", TopOrBottom.BOTTOM)) {
-				log(LogStatus.INFO, "Successfully Create Indiviual Investor "+SmokeINDINV7, YesNo.No);
-				ExcelUtils.writeData(smokeFilePath, emailId, "Contacts", excelLabel.Variable_Name,"SmokeC10", excelLabel.Contact_EmailId);
-				if(indiviual.getLabelHeaderText(environment, mode, 60).getText().trim().contains(SmokeINDINV7)) {
-					log(LogStatus.INFO, SmokeINDINV7+" header text is verified", YesNo.No);
-				}else {
-					log(LogStatus.ERROR, SmokeINDINV7+" header text is not matched ", YesNo.Yes);
-					sa.assertTrue(false, SmokeINDINV7+" header text is not matched ");
-				}
-				String[][] labelAndValue= {{excelLabel.Institution_Type.toString(),SmokeINDINV7_InstitutionType},
-						{excelLabel.Phone.toString(),SmokeINDINV7_Phone},
-						{excelLabel.Fax.toString(),SmokeINDINV7_Fax},
-						{excelLabel.Description.toString(),SmokeINDINV7_Description},
-						{excelLabel.Street.toString(),SmokeINDINV7_Street},
-						{excelLabel.City.toString(),SmokeINDINV7_City},
-						{excelLabel.State.toString(),SmokeINDINV7_State},
-						{excelLabel.Postal_Code.toString(),SmokeINDINV7_PostalCode},
-						{excelLabel.Country.toString(),SmokeINDINV7_Country},
-						{excelLabel.Shipping_Street.toString(),SmokeINDINV7_ShippingStreet},
-						{excelLabel.Shipping_City.toString(),SmokeINDINV7_ShippingCity},
-						{excelLabel.Shipping_State.toString(),SmokeINDINV7_ShippingState},
-						{excelLabel.Shipping_Zip.toString(),SmokeINDINV7_ShippingZip},
-						{excelLabel.Shipping_Country.toString(),SmokeINDINV7_ShippingCountry},
-						{excelLabel.Fund_Preferences.toString(),SmokeINDINV7_FundPreferences},
-						{excelLabel.Industry_Preferences.toString(),SmokeINDINV7_IndustryPreferences},
-						{excelLabel.Website.toString(),SmokeINDINV7_Website}};
-				
-				for (String[] strings : labelAndValue) {
-					if(ins.fieldValueVerificationOnInstitutionPage(environment, mode, TabName.InstituitonsTab, strings[0],strings[1])) {
-						log(LogStatus.INFO, strings[0]+" label value "+strings[1]+" is matched ", YesNo.No);
-					}else {
-						log(LogStatus.ERROR, strings[0]+" label value "+strings[1]+" is not matched ", YesNo.Yes);
-						sa.assertTrue(false, strings[0]+" label value "+strings[1]+" is not matched ");
-					}
-					
-				}
-				settingsBeforeTests();
-				if(contact.clickOnTab(environment, mode, TabName.ContactTab)) {
-					if(contact.clickOnCreatedContact(environment,  SmokeC10_FName, SmokeC10_LName)) {
-						String[][] contactLabelAndValue= {{excelLabel.Name.toString(),SmokeC10_FName+" "+SmokeC10_LName},
-								{excelLabel.Description.toString(),SmokeC10_Description},
-								{excelLabel.Fax.toString(),SmokeINDINV7_Fax},
-								{excelLabel.Description.toString(),SmokeC10_Description},
-								{excelLabel.Mailing_Street.toString(),SmokeC10_MailingStreet},
-								{excelLabel.Mailing_City.toString(),SmokeC10_MailingCity},
-								{excelLabel.Mailing_State.toString(),SmokeC10_MailingState},
-								{excelLabel.Mailing_Zip.toString(),SmokeC10_MailingZip},
-								{excelLabel.Mailing_Country.toString(),SmokeC10_MailingCountry},
-								{excelLabel.Other_Street.toString(),SmokeC10_OtherStreet},
-								{excelLabel.Other_City.toString(),SmokeC10_OtherCity},
-								{excelLabel.Other_State.toString(),SmokeC10_OtherState},
-								{excelLabel.Other_Zip.toString(),SmokeC10_OtherZip},
-								{excelLabel.Other_Country.toString(),SmokeC10_OtherCountry},
-								{excelLabel.Email.toString(),SmokeC10_EmailID},
-								{excelLabel.Assistant.toString(),SmokeC10_Assistant},
-								{excelLabel.Asst_Phone.toString(),SmokeC10_Asst_Phone},
-								{ContactPageFieldLabelText.Mobile.toString(),SmokeC10_Mobile},
-								{excelLabel.Phone.toString(),SmokeC10_Phone},
-								{IndiviualInvestorFieldLabel.Preferred_Mode_of_Contact.toString(),SmokeC10_Preferred_Mode_of_Contact}};
-						
-						for (String[] strings : contactLabelAndValue) {
-							if(contact.fieldValueVerificationOnContactPage(environment, TabName.InstituitonsTab, strings[0],strings[1])) {
-								log(LogStatus.INFO, strings[0]+" label value "+strings[1]+" is matched ", YesNo.No);
-							}else {
-								log(LogStatus.ERROR, strings[0]+" label value "+strings[1]+" is not matched ", YesNo.Yes);
-								sa.assertTrue(false, strings[0]+" label value "+strings[1]+" is not matched ");
-							}
-							
-						}
-					}else {
-						log(LogStatus.ERROR, "Not able to click on created contact "+SmokeC10_FName+" "+SmokeC10_LName, YesNo.Yes);
-						sa.assertTrue(false, "Not able to click on created contact "+SmokeC10_FName+" "+SmokeC10_LName);
-					}
-				}else {
-					log(LogStatus.ERROR, "Not able to click on Contact tab so cannot verify created contact "+SmokeC10_FName+" "+SmokeC10_LName, YesNo.No);
-					sa.assertTrue(false, "Not able to click on Contact tab so cannot verify created contact "+SmokeC10_FName+" "+SmokeC10_LName);
-				}
-				
-			}else {
-				log(LogStatus.ERROR, "Not able to Create Indiviual Investor "+SmokeINDINV7, YesNo.Yes);
-				sa.assertTrue(false, "Not able to Create Indiviual Investor "+SmokeINDINV7);
-			}
-			
-		
-		
-		lp.CRMlogout(environment, mode);
-		sa.assertAll();
-	}
-	
-	@Parameters({ "environment", "mode" })
-	@Test
-	public void PESmokeTc044_1_VerifyRevertToDefaultInIndiviualInvestorCreation(String environment, String mode) {
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		DealCreationTabBusinessLayer dctb = new DealCreationTabBusinessLayer(driver);
-		NavatarSetupPageBusinessLayer nsp = new NavatarSetupPageBusinessLayer(driver);
-		String month = getSystemDate("MMM");
-		String year = getSystemDate("yyyy");
-		System.err.println("month " + month);
-		System.err.println("year " + year);
-		String msg;
-		lp.CRMLogin(superAdminUserName, adminPassword);
-			if (bp.clickOnTab(environment, mode, TabName.NavatarSetup)) {
-				log(LogStatus.INFO,"Clicked on Navatar Set Up Tab", YesNo.No);
-				if(nsp.clickOnNavatarSetupSideMenusTab(environment, NavatarSetupSideMenuTab.IndividualInvestorCreation)) {
-				if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-					switchToFrame(driver, 10, nsp.getnavatarSetUpTabFrame_Lighting(environment, 10));
-				}
-
-				if (click(driver, nsp.getEditButtonforNavatarSetUpSideMenuTab(environment, 
-						NavatarSetupSideMenuTab.IndividualInvestorCreation, 10), "Edit Button", action.BOOLEAN)) {
-					log(LogStatus.INFO,"Clicked on Edit Button", YesNo.No);
-					ThreadSleep(2000);
-					if (click(driver, nsp.getCancelButtonforNavatarSetUpSideMenuTab(environment, mode,NavatarSetupSideMenuTab.DealCreation,TopOrBottom.TOP, 10), "Cancel Button", action.BOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Cancel Button", YesNo.No);
-						if (nsp.getRevertToDefaultButtonforNavatarSetUpSideMenuTab(environment, mode,
-								NavatarSetupSideMenuTab.IndividualInvestorCreation, TopOrBottom.TOP, 10) == null) {
-							log(LogStatus.INFO, "create indiviual investor page has been be closed and available in view mode", YesNo.No);
-						} else {
-							log(LogStatus.SKIP,
-									"create indiviual investor page has not been closed and not available in view mode",
-									YesNo.Yes);
-							sa.assertTrue(false,
-									"create indiviual investor page has not been closed and not available in view mode");
-						}
-					} else {
-						log(LogStatus.SKIP, "Not Able to Click on Cancel Button", YesNo.Yes);
-						sa.assertTrue(false, "Not Able to Click on Cancel Button");
-					}
-
-				} else {
-					log(LogStatus.SKIP, "Not Able to Click on Edit Button", YesNo.Yes);
-					sa.assertTrue(false, "Not Able to Click on Edit Button");
-				}
-				
-				switchToDefaultContent(driver);
-				if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-					switchToFrame(driver, 10, nsp.getnavatarSetUpTabFrame_Lighting(environment, 10));
-				}
-				
-				if (click(driver, nsp.getEditButtonforNavatarSetUpSideMenuTab(environment, 
-						NavatarSetupSideMenuTab.DealCreation, 10), "Edit Button", action.BOOLEAN)) {
-
-					appLog.info("Clicked on Edit Button");
-					ThreadSleep(2000);
-					if (click(driver, nsp.getCancelButtonforNavatarSetUpSideMenuTab(environment, mode,
-							NavatarSetupSideMenuTab.DealCreation,TopOrBottom.BOTTOM, 10), "Cancel Button", action.BOOLEAN)) {
-						appLog.info("Clicked on Cancel Button");
-						ThreadSleep(2000);
-						if (nsp.getRevertToDefaultButtonforNavatarSetUpSideMenuTab(environment, mode,
-								NavatarSetupSideMenuTab.DealCreation, TopOrBottom.TOP, 10) == null) {
-							appLog.info("create indiviual investor page has been be closed and available in view mode");
-						} else {
-							appLog.error("create indiviual investor page has not been closed and not available in view mode");
-							sa.assertTrue(false,
-									"create indiviual investor page has not been closed and not available in view mode");
-							log(LogStatus.SKIP,
-									"create indiviual investor page has not been closed and not available in view mode",
-									YesNo.Yes);
-						}
-					} else {
-						appLog.error("Not Able to Click on Cancel Button");
-						sa.assertTrue(false, "Not Able to Click on Cancel Button");
-						log(LogStatus.SKIP, "Not Able to Click on Cancel Button", YesNo.Yes);
-					}
-
-				} else {
-					appLog.error("Not Able to Click on Edit Button");
-					sa.assertTrue(false, "Not Able to Click on Edit Button");
-					log(LogStatus.SKIP, "Not Able to Click on Edit Button", YesNo.Yes);
-				}
-				
-				
-				
-				
-				
-				
-				
-				
-				switchToDefaultContent(driver);
-				if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-					switchToFrame(driver, 10, nsp.getnavatarSetUpTabFrame_Lighting(environment, 10));
-				}
-
-				
-				if (click(driver, nsp.getEditButtonforNavatarSetUpSideMenuTab(environment, 
-						NavatarSetupSideMenuTab.IndividualInvestorCreation, 10), "Edit Button", action.BOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on Edit Button for Cross Icon", YesNo.No);
-					ThreadSleep(2000);
-					if (click(driver,
-							nsp.getRevertToDefaultButtonforNavatarSetUpSideMenuTab(environment, mode,
-									NavatarSetupSideMenuTab.IndividualInvestorCreation, TopOrBottom.TOP, 10),
-							"Revert to Default Button", action.BOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Revert to Default Button", YesNo.No);
-
-						msg = nsp.getWarningPopUpMsg(environment, 10).getText();
-						if (msg != null) {
-							if (msg.contains(NavatarSetUpPageErrorMessage.WarningPopUpMessage1)
-									&& msg.contains(NavatarSetUpPageErrorMessage.WarningPopUpMessage2)) {
-								log(LogStatus.INFO, "Warning PopUp MEssage Verified : " + msg, YesNo.No);
-							} else {
-								log(LogStatus.SKIP, "Warning PopUp MEssage Not Verified :  Actual -  " + msg
-										+ "\t Expected : " + NavatarSetUpPageErrorMessage.WarningPopUpMessage1,
-										YesNo.Yes);
-								sa.assertTrue(false, "Warning PopUp MEssage Not Verified :  Actual -  " + msg
-										+ "\t Expected : " + NavatarSetUpPageErrorMessage.WarningPopUpMessage1);
-							}
-						} else {
-							log(LogStatus.SKIP, "Warning PopUp Message Element is null", YesNo.Yes);
-							sa.assertTrue(false, "Warning PopUp Message Element is null");
-						}
-
-						if (nsp.clickButtonOnRevertToDefaultPopUp(environment, mode, NavatarSetupSideMenuTab.IndividualInvestorCreation, RevertToDefaultPopUpButton.CrossIcon)) {
-							log(LogStatus.INFO, "Clicked on Cross Icon", YesNo.No);
-							ThreadSleep(2000);
-						} else {
-							log(LogStatus.SKIP, "Not Able to Click on Cross Icon", YesNo.Yes);
-							sa.assertTrue(false, "Not Able to Click on Cross Icon");
-						}
-						ThreadSleep(2000);
-						if (click(driver,nsp.getRevertToDefaultButtonforNavatarSetUpSideMenuTab(environment, mode,NavatarSetupSideMenuTab.IndividualInvestorCreation, TopOrBottom.TOP, 10),"Revert to Default Button", action.BOOLEAN)) {
-							appLog.info("Clicked on Revert to Default Button");
-							if (nsp.clickButtonOnRevertToDefaultPopUp(environment, mode, NavatarSetupSideMenuTab.IndividualInvestorCreation, RevertToDefaultPopUpButton.NoButton)) {
-								log(LogStatus.INFO, "Clicked on No Button", YesNo.No);
-								ThreadSleep(2000);
-							} else {
-								log(LogStatus.SKIP, "Not Able to Click on No Button", YesNo.Yes);
-								sa.assertTrue(false, "Not Able to Click on No Button");
-							}
-
-						} else {
-							log(LogStatus.SKIP, "Not Able to Click on Revert to Default Button", YesNo.Yes);
-							sa.assertTrue(false, "Not Able to Click on Revert to Default Button");
-						}
-
-						if (click(driver,
-								nsp.getRevertToDefaultButtonforNavatarSetUpSideMenuTab(environment, mode,
-										NavatarSetupSideMenuTab.IndividualInvestorCreation, TopOrBottom.BOTTOM, 10),
-								"Revert to Default Button", action.BOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on Revert to Default Button", YesNo.No);
-							ThreadSleep(2000);
-
-							if (nsp.clickButtonOnRevertToDefaultPopUp(environment, mode, NavatarSetupSideMenuTab.IndividualInvestorCreation, RevertToDefaultPopUpButton.YesButton)) {
-								appLog.info("Clicked on Yes Button");
-								ThreadSleep(2000);
-								switchToDefaultContent(driver);
-								if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-									switchToFrame(driver, 10, nsp.getnavatarSetUpTabFrame_Lighting(environment, 10));
-								}
-								List<String> result = new ArrayList<String>();
-								String[] labels = { excelLabel.Fund_Preferences.toString(),
-										excelLabel.Industry_Preferences.toString(),
-										IndiviualInvestorFieldLabel.Assistant.toString(), IndiviualInvestorFieldLabel.Asst_Phone.toString(),
-										excelLabel.Website.toString(),excelLabel.Preferred_Mode_of_Contact.toString()};
-
-								result = dctb.verifyLabelInViewModeforNavatarSetUpSideMenuTab(environment, mode,NavatarSetupSideMenuTab.IndividualInvestorCreation,
-										NavatarSetupSideMenuTabLayoutSection.Additional_Information, labels);
-
-								if (!result.isEmpty() || (result.contains(excelLabel.Website.toString())
-										|| result.contains(excelLabel.Preferred_Mode_of_Contact.toString()))) {
-									log(LogStatus.INFO, "Label Verified on Additional Information ", YesNo.No);
-								} else {
-									log(LogStatus.SKIP, "Label Not Verified for Additional Information in indiviual investor creation ", YesNo.Yes);
-									sa.assertTrue(false, "Label Not Verified for Additional Information in indiviual investor creation ");
-								}
-
-							} else {
-								log(LogStatus.SKIP, "Not Able to Click on Yes Button", YesNo.Yes);
-								sa.assertTrue(false, "Not Able to Click on Yes Button");
-							}
-
-						} else {
-							log(LogStatus.SKIP, "Not Able to Click on Revert to Default Button", YesNo.Yes);
-							sa.assertTrue(false, "Not Able to Click on Revert to Default Button");
-						}
-					} else {
-						log(LogStatus.SKIP, "Not Able to Click on Revert to Default Button", YesNo.Yes);
-						sa.assertTrue(false, "Not Able to Click on Revert to Default Button");
-					}
-
-				} else {
-					log(LogStatus.SKIP, "Not Able to Click on Edit Button", YesNo.Yes);
-					sa.assertTrue(false, "Not Able to Click on Edit Button");
-				}
-				}else {
-					log(LogStatus.ERROR, "Not able to click on indiviual investor creation tab so cannot revert indiviual investor creation setting", YesNo.Yes);
-					sa.assertTrue(false, "Not able to click on indiviual investor creation tab so cannot revert indiviual investor creation setting");
-				}
-			} else {
-				log(LogStatus.SKIP, "Not Able to Click on Navatar Set Up Tab", YesNo.Yes);
-				sa.assertTrue(false, "Not Able to Click on Navatar Set Up Tab");
-			}
-
-		switchToDefaultContent(driver);
-		lp.CRMlogout(environment, mode);
-		sa.assertAll();
-	}
-	
-	@Parameters({ "environment", "mode" })
-	@Test
-	public void PESmokeTc044_2_VerifyAccountAssociationsLink(String environment, String mode) {
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		DealCreationTabBusinessLayer dctb = new DealCreationTabBusinessLayer(driver);
-		NavatarSetupPageBusinessLayer nsp = new NavatarSetupPageBusinessLayer(driver);
-		String month = getSystemDate("MMM");
-		String year = getSystemDate("yyyy");
-		System.err.println("month " + month);
-		System.err.println("year " + year);
-		String msg;
-		lp.CRMLogin(superAdminUserName, adminPassword);
-			if (bp.clickOnTab(environment, mode, TabName.NavatarSetup)) {
-				log(LogStatus.INFO,"Clicked on Navatar Set Up Tab", YesNo.No);
-				if(nsp.clickOnNavatarSetupSideMenusTab(environment, NavatarSetupSideMenuTab.AccountAssociations)) {
-					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-						switchToFrame(driver, 10, nsp.getnavatarSetUpTabFrame_Lighting(environment, 10));
-					}
-					
-					for(int i=0; i<2; i++) {
-						switchToDefaultContent(driver);
-						if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-							switchToFrame(driver, 10, nsp.getnavatarSetUpTabFrame_Lighting(environment, 10));
-						}
-						if (click(driver, nsp.getEditButtonforNavatarSetUpSideMenuTab(environment, NavatarSetupSideMenuTab.AccountAssociations, 10), "Edit Button", action.BOOLEAN)) {
-							log(LogStatus.INFO,"Clicked on Edit Button : "+i, YesNo.No);
-							ThreadSleep(2000);
-							
-							if(i==0) {
-								if(nsp.verifyAccountAssociationCheckBox(environment, mode, CheckUncheck.UnCheck, EditViewMode.Edit)) {
-									log(LogStatus.PASS, "All check box is unchecked", YesNo.No);
-								}else {
-									log(LogStatus.PASS, "All check box is not unchecked", YesNo.Yes);
-									sa.assertTrue(false, "All check box is not unchecked");
-								}
-								if (click(driver, nsp.getCancelButtonforNavatarSetUpSideMenuTab(environment, mode,NavatarSetupSideMenuTab.AccountAssociations,TopOrBottom.TOP, 10), "Cancel Button", action.BOOLEAN)) {
-									log(LogStatus.INFO, "Clicked on Cancel Button", YesNo.No);
-									if (nsp.getCancelButtonforNavatarSetUpSideMenuTab(environment, mode,NavatarSetupSideMenuTab.AccountAssociations,TopOrBottom.TOP,5) == null) {
-										log(LogStatus.INFO, "Account Associations page has been be closed and available in view mode", YesNo.No);
-									} else {
-										log(LogStatus.SKIP,
-												"Account Associations page has not been closed and not available in view mode",
-												YesNo.Yes);
-										sa.assertTrue(false,
-												"Account Associations page has not been closed and not available in view mode");
-									}
-								} else {
-									log(LogStatus.SKIP, "Not Able to Click on Cancel Button", YesNo.Yes);
-									sa.assertTrue(false, "Not Able to Click on Cancel Button");
-								}
-								
-							}
-							if(i==1) {
-								String xpath="//table[@class='TopBottomSpace']//tr/td[2]/label/input[not(contains(@disabled,'disabled'))]/following-sibling::span";
-								List<WebElement> ele=FindElements(driver, xpath, "Check box list in edit mode");
-								if(!ele.isEmpty()) {
-									for(int i1=0; i1<ele.size(); i1++) {
-										if(click(driver, ele.get(i1), "chcek box", action.SCROLLANDBOOLEAN)) {
-											log(LogStatus.INFO, "clicked on chcek box in account association ", YesNo.No);
-										}else {
-											log(LogStatus.ERROR, "not able to click on chcek box in account association ",YesNo.Yes);
-											sa.assertTrue(false, "not able to click on chcek box in account association ");
-										}
-									}
-								}else {
-									log(LogStatus.ERROR, "Check Box list is not found in account association so cannot ticked all check box", YesNo.Yes);
-									sa.assertTrue(false, "Check Box list is not found in account association so cannot ticked all check box");
-								}
-								if (click(driver,nsp.getSaveButtonforNavatarSetUpSideMenuTab(environment, NavatarSetupSideMenuTab.AccountAssociations, 10, TopOrBottom.TOP),"Save Button", action.BOOLEAN)) {
-									ThreadSleep(2000);
-									appLog.error("Clicked on Save Button");
-								} else {
-									log(LogStatus.SKIP, "Not Able to Click on Save Button", YesNo.Yes);
-									sa.assertTrue(false, "Not Able to Click on Save Button");
-								}
-							}
-						} else {
-							log(LogStatus.SKIP, "Not Able to Click on Edit Button in Account Associations : "+i, YesNo.Yes);
-							sa.assertTrue(false, "Not Able to Click on Edit Button in Account Associations : "+i);
-						}
-						
-					}
-					
-				}else {
-					log(LogStatus.ERROR, "Not able to click on Account Associations tab so cannot setting", YesNo.Yes);
-					sa.assertTrue(false, "Not able to click on Account Associations tab so cannot setting");
-				}
-			} else {
-				log(LogStatus.SKIP, "Not Able to Click on Navatar Set Up Tab", YesNo.Yes);
-				sa.assertTrue(false, "Not Able to Click on Navatar Set Up Tab");
-			}
-
-		switchToDefaultContent(driver);
-		lp.CRMlogout(environment, mode);
-		sa.assertAll();
-	}
-	
-	@Parameters({ "environment", "mode" })
-	@Test
-	public void PESmokeTc044_3_verifyAccountAssociationImpact(String environment, String mode) {
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
-		ContactsPageBusinessLayer contact = new ContactsPageBusinessLayer(driver);
-		MarketingInitiativesPageBusinesslayer market = new MarketingInitiativesPageBusinesslayer(driver);
-		FundsPageBusinessLayer fund = new FundsPageBusinessLayer(driver);
-		FundraisingsPageBusinessLayer fundraising = new FundraisingsPageBusinessLayer(driver);
-		lp.CRMLogin(superAdminUserName, adminPassword);
-		String FieldLabels = excelLabel.Street.toString() + "," + excelLabel.City.toString() + ","
-				+ excelLabel.State.toString() + "," + excelLabel.Postal_Code.toString() + ","
-				+ excelLabel.Country.toString() + "," + excelLabel.Phone.toString() + "," + excelLabel.Fax.toString();
-		for (int j = 0; j <6; j++) {
-			if (lp.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-				ThreadSleep(2000);
-				if (j == 0) {
-					if (ins.createInstitution(environment, mode, "ADTest FM", "Fund Manager",null, null)) {
-						appLog.info("Fund Manager is created Fund Manager : " + "ADTest FM");
-					} else {
-						appLog.error("Not able to click on create Fund Manager : ADTest FM");
-						sa.assertTrue(false, "Not able to click on Fund Manager : ADTest FM");
-						log(LogStatus.ERROR, "Not able to click on create Fund Manager : ADTest FM", YesNo.Yes);
-					}
-				}
-				if (j == 1) {
-					refresh(driver);
-					if (ins.createInstitution(environment, mode, "ADTest FMF", "Fund Manager’s Fund", InstitutionPageFieldLabelText.Parent_Institution.toString(), "ADTest FM")) {
-						appLog.info("Fund Manager’s Fund is created Fund Manage's Fund : " + "ADTest FMF");
-					} else {
-						appLog.error("Not able to click on create Fund Manager’s Fund : ADTest FMF");
-						sa.assertTrue(false, "Not able to click on Fund Manager’s Fund : ADTest FMF");
-						log(LogStatus.ERROR, "Not able to click on create Fund Manager’s Fund : ADTest FMF", YesNo.Yes);
-					}
-				}
-				if (j == 2) {
-					if (ins.createInstitution(environment, mode, "ADTest INS 1", "Institution", InstitutionPageFieldLabelText.Parent_Institution.toString(), "ADTest FM")) {
-						appLog.info("Institution created  : ADTest INS 1");
-					} else {
-						appLog.error("Not able to click on create institution : ADTest INS 1");
-						sa.assertTrue(false, "Not able to click on institution : ADTest INS 1");
-						log(LogStatus.ERROR, "Not able to click on create institution :ADTest INS 1", YesNo.Yes);
-					}
-				}
-				if (j == 3) {
-					if (ins.createInstitution(environment, mode, "ADTest INS 2", "Institution", InstitutionPageFieldLabelText.Parent_Institution.toString(), "ADTest FMF")) {
-						appLog.info("Institution created  :  ADTest INS 2");
-					} else {
-						appLog.error("Not able to click on create institution : ADTest INS 2");
-						sa.assertTrue(false, "Not able to click on institution : ADTest INS 2");
-						log(LogStatus.ERROR, "Not able to click on create institution :ADTest INS 2", YesNo.Yes);
-					}
-				}
-				if (j == 4) {
-					if (ins.createInstitution(environment, mode, "ADTest COM 1", SmokeCOM1_RecordType, InstitutionPageFieldLabelText.Parent_Institution.toString(), "ADTest FM")) {
-						appLog.info("Company is created :  ADTest COM 1");
-					} else {
-						appLog.error("Not able to click on create Company :  ADTest COM 1");
-						sa.assertTrue(false, "Not able to click on create Company :  ADTest COM 1");
-						log(LogStatus.ERROR, "Not able to click on create Company :  ADTest COM 1", YesNo.Yes);
-					}
-				}
-				if (j == 5) {
-					if (ins.createInstitution(environment, mode, "ADTest COM 2", SmokeCOM1_RecordType, InstitutionPageFieldLabelText.Parent_Institution.toString(), "ADTest FMF")) {
-						appLog.info("Company is created :  ADTest COM 2");
-					} else {
-						appLog.error("Not able to click on create Company :  ADTest COM 2");
-						sa.assertTrue(false, "Not able to click on create Company :  ADTest COM 2");
-						log(LogStatus.ERROR, "Not able to click on create Company :  ADTest COM 2", YesNo.Yes);
-					}
-				}
-			} else {
-				appLog.error(
-						"Not able to click on Institute Tab so cannot Create institute, indiviual insvestor and company");
-				sa.assertTrue(false,
-						"Not able to click on Institute Tab so cannot Create institute, indiviual insvestor and company");
-				log(LogStatus.SKIP,
-						"Not able to click on Institute Tab so cannot Create institute, indiviual insvestor and company",
-						YesNo.Yes);
-			}
-		}
-			if (fund.clickOnTab(environment, mode, TabName.FundsTab)) {
-				if (fund.createFund(environment, "ADTest Fund 1", SmokeFund1_Type, SmokeFund1_InvestmentCategory,null, null)) {
-					appLog.info("Fund is created Successfully:  ADTest Fund 1");
-					
-				} else {
-					appLog.error("Not able to click on fund:  ADTest Fund 1");
-					sa.assertTrue(false, "Not able to click on fund:  ADTest Fund 1");
-					log(LogStatus.SKIP, "Not able to click on fund:  ADTest Fund 1", YesNo.Yes);
-				}
-			} else {
-				appLog.error("Not able to click on fund Tab so cannot Fund");
-				sa.assertTrue(false, "Not able to click on fund Tab so cannot Fund");
-				log(LogStatus.SKIP, "Not able to click on fund Tab so cannot Fund", YesNo.Yes);
-			}
-			
-			if (fund.clickOnTab(environment, mode, TabName.FundraisingsTab)) {
-				if (fundraising.createFundRaising(environment, mode, "ADTest FRD 1", "ADTest Fund 1", "ADTest FM")) {
-					appLog.info("Fundraising is created Successfully:  ADTest FRD 1");
-					
-				} else {
-					appLog.error("Fundraising not created Successfully:  ADTest FRD 1");
-					sa.assertTrue(false, "Fundraising not created Successfully:  ADTest FRD 1");
-					log(LogStatus.SKIP, "Fundraising not created Successfully:  ADTest FRD 1", YesNo.Yes);
-				}
-			} else {
-				appLog.error("Not able to click on FundRaising Tab so cannot FundRaising");
-				sa.assertTrue(false, "Not able to click on FundRaising Tab so cannot FundRaising");
-				log(LogStatus.SKIP, "Not able to click on FundRaising Tab so cannot FundRaising", YesNo.Yes);
-			}
-			if (fund.clickOnTab(environment, mode, TabName.FundraisingsTab)) {
-				if (fundraising.createFundRaising(environment, mode, "ADTest FRD 2", "ADTest Fund 1", "ADTest FMF")) {
-					appLog.info("Fundraising is created Successfully:  ADTest FRD 2");
-					
-				} else {
-					appLog.error("Fundraising not created Successfully:  ADTest FRD 2");
-					sa.assertTrue(false, "Fundraising not created Successfully:  ADTest FRD 2");
-					log(LogStatus.SKIP, "Fundraising not created Successfully:  ADTest FRD 2", YesNo.Yes);
-				}
-			} else {
-				appLog.error("Not able to click on FundRaising Tab so cannot FundRaising");
-				sa.assertTrue(false, "Not able to click on FundRaising Tab so cannot FundRaising");
-				log(LogStatus.SKIP, "Not able to click on FundRaising Tab so cannot FundRaising", YesNo.Yes);
-			}
-		
-		lp.CRMlogout(environment, mode);
-		sa.assertAll();
-
-		
-	}
+	// functionality not exists so remove all scenario of that
 	
 	@Parameters({ "environment", "mode" })
 	@Test
@@ -11635,61 +8396,72 @@ public class OldSmokeTestCases extends BaseLib {
 								sa.assertTrue(false, "cAPITAL CALL Grid is empty");
 							}
 							
-							if (click(driver, fd.getGenerateCapitalCall(30), "generate capital call", action.SCROLLANDBOOLEAN)) {
-								//fund detail page
-								ThreadSleep(3000);
-								
-								if (fd.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.FundDrawdown, RelatedTab.Fund_Management.toString())) {
-									
-									
-								} else {
-									log(LogStatus.ERROR, "Not Able to Click on Related List ", YesNo.Yes);
-									sa.assertTrue(false, "Not Able to Click on Related List ");
-								}
-								
-								String FDID= fp.getFirstValueFromRelatedList(environment,mode,RelatedList.FundDrawdown.toString()).getText().trim();
-								ExcelUtils.writeData(smokeFilePath, FDID, "FundDrawdown", excelLabel.Variable_Name, "DD1", excelLabel.DrawdownID);
-								for (int i = 0;i<5;i++) {
-									ExcelUtils.writeData(smokeFilePath, FDID, "CapitalCall", excelLabel.Variable_Name, "CC"+(i+1), excelLabel.DrawdownID);
-									
-								}
-								ThreadSleep(2000);
-								if (clickUsingJavaScript(driver, fp.getFirstValueFromRelatedList(environment,mode,RelatedList.FundDrawdown.toString()), "fund drawdown id", action.SCROLLANDBOOLEAN)) {
-									ThreadSleep(2000);
-									String parentId=switchOnWindow(driver);
-									if (parentId!=null) {
-										log(LogStatus.INFO, "New window is open after click on FundDrawdown ", YesNo.Yes);
-										
+						if (click(driver, fd.getGenerateCapitalCall(30), "generate capital call",
+								action.SCROLLANDBOOLEAN)) {
+							// fund detail page
+							ThreadSleep(3000);
+							String FDID = null;
+							if (fd.openAppFromAppLauchner(ObjectName.Fund_Drawdowns.toString(), 10)) {
 
-										if (fd.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.CapitalCalls, null)) {
-											
-											if (bp.clickOnViewAllRelatedList(environment, mode, RelatedList.CapitalCalls)) {
-												
-											}else{
-												log(LogStatus.ERROR, "Not Able to Click on View All for "+RelatedList.CapitalCalls, YesNo.Yes);
-												sa.assertTrue(false, "Not Able to Click on View All for "+RelatedList.CapitalCalls);	
-											}
-											
+								log(LogStatus.PASS, "Able to open fund drawdown object ", YesNo.No);
+								FDID = fp.getFirstValueFromRelatedList(environment, mode,
+										RelatedList.FundDrawdown.toString(), Smoke_Fund1).getText().trim();
+
+							} else {
+								log(LogStatus.ERROR, "Not Able to open fund drawdown object ", YesNo.Yes);
+								sa.assertTrue(false, "Not Able to open fund drawdown object ");
+							}
+
+							ThreadSleep(2000);
+							if (FDID != null || !FDID.isEmpty() || !FDID.equalsIgnoreCase("")) {
+
+								ExcelUtils.writeData(smokeFilePath, FDID, "FundDrawdown", excelLabel.Variable_Name,
+										"DD1", excelLabel.DrawdownID);
+								for (int i = 0; i < 5; i++) {
+									ExcelUtils.writeData(smokeFilePath, FDID, "CapitalCall", excelLabel.Variable_Name,
+											"CC" + (i + 1), excelLabel.DrawdownID);
+
+								}
+
+								ThreadSleep(2000);
+
+								if (clickUsingJavaScript(driver,fp.getFirstValueFromRelatedList(environment, mode,RelatedList.FundDrawdown.toString(), Smoke_Fund1),
+										"fund drawdown id", action.SCROLLANDBOOLEAN)) {
+									ThreadSleep(4000);
+
+									if (fd.ClickonRelatedTab_Lighting(environment, RecordType.Fund, null)) {
+
+										if (bp.clickOnViewAllRelatedList(environment, mode, RelatedList.CapitalCalls)) {
+											log(LogStatus.PASS,
+													" Able to Click on View All for " + RelatedList.CapitalCalls,
+													YesNo.No);
 										} else {
-											log(LogStatus.ERROR, "Not Able to Click on Related List ", YesNo.Yes);
-											sa.assertTrue(false, "Not Able to Click on Related List ");
+											log(LogStatus.ERROR,
+													"Not Able to Click on View All for " + RelatedList.CapitalCalls,
+													YesNo.Yes);
+											sa.assertTrue(false,
+													"Not Able to Click on View All for " + RelatedList.CapitalCalls);
 										}
-										List<String> s = fp.returnAllValuesInRelatedList(environment, mode, RelatedList.CapitalCalls.toString());
-										for (int i =0;i<5;i++) {
-											ExcelUtils.writeData(smokeFilePath,s.get(i) ,"CapitalCall",excelLabel.Variable_Name, "CC"+(i+1), excelLabel.CapitalCalllID);
-										}
-										
-											driver.close();
-										driver.switchTo().window(parentId);
+
 									} else {
-										log(LogStatus.ERROR, "No New is open after click on FundDrawdown ", YesNo.Yes);
-										sa.assertTrue(false, "No New is open after click on FundDrawdown ");
+										log(LogStatus.ERROR, "Not Able to Click on Related List ", YesNo.Yes);
+										sa.assertTrue(false, "Not Able to Click on Related List ");
 									}
-									
+									List<String> s = fp.returnAllValuesInRelatedList(environment, mode,
+											RelatedList.CapitalCalls.toString());
+									for (int i = 0; i < 5; i++) {
+										ExcelUtils.writeData(smokeFilePath, s.get(i), "CapitalCall",
+												excelLabel.Variable_Name, "CC" + (i + 1), excelLabel.CapitalCalllID);
+									}
+
 								}
 								else {
 									log(LogStatus.ERROR, "fund drawdown link is not clickable", YesNo.Yes);
 									sa.assertTrue(false, "fund drawdown link is not clickable");
+								}
+								}else {
+									log(LogStatus.ERROR, "fund drawdown is not present so cannot verify ", YesNo.Yes);
+									sa.assertTrue(false, "fund drawdown is not present so cannot verify ");
 								}
 							}
 							else {
@@ -12088,7 +8860,7 @@ public class OldSmokeTestCases extends BaseLib {
 		String date = getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "MM/dd/YYYY");
 		if (bp.clickOnTab(environment, mode, TabName.CapitalCalls)) {
 			if (ccp.clickOnCreatedCapitalCall(environment, mode, SmokeCC3_ID)) {
-				if (click(driver, bp.getEditButton(environment, mode,60), "edit button", action.BOOLEAN)) {
+				if (ccp.clickOnShowMoreActionDownArrow("PE", PageName.CapitalCall, ShowMoreActionDropDownList.Edit, 20)) {
 					for (int i = 0;i<=3;i++) {
 						if (ccp.fieldValueVerificationOnCapitalCalls(environment, mode, TabName.CapitalCalls,labels[i] , SmokeCC3Data[i], EditViewMode.Edit)) {
 							log(LogStatus.PASS, "successfully verified "+labels[i], YesNo.No);
@@ -12444,8 +9216,10 @@ public class OldSmokeTestCases extends BaseLib {
 				ThreadSleep(5000);
 				if (bp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Correspondence_Lists, RelatedTab.Investor_Relations.toString())) {
 					log(LogStatus.INFO, "clicked on Investor Relations Tab", YesNo.No);
+					ThreadSleep(3000);
 					if (click(driver, crp.getNewCorrespondenceListButton(30),"New Correspondence List Button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.PASS, "clicked on new button on correspondence list related list", YesNo.No);
+						ThreadSleep(5000);
 						if (crp.createNewCorrList( "",mode,environment, SmokeC1_FName, SmokeC1_LName, SmokeCOMM8_ID,corrList )) {
 							log(LogStatus.PASS, "successfully created new correspondence list", YesNo.No);
 							if (cp.verifyPresenceOfCorrespondenceRelatedList(mode, environment,SmokeC1_FName+" "+SmokeC1_LName, Smoke_LP1, Smoke_P1, SmokeCOMM8_ID, 30)) {
@@ -13371,7 +10145,7 @@ public class OldSmokeTestCases extends BaseLib {
 		lp.CRMlogout(environment, mode);
 		boolean flag = false;
 		for (int i=0;i<10;i++) {
-			if (EmailLib.mailReceived(gmailUserName,adminPassword, crmUser1EmailID, SmokeC1_EmailID,subjectWithoutEmail , "")) {
+			if (EmailLib.mailReceived(gmailUserName,gmailPassword, crmUser1EmailID, SmokeC1_EmailID,subjectWithoutEmail , "")) {
 				log(LogStatus.INFO, "successfully verified email present", YesNo.No);
 				flag = true;
 				break;
@@ -13384,7 +10158,7 @@ public class OldSmokeTestCases extends BaseLib {
 		flag = false;
 		//check user bcc
 		for (int i=0;i<10;i++) {
-			if (EmailLib.mailReceived(gmailUserName2,adminPassword, crmUser1EmailID, SmokeC1_EmailID,subjectWithoutEmail , "")) {
+			if (EmailLib.mailReceived(gmailUserName2,gmailPassword, crmUser1EmailID, SmokeC1_EmailID,subjectWithoutEmail , "")) {
 				log(LogStatus.INFO, "successfully verified email present", YesNo.No);
 				flag = true;
 				break;
@@ -13848,7 +10622,7 @@ public class OldSmokeTestCases extends BaseLib {
 		
 		boolean flag = false;
 		for (int i=0;i<10;i++) {
-			if (EmailLib.mailReceived(gmailUserName,adminPassword, crmUser1EmailID, SmokeC2_EmailID,subject , emailBody)) {
+			if (EmailLib.mailReceived(gmailUserName,gmailPassword, crmUser1EmailID, SmokeC2_EmailID,subject , emailBody)) {
 				log(LogStatus.INFO, "successfully verified email present", YesNo.No);
 				flag = true;
 				break;
@@ -14369,25 +11143,27 @@ public class OldSmokeTestCases extends BaseLib {
 							if (click(driver, fdi.getGenerateInvDist(30), "generate inv dist", action.SCROLLANDBOOLEAN)) {
 								//fund detail page
 								ThreadSleep(3000);
-								if(bp.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.FundDistribution, RelatedTab.Fund_Management.toString())) {
-									appLog.info("clicked on related list tab");
+								String FDID=null;
+								if(bp.openAppFromAppLauchner(ObjectName.Fund_Distributions.toString(), 20)) {
+									appLog.info("able to open fund distribution form app laucnher");
+									 FDID= fp.getFirstValueFromRelatedList(environment,mode,RelatedList.FundDistribution.toString(), Smoke_Fund1).getText().trim();
+
 								}else {
-									appLog.error("could not click on related tab");
+									log(LogStatus.ERROR, "Not able to open fund distribution form app laucnher", YesNo.Yes);
+									sa.assertTrue(false, "Not able to open fund distribution form app laucnher");
 								}
 								
 							
-								String FDID= fp.getFirstValueFromRelatedList(environment,mode,RelatedList.FundDistribution.toString()).getText().trim();
-								ExcelUtils.writeData(smokeFilePath, FDID, "FundDistribution", excelLabel.Variable_Name, "FD1", excelLabel.FundDistributionID);
-								for (int i = 0;i<5;i++) {
-									ExcelUtils.writeData(smokeFilePath, FDID, "InvestorDistribution", excelLabel.Variable_Name, "ID"+(i+1), excelLabel.FundDistributionID);
-
-								}
-								if (clickUsingJavaScript(driver, fp.getFirstValueFromRelatedList(environment,mode,RelatedList.FundDistribution.toString()), "FundDistribution id", action.SCROLLANDBOOLEAN)) {
+								if(FDID!=null) {
+								if (clickUsingJavaScript(driver, fp.getFirstValueFromRelatedList(environment,mode,RelatedList.FundDistribution.toString(), Smoke_Fund1), "FundDistribution id", action.SCROLLANDBOOLEAN)) {
 									
-									String parentId=switchOnWindow(driver);
-									if (parentId!=null) {
-										log(LogStatus.ERROR, "New window is open after click on FundDistribution "+FDID, YesNo.Yes);
-										if(bp.clickOnRelatedList(environment, mode, RecordType.Fund, RelatedList.FundDistribution, null)) {
+									ExcelUtils.writeData(smokeFilePath, FDID, "FundDistribution", excelLabel.Variable_Name, "FD1", excelLabel.FundDistributionID);
+									for (int i = 0;i<5;i++) {
+										ExcelUtils.writeData(smokeFilePath, FDID, "InvestorDistribution", excelLabel.Variable_Name, "ID"+(i+1), excelLabel.FundDistributionID);
+
+									}
+									
+										if(bp.ClickonRelatedTab_Lighting(environment, RecordType.Fund, null)) {
 											appLog.info("clicked on related list tab");
 										}else {
 											appLog.error("could not click on related tab");
@@ -14413,18 +11189,15 @@ public class OldSmokeTestCases extends BaseLib {
 											log(LogStatus.INFO, s.get(i)+" id of investor distribution", YesNo.No);
 											ExcelUtils.writeData(smokeFilePath,s.get(i) ,"InvestorDistribution",excelLabel.Variable_Name, "ID"+(i+1), excelLabel.InvestorDistributionID);
 										}	
-										driver.close();
-										driver.switchTo().window(parentId);
-									} else {
-										log(LogStatus.ERROR, "No New is open after click on FundDistribution "+FDID, YesNo.Yes);
-										sa.assertTrue(false, "No New is open after click on FundDistribution "+FDID);
-									}
-									
-									
+					
 								}
 								else {
 									log(LogStatus.ERROR, "fund distribution link is not clickable "+FDID, YesNo.Yes);
 									sa.assertTrue(false, "fund distribution link is not clickable "+FDID);
+								}
+								}else {
+									log(LogStatus.ERROR, "fund distribution link is not present so cannot conitnue "+FDID, YesNo.Yes);
+									sa.assertTrue(false, "fund distribution link is not present so cannot conitnue "+FDID);
 								}
 							}
 							else {
@@ -15305,7 +12078,7 @@ public class OldSmokeTestCases extends BaseLib {
 								if (parentId!=null) {
 									ThreadSleep(2000);
 									if (Mode.Lightning.toString().equalsIgnoreCase(mode)) {
-										xpath = "//div/span[contains(text(),'"+linkClick[j]+"')]";
+										xpath = "//div/*[contains(text(),'"+linkClick[j]+"')]";
 										}else{
 											xpath = "//h2[contains(text(),'"+linkClick[j]+"')]";	
 										}
@@ -16140,95 +12913,7 @@ public class OldSmokeTestCases extends BaseLib {
 	
 	@Parameters({ "environment", "mode" })
 	@Test
-	public void PESmokeTc062_1_AddRelatedTabAndRelatedList(String environment, String mode) {
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
-		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
-		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
-		lp.CRMLogin(superAdminUserName, adminPassword);
-		String subTab="Related";
-		String searchText=EditPageErrorMessage.RelatedLists;
-		String sourceImage=".\\AutoIT\\EditPage\\RelatedListImg.PNG";
-		String targetImage=".\\AutoIT\\EditPage\\AddComponent.PNG";
-		appLog.info("Login with User");
-		appLog.info("Going on Contact Tab");
-		if (bp.clickOnTab(environment, mode, TabName.ContactTab)) {
-			log(LogStatus.INFO, "Click on Contact Tab", YesNo.Yes);
-			if (cp.clickOnCreatedContact(environment,  SmokeC5_FName, SmokeC5_LName)) {
-				log(LogStatus.INFO, "Click on Created Contact : " + SmokeC5_FName + " " + SmokeC5_LName, YesNo.No);
-
-				if (edit.addingSubTab(subTab, searchText, sourceImage, targetImage)) {
-					log(LogStatus.INFO,  "Not Able to add sub tab "+subTab, YesNo.No);
-				} else {
-					sa.assertTrue(false, "Not Able to add sub tab "+subTab);
-					log(LogStatus.SKIP,  "Not Able to add sub tab "+subTab, YesNo.Yes);
-				}
-			} else {
-				sa.assertTrue(false, "Not Able to Click on Created Contact : " + SmokeC5_FName + " " + SmokeC5_LName);
-				log(LogStatus.SKIP, "Not Able to Click on Created Contact : " + SmokeC5_FName + " " + SmokeC5_LName,YesNo.Yes);
-
-			}
-		} else {
-			sa.assertTrue(false, "Not Able to Click on Contact Tab");
-			log(LogStatus.SKIP, "Not Able to Click on Contact Tab", YesNo.Yes);
-		}
-		switchToDefaultContent(driver);
-		if (ip.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-			log(LogStatus.INFO, "Clicked on Institution Tab", YesNo.No);
-			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS2)) {
-				log(LogStatus.INFO, "Clicked on Created Institution : " + SmokeINS2, YesNo.No);
-
-				if (edit.addingSubTab(subTab, searchText, sourceImage, targetImage)) {
-					log(LogStatus.INFO,  "Not Able to add sub tab "+subTab, YesNo.No);
-				} else {
-					sa.assertTrue(false, "Not Able to add sub tab "+subTab);
-					log(LogStatus.SKIP,  "Not Able to add sub tab "+subTab, YesNo.Yes);
-				}
-			} else {
-				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINS2);
-				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2, YesNo.Yes);
-			}
-
-		} else {
-			sa.assertTrue(false, "Not Able to Click on Institution Tab");
-			log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
-		}
-		
-		switchToDefaultContent(driver);
-		if (ip.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-			log(LogStatus.INFO, "Clicked on Institution Tab", YesNo.No);
-			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINDINV2)) {
-				log(LogStatus.INFO, "Clicked on Created Institution : " + SmokeINDINV2, YesNo.No);
-
-				if (edit.addingSubTab(subTab, searchText, sourceImage, targetImage)) {
-					log(LogStatus.INFO,  "Not Able to add sub tab "+subTab, YesNo.No);
-				} else {
-					sa.assertTrue(false, "Not Able to add sub tab "+subTab);
-					log(LogStatus.SKIP,  "Not Able to add sub tab "+subTab, YesNo.Yes);
-				}
-			} else {
-				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINDINV2);
-				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINDINV2, YesNo.Yes);
-			}
-
-		} else {
-			sa.assertTrue(false, "Not Able to Click on Institution Tab");
-			log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
-		}
-		
-		
-
-		switchToDefaultContent(driver);
-		lp.CRMlogout(environment, mode);
-		sa.assertAll();
-		appLog.info("Pass");
-	}
-	
-	@Parameters({ "environment", "mode" })
-	@Test
-	public void PESmokeTc062_2_VerifyContactTransferButtonAtContactPageAndOfficeLocationRelatedListAtAccountPage(
+	public void PESmokeTc062_VerifyContactTransferButtonAtContactPageAndOfficeLocationRelatedListAtAccountPage(
 			String environment, String mode) {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -16256,7 +12941,7 @@ public class OldSmokeTestCases extends BaseLib {
 					log(LogStatus.ERROR, "Contact Transfer Button is Present", YesNo.Yes);
 				}
 
-				if (click(driver, cp.getEditButton(environment, mode, 10), "Edit Button", action.SCROLLANDBOOLEAN)) {
+				if (cp.clickOnShowMoreActionDownArrow("PE", PageName.ContactPage, ShowMoreActionDropDownList.Edit, 20)) {
 					log(LogStatus.INFO, "Clicked on Edit Button", YesNo.No);
 
 					WebElement officeLocEle = FindElement(driver, officeLocationLabel, "Office Location Label",
@@ -16798,7 +13483,7 @@ public class OldSmokeTestCases extends BaseLib {
 					log(LogStatus.ERROR, "Contact Transfer Button is NOT Present", YesNo.Yes);
 				}
 
-				if (click(driver, cp.getEditButton(environment, mode, 10), "Edit Button", action.SCROLLANDBOOLEAN)) {
+				if (cp.clickOnShowMoreActionDownArrow("PE", PageName.ContactPage, ShowMoreActionDropDownList.Edit, 20)) {
 					log(LogStatus.INFO, "Clicked on Edit Button", YesNo.No);
 
 					WebElement officeLocEle = FindElement(driver, officeLocationLabel, "Office Location Label",
@@ -16827,49 +13512,7 @@ public class OldSmokeTestCases extends BaseLib {
 			log(LogStatus.SKIP, "Not Able to Click on Contact Tab", YesNo.Yes);
 		}
 		switchToDefaultContent(driver);
-		if (ip.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-			log(LogStatus.INFO, "Clicked on Institution Tab", YesNo.No);
-			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS2)) {
-				log(LogStatus.INFO, "Clicked on Created Institution : " + SmokeINS2, YesNo.No);
-				if (bp.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Office_Locations, RelatedTab.Details.toString())) {
-					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-						((JavascriptExecutor) driver)
-						.executeScript("window.scrollTo(0,0);");
-						int widgetTotalScrollingWidth = Integer.parseInt(String.valueOf(((JavascriptExecutor) driver)
-								.executeScript("return window.outerHeight")));
-						int j = 200;
-						int i = 0;
-						WebElement el=null;
-						while (el==null) {
-							el=isDisplayed(driver,FindElement(driver, "//a[text()='Office Location']", "Office Locations", action.BOOLEAN, 2) , "visibility", 2, "Office Locations");
-							((JavascriptExecutor) driver).executeScript("window.scrollBy( 0 ,"+j+")");
-							i+=j;
-							if (i >= widgetTotalScrollingWidth) {
-								sa.assertTrue(false, "Office Location Related List is not Available");
-								log(LogStatus.ERROR, "Office Location Related List is not Available", YesNo.Yes);
-								break;
-							}
-							else if (el!=null) {
-								log(LogStatus.INFO, "Office Location Related List is Available", YesNo.Yes);
-								break;
-							}
-						}
-					}
-				}
-				else {
-					log(LogStatus.ERROR, "could not click on related list button",YesNo.Yes);
-					sa.assertTrue(false,"could not click on related list button" );
-				}
-				
-			} else {
-				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINS2);
-				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2, YesNo.Yes);
-			}
 
-		} else {
-			sa.assertTrue(false, "Not Able to Click on Institution Tab");
-			log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
-		}
 
 		switchToDefaultContent(driver);
 		lp.CRMlogout(environment, mode);
@@ -16892,7 +13535,8 @@ public class OldSmokeTestCases extends BaseLib {
 				{ OfficeLocationLabel.Primary.toString(), Smoke_OFFLoc1Primary },
 				{ OfficeLocationLabel.State_Province.toString(), Smoke_OFFLoc1StateProvince },
 				{ OfficeLocationLabel.Country.toString(), Smoke_OFFLoc1Country },
-				{ OfficeLocationLabel.ZIP.toString(), Smoke_OFFLoc1ZIP } };
+				{ OfficeLocationLabel.ZIP.toString(), Smoke_OFFLoc1ZIP },
+				{ OfficeLocationLabel.Organization_Name.toString(), Smoke_OFFLoc1OrgName }};
 
 		String[][] officeLocation2 = { { OfficeLocationLabel.Office_Location_Name.toString(), Smoke_OFFLoc2Name },
 				{ OfficeLocationLabel.Phone.toString(), Smoke_OFFLoc2Phone },
@@ -16902,16 +13546,15 @@ public class OldSmokeTestCases extends BaseLib {
 				{ OfficeLocationLabel.Primary.toString(), Smoke_OFFLoc2Primary },
 				{ OfficeLocationLabel.State_Province.toString(), Smoke_OFFLoc2StateProvince },
 				{ OfficeLocationLabel.Country.toString(), Smoke_OFFLoc2Country },
-				{ OfficeLocationLabel.ZIP.toString(), Smoke_OFFLoc2ZIP } };
+				{ OfficeLocationLabel.ZIP.toString(), Smoke_OFFLoc2ZIP },
+				{ OfficeLocationLabel.Organization_Name.toString(), Smoke_OFFLoc2OrgName }};
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		log(LogStatus.INFO, "Login with CRM User", YesNo.No);
 		log(LogStatus.INFO, "Going to Enter information about Office Location 1", YesNo.No);
-		if (ip.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-			log(LogStatus.INFO, "Clicked on Institution Tab", YesNo.No);
-			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS2)) {
-				log(LogStatus.INFO, "Clicked on Created Institution : " + SmokeINS2, YesNo.No);
-
+		if (ip.clickOnTab(environment, mode, TabName.OfficeLocations)) {
+			log(LogStatus.INFO, "Clicked on office locations Tab", YesNo.No);
+			
 				if (click(driver, ip.getNewOfficeLocationButton(environment, mode, RecordType.Institution, 10),
 						"New Office Location", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.SKIP, "Clicked on New Office Location  : " + SmokeINS2, YesNo.Yes);
@@ -16923,22 +13566,16 @@ public class OldSmokeTestCases extends BaseLib {
 					log(LogStatus.SKIP, "Not Able to Click on New Office Location  : " + SmokeINS2, YesNo.Yes);
 				}
 
-			} else {
-				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINS2);
-				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2, YesNo.Yes);
-			}
-
+			
 		} else {
 			sa.assertTrue(false, "Not Able to Click on Institution Tab");
 			log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
 		}
 
 		log(LogStatus.INFO, "Going to Enter information about Office Location 2", YesNo.No);
-		if (ip.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-			log(LogStatus.INFO, "Clicked on Institution Tab", YesNo.No);
-			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS2)) {
-				log(LogStatus.INFO, "Clicked on Created Institution : " + SmokeINS2, YesNo.No);
-
+		if (ip.clickOnTab(environment, mode, TabName.OfficeLocations)) {
+			log(LogStatus.INFO, "Clicked on office locations Tab", YesNo.No);
+			
 				if (click(driver, ip.getNewOfficeLocationButton(environment, mode, RecordType.Institution, 10),
 						"New Office Location", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.SKIP, "Clicked on New Office Location  : " + SmokeINS2, YesNo.Yes);
@@ -16950,76 +13587,59 @@ public class OldSmokeTestCases extends BaseLib {
 					log(LogStatus.SKIP, "Not Able to Click on New Office Location  : " + SmokeINS2, YesNo.Yes);
 				}
 
-			} else {
-				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINS2);
-				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2, YesNo.Yes);
-			}
-
+			
 		} else {
 			sa.assertTrue(false, "Not Able to Click on Institution Tab");
 			log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
 		}
-
+		String[] label= {excelLabel.Office_Location_Name.toString(),
+				excelLabel.Street.toString(),
+				excelLabel.City.toString(),
+				"State/Province",excelLabel.Country.toString(),
+				excelLabel.Primary.toString()};
+		
 		log(LogStatus.INFO, "Going to Verify Office Location 1 & 2", YesNo.No);
-
-		if (ip.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-			log(LogStatus.INFO, "Clicked on Institution Tab", YesNo.No);
-			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS2)) {
-				log(LogStatus.INFO, "Clicked on Created Institution : " + SmokeINS2, YesNo.No);
-
-				
+		
+		String[][] locations = {{Smoke_OFFLoc1Name,Smoke_OFFLoc1Street,Smoke_OFFLoc1City,Smoke_OFFLoc1StateProvince,Smoke_OFFLoc1Country,Smoke_OFFLoc1Primary},
+				{Smoke_OFFLoc2Name,Smoke_OFFLoc2Street,Smoke_OFFLoc2City,Smoke_OFFLoc2StateProvince,Smoke_OFFLoc2Country,Smoke_OFFLoc2Primary}};
+		
+		for(String[] location:locations) {
+		if (ip.clickOnTab(environment, mode, TabName.OfficeLocations)) {
+			log(LogStatus.INFO, "Clicked on office location Tab", YesNo.No);
+			if (ip.clickOnCreatedOfficeLocation(environment, mode, location[0])) {
+				log(LogStatus.INFO, "Clicked on Created office location : " + location[0], YesNo.No);
+	
 				if (ip.clickOnRelatedList(environment, mode, RecordType.IndividualInvestor, RelatedList.Office_Locations, RelatedTab.Details.toString())) {
 					
 					log(LogStatus.PASS, "Clicked on Details TAB : "+RelatedList.Office_Locations, YesNo.No);
 					
-					if (click(driver, ip.getOfficeLocationSDGLink(30), "office location link ",action.SCROLLANDBOOLEAN)) {
-						
-						log(LogStatus.PASS, "Clicked on link : "+RelatedList.Office_Locations, YesNo.No);
-						
+					
 
-						if (ip.verifyOfficeLocationRelatedListGrid(environment, mode, Smoke_OFFLoc1Name,
-								Smoke_OFFLoc1Street, Smoke_OFFLoc1City, Smoke_OFFLoc1StateProvince, Smoke_OFFLoc1Country,
-								Smoke_OFFLoc1Primary)) {
-							log(LogStatus.FAIL, "Grid Verified for : " + Smoke_OFFLoc1Name, YesNo.Yes);
-						} else {
-							sa.assertTrue(false, "Grid Not Verified for : " + Smoke_OFFLoc1Name);
-							log(LogStatus.FAIL, "Grid Not Verified for : " + Smoke_OFFLoc1Name, YesNo.Yes);
+					for(int i=0;i<location.length;i++) {
+						if(ip.fieldValueVerificationOnOfficeLocationPage(environment, mode, label[i], location[i])) {
+							log(LogStatus.FAIL, "value Verified for : " + location[i], YesNo.Yes);
+							
+						}else {
+							sa.assertTrue(false, "value Not Verified for : " + location[i]);
+							log(LogStatus.FAIL, "value Not Verified for : " + location[i], YesNo.Yes);
 						}
-
-						if (ip.verifyOfficeLocationRelatedListGrid(environment, mode, Smoke_OFFLoc2Name,
-								Smoke_OFFLoc2Street, Smoke_OFFLoc2City, Smoke_OFFLoc2StateProvince, Smoke_OFFLoc2Country,
-								Smoke_OFFLoc2Primary)) {
-							log(LogStatus.FAIL, "Grid Verified for : " + Smoke_OFFLoc2Name, YesNo.Yes);
-						} else {
-							sa.assertTrue(false, "Grid Not Verified for : " + Smoke_OFFLoc2Name);
-							log(LogStatus.FAIL, "Grid Not Verified for : " + Smoke_OFFLoc2Name, YesNo.Yes);
-						}
-						
-						} else {
-						sa.assertTrue(false, "Not Able to Click on Related List View All for " + RelatedList.Office_Locations);
-						log(LogStatus.FAIL, "Not Able to Click on Related List View All for " + RelatedList.Office_Locations, YesNo.Yes);
+			
 					}
-					
-					
 				} else {
 					sa.assertTrue(false, "Not Able to Clicked on link : " + RelatedList.Office_Locations);
 					log(LogStatus.FAIL, "Not Able to Clicked on link : " + RelatedList.Office_Locations, YesNo.Yes);
 				}
 	
-
-
-				
-
 			} else {
-				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINS2);
-				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to Click on Created office location : " + location[0]);
+				log(LogStatus.SKIP, "Not Able to Click on Created office location : " + location[0], YesNo.Yes);
 			}
 
 		} else {
 			sa.assertTrue(false, "Not Able to Click on Institution Tab");
 			log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
 		}
-
+		}
 		switchToDefaultContent(driver);
 		lp.CRMlogout(environment, mode);
 		sa.assertAll();
@@ -17064,7 +13684,7 @@ public class OldSmokeTestCases extends BaseLib {
 					}
 				}
 
-				if (click(driver, ip.getEditButton(environment, mode, 10), "Edit Button", action.SCROLLANDBOOLEAN)) {
+				if (ip.clickOnShowMoreActionDownArrow("PE", PageName.InstitutionsPage, ShowMoreActionDropDownList.Edit, 20)) {
 					log(LogStatus.INFO, "Edit Button", YesNo.No);
 					ThreadSleep(2000);
 					WebElement ele;
@@ -17185,7 +13805,7 @@ public class OldSmokeTestCases extends BaseLib {
 			if (cp.clickOnCreatedContact(environment, SmokeC5_FName, SmokeC5_LName)) {
 				log(LogStatus.INFO, "Clicked on Created Contact : " + SmokeC5_FName + " " + SmokeC5_LName, YesNo.No);
 
-				if (click(driver, cp.getEditButton(environment, mode, 10), "Edit Button", action.SCROLLANDBOOLEAN)) {
+				if (cp.clickOnShowMoreActionDownArrow("PE", PageName.ContactPage, ShowMoreActionDropDownList.Edit, 20)) {
 					log(LogStatus.INFO, "Clicked on Edit Button", YesNo.No);
 					if (cp.ClickOnLookUpAndSelectValueFromLookUpWindow(environment, mode, LookUpIcon.OfficeLocation,
 							"Office Location", Smoke_OFFLoc1Name + "," + Smoke_OFFLoc2Name)) {
@@ -17260,52 +13880,29 @@ public class OldSmokeTestCases extends BaseLib {
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		log(LogStatus.INFO, "Login with CRM User", YesNo.No);
 		log(LogStatus.INFO, "Going to Enter information about Office Location 1", YesNo.No);
-		if (ip.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-			log(LogStatus.INFO, "Clicked on Institution Tab", YesNo.No);
-			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS2)) {
-				log(LogStatus.INFO, "Clicked on Created Institution : " + SmokeINS2, YesNo.No);
+		if (ip.clickOnTab(environment, mode, TabName.OfficeLocations)) {
+			log(LogStatus.INFO, "Clicked on office location Tab", YesNo.No);
+			if (ip.clickOnCreatedOfficeLocation(environment, mode, Smoke_OFFLoc1Name)) {
+				log(LogStatus.INFO, "Clicked on Created office location : " + Smoke_OFFLoc1Name, YesNo.No);
 
 				if (ip.clickOnRelatedList(environment, mode, RecordType.IndividualInvestor, RelatedList.Office_Locations, RelatedTab.Details.toString())) {
 					
 					log(LogStatus.PASS, "Clicked on details TAB : "+RelatedList.Office_Locations, YesNo.No);
 					
-					if (click(driver, ip.getOfficeLocationSDGLink(30), "office location link ",action.SCROLLANDBOOLEAN)) {
-						
-						log(LogStatus.PASS, "Clicked on link : "+RelatedList.Office_Locations, YesNo.No);
-						
+					
 						String[][] officeLocation1 = {
 								{ OfficeLocationLabel.Primary.toString(), Smoke_OFFLoc1UpdatedPrimary } };
-						if (ip.clickOnLinkForOfficeLocation(environment, mode, RecordType.Institution,
-								Smoke_OFFLoc1Name, 30)) {
-							log(LogStatus.INFO, "Clicked on Office Location : " + Smoke_OFFLoc1Name, YesNo.No);
-							
-							String parentWindow=switchOnWindow(driver);
-							
 							ThreadSleep(2000);
-							if (clickUsingJavaScript(driver, ip.getEditButton(environment, mode, 30), " Edit",action.SCROLLANDBOOLEAN)) {
+							if (ip.clickOnShowMoreActionDownArrow("PE", PageName.ContactPage, ShowMoreActionDropDownList.Edit, 10)) {
 								
 								tsa = ip.EnterValueForLabelonOfficeLocation(environment, mode, officeLocation1);
 								sa.combineAssertions(tsa);
-								driver.close();
 								switchToDefaultContent(driver);
 							}else {
 								sa.assertTrue(false, "Not Able to Click on edit button on new window: " + Smoke_OFFLoc1Name);
 								log(LogStatus.SKIP, "Not Able to Click on edit button on new window  : " + Smoke_OFFLoc1Name, YesNo.Yes);
 							}
 
-							
-						} else {
-							sa.assertTrue(false, "Not Able to Click on Office Location : " + Smoke_OFFLoc1Name);
-							log(LogStatus.SKIP, "Not Able to Click on Office Location  : " + Smoke_OFFLoc1Name, YesNo.Yes);
-						}
-					
-						
-							} else {
-						sa.assertTrue(false, "Not Able to Click on link " + RelatedList.Office_Locations);
-						log(LogStatus.FAIL, "Not Able to Click on lnik " + RelatedList.Office_Locations, YesNo.Yes);
-					}
-					
-					
 				} else {
 					sa.assertTrue(false, "Not Able to Click on Related List " + RelatedList.Office_Locations);
 					log(LogStatus.FAIL, "Not Able to Click on Related List " + RelatedList.Office_Locations, YesNo.Yes);
@@ -17314,70 +13911,62 @@ public class OldSmokeTestCases extends BaseLib {
 					
 
 			} else {
-				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINS2);
-				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to Click on Created office location : " + Smoke_OFFLoc1Name);
+				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + Smoke_OFFLoc1Name, YesNo.Yes);
+			}
+
+		} else {
+			sa.assertTrue(false, "Not Able to Click on office location Tab");
+			log(LogStatus.SKIP, "Not Able to Click on office location Tab", YesNo.Yes);
+		}
+
+		String[] label= {excelLabel.Office_Location_Name.toString(),
+				excelLabel.Street.toString(),
+				excelLabel.City.toString(),
+				"State/Province",excelLabel.Country.toString(),
+				excelLabel.Primary.toString()};
+		
+		log(LogStatus.INFO, "Going to Verify Office Location 1 & 2", YesNo.No);
+		
+		String[][] locations = {{Smoke_OFFLoc1Name,Smoke_OFFLoc1Street,Smoke_OFFLoc1City,Smoke_OFFLoc1StateProvince,Smoke_OFFLoc1Country,Smoke_OFFLoc1UpdatedPrimary},
+				{Smoke_OFFLoc2Name,Smoke_OFFLoc2Street,Smoke_OFFLoc2City,Smoke_OFFLoc2StateProvince,Smoke_OFFLoc2Country,Smoke_OFFLoc2UpdatedPrimary}};
+		
+		for(String[] location:locations) {
+		if (ip.clickOnTab(environment, mode, TabName.OfficeLocations)) {
+			log(LogStatus.INFO, "Clicked on office location Tab", YesNo.No);
+			if (ip.clickOnCreatedOfficeLocation(environment, mode, location[0])) {
+				log(LogStatus.INFO, "Clicked on Created office location : " + location[0], YesNo.No);
+	
+				if (ip.clickOnRelatedList(environment, mode, RecordType.IndividualInvestor, RelatedList.Office_Locations, RelatedTab.Details.toString())) {
+					
+					log(LogStatus.PASS, "Clicked on Details TAB : "+RelatedList.Office_Locations, YesNo.No);
+					
+					
+
+					for(int i=0;i<location.length;i++) {
+						if(ip.fieldValueVerificationOnOfficeLocationPage(environment, mode, label[i], location[i])) {
+							log(LogStatus.FAIL, "value Verified for : " + location[i], YesNo.Yes);
+							
+						}else {
+							sa.assertTrue(false, "value Not Verified for : " + location[i]);
+							log(LogStatus.FAIL, "value Not Verified for : " + location[i], YesNo.Yes);
+						}
+			
+					}
+				} else {
+					sa.assertTrue(false, "Not Able to Clicked on link : " + RelatedList.Office_Locations);
+					log(LogStatus.FAIL, "Not Able to Clicked on link : " + RelatedList.Office_Locations, YesNo.Yes);
+				}
+	
+			} else {
+				sa.assertTrue(false, "Not Able to Click on Created office location : " + location[0]);
+				log(LogStatus.SKIP, "Not Able to Click on Created office location : " + location[0], YesNo.Yes);
 			}
 
 		} else {
 			sa.assertTrue(false, "Not Able to Click on Institution Tab");
 			log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
 		}
-
-		log(LogStatus.INFO, "Going to Verify Office Location 1 & 2", YesNo.No);
-
-		if (ip.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-			log(LogStatus.INFO, "Clicked on Institution Tab", YesNo.No);
-			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS2)) {
-				log(LogStatus.INFO, "Clicked on Created Institution : " + SmokeINS2, YesNo.No);
-
-				if (ip.clickOnRelatedList(environment, mode, RecordType.IndividualInvestor, RelatedList.Office_Locations, RelatedTab.Details.toString())) {
-					
-					log(LogStatus.PASS, "Clicked on details TAB : "+RelatedList.Office_Locations, YesNo.No);
-					
-					if (click(driver, ip.getOfficeLocationSDGLink(30), "office location link ",action.SCROLLANDBOOLEAN)) {
-						
-						log(LogStatus.PASS, "Clicked on detail : "+RelatedList.Office_Locations, YesNo.No);
-						
-
-						if (ip.verifyOfficeLocationRelatedListGrid(environment, mode, Smoke_OFFLoc1Name,
-								Smoke_OFFLoc1Street, Smoke_OFFLoc1City, Smoke_OFFLoc1StateProvince, Smoke_OFFLoc1Country,
-								Smoke_OFFLoc1UpdatedPrimary)) {
-							log(LogStatus.PASS, "Grid Verified for : " + Smoke_OFFLoc1Name, YesNo.Yes);
-						} else {
-							sa.assertTrue(false, "Grid Not Verified for : " + Smoke_OFFLoc1Name);
-							log(LogStatus.FAIL, "Grid Not Verified for : " + Smoke_OFFLoc1Name, YesNo.Yes);
-						}
-
-						if (ip.verifyOfficeLocationRelatedListGrid(environment, mode, Smoke_OFFLoc2Name,
-								Smoke_OFFLoc2Street, Smoke_OFFLoc2City, Smoke_OFFLoc2StateProvince, Smoke_OFFLoc2Country,
-								Smoke_OFFLoc2UpdatedPrimary)) {
-							log(LogStatus.PASS, "Grid Verified for : " + Smoke_OFFLoc2Name, YesNo.Yes);
-						} else {
-							sa.assertTrue(false, "Grid Not Verified for : " + Smoke_OFFLoc2Name);
-							log(LogStatus.FAIL, "Grid Not Verified for : " + Smoke_OFFLoc2Name, YesNo.Yes);
-						}
-
-						
-							} else {
-						sa.assertTrue(false, "Not Able to Click on Related List View All for " + RelatedList.Office_Locations);
-						log(LogStatus.FAIL, "Not Able to Click on Related List View All for " + RelatedList.Office_Locations, YesNo.Yes);
-					}
-					
-					
-				} else {
-					sa.assertTrue(false, "Not Able to Click on Related List " + RelatedList.Office_Locations);
-					log(LogStatus.FAIL, "Not Able to Click on Related List " + RelatedList.Office_Locations, YesNo.Yes);
-				}
-
-
-			} else {
-				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINS2);
-				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2, YesNo.Yes);
-			}
-
-		} else {
-			sa.assertTrue(false, "Not Able to Click on Institution Tab");
-			log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
 		}
 
 		log(LogStatus.PASS, "Going to Verify Address Information ", YesNo.Yes);
@@ -17456,46 +14045,26 @@ public class OldSmokeTestCases extends BaseLib {
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		log(LogStatus.INFO, "Login with CRM User", YesNo.No);
 		log(LogStatus.INFO, "Going to Update information about Office Location 1", YesNo.No);
-		if (ip.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-			log(LogStatus.INFO, "Clicked on Institution Tab", YesNo.No);
-			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS2)) {
-				log(LogStatus.INFO, "Clicked on Created Institution : " + SmokeINS2, YesNo.No);
+		if (ip.clickOnTab(environment, mode, TabName.OfficeLocations)) {
+			log(LogStatus.INFO, "Clicked on office location Tab", YesNo.No);
+			if (ip.clickOnCreatedOfficeLocation(environment, mode, Smoke_OFFLoc1Name)) {
+				log(LogStatus.INFO, "Clicked on Created office location : " + Smoke_OFFLoc1Name, YesNo.No);
 
 				if (ip.clickOnRelatedList(environment, mode, RecordType.IndividualInvestor, RelatedList.Office_Locations, RelatedTab.Details.toString())) {
 					
 					log(LogStatus.PASS, "Clicked on detail TAB : "+RelatedList.Office_Locations, YesNo.No);
 					
-					if (click(driver, ip.getOfficeLocationSDGLink(30), "office location link ",action.SCROLLANDBOOLEAN)) {
-						
-						log(LogStatus.PASS, "Clicked on Related : "+RelatedList.Office_Locations, YesNo.No);
-						if (ip.clickOnLinkForOfficeLocation(environment, mode, RecordType.Institution,
-								Smoke_OFFLoc1Name, 10)) {
-							log(LogStatus.INFO,
-									"Clicked on Office Location and Going to Update Value: " + Smoke_OFFLoc1Name, YesNo.No);
-							
-							String parentWindow=switchOnWindow(driver);
-							
 							ThreadSleep(2000);
-							if (clickUsingJavaScript(driver, ip.getEditButton(environment, mode, 30), " Edit",action.SCROLLANDBOOLEAN)) {
-	
+							if (cp.clickOnShowMoreActionDownArrow("PE", PageName.ContactPage, ShowMoreActionDropDownList.Edit, 10)) {
+								log(LogStatus.INFO, "Clicked on edit button", YesNo.No);
 							tsa = ip.EnterValueForLabelonOfficeLocation(environment, mode, updatedOfficeLocation1);
 							sa.combineAssertions(tsa);
 							flag=true;
-							driver.close();
-							driver.switchTo().window(parentWindow);
 							}else {
 								sa.assertTrue(false, "Not Able to Click on edit button on new window: " + Smoke_OFFLoc1Name);
 								log(LogStatus.SKIP, "Not Able to Click on edit button on new window  : " + Smoke_OFFLoc1Name, YesNo.Yes);
 							}
-						} else {
-							sa.assertTrue(false, "Not Able to Click on Office Location : " + Smoke_OFFLoc1Name);
-							log(LogStatus.SKIP, "Not Able to Click on Office Location  : " + Smoke_OFFLoc1Name, YesNo.Yes);
-						}
-							} else {
-						sa.assertTrue(false, "Not Able to Click on Related List View All for " + RelatedList.Office_Locations);
-						log(LogStatus.FAIL, "Not Able to Click on Related List View All for " + RelatedList.Office_Locations, YesNo.Yes);
-					}
-					
+						
 					
 				} else {
 					sa.assertTrue(false, "Not Able to Click on Related List " + RelatedList.Office_Locations);
@@ -17506,62 +14075,63 @@ public class OldSmokeTestCases extends BaseLib {
 				
 
 			} else {
-				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINS2);
-				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to Click on Created office location : " + Smoke_OFFLoc1Name);
+				log(LogStatus.SKIP, "Not Able to Click on Created office location : " + Smoke_OFFLoc1Name, YesNo.Yes);
 			}
 
 		} else {
-			sa.assertTrue(false, "Not Able to Click on Institution Tab");
-			log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
+			sa.assertTrue(false, "Not Able to Click on office location Tab");
+			log(LogStatus.SKIP, "Not Able to Click on office location Tab", YesNo.Yes);
 		}
 		if (flag) {
 			
+			String[] label= {excelLabel.Office_Location_Name.toString(),
+					excelLabel.Street.toString(),
+					excelLabel.City.toString(),
+					"State/Province",excelLabel.Country.toString(),
+					excelLabel.Primary.toString()};
+			
 			log(LogStatus.INFO, "Going to Verify Office Location 1", YesNo.No);
 
-			if (ip.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
-				log(LogStatus.INFO, "Clicked on Institution Tab", YesNo.No);
-				if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS2)) {
-					log(LogStatus.INFO, "Clicked on Created Institution : " + SmokeINS2, YesNo.No);
-
+			String[][] locations = {{Smoke_OFFLoc1UpdName,Smoke_OFFLoc1UpdStreet,Smoke_OFFLoc1UpdCity,Smoke_OFFLoc1UpdStateProvince,Smoke_OFFLoc1UpdCountry,Smoke_OFFLoc1UpdatedPrimary}
+				};
+			
+			for(String[] location:locations) {
+			if (ip.clickOnTab(environment, mode, TabName.OfficeLocations)) {
+				log(LogStatus.INFO, "Clicked on office location Tab", YesNo.No);
+				if (ip.clickOnCreatedOfficeLocation(environment, mode, location[0])) {
+					log(LogStatus.INFO, "Clicked on Created office location : " + location[0], YesNo.No);
+		
 					if (ip.clickOnRelatedList(environment, mode, RecordType.IndividualInvestor, RelatedList.Office_Locations, RelatedTab.Details.toString())) {
 						
-						log(LogStatus.PASS, "Clicked on Related TAB : "+RelatedList.Office_Locations, YesNo.No);
+						log(LogStatus.PASS, "Clicked on Details TAB : "+RelatedList.Office_Locations, YesNo.No);
 						
-						if (click(driver, ip.getOfficeLocationSDGLink(30), "office location link ",action.SCROLLANDBOOLEAN)) {
-							
-							log(LogStatus.PASS, "Clicked on Related : "+RelatedList.Office_Locations, YesNo.No);
-							
-							if (ip.verifyOfficeLocationRelatedListGrid(environment, mode, Smoke_OFFLoc1UpdName,
-									Smoke_OFFLoc1UpdStreet, Smoke_OFFLoc1UpdCity, Smoke_OFFLoc1UpdStateProvince,
-									Smoke_OFFLoc1UpdCountry, Smoke_OFFLoc1UpdPrimary)) {
-								log(LogStatus.PASS, "Grid Verified for : " + Smoke_OFFLoc1UpdName, YesNo.Yes);
-							} else {
-								sa.assertTrue(false, "Grid Not Verified for : " + Smoke_OFFLoc1UpdName);
-								log(LogStatus.FAIL, "Grid Not Verified for : " + Smoke_OFFLoc1UpdName, YesNo.Yes);
+						
+
+						for(int i=0;i<location.length;i++) {
+							if(ip.fieldValueVerificationOnOfficeLocationPage(environment, mode, label[i], location[i])) {
+								log(LogStatus.FAIL, "value Verified for : " + location[i], YesNo.Yes);
+								
+							}else {
+								sa.assertTrue(false, "value Not Verified for : " + location[i]);
+								log(LogStatus.FAIL, "value Not Verified for : " + location[i], YesNo.Yes);
 							}
-							
-							} else {
-							sa.assertTrue(false, "Not Able to Click on Related List View All for " + RelatedList.Office_Locations);
-							log(LogStatus.FAIL, "Not Able to Click on Related List View All for " + RelatedList.Office_Locations, YesNo.Yes);
+				
 						}
-						
-						
 					} else {
-						sa.assertTrue(false, "Not Able to Click on Related List " + RelatedList.Office_Locations);
-						log(LogStatus.FAIL, "Not Able to Click on Related List " + RelatedList.Office_Locations, YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Clicked on link : " + RelatedList.Office_Locations);
+						log(LogStatus.FAIL, "Not Able to Clicked on link : " + RelatedList.Office_Locations, YesNo.Yes);
 					}
-
-						
-
-
+		
 				} else {
-					sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINS2);
-					log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2, YesNo.Yes);
+					sa.assertTrue(false, "Not Able to Click on Created office location : " + location[0]);
+					log(LogStatus.SKIP, "Not Able to Click on Created office location : " + location[0], YesNo.Yes);
 				}
 
 			} else {
 				sa.assertTrue(false, "Not Able to Click on Institution Tab");
 				log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
+			}
 			}
 
 			log(LogStatus.INFO, "Going to Verify Address Information on INstitution ", YesNo.No);
@@ -17713,7 +14283,7 @@ public class OldSmokeTestCases extends BaseLib {
 
 		if (gp.clickOnGlobalActionAndEnterValue("", GlobalActionItem.Log_a_Call, event3)) {
 			log(LogStatus.INFO,"Able to Enter Value for : "+task,YesNo.No);
-			gp.enterValueOnRelatedTo("", PageName.GlobalActtion_TaskPOpUp, TabName.FundsTab, Smoke_Fund1);
+			gp.enterValueOnRelatedTo("", PageName.GlobalActtion_TaskPOpUp, TabName.Object3Tab, Smoke_Fund1);
 			if (click(driver, gp.getSaveButtonForEvent("", 10), "Save Button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);		
 			}else {
@@ -17792,7 +14362,7 @@ public class OldSmokeTestCases extends BaseLib {
 				log(LogStatus.INFO, "Click on Created Contact : " + SmokeC5_FName + " " + SmokeC5_LName, YesNo.No);
 
 				// Azhar Start
-				if (clickUsingJavaScript(driver, cp.getContactTransfer(environment,  10), "Contact Transfer Button for Cancel")) {
+				if (cp.clickOnShowMoreActionDownArrow("PE", PageName.InstitutionsPage, ShowMoreActionDropDownList.Contact_Transfer, 10)) {
 					log(LogStatus.INFO, "Clicked on Contact Transfer for Cancel Button", YesNo.No);	
 					ThreadSleep(2000);
 					if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
@@ -17811,7 +14381,7 @@ public class OldSmokeTestCases extends BaseLib {
 				// Azhar End
 				ThreadSleep(5000);
 				switchToDefaultContent(driver);
-				if (clickUsingJavaScript(driver, cp.getContactTransfer(environment, 10), "Contact Transfer Button")) {
+				if (cp.clickOnShowMoreActionDownArrow("PE", PageName.InstitutionsPage, ShowMoreActionDropDownList.Contact_Transfer, 10)) {
 					log(LogStatus.INFO, "Clicked on Contact Transfer", YesNo.No);	
 					
 					if (cp.verifyContactTransferUIonContactPage(environment, mode,SmokeC5_FName+" "+SmokeC5_LName, SmokeINS2, 10)) {
@@ -17864,67 +14434,54 @@ public class OldSmokeTestCases extends BaseLib {
 								}
 							}
 							
-							if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, null)) {
-								log(LogStatus.INFO, "Click on Affiliations", YesNo.Yes);	
-								if (bp.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Affiliations, true)) {
-									log(LogStatus.INFO, "successfully scrolled to related list affiliations", YesNo.No);
-								}
-								else {
-									log(LogStatus.ERROR, "could not scroll to affiliations related list", YesNo.Yes);
-									sa.assertTrue(false, "could not scroll to affiliations related list");
-								}
-								
-								if (cp.verifyOpenActivityRelatedList(environment, mode,TabName.ContactTab, Smoke_NewTask1Subject, SmokeINS2, null)) {
-									log(LogStatus.INFO, "Open Activity Grid  Verified For "+Smoke_NewTask1Subject, YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Open Activity Grid Not Verified For "+Smoke_NewTask1Subject);
-									log(LogStatus.FAIL, "Open Activity Grid Not Verified For "+Smoke_NewTask1Subject, YesNo.Yes);
-								}
-								
-								if (cp.verifyOpenActivityRelatedList(environment, mode,TabName.ContactTab, Smoke_NewEvent1Subject, SmokeINS2, null)) {
-									log(LogStatus.INFO, "Open Activity Grid Verified For "+Smoke_NewEvent1Subject, YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Open Activity Grid Not Verified For "+Smoke_NewEvent1Subject);
-									log(LogStatus.FAIL, "Open Activity  Grid Not Verified For "+Smoke_NewEvent1Subject, YesNo.Yes);
-								}
-								
-								if (cp.verifyActivityHistoryRelatedList(environment, mode,TabName.ContactTab, Smoke_CallLog1Subject, Smoke_Fund1, null)) {
-									log(LogStatus.INFO, "Activity History Grid Verified For "+Smoke_CallLog1Subject, YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Activity History Grid Not Verified For "+Smoke_CallLog1Subject);
-									log(LogStatus.FAIL, "Activity History Grid Not Verified For "+Smoke_CallLog1Subject, YesNo.Yes);
-								}
-								
-								
-								if (cp.clickOnViewAllRelatedList(environment, mode,RelatedList.Affiliations)) {
-									log(LogStatus.INFO, "Click on View All Affiliations", YesNo.No);
-									
-									if (cp.verifyAffliationRelatedList(environment, mode,TabName.ContactTab, SmokeINS2)) {
-										log(LogStatus.PASS, "Affialition Grid Verified For "+SmokeINS2, YesNo.Yes);	
-									} else {
-										sa.assertTrue(false, "Affialition Grid Not Verified For "+SmokeINS2);
-										log(LogStatus.FAIL, "Affialition Grid Not Verified For "+SmokeINS2, YesNo.Yes);
-									}
-								} else {
-									sa.assertTrue(false, "Not Able to Click on View All Affiliations");
-									log(LogStatus.SKIP, "Not Able to Click on View All Affiliations", YesNo.Yes);
-								}
-								
-								
-								
-								
-								
-							} else {
-								sa.assertTrue(false, "Not Able to Click on Affiliations");
-								log(LogStatus.SKIP, "Not Able to Click on Affiliations", YesNo.Yes);
-							}
+					if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, RelatedTab.Affiliations.toString())) {
+						log(LogStatus.INFO, "Click on Affiliations", YesNo.Yes);
 
+						if (cp.verifyOpenActivityRelatedList(environment, mode, TabName.ContactTab,
+								Smoke_NewTask1Subject, SmokeINS2, null)) {
+							log(LogStatus.INFO, "Open Activity Grid  Verified For " + Smoke_NewTask1Subject, YesNo.No);
+						} else {
+							sa.assertTrue(false, "Open Activity Grid Not Verified For " + Smoke_NewTask1Subject);
+							log(LogStatus.FAIL, "Open Activity Grid Not Verified For " + Smoke_NewTask1Subject,
+									YesNo.Yes);
+						}
+
+						if (cp.verifyOpenActivityRelatedList(environment, mode, TabName.ContactTab,
+								Smoke_NewEvent1Subject, SmokeINS2, null)) {
+							log(LogStatus.INFO, "Open Activity Grid Verified For " + Smoke_NewEvent1Subject, YesNo.No);
+						} else {
+							sa.assertTrue(false, "Open Activity Grid Not Verified For " + Smoke_NewEvent1Subject);
+							log(LogStatus.FAIL, "Open Activity  Grid Not Verified For " + Smoke_NewEvent1Subject,
+									YesNo.Yes);
+						}
+
+						if (cp.verifyActivityHistoryRelatedList(environment, mode, TabName.ContactTab,
+								Smoke_CallLog1Subject, Smoke_Fund1, null)) {
+							log(LogStatus.INFO, "Activity History Grid Verified For " + Smoke_CallLog1Subject,
+									YesNo.No);
+						} else {
+							sa.assertTrue(false, "Activity History Grid Not Verified For " + Smoke_CallLog1Subject);
+							log(LogStatus.FAIL, "Activity History Grid Not Verified For " + Smoke_CallLog1Subject,
+									YesNo.Yes);
+						}
+
+						if (cp.verifyAffliationRelatedList(environment, mode, TabName.ContactTab, SmokeINS2)) {
+							log(LogStatus.PASS, "Affialition Grid Verified For " + SmokeINS2, YesNo.Yes);
+						} else {
+							sa.assertTrue(false, "Affialition Grid Not Verified For " + SmokeINS2);
+							log(LogStatus.FAIL, "Affialition Grid Not Verified For " + SmokeINS2, YesNo.Yes);
+						}
+
+					} else {
+						sa.assertTrue(false, "Not Able to Click on Affiliations");
+						log(LogStatus.SKIP, "Not Able to Click on Affiliations", YesNo.Yes);
+					}
 
 				} else {
 					sa.assertTrue(false, "Not Able to Click on Contact Transfer");
 					log(LogStatus.SKIP, "Not Able to Click on Contact Transfer", YesNo.Yes);
 				}
-				
+
 			} else {
 				sa.assertTrue(false, "Not Able to Click on Created Contact : " + SmokeC5_FName + " " + SmokeC5_LName);
 				log(LogStatus.SKIP, "Not Able to Click on Created Contact : " + SmokeC5_FName + " " + SmokeC5_LName,
@@ -17935,7 +14492,7 @@ public class OldSmokeTestCases extends BaseLib {
 			sa.assertTrue(false, "Not Able to Click on Contact Tab");
 			log(LogStatus.SKIP, "Not Able to Click on Contact Tab", YesNo.Yes);
 		}
-	
+
 		switchToDefaultContent(driver);
 		lp.CRMlogout(environment, mode);
 		sa.assertAll();
@@ -17954,79 +14511,33 @@ public class OldSmokeTestCases extends BaseLib {
 		if (bp.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS2)) {
 				log(LogStatus.INFO, "Click on Created Inst : " + SmokeINS2, YesNo.No);
-							
-							if (ip.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Activities, null)) {
-								log(LogStatus.INFO, "Click on Activities", YesNo.Yes);	
-								if (bp.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Activities, true)) {
-									log(LogStatus.INFO,"successfully scrolled to activities related list", YesNo.No);
-								}
-								else {
-									log(LogStatus.ERROR,"could not scroll to activities related list", YesNo.Yes);
-									sa.assertTrue(false, "could not scroll to activities related list");
-								}
-								
-								if (ip.verifyOpenActivityRelatedList(environment, mode,TabName.InstituitonsTab, Smoke_NewTask1Subject, SmokeINS2, SmokeC5_FName + " " + SmokeC5_LName)) {
-									log(LogStatus.INFO, "Open Activity Grid  Verified For "+Smoke_NewTask1Subject, YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Open Activity Grid Not Verified For "+Smoke_NewTask1Subject);
-									log(LogStatus.FAIL, "Open Activity Grid Not Verified For "+Smoke_NewTask1Subject, YesNo.Yes);
-								}
-								
-								if (ip.verifyOpenActivityRelatedList(environment, mode,TabName.InstituitonsTab, Smoke_NewEvent1Subject, SmokeINS2, SmokeC5_FName + " " + SmokeC5_LName)) {
-									log(LogStatus.INFO, "Open Activity Grid Verified For "+Smoke_NewEvent1Subject, YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Open Activity Grid Not Verified For "+Smoke_NewEvent1Subject);
-									log(LogStatus.FAIL, "Open Activity  Grid Not Verified For "+Smoke_NewEvent1Subject, YesNo.Yes);
-								}
-								
-								if (ip.verifyNoDataAtActivityHistorySection(environment, mode, TabName.InstituitonsTab, 10)) {
-									log(LogStatus.INFO, "Activity History Grid Verified For No Records/No Past Activity Msg", YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Activity History Grid Not Verified For No Records/No Past Activity Msg");
-									log(LogStatus.FAIL, "Activity History Grid Not Verified For No Records/No Past Activity Msg", YesNo.Yes);
-								}
-								
-								if (ip.clickOnViewAllRelatedList(environment, mode,RelatedList.Activities)) {
-									log(LogStatus.INFO, "Click on View All Affiliations", YesNo.No);
-									
-									String[][] activitiesRecords ={{Smoke_NewTask1Subject,SmokeC5_FName + " " + SmokeC5_LName,SmokeINS2},
-															{Smoke_NewEvent1Subject,SmokeC5_FName + " " + SmokeC5_LName,SmokeINS2},
-															{Smoke_CallLog1Subject,SmokeC5_FName + " " + SmokeC5_LName,Smoke_Fund1}};
-									
-									for (String[] activityRecord : activitiesRecords) {
-										
-										if (ip.verifyActivitiesRelatedList(environment, mode, TabName.InstituitonsTab, activityRecord[0], activityRecord[1], activityRecord[2])) {
-											log(LogStatus.PASS, "Activities Grid Verified For "+activityRecord[0], YesNo.Yes);	
-										} else {
-											sa.assertTrue(false, "Activities Grid Not Verified For "+activityRecord[0]);
-											log(LogStatus.FAIL, "Activities Grid Not Verified For "+activityRecord[0], YesNo.Yes);
-										}	
-									}
-									
-									
-								} else {
-									sa.assertTrue(false, "Not Able to Click on View All Activities");
-									log(LogStatus.SKIP, "Not Able to Click on View All Activities", YesNo.Yes);
-								}
-								
-								
-							} else {
-								sa.assertTrue(false, "Not Able to Click on Activities");
-								log(LogStatus.SKIP, "Not Able to Click on Activities", YesNo.Yes);
-							}
 
+				if (ip.verifyOpenActivityRelatedList(environment, mode, TabName.InstituitonsTab, Smoke_NewTask1Subject,
+						SmokeINS2, SmokeC5_FName + " " + SmokeC5_LName)) {
+					log(LogStatus.INFO, "Open Activity Grid  Verified For " + Smoke_NewTask1Subject, YesNo.No);
+				} else {
+					sa.assertTrue(false, "Open Activity Grid Not Verified For " + Smoke_NewTask1Subject);
+					log(LogStatus.FAIL, "Open Activity Grid Not Verified For " + Smoke_NewTask1Subject, YesNo.Yes);
+				}
 
-				
+				if (ip.verifyOpenActivityRelatedList(environment, mode, TabName.InstituitonsTab, Smoke_NewEvent1Subject,
+						SmokeINS2, SmokeC5_FName + " " + SmokeC5_LName)) {
+					log(LogStatus.INFO, "Open Activity Grid Verified For " + Smoke_NewEvent1Subject, YesNo.No);
+				} else {
+					sa.assertTrue(false, "Open Activity Grid Not Verified For " + Smoke_NewEvent1Subject);
+					log(LogStatus.FAIL, "Open Activity  Grid Not Verified For " + Smoke_NewEvent1Subject, YesNo.Yes);
+				}
+
 			} else {
 				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINS2);
-				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2,YesNo.Yes);
+				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2, YesNo.Yes);
 
 			}
 		} else {
 			sa.assertTrue(false, "Not Able to Click on Institution Tab");
 			log(LogStatus.SKIP, "Not Able to Click on Institution Tab", YesNo.Yes);
 		}
-	
+
 		switchToDefaultContent(driver);
 		lp.CRMlogout(environment, mode);
 		sa.assertAll();
@@ -18045,12 +14556,7 @@ public class OldSmokeTestCases extends BaseLib {
 		if (bp.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINDINV2)) {
 				log(LogStatus.INFO, "Click on Created Inst : " + SmokeINDINV2, YesNo.No);
-							
-							if (ip.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Activities, null)) {
-								log(LogStatus.INFO, "Click on Related Tab", YesNo.No);	
-								windowScrollYAxis(driver, 0, 1400);
-								log(LogStatus.INFO, "Scroll >>>>>", YesNo.No);
-								ThreadSleep(2000);
+						
 								if (ip.verifyOpenActivityRelatedList(environment, mode,TabName.InstituitonsTab, Smoke_NewTask1Subject, SmokeINS2, SmokeC5_FName + " " + SmokeC5_LName)) {
 									log(LogStatus.INFO, "Open Activity Grid  Verified For "+Smoke_NewTask1Subject, YesNo.No);	
 								} else {
@@ -18073,17 +14579,7 @@ public class OldSmokeTestCases extends BaseLib {
 								}
 								
 							
-								if (ip.verifyNoDataAtActivitiesSection(environment, mode, TabName.InstituitonsTab, 10)) {
-									log(LogStatus.INFO, " Activities Grid Verified For No Records/No Activities Msg", YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Activities Grid Not Verified For No Records/No Activities Msg");
-									log(LogStatus.FAIL, "Activities Grid Not Verified For No Records/No Activities Msg", YesNo.Yes);
-								}
-								
-							} else {
-								sa.assertTrue(false, "Not Able to Click on Related Tab");
-								log(LogStatus.SKIP, "Not Able to Click on Related Tab", YesNo.Yes);
-							}
+						
 			} else {
 				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINDINV2);
 				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINDINV2,YesNo.Yes);
@@ -18114,7 +14610,7 @@ public class OldSmokeTestCases extends BaseLib {
 				log(LogStatus.INFO, "Click on Created Contact : " + SmokeC5_FName + " " + SmokeC5_LName, YesNo.No);
 
 				
-				if (clickUsingJavaScript(driver, cp.getContactTransfer(environment,  10), "Contact Transfer Button")) {
+				if (cp.clickOnShowMoreActionDownArrow("PE", PageName.ContactPage, ShowMoreActionDropDownList.Contact_Transfer, 10)) {
 					log(LogStatus.INFO, "Clicked on Contact Transfer", YesNo.No);	
 					
 					if (cp.verifyContactTransferUIonContactPage(environment, mode, SmokeC5_FName+" "+SmokeC5_LName, SmokeINDINV2, 10)) {
@@ -18174,16 +14670,10 @@ public class OldSmokeTestCases extends BaseLib {
 										}
 									}
 							
-							if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, null)) {
+							if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, RelatedTab.Affiliations.toString())) {
 								log(LogStatus.INFO, "Click on Affiliations", YesNo.Yes);	
 								
-								if (bp.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Affiliations, true)) {
-									log(LogStatus.INFO, "successfully found affiliations related list", YesNo.No);
-								}
-								else {
-									log(LogStatus.ERROR, "could not find affiliations related list", YesNo.Yes);
-									sa.assertTrue(false, "could not find affiliations related list");
-								}
+								
 								if (cp.verifyOpenActivityRelatedList(environment, mode,TabName.ContactTab, Smoke_NewTask1Subject, SmokeINS2, null)) {
 									log(LogStatus.INFO, "Open Activity Grid  Verified For "+Smoke_NewTask1Subject, YesNo.No);	
 								} else {
@@ -18205,9 +14695,7 @@ public class OldSmokeTestCases extends BaseLib {
 									log(LogStatus.FAIL, "Activity History Grid Not Verified For "+Smoke_CallLog1Subject, YesNo.Yes);
 								}
 								
-								if (cp.clickOnViewAllRelatedList(environment, mode,RelatedList.Affiliations)) {
-									log(LogStatus.INFO, "Click on View All Affiliations", YesNo.No);
-									
+								
 									if (cp.verifyAffliationRelatedList(environment, mode,TabName.ContactTab, SmokeINS2)) {
 										log(LogStatus.PASS, "Affialition Grid Verified For "+SmokeINS2, YesNo.Yes);	
 									} else {
@@ -18222,10 +14710,7 @@ public class OldSmokeTestCases extends BaseLib {
 										log(LogStatus.FAIL, "Affialition Grid Not Verified For "+SmokeINDINV2, YesNo.Yes);
 									}
 									
-								} else {
-									sa.assertTrue(false, "Not Able to Click on View All Affiliations");
-									log(LogStatus.SKIP, "Not Able to Click on View All Affiliations", YesNo.Yes);
-								}
+								
 								
 								
 							} else {
@@ -18269,10 +14754,7 @@ public class OldSmokeTestCases extends BaseLib {
 			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS2)) {
 				log(LogStatus.INFO, "Click on Created Inst : " + SmokeINS2, YesNo.No);
 							
-							if (ip.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Activities, null)) {
-								log(LogStatus.INFO, "Click on Activities", YesNo.Yes);	
-								
-								
+							
 								if (ip.verifyOpenActivityRelatedList(environment, mode,TabName.InstituitonsTab, Smoke_NewTask1Subject, SmokeINS2, SmokeC5_FName + " " + SmokeC5_LName)) {
 									log(LogStatus.INFO, "Open Activity Grid  Verified For "+Smoke_NewTask1Subject, YesNo.No);	
 								} else {
@@ -18287,50 +14769,6 @@ public class OldSmokeTestCases extends BaseLib {
 									log(LogStatus.FAIL, "Open Activity  Grid Not Verified For "+Smoke_NewEvent1Subject, YesNo.Yes);
 								}
 								
-								if (ip.verifyNoDataAtActivityHistorySection(environment, mode, TabName.InstituitonsTab, 10)) {
-									log(LogStatus.INFO, "Activity History Grid Verified For No Records/No Past Activity Msg", YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Activity History Grid Not Verified For No Records/No Past Activity Msg");
-									log(LogStatus.FAIL, "Activity History Grid Not Verified For No Records/No Past Activity Msg", YesNo.Yes);
-								}
-								if (bp.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Activities, true)) {
-									log(LogStatus.INFO, "successfully scrolled to activities related list", YesNo.No);
-								}
-								else {
-									log(LogStatus.ERROR, "could not scroll to activities related list",YesNo.Yes);
-									sa.assertTrue(false,  "could not scroll to activities related list");
-								}
-								if (ip.clickOnViewAllRelatedList(environment, mode,RelatedList.Activities)) {
-									log(LogStatus.INFO, "Click on View All Affiliations", YesNo.No);
-									
-									String[][] activitiesRecords ={{Smoke_NewTask1Subject,SmokeC5_FName + " " + SmokeC5_LName,SmokeINS2},
-															{Smoke_NewEvent1Subject,SmokeC5_FName + " " + SmokeC5_LName,SmokeINS2},
-															{Smoke_CallLog1Subject,SmokeC5_FName + " " + SmokeC5_LName,Smoke_Fund1}};
-									
-									for (String[] activityRecord : activitiesRecords) {
-										
-										if (ip.verifyActivitiesRelatedList(environment, mode, TabName.InstituitonsTab, activityRecord[0], activityRecord[1], activityRecord[2])) {
-											log(LogStatus.PASS, "Activities Grid Verified For "+activityRecord[0], YesNo.Yes);	
-										} else {
-											sa.assertTrue(false, "Activities Grid Not Verified For "+activityRecord[0]);
-											log(LogStatus.FAIL, "Activities Grid Not Verified For "+activityRecord[0], YesNo.Yes);
-										}	
-									}
-									
-									
-								} else {
-									sa.assertTrue(false, "Not Able to Click on View All Activities");
-									log(LogStatus.SKIP, "Not Able to Click on View All Activities", YesNo.Yes);
-								}
-								
-								
-							} else {
-								sa.assertTrue(false, "Not Able to Click on Activities");
-								log(LogStatus.SKIP, "Not Able to Click on Activities", YesNo.Yes);
-							}
-
-
-				
 			} else {
 				sa.assertTrue(false, "Not Able to Click on Created Institution : " + SmokeINS2);
 				log(LogStatus.SKIP, "Not Able to Click on Created Institution : " + SmokeINS2,YesNo.Yes);
@@ -18719,7 +15157,7 @@ public class OldSmokeTestCases extends BaseLib {
 				log(LogStatus.INFO, "Click on Created Contact : " + SmokeC6_FName + " " + SmokeC6_LName, YesNo.No);
 
 				
-				if (clickUsingJavaScript(driver, cp.getContactTransfer(environment,  10), "Contact Transfer Button")) {
+				if (cp.clickOnShowMoreActionDownArrow("PE", PageName.ContactPage, ShowMoreActionDropDownList.Contact_Transfer, 10)) {
 					log(LogStatus.INFO, "Clicked on Contact Transfer", YesNo.No);	
 					
 					if (cp.verifyContactTransferUIonContactPage(environment, mode, SmokeC6_FName+" "+SmokeC6_LName, SmokeINS4, 10)) {
@@ -19008,7 +15446,7 @@ public class OldSmokeTestCases extends BaseLib {
 				log(LogStatus.INFO, "Click on Created Contact : " + SmokeC6_FName + " " + SmokeC6_LName, YesNo.No);
 
 				
-				if (clickUsingJavaScript(driver, cp.getContactTransfer(environment,  10), "Contact Transfer Button")) {
+				if (cp.clickOnShowMoreActionDownArrow("PE", PageName.ContactPage, ShowMoreActionDropDownList.Contact_Transfer, 10)) {
 					log(LogStatus.INFO, "Clicked on Contact Transfer", YesNo.No);	
 					
 					if (cp.verifyContactTransferUIonContactPage(environment, mode, SmokeC6_FName+" "+SmokeC6_LName, SmokeINDINV3, 10)) {

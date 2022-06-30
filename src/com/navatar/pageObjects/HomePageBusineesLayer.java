@@ -1829,9 +1829,12 @@ public class HomePageBusineesLayer extends HomePage {
 				switchToFrame(driver, 60, getCreateCommitmentFrame_Lightning(120));
 
 			}
+			WebElement element=null;
 			List<WebElement> ele1 = getCommitmentCreationContinueBtn(2);
 			for (int i = 0; i < ele1.size(); i++) {
-				if (click(driver, ele1.get(i), "continue button", action.SCROLLANDBOOLEAN)) {
+				element=isDisplayed(driver, ele1.get(i), "Visibility", 10, "");
+				if(element!=null) {
+				if (click(driver, element, "continue button", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "clicked on continue button", YesNo.No);
 					break;
 				} else {
@@ -1840,6 +1843,7 @@ public class HomePageBusineesLayer extends HomePage {
 								YesNo.Yes);
 						flag = false;
 					}
+				}
 				}
 			}
 		}
@@ -3307,6 +3311,31 @@ public class HomePageBusineesLayer extends HomePage {
 		}
 
 		return null;
+
+	}
+	
+	public boolean verifyPECloudOnHomePage()
+	{
+		boolean flag=false;
+		if(checkElementVisibility(driver, getPECloudOnHomePage(50), "PE Cloud Text",50))
+		{
+			String text=CommonLib.getText(driver, getPECloudOnHomePage(50), "PE Cloud", action.BOOLEAN);
+			if(text.equals("PE Cloud"))
+			{
+				log(LogStatus.INFO, "PE Cloud has been verified in the home page",YesNo.No);
+				flag=true;
+			}
+			else
+			{
+				log(LogStatus.ERROR, "PE Cloud is not availabel in the home page",YesNo.Yes); 	
+			}
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "PE Cloud is not visible in the home page",YesNo.Yes); 
+		}
+		return flag;
 
 	}
 

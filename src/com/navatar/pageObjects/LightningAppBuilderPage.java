@@ -21,13 +21,15 @@ public class LightningAppBuilderPage extends BasePageBusinessLayer {
 
 
 
+	
+
 	@FindBy(xpath="//iframe[@title='Salesforce - Enterprise Edition']")
 	private WebElement locator;
 
-	public WebElement getLocator() {
-		return locator;
-	}
+	public WebElement getLocator(int timeOut) {
+		return isDisplayed(driver, locator, "Visibility", timeOut, "New Button");
 
+	}
 
 
 

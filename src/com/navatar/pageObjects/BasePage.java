@@ -3261,7 +3261,9 @@ public abstract class BasePage extends BaseLib {
 	@FindBy(xpath = "//input[@name='save']")
 	private WebElement saveButtonClassic;
 
-	@FindBy(xpath = "//button[@title='Save']/span[text()='Save']")
+	
+	@FindBy(xpath="//button[@title='Save' or text()='Save']")
+
 	private WebElement saveButtonLighting;
 
 	/**
@@ -4796,7 +4798,9 @@ public abstract class BasePage extends BaseLib {
 		return ele;
 	}
 
-	@FindBy(xpath = "//h2[contains(text(),'Delete')]/../following-sibling::div//*[@title='Delete']")
+
+	@FindBy(xpath="//div[contains(@class,'forceModalActionContainer')]//button[@title='Delete']")
+
 	private WebElement deleteButtonOnDeletePopUp;
 
 	/**
@@ -5761,6 +5765,32 @@ public abstract class BasePage extends BaseLib {
 					"Visibility", timeOut, "Header: " + FirmName);
 		}
 	}
+	
+	@FindBy(xpath = "//button[@title='Show filters']")
+	private WebElement showFilter;
+
+	public WebElement getshowFilter(int timeOut) {
+		return isDisplayed(driver, showFilter, "Visibility", timeOut, "Show Filter");
+	
+	}	
+	
+	@FindBy(xpath = "//a[text()='Remove All']")
+	private WebElement removeAll;
+
+	public WebElement getremoveAll(int timeOut) {
+		return isDisplayed(driver, removeAll, "Visibility", timeOut, "Remove All");
+	
+	}	
+	
+	
+	
+	@FindBy(xpath = "//a[text()='Users']/ancestor::li[@aria-expanded='false']")
+	private WebElement userarialextendedicon;
+
+	public WebElement getuserarialextendedicon(int timeOut) {
+		return isDisplayed(driver, userarialextendedicon, "Visibility", timeOut, "User tab Arial extended icon");
+	
+	}	
 	
 	
 	public WebElement filteryOwnerRadioButton(String filterByOwnerRadioButton, int timeOut) {

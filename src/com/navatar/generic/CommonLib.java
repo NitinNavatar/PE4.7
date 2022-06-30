@@ -386,7 +386,25 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 			return false;
 		}
 	}
+	
+	public static boolean scrollDownThroughWebelementInCenter(WebDriver driver, WebElement Element, String elementName) {
+		try {
+			JavascriptExecutor j = (JavascriptExecutor)driver;
+			j.executeScript ("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'})", Element);
+			if (elementName != "")
+				System.out.println("Window Scrolled to " + elementName);
+			return true;
+		} catch (Exception e) {
+			if (elementName != "")
+				System.err.println("Can not scrolled Window to " + elementName);
+			return false;
+		}
+	}
 
+	
+	
+	
+	
 	/**
 	 * @author Ankit Jaiswal
 	 * @param driver

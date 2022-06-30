@@ -276,6 +276,65 @@ public class SDGPage extends BasePageBusinessLayer {
 
 	}
 
+	public WebElement getsdgGridCheckbox(String sdgGridName, int timeOut) {
+		String xPath = "//a[text()='" + sdgGridName
+				+ "']/ancestor::article//lightning-input[@class='slds-form-element']//input[@type='checkbox']";
+		return isDisplayed(driver, FindElement(driver, xPath, "SDG Grid Checkbox", action.SCROLLANDBOOLEAN, timeOut),
+				"Visibility", timeOut, "SDG Grid Checkbox");
+	}
+
+	@FindBy(xpath = "//span[text()='1 record has error. Kindly resolve them and try again.']")
+	private WebElement errorMessageAfterSaveBlankRecord;
+
+	public WebElement geterrorMessageAfterSaveBlankRecord(int timeOut) {
+		return isDisplayed(driver, errorMessageAfterSaveBlankRecord, "Visibility", timeOut, "Error Message");
+	}
+
+	@FindBy(xpath = "//span[contains(text(),'has error. Kindly resolve them and try again.')]")
+	private WebElement errorMessageAfterSaveTwoRecord;
+
+	public WebElement geterrorMessageAfterSaveTwoRecord(int timeOut) {
+		return isDisplayed(driver, errorMessageAfterSaveTwoRecord, "Visibility", timeOut, "Error Message");
+	}
+
+	@FindBy(xpath = "//div[contains(text(),'[Name] field is required.')]")
+	private WebElement triangleErrorIcon;
+
+	public WebElement gettriangleErrorIcon(int timeOut) {
+		return isDisplayed(driver, triangleErrorIcon, "Visibility", timeOut, "Triangle error message");
+	}
+
+	@FindBy(xpath = "//div[contains(text(),'permission to edit')]")
+	private WebElement triangleIconPermissionError;
+
+	public WebElement gettriangleIconPermissionError(int timeOut) {
+		return isDisplayed(driver, triangleIconPermissionError, "Visibility", timeOut,
+				"Triangle Permission error message");
+	}
+
+	@FindBy(xpath = "//div[contains(text(),'value outside of valid range')]")
+	private WebElement triangleIconOutsideRangeError;
+
+	public WebElement gettriangleIconOutsideRangeError(int timeOut) {
+		return isDisplayed(driver, triangleIconOutsideRangeError, "Visibility", timeOut,
+				"Triangle outside range message");
+	}
+
+	@FindBy(xpath = "//span[text()='Your changes are saved.']")
+	private WebElement UpdateMessageAfterSaveRecord;
+
+	public WebElement getUpdateMessageAfterSaveRecord(int timeOut) {
+		return isDisplayed(driver, UpdateMessageAfterSaveRecord, "Visibility", timeOut, "Update Message");
+	}
+
+	@FindBy(xpath = "//span[text()='Sortable Data Grid Fields']/ancestor::article//span[text()='View All']")
+	private WebElement sortableDataGridFields;
+
+	public WebElement getsortableDataGridFields(int timeOut) {
+		return isDisplayed(driver, sortableDataGridFields, "Visibility", timeOut,
+				"sortable Data Grid Fields View all button");
+	}
+
 	public WebElement inputBoxForSDGFilterName(String filterName, int timeOut) {
 		String xpath = "//span[text()='" + filterName + "']/parent::label/../../following-sibling::div//input";
 		try {

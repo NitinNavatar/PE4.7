@@ -529,8 +529,18 @@ public class HomePage extends BasePageBusinessLayer {
 	 * @return the selectCompanyNameLookUpIconOnCreateCommitmentPopUp
 	 */
 	public WebElement getSelectCompanyNameLookUpIconOnCreateCommitmentPopUp(int timeOut) {
-		return isDisplayed(driver, selectCompanyNameLookUpIconOnCreateCommitmentPopUp, "Visibility", timeOut,
-				"select Company Name LookUpIcon On Create Commitment PopUp");
+		WebElement element = null;
+		List<WebElement> list = FindElements(driver, "//img[@title='Company Lookup (New Window)']", "");
+		for (WebElement ele : list) {
+			element = isDisplayed(driver, ele, "Visibility", timeOut,
+					"select Company Name LookUpIcon On Create Commitment PopUp");
+			if (element != null) {
+				element = ele;
+				break;
+			}
+
+		}
+		return element;
 	}
 
 	@FindBy(xpath = "//h2[text()='General Information']/..//table//label[text()='Company']/../following-sibling::td/span")
@@ -2334,25 +2344,27 @@ public class HomePage extends BasePageBusinessLayer {
 				+ "]";
 		return columnData = FindElements(driver, xpath, "Column Data");
 	}
-	
-	
-	
-	public WebElement columnDataCorrespondToDataOfSDG(String Title, String columnData, String columnDataCorrespondToFirst,int timeOut) {
+
+	public WebElement columnDataCorrespondToDataOfSDG(String Title, String columnData,
+			String columnDataCorrespondToFirst, int timeOut) {
 
 		String xpath = "//a[text()='" + Title
 				+ "']/../../../../../following-sibling::div//table/tbody/tr//td//a[text()='" + columnData
 				+ "']/ancestor::td/following-sibling::td//a[text()='" + columnDataCorrespondToFirst + "']";
 		try {
-			return isDisplayed(driver,
-					FindElement(driver, xpath, "Text Found: " + columnDataCorrespondToFirst, action.SCROLLANDBOOLEAN, timeOut),
-					"Visibility", timeOut, columnDataCorrespondToFirst);
+			return isDisplayed(driver, FindElement(driver, xpath, "Text Found: " + columnDataCorrespondToFirst,
+					action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, columnDataCorrespondToFirst);
 		} catch (StaleElementReferenceException e) {
-			return isDisplayed(driver,
-					FindElement(driver, xpath, "Text Found: " + columnDataCorrespondToFirst, action.SCROLLANDBOOLEAN, timeOut),
-					"Visibility", timeOut, columnDataCorrespondToFirst);
+			return isDisplayed(driver, FindElement(driver, xpath, "Text Found: " + columnDataCorrespondToFirst,
+					action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, columnDataCorrespondToFirst);
 		}
 	}
 
+	@FindBy(xpath = "//span[@title='PE Cloud']")
+	private WebElement PECloudOnHomePage;
 
+	public WebElement getPECloudOnHomePage(int timeOut) {
+		return isDisplayed(driver, PECloudOnHomePage, "Visibility", timeOut, "PE Cloud");
+	}
 
 }

@@ -19,7 +19,7 @@ public class DealCreationTab extends NavatarSetupPageBusinessLayer {
 		PageFactory.initElements(driver, this);
 	}
 	
-	@FindBy(xpath="//label[text()='Company Name']/../following-sibling::td/input")
+	@FindBy(xpath="//label[text()='Company']/../following-sibling::td/input")
 	private WebElement companyNameTextBox;
 
 	/**
