@@ -1,6 +1,7 @@
 package com.navatar.pageObjects;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -44,35 +45,31 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, sdgConfigDataProviderTextBox, "Visibility", timeOut,
 				"sdg Config Data Provider TextBox");
 	}
-	
-	@FindBy(xpath="//button[text()='Add Tab']")
+
+	@FindBy(xpath = "//button[text()='Add Tab']")
 	private WebElement addTab;
-	
 
-
-	
 	public WebElement getAddTab(int timeOut) {
 		return isDisplayed(driver, addTab, "Visibility", timeOut, "Add Tab");
 	}
-	
 
 	/**
 	 * @return the editPageFrame
 	 */
-	public WebElement getPageTabEle(String tabName,int timeOut) {
-		String 	xpath= "(//*[@class='uiOutputText']/../..//*[@title='"+tabName+"'])[2]";
+	public WebElement getPageTabEle(String tabName, int timeOut) {
+		String xpath = "(//*[@class='uiOutputText']/../..//*[@title='" + tabName + "'])[2]";
 		WebElement ele = FindElement(driver, xpath, tabName, action.BOOLEAN, timeOut);
-		if (ele!=null) {
+		if (ele != null) {
 			return isDisplayed(driver, ele, "Visibility", timeOut, tabName);
 		} else {
-			xpath= "(//*[@class='uiOutputText']/../..//*[@title='tabName'])[1]";
+			xpath = "(//*[@class='uiOutputText']/../..//*[@title='tabName'])[1]";
 			ele = FindElement(driver, xpath, tabName, action.BOOLEAN, timeOut);
-			return isDisplayed(driver, ele, "Visibility", timeOut,tabName);
+			return isDisplayed(driver, ele, "Visibility", timeOut, tabName);
 		}
 
 	}
-	
-	@FindBy(xpath="//*[text()='Tab Label']/../following-sibling::*//select[@class='slds-select']")
+
+	@FindBy(xpath = "//*[text()='Tab Label']/../following-sibling::*//select[@class='slds-select']")
 	private WebElement subTabDropdownList;
 
 	/**
@@ -82,9 +79,9 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, subTabDropdownList, "Visibility", timeOut, "Sub Tab Drop Down List");
 	}
 
-	@FindBy(xpath="//button[text()='Done']")
+	@FindBy(xpath = "//button[text()='Done']")
 	private WebElement doneButton;
-	
+
 	public WebElement getdoneButton(int timeOut) {
 		return isDisplayed(driver, doneButton, "Visibility", timeOut, "Done Button");
 	}
@@ -421,13 +418,13 @@ public class EditPage extends BasePageBusinessLayer {
 		return DataProviderDropDownList;
 	}
 
-	@FindBy(xpath="//input[@placeholder='Search...']")
+	@FindBy(xpath = "//input[@placeholder='Search...']")
 	private WebElement SearchonAppBuilder;
 
 	public WebElement getSearchonAppBuilder(int timeOut) {
 		return isDisplayed(driver, SearchonAppBuilder, "Visibility", timeOut, "object manage");
 	}
-	
+
 	@FindBy(xpath = "//button[text()='Activate']")
 	private WebElement AvtivateButton;
 
@@ -530,7 +527,13 @@ public class EditPage extends BasePageBusinessLayer {
 	private WebElement AddComponentButton;
 
 	public WebElement getAddComponentButton(int timeOut) {
-		return isDisplayed(driver, AddComponentButton, "Visibility", timeOut, "object manage");
+		try {
+			return isDisplayed(driver, AddComponentButton, "Visibility", timeOut, "AddComponentButton");
+		}
+
+		catch (Exception e) {
+			return AddComponentLink;
+		}
 
 	}
 
@@ -557,7 +560,6 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, backIcon, "Visibility", timeOut, "Back icon");
 
 	}
-	
 
 	@FindBy(xpath = "//input[@name='label1']")
 	private WebElement label1;
@@ -566,7 +568,7 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, label1, "Visibility", timeOut, "Label 1");
 
 	}
-	
+
 	@FindBy(xpath = "//input[@name='query1']")
 	private WebElement query1;
 
@@ -574,7 +576,7 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, query1, "Visibility", timeOut, "Query 1");
 
 	}
-	
+
 	@FindBy(xpath = "//input[@name='label2']")
 	private WebElement label2;
 
@@ -582,7 +584,7 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, label2, "Visibility", timeOut, "Label 2");
 
 	}
-	
+
 	@FindBy(xpath = "//input[@name='query2']")
 	private WebElement query2;
 
@@ -590,7 +592,7 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, query2, "Visibility", timeOut, "Query 2");
 
 	}
-	
+
 	@FindBy(xpath = "//input[@name='label3']")
 	private WebElement label3;
 
@@ -598,7 +600,7 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, label3, "Visibility", timeOut, "Label 3");
 
 	}
-	
+
 	@FindBy(xpath = "//input[@name='query3']")
 	private WebElement query3;
 
@@ -606,50 +608,187 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, query3, "Visibility", timeOut, "Query 3");
 
 	}
-	
-	@FindBy(xpath="//h2[@class='slds-card__header-title']")
+
+	@FindBy(xpath = "//h2[@class='slds-card__header-title']//a")
 	private WebElement sldHeader;
 
 	public WebElement getsldHeader(int timeOut) {
 		return isDisplayed(driver, sldHeader, "Visibility", timeOut, "SLD Headers");
 
 	}
-	
-	@FindBy(xpath="//span[text()='Navatar Custom Filter For SDG']")
+
+	@FindBy(xpath = "//span[text()='Navatar Custom Filter For SDG']")
 	private WebElement customFilterForSDGButton;
 
 	public WebElement getcustomFilterForSDGButton(int timeOut) {
 		return isDisplayed(driver, customFilterForSDGButton, "Visibility", timeOut, "Custon field for sdg");
 
 	}
-	
-	
-	@FindBy(xpath="//div[@class='navpeIICustomFilterCompForSDG']")
+
+	@FindBy(xpath = "//div[@class='navpeIICustomFilterCompForSDG']")
 	private WebElement customFilterComponent;
 
 	public WebElement getcustomFilterComponent(int timeOut) {
 		return isDisplayed(driver, customFilterComponent, "Visibility", timeOut, "Custom Filter Component");
 	}
-	
-	
+
 //	@FindBy(xpath="//span[text()='My Record filter']/preceding-sibling::span")
-	@FindBy(xpath="//span[text()='My Record filter']/parent::label/preceding-sibling::input")
+	@FindBy(xpath = "//span[text()='My Record filter']/parent::label/preceding-sibling::input")
 	private WebElement myRecordFilterCheckbox;
 
 	public WebElement getmyRecordFilterCheckbox(int timeOut) {
 		return isDisplayed(driver, myRecordFilterCheckbox, "Visibility", timeOut, "My Record Filter Checkbox");
 	}
-	
-	@FindBy(xpath="//label[text()='Show']")
+
+	@FindBy(xpath = "//label[text()='Show']")
 	private WebElement customFilterLabel;
 
 	public WebElement getcustomFilterLabel(int timeOut) {
 		return isDisplayed(driver, customFilterLabel, "Visibility", timeOut, "Custom Filter Label");
 	}
-	
-	
-	
-	
 
+	@FindBy(xpath = "//a[text()='Add Component(s) Here']")
+
+	private WebElement AddComponentLink;
+
+	public WebElement AddComponentLink(int timeOut) {
+		try {
+			return isDisplayed(driver, AddComponentLink, "Visibility", timeOut, "object manage");
+		} catch (Exception e) {
+			return AddComponentLink;
+		}
+
+	}
+
+	public WebElement AddComponentLinkButton(int timeOut) {
+		String xpath = "//a[text()='Add Component(s) Here']";
+		try {
+
+			return FindElement(driver, xpath, "AddComponentLink", action.SCROLLANDBOOLEAN, 50);
+		}
+
+		catch (Exception e) {
+			return FindElement(driver, xpath, "AddComponentLink", action.SCROLLANDBOOLEAN, 50);
+		}
+
+	}
+
+	public WebElement sdgHeaderElement(String HeaderSDG, int timeOut) {
+		String xpath = "//a[text()='" + HeaderSDG + "']";
+		try {
+
+			return FindElement(driver, xpath, "sdgHeaderElement", action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+		catch (Exception e) {
+			return FindElement(driver, xpath, "sdgHeaderElement", action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+
+	public WebElement tabNameElement(String tabName, int timeOut) {
+
+		try {
+			return FindElement(driver, "//ul//li[contains(@class,'tab')]//a[text()='" + tabName + "']",
+					"Tab Name: " + tabName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, "//ul//li[contains(@class,'tab')]//a[text()='" + tabName + "']",
+					"Tab Name: " + tabName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+
+	public WebElement tabNameElementInEditPageComponent(String tabName, int timeOut) {
+
+		try {
+			return FindElement(driver, "//ul//li[contains(@class,'tab')]//span[text()='" + tabName + "']/parent::a",
+					"Tab Name: " + tabName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, "//ul//li[contains(@class,'tab')]//span[text()='" + tabName + "']/parent::a",
+					"Tab Name: " + tabName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+
+	public WebElement tabNameElementInEditPage(String tabName, int timeOut) {
+
+		try {
+			return FindElement(driver, "//span[text()=\""+tabName+"\" and @class=\"uiOutputText\"]/parent::a",
+					"Tab Name: " + tabName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, "//span[text()=\""+tabName+"\" and @class=\"uiOutputText\"]/parent::a",
+					"Tab Name: " + tabName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+
+	@FindBy(xpath = "//button[text()='Add Tab']")
+	private WebElement addTabButtonInEditPage;
+
+	public WebElement addTabButtonInEditPage(int timeOut) {
+		return isDisplayed(driver, addTabButtonInEditPage, "Visibility", timeOut, "addTabButtonInEditPage");
+
+	}
+
+	@FindBy(xpath = "(//span[text()='Details' and @class='uiOutputText'])[2]/parent::a")
+	private WebElement detailTabCreatedAfterAddTab;
+
+	public WebElement detailTabCreatedAfterAddTab(int timeOut) {
+		return isDisplayed(driver, detailTabCreatedAfterAddTab, "Visibility", timeOut, "detailTabCreatedAfterAddTab");
+
+	}
+
+	@FindBy(xpath = "//span[text()='Tab Label']/parent::label/following-sibling::div//select")
+	private WebElement tabLabelSelectElement;
+
+	public WebElement tabLabelSelectElement(int timeOut) {
+		return isDisplayed(driver, tabLabelSelectElement, "Visibility", timeOut, "tabLabelSelectElement");
+
+	}
+
+	@FindBy(xpath = "//label[text()='Custom Label']/following-sibling::div//input")
+	private WebElement customLabelInputBox;
+
+	public WebElement customLabelInputBox(int timeOut) {
+		return isDisplayed(driver, customLabelInputBox, "Visibility", timeOut, "customLabelInputBox");
+
+	}
+
+	@FindBy(xpath = "//button[text()='Done']/parent::div")
+	private WebElement doneButtonDivInTabLabel;
+
+	public WebElement doneButtonDivInTabLabel(int timeOut) {
+		return isDisplayed(driver, doneButtonDivInTabLabel, "Visibility", timeOut, "doneButtonDivInTabLabel");
+
+	}
+
+	@FindBy(xpath = "//button[text()='Done']")
+	private WebElement doneButtonInTabLabel;
+
+	public WebElement doneButtonInTabLabel(int timeOut) {
+		return isDisplayed(driver, doneButtonInTabLabel, "Visibility", timeOut, "doneButtonInTabLabel");
+
+	}
+
+	@FindBy(xpath = "//span[text()='Changes saved.']/parent::div[@class='notification showMessage']")
+	private WebElement changesSavedMsg;
+
+	public WebElement changesSavedMsg(int timeOut) {
+		return isDisplayed(driver, changesSavedMsg, "Visibility", timeOut, "changesSavedMsg");
+
+	}
+
+	@FindBy(xpath = "//div[contains(@class,'uiTabset--default')]//a[text()='Add Component(s) Here']")
+	private WebElement addComponentLinkInTabSection;
+
+	public WebElement addComponentLinkInTabSection(int timeOut) {
+		return isDisplayed(driver, addComponentLinkInTabSection, "Visibility", timeOut, "addComponentLinkInTabSection");
+	}
+	
+	public WebElement customFilterComponent(int timeOut) {
+		String xpath = "//div[@class='navpeIICustomFilterCompForSDG']";
+		return FindElement(driver, xpath, "Custom Filter Component", action.SCROLLANDBOOLEAN, timeOut);
+		
+	}
 
 }

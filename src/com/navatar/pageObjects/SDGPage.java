@@ -93,8 +93,8 @@ public class SDGPage extends BasePageBusinessLayer {
 		WebElement ele;
 		String xpath = "//span[text()='" + SDGCreationLabel
 				+ "']/parent::div/following-sibling::div//lightning-formatted-text";
-		return ele = FindElement(driver, xpath, "SDGLabelValue Element, Label: " + SDGCreationLabel, action.SCROLLANDBOOLEAN,
-				timeOut);
+		return ele = FindElement(driver, xpath, "SDGLabelValue Element, Label: " + SDGCreationLabel,
+				action.SCROLLANDBOOLEAN, timeOut);
 
 	}
 
@@ -132,7 +132,6 @@ public class SDGPage extends BasePageBusinessLayer {
 	public WebElement getsdgSearchbox(String projectName, int timeOut) {
 		return isDisplayed(driver, sdgSearchbox, "Visibility", timeOut, "SDG Searchbox");
 	}
-
 
 	@FindBy(xpath = "//a[@id='relatedListsTab__item']")
 	private WebElement relatedTabOnSDG;
@@ -176,9 +175,6 @@ public class SDGPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, sdgSaveBtn, "Visibility", timeOut, "SDG save button");
 	}
 
-
-
-
 	@FindBy(xpath = "//tbody//lst-formatted-text[text()='Name']/ancestor::td/following-sibling::td//button")
 	private WebElement nameEroBtn;
 
@@ -193,12 +189,99 @@ public class SDGPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, sdgPageEditButton, "Visibility", timeOut, "Edit button");
 	}
 
+	public WebElement editSDGCheckBox(String editSDGCheckBoxLabel, int timeOut) {
 
-	public WebElement getsdgGridCheckbox(String sdgGridName, int timeOut) {
-		String xPath="//a[text()='"+sdgGridName+"']/ancestor::article//lightning-input[@class='slds-form-element']//input[@type='checkbox']";
-		return isDisplayed(driver, FindElement(driver, xPath, "SDG Grid Checkbox", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "SDG Grid Checkbox");
+		String xpath = "//span[text()='" + editSDGCheckBoxLabel
+				+ "']/parent::label/following-sibling::div//input[@type='checkbox']";
+		try {
+			return FindElement(driver, xpath, "Edit SDG CheckBox Label: " + editSDGCheckBoxLabel,
+					action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Edit SDG CheckBox Label: " + editSDGCheckBoxLabel,
+					action.SCROLLANDBOOLEAN, timeOut);
+		}
+
 	}
 
+	@FindBy(xpath = "//span[contains(@title,'Actions')]/ancestor::article//button[text()='New']")
+	private WebElement actionsNewButton;
+
+	public WebElement actionsNewButton(String projectName, int timeOut) {
+		return isDisplayed(driver, actionsNewButton, "Visibility", timeOut, "actionsNewButton");
+	}
+
+	public WebElement sdgActionAndFieldDropDownValue(String label, String value, int timeOut) {
+
+		String xpath = "//*[text()='" + label
+				+ "']/following-sibling::div//button/parent::div/following-sibling::div//lightning-base-combobox-item//span[text()='"
+				+ value + "']";
+		try {
+			return FindElement(driver, xpath, "SDG Action/Field Dropdown value: " + value, action.SCROLLANDBOOLEAN,
+					timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "SDG Action/Field Dropdown value: " + value, action.SCROLLANDBOOLEAN,
+					timeOut);
+		}
+
+	}
+
+	public WebElement sdgActionAndFieldDropDownButton(String label, int timeOut) {
+
+		String xpath = "//*[text()='" + label + "']/following-sibling::div//button";
+		try {
+			return FindElement(driver, xpath, "SDG Action/Field Dropdown Label: " + label, action.SCROLLANDBOOLEAN,
+					timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "SDG Action/Field Dropdown Label: " + label, action.SCROLLANDBOOLEAN,
+					timeOut);
+		}
+
+	}
+
+	public WebElement sdgActionAndFieldTextArea(String label, int timeOut) {
+
+		String xpath = "//*[text()='" + label + "']/following-sibling::div/textarea";
+		try {
+			return FindElement(driver, xpath, "SDG Action/Field TextArea Label: " + label, action.SCROLLANDBOOLEAN,
+					timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "SDG Action/Field TextArea Label: " + label, action.SCROLLANDBOOLEAN,
+					timeOut);
+		}
+
+	}
+
+	@FindBy(xpath = "//select[@name='fieldSelect']")
+	private WebElement sdgFieldSelectElement;
+
+	public WebElement sdgFieldSelectElement(int timeOut) {
+		return isDisplayed(driver, sdgFieldSelectElement, "Visibility", timeOut, "sdgFieldSelectElement");
+	}
+
+	public WebElement selectTagForSDGFilterName(String filterName, int timeOut) {
+		String xpath = "//span[text()='" + filterName + "']/parent::label/following-sibling::div//select";
+		try {
+			return FindElement(driver, xpath, "selectTagForSDGFilterName", action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "selectTagForSDGFilterName", action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+
+	public List<WebElement> getLabelsForFilters(String SDGName) {
+
+		String xpath = "//article//a[text()='" + SDGName
+				+ "']/ancestor::header/parent::div/following-sibling::div//div[@class=' slds-col slds-size_6-of-12']//div[@class='slds-form-element']//label";
+		return FindElements(driver, xpath, "Labels For Filters");
+
+	}
+
+	public WebElement getsdgGridCheckbox(String sdgGridName, int timeOut) {
+		String xPath = "//a[text()='" + sdgGridName
+				+ "']/ancestor::article//lightning-input[@class='slds-form-element']//input[@type='checkbox']";
+		return isDisplayed(driver, FindElement(driver, xPath, "SDG Grid Checkbox", action.SCROLLANDBOOLEAN, timeOut),
+				"Visibility", timeOut, "SDG Grid Checkbox");
+	}
 
 	@FindBy(xpath = "//span[text()='1 record has error. Kindly resolve them and try again.']")
 	private WebElement errorMessageAfterSaveBlankRecord;
@@ -225,19 +308,17 @@ public class SDGPage extends BasePageBusinessLayer {
 	private WebElement triangleIconPermissionError;
 
 	public WebElement gettriangleIconPermissionError(int timeOut) {
-		return isDisplayed(driver, triangleIconPermissionError, "Visibility", timeOut, "Triangle Permission error message");
+		return isDisplayed(driver, triangleIconPermissionError, "Visibility", timeOut,
+				"Triangle Permission error message");
 	}
 
 	@FindBy(xpath = "//div[contains(text(),'value outside of valid range')]")
 	private WebElement triangleIconOutsideRangeError;
 
 	public WebElement gettriangleIconOutsideRangeError(int timeOut) {
-		return isDisplayed(driver, triangleIconOutsideRangeError, "Visibility", timeOut, "Triangle outside range message");
+		return isDisplayed(driver, triangleIconOutsideRangeError, "Visibility", timeOut,
+				"Triangle outside range message");
 	}
-
-
-
-
 
 	@FindBy(xpath = "//span[text()='Your changes are saved.']")
 	private WebElement UpdateMessageAfterSaveRecord;
@@ -245,74 +326,23 @@ public class SDGPage extends BasePageBusinessLayer {
 	public WebElement getUpdateMessageAfterSaveRecord(int timeOut) {
 		return isDisplayed(driver, UpdateMessageAfterSaveRecord, "Visibility", timeOut, "Update Message");
 	}
-	
+
 	@FindBy(xpath = "//span[text()='Sortable Data Grid Fields']/ancestor::article//span[text()='View All']")
 	private WebElement sortableDataGridFields;
 
 	public WebElement getsortableDataGridFields(int timeOut) {
-		return isDisplayed(driver, sortableDataGridFields, "Visibility", timeOut, "sortable Data Grid Fields View all button");
-	}
-	
-	
-
-
-	public WebElement selectTagForSDGFilterName(String filterName, int timeOut) {
-		String xpath = "//span[text()='"+filterName+"']/parent::label/following-sibling::div//select";
-		try {
-			return FindElement(driver, xpath, "selectTagForSDGFilterName", action.SCROLLANDBOOLEAN, timeOut);
-		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, xpath, "selectTagForSDGFilterName", action.SCROLLANDBOOLEAN, timeOut);
-		}
-
-
-
+		return isDisplayed(driver, sortableDataGridFields, "Visibility", timeOut,
+				"sortable Data Grid Fields View all button");
 	}
 
 	public WebElement inputBoxForSDGFilterName(String filterName, int timeOut) {
-		String xpath = "//span[text()='"+filterName+"']/parent::label/../../following-sibling::div//input";
+		String xpath = "//span[text()='" + filterName + "']/parent::label/../../following-sibling::div//input";
 		try {
 			return FindElement(driver, xpath, "inputBoxForSDGFilterName", action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
 			return FindElement(driver, xpath, "inputBoxForSDGFilterName", action.SCROLLANDBOOLEAN, timeOut);
 		}
 
-
-
 	}
-
-	public List<WebElement> getLabelsForFilters(String SDGName) {
-
-
-
-		String xpath = "//article//a[text()='" + SDGName
-				+ "']/ancestor::header/parent::div/following-sibling::div//div[@class=' slds-col slds-size_6-of-12']//div[@class='slds-form-element']//label";
-		return FindElements(driver, xpath, "Labels For Filters");
-
-
-
-	}
-
-	public WebElement editSDGCheckBox(String editSDGCheckBoxLabel, int timeOut) {
-
-
-
-		String xpath = "//span[text()='" + editSDGCheckBoxLabel
-		+ "']/parent::label/following-sibling::div//input[@type='checkbox']";
-		try {
-		return FindElement(driver, xpath, "Edit SDG CheckBox Label: " + editSDGCheckBoxLabel,
-		action.SCROLLANDBOOLEAN, timeOut);
-		} catch (StaleElementReferenceException e) {
-		return FindElement(driver, xpath, "Edit SDG CheckBox Label: " + editSDGCheckBoxLabel,
-		action.SCROLLANDBOOLEAN, timeOut);
-		}
-
-
-
-		}
-
-
-
-
-
 
 }

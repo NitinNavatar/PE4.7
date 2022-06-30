@@ -5972,15 +5972,22 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					action.SCROLLANDBOOLEAN, 5);
 			ThreadSleep(3000);
 			if (selectListView != null) {
-				log(LogStatus.INFO, ""+viewList+" is already present", YesNo.No);
+				log(LogStatus.ERROR, "List View: "+viewList+" is already present", YesNo.No);
+				if (click(driver, selectListView, viewList, action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on List View: "+viewList, YesNo.No);
+				
 				return true;
+				}
+				else 
+				{
+					log(LogStatus.INFO, "Not Able to Click on List View: "+viewList, YesNo.No);
+				}
 			} else {
-				log(LogStatus.ERROR, "not found "+viewList+".. now creating", YesNo.No);
+				log(LogStatus.INFO, "List View: "+viewList+" is not already present.. now creating", YesNo.No);
 
 			}
-		}
-		else {
-			log(LogStatus.ERROR, "list dropdown is not clickable, so cannot check presence of "+viewList+"",
+		} else {
+			log(LogStatus.ERROR, "list dropdown is not clickable, so cannot check presence of "+viewList,
 					YesNo.Yes);
 
 		}
@@ -5989,20 +5996,28 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			if (changeFilterInListView(projectName, listViewDataRowWise, timeOut)) {
 				return true;
 			} else {
-				log(LogStatus.ERROR, "could not change filter to all", YesNo.Yes);
+				log(LogStatus.ERROR, "Could not change filter for List View: "+viewList, YesNo.Yes);
+				return false;
 			}
 		} else {
-			log(LogStatus.ERROR, "could not create new list", YesNo.Yes);
+			log(LogStatus.ERROR, "Could not create new List View: "+viewList, YesNo.Yes);
 		}
 		return false;
 
 	}
 
+	/**
+	 * @author Ankur Huria
+	 * @param projectName
+	 * @param listViewName
+	 * @param timeOut
+	 */
+	
 	public boolean changeFilterInListView(String projectName, String[] listViewDataRowWise, int timeOut) {
 
 		if (click(driver, getfilterByOwnerBtn(projectName, 10), "filter section", action.BOOLEAN)) {
 			log(LogStatus.INFO, "successfully click on filter section", YesNo.No);
-			if (click(driver, getallCheckboxForFilter(projectName, timeOut), "all filters", action.BOOLEAN)) {
+			if (click(driver, filteryOwnerRadioButton(listViewDataRowWise[4], timeOut), "all filters", action.BOOLEAN)) {
 				log(LogStatus.INFO, "successfully click on all radio button", YesNo.No);
 				if (click(driver, getdoneButtonListView(projectName, timeOut), "done", action.BOOLEAN)) {
 					log(LogStatus.INFO, "successfully click on done buton", YesNo.No);
@@ -6016,14 +6031,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 						if (click(driver, getaddFilterBtn(projectName, timeOut), "Add Filter Button", action.BOOLEAN)) {
 							log(LogStatus.INFO, "successfully click on Add Filter buton", YesNo.No);
-
-							if (getSelectedOptionOfDropDown(driver, getfilterFielddropdown(projectName, timeOut),
-									getfilterFielddropdownlist(projectName, timeOut), "Field filter", filter)) {
+							String xpathgetfilterFielddropdownlist = "//label[text()='Field']/parent::lightning-combobox//span[@class='slds-truncate']";
+							if (dropDownHandle(driver, getfilterFielddropdown(projectName, timeOut),
+									xpathgetfilterFielddropdownlist, "Field filter", filter)) {
 								log(LogStatus.INFO, "successfully Select the Field", YesNo.No);
-
-								if (getSelectedOptionOfDropDown(driver, getFilterOperatordropdown(projectName, timeOut),
-										getfilterOperatordropdownlist(projectName, timeOut), "Operator filter",
-										operators[i])) {
+								String xpathgetfilterOperatordropdownlist = "//label[text()='Operator']/parent::lightning-combobox//span[@class='slds-truncate']";
+								if (dropDownHandle(driver, getFilterOperatordropdown(projectName, timeOut),
+										xpathgetfilterOperatordropdownlist, "Operator filter", operators[i])) {
 									log(LogStatus.INFO, "successfully Select the Operator", YesNo.No);
 
 									if (filter.trim().equalsIgnoreCase("Vintage Year")
@@ -6036,6 +6050,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 										} else {
 											log(LogStatus.ERROR, "Value is not Entered", YesNo.No);
+											sa.assertTrue(false, "Value is not Entered");
 
 										}
 
@@ -6043,13 +6058,15 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 									else if (filter.equals("Fund Type") || filter.equals("Investment Category")
 											|| filter.equals("Stage")) {
-										if (getSelectedOptionOfDropDown(driver,
-												getfilterValueDropDown(projectName, timeOut),
-												getfilterValueDropdownlist(projectName, timeOut), "Value filter list",
+										String xpathgetfilterValueDropdownlist = "//div[@role='menu']//li/a";
+										if (dropDownHandle(driver, getfilterValueDropDown(projectName, timeOut),
+												xpathgetfilterValueDropdownlist, "Value filter list",
 												filtervalues[i])) {
 											log(LogStatus.INFO, "successfully Select the Operator", YesNo.No);
 										} else {
 											log(LogStatus.ERROR, "Value is not Selected", YesNo.No);
+											sa.assertTrue(false, "Value is not Selected");
+											
 										}
 
 									}
@@ -6060,18 +6077,22 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 									} else {
 										log(LogStatus.ERROR, "done button is not clickable", YesNo.No);
+										sa.assertTrue(false, "done button is not clickable");
 									}
 								}
 
 								else {
 									log(LogStatus.ERROR, "Operator Filter is not Selected", YesNo.No);
+									sa.assertTrue(false, "Operator Filter is not Selected");
 								}
 
 							} else {
 								log(LogStatus.ERROR, "Field Filter is not Selected", YesNo.No);
+								sa.assertTrue(false,"Field Filter is not Selected");
 							}
 						} else {
 							log(LogStatus.ERROR, "Add Filter button is not clickable", YesNo.No);
+							sa.assertTrue(false, "Add Filter button is not clickable");
 						}
 
 						i++;
@@ -6081,15 +6102,18 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 				else {
 					log(LogStatus.ERROR, "Filter Done button is not clicked", YesNo.No);
+					sa.assertTrue(false, "Filter Done button is not clicked");
 				}
 
 			}
 
 			else {
 				log(LogStatus.ERROR, "all checkbox is not clickable", YesNo.No);
+				sa.assertTrue(false, "all checkbox is not clickable");
 			}
 		} else {
 			log(LogStatus.ERROR, "list filter section is not clickable", YesNo.No);
+			sa.assertTrue(false, "list filter section is not clickable");
 		}
 
 		if (click(driver, getfilterSave(projectName, timeOut), "save", action.BOOLEAN)) {
@@ -6110,10 +6134,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			} else {
 				sa.assertTrue(false, "Created Task Msg Ele not Found");
 				log(LogStatus.SKIP, "Created Task Msg Ele not Found", YesNo.Yes);
+				sa.assertTrue(false, "Created Task Msg Ele not Found");
 
 			}
 		} else {
 			log(LogStatus.ERROR, "save button is not clickable", YesNo.No);
+			sa.assertTrue(false, "save button is not clickable");
 		}
 
 		return false;
@@ -6392,6 +6418,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return flag;
 
 	}
+	
 
 	public boolean clickOnAlreadyCreated(String environment, String mode, TabName tabName,
 			String alreadyCreated, int timeout) {
