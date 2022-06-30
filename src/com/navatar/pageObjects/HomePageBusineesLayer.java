@@ -25,6 +25,7 @@ import com.navatar.generic.EnumConstants.TopOrBottom;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.generic.EnumConstants.fundraisingContactActions;
+import com.navatar.generic.AppListeners;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.ExcelUtils;
@@ -3271,8 +3272,115 @@ public class HomePageBusineesLayer extends HomePage {
 		return flag;
 
 	}
+	
+	public boolean VerifyOnlyPECloudOnLauncher()
+	{
+		String xPath="";
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 
+		boolean flag = false;
+		if (click(driver, lp.getAppLuncherXpath(50), "App launcher icon", action.BOOLEAN)) {
+			AppListeners.appLog.info(" click on app launcher icon");
+			ThreadSleep(5000);
+			xPath="//div[@aria-label='Apps']//p";
+			List<WebElement> AppListOnLauncher=CommonLib.FindElements(driver, xPath, "App list on Launcher");
+
+			int size=AppListOnLauncher.size();
+			String text=CommonLib.getText(driver, getPECloudOnLauncher(50), "Apps on App Launcher", action.BOOLEAN);
+
+			if(size==1 && text.equals("PE Cloud"))
+			{
+				log(LogStatus.INFO, "PE Could is appearing on the App Launcher page and No other Apps is Appearing on the App Launcher",YesNo.No);
+				flag=true;
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Either PE Could is not appearing on the App Launcher page Or other Apps are Appearing on the App Launcher",YesNo.Yes);
+
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Could not click on the App Launcher Page",YesNo.Yes);
+
+		}
+
+
+		return flag;
+
+	}
+
+	public boolean VerifyOnlyPECloudOnViewAll()
+	{
+		String xPath="";
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+
+		boolean flag = false;
+		if (click(driver, lp.getAppLuncherXpath(50), "App launcher icon", action.BOOLEAN)) {
+
+			if(click(driver, getViewAllBtn(50), "View all button", action.BOOLEAN))
+			{
+				AppListeners.appLog.info(" click on app launcher icon");
+				ThreadSleep(5000);
+				xPath="//div[@class='slds-accordion__content']//one-app-launcher-app-tile//p[@class='slds-truncate']";
+				List<WebElement> AppListOnLauncher=CommonLib.FindElements(driver, xPath, "App list on Launcher");
+
+				int size=AppListOnLauncher.size();
+				String text=CommonLib.getText(driver, AppListOnLauncher.get(0), "Apps on View All", action.BOOLEAN);
+
+				if(size==1 && text.equals("PE Cloud"))
+				{
+					log(LogStatus.INFO, "PE Could is appearing on the view all of App Launcher page and No other Apps are Appearing on the View All of App Launcher",YesNo.No);
+					flag=true;
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Either PE Could is not appearing on the View All of App Launcher page Or other Apps are Appearing on View All of App Launcher",YesNo.Yes);
+
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Could not click on the view all button",YesNo.Yes);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Could not click on the App Launcher Page",YesNo.Yes);
+
+		}
+		return flag;
+	}
 	
-	
+	public ArrayList<String> verifyHomePageTabs(ArrayList<String> Tabs)
+	{
+		
+		ArrayList<String> homePageTabs=new ArrayList<String>();
+		ArrayList<String> result=new ArrayList<String>();
+		CommonLib.ThreadSleep(2000);
+		
+		for(int i=0; i<getHomePageTabs().size();i++)
+		{
+			String text=CommonLib.getText(driver, getHomePageTabs().get(i), "Homepage Tabs", action.BOOLEAN);
+			homePageTabs.add(text);
+		}
+		
+		for(int i=0; i<Tabs.size(); i++)
+		{
+			if(Tabs.get(i).equals(homePageTabs.get(i)))
+			{
+				log(LogStatus.INFO, Tabs.get(i)+" has been matched in Home page tab with "+homePageTabs.get(i),YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, Tabs.get(i)+" is not matched in Home page tab with "+homePageTabs.get(i),YesNo.No);
+				result.add(Tabs.get(i)+" is not matched int Home page tab with "+homePageTabs.get(i));
+			}
+		}
+		
+
+		return result;
+	}
+
 	 
 }

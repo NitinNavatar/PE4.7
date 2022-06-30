@@ -37,7 +37,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 
 import static com.navatar.generic.AppListeners.*;
@@ -4815,6 +4814,60 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 		return result;
 	}
+	
+	
+	
+   public ArrayList<String> verifyRecordTypeAndActivityStatusOnCompanyObject(ArrayList<String> recordName,ArrayList<String> status)
+   {
+	 ArrayList<String> recordTypeName=new ArrayList<String>();
+	 ArrayList<String> activityStatus=new ArrayList<String>();
+	 ArrayList<String> result=new ArrayList<String>();
+	if(CommonLib.checkElementVisibility(driver, getcompanyRecordTypeName(50), "Record type name on company object", 50))
+	{
+		for(int i=0;i<getcompanyRecordTypeNamelist().size();i++)
+		{
+			String text=CommonLib.getText(driver, getcompanyRecordTypeNamelist().get(i), "record name", action.SCROLLANDBOOLEAN);
+			recordTypeName.add(text);
+			
+			String active=CommonLib.getText(driver, getcompanyRecordTypeActivityStatus().get(i), "record name", action.SCROLLANDBOOLEAN);
+			activityStatus.add(active);		
+		}	
+		
+		for(int i=0;i<recordName.size();i++)
+		{
+			
+			if(recordName.get(i).equals(recordTypeName.get(i)) && status.get(i).equals(activityStatus.get(i)))
+			{
+				log(LogStatus.INFO, "Record Name: "+recordName.get(i)+" and Activity Status: "+status.get(i)+" has been verified", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Either Record name :"+recordTypeName.get(i)+ " or Activity status "+activityStatus.get(i)+ " is not matched", YesNo.Yes);
+				result.add("Either Record name :"+recordTypeName.get(i)+ " or Activity status "+activityStatus.get(i)+ " is not matched");
+			}
+		}
+	}
+	else
+	{
+		log(LogStatus.ERROR, "Record type name is not visible", YesNo.Yes);
+		result.add("Record type name is not visible");
+		
+	}
+	return result;
+	   
+	
+	
+   }
+
+   
+   
+   
+   
+   
+   
+   
+	
+
 
 
 

@@ -16,7 +16,6 @@ import static com.navatar.generic.CommonLib.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class SetupPage extends BasePageBusinessLayer {
 
@@ -881,15 +880,25 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, fieldandRelationshipQuickSearch, "Visibility", timeOut, "Field and relationship Quick Search");
 	}
 	
+	@FindBy(xpath = "//section[@class='related-list-card']//tbody//td[3]//span[@class='slds-assistive-text' or contains(@class,'assistiveText')]")
+	private List<WebElement> companyRecordTypeActivityStatus;
+
+	public List<WebElement> getcompanyRecordTypeActivityStatus() {
+		return companyRecordTypeActivityStatus;
+	}
 	
+	@FindBy(xpath = "//section[@class='related-list-card']//tbody//td[1]//span")
+	private WebElement companyRecordTypeName;
+
+	public WebElement getcompanyRecordTypeName(int timeOut) {
+		return isDisplayed(driver, companyRecordTypeName, "Visibility", timeOut, "Company record type name");
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	@FindBy(xpath = "//section[@class='related-list-card']//tbody//td[1]//span")
+	private List<WebElement> companyRecordTypeNamelist;
+
+	public List<WebElement> getcompanyRecordTypeNamelist() {
+		return companyRecordTypeNamelist;
+	}
 	
 }

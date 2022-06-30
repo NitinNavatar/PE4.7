@@ -2024,5 +2024,35 @@ public class HomePage extends BasePageBusinessLayer {
 		return isDisplayed(driver, PECloudOnHomePage, "Visibility", timeOut, "PE Cloud");
 	}
 	
+	@FindBy(xpath = "//div[@aria-label='Apps']//p")
+	private WebElement PECloudOnLauncher;
+
+	public WebElement getPECloudOnLauncher(int timeOut) {
+		return isDisplayed(driver, PECloudOnLauncher, "Visibility", timeOut, "PE Cloud on Launcher");
+	}
+	
+	@FindBy(xpath = "//button[text()='View All']")
+	private WebElement viewAllBtn;
+
+	public WebElement getViewAllBtn(int timeOut) {
+		return isDisplayed(driver, viewAllBtn, "Visibility", timeOut, "View All button");
+	}
+	
+	@FindBy(xpath = "//div[@role='list']//span[@class='slds-truncate']")
+	private List<WebElement> HomePageTabs;
+
+	public List<WebElement> getHomePageTabs() {
+		return HomePageTabs;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
