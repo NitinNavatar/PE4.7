@@ -3261,8 +3261,7 @@ public abstract class BasePage extends BaseLib {
 	@FindBy(xpath = "//input[@name='save']")
 	private WebElement saveButtonClassic;
 
-	
-	@FindBy(xpath="//button[@title='Save' or text()='Save']")
+	@FindBy(xpath = "//button[@title='Save' or text()='Save']")
 
 	private WebElement saveButtonLighting;
 
@@ -4798,8 +4797,7 @@ public abstract class BasePage extends BaseLib {
 		return ele;
 	}
 
-
-	@FindBy(xpath="//div[contains(@class,'forceModalActionContainer')]//button[@title='Delete']")
+	@FindBy(xpath = "//div[contains(@class,'forceModalActionContainer')]//button[@title='Delete']")
 
 	private WebElement deleteButtonOnDeletePopUp;
 
@@ -5765,37 +5763,35 @@ public abstract class BasePage extends BaseLib {
 					"Visibility", timeOut, "Header: " + FirmName);
 		}
 	}
-	
+
 	@FindBy(xpath = "//button[@title='Show filters']")
 	private WebElement showFilter;
 
 	public WebElement getshowFilter(int timeOut) {
 		return isDisplayed(driver, showFilter, "Visibility", timeOut, "Show Filter");
-	
-	}	
-	
+
+	}
+
 	@FindBy(xpath = "//a[text()='Remove All']")
 	private WebElement removeAll;
 
 	public WebElement getremoveAll(int timeOut) {
 		return isDisplayed(driver, removeAll, "Visibility", timeOut, "Remove All");
-	
-	}	
-	
-	
-	
+
+	}
+
 	@FindBy(xpath = "//a[text()='Users']/ancestor::li[@aria-expanded='false']")
 	private WebElement userarialextendedicon;
 
 	public WebElement getuserarialextendedicon(int timeOut) {
 		return isDisplayed(driver, userarialextendedicon, "Visibility", timeOut, "User tab Arial extended icon");
-	
-	}	
-	
-	
+
+	}
+
 	public WebElement filteryOwnerRadioButton(String filterByOwnerRadioButton, int timeOut) {
-		String xpath = "//span[contains(text(),'"+filterByOwnerRadioButton+"')]/../..//input";
-		WebElement ele = FindElement(driver, xpath, "User Header Found: " + filterByOwnerRadioButton, action.SCROLLANDBOOLEAN, timeOut);
+		String xpath = "//span[contains(text(),'" + filterByOwnerRadioButton + "')]/../..//input";
+		WebElement ele = FindElement(driver, xpath, "User Header Found: " + filterByOwnerRadioButton,
+				action.SCROLLANDBOOLEAN, timeOut);
 		try {
 			return isDisplayed(driver, ele, "Visibility", timeOut, "Radio Button Found: " + filterByOwnerRadioButton);
 
@@ -5803,6 +5799,5 @@ public abstract class BasePage extends BaseLib {
 			return isDisplayed(driver, ele, "Visibility", timeOut, "Radio Button Found: " + filterByOwnerRadioButton);
 		}
 	}
-	
 
 }
