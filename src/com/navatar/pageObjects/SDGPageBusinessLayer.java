@@ -4100,9 +4100,9 @@ public class SDGPageBusinessLayer extends SDGPage implements SDGPageErrorMessage
 			if (filterLabelsListText.contains(filterLabelName)) {
 				log(LogStatus.INFO, "--------Filter available: " + filterLabelName + " --------", YesNo.No);
 
-				String text = CommonLib.getText(driver, inputBoxForSDGFilterName(filterLabelName, 20),
-						filterLabelName + " value", action.SCROLLANDBOOLEAN);
-				if (text.equals("filerOptionValue")) {
+				String text = CommonLib.getAttribute(driver, inputBoxForSDGFilterName(filterLabelName, 20),
+						filterLabelName + " value", "value");
+				if (text.equals(filerOptionValue)) {
 					log(LogStatus.INFO, "--------Filter available: " + filterLabelName + " --------", YesNo.No);
 					flag = true;
 				} else {

@@ -4876,10 +4876,10 @@ public class CommonVariables {
 								excelLabel.TestCases_Name, "M9Tc035_AddOpenTaskGridOnHomePage", excelLabel.SDG_DataProviderName);
 
 						M9_TC036_MPickListErrorMsgData1 = ExcelUtils.readData(wb, phase1DataSheetFilePath, "SDG Standard Filter",
-								excelLabel.Variable_Name, "M9_TC038_FilterData1", excelLabel.SDG_Misc);
+								excelLabel.Variable_Name, "M9_TC036_FilterData1", excelLabel.SDG_Misc);
 
 						M9_TC038_SDGName = ExcelUtils.readData(wb, phase1DataSheetFilePath, "CustomSDG", excelLabel.Variable_Name,
-								"M9_TC035_SDGField", excelLabel.SDG_Name);
+								"M9_TC038_SDGField", excelLabel.SDG_Name);
 
 						M9_TC038_SDGDataProviderName = ExcelUtils.readData(wb, phase1DataSheetFilePath, "FilePath",
 								excelLabel.TestCases_Name, "M9Tc038_EditTabAndAddFundPrepSDG", excelLabel.SDG_DataProviderName);

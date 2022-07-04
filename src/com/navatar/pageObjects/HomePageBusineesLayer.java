@@ -3114,7 +3114,7 @@ public class HomePageBusineesLayer extends HomePage {
 			flag = true;
 
 		} else {
-			log(LogStatus.ERROR, "No. of Records not Matched: " + NoOfRecordsLessThanEqualHundred, YesNo.No);
+			log(LogStatus.ERROR, "No. of Records not Matched, Expected:" + NoOfRecordsLessThanEqualHundred+" , Actual: "+records.size(), YesNo.No);
 
 			sa.assertTrue(false, "-----------No. of Records not Matched-----> " + "Actual: " + records.size()
 					+ "but Expected: " + NoOfRecordsLessThanEqualHundred + "--------------");
@@ -3131,6 +3131,7 @@ public class HomePageBusineesLayer extends HomePage {
 	public boolean deleteSDGRecord(String Title, String FundName) {
 		boolean flag = false;
 
+		
 		if (fundNameElement(Title, FundName) != null) {
 			log(LogStatus.INFO, "Record Found " + FundName, YesNo.No);
 			if (click(driver, deleteRecordBtn(Title, FundName), "Delete Button: " + FundName,
@@ -3410,7 +3411,7 @@ public class HomePageBusineesLayer extends HomePage {
 							"Custom MPicklist Input Box", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Pass the Value to Input Box: " + data[0], YesNo.No);
 						CommonLib.ThreadSleep(30000);
-						int numberOfRecords = AppBuilder.numberOfRecords(SDGName, pageSize);
+						int numberOfRecords = numberOfRecords(SDGName, pageSize);
 						if (numberOfRecords == Integer.parseInt(data[1])) {
 							log(LogStatus.INFO, "--------Number of Records Matched for " + data[0]
 									+ " in CustomMPicklist: " + data[1] + " for Operator: " + data[2] + "--------",
@@ -3596,7 +3597,7 @@ public class HomePageBusineesLayer extends HomePage {
 							"Custom MPicklist Input Box", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Pass the Value to Input Box: " + data[0], YesNo.No);
 						CommonLib.ThreadSleep(30000);
-						int numberOfRecords = AppBuilder.numberOfRecords(SDGName, pageSize);
+						int numberOfRecords = numberOfRecords(SDGName, pageSize);
 						if (numberOfRecords == Integer.parseInt(data[1])) {
 							log(LogStatus.INFO, "--------Number of Records Matched for " + data[0]
 									+ " in CustomMPicklist: " + data[1] + " for Operator: " + data[2] + "--------",
@@ -3939,7 +3940,7 @@ public class HomePageBusineesLayer extends HomePage {
 						}
 
 						else if (value[k].equalsIgnoreCase("Row Button")) {
-							int rowCountAfterFilter = AppBuilder.numberOfRecords(sdgName, pageSize);
+							int rowCountAfterFilter = numberOfRecords(sdgName, pageSize);
 							if (home.rowButtonsInSDGGrid(sdgName, value[j]).size() == rowCountAfterFilter) {
 								log(LogStatus.ERROR,
 										"------------Action Row Buttons: " + value[j]
@@ -4638,6 +4639,84 @@ public class HomePageBusineesLayer extends HomePage {
 		}
 
 		return result;
+	}
+	
+	
+	/**
+	 * @author Ankur Huria
+	 * @param Title
+	 */
+	public boolean sdgGridExpandedByDefaultIfNotThenExpandByTooltip(String Title) {
+		boolean flag = false;
+		CommonLib.ThreadSleep(8000);
+		WebElement alreadyAddedComponentToHomePage = FindElement(driver, "//a[text()='" + Title + "']",
+				"Component Title ", action.SCROLLANDBOOLEAN, 10);
+		if (alreadyAddedComponentToHomePage != null) {
+
+			log(LogStatus.INFO, "Component Title Matched to Home Page " + Title, YesNo.Yes);
+
+			WebElement TooltipElement = FindElement(driver,
+					"//a[text()='" + Title + "']/ancestor::article/preceding-sibling::lightning-icon", "Tooltip",
+					action.SCROLLANDBOOLEAN, 20);
+			if (CommonLib.getAttribute(driver, TooltipElement, "Collapse/Expand Element", "title").equalsIgnoreCase("Expand")) {
+				log(LogStatus.INFO, "Not Expanded By Default SDG: " + Title, YesNo.No);
+				log(LogStatus.INFO, "Now Expanding  SDG: " + Title, YesNo.No);
+
+				
+				if (click(driver, TooltipElement, "Collapse/Expand Element", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on Collapse/Expand");
+					flag = true;
+				} else {
+					log(LogStatus.ERROR, "Not Able to click on Expand Button of SDG :" + Title, YesNo.No);
+
+				}
+			}
+
+			else {
+				log(LogStatus.INFO, "Expanded By Default SDG :" + Title, YesNo.No);
+				flag = true;
+
+			}
+		} else {
+			log(LogStatus.ERROR, "Component Title Not Matched to Home Page :" + Title, YesNo.No);
+
+		}
+
+		return flag;
+	}
+	
+	
+	/**
+	 * @author Ankur Huria
+	 * @param sdgName
+	 * @param pazeSize
+	 * @return boolean
+	 */
+
+	public int numberOfRecords(String Title, String pageSize) {
+		boolean flag = false;
+		int size = 0;
+		if (sdgGridExpandedByDefaultIfNotThenExpandByTooltip(Title)) {
+			log(LogStatus.INFO, "SDG data has been expended", YesNo.No);
+
+			if (pageSizeSelect(Title, pageSize)) {
+				log(LogStatus.INFO, "Page size " + pageSize + " has been selected", YesNo.No);
+				CommonLib.ThreadSleep(30000);
+				List<WebElement> records = FindElements(driver,
+						"//a[text()='" + Title + "']/ancestor::article//tbody/tr", "Records");
+				System.out.println("No. of Records Present: " + records.size());
+				size = records.size();
+				flag = true;
+			} else {
+				log(LogStatus.ERROR, "Could not select the Pagesize", YesNo.No);
+				flag = false;
+			}
+		} else {
+			log(LogStatus.ERROR, "Could not expend the SDG", YesNo.No);
+			flag = false;
+		}
+		return size;
+
 	}
 
 }
