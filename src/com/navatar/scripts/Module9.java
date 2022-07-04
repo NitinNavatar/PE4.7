@@ -203,7 +203,7 @@ public class Module9 extends BaseLib {
 		String parentWindow = null;
 		String[] splitedUserLastName = removeNumbersFromString(crmUser2LastName);
 		String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
-		String emailId = lp.generateRandomEmailId(gmailUserName);
+		String emailId = lp.generateRandomEmailId(gmailUserName2);
 		ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User2",
 				excelLabel.User_Last_Name);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
@@ -253,11 +253,11 @@ public class Module9 extends BaseLib {
 
 				} else {
 					appLog.error(
-							"Not able to install PE package in CRM User2: " + crmUser2FirstName + " " + UserLastName);
+							"Not able to install PE package in CRM User1: " + crmUser2FirstName + " " + UserLastName);
 					sa.assertTrue(false,
-							"Not able to install PE package in CRM User2: " + crmUser2FirstName + " " + UserLastName);
+							"Not able to install PE package in CRM User1: " + crmUser2FirstName + " " + UserLastName);
 					log(LogStatus.ERROR,
-							"Not able to install PE package in CRM User2: " + crmUser2FirstName + " " + UserLastName,
+							"Not able to install PE package in CRM User1: " + crmUser2FirstName + " " + UserLastName,
 							YesNo.Yes);
 				}
 			}
@@ -275,7 +275,7 @@ public class Module9 extends BaseLib {
 		String passwordResetLink = null;
 		try {
 			passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
-					ExcelUtils.readDataFromPropertyFile("gmailUserName"),
+					ExcelUtils.readDataFromPropertyFile("gmailUserName2"),
 					ExcelUtils.readDataFromPropertyFile("gmailPassword"));
 		} catch (InterruptedException e2) {
 			e2.printStackTrace();
