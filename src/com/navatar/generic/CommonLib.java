@@ -386,11 +386,12 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 			return false;
 		}
 	}
-	
-	public static boolean scrollDownThroughWebelementInCenter(WebDriver driver, WebElement Element, String elementName) {
+
+	public static boolean scrollDownThroughWebelementInCenter(WebDriver driver, WebElement Element,
+			String elementName) {
 		try {
-			JavascriptExecutor j = (JavascriptExecutor)driver;
-			j.executeScript ("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'})", Element);
+			JavascriptExecutor j = (JavascriptExecutor) driver;
+			j.executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'})", Element);
 			if (elementName != "")
 				System.out.println("Window Scrolled to " + elementName);
 			return true;
@@ -401,10 +402,6 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 		}
 	}
 
-	
-	
-	
-	
 	/**
 	 * @author Ankit Jaiswal
 	 * @param driver
@@ -3168,35 +3165,54 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 		return flag;
 	}
 
-	public static boolean datePickerHandle(WebDriver driver, WebElement Element, WebElement DaySelector,
-			WebElement MonthYearSelector, WebElement MonthYearPreviousButton, String MonthSpaceYear,
-			String elementName) {
+	public static boolean datePickerHandle(WebDriver driver, WebElement YearSelector, List<WebElement> DaySelector,
+			WebElement MonthSelector, WebElement MonthPreviousButton,  String elementName,
+			String Year, String Month,String Date) {
 		boolean flag = false;
-		if (Element != null) {
-			try {
-				log(LogStatus.INFO, elementName + " button is clickable", YesNo.No);
-				click(driver, Element, elementName, action.SCROLLANDBOOLEAN);
-				while (true) {
-					if (MonthSpaceYear.equals(MonthYearSelector.getText())) {
-						break;
-					} else {
-						click(driver, MonthYearPreviousButton, "", action.SCROLLANDBOOLEAN);
-					}
+		try {
 
+			while (true) {
+				if (Month.equals(MonthSelector.getText())) {
+					appLog.error("Month Selected : " + Month);
+					break;
+				} else {
+					click(driver, MonthPreviousButton, "", action.SCROLLANDBOOLEAN);
 				}
-				click(driver, DaySelector, "", action.SCROLLANDBOOLEAN);
-				log(LogStatus.INFO, elementName + " Date is Selected", YesNo.No);
-				flag = true;
-			} catch (Exception e) {
-				flag = false;
-
-				log(LogStatus.ERROR, elementName + " Date is Not Selected", YesNo.No);
-				log(LogStatus.ERROR, e.getMessage(), YesNo.No);
 			}
-		} else {
+
+			if (CommonLib.elementToBeSelectFromDropDown(driver, YearSelector, "YearSelector: " + Year, Year))
+
+			{
+				appLog.error("Select The Year: " + Year);
+				for(WebElement day : DaySelector) {
+					if(day.getText().equalsIgnoreCase(Date))
+					{
+				if (click(driver, day, "", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, DaySelector + " Day is Selected", YesNo.No);
+					flag = true;
+				} else {
+					log(LogStatus.INFO, DaySelector + " Day is Not Selected", YesNo.No);
+					flag = false;
+				}
+					}
+					else
+					{
+						log(LogStatus.INFO, "Wrong Input For Date: "+Date, YesNo.No);
+						return false;
+					}
+				}
+
+			} else {
+				appLog.error("Not ABle to Select Year: " + Year);
+			}
+
+		} catch (Exception e) {
 			flag = false;
-			log(LogStatus.ERROR, elementName + " is not visible", YesNo.No);
+
+			log(LogStatus.ERROR, elementName + " Date is Not Selected", YesNo.No);
+			log(LogStatus.ERROR, e.getMessage(), YesNo.No);
 		}
+
 		return flag;
 
 	}
