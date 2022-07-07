@@ -4871,21 +4871,116 @@ public class SetupPageBusinessLayer extends SetupPage {
 		
 	}
 	return result;
-	   
-	
-	
    }
 
+   public ArrayList<String> verifyDescriptionOnFirm( ArrayList<String> recordName,ArrayList<String> des)
+   {
+	   String xPath="";
+	   WebElement ele;
+	   ArrayList<String> Description=new ArrayList<String>();
+	   ArrayList<String> result=new ArrayList<String>();
+
+	   for(int i=0;i<des.size()-1;i++)
+	   {
+		   xPath="//section[@class='related-list-card']//tbody//span[text()='"+recordName.get(i)+"']/ancestor::td/following-sibling::td[1]//span"; 
+		   ele=CommonLib.FindElement(driver, xPath, recordName.get(i)+" description", action.SCROLLANDBOOLEAN, 50);
+		   String text=CommonLib.getText(driver, ele, recordName.get(i)+" description : ", action.SCROLLANDBOOLEAN);
+		   Description.add(text);
+	   }	
+
+	   for(int i=0;i<des.size()-1;i++)
+	   {
+
+		   if(Description.get(i).equals(des.get(i)) )
+		   {
+			   log(LogStatus.INFO, "Description \""+des.get(i)+"\" has been verified", YesNo.No);
+		   }
+		   else
+		   {
+			   log(LogStatus.ERROR, "Description \""+des.get(i)+ "\"  is not matched with the \""+Description.get(i)+ "\"", YesNo.Yes);
+			   result.add("Description \""+des.get(i)+ "\"  is not matched with the \""+Description.get(i)+ "\"");
+		   }
+	   }
+
+	   return result;
+   }
    
-   
-   
-   
-   
-   
-   
-	
+   public boolean VerifyDefaultRecordTypeForObject(String profileName,String recordTypeName)
+   {
+	   boolean flag=false;
+	   String xPath="";
+	   WebElement ele=null;
+	   ThreadSleep(5000);
+	   if(CommonLib.switchToFrame(driver, 50, getuserProfileIframe(50)))
+	   {
+		   ThreadSleep(5000);
+		   log(LogStatus.INFO, "Successfully switched to User Profile Iframe", YesNo.No);	
+		   xPath="//div[@class='bRelatedList']//a[text()='"+profileName+"']";
+		   ele=CommonLib.FindElement(driver, xPath, profileName+" profile name", action.SCROLLANDBOOLEAN, 50);
+		   if(CommonLib.clickUsingJavaScript(driver, ele, profileName+" profile name", action.BOOLEAN))
+		   {
+			   log(LogStatus.INFO, "Successfully clicked on the "+profileName+" profile name", YesNo.No);
+			   ThreadSleep(12000);
+			   CommonLib.switchToDefaultContent(driver);
+			   ThreadSleep(2000);
+			   if(CommonLib.switchToFrame(driver, 50, getProfileIframe(50)))
+			   {
+				   ThreadSleep(12000);
+				   log(LogStatus.INFO, "Successfully switched to Profile Iframe", YesNo.No);
+				   if(CommonLib.clickUsingJavaScript(driver, getRecordTypeEditButton(50), "Record type edit button", action.BOOLEAN))
+				   {
+					   log(LogStatus.INFO, "Successfully click on record type edit button", YesNo.No);
+					   ThreadSleep(12000);
+					   CommonLib.switchToDefaultContent(driver);
+					   ThreadSleep(2000);
+					   if(CommonLib.switchToFrame(driver, 50, geteditRecordTypeIframe(50)))
+					   {
+						   ThreadSleep(12000);
+						   log(LogStatus.INFO, "Successfully switched to Profile Iframe", YesNo.No);
+						   
+						  String text= CommonLib.getText(driver, getdefaultRecordType(50), "default record type", action.SCROLLANDBOOLEAN);
+						  if(text.equals(recordTypeName))
+						  {
+							  log(LogStatus.INFO, "Default record company has been verified", YesNo.No);
+							  flag=true;
+						  }
+						  else
+						  {
+							  log(LogStatus.ERROR, "Default record company is not verified", YesNo.Yes);
+						  }
+					   }
+					   else
+					   {
+						   log(LogStatus.ERROR,  "Not able to switched to edit record Iframe", YesNo.Yes);
+					   }
+					   
+				   }
+				   else
+				   {
+					   log(LogStatus.ERROR, "Not able to click on the record type edit button", YesNo.Yes); 
+				   }
+				
+			   }
+			   else
+			   {
+				   log(LogStatus.ERROR, "Not able to switched to Profile Iframe", YesNo.Yes);
+			   }
+			   
+		   }
+		   else
+		   {
+			   log(LogStatus.ERROR, "Not able to click on the "+profileName+" profile name", YesNo.Yes);
+		   }
+	   }
+	   else
+	   {
+		   log(LogStatus.ERROR, "Not able to switched to User profile Iframe", YesNo.Yes);
+	   }
+	   
+	return flag;
+	   
+   }
 
 
-
-
+   
 }
