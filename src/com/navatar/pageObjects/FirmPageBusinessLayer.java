@@ -175,17 +175,14 @@ public class FirmPageBusinessLayer extends FirmPage{
 								xPath="//div[@id='filterPanelFieldCriterion"+j+"']//div[@class='fieldLabel']";
 								ele=CommonLib.FindElement(driver, xPath, "Field Label", action.SCROLLANDBOOLEAN, 50);
 								String filterFieldLabel=CommonLib.getText(driver,ele, "Filter field label", action.SCROLLANDBOOLEAN);
-								System.out.println("field  "+filterFiled[j]);
 								
 								xPath="//div[@id='filterPanelFieldCriterion"+j+"']//span[@class='test-operatorWrapper']";
 								ele=CommonLib.FindElement(driver, xPath, "Field Label", action.SCROLLANDBOOLEAN, 50);
-								String filterOperator=CommonLib.getText(driver, ele, "Filter Operator", action.SCROLLANDBOOLEAN);
-								System.out.println("filter Operator  "+fOperator[j]);
+								String filterOperator=CommonLib.getText(driver, ele, "Filter Operator", action.SCROLLANDBOOLEAN);							
 								
 								xPath="//div[@id='filterPanelFieldCriterion"+j+"']//span[@class='test-operandsWrapper']";
 								ele=CommonLib.FindElement(driver, xPath, "Field Label", action.SCROLLANDBOOLEAN, 50);
-								String filterOperand=CommonLib.getText(driver, ele, "Filter Operand", action.SCROLLANDBOOLEAN);
-								System.out.println("Operand  "+FOperand[j]);
+								String filterOperand=CommonLib.getText(driver, ele, "Filter Operand", action.SCROLLANDBOOLEAN);						
 								
 								if(filterFieldLabel.equalsIgnoreCase(filterFiled[j]) && filterOperator.equalsIgnoreCase(fOperator[j]) && filterOperand.equalsIgnoreCase(FOperand[j]))
 								{

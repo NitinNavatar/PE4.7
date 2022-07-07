@@ -223,7 +223,7 @@ public class CustomObjPageBusinessLayer extends CustomObjPage {
 					if (setup.searchStandardOrCustomObject(environment, mode, object.Profiles)) {
 						log(LogStatus.INFO, "click on Object : " + object.Profiles, YesNo.No);
 						ThreadSleep(2000);
-						if (setup.permissionChangeForUserONObject(driver, userName,
+						if (setup.permissionChangeOfUserONObject(driver, userName,
 								new String[][] { { onObject, permission1 }, { onObject, permission2 } }, 20)) {
 							log(LogStatus.PASS,
 									permission1 + " permission change for " + userName + " on object " + onObject,

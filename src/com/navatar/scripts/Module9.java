@@ -11,6 +11,7 @@ import static com.navatar.generic.CommonLib.log;
 import static com.navatar.generic.CommonLib.removeNumbersFromString;
 import static com.navatar.generic.CommonLib.sendKeysAndPressEnter;
 import static com.navatar.generic.CommonLib.switchOnWindow;
+import static com.navatar.generic.CommonLib.switchToDefaultContent;
 import static com.navatar.generic.CommonVariables.*;
 
 import java.awt.Toolkit;
@@ -35,6 +36,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -61,6 +63,7 @@ import com.navatar.generic.EnumConstants.SDGGridName;
 import com.navatar.generic.EnumConstants.SDGLabels;
 import com.navatar.generic.EnumConstants.SortOrder;
 import com.navatar.generic.EnumConstants.TabName;
+import com.navatar.generic.EnumConstants.Workspace;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
@@ -102,8 +105,7 @@ public class Module9 extends BaseLib {
 		String[] splitedUserLastName = removeNumbersFromString(crmUser1LastName);
 		String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
 		String emailId = lp.generateRandomEmailId(gmailUserName);
-		ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",
-				excelLabel.User_Last_Name);
+		
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		boolean flag = false;
 		for (int i = 0; i < 3; i++) {
@@ -143,6 +145,8 @@ public class Module9 extends BaseLib {
 		if (flag) {
 
 			if (!environment.equalsIgnoreCase(Environment.Sandbox.toString())) {
+				switchToDefaultContent(driver);
+				CommonLib.ThreadSleep(5000);
 				if (setup.installedPackages(crmUser1FirstName, UserLastName)) {
 					appLog.info("PE Package is installed Successfully in CRM User: " + crmUser1FirstName + " "
 							+ UserLastName);
@@ -201,8 +205,7 @@ public class Module9 extends BaseLib {
 		String[] splitedUserLastName = removeNumbersFromString(crmUser2LastName);
 		String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
 		String emailId = lp.generateRandomEmailId(gmailUserName2);
-		ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User2",
-				excelLabel.User_Last_Name);
+
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		boolean flag = false;
 		for (int i = 0; i < 3; i++) {
@@ -242,6 +245,8 @@ public class Module9 extends BaseLib {
 		if (flag) {
 
 			if (!environment.equalsIgnoreCase(Environment.Sandbox.toString())) {
+				switchToDefaultContent(driver);
+				CommonLib.ThreadSleep(5000);
 				if (setup.installedPackages(crmUser2FirstName, UserLastName)) {
 					appLog.info("PE Package is installed Successfully in CRM User: " + crmUser2FirstName + " "
 							+ UserLastName);
@@ -585,7 +590,6 @@ public class Module9 extends BaseLib {
 				SDGLabels.APIName.toString() + "," + SDGLabels.Override_Label.toString() };
 		String[] values = { M9SDGFieldValue_1_APIName, M9SDGFieldValue_1_OverrideLabel };
 
-		// String[] values = { "Name,Fund Name", "navpeII__Fund_Type__c,Fund Type" };
 		lp.searchAndClickOnApp(SDG, 30);
 
 		if (lp.clickOnTab(projectName, TabName.SDGTab)) {
@@ -682,7 +686,7 @@ public class Module9 extends BaseLib {
 
 		if (lp.clickOnTab(projectName, TabName.SDGTab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
-			String sdgName = M9_TC004_SDGName;
+			String sdgName = M9_TC003_SDGName;
 			String[][] sdgLabels1 = {
 					{ SDGCreationLabel.Parent_Field_Name.toString(), M9_TC004_SDGParentFilterName1 } };
 			String[][] sdgLabels2 = {
@@ -736,7 +740,7 @@ public class Module9 extends BaseLib {
 				M9_TC005_SDGField5, M9_TC005_SDGField6, M9_TC005_SDGField7, M9_TC005_SDGField8, M9_TC005_SDGField9,
 				M9_TC005_SDGField10, M9_TC005_SDGField11, M9_TC005_SDGField12, M9_TC005_SDGField13, M9_TC005_SDGField14,
 				M9_TC005_SDGField15, M9_TC005_SDGField16 };
-		String TitleOfSDG = M9_TC005_SDGName;
+		String TitleOfSDG = M9_TC003_SDGName;
 		String dataProviderName = M9_TC005_SDGDataProviderName;
 		int numberOfRecords = Integer.parseInt(M9_TC005_SDGNumberOfRecords);
 
@@ -798,7 +802,7 @@ public class Module9 extends BaseLib {
 				M9_TC005_SDGField5, M9_TC005_SDGField6, M9_TC005_SDGField7, M9_TC005_SDGField8, M9_TC005_SDGField9,
 				M9_TC005_SDGField10, M9_TC005_SDGField11, M9_TC005_SDGField12, M9_TC005_SDGField13, M9_TC005_SDGField14,
 				M9_TC005_SDGField15, M9_TC005_SDGField16 };
-		String TitleOfSDG = M9_TC005_SDGName;
+		String TitleOfSDG = M9_TC003_SDGName;
 		int row = Integer.parseInt(M9_TC006_SDGRowNumberForTooltip);
 		;
 
@@ -949,7 +953,7 @@ public class Module9 extends BaseLib {
 		for (String Email : Emails) {
 			lp.CRMLogin(Email, adminPassword, appName);
 
-			String TitleOfSDG = M9_TC005_SDGName;
+			String TitleOfSDG = M9_TC003_SDGName;
 
 			if (lp.clickOnTab(projectName, TabName.HomeTab)) {
 				log(LogStatus.INFO, "Clicked on Tab : " + TabName.HomeTab, YesNo.No);
@@ -963,6 +967,7 @@ public class Module9 extends BaseLib {
 					sa.assertTrue(true,
 							"------------Component Already Added to Home Page " + TitleOfSDG + "---------------");
 
+					CommonLib.ThreadSleep(8000);
 					if (home.verifySDGExpandByDefault(TitleOfSDG)) {
 						log(LogStatus.PASS, "-----------SDG: " + TitleOfSDG + " is Expanded By Default in case of "
 								+ Email + "--------------", YesNo.No);
@@ -1035,7 +1040,7 @@ public class Module9 extends BaseLib {
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
-		String TitleOfSDG = M9_TC005_SDGName;
+		String TitleOfSDG = M9_TC003_SDGName;
 
 		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
 			log(LogStatus.INFO, "Clicked on Tab : " + TabName.HomeTab, YesNo.No);
@@ -1127,7 +1132,7 @@ public class Module9 extends BaseLib {
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
-		String sdgName = M9_TC005_SDGName;
+		String sdgName = M9_TC003_SDGName;
 
 		int numberOfRecords = Integer.parseInt(M9_TC009_SDGNumberOfRecords);
 
@@ -1227,7 +1232,7 @@ public class Module9 extends BaseLib {
 
 		lp.CRMLogin(crmUser2EmailID, adminPassword, appName);
 
-		String sdgName = M9_TC005_SDGName;
+		String sdgName = M9_TC003_SDGName;
 		int numberOfRecords = Integer.parseInt(M9_TC009_SDGNumberOfRecords);
 
 		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
@@ -1301,7 +1306,7 @@ public class Module9 extends BaseLib {
 		String[][][] sdgLabels = { { { SDGCreationLabel.List_View_Name.toString(), M9_TC011_SDGListViewName1 } },
 				{ { SDGCreationLabel.List_View_Name.toString(), M9_TC011_SDGListViewName2 } } };
 
-		String sdgName = M9_TC005_SDGName;
+		String sdgName = M9_TC003_SDGName;
 		String[] expectedNumberOfRecords = M9_TC011_SDGNumberOfRecords.split("<break>");
 		int i = 0;
 		for (String[][] sdgLabel : sdgLabels) {
@@ -1448,7 +1453,7 @@ public class Module9 extends BaseLib {
 				lp.CRMLogin(superAdminUserName, adminPassword, appName);
 			}
 
-			String sdgName = M9_TC005_SDGName;
+			String sdgName = M9_TC003_SDGName;
 
 			if (lp.clickOnTab(projectName, TabName.HomeTab)) {
 				log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
@@ -1686,7 +1691,7 @@ public class Module9 extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		String sdgName = M9_TC005_SDGName;
+		String sdgName = M9_TC003_SDGName;
 		String fundNameToDelete = M9_TC013_FundName;
 
 		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
@@ -1776,9 +1781,10 @@ public class Module9 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		HomePage hp = new HomePage(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		String sdgName = M9_TC005_SDGName;
+		String sdgName = M9_TC003_SDGName;
 		String fundNameDeleted = M9_TC013_FundName;
 		int numberOfRecords = Integer.parseInt(M9_TC014_SDGNumberOfRecords);
 		String[][] listViewSheetData = { { M9_TC014_ListViewMember, M9_TC014_ListViewTabName, M9_TC014_ListViewName,
@@ -1794,7 +1800,7 @@ public class Module9 extends BaseLib {
 				log(LogStatus.INFO, "------------Component Already Added to Home Page " + sdgName + "----------------",
 						YesNo.Yes);
 				sa.assertTrue(true, "------------Component Already Added to Home Page " + sdgName + "---------------");
-				lp.searchAndClickOnApp(SDG, 30);
+				BP.openAppFromAppLauchner(SDG, 30);
 
 				if (lp.clickOnTab(projectName, TabName.SDGTab)) {
 					log(LogStatus.INFO, "Click on Tab : " + TabName.SDGTab, YesNo.No);
@@ -1814,26 +1820,12 @@ public class Module9 extends BaseLib {
 											"-----------Page Size has selected to" + pageSize + " --------------",
 											YesNo.No);
 
-									if (home.numberOfRecordsMatch(sdgName, numberOfRecords)) {
-										log(LogStatus.INFO, "----------No. of Records Matched: " + numberOfRecords
-												+ "for All Records Checked------------", YesNo.No);
+									if (hp.fundNameElement(sdgName, fundNameDeleted) != null) {
+										log(LogStatus.INFO, "Record Found " + fundNameDeleted, YesNo.No);
 
-										if (hp.fundNameElement(sdgName, fundNameDeleted) != null) {
-											log(LogStatus.INFO, "Record Found " + fundNameDeleted, YesNo.No);
-
-										} else {
-											log(LogStatus.ERROR, "Record not Found: " + fundNameDeleted, YesNo.No);
-											sa.assertTrue(false, "Record not Found: " + fundNameDeleted);
-										}
-
-									}
-
-									else {
-										log(LogStatus.FAIL, "---------No. of Records not Matched " + numberOfRecords
-												+ "for All Records Checked-------- ", YesNo.No);
-										sa.assertTrue(false, "-----------No. of Records not Matched: " + numberOfRecords
-												+ "for All Records Checked--------------");
-
+									} else {
+										log(LogStatus.ERROR, "Record not Found: " + fundNameDeleted, YesNo.No);
+										sa.assertTrue(false, "Record not Found: " + fundNameDeleted);
 									}
 
 								} else {
@@ -1880,26 +1872,79 @@ public class Module9 extends BaseLib {
 			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
 		}
 
+		// 2nd Part(Unselect All Row Check box)
+		BP.openAppFromAppLauchner(SDG, 50);
+
+		if (sdg.editAllRowOnSDG(projectName, sdgName, Condition.UnSelectCheckbox)) {
+			log(LogStatus.PASS, "--------edit/verify SDG : " + sdgName + " -------------", YesNo.No);
+			sa.assertTrue(true, "--------Able to edit SDG : " + sdgName + " --------------");
+
+		} else {
+			sa.assertTrue(false, "----------Not Able to edit/verify created SDG : " + sdgName + " ------------");
+			log(LogStatus.SKIP, "-----------Not Able to edit/verify created SDG : " + sdgName + " -------------",
+					YesNo.Yes);
+		}
+
 		WebElement ele;
 		String recycleTab = lp.getTabName(projectName, TabName.RecycleBinTab);
 		if (lp.openAppFromAppLauchner(60, recycleTab)) {
 
 			CommonLib.refresh(driver);
-			if (click(driver, hp.getSelectListIcon(60), "List View Button", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on List Views Button  ", YesNo.No);
-				WebElement allListViewEle = FindElement(driver, "//span[text()='Org Recycle Bin']/ancestor::a",
-						"Org Recycle Bin List View Button ", action.SCROLLANDBOOLEAN, 10);
-				if (click(driver, allListViewEle, "Org Recycle Bin List View Button", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on Org Recycle Bin List Views Button  ", YesNo.No);
 
+			for (String[] row : listViewSheetData) {
+
+				if (lp.addListView(projectName, row, 10)) {
+					log(LogStatus.INFO, "list view added on " + row[1], YesNo.No);
 					ele = lp.getCheckboxOfRestoreItemOnRecycleBin(projectName, fundNameDeleted, 30);
 					if (clickUsingJavaScript(driver, ele, "Check box against : " + fundNameDeleted, action.BOOLEAN)) {
 						log(LogStatus.INFO, "Click on checkbox for " + fundNameDeleted, YesNo.No);
-
+						;
 						ele = lp.getRestoreButtonOnRecycleBin(projectName, 30);
 						if (clickUsingJavaScript(driver, ele, "Restore Button : " + fundNameDeleted, action.BOOLEAN)) {
 							ThreadSleep(10000);
 							log(LogStatus.INFO, "Click on Restore Button for " + fundNameDeleted, YesNo.No);
+							sa.assertTrue(true, "Contact has been restore from the Recycle bin");
+
+							CommonLib.switchToDefaultContent(driver);
+							ThreadSleep(2000);
+							if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+								log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+
+								if (home.sdgGridExpandedByDefaultIfNotThenExpand(sdgName)) {
+
+									String pageSize = "100";
+									if (home.pageSizeSelect(sdgName, pageSize)) {
+
+										log(LogStatus.PASS,
+												"-----------Page Size has selected to" + pageSize + " --------------",
+												YesNo.No);
+										if (hp.fundNameElement(sdgName, fundNameDeleted) != null) {
+											log(LogStatus.INFO, "Record Found After Restore: " + fundNameDeleted,
+													YesNo.No);
+
+										} else {
+											log(LogStatus.ERROR, "Record not Found After Restore: " + fundNameDeleted,
+													YesNo.No);
+											sa.assertTrue(false, "Record not Found After Restore: " + fundNameDeleted);
+										}
+
+									} else {
+										log(LogStatus.FAIL, "-----------Not able to Select Page Size: " + pageSize
+												+ "--------------", YesNo.No);
+										sa.assertTrue(false, "-----------Not able to Select Page Size: " + pageSize
+												+ " --------------");
+									}
+
+								} else {
+									log(LogStatus.FAIL, "-----------Not able to Expand SDG Grid --------------",
+											YesNo.No);
+									sa.assertTrue(false, "-----------Not able to Expand SDG Grid --------------");
+								}
+
+							} else {
+								sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
+								log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
+							}
 
 						} else {
 
@@ -1913,16 +1958,14 @@ public class Module9 extends BaseLib {
 						log(LogStatus.ERROR, "Not Able to Click on checkbox for " + fundNameDeleted, YesNo.Yes);
 						sa.assertTrue(false, "Not Able to Click on checkbox for " + fundNameDeleted);
 					}
-				} else {
-					appLog.error("Not able to click on Org Recycle Bin List View Button");
-					sa.assertTrue(false, "Not able to click on Org Recycle Bin List View Button");
-
 				}
-			} else {
-				appLog.error("Not able to click on List Views Button");
-				sa.assertTrue(false, "Not able to click on List Views Button");
 
+				else {
+					log(LogStatus.FAIL, "list view could not added on " + row[1], YesNo.Yes);
+					sa.assertTrue(false, "list view could not added on " + row[1]);
+				}
 			}
+
 		} else {
 			log(LogStatus.ERROR, "Not Able to open the Recycle been tab", YesNo.Yes);
 			sa.assertTrue(false, "Not Able to open the Recycle been tab");
@@ -1934,7 +1977,10 @@ public class Module9 extends BaseLib {
 		sa.assertAll();
 	}
 
-	public void M9Tc015_UpdateMyRecordsFieldWithRecordOwnerId(String projectName) {
+	@Parameters({ "projectName" })
+
+	@Test
+	public void M9Tc015_UpdateMyRecordsFieldWithRecordOwnerID(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
 		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
@@ -1942,7 +1988,7 @@ public class Module9 extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		boolean flag = false;
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		String sdgName = M9_TC005_SDGName;
+		String sdgName = M9_TC003_SDGName;
 		String globalFilterQuery = M9_TC015_GlobalFilterQuery;
 		String[][] sdgLabels = { { SDGCreationLabel.My_Records.toString(), M9_TC015_MyRecords } };
 		String pageSize = "100";
@@ -2048,7 +2094,7 @@ public class Module9 extends BaseLib {
 			if (AppBuilder.selectFilter("Show", "My Records")) {
 				log(LogStatus.INFO, "Filter has been selected: ", YesNo.No);
 				CommonLib.ThreadSleep(8000);
-				rowCountAfterFilter = AppBuilder.numberOfRecords(sdgName, pageSize);
+				rowCountAfterFilter = home.numberOfRecords(sdgName, pageSize);
 
 				if (rowCountAfterFilter != 0) {
 					if (rowCountAfterFilter == rowCountAfterFilterAdminCase) {
@@ -2078,7 +2124,7 @@ public class Module9 extends BaseLib {
 				if (AppBuilder.selectFilter("Show", "My Records")) {
 					log(LogStatus.INFO, "Filter has been selected: ", YesNo.No);
 					CommonLib.ThreadSleep(8000);
-					rowCountAfterFilter = AppBuilder.numberOfRecords(sdgName, pageSize);
+					rowCountAfterFilter = home.numberOfRecords(sdgName, pageSize);
 
 					if (rowCountAfterFilter != 0) {
 						if (rowCountAfterFilter == rowCountAfterFilterUser1Case) {
@@ -2170,10 +2216,11 @@ public class Module9 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
 		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 		boolean flag = false;
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		String sdgName = M9_TC005_SDGName;
+		String sdgName = M9_TC003_SDGName;
 		String[][] sdgLabels = { { SDGCreationLabel.My_Records.toString(), M9_TC016_MyRecords } };
 		String pageSize = "100";
 		int rowCountAfterFilter;
@@ -2229,7 +2276,7 @@ public class Module9 extends BaseLib {
 					if (AppBuilder.selectFilter("Show", "My Records")) {
 						log(LogStatus.INFO, "Filter has been selected: ", YesNo.No);
 						CommonLib.ThreadSleep(8000);
-						rowCountAfterFilter = AppBuilder.numberOfRecords(sdgName, pageSize);
+						rowCountAfterFilter = home.numberOfRecords(sdgName, pageSize);
 
 						if (rowCountAfterFilter != 0) {
 							if (rowCountAfterFilter == rowCountAfterFilterAdminCase) {
@@ -2287,10 +2334,11 @@ public class Module9 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
 		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 		boolean flag = false;
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		String sdgName = M9_TC005_SDGName;
+		String sdgName = M9_TC003_SDGName;
 		String[][] sdgLabels = { { SDGCreationLabel.My_Records.toString(), "" },
 				{ SDGCreationLabel.List_View_Name.toString(), "" } };
 		String pageSize = "100";
@@ -2347,7 +2395,7 @@ public class Module9 extends BaseLib {
 					if (AppBuilder.selectFilter("Show", "My Records")) {
 						log(LogStatus.INFO, "Filter has been selected: ", YesNo.No);
 						CommonLib.ThreadSleep(8000);
-						rowCountAfterFilter = AppBuilder.numberOfRecords(sdgName, pageSize);
+						rowCountAfterFilter = home.numberOfRecords(sdgName, pageSize);
 
 						if (rowCountAfterFilter != 0) {
 							if (rowCountAfterFilter == rowCountAfterFilterAdminCase) {
@@ -2409,14 +2457,14 @@ public class Module9 extends BaseLib {
 		ReportsTab reportPage = new ReportsTab(driver);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		String sdgName = M9_TC005_SDGName;
+		String sdgName = M9_TC003_SDGName;
 
 		String[] fieldsInSDG = { M9_TC005_SDGField1, M9_TC005_SDGField2, M9_TC005_SDGField10, M9_TC005_SDGField11 };
 
 		String[] fieldDataInSDG = M9_TC018_SDGFieldData.split("<break>");
-
 		List<String> columnInSDG = Arrays.asList(fieldsInSDG);
 		List<String> columnDataInSDG = Arrays.asList(fieldDataInSDG);
+		columnDataInSDG.set(1, crmUser1FirstName + " " + crmUser1LastName);
 
 		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
@@ -2595,7 +2643,7 @@ public class Module9 extends BaseLib {
 		ReportsTabBusinessLayer reportBusinessLayer = new ReportsTabBusinessLayer(driver);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		String sdgName = M9_TC005_SDGName;
+		String sdgName = M9_TC003_SDGName;
 
 		String[] fieldsInSDG = { M9_TC005_SDGField11 };
 		String[] fieldDataInSDG = { M9_TC018_SDGFieldData.split("<break>")[3] };
@@ -2760,7 +2808,7 @@ public class Module9 extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		String sdgName = M9_TC005_SDGName;
+		String sdgName = M9_TC003_SDGName;
 		String groupingFilter = "Grouping Query";
 
 		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
@@ -2818,7 +2866,7 @@ public class Module9 extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		String sdgName = M9_TC005_SDGName;
+		String sdgName = M9_TC003_SDGName;
 
 		String[][] data = {
 				{ M9_TC022_StandardFilterSearch1, M9_TC022_SDGNumberOfRecords1, M9_TC022_StandardFilterPickList1 },
@@ -2899,7 +2947,7 @@ public class Module9 extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		String sdgName = M9_TC005_SDGName;
+		String sdgName = M9_TC003_SDGName;
 		String[][] data = {
 				{ M9_TC023_StandardFilterSearch1, M9_TC023_SDGNumberOfRecords1, M9_TC023_StandardFilterPickList1 } };
 		String[][] data2 = {
@@ -3031,7 +3079,7 @@ public class Module9 extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		String sdgName = M9_TC005_SDGName;
+		String sdgName = M9_TC003_SDGName;
 		String[][] data = {
 				{ M9_TC024_StandardFilterSearch1, M9_TC024_SDGNumberOfRecords1, M9_TC024_StandardFilterPickList1 } };
 
@@ -3099,7 +3147,7 @@ public class Module9 extends BaseLib {
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-		String sdgName = M9_TC005_SDGName;
+		String sdgName = M9_TC003_SDGName;
 		String pageSize = "100";
 		int expectedNumberOfRecords = Integer.parseInt(M9_TC025_SDGNumberOfRecords1);
 
@@ -3114,7 +3162,7 @@ public class Module9 extends BaseLib {
 				sa.assertTrue(true, "------------Component Already Added to Home Page " + sdgName + "---------------");
 				if (home.sdgGridExpandedByDefaultIfNotThenExpand(sdgName)) {
 					log(LogStatus.INFO, "Verified SDG Grid: " + sdgName + " is Expanded By or Not ", YesNo.Yes);
-					int actualNumberOfRecords = AppBuilder.numberOfRecords(sdgName, pageSize);
+					int actualNumberOfRecords = home.numberOfRecords(sdgName, pageSize);
 					if (actualNumberOfRecords == expectedNumberOfRecords) {
 						log(LogStatus.INFO,
 								"---------Number of Records Matched of SDG: " + sdgName + ",Expected: "
@@ -3163,7 +3211,7 @@ public class Module9 extends BaseLib {
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
-		String TitleOfSDG = M9_TC005_SDGName;
+		String TitleOfSDG = M9_TC003_SDGName;
 		String[][] sdgLabels = { { SDGCreationLabel.Default_Sort.toString(), M9_TC026_DefaultSort1 } };
 		String[][] sdgLabels2 = { { SDGCreationLabel.Default_Sort.toString(), M9_TC026_DefaultSort2 } };
 		String errorMsg = HomePageErrorMessage.customMPicklistErrorMsg;
@@ -3334,7 +3382,7 @@ public class Module9 extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		String sdgName = M9_TC005_SDGName;
+		String sdgName = M9_TC003_SDGName;
 		String[][] data = { M9_TC027_MPickListErrorMsgData1.split("<break>"),
 				M9_TC027_MPickListErrorMsgData2.split("<break>"), M9_TC027_MPickListErrorMsgData3.split("<break>"),
 				M9_TC027_MPickListErrorMsgData4.split("<break>") };
@@ -3403,7 +3451,7 @@ public class Module9 extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
 
-		String TitleOfSDG = M9_TC005_SDGName;
+		String TitleOfSDG = M9_TC003_SDGName;
 		String[][][] sdgLabels3d = {
 				{ { SDGCreationLabel.Highlight_Colors.toString(), M9_TC028_HighlightedColors1,
 						M9_TC028_HighlightedColorsRGB1 } },
@@ -3579,7 +3627,7 @@ public class Module9 extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
 
-		String TitleOfSDG = M9_TC005_SDGName;
+		String TitleOfSDG = M9_TC003_SDGName;
 		String rememberFilterCheckBoxLabel = "Remember Filter";
 		String fundTypeFilterLabel = M9_TC029_StandardFilterLabel1;
 		String fundTypeFilterValue = M9_TC029_StandardFilterValue1;
@@ -3792,7 +3840,7 @@ public class Module9 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
-		String TitleOfSDG = M9_TC005_SDGName;
+		String TitleOfSDG = M9_TC003_SDGName;
 		String fundTypeFilterLabel = M9_TC030_StandardFilterLabel1;
 		String fundTypeFilterValue = M9_TC030_StandardFilterValue1;
 		String sectorFilterLabel = M9_TC030_StandardFilterLabel2;
@@ -4197,7 +4245,7 @@ public class Module9 extends BaseLib {
 								driver.switchTo().window(parentId);
 								CommonLib.refresh(driver);
 								CommonLib.ThreadSleep(20000);
-								int rowCountAfterFilter = AppBuilder.numberOfRecords(TitleOfSDG, pageSize);
+								int rowCountAfterFilter = home.numberOfRecords(TitleOfSDG, pageSize);
 								if (home.rowButtonsInSDGGrid(TitleOfSDG, actionButtonName)
 										.size() == rowCountAfterFilter) {
 									log(LogStatus.INFO,
@@ -4273,7 +4321,7 @@ public class Module9 extends BaseLib {
 						log(LogStatus.PASS,
 								"-----------Successfully Logged In with Id: " + crmUser1EmailID + "--------------",
 								YesNo.No);
-						int rowCountAfterFilter = AppBuilder.numberOfRecords(TitleOfSDG, pageSize);
+						int rowCountAfterFilter = home.numberOfRecords(TitleOfSDG, pageSize);
 						if (actionButtonCreateAndDisplayFlag || home.rowButtonsInSDGGrid(TitleOfSDG, actionButtonName)
 								.size() == rowCountAfterFilter) {
 							if (home.fundNameCorrespondingToSDG(TitleOfSDG, sdgLabels[0][1], 25) != null) {
@@ -4433,7 +4481,7 @@ public class Module9 extends BaseLib {
 								driver.switchTo().window(parentId);
 								CommonLib.refresh(driver);
 								CommonLib.ThreadSleep(20000);
-								int rowCountAfterFilter = AppBuilder.numberOfRecords(TitleOfSDG, pageSize);
+								int rowCountAfterFilter = home.numberOfRecords(TitleOfSDG, pageSize);
 								if (home.rowButtonsInSDGGrid(TitleOfSDG, actionButtonName)
 										.size() == rowCountAfterFilter) {
 									log(LogStatus.INFO,
@@ -4509,7 +4557,7 @@ public class Module9 extends BaseLib {
 						log(LogStatus.PASS,
 								"-----------Successfully Logged In with Id: " + crmUser1EmailID + "--------------",
 								YesNo.No);
-						int rowCountAfterFilter = AppBuilder.numberOfRecords(TitleOfSDG, pageSize);
+						int rowCountAfterFilter = home.numberOfRecords(TitleOfSDG, pageSize);
 						if (actionButtonCreateAndDisplayFlag || home.rowButtonsInSDGGrid(TitleOfSDG, actionButtonName)
 								.size() == rowCountAfterFilter) {
 							if (home.fundNameCorrespondingToSDG(TitleOfSDG, sdgLabels[0][1], 25) != null) {
@@ -4705,7 +4753,7 @@ public class Module9 extends BaseLib {
 			}
 
 			lp.CRMlogout();
-			if (lp.CRMLogin(superAdminUserName, adminPassword, appName)) {
+			if (lp.CRMLogin(crmUser1EmailID, adminPassword, appName)) {
 				if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
 					log(LogStatus.INFO, "Click on Tab : " + TabName.Object2Tab, YesNo.No);
 					String viewList = "All Contacts", xpath = "";
@@ -5044,10 +5092,12 @@ public class Module9 extends BaseLib {
 							log(LogStatus.INFO, "------Remember Filter Applied Verified-------", YesNo.No);
 							if (lp.CRMlogout()) {
 								log(LogStatus.PASS, "-----------Successfully Logged Out--------------", YesNo.No);
+								CommonLib.ThreadSleep(8000);
 								if (lp.CRMLogin(crmUser1EmailID, adminPassword, appName)) {
 									log(LogStatus.PASS, "-----------Successfully Logged In with Id: " + crmUser1EmailID
 											+ "--------------", YesNo.No);
 
+									CommonLib.ThreadSleep(8000);
 									if (home.sdgGridExpandedByDefaultIfNotThenExpand(TitleOfSDG)) {
 										log(LogStatus.INFO,
 												"Verified SDG Grid: " + TitleOfSDG
@@ -5247,12 +5297,6 @@ public class Module9 extends BaseLib {
 
 					CommonLib.refresh(driver);
 
-					/*
-					 * if (EB.editPageAndAddFilter("Fund Records",
-					 * "Select Name from navpeII__Fund__c ORDER BY Name ASC", "", "", "", "",
-					 * Condition.SelectCheckbox))
-					 */
-
 					if (EB.editPageAndAddFilter("Fund Records", M9_TC038_GlobalFilterQuery, "", "", "", "",
 							Condition.SelectCheckbox)) {
 						log(LogStatus.INFO, "Global Filter has been added", YesNo.No);
@@ -5283,6 +5327,7 @@ public class Module9 extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
 		EditPageBusinessLayer EB = new EditPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 
 		String sdgName = M9_TC038_SDGName;
@@ -5313,22 +5358,26 @@ public class Module9 extends BaseLib {
 
 			if (SB.sdgFilterSendDataAndFound(sdgName, M9_TC039_FilterLabel, M9_TC039_FilterSearch,
 					M9_TC039_FilterPickList)) {
-				log(LogStatus.PASS, "Centrient Pharmaceuticals -2018 has been filtered in the " + sdgName, YesNo.No);
-				sa.assertTrue(true, "Centrient Pharmaceuticals -2018 Filter has been filtered in the " + sdgName);
+				log(LogStatus.PASS, M9_TC039_FilterSearch + " has been filtered in the " + sdgName, YesNo.No);
+				sa.assertTrue(true, M9_TC039_FilterSearch + " Filter has been filtered in the " + sdgName);
 				CommonLib.ThreadSleep(20000);
-				accountFilterRowCount = AppBuilder.numberOfRecordsWithoutClickOnExpendIcon("Fund Prep", pageSize);
-				System.out.println("Sou " + accountFilterRowCount);
+				accountFilterRowCount = AppBuilder.numberOfRecordsWithoutClickOnExpendIcon(M9_TC038_SDGName, pageSize);
+
 				if (accountFilterRowCount == Integer.parseInt(numberOfRecords[0])) {
-					log(LogStatus.PASS, "Filter Successfully, count is matched", YesNo.No);
-					sa.assertTrue(true, "Filter Successfully and count is matched");
+					log(LogStatus.PASS, "Filter Successfully, count is matched: " + accountFilterRowCount, YesNo.No);
+					sa.assertTrue(true, "Filter Successfully and count is matched " + accountFilterRowCount);
 				} else {
-					log(LogStatus.ERROR, "Filtered not successfully, Count is not matched", YesNo.No);
-					sa.assertTrue(false, "Filtered not successfully,Count is not matched");
+					log(LogStatus.ERROR,
+							"Filtered not successfully, Count is not matched, Expected: "
+									+ Integer.parseInt(numberOfRecords[0]) + " but Actual: " + accountFilterRowCount,
+							YesNo.No);
+					sa.assertTrue(false, "Filtered not successfully, Count is not matched, Expected: "
+							+ Integer.parseInt(numberOfRecords[0]) + " but Actual: " + accountFilterRowCount);
 				}
 
 			} else {
-				log(LogStatus.ERROR, "Centrient Pharmaceuticals -2018 is not filtered in the " + sdgName, YesNo.Yes);
-				sa.assertTrue(false, "Centrient Pharmaceuticals -2018 is not filtered in the " + sdgName);
+				log(LogStatus.ERROR, M9_TC039_FilterSearch + " is not filtered in the " + sdgName, YesNo.Yes);
+				sa.assertTrue(false, M9_TC039_FilterSearch + " is not filtered in the " + sdgName);
 			}
 		} else {
 			log(LogStatus.ERROR, "Not able to open the " + TabName.HomeTab + "", YesNo.Yes);
@@ -5344,7 +5393,6 @@ public class Module9 extends BaseLib {
 
 				rowCountAfterFilter = AppBuilder.numberOfRecordsWithoutClickOnExpendIcon(sdgName, pageSize);
 
-				System.out.println("Sou  row count" + rowCountAfterFilter);
 				if (rowCountAfterFilter == Integer.parseInt(numberOfRecords[1])) {
 					log(LogStatus.PASS, "Record has been matched on the basis of the My Record FIlter", YesNo.No);
 					sa.assertTrue(true, "Record has been matched on the basis of the My Record FIlter");
@@ -5368,14 +5416,18 @@ public class Module9 extends BaseLib {
 			if (SB.sdgFilterSendDataAndFound(sdgName, "Fund Type", "Fund")) {
 				log(LogStatus.PASS, "Fund type has been filtered in the " + sdgName, YesNo.No);
 				sa.assertTrue(true, "Fund type has been filtered in the " + sdgName);
-				accountFilterRowCount = AppBuilder.numberOfRecords(sdgName, pageSize);
-				System.out.println("Sou " + accountFilterRowCount);
+				accountFilterRowCount = home.numberOfRecords(sdgName, pageSize);
+
 				if (accountFilterRowCount == Integer.parseInt(numberOfRecords[2])) {
-					log(LogStatus.PASS, "Filter Successfully, count is matched", YesNo.No);
-					sa.assertTrue(true, "Filter Successfully and count is matched");
+					log(LogStatus.PASS, "Filter Successfully, count is matched: " + accountFilterRowCount, YesNo.No);
+					sa.assertTrue(true, "Filter Successfully and count is matched: " + accountFilterRowCount);
 				} else {
-					log(LogStatus.ERROR, "Filtered not successfully, Count is not matched", YesNo.No);
-					sa.assertTrue(false, "Filtered not successfully,Count is not matched");
+					log(LogStatus.ERROR,
+							"Filtered not successfully, Count is not matched. Expected: "
+									+ Integer.parseInt(numberOfRecords[2]) + " but Actual: " + accountFilterRowCount,
+							YesNo.No);
+					sa.assertTrue(false, "Filtered not successfully, Count is not matched. Expected: "
+							+ Integer.parseInt(numberOfRecords[2]) + " but Actual: " + accountFilterRowCount);
 				}
 
 			} else {
@@ -5399,6 +5451,7 @@ public class Module9 extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		SDGPageBusinessLayer SB = new SDGPageBusinessLayer(driver);
 		EditPageBusinessLayer EB = new EditPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
 
 		String sdgName = M9_TC038_SDGName;
@@ -5499,11 +5552,16 @@ public class Module9 extends BaseLib {
 
 					rowCountAfterFilter = AppBuilder.numberOfRecordsWithoutClickOnExpendIcon(sdgName, pageSize);
 					if (rowCountAfterFilter == Integer.parseInt(numberOfRecords[0])) {
-						log(LogStatus.PASS, "Record has been matched on the basis of the My Record FIlter", YesNo.No);
-						sa.assertTrue(true, "Record has been matched on the basis of the My Record FIlter");
+						log(LogStatus.PASS,
+								"Record has been matched on the basis of the My Record FIlter: " + rowCountAfterFilter,
+								YesNo.No);
+						sa.assertTrue(true,
+								"Record has been matched on the basis of the My Record FIlter: " + rowCountAfterFilter);
 					} else {
-						log(LogStatus.ERROR, "Record is not matched on the basis of the My Record FIlter", YesNo.Yes);
-						sa.assertTrue(false, "Record is not matched on the basis of the My Record FIlter");
+						log(LogStatus.ERROR, "Record is not matched on the basis of the My Record FIlter, Expected: "
+								+ numberOfRecords[0] + " but Actual: " + rowCountAfterFilter, YesNo.Yes);
+						sa.assertTrue(false, "Record is not matched on the basis of the My Record FIlter, Expected: "
+								+ numberOfRecords[0] + " but Actual: " + rowCountAfterFilter);
 					}
 
 				} else {
@@ -5516,7 +5574,7 @@ public class Module9 extends BaseLib {
 			}
 
 			if (BP.clickOnTab(projectName, TabName.HomeTab)) {
-				rowCountAfterFilter = Integer.parseInt(numberOfRecords[1]);
+
 				log(LogStatus.INFO, TabName.HomeTab + " has been open", YesNo.No);
 				CommonLib.refresh(driver);
 				if (SB.sdgFilterSendDataAndFound(sdgName, M9_TC040_StandardFilterLabel1,
@@ -5538,14 +5596,18 @@ public class Module9 extends BaseLib {
 						}
 					}
 
-					rowCountAfterFilter = AppBuilder.numberOfRecords(sdgName, pageSize);
+					rowCountAfterFilter = home.numberOfRecords(sdgName, pageSize);
 
-					if (rowCountAfterFilter == Integer.parseInt(numberOfRecords[2])) {
-						log(LogStatus.PASS, "Filter Successfully, count is matched", YesNo.No);
-						sa.assertTrue(true, "Filter Successfully and count is matched");
+					if (rowCountAfterFilter == Integer.parseInt(numberOfRecords[1])) {
+						log(LogStatus.PASS, "Filter Successfully, count is matched " + rowCountAfterFilter, YesNo.No);
+						sa.assertTrue(true, "Filter Successfully and count is matched " + rowCountAfterFilter);
 					} else {
-						log(LogStatus.ERROR, "Filtered not successfully, Count is not matched", YesNo.No);
-						sa.assertTrue(false, "Filtered not successfully,Count is not matched");
+						log(LogStatus.ERROR,
+								"Filtered not successfully, Count is not matched. Expected: "
+										+ Integer.parseInt(numberOfRecords[1]) + " but Actual: " + rowCountAfterFilter,
+								YesNo.No);
+						sa.assertTrue(false, "Filtered not successfully, Count is not matched. Expected: "
+								+ Integer.parseInt(numberOfRecords[1]) + " but Actual: " + rowCountAfterFilter);
 					}
 
 				} else {
@@ -5658,7 +5720,7 @@ public class Module9 extends BaseLib {
 							log(LogStatus.INFO,
 									"------" + myHomeFilterCheckBoxLabel + " Filter Applied Verified-------", YesNo.No);
 
-							int rowCountAfterFilter = AppBuilder.numberOfRecords(TitleOfSDG, pageSize);
+							int rowCountAfterFilter = home.numberOfRecords(TitleOfSDG, pageSize);
 
 							if (expectedRecordsInAdminCase == rowCountAfterFilter) {
 								log(LogStatus.INFO,
@@ -5707,7 +5769,7 @@ public class Module9 extends BaseLib {
 											"------" + myHomeFilterCheckBoxLabel + " Filter Applied Verified-------",
 											YesNo.No);
 
-									int rowCountAfterFilter = AppBuilder.numberOfRecords(TitleOfSDG, pageSize);
+									int rowCountAfterFilter = home.numberOfRecords(TitleOfSDG, pageSize);
 
 									if (expectedRecordsInUserCase == rowCountAfterFilter) {
 										log(LogStatus.INFO,
@@ -5835,7 +5897,7 @@ public class Module9 extends BaseLib {
 								log(LogStatus.INFO,
 										"---------Verified Filters Applied to SDG: " + TitleOfSDG + " ---------",
 										YesNo.No);
-								int rowCountAfterFilter = AppBuilder.numberOfRecords(TitleOfSDG, pageSize);
+								int rowCountAfterFilter = home.numberOfRecords(TitleOfSDG, pageSize);
 
 								if (expectedRecordsInUserCase == rowCountAfterFilter) {
 									log(LogStatus.INFO,
@@ -5998,8 +6060,8 @@ public class Module9 extends BaseLib {
 											if (home.sdgFilterSendDataAndDropDownHandle(TitleOfSDG, data)) {
 												log(LogStatus.INFO, "---------Verified Filters Applied to SDG: "
 														+ TitleOfSDG + " ---------", YesNo.No);
-												int rowCountAfterFilter = AppBuilder.numberOfRecords(TitleOfSDG,
-														pageSize);
+												CommonLib.ThreadSleep(8000);
+												int rowCountAfterFilter = home.numberOfRecords(TitleOfSDG, pageSize);
 
 												if (expectedRecordsInUserCase == rowCountAfterFilter) {
 													log(LogStatus.INFO,
@@ -6246,7 +6308,7 @@ public class Module9 extends BaseLib {
 
 										}
 
-										int rowCountAfterFilter = AppBuilder.numberOfRecords(TitleOfSDG, pageSize);
+										int rowCountAfterFilter = home.numberOfRecords(TitleOfSDG, pageSize);
 
 										if (expectedRecordsInAdminCase == rowCountAfterFilter) {
 											log(LogStatus.INFO,
@@ -7011,7 +7073,7 @@ public class Module9 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
-		LightningAppBuilderPageBusinessLayer AppBuilder = new LightningAppBuilderPageBusinessLayer(driver);
+		boolean defaultSorting = false;
 
 		String[][] data = { M9_TC047_FilterMiscData.split("<break>") };
 		String[] numberOfRecords = M9_TC047_SDGNumberOfRecords.split("<break>");
@@ -7020,7 +7082,7 @@ public class Module9 extends BaseLib {
 		String pageSize = "100";
 		int expectedDefaultRecordsInUserCase = Integer.parseInt(numberOfRecords[1]);
 		String[] fieldsInSDG = { M9_TC005_SDGField1, M9_TC005_SDGField2, M9_TC005_SDGField3, M9_TC005_SDGField4,
-				M9_TC005_SDGField5, M9_TC005_SDGField6, M9_TC005_SDGField7, M9_TC005_SDGField9 };
+				M9_TC005_SDGField5, M9_TC005_SDGField6, M9_TC005_SDGField7 };
 		String[] datefieldsInSDG = { M9_TC005_SDGField5 };
 
 		List<String> columnInSDG = Arrays.asList(fieldsInSDG);
@@ -7033,7 +7095,7 @@ public class Module9 extends BaseLib {
 					"Verified SDG Grid: " + TitleOfSDG + " is Expanded By Default or Not, If not then Expand it ",
 					YesNo.Yes);
 
-			int rowCount = AppBuilder.numberOfRecords(TitleOfSDG, pageSize);
+			int rowCount = home.numberOfRecords(TitleOfSDG, pageSize);
 
 			if (expectedDefaultRecordsInUserCase == rowCount) {
 				log(LogStatus.INFO,
@@ -7057,6 +7119,79 @@ public class Module9 extends BaseLib {
 		}
 
 		// 2nd Part
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(10000);
+		log(LogStatus.INFO, "---------Now Going to Verify Default Sorting & Also SOrting For other Columns in SDG: "
+				+ TitleOfSDG + " in case of User-----------", YesNo.Yes);
+		if (home.sdgGridExpandedByDefaultIfNotThenExpand(TitleOfSDG)) {
+
+			if (home.pageSizeSelect(TitleOfSDG, pageSize)) {
+
+				log(LogStatus.PASS, "-----------Page Size has selected to" + pageSize + " --------------", YesNo.No);
+
+				if (CommonLib.checkSorting(driver, SortOrder.Decending, home.columnData(TitleOfSDG, 2))) {
+					log(LogStatus.PASS, "-----------Fund Name Column is in Descending Order By Default --------------",
+							YesNo.No);
+					sa.assertTrue(true, "-----------Fund Name Column is in Descending Order By Default --------------");
+					defaultSorting = true;
+
+				}
+
+				else {
+					log(LogStatus.FAIL, "-----------Fund Name Column not in Descending Order By Default --------------",
+							YesNo.No);
+					sa.assertTrue(false,
+							"-----------Fund Name Column not in Descending Order By Default --------------");
+
+				}
+			} else {
+				log(LogStatus.FAIL, "-----------Not able to Select Page Size: " + pageSize + "--------------",
+						YesNo.No);
+				sa.assertTrue(false, "-----------Not able to Select Page Size: " + pageSize + " --------------");
+			}
+
+		} else {
+			log(LogStatus.FAIL, "-----------Not able to Expand SDG Grid --------------", YesNo.No);
+			sa.assertTrue(false, "-----------Not able to Expand SDG Grid --------------");
+		}
+
+		// 3rd Part
+		if (defaultSorting) {
+			log(LogStatus.PASS,
+					"-----------Fund Name Column is in Descending Order By Default, Now Continue to Check Sorting of Other Columns --------------",
+					YesNo.No);
+			if (home.sdgGridExpandedByDefaultIfNotThenExpand(TitleOfSDG)) {
+
+				if (home.pageSizeSelect(TitleOfSDG, pageSize)) {
+
+					log(LogStatus.PASS, "-----------Page Size has selected to" + pageSize + " --------------",
+							YesNo.No);
+					CommonLib.ThreadSleep(25000);
+					home.verifyColumnAscendingDescendingOrder(SDGGridName.Clonned_SDG, columnInSDG, dateColumnInSDG);
+				} else {
+					log(LogStatus.FAIL, "-----------Not able to Select Page Size: " + pageSize + "--------------",
+							YesNo.No);
+					sa.assertTrue(false, "-----------Not able to Select Page Size: " + pageSize + " --------------");
+				}
+
+			} else {
+				log(LogStatus.FAIL, "-----------Not able to Expand SDG Grid --------------", YesNo.No);
+				sa.assertTrue(false, "-----------Not able to Expand SDG Grid --------------");
+			}
+
+		}
+
+		else
+
+		{
+			log(LogStatus.FAIL,
+					"-----------Fund Name Column not in Descending Order By Default, SO No Able to Continue to Check Sorting of Other Columns --------------",
+					YesNo.No);
+			sa.assertTrue(false,
+					"-----------Fund Name Column not in Descending Order By Default, SO No Able to Continue to Check Sorting of Other Columns --------------");
+		}
+
+		// 4th Part
 
 		log(LogStatus.INFO, "---------Now Going to Verify Records After Filter Applied in SDG: " + TitleOfSDG
 				+ " in case of User-----------", YesNo.Yes);
@@ -7073,7 +7208,8 @@ public class Module9 extends BaseLib {
 					log(LogStatus.INFO, "---------Verified Filters Applied to SDG: " + TitleOfSDG + " ---------",
 							YesNo.No);
 					CommonLib.ThreadSleep(8000);
-					int rowCountAfterFilter = AppBuilder.numberOfRecords(TitleOfSDG, pageSize);
+					home.sdgGridExpandedByDefaultIfNotThenExpand(TitleOfSDG);
+					int rowCountAfterFilter = home.numberOfRecords(TitleOfSDG, pageSize);
 
 					if (expectedRecordsInUserCaseAfterSumoFilterApplied == rowCountAfterFilter) {
 						log(LogStatus.INFO,
@@ -7104,42 +7240,6 @@ public class Module9 extends BaseLib {
 			} else {
 				log(LogStatus.ERROR, "Not able to click on Filter Button on SDG: " + TitleOfSDG, YesNo.Yes);
 				sa.assertTrue(false, "Not able to click on Filter Button on SDG: " + TitleOfSDG);
-			}
-
-		} else {
-			log(LogStatus.FAIL, "-----------Not able to Expand SDG Grid --------------", YesNo.No);
-			sa.assertTrue(false, "-----------Not able to Expand SDG Grid --------------");
-		}
-
-		// 3rd Part
-		CommonLib.refresh(driver);
-		CommonLib.ThreadSleep(10000);
-		log(LogStatus.INFO, "---------Now Going to Verify Default Sorting & Also SOrting For other Columns in SDG: "
-				+ TitleOfSDG + " in case of User-----------", YesNo.Yes);
-		if (home.sdgGridExpandedByDefaultIfNotThenExpand(TitleOfSDG)) {
-
-			if (home.pageSizeSelect(TitleOfSDG, pageSize)) {
-
-				log(LogStatus.PASS, "-----------Page Size has selected to" + pageSize + " --------------", YesNo.No);
-
-				if (CommonLib.checkSorting(driver, SortOrder.Decending, home.columnData(TitleOfSDG, 2))) {
-					log(LogStatus.PASS, "-----------Fund Name Column is in Descending Order By Default --------------",
-							YesNo.No);
-					sa.assertTrue(true, "-----------Fund Name Column is in Descending Order By Default --------------");
-
-				}
-
-				else {
-					log(LogStatus.FAIL, "-----------Fund Name Column not in Descending Order By Default --------------",
-							YesNo.No);
-					sa.assertTrue(false,
-							"-----------Fund Name Column not in Descending Order By Default --------------");
-
-				}
-			} else {
-				log(LogStatus.FAIL, "-----------Not able to Select Page Size: " + pageSize + "--------------",
-						YesNo.No);
-				sa.assertTrue(false, "-----------Not able to Select Page Size: " + pageSize + " --------------");
 			}
 
 		} else {
@@ -7288,7 +7388,7 @@ public class Module9 extends BaseLib {
 															+ " is Expanded By Default or Not, If not then Expand it ",
 															YesNo.Yes);
 
-													int rowCountAfterFilter = AppBuilder.numberOfRecords(TitleOfSDG,
+													int rowCountAfterFilter = home.numberOfRecords(TitleOfSDG,
 															pageSize);
 
 													if (expectedRecordsInUserCase == rowCountAfterFilter) {
@@ -8913,6 +9013,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 	public void M9Tc066_VerifyGlobalFilterForFundAndFirm(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -9226,6 +9327,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 	public void M9Tc068_AddFilterSequenceForFundAndVerifyRecord(String projectName) {
 
@@ -9404,6 +9506,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 	public void M9Tc069_AddFilterSequenceForAccountAndContactVerifyRecord(String projectName) {
 
@@ -9570,6 +9673,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 	public void M9Tc070_VerifyFundAndFirmFilter(String projectName) {
 
@@ -9687,6 +9791,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 	public void M9Tc071_checkMyRecordFiltercCheckbox(String projectName) {
 
@@ -9748,6 +9853,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 	public void M9Tc072_verifyMyTeamRecordUser(String projectName) {
 
@@ -9887,6 +9993,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 	public void M9Tc073_verifyMyTeamRecordAdmin(String projectName) {
 
@@ -9969,6 +10076,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 	public void M9Tc074_updateTeamBlankAndVerifyMyTeamRecordFilterRecord(String projectName) {
 
@@ -10089,6 +10197,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 	public void M9Tc075_updateTeamToOriginationForUser1AndVerifyMyTeamRecordFilterRecords(String projectName) {
 
@@ -10268,6 +10377,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 	public void M9Tc076_updateTeamBlankAndVerifyMyTeamRecordFilterRecord(String projectName) {
 
@@ -10388,6 +10498,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 
 	public void M9Tc077_verifyEditLockedIconOnRecord(String projectName) {
@@ -10468,6 +10579,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 
 	public void M9Tc078_VerifyHeaderCheckboxOfSDG(String projectName) {
@@ -10548,6 +10660,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 
 	public void M9Tc079_VerifyErrorMessageIfRequireFieldEmpty(String projectName) {
@@ -10600,6 +10713,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 
 	public void M9Tc080_VerifyFieldsWhichEditableOnSingleRecordAndMultipleRecord(String projectName) {
@@ -11318,6 +11432,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 
 	public void M9Tc081_VerifyMultipleFieldsWhichEditableOnSameTimeWithSingleOrMultipleRecored(String projectName) {
@@ -11557,6 +11672,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 
 	public void M9Tc082_UpdatePhoneForCompanyAndVerifyErrorMessage(String projectName) {
@@ -11622,6 +11738,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 
 	public void M9Tc083_UpdatePhoneWebSiteRevenueAndRefreashSDGAndVerifyRecord(String projectName) {
@@ -11710,6 +11827,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 
 	public void M9Tc084_VerifyMultipleFieldWillNotEditSameTimeOnDifferentPage(String projectName) {
@@ -11813,6 +11931,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 
 	public void M9Tc085_VerifyAllfieldsWillEditAtAameTimeOnSamePage(String projectName) {
@@ -11901,6 +12020,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 
 	public void M9Tc086_CreateCustompicklistfieldAndSetCustomSourcefieldAsControllingField(String projectName) {
@@ -11983,6 +12103,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 
 	public void M9Tc087_addFieldOnSDG(String projectName) {
@@ -12024,6 +12145,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 
 	public void M9Tc088_verifyLockedIconOnSourceAndStatusField(String projectName) {
@@ -12063,6 +12185,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 
 	public void M9Tc089_verifyValidation(String projectName) {
@@ -12143,6 +12266,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 	public void M9Tc090_verifyLockedIconOnNumberOfContactField(String projectName) {
 
@@ -12173,6 +12297,7 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
+
 	@Test
 	public void M9Tc091_verifyLockedIconOnIntroducedByField(String projectName) {
 
