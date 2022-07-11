@@ -2095,6 +2095,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String tab = getTabName(projectName, tabName);
 		for (int i = 0; i < 2; i++) {
 
+			
 			ele = getrelatedAssociationsdropdownButton(projectName, pageName, label, action, 5);
 			if (click(driver, ele, "Drop Down Icon For Label : " + label, action)) {
 				appLog.error("Clicked on  Drown Down Icon for LABEL : " + label);
@@ -2326,7 +2327,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				return flag;
 			}
 		}
+		
+		if (label.replaceAll("_", " ").equalsIgnoreCase(PageLabel.Name.toString())) {
+			String xpath = "//span[text()='" + label.replaceAll("_", " ")
+					+ "']/..//following-sibling::div//input[@title='Search Contacts']";
+			doubleClickUsingAction(driver, FindElement(driver, xpath, "",action.BOOLEAN,30));
+			log(LogStatus.INFO, "click on name text box" , YesNo.No);
 
+		}
 		ele = getLabelTextBoxForNameOrRelatedAssociationOnTask(projectName, pageName, label, action, timOut);
 		ThreadSleep(2000);
 		if (sendKeys(driver, ele, textValue, "Related To Text Label", action)) {
@@ -3167,7 +3175,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					YesNo.No);
 
 			// Assigned To
-			String assignedToxpath = subjectXpath + "/../..//following-sibling::p";
+			String assignedToxpath = subjectXpath + "/ancestor::li//div[contains(@class,'summary')]";
 			ele = FindElement(driver, assignedToxpath, "Asigned To ", action.SCROLLANDBOOLEAN, 5);
 			if (ele != null) {
 				log(LogStatus.INFO, "Asigned To verified for subject : " + subject + " For item : " + createdItemValue,
@@ -3561,7 +3569,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String xpath = "";
 		String head = header.toString().replace("_", " ");
 		ThreadSleep(3000);
-		xpath = "//*[contains(text(),'" + head + "')]/..//*[text()='" + itemName + "']";
+		xpath = "//div[contains(text(),'" + head + "')]/..//*[text()='" + itemName + "']";
 		ele = FindElement(driver, xpath, "Header : " + itemName, action.BOOLEAN, 30);
 		ele = isDisplayed(driver, ele, "Visibility", 10, head + " : " + itemName);
 		return ele;
