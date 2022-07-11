@@ -1623,6 +1623,11 @@ public class CommonVariables {
 			M3Fund1Category=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "M3FUND1", excelLabel.Investment_Category);
 			M3Fund1RecordType=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "M3FUND1", excelLabel.Record_Type);
 
+			SmokeReportFolderName=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Report_Folder_Name);
+			SmokeReportName=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Report_Name);	
+			SmokeReportType=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Select_Report_Type);
+			SmokeReportShow=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Show);
+			SmokeReportRange=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Range);
 
 
 			//**********************************************************Email Template ******************************************************/

@@ -1048,8 +1048,8 @@ lp.CRMlogout();
 				flag=true;
 				if (flag) {
 					if (i==0) {
-						String reportName="CustomReport68182";
-						String templateName="CustomReport68182";
+						String reportName=SmokeReportName;
+						String templateName=SmokeReportFolderName;
 						String fname=M3Contact1FName;
 						String lname = M3Contact1LName;
 						String folderName=EmailTemplate1_FolderName;
@@ -1251,7 +1251,6 @@ lp.CRMlogout();
 		String dueDate=todaysDate;
 		String status="";
 		String priority="";
-		String meetingType = "";
 		String contactNAme= M3Contact1FName+" "+M3Contact1LName;
 		String[][] dropDownLabelWithValues = new String[3][];
 
@@ -1295,14 +1294,8 @@ lp.CRMlogout();
 					} else if(i==1) {
 
 						subject =M3Meeting1Subject;
-						status=M3Meeting1Status;
-						priority=M3Meeting1Priority;
-						meetingType=M3Meeting1MeetingType;
 
-						String[][] dropDownLabelWithValues2 = {{PageLabel.Status.toString(),status},
-								{PageLabel.Priority.toString(),priority},
-								{PageLabel.Meeting_Type.toString(),meetingType}};
-						dropDownLabelWithValues=dropDownLabelWithValues2;
+						dropDownLabelWithValues=null;
 
 					}else{
 						subject =M3Task1Subject;
@@ -1316,7 +1309,7 @@ lp.CRMlogout();
 					if (tp.enteringSubjectAndSelectDropDownValuesonTaskPopUp(projectName, PageName.TaskPage, subject, dropDownLabelWithValues, action.SCROLLANDBOOLEAN, 10)) {
 						log(LogStatus.INFO, "Entered value to Subject Text Box ", YesNo.No);
 						ThreadSleep(1000);
-
+						if(i!=1) {
 						if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), dueDate, PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Entered value to Due Date Text Box", YesNo.No);
 							ThreadSleep(1000);
@@ -1324,7 +1317,7 @@ lp.CRMlogout();
 							log(LogStatus.ERROR, "Not able to enter value on duedate textbox "+newInteractionsNavigationLink, YesNo.Yes);
 							sa.assertTrue(false,"Not able to enter value on duedate textbox "+newInteractionsNavigationLink );
 						}
-
+						}
 						flag = cp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Name.toString(), TabName.TaskTab, contactNAme, action.SCROLLANDBOOLEAN, 10);		
 						if (flag) {
 							ele=cp.getCrossButtonForAlreadySelectedItem(projectName, PageName.TaskPage, PageLabel.Name.toString(),true, contactNAme, action.SCROLLANDBOOLEAN, 5);
@@ -1356,14 +1349,23 @@ lp.CRMlogout();
 								sa.assertTrue(false,"Created Task Msg Ele not Found");
 								log(LogStatus.SKIP,"Created Task Msg Ele not Found",YesNo.Yes);
 							}
-							String[][] fieldsWithValues= {
-									{PageLabel.Subject.toString(),subject},
-									{PageLabel.Due_Date.toString(),dueDate},
-									{PageLabel.Name.toString(),contactNAme},
-									{PageLabel.Status.toString(),status},
-									{PageLabel.Priority.toString(),priority},
-									{PageLabel.Assigned_To.toString(),adminUerName}};
-							tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
+							
+							if(i!=1) {
+								String[][] fieldsWithValues= {
+										{PageLabel.Subject.toString(),subject},
+										{PageLabel.Due_Date.toString(),dueDate},
+										{PageLabel.Name.toString(),contactNAme},
+										{PageLabel.Status.toString(),status},
+										{PageLabel.Priority.toString(),priority}};
+								
+								tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
+							}else {
+								String[][] fieldsWithValues= {
+										{PageLabel.Subject.toString(),subject},
+										{PageLabel.Name.toString(),contactNAme}};
+								
+								tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
+							}
 						}
 						else {
 							log(LogStatus.ERROR, "Save Button is not visible so could not be create "+newInteractionsNavigationLink, YesNo.Yes);

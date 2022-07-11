@@ -74,7 +74,7 @@ public class DataLoaderWizardPage extends BasePageBusinessLayer {
 	 * "//div[@data-aura-class='dataImporterDiLanding']//a[text()='Launch Wizard!']"
 	 * )
 	 */
-	@FindBy(xpath="//a[contains(text(),\"Launch\")]")
+	@FindBy(xpath="//a[contains(text(),'Launch Wizard')]")
 	private WebElement lunchWizardButton;
 
 	public WebElement getLunchWizardButton(int timeOut) {
@@ -230,6 +230,13 @@ public class DataLoaderWizardPage extends BasePageBusinessLayer {
 
 	public WebElement getFundNameLookUpFieldDropDownInFundRaising(int timeOut) {
 		return isDisplayed(driver, fundNameLookUpFieldDropDownInFundRaising, "Visibility", timeOut, "fund Name LookUp Field DropDown In FundRaising");
+	}
+	
+	@FindBy(xpath = "//option[@label='Navigation Name']/parent::select")
+	private WebElement navigationNameLookUpFieldDropDownInFundRaising;
+
+	public WebElement getNavigationNameLookUpFieldDropDownInNavigation(int timeOut) {
+		return isDisplayed(driver, navigationNameLookUpFieldDropDownInFundRaising, "Visibility", timeOut, "navigation Name LookUp Field DropDown In FundRaising");
 	}
 	
 	@FindBy(xpath = "(//span[text()='Which Firm field in your file do you want to match against to set the Legal Name lookup field?']/parent::div/following-sibling::div/select)[1]")

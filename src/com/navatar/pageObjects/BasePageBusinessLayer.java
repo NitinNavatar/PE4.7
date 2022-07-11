@@ -7,6 +7,7 @@ import org.apache.poi.hssf.view.brush.PendingPaintings;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -2427,10 +2428,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String label;
 		String value;
 		boolean flag = false;
-		getLabelTextBox(projectName, PageName.TaskPage.toString(), PageLabel.Subject.toString(), timeOut).clear();
+		WebElement ele2=getLabelTextBox(projectName, PageName.TaskPage.toString(), PageLabel.Subject.toString(), timeOut);
+		ele2.sendKeys(Keys.BACK_SPACE);
+		ThreadSleep(1000);
+		ele2.clear();
+		sendKeys(driver,ele2,
+				subjectText, "Subject", action);
+		ele2.sendKeys(Keys.BACK_SPACE);
+		ele2.sendKeys(Keys.BACK_SPACE);
+		ele2.clear();
 		ThreadSleep(3000);
-		if (sendKeys(driver,
-				getLabelTextBox(projectName, PageName.TaskPage.toString(), PageLabel.Subject.toString(), timeOut),
+		if (sendKeys(driver,ele2,
 				subjectText, "Subject", action)) {
 			log(LogStatus.INFO, "Entered value to Subject Text Box", YesNo.Yes);
 
@@ -3167,7 +3175,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					YesNo.No);
 
 			// Assigned To
-			String assignedToxpath = subjectXpath + "/../..//following-sibling::p";
+			String assignedToxpath = subjectXpath + "/ancestor::li//div[contains(@class,'summary')]";
 			ele = FindElement(driver, assignedToxpath, "Asigned To ", action.SCROLLANDBOOLEAN, 5);
 			if (ele != null) {
 				log(LogStatus.INFO, "Asigned To verified for subject : " + subject + " For item : " + createdItemValue,
