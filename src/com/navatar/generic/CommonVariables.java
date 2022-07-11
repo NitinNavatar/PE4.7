@@ -727,26 +727,28 @@ public class CommonVariables {
 	public static String M9LV_1_Member,M9LV_2_Member,M9LV_3_Member,M9LV_4_Member,M9LV_5_Member;
 
 	//Tab Name
-	public static String M9LV_1_TabName,M9LV_2_TabName,M9LV_3_TabName,M9LV_4_TabName,M9LV_5_TabName;
+	public static String M9LV_1_TabName,M9LV_2_TabName,M9LV_3_TabName,M9LV_4_TabName,M9LV_5_TabName,PEFSTG_10_TabName;
 
 	//List View Name
-	public static String M9LV_1_ListViewName,M9LV_2_ListViewName,M9LV_3_ListViewName,M9LV_4_ListViewName,M9LV_5_ListViewName;
+	public static String M9LV_1_ListViewName,M9LV_2_ListViewName,M9LV_3_ListViewName,M9LV_4_ListViewName,M9LV_5_ListViewName,PEFSTG_10_ListViewName;
 
 	//List Accessibility
 	public static String M9LV_1_ListAccessibility,M9LV_2_ListAccessibility,M9LV_3_ListAccessibility,M9LV_4_ListAccessibility,M9LV_5_ListAccessibility;	
 
 	//Filter
-	public static String M9LV_1_Filter,M9LV_2_Filter,M9LV_3_Filter,M9LV_4_Filter,M9LV_5_Filter;
+	public static String M9LV_1_Filter,M9LV_2_Filter,M9LV_3_Filter,M9LV_4_Filter,M9LV_5_Filter,PEFSTG_10_Filter;
 
 	//Field
-	public static String M9LV_1_Field,M9LV_2_Field,M9LV_3_Field,M9LV_4_Field,M9LV_5_Field;
+	public static String M9LV_1_Field,M9LV_2_Field,M9LV_3_Field,M9LV_4_Field,M9LV_5_Field,PEFSTG_10_Field;
 
 	//Operators
-	public static String M9LV_1_Operators,M9LV_2_Operators,M9LV_3_Operators,M9LV_4_Operators,M9LV_5_Operators;
+	public static String M9LV_1_Operators,M9LV_2_Operators,M9LV_3_Operators,M9LV_4_Operators,M9LV_5_Operators,PEFSTG_10_Operators;
 
 	//Filter Value
-	public static String M9LV_1_FilterValue,M9LV_2_FilterValue,M9LV_3_FilterValue,M9LV_4_FilterValue,M9LV_5_FilterValue;
-
+	public static String M9LV_1_FilterValue,M9LV_2_FilterValue,M9LV_3_FilterValue,M9LV_4_FilterValue,M9LV_5_FilterValue,PEFSTG_10_FilterValue;
+    
+	// List view Condition
+	public static String PEFSTG_10_FilterCondition;
 	//List View Sheet Data
 	public static String[][] getListViewSheetData;
 
@@ -3816,6 +3818,7 @@ public class CommonVariables {
 
 
 						//Tab Name
+
 						M9LV_1_TabName = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "M9LV_1", excelLabel.TabName);
 						M9LV_2_TabName = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "M9LV_2", excelLabel.TabName);
 						M9LV_3_TabName = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "M9LV_3", excelLabel.TabName);
@@ -3829,7 +3832,6 @@ public class CommonVariables {
 						M9LV_3_ListViewName = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "M9LV_3", excelLabel.List_View_Name);
 						M9LV_4_ListViewName = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "M9LV_4", excelLabel.List_View_Name);
 						M9LV_5_ListViewName = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "M9LV_5", excelLabel.List_View_Name);
-
 
 						// List Accessibility
 						M9LV_1_ListAccessibility = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView",
@@ -3851,8 +3853,8 @@ public class CommonVariables {
 								"M9LV_3", excelLabel.Filter);
 						M9LV_4_Filter = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
 								"M9LV_4", excelLabel.Filter);
+
 						M9LV_5_Filter = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "M9LV_5", excelLabel.Filter);
-					
 								
 
 						// Field
@@ -3864,6 +3866,7 @@ public class CommonVariables {
 								"M9LV_3", excelLabel.Field);
 						M9LV_4_Field = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
 								"M9LV_4", excelLabel.Field);
+
 						M9LV_5_Field = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "M9LV_5", excelLabel.Field);		
 
 						// Operators
@@ -3875,6 +3878,7 @@ public class CommonVariables {
 								"M9LV_3", excelLabel.Operators);
 						M9LV_4_Operators = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
 								"M9LV_4", excelLabel.Operators);
+
 							M9LV_5_Operators = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "M9LV_5", excelLabel.Operators);		
 
 						// Filter Value
@@ -3886,6 +3890,7 @@ public class CommonVariables {
 								"M9LV_3", excelLabel.Filter_Value);
 						M9LV_4_FilterValue = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
 								"M9LV_4", excelLabel.Filter_Value);
+
 						M9LV_5_FilterValue = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "M9LV_5", excelLabel.Filter_Value);		
 
 						//Account Industry Name
@@ -5268,6 +5273,70 @@ public class CommonVariables {
 						M9_TC048_SDGNumberOfRecords = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "FilePath",
 								excelLabel.TestCases_Name, "M9Tc048_AddSDGToFundPage", excelLabel.SDG_Data_Count);
             
+							
+						try {
+							dataFile.close();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						try {
+							dataWb.close();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}	
+			
+			
+			case "PEFSTG":
+			
+				try {
+					dataFile=new FileInputStream(new File(phase1DataSheetFilePath));
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					dataWb=WorkbookFactory.create(dataFile);
+				} catch (EncryptedDocumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvalidFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+			//Tab Name
+			PEFSTG_10_TabName = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "PEFSTG_10", excelLabel.TabName);
+
+
+			//List View Name
+			PEFSTG_10_ListViewName = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "PEFSTG_10", excelLabel.List_View_Name);
+			
+			
+
+		
+			// Filter
+			PEFSTG_10_Filter = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "PEFSTG_10", excelLabel.Filter);
+			
+					
+
+			// Field
+			PEFSTG_10_Field = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "PEFSTG_10", excelLabel.Field);		
+
+			// Operators
+			PEFSTG_10_Operators = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "PEFSTG_10", excelLabel.Operators);		
+
+			// Filter Value
+			PEFSTG_10_FilterValue = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "PEFSTG_10", excelLabel.Filter_Value);		
+           
+			//Filter Condition
+			PEFSTG_10_FilterCondition = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "PEFSTG_10", excelLabel.Filter_Condition);		
+	           
+			
 			
 			try {
 				dataFile.close();
@@ -5281,6 +5350,7 @@ public class CommonVariables {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
 			break;
 
 		default:
