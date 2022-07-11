@@ -6,19 +6,10 @@ import static com.navatar.generic.CommonLib.log;
 import static com.navatar.generic.CommonLib.removeNumbersFromString;
 import static com.navatar.generic.CommonLib.switchOnWindow;
 import static com.navatar.generic.CommonLib.switchToDefaultContent;
-import static com.navatar.generic.CommonVariables.adminPassword;
-import static com.navatar.generic.CommonVariables.appName;
-import static com.navatar.generic.CommonVariables.crmUser1EmailID;
-import static com.navatar.generic.CommonVariables.crmUser1FirstName;
-import static com.navatar.generic.CommonVariables.crmUser1LastName;
-import static com.navatar.generic.CommonVariables.crmUserLience;
-import static com.navatar.generic.CommonVariables.crmUserProfile;
-import static com.navatar.generic.CommonVariables.environment;
-import static com.navatar.generic.CommonVariables.gmailUserName;
-import static com.navatar.generic.CommonVariables.mode;
-import static com.navatar.generic.CommonVariables.superAdminUserName;
+import static com.navatar.generic.CommonVariables.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -28,11 +19,13 @@ import com.navatar.generic.CommonLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.EnumConstants.Environment;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
+import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.generic.EnumConstants.object;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.pageObjects.BasePageBusinessLayer;
+import com.navatar.pageObjects.FieldAndRelationshipPageBusinessLayer;
 import com.navatar.pageObjects.FirmPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
@@ -40,13 +33,13 @@ import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class PEFSTG extends BaseLib{
-	
-	
+
+
 
 	@Parameters({ "projectName"})
 	@Test
 	public void PEFSTGTc001_CreateCRMUser(String projectName) {
-		
+
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -142,18 +135,18 @@ public class PEFSTG extends BaseLib{
 		}
 		lp.CRMlogout();
 		sa.assertAll();
-		
+
 	}
-	
-	
+
+
 	@Parameters({ "projectName"})
 	@Test
 	public void PEFSTGTc002_VerifyAppsOrLightningPages(String projectName) {
-		
+
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		
+
 		if(home.verifyPECloudOnHomePage())
 		{
 			log(LogStatus.PASS, "PE Cloud is availale on the home page", YesNo.No);
@@ -164,7 +157,7 @@ public class PEFSTG extends BaseLib{
 			log(LogStatus.FAIL, "PE Cloud is not availale on the home page", YesNo.Yes);
 			sa.assertTrue(false, "PE Cloud is not availale on the home page");	
 		}
-		
+
 		if(home.VerifyOnlyPECloudOnLauncher())
 		{
 			log(LogStatus.PASS, "PE Could is appearing on the App Launcher page and No other Apps is Appearing on the View All of App Launcher", YesNo.No);
@@ -186,21 +179,21 @@ public class PEFSTG extends BaseLib{
 			log(LogStatus.FAIL, "Either PE Could is not appearing on the View All of App Launcher page Or other Apps are Appearing on the View All of App Launcher", YesNo.Yes);
 			sa.assertTrue(false, "Either PE Could is not appearing on the View All of App Launcher page Or other Apps are Appearing on the View All of App Launcher");	
 		}
-		
-		
+
+
 		lp.CRMlogout();
 		sa.assertAll();	
-		
+
 	}
-	
+
 	@Parameters({ "projectName"})
 	@Test
 	public void PEFSTGTc003_VerifyTabsOnHomePage(String projectName) {
-		
+
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		
+
 		ArrayList<String> tabsForAdmin=new ArrayList<String>();
 		tabsForAdmin.add("Home");
 		tabsForAdmin.add("Firms");
@@ -213,21 +206,21 @@ public class PEFSTG extends BaseLib{
 		tabsForAdmin.add("Reports");
 		tabsForAdmin.add("Dashboards");
 		tabsForAdmin.add("Navatar Setup");
-		
+
 		ArrayList<String> result=home.verifyHomePageTabs(tabsForAdmin);
 		if(result.isEmpty())
 		{
 			log(LogStatus.PASS, "Homepage tabs has been verified "+tabsForAdmin, YesNo.Yes);
 			sa.assertTrue(true, "Homepage tabs has been verified "+tabsForAdmin);	
-		
+
 		}
 		else
 		{
 			log(LogStatus.FAIL, "Homepage tabs is not matched "+result, YesNo.Yes);
 			sa.assertTrue(false, "Homepage tabs is not matched "+result);	
 		}
-		
-		
+
+
 		lp.CRMlogout();
 		ThreadSleep(12000);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
@@ -242,21 +235,21 @@ public class PEFSTG extends BaseLib{
 		tabsForuser.add("Fund Center");
 		tabsForuser.add("Reports");
 		tabsForuser.add("Dashboards");
-		
-		
+
+
 		ArrayList<String> resultuser=home.verifyHomePageTabs(tabsForuser);
 		if(resultuser.isEmpty())
 		{
 			log(LogStatus.PASS, "Homepage tabs has been verified "+tabsForuser, YesNo.Yes);
 			sa.assertTrue(true, "Homepage tabs has been verified "+tabsForuser);	
-		
+
 		}
 		else
 		{
 			log(LogStatus.FAIL, "Homepage tabs is not matched "+resultuser, YesNo.Yes);
 			sa.assertTrue(false, "Homepage tabs is not matched "+resultuser);	
 		}
-		
+
 		lp.CRMlogout();
 		sa.assertAll();	
 	}
@@ -384,6 +377,384 @@ public class PEFSTG extends BaseLib{
 		sa.assertAll();	
 
 	}
+
+
+
+	@Parameters({ "projectName"})
+	@Test
+	public void PEFSTGTc005_VerifyDescriptionOfFirmRecordTypes(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		FirmPageBusinessLayer fb=new FirmPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+
+			String parentWindowID = switchOnWindow(driver);
+			if (parentWindowID == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create App Page");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create App Page",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create App Page");
+			}
+
+			if (setup.searchStandardOrCustomObject(projectName, mode, object.Firm)) {
+
+				if (setup.clickOnObjectFeature(projectName, mode, object.Firm,
+						ObjectFeatureName.recordTypes))
+				{
+					ArrayList<String> description=new ArrayList<String>();
+					description.add("An Advisor is a consulting or advisory firm that supports deal processes but is not an Intermediary.");
+					description.add("A Company is an operating asset that is a potential acquisition / investment target.");
+					description.add("An Institution is an existing or prospective investor.");
+					description.add("An Intermediary is a financial services firm that negotiates sell-side or buy-side transactions (e.g. investment banks, brokerages, advisors etc.)");
+					description.add("A Lender is an investment firm specializing in lending or debt investments (e.g., mezzanine or distressed debt funds).");
+					description.add("A Limited Partner is the legal entity an Institution uses to invest in your funds.");
+					description.add("A Portfolio Company is an operating asset that is currently or historically part of your firm’s portfolio.");
+
+					ArrayList<String> recordName=new ArrayList<String>();
+					recordName.add("Advisor");
+					recordName.add("Company");
+					recordName.add("Institution");
+					recordName.add("Intermediary");
+					recordName.add("Lender");
+					recordName.add("Limited Partner");
+					recordName.add("Portfolio Company");
+
+
+					ArrayList<String>result=setup.verifyDescriptionOnFirm(recordName,description);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "Description has been verified "+description, YesNo.Yes);
+						sa.assertTrue(true, "Description has been verified "+description);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Description is not matched "+result, YesNo.Yes);
+						sa.assertTrue(false, "Description is not matched "+result);
+					}
+				}
+				else
+				{
+					log(LogStatus.FAIL, "Not able to click on the Object feature name", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on the Object feature name");
+				}
+			}
+			else
+			{
+				log(LogStatus.FAIL, "Not able to search the Standard or Custom Object", YesNo.Yes);
+				sa.assertTrue(false, "Not able to search the Standard or Custom Object");
+
+			}
+
+			driver.close();
+			driver.switchTo().window(parentWindowID);
+		}
+		else
+		{
+			log(LogStatus.FAIL, "Not able to open the setup page", YesNo.Yes);
+			sa.assertTrue(false, "Not able to open the setup page");
+		}
+		lp.CRMlogout();
+		sa.assertAll();	
+	}
+
+
+	@Parameters({ "projectName"})
+	@Test
+	public void PEFSTGTc006_VerifyDefaultRecord(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		FirmPageBusinessLayer fb=new FirmPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		String parentWindowID=null;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+
+			parentWindowID = switchOnWindow(driver);
+			if (parentWindowID == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create App Page");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create App Page",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create App Page");
+			}
+
+			if (setup.searchStandardOrCustomObject(projectName, mode, object.Profiles)) {
+				log(LogStatus.PASS, "Profile page has been open", YesNo.No);
+
+				if(setup.VerifyDefaultRecordTypeForObject("System Administrator", "Company"))
+				{
+					log(LogStatus.PASS ,"Default record company has been verified for System Administrator", YesNo.Yes);
+					sa.assertTrue(true, "Default record company has been verified for System Administrator");
+				}
+				else
+				{
+					log(LogStatus.FAIL ,"Default record company is not verified for System Administrator", YesNo.Yes);
+					sa.assertTrue(false, "Default record company is not verified for System Administrator");
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open the Profile page", YesNo.Yes);
+				sa.assertTrue(false, "Not able to open the Profile page");
+			}
+
+			CommonLib.switchToDefaultContent(driver);
+			ThreadSleep(2000);
+			CommonLib.refresh(driver);
+			ThreadSleep(2000);
+			if (setup.searchStandardOrCustomObject(projectName, mode, object.Profiles)) {
+				log(LogStatus.PASS, "Profile page has been open", YesNo.No);
+
+				if(setup.VerifyDefaultRecordTypeForObject("Standard User", "Company"))
+				{
+					log(LogStatus.PASS ,"Default record company has been verified for Standard User", YesNo.Yes);
+					sa.assertTrue(true, "Default record company has been verified for Standard User");
+				}
+				else
+				{
+					log(LogStatus.ERROR ,"Default record company is not verified for Standard User", YesNo.Yes);
+					sa.assertTrue(false, "Default record company is not verified for Standard User");
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open the Profile page", YesNo.Yes);
+				sa.assertTrue(false, "Not able to open the Profile page");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to open the setup page", YesNo.Yes);
+			sa.assertTrue(false, "Not able to open the setup page");
+		}
+
+
+		driver.close();
+		driver.switchTo().window(parentWindowID);
+		lp.CRMlogout();
+		sa.assertAll();	
+	}
+
+
+	@Parameters({ "projectName"})	    
+	@Test
+
+	public void PEFSTGTc008_VerifyListViewsOnFirmObject(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP=new BasePageBusinessLayer(driver);
+		FirmPageBusinessLayer FB = new FirmPageBusinessLayer(driver);
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		ArrayList<String> listview = new ArrayList<String>();
+		listview.add("All Advisors");
+		listview.add("All Companies");
+		listview.add("All Firms");
+		listview.add("All Institutions");
+		listview.add("All Intermediaries");
+		listview.add("All Lenders");
+		listview.add("All Limited Partners");
+		listview.add("All Portfolio Companies");
+		listview.add("Recently Viewed  (Pinned list)");
+		listview.add("Recently Viewed Firms");
+
+		if(BP.clickOnTab(projectName, TabName.InstituitonsTab))
+		{
+			log(LogStatus.INFO, "Click on Tab : " + TabName.InstituitonsTab, YesNo.No);			
+			ArrayList<String> result=FB.verifyListViewOfFirm(listview);
+			if(result.isEmpty())
+			{
+				log(LogStatus.PASS, "All list view has been matched on the firm tab " +listview , YesNo.No);
+				sa.assertTrue(true, "All list view has been matched on the firm tab " +listview);
+			}
+			else {
+				log(LogStatus.ERROR, "List view is not matched on the firm tab " +result , YesNo.No);
+				sa.assertTrue(false, "List view is not matched on the firm tab " +result);
+			}
+		}
+		else {
+			sa.assertTrue(false, "Not able to clicked on Firms Tab");
+			log(LogStatus.SKIP, "Not Able to clicked on Firms Tab", YesNo.Yes);
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();	
+
+	}
+
+
+
+
+	@Parameters({ "projectName"})	    
+	@Test
+
+	public void PEFSTGTc009_VerifyFieldsOnListViewsOnFirmObject(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP=new BasePageBusinessLayer(driver);
+		FirmPageBusinessLayer FB = new FirmPageBusinessLayer(driver);
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		ArrayList<String> listview = new ArrayList<String>();
+		listview.add("All Advisors");
+		listview.add("All Companies");
+		listview.add("All Firms");
+		listview.add("All Institutions");
+		listview.add("All Intermediaries");
+		listview.add("All Lenders");
+		listview.add("All Limited Partners");
+		listview.add("All Portfolio Companies");
+		listview.add("Recently Viewed  (Pinned list)");
+		listview.add("Recently Viewed Firms");
+		
+		String[][] fieldData= {{"Legal Name","Entity Type","City","State","Website"},
+				{"Legal Name","Entity Type","Tier","Status","Industry","City","State","Website"},
+				{"Legal Name","Entity Type","Record Type","City","State","Website"}};
+
+		if(BP.clickOnTab(projectName, TabName.InstituitonsTab))
+		{
+			log(LogStatus.INFO, "Click on Tab : " + TabName.InstituitonsTab, YesNo.No);	
+			
+			
+		}
+		else
+		{
+			sa.assertTrue(false, "Not able to clicked on Firms Tab");
+			log(LogStatus.SKIP, "Not Able to clicked on Firms Tab", YesNo.Yes);
+		}
+	}
+
+
+
+	@Parameters({ "projectName"})	    
+	@Test
+
+	public void PEFSTGTc0010_VerifyFiltersOnListViews(String projectName) {
+
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP=new BasePageBusinessLayer(driver);
+		FirmPageBusinessLayer FB = new FirmPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
+		String[] listViewName=PEFSTG_10_ListViewName.split("<BreakOn>");
+		String[] filterValue=PEFSTG_10_FilterValue.split("<BreakOn>");
+		String[] filter=PEFSTG_10_Filter.split("<BreakOn>");
+		String[] field=PEFSTG_10_Field.split("<BreakOn>");
+		String[] operators=PEFSTG_10_Operators.split("<BreakOn>");
+		String[] Filter_Condition=PEFSTG_10_FilterCondition.split("<BreakOn>");
+
+
+		if(BP.clickOnTab(projectName, TabName.InstituitonsTab))
+		{
+			log(LogStatus.INFO, "Click on Tab : " + TabName.InstituitonsTab, YesNo.No);	
+			ArrayList<String> result=FB.verifyFilterOnListView(listViewName, filter, field, operators, filterValue,Filter_Condition);
+			if(result.isEmpty())
+			{
+				log(LogStatus.PASS, "Filter has been verified on the List view " +listViewName , YesNo.No);
+				sa.assertTrue(true, "Filter has been verified on the List view " +listViewName  );
+			}
+			else
+			{
+				log(LogStatus.FAIL, "Filter is not verified on the List view " +result , YesNo.Yes);
+				sa.assertTrue(false, "Filter is not verified on the List view " +result);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on the firm tab", YesNo.No);
+			sa.assertTrue(false, "Not able to click on the firm tab");
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();			
+
+	}
+
+
+
+	@Parameters({ "projectName"})	    
+	@Test
+
+	public void PEFSTGTc0011_VerifyEntityTypeFieldOnFirmObject(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP=new BasePageBusinessLayer(driver);
+		FirmPageBusinessLayer FB = new FirmPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		FieldAndRelationshipPageBusinessLayer FRB=new FieldAndRelationshipPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		
+		
+
+		if (home.clickOnSetUpLink()) {
+
+			String parentWindowID = switchOnWindow(driver);
+			if (parentWindowID == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create App Page");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create App Page",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create App Page");
+			}
+
+			if (setup.searchStandardOrCustomObject(projectName, mode, object.Firm)) {
+
+				if (setup.clickOnObjectFeature(projectName, mode, object.Firm,
+						ObjectFeatureName.FieldAndRelationShip))
+				{
+					log(LogStatus.INFO, "Clicked on the Field and Relationship object feature name", YesNo.No);
+					
+					if(FRB.verifyField("Entity Type"))
+					{
+						log(LogStatus.FAIL, "Entity type field is visible on the firm object", YesNo.No);
+						sa.assertTrue(true, "Entity type field is visible on the firm object");
+					
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Entity type field is not visible on the firm object", YesNo.Yes);
+						sa.assertTrue(false, "Entity type field is not visible on the firm object");
+					}
+					
+					
+
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Could not click on the Field and Relationship object feature name", YesNo.Yes);
+					sa.assertTrue(false, "Could not click on the Field and Relationship object feature name");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Could not click on the Firm Object manager name", YesNo.Yes);
+				sa.assertTrue(false, "Could not click on the Firm Object manager name");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on the setup link", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on the setup link");
+		}
+
+	}
+
+
+
+
+
 
 
 }

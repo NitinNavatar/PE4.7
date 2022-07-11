@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.navatar.generic.CommonLib;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
@@ -900,5 +901,49 @@ public class SetupPage extends BasePageBusinessLayer {
 	public List<WebElement> getcompanyRecordTypeNamelist() {
 		return companyRecordTypeNamelist;
 	}
+	
+	@FindBy(xpath = "//iframe[@title='User Profiles ~ Salesforce - Enterprise Edition']")
+	private WebElement userProfileIframe;
+
+	public WebElement getuserProfileIframe(int timeOut) {
+		return isDisplayed(driver, userProfileIframe, "Visibility", timeOut, "User Profile Iframe");
+	}
+	
+	@FindBy(xpath = "//iframe[contains(@title,'Salesforce - Enterprise Edition')]")
+	private WebElement profileIframe;
+
+	public WebElement getProfileIframe(int timeOut) {
+		return isDisplayed(driver, profileIframe, "Visibility", timeOut, "Profile Iframe");
+	}
+	
+	@FindBy(xpath = "//table[@class='detailList']//tr[td[text()='Accounts']]//a[text()='Edit']")
+	private WebElement recordTypeEditButton;
+
+	public WebElement getRecordTypeEditButton(int timeOut) {
+		return isDisplayed(driver, recordTypeEditButton, "Visibility", timeOut, "Record type edit button");
+	}
+	
+	@FindBy(xpath = "//iframe[@title='Edit Record Type Settings: Account ~ Salesforce - Enterprise Edition']")
+	private WebElement editRecordTypeIframe;
+
+	public WebElement geteditRecordTypeIframe(int timeOut) {
+		return isDisplayed(driver, editRecordTypeIframe, "Visibility", timeOut, "Record type edit iframe");
+	}
+	
+	@FindBy(xpath = "//select[@id='p5']//option[@selected='selected']")
+	private WebElement defaultRecordType;
+
+	public WebElement getdefaultRecordType(int timeOut) {
+		return defaultRecordType;
+	}
+	
+	
+	
+	
+	
+	
+
+	
+	
 	
 }
