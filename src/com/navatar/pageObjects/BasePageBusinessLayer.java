@@ -3569,7 +3569,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String xpath = "";
 		String head = header.toString().replace("_", " ");
 		ThreadSleep(3000);
-		xpath = "//div[contains(text(),'" + head + "')]/..//*[text()='" + itemName + "']";
+		xpath = "//div[contains(@class,'outputName') or contains(@class,'header')]//*[text()='" + itemName + "']";
 		ele = FindElement(driver, xpath, "Header : " + itemName, action.BOOLEAN, 30);
 		ele = isDisplayed(driver, ele, "Visibility", 10, head + " : " + itemName);
 		return ele;
