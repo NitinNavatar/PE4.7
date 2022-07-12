@@ -3515,7 +3515,7 @@ public abstract class BasePage extends BaseLib {
 	@FindBy(xpath = "//h2[@class='topName']")
 	private WebElement labelHeaderText;
 
-	@FindBy(xpath = "//h1//span[@data-aura-class='uiOutputText']")
+	@FindBy(xpath = "//div[contains(@class,'outputName')]")
 	private WebElement labelHeaderText_Lightning;
 
 	/**

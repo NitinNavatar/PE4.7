@@ -488,5 +488,33 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 		return flag;
 
 	}
+	
+	public boolean verifyField(String fieldName)
+	{
+		String xPath="";
+		WebElement ele;
+		boolean flag=false;
+		if(CommonLib.sendKeysAndPressEnter(driver, getQucikSearchInFieldAndRelationshipPage(50),fieldName ,fieldName+" field", action.SCROLLANDBOOLEAN))
+		{
+			log(LogStatus.INFO,"Field value has been passed in "+fieldName,YesNo.No);
+			CommonLib.ThreadSleep(6000);
+			xPath="//span[text()='"+fieldName+"']";
+			ele = FindElement(driver, xPath, fieldName + " xpath", action.SCROLLANDBOOLEAN, 30);
+			if (ele!=null) {
+				log(LogStatus.INFO, fieldName+" field is appearing", YesNo.No);	
+				flag=true;
+			}
+			else
+			{
+				log(LogStatus.ERROR, fieldName+" field is not appearing", YesNo.Yes);	
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, fieldName+" has been passed in the searchbox", YesNo.Yes);
+		}
+		return flag;
+	}
+
 
 }
