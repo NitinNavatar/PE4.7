@@ -44,7 +44,7 @@ import com.navatar.pageObjects.PartnershipsPageBusinessLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
-public class Module1 extends BaseLib {
+public class Module1FieldSetDepricated extends BaseLib {
 	@Parameters({ "projectName"})
 	@Test
 	public void M1Tc001_1_CreateCRMUser(String projectName) {

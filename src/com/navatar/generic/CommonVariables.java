@@ -23,14 +23,14 @@ import com.navatar.generic.EnumConstants.ActivityRelatedLabel;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.scripts.Module5New;
-import com.navatar.scripts.Module8;
+import com.navatar.scripts.Module8HomepageSDG;
 import com.navatar.scripts.PECloudSmoke;
 import com.navatar.scripts.Module6;
-import com.navatar.scripts.Module7;
-import com.navatar.scripts.Module1;
+import com.navatar.scripts.Module7WithMeetingTypeDepricated;
+import com.navatar.scripts.Module1FieldSetDepricated;
 import com.navatar.scripts.Module2;
 import com.navatar.scripts.Module3New;
-import com.navatar.scripts.Module4;
+import com.navatar.scripts.Module4AccordionOutOfScopeDepricated;
 
 
 /**

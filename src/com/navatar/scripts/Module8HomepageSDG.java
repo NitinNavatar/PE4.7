@@ -78,7 +78,7 @@ import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.navatar.pageObjects.TaskPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
-public class Module8 extends BaseLib {
+public class Module8HomepageSDG extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
