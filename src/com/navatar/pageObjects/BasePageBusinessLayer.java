@@ -7,6 +7,7 @@ import org.apache.poi.hssf.view.brush.PendingPaintings;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -39,6 +40,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
@@ -2435,10 +2437,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String label;
 		String value;
 		boolean flag = false;
-		getLabelTextBox(projectName, PageName.TaskPage.toString(), PageLabel.Subject.toString(), timeOut).clear();
+		WebElement ele2=getLabelTextBox(projectName, PageName.TaskPage.toString(), PageLabel.Subject.toString(), timeOut);
+		ele2.sendKeys(Keys.BACK_SPACE);
+		ThreadSleep(1000);
+		ele2.clear();
+		sendKeys(driver,ele2,
+				subjectText, "Subject", action);
+		ele2.sendKeys(Keys.BACK_SPACE);
+		ele2.sendKeys(Keys.BACK_SPACE);
+		ele2.clear();
 		ThreadSleep(3000);
-		if (sendKeys(driver,
-				getLabelTextBox(projectName, PageName.TaskPage.toString(), PageLabel.Subject.toString(), timeOut),
+		if (sendKeys(driver,ele2,
 				subjectText, "Subject", action)) {
 			log(LogStatus.INFO, "Entered value to Subject Text Box", YesNo.Yes);
 
@@ -6035,6 +6044,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					String[] filters = listViewDataRowWise[5].split("<Break>");
 					String[] operators = listViewDataRowWise[6].split("<Break>");
 					String[] filtervalues = listViewDataRowWise[7].split("<Break>");
+					String[] textBoxType = listViewDataRowWise[8].split("<Break>");
 
 					int i = 0;
 					for (String filter : filters) {
@@ -6050,9 +6060,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 										xpathgetfilterOperatordropdownlist, "Operator filter", operators[i])) {
 									log(LogStatus.INFO, "successfully Select the Operator", YesNo.No);
 
-									if (filter.trim().equalsIgnoreCase("Vintage Year")
-											|| filter.trim().equalsIgnoreCase("1st Closing Date")
-											|| filter.equals("Fund Name") || filter.equals("Record Name")) {
+									if (textBoxType[i].equalsIgnoreCase("Textbox")) {
 										if (sendKeys(driver, getfilterValuefield(projectName, timeOut), filtervalues[i],
 												"value", action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "value has been entered", YesNo.No);
@@ -6065,8 +6073,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 									}
 
-									else if (filter.equals("Fund Type") || filter.equals("Investment Category")
-											|| filter.equals("Stage")) {
+									else if (textBoxType[i].equalsIgnoreCase("dropdown")) {
 										String xpathgetfilterValueDropdownlist = "//div[@role='menu']//li/a";
 										if (dropDownHandle(driver, getfilterValueDropDown(projectName, timeOut),
 												xpathgetfilterValueDropdownlist, "Value filter list",
@@ -6078,6 +6085,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 										}
 
+									}
+									
+									else
+									{
+										log(LogStatus.ERROR, "TextBox Type not Mention Properly in Test data: "+textBoxType[i], YesNo.No);
+										sa.assertTrue(false, "TextBox Type not Mention Properly in Test data: "+textBoxType[i]);
 									}
 
 									if (click(driver, getfilterDoneBtn(projectName, timeOut), "Filter Done Button",
@@ -6823,5 +6836,923 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return flag;
 	}
+
+	/**
+	 * 
+	 * @author Ankur Huria
+	 * 
+	 * @param valueType
+	 * 
+	 * @param forFilterNumber
+	 * 
+	 * @param value
+	 * 
+	 * @param fieldvalue
+	 * 
+	 * @param timeOut
+	 * 
+	 * @return true/false
+	 * 
+	 */
+
+	public SoftAssert checkFilterSingle(String path, String sheetName, int timeOut) {
+
+		String operation;
+		String fieldValue;
+		String operatorValue;
+		String operator;
+		String valueType;
+		String expectedResult = "";
+		for (int i = 1; i > 0; i++) {
+			operation = ExcelUtils.readData(path, sheetName, i, 6);
+			if (operation == null) {
+				appLog.info("Done with the filters");
+				break;
+			}
+			operation.trim();
+			fieldValue = ExcelUtils.readData(path, sheetName, i, 0);
+			if (fieldValue == null) {
+				appLog.info("No Field value is provided in row number " + (i + 1)
+						+ ". So Skipping to the next field filter check.");
+
+				/*
+				 * ExcelUtils.
+				 * writeDataInExcel("Not Checked: No Field value is provided in row number " +
+				 * (i + 1) + ". So Skipping to the next field filter check.",
+				 * "Filter Logic for single row", i, 7);
+				 */
+
+				continue;
+			}
+			valueType = ExcelUtils.readData(path, sheetName, i, 2);
+
+			String display = CommonLib.getAttribute(driver, firstFilterGrid(20), "Expand The Grid ", "style");
+
+			try {
+				if (!display.equals("")) {
+					appLog.info("Filter Grid Not Expanded By Default, Now Going to Expand");
+					if (CommonLib.click(driver, firstFilterGridBtn(10), "Filter Grid Button", action.BOOLEAN)) {
+						appLog.info("Clicked on Filter Grid Button");
+					} else {
+						appLog.error("Not Able  to Click on Filter Grid Button");
+						break;
+					}
+				} else {
+					appLog.info("Filter Grid Expanded By Default");
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				break;
+			}
+
+			if (searchClearButton(3) != null) {
+				CommonLib.clickUsingJavaScript(driver, searchClearButton(2), "searchClearButton",
+						action.SCROLLANDBOOLEAN);
+				appLog.info("Clicked on Filter Search Clear Button");
+			}
+			CommonLib.ThreadSleep(2000);
+			if (setFieldValueOnManageInvestor(fieldValue, 1, timeOut)) {
+
+				if (operation.equalsIgnoreCase("Operator")) {
+					List<String> list = operatorCheck(path, i, fieldValue, sheetName);
+					if (!list.isEmpty()) {
+						for (int j = 0; j < list.size(); j++) {
+							sa.assertTrue(false, list.get(j) + " :Operator not found in the drop down for field value: "
+									+ fieldValue);
+						}
+					} else {
+						appLog.info("Successfully verified operators.");
+					}
+				} else if (operation.equalsIgnoreCase("Result")) {
+					operator = ExcelUtils.readData(path, sheetName, i, 1);
+					operatorValue = ExcelUtils.readData(path, sheetName, i, 3);
+					if (setOperatorValueOnManageInvestor(operator, 1, timeOut)) {
+						if (setCriterionValueOnManageTarget(valueType, 1, operatorValue, fieldValue, timeOut)) {
+							if (searchButton(3) != null) {
+
+								if (click(driver, searchButton(timeOut), "Search Button", action.THROWEXCEPTION)) {
+									expectedResult = ExcelUtils.readData(path, sheetName, i, 4);
+									List<String> list = new ArrayList<String>();
+									list.addAll(checkResultOnManageInvestor(expectedResult, timeOut));
+									System.out.println("\n\n\nis list empty: " + list.isEmpty() + "\n\n\nList Size: "
+											+ list.size());
+									if (!list.isEmpty()) {
+										System.out.println("Inside the condition\n\n\n");
+										for (int j = 0; j < list.size(); j++) {
+											System.out.println("Inside the loop.");
+											sa.assertTrue(false,
+													list.get(j) + " :Target not found for field value " + fieldValue
+															+ " operator " + operator + " and value " + operatorValue);
+										}
+									}
+								} else {
+									appLog.error("Not Able to Click on Search Button");
+								}
+
+							}
+
+							else {
+
+								if (click(driver, applyButton(timeOut), "Apply Button", action.THROWEXCEPTION)) {
+									expectedResult = ExcelUtils.readData(path, sheetName, i, 4);
+									List<String> list = new ArrayList<String>();
+									list.addAll(checkResultOnManageInvestor(expectedResult, timeOut));
+									System.out.println("\n\n\nis list empty: " + list.isEmpty() + "\n\n\nList Size: "
+											+ list.size());
+									if (!list.isEmpty()) {
+										System.out.println("Inside the condition\n\n\n");
+										for (int j = 0; j < list.size(); j++) {
+											System.out.println("Inside the loop.");
+											sa.assertTrue(false,
+													list.get(j) + " :Target not found for field value " + fieldValue
+															+ " operator " + operator + " and value " + operatorValue);
+										}
+									}
+								}
+
+								else {
+									appLog.error("Not Able to Click on Apply Button");
+								}
+							}
+
+						}
+					} else {
+						appLog.info("Not able to set operator value. So Skipping to the next filter.");
+						continue;
+					}
+				} else if (operation.equalsIgnoreCase("both")) {
+					List<String> list = operatorCheck(path, i, fieldValue, sheetName);
+					if (!list.isEmpty()) {
+						for (int j = 0; j < list.size(); j++) {
+							sa.assertTrue(false, list.get(j) + " :Operator not found in the drop down for field value: "
+									+ fieldValue);
+						}
+					} else {
+						appLog.info("Successfully verified operators.");
+					}
+					operator = ExcelUtils.readData(path, sheetName, i, 1);
+					operatorValue = ExcelUtils.readData(path, sheetName, i, 3);
+					CommonLib.ThreadSleep(2000);
+					if (setOperatorValueOnManageInvestor(operator, 1, timeOut)) {
+						if (setCriterionValueOnManageTarget(valueType, 1, operatorValue, fieldValue, timeOut)) {
+							if (searchButton(3) != null) {
+
+								if (click(driver, searchButton(timeOut), "Search Button", action.THROWEXCEPTION)) {
+									expectedResult = ExcelUtils.readData(path, sheetName, i, 4);
+									List<String> listResult = new ArrayList<String>();
+									listResult.addAll(checkResultOnManageInvestor(expectedResult, timeOut));
+									System.out.println("\n\n\nis list empty: " + listResult.isEmpty()
+											+ "\n\n\nList Size: " + listResult.size());
+									if (!listResult.isEmpty()) {
+										System.out.println("Inside the condition\n\n\n");
+										for (int j = 0; j < listResult.size(); j++) {
+											System.out.println("Inside the loop.");
+											sa.assertTrue(false,
+													listResult.get(j) + " :Target not found for field value "
+															+ fieldValue + " operator " + operator + " and value "
+															+ operatorValue);
+										}
+									}
+								} else {
+									appLog.error("Not Able to Click on Search Button");
+								}
+
+							}
+
+							else {
+
+								if (click(driver, applyButton(timeOut), "Apply Button", action.THROWEXCEPTION)) {
+									expectedResult = ExcelUtils.readData(path, sheetName, i, 4);
+									List<String> listResult = new ArrayList<String>();
+									listResult.addAll(checkResultOnManageInvestor(expectedResult, timeOut));
+									System.out.println("\n\n\nis list empty: " + listResult.isEmpty()
+											+ "\n\n\nList Size: " + listResult.size());
+									if (!listResult.isEmpty()) {
+										System.out.println("Inside the condition\n\n\n");
+										for (int j = 0; j < listResult.size(); j++) {
+											System.out.println("Inside the loop.");
+											sa.assertTrue(false,
+													listResult.get(j) + " :Target not found for field value "
+															+ fieldValue + " operator " + operator + " and value "
+															+ operatorValue);
+										}
+									}
+								}
+
+								else {
+									appLog.error("Not Able to Click on Apply Button");
+								}
+							}
+
+						}
+					} else {
+						appLog.info("Not able to set operator value. So Skipping to the next filter.");
+						continue;
+					}
+				}
+			} else {
+				appLog.info("Field Value:" + fieldValue + " is not available in drop down. So skipping this filter");
+
+				continue;
+			}
+
+		}
+		return sa;
+	}
+
+	/**
+	 * 
+	 * @author Ankur Huria
+	 * 
+	 * @param valueType
+	 * 
+	 * @param forFilterNumber
+	 * 
+	 * @param value
+	 * 
+	 * @param fieldvalue
+	 * 
+	 * 
+	 * @param timeOut
+	 * 
+	 * @return true/false
+	 * 
+	 */
+	public boolean setFieldValueOnManageInvestor(String fieldValue, int forFilterNumber, int timeOut) {
+
+		boolean filterFindflag = false;
+
+		if (CommonLib.click(driver, fieldInputBox(30), "fieldInputBox", action.BOOLEAN)) {
+			appLog.info("Clicked on Field Input Box");
+
+			List<WebElement> filterList = filterList();
+			for (WebElement filter : filterList) {
+
+				if (filter.getText().equalsIgnoreCase(fieldValue)) {
+
+					if (CommonLib.click(driver, filter, fieldValue, action.SCROLLANDBOOLEAN)) {
+
+						appLog.info("Field value " + fieldValue + " is present in the drop down and Selected");
+
+						filterFindflag = true;
+						break;
+
+					} else {
+
+						filterFindflag = false;
+
+					}
+
+				}
+			}
+
+		} else {
+			appLog.error("Not Able to Click on Field Input Box");
+			return false;
+		}
+		if (filterFindflag)
+			return true;
+		else {
+			appLog.error("Field value " + fieldValue + " is not present in the drop down, for filter no.: "
+					+ forFilterNumber + " So, Skipping this Filter");
+			sa.assertTrue(false, "Field value " + fieldValue + " is not present in the drop down, for filter no.: "
+					+ forFilterNumber + " So, Skipping this Filter");
+			return false;
+		}
+
+	}
+
+	/**
+	 * 
+	 * @author Ankur Huria
+	 * 
+	 * @param operator
+	 * 
+	 * @param forFilterNumber
+	 * 
+	 * 
+	 * @param timeOut
+	 * 
+	 * @return true/false
+	 * 
+	 */
+
+	public boolean setOperatorValueOnManageInvestor(String operator, int forFilterNumber, int timeOut) {
+
+		String operatorValues = "//div//lightning-combobox//lightning-base-combobox//button[@name='']//parent::div//following-sibling::div//lightning-base-combobox-item/span/span";
+		if (CommonLib.dropDownHandle(driver, operatorInputBox(30), operatorValues, "Operator Dropdown", operator))
+
+		{
+			appLog.info("Operator: " + operator + " is present in the drop down and Selected");
+			return true;
+		} else {
+			appLog.error(
+					"Operator: " + operator + " is Not present in the drop down for Filter Number: " + forFilterNumber);
+			sa.assertTrue(false,
+					"Operator: " + operator + " is Not present in the drop down for Filter Number: " + forFilterNumber);
+			return false;
+		}
+
+	}
+
+	/**
+	 * 
+	 * @author Ankur Huria
+	 * 
+	 * @param valueType
+	 * 
+	 * @param forFilterNumber
+	 * 
+	 * @param value
+	 * 
+	 * @param fieldvalue
+	 * 
+	 * 
+	 * @param timeOut
+	 * 
+	 * @return true/false
+	 * 
+	 */
+
+	public boolean setCriterionValueOnManageTarget(String valueType, int forFilterNumber, String value,
+			String fieldvalue, int timeOut) {
+
+		String xpath = "//lightning-input[not(contains(@class,'slds-combobox__input')) and contains(@style,'display')]//input";
+
+		String xpathLookUp = "//lightning-input[not(contains(@class,'slds-combobox__input')) and contains(@style,'display')]/parent::div/following-sibling::div/lightning-icon";
+
+		String xpathcalendar = "//input/ancestor::lightning-datepicker//input";
+
+		String[] valueTypes = valueType.split("-");
+
+		if (valueTypes[0].equalsIgnoreCase("TextBox") || value == null) {
+
+			WebElement ele = FindElement(driver, xpath, "valueInputBox", action.SCROLLANDBOOLEAN, timeOut);
+			if (value == null) {
+
+				value = "";
+
+			}
+
+			ele.clear();
+
+			if (sendKeys(driver, ele, value, "Criterion Box", action.SCROLLANDTHROWEXCEPTION)) {
+				appLog.info("Successfully send the Value :" + value + " , for Field : " + fieldvalue);
+				return true;
+			}
+
+			else {
+				appLog.error("Not Successfully send the Value :" + value + " , for Field : " + fieldvalue);
+				return false;
+			}
+
+		} else if (valueTypes[0].equalsIgnoreCase("lookup")) {
+
+			WebElement eleLookUp = FindElement(driver, xpathLookUp, "Look Up icon", action.BOOLEAN, timeOut);
+
+			scrollDownThroughWebelement(driver, eleLookUp, "LookUp Icon");
+
+			if (eleLookUp != null) {
+
+				click(driver, eleLookUp, "LookUp Icon", action.SCROLLANDTHROWEXCEPTION);
+
+				if (valueType.equalsIgnoreCase("lookup-radio")) {
+					String val[] = value.split(",");
+
+					for (int i = 0; i < val.length; i++) {
+						if (!click(driver,
+
+								FindElement(driver,
+
+										"//tr/th//div//lightning-base-formatted-text[text()='" + val[i]
+												+ "']/ancestor::th/preceding-sibling::td/lightning-primitive-cell-checkbox",
+
+										"Radio Button of: " + val[i], action.BOOLEAN, timeOut),
+
+								"Radio Button of: " + val[i], action.SCROLLANDBOOLEAN)) {
+
+							appLog.info(
+									val[i] + " is not present in the lookup window., for Field Value: " + fieldvalue);
+							sa.assertTrue(false,
+									val[i] + " is not present in the lookup window., for Field Value: " + fieldvalue);
+
+							if (click(driver, closePopupButton(20),
+
+									"closePopupButton", action.SCROLLANDBOOLEAN)) {
+
+								appLog.info("Clicked on Close Popup Button");
+							} else {
+								appLog.error("Not able to Click on Close Popup Button");
+							}
+
+							return false;
+
+						}
+					}
+
+				} else {
+
+					String val[] = value.split(",");
+
+					for (int i = 0; i < val.length; i++) {
+
+						if (!click(driver,
+
+								FindElement(driver,
+
+										"//lightning-menu-item//span[text()='" + val[i] + "']/parent::a",
+
+										"CheckBox of: " + val[i], action.BOOLEAN, 20),
+
+								"CheckBox of: " + val[i], action.SCROLLANDBOOLEAN)) {
+
+							appLog.error(
+									val[i] + " is not present in the lookup window., for Field Value: " + fieldvalue);
+							sa.assertTrue(false,
+									val[i] + " is not present in the lookup window., for Field Value: " + fieldvalue);
+							if (click(driver, closePopupButton(20),
+
+									"closePopupButton", action.SCROLLANDBOOLEAN)) {
+
+								appLog.info("Clicked on Close Popup Button");
+							} else {
+								appLog.error("Not able to Click on Close Popup Button");
+							}
+
+							return false;
+
+						}
+
+					}
+
+				}
+
+				if (click(driver, getInsertSelectedButton(timeOut), "Insert Selected", action.SCROLLANDBOOLEAN)) {
+
+					appLog.info("Successfully selected the value: " + value + " for Field Value: "
+							+ "Invalid Date format: " + value + " for Field Value: " + fieldvalue);
+
+					return true;
+
+				}
+
+				System.out.println("going to close the lookup window.");
+
+				appLog.info("Not able to select value " + value + " from the lookup window");
+
+				return false;
+
+			} else {
+
+				appLog.info("Lookup is not displaying for field value: " + fieldvalue);
+				sa.assertTrue(false, "Lookup is not displaying for field value: " + fieldvalue);
+
+				return false;
+
+			}
+
+		} else if (valueType.equalsIgnoreCase("Date")) {
+
+			if (!click(driver, FindElement(driver, xpathcalendar, "calendar Icon", action.BOOLEAN, timeOut),
+
+					"Calendar icon", action.SCROLLANDBOOLEAN)) {
+
+				appLog.info("Calendar icon is not present for the current field value.: " + fieldvalue);
+				sa.assertTrue(false, "Calendar icon is not present for the current field value.: " + fieldvalue);
+
+				return false;
+
+			}
+
+			String[] val = value.split("/");
+
+			if (datePickerHandle(driver, monthInDatePicker(20), previousMonthButtonInDatePicker(10), "Date Picker",
+					val[2], val[1], val[0])) {
+				appLog.info("Date has been Selected: " + value + " for Field Value: " + fieldvalue);
+				return true;
+
+			} else {
+
+				appLog.error("Invalid Date format: " + value + " for Field Value: " + fieldvalue);
+				sa.assertTrue(false, "Invalid Date format: " + value + " for Field Value: " + fieldvalue);
+
+				return false;
+
+			}
+
+		}
+
+		else {
+
+			appLog.info("Criterion box number " + forFilterNumber + " is not present");
+
+			return false;
+
+		}
+
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param expectedResult
+	 * @param timeOut
+	 * @return List<String>
+	 */
+	public List<String> checkResultOnManageInvestor(String expectedResult, int timeOut) {
+		List<String> notFound = new ArrayList<String>();
+		String[] result = expectedResult.split("<:break:>");
+
+		for (int i = 0; i < result.length; i++) {
+
+			List<WebElement> elements = null;
+			List<String> elementsText = null;
+			if (result[i].toLowerCase().contains("no data to display")) {
+
+				elements = FindElements(driver, "//div/div/b", "Filter Result List: No data to Display");
+				elementsText = elements.stream().map(x -> x.getText().trim().toLowerCase())
+						.collect(Collectors.toList());
+
+			} else {
+
+				elements = FindElements(driver, "//tbody//tr//th//lightning-formatted-url/a", "Filter Result List");
+				elementsText = elements.stream().map(x -> x.getText().trim().toLowerCase())
+						.collect(Collectors.toList());
+
+			}
+
+			try {
+				if (elements.size() == 0) {
+					appLog.error(result[i] + " is not matched.");
+					notFound.add(result[i]);
+				} else {
+					if (elementsText.contains(result[i].toLowerCase())) {
+						appLog.info(result[i] + " is matched.");
+					} else {
+						appLog.error(result[i] + " is not matched.");
+						notFound.add(result[i]);
+					}
+				}
+
+			} catch (Exception e) {
+				notFound.add(result[i]);
+			}
+
+		}
+
+		return notFound;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param path
+	 * @param rowNum
+	 * @param fieldValue
+	 * @param sheetName
+	 * @return List<String>
+	 */
+	public List<String> operatorCheck(String path, int rowNum, String fieldValue, String sheetName) {
+		List<String> notFoundOperators = new ArrayList<String>();
+		CommonLib.ThreadSleep(2000);
+		if (CommonLib.clickUsingJavaScript(driver, operatorInputBox(30), "Operator DropDown",
+				action.SCROLLANDBOOLEAN)) {
+			appLog.info("Clicked on Operator DropDown for " + fieldValue);
+			CommonLib.ThreadSleep(3000);
+			List<WebElement> operatorDropDownValues = operatorValues();
+
+			String operatorValues = ExcelUtils.readData(path, sheetName, rowNum, 5);
+			String[] opVal = operatorValues.split(",");
+			for (int j = 0; j < opVal.length; j++) {
+				for (int k = 0; k < operatorDropDownValues.size(); k++) {
+					if (opVal[j].equalsIgnoreCase(operatorDropDownValues.get(k).getText())) {
+						appLog.info("Successfully Found The Operator: " + opVal[j]);
+						break;
+					} else if (k == operatorDropDownValues.size() - 1) {
+						appLog.info(opVal[j] + " :Operator not found in the drop down for field value: " + fieldValue);
+						notFoundOperators.add(opVal[j]);
+
+					}
+				}
+			}
+		} else {
+			appLog.error("Not Able to Click on Operator DropDown, So Not able Check Operators for " + fieldValue);
+		}
+		CommonLib.clickUsingJavaScript(driver, operatorInputBox(30), "Operator DropDown", action.SCROLLANDBOOLEAN);
+		return notFoundOperators;
+	}
+	
+	
+	
+	
+	public List<String> verifyListView(List<String> listViewName) {
+		boolean flag = false;
+		ArrayList<String> result = new ArrayList<String>();
+		if(CommonLib.click(driver, getClickedOnRecentlyViewed(30), "Recently Viewed", action.SCROLLANDBOOLEAN)) {
+
+			appLog.info("clicked on recently viewed");
+
+			List<String> listView = new ArrayList<String>();
+
+			List<WebElement> lists= CommonLib.FindElements(driver, "//div[@class='scroller']//ul//li", "RecentlyViewedList");
+			if(lists.size() != 0) {
+				for(int i=0;i<lists.size();i++)
+				{
+					WebElement element= lists.get(i);
+					String listName= CommonLib.getText(driver, element, "list view of Firm", action.BOOLEAN);
+					listView.add(listName.replace("Selected","").trim().replace("\n", ""));
+					
+				}      
+			}
+			else {
+				log(LogStatus.ERROR,"Could not get the list view name",YesNo.No);
+				result.add("Could not get the list view name");
+			}
+
+			for(int i=0;i<listViewName.size();i++)
+			{
+				if(listView.contains(listViewName.get(i)))
+				{
+
+					log(LogStatus.INFO, listViewName.get(i)+" List Name is present", YesNo.No);
+
+				}
+				else {
+					log(LogStatus.ERROR, listViewName.get(i)+" List Name is Not present", YesNo.No);
+					result.add(listViewName.get(i)+" List Name is Not present");
+
+				}
+			}
+		}
+		else {
+			appLog.error("Not able to click on recently viewed...");
+			result.add("Not able to click on recently viewed...");
+
+		}
+
+		if(CommonLib.click(driver, getClickedOnRecentlyViewed(30), "Recently Viewed", action.SCROLLANDBOOLEAN)) {
+
+			appLog.info("clicked on recently viewed");
+		}
+		else {
+			appLog.error("Not able to click on recently viewed...");
+			result.add("Not able to click on recently viewed...");
+
+		}
+		return result ;
+	}
+	
+	
+	public ArrayList<String> verifyFilterOnListView(String[] listViewName, String[] filter, String[] field, String[] Operator, String[] filterValue,String[] filterCondition )
+	{
+		String xPath="";
+		WebElement ele;
+		ArrayList<String> result=new ArrayList<String>();
+
+		for(int i=0; i<filterCondition.length; i++)
+		{
+			String[] filterFiled=null;
+			String[] fOperator=null;
+			String[] FOperand=null;
+			
+			if(CommonLib.click(driver, getClickedOnRecentlyViewed(30), "Recently Viewed", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on the recently view button", YesNo.No);
+
+				xPath="//ul[@class='slds-dropdown__list slds-show']//span[text()='"+listViewName[i]+"']";
+				ele=CommonLib.FindElement(driver, xPath, listViewName[i],action.SCROLLANDBOOLEAN , 50);
+
+				if(CommonLib.click(driver, ele, listViewName[i]+" element", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on "+listViewName[i]+" element"+" button", YesNo.No);
+
+					if(filterCondition[i].equals("All Filters"))
+					{
+
+						if(CommonLib.click(driver, getshowFilter(50), "Show filter", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Show filter button", YesNo.No);
+
+							String scopeLabelFilter=CommonLib.getText(driver, getscopeLabelFilter(50), "scope label filter", action.SCROLLANDBOOLEAN);
+							if(scopeLabelFilter.equals(filter[i]))
+							{
+								log(LogStatus.INFO, scopeLabelFilter+ " is visible in the Filter by Owner", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, scopeLabelFilter+ " is not visible in the Filter by Owner", YesNo.Yes);
+								result.add(scopeLabelFilter+ " is not visible in the Filter by Owner");
+							}
+							
+						    filterFiled=field[i].split("<FieldBreak>");
+						    fOperator=Operator[i].split("<OperatorBreak>");
+						    FOperand=filterValue[i].split("<valueBreak>");
+					    
+						    if(filterFiled.length==1)
+						    {
+						    	String filterFieldLabel=CommonLib.getText(driver, getfilterFieldLabel(50), "Filter field label", action.SCROLLANDBOOLEAN);
+								String filterOperator=CommonLib.getText(driver, getfilterOperator(50), "Filter Operator", action.SCROLLANDBOOLEAN);
+								String filterOperand=CommonLib.getText(driver, getfilterOperand(50), "Filter Operand", action.SCROLLANDBOOLEAN);
+
+								if(filterFieldLabel.equalsIgnoreCase(field[i]) && filterOperator.equalsIgnoreCase(Operator[i]) && filterOperand.equalsIgnoreCase(filterValue[i]))
+								{
+									log(LogStatus.INFO, filterFieldLabel+", "+filterOperator+" and "+filterOperand+ " have been matched" , YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "Either Filter label name : "+filterFieldLabel+" or filter Operator :"+filterOperator+" Or Filter operand :"+filterOperand+ " are not matced with Filter label name : "+field+", filter Operator :"+Operator+", Filter operand :"+filterValue[i]+ "", YesNo.No);
+									result.add("Either Filter label name : "+filterFieldLabel+" or filter Operator :"+filterOperator+" Or Filter operand :"+filterOperand+ " are not matced with Filter label name : "+field+", filter Operator :"+Operator+", Filter operand :"+filterValue[i]+ "");
+								}
+						    }
+						    else
+						    {
+						 
+							for(int j=0; j<filterFiled.length;j++)
+							{
+								xPath="//div[@id='filterPanelFieldCriterion"+j+"']//div[@class='fieldLabel']";
+								ele=CommonLib.FindElement(driver, xPath, "Field Label", action.SCROLLANDBOOLEAN, 50);
+								String filterFieldLabel=CommonLib.getText(driver,ele, "Filter field label", action.SCROLLANDBOOLEAN);
+								
+								xPath="//div[@id='filterPanelFieldCriterion"+j+"']//span[@class='test-operatorWrapper']";
+								ele=CommonLib.FindElement(driver, xPath, "Field Label", action.SCROLLANDBOOLEAN, 50);
+								String filterOperator=CommonLib.getText(driver, ele, "Filter Operator", action.SCROLLANDBOOLEAN);							
+								
+								xPath="//div[@id='filterPanelFieldCriterion"+j+"']//span[@class='test-operandsWrapper']";
+								ele=CommonLib.FindElement(driver, xPath, "Field Label", action.SCROLLANDBOOLEAN, 50);
+								String filterOperand=CommonLib.getText(driver, ele, "Filter Operand", action.SCROLLANDBOOLEAN);						
+								
+								if(filterFieldLabel.equalsIgnoreCase(filterFiled[j]) && filterOperator.equalsIgnoreCase(fOperator[j]) && filterOperand.equalsIgnoreCase(FOperand[j]))
+								{
+									log(LogStatus.INFO, filterFieldLabel+", "+filterOperator+" and "+filterOperand+ " have been matched" , YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "Either Filter label name : "+filterFieldLabel+" or filter Operator :"+filterOperator+" Or Filter operand :"+filterOperand+ " are not matced with Filter label name : "+filterFiled[j]+", filter Operator :"+fOperator[j]+", Filter operand :"+FOperand[j]+ "", YesNo.Yes);
+									result.add("Either Filter label name : "+filterFieldLabel+" or filter Operator :"+filterOperator+" Or Filter operand :"+filterOperand+ " are not matced with Filter label name : "+filterFiled[j]+", filter Operator :"+fOperator[j]+", Filter operand :"+FOperand[j]+ "");
+								}
+								
+								if(filterLogic(50)!=null)
+								{
+									log(LogStatus.INFO, "Filter logic is visible", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.INFO, "Filter logic is nto visible", YesNo.Yes);
+									result.add("Filter logic is not visible");
+								}
+								
+								
+							}
+						    }
+
+							CommonLib.refresh(driver);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Show filter button", YesNo.Yes);
+							result.add("Not able to click on Show filter button");
+						}
+
+					}
+					
+					else if(filterCondition[i].trim().equalsIgnoreCase("Only Filter_By_Owner"))
+					{
+
+						if(CommonLib.click(driver, getshowFilter(50), "Show filter", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Show filter button", YesNo.No);
+
+							String scopeLabelFilter=CommonLib.getText(driver, getscopeLabelFilter(50), "scope label filter", action.SCROLLANDBOOLEAN);
+							if(scopeLabelFilter.equals(filter[i]))
+							{
+								log(LogStatus.INFO, scopeLabelFilter+ " is visible in the Filter by Owner", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, scopeLabelFilter+ " is not visible in the Filter by Owner for "+listViewName[i], YesNo.Yes);
+								result.add(scopeLabelFilter+ " is not visible in the Filter by Owner for "+listViewName[i]);
+							}
+
+							CommonLib.refresh(driver);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Show filter button", YesNo.Yes);
+							result.add("Not able to click on Show filter button");
+						}
+
+					}
+
+					else if(filterCondition[i].trim().equalsIgnoreCase("Only Filter_icon_Availability"))
+					{
+
+						ele=getshowFilter(50);
+						if(ele==null)
+						{
+							log(LogStatus.INFO, "Filter icon is disable for list view : "+listViewName[i] , YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Filter icon is not disable for list view : "+listViewName[i], YesNo.Yes);
+							result.add("Filter icon is not disable for list view : "+listViewName[i]);
+						}
+						CommonLib.refresh(driver);		
+					}
+
+
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on "+listViewName[i]+"", YesNo.Yes);
+						result.add("Not able to click on "+listViewName[i]+"");
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, listViewName[i]+" element not found", YesNo.Yes);
+					result.add(listViewName[i]+" element not found");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on recently view", YesNo.Yes);
+				result.add("Not able to click on recently view");
+			}
+		}
+		return result;
+
+	}
+	
+
+	public ArrayList<String> verifyFieldsOnListview(String listViewAndFieldData, int timeOut)
+    {
+        String xPath="";
+        WebElement ele;
+        List<WebElement> elements;
+        ArrayList<String> actualFieldValue=new ArrayList<String>();
+        ArrayList<String> expectedFieldValue=new ArrayList<String>();
+        ArrayList<String> result=new ArrayList<String>();
+        String[] listViewAndFieldName=listViewAndFieldData.split("<break>");
+
+        for(int i=0; i<listViewAndFieldName.length; i++)
+        {
+            String data[]=listViewAndFieldName[i].split("<fieldBreak>");
+            String listViewName=data[0];
+            String fieldData[]=data[1].split("<f>");
+
+            for(int k=0; k<fieldData.length; k++)
+            {
+                String val=fieldData[k];
+                expectedFieldValue.add(val);
+            }
+            if(CommonLib.click(driver, getClickedOnRecentlyViewed(timeOut), "Recently Viewed ero icon", action.SCROLLANDBOOLEAN)) {
+                log(LogStatus.INFO, "Clicked on the recently view ero icon", YesNo.No);
+
+                xPath="//ul[@class='slds-dropdown__list slds-show']//span[text()='"+listViewName+"']";
+                ele=CommonLib.FindElement(driver, xPath, listViewName,action.SCROLLANDBOOLEAN , timeOut);
+
+                if(CommonLib.click(driver, ele, listViewName+" element", action.SCROLLANDBOOLEAN)) {
+                    log(LogStatus.INFO, "Clicked on "+listViewName+" element"+" button", YesNo.No);
+                    ThreadSleep(10000);
+                    xPath="//table[@data-aura-class='uiVirtualDataTable']//thead//th//span[@class='slds-truncate' and text()!='']";
+                    elements=CommonLib.FindElements(driver, xPath, listViewName+"'s field");
+                    for(int j=0; j<elements.size(); j++)
+                    {
+                        String text=CommonLib.getText(driver, elements.get(j), listViewName+" field", action.SCROLLANDBOOLEAN);
+                        actualFieldValue.add(text);
+                    }
+
+                    for(int a=0; a<expectedFieldValue.size(); a++)
+                    {
+                        if(expectedFieldValue.get(a).equals(actualFieldValue.get(a)))
+                        {
+                            log(LogStatus.INFO, "Expected field value : "+expectedFieldValue.get(a)+" has been matched with the Actual field value : "+actualFieldValue.get(a), YesNo.No);
+                        }
+                        else
+                        {
+                            log(LogStatus.ERROR, "Expected field value : "+expectedFieldValue.get(a)+" is not matched with the Actual field value : "+actualFieldValue.get(a), YesNo.No);    
+                            result.add("Expected field value : "+expectedFieldValue.get(a)+" is not matched with the Actual field value : "+actualFieldValue.get(a));
+                        }
+
+                    }
+
+                }
+                else
+                {
+                    log(LogStatus.ERROR, "Not able to click on the "+listViewName+" list view name", YesNo.Yes);
+                    result.add("Not able to click on the "+listViewName+" list view name");
+                }
+            }
+
+            else
+            {
+                log(LogStatus.ERROR, "Not able to click on the recently view ero icon", YesNo.Yes);
+                result.add("Not able to click on the recently view ero icon");
+            }
+            actualFieldValue.removeAll(actualFieldValue);
+            expectedFieldValue.removeAll(expectedFieldValue);
+
+        }
+
+        return result;
+
+    }
+
+
 
 }
