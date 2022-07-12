@@ -295,11 +295,8 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
 	@Test
-	public void
-
-			M9Tc001_3_createACustomObjectAndTabAndGivePermissions(String projectName) {
+	public void M9Tc001_3_createACustomObjectAndTabAndGivePermissions(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -313,11 +310,8 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
 	@Test
-	public void
-
-			M9Tc001_4_createACustomObjectAndTabAndGivePermissions(String projectName) {
+	public void M9Tc001_4_createACustomObjectAndTabAndGivePermissions(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -331,11 +325,8 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
 	@Test
-	public void
-
-			M9Tc001_5_createFieldsForCustomObjects(String projectName) {
+	public void M9Tc001_5_createFieldsForCustomObjects(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -371,11 +362,8 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
 	@Test
-	public void
-
-			M9Tc001_6_verifyPreconditionRecordsDataImportWizardAdmin(String projectName) {
+	public void M9Tc001_6_verifyPreconditionRecordsDataImportWizardAdmin(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -470,7 +458,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
 	@Test
 	public void M9Tc001_7_AddListViews(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -5854,9 +5841,7 @@ public class Module9 extends BaseLib {
 		sa.assertAll();
 	}
 
-	/**
-	 * @param projectName
-	 */
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void M9Tc042_VerifyFilterApplyOnFundPrepAndVerifyRecords(String projectName) {
