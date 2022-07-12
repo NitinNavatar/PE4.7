@@ -743,7 +743,7 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 
 	public boolean addFilterInCustomReportLightning(String showDropDownValue, String dateFieldDropDownValue,
 			String rangeDropDownValue, String customFieldDrpDownValue, String operatorDrpDownValue,
-			String fieldFilterValue) {
+			String fieldFilterValue, String textBoxType) {
 		boolean flag = false;
 
 		if (switchToFrame(driver, 30, iFrameReportTypeLightning(30))) {
@@ -919,6 +919,7 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 					String[] customFieldDrpDownVal = customFieldDrpDownValue.split("<Break>");
 					String[] operatorDrpDownVal = operatorDrpDownValue.split("<Break>");
 					String[] fieldFilterVal = fieldFilterValue.split("<Break>");
+					String[] textBoxTyp = textBoxType.split("<Break>");
 
 					int j = 0;
 					for (String customFieldDrpDwnVal : customFieldDrpDownVal) {
@@ -959,8 +960,7 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 
 										appLog.info("Selected Operator Filter value : " + operatorDrpDownVal[j]);
 
-										if (customFieldDrpDwnVal.equals("Stage")
-												|| customFieldDrpDwnVal.equals("Industry"))
+										if (textBoxTyp[j].equalsIgnoreCase("DropDown"))
 
 										{
 											WebElement customFilterValueEle = FindElement(driver,
@@ -997,7 +997,7 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 
 										}
 										
-										else if(customFieldDrpDwnVal.equals("Target Close Date")) {
+										else if(textBoxTyp[j].equalsIgnoreCase("Relative Date")) {
 
 											if (click(driver, useRelativeDateLink(30), "Use relative Date Link ",
 													action.SCROLLANDBOOLEAN)) {
@@ -1035,7 +1035,7 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 											
 										}
 
-										else {
+										else if (textBoxTyp[j].equalsIgnoreCase("TextBox")) {
 
 											if (sendKeys(driver, customFilterFieldValueInputBoxLightning(30),
 													fieldFilterVal[j], "Field Filter Value Input Box",
@@ -1063,6 +1063,12 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 												
 											}
 
+										}
+										
+										else
+										{
+											log(LogStatus.ERROR, "TextBox Type not Mention Properly in Test data: "+textBoxTyp[j], YesNo.No);
+											sa.assertTrue(false, "TextBox Type not Mention Properly in Test data: "+textBoxTyp[j]);
 										}
 
 									} else {
