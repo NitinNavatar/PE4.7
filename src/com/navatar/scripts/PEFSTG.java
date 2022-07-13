@@ -6,11 +6,63 @@ import static com.navatar.generic.CommonLib.log;
 import static com.navatar.generic.CommonLib.removeNumbersFromString;
 import static com.navatar.generic.CommonLib.switchOnWindow;
 import static com.navatar.generic.CommonLib.switchToDefaultContent;
-import static com.navatar.generic.CommonVariables.*;
+import static com.navatar.generic.CommonVariables.PEFSTGINS1_Institution;
+import static com.navatar.generic.CommonVariables.PEFSTGINS1_RecordType;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_1_Field;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_1_Filter;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_1_FilterCondition;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_1_FilterValue;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_1_ListViewName;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_1_Member;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_1_Operators;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_1_TabName;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_2_Field;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_2_Filter;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_2_FilterCondition;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_2_FilterValue;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_2_ListViewName;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_2_Member;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_2_Operators;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_2_TabName;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_3_Field;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_3_Filter;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_3_FilterCondition;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_3_FilterValue;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_3_ListViewName;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_3_Member;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_3_Operators;
+import static com.navatar.generic.CommonVariables.PEFSTGLV_3_TabName;
+import static com.navatar.generic.CommonVariables.PEFSTG_10_Field;
+import static com.navatar.generic.CommonVariables.PEFSTG_10_Filter;
+import static com.navatar.generic.CommonVariables.PEFSTG_10_FilterCondition;
+import static com.navatar.generic.CommonVariables.PEFSTG_10_FilterValue;
+import static com.navatar.generic.CommonVariables.PEFSTG_10_ListViewName;
+import static com.navatar.generic.CommonVariables.PEFSTG_10_Operators;
+import static com.navatar.generic.CommonVariables.PEFSTG_TC011_FieldName;
+import static com.navatar.generic.CommonVariables.PEFSTG_TC012_FieldName;
+import static com.navatar.generic.CommonVariables.PEFSTG_TC015_FieldName;
+import static com.navatar.generic.CommonVariables.PEFSTG_Tc009_FieldName;
+import static com.navatar.generic.CommonVariables.PEFSTG_Tc013_RecordType;
+import static com.navatar.generic.CommonVariables.PEFSTG_Tc013_UserProfile;
+import static com.navatar.generic.CommonVariables.PEFSTG_Tc014_RecordType;
+import static com.navatar.generic.CommonVariables.PEFSTG_Tc014_UserProfile;
+import static com.navatar.generic.CommonVariables.adminPassword;
+import static com.navatar.generic.CommonVariables.appName;
+import static com.navatar.generic.CommonVariables.crmUser1EmailID;
+import static com.navatar.generic.CommonVariables.crmUser1FirstName;
+import static com.navatar.generic.CommonVariables.crmUser1LastName;
+import static com.navatar.generic.CommonVariables.crmUser2EmailID;
+import static com.navatar.generic.CommonVariables.crmUserLience;
+import static com.navatar.generic.CommonVariables.crmUserProfile;
+import static com.navatar.generic.CommonVariables.environment;
+import static com.navatar.generic.CommonVariables.gmailUserName;
+import static com.navatar.generic.CommonVariables.mode;
+import static com.navatar.generic.CommonVariables.superAdminUserName;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -29,12 +81,13 @@ import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.FieldAndRelationshipPageBusinessLayer;
 import com.navatar.pageObjects.FirmPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
+import com.navatar.pageObjects.InstitutionsPageBusinessLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class PEFSTG extends BaseLib {
-
+/*
 	@Parameters({ "projectName" })
 	@Test
 	public void PEFSTGTc001_CreateCRMUser(String projectName) {
@@ -1108,6 +1161,39 @@ public class PEFSTG extends BaseLib {
 		sa.assertAll();
 
 	}
+*/	
+	@Parameters({ "projectName"})
+	@Test
+	public void PEFSTGTc0016_CreateANewAdvisorRecordAndVerifyPage(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		FirmPageBusinessLayer fb=new FirmPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip=new InstitutionsPageBusinessLayer(driver);
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+	
+		if (BP.clickOnTab(projectName, "Firms")) {
+			if (ip.createInstitution(projectName, environment, mode, PEFSTGINS1_Institution,PEFSTGINS1_RecordType, null,null)) {
+				log(LogStatus.INFO,"successfully Created Account/Entity : "+PEFSTGINS1_Institution+" of record type : "+PEFSTGINS1_RecordType,YesNo.No);	
+			} else {
+				sa.assertTrue(false,"Not Able to Create Account/Entity : "+PEFSTGINS1_Institution+" of record type : "+PEFSTGINS1_RecordType);
+				log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+PEFSTGINS1_Institution+" of record type : "+PEFSTGINS1_RecordType,YesNo.Yes);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on firm tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on firm tab");
+		}
+
+
+		lp.CRMlogout();
+		sa.assertAll();	
+	}
+
 
 
 }

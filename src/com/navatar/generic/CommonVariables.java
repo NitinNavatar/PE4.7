@@ -1025,7 +1025,8 @@ public class CommonVariables {
 		//Filter Conditions
 		public static String PEFSTGLV_1_FilterCondition,PEFSTGLV_2_FilterCondition,PEFSTGLV_3_FilterCondition;
 
-
+		public static String PEFSTGINS1_RecordType;
+		public static String PEFSTGINS1_Institution;
 
 
 
@@ -5490,7 +5491,9 @@ public class CommonVariables {
 			PEFSTGLV_3_FilterCondition = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
 					"PEFSTGLV_3", excelLabel.Filter_Condition);
 	           
-			
+			PEFSTGINS1_RecordType=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "PEFSTGINS1", excelLabel.Record_Type);
+            PEFSTGINS1_Institution=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "PEFSTGINS1", excelLabel.Institutions_Name);
+	        	
 			
 			try {
 				dataFile.close();
