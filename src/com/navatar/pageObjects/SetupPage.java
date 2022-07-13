@@ -937,6 +937,60 @@ public class SetupPage extends BasePageBusinessLayer {
 		return defaultRecordType;
 	}
 	
+	@FindBy(xpath="//iframe[contains(@title,'Salesforce - Enterprise Edition')]")
+	private WebElement recordTypeIframe;
+
+	public WebElement getrecordTypeIframe(int timeOut) {	
+		return isDisplayed(driver, recordTypeIframe, "Visibility", timeOut, "Record type iframes");
+	}
+	
+	@FindBy(xpath="//a[@data-list='Record Types']")
+	private WebElement recordTypeObjectManager;
+
+	public WebElement getrecordTypeObjectManager(int timeOut) {	
+		return isDisplayed(driver, recordTypeObjectManager, "Visibility", timeOut, "Record type Object Manager");
+	}
+
+	@FindBy(xpath="//button[text()='Page Layout Assignment']")
+	private WebElement pageLayoutAssignment;
+
+	public WebElement getpageLayoutAssignment(int timeOut) {	
+		return isDisplayed(driver, pageLayoutAssignment, "Visibility", timeOut, "Page Layout Assignment button");
+	}
+
+	@FindBy(xpath="//iframe[contains(@title,'Salesforce - Enterprise Edition')]")
+	private WebElement pageLayoutIframe;
+
+	public WebElement getpageLayoutIframe(int timeOut) {	
+		return isDisplayed(driver, pageLayoutIframe, "Visibility", timeOut, "Page layout Iframe");
+	}
+	
+	@FindBy(xpath="//a[text()='Next>']")
+	private WebElement nextBtn;
+
+	public WebElement getnextBtn(int timeOut) {	
+		return isDisplayed(driver, nextBtn, "Visibility", timeOut, "Next button");
+	}
+	
+	
+	@FindBy(xpath="//a[text()='<Prev']")
+	private WebElement PrevBtn;
+
+	public WebElement getPrevBtn(int timeOut) {	
+		return isDisplayed(driver, PrevBtn, "Visibility", timeOut, "Prev button");
+	}
+	
+	@FindBy(xpath="//button[text()='View Page Assignments']")
+	private WebElement viewPageAssignments;
+
+	public WebElement getviewPageAssignments(int timeOut) {	
+		return isDisplayed(driver, viewPageAssignments, "Visibility", timeOut, "View Page Assignments button");
+	}
+
+	
+	
+	 	
+
 	
 	
 	

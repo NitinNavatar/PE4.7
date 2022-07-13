@@ -727,28 +727,26 @@ public class CommonVariables {
 	public static String M9LV_1_Member,M9LV_2_Member,M9LV_3_Member,M9LV_4_Member,M9LV_5_Member;
 
 	//Tab Name
-	public static String M9LV_1_TabName,M9LV_2_TabName,M9LV_3_TabName,M9LV_4_TabName,M9LV_5_TabName,PEFSTG_10_TabName;
+	public static String M9LV_1_TabName,M9LV_2_TabName,M9LV_3_TabName,M9LV_4_TabName,M9LV_5_TabName;
 
 	//List View Name
-	public static String M9LV_1_ListViewName,M9LV_2_ListViewName,M9LV_3_ListViewName,M9LV_4_ListViewName,M9LV_5_ListViewName,PEFSTG_10_ListViewName;
+	public static String M9LV_1_ListViewName,M9LV_2_ListViewName,M9LV_3_ListViewName,M9LV_4_ListViewName,M9LV_5_ListViewName;
 
 	//List Accessibility
 	public static String M9LV_1_ListAccessibility,M9LV_2_ListAccessibility,M9LV_3_ListAccessibility,M9LV_4_ListAccessibility,M9LV_5_ListAccessibility;	
 
 	//Filter
-	public static String M9LV_1_Filter,M9LV_2_Filter,M9LV_3_Filter,M9LV_4_Filter,M9LV_5_Filter,PEFSTG_10_Filter;
+	public static String M9LV_1_Filter,M9LV_2_Filter,M9LV_3_Filter,M9LV_4_Filter,M9LV_5_Filter;
 
 	//Field
-	public static String M9LV_1_Field,M9LV_2_Field,M9LV_3_Field,M9LV_4_Field,M9LV_5_Field,PEFSTG_10_Field;
+	public static String M9LV_1_Field,M9LV_2_Field,M9LV_3_Field,M9LV_4_Field,M9LV_5_Field;
 
 	//Operators
-	public static String M9LV_1_Operators,M9LV_2_Operators,M9LV_3_Operators,M9LV_4_Operators,M9LV_5_Operators,PEFSTG_10_Operators;
+	public static String M9LV_1_Operators,M9LV_2_Operators,M9LV_3_Operators,M9LV_4_Operators,M9LV_5_Operators;
 
 	//Filter Value
-	public static String M9LV_1_FilterValue,M9LV_2_FilterValue,M9LV_3_FilterValue,M9LV_4_FilterValue,M9LV_5_FilterValue,PEFSTG_10_FilterValue;
+	public static String M9LV_1_FilterValue,M9LV_2_FilterValue,M9LV_3_FilterValue,M9LV_4_FilterValue,M9LV_5_FilterValue;
     
-	// List view Condition
-	public static String PEFSTG_10_FilterCondition;
 	//List View Sheet Data
 	public static String[][] getListViewSheetData;
 
@@ -958,6 +956,43 @@ public class CommonVariables {
 				M9_TC048_SDGNumberOfRecords;
 	
 	
+		
+		//PEFSTG
+
+		//Tab Name
+		public static String PEFSTG_10_TabName;
+
+		//List View Name
+		public static String PEFSTG_10_ListViewName;
+
+		//Filter
+		public static String PEFSTG_10_Filter;
+
+		//Field
+		public static String PEFSTG_10_Field;
+
+		//Operators
+		public static String PEFSTG_10_Operators;
+
+		//Filter Value
+		public static String PEFSTG_10_FilterValue;
+	    
+		// List view Condition
+		public static String PEFSTG_10_FilterCondition;
+		
+		//field Name
+		public static String PEFSTG_Tc009_FieldName,PEFSTG_TC011_FieldName,PEFSTG_TC012_FieldName,PEFSTG_TC015_FieldName;
+		
+		//Record type
+		public static String PEFSTG_Tc013_RecordType,PEFSTG_Tc014_RecordType;	
+		
+		//User Profile
+		public static String PEFSTG_Tc013_UserProfile,PEFSTG_Tc014_UserProfile ;	
+		
+		
+		
+		
+		
 		static FileInputStream dataFile = null;
 		static Workbook dataWb = null;
 		
@@ -5310,15 +5345,10 @@ public class CommonVariables {
 
 			//List View Name
 			PEFSTG_10_ListViewName = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "PEFSTG_10", excelLabel.List_View_Name);
-			
-			
-
-		
+	
 			// Filter
 			PEFSTG_10_Filter = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "PEFSTG_10", excelLabel.Filter);
 			
-					
-
 			// Field
 			PEFSTG_10_Field = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "PEFSTG_10", excelLabel.Field);		
 
@@ -5330,7 +5360,23 @@ public class CommonVariables {
            
 			//Filter Condition
 			PEFSTG_10_FilterCondition = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "PEFSTG_10", excelLabel.Filter_Condition);		
-	           
+	        
+			
+			//field 
+			PEFSTG_Tc009_FieldName=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FSTGVerifyField",excelLabel.Variable_Name, "PEFSTG_Tc009", excelLabel.Fields_Name);
+			PEFSTG_TC011_FieldName=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FSTGVerifyField",excelLabel.Variable_Name, "PEFSTG_Tc011", excelLabel.Fields_Name);		
+			PEFSTG_TC012_FieldName=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FSTGVerifyField",excelLabel.Variable_Name, "PEFSTG_Tc012", excelLabel.Fields_Name);		
+			PEFSTG_TC015_FieldName=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FSTGVerifyField",excelLabel.Variable_Name, "PEFSTG_Tc015", excelLabel.Fields_Name);		
+			
+			
+			//Record type
+			PEFSTG_Tc013_RecordType=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, "PEFSTGTc0013_VerifyPagLayoutAssignmentForFirmRecordTypes", excelLabel.Record_Type);
+			PEFSTG_Tc014_RecordType=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, "PEFSTGTc0014_VerifyLightningRecordPagesAssignmentForFirmRecordTypes", excelLabel.Record_Type);
+			
+			
+			//User Profile
+			PEFSTG_Tc013_UserProfile=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, "PEFSTGTc0013_VerifyPagLayoutAssignmentForFirmRecordTypes", excelLabel.User_Profile);
+			PEFSTG_Tc014_UserProfile=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, "PEFSTGTc0014_VerifyLightningRecordPagesAssignmentForFirmRecordTypes", excelLabel.User_Profile);
 			
 			
 			try {
