@@ -1100,7 +1100,7 @@ public class CommonVariables {
 		
 		switch (obj.getClass().getSimpleName()) {
 
-		case "Module1":
+		case "Module1FieldSetDepricated":
 
 			ToggleOpenQA1ID=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Request_Tracker_ID);
 			ToggleOpenQA1RequestedDate=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Date_Requested);;
@@ -1776,7 +1776,7 @@ public class CommonVariables {
 			}
 			break;
 
-		case "Module4" :
+		case "Module4AccordionOutOfScopeDepricated" :
 			try {
 				dataFile=new FileInputStream(new File(phase1DataSheetFilePath));
 			} catch (FileNotFoundException e1) {
@@ -2121,7 +2121,7 @@ public class CommonVariables {
 			}
 			break;
 
-		case "Module7" :
+		case "Module7WithMeetingTypeDepricated" :
 			
 			try {
 				dataFile=new FileInputStream(new File(phase1DataSheetFilePath));
@@ -2366,7 +2366,7 @@ public class CommonVariables {
 			}
 			break;
 
-		case "Module7New" :
+		case "Module7" :
 			try {
 				dataFile=new FileInputStream(new File(phase1DataSheetFilePath));
 			} catch (FileNotFoundException e1) {
@@ -2693,7 +2693,7 @@ public class CommonVariables {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		case "Module8" :
+		case "Module8HomepageSDG" :
 			try {
 				dataFile=new FileInputStream(new File(phase1DataSheetFilePath));
 			} catch (FileNotFoundException e1) {
