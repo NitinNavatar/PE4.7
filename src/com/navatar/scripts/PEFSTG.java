@@ -17,6 +17,7 @@ import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.EmailLib;
+import com.navatar.generic.EnumConstants.Condition;
 import com.navatar.generic.EnumConstants.Environment;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.TabName;
@@ -394,7 +395,7 @@ public class PEFSTG extends BaseLib {
 					description.add(
 							"A Lender is an investment firm specializing in lending or debt investments (e.g., mezzanine or distressed debt funds).");
 					description
-							.add("A Limited Partner is the legal entity an Institution uses to invest in your funds.");
+					.add("A Limited Partner is the legal entity an Institution uses to invest in your funds.");
 					description.add(
 							"A Portfolio Company is an operating asset that is currently or historically part of your firms portfolio.");
 
@@ -545,44 +546,50 @@ public class PEFSTG extends BaseLib {
 
 	}
 
-	@Parameters({ "projectName" })
+
+	@Parameters({ "projectName"})	    
 	@Test
 
 	public void PEFSTGTc009_VerifyFieldsOnListViewsOnFirmObject(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		BasePageBusinessLayer BP=new BasePageBusinessLayer(driver);
 		FirmPageBusinessLayer FB = new FirmPageBusinessLayer(driver);
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		ArrayList<String> listview = new ArrayList<String>();
-		listview.add("All Advisors");
-		listview.add("All Companies");
-		listview.add("All Firms");
-		listview.add("All Institutions");
-		listview.add("All Intermediaries");
-		listview.add("All Lenders");
-		listview.add("All Limited Partners");
-		listview.add("All Portfolio Companies");
-		listview.add("Recently Viewed  (Pinned list)");
-		listview.add("Recently Viewed Firms");
 
-		String[][] fieldData = { { "Legal Name", "Entity Type", "City", "State", "Website" },
-				{ "Legal Name", "Entity Type", "Tier", "Status", "Industry", "City", "State", "Website" },
-				{ "Legal Name", "Entity Type", "Record Type", "City", "State", "Website" } };
+		if(BP.clickOnTab(projectName, TabName.InstituitonsTab))
+		{
+			log(LogStatus.INFO, "Click on Tab : " + TabName.InstituitonsTab, YesNo.No);	
 
-		if (BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
-			log(LogStatus.INFO, "Click on Tab : " + TabName.InstituitonsTab, YesNo.No);
+			ArrayList<String> result=FB.verifyFieldsOnListview(PEFSTG_Tc009_FieldName, 50);
+			if(result.isEmpty())
+			{
+				log(LogStatus.PASS, "fields have been verified on the list view", YesNo.No);
+				sa.assertTrue(true,"fields has been verified on the list view");
+			}
+			else
+			{
+				log(LogStatus.FAIL, "fields are not verified on the List view "+result, YesNo.Yes);
+				sa.assertTrue(false,"fields are not verified on the List view "+result);
 
-		} else {
-			sa.assertTrue(false, "Not able to clicked on Firms Tab");
-			log(LogStatus.SKIP, "Not Able to clicked on Firms Tab", YesNo.Yes);
+			}
 		}
+		else
+		{
+			log(LogStatus.FAIL, "Not Able to clicked on Firms Tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to clicked on Firms Tab");
+
+		}
+		lp.CRMlogout();
+		sa.assertAll();
 	}
+
+
 
 	@Parameters({ "projectName" })
 	@Test
 
-	public void PEFSTGTc0010_VerifyFiltersOnListViews(String projectName) {
+	public void PEFSTGTc010_VerifyFiltersOnListViews(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
@@ -617,16 +624,20 @@ public class PEFSTG extends BaseLib {
 
 	}
 
-	@Parameters({ "projectName" })
+	@Parameters({ "projectName"})	    
 	@Test
 
-	public void PEFSTGTc0011_VerifyEntityTypeFieldOnFirmObject(String projectName) {
+	public void PEFSTGTc011_VerifyEntityTypeFieldOnFirmObject(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		BasePageBusinessLayer BP=new BasePageBusinessLayer(driver);
 		FirmPageBusinessLayer FB = new FirmPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
-		FieldAndRelationshipPageBusinessLayer FRB = new FieldAndRelationshipPageBusinessLayer(driver);
+		FieldAndRelationshipPageBusinessLayer FRB=new FieldAndRelationshipPageBusinessLayer(driver);
+
+		String[] field=PEFSTG_TC011_FieldName.split("<section>");
+		String fieldName=field[0];
+		String[] picklistName=field[1].split("<f>");
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
 		if (home.clickOnSetUpLink()) {
@@ -644,33 +655,370 @@ public class PEFSTG extends BaseLib {
 			if (setup.searchStandardOrCustomObject(projectName, mode, object.Firm)) {
 
 				if (setup.clickOnObjectFeature(projectName, mode, object.Firm,
-						ObjectFeatureName.FieldAndRelationShip)) {
+						ObjectFeatureName.FieldAndRelationShip))
+				{
 					log(LogStatus.INFO, "Clicked on the Field and Relationship object feature name", YesNo.No);
 
-					if (FRB.verifyField("Entity Type")) {
-						log(LogStatus.FAIL, "Entity type field is visible on the firm object", YesNo.No);
+					if(FRB.verifyField(fieldName))
+					{
+						log(LogStatus.PASS, "Entity type field is visible on the firm object", YesNo.No);
 						sa.assertTrue(true, "Entity type field is visible on the firm object");
 
-					} else {
+						ArrayList<String>result=FRB.verifyPicklistValue(fieldName, picklistName,Condition.activate);
+						if(result.isEmpty())
+						{
+							log(LogStatus.PASS, "Picklist value of Entity type field has been verified on the firm object "+picklistName, YesNo.Yes);
+							sa.assertTrue(true, "Picklist value of Entity type field has been verified on the firm object"+ picklistName);
+						}
+						else
+						{
+							log(LogStatus.FAIL, "Picklist value of Entity type field is not matched on the firm object", YesNo.Yes);
+							sa.assertTrue(false, "Picklist value of Entity type field is not matched on the firm object");
+						}	
+					}
+					else
+					{
 						log(LogStatus.ERROR, "Entity type field is not visible on the firm object", YesNo.Yes);
 						sa.assertTrue(false, "Entity type field is not visible on the firm object");
 					}
 
-				} else {
-					log(LogStatus.ERROR, "Could not click on the Field and Relationship object feature name",
-							YesNo.Yes);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Could not click on the Field and Relationship object feature name", YesNo.Yes);
 					sa.assertTrue(false, "Could not click on the Field and Relationship object feature name");
 				}
-			} else {
+			}
+			else
+			{
 				log(LogStatus.ERROR, "Could not click on the Firm Object manager name", YesNo.Yes);
 				sa.assertTrue(false, "Could not click on the Firm Object manager name");
 			}
-		} else {
+		}
+		else
+		{
 			log(LogStatus.ERROR, "Not able to click on the setup link", YesNo.Yes);
 			sa.assertTrue(false, "Not able to click on the setup link");
 		}
-
+		lp.CRMlogout();
+		sa.assertAll();	
 	}
+
+
+	@Parameters({ "projectName"})
+	@Test
+	public void PEFSTGTc0012_VerifyAssignmentOfEntityTypePicklistValuesOnDifferentFirmRecordTypes(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		FirmPageBusinessLayer fb=new FirmPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+
+			String parentWindowID = switchOnWindow(driver);
+			if (parentWindowID == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create App Page");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create App Page",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create App Page");
+			}
+
+			if (setup.searchStandardOrCustomObject(projectName, mode, object.Firm)) {
+
+				if (setup.clickOnObjectFeature(projectName, mode, object.Firm,
+						ObjectFeatureName.recordTypes))
+				{
+					ArrayList<String> result=setup.verifyPicklistOnDifferentRecordType(PEFSTG_TC012_FieldName, 50);
+					if(result.isEmpty())
+					{
+						log(LogStatus.PASS, "Entity type picklist value has been verified on different Firm Record type", YesNo.Yes);
+						sa.assertTrue(true, "Entity type picklist value has been verified on different Firm Record type");
+					}
+
+					else
+					{
+						log(LogStatus.FAIL, "Entity type picklist values are not verified on different Firm Record type "+result, YesNo.Yes);
+						sa.assertTrue(false, "Entity type picklist values are not verified on different Firm Record type "+result);
+					}
+				}
+				else
+				{
+					log(LogStatus.FAIL, "Not able to click on the Object feature name", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on the Object feature name");
+				}
+			}
+			else
+			{
+				log(LogStatus.FAIL, "Not able to search the Standard or Custom Object", YesNo.Yes);
+				sa.assertTrue(false, "Not able to search the Standard or Custom Object");
+
+			}
+
+		}
+		else
+		{
+			log(LogStatus.FAIL, "Not able to open the setup page", YesNo.Yes);
+			sa.assertTrue(false, "Not able to open the setup page");
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();	
+	}
+
+
+	@Parameters({ "projectName"})
+	@Test
+	public void PEFSTGTc0013_VerifyPagLayoutAssignmentForFirmRecordTypes(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		FirmPageBusinessLayer fb=new FirmPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		ArrayList<String> recordType=new ArrayList<String>();
+		ArrayList<String> userProfile=new ArrayList<String>();
+
+
+		String[] data=PEFSTG_Tc013_RecordType.split("<break>");
+		String parentWindowID=null;
+		for(int i=0; i<data.length; i++)
+		{
+			recordType.add(data[i]);
+		}		
+		String[] userProfileData=PEFSTG_Tc013_UserProfile.split("<break>");
+		for(int i=0; i<userProfileData.length; i++)
+		{
+			userProfile.add(userProfileData[i]);
+		}
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+
+			parentWindowID = switchOnWindow(driver);
+			if (parentWindowID == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create App Page");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create App Page",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create App Page");
+			}
+
+			if (setup.searchStandardOrCustomObject(projectName, mode, object.Firm)) {
+
+				if (setup.clickOnObjectFeature(projectName, mode, object.Firm,
+						ObjectFeatureName.pageLayouts))
+				{
+
+
+					ArrayList<String> result=setup.verifyPageLayoutAssignment(recordType,userProfile,50);
+					if(result.isEmpty())
+					{
+						log(LogStatus.PASS, "Record Pages assignment for Firm Record Types has been verified", YesNo.Yes);
+						sa.assertTrue(true, "Record Pages assignment for Firm Record Types has been verified");
+					}
+					else
+					{
+						log(LogStatus.FAIL, "Record Pages assignment for Firm Record Types is not verified "+result, YesNo.Yes);
+						sa.assertTrue(false, "Record Pages assignment for Firm Record Types is not verified "+result);
+
+					}
+
+				}
+				else
+				{
+					log(LogStatus.FAIL, "Not able to click on the Object feature name", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on the Object feature name");
+				}
+			}
+			else
+			{
+				log(LogStatus.FAIL, "Not able to search the Standard or Custom Object", YesNo.Yes);
+				sa.assertTrue(false, "Not able to search the Standard or Custom Object");
+
+			}
+
+		}
+		else
+		{
+			log(LogStatus.FAIL, "Not able to open the setup page", YesNo.Yes);
+			sa.assertTrue(false, "Not able to open the setup page");
+		}
+		driver.close();
+		driver.switchTo().window(parentWindowID);
+
+		lp.CRMlogout();
+		sa.assertAll();	
+	}
+
+
+	@Parameters({ "projectName"})
+	@Test
+	public void PEFSTGTc0014_VerifyLightningRecordPagesAssignmentForFirmRecordTypes(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		FirmPageBusinessLayer fb=new FirmPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		ArrayList<String> result=new ArrayList<String>();
+		String parentWindowID=null;
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+
+			parentWindowID = switchOnWindow(driver);
+			if (parentWindowID == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create App Page");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create App Page",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create App Page");
+			}
+
+			if (setup.searchStandardOrCustomObject(projectName, mode, object.Firm)) {
+
+				if (setup.clickOnObjectFeature(projectName, mode, object.Firm,
+						ObjectFeatureName.lightningRecordPages))
+				{
+
+					result=setup.VerifyLightningRecordPagesAssignment(PEFSTG_Tc014_RecordType,PEFSTG_Tc014_UserProfile,"APP, RECORD TYPE, AND PROFILE",50);
+					if(result.isEmpty())
+					{
+						log(LogStatus.PASS, "Lightning Record Pages assignment for Firm Record Types has been verified", YesNo.Yes);
+						sa.assertTrue(true, "Lightning Record Pages assignment for Firm Record Types has been verified");
+					}
+					else
+					{
+						log(LogStatus.FAIL, "Lightning Record Pages assignment for Firm Record Types is not verified "+result, YesNo.Yes);
+						sa.assertTrue(false, "Lightning Record Pages assignment for Firm Record Types is not verified "+result);
+
+					}
+
+				}
+				else
+				{
+					log(LogStatus.FAIL, "Not able to click on the Object feature name", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on the Object feature name");
+				}
+			}
+			else
+			{
+				log(LogStatus.FAIL, "Not able to search the Standard or Custom Object", YesNo.Yes);
+				sa.assertTrue(false, "Not able to search the Standard or Custom Object");
+
+			}
+
+		}
+		else
+		{
+			log(LogStatus.FAIL, "Not able to open the setup page", YesNo.Yes);
+			sa.assertTrue(false, "Not able to open the setup page");
+		}
+		driver.close();
+		driver.switchTo().window(parentWindowID);
+
+		lp.CRMlogout();
+		sa.assertAll();	
+	}
+
+
+
+	@Parameters({ "projectName"})	    
+	@Test
+
+	public void PEFSTGTc015_VerifyPicklistVaulesForIndustryFieldOnFirmObject(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP=new BasePageBusinessLayer(driver);
+		FirmPageBusinessLayer FB = new FirmPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		FieldAndRelationshipPageBusinessLayer FRB=new FieldAndRelationshipPageBusinessLayer(driver);
+
+		String fieldName1,fieldName2;
+
+		String[] allfieldNamePickListValue=PEFSTG_TC015_FieldName.split("<break>");
+
+		String[] fieldNamePickList1=allfieldNamePickListValue[0].split("<section>");
+		fieldName1=fieldNamePickList1[0];
+		String[] activePickListValue=fieldNamePickList1[1].split("<f>");
+
+		String[] fieldNamePickList2=allfieldNamePickListValue[1].split("<section>");
+		fieldName2=fieldNamePickList2[0];
+		String[] deactivePickListValue=fieldNamePickList2[1].split("<f>");
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		ArrayList<String>result=new ArrayList<String>();
+		if (home.clickOnSetUpLink()) {
+
+			String parentWindowID = switchOnWindow(driver);
+			if (parentWindowID == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create App Page");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create App Page",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create App Page");
+			}
+
+			if (setup.searchStandardOrCustomObject(projectName, mode, object.Firm)) {
+
+				if (setup.clickOnObjectFeature(projectName, mode, object.Firm,
+						ObjectFeatureName.FieldAndRelationShip))
+				{
+					log(LogStatus.INFO, "Clicked on the Field and Relationship object feature name", YesNo.No);
+
+					result=FRB.verifyPicklistValue(fieldName1, activePickListValue,Condition.activate);
+					if(result.isEmpty())
+					{
+						log(LogStatus.PASS, "Picklist value of "+fieldName1+" field has been verified on the firm object "+activePickListValue, YesNo.Yes);
+						sa.assertTrue(true, "Picklist value of "+fieldName1+" field has been verified on the firm object "+ activePickListValue);
+					}
+					else
+					{
+						log(LogStatus.FAIL, "Picklist value of "+fieldName1+" field is not matched on the firm object "+result, YesNo.Yes);
+						sa.assertTrue(false, "Picklist value of "+fieldName1+" field is not matched on the firm object "+result);
+					}		
+
+					result=FRB.verifyPicklistValue(fieldName2, deactivePickListValue,Condition.deactivate);
+					if(result.isEmpty())
+					{
+						log(LogStatus.PASS, "Picklist value of "+fieldName2+" field has been verified on the firm object "+deactivePickListValue, YesNo.Yes);
+						sa.assertTrue(true, "Picklist value of "+fieldName2+" field has been verified on the firm object "+ deactivePickListValue);
+					}
+					else
+					{
+						log(LogStatus.FAIL, "Picklist value of "+fieldName2+" field is not matched on the firm object "+result, YesNo.Yes);
+						sa.assertTrue(false, "Picklist value of "+fieldName2+" field is not matched on the firm object "+result);
+					}	
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Could not click on the Field and Relationship object feature name", YesNo.Yes);
+					sa.assertTrue(false, "Could not click on the Field and Relationship object feature name");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Could not click on the Firm Object manager name", YesNo.Yes);
+				sa.assertTrue(false, "Could not click on the Firm Object manager name");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on the setup link", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on the setup link");
+		}
+		lp.CRMlogout();
+		sa.assertAll();	
+	}
+
 
 	@Parameters({ "projectName" })
 	@Test
@@ -693,11 +1041,11 @@ public class PEFSTG extends BaseLib {
 
 		String[][] listViewSheetData = {
 				{ PEFSTGLV_1_Member, PEFSTGLV_1_TabName, PEFSTGLV_1_ListViewName, PEFSTGLV_1_Filter, PEFSTGLV_1_Field,
-						PEFSTGLV_1_Operators, PEFSTGLV_1_FilterValue, PEFSTGLV_1_FilterCondition },
+					PEFSTGLV_1_Operators, PEFSTGLV_1_FilterValue, PEFSTGLV_1_FilterCondition },
 				{ PEFSTGLV_2_Member, PEFSTGLV_2_TabName, PEFSTGLV_2_ListViewName, PEFSTGLV_2_Filter, PEFSTGLV_2_Field,
 						PEFSTGLV_2_Operators, PEFSTGLV_2_FilterValue, PEFSTGLV_2_FilterCondition },
 				{ PEFSTGLV_3_Member, PEFSTGLV_3_TabName, PEFSTGLV_3_ListViewName, PEFSTGLV_3_Filter, PEFSTGLV_3_Field,
-						PEFSTGLV_3_Operators, PEFSTGLV_3_FilterValue, PEFSTGLV_3_FilterCondition } };
+							PEFSTGLV_3_Operators, PEFSTGLV_3_FilterValue, PEFSTGLV_3_FilterCondition } };
 
 		for (String[] row : listViewSheetData) {
 
@@ -729,9 +1077,9 @@ public class PEFSTG extends BaseLib {
 
 				} else {
 					log(LogStatus.FAIL, "List Views Presence has not been verified: " + notVerifiedListViews.toString()
-							+ " So not able to verify Filters for that List Views", YesNo.Yes);
+					+ " So not able to verify Filters for that List Views", YesNo.Yes);
 					sa.assertTrue(false, "List Views Presence has not been verified: " + notVerifiedListViews.toString()
-							+ " So not able to verify Filters for that List Views");
+					+ " So not able to verify Filters for that List Views");
 				}
 
 				List<String> notVerifiedListViewsFilters = FB.verifyFilterOnListView(listViews, filter, field,
@@ -760,5 +1108,6 @@ public class PEFSTG extends BaseLib {
 		sa.assertAll();
 
 	}
+
 
 }

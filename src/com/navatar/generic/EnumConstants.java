@@ -419,7 +419,13 @@ Fundraising_ContactPage, Financing, Financial_Performance, Marketing_Initiative,
 			public String toString() {
 					return "Page Layouts";
 		}
-	},myTemplates{
+	},lightningRecordPages{
+		@Override
+		public String toString() {
+				return "Lightning Record Pages";
+	}
+}
+		,myTemplates{
 			@Override
 			public String toString() {
 				if(ExcelUtils.readDataFromPropertyFile("Mode").equalsIgnoreCase(Mode.Classic.toString())){
