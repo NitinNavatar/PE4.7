@@ -2128,6 +2128,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 		switchToDefaultContent(driver);
 		switchToFrame(driver, 60, getSetUpPageIframe(120));
+		ThreadSleep(5000);
 		boolean flag = false;
 		;
 		String xpath = "";

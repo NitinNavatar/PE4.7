@@ -1133,7 +1133,7 @@ public class HomePage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "//label[text()='Company Name']/../following-sibling::td/input")
+	@FindBy(xpath = "//label[text()='Company']/../following-sibling::td/input")
 	private WebElement companyNameTextBox;
 
 	/**

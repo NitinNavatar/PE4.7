@@ -105,7 +105,7 @@ public class Module9 extends BaseLib {
 		String[] splitedUserLastName = removeNumbersFromString(crmUser1LastName);
 		String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
 		String emailId = lp.generateRandomEmailId(gmailUserName);
-		
+
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		boolean flag = false;
 		for (int i = 0; i < 3; i++) {
@@ -167,10 +167,10 @@ public class Module9 extends BaseLib {
 			sa.assertTrue(false, "could not click on setup link, test case fail");
 
 		}
-
-		closeBrowser();
-		driver.switchTo().window(parentWindow);
 		lp.CRMlogout();
+		closeBrowser();
+//		driver.switchTo().window(parentWindow);
+		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
 		String passwordResetLink = null;
 		try {
@@ -204,7 +204,7 @@ public class Module9 extends BaseLib {
 		String parentWindow = null;
 		String[] splitedUserLastName = removeNumbersFromString(crmUser2LastName);
 		String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
-		String emailId = lp.generateRandomEmailId(gmailUserName2);
+		String emailId = lp.generateRandomEmailId(gmailUserName);
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		boolean flag = false;
@@ -267,15 +267,14 @@ public class Module9 extends BaseLib {
 			sa.assertTrue(false, "could not click on setup link, test case fail");
 
 		}
-
-		closeBrowser();
-		driver.switchTo().window(parentWindow);
 		lp.CRMlogout();
+		closeBrowser();
+		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
 		String passwordResetLink = null;
 		try {
 			passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
-					ExcelUtils.readDataFromPropertyFile("gmailUserName2"),
+					ExcelUtils.readDataFromPropertyFile("gmailUserName"),
 					ExcelUtils.readDataFromPropertyFile("gmailPassword"));
 		} catch (InterruptedException e2) {
 			e2.printStackTrace();
@@ -295,11 +294,8 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
 	@Test
-	public void
-
-			M9Tc001_3_createACustomObjectAndTabAndGivePermissions(String projectName) {
+	public void M9Tc001_3_createACustomObjectAndTabAndGivePermissions(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -313,11 +309,8 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
 	@Test
-	public void
-
-			M9Tc001_4_createACustomObjectAndTabAndGivePermissions(String projectName) {
+	public void M9Tc001_4_createACustomObjectAndTabAndGivePermissions(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -331,11 +324,8 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
 	@Test
-	public void
-
-			M9Tc001_5_createFieldsForCustomObjects(String projectName) {
+	public void M9Tc001_5_createFieldsForCustomObjects(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -371,11 +361,8 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
 	@Test
-	public void
-
-			M9Tc001_6_verifyPreconditionRecordsDataImportWizardAdmin(String projectName) {
+	public void M9Tc001_6_verifyPreconditionRecordsDataImportWizardAdmin(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -470,20 +457,19 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
 	@Test
 	public void M9Tc001_7_AddListViews(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 
 		String[][] listViewSheetData = {
 				{ M9LV_1_Member, M9LV_1_TabName, M9LV_1_ListViewName, M9LV_1_ListAccessibility, M9LV_1_Filter,
-						M9LV_1_Field, M9LV_1_Operators, M9LV_1_FilterValue },
+						M9LV_1_Field, M9LV_1_Operators, M9LV_1_FilterValue, M9LV_1_TextBoxType },
 				{ M9LV_2_Member, M9LV_2_TabName, M9LV_2_ListViewName, M9LV_2_ListAccessibility, M9LV_2_Filter,
-						M9LV_2_Field, M9LV_2_Operators, M9LV_2_FilterValue },
+						M9LV_2_Field, M9LV_2_Operators, M9LV_2_FilterValue, M9LV_2_TextBoxType },
 				{ M9LV_3_Member, M9LV_3_TabName, M9LV_3_ListViewName, M9LV_3_ListAccessibility, M9LV_3_Filter,
-						M9LV_3_Field, M9LV_3_Operators, M9LV_3_FilterValue },
+						M9LV_3_Field, M9LV_3_Operators, M9LV_3_FilterValue, M9LV_3_TextBoxType },
 				{ M9LV_4_Member, M9LV_4_TabName, M9LV_4_ListViewName, M9LV_4_ListAccessibility, M9LV_4_Filter,
-						M9LV_4_Field, M9LV_4_Operators, M9LV_4_FilterValue } };
+						M9LV_4_Field, M9LV_4_Operators, M9LV_4_FilterValue, M9LV_4_TextBoxType } };
 
 		for (String[] row : listViewSheetData) {
 
@@ -537,12 +523,12 @@ public class Module9 extends BaseLib {
 				{ M9Report_1_ReportFolderName, M9Report_1_ReportName, M9Report_1_SelectReportType, M9Report_1_Show,
 
 						M9Report_1_Range, M9Report_1_DateField, M9Report_1_FieldName, M9Report_1_Operator,
-						M9Report_1_FieldValue },
+						M9Report_1_FieldValue, M9Report_1_TextBoxType },
 
 				{ M9Report_2_ReportFolderName, M9Report_2_ReportName, M9Report_2_SelectReportType, M9Report_2_Show,
 
 						M9Report_2_Range, M9Report_2_DateField, M9Report_2_FieldName, M9Report_2_Operator,
-						M9Report_2_FieldValue } };
+						M9Report_2_FieldValue, M9Report_2_TextBoxType } };
 
 		int i = 0;
 		for (String[] data : datas) {
@@ -552,7 +538,8 @@ public class Module9 extends BaseLib {
 				appLog.info("Custom Report is created succesdfully : " + data[1]);
 				sa.assertTrue(true, "Custom Report is created succesdfully : " + data[1]);
 
-				if (report.addFilterInCustomReportLightning(data[3], data[5], data[4], data[6], data[7], data[8])) {
+				if (report.addFilterInCustomReportLightning(data[3], data[5], data[4], data[6], data[7], data[8],
+						data[9])) {
 					appLog.info("All Filters has been successfully applied to the report : " + data[1]);
 					sa.assertTrue(true, "All filters added to Custom Report : " + data[1]);
 
@@ -1789,7 +1776,7 @@ public class Module9 extends BaseLib {
 		int numberOfRecords = Integer.parseInt(M9_TC014_SDGNumberOfRecords);
 		String[][] listViewSheetData = { { M9_TC014_ListViewMember, M9_TC014_ListViewTabName, M9_TC014_ListViewName,
 				M9_TC014_ListViewAccessibility, M9_TC014_ListViewFilter, M9_TC014_ListViewField,
-				M9_TC014_ListViewOperators, M9_TC014_ListViewFilterValue } };
+				M9_TC014_ListViewOperators, M9_TC014_ListViewFilterValue, M9_TC014_ListViewTextBoxType } };
 
 		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
@@ -2740,7 +2727,7 @@ public class Module9 extends BaseLib {
 
 		String[][] listViewSheetData = { { M9_TC020_ListViewMember, M9_TC020_ListViewTabName, M9_TC020_ListViewName,
 				M9_TC020_ListViewAccessibility, M9_TC020_ListViewFilter, M9_TC020_ListViewField,
-				M9_TC020_ListViewOperators, M9_TC020_ListViewFilterValue } };
+				M9_TC020_ListViewOperators, M9_TC020_ListViewFilterValue, M9_TC020_ListViewTexBoxType } };
 		int expectedNumberOfRecords = Integer.parseInt(M9_TC019_SDGNumberOfRecords);
 
 		for (String[] row : listViewSheetData) {
@@ -5853,9 +5840,7 @@ public class Module9 extends BaseLib {
 		sa.assertAll();
 	}
 
-	/**
-	 * @param projectName
-	 */
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void M9Tc042_VerifyFilterApplyOnFundPrepAndVerifyRecords(String projectName) {

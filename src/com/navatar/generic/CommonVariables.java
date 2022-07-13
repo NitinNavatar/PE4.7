@@ -23,14 +23,14 @@ import com.navatar.generic.EnumConstants.ActivityRelatedLabel;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.pageObjects.BasePageErrorMessage;
 import com.navatar.scripts.Module5New;
-import com.navatar.scripts.Module8;
+import com.navatar.scripts.Module8HomepageSDG;
 import com.navatar.scripts.PECloudSmoke;
 import com.navatar.scripts.Module6;
-import com.navatar.scripts.Module7;
-import com.navatar.scripts.Module1;
+import com.navatar.scripts.Module7WithMeetingTypeDepricated;
+import com.navatar.scripts.Module1FieldSetDepricated;
 import com.navatar.scripts.Module2;
 import com.navatar.scripts.Module3New;
-import com.navatar.scripts.Module4;
+import com.navatar.scripts.Module4AccordionOutOfScopeDepricated;
 
 
 /**
@@ -745,8 +745,14 @@ public class CommonVariables {
 	public static String M9LV_1_Operators,M9LV_2_Operators,M9LV_3_Operators,M9LV_4_Operators,M9LV_5_Operators;
 
 	//Filter Value
+
+
 	public static String M9LV_1_FilterValue,M9LV_2_FilterValue,M9LV_3_FilterValue,M9LV_4_FilterValue,M9LV_5_FilterValue;
-    
+	
+	//TextBox Type
+		public static String M9LV_1_TextBoxType,M9LV_2_TextBoxType,M9LV_3_TextBoxType,M9LV_4_TextBoxType;
+
+
 	//List View Sheet Data
 	public static String[][] getListViewSheetData;
 
@@ -832,10 +838,10 @@ public class CommonVariables {
 
 		public static String M9Report_1_ReportFolderName, M9Report_1_ReportName, M9Report_1_SelectReportType,
 				M9Report_1_Show, M9Report_1_Range, M9Report_1_DateField, M9Report_1_FieldName, M9Report_1_Operator,
-				M9Report_1_FieldValue;
+				M9Report_1_FieldValue,M9Report_1_TextBoxType;
 		public static String M9Report_2_ReportFolderName, M9Report_2_ReportName, M9Report_2_SelectReportType,
 				M9Report_2_Show, M9Report_2_Range, M9Report_2_DateField, M9Report_2_FieldName, M9Report_2_Operator,
-				M9Report_2_FieldValue;
+				M9Report_2_FieldValue,M9Report_2_TextBoxType;
 
 		// M9 SDG Field Values
 		public static String M9SDGFieldValue_1_APIName, M9SDGFieldValue_1_OverrideLabel, M9SDGFieldValue_1_SDGName,
@@ -877,7 +883,7 @@ public class CommonVariables {
 		// M9Tc014 Data
 		public static String M9_TC014_SDGNumberOfRecords, M9_TC014_ListViewMember, M9_TC014_ListViewTabName,
 				M9_TC014_ListViewName, M9_TC014_ListViewAccessibility, M9_TC014_ListViewFilter, M9_TC014_ListViewField,
-				M9_TC014_ListViewOperators, M9_TC014_ListViewFilterValue;
+				M9_TC014_ListViewOperators, M9_TC014_ListViewFilterValue,M9_TC014_ListViewTextBoxType;
 
 		// M9Tc015 Data
 		public static String M9_TC015_MyRecords, M9_TC015_GlobalFilterQuery, M9_TC015_SDGNumberOfRecords;
@@ -892,7 +898,7 @@ public class CommonVariables {
 
 		public static String M9_TC020_ListViewMember, M9_TC020_ListViewTabName, M9_TC020_ListViewName,
 				M9_TC020_ListViewAccessibility, M9_TC020_ListViewFilter, M9_TC020_ListViewField, M9_TC020_ListViewOperators,
-				M9_TC020_ListViewFilterValue;
+				M9_TC020_ListViewFilterValue,M9_TC020_ListViewTexBoxType;
 
 		public static String M9_TC022_StandardFilterSearch1, M9_TC022_StandardFilterPickList1, M9_TC022_SDGNumberOfRecords1,
 				M9_TC022_StandardFilterSearch2, M9_TC022_StandardFilterPickList2, M9_TC022_SDGNumberOfRecords2,
@@ -956,6 +962,7 @@ public class CommonVariables {
 				M9_TC048_SDGNumberOfRecords;
 	
 	
+
 		
 		//PEFSTG
 
@@ -988,17 +995,35 @@ public class CommonVariables {
 		
 		//User Profile
 		public static String PEFSTG_Tc013_UserProfile,PEFSTG_Tc014_UserProfile ;	
-		
-		
-		
-		
-		
+
 		static FileInputStream dataFile = null;
 		static Workbook dataWb = null;
 		
 
+		//Member
+		public static String PEFSTGLV_1_Member,PEFSTGLV_2_Member,PEFSTGLV_3_Member;
 
+		//Tab Name
+		public static String PEFSTGLV_1_TabName,PEFSTGLV_2_TabName,PEFSTGLV_3_TabName;
 
+		//List View Name
+		public static String PEFSTGLV_1_ListViewName,PEFSTGLV_2_ListViewName,PEFSTGLV_3_ListViewName;
+
+		
+		//Filter
+		public static String PEFSTGLV_1_Filter,PEFSTGLV_2_Filter,PEFSTGLV_3_Filter;
+
+		//Field
+		public static String PEFSTGLV_1_Field,PEFSTGLV_2_Field,PEFSTGLV_3_Field;
+
+		//Operators
+		public static String PEFSTGLV_1_Operators,PEFSTGLV_2_Operators,PEFSTGLV_3_Operators;
+
+		//Filter Value
+		public static String PEFSTGLV_1_FilterValue,PEFSTGLV_2_FilterValue,PEFSTGLV_3_FilterValue;
+
+		//Filter Conditions
+		public static String PEFSTGLV_1_FilterCondition,PEFSTGLV_2_FilterCondition,PEFSTGLV_3_FilterCondition;
 
 
 
@@ -1100,7 +1125,7 @@ public class CommonVariables {
 		
 		switch (obj.getClass().getSimpleName()) {
 
-		case "Module1":
+		case "Module1FieldSetDepricated":
 
 			ToggleOpenQA1ID=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Request_Tracker_ID);
 			ToggleOpenQA1RequestedDate=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"DealRequestTracker",excelLabel.Variable_Name, "OPENQA1", excelLabel.Date_Requested);;
@@ -1660,6 +1685,11 @@ public class CommonVariables {
 			M3Fund1Category=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "M3FUND1", excelLabel.Investment_Category);
 			M3Fund1RecordType=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Fund",excelLabel.Variable_Name, "M3FUND1", excelLabel.Record_Type);
 
+			SmokeReportFolderName=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Report_Folder_Name);
+			SmokeReportName=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Report_Name);	
+			SmokeReportType=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Select_Report_Type);
+			SmokeReportShow=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Show);
+			SmokeReportRange=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Report",excelLabel.Variable_Name, "SmokeReport1", excelLabel.Range);
 
 
 			//**********************************************************Email Template ******************************************************/
@@ -1771,7 +1801,7 @@ public class CommonVariables {
 			}
 			break;
 
-		case "Module4" :
+		case "Module4AccordionOutOfScopeDepricated" :
 			try {
 				dataFile=new FileInputStream(new File(phase1DataSheetFilePath));
 			} catch (FileNotFoundException e1) {
@@ -2116,7 +2146,7 @@ public class CommonVariables {
 			}
 			break;
 
-		case "Module7" :
+		case "Module7WithMeetingTypeDepricated" :
 			
 			try {
 				dataFile=new FileInputStream(new File(phase1DataSheetFilePath));
@@ -2361,7 +2391,7 @@ public class CommonVariables {
 			}
 			break;
 
-		case "Module7New" :
+		case "Module7" :
 			try {
 				dataFile=new FileInputStream(new File(phase1DataSheetFilePath));
 			} catch (FileNotFoundException e1) {
@@ -2688,7 +2718,7 @@ public class CommonVariables {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		case "Module8" :
+		case "Module8HomepageSDG" :
 			try {
 				dataFile=new FileInputStream(new File(phase1DataSheetFilePath));
 			} catch (FileNotFoundException e1) {
@@ -3921,7 +3951,19 @@ public class CommonVariables {
 						M9LV_4_FilterValue = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
 								"M9LV_4", excelLabel.Filter_Value);
 
-						M9LV_5_FilterValue = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "M9LV_5", excelLabel.Filter_Value);		
+						M9LV_5_FilterValue = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "M9LV_5", excelLabel.Filter_Value);
+						
+						// Filter Value
+						M9LV_1_TextBoxType = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
+								"M9LV_1", excelLabel.TextBox_Type);
+						M9LV_2_TextBoxType = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
+								"M9LV_2", excelLabel.TextBox_Type);
+						M9LV_3_TextBoxType = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
+								"M9LV_3", excelLabel.TextBox_Type);
+						M9LV_4_TextBoxType = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
+								"M9LV_4", excelLabel.TextBox_Type);
+						
+
 
 						//Account Industry Name
 						M9SDGD_1_AccountIndustry=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"SDGData",excelLabel.Variable_Name, "M9SDGD_1", excelLabel.Account_Industry);
@@ -4760,6 +4802,8 @@ public class CommonVariables {
 								"M9Report1", excelLabel.Operators);
 						M9Report_1_FieldValue = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "Report", excelLabel.Variable_Name,
 								"M9Report1", excelLabel.Field_Value);
+						M9Report_1_TextBoxType = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "Report", excelLabel.Variable_Name,
+								"M9Report1", excelLabel.TextBox_Type);
 
 						M9Report_2_ReportFolderName = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "Report",
 								excelLabel.Variable_Name, "M9Report2", excelLabel.Report_Folder_Name);
@@ -4779,6 +4823,8 @@ public class CommonVariables {
 								"M9Report2", excelLabel.Operators);
 						M9Report_2_FieldValue = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "Report", excelLabel.Variable_Name,
 								"M9Report2", excelLabel.Field_Value);
+						M9Report_2_TextBoxType = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "Report", excelLabel.Variable_Name,
+								"M9Report2", excelLabel.TextBox_Type);
 
 						// M9Tc002 (Field Values)
 
@@ -4933,6 +4979,8 @@ public class CommonVariables {
 								excelLabel.Variable_Name, "M9LV_7", excelLabel.Operators);
 						M9_TC014_ListViewFilterValue = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView",
 								excelLabel.Variable_Name, "M9LV_7", excelLabel.Filter_Value);
+						M9_TC014_ListViewTextBoxType = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView",
+								excelLabel.Variable_Name, "M9LV_7", excelLabel.TextBox_Type);
 
 						// M9Tc015 Data
 						M9_TC015_MyRecords = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "CustomSDG", excelLabel.Variable_Name,
@@ -4977,6 +5025,8 @@ public class CommonVariables {
 								excelLabel.Variable_Name, "M9LV_6", excelLabel.Operators);
 						M9_TC020_ListViewFilterValue = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView",
 								excelLabel.Variable_Name, "M9LV_6", excelLabel.Filter_Value);
+						M9_TC020_ListViewTexBoxType = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView",
+								excelLabel.Variable_Name, "M9LV_6", excelLabel.TextBox_Type);
 
 						M9_TC022_StandardFilterSearch1 = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "SDG Standard Filter",
 								excelLabel.Variable_Name, "M9_TC022_FilterData1", excelLabel.Filter_Search);
@@ -5360,6 +5410,7 @@ public class CommonVariables {
            
 			//Filter Condition
 			PEFSTG_10_FilterCondition = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "PEFSTG_10", excelLabel.Filter_Condition);		
+
 	        
 			
 			//field 
@@ -5378,6 +5429,68 @@ public class CommonVariables {
 			PEFSTG_Tc013_UserProfile=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, "PEFSTGTc0013_VerifyPagLayoutAssignmentForFirmRecordTypes", excelLabel.User_Profile);
 			PEFSTG_Tc014_UserProfile=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, "PEFSTGTc0014_VerifyLightningRecordPagesAssignmentForFirmRecordTypes", excelLabel.User_Profile);
 			
+			// Sheet Name: ListView
+			// Member
+			PEFSTGLV_1_Member = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "PEFSTGLV_1", excelLabel.Member);
+			PEFSTGLV_2_Member = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "PEFSTGLV_2", excelLabel.Member);
+			PEFSTGLV_3_Member = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "PEFSTGLV_3", excelLabel.Member);
+			
+			//Tab Name
+			PEFSTGLV_1_TabName = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "PEFSTGLV_1", excelLabel.TabName);
+			PEFSTGLV_2_TabName = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "PEFSTGLV_2", excelLabel.TabName);
+			PEFSTGLV_3_TabName = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "PEFSTGLV_3", excelLabel.TabName);
+			
+			//List View Name
+			PEFSTGLV_1_ListViewName = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "PEFSTGLV_1", excelLabel.List_View_Name);
+			PEFSTGLV_2_ListViewName = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "PEFSTGLV_2", excelLabel.List_View_Name);
+			PEFSTGLV_3_ListViewName = ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"ListView",excelLabel.Variable_Name, "PEFSTGLV_3", excelLabel.List_View_Name);
+		
+			
+			// Filter
+			PEFSTGLV_1_Filter = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
+					"PEFSTGLV_1", excelLabel.Filter);
+			PEFSTGLV_2_Filter = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
+					"PEFSTGLV_2", excelLabel.Filter);
+			PEFSTGLV_3_Filter = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
+					"PEFSTGLV_3", excelLabel.Filter);
+			
+					
+
+			// Field
+			PEFSTGLV_1_Field = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
+					"PEFSTGLV_1", excelLabel.Field);
+			PEFSTGLV_2_Field = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
+					"PEFSTGLV_2", excelLabel.Field);
+			PEFSTGLV_3_Field = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
+					"PEFSTGLV_3", excelLabel.Field);
+			
+			// Operators
+			PEFSTGLV_1_Operators = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
+					"PEFSTGLV_1", excelLabel.Operators);
+			PEFSTGLV_2_Operators = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
+					"PEFSTGLV_2", excelLabel.Operators);
+			PEFSTGLV_3_Operators = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
+					"PEFSTGLV_3", excelLabel.Operators);
+			
+			// Filter Value
+			PEFSTGLV_1_FilterValue = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
+					"PEFSTGLV_1", excelLabel.Filter_Value);
+			PEFSTGLV_2_FilterValue = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
+					"PEFSTGLV_2", excelLabel.Filter_Value);
+			PEFSTGLV_3_FilterValue = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
+					"PEFSTGLV_3", excelLabel.Filter_Value);
+			
+			
+			
+			// Filter Condition
+			PEFSTGLV_1_FilterCondition = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
+					"PEFSTGLV_1", excelLabel.Filter_Condition);
+			PEFSTGLV_2_FilterCondition = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
+					"PEFSTGLV_2", excelLabel.Filter_Condition);
+			PEFSTGLV_3_FilterCondition = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
+					"PEFSTGLV_3", excelLabel.Filter_Condition);
+	           
+			
 			
 			try {
 				dataFile.close();
@@ -5391,8 +5504,6 @@ public class CommonVariables {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
-			break;
 
 		default:
 			break;
