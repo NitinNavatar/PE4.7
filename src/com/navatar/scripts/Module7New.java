@@ -418,9 +418,9 @@ public void M7NTc06_CreatLogACallForContactJhonAleaxVerifyLastTouchpointOnContac
 	M7NTask3dueDate=todaysDate;
 	String task = M7NTask3Subject;
 	String[][] event1 = {{PageLabel.Subject.toString(),task},
-			{PageLabel.Due_Date.toString(),M7NTask3dueDate},
+			/*{PageLabel.Due_Date.toString(),M7NTask3dueDate},*/
 			{PageLabel.Name.toString(),contactName},
-			{PageLabel.Status.toString(),M7NTask3Status}};
+			/*{PageLabel.Status.toString(),M7NTask3Status}*/};
 
 	if (gp.clickOnGlobalActionAndEnterValue(projectName, GlobalActionItem.Log_a_Call, event1)) {
 		log(LogStatus.INFO,"Able to Enter Value for : "+task,YesNo.No);

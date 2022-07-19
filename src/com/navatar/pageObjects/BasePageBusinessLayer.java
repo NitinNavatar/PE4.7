@@ -2141,7 +2141,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			// xpath = "//span[text()='"+label+"']/../following-sibling::div";
 			xpath = "//ul/li/a[@title='" + value + "']";
 		} else {
-			xpath = "//label[text()='" + label + "']/..//span[@title='" + value + "']";
+		/*	xpath = "//label[text()='" + label + "']/..//span[@title='" + value + "']";*/
+		
+		xpath = "//*[text()='" + label + "']/../..//a[text()='" + value + "']";
 		}
 
 		ele = FindElement(driver, xpath, "Drop Down : " + label + " value : " + value, action, timeOut);
@@ -3304,7 +3306,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			tabName = "Entities";
 		} else if (TabName.contains("Inst")) {
 			tabName = "Institutions";
-		} else if (TabName.contains("Funds")) {
+		} else if (TabName.contains("Fund")) {
 			tabName = "Funds";
 		} else {
 			tabName = TabName;
@@ -3474,9 +3476,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String btname = btnName.toString();
 		String xpath = "";
 		if (isInside) {
-			xpath = "//header//a[text()='"+toggleTab+"' or @title='"+toggleTab+"']" ;
+			xpath = "//button[@title='"+toggleTab+"']" ;
 		} else {
-			xpath = "//header//a[text()='"+toggleTab+"' or @title='"+toggleTab+"']" ;
+			xpath = "//button[@title='"+toggleTab+"']" ;
 		}
 		WebElement ele = FindElement(driver, xpath, toggleTab + " >> " + btname, action, timeOut);
 		scrollDownThroughWebelement(driver, ele, "Toggle Button : " + btname);
