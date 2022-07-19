@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.navatar.generic.CommonLib;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
@@ -16,7 +17,6 @@ import static com.navatar.generic.CommonLib.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class SetupPage extends BasePageBusinessLayer {
 
@@ -881,14 +881,122 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, fieldandRelationshipQuickSearch, "Visibility", timeOut, "Field and relationship Quick Search");
 	}
 	
+	@FindBy(xpath = "//section[@class='related-list-card']//tbody//td[3]//span[@class='slds-assistive-text' or contains(@class,'assistiveText')]")
+	private List<WebElement> companyRecordTypeActivityStatus;
+
+	public List<WebElement> getcompanyRecordTypeActivityStatus() {
+		return companyRecordTypeActivityStatus;
+	}
+	
+	@FindBy(xpath = "//section[@class='related-list-card']//tbody//td[1]//span")
+	private WebElement companyRecordTypeName;
+
+	public WebElement getcompanyRecordTypeName(int timeOut) {
+		return isDisplayed(driver, companyRecordTypeName, "Visibility", timeOut, "Company record type name");
+	}
+	
+	@FindBy(xpath = "//section[@class='related-list-card']//tbody//td[1]//span")
+	private List<WebElement> companyRecordTypeNamelist;
+
+	public List<WebElement> getcompanyRecordTypeNamelist() {
+		return companyRecordTypeNamelist;
+	}
+	
+	@FindBy(xpath = "//iframe[@title='User Profiles ~ Salesforce - Enterprise Edition']")
+	private WebElement userProfileIframe;
+
+	public WebElement getuserProfileIframe(int timeOut) {
+		return isDisplayed(driver, userProfileIframe, "Visibility", timeOut, "User Profile Iframe");
+	}
+	
+	@FindBy(xpath = "//iframe[contains(@title,'Salesforce - Enterprise Edition')]")
+	private WebElement profileIframe;
+
+	public WebElement getProfileIframe(int timeOut) {
+		return isDisplayed(driver, profileIframe, "Visibility", timeOut, "Profile Iframe");
+	}
+	
+	@FindBy(xpath = "//table[@class='detailList']//tr[td[text()='Accounts']]//a[text()='Edit']")
+	private WebElement recordTypeEditButton;
+
+	public WebElement getRecordTypeEditButton(int timeOut) {
+		return isDisplayed(driver, recordTypeEditButton, "Visibility", timeOut, "Record type edit button");
+	}
+	
+	@FindBy(xpath = "//iframe[@title='Edit Record Type Settings: Account ~ Salesforce - Enterprise Edition']")
+	private WebElement editRecordTypeIframe;
+
+	public WebElement geteditRecordTypeIframe(int timeOut) {
+		return isDisplayed(driver, editRecordTypeIframe, "Visibility", timeOut, "Record type edit iframe");
+	}
+	
+	@FindBy(xpath = "//select[@id='p5']//option[@selected='selected']")
+	private WebElement defaultRecordType;
+
+	public WebElement getdefaultRecordType(int timeOut) {
+		return defaultRecordType;
+	}
+	
+	@FindBy(xpath="//iframe[contains(@title,'Salesforce - Enterprise Edition')]")
+	private WebElement recordTypeIframe;
+
+	public WebElement getrecordTypeIframe(int timeOut) {	
+		return isDisplayed(driver, recordTypeIframe, "Visibility", timeOut, "Record type iframes");
+	}
+	
+	@FindBy(xpath="//a[@data-list='Record Types']")
+	private WebElement recordTypeObjectManager;
+
+	public WebElement getrecordTypeObjectManager(int timeOut) {	
+		return isDisplayed(driver, recordTypeObjectManager, "Visibility", timeOut, "Record type Object Manager");
+	}
+
+	@FindBy(xpath="//button[text()='Page Layout Assignment']")
+	private WebElement pageLayoutAssignment;
+
+	public WebElement getpageLayoutAssignment(int timeOut) {	
+		return isDisplayed(driver, pageLayoutAssignment, "Visibility", timeOut, "Page Layout Assignment button");
+	}
+
+	@FindBy(xpath="//iframe[contains(@title,'Salesforce - Enterprise Edition')]")
+	private WebElement pageLayoutIframe;
+
+	public WebElement getpageLayoutIframe(int timeOut) {	
+		return isDisplayed(driver, pageLayoutIframe, "Visibility", timeOut, "Page layout Iframe");
+	}
+	
+	@FindBy(xpath="//a[text()='Next>']")
+	private WebElement nextBtn;
+
+	public WebElement getnextBtn(int timeOut) {	
+		return isDisplayed(driver, nextBtn, "Visibility", timeOut, "Next button");
+	}
+	
+	
+	@FindBy(xpath="//a[text()='<Prev']")
+	private WebElement PrevBtn;
+
+	public WebElement getPrevBtn(int timeOut) {	
+		return isDisplayed(driver, PrevBtn, "Visibility", timeOut, "Prev button");
+	}
+	
+	@FindBy(xpath="//button[text()='View Page Assignments']")
+	private WebElement viewPageAssignments;
+
+	public WebElement getviewPageAssignments(int timeOut) {	
+		return isDisplayed(driver, viewPageAssignments, "Visibility", timeOut, "View Page Assignments button");
+	}
+
+	
+	
+	 	
+
 	
 	
 	
 	
 	
-	
-	
-	
+
 	
 	
 	

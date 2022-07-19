@@ -304,7 +304,7 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 	@FindBy(xpath="//h3[text()='Office Locations']/../following-sibling::td/input[@title='New Office Location']")
 	private WebElement newOfficeLocationBtn_Classic;
 
-	@FindBy(xpath="//span[text()='Office Locations']/ancestor::article//a/div[@title='New']")
+	@FindBy(xpath="//a[@title='New']")
 	private WebElement newofficeLocationBtn_Lighting;
 
 
@@ -733,5 +733,17 @@ public class InstitutionsPage extends BasePageBusinessLayer {
 
 		return null;
 	}
+	
+	@FindBy(xpath = "//ul[@role='tablist']//a[text()='Details']")
+	private WebElement detailsTab;
+
+	public WebElement getdetailsTab(int timeOut) {
+
+		return isDisplayed(driver, detailsTab, "Visibility", timeOut, "Details Tab");
+
+	}
+	
+	
+	
 
 }

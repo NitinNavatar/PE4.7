@@ -4,6 +4,9 @@ import static com.navatar.generic.CommonLib.FindElement;
 import static com.navatar.generic.CommonLib.click;
 import static com.navatar.generic.CommonLib.log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -46,6 +49,7 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 				log(LogStatus.INFO, "clicked on Field" + fieldName, YesNo.No);
 				CommonLib.ThreadSleep(7000);
 				CommonLib.switchToFrame(driver, 40, getfieldsAndRelationshipsIframe(30));
+				CommonLib.ThreadSleep(2000);
 				try
 				{
 					ele=new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//th[@scope='row' and text()='"+value+"']/preceding-sibling::td//a[contains(@title,'ctivate')]")));
@@ -61,23 +65,20 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 
 				if(condition.toString().equals("activate"))
 				{
-					if(!actionStatus.equals("Activate"))
+					if(!actionStatus.equals("Deactivate"))
 					{
-						if (CommonLib.click(driver, ele,value+" Deactivate button" , action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "clicked on the Deactivate button of " +value, YesNo.No);
-							if(!CommonLib.isAlertPresent(driver))
-							{		
-								CommonLib.clickUsingJavaScript(driver, ele,value+" field" , action.SCROLLANDBOOLEAN);
-
-							}
+						if (CommonLib.click(driver, ele,value+" activate button" , action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on the activate button of " +value, YesNo.No);
+							CommonLib.ThreadSleep(20000);
 							CommonLib.switchToDefaultContent(driver);
-							CommonLib.switchToAlertAndAcceptOrDecline(driver, 20, action.ACCEPT);
+							CommonLib.ThreadSleep(3000);
 							flag =true;
 						}					
 					}
 					else
 					{
 						CommonLib.switchToDefaultContent(driver);
+						CommonLib.ThreadSleep(3000);
 						log(LogStatus.INFO, value+" is already Activated", YesNo.No);
 
 						flag=true;
@@ -85,10 +86,20 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 				}
 				else if(condition.toString().equals("deactivate"))
 				{
-					if(!actionStatus.equals("Deactivate"))
+					if(!actionStatus.equals("Activate"))
 					{
 						if (CommonLib.click(driver, ele,value+" Activate button" , action.SCROLLANDBOOLEAN)) {
+
+							if(!CommonLib.isAlertPresent(driver))
+							{		
+								CommonLib.clickUsingJavaScript(driver, ele,value+" field" , action.SCROLLANDBOOLEAN);
+
+							}
+
+							CommonLib.switchToAlertAndAcceptOrDecline(driver, 20, action.ACCEPT);
+							CommonLib.ThreadSleep(20000);
 							CommonLib.switchToDefaultContent(driver);
+							CommonLib.ThreadSleep(3000);
 							log(LogStatus.INFO, "clicked on the Activate button of " +value, YesNo.No);	
 
 							flag=true;
@@ -98,11 +109,10 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 					{
 						log(LogStatus.INFO, value+" is already Deactivated", YesNo.No);
 						CommonLib.switchToDefaultContent(driver);
+						CommonLib.ThreadSleep(3000);
 						flag=true;
 					}
-				}
-
-				CommonLib.ThreadSleep(15000);
+				}			
 			}
 
 			else
@@ -481,5 +491,133 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 		return flag;
 
 	}
+
+	public boolean verifyField(String fieldName)
+	{
+		String xPath="";
+		WebElement ele;
+		boolean flag=false;
+		if(CommonLib.sendKeysAndPressEnter(driver, getQucikSearchInFieldAndRelationshipPage(50),fieldName ,fieldName+" field", action.SCROLLANDBOOLEAN))
+		{
+			log(LogStatus.INFO,"Field value has been passed in "+fieldName,YesNo.No);
+			CommonLib.ThreadSleep(6000);
+			xPath="//span[text()='"+fieldName+"']";
+			ele = FindElement(driver, xPath, fieldName + " xpath", action.SCROLLANDBOOLEAN, 30);
+			if (ele!=null) {
+				log(LogStatus.INFO, fieldName+" field is appearing", YesNo.No);	
+				flag=true;
+			}
+			else
+			{
+				log(LogStatus.ERROR, fieldName+" field is not appearing", YesNo.Yes);	
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Not able to pass the "+fieldName+" in the searchbox", YesNo.Yes);
+		}
+		return flag;
+	}
+
+	public ArrayList<String> verifyPicklistValue(String fieldName, String[] picklistValue,Condition condition)
+	{
+		String xPath="";
+		WebElement ele;
+		List<WebElement> elements;
+		ArrayList<String> picklistExpectedValue=new ArrayList<String>();
+		ArrayList<String> picklistActualValue=new ArrayList<String>();
+		ArrayList<String> result=new ArrayList<String>();
+
+		for(int i=0; i<picklistValue.length; i++)
+		{
+			picklistExpectedValue.add(picklistValue[i]);
+		}
+
+		if(CommonLib.sendKeysAndPressEnter(driver, getQucikSearchInFieldAndRelationshipPage(50),fieldName ,fieldName+" field", action.SCROLLANDBOOLEAN))
+		{
+			log(LogStatus.INFO,"Field value has been passed in "+fieldName,YesNo.No);
+			CommonLib.ThreadSleep(6000);
+			xPath="//span[text()='"+fieldName+"']";
+			ele = FindElement(driver, xPath, fieldName + " xpath", action.SCROLLANDBOOLEAN, 30);
+			if (CommonLib.click(driver, ele,fieldName+" field" , action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "clicked on Field" + fieldName, YesNo.No);
+				CommonLib.ThreadSleep(10000);
+				if(CommonLib.switchToFrame(driver, 40, getfieldsAndRelationshipsIframe(30)))
+				{
+					log(LogStatus.INFO,"Successfully switch to Field and Relationship Iframe", YesNo.No);
+					if(condition.toString().equals("activate"))
+					{
+						xPath="//a[text()='Deactivate']/ancestor::tr//th";
+						elements=CommonLib.FindElements(driver, xPath, "Active picklist");
+						for(int i=0; i<elements.size(); i++)
+						{
+							String text=CommonLib.getText(driver, elements.get(i), "Active Picklist "+i+ "", action.SCROLLANDBOOLEAN);
+							picklistActualValue.add(text);
+						}
+
+						for(int i=0; i<picklistExpectedValue.size(); i++)
+						{
+							if(picklistExpectedValue.get(i).equals(picklistActualValue.get(i)))
+							{
+								log(LogStatus.INFO,picklistExpectedValue.get(i)+" has been matched with the "+picklistActualValue.get(i), YesNo.No);					
+							}
+							else
+							{
+								log(LogStatus.ERROR,picklistExpectedValue.get(i)+" is not matched with the "+picklistActualValue.get(i), YesNo.Yes);
+								result.add(picklistExpectedValue.get(i)+" is not matched with the "+picklistActualValue.get(i));
+							}
+						}
+
+					}
+
+
+					else if(condition.toString().equals("deactivate"))
+					{
+						xPath="//a[text()='Activate']/ancestor::tr//th";
+						elements=CommonLib.FindElements(driver, xPath, "inactive picklist");
+						for(int i=0; i<elements.size(); i++)
+						{
+							String text=CommonLib.getText(driver, elements.get(i), "inactive Picklist "+i+ "", action.SCROLLANDBOOLEAN);
+							picklistActualValue.add(text);
+						}
+
+						for(int i=0; i<picklistExpectedValue.size(); i++)
+						{
+							if(picklistExpectedValue.get(i).equals(picklistActualValue.get(i)))
+							{
+								log(LogStatus.INFO,picklistExpectedValue.get(i)+" has been matched with the "+picklistActualValue.get(i), YesNo.No);					
+							}
+							else
+							{
+								log(LogStatus.ERROR,picklistExpectedValue.get(i)+" is not matched with the "+picklistActualValue.get(i), YesNo.Yes);
+								result.add(picklistExpectedValue.get(i)+" is not matched with the "+picklistActualValue.get(i));
+							}
+						}
+
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Not able to switch to Field and Relationship Iframe", YesNo.Yes);
+					result.add("Not able to switch to Field and Relationship Iframe");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Not able to click on the "+fieldName+" ", YesNo.Yes);
+				result.add("Not able to click on the "+fieldName+" ");
+			}
+
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Not able to pass the "+fieldName+" in the searchbox", YesNo.Yes);
+			result.add("Not able to pass the "+fieldName+" in the searchbox");
+		}
+
+		return result;
+
+	}
+
 
 }
