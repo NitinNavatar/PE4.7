@@ -331,11 +331,11 @@ public class FundraisingsPageBusinessLayer extends FundraisingsPage {
 		return id;
 	}
 	
-	public boolean verifyfundraisingContacts(String headder,String Name,String firm,String role,String primary) {
+	public boolean verifyfundraisingContacts(String headder,String Name,String firm,String role,String email) {
 
 		boolean flag =true;
 		try {
-			String headerxpath = "//*[text()='Fundraising Contacts']/ancestor::article//*[text()='Name']/ancestor::th//following-sibling::th//*[text()='Firm']/ancestor::th//following-sibling::th//*[text()='Role']/ancestor::th//following-sibling::th//*[text()='Primary']"; 
+			String headerxpath = "//*[text()='Fundraising Contacts']/ancestor::article//*[text()='Name']/ancestor::th//following-sibling::th//*[text()='Firm']/ancestor::th//following-sibling::th//*[text()='Role']/ancestor::th//following-sibling::th//*[text()='Email']"; 
 			WebElement ele = FindElement(driver, headerxpath, "Header", action.BOOLEAN, 10);
 			if (ele!=null) {
 				log(LogStatus.INFO,"Header Verified " , YesNo.No);
@@ -367,40 +367,40 @@ public class FundraisingsPageBusinessLayer extends FundraisingsPage {
 				
 				
 			} else {
-				log(LogStatus.ERROR, "Grid value for "+Name+" with "+firm+" "+role+" "+primary+" not verified", YesNo.Yes);
-				BaseLib.sa.assertTrue(false, "Grid value for "+Name+" with "+firm+" "+role+" "+primary+" not verified");
+				log(LogStatus.ERROR, "Grid value for "+Name+" with "+firm+" "+role+" "+email+" not verified", YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Grid value for "+Name+" with "+firm+" "+role+" "+email+" not verified");
 				flag=false;
 			}
 
-			headerxpath = "//*[text()='Fundraising Contacts']/ancestor::article//tr//*[text()='"+Name+"']/ancestor::td//following-sibling::td/span//img"; 
-			ele = FindElement(driver, headerxpath, primary, action.BOOLEAN, 10);
-			if (primary.equalsIgnoreCase("Checked")) {
-				expcted="checked";
-			} else {
-				expcted="unchecked";
-			}
-			if (ele!=null) {
-				log(LogStatus.INFO,primary+" Verified " , YesNo.No);
-				actual=ele.getAttribute("class").trim();
-				if (expcted.equals(actual)) {
-					log(LogStatus.INFO, "Grid value for "+Name+" with "+expcted+" verified", YesNo.No);
-				} else {
-					flag=false;
-					log(LogStatus.ERROR, "Grid value for "+Name+" with "+expcted+" not verified Actual : "+actual, YesNo.Yes);
-					BaseLib.sa.assertTrue(false, "Grid value for "+Name+" with "+expcted+" not verified Actual : "+actual);
-				}
-			} else {
-				flag=false;
-				log(LogStatus.ERROR, "Grid value for "+Name+" with "+expcted+" not verified Actual : "+actual, YesNo.Yes);
-				BaseLib.sa.assertTrue(false, "Grid value for "+Name+" with "+expcted+" not verified Actual : "+actual);
-
-			}
+//			headerxpath = "//*[text()='Fundraising Contacts']/ancestor::article//tr//*[text()='"+Name+"']/ancestor::td//following-sibling::td/span//img"; 
+//			ele = FindElement(driver, headerxpath, primary, action.BOOLEAN, 10);
+//			if (primary.equalsIgnoreCase("Checked")) {
+//				expcted="checked";
+//			} else {
+//				expcted="unchecked";
+//			}
+//			if (ele!=null) {
+//				log(LogStatus.INFO,primary+" Verified " , YesNo.No);
+//				actual=ele.getAttribute("class").trim();
+//				if (expcted.equals(actual)) {
+//					log(LogStatus.INFO, "Grid value for "+Name+" with "+expcted+" verified", YesNo.No);
+//				} else {
+//					flag=false;
+//					log(LogStatus.ERROR, "Grid value for "+Name+" with "+expcted+" not verified Actual : "+actual, YesNo.Yes);
+//					BaseLib.sa.assertTrue(false, "Grid value for "+Name+" with "+expcted+" not verified Actual : "+actual);
+//				}
+//			} else {
+//				flag=false;
+//				log(LogStatus.ERROR, "Grid value for "+Name+" with "+expcted+" not verified Actual : "+actual, YesNo.Yes);
+//				BaseLib.sa.assertTrue(false, "Grid value for "+Name+" with "+expcted+" not verified Actual : "+actual);
+//
+//			}
 
 
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
-			log(LogStatus.ERROR, "Grid value for "+Name+" with "+firm+" "+role+" "+primary+" not verified", YesNo.Yes);
-			BaseLib.sa.assertTrue(false, "Grid value for "+Name+" with "+firm+" "+role+" "+primary+" not verified");
+			log(LogStatus.ERROR, "Grid value for "+Name+" with "+firm+" "+role+" "+email+" not verified", YesNo.Yes);
+			BaseLib.sa.assertTrue(false, "Grid value for "+Name+" with "+firm+" "+role+" "+email+" not verified");
 
 		}
 		return flag;
