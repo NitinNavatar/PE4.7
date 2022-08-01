@@ -6193,4 +6193,28 @@ public abstract class BasePage extends BaseLib {
 		public WebElement filterLogic(int timeOut) {
 			return isDisplayed(driver, filterLogic, "Visibility", timeOut, "filter Logic");
 		}
+		
+
+		public List<WebElement> listOfButtons() {
+			return FindElements(driver, "//ul[@class='slds-button-group-list']/li//button[contains(@class,'slds-button_neutral')]",
+					"listOfButtons");
+		}
+		
+		@FindBy(xpath = "//ul[@class='slds-button-group-list']/li//button[contains(@class,'slds-button_icon-border-filled')]")
+		private WebElement downArrowButton;
+
+		public WebElement downArrowButton(int timeOut) {
+			return isDisplayed(driver, downArrowButton, "Visibility", timeOut, "Down Arrow Button");
+		}
+		
+		public List<WebElement> dropDownButtonsList() {
+			return FindElements(driver, "//div[contains(@class,'slds-dropdown__list')]//a",
+					"DropDown Buttons List");
+		}
+		
+		public List<WebElement> tabsInPage () {
+			return FindElements(driver, "//ul[@role='tablist']/li/a",
+					"Tabs in Page");
+		}
+
 }

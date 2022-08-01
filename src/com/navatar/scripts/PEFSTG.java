@@ -1,68 +1,21 @@
 package com.navatar.scripts;
 
 import static com.navatar.generic.CommonLib.ThreadSleep;
+import static com.navatar.generic.CommonLib.click;
 import static com.navatar.generic.CommonLib.exit;
 import static com.navatar.generic.CommonLib.log;
 import static com.navatar.generic.CommonLib.removeNumbersFromString;
 import static com.navatar.generic.CommonLib.switchOnWindow;
 import static com.navatar.generic.CommonLib.switchToDefaultContent;
-import static com.navatar.generic.CommonVariables.PEFSTGINS1_Institution;
-import static com.navatar.generic.CommonVariables.PEFSTGINS1_RecordType;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_1_Field;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_1_Filter;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_1_FilterCondition;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_1_FilterValue;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_1_ListViewName;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_1_Member;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_1_Operators;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_1_TabName;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_2_Field;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_2_Filter;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_2_FilterCondition;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_2_FilterValue;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_2_ListViewName;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_2_Member;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_2_Operators;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_2_TabName;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_3_Field;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_3_Filter;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_3_FilterCondition;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_3_FilterValue;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_3_ListViewName;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_3_Member;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_3_Operators;
-import static com.navatar.generic.CommonVariables.PEFSTGLV_3_TabName;
-import static com.navatar.generic.CommonVariables.PEFSTG_10_Field;
-import static com.navatar.generic.CommonVariables.PEFSTG_10_Filter;
-import static com.navatar.generic.CommonVariables.PEFSTG_10_FilterCondition;
-import static com.navatar.generic.CommonVariables.PEFSTG_10_FilterValue;
-import static com.navatar.generic.CommonVariables.PEFSTG_10_ListViewName;
-import static com.navatar.generic.CommonVariables.PEFSTG_10_Operators;
-import static com.navatar.generic.CommonVariables.PEFSTG_TC011_FieldName;
-import static com.navatar.generic.CommonVariables.PEFSTG_TC012_FieldName;
-import static com.navatar.generic.CommonVariables.PEFSTG_TC015_FieldName;
-import static com.navatar.generic.CommonVariables.PEFSTG_Tc009_FieldName;
-import static com.navatar.generic.CommonVariables.PEFSTG_Tc013_RecordType;
-import static com.navatar.generic.CommonVariables.PEFSTG_Tc013_UserProfile;
-import static com.navatar.generic.CommonVariables.PEFSTG_Tc014_RecordType;
-import static com.navatar.generic.CommonVariables.PEFSTG_Tc014_UserProfile;
-import static com.navatar.generic.CommonVariables.adminPassword;
-import static com.navatar.generic.CommonVariables.appName;
-import static com.navatar.generic.CommonVariables.crmUser1EmailID;
-import static com.navatar.generic.CommonVariables.crmUser1FirstName;
-import static com.navatar.generic.CommonVariables.crmUser1LastName;
-import static com.navatar.generic.CommonVariables.crmUser2EmailID;
-import static com.navatar.generic.CommonVariables.crmUserLience;
-import static com.navatar.generic.CommonVariables.crmUserProfile;
-import static com.navatar.generic.CommonVariables.environment;
-import static com.navatar.generic.CommonVariables.gmailUserName;
-import static com.navatar.generic.CommonVariables.mode;
-import static com.navatar.generic.CommonVariables.superAdminUserName;
+import static com.navatar.generic.CommonVariables.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
+import org.openqa.selenium.WebElement;
+import org.sikuli.script.Screen;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -74,10 +27,12 @@ import com.navatar.generic.EnumConstants.Environment;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
+import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.generic.EnumConstants.object;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.pageObjects.BasePageBusinessLayer;
+import com.navatar.pageObjects.ContactsPageBusinessLayer;
 import com.navatar.pageObjects.FieldAndRelationshipPageBusinessLayer;
 import com.navatar.pageObjects.FirmPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
@@ -87,7 +42,7 @@ import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class PEFSTG extends BaseLib {
-/*
+
 	@Parameters({ "projectName" })
 	@Test
 	public void PEFSTGTc001_CreateCRMUser(String projectName) {
@@ -557,7 +512,85 @@ public class PEFSTG extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
+	
 
+	@Parameters("projectName")
+    @Test
+    public void PEFSTG007_VerifyFilesNotesAndAttachmentsRelatedlistforFirm(String projectName) {
+
+        LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+        HomePageBusineesLayer home= new HomePageBusineesLayer(driver);
+        SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+        String parentID=null;
+
+        String sectionsInPageLayout = "Related Lists<break>Related Lists";
+        String PageLayouts = "Advisor<break>Company";
+
+        String fieldsNotAlreadyAddedLayoutWise = "Notes & Attachments<fieldNotAdded>Assets<break>Notes & Attachments<fieldNotAdded>Assets";
+        String fieldsAlreadyAddedLayoutWise = "Advisors<fieldAdded>Advisor Involvements<break>Advisors<fieldAdded>Advisor Involvements";
+
+
+
+        lp.CRMLogin(superAdminUserName, adminPassword);
+        object tab = object.Firm;
+
+        if(home.clickOnSetUpLink()) {
+            log(LogStatus.PASS, "Click on setup link", YesNo.No);
+
+             parentID = switchOnWindow(driver);
+            if (parentID!=null) {
+
+            if(setup.searchStandardOrCustomObject(environment, mode, tab)) {
+                log(LogStatus.PASS, "Successfully search object: "+tab.toString(), YesNo.No);
+
+                if(setup.clickOnObjectFeature(environment, mode, tab, ObjectFeatureName.pageLayouts)) {
+
+                    log(LogStatus.PASS, "click on page layout link of objet: "+tab.toString(), YesNo.No);
+                    List<String> result= setup.verifyFieldsAvailabilityAndNonAvailabilityOnPageLayout (sectionsInPageLayout,
+                             PageLayouts,  fieldsAlreadyAddedLayoutWise,  fieldsNotAlreadyAddedLayoutWise,
+                            30);
+
+                    if(result.isEmpty()) {
+                        log(LogStatus.PASS, "All fields are verified of object "+tab.toString(),YesNo.No);
+
+                        
+                    }else {
+
+                        log(LogStatus.FAIL, "field are not verified :"+ result, YesNo.No);
+                        sa.assertTrue(false,"field are not verified :"+result);
+                    }
+
+                }else {
+
+                    log(LogStatus.FAIL, "not able to click on page layout link of objet :"+tab.toString(), YesNo.No);
+                    sa.assertTrue(false,"not able to click on page layout link of objet :"+tab.toString());
+                }
+
+            }else {
+
+                log(LogStatus.FAIL, "Unable to search object: "+tab.toString(), YesNo.No);
+                sa.assertTrue(false,"Unable to search object: "+tab.toString());
+            }
+
+            }else {
+                log(LogStatus.FAIL, "could not find new window to switch", YesNo.Yes);
+                sa.assertTrue(false, "could not find new window to switch");
+            }
+        }else {
+
+            log(LogStatus.PASS, "Not able to Click on setup link", YesNo.No);
+            sa.assertTrue(false,"Not able to Click on setup link");
+        }
+
+        driver.close();
+        driver.switchTo().window(parentID);
+        lp.CRMlogout();
+        sa.assertAll();
+    }
+	
+	
+	
+    
 	@Parameters({ "projectName" })
 	@Test
 
@@ -1161,7 +1194,7 @@ public class PEFSTG extends BaseLib {
 		sa.assertAll();
 
 	}
-*/	
+	
 	@Parameters({ "projectName"})
 	@Test
 	public void PEFSTGTc0016_CreateANewAdvisorRecordAndVerifyPage(String projectName) {
@@ -1194,6 +1227,573 @@ public class PEFSTG extends BaseLib {
 		sa.assertAll();	
 	}
 
+	@Parameters({ "projectName"})
+	@Test
+	public void PEFSTGTc0017_VerifySortingOnPicklistFieldOnAdvisorRecord(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FirmPageBusinessLayer fb=new FirmPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (BP.clickOnTab(projectName, "Firms")) {
+			if(BP.clickOnAlreadyCreatedItem(projectName, PEFSTGINS1_Institution, TabName.InstituitonsTab, 50))
+			{
+				log(LogStatus.INFO,"successfully open the record : "+PEFSTGINS1_Institution,YesNo.No);	
+				if(fb.VerifySortingOnEntityTypeField())
+				{
+					log(LogStatus.FAIL,"Sorting order of Entity type's list has been verified",YesNo.Yes);
+					sa.assertTrue(false,"Sorting order of Entity type's list has been verified");
+				}
+				else
+				{
+					log(LogStatus.FAIL,"Sorting order of Entity type's list are not verified",YesNo.Yes);
+					sa.assertTrue(false,"Sorting order of Entity type's list are not verified");
+				}
+
+			}
+			else
+			{
+				log(LogStatus.FAIL,"Not Able to open the record : "+PEFSTGINS1_Institution,YesNo.Yes);
+				sa.assertTrue(false,"Not Able to open the record : "+PEFSTGINS1_Institution);
+
+			}
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on firm tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on firm tab");
+		}
+		lp.CRMlogout();
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName"})
+	@Test
+	public void PEFSTGTc0018_VerifyHighlightPanelOnAdvisorRecordPage(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FirmPageBusinessLayer fb=new FirmPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		ArrayList<String>highlightedValueExpected=new ArrayList<String>();
+		highlightedValueExpected.add(PEFSTGINS1_Institution);
+		highlightedValueExpected.add("Entity Type");
+		highlightedValueExpected.add("Website");
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (BP.clickOnTab(projectName, "Firms")) {
+			if(BP.clickOnAlreadyCreatedItem(projectName, PEFSTGINS1_Institution, TabName.InstituitonsTab, 50))
+			{
+				log(LogStatus.INFO,"successfully open the record : "+PEFSTGINS1_Institution,YesNo.No);
+				ArrayList<String>result=fb.verifyHighlightPanel(highlightedValueExpected);
+				if(result.isEmpty())
+				{
+					log(LogStatus.PASS,"Highlight panel advisor has been verified on Advisor record page",YesNo.Yes);
+					sa.assertTrue(true,"Highlight panel advisor has been verified on Advisor record page");
+				}
+				else
+				{
+					log(LogStatus.FAIL,"Highlight panel advisor is not verified on Advisor record page",YesNo.Yes);
+					sa.assertTrue(false,"Highlight panel advisor is not verified on Advisor record page");
+				
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open the record : "+PEFSTGINS1_Institution, YesNo.Yes);
+				sa.assertTrue(false, "Not able to open the record : "+PEFSTGINS1_Institution);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on firm tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on firm tab");
+		}
+		lp.CRMlogout();
+		sa.assertAll();	
+	}
+	
+	@Parameters({ "projectName"})
+	 @Test
+	public void PEFSTGTc0019_VerifyButtonsAndTabsOnAdvisorRecordPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FirmPageBusinessLayer fb=new FirmPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		ArrayList<String>highlightedValueExpected=new ArrayList<String>();
+		List<String> ExpectedButtonsOnPage = Arrays
+				.asList("Edit<Break>New Contact<Break>New Affiliation".split("<Break>"));
+		List<String> ExpectedButtonsInDownArrowButton = Arrays.asList(
+				"New Client<Break>Sharing<Break>Change Record Type<Break>Change Owner<Break>Delete".split("<Break>"));
+		List<String> ExpectedTabsOnPage = Arrays.asList(
+				"Details<Break>Contacts<Break>Clients<Break>Referrals<Break>Connections<Break>Files"
+						.split("<Break>"));
+		
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		if (BP.clickOnTab(projectName, "Firms")) {
+			if(BP.clickOnAlreadyCreatedItem(projectName, PEFSTGINS1_Institution, TabName.InstituitonsTab, 50))
+			{
+				log(LogStatus.INFO,"successfully open the record : "+PEFSTGINS1_Institution,YesNo.No);
+				List<String> negativeResultOfButtons = BP.verifyButtonsOnAPageAndInDownArrowButton(ExpectedButtonsOnPage,
+						ExpectedButtonsInDownArrowButton);
+				if (negativeResultOfButtons.isEmpty()) {
+					log(LogStatus.INFO, "-----Verified Buttons on Page & in DownArrow Button-----", YesNo.No);
+				} else {
+					sa.assertTrue(false, "-----Not Verified Buttons on Page & in DownArrow Button-----: " + negativeResultOfButtons);
+					log(LogStatus.FAIL, "Not Verified Buttons on Page & in DownArrow Button-----: " + negativeResultOfButtons,
+							YesNo.Yes);
+				}
+				
+				List<String> negativeResultOfTabs = BP.verifyTabsOnAPage(ExpectedTabsOnPage);
+				if (negativeResultOfTabs.isEmpty()) {
+					log(LogStatus.INFO, "-----Verified Tabs on Page-----", YesNo.No);
+				} else {
+					sa.assertTrue(false, "-----Not Verified Tabs on Page-----:" + negativeResultOfTabs);
+					log(LogStatus.FAIL, "-----Not Verified Buttons on Page-----:" + negativeResultOfTabs,
+							YesNo.Yes);
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open the record : "+PEFSTGINS1_Institution, YesNo.Yes);
+				sa.assertTrue(false, "Not able to open the record : "+PEFSTGINS1_Institution);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on firm tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on firm tab");
+		}
+		lp.CRMlogout();
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void PEFSTGTc0020_VerifyCustomActionsOnAdvisorRecordPage(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FirmPageBusinessLayer fb=new FirmPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (BP.clickOnTab(projectName, "Firms")) {
+			if(BP.clickOnAlreadyCreatedItem(projectName, PEFSTGINS1_Institution, TabName.InstituitonsTab, 50))
+			{
+				log(LogStatus.INFO,"successfully open the record : "+PEFSTGINS1_Institution,YesNo.No);				
+				if(fb.verifyCustomAction(PEFSTG_Tc020_RecordType))
+				{
+					log(LogStatus.INFO,"Custom actions has been verified",YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Custom actions has been verified",YesNo.No);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Not able to open the record "+PEFSTGINS1_Institution,YesNo.No);	
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Not able to click on Firm tab",YesNo.No);	
+		}
+	}
+	
+	
+	
+		@Parameters({ "projectName" })
+
+	@Test
+	public void PEFSTGTcS012_verifyDetailTabOnAdvisor(String projectName) throws InterruptedException {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		ContactsPageBusinessLayer CPB = new ContactsPageBusinessLayer(driver);		
+		FirmPageBusinessLayer FPB = new FirmPageBusinessLayer(driver);		
+		ArrayList<String> DetailsTab = new ArrayList<String>();
+		
+		ArrayList<String> ExpectedDetailsTab = new ArrayList<String>();
+		ExpectedDetailsTab.add("Advisor Information");
+		ExpectedDetailsTab.add("Description");
+		ExpectedDetailsTab.add("Address");
+		ExpectedDetailsTab.add("System Information");		
+		
+		ArrayList<String> ExpectedAdvisorTab = new ArrayList<String>();
+		ExpectedAdvisorTab.add("Legal Name"); 
+		ExpectedAdvisorTab.add("Firm Owner");
+		ExpectedAdvisorTab.add("Entity Type");
+		ExpectedAdvisorTab.add("Phone");
+		ExpectedAdvisorTab.add("Record Type");
+		ExpectedAdvisorTab.add("Website");  
+	    
+		ArrayList<String> ExpectedDescriptionTab = new ArrayList<String>();
+		ExpectedDescriptionTab.add("Description");		
+		
+		ArrayList<String> ExpectedAddressTab = new ArrayList<String>();
+		ExpectedAddressTab.add("Address"); 		
+	
+		ArrayList<String> ExpectedSystemInformationTab = new ArrayList<String>();
+		ExpectedSystemInformationTab.add("Created By"); 
+		ExpectedSystemInformationTab.add("Parent Firm");
+		ExpectedSystemInformationTab.add("Last Modified By");
+	   
+		HashMap<String,ArrayList<String>> labelListMap = new HashMap <String,ArrayList<String>>();
+		labelListMap.put("Advisor Information", ExpectedAdvisorTab);
+		labelListMap.put("Description", ExpectedDescriptionTab);
+		labelListMap.put("Address", ExpectedAddressTab);
+		labelListMap.put("System Information", ExpectedSystemInformationTab);
+				
+		
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);	
+		if (BP.clickOnTab(projectName, projectName, TabName.InstituitonsTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.InstituitonsTab, YesNo.No);
+			if (CPB.clickOnCreatedContact(projectName,null,"pe_advisor_record01")) {
+				log(LogStatus.PASS, "Clicked on created Firm", YesNo.No);
+				sa.assertTrue(true, "Clicked on created Frm");
+				ArrayList<String> result = FPB.DetailTabVerify(ExpectedDetailsTab,labelListMap);
+                if(!result.isEmpty())
+                {
+                    log(LogStatus.PASS, "Detail tab has been verified ", YesNo.No);
+                    sa.assertTrue(true,"Detail Tab has been verified ");
+                }
+                else
+                {
+                    log(LogStatus.FAIL, "Detail Tab does not contain"+result, YesNo.Yes);
+                    sa.assertTrue(false,"Detail Tab does not contain "+result);
+
+                }
+				
+			}
+			  else {
+				log(LogStatus.ERROR, "Not able to click on Firm Tab", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on Firm Tab");
+			}
+
+			}
+			lp.CRMlogout();
+			sa.assertAll();
 
 
+		}
+	
+	
+	@Parameters({ "projectName"})
+	@Test
+	public void PEFSTGTc0022_VerifyContactsTabOnAdvisorRecordPage(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FirmPageBusinessLayer fb=new FirmPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);	
+		
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		
+		if (BP.clickOnTab(projectName, "Firms")) {
+			if(BP.clickOnAlreadyCreatedItem(projectName, PEFSTGINS1_Institution, TabName.InstituitonsTab, 50))
+			{
+				log(LogStatus.INFO,"successfully open the record : "+PEFSTGINS1_Institution,YesNo.No);
+				CommonLib.refresh(driver);
+		        String xPath="//a[text()=\"Contacts\" and @role=\"tab\"]";
+		        WebElement ele=CommonLib.FindElement(driver, xPath, "Contacts Tab", action.SCROLLANDBOOLEAN, 50);
+				if(CommonLib.click(driver, ele, "Contact Tab", action.SCROLLANDBOOLEAN))
+				{
+					ArrayList<String> result=fb.VerifyContactsTabOnAdvisorRecordPage(PEFSTG_Tc022_RecordType1, PEFSTG_Tc022_RecordType2,50);
+					if(result.isEmpty())
+					{
+						log(LogStatus.PASS,"Contacts Tab On Advisor Record Page has been verified",YesNo.No);
+						sa.assertTrue(true, "Contacts Tab On Advisor Record Page has been verified");
+					}
+					else
+					{
+						log(LogStatus.ERROR,"Contacts Tab On Advisor Record Page has been verified",YesNo.No);
+						sa.assertTrue(false, "Contacts Tab On Advisor Record Page has been verified");	
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Not able to click on Contact tab",YesNo.No);
+					sa.assertTrue(false, "Not able to click on Contact tab");					
+				}			
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Not able to open the record : "+PEFSTGINS1_Institution,YesNo.No);
+				sa.assertTrue(false,"Not able to open the record : "+PEFSTGINS1_Institution);				
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Not able to click on firm Tab",YesNo.No);
+			sa.assertTrue(false,"Not able to click on firm Tab");			
+		}
+		lp.CRMlogout();
+		sa.assertAll();	
+	}
+
+	@Parameters({ "projectName" })
+	@Test
+
+	public void PEFSTGTc0023_VerifySortingOnAllFieldsOfContactsAndAffiliationsGridOnContactsTab(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		FirmPageBusinessLayer FB = new FirmPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		
+		String data="Contacts<fieldBreak>Title<f>Email<f>Phone<f>Last Touchpoint<defaultSortBreak>Name<sortOrder>ASC<break>Affiliations<fieldBreak>Name<f>Firm<f>End Date<f>Last Touchpoint<defaultSortBreak>Start Date<sortOrder>DESC";
+
+		if(BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
+			log(LogStatus.INFO, "Clicked On Firms Tab", YesNo.No);
+
+			if(BP.clickOnAlreadyCreatedItem(projectName, "pe_advisor_record01", TabName.InstituitonsTab, 50))
+			{
+				log(LogStatus.PASS, "Enter the Name and clicked on it", YesNo.No);
+				if(FB.VerifySortingOnFields(data)) {
+					log(LogStatus.INFO, "Clicked On Firms Details Page", YesNo.No);
+				}
+				else {
+					log(LogStatus.FAIL, "Not able to Clicked On Firms Details Page", YesNo.Yes);
+					sa.assertTrue(false, "Not able to Clicked On Firms Details Page");
+				}
+
+			}
+			else {
+				log(LogStatus.FAIL, "Unable the Enter Name and not clicked on it", YesNo.No);
+				sa.assertTrue(false, "Unable the Enter Name and not clicked on it");
+			}
+		}else {
+			log(LogStatus.FAIL, "Not able to clicked on Firms Tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to clicked on Firms Tab");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+
+	}
+	
+
+	@Parameters({ "projectName" })
+	@Test
+
+	public void PEFSTGTc0024_VerifyPageRedirectionForTheClickableFieldsOnContactsAndAffiliationsGridOnContactsTab (String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		FirmPageBusinessLayer FB = new FirmPageBusinessLayer(driver);
+		ArrayList<String> tabName=new ArrayList<String>();
+		tabName.add("Contacts");
+		tabName.add("Affiliations");
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		for(int i=0; i<tabName.size(); i++)
+		{
+			if (BP.clickOnTab(projectName, "Firms")) {
+				if(BP.clickOnAlreadyCreatedItem(projectName, PEFSTGINS1_Institution, TabName.InstituitonsTab, 50))
+				{
+					ArrayList<String> result= FB.verifywindowsApp(PEFSTG_Tc025_RecordType1,PEFSTG_Tc025_RecordType1,tabName.get(i));
+					if(result.isEmpty())
+					{
+						log(LogStatus.PASS, "Page redirection for the clickable fields on Contacts and Affiliations grid on Contacts tab has been verified", YesNo.No);
+						sa.assertTrue(true, "Page redirection for the clickable fields on Contacts and Affiliations grid on Contacts tab has been verified");
+					}
+					else
+					{
+						log(LogStatus.FAIL, "Page redirection for the clickable fields on Contacts and Affiliations grid on Contacts tab is not verified "+result, YesNo.No);
+						sa.assertTrue(false, "Page redirection for the clickable fields on Contacts and Affiliations grid on Contacts tab is not verified "+result);
+
+					}
+				}
+				else
+				{
+					log(LogStatus.FAIL, "Not able to click on "+PEFSTGINS1_Institution, YesNo.No);
+					sa.assertTrue(false, "Not able to click on "+PEFSTGINS1_Institution);
+
+				}
+			}
+			else
+			{
+				log(LogStatus.FAIL, "Not able to open Firm Tab", YesNo.No);
+				sa.assertTrue(false, "Not able to Firm Tab");
+			}
+
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();	
+	}
+
+
+	@Parameters({ "projectName" })
+	@Test
+
+	public void PEFSTGTc0025_VerifyInlineEditingForContactsAndAffiliationsGridOnContactsTab(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		FirmPageBusinessLayer FB = new FirmPageBusinessLayer(driver);
+
+		ArrayList<String> tabName=new ArrayList<String>();
+		tabName.add("Contacts");
+		tabName.add("Affiliations");
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		
+			if (BP.clickOnTab(projectName, "Firms")) {
+				if(BP.clickOnAlreadyCreatedItem(projectName, PEFSTGINS1_Institution, TabName.InstituitonsTab, 50))
+				{
+
+					String xPath="//a[@data-label='Contacts']";
+					WebElement ele=CommonLib.FindElement(driver, xPath,"Contact tab", action.SCROLLANDBOOLEAN, 50);
+
+					if(click(driver, ele, "Contacts Tab", action.SCROLLANDBOOLEAN)){
+						log(LogStatus.INFO, "Clicked on Contact tab button", YesNo.No);	
+
+						ArrayList<String> result= FB.VerifyInlineEditingForContactsAndAffiliationsGrid(PEFSTG_Tc025_RecordType2);
+						if(result.isEmpty())
+						{
+							log(LogStatus.PASS, "Inline editing for Contacts and Affiliations grid on Contacts tab has been verified", YesNo.No);
+							sa.assertTrue(true, "Inline editing for Contacts and Affiliations grid on Contacts tab has been verified");
+						}
+						else
+						{
+							log(LogStatus.FAIL, "Inline editing for Contacts and Affiliations grid on Contacts tab is not verified", YesNo.No);
+							sa.assertTrue(false, "Inline editing for Contacts and Affiliations grid on Contacts tab is not verified");
+
+						}
+					}
+					else
+					{
+						log(LogStatus.FAIL, "Not able to click on Contact tab", YesNo.No);
+						sa.assertTrue(false, "Not able to click on Contact tab");
+
+					}
+				}
+				else
+				{
+					log(LogStatus.FAIL, "Not able to click on "+PEFSTGINS1_Institution, YesNo.No);
+					sa.assertTrue(false, "Not able to click on "+PEFSTGINS1_Institution);
+
+				}
+			}
+			else
+			{
+				log(LogStatus.FAIL, "Not able to open Firm Tab", YesNo.No);
+				sa.assertTrue(false, "Not able to Firm Tab");
+			}
+
+		lp.CRMlogout();
+		sa.assertAll();	
+	}
+
+
+	@Parameters({ "projectName" })
+
+	@Test
+	public void PEFSTGTc0026_VerifyClientsTabOnAdvisorRecordPage(String projectName){
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		ContactsPageBusinessLayer CPB = new ContactsPageBusinessLayer(driver);		
+		FirmPageBusinessLayer FPB = new FirmPageBusinessLayer(driver);		
+
+		ArrayList<String> ExpectedHeaderTab = new ArrayList<String>();
+		ExpectedHeaderTab.add("Clients");
+		ExpectedHeaderTab.add("Fundraising");			
+
+		ArrayList<String> ExpectedClientTab = new ArrayList<String>();
+		ExpectedClientTab.add("CLIENT"); 
+		ExpectedClientTab.add("ROLE");
+		ExpectedClientTab.add("MAIN CONTACT");
+
+		ArrayList<String> ExpectedFundraisingTab = new ArrayList<String>();
+		ExpectedFundraisingTab.add("CLIENT NAME"); 
+		ExpectedFundraisingTab.add("FUND");
+		ExpectedFundraisingTab.add("STAGE");
+		ExpectedFundraisingTab.add("CLOSE DATE");
+		ExpectedFundraisingTab.add("POTENTIAL INVESTMENT (M)");
+		ExpectedFundraisingTab.add("STATUS NOTES");
+
+		HashMap<String,ArrayList<String>> labelListMap = new HashMap <String,ArrayList<String>>();
+		labelListMap.put("Clients", ExpectedClientTab);
+		labelListMap.put("Fundraising", ExpectedFundraisingTab);
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);	
+		if (BP.clickOnTab(projectName, projectName, TabName.InstituitonsTab)) {
+			log(LogStatus.PASS, "Clicked on Firm Tab", YesNo.No);
+
+			log(LogStatus.INFO, "Click on Tab : " + TabName.InstituitonsTab, YesNo.No);
+			if (CPB.clickOnCreatedContact(projectName,null,"pe_advisor_record01")) {
+				log(LogStatus.PASS, "Clicked on created Firm", YesNo.No);
+
+				String xPath = "//a[text()='Clients']";
+				WebElement ele=CommonLib.FindElement(driver, xPath, "Client tab", action.SCROLLANDBOOLEAN, 50);					
+				if (click(driver,ele,"Client",action.SCROLLANDBOOLEAN)) {
+
+					log(LogStatus.INFO, "Clicked on client Tab", YesNo.No);
+					ArrayList<String> result = FPB.ClientTabVerify(ExpectedHeaderTab,labelListMap);
+					if(result.isEmpty())
+					{
+						log(LogStatus.PASS, "Client tab has been verified ", YesNo.No);
+						sa.assertTrue(true,"Client Tab has been verified ");
+					}
+					else
+					{
+						log(LogStatus.FAIL, "Client Tab does not contain"+result, YesNo.Yes);
+						sa.assertTrue(false,"Client Tab does not contain "+result);
+
+					}
+				}
+				else 
+				{
+					log(LogStatus.ERROR, "Not able to click on Client Tab", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on Client Tab");
+				}
+			}
+			else {
+				log(LogStatus.ERROR, "Not able to click on Firm Tab", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on Firm Tab");
+			}
+
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	
+	@Parameters({ "projectName" })
+	@Test
+
+	public void PEFSTGTc0026_VerifySortingOnAllFieldsOfClientsFundraisingGridOnClientsTab(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		FirmPageBusinessLayer FB = new FirmPageBusinessLayer(driver);
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		
+		String data="Contacts<fieldBreak>Title<f>Email<f>Phone<f>Last Touchpoint<defaultSortBreak>Name<sortOrder>ASC<break>Affiliations<fieldBreak>Name<f>Firm<f>End Date<f>Last Touchpoint<defaultSortBreak>Start Date<sortOrder>DESC";
+
+		if(BP.clickOnTab(projectName, TabName.InstituitonsTab)) {
+			log(LogStatus.INFO, "Clicked On Firms Tab", YesNo.No);
+
+			if(BP.clickOnAlreadyCreatedItem(projectName, "pe_advisor_record01", TabName.InstituitonsTab, 50))
+			{
+				log(LogStatus.PASS, "Enter the Name and clicked on it", YesNo.No);
+				if(FB.VerifySortingOnFields(data)) {
+					log(LogStatus.INFO, "Clicked On Firms Details Page", YesNo.No);
+				}
+				else {
+					log(LogStatus.FAIL, "Not able to Clicked On Firms Details Page", YesNo.Yes);
+					sa.assertTrue(false, "Not able to Clicked On Firms Details Page");
+				}
+
+			}
+			else {
+				log(LogStatus.FAIL, "Unable the Enter Name and not clicked on it", YesNo.No);
+				sa.assertTrue(false, "Unable the Enter Name and not clicked on it");
+			}
+		}else {
+			log(LogStatus.FAIL, "Not able to clicked on Firms Tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to clicked on Firms Tab");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+
+	}
+	
+	
 }

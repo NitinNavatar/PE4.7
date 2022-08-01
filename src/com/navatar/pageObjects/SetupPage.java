@@ -1,22 +1,25 @@
 package com.navatar.pageObjects;
 
-import org.bridj.cpp.std.list;
+import static com.navatar.generic.CommonLib.FindElement;
+import static com.navatar.generic.CommonLib.FindElements;
+import static com.navatar.generic.CommonLib.ThreadSleep;
+import static com.navatar.generic.CommonLib.isDisplayed;
+import static com.navatar.generic.CommonLib.log;
+import static com.navatar.generic.CommonLib.scrollDownThroughWebelement;
+
+import java.util.List;
+
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.navatar.generic.CommonLib;
-import com.navatar.generic.EnumConstants.Mode;
+import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.object;
 import com.relevantcodes.extentreports.LogStatus;
-
-import static com.navatar.generic.CommonLib.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SetupPage extends BasePageBusinessLayer {
 
@@ -987,7 +990,16 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, viewPageAssignments, "Visibility", timeOut, "View Page Assignments button");
 	}
 
-	
+	public WebElement sectionInPageLayoutButton(String sectionInPageLayout, int timeOut) {
+        String xpath = "//div[@id='troughSelector']/ul/li/div[text()='"+sectionInPageLayout+"']";
+
+        try {
+            return FindElement(driver, xpath, "sectionInPageLayout", action.SCROLLANDBOOLEAN, timeOut);
+
+        } catch (StaleElementReferenceException e) {
+            return FindElement(driver, xpath, "sectionInPageLayout", action.SCROLLANDBOOLEAN, timeOut);
+        }
+    }
 	
 	 	
 
