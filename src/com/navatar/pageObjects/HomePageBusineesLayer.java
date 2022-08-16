@@ -1059,14 +1059,13 @@ public class HomePageBusineesLayer extends HomePage {
 		return false;
 	}
 
-	public boolean clickOnTemplateForReportOnBulkEmail(String environment, String mode, String reportName,
-			String templateName) {
+	public boolean clickOnTemplateForReportOnBulkEmail(String environment, String mode, String templateName,
+			String reportName) {
 		WebElement ele;
-		String xpath = "//span[text()='" + templateName + "']/ancestor::ul//span[contains(@id,'extd')][text()='"
-				+ reportName + "']";
+		String xpath = "//span[contains(@id,'extd')][text()='" + templateName + "']/ancestor::ul//span[text()='" + reportName + "']";
 		ele = FindElement(driver, xpath, reportName + " : " + templateName, action.SCROLLANDBOOLEAN, 10);
 
-		if (click(driver, ele, reportName + " : " + templateName, action.SCROLLANDBOOLEAN)) {
+		if (clickUsingJavaScript(driver, ele, reportName + " : " + templateName, action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on >>>   " + reportName + " : " + templateName, YesNo.No);
 			return true;
 		} else {

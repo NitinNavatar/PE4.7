@@ -3540,7 +3540,7 @@ public class OldSmokeTestCases extends BaseLib {
 						if(frpg.clickOnCreatedFundRaising(environment, mode, ss[i])) {
 							if(frpg.clickOnRelatedList(environment, mode, RecordType.Fundraising, RelatedList.Fundraising_Contacts, RelatedTab.Fundraising_Contacts.toString())) {
 									if(i==0){
-										if(frpg.verifyfundraisingContacts("",SmokeC1_FName+" "+SmokeC1_LName,SmokeINS1,SmokeFRC1_Role,SmokeFRC1_Primary)) {
+										if(frpg.verifyfundraisingContacts("",SmokeC1_FName+" "+SmokeC1_LName,SmokeINS1,SmokeFRC1_Role,SmokeFRC1_Email)) {
 											log(LogStatus.INFO, SmokeC1_FName+" "+SmokeC1_LName+" contact details are verified on Fundraising "+ss[i], YesNo.No);
 										}else {
 											log(LogStatus.INFO, SmokeC1_FName+" "+SmokeC1_LName+" contact details are not verified on Fundraising "+ss[i], YesNo.No);
@@ -3548,14 +3548,14 @@ public class OldSmokeTestCases extends BaseLib {
 										}
 									}
 									if(i==1){
-										if(frpg.verifyfundraisingContacts("",SmokeC3_FName+" "+SmokeC3_LName,SmokeINDINV1,SmokeFRC3_Role,SmokeFRC3_Primary)) {
+										if(frpg.verifyfundraisingContacts("",SmokeC3_FName+" "+SmokeC3_LName,SmokeINDINV1,SmokeFRC3_Role,SmokeFRC3_Email)) {
 											log(LogStatus.INFO, SmokeC3_FName+" "+SmokeC3_LName+" and "+SmokeC4_FName+" "+SmokeC4_LName+"  contact details are verified on Fundraising "+ss[i], YesNo.No);
 										}else {
 											log(LogStatus.INFO, SmokeC3_FName+" "+SmokeC3_LName+" and "+SmokeC4_FName+" "+SmokeC4_LName+" contact details are not verified on Fundraising "+ss[i], YesNo.No);
 											sa.assertTrue(false,SmokeC3_FName+" "+SmokeC3_LName+" and "+SmokeC4_FName+" "+SmokeC4_LName+" contact details are not verified on Fundraising "+ss[i]);
 										}
 									
-									if(frpg.verifyfundraisingContacts("",SmokeC4_FName+" "+SmokeC4_LName,SmokeINDINV1,SmokeFRC4_Role,SmokeFRC4_Primary)) {
+									if(frpg.verifyfundraisingContacts("",SmokeC4_FName+" "+SmokeC4_LName,SmokeINDINV1,SmokeFRC4_Role,SmokeFRC4_Email)) {
 										log(LogStatus.INFO, SmokeC4_FName+" "+SmokeC4_LName+"  contact details are verified on Fundraising "+ss[i], YesNo.No);
 									}else {
 										log(LogStatus.INFO, SmokeC4_FName+" "+SmokeC4_LName+" contact details are not verified on Fundraising "+ss[i], YesNo.No);
@@ -4050,14 +4050,14 @@ public class OldSmokeTestCases extends BaseLib {
 								if(i==1)
 								{
 										
-										if(frpg.verifyfundraisingContacts("",SmokeC3_FName+" "+SmokeC3_LName,SmokeINDINV1,SmokeFRC5_Role,SmokeFRC5_Primary)) {
+										if(frpg.verifyfundraisingContacts("",SmokeC3_FName+" "+SmokeC3_LName,SmokeINDINV1,SmokeFRC5_Role,SmokeFRC5_Email)) {
 											log(LogStatus.INFO, SmokeC3_FName+" "+SmokeC3_LName+"  contact details are verified on Fundraising "+FR[i], YesNo.No);
 										}else {
 											log(LogStatus.INFO, SmokeC3_FName+" "+SmokeC3_LName+" contact details are not verified on Fundraising "+FR[i], YesNo.No);
 											sa.assertTrue(false,SmokeC3_FName+" "+SmokeC3_LName+" contact details are not verified on Fundraising "+FR[i]);
 										}
 										
-										if(frpg.verifyfundraisingContacts("",SmokeC4_FName+" "+SmokeC4_LName,SmokeINDINV1,SmokeFRC6_Role,SmokeFRC6_Primary)) {
+										if(frpg.verifyfundraisingContacts("",SmokeC4_FName+" "+SmokeC4_LName,SmokeINDINV1,SmokeFRC6_Role,SmokeFRC6_Email)) {
 											log(LogStatus.INFO, SmokeC4_FName+" "+SmokeC4_LName+"  contact details are verified on Fundraising "+FR[i], YesNo.No);
 										}else {
 											log(LogStatus.INFO, SmokeC4_FName+" "+SmokeC4_LName+" contact details are not verified on Fundraising "+FR[i], YesNo.No);
@@ -4689,7 +4689,7 @@ public class OldSmokeTestCases extends BaseLib {
 						if(i==0) {
 							
 							
-							if(frpg.verifyfundraisingContacts("",SmokeC1_FName+" "+SmokeC1_LName,SmokeINS1,SmokeFRC7_Role,SmokeFRC7_Primary)) {
+							if(frpg.verifyfundraisingContacts("",SmokeC1_FName+" "+SmokeC1_LName,SmokeINS1,SmokeFRC7_Role,SmokeFRC7_Email)) {
 								log(LogStatus.INFO, SmokeC1_FName+" "+SmokeC1_LName+"  contact details are verified on Fundraising "+FR[i], YesNo.No);
 							}else {
 								log(LogStatus.INFO, SmokeC1_FName+" "+SmokeC1_LName+" contact details are not verified on Fundraising "+FR[i], YesNo.No);
@@ -4699,14 +4699,14 @@ public class OldSmokeTestCases extends BaseLib {
 						if(i==1) {
 							
 							
-							if(frpg.verifyfundraisingContacts("",SmokeC3_FName+" "+SmokeC3_LName,SmokeINDINV1,SmokeFRC8_Role,SmokeFRC8_Primary)) {
+							if(frpg.verifyfundraisingContacts("",SmokeC3_FName+" "+SmokeC3_LName,SmokeINDINV1,SmokeFRC8_Role,SmokeFRC8_Email)) {
 								log(LogStatus.INFO, SmokeC3_FName+" "+SmokeC3_LName+"  contact details are verified on Fundraising "+FR[i], YesNo.No);
 							}else {
 								log(LogStatus.INFO, SmokeC3_FName+" "+SmokeC3_LName+" contact details are not verified on Fundraising "+FR[i], YesNo.No);
 								sa.assertTrue(false,SmokeC3_FName+" "+SmokeC3_LName+" contact details are not verified on Fundraising "+FR[i]);
 							}
 							
-							if(frpg.verifyfundraisingContacts("",SmokeC4_FName+" "+SmokeC4_LName,SmokeINDINV1,SmokeFRC9_Role,SmokeFRC9_Primary)) {
+							if(frpg.verifyfundraisingContacts("",SmokeC4_FName+" "+SmokeC4_LName,SmokeINDINV1,SmokeFRC9_Role,SmokeFRC9_Email)) {
 								log(LogStatus.INFO, SmokeC4_FName+" "+SmokeC4_LName+"  contact details are verified on Fundraising "+FR[i], YesNo.No);
 							}else {
 								log(LogStatus.INFO, SmokeC4_FName+" "+SmokeC4_LName+" contact details are not verified on Fundraising "+FR[i], YesNo.No);
@@ -8083,7 +8083,7 @@ public class OldSmokeTestCases extends BaseLib {
 										if (click(driver, ele, linkClick[j], action.SCROLLANDBOOLEAN)) {
 											switchToDefaultContent(driver);
 											if (Mode.Lightning.toString().equalsIgnoreCase(mode)) {
-												xpath = "//*[contains(text(),'"+linkClick[j]+"')]";
+												xpath ="//div[contains(@class,'outputName')]//*[text()='"+linkClick[j]+"']";
 											}else{
 												xpath = "//h2[contains(text(),'"+linkClick[j]+"')]";	
 											}
@@ -10779,7 +10779,8 @@ public class OldSmokeTestCases extends BaseLib {
 									if (click(driver, ele, linkClick[j], action.SCROLLANDBOOLEAN)) {
 										switchToDefaultContent(driver);
 										if (Mode.Lightning.toString().equalsIgnoreCase(mode)) {
-											xpath = "//*[contains(text(),'"+linkClick[j]+"')]";
+											
+											xpath ="//div[contains(@class,'outputName')]//*[text()='"+linkClick[j]+"']";
 										}else{
 											xpath = "//h2[contains(text(),'"+linkClick[j]+"')]";	
 										}
@@ -14273,7 +14274,7 @@ public class OldSmokeTestCases extends BaseLib {
 
 		String[][] CallLogLabelsWithValues= {{ActivityRelatedLabel.Subject.toString(),Smoke_CallLog1Subject},
 				{ActivityRelatedLabel.Related_To.toString(),"Fund"+"<break>"+Smoke_Fund1},
-				{ActivityRelatedLabel.Due_Date.toString(),startDate}};
+				/*{ActivityRelatedLabel.Due_Date.toString(),startDate}*/};
 
 
 		task = Smoke_CallLog1Subject;
@@ -14798,26 +14799,26 @@ public class OldSmokeTestCases extends BaseLib {
 			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINDINV2)) {
 				log(LogStatus.INFO, "Click on Created Inst : " + SmokeINDINV2, YesNo.No);
 							
-							if (ip.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Activities, null)) {
-								log(LogStatus.INFO, "Click on Related Tab", YesNo.No);	
+//							if (ip.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Activities, null)) {
+//								log(LogStatus.INFO, "Click on Related Tab", YesNo.No);	
 								if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 									windowScrollYAxis(driver, 0, 2800);
 									log(LogStatus.INFO, "Scroll >>>>>", YesNo.No);	
 								}
 								ThreadSleep(2000);
-								if (ip.verifyNoDataAtOpenActivitiesSection(environment, mode, TabName.InstituitonsTab, 10)) {
-									log(LogStatus.INFO, "Open Activities Grid Verified For No Records/No Next Activity Msg", YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Open Activities Grid Not Verified For No Records/No Next Activity Msg");
-									log(LogStatus.FAIL, "Open Activities Grid Not Verified For No Records/No Next Activity Msg", YesNo.Yes);
-								}
+//								if (ip.verifyNoDataAtOpenActivitiesSection(environment, mode, TabName.InstituitonsTab, 10)) {
+//									log(LogStatus.INFO, "Open Activities Grid Verified For No Records/No Next Activity Msg", YesNo.No);	
+//								} else {
+//									sa.assertTrue(false, "Open Activities Grid Not Verified For No Records/No Next Activity Msg");
+//									log(LogStatus.FAIL, "Open Activities Grid Not Verified For No Records/No Next Activity Msg", YesNo.Yes);
+//								}
 								
-								if (ip.verifyNoDataAtActivitiesSection(environment, mode, TabName.InstituitonsTab, 10)) {
-									log(LogStatus.INFO, " Activities Grid Verified For No Records/No Activities Msg", YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Activities Grid Not Verified For No Records/No Activities Msg");
-									log(LogStatus.FAIL, "Activities Grid Not Verified For No Records/No Activities Msg", YesNo.Yes);
-								}
+//								if (ip.verifyNoDataAtActivitiesSection(environment, mode, TabName.InstituitonsTab, 10)) {
+//									log(LogStatus.INFO, " Activities Grid Verified For No Records/No Activities Msg", YesNo.No);	
+//								} else {
+//									sa.assertTrue(false, "Activities Grid Not Verified For No Records/No Activities Msg");
+//									log(LogStatus.FAIL, "Activities Grid Not Verified For No Records/No Activities Msg", YesNo.Yes);
+//								}
 								
 								if (ip.verifyNoDataAtActivityHistorySection(environment, mode, TabName.InstituitonsTab, 10)) {
 										log(LogStatus.INFO, "Activity History Section Verified For No Records/No Activities Msg", YesNo.No);	
@@ -14828,10 +14829,10 @@ public class OldSmokeTestCases extends BaseLib {
 								
 								
 								
-							} else {
-								sa.assertTrue(false, "Not Able to Click on Related Tab");
-								log(LogStatus.SKIP, "Not Able to Click on Related Tab", YesNo.Yes);
-							}
+//							} else {
+//								sa.assertTrue(false, "Not Able to Click on Related Tab");
+//								log(LogStatus.SKIP, "Not Able to Click on Related Tab", YesNo.Yes);
+//							}
 
 
 				
@@ -14873,12 +14874,12 @@ public class OldSmokeTestCases extends BaseLib {
 								ThreadSleep(2000);
 
 								
-								if (ip.verifyNoDataAtActivitiesSection(environment, mode, TabName.InstituitonsTab, 10)) {
-									log(LogStatus.INFO, " Activities Grid Verified For No Records/No Activities Msg", YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Activities Grid Not Verified For No Records/No Activities Msg");
-									log(LogStatus.FAIL, "Activities Grid Not Verified For No Records/No Activities Msg", YesNo.Yes);
-								}
+//								if (ip.verifyNoDataAtActivitiesSection(environment, mode, TabName.InstituitonsTab, 10)) {
+//									log(LogStatus.INFO, " Activities Grid Verified For No Records/No Activities Msg", YesNo.No);	
+//								} else {
+//									sa.assertTrue(false, "Activities Grid Not Verified For No Records/No Activities Msg");
+//									log(LogStatus.FAIL, "Activities Grid Not Verified For No Records/No Activities Msg", YesNo.Yes);
+//								}
 
 								if (ip.verifyOpenActivityRelatedList(environment, mode,TabName.InstituitonsTab, Smoke_NewTask1Subject, SmokeINS2, SmokeC5_FName + " " + SmokeC5_LName)) {
 									log(LogStatus.INFO, "Open Activity Grid  Verified For "+Smoke_NewTask1Subject, YesNo.No);	
@@ -15065,7 +15066,7 @@ public class OldSmokeTestCases extends BaseLib {
 			
 			String[][] CallLogLabelsWithValues= {{ActivityRelatedLabel.Subject.toString(),Smoke_CallLog2Subject},
 												{ActivityRelatedLabel.Related_To.toString(),"Fund"+"<break>"+Smoke_CallLog2RelatedTo},
-												{ActivityRelatedLabel.Due_Date.toString(),startDate}};
+												/*{ActivityRelatedLabel.Due_Date.toString(),startDate}*/};
 			
 			 task = Smoke_CallLog2Subject;
 				String[][] event3 = {{PageLabel.Subject.toString(),task},
@@ -15206,10 +15207,9 @@ public class OldSmokeTestCases extends BaseLib {
 								}
 							}
 							
-							if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, null)) {
-								log(LogStatus.INFO, "Click on Affiliations", YesNo.Yes);	
-								
-								
+						if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, null)) {
+								log(LogStatus.INFO, "Click on Affiliations", YesNo.Yes);
+		
 								if (cp.verifyOpenActivityRelatedList(environment, mode,TabName.ContactTab, Smoke_NewTask2Subject, null, null)) {
 									log(LogStatus.INFO, "Open Activity Grid  Verified For "+Smoke_NewTask2Subject, YesNo.No);	
 								} else {
@@ -15230,15 +15230,15 @@ public class OldSmokeTestCases extends BaseLib {
 									sa.assertTrue(false, "Activity History Grid Not Verified For "+Smoke_CallLog2Subject);
 									log(LogStatus.FAIL, "Activity History Grid Not Verified For "+Smoke_CallLog2Subject, YesNo.Yes);
 								}
-								if (bp.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Affiliations, true)) {
-									log(LogStatus.INFO, "successfully scrolled to affiliations related list", YesNo.No);
-								}
-								else {
-									log(LogStatus.ERROR, "could not scroll to affiliations related list",YesNo.Yes);
-									sa.assertTrue(false, "could not scroll to affiliations related list");
-								}
-								if (cp.clickOnViewAllRelatedList(environment, mode,RelatedList.Affiliations)) {
-									log(LogStatus.INFO, "Click on View All Affiliations", YesNo.No);
+//								if (bp.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Affiliations, true)) {
+//									log(LogStatus.INFO, "successfully scrolled to affiliations related list", YesNo.No);
+//								}
+//								else {
+//									log(LogStatus.ERROR, "could not scroll to affiliations related list",YesNo.Yes);
+//									sa.assertTrue(false, "could not scroll to affiliations related list");
+//								}
+//								if (cp.clickOnViewAllRelatedList(environment, mode,RelatedList.Affiliations)) {
+//									log(LogStatus.INFO, "Click on View All Affiliations", YesNo.No);
 									
 									if (cp.verifyAffliationRelatedList(environment, mode,TabName.ContactTab, SmokeINS4)) {
 										log(LogStatus.PASS, "Affialition Grid Verified For "+SmokeINS4, YesNo.Yes);	
@@ -15246,10 +15246,10 @@ public class OldSmokeTestCases extends BaseLib {
 										sa.assertTrue(false, "Affialition Grid Not Verified For "+SmokeINS4);
 										log(LogStatus.FAIL, "Affialition Grid Not Verified For "+SmokeINS4, YesNo.Yes);
 									}
-								} else {
-									sa.assertTrue(false, "Not Able to Click on View All Affiliations");
-									log(LogStatus.SKIP, "Not Able to Click on View All Affiliations", YesNo.Yes);
-								}
+//								} else {
+//									sa.assertTrue(false, "Not Able to Click on View All Affiliations");
+//									log(LogStatus.SKIP, "Not Able to Click on View All Affiliations", YesNo.Yes);
+//								}
 								
 								
 							} else {
@@ -15293,19 +15293,19 @@ public class OldSmokeTestCases extends BaseLib {
 			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS4)) {
 				log(LogStatus.INFO, "Click on Created Inst : " + SmokeINS4, YesNo.No);
 							
-							if (ip.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Activities, null)) {
-								log(LogStatus.INFO, "Click on Related Tab", YesNo.Yes);	
+//							if (ip.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Activities, null)) {
+//								log(LogStatus.INFO, "Click on Related Tab", YesNo.Yes);	
 								
 								if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 									windowScrollYAxis(driver, 0, 2800);
 								}
 								
-								if (ip.verifyNoDataAtOpenActivitiesSection(environment, mode, TabName.InstituitonsTab, 10)) {
-									log(LogStatus.INFO, "Open Activities Grid Verified For No Records/No Next Activity Msg", YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Open Activities Grid Not Verified For No Records/No Next Activity Msg");
-									log(LogStatus.FAIL, "Open Activities Grid Not Verified For No Records/No Next Activity Msg", YesNo.Yes);
-								}
+//								if (ip.verifyNoDataAtOpenActivitiesSection(environment, mode, TabName.InstituitonsTab, 10)) {
+//									log(LogStatus.INFO, "Open Activities Grid Verified For No Records/No Next Activity Msg", YesNo.No);	
+//								} else {
+//									sa.assertTrue(false, "Open Activities Grid Not Verified For No Records/No Next Activity Msg");
+//									log(LogStatus.FAIL, "Open Activities Grid Not Verified For No Records/No Next Activity Msg", YesNo.Yes);
+//								}
 								
 								if (ip.verifyNoDataAtActivityHistorySection(environment, mode, TabName.InstituitonsTab, 10)) {
 									log(LogStatus.INFO, "Activity History Grid Verified For No Records/No Past Activity Msg", YesNo.No);	
@@ -15314,8 +15314,8 @@ public class OldSmokeTestCases extends BaseLib {
 									log(LogStatus.FAIL, "Activity History Grid Not Verified For No Records/No Past Activity Msg", YesNo.Yes);
 								}
 								
-								if (ip.clickOnViewAllRelatedList(environment, mode,RelatedList.Activities)) {
-									log(LogStatus.INFO, "Click on View All Affiliations", YesNo.No);
+//								if (ip.clickOnViewAllRelatedList(environment, mode,RelatedList.Activities)) {
+//									log(LogStatus.INFO, "Click on View All Affiliations", YesNo.No);
 									
 									String[][] activitiesRecords ={{Smoke_NewTask2Subject,SmokeC6_FName + " " + SmokeC6_LName,null},
 															{Smoke_NewEvent2Subject,SmokeC6_FName + " " + SmokeC6_LName,SmokeINDINV3},
@@ -15332,16 +15332,16 @@ public class OldSmokeTestCases extends BaseLib {
 									}
 									
 									
-								} else {
-									sa.assertTrue(false, "Not Able to Click on View All Activities");
-									log(LogStatus.SKIP, "Not Able to Click on View All Activities", YesNo.Yes);
-								}
+//								} else {
+//									sa.assertTrue(false, "Not Able to Click on View All Activities");
+//									log(LogStatus.SKIP, "Not Able to Click on View All Activities", YesNo.Yes);
+//								}
 								
-								
-							} else {
-								sa.assertTrue(false, "Not Able to Click on Related Tab");
-								log(LogStatus.SKIP, "Not Able to Click on Related Tab", YesNo.Yes);
-							}
+//								
+//							} else {
+//								sa.assertTrue(false, "Not Able to Click on Related Tab");
+//								log(LogStatus.SKIP, "Not Able to Click on Related Tab", YesNo.Yes);
+//							}
 
 
 				
@@ -15374,8 +15374,8 @@ public class OldSmokeTestCases extends BaseLib {
 			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINDINV3)) {
 				log(LogStatus.INFO, "Click on Created Inst : " + SmokeINDINV3, YesNo.No);
 							
-							if (ip.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Activities, null)) {
-								log(LogStatus.INFO, "Click on Related Tab", YesNo.Yes);	
+//							if (ip.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Activities, null)) {
+//								log(LogStatus.INFO, "Click on Related Tab", YesNo.Yes);	
 								
 								if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 									windowScrollYAxis(driver, 0, 2800);
@@ -15402,17 +15402,17 @@ public class OldSmokeTestCases extends BaseLib {
 									log(LogStatus.FAIL, "Activity History Grid Not Verified For "+Smoke_CallLog2Subject, YesNo.Yes);
 								}	
 								
-							if (ip.verifyGridErrorMessage(environment, mode, RelatedList.Activities, HomePageErrorMessage.NoRecordToDisplayOnActivities, 10)) {
-									log(LogStatus.PASS, HomePageErrorMessage.NoRecordToDisplayOnActivities+" Verify Error Message on Actvities Grid", YesNo.No);
-								}else {
-									log(LogStatus.FAIL, HomePageErrorMessage.NoRecordToDisplayOnActivities+" Error Message is not verified on Activities Grid", YesNo.Yes);
-									sa.assertTrue(false, HomePageErrorMessage.NoRecordToDisplayOnActivities+" Error Message is not verified on Actvities Grid");
-								}
+//							if (ip.verifyGridErrorMessage(environment, mode, RelatedList.Activities, HomePageErrorMessage.NoRecordToDisplayOnActivities, 10)) {
+//									log(LogStatus.PASS, HomePageErrorMessage.NoRecordToDisplayOnActivities+" Verify Error Message on Actvities Grid", YesNo.No);
+//								}else {
+//									log(LogStatus.FAIL, HomePageErrorMessage.NoRecordToDisplayOnActivities+" Error Message is not verified on Activities Grid", YesNo.Yes);
+//									sa.assertTrue(false, HomePageErrorMessage.NoRecordToDisplayOnActivities+" Error Message is not verified on Actvities Grid");
+//								}
 
-							} else {
-								sa.assertTrue(false, "Not Able to Click on Related Tab");
-								log(LogStatus.SKIP, "Not Able to Click on Related Tab", YesNo.Yes);
-							}
+//							} else {
+//								sa.assertTrue(false, "Not Able to Click on Related Tab");
+//								log(LogStatus.SKIP, "Not Able to Click on Related Tab", YesNo.Yes);
+//							}
 
 
 				
@@ -15501,10 +15501,11 @@ public class OldSmokeTestCases extends BaseLib {
 							}
 							
 						
-							if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, null)) {
-								log(LogStatus.INFO, "Click on Affiliations", YesNo.Yes);	
+//							if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, null)) {
+//								log(LogStatus.INFO, "Click on Affiliations", YesNo.Yes);	
 								
-								
+							if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, RelatedTab.Affiliations.toString())){
+								log(LogStatus.INFO, "Click on Affiliations", YesNo.Yes);
 								if (cp.verifyOpenActivityRelatedList(environment, mode,TabName.ContactTab, Smoke_NewTask2Subject, null, null)) {
 									log(LogStatus.PASS, "Open Activity Grid  Verified For "+Smoke_NewTask2Subject, YesNo.No);	
 								} else {
@@ -15526,15 +15527,15 @@ public class OldSmokeTestCases extends BaseLib {
 									log(LogStatus.FAIL, "Activity History Grid Not Verified For "+Smoke_CallLog2Subject, YesNo.Yes);
 								}
 								
-									if (bp.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Affiliations, true)) {
-										log(LogStatus.INFO, "successfully scrolled to affiliations related list", YesNo.No);
-									}
-									else {
-										log(LogStatus.ERROR, "could not scroll to affiliations related list", YesNo.Yes);
-										sa.assertTrue(false, "could not scroll to affiliations related list");
-									}
-								if (cp.clickOnViewAllRelatedList(environment, mode,RelatedList.Affiliations)) {
-									log(LogStatus.INFO, "Click on View All Affiliations", YesNo.No);
+//									if (bp.scrollToRelatedListViewAll_Lightning(environment, mode, RelatedList.Affiliations, true)) {
+//										log(LogStatus.INFO, "successfully scrolled to affiliations related list", YesNo.No);
+//									}
+//									else {
+//										log(LogStatus.ERROR, "could not scroll to affiliations related list", YesNo.Yes);
+//										sa.assertTrue(false, "could not scroll to affiliations related list");
+//									}
+//								if (cp.clickOnViewAllRelatedList(environment, mode,RelatedList.Affiliations)) {
+//									log(LogStatus.INFO, "Click on View All Affiliations", YesNo.No);
 									
 									if (cp.verifyAffliationRelatedList(environment, mode,TabName.ContactTab, SmokeINS4)) {
 										log(LogStatus.PASS, "Affialition Grid Verified For "+SmokeINS4, YesNo.Yes);	
@@ -15550,10 +15551,10 @@ public class OldSmokeTestCases extends BaseLib {
 										log(LogStatus.FAIL, "Affialition Grid Not Verified For "+SmokeINDINV3, YesNo.Yes);
 									}
 									
-								} else {
-									sa.assertTrue(false, "Not Able to Click on View All Affiliations");
-									log(LogStatus.SKIP, "Not Able to Click on View All Affiliations", YesNo.Yes);
-								}
+//								} else {
+//									sa.assertTrue(false, "Not Able to Click on View All Affiliations");
+//									log(LogStatus.SKIP, "Not Able to Click on View All Affiliations", YesNo.Yes);
+//								}
 								
 								
 							} else {
@@ -15677,20 +15678,20 @@ public class OldSmokeTestCases extends BaseLib {
 		if (bp.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINDINV3)) {
 				log(LogStatus.INFO, "Click on Created Inst : " + SmokeINDINV3, YesNo.No);
-							
-							if (ip.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Activities, null)) {
-								log(LogStatus.INFO, "Click on Related Tab", YesNo.No);	
+//							
+//							if (ip.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Activities, null)) {
+//								log(LogStatus.INFO, "Click on Related Tab", YesNo.No);	
 								if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 									windowScrollYAxis(driver, 0, 180000);
 									log(LogStatus.INFO, "Scroll >>>>>", YesNo.No);	
 								}
 								ThreadSleep(2000);
-								if (ip.verifyNoDataAtOpenActivitiesSection(environment, mode, TabName.InstituitonsTab, 10)) {
-									log(LogStatus.PASS, "Open Activities Grid Verified For No Records/No Next Activity Msg", YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Open Activities Grid Not Verified For No Records/No Next Activity Msg");
-									log(LogStatus.FAIL, "Open Activities Grid Not Verified For No Records/No Next Activity Msg", YesNo.Yes);
-								}
+//								if (ip.verifyNoDataAtOpenActivitiesSection(environment, mode, TabName.InstituitonsTab, 10)) {
+//									log(LogStatus.PASS, "Open Activities Grid Verified For No Records/No Next Activity Msg", YesNo.No);	
+//								} else {
+//									sa.assertTrue(false, "Open Activities Grid Not Verified For No Records/No Next Activity Msg");
+//									log(LogStatus.FAIL, "Open Activities Grid Not Verified For No Records/No Next Activity Msg", YesNo.Yes);
+//								}
 
 								if (ip.verifyNoDataAtActivityHistorySection(environment, mode, TabName.InstituitonsTab, 10)) {
 									log(LogStatus.PASS, "Activity History Section Verified For No Records/No Activities Msg", YesNo.No);	
@@ -15699,19 +15700,19 @@ public class OldSmokeTestCases extends BaseLib {
 									log(LogStatus.FAIL, "Activity History Section Not Verified For No Records/No Activities Msg", YesNo.Yes);
 								}	
 								
-								if (ip.verifyGridErrorMessage(environment, mode, RelatedList.Activities, HomePageErrorMessage.NoRecordToDisplayOnActivities, 10)) {
-									log(LogStatus.PASS, HomePageErrorMessage.NoRecordToDisplayOnActivities+" Verify Error Message on Actvities Grid", YesNo.No);
-								}else {
-									log(LogStatus.FAIL, HomePageErrorMessage.NoRecordToDisplayOnActivities+" Error Message is not verified on Activities Grid", YesNo.Yes);
-									sa.assertTrue(false, HomePageErrorMessage.NoRecordToDisplayOnActivities+" Error Message is not verified on Actvities Grid");
-								}
+//								if (ip.verifyGridErrorMessage(environment, mode, RelatedList.Activities, HomePageErrorMessage.NoRecordToDisplayOnActivities, 10)) {
+//									log(LogStatus.PASS, HomePageErrorMessage.NoRecordToDisplayOnActivities+" Verify Error Message on Actvities Grid", YesNo.No);
+//								}else {
+//									log(LogStatus.FAIL, HomePageErrorMessage.NoRecordToDisplayOnActivities+" Error Message is not verified on Activities Grid", YesNo.Yes);
+//									sa.assertTrue(false, HomePageErrorMessage.NoRecordToDisplayOnActivities+" Error Message is not verified on Actvities Grid");
+//								}
 								
 								
 								
-							} else {
-								sa.assertTrue(false, "Not Able to Click on Related Tab");
-								log(LogStatus.SKIP, "Not Able to Click on Related Tab", YesNo.Yes);
-							}
+//							} else {
+//								sa.assertTrue(false, "Not Able to Click on Related Tab");
+//								log(LogStatus.SKIP, "Not Able to Click on Related Tab", YesNo.Yes);
+//							}
 
 
 				
@@ -15744,8 +15745,8 @@ public class OldSmokeTestCases extends BaseLib {
 			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS5)) {
 				log(LogStatus.INFO, "Click on Created Inst : " + SmokeINS5, YesNo.No);
 							
-							if (ip.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Activities, null)) {
-								log(LogStatus.INFO, "Click on Related Tab", YesNo.Yes);	
+//							if (ip.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Activities, null)) {
+//								log(LogStatus.INFO, "Click on Related Tab", YesNo.Yes);	
 								
 								if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 									windowScrollYAxis(driver, 0, 2800);
@@ -15772,17 +15773,17 @@ public class OldSmokeTestCases extends BaseLib {
 									log(LogStatus.FAIL, "Activity History Grid Not Verified For "+Smoke_CallLog2Subject, YesNo.Yes);
 								}	
 								
-								if (ip.verifyGridErrorMessage(environment, mode, RelatedList.Activities, HomePageErrorMessage.NoRecordToDisplayOnActivities, 10)) {
-									log(LogStatus.INFO, HomePageErrorMessage.NoRecordToDisplayOnActivities+" Verify Error Message on Actvities Grid", YesNo.No);
-								}else {
-									log(LogStatus.FAIL, HomePageErrorMessage.NoRecordToDisplayOnActivities+" Error Message is not verified on Activities Grid", YesNo.Yes);
-									sa.assertTrue(false, HomePageErrorMessage.NoRecordToDisplayOnActivities+" Error Message is not verified on Actvities Grid");
-								}
+//								if (ip.verifyGridErrorMessage(environment, mode, RelatedList.Activities, HomePageErrorMessage.NoRecordToDisplayOnActivities, 10)) {
+//									log(LogStatus.INFO, HomePageErrorMessage.NoRecordToDisplayOnActivities+" Verify Error Message on Actvities Grid", YesNo.No);
+//								}else {
+//									log(LogStatus.FAIL, HomePageErrorMessage.NoRecordToDisplayOnActivities+" Error Message is not verified on Activities Grid", YesNo.Yes);
+//									sa.assertTrue(false, HomePageErrorMessage.NoRecordToDisplayOnActivities+" Error Message is not verified on Actvities Grid");
+//								}
 
-							} else {
-								sa.assertTrue(false, "Not Able to Click on Related Tab");
-								log(LogStatus.SKIP, "Not Able to Click on Related Tab", YesNo.Yes);
-							}
+//							} else {
+//								sa.assertTrue(false, "Not Able to Click on Related Tab");
+//								log(LogStatus.SKIP, "Not Able to Click on Related Tab", YesNo.Yes);
+//							}
 
 
 				

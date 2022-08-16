@@ -422,12 +422,13 @@ public void M7NTc06_CreatLogACallForContactJhonAleaxVerifyLastTouchpointOnContac
 	M7NTask3dueDate=todaysDate;
 	String task = M7NTask3Subject;
 	String[][] event1 = {{PageLabel.Subject.toString(),task},
+
 			/* {PageLabel.Due_Date.toString(),M7NTask3dueDate}, */
 			{PageLabel.Name.toString(),contactName},
 			/* {PageLabel.Status.toString(),M7NTask3Status} */};
 	
                       /*due date and status removed*/
-	
+
 	if (gp.clickOnGlobalActionAndEnterValue(projectName, GlobalActionItem.Log_a_Call, event1)) {
 		log(LogStatus.INFO,"Able to Enter Value for : "+task,YesNo.No);
 		ExcelUtils.writeData(phase1DataSheetFilePath,M7NTask3dueDate, "Task1", excelLabel.Variable_Name, "M7NTask3", excelLabel.Due_Date);

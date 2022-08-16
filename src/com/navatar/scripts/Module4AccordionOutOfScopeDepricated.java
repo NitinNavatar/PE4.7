@@ -24,7 +24,7 @@ import com.navatar.generic.EnumConstants.*;
 import com.navatar.pageObjects.*;
 import com.relevantcodes.extentreports.LogStatus;
 
-public class Module4 extends BaseLib{
+public class Module4AccordionOutOfScopeDepricated extends BaseLib{
 	Scanner sc = new Scanner(System.in);
 	//Delete all SDG, remove calender from entity event tab
 	//Remove all accordions from entity, deal, event page
@@ -130,7 +130,7 @@ public class Module4 extends BaseLib{
 		if (lp.clickOnTab(projectName, TabName.Object5Tab)) {
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object5Tab,YesNo.No);	
 			
-			if (me.createMarketingEvent(projectName, M4MarketingEvent1Name, M4MarketingEvent1RecordType, M4MarketingEvent1Date, M4MarketingEvent1Organizer, 10)) {
+			if (me.createMarketingEvent(projectName, M4MarketingEvent1Name, M4MarketingEvent1RecordType, todaysDate, M4MarketingEvent1Organizer, 10)) {
 				log(LogStatus.INFO,"Created Marketing Event : "+M4MarketingEvent1Name,YesNo.No);	
 			} else {
 				sa.assertTrue(false,"Not Able to Create Marketing Event  : "+M4MarketingEvent1Name);
@@ -184,7 +184,9 @@ public class Module4 extends BaseLib{
 				type= ExcelUtils.readData(phase1DataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "M4DT"+(i+1), excelLabel.Type);
 				role= ExcelUtils.readData(phase1DataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "M4DT"+(i+1), excelLabel.Role);
 				String[][] dt = {{PageLabel.Team_Member.toString(),member},{PageLabel.Deal.toString(),deal}
-				,{PageLabel.Team_Member_Role.toString(),role},{PageLabel.Deal_Contact_Type.toString(),type}};
+				,{PageLabel.Team_Member_Role.toString(),role}
+				//,{PageLabel.Deal_Contact_Type.toString(),type}
+				};
 
 				if (dtp.createDealTeam(projectName, deal, dt,"M4DT" +(i+1), action.SCROLLANDBOOLEAN, 10)) {
 					log(LogStatus.INFO,"Created deal team for deal : "+deal,YesNo.No);	
@@ -362,14 +364,14 @@ public class Module4 extends BaseLib{
 				EditPageLabel.Image_Field_API_Name.toString()+"<break>"+"navpeII__Profile_Image__c",EditPageLabel.Number_of_Records_to_Display.toString()+"<break>6",
 				EditPageLabel.SDG_Name.toString()+"<break>"+M4Sdg1Name,EditPageLabel.Popup_Title.toString()+"<break>"+M4Sdg1Name+"s"
 		};
-		String source= System.getProperty("user.dir")+"\\AutoIT\\EditPage\\rla.png";
+		String source= System.getProperty("user.dir")+"\\AutoIT\\EditPage\\RelatedListAccordion.png";
 		String target= System.getProperty("user.dir")+"\\AutoIT\\AddComponentHere.png";
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M4Ins1, 10)) {
 				if (ep.clickOnEditPageLink()) {
 					log(LogStatus.INFO, "successfully reached edit page", YesNo.No);
 					
-					if (ep.dragAndDropAccordian(projectName, PageName.Object1Page, "RelatedListAccordion", fieldValues, source, target)) {
+					if (ep.dragAndDropAccordian(projectName, PageName.Object1Page, "Navatar Related List Accordion", fieldValues, source, target)) {
 						log(LogStatus.INFO, "successfully added accordion on entity page", YesNo.No);
 							
 					}else {
@@ -1204,7 +1206,7 @@ public class Module4 extends BaseLib{
 				if (ep.clickOnEditPageLink()) {
 					log(LogStatus.INFO, "successfully reached edit page", YesNo.No);
 					
-					if (ep.dragAndDropAccordian(projectName, PageName.Object1Page, "RelatedListAccordion", fieldValues, source, target)) {
+					if (ep.dragAndDropAccordian(projectName, PageName.Object1Page, "Navatar Related List Accordion", fieldValues, source, target)) {
 						log(LogStatus.INFO, "successfully added accordion on entity page", YesNo.No);
 							
 					}else {
@@ -1549,7 +1551,7 @@ public class Module4 extends BaseLib{
 				if (ep.clickOnEditPageLink()) {
 					log(LogStatus.INFO, "successfully reached edit page", YesNo.No);
 					
-					if (ep.dragAndDropAccordian(projectName, PageName.Object1Page, "RelatedListAccordion", fieldValues, source, target)) {
+					if (ep.dragAndDropAccordian(projectName, PageName.Object1Page, "Navatar Related List Accordion", fieldValues, source, target)) {
 						log(LogStatus.INFO, "successfully added accordion on entity page", YesNo.No);
 							
 					}else {
@@ -1894,7 +1896,7 @@ public class Module4 extends BaseLib{
 		String query[]={EditPageErrorMessage.query1,EditPageErrorMessage.query2,EditPageErrorMessage.query3};
 		String image[]={EditPageErrorMessage.image1,EditPageErrorMessage.image2,EditPageErrorMessage.image3};
 		String fieldValues[]= new String[3];
-		String source= System.getProperty("user.dir")+"\\AutoIT\\EditPage\\rla.png";
+		String source= System.getProperty("user.dir")+"\\AutoIT\\EditPage\\RelatedListAccordion.png";
 		String target= System.getProperty("user.dir")+"\\AutoIT\\dealAccordionDrop.png";
 		
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
@@ -1910,8 +1912,8 @@ public class Module4 extends BaseLib{
 						ele=ep.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 						scrollDownThroughWebelement(driver, ele, "overview");
 						switchToDefaultContent(driver);
-						target=System.getProperty("user.dir")+"\\AutoIT\\viewdetails.png";
-						if (ep.dragAndDropAccordian(projectName, PageName.Object1Page, "RelatedListAccordion", fieldValues, source, target)) {
+						target=System.getProperty("user.dir")+"\\AutoIT\\AddComponentHere.png";
+						if (ep.dragAndDropAccordian(projectName, PageName.Object1Page, "Navatar Related List Accordion", fieldValues, source, target)) {
 							log(LogStatus.INFO, "successfully added "+tab[i]+" accordion on entity page", YesNo.No);
 
 						}else {
