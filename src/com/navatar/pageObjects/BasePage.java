@@ -5509,7 +5509,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, calenderIcon, "Visibility", timeOut, "View Calendar");
 	}
 
-	@FindBy(xpath = "//div[@class='eventList']")
+	@FindBy(xpath = "//div[contains(@class,'eventList')]")
 	private WebElement calenderCellIcon;
 
 	/**

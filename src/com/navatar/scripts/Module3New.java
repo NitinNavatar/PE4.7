@@ -2477,7 +2477,7 @@ lp.CRMlogout();
 		String[][] ffrecordType = { { recordTypeLabel.Record_Type_Label.toString(), recordTypeArray[1] },
 				{ recordTypeLabel.Description.toString(), recordTypeArray[1] + recordTypeDescription },
 				{ recordTypeLabel.Active.toString(), "" } };
-
+		String[] profileForSelection= {"PE Standard User","System Administrator"};
 		boolean isMakeAvailable = true;
 		boolean isMakeDefault = true;
 		boolean flag = false;
@@ -2492,11 +2492,11 @@ lp.CRMlogout();
 								ObjectFeatureName.recordTypes)) {
 							if (i == 0) {
 								flag = sp.createRecordTypeForObject(projectName, fundRecordType, isMakeAvailable,
-										null, isMakeDefault, null, 10);
+										profileForSelection, isMakeDefault, null, 10);
 							} else {
 								isMakeDefault = false;
 								flag = sp.createRecordTypeForObject(projectName, ffrecordType, isMakeAvailable,
-										null, isMakeDefault, null, 10);
+										profileForSelection, isMakeDefault, null, 10);
 							}
 							if (flag) {
 								log(LogStatus.ERROR, "Created Record Type : " + recordTypeArray[i], YesNo.No);

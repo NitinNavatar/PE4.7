@@ -1405,6 +1405,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case DealTab:
 			viewList = "All";
 			break;
+		case TaskTab:
+			viewList = "All";
+			break;
 		case Object1Tab:
 			viewList = "All";
 			break;
@@ -1467,8 +1470,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				action.SCROLLANDBOOLEAN)) {
 			ThreadSleep(5000);
 
-			xpath = "//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//*[text()='" + alreadyCreated
-					+ "']";
+			if(tabName.toString().contains("Task")||tabName.toString().equalsIgnoreCase("Task")){
+				xpath = "//span[text()='"+alreadyCreated+"']/ancestor::a";
+			}else{
+				xpath = "//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//*[text()='" + alreadyCreated
+						+ "']";
+			}
+			
 			ele = FindElement(driver, xpath, alreadyCreated, action.BOOLEAN, 30);
 			ThreadSleep(2000);
 

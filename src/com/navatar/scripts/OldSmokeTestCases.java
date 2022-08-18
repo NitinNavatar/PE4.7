@@ -15206,12 +15206,9 @@ public class OldSmokeTestCases extends BaseLib {
 											YesNo.Yes);
 								}
 							}
-							
-//							if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, null)) {
-//								log(LogStatus.INFO, "Click on Affiliations", YesNo.Yes);
-							if (click(driver, cp.getcontactAffiliations_Lighting(30), "Affiliation tab", action.BOOLEAN)){
+						
+							if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, RelatedTab.Affiliations.toString())){
 								log(LogStatus.INFO, "Click on Affiliations", YesNo.Yes);
-							
 
 							
 								
@@ -15507,8 +15504,7 @@ public class OldSmokeTestCases extends BaseLib {
 							}
 							
 						
-//							if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, null)) {
-//								log(LogStatus.INFO, "Click on Affiliations", YesNo.Yes);	
+							
 								
 							if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, RelatedTab.Affiliations.toString())){
 								log(LogStatus.INFO, "Click on Affiliations", YesNo.Yes);
