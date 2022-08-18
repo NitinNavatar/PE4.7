@@ -7766,5 +7766,243 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
     }
 
 
+	public List<String> verifyButtonsOnAPageAndInDownArrowButton(List<String> ExpectedButtonsOnPage,
+			List<String> ExpectedButtonsInDownArrowButton) {
+
+		List<String> negativeResult = new ArrayList<String>();
+
+		if (!ExpectedButtonsOnPage.isEmpty()) {
+
+			if (ExpectedButtonsOnPage.size() != 1 && !ExpectedButtonsOnPage.get(0).equals("")) {
+				List<String> listOfButtons = listOfButtons().stream().map(x -> x.getText().trim())
+						.collect(Collectors.toList());
+
+				if (!listOfButtons.isEmpty()) {
+					log(LogStatus.INFO, "No. of Buttons Present on Page are: " + listOfButtons.size(), YesNo.No);
+
+					int i = 0;
+					if (listOfButtons.size() == ExpectedButtonsOnPage.size()) {
+						log(LogStatus.INFO,
+								"No. of Actual and Expected Buttons on Page are same, So Continue the Process",
+								YesNo.No);
+
+						for (String button : listOfButtons) {
+							if (button.equals(ExpectedButtonsOnPage.get(i))) {
+								log(LogStatus.INFO, "----Button Matched, Expected: " + ExpectedButtonsOnPage.get(i)
+										+ " & Actual: " + button + " on this Page----", YesNo.No);
+							} else {
+
+								log(LogStatus.ERROR, "----Button Not Matched, Expected: " + ExpectedButtonsOnPage.get(i)
+										+ " but Actual: " + button + " on this Page----", YesNo.No);
+								negativeResult.add("----Button Not Matched, Expected: " + ExpectedButtonsOnPage.get(i)
+										+ " but Actual: " + button + " on this Page----");
+
+							}
+
+							i++;
+						}
+					} else {
+						log(LogStatus.ERROR,
+								"No. of Expected and Actual Buttons on Page not matched, So not able to continue, Expected: "
+										+ ExpectedButtonsOnPage + " & Actual: " + listOfButtons,
+								YesNo.Yes);
+						negativeResult.add(
+								"No. of Expected and Actual Buttons on Page not matched, So not able to continue, Expected: "
+										+ ExpectedButtonsOnPage + " & Actual: " + listOfButtons);
+					}
+
+				}
+
+				else {
+					log(LogStatus.ERROR, "No Buttons Are Present on this Page", YesNo.Yes);
+					negativeResult.add("No Buttons Are Present on this Page");
+				}
+			} else
+
+			{
+				log(LogStatus.ERROR, "No Expected Buttons to verify on Page Mentioned", YesNo.No);
+			}
+		} else
+
+		{
+			log(LogStatus.ERROR, "No Expected Buttons to verify on Page Mentioned", YesNo.No);
+		}
+
+		if (!ExpectedButtonsInDownArrowButton.isEmpty())
+
+		{
+			if (ExpectedButtonsInDownArrowButton.size() != 1 && !ExpectedButtonsInDownArrowButton.get(0).equals("")) {
+				if (downArrowButton(20) != null) {
+					log(LogStatus.INFO, "Down Arrow Button is Present", YesNo.No);
+					if (click(driver, downArrowButton(20), "DownArrowButton", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
+						CommonLib.ThreadSleep(2000);
+
+						List<String> dropDownButtonsList = dropDownButtonsList().stream().map(x -> x.getText().trim())
+								.collect(Collectors.toList());
+
+						if (!dropDownButtonsList.isEmpty()) {
+							log(LogStatus.INFO,
+									"No. of Buttons Present on DownArrow Button are: " + dropDownButtonsList.size(),
+									YesNo.No);
+
+							int i = 0;
+							if (dropDownButtonsList.size() == ExpectedButtonsInDownArrowButton.size()) {
+								log(LogStatus.INFO,
+										"No. of Actual and Expected Buttons on DownArrowButton are same, So Continue the Process",
+										YesNo.No);
+
+								for (String button : dropDownButtonsList) {
+									if (button.equals(ExpectedButtonsInDownArrowButton.get(i))) {
+										log(LogStatus.INFO,
+												"----Button Matched, Expected: "
+														+ ExpectedButtonsInDownArrowButton.get(i) + " & Actual: "
+														+ button + " in DownArrow Button----",
+												YesNo.No);
+									} else {
+
+										log(LogStatus.ERROR,
+												"----Button Not Matched, Expected: "
+														+ ExpectedButtonsInDownArrowButton.get(i) + " but Actual: "
+														+ button + " in DownArrow Button----",
+												YesNo.No);
+										negativeResult.add("----Button Not Matched, Expected: "
+												+ ExpectedButtonsInDownArrowButton.get(i) + " but Actual: " + button
+												+ " in DownArrow Button----");
+
+									}
+
+									i++;
+								}
+							} else {
+								log(LogStatus.ERROR,
+										"No. of Expected and Actual Buttons in DownArrow Button not matched, So not able to continue, Expected: "
+												+ ExpectedButtonsInDownArrowButton + " & Actual: "
+												+ dropDownButtonsList,
+										YesNo.Yes);
+								negativeResult.add(
+										"No. of Expected and Actual Buttons in DownArrow Button not matched, So not able to continue, Expected: "
+												+ ExpectedButtonsInDownArrowButton + " & Actual: "
+												+ dropDownButtonsList);
+							}
+
+						}
+
+						else {
+							log(LogStatus.ERROR, "No Buttons Are Present in DownArrow Button", YesNo.Yes);
+							negativeResult.add("No Buttons Are Present in DownArrow Button");
+						}
+
+					} else {
+						log(LogStatus.INFO, "Not able to Click on Down Arrow Button", YesNo.No);
+					}
+				}
+
+				else {
+					log(LogStatus.ERROR, "Down Arrow Button is not Present on this Page", YesNo.Yes);
+					negativeResult.add("Down Arrow Button is not Present on this Page");
+				}
+			} else
+
+			{
+				log(LogStatus.ERROR, "No Expected Buttons to verify in Down Arrow Button Mentioned", YesNo.No);
+			}
+		} else
+
+		{
+			log(LogStatus.ERROR, "No Expected Buttons to verify in Down Arrow Button Mentioned", YesNo.No);
+		}
+
+		if (!ExpectedButtonsInDownArrowButton.isEmpty() && !ExpectedButtonsOnPage.isEmpty()) {
+			if ((ExpectedButtonsInDownArrowButton.size() == 1 && ExpectedButtonsInDownArrowButton.get(0).equals(""))
+					&& ExpectedButtonsOnPage.size() == 1 && ExpectedButtonsOnPage.get(0).equals("")) {
+				log(LogStatus.ERROR, "No Expected Buttons to verify in Down Arrow Button and On Page Mentioned",
+						YesNo.No);
+				negativeResult.add("No Expected Buttons to verify in Down Arrow Button and On Page Mentioned");
+			}
+		} else {
+			log(LogStatus.ERROR, "No Expected Buttons to verify in Down Arrow Button and On Page Mentioned", YesNo.No);
+			negativeResult.add("No Expected Buttons to verify in Down Arrow Button and On Page Mentioned");
+		}
+		return negativeResult;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param expectedListOfTabs
+	 * @return negativeResult
+	 */
+	public List<String> verifyTabsOnAPage(List<String> expectedListOfTabs) {
+
+		List<String> negativeResult = new ArrayList<String>();
+
+		if (!expectedListOfTabs.isEmpty()) {
+
+			if (expectedListOfTabs.size() != 1 && !expectedListOfTabs.get(0).equals("")) {
+				List<String> tabsInPage = tabsInPage().stream().map(x -> x.getText().trim())
+						.collect(Collectors.toList());
+
+				if (!tabsInPage.isEmpty()) {
+					log(LogStatus.INFO, "No. of Tabs Present on Page are: " + tabsInPage.size(), YesNo.No);
+
+					int i = 0;
+					if (tabsInPage.size() == expectedListOfTabs.size()) {
+						log(LogStatus.INFO, "No. of Actual and Expected Tabs on Page are same, So Continue the Process",
+								YesNo.No);
+
+						for (String tab : tabsInPage) {
+							if (tab.equals(expectedListOfTabs.get(i))) {
+								log(LogStatus.INFO, "----Tab Matched, Expected: " + expectedListOfTabs.get(i)
+										+ " & Actual: " + tab + " on this Page----", YesNo.No);
+							} else {
+
+								log(LogStatus.ERROR, "----Tab Not Matched, Expected: " + expectedListOfTabs.get(i)
+										+ " but Actual: " + tab + " on this Page----", YesNo.No);
+								negativeResult.add("----Button Not Matched, Expected: " + expectedListOfTabs.get(i)
+										+ " but Actual: " + tab + " on this Page----");
+
+							}
+
+							i++;
+						}
+					} else {
+						log(LogStatus.ERROR,
+								"No. of Expected and Actual Tabs on Page not matched, So not able to continue, Expected: "
+										+ expectedListOfTabs + " & Actual: " + tabsInPage,
+								YesNo.Yes);
+						negativeResult.add(
+								"No. of Expected and Actual Tabs on Page not matched, So not able to continue, Expected: "
+										+ expectedListOfTabs + " & Actual: " + tabsInPage);
+					}
+
+				}
+
+				else {
+					log(LogStatus.ERROR, "No Tabs Are Present on this Page", YesNo.Yes);
+					negativeResult.add("No Tabs Are Present on this Page");
+				}
+			} else
+
+			{
+				log(LogStatus.ERROR, "No Expected Tabs to verify on Page Mentioned", YesNo.No);
+				negativeResult.add("No Expected Tabs to verify On Page Mentioned");
+			}
+		} else
+
+		{
+			log(LogStatus.ERROR, "No Expected Tabs to verify on Page Mentioned", YesNo.No);
+			negativeResult.add("No Expected Tabs to verify On Page Mentioned");
+		}
+
+		return negativeResult;
+	}
+
+
+
+
+
+
+
+
 
 }

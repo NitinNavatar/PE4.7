@@ -2845,9 +2845,9 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 		String monthName1 = findThreeLetterMonthName(date1).split(" ")[0];
 		String monthName2 = findThreeLetterMonthName(date2).split(" ")[0];
 		if (monthName1.equalsIgnoreCase(monthName2))
-			return findThreeLetterMonthName(date1) + " – " + date2.split("/")[1] + ", " + date1.split("/")[2];
+			return findThreeLetterMonthName(date1) + " ï¿½ " + date2.split("/")[1] + ", " + date1.split("/")[2];
 		else
-			return findThreeLetterMonthName(date1) + " – " + findThreeLetterMonthName(date2) + ", "
+			return findThreeLetterMonthName(date1) + " ï¿½ " + findThreeLetterMonthName(date2) + ", "
 					+ date1.split("/")[2];
 	}
 
@@ -3183,67 +3183,75 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 	 * @description returns the list of webelement based on the xpath passed
 	 */
 	public static boolean datePickerHandle(WebDriver driver, WebElement MonthSelector, WebElement MonthPreviousButton,
-			String elementName, String Year, String Month, String Date) {
-		boolean flag = false;
-		try {
+            String elementName, String Year, String Month, String Date) {
+        boolean flag = false;
+        try {
 
-			int j = 0;
-			for (int i = 0; i < 13; i++) {
-				if (j < 12) {
-					if (MonthSelector.getText().contains(Month)) {
-						appLog.info("Month Selected : " + Month);
-						break;
-					} else {
-						click(driver, MonthPreviousButton, "", action.SCROLLANDBOOLEAN);
-						j++;
-					}
-				} else {
-					appLog.error("Month Format Is Not Correct");
-					return false;
+            int j = 0;
+            for (int i = 0; i < 13; i++) {
+                if (j < 12) {
+                    if (MonthSelector.getText().contains(Month)) {
+                        appLog.info("Month Selected : " + Month);
+                        break;
+                    } else {
+                        click(driver, MonthPreviousButton, "", action.SCROLLANDBOOLEAN);
+                        j++;
+                    }
+                } else {
+                    appLog.error("Month Format Is Not Correct");
+                    return false;
 
-				}
-			}
-			String xpath = "//lightning-select//select";
-			WebElement YearSelector = FindElement(driver, xpath, "YearSelector", action.SCROLLANDBOOLEAN, 25);
-			if (CommonLib.selectVisibleTextFromDropDown(driver, YearSelector, "YearSelector: " + Year, Year))
+                }
+            }
+            String xpath = "//lightning-select//select";
+            WebElement YearSelector = FindElement(driver, xpath, "YearSelector", action.SCROLLANDBOOLEAN, 25);
+            if (CommonLib.selectVisibleTextFromDropDown(driver, YearSelector, "YearSelector: " + Year, Year))
 
-			{
-				appLog.info("Select The Year: " + Year);
-				CommonLib.ThreadSleep(8000);
-				List<WebElement> DaySelector = FindElements(driver,
-						"//table[@class='slds-datepicker__month']//tr//td[not(contains(@class,'slds-day_adjacent-month'))]/span",
-						"dateSelector");
-				for (WebElement day : DaySelector) {
-					try {
-					if (day.getText().trim().equalsIgnoreCase(Date)) {
-						if (click(driver, day, "", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, Date + " Date is Selected", YesNo.No);
-							flag = true;
-						} else {
-							log(LogStatus.INFO, Date + " Date is Not Selected", YesNo.No);
-							flag = false;
-						}
-					}
-				}
-					catch(StaleElementReferenceException e)
-					{
-						e.getMessage();
-					}
-				}
+            {
+                appLog.info("Select The Year: " + Year);
+                CommonLib.ThreadSleep(8000);
+                List<WebElement> DaySelector = FindElements(driver,
+                        "//table[@class='slds-datepicker__month']//tr//td[not(contains(@class,'slds-day_adjacent-month'))]/span",
+                        "dateSelector");
+                for (WebElement day : DaySelector) {
+                    try {
 
-			} else {
-				appLog.error("Not ABle to Select Year: " + Year);
-			}
 
-		} catch (Exception e) {
-			flag = false;
 
-			log(LogStatus.ERROR, elementName + " Date is Not Selected", YesNo.No);
-			log(LogStatus.ERROR, e.getMessage(), YesNo.No);
-		}
+                        if (Integer.parseInt(Date) < 10 && Date.length()==2) {
+                            Date = Date.replace("0", "");
+                        }
 
-		return flag;
+                        
 
-	}
+                    if (day.getText().trim().equalsIgnoreCase(Date)) {
+                        if (click(driver, day, "", action.SCROLLANDBOOLEAN)) {
+                            log(LogStatus.INFO, Date + " Date is Selected", YesNo.No);
+                            flag = true;
+                        } else {
+                            log(LogStatus.INFO, Date + " Date is Not Selected", YesNo.No);
+                            flag = false;
+                        }
+                    }
+                }
+                    catch(StaleElementReferenceException e)
+                    {
+                        e.getMessage();
+                    }
+                }
 
+            } else {
+                appLog.error("Not ABle to Select Year: " + Year);
+            }
+
+        } catch (Exception e) {
+            flag = false;
+
+            log(LogStatus.ERROR, elementName + " Date is Not Selected", YesNo.No);
+            log(LogStatus.ERROR, e.getMessage(), YesNo.No);
+        }
+
+        return flag;
+
+    }
 }

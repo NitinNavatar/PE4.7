@@ -991,10 +991,11 @@ public class CommonVariables {
 		public static String PEFSTG_Tc009_FieldName,PEFSTG_TC011_FieldName,PEFSTG_TC012_FieldName,PEFSTG_TC015_FieldName;
 		
 		//Record type
-		public static String PEFSTG_Tc013_RecordType,PEFSTG_Tc014_RecordType;	
+		public static String PEFSTG_Tc013_RecordType,PEFSTG_Tc014_RecordType,PEFSTG_Tc020_RecordType,PEFSTG_Tc022_RecordType1,PEFSTG_Tc022_RecordType2,PEFSTG_Tc024_RecordType1,PEFSTG_Tc024_RecordType2,PEFSTG_Tc025_RecordType1,PEFSTG_Tc025_RecordType2;	
 		
 		//User Profile
-		public static String PEFSTG_Tc013_UserProfile,PEFSTG_Tc014_UserProfile ;	
+		public static String PEFSTG_Tc013_UserProfile,PEFSTG_Tc014_UserProfile ;
+
 
 		static FileInputStream dataFile = null;
 		static Workbook dataWb = null;
@@ -5494,6 +5495,15 @@ public class CommonVariables {
 			PEFSTGINS1_RecordType=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "PEFSTGINS1", excelLabel.Record_Type);
             PEFSTGINS1_Institution=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Entities",excelLabel.Variable_Name, "PEFSTGINS1", excelLabel.Institutions_Name);
 	        	
+            PEFSTG_Tc020_RecordType=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "PEFSTGTc0020_VerifyCustomActionsOnAdvisorRecordPage", excelLabel.Record_Type);
+            PEFSTG_Tc022_RecordType1=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "PEFSTGRECORD1", excelLabel.Record_Type);
+            PEFSTG_Tc022_RecordType2=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "PEFSTGTc0022_VerifyContactsTabOnAdvisorRecordPage", excelLabel.Record_Type);
+            PEFSTG_Tc024_RecordType1=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "PEFSTGRECORD2", excelLabel.Record_Type);
+            PEFSTG_Tc024_RecordType2=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "PEFSTGTc0024_VerifyPageRedirectionForTheClickableFieldsOnContactsAndAffiliationsGridOnContactsTab", excelLabel.Record_Type);
+            PEFSTG_Tc025_RecordType1=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "PEFSTGRECORD3", excelLabel.Record_Type);
+            PEFSTG_Tc025_RecordType2=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"FilePath",excelLabel.Variable_Name, "PEFSTGTc0025_VerifyInlineEditingForContactsAndAffiliationsGridOnContactsTab", excelLabel.Record_Type);
+            
+            
 			
 			try {
 				dataFile.close();
