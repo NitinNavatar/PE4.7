@@ -999,8 +999,15 @@ public class CommonVariables {
 
 		//Filter Conditions
 		public static String PEFSTGLV_1_FilterCondition,PEFSTGLV_2_FilterCondition,PEFSTGLV_3_FilterCondition;
+		
+		//Fields Name
+		public static String PEFSTGLV_1_FieldsName,PEFSTGLV_2_FieldsName,PEFSTGLV_3_FieldsName;
 
-
+		public static String PEFSTGEntities_1_InstitutionsName,PEFSTGEntities_1_RecordType;
+		
+		public static String PEFSTGContacts_1_FName,PEFSTGContacts_1_LName,PEFSTGContacts_1_EmailID;
+		
+		
 
 
 
@@ -5451,6 +5458,23 @@ public class CommonVariables {
 					"PEFSTGLV_2", excelLabel.Filter_Condition);
 			PEFSTGLV_3_FilterCondition = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
 					"PEFSTGLV_3", excelLabel.Filter_Condition);
+			
+			// Fields Name
+			PEFSTGLV_1_FieldsName = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
+					"PEFSTGLV_1", excelLabel.Fields_Name);
+			PEFSTGLV_2_FieldsName = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
+					"PEFSTGLV_2", excelLabel.Fields_Name);
+			PEFSTGLV_3_FieldsName = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "ListView", excelLabel.Variable_Name,
+					"PEFSTGLV_3", excelLabel.Fields_Name);
+			
+			PEFSTGEntities_1_InstitutionsName = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "Entities", excelLabel.Variable_Name,
+					"PEFSTGINS1", excelLabel.Institutions_Name);
+			PEFSTGEntities_1_RecordType = ExcelUtils.readData(dataWb, phase1DataSheetFilePath, "Entities", excelLabel.Variable_Name,
+					"PEFSTGINS1", excelLabel.Record_Type);
+			
+			PEFSTGContacts_1_FName=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "PEFSTGCON1", excelLabel.Contact_FirstName);
+			PEFSTGContacts_1_LName=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "PEFSTGCON1", excelLabel.Contact_LastName);
+			PEFSTGContacts_1_EmailID=ExcelUtils.readData(dataWb,phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "PEFSTGCON1", excelLabel.Contact_EmailId);
 	           
 			
 			

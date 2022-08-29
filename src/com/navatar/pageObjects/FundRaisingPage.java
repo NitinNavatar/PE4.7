@@ -378,5 +378,16 @@ public class FundRaisingPage extends BasePage {
 		}
 
 	}
+	
+	
+	
+	@FindBy(xpath = "//*[text()='Company']/following-sibling::div//input[@title='Search' or contains(@placeholder,'Search')]")
+	private WebElement companyName_Lighting;
+	public WebElement getCompanyName(String environment, String mode, int timeOut) {
+		
+			return isDisplayed(driver, companyName_Lighting, "Visibility", timeOut, "Company Name");
+		
+
+	}
 
 }

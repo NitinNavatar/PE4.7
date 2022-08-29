@@ -3,6 +3,7 @@ package com.navatar.pageObjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -755,14 +756,25 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 					String xpath = "//td//a//span[text()='" + layoutName + "']";
 					ele = FindElement(driver, xpath, layoutName, action.SCROLLANDBOOLEAN, timeOut);
-					ele = isDisplayed(driver, ele, "visibility", timeOut, layoutName);
 
-					if (click(driver, ele, layoutName, action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.PASS, "clicked on page layout:" + layoutName, YesNo.Yes);
-						flag = true;
-					} else {
-						log(LogStatus.ERROR, "could not click on layout :" + layoutName, YesNo.Yes);
-						return flag;
+					try {
+						ele = isDisplayed(driver, ele, "visibility", timeOut, layoutName);
+						if (click(driver, ele, layoutName, action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.PASS, "clicked on page layout:" + layoutName, YesNo.Yes);
+							flag = true;
+						} else {
+							log(LogStatus.ERROR, "could not click on layout :" + layoutName, YesNo.Yes);
+							return flag;
+						}
+					} catch (StaleElementReferenceException e) {
+						ele = isDisplayed(driver, ele, "visibility", timeOut, layoutName);
+						if (click(driver, ele, layoutName, action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.PASS, "clicked on page layout:" + layoutName, YesNo.Yes);
+							flag = true;
+						} else {
+							log(LogStatus.ERROR, "could not click on layout :" + layoutName, YesNo.Yes);
+							return flag;
+						}
 					}
 
 				} else {
@@ -4871,29 +4883,26 @@ public class SetupPageBusinessLayer extends SetupPage {
 					ele = FindElement(driver, xpath, OnObject + " with permission " + permission,
 							action.SCROLLANDBOOLEAN, timeOut);
 					CommonLib.ThreadSleep(4000);
-					String checked = CommonLib.getAttribute(driver, ele, "CheckBox", "checked"); 
-					if(!"true".equals(checked))
-					{
-					if (clickUsingJavaScript(driver, ele, OnObject + " with permission " + permission,
-							action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "clicked on checkbox " + permission + " for " + OnObject, YesNo.No);
-						CommonLib.ThreadSleep(4000);
+					String checked = CommonLib.getAttribute(driver, ele, "CheckBox", "checked");
+					if (!"true".equals(checked)) {
+						if (clickUsingJavaScript(driver, ele, OnObject + " with permission " + permission,
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on checkbox " + permission + " for " + OnObject, YesNo.No);
+							CommonLib.ThreadSleep(4000);
 
+						} else {
+							log(LogStatus.ERROR, "Not Able clicked on checkbox " + permission + " for " + OnObject,
+									YesNo.Yes);
+							sa.assertTrue(false,
+									permission + " permission not change for " + userName + " on object " + OnObject);
+							log(LogStatus.FAIL,
+									permission + " permission not change for " + userName + " on object " + OnObject,
+									YesNo.Yes);
+
+						}
 					} else {
-						log(LogStatus.ERROR, "Not Able clicked on checkbox " + permission + " for " + OnObject,
-								YesNo.Yes);
-						sa.assertTrue(false,
-								permission + " permission not change for " + userName + " on object " + OnObject);
-						log(LogStatus.FAIL,
-								permission + " permission not change for " + userName + " on object " + OnObject,
-								YesNo.Yes);
-
-					}
-					}
-					else
-					{
-						log(LogStatus.INFO, "Not clicked on checkbox " + permission + " for " + OnObject+" as it is already Checked",
-								YesNo.No);
+						log(LogStatus.INFO, "Not clicked on checkbox " + permission + " for " + OnObject
+								+ " as it is already Checked", YesNo.No);
 					}
 
 				}
@@ -4922,114 +4931,320 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return flag;
 	}
 
-   
+	public ArrayList<String> verifyDescriptionOnFirm(ArrayList<String> recordName, ArrayList<String> des) {
+		String xPath = "";
+		WebElement ele;
+		ArrayList<String> Description = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<String>();
 
-   public ArrayList<String> verifyDescriptionOnFirm( ArrayList<String> recordName,ArrayList<String> des)
-   {
-	   String xPath="";
-	   WebElement ele;
-	   ArrayList<String> Description=new ArrayList<String>();
-	   ArrayList<String> result=new ArrayList<String>();
+		for (int i = 0; i < des.size() - 1; i++) {
+			xPath = "//section[@class='related-list-card']//tbody//span[text()='" + recordName.get(i)
+					+ "']/ancestor::td/following-sibling::td[1]//span";
+			ele = CommonLib.FindElement(driver, xPath, recordName.get(i) + " description", action.SCROLLANDBOOLEAN, 50);
+			String text = CommonLib.getText(driver, ele, recordName.get(i) + " description : ",
+					action.SCROLLANDBOOLEAN);
+			Description.add(text);
+		}
 
-	   for(int i=0;i<des.size()-1;i++)
-	   {
-		   xPath="//section[@class='related-list-card']//tbody//span[text()='"+recordName.get(i)+"']/ancestor::td/following-sibling::td[1]//span"; 
-		   ele=CommonLib.FindElement(driver, xPath, recordName.get(i)+" description", action.SCROLLANDBOOLEAN, 50);
-		   String text=CommonLib.getText(driver, ele, recordName.get(i)+" description : ", action.SCROLLANDBOOLEAN);
-		   Description.add(text);
-	   }	
+		for (int i = 0; i < des.size() - 1; i++) {
 
-	   for(int i=0;i<des.size()-1;i++)
-	   {
+			if (Description.get(i).equals(des.get(i))) {
+				log(LogStatus.INFO, "Description \"" + des.get(i) + "\" has been verified", YesNo.No);
+			} else {
+				log(LogStatus.ERROR,
+						"Description \"" + des.get(i) + "\"  is not matched with the \"" + Description.get(i) + "\"",
+						YesNo.Yes);
+				result.add(
+						"Description \"" + des.get(i) + "\"  is not matched with the \"" + Description.get(i) + "\"");
+			}
+		}
 
-		   if(Description.get(i).equals(des.get(i)) )
-		   {
-			   log(LogStatus.INFO, "Description \""+des.get(i)+"\" has been verified", YesNo.No);
-		   }
-		   else
-		   {
-			   log(LogStatus.ERROR, "Description \""+des.get(i)+ "\"  is not matched with the \""+Description.get(i)+ "\"", YesNo.Yes);
-			   result.add("Description \""+des.get(i)+ "\"  is not matched with the \""+Description.get(i)+ "\"");
-		   }
-	   }
+		return result;
+	}
 
-	   return result;
-   }
-   
-   public boolean VerifyDefaultRecordTypeForObject(String profileName,String recordTypeName)
-   {
-	   boolean flag=false;
-	   String xPath="";
-	   WebElement ele=null;
-	   ThreadSleep(5000);
-	   if(CommonLib.switchToFrame(driver, 50, getuserProfileIframe(50)))
-	   {
-		   ThreadSleep(5000);
-		   log(LogStatus.INFO, "Successfully switched to User Profile Iframe", YesNo.No);	
-		   xPath="//div[@class='bRelatedList']//a[text()='"+profileName+"']";
-		   ele=CommonLib.FindElement(driver, xPath, profileName+" profile name", action.SCROLLANDBOOLEAN, 50);
-		   if(CommonLib.clickUsingJavaScript(driver, ele, profileName+" profile name", action.BOOLEAN))
-		   {
-			   log(LogStatus.INFO, "Successfully clicked on the "+profileName+" profile name", YesNo.No);
-			   ThreadSleep(12000);
-			   CommonLib.switchToDefaultContent(driver);
-			   ThreadSleep(2000);
-			   if(CommonLib.switchToFrame(driver, 50, getProfileIframe(50)))
-			   {
-				   ThreadSleep(12000);
-				   log(LogStatus.INFO, "Successfully switched to Profile Iframe", YesNo.No);
-				   if(CommonLib.clickUsingJavaScript(driver, getRecordTypeEditButton(50), "Record type edit button", action.BOOLEAN))
-				   {
-					   log(LogStatus.INFO, "Successfully click on record type edit button", YesNo.No);
-					   ThreadSleep(12000);
-					   CommonLib.switchToDefaultContent(driver);
-					   ThreadSleep(2000);
-					   if(CommonLib.switchToFrame(driver, 50, geteditRecordTypeIframe(50)))
-					   {
-						   ThreadSleep(12000);
-						   log(LogStatus.INFO, "Successfully switched to Profile Iframe", YesNo.No);
-						   
-						  String text= CommonLib.getText(driver, getdefaultRecordType(50), "default record type", action.SCROLLANDBOOLEAN);
-						  if(text.equals(recordTypeName))
-						  {
-							  log(LogStatus.INFO, "Default record company has been verified", YesNo.No);
-							  flag=true;
-						  }
-						  else
-						  {
-							  log(LogStatus.ERROR, "Default record company is not verified", YesNo.Yes);
-						  }
-					   }
-					   else
-					   {
-						   log(LogStatus.ERROR,  "Not able to switched to edit record Iframe", YesNo.Yes);
-					   }
-					   
-				   }
-				   else
-				   {
-					   log(LogStatus.ERROR, "Not able to click on the record type edit button", YesNo.Yes); 
-				   }
-				
-			   }
-			   else
-			   {
-				   log(LogStatus.ERROR, "Not able to switched to Profile Iframe", YesNo.Yes);
-			   }
-			   
-		   }
-		   else
-		   {
-			   log(LogStatus.ERROR, "Not able to click on the "+profileName+" profile name", YesNo.Yes);
-		   }
-	   }
-	   else
-	   {
-		   log(LogStatus.ERROR, "Not able to switched to User profile Iframe", YesNo.Yes);
-	   }
-	   
-	return flag;
-	   
-   }
-   
+	public boolean VerifyDefaultRecordTypeForObject(String profileName, String recordTypeName) {
+		boolean flag = false;
+		String xPath = "";
+		WebElement ele = null;
+		ThreadSleep(5000);
+		if (CommonLib.switchToFrame(driver, 50, getuserProfileIframe(50))) {
+			ThreadSleep(5000);
+			log(LogStatus.INFO, "Successfully switched to User Profile Iframe", YesNo.No);
+			xPath = "//div[@class='bRelatedList']//a[text()='" + profileName + "']";
+			ele = CommonLib.FindElement(driver, xPath, profileName + " profile name", action.SCROLLANDBOOLEAN, 50);
+			if (CommonLib.clickUsingJavaScript(driver, ele, profileName + " profile name", action.BOOLEAN)) {
+				log(LogStatus.INFO, "Successfully clicked on the " + profileName + " profile name", YesNo.No);
+				ThreadSleep(12000);
+				CommonLib.switchToDefaultContent(driver);
+				ThreadSleep(2000);
+				if (CommonLib.switchToFrame(driver, 50, getProfileIframe(50))) {
+					ThreadSleep(12000);
+					log(LogStatus.INFO, "Successfully switched to Profile Iframe", YesNo.No);
+					if (CommonLib.clickUsingJavaScript(driver, getRecordTypeEditButton(50), "Record type edit button",
+							action.BOOLEAN)) {
+						log(LogStatus.INFO, "Successfully click on record type edit button", YesNo.No);
+						ThreadSleep(12000);
+						CommonLib.switchToDefaultContent(driver);
+						ThreadSleep(2000);
+						if (CommonLib.switchToFrame(driver, 50, geteditRecordTypeIframe(50))) {
+							ThreadSleep(12000);
+							log(LogStatus.INFO, "Successfully switched to Profile Iframe", YesNo.No);
+
+							String text = CommonLib.getText(driver, getdefaultRecordType(50), "default record type",
+									action.SCROLLANDBOOLEAN);
+							if (text.equals(recordTypeName)) {
+								log(LogStatus.INFO, "Default record company has been verified", YesNo.No);
+								flag = true;
+							} else {
+								log(LogStatus.ERROR, "Default record company is not verified", YesNo.Yes);
+							}
+						} else {
+							log(LogStatus.ERROR, "Not able to switched to edit record Iframe", YesNo.Yes);
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Not able to click on the record type edit button", YesNo.Yes);
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not able to switched to Profile Iframe", YesNo.Yes);
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to click on the " + profileName + " profile name", YesNo.Yes);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to switched to User profile Iframe", YesNo.Yes);
+		}
+
+		return flag;
+
+	}
+
+	/**
+	 * @author Sourabh Kumar
+	 * @param layoutName
+	 * @param timeout
+	 * @return empty list if all field matched in page layout
+	 */
+	public List<String> verifyFieldsAvailabilityAndNonAvailabilityOnPageLayout(String sectionsInPageLayout,
+			String PageLayouts, String fieldsAlreadyAddedLayoutWise, String fieldsNotAlreadyAddedLayoutWise,
+			int timeOut) {
+		List<String> result = new ArrayList<>();
+
+		String layoutName = "";
+		String fieldName = "";
+		String[] sectionsInPageLayoutList = sectionsInPageLayout.split("<break>");
+		String[] PageLayoutsList = PageLayouts.split("<break>");
+		String[] fieldsAlreadyAddedLayoutWiseList = fieldsAlreadyAddedLayoutWise.split("<break>");
+		String[] fieldsNotAlreadyAddedLayoutWiseList = fieldsNotAlreadyAddedLayoutWise.split("<break>");
+
+		String[] fieldAdded;
+		String[] fieldNotAdded;
+
+		if (sectionsInPageLayoutList.length == PageLayoutsList.length
+				&& PageLayoutsList.length == fieldsAlreadyAddedLayoutWiseList.length
+				&& fieldsAlreadyAddedLayoutWiseList.length == fieldsNotAlreadyAddedLayoutWiseList.length) {
+			log(LogStatus.INFO, "Expected Data Size Matched: " + sectionsInPageLayoutList.length
+					+ " So, Going for Further Process of Validations", YesNo.No);
+
+			for (int a = 0; a < PageLayoutsList.length; a++) {
+
+				layoutName = PageLayoutsList[a];
+				fieldAdded = fieldsAlreadyAddedLayoutWiseList[a].split("<fieldAdded>");
+				fieldNotAdded = fieldsNotAlreadyAddedLayoutWiseList[a].split("<fieldNotAdded>");
+
+				if (openAlreadyCreatedPageLayout(layoutName, ObjectFeatureName.pageLayouts, 60)) {
+					log(LogStatus.PASS, "Successfully Open page layout :" + layoutName, YesNo.No);
+
+					ThreadSleep(5000);
+					switchToFrame(driver, 60, getSetUpPageIframe(120));
+					CommonLib.ThreadSleep(10000);
+					if (clickUsingJavaScript(driver, sectionInPageLayoutButton(sectionsInPageLayoutList[a], 20),
+							"Section in Page Layout: " + sectionsInPageLayoutList[a], action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on section: " + sectionsInPageLayoutList[a]
+								+ " in the page layout :" + layoutName, YesNo.No);
+						CommonLib.ThreadSleep(3000);
+
+						if (fieldAdded.length != 1 && !fieldAdded[0].equals("")) {
+							for (int i = 0; i < fieldAdded.length; i++) {
+
+								fieldName = fieldAdded[i];
+
+								if (sendKeysAndPressEnter(driver, getQuickFindInPageLayout_Lighting(timeOut), fieldName,
+										fieldName + " field", action.BOOLEAN)) {
+									ThreadSleep(1000);
+									List<WebElement> lst = getFieldsInPageLayoutList();
+									List<WebElement> lst2 = FindElements(driver,
+											"//div[@id='fieldTrough']//div[contains(@class,'item')]/span", "");
+									int size = lst.size();
+									for (int b = 0; b < size; b++) {
+										String at = lst.get(b).getAttribute("class");
+										String at2 = lst2.get(b).getText().replace("...", "");
+
+										if (fieldName.contains(at2)) {
+
+											log(LogStatus.PASS, fieldName
+													+ " field successfully found in the page layout :" + layoutName,
+													YesNo.No);
+
+											if (!at.contains("item unused")) {
+
+												log(LogStatus.PASS, fieldName
+														+ " is enable/present in the page layout :" + layoutName,
+														YesNo.No);
+
+											} else {
+												log(LogStatus.FAIL, fieldName + " Field not enable in the page layout :"
+														+ layoutName, YesNo.No);
+												result.add(fieldName + " Field not enable in the page layout :"
+														+ layoutName);
+
+											}
+											break;
+
+										} else {
+											if (b == size - 1) {
+
+												log(LogStatus.FAIL, fieldName + " field  not found in the page layout :"
+														+ layoutName, YesNo.No);
+												result.add(fieldName + " field not found in the page layout :"
+														+ layoutName);
+
+											}
+
+										}
+
+									}
+
+								} else {
+									log(LogStatus.FAIL,
+											"Not able to search field: " + fieldName + " in quick find input",
+											YesNo.No);
+									result.add("Not able to search field: " + fieldName + " in quick find input");
+
+								}
+
+							}
+						} else {
+							log(LogStatus.ERROR,
+									"No data present in case of Field Already Added for Layout: " + layoutName,
+									YesNo.No);
+
+						}
+
+						if (fieldNotAdded.length != 1 && !fieldNotAdded[0].equals("")) {
+							for (int i = 0; i < fieldNotAdded.length; i++) {
+
+								fieldName = fieldNotAdded[i];
+
+								if (sendKeysAndPressEnter(driver, getQuickFindInPageLayout_Lighting(timeOut), fieldName,
+										fieldName + " field", action.BOOLEAN)) {
+									ThreadSleep(1000);
+									List<WebElement> lst = getFieldsInPageLayoutList();
+									List<WebElement> lst2 = FindElements(driver,
+											"//div[@id='fieldTrough']//div[contains(@class,'item')]/span", "");
+									int size = lst.size();
+									for (int b = 0; b < size; b++) {
+										String at = lst.get(b).getAttribute("class");
+										String at2 = lst2.get(b).getText().replace("...", "");
+
+										if (fieldName.contains(at2)) {
+
+											log(LogStatus.PASS, fieldName
+													+ " field successfully found in the page layout :" + layoutName,
+													YesNo.No);
+
+											if (!at.contains("item unused")) {
+
+												log(LogStatus.FAIL, fieldName
+														+ " is enable/present in the page layout :" + layoutName,
+														YesNo.No);
+												result.add(fieldName + " is enable/present in the page layout :"
+														+ layoutName);
+
+											} else {
+												log(LogStatus.PASS, fieldName + " Field not enable in the page layout :"
+														+ layoutName, YesNo.No);
+
+											}
+											break;
+
+										} else {
+											if (b == size - 1) {
+
+												log(LogStatus.FAIL, fieldName + " field  not found in the page layout :"
+														+ layoutName, YesNo.No);
+												result.add(fieldName + " field not found in the page layout :"
+														+ layoutName);
+
+											}
+
+										}
+
+									}
+
+								} else {
+									log(LogStatus.FAIL,
+											"Not able to search field: " + fieldName + " in quick find input",
+											YesNo.No);
+									result.add("Not able to search field: " + fieldName + " in quick find input");
+
+								}
+
+							}
+						} else {
+							log(LogStatus.ERROR,
+									"No data present in case of Field Not Already Added for Layout: " + layoutName,
+									YesNo.No);
+
+						}
+
+						if (fieldNotAdded.length == 1 && fieldNotAdded[0].equals("") && fieldAdded.length == 1
+								&& fieldAdded[0].equals("")) {
+							log(LogStatus.ERROR,
+									"No data present in Both case of Field Not Already Added & Field Already Added for Layout: "
+											+ layoutName,
+									YesNo.No);
+							result.add(
+									"No data present in Both case of Field Not Already Added & Field Already Added for Layout: "
+											+ layoutName);
+						}
+
+					}
+
+					else {
+						log(LogStatus.ERROR, "Not Able  to Click on section: " + sectionsInPageLayoutList[a]
+								+ " in the page layout :" + layoutName, YesNo.No);
+						result.add("Not Able  to Click on section: " + sectionsInPageLayoutList[a]
+								+ " in the page layout :" + layoutName);
+
+					}
+
+				} else {
+					log(LogStatus.FAIL, "Not able to Open page layout :" + layoutName, YesNo.No);
+					result.add("Not able to Open page layout :" + layoutName);
+
+				}
+				switchToDefaultContent(driver);
+
+			}
+		} else {
+
+			log(LogStatus.INFO,
+					"Expected Data Size Not Matched, sectionsInPageLayoutList: " + sectionsInPageLayoutList.length
+							+ " , PageLayouts: " + PageLayouts.length() + ", FieldsAlreadyAddedLayoutWise : "
+							+ fieldsAlreadyAddedLayoutWise.length() + ", fieldsNotAlreadyAddedLayoutWise : "
+							+ fieldsNotAlreadyAddedLayoutWise.length()
+							+ " So, Not Going for Further Process of Validations",
+					YesNo.No);
+
+			result.add("Expected Data Size Not Matched, sectionsInPageLayoutList: " + sectionsInPageLayoutList.length
+					+ " , PageLayouts: " + PageLayouts.length() + ", FieldsAlreadyAddedLayoutWise : "
+					+ fieldsAlreadyAddedLayoutWise.length() + ", fieldsNotAlreadyAddedLayoutWise : "
+					+ fieldsNotAlreadyAddedLayoutWise.length() + " So, Not Going for Further Process of Validations");
+		}
+		return result;
+	}
+
 }

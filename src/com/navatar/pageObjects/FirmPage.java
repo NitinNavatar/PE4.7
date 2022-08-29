@@ -49,21 +49,21 @@ public class FirmPage extends BasePageBusinessLayer{
 		return isDisplayed(driver, scopeLabelFilter, "Visibility", timeOut, "scope lebel filter");
 	}
 	
-	@FindBy(xpath="//div[@id='filterPanelFieldCriterion0']//div[@class='fieldLabel']")
+	@FindBy(xpath="//span[@class='filterInfoWrapper']//span[@class='fieldLabel']")
     private WebElement filterFieldLabel;
 	
 	public WebElement getfilterFieldLabel(int timeOut) {
 		return isDisplayed(driver, filterFieldLabel, "Visibility", timeOut, "filter field label");
 	}
 	
-	@FindBy(xpath="//div[@id='filterPanelFieldCriterion0']//span[@class='test-operatorWrapper']")
+	@FindBy(xpath="//span[@class='operatorAndOperand']/span[1]")
     private WebElement filterOperator;
 	
 	public WebElement getfilterOperator(int timeOut) {
 		return isDisplayed(driver, filterOperator, "Visibility", timeOut, "filter Operator");
 	}
 	
-	@FindBy(xpath="//div[@id='filterPanelFieldCriterion0']//span[@class='test-operandsWrapper']")
+	@FindBy(xpath="//span[@class='operatorAndOperand']//span[@class='uiOutputText']")
     private WebElement filterOperand;
 	
 	public WebElement getfilterOperand(int timeOut) {

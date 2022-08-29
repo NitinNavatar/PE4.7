@@ -147,9 +147,9 @@ public class FirmPageBusinessLayer extends FirmPage{
 								result.add(scopeLabelFilter+ " is not visible in the Filter by Owner");
 							}
 							
-						    filterFiled=field[i].split("<FieldBreak>");
-						    fOperator=Operator[i].split("<OperatorBreak>");
-						    FOperand=filterValue[i].split("<valueBreak>");
+						    filterFiled=field[i].split("<FieldBreak>",-1);
+						    fOperator=Operator[i].split("<OperatorBreak>",-1);
+						    FOperand=filterValue[i].split("<valueBreak>",-1);
 					    
 						    if(filterFiled.length==1)
 						    {

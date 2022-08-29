@@ -203,8 +203,7 @@ public class ContactsPage extends BasePageBusinessLayer {
 
 	}
 
-	
-	@FindBy(xpath="//input[@title='Search Office Locations...' or @placeholder='Search Office Locations...']")
+	@FindBy(xpath = "//input[@title='Search Office Locations...' or @placeholder='Search Office Locations...']")
 
 	private WebElement officeLocationTextBox_Lighting;
 
@@ -611,4 +610,353 @@ public class ContactsPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, nextMonthButtonInDatePicker, "Visibility", timeOut, "nextMonthButtonInDatePicker");
 
 	}
+
+	public WebElement getContactFullNameEle(String contactFullName, int timeOut) {
+
+		return FindElement(driver, "//*[text()='Contact']/following-sibling::*//*[text()='" + contactFullName + "']",
+				"Contact Name Text", action.SCROLLANDBOOLEAN, timeOut);
+
+	}
+
+	@FindBy(xpath = "//a[text()='RamPal Yadav']")
+	private WebElement RamPalYadavContact;
+
+	public WebElement RamPalYadavContact(int timeOut) {
+		return isDisplayed(driver, RamPalYadavContact, "Visibility", timeOut, "RamPalYadavContact");
+
+	}
+
+	@FindBy(xpath = "//a[text()='Connections']")
+	private WebElement Connections;
+
+	public WebElement Connections(int timeOut) {
+		return isDisplayed(driver, Connections, "Visibility", timeOut, "Connections");
+
+	}
+
+	public WebElement ConnectionsTab(String connectionsTab, int timeOut) {
+
+		String xpath = "//a[text()='" + connectionsTab + "']";
+
+		try {
+			return isDisplayed(driver, FindElement(driver, xpath, connectionsTab, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, connectionsTab);
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, FindElement(driver, xpath, connectionsTab, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, connectionsTab);
+		}
+	}
+
+	public List<WebElement> getSDGColumns(String TitleOfSDG) {
+		String xpath = "//h2/span/a[text()='" + TitleOfSDG
+				+ "']/../../../../../following-sibling::div/div/following-sibling::div//tr/th/following-sibling::th//span";
+		List<WebElement> sdgColumns = FindElements(driver, xpath, "Fund First SDG Columns");
+		return sdgColumns;
+	}
+
+	public WebElement buttonInMainContactPage(String buttonName, int timeOut) {
+		String xpath = "//div[contains(@class,'primaryFieldRow')]//button[text()='" + buttonName + "']";
+
+		try {
+			return FindElement(driver, xpath, "buttonInMainContactPage: " + buttonName, action.SCROLLANDBOOLEAN,
+					timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "buttonInMainContactPage: " + buttonName, action.SCROLLANDBOOLEAN,
+					timeOut);
+		}
+	}
+
+	public WebElement activityTimelineTab(String tabName, int timeOut) {
+		String xpath = "//div[contains(@class,'region-sidebar-right')]//div[@class='uiTabBar']//li[contains(@class,'uiTabItem')]/a/span[2][text()='"
+				+ tabName + "']/parent::a";
+
+		try {
+			return FindElement(driver, xpath, "activityTimelineTab: " + tabName, action.SCROLLANDBOOLEAN, timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "activityTimelineTab: " + tabName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+
+	@FindBy(xpath = "//div[contains(@class,'dummyControlsContainer')]/button[@title='Add']")
+	private WebElement addTaskButtonInActivityTimeline;
+
+	public WebElement addTaskButtonInActivityTimeline(int timeOut) {
+		return isDisplayed(driver, addTaskButtonInActivityTimeline, "Visibility", timeOut, "Connections");
+
+	}
+
+	public WebElement activityTimelineSearchDropDown(String labelTextBox, int timeOut) {
+		String xpath = "//label[text()='" + labelTextBox + "']/..//input";
+
+		try {
+			return FindElement(driver, xpath, "activityTimelineSearchDropDown: " + labelTextBox,
+					action.SCROLLANDBOOLEAN, timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "activityTimelineSearchDropDown: " + labelTextBox,
+					action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+
+	public WebElement activityTimelineSmallDropDownInDoubleDropDown(String tab, String labelTextBox, int timeOut) {
+		String xpath = "//span[text()='" + labelTextBox
+				+ "']/parent::label/following-sibling::div/div/div/div[contains(@class,'uiMenu')]//a";
+
+		String xpathEmail = "//span[text()='" + labelTextBox
+				+ "']/parent::label/parent::div/div//div[contains(@class,'inputWrapper')]/div[contains(@class,'entityMenu')]//a";
+
+		if (tab.equalsIgnoreCase("Email"))
+
+		{
+			try {
+				return FindElement(driver, xpathEmail, "activityTimelineSmallDropDownInDoubleDropDown: " + labelTextBox,
+						action.SCROLLANDBOOLEAN, timeOut);
+
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpathEmail, "activityTimelineSmallDropDownInDoubleDropDown: " + labelTextBox,
+						action.SCROLLANDBOOLEAN, timeOut);
+			}
+		} else {
+			try {
+				return FindElement(driver, xpath, "activityTimelineSmallDropDownInDoubleDropDown: " + labelTextBox,
+						action.SCROLLANDBOOLEAN, timeOut);
+
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpath, "activityTimelineSmallDropDownInDoubleDropDown: " + labelTextBox,
+						action.SCROLLANDBOOLEAN, timeOut);
+			}
+		}
+	}
+
+	public WebElement activityTimelineSearchDropDownInDoubleDropDown(String tab, String labelTextBox, int timeOut) {
+		String xpath = "//span[text()='" + labelTextBox
+				+ "']/parent::label/following-sibling::div/div/div/div[contains(@class,'autocompleteWrapper')]/input";
+
+		String xpathEmail = "//span[text()='" + labelTextBox
+				+ "']/parent::label/parent::div/div//div[contains(@class,'inputWrapper')]/div[contains(@class,'autocompleteWrapper')]/input";
+
+		if (tab.equalsIgnoreCase("Email")) {
+			try {
+				return FindElement(driver, xpathEmail,
+						"activityTimelineSearchDropDownInDoubleDropDown: " + labelTextBox, action.SCROLLANDBOOLEAN,
+						timeOut);
+
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpathEmail,
+						"activityTimelineSearchDropDownInDoubleDropDown: " + labelTextBox, action.SCROLLANDBOOLEAN,
+						timeOut);
+			}
+		} else {
+
+			try {
+				return FindElement(driver, xpath, "activityTimelineSearchDropDownInDoubleDropDown: " + labelTextBox,
+						action.SCROLLANDBOOLEAN, timeOut);
+
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpath, "activityTimelineSearchDropDownInDoubleDropDown: " + labelTextBox,
+						action.SCROLLANDBOOLEAN, timeOut);
+			}
+		}
+	}
+
+	public WebElement activityTimelineDropDownElement(String labelTextBox, int timeOut) {
+		String xpath = "//span[text()='" + labelTextBox + "']/parent::span/following-sibling::div/div/div//a";
+
+		try {
+			return FindElement(driver, xpath, "activityTimelineDropDownElement: " + labelTextBox,
+					action.SCROLLANDBOOLEAN, timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "activityTimelineDropDownElement: " + labelTextBox,
+					action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+
+	public WebElement activityTimelineTextBoxElement(String labelTextBox, int timeOut) {
+		String xpath = "//span[text()='" + labelTextBox + "']/parent::label/following-sibling::input";
+
+		try {
+			return FindElement(driver, xpath, "activityTimelineTextBoxElement: " + labelTextBox,
+					action.SCROLLANDBOOLEAN, timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "activityTimelineTextBoxElement: " + labelTextBox,
+					action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+
+	public WebElement activityTimelineDateElement(String label, String subLabel, int timeOut) {
+		String xpath = "//legend[text()=\"" + label + "\"]/parent::fieldset//label[text()=\"" + subLabel
+				+ "\"]/parent::div/div/input";
+
+		try {
+			return FindElement(driver, xpath, "activityTimelineDateTimeElement: " + label + " & " + subLabel,
+					action.SCROLLANDBOOLEAN, timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "activityTimelineDateTimeElement: " + label + " & " + subLabel,
+					action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+
+	public WebElement activityTimelineTimeElement(String label, String subLabel, int timeOut) {
+		String xpath = "//legend[text()=\"" + label + "\"]/parent::fieldset//label[text()=\"" + subLabel
+				+ "\"]/parent::lightning-timepicker//div/input";
+
+		try {
+			return FindElement(driver, xpath, "activityTimelineDateTimeElement: " + label + " & " + subLabel,
+					action.SCROLLANDBOOLEAN, timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "activityTimelineDateTimeElement: " + label + " & " + subLabel,
+					action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+
+	@FindBy(xpath = "//*[@title='Save' or text()='Save']")
+	private WebElement save_Lightning;
+
+	public WebElement getCustomTabSaveBtn(int timeOut) {
+		List<WebElement> eleList = FindElements(driver, "//*[@title='Save' or text()='Save']", "Save Button");
+		for (WebElement webElement : eleList) {
+			webElement = isDisplayed(driver, webElement, "Visibility", 2, "Custom Tab Save Button lightning");
+			if (webElement != null) {
+				return webElement;
+			} else {
+
+			}
+		}
+		return isDisplayed(driver, save_Lightning, "Visibility", timeOut, "Custom Tab Save Button lightning");
+
+	}
+
+	@FindBy(xpath = "//span[text()='Send']/parent::button")
+	private WebElement sendButtonInActivityTimeline;
+
+	public WebElement sendButtonInActivityTimeline(int timeOut) {
+		return isDisplayed(driver, sendButtonInActivityTimeline, "Visibility", timeOut, "Connections");
+
+	}
+
+	@FindBy(xpath = "//span[text()='Email sent.']")
+	private WebElement emailSentMsg;
+
+	public WebElement emailSentMsg(int timeOut) {
+		return isDisplayed(driver, emailSentMsg, "Visibility", timeOut, "emailSentMsg");
+
+	}
+
+	@FindBy(xpath = "//span[contains(@class,'toastMessage slds-text-heading--small')]")
+	private WebElement ActivityTimeLineCreatedMsg;
+
+	public WebElement ActivityTimeLineCreatedMsg(int timeOut) {
+		return isDisplayed(driver, ActivityTimeLineCreatedMsg, "Visibility", timeOut, "ActivityTimeLineCreatedMsg");
+
+	}
+
+	public WebElement transferContactLegalNameSearchBtn(int timeOut) {
+		String xpath = "//img[contains(@title,'Legal Name')]/parent::a";
+
+		try {
+			return FindElement(driver, xpath, "transferContactLegalNameSearchBtn: ", action.SCROLLANDBOOLEAN, timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "transferContactLegalNameSearchBtn: ", action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+
+	public WebElement transferContactLegalNameInNewWindowAndFrame(String legalName, int timeOut) {
+		String xpath = "//tbody/tr[contains(@class,'dataRow')]/th/a[text()='" + legalName + "']";
+
+		try {
+			return FindElement(driver, xpath, "transferContactLegalNameInNewWindowAndFrame: " + legalName,
+					action.SCROLLANDBOOLEAN, timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "transferContactLegalNameInNewWindowAndFrame: " + legalName,
+					action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+
+	public WebElement transferContactIFrame(int timeOut) {
+		String xpath = "//div[contains(@class,'slds-template_iframe')]//iframe[@title='accessibility title']";
+
+		try {
+			return FindElement(driver, xpath, "transferContactIFrame: ", action.SCROLLANDBOOLEAN, timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "transferContactIFrame: ", action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+
+	public List<WebElement> sdgGridColumnData(String Title, int ColumnIndex) {
+		// index start from 2 in Deal SDG grid.
+
+		String xpath = "//h2/span/a[text()='" + Title
+				+ "']/../../../../../following-sibling::div/div/following-sibling::div//tbody/tr/td[" + ColumnIndex
+				+ "]/span/span[1]";
+
+		List<WebElement> sdgColumnData = FindElements(driver, xpath, "SDG grid " + Title + " column data ");
+
+		return sdgColumnData;
+	}
+
+	public WebElement sdgGridColumnsDataRowWise(String Title, int CloumnIndex, int RowIndex) {
+		// index start from 2 in Deal SDG grid.
+
+		String xpath = "//h2/span/a[text()='" + Title
+				+ "']/../../../../../following-sibling::div/div/following-sibling::div//tbody/tr[" + RowIndex + "]/td["
+				+ CloumnIndex + "]/span/span[1]";
+
+		WebElement ele = FindElement(driver, xpath, "SDG grid " + Title + " column data ", action.SCROLLANDBOOLEAN, 30);
+
+		return ele;
+	}
+
+	public WebElement contactTransferConfirmButton(String buttonText, int timeOut) {
+
+		String xpath = "//div[@class='slds-modal__footer']/input[@value='" + buttonText + "']";
+
+		WebElement ele = FindElement(driver, xpath, "Confirm Button " + buttonText, action.SCROLLANDBOOLEAN, timeOut);
+
+		return ele;
+	}
+
+	public WebElement buttonCorrespondToRecordInSDG(String SDGName, String ButtonName, int timeOut) {
+
+		String xpath = "//article//a[text()='" + SDGName + "']/ancestor::article//button[text()='" + ButtonName + "']";
+
+		WebElement ele = FindElement(driver, xpath, "Button " + ButtonName, action.SCROLLANDBOOLEAN, timeOut);
+
+		return ele;
+	}
+
+	public WebElement sdgGridColumnsDataLinkRowWise(String Title, int CloumnIndex, int RowIndex) {
+		// index start from 2 in Deal SDG grid.
+
+		String xpath = "//h2/span/a[text()='" + Title
+				+ "']/../../../../../following-sibling::div/div/following-sibling::div//tbody/tr[" + RowIndex + "]/td["
+				+ CloumnIndex + "]/span/span[1]//a";
+
+		WebElement ele = FindElement(driver, xpath, "SDG grid " + Title + " column data ", action.SCROLLANDBOOLEAN, 30);
+
+		return ele;
+	}
+
+	@FindBy(xpath = "//button[@title='Edit Tier']")
+	private WebElement EditTierButton;
+
+	public WebElement getEditTierButton(int timeOut) {
+		return isDisplayed(driver, EditTierButton, "Visibility", timeOut, "EditTierButton");
+	}
+
+	@FindBy(xpath = "//label[text()='Tier']/parent::lightning-combobox//button")
+	private WebElement TierDropdown;
+
+	public WebElement getTierDropdown(int timeOut) {
+		return isDisplayed(driver, TierDropdown, "Visibility", timeOut, "TierDropdown");
+	}
+
 }
