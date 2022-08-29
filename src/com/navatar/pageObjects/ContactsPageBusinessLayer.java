@@ -2,6 +2,7 @@ package com.navatar.pageObjects;
 
 import static com.navatar.generic.AppListeners.appLog;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -1397,6 +1398,38 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		}
 		return flag;
 
+	}
+	
+	
+	public boolean CreateNewContactFromTab(String projectName,ArrayList<String> labelName,ArrayList<String> value,ArrayList<String> inputType)
+	{
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		boolean flag=false;
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		if(CommonLib.clickUsingJavaScript(driver, getContactTab(50), "Contact tab", action.SCROLLANDBOOLEAN))
+		{
+			appLog.info("Clicked on contact tab");
+			
+			if(BP.createNewRecordThroughSDG(projectName, "Contacts", "New Contact", labelName, value, inputType, 50))
+			{
+				log(LogStatus.PASS, "New Fundraising Contact has been created", YesNo.No);
+				sa.assertTrue(true, "New Fundraising Contact has been created");
+				flag=true;
+			}
+			else
+			{
+				log(LogStatus.FAIL, "New Fundraising Contact is not created", YesNo.No);
+				sa.assertTrue(false, "New Fundraising Contact is not created");
+			}
+			
+		}
+		else
+		{
+			appLog.error("Not able to click on fundraising contact tab");
+		}
+		return flag;
+		
 	}
 
 }

@@ -611,4 +611,14 @@ public class ContactsPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, nextMonthButtonInDatePicker, "Visibility", timeOut, "nextMonthButtonInDatePicker");
 
 	}
+	
+	@FindBy(xpath = "//ul[@role='tablist']//a[text()='Contacts']")
+	private WebElement contactTab;
+
+	public WebElement getContactTab(int timeOut) {
+		return isDisplayed(driver, contactTab, "Visibility", timeOut, "Contact tab");
+
+	}
+	
+	
 }

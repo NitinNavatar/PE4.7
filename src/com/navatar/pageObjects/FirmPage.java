@@ -180,7 +180,7 @@ public class FirmPage extends BasePageBusinessLayer{
 	public List<WebElement> getClientList() {
 		return FindElements(driver,
 				"//a[contains(@class,'header-title')]",
-				"ClientTab");
+				"SDG Name");
 	}
 	
 	@FindBy(xpath = "//span[text()='Your changes are saved.']")
@@ -197,25 +197,137 @@ public class FirmPage extends BasePageBusinessLayer{
 		return isDisplayed(driver, popUpHeading, "Visibility", timeOut, "popup heading");
 		}
 	
+	@FindBy(xpath = "//h2[@class='slds-card__header-title']/a")
+	private WebElement fileCountVisible;
+
+	public WebElement getfileCountVisible(int timeOut) {
+		return isDisplayed(driver, fileCountVisible, "Visibility", timeOut, "file Count visible");
+		}
 	
+	@FindBy(xpath = "//span[text()='Upload Files']")
+	private WebElement uploadFileVisible;
+
+	public WebElement getuploadFileVisible(int timeOut) {
+		return isDisplayed(driver, uploadFileVisible, "Visibility", timeOut, "Upload File Visible");
+		}
+	
+	@FindBy(xpath = "//div[text()='Add Files']")
+	private WebElement addFileVisible;
+
+	public WebElement getaddFileVisible(int timeOut) {
+		return isDisplayed(driver, addFileVisible, "Visibility", timeOut, "Add File button Visible");
+	}
+
+	
+	@FindBy(xpath = "//span[text()='Or drop files']")
+	private WebElement dropFileVisible;
+
+	public WebElement getdropFileVisible(int timeOut) {
+		return isDisplayed(driver, dropFileVisible, "Visibility", timeOut, "Or drop file button Visible");
+		}
+	
+	@FindBy(xpath="//li[@title='Files']")
+    private WebElement FilesTabPage;
+	
+	public WebElement getFilesTabPage(int timeOut) {
+		return isDisplayed(driver, FilesTabPage, "Visibility", timeOut, "FilesTabPage");
+	}
+	
+	@FindBy(xpath="//span[text()='Done']")
+	private WebElement ClickedOnDoneButton;
+	
+	public WebElement getClickedOnDoneButton(int timeOut) {
+		return isDisplayed(driver, ClickedOnDoneButton, "Visibility", timeOut, "ClickedOnDoneButton");
+	}
+    
+	public WebElement getFileName(int timeOut) {
+		
+		return FindElement(driver, "//div[@class='slds-show_inline-block slds-float_left slds-p-left--x-small slds-truncate slds-m-right_x-small']//span", "FileName",
+				action.SCROLLANDBOOLEAN, timeOut);
+	
+	}
+	public WebElement getUploadFileButton(int timeOut) {
+		return FindElement(driver, "//span[text()='Upload Files']", "UploadFileButton",action.SCROLLANDBOOLEAN, timeOut);
+		
+	}
+	
+	@FindBy(xpath="//h2[@class='slds-card__header-title']//span[contains(@class,'slds-shrink')]")
+    private WebElement UploadedFileCount;
+	
+	public WebElement getUploadedFileCount(int timeOut) {
+		return isDisplayed(driver, UploadedFileCount, "Visibility", timeOut, "Uploaded File Count");
+	}
+	
+	@FindBy(xpath="//input[@class='slds-file-selector__input slds-assistive-text']")
+    private WebElement fileUpload;
+	
+	public WebElement getfileUpload(int timeOut) {
+		return isDisplayed(driver, fileUpload, "Visibility", timeOut, "File Upload");
+	}
 	
 
+	@FindBy(xpath="//span[text()='1 file was added to the Firm.']")
+    private WebElement fileUploadConfirmationMsg;
+	
+	public WebElement getfileUploadConfirmationMsg(int timeOut) {
+		return isDisplayed(driver, fileUploadConfirmationMsg, "Visibility", timeOut, "File Upload Confirmation Message");
+	}
+	
+	@FindBy(xpath="//p[contains(@class,'secondaryFields')]/span[@class='uiOutputDateTime']")
+    private WebElement fileUploadDate;
+	
+	public WebElement getfileUploadDate(int timeOut) {
+		return isDisplayed(driver, fileUploadDate, "Visibility", timeOut, "Uploaded File Date");
+	}
+	
+	@FindBy(xpath="//p[contains(@class,'secondaryFields')]/span[@class='forceChatterFileSize']")
+    private WebElement fileUploadSize;
+	
+	public WebElement getfileUploadSize(int timeOut) {
+		return isDisplayed(driver, fileUploadSize, "Visibility", timeOut, "Uploaded file Size");
+	}
+	
+	@FindBy(xpath="//p[contains(@class,'secondaryFields')]/span[@class='itemLabel slds-truncate uiOutputText']")
+    private WebElement fileUploadType;
+	
+	public WebElement getfileUploadType(int timeOut) {
+		return isDisplayed(driver, fileUploadType, "Visibility", timeOut, "Uploaded file type");
+	}
+	
+	@FindBy(xpath="//span[text()='View All']")
+    private WebElement viewAllButton;
+	
+	public WebElement getviewAllButton(int timeOut) {
+		return isDisplayed(driver, viewAllButton, "Visibility", timeOut, "view all button");
+	}
+	
+	
+	public WebElement sectionBelowTaskAndEventSection(int timeOut) {
+        String xpath = "//div[contains(@class,'slds-size_1-of-1 row row-main')]/div[contains(@class,'region-sidebar-right')][2]";
+       try {
+            return FindElement(driver, xpath, "sectionBelowTaskAndEventSection", action.SCROLLANDBOOLEAN, timeOut);
+       } catch (StaleElementReferenceException e) {
+            return FindElement(driver, xpath, "sectionBelowTaskAndEventSection", action.SCROLLANDBOOLEAN, timeOut);
+        }
+    }
+	
+	public WebElement pageLevelCreateRecordPopupSaveOrCancelButton(String buttonName, int timeOut) {
+        String xpath = "//footer/button/span[text()='" + buttonName + "']/parent::button";
 
+
+
+       try {
+            return FindElement(driver, xpath, "pageLevelCreateRecordPopupSaveOrCancelButton", action.SCROLLANDBOOLEAN,
+                    timeOut);
+
+
+
+       } catch (StaleElementReferenceException e) {
+            return FindElement(driver, xpath, "pageLevelCreateRecordPopupSaveOrCancelButton", action.SCROLLANDBOOLEAN,
+                    timeOut);
+        }
+    }
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 
 }

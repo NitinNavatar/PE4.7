@@ -53,6 +53,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -2097,7 +2098,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String tab = getTabName(projectName, tabName);
 		for (int i = 0; i < 2; i++) {
 
-			
 			ele = getrelatedAssociationsdropdownButton(projectName, pageName, label, action, 5);
 			if (click(driver, ele, "Drop Down Icon For Label : " + label, action)) {
 				appLog.error("Clicked on  Drown Down Icon for LABEL : " + label);
@@ -2148,9 +2148,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			// xpath = "//span[text()='"+label+"']/../following-sibling::div";
 			xpath = "//ul/li/a[@title='" + value + "']";
 		} else {
-		/*	xpath = "//label[text()='" + label + "']/..//span[@title='" + value + "']";*/
-		
-		xpath = "//*[text()='" + label + "']/../..//a[text()='" + value + "']";
+			/*
+			 * xpath = "//label[text()='" + label + "']/..//span[@title='" + value + "']";
+			 */
+
+			xpath = "//*[text()='" + label + "']/../..//a[text()='" + value + "']";
 		}
 
 		ele = FindElement(driver, xpath, "Drop Down : " + label + " value : " + value, action, timeOut);
@@ -2331,12 +2333,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				return flag;
 			}
 		}
-		
+
 		if (label.replaceAll("_", " ").equalsIgnoreCase(PageLabel.Name.toString())) {
 			String xpath = "//span[text()='" + label.replaceAll("_", " ")
 					+ "']/..//following-sibling::div//input[@title='Search Contacts']";
-			doubleClickUsingAction(driver, FindElement(driver, xpath, "",action.BOOLEAN,30));
-			log(LogStatus.INFO, "click on name text box" , YesNo.No);
+			doubleClickUsingAction(driver, FindElement(driver, xpath, "", action.BOOLEAN, 30));
+			log(LogStatus.INFO, "click on name text box", YesNo.No);
 
 		}
 		ele = getLabelTextBoxForNameOrRelatedAssociationOnTask(projectName, pageName, label, action, timOut);
@@ -2439,18 +2441,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String label;
 		String value;
 		boolean flag = false;
-		WebElement ele2=getLabelTextBox(projectName, PageName.TaskPage.toString(), PageLabel.Subject.toString(), timeOut);
+		WebElement ele2 = getLabelTextBox(projectName, PageName.TaskPage.toString(), PageLabel.Subject.toString(),
+				timeOut);
 		ele2.sendKeys(Keys.BACK_SPACE);
 		ThreadSleep(1000);
 		ele2.clear();
-		sendKeys(driver,ele2,
-				subjectText, "Subject", action);
+		sendKeys(driver, ele2, subjectText, "Subject", action);
 		ele2.sendKeys(Keys.BACK_SPACE);
 		ele2.sendKeys(Keys.BACK_SPACE);
 		ele2.clear();
 		ThreadSleep(3000);
-		if (sendKeys(driver,ele2,
-				subjectText, "Subject", action)) {
+		if (sendKeys(driver, ele2, subjectText, "Subject", action)) {
 			log(LogStatus.INFO, "Entered value to Subject Text Box", YesNo.Yes);
 
 			flag = true;
@@ -3507,9 +3508,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String xpath = "";
 		if (isInside) {
 
-			xpath = "//button[@title='"+toggleTab+"']" ;
+			xpath = "//button[@title='" + toggleTab + "']";
 		} else {
-			xpath = "//button[@title='"+toggleTab+"']" ;
+			xpath = "//button[@title='" + toggleTab + "']";
 
 		}
 		WebElement ele = FindElement(driver, xpath, toggleTab + " >> " + btname, action, timeOut);
@@ -6090,11 +6091,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 										}
 
 									}
-									
-									else
-									{
-										log(LogStatus.ERROR, "TextBox Type not Mention Properly in Test data: "+textBoxType[i], YesNo.No);
-										sa.assertTrue(false, "TextBox Type not Mention Properly in Test data: "+textBoxType[i]);
+
+									else {
+										log(LogStatus.ERROR,
+												"TextBox Type not Mention Properly in Test data: " + textBoxType[i],
+												YesNo.No);
+										sa.assertTrue(false,
+												"TextBox Type not Mention Properly in Test data: " + textBoxType[i]);
 									}
 
 									if (click(driver, getfilterDoneBtn(projectName, timeOut), "Filter Done Button",
@@ -7444,236 +7447,230 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		CommonLib.clickUsingJavaScript(driver, operatorInputBox(30), "Operator DropDown", action.SCROLLANDBOOLEAN);
 		return notFoundOperators;
 	}
-	
-	
-	
-	
+
 	public List<String> verifyListView(List<String> listViewName) {
 		boolean flag = false;
 		ArrayList<String> result = new ArrayList<String>();
-		if(CommonLib.click(driver, getClickedOnRecentlyViewed(30), "Recently Viewed", action.SCROLLANDBOOLEAN)) {
+		if (CommonLib.click(driver, getClickedOnRecentlyViewed(30), "Recently Viewed", action.SCROLLANDBOOLEAN)) {
 
 			appLog.info("clicked on recently viewed");
 
 			List<String> listView = new ArrayList<String>();
 
-			List<WebElement> lists= CommonLib.FindElements(driver, "//div[@class='scroller']//ul//li", "RecentlyViewedList");
-			if(lists.size() != 0) {
-				for(int i=0;i<lists.size();i++)
-				{
-					WebElement element= lists.get(i);
-					String listName= CommonLib.getText(driver, element, "list view of Firm", action.BOOLEAN);
-					listView.add(listName.replace("Selected","").trim().replace("\n", ""));
-					
-				}      
-			}
-			else {
-				log(LogStatus.ERROR,"Could not get the list view name",YesNo.No);
+			List<WebElement> lists = CommonLib.FindElements(driver, "//div[@class='scroller']//ul//li",
+					"RecentlyViewedList");
+			if (lists.size() != 0) {
+				for (int i = 0; i < lists.size(); i++) {
+					WebElement element = lists.get(i);
+					String listName = CommonLib.getText(driver, element, "list view of Firm", action.BOOLEAN);
+					listView.add(listName.replace("Selected", "").trim().replace("\n", ""));
+
+				}
+			} else {
+				log(LogStatus.ERROR, "Could not get the list view name", YesNo.No);
 				result.add("Could not get the list view name");
 			}
 
-			for(int i=0;i<listViewName.size();i++)
-			{
-				if(listView.contains(listViewName.get(i)))
-				{
+			for (int i = 0; i < listViewName.size(); i++) {
+				if (listView.contains(listViewName.get(i))) {
 
-					log(LogStatus.INFO, listViewName.get(i)+" List Name is present", YesNo.No);
+					log(LogStatus.INFO, listViewName.get(i) + " List Name is present", YesNo.No);
 
-				}
-				else {
-					log(LogStatus.ERROR, listViewName.get(i)+" List Name is Not present", YesNo.No);
-					result.add(listViewName.get(i)+" List Name is Not present");
+				} else {
+					log(LogStatus.ERROR, listViewName.get(i) + " List Name is Not present", YesNo.No);
+					result.add(listViewName.get(i) + " List Name is Not present");
 
 				}
 			}
-		}
-		else {
+		} else {
 			appLog.error("Not able to click on recently viewed...");
 			result.add("Not able to click on recently viewed...");
 
 		}
 
-		if(CommonLib.click(driver, getClickedOnRecentlyViewed(30), "Recently Viewed", action.SCROLLANDBOOLEAN)) {
+		if (CommonLib.click(driver, getClickedOnRecentlyViewed(30), "Recently Viewed", action.SCROLLANDBOOLEAN)) {
 
 			appLog.info("clicked on recently viewed");
-		}
-		else {
+		} else {
 			appLog.error("Not able to click on recently viewed...");
 			result.add("Not able to click on recently viewed...");
 
 		}
-		return result ;
+		return result;
 	}
-	
-	
-	public ArrayList<String> verifyFilterOnListView(String[] listViewName, String[] filter, String[] field, String[] Operator, String[] filterValue,String[] filterCondition )
-	{
-		String xPath="";
-		WebElement ele;
-		ArrayList<String> result=new ArrayList<String>();
 
-		for(int i=0; i<filterCondition.length; i++)
-		{
-			String[] filterFiled=null;
-			String[] fOperator=null;
-			String[] FOperand=null;
-			
-			if(CommonLib.click(driver, getClickedOnRecentlyViewed(30), "Recently Viewed", action.SCROLLANDBOOLEAN)) {
+	public ArrayList<String> verifyFilterOnListView(String[] listViewName, String[] filter, String[] field,
+			String[] Operator, String[] filterValue, String[] filterCondition) {
+		String xPath = "";
+		WebElement ele;
+		ArrayList<String> result = new ArrayList<String>();
+
+		for (int i = 0; i < filterCondition.length; i++) {
+			String[] filterFiled = null;
+			String[] fOperator = null;
+			String[] FOperand = null;
+
+			if (CommonLib.click(driver, getClickedOnRecentlyViewed(30), "Recently Viewed", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on the recently view button", YesNo.No);
 
-				xPath="//ul[@class='slds-dropdown__list slds-show']//span[text()='"+listViewName[i]+"']";
-				ele=CommonLib.FindElement(driver, xPath, listViewName[i],action.SCROLLANDBOOLEAN , 50);
+				xPath = "//ul[@class='slds-dropdown__list slds-show']//span[text()='" + listViewName[i] + "']";
+				ele = CommonLib.FindElement(driver, xPath, listViewName[i], action.SCROLLANDBOOLEAN, 50);
 
-				if(CommonLib.click(driver, ele, listViewName[i]+" element", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on "+listViewName[i]+" element"+" button", YesNo.No);
+				if (CommonLib.click(driver, ele, listViewName[i] + " element", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on " + listViewName[i] + " element" + " button", YesNo.No);
 
-					if(filterCondition[i].equals("All Filters"))
-					{
+					if (filterCondition[i].equals("All Filters")) {
 
-						if(CommonLib.click(driver, getshowFilter(50), "Show filter", action.SCROLLANDBOOLEAN)) {
+						if (CommonLib.click(driver, getshowFilter(50), "Show filter", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Show filter button", YesNo.No);
 
-							String scopeLabelFilter=CommonLib.getText(driver, getscopeLabelFilter(50), "scope label filter", action.SCROLLANDBOOLEAN);
-							if(scopeLabelFilter.equals(filter[i]))
-							{
-								log(LogStatus.INFO, scopeLabelFilter+ " is visible in the Filter by Owner", YesNo.No);
+							String scopeLabelFilter = CommonLib.getText(driver, getscopeLabelFilter(50),
+									"scope label filter", action.SCROLLANDBOOLEAN);
+							if (scopeLabelFilter.equals(filter[i])) {
+								log(LogStatus.INFO, scopeLabelFilter + " is visible in the Filter by Owner", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, scopeLabelFilter + " is not visible in the Filter by Owner",
+										YesNo.Yes);
+								result.add(scopeLabelFilter + " is not visible in the Filter by Owner");
 							}
-							else
-							{
-								log(LogStatus.ERROR, scopeLabelFilter+ " is not visible in the Filter by Owner", YesNo.Yes);
-								result.add(scopeLabelFilter+ " is not visible in the Filter by Owner");
-							}
-							
-						    filterFiled=field[i].split("<FieldBreak>");
-						    fOperator=Operator[i].split("<OperatorBreak>");
-						    FOperand=filterValue[i].split("<valueBreak>");
-					    
-						    if(filterFiled.length==1)
-						    {
-						    	String filterFieldLabel=CommonLib.getText(driver, getfilterFieldLabel(50), "Filter field label", action.SCROLLANDBOOLEAN);
-								String filterOperator=CommonLib.getText(driver, getfilterOperator(50), "Filter Operator", action.SCROLLANDBOOLEAN);
-								String filterOperand=CommonLib.getText(driver, getfilterOperand(50), "Filter Operand", action.SCROLLANDBOOLEAN);
 
-								if(filterFieldLabel.equalsIgnoreCase(field[i]) && filterOperator.equalsIgnoreCase(Operator[i]) && filterOperand.equalsIgnoreCase(filterValue[i]))
-								{
-									log(LogStatus.INFO, filterFieldLabel+", "+filterOperator+" and "+filterOperand+ " have been matched" , YesNo.No);
-								}
-								else
-								{
-									log(LogStatus.ERROR, "Either Filter label name : "+filterFieldLabel+" or filter Operator :"+filterOperator+" Or Filter operand :"+filterOperand+ " are not matced with Filter label name : "+field+", filter Operator :"+Operator+", Filter operand :"+filterValue[i]+ "", YesNo.No);
-									result.add("Either Filter label name : "+filterFieldLabel+" or filter Operator :"+filterOperator+" Or Filter operand :"+filterOperand+ " are not matced with Filter label name : "+field+", filter Operator :"+Operator+", Filter operand :"+filterValue[i]+ "");
-								}
-						    }
-						    else
-						    {
-						 
-							for(int j=0; j<filterFiled.length;j++)
-							{
-								xPath="//div[@id='filterPanelFieldCriterion"+j+"']//div[@class='fieldLabel']";
-								ele=CommonLib.FindElement(driver, xPath, "Field Label", action.SCROLLANDBOOLEAN, 50);
-								String filterFieldLabel=CommonLib.getText(driver,ele, "Filter field label", action.SCROLLANDBOOLEAN);
-								
-								xPath="//div[@id='filterPanelFieldCriterion"+j+"']//span[@class='test-operatorWrapper']";
-								ele=CommonLib.FindElement(driver, xPath, "Field Label", action.SCROLLANDBOOLEAN, 50);
-								String filterOperator=CommonLib.getText(driver, ele, "Filter Operator", action.SCROLLANDBOOLEAN);							
-								
-								xPath="//div[@id='filterPanelFieldCriterion"+j+"']//span[@class='test-operandsWrapper']";
-								ele=CommonLib.FindElement(driver, xPath, "Field Label", action.SCROLLANDBOOLEAN, 50);
-								String filterOperand=CommonLib.getText(driver, ele, "Filter Operand", action.SCROLLANDBOOLEAN);						
-								
-								if(filterFieldLabel.equalsIgnoreCase(filterFiled[j]) && filterOperator.equalsIgnoreCase(fOperator[j]) && filterOperand.equalsIgnoreCase(FOperand[j]))
-								{
-									log(LogStatus.INFO, filterFieldLabel+", "+filterOperator+" and "+filterOperand+ " have been matched" , YesNo.No);
-								}
-								else
-								{
-									log(LogStatus.ERROR, "Either Filter label name : "+filterFieldLabel+" or filter Operator :"+filterOperator+" Or Filter operand :"+filterOperand+ " are not matced with Filter label name : "+filterFiled[j]+", filter Operator :"+fOperator[j]+", Filter operand :"+FOperand[j]+ "", YesNo.Yes);
-									result.add("Either Filter label name : "+filterFieldLabel+" or filter Operator :"+filterOperator+" Or Filter operand :"+filterOperand+ " are not matced with Filter label name : "+filterFiled[j]+", filter Operator :"+fOperator[j]+", Filter operand :"+FOperand[j]+ "");
-								}
-								
-								if(filterLogic(50)!=null)
-								{
-									log(LogStatus.INFO, "Filter logic is visible", YesNo.No);
-								}
-								else
-								{
-									log(LogStatus.INFO, "Filter logic is nto visible", YesNo.Yes);
-									result.add("Filter logic is not visible");
-								}
-								
-								
-							}
-						    }
+							filterFiled = field[i].split("<FieldBreak>");
+							fOperator = Operator[i].split("<OperatorBreak>");
+							FOperand = filterValue[i].split("<valueBreak>");
 
-							CommonLib.refresh(driver);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on Show filter button", YesNo.Yes);
-							result.add("Not able to click on Show filter button");
-						}
+							if (filterFiled.length == 1) {
+								String filterFieldLabel = CommonLib.getText(driver, getfilterFieldLabel(50),
+										"Filter field label", action.SCROLLANDBOOLEAN);
+								String filterOperator = CommonLib.getText(driver, getfilterOperator(50),
+										"Filter Operator", action.SCROLLANDBOOLEAN);
+								String filterOperand = CommonLib.getText(driver, getfilterOperand(50), "Filter Operand",
+										action.SCROLLANDBOOLEAN);
 
-					}
-					
-					else if(filterCondition[i].trim().equalsIgnoreCase("Only Filter_By_Owner"))
-					{
+								if (filterFieldLabel.equalsIgnoreCase(field[i])
+										&& filterOperator.equalsIgnoreCase(Operator[i])
+										&& filterOperand.equalsIgnoreCase(filterValue[i])) {
+									log(LogStatus.INFO, filterFieldLabel + ", " + filterOperator + " and "
+											+ filterOperand + " have been matched", YesNo.No);
+								} else {
+									log(LogStatus.ERROR,
+											"Either Filter label name : " + filterFieldLabel + " or filter Operator :"
+													+ filterOperator + " Or Filter operand :" + filterOperand
+													+ " are not matced with Filter label name : " + field
+													+ ", filter Operator :" + Operator + ", Filter operand :"
+													+ filterValue[i] + "",
+											YesNo.No);
+									result.add("Either Filter label name : " + filterFieldLabel
+											+ " or filter Operator :" + filterOperator + " Or Filter operand :"
+											+ filterOperand + " are not matced with Filter label name : " + field
+											+ ", filter Operator :" + Operator + ", Filter operand :" + filterValue[i]
+											+ "");
+								}
+							} else {
 
-						if(CommonLib.click(driver, getshowFilter(50), "Show filter", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on Show filter button", YesNo.No);
+								for (int j = 0; j < filterFiled.length; j++) {
+									xPath = "//div[@id='filterPanelFieldCriterion" + j + "']//div[@class='fieldLabel']";
+									ele = CommonLib.FindElement(driver, xPath, "Field Label", action.SCROLLANDBOOLEAN,
+											50);
+									String filterFieldLabel = CommonLib.getText(driver, ele, "Filter field label",
+											action.SCROLLANDBOOLEAN);
 
-							String scopeLabelFilter=CommonLib.getText(driver, getscopeLabelFilter(50), "scope label filter", action.SCROLLANDBOOLEAN);
-							if(scopeLabelFilter.equals(filter[i]))
-							{
-								log(LogStatus.INFO, scopeLabelFilter+ " is visible in the Filter by Owner", YesNo.No);
-							}
-							else
-							{
-								log(LogStatus.ERROR, scopeLabelFilter+ " is not visible in the Filter by Owner for "+listViewName[i], YesNo.Yes);
-								result.add(scopeLabelFilter+ " is not visible in the Filter by Owner for "+listViewName[i]);
+									xPath = "//div[@id='filterPanelFieldCriterion" + j
+											+ "']//span[@class='test-operatorWrapper']";
+									ele = CommonLib.FindElement(driver, xPath, "Field Label", action.SCROLLANDBOOLEAN,
+											50);
+									String filterOperator = CommonLib.getText(driver, ele, "Filter Operator",
+											action.SCROLLANDBOOLEAN);
+
+									xPath = "//div[@id='filterPanelFieldCriterion" + j
+											+ "']//span[@class='test-operandsWrapper']";
+									ele = CommonLib.FindElement(driver, xPath, "Field Label", action.SCROLLANDBOOLEAN,
+											50);
+									String filterOperand = CommonLib.getText(driver, ele, "Filter Operand",
+											action.SCROLLANDBOOLEAN);
+
+									if (filterFieldLabel.equalsIgnoreCase(filterFiled[j])
+											&& filterOperator.equalsIgnoreCase(fOperator[j])
+											&& filterOperand.equalsIgnoreCase(FOperand[j])) {
+										log(LogStatus.INFO, filterFieldLabel + ", " + filterOperator + " and "
+												+ filterOperand + " have been matched", YesNo.No);
+									} else {
+										log(LogStatus.ERROR, "Either Filter label name : " + filterFieldLabel
+												+ " or filter Operator :" + filterOperator + " Or Filter operand :"
+												+ filterOperand + " are not matced with Filter label name : "
+												+ filterFiled[j] + ", filter Operator :" + fOperator[j]
+												+ ", Filter operand :" + FOperand[j] + "", YesNo.Yes);
+										result.add("Either Filter label name : " + filterFieldLabel
+												+ " or filter Operator :" + filterOperator + " Or Filter operand :"
+												+ filterOperand + " are not matced with Filter label name : "
+												+ filterFiled[j] + ", filter Operator :" + fOperator[j]
+												+ ", Filter operand :" + FOperand[j] + "");
+									}
+
+									if (filterLogic(50) != null) {
+										log(LogStatus.INFO, "Filter logic is visible", YesNo.No);
+									} else {
+										log(LogStatus.INFO, "Filter logic is nto visible", YesNo.Yes);
+										result.add("Filter logic is not visible");
+									}
+
+								}
 							}
 
 							CommonLib.refresh(driver);
-						}
-						else
-						{
+						} else {
 							log(LogStatus.ERROR, "Not able to click on Show filter button", YesNo.Yes);
 							result.add("Not able to click on Show filter button");
 						}
 
 					}
 
-					else if(filterCondition[i].trim().equalsIgnoreCase("Only Filter_icon_Availability"))
-					{
+					else if (filterCondition[i].trim().equalsIgnoreCase("Only Filter_By_Owner")) {
 
-						ele=getshowFilter(50);
-						if(ele==null)
-						{
-							log(LogStatus.INFO, "Filter icon is disable for list view : "+listViewName[i] , YesNo.No);
+						if (CommonLib.click(driver, getshowFilter(50), "Show filter", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Show filter button", YesNo.No);
+
+							String scopeLabelFilter = CommonLib.getText(driver, getscopeLabelFilter(50),
+									"scope label filter", action.SCROLLANDBOOLEAN);
+							if (scopeLabelFilter.equals(filter[i])) {
+								log(LogStatus.INFO, scopeLabelFilter + " is visible in the Filter by Owner", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, scopeLabelFilter + " is not visible in the Filter by Owner for "
+										+ listViewName[i], YesNo.Yes);
+								result.add(scopeLabelFilter + " is not visible in the Filter by Owner for "
+										+ listViewName[i]);
+							}
+
+							CommonLib.refresh(driver);
+						} else {
+							log(LogStatus.ERROR, "Not able to click on Show filter button", YesNo.Yes);
+							result.add("Not able to click on Show filter button");
 						}
-						else
-						{
-							log(LogStatus.ERROR, "Filter icon is not disable for list view : "+listViewName[i], YesNo.Yes);
-							result.add("Filter icon is not disable for list view : "+listViewName[i]);
-						}
-						CommonLib.refresh(driver);		
+
 					}
 
+					else if (filterCondition[i].trim().equalsIgnoreCase("Only Filter_icon_Availability")) {
 
-					else
-					{
-						log(LogStatus.ERROR, "Not able to click on "+listViewName[i]+"", YesNo.Yes);
-						result.add("Not able to click on "+listViewName[i]+"");
+						ele = getshowFilter(50);
+						if (ele == null) {
+							log(LogStatus.INFO, "Filter icon is disable for list view : " + listViewName[i], YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "Filter icon is not disable for list view : " + listViewName[i],
+									YesNo.Yes);
+							result.add("Filter icon is not disable for list view : " + listViewName[i]);
+						}
+						CommonLib.refresh(driver);
 					}
 
+					else {
+						log(LogStatus.ERROR, "Not able to click on " + listViewName[i] + "", YesNo.Yes);
+						result.add("Not able to click on " + listViewName[i] + "");
+					}
+
+				} else {
+					log(LogStatus.ERROR, listViewName[i] + " element not found", YesNo.Yes);
+					result.add(listViewName[i] + " element not found");
 				}
-				else
-				{
-					log(LogStatus.ERROR, listViewName[i]+" element not found", YesNo.Yes);
-					result.add(listViewName[i]+" element not found");
-				}
-			}
-			else
-			{
+			} else {
 				log(LogStatus.ERROR, "Not able to click on recently view", YesNo.Yes);
 				result.add("Not able to click on recently view");
 			}
@@ -7681,82 +7678,76 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 
 	}
-	
 
-	public ArrayList<String> verifyFieldsOnListview(String listViewAndFieldData, int timeOut)
-    {
-        String xPath="";
-        WebElement ele;
-        List<WebElement> elements;
-        ArrayList<String> actualFieldValue=new ArrayList<String>();
-        ArrayList<String> expectedFieldValue=new ArrayList<String>();
-        ArrayList<String> result=new ArrayList<String>();
-        String[] listViewAndFieldName=listViewAndFieldData.split("<break>");
+	public ArrayList<String> verifyFieldsOnListview(String listViewAndFieldData, int timeOut) {
+		String xPath = "";
+		WebElement ele;
+		List<WebElement> elements;
+		ArrayList<String> actualFieldValue = new ArrayList<String>();
+		ArrayList<String> expectedFieldValue = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<String>();
+		String[] listViewAndFieldName = listViewAndFieldData.split("<break>");
 
-        for(int i=0; i<listViewAndFieldName.length; i++)
-        {
-            String data[]=listViewAndFieldName[i].split("<fieldBreak>");
-            String listViewName=data[0];
-            String fieldData[]=data[1].split("<f>");
+		for (int i = 0; i < listViewAndFieldName.length; i++) {
+			String data[] = listViewAndFieldName[i].split("<fieldBreak>");
+			String listViewName = data[0];
+			String fieldData[] = data[1].split("<f>");
 
-            for(int k=0; k<fieldData.length; k++)
-            {
-                String val=fieldData[k];
-                expectedFieldValue.add(val);
-            }
-            if(CommonLib.click(driver, getClickedOnRecentlyViewed(timeOut), "Recently Viewed ero icon", action.SCROLLANDBOOLEAN)) {
-                log(LogStatus.INFO, "Clicked on the recently view ero icon", YesNo.No);
+			for (int k = 0; k < fieldData.length; k++) {
+				String val = fieldData[k];
+				expectedFieldValue.add(val);
+			}
+			if (CommonLib.click(driver, getClickedOnRecentlyViewed(timeOut), "Recently Viewed ero icon",
+					action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on the recently view ero icon", YesNo.No);
 
-                xPath="//ul[@class='slds-dropdown__list slds-show']//span[text()='"+listViewName+"']";
-                ele=CommonLib.FindElement(driver, xPath, listViewName,action.SCROLLANDBOOLEAN , timeOut);
+				xPath = "//ul[@class='slds-dropdown__list slds-show']//span[text()='" + listViewName + "']";
+				ele = CommonLib.FindElement(driver, xPath, listViewName, action.SCROLLANDBOOLEAN, timeOut);
 
-                if(CommonLib.click(driver, ele, listViewName+" element", action.SCROLLANDBOOLEAN)) {
-                    log(LogStatus.INFO, "Clicked on "+listViewName+" element"+" button", YesNo.No);
-                    ThreadSleep(10000);
-                    xPath="//table[@data-aura-class='uiVirtualDataTable']//thead//th//span[@class='slds-truncate' and text()!='']";
-                    elements=CommonLib.FindElements(driver, xPath, listViewName+"'s field");
-                    for(int j=0; j<elements.size(); j++)
-                    {
-                        String text=CommonLib.getText(driver, elements.get(j), listViewName+" field", action.SCROLLANDBOOLEAN);
-                        actualFieldValue.add(text);
-                    }
+				if (CommonLib.click(driver, ele, listViewName + " element", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on " + listViewName + " element" + " button", YesNo.No);
+					ThreadSleep(10000);
+					xPath = "//table[@data-aura-class='uiVirtualDataTable']//thead//th//span[@class='slds-truncate' and text()!='']";
+					elements = CommonLib.FindElements(driver, xPath, listViewName + "'s field");
+					for (int j = 0; j < elements.size(); j++) {
+						String text = CommonLib.getText(driver, elements.get(j), listViewName + " field",
+								action.SCROLLANDBOOLEAN);
+						actualFieldValue.add(text);
+					}
 
-                    for(int a=0; a<expectedFieldValue.size(); a++)
-                    {
-                        if(expectedFieldValue.get(a).equals(actualFieldValue.get(a)))
-                        {
-                            log(LogStatus.INFO, "Expected field value : "+expectedFieldValue.get(a)+" has been matched with the Actual field value : "+actualFieldValue.get(a), YesNo.No);
-                        }
-                        else
-                        {
-                            log(LogStatus.ERROR, "Expected field value : "+expectedFieldValue.get(a)+" is not matched with the Actual field value : "+actualFieldValue.get(a), YesNo.No);    
-                            result.add("Expected field value : "+expectedFieldValue.get(a)+" is not matched with the Actual field value : "+actualFieldValue.get(a));
-                        }
+					for (int a = 0; a < expectedFieldValue.size(); a++) {
+						if (expectedFieldValue.get(a).equals(actualFieldValue.get(a))) {
+							log(LogStatus.INFO, "Expected field value : " + expectedFieldValue.get(a)
+									+ " has been matched with the Actual field value : " + actualFieldValue.get(a),
+									YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "Expected field value : " + expectedFieldValue.get(a)
+									+ " is not matched with the Actual field value : " + actualFieldValue.get(a),
+									YesNo.No);
+							result.add("Expected field value : " + expectedFieldValue.get(a)
+									+ " is not matched with the Actual field value : " + actualFieldValue.get(a));
+						}
 
-                    }
+					}
 
-                }
-                else
-                {
-                    log(LogStatus.ERROR, "Not able to click on the "+listViewName+" list view name", YesNo.Yes);
-                    result.add("Not able to click on the "+listViewName+" list view name");
-                }
-            }
+				} else {
+					log(LogStatus.ERROR, "Not able to click on the " + listViewName + " list view name", YesNo.Yes);
+					result.add("Not able to click on the " + listViewName + " list view name");
+				}
+			}
 
-            else
-            {
-                log(LogStatus.ERROR, "Not able to click on the recently view ero icon", YesNo.Yes);
-                result.add("Not able to click on the recently view ero icon");
-            }
-            actualFieldValue.removeAll(actualFieldValue);
-            expectedFieldValue.removeAll(expectedFieldValue);
+			else {
+				log(LogStatus.ERROR, "Not able to click on the recently view ero icon", YesNo.Yes);
+				result.add("Not able to click on the recently view ero icon");
+			}
+			actualFieldValue.removeAll(actualFieldValue);
+			expectedFieldValue.removeAll(expectedFieldValue);
 
-        }
+		}
 
-        return result;
+		return result;
 
-    }
-
+	}
 
 	public List<String> verifyButtonsOnAPageAndInDownArrowButton(List<String> ExpectedButtonsOnPage,
 			List<String> ExpectedButtonsInDownArrowButton) {
@@ -7945,13 +7936,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						for (String tab : tabsInPage) {
 							if (tab.equals(expectedListOfTabs.get(i))) {
 								log(LogStatus.INFO, "----Tab Matched, Expected: " + expectedListOfTabs.get(i)
-										+ " & Actual: " + tab + " on this Page----", YesNo.No);
+								+ " & Actual: " + tab + " on this Page----", YesNo.No);
 							} else {
 
 								log(LogStatus.ERROR, "----Tab Not Matched, Expected: " + expectedListOfTabs.get(i)
-										+ " but Actual: " + tab + " on this Page----", YesNo.No);
+								+ " but Actual: " + tab + " on this Page----", YesNo.No);
 								negativeResult.add("----Button Not Matched, Expected: " + expectedListOfTabs.get(i)
-										+ " but Actual: " + tab + " on this Page----");
+								+ " but Actual: " + tab + " on this Page----");
 
 							}
 
@@ -7961,7 +7952,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						log(LogStatus.ERROR,
 								"No. of Expected and Actual Tabs on Page not matched, So not able to continue, Expected: "
 										+ expectedListOfTabs + " & Actual: " + tabsInPage,
-								YesNo.Yes);
+										YesNo.Yes);
 						negativeResult.add(
 								"No. of Expected and Actual Tabs on Page not matched, So not able to continue, Expected: "
 										+ expectedListOfTabs + " & Actual: " + tabsInPage);
@@ -7989,12 +7980,1598 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return negativeResult;
 	}
 
+	/**
+	 * @author Ankur Huria
+	 * @param SDGName
+	 * @param datas
+	 */
+	@SuppressWarnings("unused")
+	public boolean createNewRecordThroughSDG(String projectName, String sdgName, String actionButtonName,
+			List<String> labels, List<String> values, List<String> typesOfFields, int timeOut) {
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+
+		boolean flag = false;
+		if (click(driver, home.listButtonOnSDG(sdgName, actionButtonName, timeOut), "Action Button " + actionButtonName,
+				action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on Button: " + actionButtonName + " on SDG: " + sdgName, YesNo.No);
+
+			int i = 0;
+			for (String label : labels) {
+
+				if (typesOfFields.get(i).equalsIgnoreCase("SearchDropDown")) {
+					String DropDownElements ="//label[text()=\""+label+"\"]/following-sibling::div//div[contains(@class,\"slds-combobox__form-element\")]/input//parent::div/following-sibling::div//li//lightning-base-combobox-item/span/following-sibling::span/span[1]/span";
+
+					if (CommonLib.dropDownHandle(driver, home.searchDropDownBoxThroughSDG(label, 30), DropDownElements,
+							"searchDropDownBoxThroughSDG", values.get(i))) {
+						log(LogStatus.INFO, values.get(i) + " value has been Selected  from label: " + label, YesNo.No);
+					} else {
+						sa.assertTrue(false, values.get(i) + " value has not been Selected  from label: " + label);
+						log(LogStatus.ERROR, values.get(i) + " value has not been Selected  from label: " + label,
+								YesNo.Yes);
+					}
+
+				}
+
+				if (typesOfFields.get(i).equalsIgnoreCase("MultiPickList")) {
+					List<WebElement> rolesData = chosenOrAvailableDataForLabel(label, "Available");
+
+					for (WebElement roledata : rolesData) {
+						if (roledata.getText().equals(values.get(i))) {
+							if (click(driver, roledata, values.get(i), action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Click on " + values.get(i) + " Button of Label " + label
+										+ " on SDG:  " + sdgName, YesNo.No);
+								CommonLib.ThreadSleep(3000);
+
+								if (click(driver, home.moveSectionToChosenOrAvailableButton(label, "Chosen", 30),
+										"MultiPickList Navigation Button", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "Click on MultipickList Navigation Button of Label " + label
+											+ " on SDG:  " + sdgName, YesNo.No);
+
+									List<WebElement> chosenRoleDatas = chosenOrAvailableDataForLabel(label, "Chosen");
+									if (!chosenRoleDatas.isEmpty()) {
+										List<String> chosenRoleDatasText = chosenRoleDatas.stream()
+												.map(x -> x.getText()).collect(Collectors.toList());
+										if (chosenRoleDatasText.contains(values.get(i))) {
+
+											log(LogStatus.INFO, "Value: " + values.get(i) + " has been Chosen ",
+													YesNo.Yes);
+
+										} else {
+											sa.assertTrue(false, "Value: " + values.get(i)
+											+ " has not been Chosen, So Not Able to Continue to Create Record in SDG: "
+											+ sdgName);
+											log(LogStatus.ERROR, "Value: " + values.get(i)
+											+ " has not been Chosen, So Not Able to Continue to Create Record in SDG: "
+											+ sdgName, YesNo.Yes);
+										}
+									} else {
+										sa.assertTrue(false, "Not Able to Chose the " + label + " " + values.get(i)
+										+ " on SDG:  " + sdgName);
+										log(LogStatus.ERROR, "Not Able to Chose the " + label + " " + values.get(i)
+										+ " on SDG:  " + sdgName, YesNo.Yes);
+									}
+
+								} else {
+									sa.assertTrue(false,
+											"Not Able to Click on MultipickList Navigation Button of Label Role on SDG:  "
+													+ sdgName);
+									log(LogStatus.ERROR,
+											"Not Able to Click on MultipickList Navigation Button of Label Role on SDG:  "
+													+ sdgName,
+													YesNo.Yes);
+								}
+
+							} else {
+								sa.assertTrue(false,
+										"Not Able to Click on Button Value so cannot move to Chosen of Label " + label
+										+ " on SDG:  " + sdgName);
+								log(LogStatus.SKIP,
+										"Not Able to Click on " + values.get(i)
+										+ " Button Value so cannot move to Chosen of Label " + label
+										+ " on SDG:  " + sdgName,
+										YesNo.Yes);
+							}
+
+						}
+					}
+				}
+
+				if (typesOfFields.get(i).equalsIgnoreCase("DatePicker")) {
+					if (values.get(i) != null || values.get(i) != "") {
+						String[] date = values.get(i).split("/");
+
+						if (click(driver, calendarInputBox(label, 30), label + " Input Box", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Click on " + label + " Calendar Input Box", YesNo.No);
+							if (CommonLib.datePickerHandle(driver, monthInDatePicker(30),
+									previousMonthButtonInDatePicker(30), label + " Picker", date[2], date[1],
+									date[0])) {
+								log(LogStatus.INFO, "Date has been Selected  " + values.get(i), YesNo.No);
+							} else {
+								sa.assertTrue(false, "Date has not been Selected  " + values.get(i));
+								log(LogStatus.ERROR, "Date has not been Selected  " + values.get(i), YesNo.Yes);
+							}
+						} else {
+							sa.assertTrue(false, "Not Able to Click on " + label + " Calendar input Box");
+							log(LogStatus.ERROR, "Not Able to Click on " + label + " Calendar input Box", YesNo.Yes);
+						}
+
+					} else {
+						log(LogStatus.ERROR, "No " + label + " Provided:  " + values.get(i), YesNo.Yes);
+					}
+
+				}
+
+				if (typesOfFields.get(i).equalsIgnoreCase("DropDown")) {
+
+					String DropDownElements = "//label[text()='" + label
+							+ "']/parent::lightning-combobox//div[contains(@class,'slds-listbox_vertical')]//lightning-base-combobox-item//span[@class='slds-media__body']/span";
+					if (CommonLib.dropDownHandle(driver, home.recordDropDown(label, 30), DropDownElements,
+							label + " Input Box", values.get(i))) {
+						log(LogStatus.INFO, values.get(i) + " value has been Selected  from label: " + label, YesNo.No);
+					} else {
+						sa.assertTrue(false, values.get(i) + " value has not been Selected  from label: " + label);
+						log(LogStatus.ERROR, values.get(i) + " value has not been Selected  from label: " + label,
+								YesNo.Yes);
+					}
+				}
+
+				if (typesOfFields.get(i).equalsIgnoreCase("TextBox")) {
+
+					if (CommonLib.sendKeys(driver, home.recordTextBox(label, 30), values.get(i), label + " Input Box",
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, values.get(i) + " value has been Entered in label: " + label, YesNo.No);
+					} else {
+						sa.assertTrue(false, values.get(i) + " value has not been Entered in label: " + label);
+						log(LogStatus.ERROR, values.get(i) + " value has not been Entered in label: " + label,
+								YesNo.Yes);
+					}
+				}
+
+				if (typesOfFields.get(i).equalsIgnoreCase("Checkbox")) {
+					String xPath="//span[text()='"+label+"']/../following-sibling::div//input";
+					WebElement ele=CommonLib.FindElement(driver, xPath, label+ " checkbox", action.SCROLLANDBOOLEAN, 50);
+					if(values.get(i).equalsIgnoreCase("select"))
+					{
+						if(!CommonLib.isSelected(driver, ele, label+" checkbox"))
+						{
+							if (CommonLib.click(driver, ele, label+ " Checkbox", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, values+" checkbox has been clicked", YesNo.No);
+							} else {
+								sa.assertTrue(false, values+" checkbox is not clicked");
+								log(LogStatus.ERROR, values+" checkbox is not clicked", YesNo.Yes);
+							}
+						}
+						else
+						{
+							log(LogStatus.INFO, values+" checkbox is already selected", YesNo.No);
+						}
+
+
+						if(values.get(i).equalsIgnoreCase("unselect"))
+						{
+							if(CommonLib.isSelected(driver, ele, label+" checkbox"))
+							{
+								if (CommonLib.click(driver, ele, label+ " Checkbox", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, values+" checkbox has been unselected", YesNo.No);
+								} else {
+									sa.assertTrue(false, values+" checkbox is not unselected");
+									log(LogStatus.ERROR, values+" checkbox is not unselected", YesNo.Yes);
+								}
+							}
+							else
+							{
+								log(LogStatus.INFO, values+" checkbox is already unselected", YesNo.No);
+							}
+						}
+					}
+				}
+
+
+				i++;
+			}
+
+			if (click(driver, getRecordPageSettingSave(60), "Save Button", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Click on Save Button  " + sdgName, YesNo.No);
+				flag = true;
+				ThreadSleep(5000);
+
+			} else {
+				sa.assertTrue(false,
+						"Not Able to Click on Save Button Value so cannot create Firm on SDG:  " + sdgName);
+				log(LogStatus.SKIP, "Not Able to Click on Save Button Value so cannot create Firm on SDG:  " + sdgName,
+						YesNo.Yes);
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on Button: " + actionButtonName + " on SDG: " + sdgName, YesNo.Yes);
+			sa.assertTrue(false, "Not Able to Click on Button: " + actionButtonName + " on SDG: " + sdgName);
+
+		}
+		return flag;
+
+	}
+
+	
+	public ArrayList<String> verifyEditOrLockIconOnSDgRecord(String sdgName,ArrayList<String> recordName,ArrayList<String> iconType)
+	{
+		String xPath;
+		WebElement ele;
+		ArrayList<String> result=new ArrayList<String>();
+		if(recordName.size()==iconType.size())
+		{
+			for(int i=0; i<recordName.size(); i++)
+			{
+				xPath="//a[text()='"+sdgName+"']/ancestor::article//td[contains(@data-label,'"+recordName.get(i)+"')]//span";
+				ele=FindElement(driver, xPath, recordName.get(i)+" record", null, 50);
+				scrollDownThroughWebelementInCenter(driver, ele, recordName.get(i)+" record");
+				ThreadSleep(1500);
+				if(mouseOverOperation(driver, ele))
+				{
+					log(LogStatus.INFO, "The mouse has been hover to "+recordName.get(i), YesNo.No);	
+					if(iconType.get(i).equals("Lock"))
+					{
+						xPath="//a[text()='"+sdgName+"']/ancestor::article//td[contains(@data-label,'"+recordName.get(i)+"')]//button[@title='Locked']";
+						ele=CommonLib.FindElement(driver, xPath, recordName.get(i), null, 20);
+						if(CommonLib.checkElementVisibility(driver, ele, recordName.get(i)+" record lock icon", 20))
+						{
+							log(LogStatus.INFO, "Locked icon is visible on "+recordName.get(i), YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Locked icon is not visible on "+recordName.get(i), YesNo.No);
+							result.add("Locked icon is not visible on "+recordName.get(i));
+						}
+					}
+					else if(iconType.get(i).equals("Edit"))
+					{
+						xPath="//a[text()='"+sdgName+"']/ancestor::article//td[contains(@data-label,'"+recordName.get(i)+"')]//button[@title='Edit']";
+						ele=CommonLib.FindElement(driver, xPath, recordName.get(i), null, 20);
+						if(CommonLib.checkElementVisibility(driver, ele, recordName.get(i)+" record edit icon", 20))
+						{
+							log(LogStatus.INFO, "Edit icon is visible on "+recordName.get(i), YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Edit icon is not visible on "+recordName.get(i), YesNo.No);
+							result.add("Edit icon is not visible on "+recordName.get(i));
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Icon type is not correct", YesNo.No);
+						result.add("Icon type is not correct");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not abe to hover to "+recordName.get(i), YesNo.No);
+					result.add("Not abe to hover to "+recordName.get(i));
+				}
+			}
+		}
+
+		return result;
+	}
+	
+	
+	/**
+	 * @author Ankur Huria
+	 * @param activityTimeLineTab
+	 * @param labelValueAndTypes
+	 */
+	public boolean enterValuesForActivityTimeline(String activityTimeLineTab, String[][] labelValueAndTypes) {
+		CommonLib.refresh(driver);
+
+		int status = 0;
+		int loopCount = 0;
+		WebElement ele = getActivityTimelineGridOnRelatedTab(30);
+		if (ele != null) {
+			log(LogStatus.INFO, "Activity timeline grid is presenton on this page", YesNo.No);
+
+			if (click(driver, activityTimelineTab(activityTimeLineTab, 10), activityTimeLineTab,
+					action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Click on " + activityTimeLineTab + " Tab", YesNo.No);
+
+				if (activityTimeLineTab.equalsIgnoreCase("New Task")) {
+					if (click(driver, addTaskButtonInActivityTimeline(10), "New Task", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Click on Add Task Button In Activity Timeline", YesNo.No);
+
+					} else {
+						sa.assertTrue(false, "Not Able to Click on Add Task Button In Activity Timeline");
+						log(LogStatus.SKIP, "Not Able to Click on Add Task Button In Activity Timeline", YesNo.Yes);
+					}
+				}
+
+				for (String[] labelValueAndType : labelValueAndTypes) {
+
+					String label = labelValueAndType[0].replace("_", " ");
+					String value = labelValueAndType[1];
+					String type = labelValueAndType[2];
+
+					if (!"".equals(label) && !"".equals(value) && !"".equals(type)) {
+
+						if (type.equalsIgnoreCase("SearchDropDown")) {
+
+							String DropDownElements = "//label[text()='" + label
+									+ "']/ancestor::div//div/lightning-base-combobox-item/span/span/ancestor::lightning-base-combobox-item";
+
+							if (CommonLib.dropDownHandle(driver, activityTimelineSearchDropDown(label, 30),
+									DropDownElements, "searchDropDownBoxThroughSDG", value)) {
+								log(LogStatus.INFO, value + " value has been Selected  from label: " + label, YesNo.No);
+								status++;
+							} else {
+								sa.assertTrue(false, value + " value has not been Selected  from label: " + label);
+								log(LogStatus.ERROR, value + " value has not been Selected  from label: " + label,
+										YesNo.Yes);
+							}
+
+						}
+
+						else if (type.equalsIgnoreCase("DatePicker")) {
+							if (value != "") {
+								String[] date = value.split("/");
+
+								if (click(driver, calendarInputBox(label, 30), label + " Input Box",
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "Click on " + label + " Calendar Input Box", YesNo.No);
+									if (CommonLib.datePickerHandle(driver, monthInDatePicker(30),
+											previousMonthButtonInDatePicker(30), label + " Picker", date[2], date[1],
+											date[0])) {
+										log(LogStatus.INFO, "Date has been Selected  " + value, YesNo.No);
+										status++;
+									} else {
+										sa.assertTrue(false, "Date has not been Selected  " + value);
+										log(LogStatus.ERROR, "Date has not been Selected  " + value, YesNo.Yes);
+									}
+								} else {
+									sa.assertTrue(false, "Not Able to Click on " + label + " Calendar input Box");
+									log(LogStatus.ERROR, "Not Able to Click on " + label + " Calendar input Box",
+											YesNo.Yes);
+								}
+
+							} else {
+								log(LogStatus.ERROR, "No " + label + " Provided:  " + value, YesNo.Yes);
+							}
+
+						}
+
+						else if (type.equalsIgnoreCase("DatePickerCurrentDate")) {
+							value = CommonLib.getDateAccToTimeZone("GMT+5:30", "dd/MMM/yyyy");
+
+							String[] date = value.split("/");
+
+							if (click(driver, calendarInputBox(label, 30), label + " Input Box",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Click on " + label + " Calendar Input Box", YesNo.No);
+								if (CommonLib.datePickerHandle(driver, monthInDatePicker(30),
+										previousMonthButtonInDatePicker(30), label + " Picker", date[2], date[1],
+										date[0])) {
+									log(LogStatus.INFO, "Date has been Selected  " + value, YesNo.No);
+									status++;
+								} else {
+									sa.assertTrue(false, "Date has not been Selected  " + value);
+									log(LogStatus.ERROR, "Date has not been Selected  " + value, YesNo.Yes);
+								}
+							} else {
+								sa.assertTrue(false, "Not Able to Click on " + label + " Calendar input Box");
+								log(LogStatus.ERROR, "Not Able to Click on " + label + " Calendar input Box",
+										YesNo.Yes);
+							}
+
+						}
+
+						else if (type.equalsIgnoreCase("DatePickerFutureDate")) {
+							if (value != "") {
+
+								value = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MMM/yyyy",
+										Integer.parseInt(value));
+								String[] date = value.split("/");
+
+								if (click(driver, calendarInputBox(label, 30), label + " Input Box",
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "Click on " + label + " Calendar Input Box", YesNo.No);
+									if (CommonLib.datePickerHandle(driver, monthInDatePicker(30),
+											previousMonthButtonInDatePicker(30), label + " Picker", date[2], date[1],
+											date[0])) {
+										log(LogStatus.INFO, "Date has been Selected  " + value, YesNo.No);
+										status++;
+									} else {
+										sa.assertTrue(false, "Date has not been Selected  " + value);
+										log(LogStatus.ERROR, "Date has not been Selected  " + value, YesNo.Yes);
+									}
+								} else {
+									sa.assertTrue(false, "Not Able to Click on " + label + " Calendar input Box");
+									log(LogStatus.ERROR, "Not Able to Click on " + label + " Calendar input Box",
+											YesNo.Yes);
+								}
+
+							} else {
+								log(LogStatus.ERROR, "No " + label + " Provided:  " + value, YesNo.Yes);
+							}
+
+						}
+
+						else if (type.equalsIgnoreCase("DateTimePicker")) {
+							if (value != "") {
+								String[] dateTime = value.split("<Split>");
+								String[] date = dateTime[0].split("/");
+								String time = dateTime[1];
+
+								if (!dateTime[0].equals("")) {
+									if (click(driver, activityTimelineDateElement(label, "Date", 30),
+											label + " Input Box", action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.INFO, "Click on " + label + " Calendar Input Box", YesNo.No);
+										if (CommonLib.datePickerHandle(driver, monthInDatePicker(30),
+												previousMonthButtonInDatePicker(30), label + " Picker", date[2],
+												date[1], date[0])) {
+											log(LogStatus.INFO, "Date has been Selected  " + dateTime[0], YesNo.No);
+											CommonLib.ThreadSleep(2000);
+											if (!dateTime[1].equals("")) {
+
+												String DropDownElements = "//div[contains(@class,'slds-listbox')]/lightning-base-combobox-item/span/span";
+												if (CommonLib.dropDownHandle(driver,
+														activityTimelineTimeElement(label, "Time", 30),
+														DropDownElements, label + " Input Box", time)) {
+													log(LogStatus.INFO,
+															time + " value has been Selected  from label: " + label,
+															YesNo.No);
+													status++;
+												} else {
+													sa.assertTrue(false, time
+															+ " value has not been Selected  from label: " + label);
+													log(LogStatus.ERROR,
+															time + " value has not been Selected  from label: " + label,
+															YesNo.Yes);
+												}
+											}
+
+										} else {
+											sa.assertTrue(false, "Date has not been Selected  " + dateTime[0]);
+											log(LogStatus.ERROR, "Date has not been Selected  " + dateTime[0],
+													YesNo.Yes);
+										}
+									} else {
+										sa.assertTrue(false, "Not Able to Click on " + label + " Calendar input Box");
+										log(LogStatus.ERROR, "Not Able to Click on " + label + " Calendar input Box",
+												YesNo.Yes);
+									}
+								}
+
+							} else {
+								log(LogStatus.ERROR, "No " + label + " Provided:  " + value, YesNo.Yes);
+							}
+
+						}
+
+						else if (type.equalsIgnoreCase("DateTimePickerCurrentDate")) {
+							if (value != "") {
+								String[] dateTime = value.split("<Split>");
+
+								String currentDate = CommonLib.getDateAccToTimeZone("GMT+5:30", "dd/MMM/yyyy");
+								String[] date = currentDate.split("/");
+								String time = dateTime[1];
+
+								if (!dateTime[0].equals("")) {
+									if (click(driver, activityTimelineDateElement(label, "Date", 30),
+											label + " Input Box", action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.INFO, "Click on " + label + " Calendar Input Box", YesNo.No);
+										if (CommonLib.datePickerHandle(driver, monthInDatePicker(30),
+												previousMonthButtonInDatePicker(30), label + " Picker", date[2],
+												date[1], date[0])) {
+											log(LogStatus.INFO, "Date has been Selected  " + dateTime[0], YesNo.No);
+											CommonLib.ThreadSleep(2000);
+											if (!dateTime[1].equals("")) {
+
+												String DropDownElements = "//div[contains(@class,'slds-listbox')]/lightning-base-combobox-item/span/span";
+												if (CommonLib.dropDownHandle(driver,
+														activityTimelineTimeElement(label, "Time", 30),
+														DropDownElements, label + " Input Box", time)) {
+													log(LogStatus.INFO,
+															time + " value has been Selected  from label: " + label,
+															YesNo.No);
+													status++;
+												} else {
+													sa.assertTrue(false, time
+															+ " value has not been Selected  from label: " + label);
+													log(LogStatus.ERROR,
+															time + " value has not been Selected  from label: " + label,
+															YesNo.Yes);
+												}
+											}
+
+										} else {
+											sa.assertTrue(false, "Date has not been Selected  " + dateTime[0]);
+											log(LogStatus.ERROR, "Date has not been Selected  " + dateTime[0],
+													YesNo.Yes);
+										}
+									} else {
+										sa.assertTrue(false, "Not Able to Click on " + label + " Calendar input Box");
+										log(LogStatus.ERROR, "Not Able to Click on " + label + " Calendar input Box",
+												YesNo.Yes);
+									}
+								}
+
+							} else {
+								log(LogStatus.ERROR, "No " + label + " Provided:  " + value, YesNo.Yes);
+							}
+
+						}
+
+						else if (type.equalsIgnoreCase("DateTimePickerFutureDate")) {
+							if (value != "") {
+								String[] dateTime = value.split("<Split>");
+
+								String currentDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MMM/yyyy",
+										Integer.parseInt(value));
+								String[] date = currentDate.split("/");
+								String time = dateTime[1];
+
+								if (!dateTime[0].equals("")) {
+									if (click(driver, activityTimelineDateElement(label, "Date", 30),
+											label + " Input Box", action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.INFO, "Click on " + label + " Calendar Input Box", YesNo.No);
+										if (CommonLib.datePickerHandle(driver, monthInDatePicker(30),
+												previousMonthButtonInDatePicker(30), label + " Picker", date[2],
+												date[1], date[0])) {
+											log(LogStatus.INFO, "Date has been Selected  " + dateTime[0], YesNo.No);
+											CommonLib.ThreadSleep(2000);
+											if (!dateTime[1].equals("")) {
+
+												String DropDownElements = "//div[contains(@class,'slds-listbox')]/lightning-base-combobox-item/span/span";
+												if (CommonLib.dropDownHandle(driver,
+														activityTimelineTimeElement(label, "Time", 30),
+														DropDownElements, label + " Input Box", time)) {
+													log(LogStatus.INFO,
+															time + " value has been Selected  from label: " + label,
+															YesNo.No);
+													status++;
+												} else {
+													sa.assertTrue(false, time
+															+ " value has not been Selected  from label: " + label);
+													log(LogStatus.ERROR,
+															time + " value has not been Selected  from label: " + label,
+															YesNo.Yes);
+												}
+											}
+
+										} else {
+											sa.assertTrue(false, "Date has not been Selected  " + dateTime[0]);
+											log(LogStatus.ERROR, "Date has not been Selected  " + dateTime[0],
+													YesNo.Yes);
+										}
+									} else {
+										sa.assertTrue(false, "Not Able to Click on " + label + " Calendar input Box");
+										log(LogStatus.ERROR, "Not Able to Click on " + label + " Calendar input Box",
+												YesNo.Yes);
+									}
+								}
+
+							} else {
+								log(LogStatus.ERROR, "No " + label + " Provided:  " + value, YesNo.Yes);
+							}
+
+						}
+
+						else if (type.equalsIgnoreCase("DropDown")) {
+
+							String DropDownElements = "//div[@class='select-options']/ul/li[contains(@class,'uiMenuItem')]/a";
+							if (CommonLib.dropDownHandle(driver, activityTimelineDropDownElement(label, 30),
+									DropDownElements, label + " Input Box", value)) {
+								log(LogStatus.INFO, value + " value has been Selected  from label: " + label, YesNo.No);
+								status++;
+							} else {
+								sa.assertTrue(false, value + " value has not been Selected  from label: " + label);
+								log(LogStatus.ERROR, value + " value has not been Selected  from label: " + label,
+										YesNo.Yes);
+							}
+						}
+
+						else if (type.equalsIgnoreCase("DoubleDropDown")) {
+
+							String val[] = value.split("<Split>");
+							String DropDownElements = "//div[@class='entityMenuList']/ul/li/a/span";
+							if (CommonLib.dropDownHandle(driver,
+									activityTimelineSmallDropDownInDoubleDropDown(activityTimeLineTab, label, 30),
+									DropDownElements, label + " Input Box", val[0])) {
+								log(LogStatus.INFO, val[0] + " value has been Selected  from label: " + label,
+										YesNo.No);
+
+								CommonLib.ThreadSleep(2000);
+
+								if (activityTimeLineTab.equalsIgnoreCase("Email")) {
+									String searchDropDownListInNewRecordFormInCaseOfEmail = "//span[text()='" + label
+											+ "']/parent::label/following::div//div[contains(@class,'listContent')]/ul/li[not(contains(@class,'invisible'))]//div[contains(@class,'primaryLabel')]";
+									if (CommonLib.dropDownHandle(driver,
+											activityTimelineSearchDropDownInDoubleDropDown(activityTimeLineTab, label,
+													30),
+											searchDropDownListInNewRecordFormInCaseOfEmail, label + " Input Box",
+											val[1])) {
+										log(LogStatus.INFO, val[1] + " value has been Selected  from label: " + label,
+												YesNo.No);
+										status++;
+										CommonLib.ThreadSleep(2000);
+
+									} else {
+										sa.assertTrue(false,
+												val[1] + " value has not been Selected  from label: " + label);
+										log(LogStatus.ERROR,
+												val[1] + " value has not been Selected  from label: " + label,
+												YesNo.Yes);
+									}
+								} else {
+
+									if (CommonLib.dropDownHandle(driver,
+											activityTimelineSearchDropDownInDoubleDropDown(activityTimeLineTab, label,
+													30),
+											searchDropDownListInNewRecordForm(label), label + " Input Box", val[1])) {
+										log(LogStatus.INFO, val[1] + " value has been Selected  from label: " + label,
+												YesNo.No);
+										status++;
+										CommonLib.ThreadSleep(2000);
+
+									} else {
+										sa.assertTrue(false,
+												val[1] + " value has not been Selected  from label: " + label);
+										log(LogStatus.ERROR,
+												val[1] + " value has not been Selected  from label: " + label,
+												YesNo.Yes);
+									}
+								}
+
+							} else {
+								sa.assertTrue(false, val[0] + " value has not been Selected  from label: " + label);
+								log(LogStatus.ERROR, val[0] + " value has not been Selected  from label: " + label,
+										YesNo.Yes);
+							}
+						}
+
+						else if (type.equalsIgnoreCase("SearchDropDownTextBox")) {
+
+							activityTimelineSearchDropDown(label, 30)
+							.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+							if (CommonLib.sendKeys(driver, activityTimelineSearchDropDown(label, 30), value,
+									label + " Input Box", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, value + " value has been Entered in label: " + label, YesNo.No);
+								status++;
+							} else {
+								sa.assertTrue(false, value + " value has not been Entered in label: " + label);
+								log(LogStatus.ERROR, value + " value has not been Entered in label: " + label,
+										YesNo.Yes);
+							}
+						}
+
+						else if (type.equalsIgnoreCase("TextBox")) {
+							if(label.equals("To"))
+							{
+								if (CommonLib.sendKeys(driver, activityTimelineToTextBoxElement(label, 30), value,
+										label + " Input Box", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, value + " value has been Entered in label: " + label, YesNo.No);
+									status++;
+								} else {
+									sa.assertTrue(false, value + " value has not been Entered in label: " + label);
+									log(LogStatus.ERROR, value + " value has not been Entered in label: " + label,
+											YesNo.Yes);
+								}
+							}
+
+							else if(label.equals("Body"))
+							{
+								if(CommonLib.switchToFrame(driver, 50, getckEditorIframe(50)))
+								{
+								
+								
+								if(CommonLib.switchToFrame(driver, 50, getemailBodyIframe(50)))
+								{
+									log(LogStatus.INFO, "Switched to email body iframe", YesNo.No);
+									if (CommonLib.sendKeys(driver, activityTimelineBodyTextBoxElement(label, 30), value,
+											label + " Input Box", action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.INFO, value + " value has been Entered in label: " + label, YesNo.No);
+										status++;
+									} else {
+										sa.assertTrue(false, value + " value has not been Entered in label: " + label);
+										log(LogStatus.ERROR, value + " value has not been Entered in label: " + label,
+												YesNo.Yes);
+									}	
+
+								}
+								else
+								{
+									sa.assertTrue(false, "Not able to switch to email body Iframe");
+									log(LogStatus.ERROR, "Not able to switch to email body Iframe", YesNo.Yes);
+								}
+								}
+								else
+								{
+									sa.assertTrue(false, "Not able to switch to ck editor Iframe");
+									log(LogStatus.ERROR, "Not able to switch to ck editor Iframe", YesNo.Yes);
+									
+								}
+								CommonLib.switchToDefaultContent(driver);
+							}
+
+							else
+							{
+
+								if (CommonLib.sendKeys(driver, activityTimelineTextBoxElement(label, 30), value,
+										label + " Input Box", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, value + " value has been Entered in label: " + label, YesNo.No);
+									status++;
+								} else {
+									sa.assertTrue(false, value + " value has not been Entered in label: " + label);
+									log(LogStatus.ERROR, value + " value has not been Entered in label: " + label,
+											YesNo.Yes);
+								}
+							}
+						}
+
+						else {
+							sa.assertTrue(false,
+									"Please Enter Valid Type of Element, So Not Able to Enter details for It, Label: "
+											+ label + " ,Value: " + value + " & Type: " + type);
+							log(LogStatus.SKIP,
+									"Either One of Them Data is Empty, So Not Able to Enter details for It, Label: "
+											+ label + " ,Value: " + value + " & Type: " + type,
+											YesNo.Yes);
+						}
+
+					}
+
+					else {
+						sa.assertTrue(false,
+								"Either One of Them Data is Empty, So Not Able to Enter details for It, Label: " + label
+								+ " ,Value: " + value + " & Type: " + type);
+						log(LogStatus.SKIP,
+								"Either One of Them Data is Empty, So Not Able to Enter details for It, Label: " + label
+								+ " ,Value: " + value + " & Type: " + type,
+								YesNo.Yes);
+					}
+
+					loopCount++;
+				}
+
+			} else {
+				sa.assertTrue(false, "Not Able to Click on " + activityTimeLineTab + " Tab");
+				log(LogStatus.SKIP, "Not Able to Click on " + activityTimeLineTab + " Tab", YesNo.Yes);
+			}
+
+		} else {
+			sa.assertTrue(false, "Activity timeline grid is not present on this page");
+			log(LogStatus.SKIP, "Activity timeline grid is not present on this page", YesNo.Yes);
+		}
+
+		if (status == loopCount) {
+
+			if (activityTimeLineTab.equalsIgnoreCase("Email")) {
+
+				if (clickUsingJavaScript(driver, sendButtonInActivityTimeline(10), "Send Button",
+						action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Click on Send Button", YesNo.No);
+
+					if (emailSentMsg(30) != null) {
+
+						log(LogStatus.INFO, "Verified Email Sent Msg", YesNo.No);
+						return true;
+					} else {
+
+						sa.assertTrue(false, "Email Sent Msg not Verified");
+						log(LogStatus.SKIP, "Email Sent Msg not Verified", YesNo.Yes);
+						return false;
+					}
+
+				} else {
+					sa.assertTrue(false, "Not Able to Click on Send Button");
+					log(LogStatus.SKIP, "Not Able to Click on Send Button", YesNo.Yes);
+					return false;
+				}
+
+			} else {
+
+				if (clickUsingJavaScript(driver, getCustomTabSaveBtn(5), "Save Button", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Click on Save Button", YesNo.No);
+					WebElement msg = ActivityTimeLineCreatedMsg(30);
+					if (msg != null) {
+						if (msg.getText().contains("was created.")) {
+							log(LogStatus.INFO, "Created Msg Verified for :" + activityTimeLineTab, YesNo.No);
+							return true;
+						} else {
+
+							sa.assertTrue(false, "Created Msg not Verified for :" + activityTimeLineTab);
+							log(LogStatus.SKIP, "Created Msg not Verified for :" + activityTimeLineTab, YesNo.Yes);
+							return false;
+						}
+
+					} else {
+						sa.assertTrue(false, "Created Msg not Verified for :" + activityTimeLineTab);
+						log(LogStatus.SKIP, "Created Msg not Verified for :" + activityTimeLineTab, YesNo.Yes);
+						return false;
+					}
+
+				} else {
+					sa.assertTrue(false, "Not Able to Click on Save Button");
+					log(LogStatus.SKIP, "Not Able to Click on Save Button", YesNo.Yes);
+					return false;
+				}
+			}
+
+		}
+
+		else
+			return false;
+	}
+	
+	public boolean verifyActivityRecord(String recordActivityTitle)
+	{
+		String xPath;
+		List<WebElement> elements;
+		boolean flag=false;
+		ArrayList<String> expectedUpcomingAndOverdueRecord=new ArrayList<String>();
+		ArrayList<String> expectedThisMonthRecord=new ArrayList<String>();
+		ArrayList<String> actualUpcomingAndOverdueRecord=new ArrayList<String>();
+		ArrayList<String> actualThisMonthRecord=new ArrayList<String>();
+		
+		String[] recordAndActivityTitle=recordActivityTitle.split("<Break>");
+		for(int i=0; i<recordAndActivityTitle.length;i++)
+		{
+			String activityTitle=recordAndActivityTitle[i].split("<Br>")[1];
+			if(activityTitle.equals("UpcomingAndOverdue"))
+			{
+				expectedUpcomingAndOverdueRecord.add(recordAndActivityTitle[i].split("<Br>")[0]);
+			}
+			else if(activityTitle.equals("ThisMonth"))
+			{
+				expectedThisMonthRecord.add(recordAndActivityTitle[i].split("<Br>")[0]);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Activity titles are not correct", YesNo.No);
+				return false;
+			}
+		}
+		//for Upcoming and Overdue recrd
+		xPath="//button[text()='Upcoming & Overdue']/ancestor::div[contains(@class,'open-activity-group')]//a[@rel='noreferrer']";
+		elements=CommonLib.FindElements(driver, xPath, "Upcoming and overdue record");
+		for(WebElement ele:elements)
+		{
+			actualUpcomingAndOverdueRecord.add(CommonLib.getText(driver, ele, "Upcoming and overdue record", action.SCROLLANDBOOLEAN));
+		}
+		//for This Month
+		xPath="//span[text()='This Month']/ancestor::div[contains(@class,'past-activity-group')]//a[@rel='noreferrer']";
+		elements=CommonLib.FindElements(driver, xPath, "This Month record");
+		for(WebElement ele:elements)
+		{
+			actualThisMonthRecord.add(CommonLib.getText(driver, ele, "This Month record", action.SCROLLANDBOOLEAN));
+		}
+		
+		if(actualUpcomingAndOverdueRecord.containsAll(actualUpcomingAndOverdueRecord) && actualThisMonthRecord.containsAll(expectedThisMonthRecord))
+		{
+			log(LogStatus.INFO, "Record on the Upcoming & Overdue and This month has been verified Upcoming & Overdue : "+actualUpcomingAndOverdueRecord+ " This Month : "+actualThisMonthRecord, YesNo.No);
+		    flag=true;
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Record on the Upcoming & Overdue and This month are not verified Upcoming & Overdue : "+actualUpcomingAndOverdueRecord+ " This Month : "+actualThisMonthRecord, YesNo.No);
+				
+		}
+		return flag;
+	}
+	
+	
+	/**
+	 * @author Ankur Huria
+	 * @param SDGGridName
+	 */
+
+	public void verifyColumnAscendingDescendingOrder(String sdgGridName, List<String> columnNames,
+			List<String> dateColumns,List<String> amountColumns, String FirstColumnAscYesOrNoByDefault) {
+
+		List<WebElement> headerList = sdgGridAllHeadersLabelNameList(sdgGridName);
+		List<String> columnDataText = headerList.stream().map(s -> s.getText()).collect(Collectors.toList()).stream()
+				.map(t -> t.trim()).collect(Collectors.toList());
+		if (!headerList.isEmpty()) {
+			int i = 0;
+
+			if (FirstColumnAscYesOrNoByDefault.equalsIgnoreCase("Yes")) {
+				if (clickUsingJavaScript(driver, headerList.get(2), sdgGridName + " SDG Grid header column",
+						action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(6000);
+				} else {
+					log(LogStatus.PASS, "Not able to click on First Column of SDG: " + sdgGridName, YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on First Column of SDG: " + sdgGridName);
+				}
+
+			}
+
+			for (String columnName : columnNames) {
+				int columnIndex = columnDataText.indexOf(columnName);
+
+				if (clickUsingJavaScript(driver, headerList.get(columnIndex),
+						sdgGridName.toString() + " SDG Grid header column " + columnName, action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.PASS, "Clicked on Header " + columnName + " Column no. " + (columnIndex + 1) + " for "
+							+ SortOrder.Assecending, YesNo.No);
+					ThreadSleep(6000);
+
+					if (!dateColumns.contains(columnName)) {
+
+						if (!amountColumns.contains(columnName)) {
+
+							if (CommonLib.checkSorting(driver, SortOrder.Assecending,
+									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+								log(LogStatus.PASS,   "Verified "+SortOrder.Assecending+" Sorting on SDG: " + sdgGridName.toString()
+								+ " for Column " + columnName, YesNo.No);
+							} else {
+								log(LogStatus.FAIL,  SortOrder.Assecending+" Sorting not working on SDG: " + sdgGridName.toString()
+								+ " for Column " + columnName, YesNo.No);
+								sa.assertTrue(false, SortOrder.Assecending+" Sorting not working on SDG: " + sdgGridName.toString()
+								+ " for Column " + columnName);
+							}
+						}
+						else
+						{
+
+							List<Integer> expectedAmount = new ArrayList<Integer>();
+							List<String> actualAmount = new ArrayList<String>();
+							List<Integer> sortedActualAmount = new ArrayList<Integer>();
+							List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
+									columnIndex + 1);
+							actualAmount = actualDateListWebElement.stream().map(date -> date.getText())
+									.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
+									.collect(Collectors.toList());
+
+							for(String val:actualAmount)
+							{
+								String[] splitedAmount=val.split("[.]", 0);
+								String amount=splitedAmount[0].replace("$", "").replace(",", "");
+								int amou=Integer.parseInt(amount);
+								sortedActualAmount.add(amou);
+							}
+
+							expectedAmount=amountToAscendingOrder(actualDateListWebElement);
+
+							if(sortedActualAmount.equals(expectedAmount))
+							{
+								log(LogStatus.PASS, "Verified "+SortOrder.Assecending+" Sorting on SDG: " + sdgGridName.toString()
+								+ " for Column " + columnName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.FAIL, SortOrder.Assecending+" Sorting not working on SDG: " + sdgGridName.toString()
+								+ " for Column " + columnName, YesNo.No);
+								sa.assertTrue(false, SortOrder.Assecending+" Sorting not working on SDG: " + sdgGridName.toString()
+								+ " for Column " + columnName);	
+							}
+
+						}
+
+					}
+
+					else {
+						List<String> expectedDateListText = new ArrayList<String>();
+						List<String> actualDateListText = new ArrayList<String>();
+						List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
+								columnIndex + 1);
+						actualDateListText = actualDateListWebElement.stream().map(date -> date.getText())
+								.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
+								.collect(Collectors.toList());
+						expectedDateListText = dateToAscendingOrder(actualDateListWebElement);
+
+						if (actualDateListText.equals(expectedDateListText)) {
+							log(LogStatus.PASS, "Verified "+SortOrder.Assecending+" Sorting on SDG: " + sdgGridName.toString()
+							+ " for Column " + columnName, YesNo.No);
+						} else {
+							log(LogStatus.FAIL, SortOrder.Assecending+" Sorting not working on SDG: " + sdgGridName.toString()
+							+ " for Column " + columnName, YesNo.No);
+							sa.assertTrue(false, SortOrder.Assecending+" Sorting not working on SDG: " + sdgGridName.toString()
+							+ " for Column " + columnName);
+						}
+
+					}
+
+				} else {
+					log(LogStatus.PASS, "Not able to click on " + sdgGridName.toString() + " SDG Grid header "
+							+ columnName + " so cannot check Sorting " + SortOrder.Assecending, YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on " + sdgGridName.toString() + " SDG Grid header "
+							+ columnName + " so cannot check Sorting " + SortOrder.Assecending);
+				}
+				headerList = sdgGridAllHeadersLabelNameList(sdgGridName);
+
+				if (clickUsingJavaScript(driver, headerList.get(columnIndex),
+						sdgGridName.toString() + " SDG Grid header column", action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(6000);
+					log(LogStatus.PASS,
+							"Clicked on Header " + columnName + " Clomun " + (columnIndex + 1) + SortOrder.Decending,
+							YesNo.No);
+
+					if (!dateColumns.contains(columnName)) {
+						if (!amountColumns.contains(columnName)) {
+
+							if (CommonLib.checkSorting(driver, SortOrder.Decending,
+									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+								log(LogStatus.PASS, "Verified "+SortOrder.Decending+" Sorting on SDG: " + sdgGridName.toString()
+								+ " for Column " + columnName, YesNo.No);
+							} else {
+								log(LogStatus.FAIL, SortOrder.Decending+" Sorting not working on SDG: " + sdgGridName.toString()
+								+ " for Column " + columnName, YesNo.No);
+								sa.assertTrue(false, SortOrder.Decending+" Sorting not working on SDG: " + sdgGridName.toString()
+								+ " for Column " + columnName);
+							}
+						}
+						else
+						{
+
+							List<Integer> expectedAmount = new ArrayList<Integer>();
+							List<String> actualAmount = new ArrayList<String>();
+							List<Integer> sortedActualAmount = new ArrayList<Integer>();
+							List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
+									columnIndex + 1);
+							actualAmount = actualDateListWebElement.stream().map(date -> date.getText())
+									.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
+									.collect(Collectors.toList());
+
+							for(String val:actualAmount)
+							{
+								String[] splitedAmount=val.split("[.]", 0);
+								String amount=splitedAmount[0].replace("$", "").replace(",", "");
+								int amou=Integer.parseInt(amount);
+								sortedActualAmount.add(amou);
+							}
+
+							expectedAmount=amountToDescendingOrder(actualDateListWebElement);
+
+							if(sortedActualAmount.equals(expectedAmount))
+							{
+								log(LogStatus.PASS, "Verified "+SortOrder.Decending+" Sorting on SDG: " + sdgGridName.toString()
+								+ " for Column " + columnName, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.FAIL, SortOrder.Decending+" Sorting not working on SDG: " + sdgGridName.toString()
+								+ " for Column " + columnName, YesNo.No);
+								sa.assertTrue(false, SortOrder.Decending+" Sorting not working on SDG: " + sdgGridName.toString()
+								+ " for Column " + columnName);	
+							}
+
+						}
+
+					}
+
+					else {
+						List<String> expectedDateListText = new ArrayList<String>();
+						List<String> actualDateListText = new ArrayList<String>();
+						List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
+								columnIndex + 1);
+						actualDateListText = actualDateListWebElement.stream().map(date -> date.getText())
+								.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
+								.collect(Collectors.toList());
+						expectedDateListText = dateToDescendingOrder(actualDateListWebElement);
+
+						if (actualDateListText.equals(expectedDateListText)) {
+							log(LogStatus.PASS, "Verified "+SortOrder.Decending+" Sorting on SDG: " + sdgGridName.toString()
+							+ " for Column " + columnName, YesNo.No);
+						} else {
+							log(LogStatus.FAIL, SortOrder.Decending+" Sorting not working on SDG: " + sdgGridName.toString()
+							+ " for Column " + columnName, YesNo.No);
+							sa.assertTrue(false, SortOrder.Decending+" Sorting not working on SDG: " + sdgGridName.toString()
+							+ " for Column " + columnName);
+						}
+
+					}
+				} else {
+					log(LogStatus.PASS, "Not able to click on " + sdgGridName.toString() + " SDG Grid header "
+							+ columnName + " so cannot check Sorting " + SortOrder.Decending, YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on " + sdgGridName.toString() + " SDG Grid header "
+							+ columnName + " so cannot check Sorting " + SortOrder.Decending);
+				}
+
+			}
+		} else {
+			log(LogStatus.PASS,
+					sdgGridName.toString() + " SDG Grid header cloumns list is not visible so cannot check Sorting ",
+					YesNo.Yes);
+			sa.assertTrue(false,
+					sdgGridName.toString() + " SDG Grid header cloumns list is not visible so cannot check Sorting ");
+		}
+	}
+
+/**
+	 * @author Ankur Huria
+	 * @param SDGName
+	 * @param datas
+	 */
+	public List<String> dateToAscendingOrder(List<WebElement> datesListElements) {
+		List<String> datesList = new ArrayList<String>();
+		datesList = datesListElements.stream().map(date -> date.getText()).collect(Collectors.toList());
+		datesList = datesList.stream().filter(s -> !s.equals("")).collect(Collectors.toList());
+		List<String> dateResolved = new ArrayList<String>();
+		List<String> dateStringResult = new ArrayList<String>();
+		for (String dates : datesList) {
+
+			String[] dateArray = dates.split("/");
+			int monthLength = dateArray[0].length();
+			if (monthLength == 1) {
+				dates = "0" + dates;
+			}
+
+			dateResolved.add(dates);
+
+		}
+		/* Sorting the ArrayList using Collections.sort() method */
+
+		List<Date> pureDatesList = dateResolved.stream().filter(s -> !s.equals("")).map(date -> {
+			try {
+
+				return new SimpleDateFormat("MM/dd/yyyy").parse(date);
+
+			} catch (java.text.ParseException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}).collect(Collectors.toList());
+
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+
+		Collections.sort(pureDatesList, new Comparator<Date>() {
+			@Override
+			public int compare(Date lhs, Date rhs) {
+				if (lhs.getTime() < rhs.getTime())
+					return -1;
+				else if (lhs.getTime() == rhs.getTime())
+					return 0;
+				else
+					return 1;
+			}
+		});
+
+		List<String> pureDatesListInFormat = pureDatesList.stream().map(date -> formatter.format(date))
+				.collect(Collectors.toList());
+		for (String dates : pureDatesListInFormat) {
+
+			String[] dateArray = dates.split("/");
+			String[] monthArray = dateArray[0].split("");
+			String[] dayArray = dateArray[1].split("");
+			String month;
+			month = dateArray[0];
+			if (monthArray[0].equals("0")) {
+				month = dateArray[0].replace("0", "");
+				dates = month + "/" + dateArray[1] + "/" + dateArray[2];
+
+			}
+			if (dayArray[0].equals("0")) {
+				String day = dateArray[1].replace("0", "");
+				dates = month + "/" + day + "/" + dateArray[2];
+			}
+
+			dateStringResult.add(dates);
+
+		}
+
+		int i = 0;
+		for (String expectedDates : datesList) {
+
+			if (expectedDates.equals(dateStringResult.get(i))) {
+				appLog.info("Order of column is matched " + "Expected: " + expectedDates + "\tActual: "
+						+ dateStringResult.get(i));
+			} else {
+				appLog.info("Order of column din't match. " + "Expected: " + expectedDates + "\tActual: "
+						+ dateStringResult.get(i));
+				BaseLib.sa.assertTrue(false, "Order of column din't match. " + "Expected: " + expectedDates
+						+ "\tActual: " + dateStringResult.get(i));
+
+			}
+
+			i++;
+		}
+		return dateStringResult;
+	}
+
+	public List<String> dateToDescendingOrder(List<WebElement> datesListElements) {
+		List<String> datesList = new ArrayList<String>();
+		datesList = datesListElements.stream().map(date -> date.getText()).collect(Collectors.toList());
+		datesList = datesList.stream().filter(s -> !s.equals("")).collect(Collectors.toList());
+		List<String> dateResolved = new ArrayList<String>();
+		List<String> dateStringResult = new ArrayList<String>();
+		for (String dates : datesList) {
+
+			String[] dateArray = dates.split("/");
+			int monthLength = dateArray[0].length();
+			if (monthLength == 1) {
+				dates = "0" + dates;
+			}
+
+			dateResolved.add(dates);
+
+		}
+		/* Sorting the ArrayList using Collections.sort() method */
+
+		List<Date> pureDatesList = dateResolved.stream().filter(s -> !s.equals("")).map(date -> {
+			try {
+
+				return new SimpleDateFormat("MM/dd/yyyy").parse(date);
+
+			} catch (java.text.ParseException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}).collect(Collectors.toList());
+
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+
+		Collections.sort(pureDatesList, new Comparator<Date>() {
+			@Override
+			public int compare(Date lhs, Date rhs) {
+				if (lhs.getTime() < rhs.getTime())
+					return 1;
+				else if (lhs.getTime() == rhs.getTime())
+					return 0;
+				else
+					return -1;
+			}
+		});
+
+		List<String> pureDatesListInFormat = pureDatesList.stream().map(date -> formatter.format(date))
+				.collect(Collectors.toList());
+		for (String dates : pureDatesListInFormat) {
+
+			String[] dateArray = dates.split("/");
+			String[] monthArray = dateArray[0].split("");
+			String[] dayArray = dateArray[1].split("");
+			String month;
+			month = dateArray[0];
+			if (monthArray[0].equals("0")) {
+				month = dateArray[0].replace("0", "");
+				dates = month + "/" + dateArray[1] + "/" + dateArray[2];
+
+			}
+			if (dayArray[0].equals("0")) {
+				String day = dateArray[1].replace("0", "");
+				dates = month + "/" + day + "/" + dateArray[2];
+			}
+
+			dateStringResult.add(dates);
+
+		}
+
+		int i = 0;
+		for (String expectedDates : datesList) {
+
+			if (expectedDates.equals(dateStringResult.get(i))) {
+				appLog.info("Order of column is matched " + "Expected: " + expectedDates + "\tActual: "
+						+ dateStringResult.get(i));
+			} else {
+				appLog.info("Order of column din't match. " + "Expected: " + expectedDates + "\tActual: "
+						+ dateStringResult.get(i));
+				BaseLib.sa.assertTrue(false, "Order of column din't match. " + "Expected: " + expectedDates
+						+ "\tActual: " + dateStringResult.get(i));
+
+			}
+
+			i++;
+		}
+		return dateStringResult;
+	}
+	
+	public List<Integer> amountToAscendingOrder(List<WebElement> amountListElements) {
+		
+		List<String> expectedAmount=new ArrayList<String>();
+		List<Integer> sortedExpectedAmount=new ArrayList<Integer>();
+		
+		expectedAmount = amountListElements.stream().map(date -> date.getText())
+				.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
+				.collect(Collectors.toList());
+		
+		for(String val:expectedAmount)
+		{
+			String[] splitedAmount=val.split("[.]", 0);
+			String amount=splitedAmount[0].replace("$", "").replace(",", "");
+			int amou=Integer.parseInt(amount);
+			sortedExpectedAmount.add(amou);
+		}
+		Collections.sort(sortedExpectedAmount);
+		return sortedExpectedAmount;		
+	}
+		
+    public List<Integer> amountToDescendingOrder(List<WebElement> amountListElements) {
+		
+		List<String> expectedAmount=new ArrayList<String>();
+		List<Integer> sortedExpectedAmount=new ArrayList<Integer>();
+		expectedAmount = amountListElements.stream().map(date -> date.getText())
+				.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
+				.collect(Collectors.toList());
+		
+		for(String val:expectedAmount)
+		{
+			String[] splitedAmount=val.split("[.]", 0);
+			String amount=splitedAmount[0].replace("$", "").replace(",", "");
+			int amou=Integer.parseInt(amount);
+			sortedExpectedAmount.add(amou);
+		}
+		Collections.sort(sortedExpectedAmount, Collections.reverseOrder());
+		return sortedExpectedAmount;		
+	}
+    
+    /**
+	 * @author Ankur Huria
+	 * @param projectName
+	 * @param labelWithValues
+	 * @param action
+	 * @param timeOut
+	 * @return true if able to enter value for SDG creation
+	 */
+	@SuppressWarnings("unused")
+	public boolean enterDetailsForRecord(String projectName, String[][] labelValueAndTypeOfElement, action action,
+			int timeOut) {
+		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		boolean flag = false;
+		String label = "";
+		String value = "";
+		String typeOfElement = "";
+		int status = 0;
+		WebElement ele = null;
+		int loopCount = 0;
+		for (String[] labelValues : labelValueAndTypeOfElement) {
+			label = labelValues[0].replace("_", " ");
+			value = labelValues[1];
+			typeOfElement = labelValues[2];
+
+			if (typeOfElement.equalsIgnoreCase("DropDown")) {
+				CommonLib.ThreadSleep(3000);
+				if (dropDownHandle(driver, sdg.dropDownInputInNewRecordForm(label, 20),
+						dropDownListInNewRecordForm(label), "DropDown " + label, value)) {
+					log(LogStatus.INFO, "Successfully Select the value:  " + value + " from " + label, YesNo.Yes);
+					status++;
+
+				} else {
+					log(LogStatus.SKIP, "Not Successfully Select the value:  " + value + " from " + label, YesNo.Yes);
+					sa.assertTrue(false, "Not Successfully Select the value:  " + value + " from " + label);
+				}
+
+			} else if (typeOfElement.equalsIgnoreCase("TextBox")) {
+				ele = textBoxInNewRecordForm(label, 30);
+				if (ele != null) {
+					if (sendKeys(driver, ele, value, label, action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "successfully entered " + value + " in " + label, YesNo.Yes);
+						status++;
+
+					} else {
+						log(LogStatus.SKIP, "could not enter " + value + " in " + label, YesNo.Yes);
+						sa.assertTrue(false, "could not enter " + value + " in " + label);
+
+					}
+
+				}
+			} else if (typeOfElement.equalsIgnoreCase("TextArea")) {
+				ele = sdg.textAreaInNewRecordForm(label, 10);
+				if (sendKeys(driver, ele, value, label, action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "successfully entered " + value + " in " + label, YesNo.Yes);
+					status++;
+
+				} else {
+					log(LogStatus.SKIP, "could not enter " + value + " in " + label, YesNo.Yes);
+					sa.assertTrue(false, "could not enter " + value + " in " + label);
+
+				}
+
+			}
+
+			else if (typeOfElement.equalsIgnoreCase("SearchDropDown")) {
+				ele = sdg.sdgActionAndFieldTextArea(label, 10);
+				if (dropDownHandle(driver, sdg.searchDropDownInputInNewRecordForm(label, 20),
+						searchDropDownListInNewRecordForm(label), "DropDown " + label, value)) {
+					log(LogStatus.INFO, "Successfully Select the value:  " + value + " from " + label, YesNo.Yes);
+					status++;
+
+				} else {
+					log(LogStatus.SKIP, "Not Successfully Select the value:  " + value + " from " + label, YesNo.Yes);
+					sa.assertTrue(false, "Not Successfully Select the value:  " + value + " from " + label);
+				}
+
+			}
+
+			else if (typeOfElement.equalsIgnoreCase("DatePicker")) {
+				if (value != null || value != "") {
+					String[] date = value.split("/");
+
+					if (click(driver, datePickerInputInNewRecordForm(label, 30), label + " Input Box",
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Click on " + label + " Calendar Input Box", YesNo.No);
+						if (CommonLib.datePickerHandle(driver, label + " Picker", date[2], date[1], date[0])) {
+							log(LogStatus.INFO, "Date has been Selected  " + value, YesNo.No);
+							status++;
+						} else {
+							sa.assertTrue(false, "Date has not been Selected  " + value);
+							log(LogStatus.ERROR, "Date has not been Selected  " + value, YesNo.Yes);
+						}
+					} else {
+						sa.assertTrue(false, "Not Able to Click on " + label + " Calendar input Box");
+						log(LogStatus.ERROR, "Not Able to Click on " + label + " Calendar input Box", YesNo.Yes);
+					}
+
+				} else {
+					log(LogStatus.ERROR, "No " + label + " Provided:  " + value, YesNo.Yes);
+				}
+
+			}
+
+			else if (typeOfElement.equalsIgnoreCase("DatePickerCurrentDate")) {
+				value = CommonLib.getDateAccToTimeZone("GMT+5:30", "dd/MMM/yyyy");
+
+				String[] date = value.split("/");
+
+				if (click(driver, datePickerInputInNewRecordForm(label, 30), label + " Input Box",
+						action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Click on " + label + " Calendar Input Box", YesNo.No);
+					if (CommonLib.datePickerHandle(driver, label + " Picker", date[2], date[1], date[0])) {
+						log(LogStatus.INFO, "Date has been Selected  " + value, YesNo.No);
+						status++;
+					} else {
+						sa.assertTrue(false, "Date has not been Selected  " + value);
+						log(LogStatus.ERROR, "Date has not been Selected  " + value, YesNo.Yes);
+					}
+				} else {
+					sa.assertTrue(false, "Not Able to Click on " + label + " Calendar input Box");
+					log(LogStatus.ERROR, "Not Able to Click on " + label + " Calendar input Box", YesNo.Yes);
+				}
+
+			}
+
+			else if (typeOfElement.equalsIgnoreCase("DatePickerFutureDate")) {
+				value = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MMM/yyyy", Integer.parseInt(value));
+				String[] date = value.split("/");
+
+				if (click(driver, datePickerInputInNewRecordForm(label, 30), label + " Input Box",
+						action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Click on " + label + " Calendar Input Box", YesNo.No);
+					if (CommonLib.datePickerHandle(driver, label + " Picker", date[2], date[1], date[0])) {
+						log(LogStatus.INFO, "Date has been Selected  " + value, YesNo.No);
+						status++;
+					} else {
+						sa.assertTrue(false, "Date has not been Selected  " + value);
+						log(LogStatus.ERROR, "Date has not been Selected  " + value, YesNo.Yes);
+					}
+				} else {
+					sa.assertTrue(false, "Not Able to Click on " + label + " Calendar input Box");
+					log(LogStatus.ERROR, "Not Able to Click on " + label + " Calendar input Box", YesNo.Yes);
+				}
+
+			}
+
+			else if (typeOfElement.equalsIgnoreCase("MultiPickList")) {
+				List<WebElement> rolesData = chosenOrAvailableDataForLabel(label, "Available");
+
+				for (WebElement roledata : rolesData) {
+					if (roledata.getText().equals(value)) {
+						if (click(driver, roledata, value, action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Click on " + value + " Button of Label " + label, YesNo.No);
+							CommonLib.ThreadSleep(3000);
+
+							if (click(driver, home.moveSectionToChosenOrAvailableButton(label, "Chosen", 30),
+									"MultiPickList Navigation Button", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Click on MultipickList Navigation Button of Label " + label,
+										YesNo.No);
+
+								List<WebElement> chosenRoleDatas = chosenOrAvailableDataForLabel(label, "Chosen");
+								if (!chosenRoleDatas.isEmpty()) {
+									List<String> chosenRoleDatasText = chosenRoleDatas.stream().map(x -> x.getText())
+											.collect(Collectors.toList());
+									if (chosenRoleDatasText.contains(value)) {
+
+										log(LogStatus.INFO, "Value: " + value + " has been Chosen ", YesNo.Yes);
+										status++;
+
+									} else {
+										sa.assertTrue(false, "Value: " + value
+												+ " has not been Chosen, So Not Able to Continue to Create Record");
+										log(LogStatus.ERROR, "Value: " + value
+												+ " has not been Chosen, So Not Able to Continue to Create Record",
+												YesNo.Yes);
+									}
+								} else {
+									sa.assertTrue(false, "Not Able to Chose the " + label + " " + value);
+									log(LogStatus.ERROR, "Not Able to Chose the " + label + " " + value, YesNo.Yes);
+								}
+
+							} else {
+								sa.assertTrue(false,
+										"Not Able to Click on MultipickList Navigation Button of Label: " + label);
+								log(LogStatus.ERROR,
+										"Not Able to Click on MultipickList Navigation Button of Label: " + label,
+										YesNo.Yes);
+							}
+
+						} else {
+							sa.assertTrue(false,
+									"Not Able to Click on Button Value so cannot move to Chosen of Label " + label);
+							log(LogStatus.SKIP, "Not Able to Click on " + value
+									+ " Button Value so cannot move to Chosen of Label " + label, YesNo.Yes);
+						}
+
+					}
+				}
+			}
+
+			loopCount++;
+		}
+		if (status == loopCount)
+			return true;
+		else
+			return false;
+	}
+	
+	/**
+     * @author Ankur Huria
+     * @param buttonName
+     * @param timeOut
+     * @return true if able to click on button
+     */
+    public boolean clickOnRecordPageButtonForNewRecordCreation(String buttonName, int timeOut) {
+        boolean flag = false;
+        if (buttonInRecordPage(buttonName, timeOut) != null) {
+            if (click(driver, buttonInRecordPage(buttonName, timeOut), "Button " + buttonName,
+                    action.SCROLLANDBOOLEAN)) {
+                log(LogStatus.INFO, "Clicked on Button: " + buttonName + " on Record Form Page", YesNo.No);
+                flag = true;
+            } else {
+                log(LogStatus.ERROR, "Not Able to Click on Button: " + buttonName + " on Record Form Page", YesNo.Yes);
+           }
+        }
+
+       else if (downArrowButton(timeOut) != null) {
+            log(LogStatus.INFO, "Down Arrow Button is Present", YesNo.No);
+            if (click(driver, downArrowButton(timeOut), "DownArrowButton", action.SCROLLANDBOOLEAN)) {
+                log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
+                CommonLib.ThreadSleep(2000);
+
+               List<String> dropDownButtonsList = dropDownButtonsList().stream().map(x -> x.getText().trim())
+                        .collect(Collectors.toList());
+
+               if (!dropDownButtonsList.isEmpty()) {
+                    log(LogStatus.INFO, "No. of Buttons Present on DownArrow Button are: " + dropDownButtonsList.size(),
+                            YesNo.No);
+
+                   int i = 0;
+                    for (String button : dropDownButtonsList) {
+                        if (button.equalsIgnoreCase(buttonName)) {
+                            log(LogStatus.INFO, "Button Found in Down Arrow Button", YesNo.No);
 
 
 
+                           if (click(driver, dropDownButtonsList().get(i), "DownArrowButton",
+                                    action.SCROLLANDBOOLEAN)) {
+                                log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
+                                flag = true;
+                                break;
+                            }
 
 
 
+                           else {
+                                log(LogStatus.ERROR,
+                                        "Not Able to Click on Button: " + buttonName + " on Record Form Page",
+                                        YesNo.Yes);
+                           }
+                       }
 
+                       i++;
+                   }
+               }
+
+               else {
+                    log(LogStatus.ERROR, "No Buttons Are Present in DownArrow Button", YesNo.Yes);
+               }
+
+           } else {
+                log(LogStatus.INFO, "Not able to Click on Down Arrow Button", YesNo.No);
+            }
+        }
+
+       else {
+            log(LogStatus.ERROR, "Down Arrow Button is not Present on this Page, So No button: " + buttonName
+                    + " present on this Page", YesNo.Yes);
+       }
+        return flag;
+    }
+
+    
 
 }

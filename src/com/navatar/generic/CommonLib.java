@@ -41,6 +41,7 @@ import static com.navatar.generic.CommonLib.FindElement;
 import static com.navatar.generic.CommonLib.FindElements;
 import static com.navatar.generic.CommonLib.ThreadSleep;
 import static com.navatar.generic.CommonLib.click;
+import static com.navatar.generic.CommonLib.log;
 import static com.navatar.generic.CommonLib.previousOrForwardDateAccordingToTimeZone;
 import static com.navatar.generic.CommonLib.scrollDownThroughWebelement;
 import static org.testng.Assert.fail;
@@ -3254,4 +3255,118 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
         return flag;
 
     }
+	
+	
+	
+
+	public static boolean datePickerHandle(WebDriver driver, String elementName, String Year, String Month, String Date) {
+		boolean flag = false;
+		
+		WebElement MonthPreviousButton=FindElement(driver, "//lightning-calendar//button[@title='Previous Month']", "Previous button",
+				action.BOOLEAN, 30);
+		WebElement MonthSelector;	
+        
+        try {
+        	MonthSelector= FindElement(driver, "//lightning-calendar//h2", "Month Element ", action.BOOLEAN, 30);
+        } catch (StaleElementReferenceException e) {
+        	MonthSelector= FindElement(driver, "//lightning-calendar//h2", "Month Element ", action.BOOLEAN, 30);
+        }
+
+		try {
+
+			int j = 0;
+			for (int i = 0; i < 13; i++) {
+				if (j < 12) {
+					if (MonthSelector.getText().contains(Month)) {
+						appLog.info("Month Selected : " + Month);
+						break;
+					} else {
+						if(CommonLib.clickUsingJavaScript(driver, MonthPreviousButton, "", action.BOOLEAN))
+						{
+							appLog.info("CLicked on Month Previous Button");
+						}
+						else
+						{
+							appLog.error("Not able to click on month previous button");
+						}
+						j++;
+					}
+				} else {
+					appLog.error("Month Format Is Not Correct");
+					return false;
+
+				}
+			}
+			String xpath = "//lightning-select//select";
+			WebElement YearSelector = FindElement(driver, xpath, "YearSelector", action.BOOLEAN, 25);
+			if (CommonLib.selectVisibleTextFromDropDown(driver, YearSelector, "YearSelector: " + Year, Year))
+
+			{
+				appLog.info("Select The Year: " + Year);
+				CommonLib.ThreadSleep(8000);
+				List<WebElement> DaySelector = FindElements(driver,
+						"//table[@class='slds-datepicker__month']//tr//td[not(contains(@class,'slds-day_adjacent-month'))]/span",
+						"dateSelector");
+				for (WebElement day : DaySelector) {
+					try {
+
+						if (Integer.parseInt(Date) < 10 && Date.length()==2) {
+							Date = Date.replace("0", "");
+						}
+						if (day.getText().trim().equalsIgnoreCase(Date)) {
+							if (click(driver, day, "", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, Date + " Date is Selected", YesNo.No);
+								flag = true;
+							} else {
+								log(LogStatus.INFO, Date + " Date is Not Selected", YesNo.No);
+								flag = false;
+							}
+						}
+					}
+					catch(StaleElementReferenceException e)
+					{
+						e.getMessage();
+					}
+				}
+
+			} else {
+				appLog.error("Not ABle to Select Year: " + Year);
+			}
+
+		} catch (Exception e) {
+			flag = false;
+
+			log(LogStatus.ERROR, elementName + " Date is Not Selected", YesNo.No);
+			log(LogStatus.ERROR, e.getMessage(), YesNo.No);
+		}
+
+		return flag;
+
+	}
+	
+	
+	 public static String getFutureDateAccToTimeZone(String timeZone, String format, int daysToAdd) {
+	        try {
+	            DateFormat formatter = new SimpleDateFormat(format);
+	            formatter.setTimeZone(TimeZone.getTimeZone(timeZone));
+	            
+	            
+	              Calendar cal = Calendar.getInstance();  
+	                try{  
+	                   cal.setTime(formatter.parse((formatter.format(new Date()))));  
+	                }catch(ParseException e){  
+	                    e.printStackTrace();  
+	                 }  
+	                     
+	                // use add() method to add the days to the given date  
+	                cal.add(Calendar.DAY_OF_MONTH, daysToAdd);  
+	                 return formatter.format(cal.getTime());  
+	            
+	       } catch (Exception e) {
+	            return null;
+	        }
+	    }
+	
 }
+
+

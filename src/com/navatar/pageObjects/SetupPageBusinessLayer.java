@@ -4823,7 +4823,6 @@ public class SetupPageBusinessLayer extends SetupPage {
 			}
 		} else {
 			log(LogStatus.ERROR, "Record type name is not visible", YesNo.Yes);
-			result.add("Record type name is not visible");
 
 		}
 		return result;
@@ -4926,7 +4925,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 
 
-	public ArrayList<String> verifyDescriptionOnFirm( ArrayList<String> recordName,ArrayList<String> des)
+	public ArrayList<String> verifyDescriptionOnFirm(ArrayList<String> recordName,ArrayList<String> des)
 	{
 		String xPath="";
 		WebElement ele;
@@ -5396,14 +5395,14 @@ public class SetupPageBusinessLayer extends SetupPage {
 
                     ThreadSleep(5000);
                     switchToFrame(driver, 60, getSetUpPageIframe(120));
-                    CommonLib.ThreadSleep(10000);
+                    CommonLib.ThreadSleep(5000);
                     if (clickUsingJavaScript(driver, sectionInPageLayoutButton(sectionsInPageLayoutList[a], 20),
                             "Section in Page Layout: " + sectionsInPageLayoutList[a], action.SCROLLANDBOOLEAN)) {
                         log(LogStatus.INFO, "Clicked on section: " + sectionsInPageLayoutList[a]
                                 + " in the page layout :" + layoutName, YesNo.No);
                         CommonLib.ThreadSleep(3000);
 
-                        if (fieldAdded.length != 1 && !fieldAdded[0].equals("")) {
+                        if (fieldAdded.length != 0 && !fieldAdded[0].equals("")) {
                             for (int i = 0; i < fieldAdded.length; i++) {
 
                                 fieldName = fieldAdded[i];
@@ -5428,14 +5427,12 @@ public class SetupPageBusinessLayer extends SetupPage {
                                             if (!at.contains("item unused")) {
 
                                                 log(LogStatus.PASS, fieldName
-                                                        + " is enable/present in the page layout :" + layoutName,
+                                                        + " field is appearing in "+sectionsInPageLayoutList[a]+" on the page layout of: " + layoutName,
                                                         YesNo.No);
 
                                             } else {
-                                                log(LogStatus.FAIL, fieldName + " Field not enable in the page layout :"
-                                                        + layoutName, YesNo.No);
-                                                result.add(fieldName + " Field not enable in the page layout :"
-                                                        + layoutName);
+                                                log(LogStatus.FAIL, fieldName + " field is not appearing in "+sectionsInPageLayoutList[a]+" on the page layout of: " + layoutName, YesNo.No);
+                                                result.add(fieldName + " field is not appearing in "+sectionsInPageLayoutList[a]+" on the page layout of: " + layoutName);
 
                                             }
                                             break;
@@ -5470,7 +5467,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 
                         }
 
-                        if (fieldNotAdded.length != 1 && !fieldNotAdded[0].equals("")) {
+                        if (fieldNotAdded.length != 0 && !fieldNotAdded[0].equals("")) {
                             for (int i = 0; i < fieldNotAdded.length; i++) {
 
                                 fieldName = fieldNotAdded[i];
@@ -5494,15 +5491,12 @@ public class SetupPageBusinessLayer extends SetupPage {
 
                                             if (!at.contains("item unused")) {
 
-                                                log(LogStatus.FAIL, fieldName
-                                                        + " is enable/present in the page layout :" + layoutName,
+                                                log(LogStatus.FAIL, fieldName + " field is not appearing in "+sectionsInPageLayoutList[a]+" on the page layout of: " + layoutName,
                                                         YesNo.No);
-                                                result.add(fieldName + " is enable/present in the page layout :"
-                                                        + layoutName);
+                                                result.add(fieldName + " field is not appearing in "+sectionsInPageLayoutList[a]+" on the page layout of: " + layoutName);
 
                                             } else {
-                                                log(LogStatus.PASS, fieldName + " Field not enable in the page layout :"
-                                                        + layoutName, YesNo.No);
+                                                log(LogStatus.PASS,fieldName + " field is appearing in "+sectionsInPageLayoutList[a]+" on the page layout of: " + layoutName, YesNo.No);
 
                                             }
                                             break;

@@ -1067,9 +1067,10 @@ public boolean clickOnCreatedInstitution(String environment,String mode,String i
 				}
 				if (click(driver, getCustomTabSaveBtn(projectName,30), "save button", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on save button");
-					ThreadSleep(5000);
-					//							String	xpath="//span[@class='custom-truncate uiOutputText'][text()='"+institutionName+"']";
-					//							WebElement ele = FindElement(driver, xpath, "Header : "+institutionName, action.BOOLEAN, 30);
+					
+					ThreadSleep(8000);
+					CommonLib.refresh(driver);
+					ThreadSleep(9000);
 					WebElement ele = verifyCreatedItemOnPage(Header.Company, institutionName);
 					if (ele != null) {
 						appLog.info("created institution " + institutionName + " is verified successfully.");
