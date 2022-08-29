@@ -1,5 +1,6 @@
 package com.navatar.pageObjects;
 
+import org.apache.poi.hslf.record.RecordTypes;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -24,6 +25,7 @@ import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.PopUpName;
+import com.navatar.generic.EnumConstants.RecordType;
 import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
@@ -4883,8 +4885,10 @@ public class SetupPageBusinessLayer extends SetupPage {
 					ele = FindElement(driver, xpath, OnObject + " with permission " + permission,
 							action.SCROLLANDBOOLEAN, timeOut);
 					CommonLib.ThreadSleep(4000);
+
 					String checked = CommonLib.getAttribute(driver, ele, "CheckBox", "checked");
 					if (!"true".equals(checked)) {
+
 						if (clickUsingJavaScript(driver, ele, OnObject + " with permission " + permission,
 								action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on checkbox " + permission + " for " + OnObject, YesNo.No);
@@ -4900,9 +4904,11 @@ public class SetupPageBusinessLayer extends SetupPage {
 									YesNo.Yes);
 
 						}
+
 					} else {
 						log(LogStatus.INFO, "Not clicked on checkbox " + permission + " for " + OnObject
 								+ " as it is already Checked", YesNo.No);
+
 					}
 
 				}
@@ -5018,6 +5024,305 @@ public class SetupPageBusinessLayer extends SetupPage {
 		}
 
 		return flag;
+
+	}
+
+	public ArrayList<String> verifyPicklistOnDifferentRecordType(String data, int timeOut) {
+		String xPath = "";
+		WebElement ele;
+		List<WebElement> elements;
+
+		// ArrayList<String>recordType=new ArrayList<String>();
+		// ArrayList<String>fieldName=new ArrayList<String>();
+		ArrayList<String> pickListActualValue = new ArrayList<String>();
+		ArrayList<String> pickListExpectedValue = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<String>();
+
+		String[] recordTypeFieldNamePickListValue = data.split("<break>");
+
+		for (int i = 0; i < recordTypeFieldNamePickListValue.length; i++) {
+
+			String[] recordTypeFieldName = recordTypeFieldNamePickListValue[i].split("<section>");
+			String recordType = recordTypeFieldName[0];
+
+			xPath = "//th[@title='Record Type Label']/ancestor::table//tbody//span[text()='" + recordType + "']";
+			ele = CommonLib.FindElement(driver, xPath, recordType + " record type", action.SCROLLANDBOOLEAN, timeOut);
+			if (CommonLib.click(driver, ele, recordType + " record type", action.BOOLEAN)) {
+				log(LogStatus.INFO, "Successfully clicked on the " + recordType + " record type", YesNo.No);
+
+				ThreadSleep(8000);
+				if (CommonLib.switchToFrame(driver, 50, getrecordTypeIframe(50))) {
+					ThreadSleep(12000);
+					String[] fieldNamePickListValue = recordTypeFieldName[1].split("<picklistValueBreak>");
+					String fieldName = fieldNamePickListValue[0];
+					xPath = "//th[text()='" + fieldName + "']/preceding-sibling::td/a[text()='Edit']";
+					ele = CommonLib.FindElement(driver, xPath, fieldName + " field name", action.SCROLLANDBOOLEAN,
+							timeOut);
+					if (CommonLib.clickUsingJavaScript(driver, ele, fieldName + " field name", action.BOOLEAN)) {
+						log(LogStatus.INFO, "Successfully clicked on the " + fieldName + " field name", YesNo.No);
+
+						ThreadSleep(8000);
+						CommonLib.switchToDefaultContent(driver);
+						ThreadSleep(2000);
+						if (CommonLib.switchToFrame(driver, 50, getrecordTypeIframe(50))) {
+							ThreadSleep(12000);
+							String[] picklistExpectedValueArray = fieldNamePickListValue[1].split("<f>");
+							for (int k = 0; k < picklistExpectedValueArray.length; k++) {
+								pickListExpectedValue.add(picklistExpectedValueArray[k]);
+							}
+							xPath = "//select[@id='duel_select_1']//option";
+							elements = CommonLib.FindElements(driver, xPath, "selected value");
+							for (int j = 0; j < elements.size(); j++) {
+								String value = CommonLib.getText(driver, elements.get(j), fieldName + " field value",
+										action.SCROLLANDBOOLEAN);
+								pickListActualValue.add(value);
+							}
+
+							for (int a = 0; a < pickListExpectedValue.size(); a++) {
+								if (pickListActualValue.get(a).equals(pickListExpectedValue.get(a))) {
+									log(LogStatus.INFO,
+											"Expected picklist : \"" + pickListExpectedValue.get(a)
+													+ "\" value has been matched with the Actual picklist \""
+													+ pickListActualValue.get(a) + "\" value",
+											YesNo.No);
+
+								} else {
+									log(LogStatus.ERROR,
+											"Expected picklist : \"" + pickListExpectedValue.get(a)
+													+ "\" value is not matched with the Actual picklist \""
+													+ pickListActualValue.get(a) + "\" value",
+											YesNo.Yes);
+									result.add("Expected picklist : \"" + pickListExpectedValue.get(a)
+											+ "\" value is not matched with the Actual picklist \""
+											+ pickListActualValue.get(a) + "\" value");
+								}
+							}
+
+							CommonLib.switchToDefaultContent(driver);
+							ThreadSleep(2000);
+							if (CommonLib.click(driver, getrecordTypeObjectManager(50), "Record type object manager",
+									action.BOOLEAN)) {
+								log(LogStatus.INFO, "Successfully clicked on the Record type object manager", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Not able to click on the Record type object manager", YesNo.Yes);
+								result.add("Not able to click on the Record type object manager");
+							}
+						} else {
+							log(LogStatus.ERROR, "Not able to switch to Iframe", YesNo.Yes);
+							result.add("Not able to switch to Iframe");
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on " + fieldName + " field name", YesNo.Yes);
+						result.add("Not able to click on " + fieldName + " field name");
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not able to switch to Iframe", YesNo.Yes);
+					result.add("Not able to switch to Iframe");
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on the " + recordType + " record type button", YesNo.Yes);
+				result.add("Not able to click on the " + recordType + " record type button");
+			}
+		}
+		return result;
+
+	}
+
+	public ArrayList<String> verifyPageLayoutAssignment(ArrayList<String> recordTypes, ArrayList<String> userProfile,
+			int timeOut) {
+		String xPath = "";
+		WebElement ele;
+		List<WebElement> elements;
+		String data = "";
+		int num = 0;
+		ArrayList<String> result = new ArrayList<String>();
+		if (CommonLib.click(driver, getpageLayoutAssignment(timeOut), "Page Layout Assignment button",
+				action.BOOLEAN)) {
+			log(LogStatus.INFO, "Successfully clicked on the Page Layout Assignment button", YesNo.No);
+
+			ThreadSleep(2000);
+			if (CommonLib.switchToFrame(driver, timeOut, getpageLayoutIframe(timeOut))) {
+				ThreadSleep(12000);
+				log(LogStatus.INFO, "successfully switched to page layout iframe", YesNo.No);
+
+				do {
+					if (num != 0) {
+						if (CommonLib.checkElementVisibility(driver, getnextBtn(timeOut), "Next button", timeOut)) {
+							if (CommonLib.click(driver, getnextBtn(timeOut), "Page Layout Assignment button",
+									action.BOOLEAN)) {
+								ThreadSleep(5000);
+								log(LogStatus.INFO, "Successfully clicked on the Next button", YesNo.No);
+
+							} else {
+								log(LogStatus.ERROR, "Not able to click on the next button", YesNo.No);
+								result.add("Not able to click on the next button");
+
+							}
+						}
+					}
+					xPath = "//table[@id='plaHeaderTable']//th[@class='rtHeader  ']";
+					elements = CommonLib.FindElements(driver, xPath, "Header");
+					for (int i = 0; i < elements.size(); i++) {
+						String text = CommonLib.getText(driver, elements.get(i), xPath, action.BOOLEAN);
+
+						for (int j = 0; j < recordTypes.size(); j++) {
+							if (text.equals(recordTypes.get(j))) {
+
+								for (int k = 0; k < userProfile.size(); k++) {
+
+									xPath = "//table[@id='plaBodyTable']//a[text()='" + userProfile.get(k)
+											+ "']/parent::td/following-sibling::td[" + (i + 1) + "]";
+									ele = CommonLib.FindElement(driver, xPath, "Assignment list", action.BOOLEAN, 20);
+
+									if (ele == null) {
+										log(LogStatus.ERROR, "Not able to get the Element of " + text + " for "
+												+ userProfile.get(k) + "", YesNo.No);
+										result.add("Not able to get the Element of " + text + " for "
+												+ userProfile.get(k) + "");
+									}
+									data = CommonLib.getText(driver, ele, text, action.BOOLEAN);
+
+									if (data.equals(text)) {
+										log(LogStatus.INFO, "The Assignment " + data + " has been verified for "
+												+ userProfile.get(k) + "", YesNo.No);
+
+									} else {
+										log(LogStatus.ERROR, "The Assignment " + data + " is not verified  for "
+												+ userProfile.get(k) + "", YesNo.No);
+										result.add("The Assignment " + data + " is not verified  for "
+												+ userProfile.get(k) + "");
+									}
+
+								}
+								recordTypes.remove(text);
+								break;
+							}
+						}
+					}
+					num++;
+
+				} while (CommonLib.checkElementVisibility(driver, getnextBtn(20), "Next button", 20));
+			} else {
+				log(LogStatus.ERROR, "Not able to switch to page layout iframe", YesNo.No);
+				result.add("Not able to switch to page layout iframe");
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on the Page Layout Assignment button", YesNo.No);
+			result.add("Not able to click on the Page Layout Assignment button");
+
+		}
+
+		if (!recordTypes.isEmpty()) {
+			for (int i = 0; i < recordTypes.size(); i++) {
+				result.add(recordTypes.get(i));
+			}
+		}
+
+		switchToDefaultContent(driver);
+
+		return result;
+
+	}
+
+	public ArrayList<String> VerifyLightningRecordPagesAssignment(String record, String profile, String tabName,
+			int timeOut) {
+		String xPath;
+		WebElement ele;
+		String text;
+		ArrayList<String> recordTypeExpected = new ArrayList<String>();
+		ArrayList<String> lightningPageExpected = new ArrayList<String>();
+		ArrayList<String> recordTypeActual = new ArrayList<String>();
+		ArrayList<String> lightningPageActual = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<String>();
+		String[] recordTypeLightningPage = record.split("<break>");
+
+		for (int i = 0; i < recordTypeLightningPage.length; i++) {
+			String[] bearkRecordTypeAndLightningPage = recordTypeLightningPage[i].split("<section>");
+			recordTypeExpected.add(bearkRecordTypeAndLightningPage[0]);
+			lightningPageExpected.add(bearkRecordTypeAndLightningPage[1]);
+		}
+
+		String[] userProfile = profile.split("<break>");
+
+		// Record Type
+
+		if (CommonLib.click(driver, getviewPageAssignments(timeOut), "View Page Assignment button", action.BOOLEAN)) {
+			log(LogStatus.INFO, "Successfully clicked on the view page assignment button", YesNo.No);
+
+			xPath = "//ul[@class='tabs__nav']//span[text()='" + tabName + "']";
+			ele = CommonLib.FindElement(driver, xPath, tabName + " tab name", action.SCROLLANDBOOLEAN, 50);
+			if (CommonLib.click(driver, ele, tabName, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Successfully clicked on the " + tabName + " button", YesNo.No);
+
+				for (int i = 0; i < userProfile.length; i++) {
+					log(LogStatus.INFO,
+							"Verifying the Record type and Lightning page for " + userProfile[i] + " profile",
+							YesNo.No);
+
+					for (int j = 0; j < recordTypeExpected.size(); j++) {
+						xPath = "//span[text()='Desktop']/../preceding-sibling::td/span[text()='" + userProfile[i]
+								+ "']/../preceding-sibling::td/span[text()='" + recordTypeExpected.get(j) + "']";
+						ele = CommonLib.FindElement(driver, xPath, recordTypeExpected.get(j) + " record type",
+								action.SCROLLANDBOOLEAN, 30);
+						if (ele == null) {
+							log(LogStatus.ERROR, "not able to get the " + recordTypeExpected.get(j) + " locator",
+									YesNo.No);
+							result.add("not able to get the " + recordTypeExpected.get(j) + " locator");
+						}
+						text = CommonLib.getText(driver, ele, recordTypeExpected.get(j) + " record type",
+								action.SCROLLANDBOOLEAN);
+						recordTypeActual.add(text);
+
+						xPath = "//span[text()='Desktop']/../preceding-sibling::td/span[text()='" + userProfile[i]
+								+ "']/../following-sibling::td//span[text()='" + lightningPageExpected.get(j) + "']";
+
+						ele = CommonLib.FindElement(driver, xPath, lightningPageExpected.get(j) + "record type",
+								action.SCROLLANDBOOLEAN, 30);
+						if (ele == null) {
+							log(LogStatus.ERROR, "not able to get the " + lightningPageExpected.get(j) + " locator",
+									YesNo.No);
+							result.add("not able to get the " + lightningPageExpected.get(j) + " locator");
+						}
+						text = CommonLib.getText(driver, ele, recordTypeExpected.get(j) + " record type",
+								action.SCROLLANDBOOLEAN);
+						lightningPageActual.add(text);
+					}
+
+					for (int k = 0; k < recordTypeExpected.size(); k++) {
+						if (recordTypeExpected.get(k).equals(recordTypeActual.get(k))
+								&& lightningPageExpected.get(k).equals(lightningPageActual.get(k))) {
+							log(LogStatus.INFO, "Expected record type : \"" + recordTypeExpected.get(k)
+									+ "\" and Expected lightning Page : \"" + lightningPageExpected.get(k)
+									+ "\" has been matched with the Actual Record type : " + recordTypeActual.get(k)
+									+ " and Actual lightning page : " + lightningPageActual.get(k), YesNo.No);
+
+						} else {
+							log(LogStatus.ERROR, "Either Expected record type : \"" + recordTypeExpected.get(k)
+									+ "\" or Expected lightning Page : \"" + lightningPageExpected.get(k)
+									+ "\" is not matched with the Actual Record type : " + recordTypeActual.get(k)
+									+ " and Actual lightning page : " + recordTypeActual.get(k), YesNo.No);
+							result.add("Either Expected record type : \"" + recordTypeExpected.get(k)
+									+ "\" or Expected lightning Page : \"" + lightningPageExpected.get(k)
+									+ "\" is not matched with the Actual Record type : " + recordTypeActual.get(k)
+									+ " and Actual lightning page : " + recordTypeActual.get(k));
+						}
+					}
+
+					lightningPageActual.removeAll(lightningPageActual);
+					recordTypeActual.removeAll(recordTypeActual);
+
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on the " + tabName + " button", YesNo.No);
+				result.add("Not able to click on the " + tabName + " button");
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on the view page assignment button", YesNo.No);
+			result.add("Not able to click on the view page assignment button");
+		}
+
+		return result;
 
 	}
 

@@ -167,10 +167,10 @@ public class Module9 extends BaseLib {
 			sa.assertTrue(false, "could not click on setup link, test case fail");
 
 		}
-
-		closeBrowser();
-		driver.switchTo().window(parentWindow);
 		lp.CRMlogout();
+		closeBrowser();
+//		driver.switchTo().window(parentWindow);
+		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
 		String passwordResetLink = null;
 		try {
@@ -204,7 +204,7 @@ public class Module9 extends BaseLib {
 		String parentWindow = null;
 		String[] splitedUserLastName = removeNumbersFromString(crmUser2LastName);
 		String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
-		String emailId = lp.generateRandomEmailId(gmailUserName2);
+		String emailId = lp.generateRandomEmailId(gmailUserName);
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		boolean flag = false;
@@ -267,15 +267,14 @@ public class Module9 extends BaseLib {
 			sa.assertTrue(false, "could not click on setup link, test case fail");
 
 		}
-
-		closeBrowser();
-		driver.switchTo().window(parentWindow);
 		lp.CRMlogout();
+		closeBrowser();
+		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
 		String passwordResetLink = null;
 		try {
 			passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
-					ExcelUtils.readDataFromPropertyFile("gmailUserName2"),
+					ExcelUtils.readDataFromPropertyFile("gmailUserName"),
 					ExcelUtils.readDataFromPropertyFile("gmailPassword"));
 		} catch (InterruptedException e2) {
 			e2.printStackTrace();
@@ -295,11 +294,8 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
 	@Test
-	public void
-
-			M9Tc001_3_createACustomObjectAndTabAndGivePermissions(String projectName) {
+	public void M9Tc001_3_createACustomObjectAndTabAndGivePermissions(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -313,11 +309,8 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
 	@Test
-	public void
-
-			M9Tc001_4_createACustomObjectAndTabAndGivePermissions(String projectName) {
+	public void M9Tc001_4_createACustomObjectAndTabAndGivePermissions(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -331,11 +324,8 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
 	@Test
-	public void
-
-			M9Tc001_5_createFieldsForCustomObjects(String projectName) {
+	public void M9Tc001_5_createFieldsForCustomObjects(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -371,11 +361,8 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
 	@Test
-	public void
-
-			M9Tc001_6_verifyPreconditionRecordsDataImportWizardAdmin(String projectName) {
+	public void M9Tc001_6_verifyPreconditionRecordsDataImportWizardAdmin(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -470,7 +457,6 @@ public class Module9 extends BaseLib {
 	}
 
 	@Parameters({ "projectName" })
-
 	@Test
 	public void M9Tc001_7_AddListViews(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -5854,9 +5840,7 @@ public class Module9 extends BaseLib {
 		sa.assertAll();
 	}
 
-	/**
-	 * @param projectName
-	 */
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void M9Tc042_VerifyFilterApplyOnFundPrepAndVerifyRecords(String projectName) {

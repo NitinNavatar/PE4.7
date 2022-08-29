@@ -1158,7 +1158,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			viewList = "All Contacts";
 			break;
 		case InstituitonsTab:
-			viewList = "All Institutions";
+			viewList = "All Firms";
 			break;
 		case CompaniesTab:
 			viewList = "All Companies";
@@ -1408,6 +1408,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case DealTab:
 			viewList = "All";
 			break;
+		case TaskTab:
+			viewList = "All";
+			break;
 		case Object1Tab:
 			viewList = "All";
 			break;
@@ -1470,8 +1473,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				action.SCROLLANDBOOLEAN)) {
 			ThreadSleep(5000);
 
-			xpath = "//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//*[text()='" + alreadyCreated
-					+ "']";
+			if (tabName.toString().contains("Task") || tabName.toString().equalsIgnoreCase("Task")) {
+				xpath = "//span[text()='" + alreadyCreated + "']/ancestor::a";
+			} else {
+				xpath = "//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//*[text()='"
+						+ alreadyCreated + "']";
+			}
+
 			ele = FindElement(driver, xpath, alreadyCreated, action.BOOLEAN, 30);
 			ThreadSleep(2000);
 
@@ -2150,7 +2158,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			// xpath = "//span[text()='"+label+"']/../following-sibling::div";
 			xpath = "//ul/li/a[@title='" + value + "']";
 		} else {
-			xpath = "//label[text()='" + label + "']/..//span[@title='" + value + "']";
+			/*
+			 * xpath = "//label[text()='" + label + "']/..//span[@title='" + value + "']";
+			 */
+
+			xpath = "//*[text()='" + label + "']/../..//a[text()='" + value + "']";
 		}
 
 		ele = FindElement(driver, xpath, "Drop Down : " + label + " value : " + value, action, timeOut);
@@ -3335,7 +3347,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			tabName = "Entities";
 		} else if (TabName.contains("Inst")) {
 			tabName = "Institutions";
-		} else if (TabName.contains("Funds")) {
+		} else if (TabName.contains("Fund")) {
 			tabName = "Funds";
 		} else {
 			tabName = TabName;
@@ -3505,9 +3517,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String btname = btnName.toString();
 		String xpath = "";
 		if (isInside) {
-			xpath = "//header//a[text()='" + toggleTab + "' or @title='" + toggleTab + "']";
+
+			xpath = "//button[@title='" + toggleTab + "']";
 		} else {
-			xpath = "//header//a[text()='" + toggleTab + "' or @title='" + toggleTab + "']";
+			xpath = "//button[@title='" + toggleTab + "']";
+
 		}
 		WebElement ele = FindElement(driver, xpath, toggleTab + " >> " + btname, action, timeOut);
 		scrollDownThroughWebelement(driver, ele, "Toggle Button : " + btname);
@@ -3579,7 +3593,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String xpath = "";
 		String head = header.toString().replace("_", " ");
 		ThreadSleep(3000);
-		xpath = "//div[contains(text(),'" + head + "')]/..//*[text()='" + itemName + "']";
+		xpath = "//div[contains(@class,'outputName') or contains(@class,'header')]//*[text()='" + itemName + "']";
 		ele = FindElement(driver, xpath, "Header : " + itemName, action.BOOLEAN, 30);
 		ele = isDisplayed(driver, ele, "Visibility", 10, head + " : " + itemName);
 		return ele;
@@ -9338,52 +9352,38 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return flag;
 	}
-	
-	
-	public ArrayList<String> verifyFileCountUploadAndAddFileButton()
-    {
-        ArrayList<String> result=new ArrayList<String>();
-        boolean flag=false;
-        if(CommonLib.checkElementVisibility(driver, getfileCountVisible(20), "file Count visiblity",20))
-        {
-            log(LogStatus.INFO, "File count is visible", YesNo.No);
-        }
-        else
-        {
-            log(LogStatus.ERROR, "File count is not visible", YesNo.No);
-            result.add("File count is not visible");
-        }
-        
-        if(CommonLib.checkElementVisibility(driver, getuploadFileVisible(20), "Upload file visiblity",20))
-        {
-            log(LogStatus.INFO, "Upload File button is visible", YesNo.No);
-        }
-        else
-        {
-            log(LogStatus.ERROR, "Upload File button is not visible", YesNo.No);
-            result.add("Upload File button is not visible");
-        }
-        
-        if(CommonLib.checkElementVisibility(driver, getaddFileVisible(20), "Add file button visiblity",20))
-        {
-            log(LogStatus.INFO, "Add File button is visible", YesNo.No);
-        }
-        else
-        {
-            log(LogStatus.ERROR, "Add File button is not visible", YesNo.No);
-            result.add("Add File button is not visible");
-        }
-        
-        if(CommonLib.checkElementVisibility(driver, getdropFileVisible(20), "Or drop file button visiblity",20))
-        {
-            log(LogStatus.INFO, "Or drop File button is visible", YesNo.No);
-        }
-        else
-        {
-            log(LogStatus.ERROR, "Or drop File button is not visible", YesNo.No);
-            result.add("Or drop File button is not visible");
-        }
-        return result;
-    }
+
+	public ArrayList<String> verifyFileCountUploadAndAddFileButton() {
+		ArrayList<String> result = new ArrayList<String>();
+		boolean flag = false;
+		if (CommonLib.checkElementVisibility(driver, getfileCountVisible(20), "file Count visiblity", 20)) {
+			log(LogStatus.INFO, "File count is visible", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "File count is not visible", YesNo.No);
+			result.add("File count is not visible");
+		}
+
+		if (CommonLib.checkElementVisibility(driver, getuploadFileVisible(20), "Upload file visiblity", 20)) {
+			log(LogStatus.INFO, "Upload File button is visible", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Upload File button is not visible", YesNo.No);
+			result.add("Upload File button is not visible");
+		}
+
+		if (CommonLib.checkElementVisibility(driver, getaddFileVisible(20), "Add file button visiblity", 20)) {
+			log(LogStatus.INFO, "Add File button is visible", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Add File button is not visible", YesNo.No);
+			result.add("Add File button is not visible");
+		}
+
+		if (CommonLib.checkElementVisibility(driver, getdropFileVisible(20), "Or drop file button visiblity", 20)) {
+			log(LogStatus.INFO, "Or drop File button is visible", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Or drop File button is not visible", YesNo.No);
+			result.add("Or drop File button is not visible");
+		}
+		return result;
+	}
 
 }

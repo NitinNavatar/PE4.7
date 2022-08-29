@@ -106,14 +106,14 @@ public class SmokeCommonVariables {
 	public static String Smoke_FR5,SmokeFR5_Investment_Likely_Amount;
 	public static String Smoke_FR6,SmokeFR6_Investment_Likely_Amount;
 	
-	public static String SmokeFRC1_ID,SmokeFRC1_FRName,SmokeFRC1_Role,SmokeFRC1_Primary,SmokeFRC1_INS1;
-	public static String SmokeFRC3_ID,SmokeFRC3_FRName,SmokeFRC3_Role,SmokeFRC3_Primary,SmokeFRC3_INDINV1;
-	public static String SmokeFRC4_ID,SmokeFRC4_FRName,SmokeFRC4_Role,SmokeFRC4_Primary,SmokeFRC4_INDINV1;
-	public static String SmokeFRC5_ID,SmokeFRC5_FRName,SmokeFRC5_Role,SmokeFRC5_Primary,SmokeFRC5_INDINV1;
-	public static String SmokeFRC6_ID,SmokeFRC6_FRName,SmokeFRC6_Role,SmokeFRC6_Primary,SmokeFRC6_INDINV1;
-	public static String SmokeFRC7_ID,SmokeFRC7_FRName,SmokeFRC7_Role,SmokeFRC7_Primary,SmokeFRC7_INDINV1;
-	public static String SmokeFRC8_ID,SmokeFRC8_FRName,SmokeFRC8_Role,SmokeFRC8_Primary,SmokeFRC8_INDINV1;
-	public static String SmokeFRC9_ID,SmokeFRC9_FRName,SmokeFRC9_Role,SmokeFRC9_Primary,SmokeFRC9_INDINV1;
+	public static String SmokeFRC1_ID,SmokeFRC1_FRName,SmokeFRC1_Role,SmokeFRC1_Primary,SmokeFRC1_Phone,SmokeFRC1_Email,SmokeFRC1_INS1;
+	public static String SmokeFRC3_ID,SmokeFRC3_FRName,SmokeFRC3_Role,SmokeFRC3_Primary,SmokeFRC3_Phone,SmokeFRC3_Email,SmokeFRC3_INDINV1;
+	public static String SmokeFRC4_ID,SmokeFRC4_FRName,SmokeFRC4_Role,SmokeFRC4_Primary,SmokeFRC4_Phone,SmokeFRC4_Email,SmokeFRC4_INDINV1;
+	public static String SmokeFRC5_ID,SmokeFRC5_FRName,SmokeFRC5_Role,SmokeFRC5_Primary,SmokeFRC5_Phone,SmokeFRC5_Email,SmokeFRC5_INDINV1;
+	public static String SmokeFRC6_ID,SmokeFRC6_FRName,SmokeFRC6_Role,SmokeFRC6_Primary,SmokeFRC6_Phone,SmokeFRC6_Email,SmokeFRC6_INDINV1;
+	public static String SmokeFRC7_ID,SmokeFRC7_FRName,SmokeFRC7_Role,SmokeFRC7_Primary,SmokeFRC7_Phone,SmokeFRC7_Email,SmokeFRC7_INDINV1;
+	public static String SmokeFRC8_ID,SmokeFRC8_FRName,SmokeFRC8_Role,SmokeFRC8_Primary,SmokeFRC8_Phone,SmokeFRC8_Email,SmokeFRC8_INDINV1;
+	public static String SmokeFRC9_ID,SmokeFRC9_FRName,SmokeFRC9_Role,SmokeFRC9_Primary,SmokeFRC9_Phone,SmokeFRC9_Email,SmokeFRC9_INDINV1;
 	
 	public static String Smoke_COMM1,SmokeCOMM1_CommitmentAmount,SmokeCOMM1_partnerType,SmokeCOMM1_TaxForms,SmokeCOMM1_FinalCommitmentDate,SmokeCOMM1_ID;
 	public static String Smoke_COMM2,SmokeCOMM2_CommitmentAmount,SmokeCOMM2_partnerType,SmokeCOMM2_TaxForms,SmokeCOMM2_FinalCommitmentDate,SmokeCOMM2_ID;
@@ -722,34 +722,51 @@ public class SmokeCommonVariables {
 			SmokeFRC1_ID=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC1", excelLabel.Fundraising_Contact_ID);
 			SmokeFRC1_Role=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC1", excelLabel.Role);
 			SmokeFRC1_Primary=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC1", excelLabel.Primary);
+			SmokeFRC1_Phone=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC1", excelLabel.Phone);
+			SmokeFRC1_Email=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC1", excelLabel.Email);
 			
 			SmokeFRC3_ID=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC3", excelLabel.Fundraising_Contact_ID);
 			SmokeFRC3_Role=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC3", excelLabel.Role);
 			SmokeFRC3_Primary=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC3", excelLabel.Primary);
+			SmokeFRC3_Phone=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC3", excelLabel.Phone);
+			SmokeFRC3_Email=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC3", excelLabel.Email);
 			
 			SmokeFRC4_ID=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC4", excelLabel.Fundraising_Contact_ID);
 			SmokeFRC4_Role=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC4", excelLabel.Role);
 			SmokeFRC4_Primary=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC4", excelLabel.Primary);
+			SmokeFRC4_Phone=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC4", excelLabel.Phone);
+			SmokeFRC4_Email=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC4", excelLabel.Email);
+			
 			
 			SmokeFRC5_ID=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC5", excelLabel.Fundraising_Contact_ID);
 			SmokeFRC5_Role=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC5", excelLabel.Role);
 			SmokeFRC5_Primary=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC5", excelLabel.Primary);
+			SmokeFRC5_Phone=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC5", excelLabel.Phone);
+			SmokeFRC5_Email=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC5", excelLabel.Email);
 			
 			SmokeFRC6_ID=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC6", excelLabel.Fundraising_Contact_ID);
 			SmokeFRC6_Role=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC6", excelLabel.Role);
 			SmokeFRC6_Primary=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC6", excelLabel.Primary);
+			SmokeFRC6_Phone=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC6", excelLabel.Phone);
+			SmokeFRC6_Email=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC6", excelLabel.Email);
 			
 			SmokeFRC7_ID=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC7", excelLabel.Fundraising_Contact_ID);
 			SmokeFRC7_Role=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC7", excelLabel.Role);
 			SmokeFRC7_Primary=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC7", excelLabel.Primary);
+			SmokeFRC7_Phone=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC7", excelLabel.Phone);
+			SmokeFRC7_Email=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC7", excelLabel.Email);
 			
 			SmokeFRC8_ID=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC8", excelLabel.Fundraising_Contact_ID);
 			SmokeFRC8_Role=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC8", excelLabel.Role);
 			SmokeFRC8_Primary=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC8", excelLabel.Primary);
+			SmokeFRC8_Phone=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC8", excelLabel.Phone);
+			SmokeFRC8_Email=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC8", excelLabel.Email);
 			
 			SmokeFRC9_ID=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC9", excelLabel.Fundraising_Contact_ID);
 			SmokeFRC9_Role=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC9", excelLabel.Role);
 			SmokeFRC9_Primary=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC9", excelLabel.Primary);
+			SmokeFRC9_Phone=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC9", excelLabel.Phone);
+			SmokeFRC9_Email=ExcelUtils.readData(wb,smokeFilePath,"Fundraising Contacts",excelLabel.Variable_Name, "SmokeFRC9", excelLabel.Email);
 			
 			
 			//******************************************* Commitment ***************************************

@@ -243,7 +243,7 @@ public class Module6 extends BaseLib{
 		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
 				,excelLabel.Last_Stage_Change_Date.toString()};
-		String labelValues[]={Stage.Closed.toString(),Stage.Closed.toString(),todaysDateSingleDigit};
+		String labelValues[]={Stage.Closed.toString(),Stage.Closed.toString(),todaysDate};
 		String labelName1[]={excelLabel.Status.toString()
 		};
 		String labelValues1[]={InstRecordType.Portfolio_Company.toString()};
@@ -331,7 +331,7 @@ public class Module6 extends BaseLib{
 		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
 				,excelLabel.Last_Stage_Change_Date.toString()};
-		String labelValues[]={Stage.Closed.toString(),Stage.Closed.toString(),todaysDateSingleDigit};
+		String labelValues[]={Stage.Closed.toString(),Stage.Closed.toString(),todaysDate};
 		String labelName1[]={excelLabel.Status.toString()
 		};
 		String labelValues1[]={InstRecordType.Portfolio_Company.toString()};
@@ -1985,8 +1985,8 @@ public class Module6 extends BaseLib{
 					sa.assertTrue(false, "institution object is not clickable");
 				}
 				ThreadSleep(500);
-				if (setup.searchStandardOrCustomObject(environment, mode, object.Deal)) {
-					log(LogStatus.INFO, "click on Object : " + object.Deal, YesNo.No);
+				if (setup.searchStandardOrCustomObject(environment, mode, object.Profiles)) {
+					log(LogStatus.INFO, "click on Object : " + object.Profiles, YesNo.No);
 					ThreadSleep(2000);
 					switchToDefaultContent(driver);
 					switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
@@ -2453,7 +2453,8 @@ public class Module6 extends BaseLib{
 						}
 						
 					
-
+						refresh(driver);
+						ThreadSleep(5000);
 				for (int i =0;i<labelName.length;i++) {
 					if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i],false)) {
 						log(LogStatus.SKIP,"successfully verified "+labelName[i],YesNo.No);
@@ -4260,10 +4261,10 @@ public class Module6 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString(),excelLabel.Last_Stage_Change_Date.toString()
 		};
-		String labelValues[]={Stage.LOI.toString(),Stage.LOI.toString(),todaysDateSingleDigit};
+		String labelValues[]={Stage.LOI.toString(),Stage.LOI.toString(),todaysDate};
 		String labelName1[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString(),excelLabel.Last_Stage_Change_Date.toString()
 		};
-		String labelValues1[]={Stage.Closed.toString(),Stage.Closed.toString(),todaysDateSingleDigit};
+		String labelValues1[]={Stage.Closed.toString(),Stage.Closed.toString(),todaysDate};
 
 		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object4Tab,YesNo.No);	
@@ -4344,8 +4345,8 @@ public class Module6 extends BaseLib{
 	}
 	
 	@Parameters({ "projectName"})
-	@Test
-public void M6tc026_1_VerifyPathComponent(String projectName) {
+	//@Test
+	public void M6tc026_1_VerifyPathComponent(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -4356,10 +4357,10 @@ public void M6tc026_1_VerifyPathComponent(String projectName) {
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString(),excelLabel.Last_Stage_Change_Date.toString()
 		};
-		String labelValues[]={Stage.Closed.toString(),Stage.Closed.toString(),todaysDateSingleDigit};
+		String labelValues[]={Stage.Closed.toString(),Stage.Closed.toString(),todaysDate};
 		String labelName1[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString(),excelLabel.Last_Stage_Change_Date.toString()
 		};
-		String labelValues1[]={Stage.Due_Diligence.toString(),Stage.Due_Diligence.toString(),todaysDateSingleDigit};
+		String labelValues1[]={Stage.Due_Diligence.toString(),Stage.Due_Diligence.toString(),todaysDate};
 		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
 			log(LogStatus.INFO,"Click on Tab : "+TabName.Object4Tab,YesNo.No);	
 			if (ip.clickOnAlreadyCreatedItem(projectName, M6Deal3, 10)) {
@@ -4543,7 +4544,7 @@ public void M6tc026_1_VerifyPathComponent(String projectName) {
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String labelName[]={excelLabel.Last_Stage_Change_Date.toString()
 		};
-		String labelValues[]={todaysDateSingleDigit};
+		String labelValues[]={todaysDate};
 		String stages[]={Stage.Prospect.toString(),Stage.Interested.toString(),Stage.Sent_PPM.toString()};
 		if (lp.clickOnTab(projectName, TabName.FundraisingsTab)) {
 
@@ -4604,7 +4605,7 @@ public void M6tc026_1_VerifyPathComponent(String projectName) {
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String labelName[]={excelLabel.Last_Stage_Change_Date.toString()
 		};
-		String labelValues[]={todaysDateSingleDigit};
+		String labelValues[]={todaysDate};
 		String stages[]={Stage.Declined.toString(),Stage.Verbal_Commitment.toString(),Stage.Declined.toString()};
 		if (lp.clickOnTab(projectName, TabName.FundraisingsTab)) {
 
@@ -4672,7 +4673,7 @@ public void M6tc026_1_VerifyPathComponent(String projectName) {
 			if (lp.clickOnAlreadyCreatedItem(projectName, M6LSCFundraising1, 10)) {
 				for(String stage:stages) {
 					stage=stage.replace("_", " ");
-					String labelValues[]={stage,todaysDateSingleDigit};
+					String labelValues[]={stage,todaysDate};
 					ele=dp.selectPathComponent(projectName, stage);
 				if (click(driver, ele,"stage "+stage , action.BOOLEAN)) {
 					ele=dp.getmarkAsCurrentStage(10);
@@ -4737,7 +4738,7 @@ public void M6tc026_1_VerifyPathComponent(String projectName) {
 		WebElement ele;
 		String labelName[]={excelLabel.Stage.toString(),excelLabel.Last_Stage_Change_Date.toString()
 		};
-		String labelValues[]={Stage.Declined.toString(),todaysDateSingleDigit};
+		String labelValues[]={Stage.Declined.toString(),todaysDate};
 		if (ip.clickOnTab(projectName, TabName.FundraisingsTab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M6LSCFundraising1, 10)) {
 				ThreadSleep(3000);
@@ -4935,7 +4936,7 @@ public void M6tc026_1_VerifyPathComponent(String projectName) {
 		String labelName[]={excelLabel.Stage.toString(),excelLabel.Last_Stage_Change_Date.toString()
 		};
 		String stage=Stage.New_Interested.toString().replace("_", " ");
-		String labelValues[]={stage,todaysDateSingleDigit};
+		String labelValues[]={stage,todaysDate};
 		if (lp.clickOnTab(projectName, TabName.FundraisingsTab)) {
 
 			if (lp.clickOnAlreadyCreatedItem(projectName, M6LSCFundraising1, 10)) {
@@ -5078,7 +5079,7 @@ public void M6tc026_1_VerifyPathComponent(String projectName) {
 		String labelName[]={excelLabel.Stage.toString(),excelLabel.Last_Stage_Change_Date.toString()
 		};
 		String stage=Stage.New_Stage_Verification.toString().replace("_", " ");
-		String labelValues[]={stage,todaysDateSingleDigit};
+		String labelValues[]={stage,todaysDate};
 		if (lp.clickOnTab(projectName, TabName.FundraisingsTab)) {
 
 			if (lp.clickOnAlreadyCreatedItem(projectName, M6LSCFundraising1, 10)) {

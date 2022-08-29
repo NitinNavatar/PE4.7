@@ -304,8 +304,8 @@ public boolean clickOnCreatedFund(String environment, String mode,String fundNam
 		}
 		
 			
-			xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
-					+ "']/../following-sibling::div//*[contains(@class,'field-value')]";
+			xpath = "//span[@class='test-id__field-label'][contains(text(),'" + finalLabelName
+					+ "')]/../following-sibling::div//*[contains(@class,'field-value')]";
 			if (labelName.equalsIgnoreCase(excelLabel.Deal_Quality_Score.toString()))
 				xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName
 				+ "']/../following-sibling::div//*[contains(@class,'field-value')]";

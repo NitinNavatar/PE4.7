@@ -189,7 +189,7 @@ public boolean clickOnCreatedInstitution(String environment,String mode,String i
 
 		if(mode.equalsIgnoreCase(Mode.Classic.toString())){
 
-			List<WebElement> optionsInDropDown = FindElements(driver, "//select[@id='fcf']/option[text()='All Institutions']", "");
+			List<WebElement> optionsInDropDown = FindElements(driver, "//select[@id='fcf']/option[text()='All Firms']", "");
 			String[] options = {};
 			if(optionsInDropDown.size()>1){
 				String[] o = {optionsInDropDown.get(0).getAttribute("value"), optionsInDropDown.get(1).getAttribute("value")};
