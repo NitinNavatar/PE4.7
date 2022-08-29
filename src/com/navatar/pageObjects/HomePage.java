@@ -1923,8 +1923,8 @@ public class HomePage extends BasePageBusinessLayer {
 	public List<WebElement> sdgGridColumnsDataList(String Title, int CloumnIndex) {
 		// index start from 2 in Deal SDG grid.
 
-		String xpath = "//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='" + Title
-				+ "']/../../../../../following-sibling::div//table/tbody/tr/td[" + CloumnIndex + "]";
+		String xpath = "//a[text()='" + Title + "']/../../../../../following-sibling::div//table/tbody/tr/td["
+				+ CloumnIndex + "]/span/span[1]";
 		List<WebElement> ele = FindElements(driver, xpath, "SDG grid " + Title + " column data ");
 
 		return ele;
@@ -2092,8 +2092,7 @@ public class HomePage extends BasePageBusinessLayer {
 
 	public List<WebElement> sdgGridAllHeadersLabelNameList(String sdgGridName) {
 
-		String xpath = "//div[contains(@data-component-id,'navpeII_sdg')]//a[text()='" + sdgGridName
-				+ "']/../../../../../following-sibling::div//table/thead/tr/th";
+		String xpath = "//a[text()='" + sdgGridName + "']/../../../../../following-sibling::div//table/thead/tr/th";
 		List<WebElement> ele = FindElements(driver, xpath, "SDG grid header label name " + sdgGridName);
 
 		return ele;
@@ -2366,25 +2365,62 @@ public class HomePage extends BasePageBusinessLayer {
 	public WebElement getPECloudOnHomePage(int timeOut) {
 		return isDisplayed(driver, PECloudOnHomePage, "Visibility", timeOut, "PE Cloud");
 	}
-	
+
 	@FindBy(xpath = "//div[@aria-label='Apps']//p")
 	private WebElement PECloudOnLauncher;
 
 	public WebElement getPECloudOnLauncher(int timeOut) {
 		return isDisplayed(driver, PECloudOnLauncher, "Visibility", timeOut, "PE Cloud on Launcher");
 	}
-	
+
 	@FindBy(xpath = "//button[text()='View All']")
 	private WebElement viewAllBtn;
 
 	public WebElement getViewAllBtn(int timeOut) {
 		return isDisplayed(driver, viewAllBtn, "Visibility", timeOut, "View All button");
 	}
-	
+
 	@FindBy(xpath = "//div[@role='list']//span[@class='slds-truncate']")
 	private List<WebElement> HomePageTabs;
 
 	public List<WebElement> getHomePageTabs() {
 		return HomePageTabs;
 	}
+
+	public WebElement sdgGridColumnsDataOfFirstRow(String Title, int CloumnIndex) {
+		// index start from 2 in Deal SDG grid.
+
+		String xpath = "//h2/span/a[text()='" + Title
+				+ "']/../../../../../following-sibling::div/div/following-sibling::div//tbody/tr[1]/td[" + CloumnIndex
+				+ "]/span/span[1]";
+
+		WebElement ele = FindElement(driver, xpath, "SDG grid " + Title + " column data ", action.SCROLLANDBOOLEAN, 30);
+
+		return ele;
+	}
+
+	public WebElement sdgGridColumnsDataOfFirstRowFirmColumn(String Title, int CloumnIndex) {
+		// index start from 2 in Deal SDG grid.
+
+		String xpath = "//h2/span/a[text()='" + Title
+				+ "']/../../../../../following-sibling::div/div/following-sibling::div//tbody/tr[1]/td[" + CloumnIndex
+				+ "]/span/span[1]//a";
+
+		WebElement ele = FindElement(driver, xpath, "SDG grid " + Title + " column data ", action.SCROLLANDBOOLEAN, 30);
+
+		return ele;
+	}
+
+	public WebElement sdgGridColumnsDataOfFirstRowDetailButton(String Title, int timeOut) {
+		// index start from 2 in Deal SDG grid.
+
+		String xpath = "//h2/span/a[text()='" + Title
+				+ "']/../../../../../following-sibling::div/div/following-sibling::div//tbody/tr[1]/td/div/button[text()='Details']";
+
+		WebElement ele = FindElement(driver, xpath, "SDG grid " + Title + " column data ", action.SCROLLANDBOOLEAN,
+				timeOut);
+
+		return ele;
+	}
+
 }

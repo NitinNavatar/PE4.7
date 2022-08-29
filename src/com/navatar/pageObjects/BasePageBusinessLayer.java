@@ -40,6 +40,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -55,6 +56,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -62,6 +64,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class BasePageBusinessLayer extends BasePage implements BasePageErrorMessage {
 
@@ -1406,6 +1409,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		case DealTab:
 			viewList = "All";
 			break;
+		case TaskTab:
+			viewList = "All";
+			break;
 		case Object1Tab:
 			viewList = "All";
 			break;
@@ -1468,8 +1474,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				action.SCROLLANDBOOLEAN)) {
 			ThreadSleep(5000);
 
-			xpath = "//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//*[text()='" + alreadyCreated
-					+ "']";
+			if (tabName.toString().contains("Task") || tabName.toString().equalsIgnoreCase("Task")) {
+				xpath = "//span[text()='" + alreadyCreated + "']/ancestor::a";
+			} else {
+				xpath = "//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//*[text()='"
+						+ alreadyCreated + "']";
+			}
+
 			ele = FindElement(driver, xpath, alreadyCreated, action.BOOLEAN, 30);
 			ThreadSleep(2000);
 
@@ -7749,6 +7760,93 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	}
 
+	/**
+	 * @author Ankur Huria
+	 * @param ExpectedLabels
+	 * @param ExpectedLabelsValues
+	 * @return negativeResult
+	 */
+	public List<String> verifyHighlightLabelValues(List<String> ExpectedLabels, List<String> ExpectedLabelsValues) {
+		List<String> highlightedPanelLabels = highlightPanelLabels().stream().map(x -> x.getText().trim())
+				.collect(Collectors.toList());
+		List<String> highlightedPanelLabelsValues = highlightPanelLabelsValues().stream()
+				.map(x -> x.getText().replace("Preview", "").replace("Open", "").trim()).collect(Collectors.toList());
+		List<String> negativeResult = new ArrayList<String>();
+		if (highlightedPanelLabels.size() == highlightedPanelLabelsValues.size()) {
+			log(LogStatus.INFO, "No. of Highlighted Labels and Values Matched", YesNo.No);
+			if (ExpectedLabels.size() == ExpectedLabelsValues.size()) {
+				log(LogStatus.INFO, "No. of Expected Highlighted Labels and Values Matched", YesNo.No);
+				if (ExpectedLabels.size() == highlightedPanelLabels.size()) {
+					log(LogStatus.INFO, "No. of Expected Highlighted Labels and Actual Highlighted Labels Matched",
+							YesNo.No);
+					int i = 0;
+					for (String expLabel : ExpectedLabels) {
+						if (expLabel.equals(highlightedPanelLabels.get(i))
+								&& ExpectedLabelsValues.get(i).equals(highlightedPanelLabelsValues.get(i))) {
+							log(LogStatus.INFO, "Label & Values Matched, Expected: " + expLabel + " :: "
+									+ ExpectedLabelsValues.get(i) + " & Actual: " + highlightedPanelLabels.get(i)
+									+ " :: " + highlightedPanelLabelsValues.get(i), YesNo.No);
+						} else {
+
+							log(LogStatus.ERROR, "Label & Values Doesn't Matched, Expected: " + expLabel + " :: "
+									+ ExpectedLabelsValues.get(i) + " & Actual: " + highlightedPanelLabels.get(i)
+									+ " :: " + highlightedPanelLabelsValues.get(i), YesNo.No);
+							negativeResult.add("Label & Values Doesn't Matched, Expected: " + expLabel + " :: "
+									+ ExpectedLabelsValues.get(i) + " & Actual: " + highlightedPanelLabels.get(i)
+									+ " :: " + highlightedPanelLabelsValues.get(i));
+
+						}
+
+						i++;
+					}
+
+				}
+
+				else {
+					log(LogStatus.ERROR,
+							"No. of Expected Highlighted Labels and Actual Highlighted Labels doesn't Match, So not able to Continue to verify Label and Values, No. of Expected Labels: "
+									+ ExpectedLabels.size() + " & No. of Actual Highlighted Labels: "
+									+ highlightedPanelLabels.size(),
+							YesNo.No);
+					negativeResult.add(
+							"No. of Expected Highlighted Labels and Actual Highlighted Labels doesn't Match, So not able to Continue to verify Label and Values, No. of Expected Labels: "
+									+ ExpectedLabels.size() + " & No. of Actual Highlighted Labels: "
+									+ highlightedPanelLabels.size());
+				}
+
+			}
+
+			else {
+				log(LogStatus.ERROR,
+						"No. of Expected Highlighted Labels and Values doesn't Match, So not able to Continue to verify Label and Values, No. of Expected Labels: "
+								+ ExpectedLabels.size() + " & No. of Expected Values: " + ExpectedLabelsValues.size(),
+						YesNo.No);
+				negativeResult.add(
+						"No. of Expected Highlighted Labels and Values doesn't Match, So not able to Continue to verify Label and Values, No. of Expected Labels: "
+								+ ExpectedLabels.size() + " & No. of Expected Values: " + ExpectedLabelsValues.size());
+			}
+
+		}
+
+		else {
+			log(LogStatus.ERROR,
+					"No. of Actual Highlighted Labels and Values doesn't Match, So not able to Continue to verify Label and Values, No. of Actual Labels: "
+							+ highlightedPanelLabels.size() + " & No. of Actual Values: "
+							+ highlightedPanelLabelsValues.size(),
+					YesNo.Yes);
+			negativeResult.add(
+					"No. of Actual Highlighted Labels and Values doesn't Match, So not able to Continue to verify Label and Values, No. of Actual Labels: "
+							+ highlightedPanelLabels.size() + " & No. of Actual Values: "
+							+ highlightedPanelLabelsValues.size());
+		}
+		return negativeResult;
+	}
+	/**
+	 * @author Ankur Huria
+	 * @param ExpectedButtonsOnPage
+	 * @param ExpectedButtonsInDownArrowButton
+	 * @return negativeResult
+	 */
 	public List<String> verifyButtonsOnAPageAndInDownArrowButton(List<String> ExpectedButtonsOnPage,
 			List<String> ExpectedButtonsInDownArrowButton) {
 
@@ -7936,13 +8034,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						for (String tab : tabsInPage) {
 							if (tab.equals(expectedListOfTabs.get(i))) {
 								log(LogStatus.INFO, "----Tab Matched, Expected: " + expectedListOfTabs.get(i)
-								+ " & Actual: " + tab + " on this Page----", YesNo.No);
+										+ " & Actual: " + tab + " on this Page----", YesNo.No);
 							} else {
 
 								log(LogStatus.ERROR, "----Tab Not Matched, Expected: " + expectedListOfTabs.get(i)
-								+ " but Actual: " + tab + " on this Page----", YesNo.No);
-								negativeResult.add("----Button Not Matched, Expected: " + expectedListOfTabs.get(i)
-								+ " but Actual: " + tab + " on this Page----");
+										+ " but Actual: " + tab + " on this Page----", YesNo.No);
+								negativeResult.add("----Tab Not Matched, Expected: " + expectedListOfTabs.get(i)
+										+ " but Actual: " + tab + " on this Page----");
 
 							}
 
@@ -7952,7 +8050,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						log(LogStatus.ERROR,
 								"No. of Expected and Actual Tabs on Page not matched, So not able to continue, Expected: "
 										+ expectedListOfTabs + " & Actual: " + tabsInPage,
-										YesNo.Yes);
+								YesNo.Yes);
 						negativeResult.add(
 								"No. of Expected and Actual Tabs on Page not matched, So not able to continue, Expected: "
 										+ expectedListOfTabs + " & Actual: " + tabsInPage);
@@ -7985,6 +8083,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 * @param SDGName
 	 * @param datas
 	 */
+	
 	@SuppressWarnings("unused")
 	public boolean createNewRecordThroughSDG(String projectName, String sdgName, String actionButtonName,
 			List<String> labels, List<String> values, List<String> typesOfFields, int timeOut) {
@@ -9289,7 +9388,124 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return sortedExpectedAmount;		
 	}
     
-    /**
+	/**
+	 * @author Ankur Huria
+	 * @param expectedListOfSectionHeaders
+	 * @return negativeResult
+	 */
+	public List<String> verifyRecordLayoutSectionHeaderLabels(String expectedListOfSectionHeaderLabels) {
+
+		List<String> negativeResult = new ArrayList<String>();
+
+		if (!expectedListOfSectionHeaderLabels.isEmpty()) {
+
+			String[] expectedListOfSectionHeaderLabel = expectedListOfSectionHeaderLabels.split("<Break>", -1);
+
+			for (int i = 0; i < expectedListOfSectionHeaderLabel.length; i++) {
+				String[] expectListOfSectionHeaderLabel = expectedListOfSectionHeaderLabel[i].split("<Header&Labels>",
+						-1);
+				String expectedHeader = expectListOfSectionHeaderLabel[0];
+				ArrayList<String> expectedLabels = new ArrayList<String>();
+				for (int k = 1; k < expectListOfSectionHeaderLabel.length; k++) {
+					expectedLabels.add(expectListOfSectionHeaderLabel[k]);
+				}
+
+				List<String> recordLayoutSectionHeaderLabels = recordLayoutSectionHeaderLabels(expectedHeader).stream()
+						.map(x -> x.getText().trim()).collect(Collectors.toList());
+
+				if (!recordLayoutSectionHeaderLabels.isEmpty()) {
+					log(LogStatus.INFO, "No. of Section Header Labels of Section " + expectedHeader
+							+ " Present on Page are: " + recordLayoutSectionHeaderLabels.size(), YesNo.No);
+
+					int j = 0;
+					if (recordLayoutSectionHeaderLabels.size() == expectedLabels.size()) {
+						log(LogStatus.INFO, "No. of Actual and Expected Section Labels of section " + expectedHeader
+								+ " on Page are same, So Continue the Process", YesNo.No);
+
+						for (String recordLayoutSectionHeaderLabel : recordLayoutSectionHeaderLabels) {
+							if (recordLayoutSectionHeaderLabel.equals(expectedLabels.get(j))) {
+								log(LogStatus.INFO,
+										"----Header's Label Matched, Expected: " + expectedLabels.get(j) + " & Actual: "
+												+ recordLayoutSectionHeaderLabel + " for  section: " + expectedHeader
+												+ " on this Page----",
+										YesNo.No);
+							} else {
+
+								log(LogStatus.ERROR,
+										"----Header's Label Not Matched, Expected: " + expectedLabels.get(j)
+												+ " & Actual: " + recordLayoutSectionHeaderLabel + " for  section: "
+												+ expectedHeader + " on this Page----",
+										YesNo.No);
+								negativeResult.add("----Header's Label Not Matched, Expected: " + expectedLabels.get(j)
+										+ " & Actual: " + recordLayoutSectionHeaderLabel + " for  section: "
+										+ expectedHeader + " on this Page----");
+
+							}
+
+							j++;
+						}
+					} else {
+						log(LogStatus.ERROR,
+								"No. of Expected and Actual Section Header Labels of Section " + expectedHeader
+										+ " on Page not matched, So not able to continue, Expected: " + expectedLabels
+										+ " & Actual: " + recordLayoutSectionHeaderLabels,
+								YesNo.Yes);
+						negativeResult.add("No. of Expected and Actual Section Header Labels of Section "
+								+ expectedHeader + " on Page not matched, So not able to continue, Expected: "
+								+ expectedLabels + " & Actual: " + recordLayoutSectionHeaderLabels);
+					}
+
+				}
+
+				else {
+					log(LogStatus.ERROR, "No Section Header Labels of Section " + expectedHeader + " Present on Page",
+							YesNo.Yes);
+					negativeResult.add("No Section Header Labels of Section " + expectedHeader + " Present on Page");
+				}
+			}
+
+		} else
+
+		{
+			log(LogStatus.ERROR, "No Expected Section Headers to verify on Page Mentioned", YesNo.No);
+			negativeResult.add("No Expected Section Headers to verify On Page Mentioned");
+		}
+
+		return negativeResult;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param tabName
+	 * @param sdgName
+	 * @return result
+	 */
+	public boolean verifySDGGridInPageTab(String tabName, String sdgName) {
+
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(5000);
+		boolean flag = false;
+		if (click(driver, getTabInPage(tabName, 40), "Tab Name: " + tabName, action.SCROLLANDBOOLEAN)) {
+
+			log(LogStatus.INFO, "Clicked on Tab: " + tabName, YesNo.No);
+			if (getSDGName(sdgName, 40) != null) {
+				log(LogStatus.INFO, "SDG Present: " + sdgName, YesNo.No);
+				flag = true;
+			} else {
+				log(LogStatus.ERROR, "SDG Not Present: " + sdgName, YesNo.No);
+				sa.assertTrue(false, "SDG Not Present: " + sdgName);
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on Tab: " + tabName, YesNo.Yes);
+			sa.assertTrue(false, "Not Able to Click on Tab: " + tabName);
+		}
+
+		return flag;
+
+	}
+
+	/**
 	 * @author Ankur Huria
 	 * @param projectName
 	 * @param labelWithValues
@@ -9497,81 +9713,937 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		else
 			return false;
 	}
-	
+
 	/**
-     * @author Ankur Huria
-     * @param buttonName
-     * @param timeOut
-     * @return true if able to click on button
-     */
-    public boolean clickOnRecordPageButtonForNewRecordCreation(String buttonName, int timeOut) {
-        boolean flag = false;
-        if (buttonInRecordPage(buttonName, timeOut) != null) {
-            if (click(driver, buttonInRecordPage(buttonName, timeOut), "Button " + buttonName,
-                    action.SCROLLANDBOOLEAN)) {
-                log(LogStatus.INFO, "Clicked on Button: " + buttonName + " on Record Form Page", YesNo.No);
-                flag = true;
-            } else {
-                log(LogStatus.ERROR, "Not Able to Click on Button: " + buttonName + " on Record Form Page", YesNo.Yes);
-           }
-        }
+	 * @author Ankur Huria
+	 * @param buttonName
+	 * @param timeOut
+	 * @return true if able to click on button
+	 */
+	public boolean clickOnRecordPageButtonForNewRecordCreation(String buttonName, int timeOut) {
+		boolean flag = false;
+		if (buttonInRecordPage(buttonName, timeOut) != null) {
+			if (click(driver, buttonInRecordPage(buttonName, timeOut), "Button " + buttonName,
+					action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Button: " + buttonName + " on Record Form Page", YesNo.No);
+				flag = true;
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on Button: " + buttonName + " on Record Form Page", YesNo.Yes);
 
-       else if (downArrowButton(timeOut) != null) {
-            log(LogStatus.INFO, "Down Arrow Button is Present", YesNo.No);
-            if (click(driver, downArrowButton(timeOut), "DownArrowButton", action.SCROLLANDBOOLEAN)) {
-                log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
-                CommonLib.ThreadSleep(2000);
+			}
+		}
 
-               List<String> dropDownButtonsList = dropDownButtonsList().stream().map(x -> x.getText().trim())
-                        .collect(Collectors.toList());
+		else if (downArrowButton(timeOut) != null) {
+			log(LogStatus.INFO, "Down Arrow Button is Present", YesNo.No);
+			if (click(driver, downArrowButton(timeOut), "DownArrowButton", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
+				CommonLib.ThreadSleep(2000);
 
-               if (!dropDownButtonsList.isEmpty()) {
-                    log(LogStatus.INFO, "No. of Buttons Present on DownArrow Button are: " + dropDownButtonsList.size(),
-                            YesNo.No);
+				List<String> dropDownButtonsList = dropDownButtonsList().stream().map(x -> x.getText().trim())
+						.collect(Collectors.toList());
 
-                   int i = 0;
-                    for (String button : dropDownButtonsList) {
-                        if (button.equalsIgnoreCase(buttonName)) {
-                            log(LogStatus.INFO, "Button Found in Down Arrow Button", YesNo.No);
+				if (!dropDownButtonsList.isEmpty()) {
+					log(LogStatus.INFO, "No. of Buttons Present on DownArrow Button are: " + dropDownButtonsList.size(),
+							YesNo.No);
 
+					int i = 0;
+					for (String button : dropDownButtonsList) {
+						if (button.equalsIgnoreCase(buttonName)) {
+							log(LogStatus.INFO, "Button Found in Down Arrow Button", YesNo.No);
 
+							if (click(driver, dropDownButtonsList().get(i), "DownArrowButton",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
+								flag = true;
+								break;
+							}
 
-                           if (click(driver, dropDownButtonsList().get(i), "DownArrowButton",
-                                    action.SCROLLANDBOOLEAN)) {
-                                log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
-                                flag = true;
-                                break;
-                            }
+							else {
+								log(LogStatus.ERROR,
+										"Not Able to Click on Button: " + buttonName + " on Record Form Page",
+										YesNo.Yes);
 
+							}
 
+						}
 
-                           else {
-                                log(LogStatus.ERROR,
-                                        "Not Able to Click on Button: " + buttonName + " on Record Form Page",
-                                        YesNo.Yes);
-                           }
-                       }
+						i++;
 
-                       i++;
-                   }
-               }
+					}
 
-               else {
-                    log(LogStatus.ERROR, "No Buttons Are Present in DownArrow Button", YesNo.Yes);
-               }
+				}
 
-           } else {
-                log(LogStatus.INFO, "Not able to Click on Down Arrow Button", YesNo.No);
-            }
-        }
+				else {
+					log(LogStatus.ERROR, "No Buttons Are Present in DownArrow Button", YesNo.Yes);
 
-       else {
-            log(LogStatus.ERROR, "Down Arrow Button is not Present on this Page, So No button: " + buttonName
-                    + " present on this Page", YesNo.Yes);
-       }
-        return flag;
-    }
+				}
 
-    
+			} else {
+				log(LogStatus.INFO, "Not able to Click on Down Arrow Button", YesNo.No);
+			}
+		}
+
+		else {
+			log(LogStatus.ERROR, "Down Arrow Button is not Present on this Page, So No button: " + buttonName
+					+ " present on this Page", YesNo.Yes);
+
+		}
+		return flag;
+	}
+
+	
+
+	public ArrayList<String> VerifyInlineEditingForContactsAndAffiliationsGrid(String record) {
+		String xPath = "";
+		WebElement ele;
+		List<WebElement> elements;
+		Random random = new Random();
+		ArrayList<String> columnName = new ArrayList<String>();
+		ArrayList<String> inputType = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<String>();
+		String[] data = record.split("<break>");
+		for (int i = 0; i < data.length; i++) {
+			String[] gridNameAndCoulmnNameInputType = data[i].split("<gridBreak>");
+			String gridName = gridNameAndCoulmnNameInputType[0];
+			String[] CoulmnNameAndInputType = gridNameAndCoulmnNameInputType[1].split("<f>");
+			for (int j = 0; j < CoulmnNameAndInputType.length; j++) {
+				String[] ColumnNameAndDatatype = CoulmnNameAndInputType[j].split("<v>");
+				columnName.add(ColumnNameAndDatatype[0]);
+				inputType.add(ColumnNameAndDatatype[1]);
+			}
+
+			if (columnName.size() == inputType.size()) {
+				for (int j = 0; j < columnName.size(); j++) {
+
+					xPath = "//a[text()='" + gridName + "']/ancestor::article//td[contains(@data-label,'"
+							+ columnName.get(j) + "')]//span";
+					ele = CommonLib.FindElement(driver, xPath, columnName.get(j) + " heading", action.SCROLLANDBOOLEAN,
+							50);
+					if (ele != null) {
+						if (CommonLib.mouseOverOperation(driver, ele)) {
+							log(LogStatus.INFO, "Mouse has been hover to " + columnName.get(j), YesNo.Yes);
+							xPath = "//a[text()='" + gridName + "']/ancestor::article//td[contains(@data-label,'"
+									+ columnName.get(j) + "')]//button[@title='Edit']";
+							ele = CommonLib.FindElement(driver, xPath, columnName.get(j) + " record", action.BOOLEAN,
+									50);
+							if (ele != null) {
+								log(LogStatus.INFO, "Edit icon has been located of " + columnName.get(j), YesNo.Yes);
+								if (CommonLib.clickUsingJavaScript(driver, ele, columnName.get(j) + " record",
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "Clicked on " + columnName.get(j) + " record edit icon",
+											YesNo.No);
+
+									if (inputType.get(j).equals("textbox")) {
+										xPath = "//a[text()='" + gridName
+												+ "']/ancestor::article//td[contains(@data-label,'" + columnName.get(j)
+												+ "')]//input";
+										ele = CommonLib.FindElement(driver, xPath, columnName.get(j) + " record",
+												action.SCROLLANDBOOLEAN, 50);
+										CommonLib.scrollDownThroughWebelementInCenter(driver, ele,
+												columnName.get(j) + " record");
+										if (ele != null) {
+											if (columnName.get(j).equals("Phone")) {
+												if (CommonLib.sendKeys(driver, ele, random.nextInt(1000000000) + "",
+														columnName.get(j) + " input type", action.BOOLEAN)) {
+													log(LogStatus.INFO, "Phone number has been passed", YesNo.No);
+
+												} else {
+													log(LogStatus.ERROR, "Not able to enter the Phone numberd",
+															YesNo.No);
+													result.add("Not able to enter the Phone numberd");
+												}
+											} else if (columnName.get(j).equals("Email")) {
+												if (CommonLib.sendKeys(driver, ele,
+														"Automation" + random.nextInt(100000) + "@yopmail.com",
+														columnName.get(j) + " input type", action.BOOLEAN)) {
+													log(LogStatus.INFO, "Email id has been passed", YesNo.No);
+
+												} else {
+													log(LogStatus.ERROR, "Not able to enter the Email id", YesNo.No);
+													result.add("Not able to enter the Email id");
+												}
+											} else {
+												if (CommonLib.sendKeys(driver, ele,
+														"Automation" + random.nextInt(100000),
+														columnName.get(j) + " input type", action.BOOLEAN)) {
+
+													log(LogStatus.INFO, "Value has been passed", YesNo.No);
+
+												} else {
+													log(LogStatus.ERROR, "Not able to enter the value", YesNo.No);
+													result.add("Not able to enter the value");
+												}
+											}
+
+										} else {
+											log(LogStatus.ERROR,
+													"Not able to get the " + columnName.get(j) + " input icon",
+													YesNo.Yes);
+											result.add("Not able to get the " + columnName.get(j) + " input icon");
+										}
+									} else if (inputType.get(j).equals("calender")) {
+
+										xPath = "//a[text()='" + gridName
+												+ "']/ancestor::article//td[contains(@data-label,'" + columnName.get(j)
+												+ "')]//input";
+										ele = CommonLib.FindElement(driver, xPath, columnName.get(j) + " record",
+												action.SCROLLANDBOOLEAN, 50);
+										if (ele != null) {
+											if (CommonLib.click(driver, ele, columnName.get(j) + " input",
+													action.BOOLEAN)) {
+												if (datePickerHandle(driver, monthInDatePicker(50),
+														previousMonthButtonInDatePicker(50), "Calender", "2022", "July",
+														"22")) {
+													log(LogStatus.INFO, "Date has been selected from the calender",
+															YesNo.No);
+
+												} else {
+													log(LogStatus.ERROR, "Date is not selected from the calender",
+															YesNo.No);
+													result.add("Date is not selected from the calender");
+												}
+
+											} else {
+												log(LogStatus.ERROR,
+														"Not able to click on " + columnName.get(j) + " input icon",
+														YesNo.Yes);
+												result.add("Not able to click on " + columnName.get(j) + " input icon");
+											}
+										} else {
+											log(LogStatus.ERROR,
+													"Not able to get the " + columnName.get(j) + " input icon",
+													YesNo.Yes);
+											result.add("Not able to get the " + columnName.get(j) + " input icon");
+										}
+									}
+
+									else if (inputType.get(j).equals("multipicklist")) {
+										xPath = "//span[text()='Available']/parent::div//span[@class='slds-truncate']";
+										ele = CommonLib.FindElement(driver, xPath,
+												columnName.get(j) + " multipicklist record", action.SCROLLANDBOOLEAN,
+												50);
+										if (ele != null) {
+											if (CommonLib.click(driver, ele, "Availabel picklist", action.BOOLEAN)) {
+												log(LogStatus.INFO, "multipicklist element has located", YesNo.Yes);
+												xPath = "//button[@title='Move selection to Chosen']";
+												ele = CommonLib.FindElement(driver, xPath,
+														"Move selection to Chosen icon ", action.SCROLLANDBOOLEAN, 50);
+												if (ele != null) {
+													if (CommonLib.click(driver, ele, "Move selection to Chosen icon",
+															action.BOOLEAN)) {
+														log(LogStatus.INFO, "clicked on Move selection to Chosen icon",
+																YesNo.No);
+
+													} else {
+														log(LogStatus.ERROR,
+																"Not able to clicked on Move selection to Chosen icon",
+																YesNo.No);
+														result.add(
+																"Not able to clicked on Move selection to Chosen icon");
+													}
+												} else {
+													log(LogStatus.ERROR,
+															"Not able to get the Move selection to Chosen locator",
+															YesNo.No);
+													result.add("Not able to get the Move selection to Chosen locator");
+												}
+
+											} else {
+												log(LogStatus.ERROR, "Not able to click on Availabel list", YesNo.No);
+												result.add("Not able to click on Availabel list");
+											}
+										} else {
+											log(LogStatus.ERROR, "Not able to locate the multipicklist locator",
+													YesNo.No);
+											result.add("Not able to locate the multipicklist locator");
+										}
+									}
+
+									else if (inputType.get(j).equals("searchDropDown")) {
+										xPath = "//a[text()='" + gridName
+												+ "']/ancestor::article//td[contains(@data-label,'" + columnName.get(j)
+												+ "')]//span//lightning-formatted-text";
+										ele = CommonLib.FindElement(driver, xPath, columnName.get(j) + " Column Name",
+												null, 25);
+										String text = CommonLib.getText(driver, ele, columnName.get(j) + " record",
+												null);
+
+										xPath = "//a[text()='" + gridName
+												+ "']/ancestor::article//td[contains(@data-label,'" + columnName.get(j)
+												+ "')]//button[contains(@id,'combobox-button')]";
+										ele = CommonLib.FindElement(driver, xPath, columnName.get(j) + " Column Name",
+												null, 25);
+										if (CommonLib.click(driver, ele, columnName.get(j) + " record", null)) {
+											xPath = "//a[text()='" + gridName
+													+ "']/ancestor::article//td[contains(@data-label,'"
+													+ columnName.get(j)
+													+ "')]//lightning-base-combobox-item//span[@class='slds-truncate']";
+											elements = CommonLib.FindElements(driver, xPath,
+													columnName.get(j) + " record");
+											for (int k = 1; k < elements.size(); k++) {
+												if (!CommonLib.getText(driver, elements.get(k),
+														columnName.get(j) + " record", null).equals(text)) {
+													if (CommonLib.clickUsingJavaScript(driver, elements.get(k),
+															columnName.get(j) + " record")) {
+														log(LogStatus.INFO,
+																elements.get(k).getText() + " value has been selected",
+																YesNo.No);
+														break;
+													} else {
+														log(LogStatus.ERROR,
+																"Not able to select " + elements.get(k).getText()
+																		+ " value from dropdown list",
+																YesNo.No);
+														result.add("Not able to select " + elements.get(k).getText()
+																+ " value from dropdown list");
+													}
+												}
+
+											}
+										} else {
+											log(LogStatus.ERROR,
+													"Not able to click on " + columnName.get(j) + " record", YesNo.No);
+											result.add("Not able to click on " + columnName.get(j) + " record");
+										}
+									}
+
+									else {
+										log(LogStatus.ERROR, "Input type of record is incorrect", YesNo.No);
+										result.add("Input type of record is incorrect");
+									}
+
+								} else {
+									log(LogStatus.ERROR,
+											"Not able to get the " + columnName.get(i) + " record edit icon", YesNo.No);
+									result.add("Not able to get the " + columnName.get(i) + " record edit icon");
+								}
+
+							} else {
+								log(LogStatus.ERROR, "Not able to get the " + columnName.get(i) + " edit icon",
+										YesNo.No);
+								result.add("Not able to get the " + columnName.get(i) + " edit icon");
+							}
+						} else {
+							log(LogStatus.ERROR, "Not able to hover the record ", YesNo.No);
+							result.add("Not able to hover the record ");
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to get the locator of " + gridName + " record", YesNo.No);
+						result.add("Not able to get the locator of " + gridName + " record");
+					}
+
+					xPath = "//a[text()='" + gridName + "']/ancestor::article//td//input[@type='checkbox']/..";
+					ele = CommonLib.FindElement(driver, xPath, columnName.get(j) + " checkboxs record",
+							action.SCROLLANDBOOLEAN, 50);
+					CommonLib.scrollDownThroughWebelementInCenter(driver, ele, " record");
+					CommonLib.doubleClickUsingAction(driver, ele);
+					CommonLib.ThreadSleep(4000);
+
+				}
+
+			} else {
+				log(LogStatus.ERROR,
+						"Column Name size and Input type size are not matched. Please provide the correct input",
+						YesNo.Yes);
+				result.add("Column Name size and Input type size are not matched. Please provide the correct input");
+			}
+
+			xPath = "//a[text()='" + gridName + "']/ancestor::article//button[@title='Save']";
+			ele = CommonLib.FindElement(driver, xPath, gridName + " ", action.SCROLLANDBOOLEAN, 50);
+			if (CommonLib.click(driver, ele, "save button", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Save of " + gridName, YesNo.No);
+				if (CommonLib.checkElementVisibility(driver, getsaveConfirmationMsg(50), "save confirmation message",
+						50)) {
+					log(LogStatus.INFO, gridName + " record is has been saved", YesNo.No);
+				} else {
+					log(LogStatus.ERROR, gridName + " record is not saved", YesNo.No);
+					result.add(gridName + " record is not saved");
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
+				result.add("Not able to click on save button");
+			}
+
+			inputType.removeAll(inputType);
+			columnName.removeAll(columnName);
+		}
+		return result;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param projectName
+	 * @param alreadyCreated
+	 * @param viewList
+	 * @param timeout
+	 * @return true if able to click on List View
+	 */
+	public boolean clickOnAlreadyCreatedListView(String projectName, String alreadyCreated, String viewList,
+			int timeout) {
+		boolean flag = false;
+		String xpath = "";
+
+		WebElement ele, selectListView;
+		ele = null;
+
+		refresh(driver);
+
+		if (click(driver, getSelectListIcon(60), "Select List Icon", action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(3000);
+			xpath = "//div[@class='listContent']//li/a/span[contains(text(),'" + viewList + "')]";
+			selectListView = FindElement(driver, xpath, "Select List View : " + viewList, action.SCROLLANDBOOLEAN, 30);
+			if (click(driver, selectListView, "select List View : " + viewList, action.SCROLLANDBOOLEAN)) {
+			} else {
+				appLog.error("Not able to select on Select View List : " + viewList);
+			}
+		} else {
+			appLog.error("Not able to click on Select List Icon");
+		}
+
+		ThreadSleep(3000);
+		ThreadSleep(5000);
+
+		if (sendKeys(driver, getSearchIcon_Lighting(20), alreadyCreated + "\n", "Search Icon Text",
+				action.SCROLLANDBOOLEAN)) {
+			ThreadSleep(5000);
+
+			xpath = "//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//*[text()='" + alreadyCreated
+					+ "']";
+			ele = FindElement(driver, xpath, alreadyCreated, action.BOOLEAN, 30);
+			ThreadSleep(2000);
+
+			if (click(driver, ele, alreadyCreated, action.BOOLEAN)) {
+				ThreadSleep(3000);
+				click(driver, getPagePopUp(projectName, 5), "Page PopUp", action.BOOLEAN);
+				flag = true;
+			} else {
+				appLog.error("Not able to Click on Already Created : " + alreadyCreated);
+			}
+		} else {
+			appLog.error("Not able to enter value on Search Box");
+		}
+
+		return flag;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param columnNameDataTypeAndValue
+	 * @return ArrayList<String> of Negative Results
+	 */
+
+	public ArrayList<String> VerifyInlineEditing(String columnNameDataTypeAndValue) {
+		String xPath = "";
+		WebElement ele;
+		List<WebElement> elements;
+		Random random = new Random();
+		ArrayList<String> columnName = new ArrayList<String>();
+		ArrayList<String> inputType = new ArrayList<String>();
+		ArrayList<String> inputValue = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<String>();
+		String[] data = columnNameDataTypeAndValue.split("<break>");
+		for (int i = 0; i < data.length; i++) {
+			String[] gridNameAndCoulmnNameInputType = data[i].split("<gridBreak>");
+			String gridName = gridNameAndCoulmnNameInputType[0];
+			String[] CoulmnNameAndInputType = gridNameAndCoulmnNameInputType[1].split("<f>");
+			for (int j = 0; j < CoulmnNameAndInputType.length; j++) {
+				String[] ColumnNameAndDatatype = CoulmnNameAndInputType[j].split("<v>");
+				columnName.add(ColumnNameAndDatatype[0]);
+				inputType.add(ColumnNameAndDatatype[1]);
+				inputValue.add(ColumnNameAndDatatype[2]);
+			}
+
+			if (columnName.size() == inputType.size() && inputValue.size() == inputType.size()) {
+				for (int j = 0; j < columnName.size(); j++) {
+
+					xPath = "//a[text()='" + gridName + "']/ancestor::article//td[contains(@data-label,'"
+							+ columnName.get(j) + "')]//span";
+					ele = CommonLib.FindElement(driver, xPath, columnName.get(j) + " heading", action.SCROLLANDBOOLEAN,
+							50);
+					if (ele != null) {
+						if (CommonLib.mouseOverOperation(driver, ele)) {
+							log(LogStatus.INFO, "Mouse has been hover to " + columnName.get(j), YesNo.Yes);
+							xPath = "//a[text()='" + gridName + "']/ancestor::article//td[contains(@data-label,'"
+									+ columnName.get(j) + "')]//button[@title='Edit']";
+							ele = CommonLib.FindElement(driver, xPath, columnName.get(j) + " record", action.BOOLEAN,
+									50);
+							if (ele != null) {
+								log(LogStatus.INFO, "Edit icon has been located of " + columnName.get(j), YesNo.Yes);
+								if (CommonLib.clickUsingJavaScript(driver, ele, columnName.get(j) + " record",
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "Clicked on " + columnName.get(j) + " record edit icon",
+											YesNo.No);
+
+									if (inputType.get(j).equalsIgnoreCase("textbox")) {
+										xPath = "//a[text()='" + gridName
+												+ "']/ancestor::article//td[contains(@data-label,'" + columnName.get(j)
+												+ "')]//input";
+										ele = CommonLib.FindElement(driver, xPath, columnName.get(j) + " record",
+												action.SCROLLANDBOOLEAN, 50);
+										CommonLib.scrollDownThroughWebelementInCenter(driver, ele,
+												columnName.get(j) + " record");
+										if (ele != null) {
+
+											if (CommonLib.sendKeys(driver, ele, inputValue.get(j),
+													columnName.get(j) + " input type", action.BOOLEAN)) {
+
+												log(LogStatus.INFO, "Value has been passed " + inputValue.get(j),
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR, "Not able to enter the value" + inputValue.get(j),
+														YesNo.No);
+												result.add("Not able to enter the value" + inputValue.get(j));
+											}
+
+										} else {
+											log(LogStatus.ERROR,
+													"Not able to get the " + columnName.get(j) + " input icon",
+													YesNo.Yes);
+											result.add("Not able to get the " + columnName.get(j) + " input icon");
+										}
+									} else if (inputType.get(j).equalsIgnoreCase("DatePicker")) {
+
+										String[] date = inputValue.get(j).split("/");
+										xPath = "//a[text()='" + gridName
+												+ "']/ancestor::article//td[contains(@data-label,'" + columnName.get(j)
+												+ "')]//input";
+										ele = CommonLib.FindElement(driver, xPath, columnName.get(j) + " record",
+												action.SCROLLANDBOOLEAN, 50);
+										if (ele != null) {
+											if (CommonLib.click(driver, ele, columnName.get(j) + " input",
+													action.BOOLEAN)) {
+												if (datePickerHandle(driver, monthInDatePicker(50),
+														previousMonthButtonInDatePicker(50), "Calendar", date[3],
+														date[1], date[0])) {
+													log(LogStatus.INFO,
+															"Date has been selected from the calendar " + date,
+															YesNo.No);
+
+												} else {
+													log(LogStatus.ERROR,
+															"Date is not selected from the calendar " + date, YesNo.No);
+													result.add("Date is not selected from the calendar " + date);
+												}
+
+											} else {
+												log(LogStatus.ERROR,
+														"Not able to click on " + columnName.get(j) + " input icon",
+														YesNo.Yes);
+												result.add("Not able to click on " + columnName.get(j) + " input icon");
+											}
+										} else {
+											log(LogStatus.ERROR,
+													"Not able to get the " + columnName.get(j) + " input icon",
+													YesNo.Yes);
+											result.add("Not able to get the " + columnName.get(j) + " input icon");
+										}
+									}
+
+									else if (inputType.get(j).equalsIgnoreCase("DatePickerCurrentDate")) {
+										String value = CommonLib.getDateAccToTimeZone("GMT+5:30", "dd/MMM/yyyy");
+										String[] date = value.split("/");
+										xPath = "//a[text()='" + gridName
+												+ "']/ancestor::article//td[contains(@data-label,'" + columnName.get(j)
+												+ "')]//input";
+										ele = CommonLib.FindElement(driver, xPath, columnName.get(j) + " record",
+												action.SCROLLANDBOOLEAN, 50);
+										if (ele != null) {
+											if (CommonLib.click(driver, ele, columnName.get(j) + " input",
+													action.BOOLEAN)) {
+												if (datePickerHandle(driver, monthInDatePicker(50),
+														previousMonthButtonInDatePicker(50), "Calendar", date[3],
+														date[1], date[0])) {
+													log(LogStatus.INFO,
+															"Date has been selected from the calendar " + date,
+															YesNo.No);
+
+												} else {
+													log(LogStatus.ERROR,
+															"Date is not selected from the calendar " + date, YesNo.No);
+													result.add("Date is not selected from the calendar " + date);
+												}
+
+											} else {
+												log(LogStatus.ERROR,
+														"Not able to click on " + columnName.get(j) + " input icon",
+														YesNo.Yes);
+												result.add("Not able to click on " + columnName.get(j) + " input icon");
+											}
+										} else {
+											log(LogStatus.ERROR,
+													"Not able to get the " + columnName.get(j) + " input icon",
+													YesNo.Yes);
+											result.add("Not able to get the " + columnName.get(j) + " input icon");
+										}
+									}
+
+									else if (inputType.get(j).equalsIgnoreCase("DatePickerFutureDate")) {
+										String value = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MMM/yyyy",
+												Integer.parseInt(inputValue.get(j)));
+										String[] date = value.split("/");
+										xPath = "//a[text()='" + gridName
+												+ "']/ancestor::article//td[contains(@data-label,'" + columnName.get(j)
+												+ "')]//input";
+										ele = CommonLib.FindElement(driver, xPath, columnName.get(j) + " record",
+												action.SCROLLANDBOOLEAN, 50);
+										if (ele != null) {
+											if (CommonLib.click(driver, ele, columnName.get(j) + " input",
+													action.BOOLEAN)) {
+												if (datePickerHandle(driver, monthInDatePicker(50),
+														previousMonthButtonInDatePicker(50), "Calendar", date[3],
+														date[1], date[0])) {
+													log(LogStatus.INFO,
+															"Date has been selected from the calendar " + date,
+															YesNo.No);
+
+												} else {
+													log(LogStatus.ERROR,
+															"Date is not selected from the calendar " + date, YesNo.No);
+													result.add("Date is not selected from the calendar " + date);
+												}
+
+											} else {
+												log(LogStatus.ERROR,
+														"Not able to click on " + columnName.get(j) + " input icon",
+														YesNo.Yes);
+												result.add("Not able to click on " + columnName.get(j) + " input icon");
+											}
+										} else {
+											log(LogStatus.ERROR,
+													"Not able to get the " + columnName.get(j) + " input icon",
+													YesNo.Yes);
+											result.add("Not able to get the " + columnName.get(j) + " input icon");
+										}
+									}
+
+									else if (inputType.get(j).equalsIgnoreCase("multipicklist")) {
+										xPath = "//span[text()='Available']/parent::div//span[@class='slds-truncate']";
+										ele = CommonLib.FindElement(driver, xPath,
+												columnName.get(j) + " multipicklist record", action.SCROLLANDBOOLEAN,
+												50);
+										if (ele != null) {
+											if (CommonLib.click(driver, ele, "Availabel picklist", action.BOOLEAN)) {
+												log(LogStatus.INFO, "multipicklist element has located", YesNo.Yes);
+												xPath = "//button[@title='Move selection to Chosen']";
+												ele = CommonLib.FindElement(driver, xPath,
+														"Move selection to Chosen icon ", action.SCROLLANDBOOLEAN, 50);
+												if (ele != null) {
+													if (CommonLib.click(driver, ele, "Move selection to Chosen icon",
+															action.BOOLEAN)) {
+														log(LogStatus.INFO, "clicked on Move selection to Chosen icon",
+																YesNo.No);
+
+													} else {
+														log(LogStatus.ERROR,
+																"Not able to clicked on Move selection to Chosen icon",
+																YesNo.No);
+														result.add(
+																"Not able to clicked on Move selection to Chosen icon");
+													}
+												} else {
+													log(LogStatus.ERROR,
+															"Not able to get the Move selection to Chosen locator",
+															YesNo.No);
+													result.add("Not able to get the Move selection to Chosen locator");
+												}
+
+											} else {
+												log(LogStatus.ERROR, "Not able to click on Availabel list", YesNo.No);
+												result.add("Not able to click on Availabel list");
+											}
+										} else {
+											log(LogStatus.ERROR, "Not able to locate the multipicklist locator",
+													YesNo.No);
+											result.add("Not able to locate the multipicklist locator");
+										}
+									}
+
+									else if (inputType.get(j).equalsIgnoreCase("searchDropDown")) {
+										xPath = "//a[text()='" + gridName
+												+ "']/ancestor::article//td[contains(@data-label,'" + columnName.get(j)
+												+ "')]//span//lightning-formatted-text";
+										ele = CommonLib.FindElement(driver, xPath, columnName.get(j) + " Column Name",
+												null, 25);
+
+										xPath = "//a[text()='" + gridName
+												+ "']/ancestor::article//td[contains(@data-label,'" + columnName.get(j)
+												+ "')]//button[contains(@id,'combobox-button')]";
+										ele = CommonLib.FindElement(driver, xPath, columnName.get(j) + " Column Name",
+												null, 25);
+										if (CommonLib.click(driver, ele, columnName.get(j) + " record", null)) {
+											xPath = "//a[text()='" + gridName
+													+ "']/ancestor::article//td[contains(@data-label,'"
+													+ columnName.get(j)
+													+ "')]//lightning-base-combobox-item//span[@class='slds-truncate']";
+											elements = CommonLib.FindElements(driver, xPath,
+													columnName.get(j) + " record");
+											for (int k = 1; k < elements.size(); k++) {
+												if (CommonLib.getText(driver, elements.get(k),
+														columnName.get(j) + " record", null)
+														.equals(inputValue.get(j))) {
+													if (CommonLib.clickUsingJavaScript(driver, elements.get(k),
+															columnName.get(j) + " record")) {
+														log(LogStatus.INFO,
+																elements.get(k).getText() + " value has been selected",
+																YesNo.No);
+														break;
+													} else {
+														log(LogStatus.ERROR,
+																"Not able to select " + elements.get(k).getText()
+																		+ " value from dropdown list",
+																YesNo.No);
+														result.add("Not able to select " + elements.get(k).getText()
+																+ " value from dropdown list");
+													}
+												}
+
+											}
+										} else {
+											log(LogStatus.ERROR,
+													"Not able to click on " + columnName.get(j) + " record", YesNo.No);
+											result.add("Not able to click on " + columnName.get(j) + " record");
+										}
+									}
+
+									else {
+										log(LogStatus.ERROR, "Input type of record is incorrect", YesNo.No);
+										result.add("Input type of record is incorrect");
+									}
+
+								} else {
+									log(LogStatus.ERROR,
+											"Not able to get the " + columnName.get(i) + " record edit icon", YesNo.No);
+									result.add("Not able to get the " + columnName.get(i) + " record edit icon");
+								}
+
+							} else {
+								log(LogStatus.ERROR, "Not able to get the " + columnName.get(i) + " edit icon",
+										YesNo.No);
+								result.add("Not able to get the " + columnName.get(i) + " edit icon");
+							}
+						} else {
+							log(LogStatus.ERROR, "Not able to hover the record ", YesNo.No);
+							result.add("Not able to hover the record ");
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to get the locator of " + gridName + " record", YesNo.No);
+						result.add("Not able to get the locator of " + gridName + " record");
+					}
+
+					xPath = "//a[text()='" + gridName + "']/ancestor::article//td//input[@type='checkbox']/..";
+					ele = CommonLib.FindElement(driver, xPath, columnName.get(j) + " checkboxs record",
+							action.SCROLLANDBOOLEAN, 50);
+					CommonLib.scrollDownThroughWebelementInCenter(driver, ele, " record");
+					CommonLib.doubleClickUsingAction(driver, ele);
+					CommonLib.ThreadSleep(4000);
+
+				}
+
+			} else {
+				log(LogStatus.ERROR,
+						"Column Name size and Input type size are not matched. Please provide the correct input",
+						YesNo.Yes);
+				result.add("Column Name size and Input type size are not matched. Please provide the correct input");
+			}
+
+			xPath = "//a[text()='" + gridName + "']/ancestor::article//button[@title='Save']";
+			ele = CommonLib.FindElement(driver, xPath, gridName + " ", action.SCROLLANDBOOLEAN, 50);
+			if (CommonLib.click(driver, ele, "save button", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Save of " + gridName, YesNo.No);
+				if (CommonLib.checkElementVisibility(driver, getsaveConfirmationMsg(50), "save confirmation message",
+						50)) {
+					log(LogStatus.INFO, gridName + " record is has been saved", YesNo.No);
+				} else {
+					log(LogStatus.ERROR, gridName + " record is not saved", YesNo.No);
+					result.add(gridName + " record is not saved");
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
+				result.add("Not able to click on save button");
+			}
+
+			inputType.removeAll(inputType);
+			columnName.removeAll(columnName);
+		}
+		return result;
+	}
+
+	public boolean uploadFileAndVerify(String fileName, String fileType, String fileSize) {
+		boolean flag = false;
+		String xPath;
+		WebElement ele;
+
+		String text = CommonLib.getText(driver, getUploadedFileCount(30), "Uploaded file count", action.BOOLEAN);
+		String size = text.replaceAll("()", "");
+		String currentDate = CommonLib.getDateAccToTimeZone("GMT+5:30", "MMM dd, yyyy");
+
+		if (getuploadFileVisible(15) != null) {
+
+			if (CommonLib.sendKeys(driver, getfileUpload(30),
+					System.getProperty("user.dir") + "/UploadFiles/PEFSTG/" + fileName, "Upload file",
+					action.BOOLEAN)) {
+				if (click(driver, getClickedOnDoneButton(40), "Done button", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on done button", YesNo.No);
+
+					if (CommonLib.checkElementVisibility(driver, getfileUploadConfirmationMsg(50),
+							"File Upload confirmation message", 50)) {
+						log(LogStatus.INFO, "File has been Uploaded", YesNo.No);
+
+						CommonLib.ThreadSleep(5000);
+						String actualUploadedFileDate = CommonLib.getText(driver, getfileUploadDate(20),
+								"Uploaded File Date", action.SCROLLANDBOOLEAN);
+						String actualUploadedFileSize = CommonLib.getText(driver, getfileUploadSize(20),
+								"Uploaded File Size", action.SCROLLANDBOOLEAN);
+						String actualUploadedFileType = CommonLib.getText(driver, getfileUploadType(20),
+								"Uploaded File type", action.SCROLLANDBOOLEAN);
+
+						if (actualUploadedFileDate.equals(currentDate) && actualUploadedFileSize.equals(fileSize)
+								&& actualUploadedFileType.equals(fileType)) {
+							log(LogStatus.INFO,
+									"Expected uploaded file date : " + currentDate + ", file size : " + fileSize
+											+ ", and file type : " + fileType
+											+ " have been matched with the Actual uploaded file date : "
+											+ actualUploadedFileDate + ", file size : " + actualUploadedFileSize
+											+ ", and file type : " + actualUploadedFileType,
+									YesNo.No);
+							flag = true;
+						} else {
+							log(LogStatus.ERROR,
+									"Expected uploaded file date : " + currentDate + ", file size : " + fileSize
+											+ ", and file type : " + fileType
+											+ " are not  matched with the Actual uploaded file date : "
+											+ actualUploadedFileDate + ", file size : " + actualUploadedFileSize
+											+ ", and file type : " + actualUploadedFileType,
+									YesNo.No);
+
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to Upload the File", YesNo.No);
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Could not Clicked on  Done Button", YesNo.No);
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to upload the file", YesNo.No);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to upload the file", YesNo.No);
+		}
+		return flag;
+	}
+
+	public ArrayList<String> verifyFileCountUploadAndAddFileButton() {
+		ArrayList<String> result = new ArrayList<String>();
+		boolean flag = false;
+		if (CommonLib.checkElementVisibility(driver, getfileCountVisible(20), "file Count visiblity", 20)) {
+			log(LogStatus.INFO, "File count is visible", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "File count is not visible", YesNo.No);
+			result.add("File count is not visible");
+		}
+
+		if (CommonLib.checkElementVisibility(driver, getuploadFileVisible(20), "Upload file visiblity", 20)) {
+			log(LogStatus.INFO, "Upload File button is visible", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Upload File button is not visible", YesNo.No);
+			result.add("Upload File button is not visible");
+		}
+
+		if (CommonLib.checkElementVisibility(driver, getaddFileVisible(20), "Add file button visiblity", 20)) {
+			log(LogStatus.INFO, "Add File button is visible", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Add File button is not visible", YesNo.No);
+			result.add("Add File button is not visible");
+		}
+
+		if (CommonLib.checkElementVisibility(driver, getdropFileVisible(20), "Or drop file button visiblity", 20)) {
+			log(LogStatus.INFO, "Or drop File button is visible", YesNo.No);
+		} else {
+			log(LogStatus.ERROR, "Or drop File button is not visible", YesNo.No);
+			result.add("Or drop File button is not visible");
+		}
+		return result;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param expectedListOfSectionHeaders
+	 * @return negativeResult
+	 */
+	public List<String> verifyRecordLayoutSectionHeaders(List<String> expectedListOfSectionHeaders) {
+
+		List<String> negativeResult = new ArrayList<String>();
+
+		if (!expectedListOfSectionHeaders.isEmpty()) {
+
+			if (expectedListOfSectionHeaders.size() != 1 && !expectedListOfSectionHeaders.get(0).equals("")) {
+				List<String> recordLayoutSectionHeaders = recordLayoutSectionHeaders().stream()
+						.map(x -> x.getText().trim()).collect(Collectors.toList());
+
+				if (!recordLayoutSectionHeaders.isEmpty()) {
+					log(LogStatus.INFO,
+							"No. of Section Headers Present on Page are: " + recordLayoutSectionHeaders.size(),
+							YesNo.No);
+
+					int i = 0;
+					if (recordLayoutSectionHeaders.size() == expectedListOfSectionHeaders.size()) {
+						log(LogStatus.INFO,
+								"No. of Actual and Expected Section Headers on Page are same, So Continue the Process",
+								YesNo.No);
+
+						for (String recordLayoutSectionHeader : recordLayoutSectionHeaders) {
+							if (recordLayoutSectionHeader.equals(expectedListOfSectionHeaders.get(i))) {
+								log(LogStatus.INFO,
+										"----Section Headers Matched, Expected: " + expectedListOfSectionHeaders.get(i)
+												+ " & Actual: " + recordLayoutSectionHeader + " on this Page----",
+										YesNo.No);
+							} else {
+
+								log(LogStatus.ERROR,
+										"----Section Headers Not Matched, Expected: "
+												+ expectedListOfSectionHeaders.get(i) + " but Actual: "
+												+ recordLayoutSectionHeader + " on this Page----",
+										YesNo.No);
+								negativeResult.add("----Section Headers Not Matched, Expected: "
+										+ expectedListOfSectionHeaders.get(i) + " but Actual: "
+										+ recordLayoutSectionHeader + " on this Page----");
+
+							}
+
+							i++;
+						}
+					} else {
+						log(LogStatus.ERROR,
+								"No. of Expected and Actual Section Headers on Page not matched, So not able to continue, Expected: "
+										+ expectedListOfSectionHeaders + " & Actual: " + recordLayoutSectionHeaders,
+								YesNo.Yes);
+						negativeResult.add(
+								"No. of Expected and Actual Section Headers on Page not matched, So not able to continue, Expected: "
+										+ expectedListOfSectionHeaders + " & Actual: " + recordLayoutSectionHeaders);
+					}
+
+				}
+
+				else {
+					log(LogStatus.ERROR, "No Section Headers Are Present on this Page", YesNo.Yes);
+					negativeResult.add("No Section Headers Are Present on this Page");
+				}
+			} else
+
+			{
+				log(LogStatus.ERROR, "No Expected Section Headers to verify on Page Mentioned", YesNo.No);
+				negativeResult.add("No Expected Section Headers to verify On Page Mentioned");
+			}
+		} else
+
+		{
+			log(LogStatus.ERROR, "No Expected Section Headers to verify on Page Mentioned", YesNo.No);
+			negativeResult.add("No Expected Section Headers to verify On Page Mentioned");
+		}
+
+		return negativeResult;
+	}
 
 }

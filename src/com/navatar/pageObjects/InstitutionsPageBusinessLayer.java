@@ -115,7 +115,7 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 
 				}
 				FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
-				if (labelsWithValues!=null) {
+				if (labelsWithValues!=null ) {
 					for (String[] strings : labelsWithValues) {
 						if (click(driver, fp.getDealStatus(projectName, timeOut), "Status : "+strings[1], action.SCROLLANDBOOLEAN)) {
 							ThreadSleep(2000);
@@ -1039,6 +1039,7 @@ public boolean clickOnCreatedInstitution(String environment,String mode,String i
 				appLog.info("passed data in text box: " + institutionName);
 				if(labelNames!=null && labelValue!=null) {
 					for(int i=0; i<labelNames.length; i++) {
+						if(labelNames[i]!="") {
 						WebElement ele = getInstitutionPageTextBoxOrRichTextBoxWebElement(environment, mode, labelNames[i].trim(), 30);
 						if(sendKeys(driver, ele, labelValue[i], labelNames[i]+" text box", action.SCROLLANDBOOLEAN)) {
 							appLog.info("passed value "+labelValue[i]+" in "+labelNames[i]+" field");
@@ -1063,6 +1064,7 @@ public boolean clickOnCreatedInstitution(String environment,String mode,String i
 							BaseLib.sa.assertTrue(false, "Not able to pass value "+labelValue[i]+" in "+labelNames[i]+" field");
 						}
 					}
+					}
 
 				}
 				if (click(driver, getCustomTabSaveBtn(projectName,30), "save button", action.SCROLLANDBOOLEAN)) {
@@ -1070,8 +1072,11 @@ public boolean clickOnCreatedInstitution(String environment,String mode,String i
 					
 					ThreadSleep(8000);
 					CommonLib.refresh(driver);
-					ThreadSleep(9000);
+					ThreadSleep(5000);
 					WebElement ele = verifyCreatedItemOnPage(Header.Company, institutionName);
+					ThreadSleep(5000);
+					//							String	xpath="//span[@class='custom-truncate uiOutputText'][text()='"+institutionName+"']";
+					//							WebElement ele = FindElement(driver, xpath, "Header : "+institutionName, action.BOOLEAN, 30);
 					if (ele != null) {
 						appLog.info("created institution " + institutionName + " is verified successfully.");
 						appLog.info(institutionName + " is created successfully.");

@@ -377,6 +377,17 @@ public class FundRaisingPage extends BasePage {
 			return FindElements(driver, xpath, "recordsInListView");
 		}
 	}
+	
+	
+	
+	@FindBy(xpath = "//*[text()='Company']/following-sibling::div//input[@title='Search' or contains(@placeholder,'Search')]")
+	private WebElement companyName_Lighting;
+	public WebElement getCompanyName(String environment, String mode, int timeOut) {
+		
+			return isDisplayed(driver, companyName_Lighting, "Visibility", timeOut, "Company Name");
+		
+
+	}
 
 	
 	@FindBy(xpath = "//a[text()='Fundraising Contacts' and @role='tab']")

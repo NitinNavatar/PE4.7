@@ -1016,14 +1016,17 @@ public class PECloudSmoke extends BaseLib{
 
 		
 		//event
-		if (click(driver, gp.getGlobalActionIcon(projectName, 15), "Global Action Related item", action.BOOLEAN)) {
-			log(LogStatus.INFO, "Clicked on Global Action Related item", YesNo.No);
-			if (clickUsingJavaScript(driver, gp.getActionItem(projectName, GlobalActionItem.New_Event, 15),
-					"New Event Link", action.BOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on New Event Link", YesNo.Yes);
-				ThreadSleep(2000);
+//		if (click(driver, gp.getGlobalActionIcon(projectName, 15), "Global Action Related item", action.BOOLEAN)) {
+//			log(LogStatus.INFO, "Clicked on Global Action Related item", YesNo.No);
+//			if (clickUsingJavaScript(driver, gp.getActionItem(projectName, GlobalActionItem.New_Event, 15),
+//					"New Event Link", action.BOOLEAN)) {
+//				log(LogStatus.INFO, "Clicked on New Event Link", YesNo.Yes);
+//				ThreadSleep(2000);
 
-				click(driver, gp.getMaximizeIcon(projectName, 15), "Maximize Icon", action.BOOLEAN);
+		if (lp.clickAnyCellonCalender(projectName)) {
+			log(LogStatus.INFO,"Able to click on Calendar/Event Link",YesNo.No);
+			
+//				click(driver, gp.getMaximizeIcon(projectName, 15), "Maximize Icon", action.BOOLEAN);
 				SMOKEvent1StartDate = todaysDate;
 				SMOKEvent1EndDate = tomorrowsDate;
 
@@ -1062,11 +1065,11 @@ public class PECloudSmoke extends BaseLib{
 				log(LogStatus.SKIP, "Not Able to Clicked on New Event Link", YesNo.Yes);
 
 			}
-		}else{
-
-			sa.assertTrue(false, "Not Able to Clicked on Global Action Related item");
-			log(LogStatus.SKIP, "Not Able to Clicked on Global Action Related item", YesNo.Yes);
-		}
+//		}else{
+//
+//			sa.assertTrue(false, "Not Able to Clicked on Global Action Related item");
+//			log(LogStatus.SKIP, "Not Able to Clicked on Global Action Related item", YesNo.Yes);
+//		}
 		
 		
 		home.clickOnTab(projectName, TabName.HomeTab);	
@@ -2995,7 +2998,13 @@ public class PECloudSmoke extends BaseLib{
 				log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabName+" For : "+ctAccount,YesNo.Yes);
 			}
 		}
-		
+		if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, RelatedTab.Affiliations.toString())){
+			log(LogStatus.INFO, "Click on Affiliations", YesNo.Yes);    
+} else {
+			sa.assertTrue(false, "Not Able to Click on Affiliations");
+			log(LogStatus.SKIP, "Not Able to Click on Affiliations", YesNo.Yes);
+		}        
+
 		switchToDefaultContent(driver);
 		lp.CRMlogout();
 		sa.assertAll();
@@ -4727,6 +4736,8 @@ public class PECloudSmoke extends BaseLib{
 	public void SmokeTc028_CreateWatchlistTaskEventsAndCall(String projectName) {
 		GlobalActionPageBusinessLayer gp = new GlobalActionPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String task = "";
 		
@@ -4769,10 +4780,10 @@ public class PECloudSmoke extends BaseLib{
 		}
 		}
 
-		SmokeWLEvent1StartDate=todaysDate1;
-		SmokeWLEvent1EndDate=todaysDate1;
-		SmokeWLEvent2StartDate=todaysDate1;
-		SmokeWLEvent2EndDate=todaysDate1;
+		SmokeWLEvent1StartDate=todaysDate;
+		SmokeWLEvent1EndDate=todaysDate;
+		SmokeWLEvent2StartDate=todaysDate;
+		SmokeWLEvent2EndDate=todaysDate;
 		
 		ExcelUtils.writeData(phase1DataSheetFilePath,SmokeWLEvent1StartDate, "Events", excelLabel.Variable_Name, "SmokeWLEvent1", excelLabel.Start_Date);
 		ExcelUtils.writeData(phase1DataSheetFilePath,SmokeWLEvent1EndDate, "Events", excelLabel.Variable_Name, "SmokeWLEvent1", excelLabel.End_Date);
@@ -4835,7 +4846,116 @@ public class PECloudSmoke extends BaseLib{
 			log(LogStatus.SKIP,"Not Able to Click/Enter Value : "+task,YesNo.Yes);	
 		}
 		}
+		String[] task2= {SmokeWLTask1Subject,SmokeWLTask2Subject};
+		for(int i=0;i<task2.length;i++){
+		
+		
+		if(tp.clickOnTab(projectName, mode, TabName.TaskTab)){
+			log(LogStatus.PASS,"Click on task tab",YesNo.Yes);
 
+			if(tp.clickOnAlreadyCreatedItem(projectName,TabName.TaskTab, task2[i], 30)){
+				log(LogStatus.PASS,"Click on created task:"+task,YesNo.Yes);
+				WebElement ele= tp.getLabelForTaskInViewMode( projectName, PageName.TaskPage,PageLabel.Watchlist.toString(),action.BOOLEAN, 10);
+				if(ele==null){
+					log(LogStatus.INFO,"Watchlist Check Box Filed Not present : "+task,YesNo.No);
+				}else{
+					sa.assertTrue(false,"Watchlist Check Box Filed is present but it should not be present: "+task);
+					log(LogStatus.SKIP,"Watchlist Check Box Filed is present but it should not be present : "+task,YesNo.Yes);	
+				}
+			}else{
+				sa.assertTrue(false,"not able to Click on created task:"+task);
+				log(LogStatus.SKIP,"not able to Click on created task:"+task,YesNo.Yes);
+				
+			}
+		}else{
+			
+			sa.assertTrue(false,"Not able to Click on task tab"+task);
+			log(LogStatus.SKIP,"Not able to Click on task tab"+task,YesNo.Yes);
+		}}
+		String[] logACall1= {SmokeWLLogACall1Subject,SmokeWLLogACall2Subject};
+		for(int i=0;i<logACall1.length;i++){
+		
+		
+		if(tp.clickOnTab(projectName, mode, TabName.TaskTab)){
+			log(LogStatus.PASS,"Click on task tab",YesNo.Yes);
+
+			if(tp.clickOnAlreadyCreatedItem(projectName,TabName.TaskTab, logACall1[i], 30)){
+				log(LogStatus.PASS,"Click on created task:"+task,YesNo.Yes);
+				WebElement ele= tp.getLabelForTaskInViewMode( projectName, PageName.TaskPage,PageLabel.Watchlist.toString(),action.BOOLEAN, 10);
+				if(ele==null){
+					log(LogStatus.INFO,"Watchlist Check Box Filed Not present : "+task,YesNo.No);
+				}else{
+					sa.assertTrue(false,"Watchlist Check Box Filed is present but it should not be present: "+task);
+					log(LogStatus.SKIP,"Watchlist Check Box Filed is present but it should not be present : "+task,YesNo.Yes);	
+				}
+			}else{
+				sa.assertTrue(false,"not able to Click on created task:"+task);
+				log(LogStatus.SKIP,"not able to Click on created task:"+task,YesNo.Yes);
+				
+			}
+		}else{
+			
+			sa.assertTrue(false,"Not able to Click on task tab"+task);
+			log(LogStatus.SKIP,"Not able to Click on task tab"+task,YesNo.Yes);
+		}}
+		String primaryContact=SmokeWlContact1FName+" "+SmokeWlContact1LName;
+		String secondaryContact=SmokeWlContact2FName+" "+SmokeWlContact2LName;
+		String task3 = SmokeWLEvent1Subject;
+		if (cp.clickOnTab(projectName, tabObj2)) {
+			log(LogStatus.INFO,"Clicked on Tab : "+tabObj2+" For : "+primaryContact,YesNo.No);
+			if (cp.clickOnAlreadyCreatedItem(projectName, primaryContact, 30)) {
+				log(LogStatus.INFO,"Clicked on  : "+primaryContact+" For : "+tabObj2,YesNo.No);
+				if (click(driver, lp.getTaskLink(projectName, task3), task3, action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO,"Click on Task : "+task3,YesNo.No);
+					ThreadSleep(2000);
+					WebElement ele= tp.getLabelForTaskInViewMode( projectName, PageName.TaskPage,PageLabel.Watchlist.toString(),action.BOOLEAN, 10);
+					if(ele==null){
+						log(LogStatus.INFO,"Watchlist Check Box Filed Not present : "+task,YesNo.No);
+					}else{
+						sa.assertTrue(false,"Watchlist Check Box Filed is present but it should not be present: "+task);
+						log(LogStatus.SKIP,"Watchlist Check Box Filed is present but it should not be present : "+task,YesNo.Yes);	
+					}	
+				} else {
+					sa.assertTrue(false,"Not Able to Click on Task : "+task);
+					log(LogStatus.SKIP,"Not Able to Click on Task : "+task,YesNo.Yes);
+				}
+
+			} else {
+				sa.assertTrue(false,"Item Not Found : "+primaryContact+" For : "+tabObj2);
+				log(LogStatus.SKIP,"Item Not Found : "+primaryContact+" For : "+tabObj2,YesNo.Yes);
+			}
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2+" For : "+primaryContact);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2+" For : "+primaryContact,YesNo.Yes);
+		}
+		String task4 = SmokeWLEvent2Subject;
+		if (cp.clickOnTab(projectName, tabObj2)) {
+			log(LogStatus.INFO,"Clicked on Tab : "+tabObj2+" For : "+secondaryContact,YesNo.No);
+			if (cp.clickOnAlreadyCreatedItem(projectName, secondaryContact, 30)) {
+				log(LogStatus.INFO,"Clicked on  : "+secondaryContact+" For : "+tabObj2,YesNo.No);
+				if (click(driver, lp.getTaskLink(projectName, task4), task4, action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO,"Click on Task : "+task4,YesNo.No);
+					ThreadSleep(2000);
+					WebElement ele= tp.getLabelForTaskInViewMode( projectName, PageName.TaskPage,PageLabel.Watchlist.toString(),action.BOOLEAN, 10);
+					if(ele==null){
+						log(LogStatus.INFO,"Watchlist Check Box Filed Not present : "+task,YesNo.No);
+					}else{
+						sa.assertTrue(false,"Watchlist Check Box Filed is present but it should not be present: "+task);
+						log(LogStatus.SKIP,"Watchlist Check Box Filed is present but it should not be present : "+task,YesNo.Yes);	
+					}	
+				} else {
+					sa.assertTrue(false,"Not Able to Click on Task : "+task);
+					log(LogStatus.SKIP,"Not Able to Click on Task : "+task,YesNo.Yes);
+				}
+
+			} else {
+				sa.assertTrue(false,"Item Not Found : "+secondaryContact+" For : "+tabObj2);
+				log(LogStatus.SKIP,"Item Not Found : "+secondaryContact+" For : "+tabObj2,YesNo.Yes);
+			}
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2+" For : "+secondaryContact);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2+" For : "+secondaryContact,YesNo.Yes);
+		}
 		switchToDefaultContent(driver);
 		lp.CRMlogout();
 		sa.assertAll();
@@ -4852,7 +4972,7 @@ public class PECloudSmoke extends BaseLib{
 		if(tp.clickOnTab(projectName, mode, TabName.TaskTab)){
 			log(LogStatus.PASS,"Click on task tab",YesNo.Yes);
 
-			if(tp.clickOnAlreadyCreatedItem(projectName, task, 30)){
+			if(tp.clickOnAlreadyCreatedItem(projectName,TabName.TaskTab, task, 30)){
 				log(LogStatus.PASS,"Click on created task:"+task,YesNo.Yes);
 
 				ThreadSleep(5000);
@@ -4874,7 +4994,13 @@ public class PECloudSmoke extends BaseLib{
 			sa.assertTrue(false,"Not able to Click on task tab"+task);
 			log(LogStatus.SKIP,"Not able to Click on task tab"+task,YesNo.Yes);
 		}
-		
+		WebElement ele= tp.getLabelForTaskInViewMode( projectName, PageName.TaskPage,PageLabel.Watchlist.toString(),action.BOOLEAN, 10);
+		if(ele==null){
+			log(LogStatus.INFO,"Watchlist Check Box Filed Not present : "+task,YesNo.No);
+		}else{
+			sa.assertTrue(false,"Watchlist Check Box Filed is present but it should not be present: "+task);
+			log(LogStatus.SKIP,"Watchlist Check Box Filed is present but it should not be present : "+task,YesNo.Yes);	
+		}
 		 
 		switchToDefaultContent(driver);
 		lp.CRMlogout();
@@ -4980,7 +5106,31 @@ public class PECloudSmoke extends BaseLib{
 			sa.assertTrue(false,"Not Able to Click/Enter Value : "+task);
 			log(LogStatus.SKIP,"Not Able to Click/Enter Value : "+task,YesNo.Yes);	
 		}
+		if(lp.clickOnTab(contactName, mode, TabName.ContactTab)){
+			log(LogStatus.INFO,"Click on Tab : "+tabObj2,YesNo.No);
+			if(lp.clickOnAlreadyCreatedItem(projectName, contactName, 30)){
+				log(LogStatus.INFO,"click on Created Contact : "+contactName,YesNo.No);	
+				ThreadSleep(3000);
+				
+				String value= cp.getlastTouchPointValue(projectName, 30).getText();
+//				if(cp.verifyDate(SmokeLTPLogACall1dueDate, value)){
+					if(bp.verifyDate(SmokeLTPLogACall1dueDate, null, "M/d/yyyy")){
+					log(LogStatus.INFO,"Last touch point value is matched in :"+contactName,YesNo.No);	
 
+				}else{
+					sa.assertTrue(false,"Last touch point value is not matched in contact :"+contactName);
+					log(LogStatus.SKIP,"Last touch point value is not matched in contact :"+contactName,YesNo.Yes);
+				}
+				
+			}else{
+				sa.assertTrue(false,"Not Able to click on Create Contact : "+contactName);
+				log(LogStatus.SKIP,"Not Able to click on created Contact: "+contactName,YesNo.Yes);
+			}
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2);
+			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2,YesNo.Yes);
+		}
+		
 		if(lp.clickOnTab(contactName, mode, TabName.ContactTab)){
 			log(LogStatus.INFO,"Click on Tab : "+tabObj2,YesNo.No);
 			if(lp.clickOnAlreadyCreatedItem(projectName, contactName2, 30)){
@@ -6454,7 +6604,7 @@ public class PECloudSmoke extends BaseLib{
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		String user=ExcelUtils.readData(phase1DataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "M4DT1", excelLabel.Member);
 		
-		String fieldValue[]={PageLabel.Name.toString()+breakSP+SmokeACDContact1FName+" "+SmokeACDContact1LName,"Title"+breakSP+SmokeACDContact1Title,
+		String fieldValue[]={PageLabel.Name.toString()+breakSP+SmokeACDContact1FName+" "+SmokeACDContact1LName,"Title"+breakSP+SmokeACDContact1Title,"Contact_EmailId"+breakSP+SmokeACDContact1EmailID,
 				"Business Phone"+breakSP+SmokeACDContact1Phone};
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, SmokeFSIns1,10)) {

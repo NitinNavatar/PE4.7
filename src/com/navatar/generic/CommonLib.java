@@ -786,7 +786,11 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 						}
 					}
 				} else if (waitOn.equalsIgnoreCase("Visibility")) {
-					ele = wait.until(ExpectedConditions.visibilityOf(element));
+					try {
+						ele = wait.until(ExpectedConditions.visibilityOf(element));
+					} catch (Exception e) {
+						ele = null;
+					}
 				} else if (waitOn.equalsIgnoreCase("Clickable")) {
 					ele = wait.until(ExpectedConditions.elementToBeClickable(element));
 				} else {
@@ -3174,7 +3178,6 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 		return flag;
 	}
 
-	
 	/**
 	 * @author Ankur Huria
 	 * @param driver
@@ -3184,111 +3187,18 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 	 * @description returns the list of webelement based on the xpath passed
 	 */
 	public static boolean datePickerHandle(WebDriver driver, WebElement MonthSelector, WebElement MonthPreviousButton,
-            String elementName, String Year, String Month, String Date) {
-        boolean flag = false;
-        try {
-
-            int j = 0;
-            for (int i = 0; i < 13; i++) {
-                if (j < 12) {
-                    if (MonthSelector.getText().contains(Month)) {
-                        appLog.info("Month Selected : " + Month);
-                        break;
-                    } else {
-                        click(driver, MonthPreviousButton, "", action.SCROLLANDBOOLEAN);
-                        j++;
-                    }
-                } else {
-                    appLog.error("Month Format Is Not Correct");
-                    return false;
-
-                }
-            }
-            String xpath = "//lightning-select//select";
-            WebElement YearSelector = FindElement(driver, xpath, "YearSelector", action.SCROLLANDBOOLEAN, 25);
-            if (CommonLib.selectVisibleTextFromDropDown(driver, YearSelector, "YearSelector: " + Year, Year))
-
-            {
-                appLog.info("Select The Year: " + Year);
-                CommonLib.ThreadSleep(8000);
-                List<WebElement> DaySelector = FindElements(driver,
-                        "//table[@class='slds-datepicker__month']//tr//td[not(contains(@class,'slds-day_adjacent-month'))]/span",
-                        "dateSelector");
-                for (WebElement day : DaySelector) {
-                    try {
-
-
-
-                        if (Integer.parseInt(Date) < 10 && Date.length()==2) {
-                            Date = Date.replace("0", "");
-                        }
-
-                        
-
-                    if (day.getText().trim().equalsIgnoreCase(Date)) {
-                        if (click(driver, day, "", action.SCROLLANDBOOLEAN)) {
-                            log(LogStatus.INFO, Date + " Date is Selected", YesNo.No);
-                            flag = true;
-                        } else {
-                            log(LogStatus.INFO, Date + " Date is Not Selected", YesNo.No);
-                            flag = false;
-                        }
-                    }
-                }
-                    catch(StaleElementReferenceException e)
-                    {
-                        e.getMessage();
-                    }
-                }
-
-            } else {
-                appLog.error("Not ABle to Select Year: " + Year);
-            }
-
-        } catch (Exception e) {
-            flag = false;
-
-            log(LogStatus.ERROR, elementName + " Date is Not Selected", YesNo.No);
-            log(LogStatus.ERROR, e.getMessage(), YesNo.No);
-        }
-
-        return flag;
-
-    }
-	
-	
-	
-
-	public static boolean datePickerHandle(WebDriver driver, String elementName, String Year, String Month, String Date) {
+			String elementName, String Year, String Month, String Date) {
 		boolean flag = false;
-		
-		WebElement MonthPreviousButton=FindElement(driver, "//lightning-calendar//button[@title='Previous Month']", "Previous button",
-				action.BOOLEAN, 30);
-		WebElement MonthSelector;	
-        
-        try {
-        	MonthSelector= FindElement(driver, "//lightning-calendar//h2", "Month Element ", action.BOOLEAN, 30);
-        } catch (StaleElementReferenceException e) {
-        	MonthSelector= FindElement(driver, "//lightning-calendar//h2", "Month Element ", action.BOOLEAN, 30);
-        }
-
 		try {
 
 			int j = 0;
 			for (int i = 0; i < 13; i++) {
 				if (j < 12) {
-					if (MonthSelector.getText().contains(Month)) {
+					if (MonthSelector.getText().toLowerCase().contains(Month.toLowerCase())) {
 						appLog.info("Month Selected : " + Month);
 						break;
 					} else {
-						if(CommonLib.clickUsingJavaScript(driver, MonthPreviousButton, "", action.BOOLEAN))
-						{
-							appLog.info("CLicked on Month Previous Button");
-						}
-						else
-						{
-							appLog.error("Not able to click on month previous button");
-						}
+						click(driver, MonthPreviousButton, "", action.SCROLLANDBOOLEAN);
 						j++;
 					}
 				} else {
@@ -3298,7 +3208,7 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 				}
 			}
 			String xpath = "//lightning-select//select";
-			WebElement YearSelector = FindElement(driver, xpath, "YearSelector", action.BOOLEAN, 25);
+			WebElement YearSelector = FindElement(driver, xpath, "YearSelector", action.SCROLLANDBOOLEAN, 25);
 			if (CommonLib.selectVisibleTextFromDropDown(driver, YearSelector, "YearSelector: " + Year, Year))
 
 			{
@@ -3310,9 +3220,10 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 				for (WebElement day : DaySelector) {
 					try {
 
-						if (Integer.parseInt(Date) < 10 && Date.length()==2) {
+						if (Integer.parseInt(Date) < 10 && Date.length() == 2) {
 							Date = Date.replace("0", "");
 						}
+
 						if (day.getText().trim().equalsIgnoreCase(Date)) {
 							if (click(driver, day, "", action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, Date + " Date is Selected", YesNo.No);
@@ -3322,9 +3233,7 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 								flag = false;
 							}
 						}
-					}
-					catch(StaleElementReferenceException e)
-					{
+					} catch (StaleElementReferenceException e) {
 						e.getMessage();
 					}
 				}
@@ -3343,30 +3252,182 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 		return flag;
 
 	}
-	
-	
-	 public static String getFutureDateAccToTimeZone(String timeZone, String format, int daysToAdd) {
-	        try {
-	            DateFormat formatter = new SimpleDateFormat(format);
-	            formatter.setTimeZone(TimeZone.getTimeZone(timeZone));
-	            
-	            
-	              Calendar cal = Calendar.getInstance();  
-	                try{  
-	                   cal.setTime(formatter.parse((formatter.format(new Date()))));  
-	                }catch(ParseException e){  
-	                    e.printStackTrace();  
-	                 }  
-	                     
-	                // use add() method to add the days to the given date  
-	                cal.add(Calendar.DAY_OF_MONTH, daysToAdd);  
-	                 return formatter.format(cal.getTime());  
-	            
-	       } catch (Exception e) {
-	            return null;
-	        }
-	    }
-	
+
+	/**
+	 * @author Ankur Huria
+	 * @param driver
+	 * @param xpath
+	 * @param elementName
+	 * @return list<webelement>
+	 * @description returns the list of webelement based on the xpath passed
+	 */
+	public static boolean datePickerHandle(WebDriver driver, String elementName, String Year, String Month,
+			String Date) {
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		boolean flag = false;
+		if (bp.monthInDatePicker(5) != null) {
+			try {
+
+				int j = 0;
+				for (int i = 0; i < 13; i++) {
+					if (j < 12) {
+
+						if (bp.monthInDatePicker(5).getText().toLowerCase().contains(Month.toLowerCase())) {
+							appLog.info("Month Selected : " + Month);
+							break;
+						} else {
+							click(driver, bp.previousMonthButtonInDatePicker(8), "", action.SCROLLANDBOOLEAN);
+							j++;
+						}
+
+					} else {
+						appLog.error("Month Format Is Not Correct");
+						return false;
+
+					}
+				}
+				String xpath = "//lightning-select//select";
+				WebElement YearSelector = FindElement(driver, xpath, "YearSelector", action.SCROLLANDBOOLEAN, 25);
+				if (CommonLib.selectVisibleTextFromDropDown(driver, YearSelector, "YearSelector: " + Year, Year))
+
+				{
+					appLog.info("Select The Year: " + Year);
+					CommonLib.ThreadSleep(8000);
+					List<WebElement> DaySelector = FindElements(driver,
+							"//table[@class='slds-datepicker__month']//tr//td[not(contains(@class,'slds-day_adjacent-month'))]/span",
+							"dateSelector");
+					for (WebElement day : DaySelector) {
+						try {
+
+							if (Integer.parseInt(Date) < 10 && Date.length() == 2) {
+								Date = Date.replace("0", "");
+							}
+
+							if (day.getText().trim().equalsIgnoreCase(Date)) {
+								if (click(driver, day, "", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, Date + " Date is Selected", YesNo.No);
+									flag = true;
+								} else {
+									log(LogStatus.INFO, Date + " Date is Not Selected", YesNo.No);
+									flag = false;
+								}
+							}
+						} catch (StaleElementReferenceException e) {
+							e.getMessage();
+						}
+					}
+
+				} else {
+					appLog.error("Not ABle to Select Year: " + Year);
+				}
+
+			} catch (Exception e) {
+				flag = false;
+
+				log(LogStatus.ERROR, elementName + " Date is Not Selected", YesNo.No);
+				log(LogStatus.ERROR, e.getMessage(), YesNo.No);
+			}
+
+		}
+
+		else {
+
+			try {
+
+				int j = 0;
+				for (int i = 0; i < 13; i++) {
+					if (j < 12) {
+						if (bp.alternateMonthInDatePicker(5) != null) {
+							if (bp.alternateMonthInDatePicker(5).getText().toLowerCase()
+									.contains(Month.toLowerCase())) {
+								appLog.info("Month Selected : " + Month);
+								break;
+							} else {
+								click(driver, bp.alteratePreviousMonthButtonInDatePicker(7), "",
+										action.SCROLLANDBOOLEAN);
+								j++;
+							}
+						}
+					} else {
+						appLog.error("Month Format Is Not Correct");
+						return false;
+
+					}
+				}
+				String xpath = "//div[@class='slds-shrink-none']/label/select";
+				WebElement YearSelector = FindElement(driver, xpath, "YearSelector", action.SCROLLANDBOOLEAN, 25);
+				if (CommonLib.selectVisibleTextFromDropDown(driver, YearSelector, "YearSelector: " + Year, Year))
+
+				{
+					appLog.info("Select The Year: " + Year);
+					CommonLib.ThreadSleep(8000);
+					List<WebElement> DaySelector = FindElements(driver,
+							"//div[contains(@class,'uiDatePickerGrid--default')]//td[@class='uiDayInMonthCell' or contains(@class,'slds-is-today')]/span",
+							"AlternateDateSelector");
+					for (WebElement day : DaySelector) {
+						try {
+
+							if (Integer.parseInt(Date) < 10 && Date.length() == 2) {
+								Date = Date.replace("0", "");
+							}
+
+							if (day.getText().trim().equalsIgnoreCase(Date)) {
+								if (click(driver, day, "", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, Date + " Date is Selected", YesNo.No);
+									flag = true;
+								} else {
+									log(LogStatus.INFO, Date + " Date is Not Selected", YesNo.No);
+									flag = false;
+								}
+							}
+						} catch (StaleElementReferenceException e) {
+							e.getMessage();
+						}
+					}
+
+				} else {
+					appLog.error("Not ABle to Select Year: " + Year);
+				}
+
+			} catch (Exception e) {
+				flag = false;
+
+				log(LogStatus.ERROR, elementName + " Date is Not Selected", YesNo.No);
+				log(LogStatus.ERROR, e.getMessage(), YesNo.No);
+			}
+
+		}
+
+		return flag;
+
+	}
+
+	/**
+	 * 
+	 * @author Ankur Huria
+	 * @description- This method is used to get Future date according to the time
+	 *               zone.
+	 */
+	public static String getFutureDateAccToTimeZone(String timeZone, String format, int daysToAdd) {
+		try {
+			DateFormat formatter = new SimpleDateFormat(format);
+			formatter.setTimeZone(TimeZone.getTimeZone(timeZone));
+
+			Calendar cal = Calendar.getInstance();
+			try {
+				cal.setTime(formatter.parse((formatter.format(new Date()))));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+
+			// use add() method to add the days to the given date
+			cal.add(Calendar.DAY_OF_MONTH, daysToAdd);
+			return formatter.format(cal.getTime());
+
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }
 
 

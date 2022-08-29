@@ -15206,16 +15206,13 @@ public class OldSmokeTestCases extends BaseLib {
 											YesNo.Yes);
 								}
 							}
-							
-//							if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, null)) {
-//								log(LogStatus.INFO, "Click on Affiliations", YesNo.Yes);
-							if (click(driver, cp.getcontactAffiliations_Lighting(30), "Affiliation tab", action.BOOLEAN)){
+						
+							if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, RelatedTab.Affiliations.toString())){
 								log(LogStatus.INFO, "Click on Affiliations", YesNo.Yes);
-							
 
 							
 								
-								
+
 								if (cp.verifyOpenActivityRelatedList(environment, mode,TabName.ContactTab, Smoke_NewTask2Subject, null, null)) {
 									log(LogStatus.INFO, "Open Activity Grid  Verified For "+Smoke_NewTask2Subject, YesNo.No);	
 								} else {
@@ -15507,8 +15504,7 @@ public class OldSmokeTestCases extends BaseLib {
 							}
 							
 						
-//							if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, null)) {
-//								log(LogStatus.INFO, "Click on Affiliations", YesNo.Yes);	
+							
 								
 							if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, RelatedTab.Affiliations.toString())){
 								log(LogStatus.INFO, "Click on Affiliations", YesNo.Yes);
