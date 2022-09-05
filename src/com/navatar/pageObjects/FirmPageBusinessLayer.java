@@ -1,6 +1,7 @@
 package com.navatar.pageObjects;
 
 import static com.navatar.generic.CommonLib.*;
+import static com.navatar.generic.CommonVariables.PEFSTGINS1_Institution;
 import static com.navatar.generic.CommonVariables.PEFSTG_Tc025_RecordType2;
 
 import java.util.ArrayList;
@@ -17,48 +18,44 @@ import org.sikuli.script.Screen;
 
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.EnumConstants.SortOrder;
+import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.columnName;
 import com.relevantcodes.extentreports.LogStatus;
 
-public class FirmPageBusinessLayer extends FirmPage{
+public class FirmPageBusinessLayer extends FirmPage {
 
 	public FirmPageBusinessLayer(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
 	}
 
-	public ArrayList<String> verifyFirmRecordType(ArrayList<String> recordName)
-	{
-		ArrayList<String> recordTypeName=new ArrayList<String>();
-		ArrayList<String> result=new ArrayList<String>();
+	public ArrayList<String> verifyFirmRecordType(ArrayList<String> recordName) {
+		ArrayList<String> recordTypeName = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<String>();
 
 		if (click(driver, getnewButton(50), "new button", action.BOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on the new button", YesNo.No);
 			ThreadSleep(3000);
-			for(int i=0; i<getrecordTypeLabelName().size(); i++)
-			{
-				String text=CommonLib.getText(driver, getrecordTypeLabelName().get(i), "Record label name", action.SCROLLANDBOOLEAN);
+			for (int i = 0; i < getrecordTypeLabelName().size(); i++) {
+				String text = CommonLib.getText(driver, getrecordTypeLabelName().get(i), "Record label name",
+						action.SCROLLANDBOOLEAN);
 				recordTypeName.add(text);
 			}
 
-			for(int i=0; i<recordName.size(); i++)
-			{
-				if(recordName.get(i).equals(recordTypeName.get(i)))
-				{
-					log(LogStatus.INFO, "Record Name: "+recordName.get(i)+" has been verified", YesNo.No);
-				}
-				else
-				{
-					log(LogStatus.ERROR, "Record Name: "+recordName.get(i)+" is not matched with the "+recordTypeName.get(i)+"", YesNo.No);
-					result.add("Record Name: "+recordName.get(i)+" is not matched with the "+recordTypeName.get(i)+"");
+			for (int i = 0; i < recordName.size(); i++) {
+				if (recordName.get(i).equals(recordTypeName.get(i))) {
+					log(LogStatus.INFO, "Record Name: " + recordName.get(i) + " has been verified", YesNo.No);
+				} else {
+					log(LogStatus.ERROR, "Record Name: " + recordName.get(i) + " is not matched with the "
+							+ recordTypeName.get(i) + "", YesNo.No);
+					result.add("Record Name: " + recordName.get(i) + " is not matched with the " + recordTypeName.get(i)
+							+ "");
 				}
 			}
 
-		}
-		else
-		{
+		} else {
 			log(LogStatus.INFO, "Not able to click on the new button", YesNo.Yes);
 			result.add("Not able to click on the new button");
 
@@ -70,219 +67,220 @@ public class FirmPageBusinessLayer extends FirmPage{
 	public ArrayList<String> verifyListViewOfFirm(ArrayList<String> listViewName) {
 		boolean flag = false;
 		ArrayList<String> result = new ArrayList<String>();
-		if(CommonLib.click(driver, getClickedOnRecentlyViewed(30), "Recently Viewed", action.SCROLLANDBOOLEAN)) {
+		if (CommonLib.click(driver, getClickedOnRecentlyViewed(30), "Recently Viewed", action.SCROLLANDBOOLEAN)) {
 
 			appLog.info("clicked on recently viewed");
 
 			List<String> listView = new ArrayList<String>();
 
-			List<WebElement> lists= CommonLib.FindElements(driver, "//div[@class='scroller']//ul//li", "RecentlyViewedList");
-			if(lists!=null) {
-				for(int i=0;i<lists.size();i++)
-				{
-					WebElement element= lists.get(i);
-					String listName= CommonLib.getText(driver, element, "list view of Firm", action.BOOLEAN);
+			List<WebElement> lists = CommonLib.FindElements(driver, "//div[@class='scroller']//ul//li",
+					"RecentlyViewedList");
+			if (lists != null) {
+				for (int i = 0; i < lists.size(); i++) {
+					WebElement element = lists.get(i);
+					String listName = CommonLib.getText(driver, element, "list view of Firm", action.BOOLEAN);
 					listView.add(listName.replace("\n", " "));
-				}      
-			}
-			else {
-				log(LogStatus.ERROR,"Could not get the list view name",YesNo.No);
+				}
+			} else {
+				log(LogStatus.ERROR, "Could not get the list view name", YesNo.No);
 				result.add("Could not get the list view name");
 			}
 
-			for(int i=0;i<lists.size()-1;i++)
-			{
-				if(listView.get(i+1).contains(listViewName.get(i)))
-				{
+			for (int i = 0; i < lists.size() - 1; i++) {
+				if (listView.get(i + 1).contains(listViewName.get(i))) {
 
-					log(LogStatus.INFO, listView.get(i+1)+" List Name has been matched with "+listViewName.get(i), YesNo.No);
+					log(LogStatus.INFO, listView.get(i + 1) + " List Name has been matched with " + listViewName.get(i),
+							YesNo.No);
 
-				}
-				else {
-					log(LogStatus.ERROR, listView.get(i+1)+" List Name is not matched with "+listViewName.get(i), YesNo.No);
-					result.add(listView.get(i+1)+" List Name is not matched with "+listViewName.get(i));
+				} else {
+					log(LogStatus.ERROR, listView.get(i + 1) + " List Name is not matched with " + listViewName.get(i),
+							YesNo.No);
+					result.add(listView.get(i + 1) + " List Name is not matched with " + listViewName.get(i));
 
 				}
 			}
-		}
-		else {
+		} else {
 			appLog.error("Not able to click on recently viewed...");
 			result.add("Not able to click on recently viewed...");
 
 		}
 
-		return result ;
+		return result;
 	}
 
-
-	public ArrayList<String> verifyFilterOnListView(String[] listViewName, String[] filter, String[] field, String[] Operator, String[] filterValue,String[] filterCondition )
-	{
-		String xPath="";
+	public ArrayList<String> verifyFilterOnListView(String[] listViewName, String[] filter, String[] field,
+			String[] Operator, String[] filterValue, String[] filterCondition) {
+		String xPath = "";
 		WebElement ele;
-		ArrayList<String> result=new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<String>();
 
-		for(int i=0; i<filterCondition.length; i++)
-		{
-			String[] filterFiled=null;
-			String[] fOperator=null;
-			String[] FOperand=null;
+		for (int i = 0; i < filterCondition.length; i++) {
+			String[] filterFiled = null;
+			String[] fOperator = null;
+			String[] FOperand = null;
 
-			if(CommonLib.click(driver, getClickedOnRecentlyViewed(30), "Recently Viewed", action.SCROLLANDBOOLEAN)) {
+			if (CommonLib.click(driver, getClickedOnRecentlyViewed(30), "Recently Viewed", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on the recently view button", YesNo.No);
 
-				xPath="//ul[@class='slds-dropdown__list slds-show']//span[text()='"+listViewName[i]+"']";
-				ele=CommonLib.FindElement(driver, xPath, listViewName[i],action.SCROLLANDBOOLEAN , 50);
+				xPath = "//ul[@class='slds-dropdown__list slds-show']//span[text()='" + listViewName[i] + "']";
+				ele = CommonLib.FindElement(driver, xPath, listViewName[i], action.SCROLLANDBOOLEAN, 50);
 
-				if(CommonLib.click(driver, ele, listViewName[i]+" element", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on "+listViewName[i]+" element"+" button", YesNo.No);
+				if (CommonLib.click(driver, ele, listViewName[i] + " element", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on " + listViewName[i] + " element" + " button", YesNo.No);
 
-					if(filterCondition[i].equals("All Filters"))
-					{
+					if (filterCondition[i].equals("All Filters")) {
 
-						if(CommonLib.click(driver, getshowFilter(50), "Show filter", action.SCROLLANDBOOLEAN)) {
+						if (CommonLib.click(driver, getshowFilter(50), "Show filter", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Show filter button", YesNo.No);
 
-							String scopeLabelFilter=CommonLib.getText(driver, getscopeLabelFilter(50), "scope label filter", action.SCROLLANDBOOLEAN);
-							if(scopeLabelFilter.equals(filter[i]))
-							{
-								log(LogStatus.INFO, scopeLabelFilter+ " is visible in the Filter by Owner", YesNo.No);
+							String scopeLabelFilter = CommonLib.getText(driver, getscopeLabelFilter(50),
+									"scope label filter", action.SCROLLANDBOOLEAN);
+							if (scopeLabelFilter.equals(filter[i])) {
+								log(LogStatus.INFO, scopeLabelFilter + " is visible in the Filter by Owner", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, scopeLabelFilter + " is not visible in the Filter by Owner",
+										YesNo.Yes);
+								result.add(scopeLabelFilter + " is not visible in the Filter by Owner");
 							}
-							else
-							{
-								log(LogStatus.ERROR, scopeLabelFilter+ " is not visible in the Filter by Owner", YesNo.Yes);
-								result.add(scopeLabelFilter+ " is not visible in the Filter by Owner");
-							}
 
-							filterFiled=field[i].split("<FieldBreak>");
-							fOperator=Operator[i].split("<OperatorBreak>");
-							FOperand=filterValue[i].split("<valueBreak>");
+							filterFiled = field[i].split("<FieldBreak>", -1);
+							fOperator = Operator[i].split("<OperatorBreak>", -1);
+							FOperand = filterValue[i].split("<valueBreak>", -1);
 
-							if(filterFiled.length==1)
-							{
-								String filterFieldLabel=CommonLib.getText(driver, getfilterFieldLabel(50), "Filter field label", action.SCROLLANDBOOLEAN);
-								String filterOperator=CommonLib.getText(driver, getfilterOperator(50), "Filter Operator", action.SCROLLANDBOOLEAN);
-								String filterOperand=CommonLib.getText(driver, getfilterOperand(50), "Filter Operand", action.SCROLLANDBOOLEAN);
+							if (filterFiled.length == 1) {
+								String filterFieldLabel = CommonLib.getText(driver, getfilterFieldLabel(50),
+										"Filter field label", action.SCROLLANDBOOLEAN);
 
-								if(filterFieldLabel.equalsIgnoreCase(field[i]) && filterOperator.equalsIgnoreCase(Operator[i]) && filterOperand.equalsIgnoreCase(filterValue[i]))
-								{
-									log(LogStatus.INFO, filterFieldLabel+", "+filterOperator+" and "+filterOperand+ " have been matched" , YesNo.No);
+								String filterOperator = CommonLib.getText(driver, getfilterOperator(50),
+										"Filter Operator", action.SCROLLANDBOOLEAN);
+								String filterOperand = CommonLib.getText(driver, getfilterOperand(50), "Filter Operand",
+										action.SCROLLANDBOOLEAN);
+
+								if (filterFieldLabel.equalsIgnoreCase(field[i])
+										&& filterOperator.equalsIgnoreCase(Operator[i])
+										&& filterOperand.equalsIgnoreCase(filterValue[i])) {
+									log(LogStatus.INFO, filterFieldLabel + ", " + filterOperator + " and "
+											+ filterOperand + " have been matched", YesNo.No);
+								} else {
+									log(LogStatus.ERROR,
+											"Either Filter label name : " + filterFieldLabel + " or filter Operator :"
+													+ filterOperator + " Or Filter operand :" + filterOperand
+													+ " are not matced with Filter label name : " + field
+													+ ", filter Operator :" + Operator + ", Filter operand :"
+													+ filterValue[i] + "",
+											YesNo.No);
+									result.add("Either Filter label name : " + filterFieldLabel
+											+ " or filter Operator :" + filterOperator + " Or Filter operand :"
+											+ filterOperand + " are not matced with Filter label name : " + field
+											+ ", filter Operator :" + Operator + ", Filter operand :" + filterValue[i]
+											+ "");
 								}
-								else
-								{
-									log(LogStatus.ERROR, "Either Filter label name : "+filterFieldLabel+" or filter Operator :"+filterOperator+" Or Filter operand :"+filterOperand+ " are not matced with Filter label name : "+field+", filter Operator :"+Operator+", Filter operand :"+filterValue[i]+ "", YesNo.No);
-									result.add("Either Filter label name : "+filterFieldLabel+" or filter Operator :"+filterOperator+" Or Filter operand :"+filterOperand+ " are not matced with Filter label name : "+field+", filter Operator :"+Operator+", Filter operand :"+filterValue[i]+ "");
-								}
-							}
-							else
-							{
+							} else {
 
-								for(int j=0; j<filterFiled.length;j++)
-								{
-									xPath="//div[@id='filterPanelFieldCriterion"+j+"']//div[@class='fieldLabel']";
-									ele=CommonLib.FindElement(driver, xPath, "Field Label", action.SCROLLANDBOOLEAN, 50);
-									String filterFieldLabel=CommonLib.getText(driver,ele, "Filter field label", action.SCROLLANDBOOLEAN);
+								for (int j = 0; j < filterFiled.length; j++) {
+									xPath = "//div[@id='filterPanelFieldCriterion" + j + "']//div[@class='fieldLabel']";
+									ele = CommonLib.FindElement(driver, xPath, "Field Label", action.SCROLLANDBOOLEAN,
+											50);
+									String filterFieldLabel = CommonLib.getText(driver, ele, "Filter field label",
+											action.SCROLLANDBOOLEAN);
 
-									xPath="//div[@id='filterPanelFieldCriterion"+j+"']//span[@class='test-operatorWrapper']";
-									ele=CommonLib.FindElement(driver, xPath, "Field Label", action.SCROLLANDBOOLEAN, 50);
-									String filterOperator=CommonLib.getText(driver, ele, "Filter Operator", action.SCROLLANDBOOLEAN);							
+									xPath = "//div[@id='filterPanelFieldCriterion" + j
+											+ "']//span[@class='test-operatorWrapper']";
+									ele = CommonLib.FindElement(driver, xPath, "Field Label", action.SCROLLANDBOOLEAN,
+											50);
+									String filterOperator = CommonLib.getText(driver, ele, "Filter Operator",
+											action.SCROLLANDBOOLEAN);
 
-									xPath="//div[@id='filterPanelFieldCriterion"+j+"']//span[@class='test-operandsWrapper']";
-									ele=CommonLib.FindElement(driver, xPath, "Field Label", action.SCROLLANDBOOLEAN, 50);
-									String filterOperand=CommonLib.getText(driver, ele, "Filter Operand", action.SCROLLANDBOOLEAN);						
+									xPath = "//div[@id='filterPanelFieldCriterion" + j
+											+ "']//span[@class='test-operandsWrapper']";
+									ele = CommonLib.FindElement(driver, xPath, "Field Label", action.SCROLLANDBOOLEAN,
+											50);
+									String filterOperand = CommonLib.getText(driver, ele, "Filter Operand",
+											action.SCROLLANDBOOLEAN);
 
-									if(filterFieldLabel.equalsIgnoreCase(filterFiled[j]) && filterOperator.equalsIgnoreCase(fOperator[j]) && filterOperand.equalsIgnoreCase(FOperand[j]))
-									{
-										log(LogStatus.INFO, filterFieldLabel+", "+filterOperator+" and "+filterOperand+ " have been matched" , YesNo.No);
+									if (filterFieldLabel.equalsIgnoreCase(filterFiled[j])
+											&& filterOperator.equalsIgnoreCase(fOperator[j])
+											&& filterOperand.equalsIgnoreCase(FOperand[j])) {
+										log(LogStatus.INFO, filterFieldLabel + ", " + filterOperator + " and "
+												+ filterOperand + " have been matched", YesNo.No);
+									} else {
+										log(LogStatus.ERROR, "Either Filter label name : " + filterFieldLabel
+												+ " or filter Operator :" + filterOperator + " Or Filter operand :"
+												+ filterOperand + " are not matced with Filter label name : "
+												+ filterFiled[j] + ", filter Operator :" + fOperator[j]
+												+ ", Filter operand :" + FOperand[j] + "", YesNo.Yes);
+										result.add("Either Filter label name : " + filterFieldLabel
+												+ " or filter Operator :" + filterOperator + " Or Filter operand :"
+												+ filterOperand + " are not matced with Filter label name : "
+												+ filterFiled[j] + ", filter Operator :" + fOperator[j]
+												+ ", Filter operand :" + FOperand[j] + "");
 									}
-									else
-									{
-										log(LogStatus.ERROR, "Either Filter label name : "+filterFieldLabel+" or filter Operator :"+filterOperator+" Or Filter operand :"+filterOperand+ " are not matced with Filter label name : "+filterFiled[j]+", filter Operator :"+fOperator[j]+", Filter operand :"+FOperand[j]+ "", YesNo.Yes);
-										result.add("Either Filter label name : "+filterFieldLabel+" or filter Operator :"+filterOperator+" Or Filter operand :"+filterOperand+ " are not matced with Filter label name : "+filterFiled[j]+", filter Operator :"+fOperator[j]+", Filter operand :"+FOperand[j]+ "");
-									}
 
-									if(filterLogic(50)!=null)
-									{
+									if (filterLogic(50) != null) {
 										log(LogStatus.INFO, "Filter logic is visible", YesNo.No);
-									}
-									else
-									{
+									} else {
 										log(LogStatus.INFO, "Filter logic is nto visible", YesNo.Yes);
 										result.add("Filter logic is not visible");
 									}
 
-
 								}
 							}
 
 							CommonLib.refresh(driver);
-						}
-						else
-						{
+						} else {
 							log(LogStatus.ERROR, "Not able to click on Show filter button", YesNo.Yes);
 							result.add("Not able to click on Show filter button");
 						}
 
 					}
 
-					else if(filterCondition[i].trim().equalsIgnoreCase("Only Filter_By_Owner"))
-					{
+					else if (filterCondition[i].trim().equalsIgnoreCase("Only Filter_By_Owner")) {
 
-						if(CommonLib.click(driver, getshowFilter(50), "Show filter", action.SCROLLANDBOOLEAN)) {
+						if (CommonLib.click(driver, getshowFilter(50), "Show filter", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Show filter button", YesNo.No);
 
-							String scopeLabelFilter=CommonLib.getText(driver, getscopeLabelFilter(50), "scope label filter", action.SCROLLANDBOOLEAN);
-							if(scopeLabelFilter.equals(filter[i]))
-							{
-								log(LogStatus.INFO, scopeLabelFilter+ " is visible in the Filter by Owner", YesNo.No);
-							}
-							else
-							{
-								log(LogStatus.ERROR, scopeLabelFilter+ " is not visible in the Filter by Owner for "+listViewName[i], YesNo.Yes);
-								result.add(scopeLabelFilter+ " is not visible in the Filter by Owner for "+listViewName[i]);
+							String scopeLabelFilter = CommonLib.getText(driver, getscopeLabelFilter(50),
+									"scope label filter", action.SCROLLANDBOOLEAN);
+							if (scopeLabelFilter.equals(filter[i])) {
+								log(LogStatus.INFO, scopeLabelFilter + " is visible in the Filter by Owner", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, scopeLabelFilter + " is not visible in the Filter by Owner for "
+										+ listViewName[i], YesNo.Yes);
+								result.add(scopeLabelFilter + " is not visible in the Filter by Owner for "
+										+ listViewName[i]);
 							}
 
 							CommonLib.refresh(driver);
-						}
-						else
-						{
+						} else {
 							log(LogStatus.ERROR, "Not able to click on Show filter button", YesNo.Yes);
 							result.add("Not able to click on Show filter button");
 						}
 
 					}
 
-					else if(filterCondition[i].trim().equalsIgnoreCase("Only Filter_icon_Availability"))
-					{
+					else if (filterCondition[i].trim().equalsIgnoreCase("Only Filter_icon_Availability")) {
 
-						ele=getshowFilter(50);
-						if(ele==null)
-						{
-							log(LogStatus.INFO, "Filter icon is disable for list view : "+listViewName[i] , YesNo.No);
+						ele = getshowFilter(50);
+						if (ele == null) {
+							log(LogStatus.INFO, "Filter icon is disable for list view : " + listViewName[i], YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "Filter icon is not disable for list view : " + listViewName[i],
+									YesNo.Yes);
+							result.add("Filter icon is not disable for list view : " + listViewName[i]);
 						}
-						else
-						{
-							log(LogStatus.ERROR, "Filter icon is not disable for list view : "+listViewName[i], YesNo.Yes);
-							result.add("Filter icon is not disable for list view : "+listViewName[i]);
-						}
-						CommonLib.refresh(driver);		
+						CommonLib.refresh(driver);
 					}
 
-
-					else
-					{
-						log(LogStatus.ERROR, "Not able to click on "+listViewName[i]+"", YesNo.Yes);
-						result.add("Not able to click on "+listViewName[i]+"");
+					else {
+						log(LogStatus.ERROR, "Not able to click on " + listViewName[i] + "", YesNo.Yes);
+						result.add("Not able to click on " + listViewName[i] + "");
 					}
 
+				} else {
+					log(LogStatus.ERROR, listViewName[i] + " element not found", YesNo.Yes);
+					result.add(listViewName[i] + " element not found");
 				}
-				else
-				{
-					log(LogStatus.ERROR, listViewName[i]+" element not found", YesNo.Yes);
-					result.add(listViewName[i]+" element not found");
-				}
-			}
-			else
-			{
+			} else {
 				log(LogStatus.ERROR, "Not able to click on recently view", YesNo.Yes);
 				result.add("Not able to click on recently view");
 			}
@@ -291,69 +289,64 @@ public class FirmPageBusinessLayer extends FirmPage{
 
 	}
 
-	public ArrayList<String> verifyFieldsOnListview(String listViewAndFieldData, int timeOut)
-	{
-		String xPath="";
+	public ArrayList<String> verifyFieldsOnListview(String listViewAndFieldData, int timeOut) {
+		String xPath = "";
 		WebElement ele;
 		List<WebElement> elements;
-		ArrayList<String> actualFieldValue=new ArrayList<String>();
-		ArrayList<String> expectedFieldValue=new ArrayList<String>();
-		ArrayList<String> result=new ArrayList<String>();
-		String[] listViewAndFieldName=listViewAndFieldData.split("<break>");
+		ArrayList<String> actualFieldValue = new ArrayList<String>();
+		ArrayList<String> expectedFieldValue = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<String>();
+		String[] listViewAndFieldName = listViewAndFieldData.split("<break>");
 
-		for(int i=0; i<listViewAndFieldName.length; i++)
-		{
-			String data[]=listViewAndFieldName[i].split("<fieldBreak>");
-			String listViewName=data[0];
-			String fieldData[]=data[1].split("<f>");
+		for (int i = 0; i < listViewAndFieldName.length; i++) {
+			String data[] = listViewAndFieldName[i].split("<fieldBreak>");
+			String listViewName = data[0];
+			String fieldData[] = data[1].split("<f>");
 
-			for(int k=0; k<fieldData.length; k++)
-			{
-				String val=fieldData[k];
+			for (int k = 0; k < fieldData.length; k++) {
+				String val = fieldData[k];
 				expectedFieldValue.add(val);
 			}
-			if(CommonLib.click(driver, getClickedOnRecentlyViewed(timeOut), "Recently Viewed ero icon", action.SCROLLANDBOOLEAN)) {
+			if (CommonLib.click(driver, getClickedOnRecentlyViewed(timeOut), "Recently Viewed ero icon",
+					action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on the recently view ero icon", YesNo.No);
 
-				xPath="//ul[@class='slds-dropdown__list slds-show']//span[text()='"+listViewName+"']";
-				ele=CommonLib.FindElement(driver, xPath, listViewName,action.SCROLLANDBOOLEAN , timeOut);
+				xPath = "//ul[@class='slds-dropdown__list slds-show']//span[text()='" + listViewName + "']";
+				ele = CommonLib.FindElement(driver, xPath, listViewName, action.SCROLLANDBOOLEAN, timeOut);
 
-				if(CommonLib.click(driver, ele, listViewName+" element", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on "+listViewName+" element"+" button", YesNo.No);
+				if (CommonLib.click(driver, ele, listViewName + " element", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on " + listViewName + " element" + " button", YesNo.No);
 					ThreadSleep(10000);
-					xPath="//table[@data-aura-class='uiVirtualDataTable']//thead//th//span[@class='slds-truncate' and text()!='']";
-					elements=CommonLib.FindElements(driver, xPath, listViewName+"'s field");
-					for(int j=0; j<elements.size(); j++)
-					{
-						String text=CommonLib.getText(driver, elements.get(j), listViewName+" field", action.SCROLLANDBOOLEAN);
+					xPath = "//table[@data-aura-class='uiVirtualDataTable']//thead//th//span[@class='slds-truncate' and text()!='']";
+					elements = CommonLib.FindElements(driver, xPath, listViewName + "'s field");
+					for (int j = 0; j < elements.size(); j++) {
+						String text = CommonLib.getText(driver, elements.get(j), listViewName + " field",
+								action.SCROLLANDBOOLEAN);
 						actualFieldValue.add(text);
 					}
 
-					for(int a=0; a<expectedFieldValue.size(); a++)
-					{
-						if(expectedFieldValue.get(a).equals(actualFieldValue.get(a)))
-						{
-							log(LogStatus.INFO, "Expected field value : "+expectedFieldValue.get(a)+" has been matched with the Actual field value : "+actualFieldValue.get(a), YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Expected field value : "+expectedFieldValue.get(a)+" is not matched with the Actual field value : "+actualFieldValue.get(a), YesNo.No);	
-							result.add("Expected field value : "+expectedFieldValue.get(a)+" is not matched with the Actual field value : "+actualFieldValue.get(a));
+					for (int a = 0; a < expectedFieldValue.size(); a++) {
+						if (expectedFieldValue.get(a).equals(actualFieldValue.get(a))) {
+							log(LogStatus.INFO, "Expected field value : " + expectedFieldValue.get(a)
+									+ " has been matched with the Actual field value : " + actualFieldValue.get(a),
+									YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "Expected field value : " + expectedFieldValue.get(a)
+									+ " is not matched with the Actual field value : " + actualFieldValue.get(a),
+									YesNo.No);
+							result.add("Expected field value : " + expectedFieldValue.get(a)
+									+ " is not matched with the Actual field value : " + actualFieldValue.get(a));
 						}
 
 					}
 
-
-				}
-				else
-				{
-					log(LogStatus.ERROR, "Not able to click on the "+listViewName+" list view name", YesNo.Yes);
-					result.add("Not able to click on the "+listViewName+" list view name");
+				} else {
+					log(LogStatus.ERROR, "Not able to click on the " + listViewName + " list view name", YesNo.Yes);
+					result.add("Not able to click on the " + listViewName + " list view name");
 				}
 			}
 
-			else
-			{
+			else {
 				log(LogStatus.ERROR, "Not able to click on the recently view ero icon", YesNo.Yes);
 				result.add("Not able to click on the recently view ero icon");
 			}
@@ -366,96 +359,113 @@ public class FirmPageBusinessLayer extends FirmPage{
 
 	}
 
-	public boolean VerifySortingOnEntityTypeField()
-	{
-		boolean flag=false;
-		String xPath="";
+	public boolean VerifySortingOnEntityTypeField() {
+		boolean flag = false;
+		String xPath = "";
 		List<WebElement> elements;
-		if(CommonLib.click(driver, geteditBtn(50), "edit button", action.SCROLLANDBOOLEAN)) {
+		if (CommonLib.click(driver, geteditBtn(50), "edit button", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on edit button", YesNo.No);
 
-			if(CommonLib.click(driver, getentityTypeBtn(50), "entity type button", action.SCROLLANDBOOLEAN)) {
+			if (CommonLib.click(driver, getentityTypeBtn(50), "entity type button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on entity type button", YesNo.No);
 
-				xPath="//label[text()='Entity Type']/parent::lightning-combobox//lightning-base-combobox-item//span[@class='slds-truncate' and text()!='--None--']";
-				elements=CommonLib.FindElements(driver, xPath, "Entity type list");
+				xPath = "//label[text()='Entity Type']/parent::lightning-combobox//lightning-base-combobox-item//span[@class='slds-truncate' and text()!='--None--']";
+				elements = CommonLib.FindElements(driver, xPath, "Entity type list");
 
-				if(CommonLib.checkSorting(driver, SortOrder.Assecending, elements))
-				{
+				if (CommonLib.checkSorting(driver, SortOrder.Assecending, elements)) {
 					log(LogStatus.INFO, "Entity type sorting order has been verified", YesNo.No);
-					flag=true;
-				}
-				else
-				{
+					flag = true;
+				} else {
 					log(LogStatus.ERROR, "Entity type sorting order is not verified", YesNo.No);
 				}
-			}
-			else
-			{
+			} else {
 				log(LogStatus.ERROR, "Not able to click on the Entity type button", YesNo.No);
 			}
-		}
-		else
-		{
+		} else {
 			log(LogStatus.ERROR, "Not able to click on edit button", YesNo.No);
 		}
 		return flag;
 	}
 
-	public ArrayList<String> verifyHighlightPanel(ArrayList<String> highlightValueExpected)
-	{
-		String xPath="";
+	public ArrayList<String> verifyHighlightPanel(ArrayList<String> highlightValueExpected) {
+		String xPath = "";
 		WebElement ele;
-		ArrayList<String> highlightValueActual=new ArrayList<String>();
-		ArrayList<String> result=new ArrayList<String>();
-		for(int i=0; i<highlightValueExpected.size(); i++)
-		{
-			xPath="//div[@class='slds-grid primaryFieldRow' or @class='secondaryFields']//*[text()='"+highlightValueExpected.get(i)+"']";
-			ele=CommonLib.FindElement(driver, xPath, highlightValueExpected+" highlight value", action.SCROLLANDBOOLEAN, 50);
-			String text=CommonLib.getText(driver, ele, highlightValueExpected+" highlight value", action.SCROLLANDBOOLEAN);
+		ArrayList<String> highlightValueActual = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<String>();
+		for (int i = 0; i < highlightValueExpected.size(); i++) {
+			xPath = "//div[@class='slds-grid primaryFieldRow' or @class='secondaryFields']//*[text()='"
+					+ highlightValueExpected.get(i) + "']";
+			ele = CommonLib.FindElement(driver, xPath, highlightValueExpected + " highlight value",
+					action.SCROLLANDBOOLEAN, 50);
+			String text = CommonLib.getText(driver, ele, highlightValueExpected + " highlight value",
+					action.SCROLLANDBOOLEAN);
 			highlightValueActual.add(text);
 		}
-		for(int i=0; i<highlightValueExpected.size(); i++)
-		{
-			if(highlightValueExpected.get(i).equals(highlightValueActual.get(i)))
-			{
-				log(LogStatus.INFO, "Highlight Value Expected result \""+highlightValueExpected.get(i)+"\" has been matched with the Highlight Value Actual result : "+highlightValueActual.get(i), YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Highlight Value Expected result \""+highlightValueExpected.get(i)+"\" is not matched with the Highlight Value Actual result : "+highlightValueActual.get(i), YesNo.No);				
-				result.add("Highlight Value Expected result \""+highlightValueExpected.get(i)+"\" is not matched with the Highlight Value Actual result : "+highlightValueActual.get(i));
+		for (int i = 0; i < highlightValueExpected.size(); i++) {
+			if (highlightValueExpected.get(i).equals(highlightValueActual.get(i))) {
+				log(LogStatus.INFO, "Highlight Value Expected result \"" + highlightValueExpected.get(i)
+						+ "\" has been matched with the Highlight Value Actual result : " + highlightValueActual.get(i),
+						YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Highlight Value Expected result \"" + highlightValueExpected.get(i)
+						+ "\" is not matched with the Highlight Value Actual result : " + highlightValueActual.get(i),
+						YesNo.No);
+				result.add("Highlight Value Expected result \"" + highlightValueExpected.get(i)
+						+ "\" is not matched with the Highlight Value Actual result : " + highlightValueActual.get(i));
 			}
 		}
 		return result;
 	}
-
-
-	public boolean verifyCustomAction(String data)
+	public boolean verifyCustomAction(String projectName, String data)
 	{
+		BasePageBusinessLayer BP=new BasePageBusinessLayer(driver);
 		String xPath="",text="";
 		WebElement ele;
 		List<WebElement> elements;
 
 		ArrayList<String> actualCustomAction=new ArrayList<String>();
-		ArrayList<String> ExpectedCustomAction=new ArrayList<String>();
-		//ArrayList<String> fieldValue=new ArrayList<String>();
+		ArrayList<String> ExpectedCustomAction=new ArrayList<String>();	
+		
 		ArrayList<String> result=new ArrayList<String>();
-
 		String tabNameFieldNameValue[]=data.split("<break>");
-
 		for(int i=0; i<tabNameFieldNameValue.length; i++)
 		{
 			String[] tabNameAndFieldNameValue=tabNameFieldNameValue[i].split("<fieldBreak>");
 			String[] fieldNameAndValue=tabNameAndFieldNameValue[1].split("<valueBreak>");
 			String[] fieldName=fieldNameAndValue[0].split("<f>");
+			String[] val= {fieldNameAndValue[1]};
 
 			for(int k=0; k<fieldName.length; k++)
 			{
 				ExpectedCustomAction.add(fieldName[k]);
 			}
-			String[] fieldValue=fieldNameAndValue[1].split("<v>");
+			
+			
+			String[][] requiredRecordPageLabelValuesAndTypesOfElements = null;
+			int recordPageLoopCount = 0;
+			for (String recordPageLabelValuesAndTypesOfElement : val) {
+				requiredRecordPageLabelValuesAndTypesOfElements = new String[recordPageLabelValuesAndTypesOfElement
+						.split("<Break>").length][3];
+				int k = 0;
+				for (String recordPageLabelValuesAndTypesOfEle : recordPageLabelValuesAndTypesOfElement.split("<Break>")) {
+					for (int j = 0; j < 3; j++) {
+						requiredRecordPageLabelValuesAndTypesOfElements[k][j] = recordPageLabelValuesAndTypesOfEle
+								.split("<Br>")[j];
+					}
+					k++;
+				}
+			}
 
+			
+/*			String[] fieldValueType=fieldNameAndValue[1].split("<br>");
+			for(int j=0; j<fieldValueType.length; j++)
+			{
+				String[] fieldNameValueAndFieldType=fieldValueType[j].split("<v>");
+				fieldLabelName.add(fieldNameValueAndFieldType[0]);
+				fieldValue.add(fieldNameValueAndFieldType[1]);
+				fieldType.add(fieldNameValueAndFieldType[2]);			
+			}
+	*/	
 			if(CommonLib.click(driver, getTabEroBtn(50), "tab ero button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on tab ero button", YesNo.No);
 				xPath="//ul[@class='slds-button-group-list']//*[text()='"+tabNameAndFieldNameValue[0]+"']";
@@ -491,8 +501,9 @@ public class FirmPageBusinessLayer extends FirmPage{
 							text=CommonLib.getText(driver, li, "New Contact label Element", action.SCROLLANDBOOLEAN);
 							text = text.replace("\n", " ");
 							actualCustomAction.add(text);							
-						}					
-
+						}	
+						
+						int k=0;
 						for(int j=0; j<ExpectedCustomAction.size(); j++)
 						{
 							if(ExpectedCustomAction.get(j).equals(actualCustomAction.get(j)))
@@ -504,43 +515,58 @@ public class FirmPageBusinessLayer extends FirmPage{
 							{
 								log(LogStatus.ERROR,"Expected result "+ExpectedCustomAction.get(j)+" is not matched with the Actual Result "+actualCustomAction.get(j), YesNo.No);
 								result.add("Expected result "+ExpectedCustomAction.get(j)+" is not matched with the Actual Result "+actualCustomAction.get(j));
+							    k++;
 							}
 						}
-
-						xPath="//span[text()='"+fieldValue[0]+"']/../following-sibling::input";
-						ele=CommonLib.FindElement(driver, xPath, fieldValue[0], action.SCROLLANDBOOLEAN, 50);
-						if(CommonLib.sendKeys(driver, ele, fieldValue[1], fieldValue[0], action.SCROLLANDBOOLEAN))
+						if(k==0)
 						{
-							log(LogStatus.INFO, fieldValue[1]+" has been entered in the "+fieldValue[0]+" field", YesNo.No);
 
-							xPath="//h2[text()='New Contact']/../following-sibling::footer//span[text()='Save']";
-							ele=CommonLib.FindElement(driver, xPath, "Save button", action.SCROLLANDBOOLEAN, 50);
-							if(CommonLib.click(driver, ele, "Save button", action.BOOLEAN))
+							if(BP.enterDetailsForRecord(projectName, requiredRecordPageLabelValuesAndTypesOfElements, action.SCROLLANDBOOLEAN, 30))
 							{
-								log(LogStatus.INFO, "Clicked on Save button", YesNo.No);
-								if(CommonLib.checkElementVisibility(driver, gettoastMessage(50), "Save confirmation message", 50))
+								log(LogStatus.INFO,"The records have been enter on "+tabNameAndFieldNameValue[0], YesNo.No);
+								
+								if(CommonLib.click(driver, pageLevelCreateRecordPopupSaveOrCancelButton("Save",30), "Save button", action.SCROLLANDBOOLEAN))
 								{
-									log(LogStatus.INFO, "fieldName has been saved", YesNo.No);
+									log(LogStatus.INFO,"Clicked on save button after filling the details of "+tabNameAndFieldNameValue[0], YesNo.No);	
+									if(CommonLib.checkElementVisibility(driver, gettoastMessage(20), "Save confirmation message", 20))
+									{
+										log(LogStatus.INFO,tabNameAndFieldNameValue[0]+" record has been created", YesNo.No);
+									}
+									else
+									{
+										log(LogStatus.ERROR,tabNameAndFieldNameValue[0]+" record is not created", YesNo.No);
+									}
 								}
 								else
 								{
-									log(LogStatus.ERROR, "fieldName is not saved", YesNo.No);
+									log(LogStatus.ERROR,"Not able to click on save button after filling the details of "+tabNameAndFieldNameValue[0], YesNo.No);		
 								}
+
 							}
 							else
 							{
-								log(LogStatus.ERROR, "Not able to click on Save button", YesNo.No);
+								log(LogStatus.INFO,"Not able to enter the details on "+tabNameAndFieldNameValue[0], YesNo.No);
 
+								if(CommonLib.click(driver, pageLevelCreateRecordPopupSaveOrCancelButton("Cancel",30), "Cancel button", action.SCROLLANDBOOLEAN))
+								{
+									log(LogStatus.INFO,"Clicked on cancel button after filling the details of "+tabNameAndFieldNameValue[0], YesNo.No);	
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to click on cancel button after filling the details of "+tabNameAndFieldNameValue[0], YesNo.No);		
+								}
 							}
 						}
 						else
 						{
-							log(LogStatus.ERROR, "Not able to enter the value "+fieldValue[1]+" in "+fieldValue[0]+" field", YesNo.No);
-
+							log(LogStatus.ERROR,"The label names are not matched of "+tabNameAndFieldNameValue[0]+" tab", YesNo.No);		
+							
 						}
 
 						ExpectedCustomAction.removeAll(ExpectedCustomAction);
 						actualCustomAction.removeAll(actualCustomAction);
+
+						
 					}
 					else if(tabNameAndFieldNameValue[0].equals("New Client"))
 					{
@@ -559,7 +585,7 @@ public class FirmPageBusinessLayer extends FirmPage{
 						text=CommonLib.getText(driver, ele, "New Client label Element", action.SCROLLANDBOOLEAN);
 						text = text.replace("\n", " ");
 						actualCustomAction.add(text);
-
+                        int k=0;
 						for(int j=0; j<ExpectedCustomAction.size(); j++)
 						{
 							if(ExpectedCustomAction.get(j).equals(actualCustomAction.get(j)))
@@ -571,53 +597,60 @@ public class FirmPageBusinessLayer extends FirmPage{
 							{
 								log(LogStatus.ERROR,"Expected result "+ExpectedCustomAction.get(j)+" is not matched with the Actual Result "+actualCustomAction.get(j), YesNo.No);
 								result.add("Expected result "+ExpectedCustomAction.get(j)+" is not matched with the Actual Result "+actualCustomAction.get(j));
+							    k++;
 							}
 						}	
-
-						xPath="//span[text()='"+fieldValue[0]+"']/../following-sibling::div//input";
-						ele=CommonLib.FindElement(driver, xPath, fieldValue[0], action.SCROLLANDBOOLEAN, 50);
-						if(CommonLib.sendKeys(driver, ele, fieldValue[1], fieldValue[0], action.SCROLLANDBOOLEAN))
+						
+						if(k==0)
 						{
-							log(LogStatus.INFO, fieldValue[1]+" has been entered in the "+fieldValue[0]+" field", YesNo.No);
-							CommonLib.ThreadSleep(2000);
-							xPath="//span[text()='"+fieldValue[0]+"']/../following-sibling::div//ul[@class='lookup__list  visible']/li//div[contains(@class,'primaryLabel')]";
-							elements=CommonLib.FindElements(driver, xPath, "New Client label");
-							if(CommonLib.getSelectedOptionOfDropDown(driver, elements, fieldValue[0]+"drop down list",fieldValue[1]))
+
+							if(BP.enterDetailsForRecord(projectName, requiredRecordPageLabelValuesAndTypesOfElements, action.SCROLLANDBOOLEAN, 30))
 							{
-								log(LogStatus.INFO, fieldValue[1]+" has been selected from the "+fieldValue[0]+" field drop down list", YesNo.No);
-								xPath="//h2[text()='New Client']/../following-sibling::footer//span[text()='Save']";
-								ele=CommonLib.FindElement(driver, xPath, "Save button", action.SCROLLANDBOOLEAN, 50);
-								if(CommonLib.click(driver, ele, "Save button", action.BOOLEAN))
+								log(LogStatus.INFO,"The records have been enter on "+tabNameAndFieldNameValue[0], YesNo.No);
+								
+								if(CommonLib.click(driver, pageLevelCreateRecordPopupSaveOrCancelButton("Save",30), "Save button", action.SCROLLANDBOOLEAN))
 								{
-									log(LogStatus.INFO, "Clicked on Save button", YesNo.No);
-									if(CommonLib.checkElementVisibility(driver, gettoastMessage(50), "Save confirmation message", 50))
+									log(LogStatus.INFO,"Clicked on save button after filling the details of "+tabNameAndFieldNameValue[0], YesNo.No);	
+									if(CommonLib.checkElementVisibility(driver, gettoastMessage(20), "Save confirmation message", 20))
 									{
-										log(LogStatus.INFO, "fieldName has been saved", YesNo.No);
+										log(LogStatus.INFO,tabNameAndFieldNameValue[0]+" record has been created", YesNo.No);
 									}
 									else
 									{
-										log(LogStatus.ERROR, "fieldName is not saved", YesNo.No);
+										log(LogStatus.ERROR,tabNameAndFieldNameValue[0]+" record is not created", YesNo.No);
 									}
 								}
 								else
 								{
-									log(LogStatus.ERROR, "Not able to click on Save button", YesNo.No);
-
+									log(LogStatus.ERROR,"Not able to click on save button after filling the details of "+tabNameAndFieldNameValue[0], YesNo.No);		
 								}
 
 							}
 							else
 							{
-								log(LogStatus.ERROR, fieldValue[1]+" is not selected from the "+fieldValue[0]+" field drop down list", YesNo.No);
+								log(LogStatus.INFO,"Not able to enter the details on "+tabNameAndFieldNameValue[0], YesNo.No);
 
+								if(CommonLib.click(driver, pageLevelCreateRecordPopupSaveOrCancelButton("Cancel",30), "Cancel button", action.SCROLLANDBOOLEAN))
+								{
+									log(LogStatus.INFO,"Clicked on cancel button after filling the details of "+tabNameAndFieldNameValue[0], YesNo.No);	
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to click on cancel button after filling the details of "+tabNameAndFieldNameValue[0], YesNo.No);		
+								}
 							}
 						}
 						else
 						{
-							log(LogStatus.ERROR, "Not able to enter the value "+fieldValue[1]+" in "+fieldValue[0]+" field", YesNo.No);
-						}					
+							log(LogStatus.ERROR,"The label names are not matched of "+tabNameAndFieldNameValue[0]+" tab", YesNo.No);		
+							
+						}
+
+
+
 						ExpectedCustomAction.removeAll(ExpectedCustomAction);
 						actualCustomAction.removeAll(actualCustomAction);
+
 					}
 					else if(tabNameAndFieldNameValue[0].equals("New Affiliation"))
 					{
@@ -643,6 +676,7 @@ public class FirmPageBusinessLayer extends FirmPage{
 						text=CommonLib.getText(driver, ele, "New Client label Element", action.SCROLLANDBOOLEAN);
 						text = text.replace("\n", " ");
 						actualCustomAction.add(text);
+						int k=0;
 						for(int j=0; j<ExpectedCustomAction.size(); j++)
 						{
 							if(ExpectedCustomAction.get(j).equals(actualCustomAction.get(j)))
@@ -654,8 +688,59 @@ public class FirmPageBusinessLayer extends FirmPage{
 							{
 								log(LogStatus.ERROR,"Expected result "+ExpectedCustomAction.get(j)+" is not matched with the Actual Result "+actualCustomAction.get(j), YesNo.No);
 								result.add("Expected result "+ExpectedCustomAction.get(j)+" is not matched with the Actual Result "+actualCustomAction.get(j));
+							    k++;
 							}
 						}
+						
+						if(k==0)
+						{
+
+							if(BP.enterDetailsForRecord(projectName, requiredRecordPageLabelValuesAndTypesOfElements, action.SCROLLANDBOOLEAN, 30))
+							{
+								log(LogStatus.INFO,"The records have been enter on "+tabNameAndFieldNameValue[0], YesNo.No);
+								
+								if(CommonLib.click(driver, pageLevelCreateRecordPopupSaveOrCancelButton("Save",30), "Save button", action.SCROLLANDBOOLEAN))
+								{
+									log(LogStatus.INFO,"Clicked on save button after filling the details of "+tabNameAndFieldNameValue[0], YesNo.No);	
+									if(CommonLib.checkElementVisibility(driver, gettoastMessage(20), "Save confirmation message", 20))
+									{
+										log(LogStatus.INFO,tabNameAndFieldNameValue[0]+" record has been created", YesNo.No);
+									}
+									else
+									{
+										log(LogStatus.ERROR,tabNameAndFieldNameValue[0]+" record is not created", YesNo.No);
+									}
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to click on save button after filling the details of "+tabNameAndFieldNameValue[0], YesNo.No);		
+								}
+
+							}
+							else
+							{
+								log(LogStatus.INFO,"Not able to enter the details on "+tabNameAndFieldNameValue[0], YesNo.No);
+
+								if(CommonLib.click(driver, pageLevelCreateRecordPopupSaveOrCancelButton("Cancel",30), "Cancel button", action.SCROLLANDBOOLEAN))
+								{
+									log(LogStatus.INFO,"Clicked on cancel button after filling the details of "+tabNameAndFieldNameValue[0], YesNo.No);	
+								}
+								else
+								{
+									log(LogStatus.ERROR,"Not able to click on cancel button after filling the details of "+tabNameAndFieldNameValue[0], YesNo.No);		
+								}
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR,"The label names are not matched of "+tabNameAndFieldNameValue[0]+" tab", YesNo.No);		
+							
+						}
+
+						
+				    	ExpectedCustomAction.removeAll(ExpectedCustomAction);
+						actualCustomAction.removeAll(actualCustomAction);
+					
 					}
 				}
 				else
@@ -672,168 +757,163 @@ public class FirmPageBusinessLayer extends FirmPage{
 
 	}
 
-	public ArrayList<String> VerifyContactsTabOnAdvisorRecordPage(String contact,String affiliation,int timeOut)
-	{
-		String xPath,text;
+	public ArrayList<String> VerifyContactsTabOnAdvisorRecordPage(String contact, String affiliation, int timeOut) {
+		String xPath, text;
 		WebElement ele;
 		List<WebElement> elements;
-		ArrayList<String> actualFieldName=new ArrayList<String>();
-		ArrayList<String> expectedFieldName=new ArrayList<String>();
-		ArrayList<String> result=new ArrayList<String>();
+		ArrayList<String> actualFieldName = new ArrayList<String>();
+		ArrayList<String> expectedFieldName = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<String>();
 
-		if(contact!=null)
-		{
-			String[] recordTypeAndButtonFieldNameSortValue=contact.split("<buttonBreak>");
-			String recordType=recordTypeAndButtonFieldNameSortValue[0];
-			String[] ButtonAndFieldNameSortValue=recordTypeAndButtonFieldNameSortValue[1].split("<fieldBreak>");
-			String button=ButtonAndFieldNameSortValue[0];
-			String[] FieldnameAndSortValue=ButtonAndFieldNameSortValue[1].split("<sortBreak>");
-			String fieldnameString=FieldnameAndSortValue[0];
-			String[] fieldName=fieldnameString.split("<f>");
-			String[] SortValue=FieldnameAndSortValue[1].split("<valueBreak>");
-			String sorting=SortValue[0];
-			String Value=SortValue[1];
+		if (contact != null) {
+			String[] recordTypeAndButtonFieldNameSortValue = contact.split("<buttonBreak>");
+			String recordType = recordTypeAndButtonFieldNameSortValue[0];
+			String[] ButtonAndFieldNameSortValue = recordTypeAndButtonFieldNameSortValue[1].split("<fieldBreak>");
+			String button = ButtonAndFieldNameSortValue[0];
+			String[] FieldnameAndSortValue = ButtonAndFieldNameSortValue[1].split("<sortBreak>");
+			String fieldnameString = FieldnameAndSortValue[0];
+			String[] fieldName = fieldnameString.split("<f>");
+			String[] SortValue = FieldnameAndSortValue[1].split("<valueBreak>");
+			String sorting = SortValue[0];
+			String Value = SortValue[1];
 
-			//	String[] fieldName=ButtonAndFieldName[1].split("<f>");
-			for(int i=0; i<fieldName.length; i++)
-			{
+			// String[] fieldName=ButtonAndFieldName[1].split("<f>");
+			for (int i = 0; i < fieldName.length; i++) {
 				expectedFieldName.add(fieldName[i]);
 			}
-			xPath="//a[contains(@class,'slds-card__header-link') and text()='"+recordType+"']/ancestor::article//button[@class='slds-button slds-button_neutral']";
-			ele=CommonLib.FindElement(driver, xPath, recordType+" element", action.SCROLLANDBOOLEAN, 50);
-			text=CommonLib.getText(driver, ele, recordType+" text", action.SCROLLANDBOOLEAN);
-			if(text.equals(button))
-			{
-				log(LogStatus.INFO,"Expected result "+recordType+" has been matched with the Actual Result "+text, YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR,"Expected result "+recordType+" is not matched with the Actual Result "+text, YesNo.No);
-				result.add("Expected result "+recordType+" is not matched with the Actual Result "+text);		
-			}
-
-			xPath="//a[contains(@class,'slds-card__header-link') and text()='"+recordType+"']/ancestor::article//div[contains(@class,'sdgcolheader')]";
-			elements=CommonLib.FindElements(driver, xPath, button+" header");
-			for(WebElement li:elements)
-			{
-				text=CommonLib.getText(driver, li, button+" header", action.SCROLLANDBOOLEAN);
-				actualFieldName.add(text);							
+			xPath = "//a[contains(@class,'slds-card__header-link') and text()='" + recordType
+					+ "']/ancestor::article//button[@class='slds-button slds-button_neutral']";
+			ele = CommonLib.FindElement(driver, xPath, recordType + " element", action.SCROLLANDBOOLEAN, 50);
+			text = CommonLib.getText(driver, ele, recordType + " text", action.SCROLLANDBOOLEAN);
+			if (text.equals(button)) {
+				log(LogStatus.INFO,
+						"Expected result " + recordType + " has been matched with the Actual Result " + text, YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Expected result " + recordType + " is not matched with the Actual Result " + text,
+						YesNo.No);
+				result.add("Expected result " + recordType + " is not matched with the Actual Result " + text);
 			}
 
-			for(int i=0; i<expectedFieldName.size(); i++)
-			{
-				if(expectedFieldName.get(i).equals(actualFieldName.get(i)))
-				{
-					log(LogStatus.INFO,"Expected result "+expectedFieldName.get(i)+" record name has been matched with the Actual Result "+actualFieldName.get(i), YesNo.No);
-
-				}
-				else
-				{
-					log(LogStatus.ERROR,"Expected result "+expectedFieldName.get(i)+" record name is not matched with the Actual Result "+actualFieldName.get(i), YesNo.No);
-					result.add("Expected result "+expectedFieldName.get(i)+" record name is not matched with the Actual Result "+actualFieldName.get(i));
-				}
+			xPath = "//a[contains(@class,'slds-card__header-link') and text()='" + recordType
+					+ "']/ancestor::article//div[contains(@class,'sdgcolheader')]";
+			elements = CommonLib.FindElements(driver, xPath, button + " header");
+			for (WebElement li : elements) {
+				text = CommonLib.getText(driver, li, button + " header", action.SCROLLANDBOOLEAN);
+				actualFieldName.add(text);
 			}
 
-			String[] defaultSortFieldnameOrder=sorting.split("<s>");
-			String defaultSortFieldName=defaultSortFieldnameOrder[0];
-			String defaultSortOrder=defaultSortFieldnameOrder[1];
-			if(defaultSortOrder.equals("ASC"))
-			{
-				xPath="//a[contains(@class,'slds-card__header-link') and text()='"+recordType+"']/ancestor::article//span[text()='"+defaultSortFieldName+"']//lightning-icon[contains(@class,'arrowup')]";
-				ele=CommonLib.FindElement(driver, xPath, defaultSortFieldName+" sorting icon", action.SCROLLANDBOOLEAN, 50);
-				if(ele!=null)
-				{
-					log(LogStatus.INFO,"Default Ascending sorting icon is visible", YesNo.No);
-				}
-				else
-				{
-					log(LogStatus.ERROR,"Default Ascending sorting icon is not visible", YesNo.No);
-				}
-			}
-			else if(defaultSortOrder.equals("DESC"))
-			{
-				xPath="//a[contains(@class,'slds-card__header-link') and text()='"+recordType+"']/ancestor::article//span[text()='"+defaultSortFieldName+"']//lightning-icon[contains(@class,'arrowdown')]";
-				ele=CommonLib.FindElement(driver, xPath, defaultSortFieldName+" sorting icon", action.SCROLLANDBOOLEAN, 50);
-				if(ele!=null)
-				{
-					log(LogStatus.INFO,"Default Descending sorting icon is visible", YesNo.No);
-				}
-				else
-				{
-					log(LogStatus.ERROR,"Default Descending sorting icon is not visible", YesNo.No);
+			for (int i = 0; i < expectedFieldName.size(); i++) {
+				if (expectedFieldName.get(i).equals(actualFieldName.get(i))) {
+					log(LogStatus.INFO,
+							"Expected result " + expectedFieldName.get(i)
+									+ " record name has been matched with the Actual Result " + actualFieldName.get(i),
+							YesNo.No);
+
+				} else {
+					log(LogStatus.ERROR,
+							"Expected result " + expectedFieldName.get(i)
+									+ " record name is not matched with the Actual Result " + actualFieldName.get(i),
+							YesNo.No);
+					result.add("Expected result " + expectedFieldName.get(i)
+							+ " record name is not matched with the Actual Result " + actualFieldName.get(i));
 				}
 			}
 
-			xPath="//a[contains(@class,'slds-card__header-link') and text()='"+recordType+"']/ancestor::article//button[@class='slds-button slds-button_neutral']";
-			ele=CommonLib.FindElement(driver, xPath, recordType+" element", action.SCROLLANDBOOLEAN, 50);
-			CommonLib.click(driver, ele,recordType+" button", action.SCROLLANDBOOLEAN);
-
-			xPath="//h2[text()='"+button+"']";
-			ele=CommonLib.FindElement(driver, xPath, button+" element", action.SCROLLANDBOOLEAN, 50);
-
-			if(ele!=null)
-			{                                                                                  
-				log(LogStatus.INFO,button+" popup has been open", YesNo.No);	
+			String[] defaultSortFieldnameOrder = sorting.split("<s>");
+			String defaultSortFieldName = defaultSortFieldnameOrder[0];
+			String defaultSortOrder = defaultSortFieldnameOrder[1];
+			if (defaultSortOrder.equals("ASC")) {
+				xPath = "//a[contains(@class,'slds-card__header-link') and text()='" + recordType
+						+ "']/ancestor::article//span[text()='" + defaultSortFieldName
+						+ "']//lightning-icon[contains(@class,'arrowup')]";
+				ele = CommonLib.FindElement(driver, xPath, defaultSortFieldName + " sorting icon",
+						action.SCROLLANDBOOLEAN, 50);
+				if (ele != null) {
+					log(LogStatus.INFO, "Default Ascending sorting icon is visible", YesNo.No);
+				} else {
+					log(LogStatus.ERROR, "Default Ascending sorting icon is not visible", YesNo.No);
+				}
+			} else if (defaultSortOrder.equals("DESC")) {
+				xPath = "//a[contains(@class,'slds-card__header-link') and text()='" + recordType
+						+ "']/ancestor::article//span[text()='" + defaultSortFieldName
+						+ "']//lightning-icon[contains(@class,'arrowdown')]";
+				ele = CommonLib.FindElement(driver, xPath, defaultSortFieldName + " sorting icon",
+						action.SCROLLANDBOOLEAN, 50);
+				if (ele != null) {
+					log(LogStatus.INFO, "Default Descending sorting icon is visible", YesNo.No);
+				} else {
+					log(LogStatus.ERROR, "Default Descending sorting icon is not visible", YesNo.No);
+				}
 			}
-			else
-			{
-				log(LogStatus.ERROR,"Not able to "+button+" popup  been open", YesNo.No);	
-			}
 
+			xPath = "//a[contains(@class,'slds-card__header-link') and text()='" + recordType
+					+ "']/ancestor::article//button[@class='slds-button slds-button_neutral']";
+			ele = CommonLib.FindElement(driver, xPath, recordType + " element", action.SCROLLANDBOOLEAN, 50);
+			CommonLib.click(driver, ele, recordType + " button", action.SCROLLANDBOOLEAN);
+
+			xPath = "//h2[text()='" + button + "']";
+			ele = CommonLib.FindElement(driver, xPath, button + " element", action.SCROLLANDBOOLEAN, 50);
+
+			if (ele != null) {
+				log(LogStatus.INFO, button + " popup has been open", YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Not able to " + button + " popup  been open", YesNo.No);
+			}
 
 		}
 		actualFieldName.removeAll(actualFieldName);
 		expectedFieldName.removeAll(expectedFieldName);
 
-		if(affiliation!=null)
-		{
-			String[] recordTypeAndButtonFieldNameSortValue=affiliation.split("<buttonBreak>");
-			String recordType=recordTypeAndButtonFieldNameSortValue[0];
-			String[] ButtonAndFieldNameSortValue=recordTypeAndButtonFieldNameSortValue[1].split("<fieldBreak>");
-			String button=ButtonAndFieldNameSortValue[0];
-			String[] FieldnameAndSortValue=ButtonAndFieldNameSortValue[1].split("<sortBreak>");
-			String fieldnameString=FieldnameAndSortValue[0];
-			String[] fieldName=fieldnameString.split("<f>");
-			String[] SortValue=FieldnameAndSortValue[1].split("<valueBreak>");
-			String sorting=SortValue[0];
-			String Value=SortValue[1];
-			for(int i=0; i<fieldName.length; i++)
-			{
+		if (affiliation != null) {
+			String[] recordTypeAndButtonFieldNameSortValue = affiliation.split("<buttonBreak>");
+			String recordType = recordTypeAndButtonFieldNameSortValue[0];
+			String[] ButtonAndFieldNameSortValue = recordTypeAndButtonFieldNameSortValue[1].split("<fieldBreak>");
+			String button = ButtonAndFieldNameSortValue[0];
+			String[] FieldnameAndSortValue = ButtonAndFieldNameSortValue[1].split("<sortBreak>");
+			String fieldnameString = FieldnameAndSortValue[0];
+			String[] fieldName = fieldnameString.split("<f>");
+			String[] SortValue = FieldnameAndSortValue[1].split("<valueBreak>");
+			String sorting = SortValue[0];
+			String Value = SortValue[1];
+			for (int i = 0; i < fieldName.length; i++) {
 				expectedFieldName.add(fieldName[i]);
 			}
 
-			xPath="//a[contains(@class,'slds-card__header-link') and text()='"+recordType+"']/ancestor::article//button[@class='slds-button slds-button_neutral']";
-			ele=CommonLib.FindElement(driver, xPath, recordType+" element", action.SCROLLANDBOOLEAN, 50);
-			text=CommonLib.getText(driver, ele, recordType+" text", action.SCROLLANDBOOLEAN);
-			if(text.equals(button))
-			{
-				log(LogStatus.INFO,"Expected result "+recordType+" has been matched with the Actual Result "+text, YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR,"Expected result "+recordType+" is not matched with the Actual Result "+text, YesNo.No);
-				result.add("Expected result "+recordType+" is not matched with the Actual Result "+text);		
-			}
-
-			xPath="//a[contains(@class,'slds-card__header-link') and text()='"+recordType+"']/ancestor::article//div[contains(@class,'sdgcolheader')]";
-			elements=CommonLib.FindElements(driver, xPath, button+" header");
-			for(WebElement li:elements)
-			{
-				text=CommonLib.getText(driver, li, button+" header", action.SCROLLANDBOOLEAN);
-				actualFieldName.add(text);							
+			xPath = "//a[contains(@class,'slds-card__header-link') and text()='" + recordType
+					+ "']/ancestor::article//button[@class='slds-button slds-button_neutral']";
+			ele = CommonLib.FindElement(driver, xPath, recordType + " element", action.SCROLLANDBOOLEAN, 50);
+			text = CommonLib.getText(driver, ele, recordType + " text", action.SCROLLANDBOOLEAN);
+			if (text.equals(button)) {
+				log(LogStatus.INFO,
+						"Expected result " + recordType + " has been matched with the Actual Result " + text, YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Expected result " + recordType + " is not matched with the Actual Result " + text,
+						YesNo.No);
+				result.add("Expected result " + recordType + " is not matched with the Actual Result " + text);
 			}
 
-			for(int i=0; i<expectedFieldName.size(); i++)
-			{
-				if(expectedFieldName.get(i).equals(actualFieldName.get(i)))
-				{
-					log(LogStatus.INFO,"Expected result "+expectedFieldName.get(i)+" record name has been matched with the Actual Result "+actualFieldName.get(i), YesNo.No);
+			xPath = "//a[contains(@class,'slds-card__header-link') and text()='" + recordType
+					+ "']/ancestor::article//div[contains(@class,'sdgcolheader')]";
+			elements = CommonLib.FindElements(driver, xPath, button + " header");
+			for (WebElement li : elements) {
+				text = CommonLib.getText(driver, li, button + " header", action.SCROLLANDBOOLEAN);
+				actualFieldName.add(text);
+			}
 
-				}
-				else
-				{
-					log(LogStatus.ERROR,"Expected result "+expectedFieldName.get(i)+" record name is not matched with the Actual Result "+actualFieldName.get(i), YesNo.No);
-					result.add("Expected result "+expectedFieldName.get(i)+" record name is not matched with the Actual Result "+actualFieldName.get(i));
+			for (int i = 0; i < expectedFieldName.size(); i++) {
+				if (expectedFieldName.get(i).equals(actualFieldName.get(i))) {
+					log(LogStatus.INFO,
+							"Expected result " + expectedFieldName.get(i)
+									+ " record name has been matched with the Actual Result " + actualFieldName.get(i),
+							YesNo.No);
+
+				} else {
+					log(LogStatus.ERROR,
+							"Expected result " + expectedFieldName.get(i)
+									+ " record name is not matched with the Actual Result " + actualFieldName.get(i),
+							YesNo.No);
+					result.add("Expected result " + expectedFieldName.get(i)
+							+ " record name is not matched with the Actual Result " + actualFieldName.get(i));
 				}
 			}
 
@@ -842,12 +922,12 @@ public class FirmPageBusinessLayer extends FirmPage{
 
 	}
 
-
-	public boolean VerifySortingOnFields(String data) {
+	public ArrayList<String> VerifySortingOnFields(String data) {
 		boolean flag = false;
 		String xPath="";
 		WebElement ele, arrowUpElement, arrowDownElement;
 		List<WebElement> elements;
+		ArrayList<String> result=new ArrayList<String>();
 
 		String[] FieldsName=data.split("<break>");
 		for(int i=0; i<FieldsName.length; i++)
@@ -859,8 +939,11 @@ public class FirmPageBusinessLayer extends FirmPage{
 			String[] defaultSortorderAndNoSortOrder=fieldNameAndSortOrderNoSortOrder[1].split("<noSortOrderBreak>");
 			String[] defaultSortFieldAndSortOrder=defaultSortorderAndNoSortOrder[0].split("<sortOrder>");
 			String defaultSortFieldName=defaultSortFieldAndSortOrder[0];
-			String defaultSortOrder=defaultSortFieldAndSortOrder[1];
-			
+			String[] defaultSortOrderAndNoSortOrder=defaultSortFieldAndSortOrder[1].split("<noSortOrderField>");
+			String defaultSortOrder=defaultSortOrderAndNoSortOrder[0];
+			String noSortOrderFieldName=defaultSortOrderAndNoSortOrder[1];
+			if(!defaultSortOrder.equals("null"))
+			{
 			if(defaultSortOrder.contains("ASC"))
 			{
 				xPath="//a[text()='"+gridName+"']/ancestor::article//thead//span[text()='"+defaultSortFieldName+"']/lightning-icon";
@@ -871,9 +954,10 @@ public class FirmPageBusinessLayer extends FirmPage{
 				else
 				{
 					log(LogStatus.ERROR,"Default Ascending order is not available on "+defaultSortFieldName, YesNo.No);
+					result.add("Default Ascending order is not available on "+defaultSortFieldName);
 				}
 			}
-			
+
 			else if(defaultSortOrder.contains("DESC"))
 			{
 				xPath="//a[text()='"+gridName+"']/ancestor::article//thead//span[text()='"+defaultSortFieldName+"']/lightning-icon";
@@ -884,7 +968,9 @@ public class FirmPageBusinessLayer extends FirmPage{
 				else
 				{
 					log(LogStatus.ERROR,"Default Descending order is not available on "+defaultSortFieldName, YesNo.No);
+					result.add("Default Descending order is not available on "+defaultSortFieldName);
 				}
+			}
 			}
 
 			for(int j=0; j<fieldName.length; j++)
@@ -903,49 +989,50 @@ public class FirmPageBusinessLayer extends FirmPage{
 					else
 					{
 						log(LogStatus.ERROR,"Arrowup and Arrowdown icon is not visible on "+fieldName[j], YesNo.No);
+						result.add("Arrowup and Arrowdown icon is not visible on "+fieldName[j]);
 					}
 				}
 				else
 				{
 					log(LogStatus.ERROR,"Not able to click on "+fieldName[j]+" field name", YesNo.No);
+					result.add("Not able to click on "+fieldName[j]+" field name");
 				}
 			}
-/*
-			for(int j=0; j<fieldName.length; j++)
-			{
-				xPath="//a[text()='"+gridName+"']/ancestor::article//thead//span[text()='"+fieldName[j]+"']";
-				ele=FindElement(driver, xPath, fieldName[j]+" field name", action.SCROLLANDBOOLEAN, 50);
-				CommonLib.scrollDownThroughWebelementInCenter(driver, ele, fieldName[j]+" field name");
-				xPath="//a[text()='"+gridName+"']/ancestor::article//thead//span[text()='"+fieldName[j]+"']/lightning-icon";
-				if(checkAscDescOrder(ele,xPath,fieldName[j]))
-				{
-					log(LogStatus.INFO,"Arrowup and Arrowdown icon is visible on "+fieldName[j], YesNo.No);
 
+
+			if(!noSortOrderFieldName.equals("null"))
+			{
+				xPath="//a[text()='"+gridName+"']/ancestor::article//thead//span[text()='"+noSortOrderFieldName+"']";
+				ele=FindElement(driver, xPath, noSortOrderFieldName+" field name", action.BOOLEAN, 50);		
+				if(click(driver, ele,noSortOrderFieldName+" field name", action.BOOLEAN))
+				{
+					log(LogStatus.INFO,"Clicked on "+noSortOrderFieldName+" field name", YesNo.No);
+					xPath="//a[text()='"+gridName+"']/ancestor::article//thead//span[text()='"+noSortOrderFieldName+"']/lightning-icon";
+					ele=FindElement(driver, xPath, 	noSortOrderFieldName+" field name", action.BOOLEAN, 15);
+					if(ele==null)
+					{
+						log(LogStatus.INFO,"Ascending or Descending Sort order icon is not visible on "+noSortOrderFieldName, YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR,"Ascending or Descending Sort order icon is visible on "+noSortOrderFieldName, YesNo.No);
+						result.add("Ascending or Descending Sort order icon is visible on "+noSortOrderFieldName);
+					}
 				}
 				else
 				{
-					log(LogStatus.ERROR,"Arrowup and Arrowdown icon is not visible on "+fieldName[j], YesNo.No);
+					log(LogStatus.ERROR,"Not able to click on "+noSortOrderFieldName, YesNo.No);
+					result.add("Not able to click on "+noSortOrderFieldName);
 				}
 
 			}
-			*/
-
 		}
-		return flag;
+		return result;
+
 	}
 
 
-
-
-			
-		
-		
-		
-		
-	
-	
-
-	public ArrayList<String> verifywindowsApp(String contactsField,String affiliationField,String tabName)
+	public ArrayList<String> VerifyPageRedirectionForTheClickableFieldsOnContactsAndAffiliations(String contactsField,String affiliationField,String tabName)
 	{
 
 		String[] contactsFieldName=contactsField.split("<break>");
@@ -1332,12 +1419,9 @@ public class FirmPageBusinessLayer extends FirmPage{
 						appLog.info("Month Selected : " + Month);
 						break;
 					} else {
-						if(CommonLib.clickUsingJavaScript(driver, MonthPreviousButton, "", action.BOOLEAN))
-						{
+						if (CommonLib.clickUsingJavaScript(driver, MonthPreviousButton, "", action.BOOLEAN)) {
 							appLog.info("CLicked on Month Previous Button");
-						}
-						else
-						{
+						} else {
 							appLog.error("Not able to click on month previous button");
 						}
 						j++;
@@ -1361,7 +1445,7 @@ public class FirmPageBusinessLayer extends FirmPage{
 				for (WebElement day : DaySelector) {
 					try {
 
-						if (Integer.parseInt(Date) < 10 && Date.length()==2) {
+						if (Integer.parseInt(Date) < 10 && Date.length() == 2) {
 							Date = Date.replace("0", "");
 						}
 						if (day.getText().trim().equalsIgnoreCase(Date)) {
@@ -1373,15 +1457,13 @@ public class FirmPageBusinessLayer extends FirmPage{
 								flag = false;
 							}
 						}
-					}
-					catch(StaleElementReferenceException e)
-					{
+					} catch (StaleElementReferenceException e) {
 						e.getMessage();
 					}
 				}
 
 			} else {
-				appLog.error("Not ABle to Select Year: " + Year);
+				appLog.error("Not Able to Select Year: " + Year);
 			}
 
 		} catch (Exception e) {
@@ -1448,11 +1530,11 @@ public class FirmPageBusinessLayer extends FirmPage{
 		return result;
 	}
 
-
 	public ArrayList<String> VerifyInlineEditingForContactsAndAffiliationsGrid(String record)
 	{
 		String xPath="";
 		WebElement ele;
+		List<WebElement> elements;
 		Random random=new Random();
 		ArrayList<String> columnName=new ArrayList<String>();
 		ArrayList<String> inputType=new ArrayList<String>();
@@ -1492,7 +1574,6 @@ public class FirmPageBusinessLayer extends FirmPage{
 
 									if(inputType.get(j).equals("textbox"))
 									{
-
 										xPath="//a[text()='"+gridName+"']/ancestor::article//td[contains(@data-label,'"+columnName.get(j)+"')]//input";
 										ele=CommonLib.FindElement(driver, xPath, columnName.get(j)+" record", action.SCROLLANDBOOLEAN, 50);
 										CommonLib.scrollDownThroughWebelementInCenter(driver, ele, columnName.get(j)+" record");
@@ -1503,6 +1584,8 @@ public class FirmPageBusinessLayer extends FirmPage{
 												if(CommonLib.sendKeys(driver, ele, random.nextInt(1000000000)+"", columnName.get(j)+" input type",action.BOOLEAN))
 												{
 													log(LogStatus.INFO, "Phone number has been passed", YesNo.No);
+											
+			
 												}
 												else
 												{
@@ -1515,6 +1598,8 @@ public class FirmPageBusinessLayer extends FirmPage{
 												if(CommonLib.sendKeys(driver, ele,"Automation"+random.nextInt(100000)+"@yopmail.com", columnName.get(j)+" input type",action.BOOLEAN))
 												{
 													log(LogStatus.INFO, "Email id has been passed", YesNo.No);
+												
+												
 												}	
 												else
 												{
@@ -1528,6 +1613,8 @@ public class FirmPageBusinessLayer extends FirmPage{
 												{
 
 													log(LogStatus.INFO, "Value has been passed", YesNo.No);
+													
+													
 												}	
 												else
 												{
@@ -1552,10 +1639,12 @@ public class FirmPageBusinessLayer extends FirmPage{
 										{
 											if(CommonLib.click(driver, ele, columnName.get(j)+" input", action.BOOLEAN))
 											{
-												if(datePickerHandle(driver,monthInDatePicker(50),previousMonthButtonInDatePicker(50),"test","2022","July","22"))
+												if(datePickerHandle(driver,monthInDatePicker(50),previousMonthButtonInDatePicker(50),"Calender","2022","July","22"))
 												{
 													log(LogStatus.INFO, "Date has been selected from the calender", YesNo.No);
 
+												
+			
 												}
 												else
 												{
@@ -1593,7 +1682,7 @@ public class FirmPageBusinessLayer extends FirmPage{
 													if(CommonLib.click(driver, ele, "Move selection to Chosen icon", action.BOOLEAN))
 													{
 														log(LogStatus.INFO, "clicked on Move selection to Chosen icon", YesNo.No);
-
+														
 													}
 													else
 													{
@@ -1620,6 +1709,44 @@ public class FirmPageBusinessLayer extends FirmPage{
 											result.add("Not able to locate the multipicklist locator");
 										}
 									}
+									
+									else if(inputType.get(j).equals("searchDropDown"))
+									{
+										xPath="//a[text()='"+gridName+"']/ancestor::article//td[contains(@data-label,'"+columnName.get(j)+"')]//span//lightning-formatted-text";
+										ele= CommonLib.FindElement(driver, xPath, columnName.get(j)+" Column Name", null, 25);
+										String text=CommonLib.getText(driver, ele, columnName.get(j)+" record", null);
+										
+										xPath="//a[text()='"+gridName+"']/ancestor::article//td[contains(@data-label,'"+columnName.get(j)+"')]//button[contains(@id,'combobox-button')]";
+										ele= CommonLib.FindElement(driver, xPath, columnName.get(j)+" Column Name", null, 25);
+										if(CommonLib.click(driver, ele, columnName.get(j)+" record", null))
+										{
+										xPath="//a[text()='"+gridName+"']/ancestor::article//td[contains(@data-label,'"+columnName.get(j)+"')]//lightning-base-combobox-item//span[@class='slds-truncate']";
+										elements=CommonLib.FindElements(driver, xPath, columnName.get(j)+" record");
+										for(int k=1; k<elements.size(); k++)
+										{
+											if(!CommonLib.getText(driver, elements.get(k), columnName.get(j)+" record", null).equals(text))
+											{
+												if(CommonLib.clickUsingJavaScript(driver, elements.get(k), columnName.get(j)+" record"))
+												{
+													log(LogStatus.INFO, elements.get(k).getText()+" value has been selected", YesNo.No);
+													break;
+												}
+												else
+												{
+													log(LogStatus.ERROR, "Not able to select "+elements.get(k).getText()+" value from dropdown list", YesNo.No);
+												    result.add("Not able to select "+elements.get(k).getText()+" value from dropdown list");
+												}
+											}
+												
+										}
+										}
+										else
+										{
+											log(LogStatus.ERROR, "Not able to click on "+columnName.get(j)+" record", YesNo.No);
+											result.add("Not able to click on "+columnName.get(j)+" record");
+										}
+									}
+									
 									else
 									{
 										log(LogStatus.ERROR, "Input type of record is incorrect", YesNo.No);
@@ -1644,7 +1771,6 @@ public class FirmPageBusinessLayer extends FirmPage{
 						{
 							log(LogStatus.ERROR, "Not able to hover the record ", YesNo.No);
 							result.add("Not able to hover the record ");
-
 						}
 					}
 					else
@@ -1652,27 +1778,25 @@ public class FirmPageBusinessLayer extends FirmPage{
 						log(LogStatus.ERROR, "Not able to get the locator of "+gridName+" record", YesNo.No);
 						result.add("Not able to get the locator of "+gridName+" record");
 					}
+					
+					
+					xPath="//a[text()='"+gridName+"']/ancestor::article//td//input[@type='checkbox']/..";
+                    ele=CommonLib.FindElement(driver, xPath, columnName.get(j)+" checkboxs record", action.SCROLLANDBOOLEAN, 50);
+                    CommonLib.scrollDownThroughWebelementInCenter(driver, ele, " record");
+                    CommonLib.doubleClickUsingAction(driver, ele);
+                    CommonLib.ThreadSleep(4000);
+					
 
 				}
+				
+				
 			}
 			else
 			{
 				log(LogStatus.ERROR, "Column Name size and Input type size are not matched. Please provide the correct input", YesNo.Yes);
 				result.add( "Column Name size and Input type size are not matched. Please provide the correct input");
 			}
-/*
-			xPath="//a[text()='"+gridName+"']/ancestor::article//div[contains(@class,'slds-form_inline')]";
-			ele=CommonLib.FindElement(driver, xPath, gridName+ " ", action.SCROLLANDBOOLEAN, 50);
-			CommonLib.doubleClickUsingAction(driver, ele); */
-			xPath="//a[text()='Contacts']/ancestor::article//button[text()='New Contact']";
-			ele=CommonLib.FindElement(driver, xPath, gridName+ " ", action.SCROLLANDBOOLEAN, 50);
-			if(CommonLib.click(driver, ele, "Page border", action.BOOLEAN))
-			{	
-				xPath="//button[@class='slds-button slds-button_icon slds-modal__close closeIcon slds-button_icon-bare slds-button_icon-inverse']";
-				ele=CommonLib.FindElement(driver, xPath, gridName+ " ", action.SCROLLANDBOOLEAN, 50);				
-				CommonLib.click(driver, ele, "Page border", action.BOOLEAN); 
-				
-				log(LogStatus.INFO, "Clicked on Page border of "+gridName, YesNo.No);
+			
 				xPath="//a[text()='"+gridName+"']/ancestor::article//button[@title='Save']";
 				ele=CommonLib.FindElement(driver, xPath, gridName+ " ", action.SCROLLANDBOOLEAN, 50);
 				if(CommonLib.click(driver, ele, "save button", action.SCROLLANDBOOLEAN))
@@ -1693,13 +1817,7 @@ public class FirmPageBusinessLayer extends FirmPage{
 					log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
 					result.add("Not able to click on save button");
 				}
-
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Not able to click on page border", YesNo.No);
-				result.add("Not able to click on page border");
-			}		
+	
 			inputType.removeAll(inputType);
 			columnName.removeAll(columnName);
 		}
@@ -1713,10 +1831,9 @@ public class FirmPageBusinessLayer extends FirmPage{
 		ArrayList<String> ActaulClientTab = new ArrayList<String>();
 		ArrayList<String> result = new ArrayList<String>();
 
-
 		for (WebElement li : FP.getClientList()) {
 			// for loop for each carousel headline
-			String getHeaderValue = CommonLib.getText(driver, li, "Client Tab", action.SCROLLANDBOOLEAN);
+			String getHeaderValue = CommonLib.getText(driver, li, "SDG Name", action.SCROLLANDBOOLEAN);
 			ArrayList<String> actualLabelNameList = new ArrayList<String>();
 			ActaulClientTab.add(getHeaderValue);
 			if (ExpectedAllTab.containsAll(ActaulClientTab)) {
@@ -1727,7 +1844,7 @@ public class FirmPageBusinessLayer extends FirmPage{
 				List<WebElement> getListOfLabelElement = CommonLib.FindElements(driver, labelNamesXpath,
 						getHeaderValue + "'s field");
 				for (WebElement labelElement : getListOfLabelElement) {
-					String labelName = CommonLib.getText(driver, labelElement, "Label Name", action.SCROLLANDBOOLEAN);
+					String labelName = CommonLib.getText(driver, labelElement, "Column Name", action.SCROLLANDBOOLEAN);
 					actualLabelNameList.add(labelName);
 				}
 				ArrayList<String> expectedLabelNames = new ArrayList<String>();
@@ -1747,53 +1864,41 @@ public class FirmPageBusinessLayer extends FirmPage{
 			}
 		}
 
-
 		return result;
 	}
-	
-	public boolean verifyButtonAndCreateRecord(String button, String[] labelNameAndValue)
-	{
-		String xPath="";
+
+	public boolean verifyButtonAndCreateRecord(String button, String[] labelNameAndValue) {
+		String xPath = "";
 		WebElement ele;
 
-		xPath="//button[text()='"+button+"']";
-		ele=CommonLib.FindElement(driver, xPath, button+ " button", action.SCROLLANDBOOLEAN, 50);
+		xPath = "//button[text()='" + button + "']";
+		ele = CommonLib.FindElement(driver, xPath, button + " button", action.SCROLLANDBOOLEAN, 50);
 
-		if(ele!=null)
-		{
-			log(LogStatus.PASS, button+" button is visible", YesNo.No);
-			sa.assertTrue(true,button+" button is visible");
-			if(CommonLib.click(driver, ele, button+" button", action.SCROLLANDBOOLEAN))
-			{	
-				log(LogStatus.INFO, "Clickd on "+button+" ", YesNo.No);				
-				if(CommonLib.checkElementVisibility(driver, getpopUpHeading(50), "Popup Heading", 50))
-				{
-					log(LogStatus.PASS, button+" popup has been open ", YesNo.No);	
-					sa.assertTrue(true,button+" popup has been open ");
-										
+		if (ele != null) {
+			log(LogStatus.PASS, button + " button is visible", YesNo.No);
+			sa.assertTrue(true, button + " button is visible");
+			if (CommonLib.click(driver, ele, button + " button", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clickd on " + button + " ", YesNo.No);
+				if (CommonLib.checkElementVisibility(driver, getpopUpHeading(50), "Popup Heading", 50)) {
+					log(LogStatus.PASS, button + " popup has been open ", YesNo.No);
+					sa.assertTrue(true, button + " popup has been open ");
+
+				} else {
+					log(LogStatus.FAIL, button + " popup is not open ", YesNo.No);
+					sa.assertTrue(false, button + " popup is not open ");
 				}
-				else
-				{
-					log(LogStatus.FAIL, button+" popup is not open ", YesNo.No);	
-					sa.assertTrue(false,button+" popup is not open ");
-				}
-				
+
+			} else {
+				log(LogStatus.ERROR, "Not able to get the " + button + " locator", YesNo.No);
 			}
-			else
-			{
-				log(LogStatus.ERROR, "Not able to get the "+button+" locator", YesNo.No);
-			}
-		}
-		else
-		{
-			log(LogStatus.FAIL, button+" button is not visible", YesNo.Yes);			
-			sa.assertTrue(false,button+" button is not visible");
+		} else {
+			log(LogStatus.FAIL, button + " button is not visible", YesNo.Yes);
+			sa.assertTrue(false, button + " button is not visible");
 		}
 		return false;
 
 	}
-	
-	
+
 	public boolean checkAscOrder(String xPath,String fieldName)
 	{
 		boolean flag=false;
@@ -1803,6 +1908,7 @@ public class FirmPageBusinessLayer extends FirmPage{
 			String className = ele.getAttribute("class");
 			if (className.contains("arrowup")) {
 				log(LogStatus.INFO, " Arrowup Icon is visible and "+fieldName+" field Name", YesNo.No);
+				flag=true;
 			} else {
 				log(LogStatus.ERROR, " Arrowup Icon is not visible on "+fieldName+" field Name", YesNo.No);
 			}
@@ -1823,6 +1929,7 @@ public class FirmPageBusinessLayer extends FirmPage{
 			String className = ele.getAttribute("class");
 			if (className.contains("arrowdown")) {
 				log(LogStatus.INFO, "arrowdown Icon is visible and "+fieldName+" field Name", YesNo.No);
+				flag=true;
 			} else {
 				log(LogStatus.ERROR, "arrowdown Icon is not visible on "+fieldName+" field Name", YesNo.No);
 			}
@@ -1834,52 +1941,675 @@ public class FirmPageBusinessLayer extends FirmPage{
 		return flag;
 	}
 
-	public boolean checkAscDescOrder(WebElement columnName, String xPath,String fieldName) {
+	public boolean checkAscDescOrder(WebElement columnName, String xPath, String fieldName) {
 
-		boolean flag=false;
-		int k=0;
+		boolean flag = false;
+		int k = 0;
 
 		for (int i = 0; i < 2; i++) {
 			// Check what class Name contain (up or down)
 			WebElement ele = CommonLib.FindElement(driver, xPath, "arrowup", action.SCROLLANDBOOLEAN, 30);
-			if(ele!=null)
-			{
+			if (ele != null) {
 				String className = ele.getAttribute("class");
 				if (className.contains("arrowup")) {
-					log(LogStatus.INFO, " Arrowup Icon is visible and clicked on "+fieldName+" field Name", YesNo.No);
+					log(LogStatus.INFO, " Arrowup Icon is visible and clicked on " + fieldName + " field Name",
+							YesNo.No);
 					k++;
 
 				} else if (className.contains("arrowdown")) {
-					log(LogStatus.INFO, " ArrowdownBtn Icon is Visible and clicked on "+fieldName+" field Name", YesNo.No);
+					log(LogStatus.INFO, " ArrowdownBtn Icon is Visible and clicked on " + fieldName + " field Name",
+							YesNo.No);
 					k++;
-				}
-				else
-				{
-					log(LogStatus.ERROR, "Either Arrowdown icon or Arrowup icon is not Visible on "+fieldName+" field Name", YesNo.No);	
+				} else {
+					log(LogStatus.ERROR,
+							"Either Arrowdown icon or Arrowup icon is not Visible on " + fieldName + " field Name",
+							YesNo.No);
 				}
 
-				if(CommonLib.click(driver, columnName, "Column element", action.BOOLEAN))
-				{
-					log(LogStatus.INFO, "Clicked on "+fieldName+" field name ", YesNo.No);
+				if (CommonLib.click(driver, columnName, "Column element", action.BOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on " + fieldName + " field name ", YesNo.No);
+				} else {
+					log(LogStatus.ERROR, "Not able to click on column name " + fieldName + " field Name", YesNo.No);
+				}
+			} else {
+				log(LogStatus.ERROR, "Arrowdown icon or Arrowup icon is not Visible " + fieldName + " field Name",
+						YesNo.No);
+			}
+
+		}
+
+		if (k != 0) {
+			flag = true;
+		}
+		return flag;
+	}
+	
+	
+	public boolean openRecordOnFirmTabAndClickClientsTab(String projectName,String recordName)
+	{
+		boolean flag=false;
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		if (BP.clickOnTab(projectName, "Firms")) {
+			if(BP.clickOnAlreadyCreatedItem(projectName, recordName, TabName.InstituitonsTab, 50))
+			{
+				String xPath="//a[@data-label='Clients']";
+				WebElement ele=CommonLib.FindElement(driver, xPath,"Contact tab", action.SCROLLANDBOOLEAN, 50);
+
+				if(click(driver, ele, "Contacts Tab", action.SCROLLANDBOOLEAN)){
+					log(LogStatus.INFO, "Clicked on Contact tab button", YesNo.No);	
+					flag=true;
 				}
 				else
 				{
-					log(LogStatus.ERROR, "Not able to click on column name "+fieldName+" field Name", YesNo.No);
+					log(LogStatus.ERROR, "Not able to click on Client tab", YesNo.No);
+				}
+				
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on "+recordName+" record", YesNo.No);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on "+recordName+" record", YesNo.No);
+		}	
+		return flag;
+	}
+	
+	
+	
+	public ArrayList<String> verifyPageRedirectionForTheClickableFieldsOnClientsGridFundraisingGridAndReferalGridOnClientsTabAndReferralTab(String projectName, String recordName, String gridNameFieldName)
+	{
+
+		String[] gridNameAndFieldName=gridNameFieldName.split("<fieldBreak>");
+		String gridName=gridNameAndFieldName[0];
+		String[] fieldName=gridNameAndFieldName[1].split("<f>");
+
+		ArrayList<String> result=new ArrayList<String>();
+		String xPath="";
+		String attName;
+		WebElement ele;
+
+
+		for(int i=0; i<fieldName.length; i++)
+		{
+
+			if(fieldName[i].equals("Client") || fieldName[i].equals("Client Name") || fieldName[i].equals("Fund") || fieldName[i].equals("Name") || fieldName[i].equals("Introduced By"))
+			{
+
+				xPath="//a[text()='"+gridName+"']/ancestor::article//tbody//tr[1]//td[contains(@data-label,'"+fieldName[i]+"')]//a";
+				ele=CommonLib.FindElement(driver, xPath, fieldName[i]+" record", action.SCROLLANDBOOLEAN, 40);
+				if(CommonLib.clickUsingJavaScript(driver, ele,fieldName[i]+" record" , action.SCROLLANDBOOLEAN))
+				{
+
+					log(LogStatus.INFO, "Clicked on "+fieldName[i]+" record", YesNo.No);			
+					String parentID=CommonLib.switchOnWindow(driver);
+					xPath="//div[contains(@class,'entityNameTitle')]";
+					ele=CommonLib.FindElement(driver, xPath, fieldName[i]+" heading", action.SCROLLANDBOOLEAN, 40);
+					if(ele!=null)
+					{
+
+						log(LogStatus.INFO, "Redirection is working properly on "+fieldName[i], YesNo.No);
+						driver.close();
+						driver.switchTo().window(parentID);
+					}
+					else
+					{
+						log(LogStatus.ERROR, fieldName[i]+" record is not redirecting", YesNo.No);	
+						result.add(fieldName[i]+" record is not redirecting");
+						driver.close();
+						driver.switchTo().window(parentID);
+					}
+				}		
+				else
+				{
+					log(LogStatus.ERROR, "Not able to Click on "+fieldName[i], YesNo.No);
+					result.add("Not able to Click on "+fieldName[i]);
+				}
+
+				xPath="//a[text()='"+gridName+"']/ancestor::article//tbody//tr[2]//td[contains(@data-label,'"+fieldName[i]+"')]//a";
+				ele=CommonLib.FindElement(driver, xPath, fieldName[i]+" record", action.SCROLLANDBOOLEAN, 40);
+				if(CommonLib.clickUsingJavaScript(driver, ele,fieldName[i]+" record" , action.SCROLLANDBOOLEAN))
+				{
+
+					log(LogStatus.INFO, "Clicked on "+fieldName[i]+" record", YesNo.No);			
+					String parentID=CommonLib.switchOnWindow(driver);
+					xPath="//div[contains(@class,'entityNameTitle')]";
+					ele=CommonLib.FindElement(driver, xPath, fieldName[i]+" heading", action.SCROLLANDBOOLEAN, 40);
+					if(ele!=null)
+					{
+
+						log(LogStatus.INFO, "Redirection is working properly on "+fieldName[i], YesNo.No);
+						driver.close();
+						driver.switchTo().window(parentID);
+					}
+					else
+					{
+						log(LogStatus.ERROR, fieldName[i]+" record is not redirecting", YesNo.No);	
+						result.add(fieldName[i]+" record is not redirecting");
+						driver.close();
+						driver.switchTo().window(parentID);
+					}
+				}		
+				else
+				{
+					log(LogStatus.ERROR, "Not able to Click on "+fieldName[i], YesNo.No);
+					result.add("Not able to Click on "+fieldName[i]);
+				}
+			}
+			else if(fieldName[i].equals("Main Contact"))
+			{
+
+				xPath="//a[text()='"+gridName+"']/ancestor::article//tbody//tr[1]//td[contains(@data-label,'"+fieldName[i]+"')]//a";
+				ele=CommonLib.FindElement(driver, xPath, fieldName[i]+" record", action.SCROLLANDBOOLEAN, 40);
+				if(CommonLib.clickUsingJavaScript(driver, ele,fieldName[i]+" record" , action.SCROLLANDBOOLEAN))
+				{
+
+					log(LogStatus.INFO, "Clicked on "+fieldName[i]+" record", YesNo.No);			
+					xPath="//div[contains(@class,'entityNameTitle')]";
+					ele=CommonLib.FindElement(driver, xPath, fieldName[i]+" heading", action.SCROLLANDBOOLEAN, 40);
+					if(ele!=null)
+					{
+						log(LogStatus.INFO, "Redirection is working properly on "+fieldName[i], YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, fieldName[i]+" record is not redirecting", YesNo.No);	
+						result.add(fieldName[i]+" record is not redirecting");
+					}
+
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to Click on "+fieldName[i], YesNo.No);
+					result.add("Not able to Click on "+fieldName[i]);
+				}
+
+				if(openRecordOnFirmTabAndClickClientsTab(projectName, recordName))
+				{
+					log(LogStatus.INFO, recordName+" record has been open", YesNo.No);
+					xPath="//a[text()='"+gridName+"']/ancestor::article//tbody//tr[2]//td[contains(@data-label,'"+fieldName[i]+"')]//a";
+					ele=CommonLib.FindElement(driver, xPath, fieldName[i]+" record", action.SCROLLANDBOOLEAN, 40);
+					if(CommonLib.clickUsingJavaScript(driver, ele,fieldName[i]+" record" , action.SCROLLANDBOOLEAN))
+					{
+
+						log(LogStatus.INFO, "Clicked on "+fieldName[i]+" record", YesNo.No);			
+						xPath="//div[contains(@class,'entityNameTitle')]";
+						ele=CommonLib.FindElement(driver, xPath, fieldName[i]+" heading", action.SCROLLANDBOOLEAN, 40);
+						if(ele!=null)
+						{
+							log(LogStatus.INFO, "Redirection is working properly on "+fieldName[i], YesNo.No);
+							openRecordOnFirmTabAndClickClientsTab(projectName, recordName);
+						}
+						else
+						{
+							log(LogStatus.ERROR, fieldName[i]+" record is not redirecting", YesNo.No);	
+							result.add(fieldName[i]+" record is not redirecting");
+							openRecordOnFirmTabAndClickClientsTab(projectName, recordName);
+						}
+
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to Click on "+fieldName[i], YesNo.No);
+						result.add("Not able to Click on "+fieldName[i]);
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open client tab from the Firm", YesNo.No);
+					result.add( "Not able to open client tab from the Firm");
+				}		
+			}
+			else if(fieldName[i].equals("Details"))
+			{
+
+				xPath="//a[text()='"+gridName+"']/ancestor::article//tbody//tr[1]//td[contains(@class,'actions')]//button";
+				ele=CommonLib.FindElement(driver, xPath, fieldName[i]+" record", action.SCROLLANDBOOLEAN, 40);
+				if(CommonLib.clickUsingJavaScript(driver, ele,fieldName[i]+" record" , action.SCROLLANDBOOLEAN))
+				{
+
+					log(LogStatus.INFO, "Clicked on "+fieldName[i]+" record", YesNo.No);			
+					xPath="//div[contains(@class,'entityNameTitle')]";
+					ele=CommonLib.FindElement(driver, xPath, fieldName[i]+" heading", action.SCROLLANDBOOLEAN, 40);
+					if(ele!=null)
+					{
+						log(LogStatus.INFO, "Redirection is working properly on "+fieldName[i], YesNo.No);
+						openRecordOnFirmTabAndClickClientsTab(projectName, recordName);
+					}
+					else
+					{
+						log(LogStatus.ERROR, fieldName[i]+" record is not redirecting", YesNo.No);	
+						result.add(fieldName[i]+" record is not redirecting");
+						openRecordOnFirmTabAndClickClientsTab(projectName, recordName);
+					}
+
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to Click on "+fieldName[i], YesNo.No);
+					result.add("Not able to Click on "+fieldName[i]);
+				}
+
+				if(openRecordOnFirmTabAndClickClientsTab(projectName, recordName))
+				{
+					log(LogStatus.INFO, recordName+" record has been open", YesNo.No);
+					xPath="//a[text()='"+gridName+"']/ancestor::article//tbody//tr[2]//td[contains(@class,'actions')]//button";
+					ele=CommonLib.FindElement(driver, xPath, fieldName[i]+" record", action.SCROLLANDBOOLEAN, 40);
+					if(CommonLib.clickUsingJavaScript(driver, ele,fieldName[i]+" record" , action.SCROLLANDBOOLEAN))
+					{
+
+						log(LogStatus.INFO, "Clicked on "+fieldName[i]+" record", YesNo.No);			
+						xPath="//div[contains(@class,'entityNameTitle')]";
+						ele=CommonLib.FindElement(driver, xPath, fieldName[i]+" heading", action.SCROLLANDBOOLEAN, 40);
+						if(ele!=null)
+						{
+							log(LogStatus.INFO, "Redirection is working properly on "+fieldName[i], YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, fieldName[i]+" record is not redirecting", YesNo.No);	
+							result.add(fieldName[i]+" record is not redirecting");
+						}
+
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to Click on "+fieldName[i], YesNo.No);
+						result.add("Not able to Click on "+fieldName[i]);
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open client tab from the Firm", YesNo.No);
+					result.add( "Not able to open client tab from the Firm");
+				}		
+			}
+			
+			else
+			{
+				log(LogStatus.ERROR, "Record name is not correct", YesNo.No);
+				result.add( "Record name is not correct");
+			}
+		}
+		return result;
+	}
+
+
+	public ArrayList<String> verifyErrorMsgAfterInlineEditingForClientsGrid(String gridName,String recordName)
+	{
+		String xPath="";
+		WebElement ele;
+		List<WebElement> elements;
+		ArrayList<String> result=new ArrayList<String>();
+
+		xPath="//a[text()='"+gridName+"']/ancestor::article//td[contains(@data-label,'"+recordName+"')]//span//a";
+		ele=CommonLib.FindElement(driver, xPath, recordName+" heading", action.SCROLLANDBOOLEAN, 50);
+		if(ele!=null)
+		{
+
+			String text=CommonLib.getText(driver, ele, gridName+" record", action.BOOLEAN);
+			if(CommonLib.mouseOverOperation(driver, ele))
+			{
+				log(LogStatus.INFO, "Mouse has been hover to "+recordName, YesNo.No);
+				xPath="//a[text()='"+gridName+"']/ancestor::article//td[contains(@data-label,'"+recordName+"')]//button[@title='Edit']";
+				ele=CommonLib.FindElement(driver, xPath, recordName+" record", action.BOOLEAN, 50);
+				if(CommonLib.clickUsingJavaScript(driver, ele, recordName+" record", action.BOOLEAN)){
+					log(LogStatus.INFO, "Clicked on "+recordName+" record edit icon", YesNo.No);	
+					xPath="//a[text()='"+gridName+"']/ancestor::article//td[contains(@data-label,'"+recordName+"')]//button[@title='Clear Selection']";
+					ele=CommonLib.FindElement(driver, xPath, recordName+" record", action.BOOLEAN, 50);
+					CommonLib.ThreadSleep(2000);
+					CommonLib.scrollDownThroughWebelementInCenter(driver, ele, recordName+" inputbox");
+					if(CommonLib.clickUsingJavaScript(driver, ele, recordName+" clear section record"))
+					{
+						CommonLib.ThreadSleep(2000);
+						log(LogStatus.INFO, recordName+" textbox has been clear", YesNo.No);
+
+						xPath="//a[text()='"+gridName+"']/ancestor::article//td[contains(@data-label,'"+recordName+"')]//input";
+						ele=CommonLib.FindElement(driver, xPath, recordName+" record", action.BOOLEAN, 50);
+						if(CommonLib.click(driver, ele, recordName+" record", action.BOOLEAN))
+						{
+
+							xPath="//a[text()='"+gridName+"']/ancestor::article//td[contains(@data-label,'"+recordName+"')]//div[contains(@id,'dropdown-element')]//span[contains(@class,'slds-listbox__option-text')]/span";
+							elements=CommonLib.FindElements(driver, xPath, recordName+" dropdown list");
+							for(int i=0;i<elements.size(); i++)
+							{
+								if(!CommonLib.getText(driver, elements.get(i), recordName+" dropdown list", action.BOOLEAN).equals(text))
+								{
+									if(CommonLib.click(driver, elements.get(i), recordName+" dropdown list", action.BOOLEAN))
+									{
+										log(LogStatus.INFO, "Clicked on "+elements.get(i).getText(), YesNo.No);
+										break;
+									}
+									else
+									{
+										log(LogStatus.ERROR, "Not able to Clicked on "+elements.get(i).getText(), YesNo.No);
+										result.add("Not able to Clicked on "+elements.get(i).getText());
+										break;
+									}
+								}
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the textbox of "+recordName, YesNo.No);
+							result.add("Not able to click on the textbox of "+recordName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to clear the textbox of "+recordName, YesNo.No);
+						result.add("Not able to clear the textbox of "+recordName);
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Edit pencil icon of "+recordName, YesNo.No);
+					result.add("Not able to click on Edit pencil icon of "+recordName);
 				}
 			}
 			else
 			{
-				log(LogStatus.ERROR, "Arrowdown icon or Arrowup icon is not Visible "+fieldName+" field Name", YesNo.No);
+				log(LogStatus.ERROR, "Not able to mouse hover on "+recordName, YesNo.No);
+				result.add("Not able to mouse hover on "+recordName);
 			}
-			
 		}
-		
-		if(k!=0)
+		else
 		{
-		    flag=true;
+			log(LogStatus.ERROR, "Not able to get the element of "+recordName, YesNo.No);
+			result.add("Not able to get the element of "+recordName);
+		}
+
+		xPath="//a[text()='"+gridName+"']/ancestor::article//td//input[@type='checkbox']/..";
+		ele=CommonLib.FindElement(driver, xPath, recordName+" checkboxs record", action.SCROLLANDBOOLEAN, 50);
+		CommonLib.scrollDownThroughWebelementInCenter(driver, ele, " record");
+		if(CommonLib.doubleClickUsingAction(driver, ele))
+		{
+			CommonLib.ThreadSleep(7000);
+
+			xPath="//a[text()='"+gridName+"']/ancestor::article//button[@title='Save']";
+			ele=CommonLib.FindElement(driver, xPath, gridName+ " ", action.SCROLLANDBOOLEAN, 50);
+			if(CommonLib.click(driver, ele, "save button", action.SCROLLANDBOOLEAN))
+			{
+				log(LogStatus.INFO, "Clicked on Save of "+gridName, YesNo.No);
+				xPath="//span[text()='1 record has error. Kindly resolve them and try again.']";
+				ele = CommonLib.FindElement(driver, xPath, "Error Message", action.SCROLLANDBOOLEAN, 40 );
+				if(CommonLib.checkElementVisibility(driver, ele, "Error message", 50))
+				{
+					log(LogStatus.INFO, "Unable to edit the record and Error message is visible", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Error Mssage is not visible", YesNo.No);
+					result.add("Error Mssage is not visible");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
+				result.add("Not able to click on save button");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to double click on checkbox button", YesNo.No);
+			result.add("Not able to double click on checkbox button");
+		}
+
+		return result;
+	}
+	
+	public boolean verifyBtnVisibilityOnSDG(String BtnName)
+	{
+		boolean flag=false;
+		String xPath;
+		WebElement ele;
+		xPath="//button[text()='"+BtnName+"']";
+		ele=CommonLib.FindElement(driver, xPath, BtnName+" button", action.SCROLLANDBOOLEAN, 30);
+		if(ele!=null)
+		{
+			log(LogStatus.INFO, BtnName+ " button is visible", YesNo.No);
+			flag=true;
+		}
+		else
+		{
+			log(LogStatus.ERROR, BtnName+ " button is not visible", YesNo.No);
+		}
+		return flag;
+	}
+	
+	public boolean verifySDGPopUPOpen(String btnName, String PopUpHeading)
+	{
+		boolean flag=false;
+		String xPath;
+		WebElement ele;
+		xPath="//button[text()='"+btnName+"']";
+		ele=CommonLib.FindElement(driver, xPath, btnName+" button", action.SCROLLANDBOOLEAN, 30);
+		if(CommonLib.click(driver, ele, btnName+" button", action.SCROLLANDBOOLEAN))
+		{
+			log(LogStatus.INFO, "Clicked on "+btnName+ " button", YesNo.No);
+			
+			xPath="//h2[text()='"+PopUpHeading+"']";
+			ele=CommonLib.FindElement(driver, xPath, PopUpHeading+" popup heading", action.SCROLLANDBOOLEAN, 40);
+			if(ele!=null)
+			{
+				log(LogStatus.INFO, PopUpHeading+" popup has been open", YesNo.No);
+				flag=true;
+			}
+			else
+			{
+				log(LogStatus.ERROR, PopUpHeading+" popup is not been open", YesNo.No);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on "+btnName+ " button", YesNo.No);
 		}
 		return flag;	
 	}
+	
+	public ArrayList<String> verifyFileCountUploadAndAddFileButton()
+	{
+		ArrayList<String> result=new ArrayList<String>();
+		boolean flag=false;
+		if(CommonLib.checkElementVisibility(driver, getfileCountVisible(20), "file Count visiblity",20))
+		{
+			log(LogStatus.INFO, "File count is visible", YesNo.No);
+		}
+		else
+		{
+			log(LogStatus.ERROR, "File count is not visible", YesNo.No);
+			result.add("File count is not visible");
+		}
+		
+		if(CommonLib.checkElementVisibility(driver, getuploadFileVisible(20), "Upload file visiblity",20))
+		{
+			log(LogStatus.INFO, "Upload File button is visible", YesNo.No);
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Upload File button is not visible", YesNo.No);
+			result.add("Upload File button is not visible");
+		}
+		
+		if(CommonLib.checkElementVisibility(driver, getaddFileVisible(20), "Add file button visiblity",20))
+		{
+			log(LogStatus.INFO, "Add File button is visible", YesNo.No);
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Add File button is not visible", YesNo.No);
+			result.add("Add File button is not visible");
+		}
+		
+		if(CommonLib.checkElementVisibility(driver, getdropFileVisible(20), "Or drop file button visiblity",20))
+		{
+			log(LogStatus.INFO, "Or drop File button is visible", YesNo.No);
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Or drop File button is not visible", YesNo.No);
+			result.add("Or drop File button is not visible");
+		}
+		return result;
+	}
+	
+	public boolean uploadFileAndVerify(String fileName, String fileType, String fileSize) {
+		boolean flag = false;
+		String xPath;
+		WebElement ele;
 
+		String text=CommonLib.getText(driver, getUploadedFileCount(30), "Uploaded file count", action.BOOLEAN);
+		String size = text.replaceAll("()","");
+		String currentDate=CommonLib.getDateAccToTimeZone("GMT+5:30", "MMM dd, yyyy");
+
+		if(getuploadFileVisible(15)!=null) {
+
+			if(CommonLib.sendKeys(driver, getfileUpload(30), System.getProperty("user.dir")+"/UploadFiles/PEFSTG/"+fileName, "Upload file", action.BOOLEAN))
+			{
+				if(click(driver, getClickedOnDoneButton(40), "Done button", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on done button", YesNo.No);
+
+					if(CommonLib.checkElementVisibility(driver, getfileUploadConfirmationMsg(50), "File Upload confirmation message", 50)) {
+						log(LogStatus.INFO, "File has been Uploaded", YesNo.No);
+						
+						CommonLib.ThreadSleep(5000);
+						String actualUploadedFileDate=CommonLib.getText(driver, getfileUploadDate(20), "Uploaded File Date", action.SCROLLANDBOOLEAN);
+						String actualUploadedFileSize=CommonLib.getText(driver, getfileUploadSize(20), "Uploaded File Size", action.SCROLLANDBOOLEAN);
+						String actualUploadedFileType=CommonLib.getText(driver, getfileUploadType(20), "Uploaded File type", action.SCROLLANDBOOLEAN);
+						
+						if(actualUploadedFileDate.equals(currentDate) && actualUploadedFileSize.equals(fileSize) && actualUploadedFileType.equals(fileType))
+						{
+							log(LogStatus.INFO, "Expected uploaded file date : "+currentDate+", file size : "+fileSize+", and file type : "+fileType+" have been matched with the Actual uploaded file date : "+actualUploadedFileDate+", file size : "+actualUploadedFileSize+", and file type : "+actualUploadedFileType, YesNo.No);
+						    flag=true;
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Expected uploaded file date : "+currentDate+", file size : "+fileSize+", and file type : "+fileType+" are not  matched with the Actual uploaded file date : "+actualUploadedFileDate+", file size : "+actualUploadedFileSize+", and file type : "+actualUploadedFileType, YesNo.No);
+								
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to Upload the File", YesNo.No);
+					}
+
+				}else {
+					log(LogStatus.ERROR, "Could not Clicked on  Done Button", YesNo.No);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to upload the file", YesNo.No);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to upload the file", YesNo.No);
+		}
+		return flag;
+	}
+
+	public boolean verifyViewAllButtonForAdvisorOnFileTab(ArrayList<String> expectedColumnName)
+	{
+		boolean flag=false;
+		String xPath;
+		List<WebElement> elements;
+		ArrayList<String> columnName=new ArrayList<String>();
+		if(CommonLib.checkElementVisibility(driver, getviewAllButton(20), "view all button", 20))
+		{
+			log(LogStatus.INFO, "view all Button is visible", YesNo.No);
+			if(CommonLib.click(driver, getviewAllButton(20), "view all button", action.BOOLEAN))
+			{
+				log(LogStatus.INFO, "clicked on view all button", YesNo.No);
+				
+				CommonLib.ThreadSleep(7000);
+				CommonLib.refresh(driver);
+				CommonLib.ThreadSleep(3000);
+				xPath="//table[contains(@class,'forceRecordLayout')]//div[@class='slds-cell-fixed']//span[@class='slds-truncate' and text()!='']";
+				elements=CommonLib.FindElements(driver, xPath, "Column list");
+				for(WebElement eles:elements)
+				{
+					columnName.add(CommonLib.getText(driver, eles, "Column name", action.BOOLEAN));
+				}
+				if(expectedColumnName.containsAll(columnName))
+				{
+					log(LogStatus.INFO, "Column name of Files has been verified "+columnName, YesNo.No);
+					flag=true;
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Column name of Files are not verified "+columnName, YesNo.No);
+				}
+				
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to clicked on view all button", YesNo.No);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "view all Button is not visible", YesNo.No);
+		}
+		return flag;
+	}
+
+	public boolean verifyTabsInConnectionsTab(ArrayList<String> expectedtabName)
+	{
+		boolean flag=false;
+		String xPath;
+		List<WebElement> elements;
+		ArrayList<String> tabName=new ArrayList<String>();
+				xPath="(//flexipage-tabset2)[2]//a[@class='slds-tabs_default__link']";
+				elements=CommonLib.FindElements(driver, xPath, "Column list");
+				for(WebElement eles:elements)
+				{
+					tabName.add(CommonLib.getText(driver, eles, "tab name", action.BOOLEAN));
+				}
+				if(expectedtabName.containsAll(tabName))
+				{
+					log(LogStatus.INFO, "Tab name of Connections tab has been verified "+tabName, YesNo.No);
+					flag=true;
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Tab name of Connections are not verified "+tabName, YesNo.No);
+				}
+				
+		return flag;
+	}
+	
+	
+	public boolean verifyActivityTimelineTab(ArrayList<String> tabName)
+	{
+		ArrayList<String> actualTabName=new ArrayList<String>();
+		String xPath="(//h2[text()='Tabs'])[2]/..//a[@class='slds-tabs_default__link']";
+		List<WebElement> elements=CommonLib.FindElements(driver, xPath, "Tabs");
+		for(WebElement ele:elements)
+		{
+			actualTabName.add(CommonLib.getText(driver, ele, "Tab Name", action.BOOLEAN));
+		}
+		if(actualTabName.containsAll(tabName))
+		{
+			log(LogStatus.INFO, "The tab names on Connections tab has been verified", YesNo.No);
+			return true;
+		}
+		else
+		{
+			log(LogStatus.ERROR, "The tab names on Connections tab are not verified "+actualTabName, YesNo.No);
+			return false;
+		}
+
+	}
+
+	
+	
+	
 }
-

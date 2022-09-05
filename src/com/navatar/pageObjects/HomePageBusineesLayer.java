@@ -3113,7 +3113,8 @@ public class HomePageBusineesLayer extends HomePage {
 			flag = true;
 
 		} else {
-			log(LogStatus.ERROR, "No. of Records not Matched, Expected:" + NoOfRecordsLessThanEqualHundred+" , Actual: "+records.size(), YesNo.No);
+			log(LogStatus.ERROR, "No. of Records not Matched, Expected:" + NoOfRecordsLessThanEqualHundred
+					+ " , Actual: " + records.size(), YesNo.No);
 
 			sa.assertTrue(false, "-----------No. of Records not Matched-----> " + "Actual: " + records.size()
 					+ "but Expected: " + NoOfRecordsLessThanEqualHundred + "--------------");
@@ -3130,7 +3131,6 @@ public class HomePageBusineesLayer extends HomePage {
 	public boolean deleteSDGRecord(String Title, String FundName) {
 		boolean flag = false;
 
-		
 		if (fundNameElement(Title, FundName) != null) {
 			log(LogStatus.INFO, "Record Found " + FundName, YesNo.No);
 			if (click(driver, deleteRecordBtn(Title, FundName), "Delete Button: " + FundName,
@@ -4404,9 +4404,15 @@ public class HomePageBusineesLayer extends HomePage {
 
 	}
 
+	/**
+	 * @author Ankur Huria
+	 * @param SDGName
+	 * @param datas
+	 */
 	public List<String> dateToAscendingOrder(List<WebElement> datesListElements) {
 		List<String> datesList = new ArrayList<String>();
 		datesList = datesListElements.stream().map(date -> date.getText()).collect(Collectors.toList());
+		datesList = datesList.stream().filter(s -> !s.equals("")).collect(Collectors.toList());
 		List<String> dateResolved = new ArrayList<String>();
 		List<String> dateStringResult = new ArrayList<String>();
 		for (String dates : datesList) {
@@ -4453,22 +4459,46 @@ public class HomePageBusineesLayer extends HomePage {
 
 			String[] dateArray = dates.split("/");
 			String[] monthArray = dateArray[0].split("");
+			String[] dayArray = dateArray[1].split("");
+			String month;
+			month = dateArray[0];
 			if (monthArray[0].equals("0")) {
-				String month = dateArray[0].replace("0", "");
+				month = dateArray[0].replace("0", "");
 				dates = month + "/" + dateArray[1] + "/" + dateArray[2];
 
+			}
+			if (dayArray[0].equals("0")) {
+				String day = dateArray[1].replace("0", "");
+				dates = month + "/" + day + "/" + dateArray[2];
 			}
 
 			dateStringResult.add(dates);
 
 		}
 
+		int i = 0;
+		for (String expectedDates : datesList) {
+
+			if (expectedDates.equals(dateStringResult.get(i))) {
+				appLog.info("Order of column is matched " + "Expected: " + expectedDates + "\tActual: "
+						+ dateStringResult.get(i));
+			} else {
+				appLog.info("Order of column din't match. " + "Expected: " + expectedDates + "\tActual: "
+						+ dateStringResult.get(i));
+				BaseLib.sa.assertTrue(false, "Order of column din't match. " + "Expected: " + expectedDates
+						+ "\tActual: " + dateStringResult.get(i));
+
+			}
+
+			i++;
+		}
 		return dateStringResult;
 	}
 
 	public List<String> dateToDescendingOrder(List<WebElement> datesListElements) {
 		List<String> datesList = new ArrayList<String>();
 		datesList = datesListElements.stream().map(date -> date.getText()).collect(Collectors.toList());
+		datesList = datesList.stream().filter(s -> !s.equals("")).collect(Collectors.toList());
 		List<String> dateResolved = new ArrayList<String>();
 		List<String> dateStringResult = new ArrayList<String>();
 		for (String dates : datesList) {
@@ -4515,14 +4545,39 @@ public class HomePageBusineesLayer extends HomePage {
 
 			String[] dateArray = dates.split("/");
 			String[] monthArray = dateArray[0].split("");
+			String[] dayArray = dateArray[1].split("");
+			String month;
+			month = dateArray[0];
 			if (monthArray[0].equals("0")) {
-				String month = dateArray[0].replace("0", "");
+				month = dateArray[0].replace("0", "");
 				dates = month + "/" + dateArray[1] + "/" + dateArray[2];
 
 			}
+			if (dayArray[0].equals("0")) {
+				String day = dateArray[1].replace("0", "");
+				dates = month + "/" + day + "/" + dateArray[2];
+			}
+
 			dateStringResult.add(dates);
+
 		}
 
+		int i = 0;
+		for (String expectedDates : datesList) {
+
+			if (expectedDates.equals(dateStringResult.get(i))) {
+				appLog.info("Order of column is matched " + "Expected: " + expectedDates + "\tActual: "
+						+ dateStringResult.get(i));
+			} else {
+				appLog.info("Order of column din't match. " + "Expected: " + expectedDates + "\tActual: "
+						+ dateStringResult.get(i));
+				BaseLib.sa.assertTrue(false, "Order of column din't match. " + "Expected: " + expectedDates
+						+ "\tActual: " + dateStringResult.get(i));
+
+			}
+
+			i++;
+		}
 		return dateStringResult;
 	}
 
@@ -4639,8 +4694,7 @@ public class HomePageBusineesLayer extends HomePage {
 
 		return result;
 	}
-	
-	
+
 	/**
 	 * @author Ankur Huria
 	 * @param Title
@@ -4657,11 +4711,11 @@ public class HomePageBusineesLayer extends HomePage {
 			WebElement TooltipElement = FindElement(driver,
 					"//a[text()='" + Title + "']/ancestor::article/preceding-sibling::lightning-icon", "Tooltip",
 					action.SCROLLANDBOOLEAN, 20);
-			if (CommonLib.getAttribute(driver, TooltipElement, "Collapse/Expand Element", "title").equalsIgnoreCase("Expand")) {
+			if (CommonLib.getAttribute(driver, TooltipElement, "Collapse/Expand Element", "title")
+					.equalsIgnoreCase("Expand")) {
 				log(LogStatus.INFO, "Not Expanded By Default SDG: " + Title, YesNo.No);
 				log(LogStatus.INFO, "Now Expanding  SDG: " + Title, YesNo.No);
 
-				
 				if (click(driver, TooltipElement, "Collapse/Expand Element", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on Collapse/Expand");
 					flag = true;
@@ -4683,8 +4737,7 @@ public class HomePageBusineesLayer extends HomePage {
 
 		return flag;
 	}
-	
-	
+
 	/**
 	 * @author Ankur Huria
 	 * @param sdgName
@@ -4716,6 +4769,675 @@ public class HomePageBusineesLayer extends HomePage {
 		}
 		return size;
 
+	}
+	
+	
+	
+
+	/*	*//**
+			 * @author Ankur Huria
+			 * @param SDGGridName
+			 *//*
+				 * 
+				 * public void verifyColumnAscendingDescendingOrder(String sdgGridName,
+				 * List<String> columnNames, List<String> dateColumns) {
+				 * 
+				 * List<WebElement> headerList = sdgGridAllHeadersLabelNameList(sdgGridName);
+				 * List<String> columnDataText = headerList.stream().map(s ->
+				 * s.getText()).collect(Collectors.toList()).stream() .map(t ->
+				 * t.trim()).collect(Collectors.toList()); if (!headerList.isEmpty()) { int i =
+				 * 0; for (String columnName : columnNames) { int columnIndex =
+				 * columnDataText.indexOf(columnName); if (i == 0) { if
+				 * (CommonLib.checkSorting(driver, SortOrder.Decending,
+				 * sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+				 * log(LogStatus.PASS, SortOrder.Decending + "Check Sorting on " + columnName +
+				 * " Columns ", YesNo.No); } else { log(LogStatus.FAIL, "Not Checked " +
+				 * SortOrder.Decending + "Sorting on " + columnName + " Columns ", YesNo.No);
+				 * sa.assertTrue(false, "Not Checked " + SortOrder.Decending + "Sorting on " +
+				 * columnName + " Columns "); } } else { if (clickUsingJavaScript(driver,
+				 * headerList.get(columnIndex), sdgGridName.toString() +
+				 * " SDG Grid header column " + columnName, action.SCROLLANDBOOLEAN)) {
+				 * log(LogStatus.PASS, "Clicked on Header" + columnName + " Clomun " +
+				 * (columnIndex + 1) + " for " + SortOrder.Assecending, YesNo.No);
+				 * ThreadSleep(35000);
+				 * 
+				 * if (!dateColumns.contains(columnName)) {
+				 * 
+				 * if (CommonLib.checkSorting(driver, SortOrder.Assecending,
+				 * sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+				 * log(LogStatus.PASS, SortOrder.Assecending + " Check Sorting on " +
+				 * sdgGridName.toString() + " Columns " + columnName, YesNo.No); } else {
+				 * log(LogStatus.FAIL, SortOrder.Assecending + " Not Checked Sorting on " +
+				 * sdgGridName.toString() + " Columns " + columnName, YesNo.No);
+				 * sa.assertTrue(false, SortOrder.Assecending + " Not Checked Sorting on " +
+				 * sdgGridName.toString() + " Columns " + columnName); }
+				 * 
+				 * }
+				 * 
+				 * else { List<String> expectedDateListText = new ArrayList<String>();
+				 * List<String> actualDateListText = new ArrayList<String>(); List<WebElement>
+				 * actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
+				 * columnIndex + 1); actualDateListText =
+				 * actualDateListWebElement.stream().map(date -> date.getText())
+				 * .collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
+				 * .collect(Collectors.toList()); expectedDateListText =
+				 * dateToAscendingOrder(actualDateListWebElement);
+				 * 
+				 * if (actualDateListText.equals(expectedDateListText)) { log(LogStatus.PASS,
+				 * SortOrder.Assecending + " Check Sorting on " + sdgGridName.toString() +
+				 * " Columns " + columnName, YesNo.No); } else { log(LogStatus.FAIL,
+				 * SortOrder.Assecending + " Not Checked Sorting on " + sdgGridName.toString() +
+				 * " Columns " + columnName, YesNo.No); sa.assertTrue(false,
+				 * SortOrder.Assecending + " Not Checked Sorting on " + sdgGridName.toString() +
+				 * " Columns " + columnName); }
+				 * 
+				 * }
+				 * 
+				 * } else { log(LogStatus.PASS, "Not able to click on " + sdgGridName.toString()
+				 * + " SDG Grid header " + columnName + " so cannot check Sorting " +
+				 * SortOrder.Assecending, YesNo.Yes); sa.assertTrue(false,
+				 * "Not able to click on " + sdgGridName.toString() + " SDG Grid header " +
+				 * columnName + " so cannot check Sorting " + SortOrder.Assecending); }
+				 * headerList = sdgGridAllHeadersLabelNameList(sdgGridName); } if (i == 0) { if
+				 * (clickUsingJavaScript(driver, headerList.get(columnIndex),
+				 * sdgGridName.toString() + " SDG Grid header column " + columnName,
+				 * action.SCROLLANDBOOLEAN)) { ThreadSleep(35000); log(LogStatus.PASS,
+				 * "Clicked on Header" + columnName + " Clomun " + (i + 1) +
+				 * SortOrder.Assecending, YesNo.No); if (CommonLib.checkSorting(driver,
+				 * SortOrder.Assecending, sdgGridColumnsDataList(sdgGridName.toString(),
+				 * columnIndex + 1))) { log(LogStatus.PASS, SortOrder.Assecending +
+				 * " Check Sorting on " + columnName + " Column on " + sdgGridName.toString() +
+				 * " SDG Grid", YesNo.No); } else { log(LogStatus.FAIL, "Not Checked " +
+				 * SortOrder.Assecending + " Sorting on " + sdgGridName.toString() + " Columns "
+				 * + columnName, YesNo.No); sa.assertTrue(false, "Not Checked " +
+				 * SortOrder.Assecending + " Sorting on " + sdgGridName.toString() + " Columns "
+				 * + columnName); } } else { log(LogStatus.PASS, "Not able to click on " +
+				 * sdgGridName.toString() + " SDG Grid header " + columnName +
+				 * " so cannot check Sorting " + SortOrder.Decending, YesNo.Yes);
+				 * sa.assertTrue(false, "Not able to click on " + sdgGridName.toString() +
+				 * " SDG Grid header " + columnName + " so cannot check Sorting " +
+				 * SortOrder.Decending); } } else { if (clickUsingJavaScript(driver,
+				 * headerList.get(columnIndex), sdgGridName.toString() +
+				 * " SDG Grid header column", action.SCROLLANDBOOLEAN)) { ThreadSleep(35000);
+				 * log(LogStatus.PASS, "Clicked on Header " + columnName + " Clomun " +
+				 * (columnIndex + 1) + SortOrder.Decending, YesNo.No);
+				 * 
+				 * if (!dateColumns.contains(columnName)) { if (CommonLib.checkSorting(driver,
+				 * SortOrder.Decending, sdgGridColumnsDataList(sdgGridName.toString(),
+				 * columnIndex + 1))) { log(LogStatus.PASS, SortOrder.Decending +
+				 * " Check Sorting on " + columnName + " Columns on SDG Grid " +
+				 * sdgGridName.toString(), YesNo.No); } else { log(LogStatus.FAIL,
+				 * "Not Checked " + SortOrder.Decending + " Sorting on " +
+				 * sdgGridName.toString() + " Columns " + columnName, YesNo.No);
+				 * sa.assertTrue(false, "Not Checked " + SortOrder.Decending + " Sorting on " +
+				 * sdgGridName.toString() + " Columns " + columnName); }
+				 * 
+				 * }
+				 * 
+				 * else { List<String> expectedDateListText = new ArrayList<String>();
+				 * List<String> actualDateListText = new ArrayList<String>(); List<WebElement>
+				 * actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
+				 * columnIndex + 1); actualDateListText =
+				 * actualDateListWebElement.stream().map(date -> date.getText())
+				 * .collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
+				 * .collect(Collectors.toList()); expectedDateListText =
+				 * dateToDescendingOrder(actualDateListWebElement);
+				 * 
+				 * if (actualDateListText.equals(expectedDateListText)) { log(LogStatus.PASS,
+				 * SortOrder.Decending + " Check Sorting on " + columnName +
+				 * " Columns on SDG Grid " + sdgGridName.toString(), YesNo.No); } else {
+				 * log(LogStatus.FAIL, "Not Checked " + SortOrder.Decending + " Sorting on " +
+				 * sdgGridName.toString() + " Columns " + columnName, YesNo.No);
+				 * sa.assertTrue(false, "Not Checked " + SortOrder.Decending + " Sorting on " +
+				 * sdgGridName.toString() + " Columns " + columnName); }
+				 * 
+				 * } } else { log(LogStatus.PASS, "Not able to click on " +
+				 * sdgGridName.toString() + " SDG Grid header " + columnName +
+				 * " so cannot check Sorting " + SortOrder.Assecending, YesNo.Yes);
+				 * sa.assertTrue(false, "Not able to click on " + sdgGridName.toString() +
+				 * " SDG Grid header " + columnName + " so cannot check Sorting " +
+				 * SortOrder.Assecending); } } headerList =
+				 * sdgGridAllHeadersLabelNameList(sdgGridName); i++; } } else {
+				 * log(LogStatus.PASS, sdgGridName.toString() +
+				 * " SDG Grid header cloumns list is not visible so cannot check Sorting ",
+				 * YesNo.Yes); sa.assertTrue(false, sdgGridName.toString() +
+				 * " SDG Grid header cloumns list is not visible so cannot check Sorting "); } }
+				 */
+
+	/**
+	 * @author Ankur Huria
+	 * @param SDGGridName
+	 */
+
+	public boolean verifySDGColumnDefaultAscendingOrDescending(String sdgGridName, String columnName, String dateColumn,
+			String AscendingOrDescending) {
+
+		boolean flag = false;
+		List<WebElement> headerList = sdgGridAllHeadersLabelNameList(sdgGridName);
+		List<String> columnDataText = headerList.stream().map(s -> s.getText()).collect(Collectors.toList()).stream()
+				.map(t -> t.trim()).collect(Collectors.toList());
+		if (!headerList.isEmpty()) {
+			int columnIndex = 0;
+			if (!"".equals(dateColumn) || dateColumn != null) {
+				columnIndex = columnDataText.indexOf(dateColumn);
+			} else if (!"".equals(columnName) || columnName != null) {
+				columnIndex = columnDataText.indexOf(columnName);
+			}
+
+			else {
+				return false;
+			}
+
+			if (AscendingOrDescending.equalsIgnoreCase("Descending")) {
+
+				if ("".equals(dateColumn) || dateColumn == null) {
+
+					if (!"".equals(columnName) || columnName != null) {
+						if (columnIndex >= 0) {
+							if (CommonLib.checkSorting(driver, SortOrder.Decending,
+									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+								log(LogStatus.PASS,
+										SortOrder.Decending + "Check Sorting on " + columnName + " Columns ", YesNo.No);
+								flag = true;
+							} else {
+								log(LogStatus.FAIL,
+										"Not Checked " + SortOrder.Decending + "Sorting on " + columnName + " Columns ",
+										YesNo.No);
+								sa.assertTrue(false, "Not Checked " + SortOrder.Decending + "Sorting on " + columnName
+										+ " Columns ");
+							}
+						} else {
+							log(LogStatus.FAIL, "Column: " + columnName + " is not Present in SDG: " + sdgGridName
+									+ " So, Not able to check Default Sorting", YesNo.No);
+							sa.assertTrue(false, "Column: " + columnName + " is not Present in SDG: " + sdgGridName
+									+ " So, Not able to check Default Sorting");
+						}
+					}
+
+					else {
+						log(LogStatus.FAIL,
+								"Both Column Name and DateColumn not Provided, Please Provid either of them", YesNo.No);
+						sa.assertTrue(false,
+								"Both Column Name and DateColumn not Provided, Please Provid either of them");
+					}
+
+				}
+
+				else {
+					List<String> expectedDateListText = new ArrayList<String>();
+					List<String> actualDateListText = new ArrayList<String>();
+					List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
+							columnIndex + 1);
+					actualDateListText = actualDateListWebElement.stream().map(date -> date.getText())
+							.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
+							.collect(Collectors.toList());
+					expectedDateListText = dateToDescendingOrder(actualDateListWebElement);
+
+					if (actualDateListText.equals(expectedDateListText)) {
+						log(LogStatus.PASS, SortOrder.Decending + " Check Sorting on " + columnName
+								+ " Columns on SDG Grid " + sdgGridName.toString(), YesNo.No);
+						flag = true;
+					} else {
+						log(LogStatus.FAIL, "Not Checked " + SortOrder.Decending + " Sorting on "
+								+ sdgGridName.toString() + " Columns " + columnName, YesNo.No);
+						sa.assertTrue(false, "Not Checked " + SortOrder.Decending + " Sorting on "
+								+ sdgGridName.toString() + " Columns " + columnName);
+					}
+
+				}
+
+			}
+
+			else if (AscendingOrDescending.equalsIgnoreCase("Ascending"))
+
+			{
+
+				if ("".equals(dateColumn) || dateColumn == null) {
+
+					if (!"".equals(columnName) || columnName != null) {
+						if (columnIndex >= 0) {
+							if (CommonLib.checkSorting(driver, SortOrder.Assecending,
+									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+								log(LogStatus.PASS,
+										SortOrder.Assecending + "Check Sorting on " + columnName + " Columns ",
+										YesNo.No);
+								flag = true;
+							} else {
+								log(LogStatus.FAIL, "Not Checked " + SortOrder.Assecending + "Sorting on " + columnName
+										+ " Columns ", YesNo.No);
+								sa.assertTrue(false, "Not Checked " + SortOrder.Assecending + "Sorting on " + columnName
+										+ " Columns ");
+							}
+						} else {
+							log(LogStatus.FAIL, "Column: " + columnName + " is not Present in SDG: " + sdgGridName
+									+ " So, Not able to check Default Sorting", YesNo.No);
+							sa.assertTrue(false, "Column: " + columnName + " is not Present in SDG: " + sdgGridName
+									+ " So, Not able to check Default Sorting");
+						}
+					}
+
+					else {
+						log(LogStatus.FAIL,
+								"Both Column Name and DateColumn not Provided, Please Provid either of them", YesNo.No);
+						sa.assertTrue(false,
+								"Both Column Name and DateColumn not Provided, Please Provid either of them");
+					}
+
+				}
+
+				else {
+					List<String> expectedDateListText = new ArrayList<String>();
+					List<String> actualDateListText = new ArrayList<String>();
+					List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
+							columnIndex + 1);
+					actualDateListText = actualDateListWebElement.stream().map(date -> date.getText())
+							.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
+							.collect(Collectors.toList());
+					expectedDateListText = dateToAscendingOrder(actualDateListWebElement);
+
+					if (actualDateListText.equals(expectedDateListText)) {
+						log(LogStatus.PASS, SortOrder.Assecending + " Check Sorting on " + columnName
+								+ " Columns on SDG Grid " + sdgGridName.toString(), YesNo.No);
+						flag = true;
+					} else {
+						log(LogStatus.FAIL, "Not Checked " + SortOrder.Assecending + " Sorting on "
+								+ sdgGridName.toString() + " Columns " + columnName, YesNo.No);
+						sa.assertTrue(false, "Not Checked " + SortOrder.Assecending + " Sorting on "
+								+ sdgGridName.toString() + " Columns " + columnName);
+					}
+
+				}
+
+			}
+
+			else {
+				log(LogStatus.FAIL, "Please Provide Either 'Ascending' or 'Descending' in Parameter", YesNo.No);
+				sa.assertTrue(false, "Please Provide Either 'Ascending' or 'Descending' in Parameter");
+			}
+		} else {
+
+			log(LogStatus.FAIL, "No Columns Find for SDG: " + sdgGridName, YesNo.No);
+			sa.assertTrue(false, "No Columns Find for SDG: " + sdgGridName);
+
+		}
+		return flag;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param SDGGridName
+	 */
+
+	public void verifyColumnAscendingDescendingOrder(String sdgGridName, List<String> columnNames,
+			List<String> dateColumns, String FirstColumnAscYesOrNoByDefault) {
+
+		List<WebElement> headerList = sdgGridAllHeadersLabelNameList(sdgGridName);
+		List<String> columnDataText = headerList.stream().map(s -> s.getText()).collect(Collectors.toList()).stream()
+				.map(t -> t.trim()).collect(Collectors.toList());
+		if (!headerList.isEmpty()) {
+			int i = 0;
+
+			if (FirstColumnAscYesOrNoByDefault.equalsIgnoreCase("Yes")) {
+				if (clickUsingJavaScript(driver, headerList.get(2), sdgGridName + " SDG Grid header column",
+						action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(1000);
+				} else {
+					log(LogStatus.PASS, "Not able to click on First Column of SDG: " + sdgGridName, YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on First Column of SDG: " + sdgGridName);
+				}
+
+			}
+
+			for (String columnName : columnNames) {
+				int columnIndex = columnDataText.indexOf(columnName);
+
+				if (clickUsingJavaScript(driver, headerList.get(columnIndex),
+						sdgGridName.toString() + " SDG Grid header column " + columnName, action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.PASS, "Clicked on Header " + columnName + " Column no. " + (columnIndex + 1) + " for "
+							+ SortOrder.Assecending, YesNo.No);
+					ThreadSleep(1000);
+
+					if (!dateColumns.contains(columnName)) {
+
+						if (CommonLib.checkSorting(driver, SortOrder.Assecending,
+								sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+							log(LogStatus.PASS, "Verified " + SortOrder.Assecending + " Sorting on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+						} else {
+							log(LogStatus.FAIL, SortOrder.Assecending + " Sorting not working on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+							sa.assertTrue(false, SortOrder.Assecending + " Sorting not working on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName);
+						}
+
+					}
+
+					else {
+						List<String> expectedDateListText = new ArrayList<String>();
+						List<String> actualDateListText = new ArrayList<String>();
+						List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
+								columnIndex + 1);
+						actualDateListText = actualDateListWebElement.stream().map(date -> date.getText())
+								.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
+								.collect(Collectors.toList());
+						expectedDateListText = dateToAscendingOrder(actualDateListWebElement);
+
+						if (actualDateListText.equals(expectedDateListText)) {
+							log(LogStatus.PASS, "Verified " + SortOrder.Assecending + " Sorting on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+						} else {
+							log(LogStatus.FAIL, SortOrder.Assecending + " Sorting not working on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+							sa.assertTrue(false, SortOrder.Assecending + " Sorting not working on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName);
+						}
+
+					}
+
+				} else {
+					log(LogStatus.PASS, "Not able to click on " + sdgGridName.toString() + " SDG Grid header "
+							+ columnName + " so cannot check Sorting " + SortOrder.Assecending, YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on " + sdgGridName.toString() + " SDG Grid header "
+							+ columnName + " so cannot check Sorting " + SortOrder.Assecending);
+				}
+				headerList = sdgGridAllHeadersLabelNameList(sdgGridName);
+
+				if (clickUsingJavaScript(driver, headerList.get(columnIndex),
+						sdgGridName.toString() + " SDG Grid header column", action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(1000);
+					log(LogStatus.PASS,
+							"Clicked on Header " + columnName + " Clomun " + (columnIndex + 1) + SortOrder.Decending,
+							YesNo.No);
+
+					if (!dateColumns.contains(columnName)) {
+						if (CommonLib.checkSorting(driver, SortOrder.Decending,
+								sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+							log(LogStatus.PASS, "Verified " + SortOrder.Decending + " Sorting on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+						} else {
+							log(LogStatus.FAIL, SortOrder.Decending + " Sorting not working on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+							sa.assertTrue(false, SortOrder.Decending + " Sorting not working on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName);
+						}
+
+					}
+
+					else {
+						List<String> expectedDateListText = new ArrayList<String>();
+						List<String> actualDateListText = new ArrayList<String>();
+						List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
+								columnIndex + 1);
+						actualDateListText = actualDateListWebElement.stream().map(date -> date.getText())
+								.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
+								.collect(Collectors.toList());
+						expectedDateListText = dateToDescendingOrder(actualDateListWebElement);
+
+						if (actualDateListText.equals(expectedDateListText)) {
+							log(LogStatus.PASS, "Verified " + SortOrder.Decending + " Sorting on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+						} else {
+							log(LogStatus.FAIL, SortOrder.Decending + " Sorting not working on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+							sa.assertTrue(false, SortOrder.Decending + " Sorting not working on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName);
+						}
+
+					}
+				} else {
+					log(LogStatus.PASS, "Not able to click on " + sdgGridName.toString() + " SDG Grid header "
+							+ columnName + " so cannot check Sorting " + SortOrder.Decending, YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on " + sdgGridName.toString() + " SDG Grid header "
+							+ columnName + " so cannot check Sorting " + SortOrder.Decending);
+				}
+
+			}
+		} else {
+			log(LogStatus.PASS,
+					sdgGridName.toString() + " SDG Grid header cloumns list is not visible so cannot check Sorting ",
+					YesNo.Yes);
+			sa.assertTrue(false,
+					sdgGridName.toString() + " SDG Grid header cloumns list is not visible so cannot check Sorting ");
+		}
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param SDGGridName
+	 */
+
+	public void verifyColumnAscendingDescendingOrder(String sdgGridName, List<String> columnNames,
+			List<String> dateColumns, List<String> amountColumns, String FirstColumnAscYesOrNoByDefault) {
+
+		List<WebElement> headerList = sdgGridAllHeadersLabelNameList(sdgGridName);
+		List<String> columnDataText = headerList.stream().map(s -> s.getText()).collect(Collectors.toList()).stream()
+				.map(t -> t.trim()).collect(Collectors.toList());
+		if (!headerList.isEmpty()) {
+			int i = 0;
+
+			if (FirstColumnAscYesOrNoByDefault.equalsIgnoreCase("Yes")) {
+				if (clickUsingJavaScript(driver, headerList.get(2), sdgGridName + " SDG Grid header column",
+						action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(6000);
+				} else {
+					log(LogStatus.PASS, "Not able to click on First Column of SDG: " + sdgGridName, YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on First Column of SDG: " + sdgGridName);
+				}
+
+			}
+
+			for (String columnName : columnNames) {
+				int columnIndex = columnDataText.indexOf(columnName);
+
+				if (clickUsingJavaScript(driver, headerList.get(columnIndex),
+						sdgGridName.toString() + " SDG Grid header column " + columnName, action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.PASS, "Clicked on Header " + columnName + " Column no. " + (columnIndex + 1) + " for "
+							+ SortOrder.Assecending, YesNo.No);
+					ThreadSleep(6000);
+
+					if (!dateColumns.contains(columnName)) {
+
+						if (!amountColumns.contains(columnName)) {
+
+							if (CommonLib.checkSorting(driver, SortOrder.Assecending,
+									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+								log(LogStatus.PASS, "Verified " + SortOrder.Assecending + " Sorting on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+							} else {
+								log(LogStatus.FAIL, SortOrder.Assecending + " Sorting not working on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+								sa.assertTrue(false, SortOrder.Assecending + " Sorting not working on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName);
+							}
+						} else {
+
+							List<Integer> expectedAmount = new ArrayList<Integer>();
+							List<String> actualAmount = new ArrayList<String>();
+							List<Integer> sortedActualAmount = new ArrayList<Integer>();
+							List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
+									columnIndex + 1);
+							actualAmount = actualDateListWebElement.stream().map(date -> date.getText())
+									.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
+									.collect(Collectors.toList());
+
+							for (String val : actualAmount) {
+								String[] splitedAmount = val.split("[.]", 0);
+								String amount = splitedAmount[0].replace("$", "").replace(",", "");
+								int amou = Integer.parseInt(amount);
+								sortedActualAmount.add(amou);
+							}
+
+							expectedAmount = amountToAscendingOrder(actualDateListWebElement);
+
+							if (sortedActualAmount.equals(expectedAmount)) {
+								log(LogStatus.PASS, "Verified " + SortOrder.Assecending + " Sorting on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+							} else {
+								log(LogStatus.FAIL, SortOrder.Assecending + " Sorting not working on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+								sa.assertTrue(false, SortOrder.Assecending + " Sorting not working on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName);
+							}
+
+						}
+
+					}
+
+					else {
+						List<String> expectedDateListText = new ArrayList<String>();
+						List<String> actualDateListText = new ArrayList<String>();
+						List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
+								columnIndex + 1);
+						actualDateListText = actualDateListWebElement.stream().map(date -> date.getText())
+								.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
+								.collect(Collectors.toList());
+						expectedDateListText = dateToAscendingOrder(actualDateListWebElement);
+
+						if (actualDateListText.equals(expectedDateListText)) {
+							log(LogStatus.PASS, "Verified " + SortOrder.Assecending + " Sorting on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+						} else {
+							log(LogStatus.FAIL, SortOrder.Assecending + " Sorting not working on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+							sa.assertTrue(false, SortOrder.Assecending + " Sorting not working on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName);
+						}
+
+					}
+
+				} else {
+					log(LogStatus.PASS, "Not able to click on " + sdgGridName.toString() + " SDG Grid header "
+							+ columnName + " so cannot check Sorting " + SortOrder.Assecending, YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on " + sdgGridName.toString() + " SDG Grid header "
+							+ columnName + " so cannot check Sorting " + SortOrder.Assecending);
+				}
+				headerList = sdgGridAllHeadersLabelNameList(sdgGridName);
+
+				if (clickUsingJavaScript(driver, headerList.get(columnIndex),
+						sdgGridName.toString() + " SDG Grid header column", action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(6000);
+					log(LogStatus.PASS,
+							"Clicked on Header " + columnName + " Clomun " + (columnIndex + 1) + SortOrder.Decending,
+							YesNo.No);
+
+					if (!dateColumns.contains(columnName)) {
+						if (!amountColumns.contains(columnName)) {
+
+							if (CommonLib.checkSorting(driver, SortOrder.Decending,
+									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
+								log(LogStatus.PASS, "Verified " + SortOrder.Decending + " Sorting on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+							} else {
+								log(LogStatus.FAIL, SortOrder.Decending + " Sorting not working on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+								sa.assertTrue(false, SortOrder.Decending + " Sorting not working on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName);
+							}
+						} else {
+
+							List<Integer> expectedAmount = new ArrayList<Integer>();
+							List<String> actualAmount = new ArrayList<String>();
+							List<Integer> sortedActualAmount = new ArrayList<Integer>();
+							List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
+									columnIndex + 1);
+							actualAmount = actualDateListWebElement.stream().map(date -> date.getText())
+									.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
+									.collect(Collectors.toList());
+
+							for (String val : actualAmount) {
+								String[] splitedAmount = val.split("[.]", 0);
+								String amount = splitedAmount[0].replace("$", "").replace(",", "");
+								int amou = Integer.parseInt(amount);
+								sortedActualAmount.add(amou);
+							}
+
+							expectedAmount = amountToDescendingOrder(actualDateListWebElement);
+
+							if (sortedActualAmount.equals(expectedAmount)) {
+								log(LogStatus.PASS, "Verified " + SortOrder.Decending + " Sorting on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+							} else {
+								log(LogStatus.FAIL, SortOrder.Decending + " Sorting not working on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+								sa.assertTrue(false, SortOrder.Decending + " Sorting not working on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName);
+							}
+
+						}
+
+					}
+
+					else {
+						List<String> expectedDateListText = new ArrayList<String>();
+						List<String> actualDateListText = new ArrayList<String>();
+						List<WebElement> actualDateListWebElement = sdgGridColumnsDataList(sdgGridName.toString(),
+								columnIndex + 1);
+						actualDateListText = actualDateListWebElement.stream().map(date -> date.getText())
+								.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
+								.collect(Collectors.toList());
+						expectedDateListText = dateToDescendingOrder(actualDateListWebElement);
+
+						if (actualDateListText.equals(expectedDateListText)) {
+							log(LogStatus.PASS, "Verified " + SortOrder.Decending + " Sorting on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+						} else {
+							log(LogStatus.FAIL, SortOrder.Decending + " Sorting not working on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+							sa.assertTrue(false, SortOrder.Decending + " Sorting not working on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName);
+						}
+
+					}
+				} else {
+					log(LogStatus.PASS, "Not able to click on " + sdgGridName.toString() + " SDG Grid header "
+							+ columnName + " so cannot check Sorting " + SortOrder.Decending, YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on " + sdgGridName.toString() + " SDG Grid header "
+							+ columnName + " so cannot check Sorting " + SortOrder.Decending);
+				}
+
+			}
+		} else {
+			log(LogStatus.PASS,
+					sdgGridName.toString() + " SDG Grid header cloumns list is not visible so cannot check Sorting ",
+					YesNo.Yes);
+			sa.assertTrue(false,
+					sdgGridName.toString() + " SDG Grid header cloumns list is not visible so cannot check Sorting ");
+		}
+	}
+
+	public List<Integer> amountToAscendingOrder(List<WebElement> amountListElements) {
+
+		List<String> expectedAmount = new ArrayList<String>();
+		List<Integer> sortedExpectedAmount = new ArrayList<Integer>();
+
+		expectedAmount = amountListElements.stream().map(date -> date.getText()).collect(Collectors.toList()).stream()
+				.filter(x -> !x.equals("")).collect(Collectors.toList());
+
+		for (String val : expectedAmount) {
+			String[] splitedAmount = val.split("[.]", 0);
+			String amount = splitedAmount[0].replace("$", "").replace(",", "");
+			int amou = Integer.parseInt(amount);
+			sortedExpectedAmount.add(amou);
+		}
+		Collections.sort(sortedExpectedAmount);
+		return sortedExpectedAmount;
+	}
+
+	public List<Integer> amountToDescendingOrder(List<WebElement> amountListElements) {
+
+		List<String> expectedAmount = new ArrayList<String>();
+		List<Integer> sortedExpectedAmount = new ArrayList<Integer>();
+		expectedAmount = amountListElements.stream().map(date -> date.getText()).collect(Collectors.toList()).stream()
+				.filter(x -> !x.equals("")).collect(Collectors.toList());
+
+		for (String val : expectedAmount) {
+			String[] splitedAmount = val.split("[.]", 0);
+			String amount = splitedAmount[0].replace("$", "").replace(",", "");
+			int amou = Integer.parseInt(amount);
+			sortedExpectedAmount.add(amou);
+		}
+		Collections.sort(sortedExpectedAmount, Collections.reverseOrder());
+		return sortedExpectedAmount;
 	}
 
 }
