@@ -2394,6 +2394,7 @@ public class CommonVariables {
 			break;
 
 		case "Module7" :
+		case "Module7New" :
 			try {
 				dataFile=new FileInputStream(new File(phase1DataSheetFilePath));
 			} catch (FileNotFoundException e1) {

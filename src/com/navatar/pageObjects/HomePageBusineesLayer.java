@@ -1059,8 +1059,8 @@ public class HomePageBusineesLayer extends HomePage {
 		return false;
 	}
 
-	public boolean clickOnTemplateForReportOnBulkEmail(String environment, String mode, String templateName,
-			String reportName) {
+	public boolean clickOnTemplateForReportOnBulkEmail(String environment, String mode,String reportName , String templateName
+			) {
 		WebElement ele;
 		String xpath = "//span[contains(@id,'extd')][text()='" + templateName + "']/ancestor::ul//span[text()='" + reportName + "']";
 		ele = FindElement(driver, xpath, reportName + " : " + templateName, action.SCROLLANDBOOLEAN, 10);
