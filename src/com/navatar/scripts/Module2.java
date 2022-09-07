@@ -1992,6 +1992,7 @@ public class Module2 extends BaseLib{
 		if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_CDINS1Name, 10)) {
 			if (ip.changeStatus(projectName, PageLabel.Under_Evaluation.toString())) {
 				for (String s:labels) {
+					ThreadSleep(1000);
 				if (ip.fieldValueVerificationOnInstitutionPage("", mode, TabName.Object1Tab, s, values1[i])) {
 					log(LogStatus.INFO,"successfully verified "+s+" : "+values1[i],YesNo.No);	
 				}else {
@@ -2307,7 +2308,9 @@ public class Module2 extends BaseLib{
 						if (sendKeys(driver, sp.getsearchTextboxFieldsAndRelationships(10), PageLabel.Status.toString()+Keys.ENTER, "status", action.BOOLEAN)) {
 							if (sp.clickOnAlreadyCreatedLayout(PageLabel.Status.toString())) {
 								switchToFrame(driver, 10, sp.getFrame(PageName.AccountCustomFieldStatusPage, 10));
+								ThreadSleep(3000);
 								WebElement ele=sp.clickOnEditInFrontOfFieldValues(projectName, PageLabel.RenameWatchlist.toString());
+								ThreadSleep(3000);
 								if (click(driver, ele, "watchlist", action.BOOLEAN)) {
 									switchToDefaultContent(driver);
 									switchToFrame(driver, 10, sp.getstatusPicklistFrame(10));
@@ -4110,12 +4113,12 @@ public class Module2 extends BaseLib{
 				if (j==0){
 					totalDealsshown=1;
 					averageDealQualityScore=closedScore/totalDealsshown;
-					String labelValues1[]={String.valueOf(dealQualityScore),String.valueOf(totalDealsshown)};
+					String labelValues1[]={String.valueOf(averageDealQualityScore),String.valueOf(totalDealsshown)};
 					temp=labelValues1;
 				}else{
 					totalDealsshown=2;
 					averageDealQualityScore=(closedScore+loiScore)/totalDealsshown;
-					String labelValues2[]={String.valueOf(dealQualityScore),"2"};
+					String labelValues2[]={String.valueOf(averageDealQualityScore),"2"};
 					temp=labelValues2;
 				}
 				for (int i =0;i<labelName1.length;i++) {
