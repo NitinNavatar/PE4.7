@@ -95,7 +95,7 @@ public class DealPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, nextButton, "Visibility", timeOut, "nextButton");
 		
 	}
-	@FindBy(xpath = "//button[@title='Finish' or contains(@class,'FINISH') or contains(@class,'Finish')]")
+	@FindBy(xpath = "//button[@title='Finish' or text()='Finish']")
 	private WebElement finishButton;
 	
 	public WebElement getfinishButton(int timeOut) {

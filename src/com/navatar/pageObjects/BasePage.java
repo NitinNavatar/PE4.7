@@ -559,7 +559,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, addButtonForFieldsLayout, "Visibility", timeOut, "add button Fields on Layout");
 	}
 
-	@FindBy(xpath = "//div[@class='slds-grid bottomBar']//span[text()='Save']")
+	@FindBy(xpath = "//div[@class='pbBottomButtons']//input[@title='Save']")
 	private WebElement customTabSaveBtn;
 
 	/**
