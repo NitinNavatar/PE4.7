@@ -559,7 +559,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, addButtonForFieldsLayout, "Visibility", timeOut, "add button Fields on Layout");
 	}
 
-	@FindBy(xpath = "//div[@class='slds-grid bottomBar']//span[text()='Save']")
+	@FindBy(xpath = "//div[@class='pbBottomButtons']//input[@title='Save']")
 	private WebElement customTabSaveBtn;
 
 	/**
@@ -1363,7 +1363,7 @@ public abstract class BasePage extends BaseLib {
 	private WebElement activityLayoutFrame;
 	@FindBy(xpath = "//iframe[contains(@title,'Account Custom Field')]")
 	private WebElement accountLayoutFrame;
-	@FindBy(xpath = "//iframe[contains(@title,'Salesforce - Enterprise Edition')]")
+	@FindBy(xpath = "//div[contains(@class,'windowViewMode-maximized')]//iframe[contains(@title,'Salesforce - Enterprise Edition')]")
 	private WebElement pipelineLayoutFrame;
 	@FindBy(xpath = "//iframe[contains(@title,'Convert to Portfolio')]")
 	private WebElement convertToPortfolioFrame;

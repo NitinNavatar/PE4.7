@@ -81,7 +81,7 @@ public class DealPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, convertToPortfolio, "Visibility", timeOut, "convertToPortfolio");
 		
 	}
-	@FindBy(xpath = "//button[text()='Convert']")
+	@FindBy(xpath = "//div[contains(@class,'windowViewMode-normal')]//button[contains(text(),'Convert')]")
 	private WebElement convert;
 	
 	public WebElement getconvertButton(int timeOut) {
@@ -95,7 +95,7 @@ public class DealPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, nextButton, "Visibility", timeOut, "nextButton");
 		
 	}
-	@FindBy(xpath = "//button[@title='Finish' or contains(@class,'FINISH') or contains(@class,'Finish')]")
+	@FindBy(xpath = "//button[@title='Finish' or text()='Finish']")
 	private WebElement finishButton;
 	
 	public WebElement getfinishButton(int timeOut) {

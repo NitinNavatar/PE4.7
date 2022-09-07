@@ -72,6 +72,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 				index = "[2]";
 			}
 			ThreadSleep(3000);
+			click(driver, FindElement(driver, "//a[text()='Home' or @title='Home']" , "home tsb link in setup",
+					action.BOOLEAN, 10),"", action.BOOLEAN);
 			if (sendKeys(driver, getQucikSearchInSetupPage(10), o, o, action.BOOLEAN)) {
 
 				ThreadSleep(2000);

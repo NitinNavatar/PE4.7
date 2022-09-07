@@ -131,7 +131,7 @@ public class Module6 extends BaseLib{
 					log(LogStatus.ERROR, "could not verify presence of convert to portfolio button", YesNo.Yes);
 					sa.assertTrue(false,"could not verify presence of convert to portfolio button" );
 				}
-				for (int i = 0;i<3;i++) {
+				for (int i = 0;i<3;i++) {//Change 3 to 2
 					if (click(driver, dp.getconvertToPortfolio(10),"convert to portfolio button", action.BOOLEAN)) {
 
 						if (i==0) {
@@ -214,7 +214,7 @@ public class Module6 extends BaseLib{
 				
 				ThreadSleep(2000);
 				refresh(driver);
-				ThreadSleep(2000);
+				ThreadSleep(5000);
 			}
 			else {
 				log(LogStatus.ERROR, "could not verify presence of convert to portfolio button", YesNo.Yes);
@@ -255,7 +255,7 @@ public class Module6 extends BaseLib{
 			if (ip.clickOnAlreadyCreatedItem(projectName, M6Deal2, 10)) {
 				for (int i =0;i<labelName.length;i++) {
 					if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i])) {
-						log(LogStatus.SKIP,"successfully verified "+labelName[i],YesNo.No);
+						log(LogStatus.INFO,"successfully verified "+labelName[i],YesNo.No);
 
 					}else {
 						sa.assertTrue(false,"Not Able to verify "+labelName[i]);
@@ -285,7 +285,7 @@ public class Module6 extends BaseLib{
 				if (click(driver, ele, "details tab", action.SCROLLANDBOOLEAN)) {
 					for (int i =0;i<labelName1.length;i++) {
 						if (ip.fieldValueVerificationOnInstitutionPage(environment,mode,TabName.Object1Tab, labelName1[i],labelValues1[i])) {
-							log(LogStatus.SKIP,"successfully verified "+labelName1[i],YesNo.No);
+							log(LogStatus.INFO,"successfully verified "+labelName1[i],YesNo.No);
 							
 						}else {
 							sa.assertTrue(false,"Not Able to verify "+labelName1[i]);
@@ -1963,10 +1963,10 @@ public class Module6 extends BaseLib{
 										log(LogStatus.FAIL, "save button not clickable", YesNo.Yes);
 										sa.assertTrue(false, "save button not clickable");
 									} // }else { //
-									log(LogStatus.FAIL, "name textbox not visible", YesNo.Yes); //
-									sa.assertTrue(false, "name textbox not visible"); // } }else {
-									log(LogStatus.FAIL, "edit button not clickable", YesNo.Yes);
-									sa.assertTrue(false, "edit button not clickable");
+//									log(LogStatus.FAIL, "name textbox not visible", YesNo.Yes); //
+//									sa.assertTrue(false, "name textbox not visible"); // } }else {
+//									log(LogStatus.FAIL, "edit button not clickable", YesNo.Yes);
+//									sa.assertTrue(false, "edit button not clickable");
 								}
 							} else {
 								log(LogStatus.FAIL, InstRecordType.Portfolio + " not found", YesNo.Yes);
@@ -2002,7 +2002,7 @@ public class Module6 extends BaseLib{
 						switchToDefaultContent(driver);
 						ThreadSleep(5000);
 						switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
-						xpath = "//*[text()='Accounts']/following-sibling::[text()='Edit']";
+						xpath = "//*[text()='Accounts']/following-sibling::td/a[text()='Edit']";
 						ele = FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, 10);
 						ele = isDisplayed(driver, ele, "visibility", 10, "Edit Button");
 						if (click(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
@@ -2056,6 +2056,7 @@ public class Module6 extends BaseLib{
 							if (setup.clickOnAlreadyCreatedLayout(excelLabel.Stage.toString())) {
 								switchToDefaultContent(driver);
 								switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
+								ThreadSleep(5000);
 								WebElement ele=dp.findDeactivateLink(projectName, Stage.Closed.toString());
 								if (click(driver, ele, "deactivate  closed", action.SCROLLANDBOOLEAN)) {
 									ThreadSleep(5000);
@@ -2067,7 +2068,7 @@ public class Module6 extends BaseLib{
 									switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
 									switchToDefaultContent(driver);
 									switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
-										
+									ThreadSleep(2000);
 									ele=dp.findActivateLink(projectName, Stage.Closed.toString());
 									if(ele!=null) {
 										log(LogStatus.INFO, "successfully deactivated closed value", YesNo.No);
@@ -2281,6 +2282,7 @@ public class Module6 extends BaseLib{
 										sa.assertTrue(false,"not able to activate closed value");
 										log(LogStatus.SKIP,"not able to activate closed value",YesNo.Yes);
 									}
+									ThreadSleep(5000);
 									ele=setup.clickOnEditInFrontOfFieldValues(projectName, Stage.Closed.toString());
 									if (clickUsingJavaScript(driver, ele, "closed", action.BOOLEAN)) {
 										switchToDefaultContent(driver);
@@ -2294,13 +2296,13 @@ public class Module6 extends BaseLib{
 											switchToDefaultContent(driver);
 											ThreadSleep(3000);
 											switchToFrame(driver, 10, setup.getFrame(PageName.PipelineCustomPage, 10));
+											ThreadSleep(5000);
 											ele=dp.findDeactivateLink(projectName, Stage.Closed_Updated.toString());
 											if (click(driver, ele, "deactivate  closed", action.SCROLLANDBOOLEAN)) {
 												ThreadSleep(5000);
 												if(!isAlertPresent(driver)) {
 													clickUsingJavaScript(driver, ele, "deactivate closed", action.SCROLLANDBOOLEAN);
 												}
-												
 											if(ele!=null) {
 												log(LogStatus.INFO, "successfully renamed closed value", YesNo.No);
 												if (clickUsingActionClass(driver, ele)) {
@@ -2389,7 +2391,8 @@ public class Module6 extends BaseLib{
 				if (click(driver, dp.getconvertToPortfolio(10),"convert to portfolio button", action.BOOLEAN)) {
 					
 					if (click(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
-						ThreadSleep(4000);if (dp.getconvertToPortfolioMessageRepeat(10)!=null) {
+						ThreadSleep(4000);
+						if (dp.getconvertToPortfolioMessageRepeat(10)!=null) {
 							String text=dp.getconvertToPortfolioMessageRepeat(10).getText();
 							if (text.contains(dp.convertToPortfolioRepeat(M6Ins3))) {
 								log(LogStatus.INFO,"successfully verified already portfolio message",YesNo.Yes);
@@ -3612,14 +3615,17 @@ public class Module6 extends BaseLib{
 				if(setup.searchStandardOrCustomObject(environment, mode, object.Deal)) {
 					if(setup.clickOnObjectFeature(environment, mode, object.Deal, ObjectFeatureName.ButtonLinksAndActions)) {
 						if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10), updateLabel, "stage", action.BOOLEAN)) {
+							ThreadSleep(4000);
 							if (setup.clickOnAlreadyCreatedLayout(PageLabel.Convert_to_Portfolio.toString().replace("_", " "))) {
 								switchToDefaultContent(driver);
 								switchToFrame(driver, 10, setup.getFrame(PageName.ConvertToPortfolioFrame, 10));
 								ele=setup.getEditButton(environment,Mode.Classic.toString(), 10);
 								if (click(driver, ele, "edit", action.BOOLEAN)) {
+									ThreadSleep(4000);
 									switchToDefaultContent(driver);
 									switchToFrame(driver, 10, setup.getFrame(PageName.ConvertToPortfolioFrame, 10));
-									if (sendKeys(driver, setup.getRecordTypeLabel(projectName, "Label", 10), updateLabel, "label", action.BOOLEAN)){
+									ThreadSleep(4000);
+									if (sendKeys(driver, setup.getRecordTypeLabel(projectName, "Label", 10), updateLabel, "Label", action.BOOLEAN)){
 										if (clickUsingJavaScript(driver, setup.getSaveButtonInCustomFields(10), "save", action.SCROLLANDBOOLEAN)) {
 											ThreadSleep(3000);	
 											log(LogStatus.INFO, "save button is clicked",YesNo.No);
@@ -4681,13 +4687,14 @@ public class Module6 extends BaseLib{
 						log(LogStatus.SKIP,"Able to click on mark as current stage",YesNo.Yes);
 
 						ThreadSleep(3000);
+						if(stage.equalsIgnoreCase(Stage.Declined.toString())) {
 						if(clickUsingActionClass(driver, frp.getdoneButton(projectName,20))) {
 							log(LogStatus.SKIP,"Able to click on  popup done button",YesNo.Yes);
 
-							
 						}else {
 							sa.assertTrue(false,"not Able to click on popup done button");
 							log(LogStatus.SKIP,"not Able to click on popup done button",YesNo.Yes);
+						}
 						}
 						refresh(driver);
 						ThreadSleep(3000);
@@ -5203,6 +5210,7 @@ public class Module6 extends BaseLib{
 		i++;
 		
 		lp.CRMlogout();
+		ThreadSleep(5000);
 		refresh(driver);
 		lp = new LoginPageBusinessLayer(driver);
 		fp = new FundsPageBusinessLayer(driver);
@@ -5253,6 +5261,7 @@ public class Module6 extends BaseLib{
 			log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.FundraisingsTab,YesNo.Yes);
 		}
 		lp.CRMlogout();
+		ThreadSleep(5000);
 		lp = new LoginPageBusinessLayer(driver);
 		fp = new FundsPageBusinessLayer(driver);
 		cp = new ContactsPageBusinessLayer(driver);
