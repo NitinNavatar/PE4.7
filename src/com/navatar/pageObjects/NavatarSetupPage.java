@@ -1,8 +1,5 @@
 package com.navatar.pageObjects;
 
-import static com.navatar.generic.CommonLib.FindElements;
-import static com.navatar.generic.CommonLib.isDisplayed;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.server.handler.FindElements;
@@ -13,6 +10,8 @@ import com.navatar.generic.EnumConstants.ClickOrCheckEnableDisableCheckBox;
 import com.navatar.generic.EnumConstants.NavatarSetupSideMenuTab;
 import com.navatar.generic.EnumConstants.NavatarSetupSideMenuTabLayoutSection;
 import com.navatar.generic.EnumConstants.TopOrBottom;
+import com.navatar.generic.EnumConstants.YesNo;
+import com.relevantcodes.extentreports.LogStatus;
 
 import static com.navatar.generic.CommonLib.*;
 
@@ -192,11 +191,26 @@ public class NavatarSetupPage extends BasePageBusinessLayer {
 
 		try {
 			if (EditViewMode.View.toString().equalsIgnoreCase(editviewMode.toString())) {
+				try {
 				return isDisplayed(driver, enableCheckBoxList.get(0), "Visibility", timeOut,
 						"Enable CheckBox for Navatar SetUp Side Menu Tab : "+sideMenuTab);
+				}
+				catch(Exception e)
+				{
+					log(LogStatus.ERROR, e.getMessage(), YesNo.No);
+					
+					return null;
+				}
 			} else {
+				try {
 				return isDisplayed(driver, enableCheckBoxList.get(1), "Visibility", timeOut,
 						"Enable CheckBox for Navatar SetUp Side Menu Tab : "+sideMenuTab);
+				}
+				catch(Exception e)
+				{
+					log(LogStatus.ERROR, e.getMessage(), YesNo.No);
+					return null;
+				}
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

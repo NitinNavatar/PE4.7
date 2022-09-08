@@ -1976,7 +1976,7 @@ public void M7NTc022_CreateNewEventToVerifyTheFutureDateInLastTouchPointDate(Str
 	String primaryContact=M7NContact8FName+" "+M7NContact8LName;
 	String secondaryContact=M7NContact9FName+" "+M7NContact9LName;
 	M7NEvent4StartDate=todaysDate;
-	M7NEvent4EndDate=previousOrForwardDate(7, "M/d/YYYY");
+	M7NEvent4EndDate=previousOrForwardDate(+7, "M/d/YYYY");
 	String task = M7NEvent4Subject;
 	String[][] Event4 = {{PageLabel.Subject.toString(),task},
 			{PageLabel.Start_Date.toString(),M7NEvent4StartDate},
@@ -2640,24 +2640,24 @@ public void M7NTc030_CreateacontactwithouttaskandupdatetheTierafterupgrade(Strin
 	
 	String value="";
 	String type="";
-	String[][] EntityOrAccounts = {{ M7NIns2, M7NIns2RecordType ,null}};
-
-	for (String[] accounts : EntityOrAccounts) {
-		if (lp.clickOnTab(projectName, tabObj1)) {
-			log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);	
-			value = accounts[0];
-			type = accounts[1];
-			if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
-				log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
-			} else {
-				sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
-				log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+value+" of record type : "+type,YesNo.Yes);
-			}
-		} else {
-			sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj1);
-			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj1,YesNo.Yes);
-		}
-	}
+//	String[][] EntityOrAccounts = {{ M7NIns2, M7NIns2RecordType ,null}};
+//
+//	for (String[] accounts : EntityOrAccounts) {
+//		if (lp.clickOnTab(projectName, tabObj1)) {
+//			log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);	
+//			value = accounts[0];
+//			type = accounts[1];
+//			if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
+//				log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);	
+//			} else {
+//				sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
+//				log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+value+" of record type : "+type,YesNo.Yes);
+//			}
+//		} else {
+//			sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj1);
+//			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj1,YesNo.Yes);
+//		}
+//	}
 	flag=true;
 	// contact
 	if (lp.clickOnTab(projectName, tabObj2)) {
@@ -3040,7 +3040,7 @@ public void M7NTc033_CreateaContactwithEventandUpdatetheEndDateAfterUpgrade(Stri
 							ThreadSleep(5000);
 							ExcelUtils.writeData(phase1DataSheetFilePath,M7NEvent8EndDate, "Events", excelLabel.Variable_Name, "M7NEvent8", excelLabel.End_Date);
 							flag=true;
-							String[][] fieldsWithValues= {{PageLabel.End.toString(),M7NEvent8EndDate}};
+							String[][] fieldsWithValues= {{PageLabel.Subject.toString(),M7NEvent8EndDate}};
 							tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 30);	
 						}else {
 							log(LogStatus.ERROR, "save button is not clickable so task not Updated : "+task, YesNo.Yes);
@@ -4105,7 +4105,7 @@ public void M7NTc042_EllinaBingContactWithUpdateCallandVerifyLastTouchPointandNe
 							log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
 							ThreadSleep(5000);
 							flag=true;
-							String[][] fieldsWithValues= {{PageLabel.End.toString(),M7NTask8Subject}};
+							String[][] fieldsWithValues= {{PageLabel.Subject.toString(),M7NTask8Subject}};
 							tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 30);	
 						}else {
 							log(LogStatus.ERROR, "save button is not clickable so task not Updated : "+task, YesNo.Yes);
@@ -4307,8 +4307,8 @@ public void M7NTc044_EllinaBingContactWithUpdateEventWithUpdateEndDateandVerifyL
 	M7NEvent11EndDate=previousOrForwardDate(+2, "M/d/YYYY");
 	String task = M7NEvent11Subject;
 	String[][] Event4 = {
-			{PageLabel.Start_Date.toString(),M7NEvent10StartDate},
-			{PageLabel.End_Date.toString(),M7NEvent10EndDate},
+			{PageLabel.Start_Date.toString(),M7NEvent11StartDate},
+			{PageLabel.End_Date.toString(),M7NEvent11EndDate},
 			{PageLabel.Subject.toString(),task}};
 	if (cp.clickOnTab(projectName, tabObj2)) {
 		log(LogStatus.INFO,"Clicked on Tab : "+tabObj2+" For : "+contactName,YesNo.No);
@@ -4924,32 +4924,7 @@ public void M7NTc049_Update4contactswithtier123andnoneAndVerifyVerifyLastTouchPo
 		sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2);
 		log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2,YesNo.Yes);
 	}
-	String contactName4=M7NContact21FName+" "+M7NContact21LName;
-	if(lp.clickOnTab(contactName, mode, TabName.ContactTab)){
-		log(LogStatus.INFO,"Click on Tab : "+tabObj2,YesNo.No);
-		if(lp.clickOnAlreadyCreatedItem(projectName, TabName.ContactTab, contactName4, 30)){
-			log(LogStatus.INFO,"click on Created Contact : "+contactName4,YesNo.No);	
-			refresh(driver);		
-			ThreadSleep(5000);
-			int days=120;
-			String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-			String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
-			if(cp.verifyDate(expectedDate, actualDate)){
-				log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName3,YesNo.No);	
-
-			}else{
-				sa.assertTrue(false,"Next touch point value is not matched As after "+days+" days from created date  in contact :"+contactName3);
-				log(LogStatus.SKIP,"Next touch point value is not matched As after "+days+" days from created date  in contact :"+contactName3,YesNo.Yes);
-			}
-		}else{
-		sa.assertTrue(false,"Not Able to click on Create Contact : "+contactName3);
-		log(LogStatus.SKIP,"Not Able to click on created Contact: "+contactName3,YesNo.Yes);
-	}
-} else {
-	sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2);
-	log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2,YesNo.Yes);
-
-		}	
+	
 	switchToDefaultContent(driver);
 	lp.CRMlogout();
 	sa.assertAll();
@@ -5437,24 +5412,17 @@ public void M7NTc052_1_UpdateJamesContactswithEventandAndVerifyVerifyLastTouchPo
 		}}
 	refresh(driver);		
 	ThreadSleep(5000);
-	 ele=cp.getlastTouchPointValue(projectName, 10);
-		if (ele!=null) {
-			String expectedValue = M7NEvent13EndDate; 
-			String actualValue = ele.getText().trim();
-			if (cp.verifyDate(expectedValue, actualValue)) {
-				log(LogStatus.INFO,expectedValue+" successfully verified last touch point date For : "+contactName, YesNo.No);
-			}
-		else {
-				log(LogStatus.ERROR, "Last touch point value is not matched For : "+contactName+" Actual : "+actualValue+" /t Expected : "+expectedValue, YesNo.Yes);
-				sa.assertTrue(false,"last touch point value is not matched For : "+contactName+" Actual : "+actualValue+" /t Expected : "+expectedValue );
-			}
-		}else {
-			log(LogStatus.ERROR, "last touch point value is not visible For : "+contactName, YesNo.Yes);
-			sa.assertTrue(false,"last touch point value is not visible For : "+contactName );
-		}
+	String lastTouchPoint= cp.getlastTouchPointValue(projectName, 30).getText();
+	if(lastTouchPoint.contains("")||lastTouchPoint.equalsIgnoreCase("")){
+		log(LogStatus.INFO,"Last touch point value is matched As blank in :"+contactName,YesNo.No);	
+
+	}else{
+		sa.assertTrue(false,"Last touch point value is not matched As blank in contact :"+contactName);
+		log(LogStatus.SKIP,"Last touch point value is not matched As blank in contact :"+contactName,YesNo.Yes);
+	}
 		refresh(driver);	
 		ThreadSleep(10000);
-		int days=92;
+		int days=90;
 		String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
 		String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
 		if(cp.verifyDate(expectedDate, actualDate)){

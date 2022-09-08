@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -904,13 +905,15 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 	public boolean verifyColumnsOfSDG(String Title, List<String> fieldsInComponent) {
 		boolean flag = false;
+		boolean resultFlag = false;
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		WebElement alreadyAddedComponentToHomePage = FindElement(driver, "//a[text()='" + Title + "']",
 				"Component Title ", action.SCROLLANDBOOLEAN, 10);
 		if (alreadyAddedComponentToHomePage != null) {
 
 			log(LogStatus.INFO, "Component Title Matched to Home Page " + Title, YesNo.Yes);
 
-			if (!verifySDGExpandByDefault(Title)) {
+			if (!home.sdgGridExpandedByDefaultIfNotThenExpandByTooltip(Title)) {
 				log(LogStatus.INFO, "Not Expanded By Default SDG: " + Title, YesNo.No);
 				log(LogStatus.INFO, "Now Expanding  SDG: " + Title, YesNo.No);
 
@@ -938,12 +941,13 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 						"Records");
 				List<String> columnsText = new ArrayList<String>();
 				for (WebElement column : columns) {
-					columnsText.add(column.getText());
+					columnsText.add(column.getText().toLowerCase());
 				}
 				System.out.println(columnsText);
+				fieldsInComponent = fieldsInComponent.stream().map(x->x.toLowerCase()).collect(Collectors.toList());
 				if (CommonLib.compareList(columnsText, fieldsInComponent)) {
 					log(LogStatus.INFO, "All Fields are Matched ", YesNo.No);
-					flag = true;
+					resultFlag=true;
 
 				} else {
 					log(LogStatus.ERROR, "All Fields are not Matched", YesNo.No);
@@ -955,7 +959,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 			}
 		}
-		return flag;
+		return resultFlag;
 
 	}
 

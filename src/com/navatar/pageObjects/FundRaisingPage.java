@@ -376,7 +376,35 @@ public class FundRaisingPage extends BasePage {
 		} catch (StaleElementReferenceException e) {
 			return FindElements(driver, xpath, "recordsInListView");
 		}
+	}
+	
+	
+	
+	@FindBy(xpath = "//*[text()='Company']/following-sibling::div//input[@title='Search' or contains(@placeholder,'Search')]")
+	private WebElement companyName_Lighting;
+	public WebElement getCompanyName(String environment, String mode, int timeOut) {
+		
+			return isDisplayed(driver, companyName_Lighting, "Visibility", timeOut, "Company Name");
+		
 
 	}
+
+	
+	@FindBy(xpath = "//a[text()='Fundraising Contacts' and @role='tab']")
+	private WebElement fundraisingContactTab;
+
+	public WebElement getfundraisingContactTab(int timeOut) {
+		return isDisplayed(driver, fundraisingContactTab, "Visibility", timeOut, "Fundraising Contact tab");
+	}
+	
+	@FindBy(xpath = "//div[@class='slds-button-group']//button[text()='New Fundraising Contact']")
+	private WebElement newFundraisingContactBtn;
+
+	public WebElement newFundraisingContactBtn(int timeOut) {
+		return isDisplayed(driver, newFundraisingContactBtn, "Visibility", timeOut, "Fundraising Contact button");
+	}
+	
+	
+	
 
 }
