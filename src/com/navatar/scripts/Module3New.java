@@ -963,6 +963,7 @@ lp.CRMlogout();
 			switchToDefaultContent(driver);
 			home.clickOnSetUpLink(environment, Mode.Classic.toString());
 			if (home.clickOnTab(environment, Mode.Classic.toString(), TabName.HomeTab)) {
+	
 				SmokeReportName = "R2" + SmokeReportName;
 				if (report.createCustomReportForFolder(environment, mode, SmokeReportFolderName, ReportFormatName.Null,
 						SmokeReportName, SmokeReportName, SmokeReportType, null, SmokeReportShow, null,
@@ -1054,7 +1055,7 @@ lp.CRMlogout();
 						String lname = M3Contact1LName;
 						String folderName=EmailTemplate1_FolderName;
 						String emailTemplateName = EmailTemplate1_TemplateName;
-						if (hp.VerifyBulkEmailFunctionality(environment, mode, reportName, templateName, fname, lname, lname, searchContactInEmailProspectGrid.Yes, folderName, emailTemplateName)) {
+						if (hp.VerifyBulkEmailFunctionality(environment, mode, templateName, reportName, fname, lname, lname, searchContactInEmailProspectGrid.Yes, folderName, emailTemplateName)) {
 							log(LogStatus.INFO, bulkActionNavigationLink+" functionality is verified succesfuly ", YesNo.No);
 
 						} else {

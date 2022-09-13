@@ -1393,7 +1393,7 @@ public class Module5New extends BaseLib {
 								switchToDefaultContent(driver);
 								ThreadSleep(20000);
 								/////////////////////////////////////////////////////
-								String sValue = EditPageErrorMessage.EnhancedLightningGrid;
+								String sValue = EditPageErrorMessage.NavatarSDG;
 								if (sendKeys(driver, edit.getEditPageSeachTextBox(projectName, 10),sValue,"Search TextBox",action.BOOLEAN)) {
 									ThreadSleep(2000);
 									log(LogStatus.INFO,"send value to Search TextBox : "+sValue,YesNo.No);
