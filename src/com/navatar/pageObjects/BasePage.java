@@ -5731,7 +5731,7 @@ public abstract class BasePage extends BaseLib {
 	}
 
 	public WebElement getUserNameHeader(String userName, int timeOut) {
-		String xpath = "//b//span[text()='" + userName + "']";
+		String xpath = "//h2[contains(text(),'"+userName+"')]";
 		WebElement ele = FindElement(driver, xpath, "User Header Found: " + userName, action.SCROLLANDBOOLEAN, timeOut);
 		try {
 			return isDisplayed(driver, ele, "Visibility", timeOut, "User Header Found: " + userName);

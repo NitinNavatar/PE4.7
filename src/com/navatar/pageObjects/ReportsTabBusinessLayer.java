@@ -620,7 +620,7 @@ public class ReportsTabBusinessLayer extends ReportsTab {
 
 																				WebElement reportNameHeaderEle = FindElement(
 																						driver,
-																						"//h1[contains(text(),'"
+																						"//span[contains(text(),'"
 																								+ reportName + "')]",
 																						"Heading : " + reportName,
 																						action.SCROLLANDBOOLEAN, 30);
