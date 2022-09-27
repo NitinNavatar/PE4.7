@@ -93,6 +93,7 @@ import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.PopUpName;
 import com.navatar.generic.EnumConstants.RecordType;
 import com.navatar.generic.EnumConstants.RelatedList;
+import com.navatar.generic.EnumConstants.RelatedTab;
 import com.navatar.generic.EnumConstants.ReportDashboardFolderType;
 import com.navatar.generic.EnumConstants.ReportField;
 import com.navatar.generic.EnumConstants.SearchBasedOnExistingFundsOptions;
@@ -141,7 +142,7 @@ import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.EnumConstants.*;
 public class OldSmokeTestCases extends BaseLib {
 	String passwordResetLink = null;
-	String navigationMenuName = NavigationMenuItems.Bulk_Actions.toString();
+	String navigationMenuName = NavigationMenuItems.Create.toString();
 //	Scanner scn = new Scanner(System.in);
 	// DRSmoke Modules Starts from here
 	
@@ -282,8 +283,9 @@ public class OldSmokeTestCases extends BaseLib {
 			}
 			
 		}
-		if (flag && (environment.equalsIgnoreCase("Test")|| environment.equalsIgnoreCase("Testing"))) {
+		if (flag) {
 			
+			if(environment.equalsIgnoreCase("Test")|| environment.equalsIgnoreCase("Testing")) {
 			if (sp.installedPackages(crmUser1FirstName, UserLastName)) {
 				appLog.info("PE Package is installed Successfully in CRM User: " + crmUser1FirstName + " "
 						+ UserLastName);
@@ -297,7 +299,7 @@ public class OldSmokeTestCases extends BaseLib {
 						"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName,
 						YesNo.Yes);
 			}
-			
+			}
 		}else{
 			
 			log(LogStatus.ERROR, "could not click on setup link, test case fail", YesNo.Yes);
@@ -2466,7 +2468,8 @@ public class OldSmokeTestCases extends BaseLib {
 			log(LogStatus.INFO, "Clicked on Contact Tab",YesNo.No);
 			if (cp.clickOnCreatedContact( mode, SmokeC1_FName, SmokeC1_LName)) {
 				log(LogStatus.INFO, "Clicked on Created Contact : "+SmokeC1_FName+" "+SmokeC1_LName,YesNo.No);	
-				
+				WebElement ele = lp.getRelatedTab("", RelatedTab.Communications.toString(), 10);
+				click(driver, ele, RelatedTab.Communications.toString(), action.SCROLLANDBOOLEAN);
 				if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Activity_History, null)) {
 					log(LogStatus.INFO, "Clicked on Activity History",YesNo.No);	
 					
@@ -2754,7 +2757,8 @@ public class OldSmokeTestCases extends BaseLib {
 			log(LogStatus.INFO, "Clicked on Contact Tab",YesNo.No);
 			if (contact.clickOnCreatedContact(environment, SmokeC2_FName, SmokeC2_LName)) {
 				log(LogStatus.INFO, "Clicked on Created Contact : "+SmokeC2_FName+" "+SmokeC2_LName,YesNo.No);	
-				
+				WebElement ele2 = lp.getRelatedTab("", RelatedTab.Communications.toString(), 10);
+				click(driver, ele2, RelatedTab.Communications.toString(), action.SCROLLANDBOOLEAN);
 				if (contact.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Activity_History, null)) {
 					log(LogStatus.INFO, "Clicked on Activity History",YesNo.No);	
 					
@@ -5126,7 +5130,8 @@ public class OldSmokeTestCases extends BaseLib {
 			log(LogStatus.INFO, "Clicked on Contact Tab",YesNo.No);
 			if (contact.clickOnCreatedContact(environment, SmokeC1_FName, SmokeC1_LName)) {
 				log(LogStatus.INFO, "Clicked on Created Contact : "+SmokeC1_FName+" "+SmokeC1_LName,YesNo.No);	
-				
+				WebElement ele2 =lp. getRelatedTab("", RelatedTab.Communications.toString(), 10);
+				click(driver, ele2, RelatedTab.Communications.toString(), action.SCROLLANDBOOLEAN);
 				if (contact.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Activity_History, null)) {
 					log(LogStatus.INFO, "Clicked on Activity History",YesNo.No);	
 					
@@ -5334,7 +5339,8 @@ public class OldSmokeTestCases extends BaseLib {
 			log(LogStatus.INFO, "Clicked on Contact Tab",YesNo.No);
 			if (contact.clickOnCreatedContact(environment,  SmokeC3_FName, SmokeC3_LName)) {
 				log(LogStatus.INFO, "Clicked on Created Contact : "+SmokeC3_FName+" "+SmokeC3_LName,YesNo.No);	
-				
+				WebElement ele2 = lp.getRelatedTab("", RelatedTab.Communications.toString(), 10);
+				click(driver, ele2, RelatedTab.Communications.toString(), action.SCROLLANDBOOLEAN);
 				if (contact.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Activity_History, null)) {
 					log(LogStatus.INFO, "Clicked on Activity History",YesNo.No);	
 					
@@ -8046,7 +8052,7 @@ public class OldSmokeTestCases extends BaseLib {
 						switchToFrame(driver, 30, fd.getEmailingFrame_Lighting(30));
 					}*/
 					//capital amount, management fee, other fee textbox
-					String[] linkClick = {Smoke_LP1,"CMT"};
+					String[] linkClick = {"LP","CMT"};
 					for (int j = 0; j < linkClick.length; j++) {
 						if (mode.equalsIgnoreCase(Mode.Lightning.toString())){
 							switchToFrame(driver, 30, fd.getEmailingFrame_Lighting(30));
@@ -8083,7 +8089,7 @@ public class OldSmokeTestCases extends BaseLib {
 										if (click(driver, ele, linkClick[j], action.SCROLLANDBOOLEAN)) {
 											switchToDefaultContent(driver);
 											if (Mode.Lightning.toString().equalsIgnoreCase(mode)) {
-												xpath ="//div[contains(@class,'outputName')]//*[text()='"+linkClick[j]+"']";
+												xpath =" //*[@name='primaryField']//*[contains(text(),'"+linkClick[j]+"')]";
 											}else{
 												xpath = "//h2[contains(text(),'"+linkClick[j]+"')]";	
 											}
@@ -14215,6 +14221,7 @@ public class OldSmokeTestCases extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		GlobalActionPageBusinessLayer gp = new GlobalActionPageBusinessLayer(driver);
+		HomePageBusineesLayer home =new HomePageBusineesLayer(driver);
 		SoftAssert tsa = new SoftAssert();
 		String startDate = previousOrForwardDate(1, "M/d/yyyy");
 		String endDate = previousOrForwardDate(2, "M/d/yyyy");
@@ -14229,7 +14236,7 @@ public class OldSmokeTestCases extends BaseLib {
 		String task = Smoke_NewTask1Subject;
 		String[][] event1 = {{PageLabel.Subject.toString(),task},{PageLabel.Name.toString(),contactName}};
 
-		if (gp.clickOnGlobalActionAndEnterValue("", GlobalActionItem.New_Task, event1)) {
+		if (home.clickOnNvaigationMenuAndEnterValueOnTask("", NavigationMenuItems.Create, NewInteractions_DefaultValues.Task, task, todaysDate, contactName, event1)) {
 			log(LogStatus.INFO,"Able to Enter Value for : "+task,YesNo.No);
 			if (click(driver, gp.getSaveButtonForEvent("", 10), "Save Button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO,"Click on Save Button For Task : "+task,YesNo.No);		
@@ -14435,7 +14442,7 @@ public class OldSmokeTestCases extends BaseLib {
 								}
 							}
 							
-					if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Affiliations, RelatedTab.Affiliations.toString())) {
+					if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Communincations, RelatedTab.Communications.toString())) {
 						log(LogStatus.INFO, "Click on Affiliations", YesNo.Yes);
 
 						if (cp.verifyOpenActivityRelatedList(environment, mode, TabName.ContactTab,
@@ -14799,6 +14806,9 @@ public class OldSmokeTestCases extends BaseLib {
 			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINDINV2)) {
 				log(LogStatus.INFO, "Click on Created Inst : " + SmokeINDINV2, YesNo.No);
 							
+				WebElement ele2 = lp.getRelatedTab("", RelatedTab.Communications.toString(), 10);
+				click(driver, ele2, RelatedTab.Communications.toString(), action.SCROLLANDBOOLEAN);
+				ThreadSleep(2000);
 //							if (ip.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Activities, null)) {
 //								log(LogStatus.INFO, "Click on Related Tab", YesNo.No);	
 								if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
@@ -15295,7 +15305,9 @@ public class OldSmokeTestCases extends BaseLib {
 		if (bp.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS4)) {
 				log(LogStatus.INFO, "Click on Created Inst : " + SmokeINS4, YesNo.No);
-							
+				WebElement ele2 = lp.getRelatedTab("", RelatedTab.Communications.toString(), 10);
+				click(driver, ele2, RelatedTab.Communications.toString(), action.SCROLLANDBOOLEAN);
+				ThreadSleep(2000);
 //							if (ip.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Activities, null)) {
 //								log(LogStatus.INFO, "Click on Related Tab", YesNo.Yes);	
 								
@@ -15376,7 +15388,9 @@ public class OldSmokeTestCases extends BaseLib {
 		if (bp.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINDINV3)) {
 				log(LogStatus.INFO, "Click on Created Inst : " + SmokeINDINV3, YesNo.No);
-							
+				WebElement ele2 = lp.getRelatedTab("", RelatedTab.Communications.toString(), 10);
+				click(driver, ele2, RelatedTab.Communications.toString(), action.SCROLLANDBOOLEAN);
+				ThreadSleep(2000);
 //							if (ip.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Activities, null)) {
 //								log(LogStatus.INFO, "Click on Related Tab", YesNo.Yes);	
 								
@@ -15600,19 +15614,23 @@ public class OldSmokeTestCases extends BaseLib {
 			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINS4)) {
 				log(LogStatus.INFO, "Click on Created Inst : " + SmokeINS4, YesNo.No);
 							
-							if (ip.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Activities, null)) {
+				WebElement ele2 = lp.getRelatedTab("", RelatedTab.Communications.toString(), 10);
+				
+				
+							if (click(driver, ele2, RelatedTab.Communications.toString(), action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Click on Related Tab", YesNo.No);	
+								ThreadSleep(2000);
 								if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 									windowScrollYAxis(driver, 0, 180000);
 								}
-								
-								if (ip.verifyNoDataAtOpenActivitiesSection(environment, mode, TabName.InstituitonsTab, 10)) {
-									log(LogStatus.PASS, "Open Activities Grid Verified For No Records/No Next Activity Msg", YesNo.No);	
-								} else {
-									sa.assertTrue(false, "Open Activities Grid Not Verified For No Records/No Next Activity Msg");
-									log(LogStatus.FAIL, "Open Activities Grid Not Verified For No Records/No Next Activity Msg", YesNo.Yes);
-								}
-								
+//								
+//								if (ip.verifyNoDataAtOpenActivitiesSection(environment, mode, TabName.InstituitonsTab, 10)) {
+//									log(LogStatus.PASS, "Open Activities Grid Verified For No Records/No Next Activity Msg", YesNo.No);	
+//								} else {
+//									sa.assertTrue(false, "Open Activities Grid Not Verified For No Records/No Next Activity Msg");
+//									log(LogStatus.FAIL, "Open Activities Grid Not Verified For No Records/No Next Activity Msg", YesNo.Yes);
+//								}
+//								
 								
 								if (ip.verifyNoDataAtActivityHistorySection(environment, mode, TabName.InstituitonsTab, 10)) {
 									log(LogStatus.PASS, "Activity History Grid Verified For No Records/No Past Activity Msg", YesNo.No);	
@@ -15680,7 +15698,9 @@ public class OldSmokeTestCases extends BaseLib {
 		if (bp.clickOnTab(environment, mode, TabName.InstituitonsTab)) {
 			if (ip.clickOnCreatedInstitution(environment, mode, SmokeINDINV3)) {
 				log(LogStatus.INFO, "Click on Created Inst : " + SmokeINDINV3, YesNo.No);
-//							
+							WebElement ele2 = lp.getRelatedTab("", RelatedTab.Communications.toString(), 10);
+				click(driver, ele2, RelatedTab.Communications.toString(), action.SCROLLANDBOOLEAN);
+				ThreadSleep(2000);
 //							if (ip.clickOnRelatedList(environment, mode, RecordType.Institution, RelatedList.Activities, null)) {
 //								log(LogStatus.INFO, "Click on Related Tab", YesNo.No);	
 								if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
@@ -16703,7 +16723,9 @@ public class OldSmokeTestCases extends BaseLib {
 				
 				if (cp.clickOnRelatedList(environment, mode, RecordType.Contact, RelatedList.Activity_History, null)) {
 					log(LogStatus.INFO, "Clicked on Activity History",YesNo.No);	
-					
+					WebElement ele2 = lp.getRelatedTab("", RelatedTab.Communications.toString(), 10);
+					click(driver, ele2, RelatedTab.Communications.toString(), action.SCROLLANDBOOLEAN);
+					ThreadSleep(2000);
 					if (cp.verifyCreatedActivityHistory(environment, mode, EmailTemplate1_Subject)) {
 						log(LogStatus.INFO, "Activity verified: "+EmailTemplate1_Subject,YesNo.No);	
 					} else {

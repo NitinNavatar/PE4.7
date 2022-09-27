@@ -902,7 +902,7 @@ public static enum PermissionType{
 			public String toString() {
 				return "Correspondence Lists";
 			}
-		}
+		}, Communincations
 	};
 
 	public static enum ActivityRelatedButton {
@@ -1208,7 +1208,7 @@ public static enum PermissionType{
 			public String toString() {
 				return "Q&A";
 			}
-		}, Overview,Events, Fund_Management, Fund_Investments, Fundraising_Contacts, Fundraising_Contact;	  
+		}, Overview,Events, Fund_Management, Fund_Investments, Fundraising_Contacts, Fundraising_Contact, Communications;	  
 	};
 	
 	public static enum Header{
@@ -1609,7 +1609,7 @@ public static enum PermissionType{
 			public String toString() {
 				return "Create New";
 			}
-    	};
+    	}, Create;
     };
     
     public static enum BulkActions_DefaultValues{

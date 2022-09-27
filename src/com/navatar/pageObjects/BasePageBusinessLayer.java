@@ -5041,6 +5041,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			String relatedTo, String contactName) {
 		WebElement ele;
 		String xpath;
+		click(driver, getRelatedTab(RelatedTab.Communications.toString(), 20), RelatedTab.Communications.toString(), action.BOOLEAN);
+		ThreadSleep(5000);
+		ele=	isDisplayed(driver, FindElement(driver, "//button[contains(@class,'moresteps')]", "More steps", action.BOOLEAN, 20), "visibility", 20, "");
+
+			click(driver, ele, "More steps", action.BOOLEAN);
+			log(LogStatus.INFO, "click on more steps button", YesNo.No);
+		
 		if (tabName.toString().equalsIgnoreCase(TabName.ContactTab.toString())) {
 			if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
 				if (relatedTo == null) {
@@ -5072,7 +5079,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					xpath = "//div[contains(@class,'slds-section__content')]//a[text()='" + subject
 							+ "']/ancestor::div[@class='slds-media']//a[text()='" + relatedTo + "']";
 				}
-				xpath = "//div[contains(@id,'upcoming-activities')]//a[text()='" + subject + "']";
+				xpath = "//div[@class='cActivityTimeline']//a[text()='"+subject+"']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			}
 		} else if (tabName.toString().equalsIgnoreCase(TabName.InstituitonsTab.toString())) {
@@ -5101,7 +5108,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				}
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			} else {
-				xpath = "//div[contains(@id,'upcoming-activities')]//a[text()='" + subject + "']";
+				xpath = "//div[@class='cActivityTimeline']//a[text()='"+subject+"']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			}
 		} else {
@@ -5119,13 +5126,20 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			String relatedTo, String contactName) {
 		WebElement ele = null;
 		String xpath;
+		click(driver, getRelatedTab(RelatedTab.Communications.toString(), 20), RelatedTab.Communications.toString(), action.BOOLEAN);
+		ThreadSleep(5000);
+		ele=	isDisplayed(driver, FindElement(driver, "//button[contains(@class,'moresteps')]", "More steps", action.BOOLEAN, 20), "visibility", 20, "");
+
+		click(driver, ele, "More steps", action.BOOLEAN);
+		log(LogStatus.INFO, "click on more steps button", YesNo.No);
+	
 		if (tabName.toString().equalsIgnoreCase(TabName.ContactTab.toString())) {
 			if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
 				xpath = "//h3[text()='Activity History']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//tr//th/a[contains(text(),'"
 						+ subject + "')]/../following-sibling::td/a[text()='" + relatedTo + "']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			} else {
-				xpath = "//div[contains(@class,'past-activity')]//a[text()='" + subject + "']";
+				xpath = "//div[@class='cActivityTimeline']//a[text()='"+subject+"']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			}
 		} else if (tabName.toString().equalsIgnoreCase(TabName.InstituitonsTab.toString())) {
@@ -5135,7 +5149,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						+ "']/../following-sibling::td/a[text()='" + relatedTo + "']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			} else {
-				xpath = "//div[contains(@class,'past-activity')]//a[text()='" + subject + "']";
+				xpath = "//div[@class='cActivityTimeline']//a[text()='"+subject+"']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			}
 		} else {
@@ -5153,6 +5167,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			String institutionName) {
 		WebElement ele;
 		String xpath;
+		click(driver, getRelatedTab(RelatedTab.Affiliations.toString(), 20), RelatedTab.Affiliations.toString(), action.BOOLEAN);
+		ThreadSleep(2000);
 		if (tabName.toString().equalsIgnoreCase(TabName.ContactTab.toString())) {
 			if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
 				xpath = "//h3[text()='Affiliations']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//tr//th/a[contains(text(),'AF')]/../following-sibling::td/a[text()='"

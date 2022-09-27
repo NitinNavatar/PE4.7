@@ -68,8 +68,11 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 	 */
 	public boolean fieldValueVerificationOnContactPage(String projectName, TabName tabName, String labelName,
 			String labelValue) {
+		WebElement ele = null;
 		String finalLabelName = "";
-
+		ele = getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+		click(driver, ele, RelatedTab.Details.toString(), action.SCROLLANDBOOLEAN);
+		ThreadSleep(2000);
 		if (labelName.contains("_")) {
 			if (labelName.equalsIgnoreCase(excelLabel.Asst_Phone.toString())) {
 				finalLabelName = IndiviualInvestorFieldLabel.Asst_Phone.toString();
@@ -82,7 +85,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 			finalLabelName = labelName;
 		}
 		String xpath = "";
-		WebElement ele = null;
+		
 
 		xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName + "']/../following-sibling::div/span";
 
@@ -193,6 +196,9 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 	public boolean verifyCreatedOpenActivity(String environment, String mode, String activitySubject) {
 		WebElement ele;
 		String xpath;
+		WebElement ele2 = getRelatedTab("", RelatedTab.Communications.toString(), 10);
+		click(driver, ele2, RelatedTab.Communications.toString(), action.SCROLLANDBOOLEAN);
+		ThreadSleep(2000);
 		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
 			xpath = "//h3[text()='Open Activities']/ancestor::div[@class='bRelatedList']//a[text()='" + activitySubject
 					+ "']";

@@ -13,6 +13,7 @@ import com.navatar.generic.EnumConstants.ContactPageFieldLabelText;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.RecordType;
+import com.navatar.generic.EnumConstants.RelatedTab;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
@@ -1127,8 +1128,11 @@ public boolean clickOnCreatedInstitution(String environment,String mode,String i
 	public boolean fieldValueVerificationOnInstitutionPage(String environment, String mode, TabName tabName,
 			String labelName,String labelValue) {
 		String finalLabelName;
+		WebElement ele = null;
 		labelValue=labelValue.replace("_", " ");
-
+		ele = getRelatedTab(mode, RelatedTab.Details.toString(), 10);
+		click(driver, ele, RelatedTab.Details.toString(), action.SCROLLANDBOOLEAN);
+		ThreadSleep(2000);
 
 		if(labelName.contains(excelLabel.Total_CoInvestment_Commitments.toString())) {
 			labelName=LimitedPartnerPageFieldLabelText.Total_CoInvestment_Commitments.toString();
@@ -1147,7 +1151,7 @@ public boolean clickOnCreatedInstitution(String environment,String mode,String i
 			finalLabelName = labelName;
 		}
 		String xpath = "";
-		WebElement ele = null;
+		
 		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
 			if(finalLabelName.equalsIgnoreCase(excelLabel.Institution_Type.toString().replace("_", " "))) {
 
@@ -1530,6 +1534,9 @@ public boolean clickOnCreatedInstitution(String environment,String mode,String i
 				if (click(driver, getNavigationTabSaveBtn(mode,30), "save button", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on save button");
 					ThreadSleep(5000);
+					WebElement ele2 = getRelatedTab("", RelatedTab.Details.toString(), 10);
+					click(driver, ele2, RelatedTab.Details.toString(), action.SCROLLANDBOOLEAN);
+
 					//							String	xpath="//span[@class='custom-truncate uiOutputText'][text()='"+institutionName+"']";
 					//							WebElement ele = FindElement(driver, xpath, "Header : "+institutionName, action.BOOLEAN, 30);
 					WebElement ele = verifyCreatedItemOnPage(Header.Company, institutionName);

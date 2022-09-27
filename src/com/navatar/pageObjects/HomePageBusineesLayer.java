@@ -13,6 +13,7 @@ import com.navatar.generic.EnumConstants.CommitmentType;
 import com.navatar.generic.EnumConstants.CreateCommitmentPageFieldLabelText;
 import com.navatar.generic.EnumConstants.CreatedOrNot;
 import com.navatar.generic.EnumConstants.FundraisingContactPageTab;
+import com.navatar.generic.EnumConstants.GlobalActionItem;
 import com.navatar.generic.EnumConstants.HTMLTAG;
 import com.navatar.generic.EnumConstants.IndiviualInvestorFieldLabel;
 import com.navatar.generic.EnumConstants.Mode;
@@ -22,6 +23,7 @@ import com.navatar.generic.EnumConstants.SDGCreationLabel;
 import com.navatar.generic.EnumConstants.SDGGridName;
 import com.navatar.generic.EnumConstants.SearchBasedOnExistingFundsOptions;
 import com.navatar.generic.EnumConstants.SortOrder;
+import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.TopOrBottom;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
@@ -31,6 +33,9 @@ import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.EnumConstants.NavatarQuickLink;
+import com.navatar.generic.EnumConstants.NavigationMenuItems;
+import com.navatar.generic.EnumConstants.NewInteractions_DefaultValues;
+import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.searchContactInEmailProspectGrid;
@@ -1024,6 +1029,106 @@ public class HomePageBusineesLayer extends HomePage {
 
 	}
 
+	public String taskCreatesMsg(String projectName,String taskName) {
+		return "Task \""+taskName+"\" was created"+"Task \""+taskName+"\" was created."+"Task "+taskName+" was created"+"Task "+taskName+" was created.";
+		
+	}
+	/**
+	 * @param projectName
+	 * @param globalActionItem
+	 * @param labelsWithValue
+	 * @return true if able to click on Global action and enter value
+	 */
+	public boolean clickOnNvaigationMenuAndEnterValueOnTask(String projectName,NavigationMenuItems navigationMenuName,NewInteractions_DefaultValues navigationMenuItems,String subject,String dueDate,String contactNAme,String[][] dropDownLabelWithValues){
+		boolean flag=false;
+		if (ClickOnItemOnNavatarEdge(navigationMenuItems.toString(), navigationMenuName.toString(), action.BOOLEAN, 20)) {
+			log(LogStatus.INFO, "clicked on "+navigationMenuName.toString()+" link", YesNo.No);
+			WebElement ele = getNavigationLabel( navigationMenuItems.toString(), action.BOOLEAN, 10);
+			if (ele!=null && click(driver, ele, navigationMenuItems.toString(), action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on "+navigationMenuItems+" so going for creation", YesNo.No);
+				
+				if (enteringSubjectAndSelectDropDownValuesonTaskPopUp(projectName, PageName.TaskPage, subject, dropDownLabelWithValues, action.SCROLLANDBOOLEAN, 10)) {
+					log(LogStatus.INFO, "Entered value to Subject Text Box ", YesNo.No);
+					ThreadSleep(1000);
+					
+					if(navigationMenuName.toString().equalsIgnoreCase("Task")||navigationMenuName.toString().equalsIgnoreCase("Call")) {
+					if (sendKeys(driver, getdueDateTextBoxInNewTask(projectName, 20), dueDate, PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Entered value to Due Date Text Box", YesNo.No);
+						ThreadSleep(1000);
+					}else {
+						log(LogStatus.ERROR, "Not able to enter value on duedate textbox "+dueDate, YesNo.Yes);
+						sa.assertTrue(false,"Not able to enter value on duedate textbox "+dueDate );
+					}
+					}else {
+						if (sendKeys(driver, getdueDateTextBoxInNewTask(projectName, 20), dueDate, PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Entered value to Due Date Text Box", YesNo.No);
+							ThreadSleep(1000);
+						}else {
+							log(LogStatus.ERROR, "Not able to enter value on duedate textbox "+dueDate, YesNo.Yes);
+							sa.assertTrue(false,"Not able to enter value on duedate textbox "+dueDate );
+						}
+					}
+					
+					flag = selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Name.toString(), TabName.TaskTab, contactNAme, action.SCROLLANDBOOLEAN, 10);		
+					if (flag) {
+						ele=getCrossButtonForAlreadySelectedItem(projectName, PageName.TaskPage, PageLabel.Name.toString(),true, contactNAme, action.SCROLLANDBOOLEAN, 5);
+						if (ele!=null) {
+							log(LogStatus.INFO, contactNAme+" Found For Label "+PageLabel.Name.toString()+" at "+navigationMenuItems,YesNo.No);	
+						} else {
+							sa.assertTrue(false,contactNAme+" not Found For Label "+PageLabel.Name.toString()+" at "+navigationMenuItems);
+							log(LogStatus.ERROR, contactNAme+" not Found For Label "+PageLabel.Name.toString()+" at "+navigationMenuItems,YesNo.Yes);
+						}
+					} else {
+						sa.assertTrue(false,"Not Able to Select "+contactNAme+" For Label "+PageLabel.Name);
+						log(LogStatus.SKIP,"Not Able to Select "+contactNAme+" For Label "+PageLabel.Name,YesNo.Yes);
+
+					}
+					if (clickUsingJavaScript(driver, getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO,"successfully created : "+subject+" for "+navigationMenuItems,  YesNo.No);
+						//ExcelUtils.writeData(phase1DataSheetFilePath,dueDate, "Task1", excelLabel.Variable_Name, "M3CALL1", excelLabel.Due_Date);
+						ele = getCreatedConfirmationMsg(projectName, 15);
+						if (ele!=null) {
+							String actualValue = ele.getText().trim();
+							String expectedValue=taskCreatesMsg(projectName, subject);
+							if (expectedValue.contains(actualValue)) {
+								log(LogStatus.INFO,expectedValue+" matched FOR Confirmation Msg", YesNo.No);
+							} else {
+								log(LogStatus.ERROR,"Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg", YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg");
+							}
+						} else {
+							sa.assertTrue(false,"Created Task Msg Ele not Found");
+							log(LogStatus.SKIP,"Created Task Msg Ele not Found",YesNo.Yes);
+						}
+						
+						
+					}
+					else {
+						log(LogStatus.ERROR, "Save Button is not visible so could not be create "+navigationMenuItems, YesNo.Yes);
+						sa.assertTrue(false,"Save Button is not visible so could not be create "+navigationMenuItems );
+					}
+
+
+				}else {
+					log(LogStatus.ERROR, "Subject textbox is not visible so could not be create "+navigationMenuItems, YesNo.Yes);
+					sa.assertTrue(false,"Subject textbox is not visible so could not be create "+navigationMenuItems );
+				}
+				
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuItems+" so cannot create data related to this ", YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+navigationMenuItems+" so cannot create data related to this ");
+
+			}
+			
+			
+
+		} else {
+			sa.assertTrue(false,"Not Able to Click on Global Action Related item");
+			log(LogStatus.SKIP,"Not Able to Click on Global Action Related item",YesNo.Yes);
+		}
+		
+		return true;
+	}
 	/**
 	 * @author Azhar Alam
 	 * @param environment
@@ -1062,9 +1167,9 @@ public class HomePageBusineesLayer extends HomePage {
 	public boolean clickOnTemplateForReportOnBulkEmail(String environment, String mode,String reportName , String templateName
 			) {
 		WebElement ele;
-		String xpath = "//span[contains(@id,'extd')][text()='" + templateName + "']/ancestor::ul//span[text()='" + reportName + "']";
+		String xpath = "//span[text()='" + reportName + "']/ancestor::ul//span[contains(@id,'extd')][text()='" + templateName + "']";
 		ele = FindElement(driver, xpath, reportName + " : " + templateName, action.SCROLLANDBOOLEAN, 10);
-
+		ThreadSleep(2000);
 		if (clickUsingJavaScript(driver, ele, reportName + " : " + templateName, action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on >>>   " + reportName + " : " + templateName, YesNo.No);
 			return true;
@@ -1484,6 +1589,7 @@ public class HomePageBusineesLayer extends HomePage {
 				if (ele != null) {
 					if (sendKeys(driver, ele, splitedFieldName[i], "field text box", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Passed Value in field Name Text box " + splitedFieldName[i], YesNo.No);
+						ThreadSleep(2000);
 						ele = isDisplayed(driver,
 								FindElement(driver,
 										"//ul[contains(@style,'block;')]//li//a[text()='" + splitedFieldName[i] + "']",
