@@ -183,10 +183,8 @@ public class MarketingInitiativesPageBusinesslayer extends MarketingInitiativesP
 			if(addProspectsTab.toString().equalsIgnoreCase(AddProspectsTab.PastMarketingInitiatives.toString())) {
 				i=2;
 			}
-			ThreadSleep(2000);
 			String xpath="(//ul[@class='ui-autocomplete ui-front ui-menu ui-widget ui-widget-content'])["+i+"]//li[text()='"+fieldName+"']";
 			ele=isDisplayed(driver,FindElement(driver, xpath, "field auto complete text", action.SCROLLANDBOOLEAN,30),"visibility",30,"field auto complete text");
-			
 			if(ele!=null) {
 				if(click(driver, ele, fieldName+" text", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on field name "+fieldName+" text box");
@@ -661,7 +659,6 @@ public class MarketingInitiativesPageBusinesslayer extends MarketingInitiativesP
 				}else {
 					xpath="//ul[@class='ui-menu ui-widget ui-widget-content ui-autocomplete ui-front']//div[text()='"+fieldName+"']";
 				}
-				ThreadSleep(2000);
 				ele=isDisplayed(driver,FindElement(driver, xpath, "field auto complete text", action.SCROLLANDBOOLEAN,30),"visibility",30,"field auto complete text");
 				if(ele!=null) {
 					if(click(driver, ele, fieldName+" text", action.SCROLLANDBOOLEAN)) {
