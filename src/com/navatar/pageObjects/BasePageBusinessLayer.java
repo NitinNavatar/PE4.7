@@ -350,7 +350,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	public boolean verifyGridErrorMessage1(String environment, String mode, RelatedList gridSectionName,
 			String expectedMsg, int timeOut) {
 		String xpath = "//*[text()='" + gridSectionName.toString()
-				+ "']/ancestor::article//*[text()='No data returned']";
+		+ "']/ancestor::article//*[text()='No data returned']";
 		WebElement ele = isDisplayed(driver,
 				FindElement(driver, xpath, gridSectionName.toString(), action.SCROLLANDBOOLEAN, timeOut), "visiblity",
 				30, gridSectionName.toString());
@@ -1130,7 +1130,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ele = FindElement(driver,
 							"//a[contains(@href,'lightning')]/span[@class='slds-truncate']/span[contains(text(),'"
 									+ tabName + "')]",
-							tabName, action.SCROLLANDBOOLEAN, 10);
+									tabName, action.SCROLLANDBOOLEAN, 10);
 					ele = isDisplayed(driver, ele, "visibility", 10, tabName);
 					if (ele != null) {
 						if (clickUsingJavaScript(driver, ele, tabName + " :Tab")) {
@@ -1228,7 +1228,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ele = FindElement(driver,
 							"//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//a[text()='"
 									+ alreadyCreated + "']",
-							alreadyCreated, action.BOOLEAN, 30);
+									alreadyCreated, action.BOOLEAN, 30);
 					ThreadSleep(2000);
 					if (click(driver, ele, alreadyCreated, action.BOOLEAN)) {
 						ThreadSleep(3000);
@@ -1669,7 +1669,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.INFO,
 							"successfully verified dueDate textbox "
 									+ subjectMeetingAssociationsCommentsDatePriorityName[4] + " contains " + name,
-							YesNo.No);
+									YesNo.No);
 				} else {
 					log(LogStatus.ERROR, "could not verify dueDate textbox, found: " + name, YesNo.No);
 					flag = false;
@@ -1760,7 +1760,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.INFO,
 							"successfully verified dueDate textbox "
 									+ subjectMeetingAssociationsCommentsDatePriorityName[4] + " contains " + name,
-							YesNo.No);
+									YesNo.No);
 				} else {
 					log(LogStatus.ERROR, "could not verify dueDate textbox, found: " + name, YesNo.No);
 					flag = false;
@@ -1897,7 +1897,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	public WebElement removeButtonInRelatedAssociations(String projectName, String record) {
 		return isDisplayed(driver, FindElement(driver,
 				"//div[@id='relatedAssociation']//span[text()='" + record
-						+ "']/../following-sibling::button[@title='Remove']",
+				+ "']/../following-sibling::button[@title='Remove']",
 				"removeButton", action.BOOLEAN, 10), "visibility", 5, "removeButton");
 	}
 
@@ -2052,7 +2052,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				|| PageName.GlobalActtion_TaskPOpUp.toString().equals(pageName.toString())) {
 			if (labelFieldTextBox.equalsIgnoreCase(PageLabel.Name.toString()))
 				xpath = "//span[text()='" + labelTextBox
-						+ "']/..//following-sibling::div//input[@title='Search Contacts']";
+				+ "']/..//following-sibling::div//input[@title='Search Contacts']";
 			else
 				xpath = "//span[text()='" + labelTextBox + "']/..//following-sibling::div//input";
 		} else {
@@ -2340,14 +2340,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				// sa.assertTrue(false,"Not Able to Select Drown Down Value :
 				// "+getTabName(projectName, tabName)+" For Label "+label);
 				log(LogStatus.SKIP, "Not Able to Select Drown Down Value : " + getTabName(projectName, tabName)
-						+ " For Label " + label, YesNo.Yes);
+				+ " For Label " + label, YesNo.Yes);
 				return flag;
 			}
 		}
 
 		if (label.replaceAll("_", " ").equalsIgnoreCase(PageLabel.Name.toString())) {
 			String xpath = "//span[text()='" + label.replaceAll("_", " ")
-					+ "']/..//following-sibling::div//input[@title='Search Contacts']";
+			+ "']/..//following-sibling::div//input[@title='Search Contacts']";
 			doubleClickUsingAction(driver, FindElement(driver, xpath, "", action.BOOLEAN, 30));
 			log(LogStatus.INFO, "click on name text box", YesNo.No);
 
@@ -3256,7 +3256,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									meetingTypeValue + " not Verified for subject : " + subject + " For item : "
 											+ createdItemValue + " Actual : " + actualValue + " \t Expected : "
 											+ meetingTypeValue,
-									YesNo.Yes);
+											YesNo.Yes);
 						}
 
 					} else {
@@ -3306,7 +3306,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									descriptionValue + " not Verified for subject : " + subject + " For item : "
 											+ createdItemValue + " Actual : " + actualValue + " \t Expected : "
 											+ descriptionValue,
-									YesNo.Yes);
+											YesNo.Yes);
 						}
 
 					} else {
@@ -3377,7 +3377,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ele = FindElement(driver,
 							"//a[contains(@href,'lightning')]/span[@class='slds-truncate']/span[contains(text(),'"
 									+ tabName + "')]",
-							tabName, action.SCROLLANDBOOLEAN, 10);
+									tabName, action.SCROLLANDBOOLEAN, 10);
 					ele = isDisplayed(driver, ele, "visibility", 10, tabName);
 					if (ele != null) {
 						if (clickUsingJavaScript(driver, ele, tabName + " :Tab")) {
@@ -3814,7 +3814,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							} else {
 								log(LogStatus.PASS,
 										"Not able to click on save button and so cannot updtaed image from path " + path
-												+ " on " + pageName,
+										+ " on " + pageName,
 										YesNo.No);
 							}
 						} else {
@@ -4231,7 +4231,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					+ toggleOneOrTwo + "]";
 		else if (pageName == PageName.Object4Page)
 			xpath = "(//*[text()='" + record + "']/../following-sibling::span//button[@title='Edit'])[" + toggleOneOrTwo
-					+ "]";
+			+ "]";
 		WebElement ele = FindElement(driver, xpath, "edit Button : " + record, action.BOOLEAN, timeOut);
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("return arguments[0].setAttribute('Styles','display: inline-block;')", ele);
@@ -4517,7 +4517,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ele = isDisplayed(driver, FindElement(driver,
 							"//a[contains(@href,'lightning')]/span[@class='slds-truncate']/span[contains(text(),'"
 									+ tabName + "')]",
-							tabName, action.SCROLLANDBOOLEAN, 10), "visibility", 10, tabName);
+									tabName, action.SCROLLANDBOOLEAN, 10), "visibility", 10, tabName);
 					if (ele != null) {
 						if (clickUsingJavaScript(driver, ele, tabName + " :Tab")) {
 							appLog.info("Clicked on Tab on More Icon: " + tabName);
@@ -4619,7 +4619,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (tabName != null) {
 			ele = FindElement(driver,
 					"//a[@title='" + tabName
-							+ "']/parent::*[@class='navItem slds-context-bar__item slds-shrink-none slds-is-active']",
+					+ "']/parent::*[@class='navItem slds-context-bar__item slds-shrink-none slds-is-active']",
 					tabName, action.SCROLLANDBOOLEAN, 30);
 			ele = isDisplayed(driver, ele, "visibility", 30, tabName);
 			if (ele != null) {
@@ -5045,9 +5045,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ThreadSleep(5000);
 		ele=	isDisplayed(driver, FindElement(driver, "//button[contains(@class,'moresteps')]", "More steps", action.BOOLEAN, 20), "visibility", 20, "");
 
-			click(driver, ele, "More steps", action.BOOLEAN);
-			log(LogStatus.INFO, "click on more steps button", YesNo.No);
-		
+		click(driver, ele, "More steps", action.BOOLEAN);
+		log(LogStatus.INFO, "click on more steps button", YesNo.No);
+
 		if (tabName.toString().equalsIgnoreCase(TabName.ContactTab.toString())) {
 			if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
 				if (relatedTo == null) {
@@ -5132,7 +5132,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		click(driver, ele, "More steps", action.BOOLEAN);
 		log(LogStatus.INFO, "click on more steps button", YesNo.No);
-	
+
 		if (tabName.toString().equalsIgnoreCase(TabName.ContactTab.toString())) {
 			if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
 				xpath = "//h3[text()='Activity History']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//tr//th/a[contains(text(),'"
@@ -5237,7 +5237,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					return flag;
 				} else {
 					log(LogStatus.ERROR, "Not able to click on " + gridSectionName.toString()
-							+ " link so cannot verify error message", YesNo.Yes);
+					+ " link so cannot verify error message", YesNo.Yes);
 				}
 			}
 
@@ -5859,7 +5859,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				} else {
 
 					AppListeners.appLog
-							.info("after clicking select list icon is should be in expand mode on:" + objectName);
+					.info("after clicking select list icon is should be in expand mode on:" + objectName);
 					result.add("after clicking select list icon is should be in expand mode on:" + objectName);
 				}
 
@@ -5942,7 +5942,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 							} else {
 								AppListeners.appLog
-										.info("Filter value is not present in filter panel size:" + filterName.size());
+								.info("Filter value is not present in filter panel size:" + filterName.size());
 								result.add("Filter value is not present in filter panel size:" + filterName.size());
 
 							}
@@ -5956,7 +5956,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					} else {
 
 						AppListeners.appLog
-								.info("after clicking select list icon is should be in expand mode on:" + objectName);
+						.info("after clicking select list icon is should be in expand mode on:" + objectName);
 						result.add("after clicking select list icon is should be in expand mode on:" + objectName);
 					}
 
@@ -6344,13 +6344,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									if (selectListViewAfterDelete != null) {
 										log(LogStatus.FAIL,
 												"List View:" + viewList
-														+ " again present after delete, So Test Case is going to fail ",
+												+ " again present after delete, So Test Case is going to fail ",
 												YesNo.No);
 
 									} else {
 										log(LogStatus.PASS,
 												"List View:" + viewList
-														+ " not present after delete, So Confirmed delete of List View",
+												+ " not present after delete, So Confirmed delete of List View",
 												YesNo.No);
 										flag = true;
 									}
@@ -6552,7 +6552,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ele = FindElement(driver,
 							"//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//a[text()='"
 									+ alreadyCreated + "']",
-							alreadyCreated, action.BOOLEAN, 30);
+									alreadyCreated, action.BOOLEAN, 30);
 					ThreadSleep(2000);
 					if (click(driver, ele, alreadyCreated, action.BOOLEAN)) {
 						ThreadSleep(3000);
@@ -6980,7 +6980,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 											System.out.println("Inside the loop.");
 											sa.assertTrue(false,
 													list.get(j) + " :Target not found for field value " + fieldValue
-															+ " operator " + operator + " and value " + operatorValue);
+													+ " operator " + operator + " and value " + operatorValue);
 										}
 									}
 								} else {
@@ -7003,7 +7003,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 											System.out.println("Inside the loop.");
 											sa.assertTrue(false,
 													list.get(j) + " :Target not found for field value " + fieldValue
-															+ " operator " + operator + " and value " + operatorValue);
+													+ " operator " + operator + " and value " + operatorValue);
 										}
 									}
 								}
@@ -7040,7 +7040,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									List<String> listResult = new ArrayList<String>();
 									listResult.addAll(checkResultOnManageInvestor(expectedResult, timeOut));
 									System.out.println("\n\n\nis list empty: " + listResult.isEmpty()
-											+ "\n\n\nList Size: " + listResult.size());
+									+ "\n\n\nList Size: " + listResult.size());
 									if (!listResult.isEmpty()) {
 										System.out.println("Inside the condition\n\n\n");
 										for (int j = 0; j < listResult.size(); j++) {
@@ -7064,7 +7064,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									List<String> listResult = new ArrayList<String>();
 									listResult.addAll(checkResultOnManageInvestor(expectedResult, timeOut));
 									System.out.println("\n\n\nis list empty: " + listResult.isEmpty()
-											+ "\n\n\nList Size: " + listResult.size());
+									+ "\n\n\nList Size: " + listResult.size());
 									if (!listResult.isEmpty()) {
 										System.out.println("Inside the condition\n\n\n");
 										for (int j = 0; j < listResult.size(); j++) {
@@ -7265,7 +7265,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 										"//tr/th//div//lightning-base-formatted-text[text()='" + val[i]
 												+ "']/ancestor::th/preceding-sibling::td/lightning-primitive-cell-checkbox",
 
-										"Radio Button of: " + val[i], action.BOOLEAN, timeOut),
+												"Radio Button of: " + val[i], action.BOOLEAN, timeOut),
 
 								"Radio Button of: " + val[i], action.SCROLLANDBOOLEAN)) {
 
@@ -7588,12 +7588,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 													+ " are not matced with Filter label name : " + field
 													+ ", filter Operator :" + Operator + ", Filter operand :"
 													+ filterValue[i] + "",
-											YesNo.No);
+													YesNo.No);
 									result.add("Either Filter label name : " + filterFieldLabel
 											+ " or filter Operator :" + filterOperator + " Or Filter operand :"
 											+ filterOperand + " are not matced with Filter label name : " + field
 											+ ", filter Operator :" + Operator + ", Filter operand :" + filterValue[i]
-											+ "");
+													+ "");
 								}
 							} else {
 
@@ -7628,12 +7628,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 												+ " or filter Operator :" + filterOperator + " Or Filter operand :"
 												+ filterOperand + " are not matced with Filter label name : "
 												+ filterFiled[j] + ", filter Operator :" + fOperator[j]
-												+ ", Filter operand :" + FOperand[j] + "", YesNo.Yes);
+														+ ", Filter operand :" + FOperand[j] + "", YesNo.Yes);
 										result.add("Either Filter label name : " + filterFieldLabel
 												+ " or filter Operator :" + filterOperator + " Or Filter operand :"
 												+ filterOperand + " are not matced with Filter label name : "
 												+ filterFiled[j] + ", filter Operator :" + fOperator[j]
-												+ ", Filter operand :" + FOperand[j] + "");
+														+ ", Filter operand :" + FOperand[j] + "");
 									}
 
 									if (filterLogic(50) != null) {
@@ -7748,14 +7748,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					for (int a = 0; a < expectedFieldValue.size(); a++) {
 						if (expectedFieldValue.get(a).equals(actualFieldValue.get(a))) {
 							log(LogStatus.INFO, "Expected field value : " + expectedFieldValue.get(a)
-									+ " has been matched with the Actual field value : " + actualFieldValue.get(a),
-									YesNo.No);
+							+ " has been matched with the Actual field value : " + actualFieldValue.get(a),
+							YesNo.No);
 						} else {
 							log(LogStatus.ERROR, "Expected field value : " + expectedFieldValue.get(a)
-									+ " is not matched with the Actual field value : " + actualFieldValue.get(a),
-									YesNo.No);
+							+ " is not matched with the Actual field value : " + actualFieldValue.get(a),
+							YesNo.No);
 							result.add("Expected field value : " + expectedFieldValue.get(a)
-									+ " is not matched with the Actual field value : " + actualFieldValue.get(a));
+							+ " is not matched with the Actual field value : " + actualFieldValue.get(a));
 						}
 
 					}
@@ -7826,7 +7826,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							"No. of Expected Highlighted Labels and Actual Highlighted Labels doesn't Match, So not able to Continue to verify Label and Values, No. of Expected Labels: "
 									+ ExpectedLabels.size() + " & No. of Actual Highlighted Labels: "
 									+ highlightedPanelLabels.size(),
-							YesNo.No);
+									YesNo.No);
 					negativeResult.add(
 							"No. of Expected Highlighted Labels and Actual Highlighted Labels doesn't Match, So not able to Continue to verify Label and Values, No. of Expected Labels: "
 									+ ExpectedLabels.size() + " & No. of Actual Highlighted Labels: "
@@ -7839,7 +7839,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				log(LogStatus.ERROR,
 						"No. of Expected Highlighted Labels and Values doesn't Match, So not able to Continue to verify Label and Values, No. of Expected Labels: "
 								+ ExpectedLabels.size() + " & No. of Expected Values: " + ExpectedLabelsValues.size(),
-						YesNo.No);
+								YesNo.No);
 				negativeResult.add(
 						"No. of Expected Highlighted Labels and Values doesn't Match, So not able to Continue to verify Label and Values, No. of Expected Labels: "
 								+ ExpectedLabels.size() + " & No. of Expected Values: " + ExpectedLabelsValues.size());
@@ -7852,7 +7852,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					"No. of Actual Highlighted Labels and Values doesn't Match, So not able to Continue to verify Label and Values, No. of Actual Labels: "
 							+ highlightedPanelLabels.size() + " & No. of Actual Values: "
 							+ highlightedPanelLabelsValues.size(),
-					YesNo.Yes);
+							YesNo.Yes);
 			negativeResult.add(
 					"No. of Actual Highlighted Labels and Values doesn't Match, So not able to Continue to verify Label and Values, No. of Actual Labels: "
 							+ highlightedPanelLabels.size() + " & No. of Actual Values: "
@@ -7889,13 +7889,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						for (String button : listOfButtons) {
 							if (button.equals(ExpectedButtonsOnPage.get(i))) {
 								log(LogStatus.INFO, "----Button Matched, Expected: " + ExpectedButtonsOnPage.get(i)
-										+ " & Actual: " + button + " on this Page----", YesNo.No);
+								+ " & Actual: " + button + " on this Page----", YesNo.No);
 							} else {
 
 								log(LogStatus.ERROR, "----Button Not Matched, Expected: " + ExpectedButtonsOnPage.get(i)
-										+ " but Actual: " + button + " on this Page----", YesNo.No);
+								+ " but Actual: " + button + " on this Page----", YesNo.No);
 								negativeResult.add("----Button Not Matched, Expected: " + ExpectedButtonsOnPage.get(i)
-										+ " but Actual: " + button + " on this Page----");
+								+ " but Actual: " + button + " on this Page----");
 
 							}
 
@@ -7905,7 +7905,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						log(LogStatus.ERROR,
 								"No. of Expected and Actual Buttons on Page not matched, So not able to continue, Expected: "
 										+ ExpectedButtonsOnPage + " & Actual: " + listOfButtons,
-								YesNo.Yes);
+										YesNo.Yes);
 						negativeResult.add(
 								"No. of Expected and Actual Buttons on Page not matched, So not able to continue, Expected: "
 										+ ExpectedButtonsOnPage + " & Actual: " + listOfButtons);
@@ -7958,14 +7958,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 												"----Button Matched, Expected: "
 														+ ExpectedButtonsInDownArrowButton.get(i) + " & Actual: "
 														+ button + " in DownArrow Button----",
-												YesNo.No);
+														YesNo.No);
 									} else {
 
 										log(LogStatus.ERROR,
 												"----Button Not Matched, Expected: "
 														+ ExpectedButtonsInDownArrowButton.get(i) + " but Actual: "
 														+ button + " in DownArrow Button----",
-												YesNo.No);
+														YesNo.No);
 										negativeResult.add("----Button Not Matched, Expected: "
 												+ ExpectedButtonsInDownArrowButton.get(i) + " but Actual: " + button
 												+ " in DownArrow Button----");
@@ -7979,7 +7979,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 										"No. of Expected and Actual Buttons in DownArrow Button not matched, So not able to continue, Expected: "
 												+ ExpectedButtonsInDownArrowButton + " & Actual: "
 												+ dropDownButtonsList,
-										YesNo.Yes);
+												YesNo.Yes);
 								negativeResult.add(
 										"No. of Expected and Actual Buttons in DownArrow Button not matched, So not able to continue, Expected: "
 												+ ExpectedButtonsInDownArrowButton + " & Actual: "
@@ -8053,13 +8053,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						for (String tab : tabsInPage) {
 							if (tab.equals(expectedListOfTabs.get(i))) {
 								log(LogStatus.INFO, "----Tab Matched, Expected: " + expectedListOfTabs.get(i)
-										+ " & Actual: " + tab + " on this Page----", YesNo.No);
+								+ " & Actual: " + tab + " on this Page----", YesNo.No);
 							} else {
 
 								log(LogStatus.ERROR, "----Tab Not Matched, Expected: " + expectedListOfTabs.get(i)
-										+ " but Actual: " + tab + " on this Page----", YesNo.No);
+								+ " but Actual: " + tab + " on this Page----", YesNo.No);
 								negativeResult.add("----Tab Not Matched, Expected: " + expectedListOfTabs.get(i)
-										+ " but Actual: " + tab + " on this Page----");
+								+ " but Actual: " + tab + " on this Page----");
 
 							}
 
@@ -8069,7 +8069,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						log(LogStatus.ERROR,
 								"No. of Expected and Actual Tabs on Page not matched, So not able to continue, Expected: "
 										+ expectedListOfTabs + " & Actual: " + tabsInPage,
-								YesNo.Yes);
+										YesNo.Yes);
 						negativeResult.add(
 								"No. of Expected and Actual Tabs on Page not matched, So not able to continue, Expected: "
 										+ expectedListOfTabs + " & Actual: " + tabsInPage);
@@ -8102,7 +8102,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 * @param SDGName
 	 * @param datas
 	 */
-	
+
 	@SuppressWarnings("unused")
 	public boolean createNewRecordThroughSDG(String projectName, String sdgName, String actionButtonName,
 			List<String> labels, List<String> values, List<String> typesOfFields, int timeOut) {
@@ -8310,7 +8310,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	}
 
-	
+
 	public ArrayList<String> verifyEditOrLockIconOnSDgRecord(String sdgName,ArrayList<String> recordName,ArrayList<String> iconType)
 	{
 		String xPath;
@@ -8371,8 +8371,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return result;
 	}
-	
-	
+
+
 	/**
 	 * @author Ankur Huria
 	 * @param activityTimeLineTab
@@ -8777,33 +8777,33 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							{
 								if(CommonLib.switchToFrame(driver, 50, getckEditorIframe(50)))
 								{
-								
-								
-								if(CommonLib.switchToFrame(driver, 50, getemailBodyIframe(50)))
-								{
-									log(LogStatus.INFO, "Switched to email body iframe", YesNo.No);
-									if (CommonLib.sendKeys(driver, activityTimelineBodyTextBoxElement(label, 30), value,
-											label + " Input Box", action.SCROLLANDBOOLEAN)) {
-										log(LogStatus.INFO, value + " value has been Entered in label: " + label, YesNo.No);
-										status++;
-									} else {
-										sa.assertTrue(false, value + " value has not been Entered in label: " + label);
-										log(LogStatus.ERROR, value + " value has not been Entered in label: " + label,
-												YesNo.Yes);
-									}	
 
-								}
-								else
-								{
-									sa.assertTrue(false, "Not able to switch to email body Iframe");
-									log(LogStatus.ERROR, "Not able to switch to email body Iframe", YesNo.Yes);
-								}
+
+									if(CommonLib.switchToFrame(driver, 50, getemailBodyIframe(50)))
+									{
+										log(LogStatus.INFO, "Switched to email body iframe", YesNo.No);
+										if (CommonLib.sendKeys(driver, activityTimelineBodyTextBoxElement(label, 30), value,
+												label + " Input Box", action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, value + " value has been Entered in label: " + label, YesNo.No);
+											status++;
+										} else {
+											sa.assertTrue(false, value + " value has not been Entered in label: " + label);
+											log(LogStatus.ERROR, value + " value has not been Entered in label: " + label,
+													YesNo.Yes);
+										}	
+
+									}
+									else
+									{
+										sa.assertTrue(false, "Not able to switch to email body Iframe");
+										log(LogStatus.ERROR, "Not able to switch to email body Iframe", YesNo.Yes);
+									}
 								}
 								else
 								{
 									sa.assertTrue(false, "Not able to switch to ck editor Iframe");
 									log(LogStatus.ERROR, "Not able to switch to ck editor Iframe", YesNo.Yes);
-									
+
 								}
 								CommonLib.switchToDefaultContent(driver);
 							}
@@ -8917,7 +8917,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		else
 			return false;
 	}
-	
+
 	public boolean verifyActivityRecord(String recordActivityTitle)
 	{
 		String xPath;
@@ -8927,7 +8927,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ArrayList<String> expectedThisMonthRecord=new ArrayList<String>();
 		ArrayList<String> actualUpcomingAndOverdueRecord=new ArrayList<String>();
 		ArrayList<String> actualThisMonthRecord=new ArrayList<String>();
-		
+
 		String[] recordAndActivityTitle=recordActivityTitle.split("<Break>");
 		for(int i=0; i<recordAndActivityTitle.length;i++)
 		{
@@ -8960,21 +8960,21 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		{
 			actualThisMonthRecord.add(CommonLib.getText(driver, ele, "This Month record", action.SCROLLANDBOOLEAN));
 		}
-		
+
 		if(actualUpcomingAndOverdueRecord.containsAll(actualUpcomingAndOverdueRecord) && actualThisMonthRecord.containsAll(expectedThisMonthRecord))
 		{
 			log(LogStatus.INFO, "Record on the Upcoming & Overdue and This month has been verified Upcoming & Overdue : "+actualUpcomingAndOverdueRecord+ " This Month : "+actualThisMonthRecord, YesNo.No);
-		    flag=true;
+			flag=true;
 		}
 		else
 		{
 			log(LogStatus.ERROR, "Record on the Upcoming & Overdue and This month are not verified Upcoming & Overdue : "+actualUpcomingAndOverdueRecord+ " This Month : "+actualThisMonthRecord, YesNo.No);
-				
+
 		}
 		return flag;
 	}
-	
-	
+
+
 	/**
 	 * @author Ankur Huria
 	 * @param SDGGridName
@@ -9191,7 +9191,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 	}
 
-/**
+	/**
 	 * @author Ankur Huria
 	 * @param SDGName
 	 * @param datas
@@ -9367,16 +9367,16 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return dateStringResult;
 	}
-	
+
 	public List<Integer> amountToAscendingOrder(List<WebElement> amountListElements) {
-		
+
 		List<String> expectedAmount=new ArrayList<String>();
 		List<Integer> sortedExpectedAmount=new ArrayList<Integer>();
-		
+
 		expectedAmount = amountListElements.stream().map(date -> date.getText())
 				.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
 				.collect(Collectors.toList());
-		
+
 		for(String val:expectedAmount)
 		{
 			String[] splitedAmount=val.split("[.]", 0);
@@ -9387,15 +9387,15 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		Collections.sort(sortedExpectedAmount);
 		return sortedExpectedAmount;		
 	}
-		
-    public List<Integer> amountToDescendingOrder(List<WebElement> amountListElements) {
-		
+
+	public List<Integer> amountToDescendingOrder(List<WebElement> amountListElements) {
+
 		List<String> expectedAmount=new ArrayList<String>();
 		List<Integer> sortedExpectedAmount=new ArrayList<Integer>();
 		expectedAmount = amountListElements.stream().map(date -> date.getText())
 				.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
 				.collect(Collectors.toList());
-		
+
 		for(String val:expectedAmount)
 		{
 			String[] splitedAmount=val.split("[.]", 0);
@@ -9406,7 +9406,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		Collections.sort(sortedExpectedAmount, Collections.reverseOrder());
 		return sortedExpectedAmount;		
 	}
-    
+
 	/**
 	 * @author Ankur Huria
 	 * @param expectedListOfSectionHeaders
@@ -9447,17 +9447,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 										"----Header's Label Matched, Expected: " + expectedLabels.get(j) + " & Actual: "
 												+ recordLayoutSectionHeaderLabel + " for  section: " + expectedHeader
 												+ " on this Page----",
-										YesNo.No);
+												YesNo.No);
 							} else {
 
 								log(LogStatus.ERROR,
 										"----Header's Label Not Matched, Expected: " + expectedLabels.get(j)
-												+ " & Actual: " + recordLayoutSectionHeaderLabel + " for  section: "
-												+ expectedHeader + " on this Page----",
+										+ " & Actual: " + recordLayoutSectionHeaderLabel + " for  section: "
+										+ expectedHeader + " on this Page----",
 										YesNo.No);
 								negativeResult.add("----Header's Label Not Matched, Expected: " + expectedLabels.get(j)
-										+ " & Actual: " + recordLayoutSectionHeaderLabel + " for  section: "
-										+ expectedHeader + " on this Page----");
+								+ " & Actual: " + recordLayoutSectionHeaderLabel + " for  section: "
+								+ expectedHeader + " on this Page----");
 
 							}
 
@@ -9466,8 +9466,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					} else {
 						log(LogStatus.ERROR,
 								"No. of Expected and Actual Section Header Labels of Section " + expectedHeader
-										+ " on Page not matched, So not able to continue, Expected: " + expectedLabels
-										+ " & Actual: " + recordLayoutSectionHeaderLabels,
+								+ " on Page not matched, So not able to continue, Expected: " + expectedLabels
+								+ " & Actual: " + recordLayoutSectionHeaderLabels,
 								YesNo.Yes);
 						negativeResult.add("No. of Expected and Actual Section Header Labels of Section "
 								+ expectedHeader + " on Page not matched, So not able to continue, Expected: "
@@ -9562,7 +9562,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				}
 
 			} else if (typeOfElement.equalsIgnoreCase("TextBox")) {
-				ele = textBoxInNewRecordForm(label, 30);
+				ele = textBoxInNewRecordForm(label, 10);
 				if (ele != null) {
 					if (sendKeys(driver, ele, value, label, action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "successfully entered " + value + " in " + label, YesNo.Yes);
@@ -9810,7 +9810,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return flag;
 	}
 
-	
+
 
 	public ArrayList<String> VerifyInlineEditingForContactsAndAffiliationsGrid(String record) {
 		String xPath = "";
@@ -10011,7 +10011,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 													} else {
 														log(LogStatus.ERROR,
 																"Not able to select " + elements.get(k).getText()
-																		+ " value from dropdown list",
+																+ " value from dropdown list",
 																YesNo.No);
 														result.add("Not able to select " + elements.get(k).getText()
 																+ " value from dropdown list");
@@ -10410,7 +10410,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 													} else {
 														log(LogStatus.ERROR,
 																"Not able to select " + elements.get(k).getText()
-																		+ " value from dropdown list",
+																+ " value from dropdown list",
 																YesNo.No);
 														result.add("Not able to select " + elements.get(k).getText()
 																+ " value from dropdown list");
@@ -10521,19 +10521,19 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								&& actualUploadedFileType.equals(fileType)) {
 							log(LogStatus.INFO,
 									"Expected uploaded file date : " + currentDate + ", file size : " + fileSize
-											+ ", and file type : " + fileType
-											+ " have been matched with the Actual uploaded file date : "
-											+ actualUploadedFileDate + ", file size : " + actualUploadedFileSize
-											+ ", and file type : " + actualUploadedFileType,
+									+ ", and file type : " + fileType
+									+ " have been matched with the Actual uploaded file date : "
+									+ actualUploadedFileDate + ", file size : " + actualUploadedFileSize
+									+ ", and file type : " + actualUploadedFileType,
 									YesNo.No);
 							flag = true;
 						} else {
 							log(LogStatus.ERROR,
 									"Expected uploaded file date : " + currentDate + ", file size : " + fileSize
-											+ ", and file type : " + fileType
-											+ " are not  matched with the Actual uploaded file date : "
-											+ actualUploadedFileDate + ", file size : " + actualUploadedFileSize
-											+ ", and file type : " + actualUploadedFileType,
+									+ ", and file type : " + fileType
+									+ " are not  matched with the Actual uploaded file date : "
+									+ actualUploadedFileDate + ", file size : " + actualUploadedFileSize
+									+ ", and file type : " + actualUploadedFileType,
 									YesNo.No);
 
 						}
@@ -10616,7 +10616,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							if (recordLayoutSectionHeader.equals(expectedListOfSectionHeaders.get(i))) {
 								log(LogStatus.INFO,
 										"----Section Headers Matched, Expected: " + expectedListOfSectionHeaders.get(i)
-												+ " & Actual: " + recordLayoutSectionHeader + " on this Page----",
+										+ " & Actual: " + recordLayoutSectionHeader + " on this Page----",
 										YesNo.No);
 							} else {
 
@@ -10624,7 +10624,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 										"----Section Headers Not Matched, Expected: "
 												+ expectedListOfSectionHeaders.get(i) + " but Actual: "
 												+ recordLayoutSectionHeader + " on this Page----",
-										YesNo.No);
+												YesNo.No);
 								negativeResult.add("----Section Headers Not Matched, Expected: "
 										+ expectedListOfSectionHeaders.get(i) + " but Actual: "
 										+ recordLayoutSectionHeader + " on this Page----");
@@ -10637,7 +10637,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						log(LogStatus.ERROR,
 								"No. of Expected and Actual Section Headers on Page not matched, So not able to continue, Expected: "
 										+ expectedListOfSectionHeaders + " & Actual: " + recordLayoutSectionHeaders,
-								YesNo.Yes);
+										YesNo.Yes);
 						negativeResult.add(
 								"No. of Expected and Actual Section Headers on Page not matched, So not able to continue, Expected: "
 										+ expectedListOfSectionHeaders + " & Actual: " + recordLayoutSectionHeaders);
@@ -10663,6 +10663,487 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 		return negativeResult;
+	}
+
+	public boolean clicktabOnPage(String tabName)
+	{
+		if(CommonLib.click(driver, getTabNameOnPage(tabName,30), tabName, action.SCROLLANDBOOLEAN))
+		{
+			log(LogStatus.INFO, "clicked on "+tabName+" tab name", YesNo.No);
+
+			String text=CommonLib.getAttribute(driver, getVerificationPartTabNameOnPage(tabName,20), tabName+" tab", "class");
+			if(text.contains("slds-is-active"))
+			{
+				log(LogStatus.INFO, tabName+" tab has been open", YesNo.No);
+				return true;
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open tab "+tabName, YesNo.No);
+				return false;
+			}
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on "+tabName+" tab name", YesNo.No);
+			return false;
+		}
+
+	}
+	
+	/**
+	 * @author Sourabh Saini 
+	 * @return return if test case is passed
+	 */
+
+	public boolean createActivityTimeline(String projectName,boolean fromNavigation, String buttonName, String[][] basicSection, String[][] advanceSection, String[][] taskSection)
+	{
+		NavigationPageBusineesLayer npbl= new NavigationPageBusineesLayer(driver);
+		String xPath="";
+		WebElement ele;
+		boolean flag=false;
+
+		if(fromNavigation==true)
+		{
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, NavigationMenuItems.Create.toString(), action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on "+buttonName+" Going to click on : "+NavigationMenuItems.Create.toString()+" for creation ", YesNo.No);
+				ele = npbl.getNavigationLabel(projectName, buttonName, action.BOOLEAN, 10);
+				if (ele!=null && CommonLib.click(driver, ele, buttonName, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on "+buttonName+" so going for creation", YesNo.No);
+
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on "+buttonName+" so cannot create data related to this ", YesNo.Yes);
+					sa.assertTrue(false,"Not Able to Click on "+buttonName+" so cannot create data related to this ");
+					return false;
+				}      
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on "+NavigationMenuItems.Create.toString()+" so cannot click on : "+buttonName+" for creation ", YesNo.Yes);
+				sa.assertTrue(false,"Not Able to Click on "+NavigationMenuItems.Create.toString()+" so cannot click on : "+buttonName+" for creation ");
+				return false;
+			}
+		}
+		else
+		{
+			if(CommonLib.click(driver, activityTimelineButton(buttonName,30),buttonName+" button" , action.BOOLEAN))
+			{
+				log(LogStatus.INFO, "Clicked on "+buttonName+" button name", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on "+buttonName, YesNo.No);
+				sa.assertTrue(false,"Not able to click on "+buttonName);
+				return false;
+			}
+		}
+		CommonLib.ThreadSleep(9000);
+		if(basicSection!=null || basicSection.length!=0)
+		{
+
+			for(String[] val:basicSection)
+			{
+				String labelName=val[0];
+				String value=val[1];
+
+				if(labelName.equalsIgnoreCase(excelLabel.Subject.toString()))
+				{
+					xPath="//label[text()='"+labelName+"']/..//input[contains(@data-id,'combobox')]";
+					ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+					if(CommonLib.sendKeys(driver, ele, value, labelName+" label", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, value+" value has been passed in "+labelName+" field", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, value+" value is not passed in "+labelName+" field", YesNo.No);
+						sa.assertTrue(false, value+" value is not passed in "+labelName+" field");
+						return false;
+
+					}
+				}
+				else
+					if(labelName.equalsIgnoreCase(excelLabel.Notes.toString()))
+					{
+						xPath="//div[span[span[text()='"+labelName+"']]]//div[@class='slds-rich-text-editor__textarea slds-grid']";
+						ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+						if(CommonLib.clickUsingJavaScript(driver, ele, labelName+" paragraph"))
+						{
+							log(LogStatus.INFO, "Clicked on "+labelName+" paragraph", YesNo.No);
+							ThreadSleep(2000);
+							xPath="//div[span[span[text()='"+labelName+"']]]//div[@role='textbox']//p";
+							ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+							if(sendKeys(driver, ele, value, labelName+" paragraph", action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, value+" has been passed on "+labelName+" paragraph", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, value+" is not passed on "+labelName+" paragraph", YesNo.No);
+								sa.assertTrue(false, value+" is not passed on "+labelName+" paragraph");
+								return false;
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on "+labelName+" paragraph", YesNo.No);
+							sa.assertTrue(false, "Not able to click on "+labelName+" paragraph");
+							return false;
+						}
+
+					}else
+						if(labelName.equalsIgnoreCase(excelLabel.Related_To.toString()))
+						{
+							ArrayList<String> tagList=new ArrayList<String>();
+
+							if(value.contains("<break>"))
+							{
+								String[] data=value.split("<break>");
+								for(int i=0; i<data.length; i++)
+								{
+									tagList.add(data[i]);
+								}
+							}
+							else
+							{
+								tagList.add(value);
+							}
+
+							for(int i=0; i<tagList.size(); i++)
+							{
+
+								xPath="//input[@placeholder='Search']";
+								ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 2);
+								if(ele==null)	
+								{	
+									xPath="//*[@title='Tag']";
+									ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+									if(CommonLib.clickUsingJavaScript(driver, ele, labelName+" paragraph"))
+									{
+										log(LogStatus.INFO, "Clicked on Tag button", YesNo.No);
+									}
+									else
+									{
+										log(LogStatus.ERROR,"Not able to click on Tag button", YesNo.No);
+										sa.assertTrue(false, "Not able to click on Tag button");
+										return false;
+									}
+
+								}
+
+								xPath="//input[@placeholder='Search']";
+								ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 2);
+								if(sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN))
+								{
+									log(LogStatus.INFO, tagList.get(i)+" value has been passed in "+labelName+" field", YesNo.No);
+									ThreadSleep(3000);
+									xPath="//ul[@class='drop_ul']//li[text()='"+tagList.get(i)+"']";
+									ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+									if(click(driver, ele, tagList+" dropdown", action.SCROLLANDBOOLEAN))
+									{
+										log(LogStatus.INFO, "clicked on "+tagList.get(i)+" value", YesNo.No);	
+									}
+									else
+									{
+										log(LogStatus.ERROR, "Not able to click on "+tagList.get(i)+" value", YesNo.No);
+										sa.assertTrue(false, "Not able to click on "+tagList.get(i)+" value");
+										return false;
+									}
+
+								}
+								else {
+									log(LogStatus.ERROR, tagList.get(i)+" value is not passed in "+labelName+" field", YesNo.No);
+									sa.assertTrue(false, tagList.get(i)+" value is not passed in "+labelName+" field");
+									return false;
+								}
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Label Name is not correct", YesNo.No);
+							sa.assertTrue(false, "Label Name is not correct");
+							return false;
+						}							
+			}
+
+		}
+		if(advanceSection!=null || advanceSection.length!=0)
+		{
+			if(clickUsingJavaScript(driver, getSectionBtn("Advanced",30), "Advanced section", action.SCROLLANDBOOLEAN))
+			{
+				log(LogStatus.INFO, "clicked on Advanced section", YesNo.No);
+				for(String[] val:advanceSection)
+				{
+					String labelName=val[0];
+					String value=val[1];
+					//String fieldType=val[2];
+
+
+					if(labelName.contains("Start Date"))
+					{
+						xPath="//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='Start Date Time']/..//label[text()='Date']/..//input";
+						ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+						if(CommonLib.sendKeys(driver, ele, value, labelName+" label", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, value+" value has been passed in "+labelName+" field", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, value+" value is not passed in "+labelName+" field", YesNo.No);
+							sa.assertTrue(false, value+" value is not passed in "+labelName+" field");
+							return false;
+						}		
+					}	
+					else if(labelName.contains("Start Time"))	
+					{
+						xPath="//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='Start Date Time']/..//label[text()='Time']/..//input";
+						ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+						if(CommonLib.sendKeys(driver, ele, value, labelName+" label", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, value+" value has been passed in "+labelName+" field", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, value+" value is not passed in "+labelName+" field", YesNo.No);
+							sa.assertTrue(false, value+" value is not passed in "+labelName+" field");
+							return false;
+						}	
+
+					}
+					else if(labelName.contains("End Date"))	
+					{
+						xPath="//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='End Date Time']/..//label[text()='Date']/..//input";
+						ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+						if(CommonLib.sendKeys(driver, ele, value, labelName+" label", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, value+" value has been passed in "+labelName+" field", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, value+" value is not passed in "+labelName+" field", YesNo.No);
+							sa.assertTrue(false, value+" value is not passed in "+labelName+" field");
+							return false;
+						}	
+
+					}
+					else if(labelName.contains("End Time"))	
+					{
+						xPath="//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='End Date Time']/..//label[text()='Time']/..//input";
+						ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+						if(CommonLib.sendKeys(driver, ele, value, labelName+" label", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, value+" value has been passed in "+labelName+" field", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, value+" value is not passed in "+labelName+" field", YesNo.No);
+							sa.assertTrue(false, value+" value is not passed in "+labelName+" field");
+							return false;
+						}	
+
+					}
+
+					else if(labelName.contains(excelLabel.Location.toString()) || labelName.contains("Due Date Only"))
+					{
+
+						xPath="//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"+labelName+"']/..//input";
+						ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+						if(CommonLib.sendKeys(driver, ele, value, labelName+" label", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, value+" value has been passed in "+labelName+" field", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, value+" value is not passed in "+labelName+" field", YesNo.No);
+							sa.assertTrue(false, value+" value is not passed in "+labelName+" field");
+							return false;
+						}
+
+					}
+
+					else 
+						if(labelName.equalsIgnoreCase(excelLabel.Status.toString()) || labelName.equalsIgnoreCase(excelLabel.Priority.toString()))
+						{
+							xPath="//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"+labelName+"']/..//button";
+							ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+							xPath="//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"+labelName+"']/..//span[@class='slds-truncate']";
+							if(CommonLib.dropDownHandle(driver, ele, xPath, labelName+" dropdown", value))
+							{
+								log(LogStatus.INFO, value+" value has been selected from "+labelName+" field", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, value+" value is not selected from "+labelName+" field", YesNo.No);
+								sa.assertTrue(false, value+" value is not selected from "+labelName+" field");
+								return false;
+							}
+						}
+						else if(labelName.equalsIgnoreCase("All-Day Event"))
+						{
+
+							if(value.equals("true"))
+							{
+								xPath="//span[text()='All-Day Event']/../../input";
+								ele=FindElement(driver, xPath, labelName+" name", action.SCROLLANDBOOLEAN, 30);
+								if(isSelected(driver, ele, labelName+" checkbox"))
+								{
+									log(LogStatus.INFO, labelName+" checkbox is already selected", YesNo.No);
+
+								}
+								else
+								{
+									if(click(driver, ele, labelName+" checkbox", action.SCROLLANDBOOLEAN))
+									{
+										log(LogStatus.INFO, labelName+" checkbox has been selected", YesNo.No);
+									}
+									else
+									{
+										log(LogStatus.ERROR, labelName+" checkbox is not selected", YesNo.No);
+										sa.assertTrue(false, labelName+" checkbox is not selected");
+										return false;
+									}
+								}
+
+							}
+							else
+							{
+								xPath="//span[text()='All-Day Event']/../../input";
+								ele=FindElement(driver, xPath, labelName+" name", action.SCROLLANDBOOLEAN, 30);
+								if(!isSelected(driver, ele, labelName+" checkbox"))
+								{
+									log(LogStatus.INFO, labelName+" checkbox is not selected", YesNo.No);
+
+								}
+								else
+								{
+									if(click(driver, ele, labelName+" checkbox", action.SCROLLANDBOOLEAN))
+									{
+										log(LogStatus.INFO, labelName+" checkbox has been unselected", YesNo.No);
+									}
+									else
+									{
+										log(LogStatus.ERROR, labelName+" checkbox is not unselected", YesNo.No);
+										sa.assertTrue(false, labelName+" checkbox is not unselected");
+										return false;
+									}
+								}
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "label name is not correct", YesNo.No);
+							sa.assertTrue(false, "label name is not correct");
+							return false;
+						}
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on Advanced search section", YesNo.No);
+				sa.assertTrue(false, "Not able to click on Advanced search section");
+				return false;
+			}
+		}
+		if(taskSection!=null)
+		{
+
+			xPath="//span[text()='Advanced']/parent::button[@aria-expanded='true']";
+			ele=FindElement(driver, xPath, "Advance section", action.SCROLLANDBOOLEAN, 3);
+			if(ele==null)
+			{
+				if(clickUsingJavaScript(driver, getSectionBtn("Advanced",3), "Advanced section", action.SCROLLANDBOOLEAN))
+				{
+					log(LogStatus.INFO, "clicked on Advanced section", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Advanced section", YesNo.No);
+					sa.assertTrue(false, "Not able to click on Advanced section");
+					return false;
+				}
+			}
+
+			if(clickUsingJavaScript(driver, getSectionBtn("Tasks",30), "Tasks section", action.SCROLLANDBOOLEAN))
+			{
+				log(LogStatus.INFO, "clicked on Tasks section", YesNo.No);
+
+				for(String[] val:taskSection)
+				{
+					String labelName=val[0];
+					String value=val[1];
+
+					if(labelName.equalsIgnoreCase(excelLabel.Subject.toString()) || labelName.equals("Due Date Only"))
+					{
+						xPath="//span[text()='Tasks']/ancestor::lightning-accordion[1]//label[text()='"+labelName+"']/..//input";
+						ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+						if(CommonLib.sendKeys(driver, ele, value, labelName+" label", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, value+" value has been passed in "+labelName+" field", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, value+" value is not passed in "+labelName+" field", YesNo.No);
+							sa.assertTrue(false, value+" value is not passed in "+labelName+" field");
+							return false;
+						}
+					}
+					else
+						if(labelName.equalsIgnoreCase(excelLabel.Status.toString()))
+						{
+							xPath="//span[text()='Tasks']/ancestor::lightning-accordion[1]//label[text()='"+labelName+"']/..//button";
+							ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+							xPath="//span[text()='Tasks']/ancestor::lightning-accordion[1]//label[text()='"+labelName+"']/..//span[@class='slds-truncate']";
+							if(CommonLib.dropDownHandle(driver, ele, xPath, labelName+" dropdown", value))
+							{
+								log(LogStatus.INFO, value+" value has been selected from "+labelName+" field", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, value+" value is not selected from "+labelName+" field", YesNo.No);
+								sa.assertTrue(false, value+" value is not selected from "+labelName+" field");
+								return false;
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Label name is not correct", YesNo.No);
+							sa.assertTrue(false, "Label name is not correct");
+							return false;
+						}
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on Tasks section", YesNo.No);
+				sa.assertTrue(false, "Not able to click on Tasks section");
+				return false;
+			}
+		}
+		
+		if(click(driver, getfooterSaveOrCancelButton("Save",20), "Save button", action.SCROLLANDBOOLEAN))
+		{
+			log(LogStatus.INFO, "clicked on Save button", YesNo.No);
+			
+			if(getSuccessMsg(30)!=null)
+			{
+				log(LogStatus.INFO, "Activity timeline record has been created", YesNo.No);
+				flag=true;
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Activity timeline record is not created", YesNo.No);
+				sa.assertTrue(false, "Activity timeline record is not created");
+				return false;
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on Save button", YesNo.No);
+			sa.assertTrue(false, "Not able to click on Save button");
+			return false;
+		}
+		
+		return flag;
 	}
 
 }

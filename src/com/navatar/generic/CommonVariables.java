@@ -6,6 +6,7 @@ package com.navatar.generic;
 import static com.navatar.generic.BaseLib.testCasesFilePath;
 import static com.navatar.generic.BaseLib.phase1DataSheetFilePath;
 import static com.navatar.generic.BaseLib.smokeFilePath;
+import static com.navatar.generic.BaseLib.AcuityDataSheetFilePath;
 import static com.navatar.generic.CommonLib.getDateAccToTimeZone;
 import static com.navatar.generic.CommonLib.previousOrForwardDate;
 
@@ -1049,19 +1050,30 @@ public class CommonVariables {
 		
 		
 		
+		/*  *******Acuity Module***********  */
 		
+		//Firm
+		public static String AS_FirmLegalName1;
+		public static String AS_FirmRecordType1;
+		
+		//Contact
+		public static String AS_ContactFirstName;
+		public static String AS_ContactLastName;
+		public static String AS_ContactLegalName;
+		public static String AS_ContactEmail;
+		
+		//Deal
+		public static String AS_DealName;
+		public static String AS_DealCompany;
+		public static String AS_DealStage;
 
-
-
-
-
-
-
-
-
-
-
-
+		
+		//Fund
+		public static String AS_FundName;
+		public static String AS_FundType;
+		public static String AS_FundInvestmentCategory;
+		
+		
 
 	public CommonVariables(Object obj) {
 		//TODO Auto-generated constructor stub
@@ -5578,6 +5590,69 @@ public class CommonVariables {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			
+			
+			
+			case "AcuitySomke" :
+				
+				try {
+					dataFile=new FileInputStream(new File(AcuityDataSheetFilePath));
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					dataWb=WorkbookFactory.create(dataFile);
+				} catch (EncryptedDocumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvalidFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+			
+				//Firm
+				AS_FirmLegalName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ASRecord1", excelLabel.Legal_Name);
+				AS_FirmRecordType1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ASRecord1", excelLabel.Record_Type);
+				
+				//Contact
+				
+				AS_ContactFirstName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AS_Contact", excelLabel.Contact_FirstName);
+				AS_ContactLastName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AS_Contact", excelLabel.Contact_LastName);
+				AS_ContactLegalName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AS_Contact", excelLabel.Legal_Name);
+				AS_ContactEmail=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AS_Contact", excelLabel.Contact_EmailId);
+				
+				
+				//Deal
+				
+				AS_DealName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "AS_Deal", excelLabel.Deal_Name);
+				AS_DealCompany=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "AS_Deal", excelLabel.Company);
+				AS_DealStage=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "AS_Deal", excelLabel.Stage);
+				
+				//Fund
+				AS_FundName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "AS_Fund", excelLabel.Fund_Name);
+				AS_FundType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "AS_Fund", excelLabel.Fund_Type);
+				AS_FundInvestmentCategory=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "AS_Fund", excelLabel.Fund_Investment_Category);
+						
+
+				try {
+					dataFile.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					dataWb.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
 
 		default:
 			break;

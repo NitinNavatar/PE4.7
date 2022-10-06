@@ -1290,7 +1290,7 @@ public static enum PermissionType{
 	}
 	
 	public static enum GlobalActionItem{
-		New_Event,New_Task,Log_a_Call;
+		New_Event,New_Task,Log_a_Call,Meeting;
 	}
 	
 	public static enum Priority {

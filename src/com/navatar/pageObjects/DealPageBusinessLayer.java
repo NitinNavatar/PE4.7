@@ -3,6 +3,7 @@ package com.navatar.pageObjects;
 import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.ToggleDeal1;
+import static com.navatar.generic.CommonVariables.tabObj4;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import com.navatar.generic.BaseLib;
+import com.navatar.generic.CommonLib;
 import com.navatar.generic.EnumConstants.ContactPagePhotoActions;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageLabel;
@@ -24,12 +26,12 @@ import com.navatar.generic.EnumConstants.action;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class DealPageBusinessLayer extends DealPage implements DealPageErrorMessage{
-	
+
 	public DealPageBusinessLayer(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	/**
 	 * @author Azhar Alam
 	 * @param projectName
@@ -49,7 +51,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		String requestXpath = "/following-sibling::td//*[text()='"+request+"']/../../..";
 		String statusXpath = "/following-sibling::td//*[text()='"+status+"']";
 		String fullXpath = requestIdXpath+dateRequestedXpath+requestXpath+statusXpath;
-		
+
 		WebElement ele = FindElement(driver, fullXpath, "Open Request", action.BOOLEAN, timeOut);
 		if (ele!=null) {
 			ele = isDisplayed(driver, ele, "Visibility", timeOut, "Open Request");
@@ -61,7 +63,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		BaseLib.sa.assertTrue(false, "Not Verified Open Request with information as: "+requestID+" >> "+dateRequested+" >> "+request+" >> "+status);
 		return flag;
 	}
-	
+
 	/**
 	 * @author Azhar Alam
 	 * @param projectName
@@ -79,7 +81,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		String dateRequestedXpath = "/following-sibling::td//*[text()='"+dateRequested+"']/../../..";
 		String requestXpath = "/following-sibling::td//*[text()='"+request+"']";
 		String fullXpath = requestIdXpath+dateRequestedXpath+requestXpath;
-		
+
 		WebElement ele = FindElement(driver, fullXpath, "Closed Request", action.BOOLEAN, timeOut);
 		if (ele!=null) {
 			ele = isDisplayed(driver, ele, "Visibility", timeOut, "Closed Request");
@@ -91,8 +93,8 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		BaseLib.sa.assertTrue(false, "Not Verified Closed Request with information as: "+requestID+" >> "+dateRequested+" >> "+request);
 		return flag;
 	}
-	
-	
+
+
 	/**
 	 * @author Azhar Alam
 	 * @param projectName
@@ -109,7 +111,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		ele = isDisplayed(driver, ele, "Visibility", timeOut, "DATE : "+date);
 		return ele;
 	}
-	
+
 	/**
 	 * @author Azhar Alam
 	 * @param projectName
@@ -126,8 +128,8 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		ele = isDisplayed(driver, ele, "Visibility", timeOut, "DATE : "+date);
 		return ele;
 	}
-	
-	
+
+
 	/**
 	 * @author Azhar Alam
 	 * @param projectName
@@ -143,8 +145,8 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		scrollDownThroughWebelement(driver, ele, name);
 		return ele;
 	}
-	
-	
+
+
 	/**
 	 * @author Azhar Alam
 	 * @param projectName
@@ -236,8 +238,8 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		}
 		return flag;
 	}
-	
-	
+
+
 	/**
 	 * @author Azhar Alam
 	 * @param projectName
@@ -283,7 +285,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @author Azhar Alam
 	 * @param projectName
@@ -300,7 +302,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		ele = isDisplayed(driver, ele, "Visibility", timeOut, "request : "+request);
 		return ele;
 	}
-	
+
 	/**
 	 * @author Azhar Alam
 	 * @param projectName
@@ -322,7 +324,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		} 
 		return flag;
 	}
-	
+
 	/**
 	 * @author Azhar Alam
 	 * @param projectName
@@ -336,7 +338,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		WebElement ele = FindElement(driver, xpath,itemValue, action, timeOut);
 		return ele;
 	}
-	
+
 	/**
 	 * @param projectName
 	 * @param stage
@@ -347,9 +349,9 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		WebElement ele = FindElement(driver, xpath,"deactivate", action.SCROLLANDBOOLEAN, 10);
 		scrollDownThroughWebelement(driver, ele, "deactivate link for "+stage);
 		return isDisplayed(driver, ele, "Visibility", 10, "deactivate "+stage);
-		
+
 	}
-	
+
 	/**
 	 * @param projectName
 	 * @param stage
@@ -360,7 +362,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		WebElement ele = FindElement(driver, xpath,"Activate", action.SCROLLANDBOOLEAN, 10);
 		scrollDownThroughWebelement(driver, ele, "Activate link for "+stage);
 		return isDisplayed(driver, ele, "Visibility", 10, "Activate "+stage);
-		
+
 	}
 	/**
 	 * @param company
@@ -369,12 +371,12 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	public String convertToPortfolioBeforeNextPart1() {
 		return "Please click 'Next' to convert ";
 	}
-	
+
 	public String convertToPortfolioBeforeNextPart2() {
 		return "to a Portfolio Company.";
 	}
-	
-	 
+
+
 	/**
 	 * @param company
 	 * @return String
@@ -395,11 +397,11 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	 */
 	public WebElement getCompanyNameOnconvertToPortfolioMessage(int timeOut) {
 		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//p";
-			WebElement ele = FindElement(driver, xpath,"company name convert to portfolio", action.SCROLLANDBOOLEAN, 10);
+		WebElement ele = FindElement(driver, xpath,"company name convert to portfolio", action.SCROLLANDBOOLEAN, 10);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "company name convert to portfolio");
-		
+
 	}
-	
+
 	/**
 	 * @param company
 	 * @param timeOut
@@ -409,9 +411,9 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//span//span/../span[text()='"+company+" ']/../span[text()='"+convertToPortfolioBeforeNextPart2()+"']";
 		WebElement ele = FindElement(driver, xpath,"convert to portfolio", action.SCROLLANDBOOLEAN, 10);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
-		
+
 	}
-	
+
 	/**
 	 * @param timeOut
 	 * @return WebElement
@@ -420,7 +422,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//span[contains(text(),'successfully')]/..";
 		WebElement ele = FindElement(driver, xpath,"convert to portfolio", action.SCROLLANDBOOLEAN, 10);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
-		
+
 	}
 	/**
 	 * @param head
@@ -431,9 +433,9 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		String xpath="//h2[text()='"+head+"']/../following-sibling::*//article//span[contains(text(),'successfully')]/..";
 		WebElement ele = FindElement(driver, xpath,"convert to portfolio", action.SCROLLANDBOOLEAN, 10);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
-		
+
 	}
-	
+
 	/**
 	 * @param timeOut
 	 * @return WebElement
@@ -442,9 +444,9 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//span[contains(text(),'already')]/..";
 		WebElement ele = FindElement(driver, xpath,"convert to portfolio", action.SCROLLANDBOOLEAN, 10);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
-		
+
 	}
-	
+
 	/**
 	 * @param head
 	 * @param timeOut
@@ -454,7 +456,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		String xpath="//h2[text()='"+head+"']/../following-sibling::*//article//span[contains(text(),'already')]/..";
 		WebElement ele = FindElement(driver, xpath,"convert to portfolio", action.SCROLLANDBOOLEAN, 10);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "convertToPortfolio");
-		
+
 	}
 	/**
 	 * @param company
@@ -467,14 +469,14 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return isDisplayed(driver, ele, "Visibility", timeOut, "cross icon for company");
 
 	}
-	
+
 	/**
 	 * @param timeOut
 	 * @return WebElement
 	 */
 	public WebElement getconvertToPortfolioMessageUnhandledFlow(int timeOut) {
 		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//*[contains(text(),'processing')]/..";
-			WebElement ele = FindElement(driver, xpath,"unhandled flow message", action.SCROLLANDBOOLEAN, 10);
+		WebElement ele = FindElement(driver, xpath,"unhandled flow message", action.SCROLLANDBOOLEAN, 10);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "unhandled flow message");
 
 	}
@@ -484,11 +486,11 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	 */
 	public WebElement getconvertToPortfolioMessageRecordTypeInvalid(int timeOut) {
 		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//article//p";
-			WebElement ele = FindElement(driver, xpath,"RT invalid", action.SCROLLANDBOOLEAN, 10);
+		WebElement ele = FindElement(driver, xpath,"RT invalid", action.SCROLLANDBOOLEAN, 10);
 		return isDisplayed(driver, ele, "Visibility", timeOut, "RT invalid");
 
 	}
-	
+
 	/**
 	 * @param expected
 	 * @param timeOut
@@ -496,7 +498,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	 */
 	public boolean checkValueOfPathComponentValueOfStage(String expected,int timeOut) {
 		String xpath="//span[@class='current slds-path__stage']/following-sibling::span";
-			WebElement ele = FindElement(driver, xpath,"path component", action.SCROLLANDBOOLEAN, 10);
+		WebElement ele = FindElement(driver, xpath,"path component", action.SCROLLANDBOOLEAN, 10);
 		ele=isDisplayed(driver, ele, "Visibility", timeOut, "path component");
 		if (ele!=null) {
 			String stage=ele.getText();
@@ -512,7 +514,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		}
 		return false;
 	}
-	
+
 	/**
 	 * @param projectName
 	 * @param stage
@@ -522,9 +524,9 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		String xpath="//span[@class='title slds-path__title'][text()='"+stage+"']";
 		WebElement ele = FindElement(driver, xpath,"path component", action.SCROLLANDBOOLEAN, 10);
 		return isDisplayed(driver, ele, "Visibility", 10, "path component");
-		
+
 	}
-	
+
 	/**
 	 * @param projectName
 	 * @param stage
@@ -540,20 +542,112 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		}else if (DealStage.Ahead.toString().equals(stage)){
 			xpath ="//*[@class='ahead slds-path__stage']/following-sibling::span[text()='"+stageVale+"']";
 		}
-	
+
 		WebElement ele = FindElement(driver, xpath,stage+" : "+stageVale, action.SCROLLANDBOOLEAN, 60);
 		return isDisplayed(driver, ele, "Visibility", 30, stage+" : "+stageVale);
-		
+
 	}
-	
+
 	public WebElement getconvertToPortfolioMessage1(String msg,int timeOut) {
 		msg=convertingPortfoliaMsg;
 		String xpath="//h2[text()='Convert to Portfolio']/../following-sibling::*//*[text()='"+msg+"']";
 		WebElement ele = FindElement(driver, xpath,msg, action.SCROLLANDBOOLEAN, 10);
 		return isDisplayed(driver, ele, "Visibility", timeOut, msg);
-		
-	}
-	
 
 	}
+
+
+	public boolean createDeal(String environment, String dealName, String companyName, String stage) {
+		// TODO Auto-generated method stub
+		WebElement ele;
+		boolean flag = false;
+		if(CommonLib.click(driver, getDealNewButton(30), tabObj4+" new button", action.SCROLLANDBOOLEAN))
+		{
+			log(LogStatus.INFO, "Clicked on the new button", YesNo.No);
+
+			if(!dealName.isEmpty() || !dealName.equals("") || dealName!=null)
+			{
+
+				if(CommonLib.sendKeys(driver, getNewDealPopupDealNameInput(30), dealName, "Deal name", action.SCROLLANDBOOLEAN))
+				{
+					log(LogStatus.INFO, dealName+" value has been passed in Deal Name", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR, dealName+" value is not passed in Deal Name", YesNo.No);
+					return false;
+				}
+			}
+			if(!companyName.isEmpty() || !companyName.equals("") || companyName!=null)
+			{
+
+				if (sendKeys(driver, getCompanyName(60), companyName, "Company Name",action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(3000);
+					if (click(driver,
+							FindElement(driver, "//*[text()='Company']/..//*[@title='" + companyName + "']",
+									"Legal Name List", action.THROWEXCEPTION, 30),
+							companyName + "   :   Company Name", action.BOOLEAN)) {
+						appLog.info(companyName + "  is present in list.");
+					} else {
+						appLog.error(companyName + "  is not present in the list.");
+						return false;
+					}
+
+				} else {
+					appLog.error("Not able to enter legal name");
+					return false;
+				}
+
+			}
+			if(!stage.isEmpty() || !stage.equals("") || stage!=null)
+			{
+
+
+				if(CommonLib.dropDownHandle(driver, getStageField(40), "//label[text()='Stage']/following-sibling::div//span[@class='slds-truncate']", "Stage field", stage))
+				{
+					log(LogStatus.INFO, stage+" value has been selected from stage field", YesNo.No);
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, stage+" value is not selected from stage field", YesNo.No);
+					return false;
+				}
+			}
+
+			if(CommonLib.click(driver, getSaveButton(30), tabObj4+" save button", action.SCROLLANDBOOLEAN))
+			{
+				log(LogStatus.INFO, "Clicked on save button", YesNo.No);
+
+				String xPath="//lightning-formatted-text[contains(text(),'"+dealName+"')]";
+				ele=CommonLib.FindElement(driver, xPath, dealName, action.SCROLLANDBOOLEAN, 40);
+				if(ele!=null)
+				{
+					log(LogStatus.INFO, dealName+" deal has been created", YesNo.No);
+					sa.assertTrue(true, dealName+" deal has been created");
+					flag=true;
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, dealName+" deal is not created", YesNo.No);
+					
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
+				
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on the new button", YesNo.No);
+		}
+
+
+		return flag;
+
+	}
+}
 

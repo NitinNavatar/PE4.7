@@ -13,6 +13,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import com.navatar.generic.BaseLib;
+import com.navatar.generic.CommonLib;
 import com.navatar.generic.SoftAssert;
 import com.navatar.generic.EnumConstants.*;
 import static com.navatar.generic.AppListeners.appLog;
@@ -6815,5 +6816,46 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getaddFileVisible(int timeOut) {
 		return isDisplayed(driver, addFileVisible, "Visibility", timeOut, "Add File button Visible");
 	}
+	
+
+
+	public WebElement getTabNameOnPage(String tabName, int timeOut) {
+		String xPath="//ul[@role='tablist']//a[text()='"+tabName+"']";
+		
+		return isDisplayed(driver, FindElement(driver, xPath, tabName+" tab name", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, tabName+" tab name");
+	}
+	
+	public WebElement getVerificationPartTabNameOnPage(String tabName, int timeOut) {
+		String xPath="//ul[@role='tablist']//a[text()='"+tabName+"']/..";
+		
+		return isDisplayed(driver, FindElement(driver, xPath, tabName+" tab name", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, tabName+" tab name");
+	}
+	
+	public WebElement activityTimelineButton(String btnName, int timeOut) {
+		String xPath="//div[@class='menuList' and text()='"+btnName+"']";
+		
+		return isDisplayed(driver, FindElement(driver, xPath, btnName+" button", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, btnName+" button");
+	}
+	
+	public WebElement getSectionBtn(String sectionName, int timeOut) {
+		String xPath="//span[@class=\"slds-accordion__summary-content\" and text()='"+sectionName+"']";
+		
+		return isDisplayed(driver, FindElement(driver, xPath, sectionName+" section", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, sectionName+" section");
+	}
+	
+	public WebElement getfooterSaveOrCancelButton(String btnName, int timeOut) {
+		String xPath="//footer/button[text()='"+btnName+"']";
+		
+		return isDisplayed(driver, FindElement(driver, xPath, btnName+" button", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, btnName+" button");
+	}
+	
+	@FindBy(xpath = "//div[text()='Success']")
+	private WebElement successMsg;
+
+	public WebElement getSuccessMsg(int timeOut) {
+		return isDisplayed(driver, successMsg, "Visibility", timeOut, "Sucsess Message");
+	}
+	
+	
 
 }

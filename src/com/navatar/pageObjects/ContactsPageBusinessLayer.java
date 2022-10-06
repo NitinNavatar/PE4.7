@@ -303,7 +303,6 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 			}
 		} else {
 			refresh(driver);
-			ThreadSleep(3000);
 			ThreadSleep(5000);
 			if (clickUsingJavaScript(driver, getNewButton(projectName, 60), "new button")) {
 				appLog.info("clicked on new button");
