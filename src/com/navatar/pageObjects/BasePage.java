@@ -77,6 +77,25 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, contactsTab, "Visibility", timeOut, "Contacts Tab");
 	}
 
+	public WebElement sdgHeaderElement(String HeaderSDG, int timeOut) {
+        String xpath = "//a[text()='" + HeaderSDG + "']";
+        try {
+
+
+
+           return FindElement(driver, xpath, "sdgHeaderElement", action.SCROLLANDBOOLEAN, timeOut);
+        }
+
+
+
+       catch (Exception e) {
+            return FindElement(driver, xpath, "sdgHeaderElement", action.SCROLLANDBOOLEAN, timeOut);
+        }
+
+
+
+   }
+	
 	@FindBy(xpath = "//a[@title='Funds Tab']")
 	private WebElement fundsTab;
 
