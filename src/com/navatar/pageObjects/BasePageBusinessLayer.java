@@ -3350,6 +3350,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			tabName = "Entities";
 		} else if (TabName.contains("Inst")) {
 			tabName = "Institutions";
+		}else if (TabName.contains("Fundraising")) {
+			tabName = "Fundraisings";
 		} else if (TabName.contains("Fund")) {
 			tabName = "Funds";
 		} else {
@@ -6125,6 +6127,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			if (click(driver, filteryOwnerRadioButton(listViewDataRowWise[4], timeOut), "all filters",
 					action.BOOLEAN)) {
 				log(LogStatus.INFO, "successfully click on all radio button", YesNo.No);
+				ThreadSleep(2000);
 				if (click(driver, getdoneButtonListView(projectName, timeOut), "done", action.BOOLEAN)) {
 					log(LogStatus.INFO, "successfully click on done buton", YesNo.No);
 
@@ -6263,7 +6266,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (click(driver, lp.getAppLuncherXpath(timeOut), "App launcher icon", action.BOOLEAN)) {
 
 			AppListeners.appLog.info(" click on app launcher icon");
-			ThreadSleep(1000);
+			ThreadSleep(3000);
 			if (sendKeys(driver, lp.getSearchAppTextBoxInAppLuncher(timeOut), objectName, "Search box in app launcher",
 					action.BOOLEAN)) {
 				AppListeners.appLog.info("entered value in app launcher search box value:" + objectName);

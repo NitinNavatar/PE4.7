@@ -3139,9 +3139,10 @@ public class HomePageBusineesLayer extends HomePage {
 
 				if (click(driver, deleteRecordConfirmBtn(Title), "Delete Confirm Button", action.BOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on Delete Confirm Button", YesNo.No);
-					String msg;
-					if (deleteRecordMsg(30) != null) {
-						msg = deleteRecordMsg(30).getText();
+					flag = true;
+					 String msg = getText(dDriver, deleteRecordMsg(10), "", action.BOOLEAN).trim();
+					if (msg != null && !msg.equalsIgnoreCase("")&&!msg.isEmpty()) {
+						
 						if (msg.contains("Successfully")) {
 							log(LogStatus.INFO, "Message Verified: " + msg, YesNo.No);
 							CommonLib.ThreadSleep(30000);
@@ -3275,6 +3276,7 @@ public class HomePageBusineesLayer extends HomePage {
 								.equals("_blank")) {
 							log(LogStatus.PASS, "Column Data: " + columnData.getText() + " will Redirect to New Tab",
 									YesNo.No);
+							ThreadSleep(2000);
 							if (clickUsingJavaScript(driver, columnData, columnData.getText(),
 									action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on :" + columnData.getText(), YesNo.No);

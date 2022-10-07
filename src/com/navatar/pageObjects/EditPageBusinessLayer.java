@@ -1192,6 +1192,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		if (clickOnEditPageLink()) {
+			ThreadSleep(4000);
 			CommonLib.switchToFrame(driver, 50, getAppBuilderIframe(90));
 			ThreadSleep(10000);
 
@@ -1214,18 +1215,22 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 						"Add Link");
 
 			}
-
+			ThreadSleep(2000);
 			CommonLib.switchToDefaultContent(driver);
 			if (CommonLib.sendKeys(driver, getSearchonAppBuilder(50), "Navatar SDG", "SearchBox",
 					action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(2000);
 				log(LogStatus.INFO, "Navatar SDG has been Search", YesNo.No);
 				if (CommonLib.click(driver, getNavatarSDGBtn(50), "Navatar SDG Button", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Navatar SDG Button has been clicked", YesNo.No);
+					ThreadSleep(2000);
 					if (CommonLib.sendKeys(driver, getTitle(50), tableName, "Title", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Title has been Entered", YesNo.No);
+						ThreadSleep(2000);
 						if (CommonLib.getSelectedOptionOfDropDown(driver, getDataProvider(50),
 								getDataProviderDropDownList(30), "Data Provider", dataProviderName)) {
 							log(LogStatus.INFO, "SDG Data Provider has been searched", YesNo.No);
+							ThreadSleep(2000);
 							if (CommonLib.click(driver, getEditAppSaveButton(50), "App builder Save Button",
 									action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "App Builder save button has been clicked", YesNo.No);
@@ -1446,9 +1451,9 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 					if (CommonLib.switchToFrame(driver, 50, getAppBuilderIframe(50))) {
 						if (CommonLib.checkElementVisibility(driver, afterAddComponentMsg(50), "Component Msg", 20)) {
 							log(LogStatus.INFO, "Component Msg is Visible, So Component Added to Page", YesNo.No);
-
+							ThreadSleep(2000);
 							CommonLib.switchToDefaultContent(driver);
-
+							ThreadSleep(2000);
 							if (CommonLib.sendKeys(driver, getTitle(50), Title, "Title", action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Title has been Entered", YesNo.No);
 

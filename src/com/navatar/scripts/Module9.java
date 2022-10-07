@@ -1806,7 +1806,7 @@ public class Module9 extends BaseLib {
 									log(LogStatus.PASS,
 											"-----------Page Size has selected to" + pageSize + " --------------",
 											YesNo.No);
-
+									ThreadSleep(5000);
 									if (hp.fundNameElement(sdgName, fundNameDeleted) != null) {
 										log(LogStatus.INFO, "Record Found " + fundNameDeleted, YesNo.No);
 
@@ -2440,6 +2440,7 @@ public class Module9 extends BaseLib {
 	public void M9Tc018_VerifySDGGridFieldsWithRedirectURLAndGrouping(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer sp = new SetupPageBusinessLayer(driver);
 		FundsPage fundPage = new FundsPage(driver);
 		ReportsTab reportPage = new ReportsTab(driver);
 
@@ -2498,11 +2499,16 @@ public class Module9 extends BaseLib {
 								}
 
 							}
+							ThreadSleep(3000);
 							if (columnName.equals("OWNER NAME")) {
+								ThreadSleep(3000);
 								String parentWindowId = home.verifyColumnRecordRedirectAndReturnNewWindowId(
 										SDGGridName.Fund_First_SDG, columnName, columnDataInSDG,
 										indexColumnDataFromList);
 								if (parentWindowId != null) {
+									ThreadSleep(3000);
+									driver.switchTo().frame(sp.getSetUpPageIframe(20));
+									ThreadSleep(3000);
 									log(LogStatus.INFO, "Redirected to New Tab for SDG : " + sdgName, YesNo.Yes);
 									if (home.getUserNameHeader(crmUser1FirstName + " " + crmUser1LastName,
 											30) != null) {
@@ -2515,7 +2521,7 @@ public class Module9 extends BaseLib {
 										sa.assertTrue(false, "No Text Found on New Tab: " + crmUser1FirstName + " "
 												+ crmUser1LastName);
 									}
-
+									switchToDefaultContent(driver);
 									CommonLib.ThreadSleep(3000);
 									driver.close();
 									CommonLib.ThreadSleep(3000);
@@ -2668,6 +2674,7 @@ public class Module9 extends BaseLib {
 								if (parentWindowId != null) {
 									log(LogStatus.INFO, "Redirected to New Tab for SDG : " + sdgName, YesNo.Yes);
 									if (CommonLib.switchToFrame(driver, 30, reportPage.reportViewerIFrame(30))) {
+										ThreadSleep(3000);
 										if (reportBusinessLayer.reportVerification(reportName, reportRowsCount,
 												columnsInReport)) {
 											log(LogStatus.PASS, "Report Verified: " + reportName, YesNo.No);
@@ -6572,11 +6579,11 @@ public class Module9 extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
-
-		String[][] sdgLabels = { { SDGCreationLabel.Override_Label.toString(), M9_TC045_SDGFieldData } };
+		String TitleOfSDG = M9_TC003_SDGName;
+		String[][] sdgLabels = {{SDGCreationLabel.Override_Label.toString(), M9_TC045_SDGFieldData } };
 
 		String fieldToSelect = M9_TC045_SDGFieldData;
-		String TitleOfSDG = M9_TC003_SDGName;
+		
 		List<String> FundFistSDGList = new ArrayList<String>();
 
 		String parentId;
@@ -8875,7 +8882,7 @@ public class Module9 extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void M9Tc063_CreateAppPageAndAddSDGs(String projectName) {
+	public void M9Tc063_CreateAppPageAndAddSDGs(String projectName) throws InterruptedException {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -10963,7 +10970,7 @@ public class Module9 extends BaseLib {
 
 				ArrayList<String> val = new ArrayList<String>();
 				val.add("Asia");
-				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 8", "Location", "Asia",
+				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 8", "Location Preferences", "Asia",
 						"Multipicklist", val)) {
 					log(LogStatus.INFO, "\"Account 8\" Location record has been updated to Asia", YesNo.No);
 					sa.assertTrue(true, "\"Account 8\" Location record has been updated to Asia");
@@ -11002,7 +11009,7 @@ public class Module9 extends BaseLib {
 				val1.add("Far East");
 				val1.add("Global");
 				val1.add("Middle East");
-				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 8", "Location", null, "Multipicklist",
+				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 8", "Location Preferences", null, "Multipicklist",
 						val1)) {
 					log(LogStatus.INFO,
 							"\"Account 8\" Location record has been updated to Far East, Global, Middle East",
@@ -11243,7 +11250,7 @@ public class Module9 extends BaseLib {
 
 				ArrayList<String> val = new ArrayList<String>();
 				val.add("Far East");
-				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 1 Updated", "Location", "null",
+				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 1 Updated", "Location Preferences", "null",
 						"Multipicklist", val)) {
 					log(LogStatus.INFO, "\"Account 1 Updated\" Location record has been updated to Far East", YesNo.No);
 					sa.assertTrue(true, "\"Account Updated\" Location record has been updated to Far East");
@@ -11283,7 +11290,7 @@ public class Module9 extends BaseLib {
 				val1.add("Asia");
 				val1.add("Middle East");
 				val1.add("Global");
-				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 1 Updated", "Location", null,
+				if (SB.updateSDGRecordAndVerifySaveCancelButton(sdgName, "Account 1 Updated", "Location Preferences", null,
 						"Multipicklist", val1)) {
 					log(LogStatus.INFO,
 							"\"Account 1 Updated\" Location record has been updated to Far Asia, Global, Middle East",
@@ -11678,7 +11685,7 @@ public class Module9 extends BaseLib {
 			ThreadSleep(7000);
 			AppBuilder.pageSizeSelect(sdgName, "100");
 			CommonLib.ThreadSleep(20000);
-			if (SB.updatePhoneOnSDGRecordAndVerifyErrorMessage(sdgName, "Tata Motors", "Phone", "9876543321")) {
+			if (SB.updatePhoneOnSDGRecordAndVerifyErrorMessage(sdgName, "Account 3", "Phone", "9876543321")) {
 				log(LogStatus.INFO, "\"Tata Motors\" Phone record has been updated to Navatar 9876543321", YesNo.No);
 				sa.assertTrue(true, "\"Tata Motors\" Phone record has been updated to Navatar 9876543321");
 				CommonLib.ThreadSleep(7000);
