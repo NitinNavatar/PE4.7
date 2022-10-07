@@ -885,7 +885,7 @@ public class Module6 extends BaseLib{
 						log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
 					}
 					}
-//					refresh(driver);
+					refresh(driver);
 					ThreadSleep(3000);
 					if (ip.getLastModifiedTime(projectName,10)!=null) {
 						scrollDownThroughWebelement(driver, ip.getLastModifiedTime(projectName,10), "last modified time");
@@ -2383,7 +2383,7 @@ public class Module6 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
 		};
-		String labelValues[]={Stage.Closed.toString(),Stage.Closed.toString()};
+		String labelValues[]={Stage.Closed_Updated.toString(),Stage.Closed_Updated.toString()};
 
 		
 		if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
@@ -2573,7 +2573,7 @@ public class Module6 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
 		};
-		String labelValues[]={Stage.Closed.toString(),Stage.Closed.toString()};
+		String labelValues[]={Stage.Closed.toString(),Stage.Closed_Updated.toString()};
 
 		if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M6Deal1, 10)) {
@@ -3596,7 +3596,7 @@ public class Module6 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void M6tc024_1_RenameConvertToPortfolioToConvert_Action(String projectName) {
+	public void M6tc024_RenameConvertToPortfolioToConvert_Action(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
@@ -3675,7 +3675,7 @@ public class Module6 extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void M6tc024_2_RenameConvertToPortfolioToConvert_Impact(String projectName) {
+	public void M6tc024_RenameConvertToPortfolioToConvert_Impact(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);

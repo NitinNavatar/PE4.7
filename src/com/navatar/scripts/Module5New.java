@@ -1870,7 +1870,6 @@ public class Module5New extends BaseLib {
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
 		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		
 		String[] tabNames = {ToggleCheck1TabName,ToggleCheck2TabName,ToggleCheck3TabName};
 		String tabName;
@@ -1908,7 +1907,7 @@ public class Module5New extends BaseLib {
 								if (i==2) {
 									//outSideContainerLocation = ".\\AutoIT\\EditPage\\DropdownIcon.PNG";
 								}
-								if (bp.dragNDropSDG(ActiveDealToggleButton)) {
+								if (edit.dragNDropUsingScreen(projectName, customSDGFileLocation, outSideContainerLocation, 20)) {
 									log(LogStatus.INFO,"Able to DragNDrop Custom SDG to Outside container",YesNo.No);
 									switchToDefaultContent(driver);
 									ThreadSleep(5000);

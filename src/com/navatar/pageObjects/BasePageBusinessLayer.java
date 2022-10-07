@@ -3008,9 +3008,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			ActivityTimeLineItem activityTimeLineItem, int timeOut) {
 		// clickUsingJavaScript(driver, getactivityLineItemsDropdown(projectName, 10),
 		// "dropdown", action.BOOLEAN);
-		WebElement ele2 = getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
-        click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
-        ThreadSleep(1000);
+
 		String xpath = "";
 		// WebElement ele;
 		String activity = activityTimeLineItem.toString().replace("_", " ");
@@ -3088,14 +3086,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		WebElement ele;
 		String type = "";
 		if (activityType == ActivityType.Next) {
-			type = "Next";
+			type = "upcoming";
 		} else if (activityType == ActivityType.Past) {
 			type = "past";
 		}
 
-		String nextStepsXpath = "//div[contains(@class,'" + type + "')]";
+		String nextStepsXpath = "//div[contains(@id,'" + type + "-activities-section')]";
 
-		String subjectXpath = nextStepsXpath + "/following-sibling::div//*[@title='" + subject + "']";
+		String subjectXpath = nextStepsXpath + "//a[@title='" + subject + "']";
 
 		String eleXpath = "";
 
@@ -3462,68 +3460,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return flag;
 	}
 
-	public boolean dragNDropSDG(String ActiveDealToggleButton) {
-        boolean flag = false;
-
-
-
-       WebElement sourceElement = null;
-        WebElement targetElement = null;
-        String xPath;
-
-
-
-       sourceElement = sdgHeaderElement(ActiveDealToggleButton, 40);
-        // String xPath="//div[@class='flexipageEditorContainerPlaceholderContainer']";
-
-
-
-       targetElement = sdgHeaderElement("Add Component(s) Here", 40);
-
-
-
-       if (CommonLib.clickUsingJavaScript(driver, sourceElement, ActiveDealToggleButton + " header")) {
-            log(LogStatus.INFO, "Click on " + ActiveDealToggleButton + " SDG", YesNo.No);
-            ThreadSleep(2000);
-            // xPath="//a[text()='"+ActiveDealToggleButton+"']/ancestor::div[@class='sdgdesignplaceholder
-            // navmnaISdgBase navmnaISdg']//a";
-            // WebElement ele=CommonLib.FindElement(driver, xPath, xPath, action.BOOLEAN,
-            // 30);
-
-
-
-           try {
-                Robot rb = new Robot();
-                rb.keyPress(KeyEvent.VK_CONTROL);
-                rb.keyPress(KeyEvent.VK_X);
-                ThreadSleep(2000);
-                CommonLib.clickUsingJavaScript(driver, targetElement, ActiveDealToggleButton + " header");
-                ThreadSleep(2000);
-                rb.keyPress(KeyEvent.VK_CONTROL);
-                rb.keyPress(KeyEvent.VK_V);
-                CommonLib.ThreadSleep(5000);
-                flag = true;
-
-
-
-           } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                System.err.println(e.toString());
-
-
-
-           }
-        } else {
-            log(LogStatus.ERROR, "Not able to click on " + ActiveDealToggleButton + " SDG", YesNo.No);
-        }
-        return flag;
-
-
-
-   }
-	
-	
 	/**
 	 * @param projectName
 	 * @param pageName
@@ -3534,22 +3470,15 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	public WebElement getRelatedTab(String projectName, String relatedTab, int timeOut) {
 		ThreadSleep(10000);
 		String xpath = "";
-		WebElement ele = null;
+		WebElement ele;
 		String related = relatedTab.toString().replace("_", " ");
 		if (projectName.contains(ProjectName.PE.toString()))
 			xpath = "//li[@title='" + related + "']//a";
 		else
 			xpath = "//li//*[@title='" + related + "' or text()='" + related + "']";
 		xpath = "//li//*[@title='" + related + "' or text()='" + related + "']";
-		List<WebElement> eleList2 = FindElements(driver, xpath, "More");
-		for(WebElement element:eleList2){
-			ele = isDisplayed(driver, element,
-					"visiblity", 30, relatedTab.toString());
-			if(ele!=null){
-				ele=element;
-				break;
-			}
-		}
+		ele = isDisplayed(driver, FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut),
+				"visiblity", 30, relatedTab.toString());
 		if (ele != null) {
 			appLog.info("Element Found : " + related);
 		} else {
@@ -4851,7 +4780,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		WebElement ele = moreStepsBtn(projectName, EnableDisable.Enable, 10);
 		click(driver, ele, "More Steps", action.BOOLEAN);
 		ThreadSleep(2000);
-		String xpath = "//div[@class='cActivityTimeline']//a[text()='" + taskName + "']";
+		String xpath = "//a[text()='" + taskName + "']";
 		ele = FindElement(driver, xpath, taskName, action.SCROLLANDBOOLEAN, 20);
 		ele = isDisplayed(driver, ele, "Visibility", 20, taskName);
 		return ele;

@@ -1196,7 +1196,7 @@ public static enum PermissionType{
 	};
 	
 	public static enum RelatedTab{
-		Related,Details,Communications,Network,Tasks,Meetings,Activities,Affiliations,Documents,Box,Referrals,Clients,KPIs,Investment,All_Contacts,Board_Members,Recent_Moves,Connections,Contacts,Financing,Consultants,Fundraising,Investors,
+		Related,Details,Network,Tasks,Meetings,Activities,Affiliations,Documents,Box,Referrals,Clients,KPIs,Investment,All_Contacts,Board_Members,Recent_Moves,Connections,Contacts,Financing,Consultants,Fundraising,Investors,
 		Investor_Relations,Co_Investments{
 			@Override
 			public String toString() {
@@ -1608,14 +1608,7 @@ public static enum PermissionType{
 			@Override
 			public String toString() {
 				return "Create New";
-				
 			}
-    	},Create{
-			@Override
-			public String toString() {
-				return "Create";
-				
-			};
     	};
     };
     
