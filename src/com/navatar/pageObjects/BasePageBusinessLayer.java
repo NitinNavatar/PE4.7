@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package com.navatar.pageObjects;
 
 import org.apache.poi.hssf.view.brush.PendingPaintings;
@@ -10691,13 +10689,20 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 	}
-	
+
 	/**
 	 * @author Sourabh Saini 
-	 * @return return if test case is passed
+	 * @param projectName
+	 * @param fromNavigation
+	 * @param buttonName
+	 * @param basicSection
+	 * @param advanceSection
+	 * @param taskSection
+	 * @param suggestedTags
+	 * @return return true if test case is passed
 	 */
 
-	public boolean createActivityTimeline(String projectName,boolean fromNavigation, String buttonName, String[][] basicSection, String[][] advanceSection, String[][] taskSection)
+	public boolean createActivityTimeline(String projectName,boolean fromNavigation, String buttonName, String[][] basicSection, String[][] advanceSection, String[][] taskSection,String[] suggestedTags)
 	{
 		NavigationPageBusineesLayer npbl= new NavigationPageBusineesLayer(driver);
 		String xPath="";
@@ -10737,7 +10742,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		}
 		CommonLib.ThreadSleep(9000);
-		if(basicSection!=null || basicSection.length!=0)
+		if(basicSection!=null )
 		{
 
 			for(String[] val:basicSection)
@@ -10775,6 +10780,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							if(sendKeys(driver, ele, value, labelName+" paragraph", action.SCROLLANDBOOLEAN))
 							{
 								log(LogStatus.INFO, value+" has been passed on "+labelName+" paragraph", YesNo.No);
+
+								CommonLib.ThreadSleep(2000);
 							}
 							else
 							{
@@ -10866,7 +10873,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 
 		}
-		if(advanceSection!=null || advanceSection.length!=0)
+		if(advanceSection!=null)
 		{
 			if(clickUsingJavaScript(driver, getSectionBtn("Advanced",30), "Advanced section", action.SCROLLANDBOOLEAN))
 			{
@@ -11119,11 +11126,43 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				return false;
 			}
 		}
-		
+
 		if(click(driver, getfooterSaveOrCancelButton("Save",20), "Save button", action.SCROLLANDBOOLEAN))
 		{
 			log(LogStatus.INFO, "clicked on Save button", YesNo.No);
-			
+
+
+			if(suggestedTags!=null)
+			{
+				for(int i=0; i<suggestedTags.length; i++)
+				{
+					xPath="//lightning-base-formatted-text[text()='"+suggestedTags[i]+"']/ancestor::th[@data-label='Reference Found']/..//td//input";
+					ele=CommonLib.FindElement(driver, xPath, suggestedTags[i]+" sugested Tag", action.SCROLLANDBOOLEAN, 30);
+					if(click(driver, ele, suggestedTags[i]+" suggested tag", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on "+suggestedTags[i]+" suggested tag checkbox button", YesNo.No);
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on "+suggestedTags[i]+" suggested tag checkbox button", YesNo.No);
+						sa.assertTrue(false, "Not able to click on "+suggestedTags[i]+" suggested tag checkbox button");
+						return false;
+					}
+				}
+				if(click(driver, getfooterTagButton(30), "Tag Button", action.SCROLLANDBOOLEAN))
+				{
+					log(LogStatus.INFO, "clicked on footer tag button", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on footer tag button", YesNo.No);
+					sa.assertTrue(false, "Not able to click on footer tag button");
+					return false;
+				}
+			}
+
+
 			if(getSuccessMsg(30)!=null)
 			{
 				log(LogStatus.INFO, "Activity timeline record has been created", YesNo.No);
@@ -11142,8 +11181,408 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			sa.assertTrue(false, "Not able to click on Save button");
 			return false;
 		}
-		
+
 		return flag;
+	}
+	
+	/**
+	 * @author Sourabh Saini 
+	 * @param intractionSubjectName
+	 * @return return true if test case is passed
+	 */
+
+	public boolean verifyRecordOnInteractionCard(String intractionSubjectName)
+	{
+		boolean flag=false;
+		if(click(driver, getInteractionViewAllBtn(30), "Interaction view all button", action.SCROLLANDBOOLEAN))
+		{
+			log(LogStatus.INFO, "Clicked on view all button of Interaction", YesNo.No);
+
+
+			if(getIntractionSubjectName(intractionSubjectName,30)!=null)
+			{
+				log(LogStatus.INFO, intractionSubjectName+" intraction Record has been created", YesNo.No);
+				flag=true;
+			}
+			else
+			{
+				log(LogStatus.ERROR, intractionSubjectName+" intraction Record is not created", YesNo.No);
+			}
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on view all button of Interaction", YesNo.No);
+		}
+		return flag;
+
+	}
+	
+	/**
+	 * @author Sourabh Saini 
+	 * @param companyTag
+	 * @param peopleTag
+	 * @param dealTag
+	 * @return return Empty ArrayList if test case is passed
+	 */
+
+	public ArrayList<String> verifyRecordOnTagged(String[] companyTag, String peopleTag[], String dealTag[])
+	{
+		ArrayList<String> result=new ArrayList<String>();
+		if(companyTag!=null)
+		{
+			if(click(driver, getTaggedRecordName("Companies",30), "Companies tab", action.SCROLLANDBOOLEAN))
+			{
+				log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
+
+				for(int i=0; i<companyTag.length; i++)
+				{
+					if(getTaggedRecordName("Companies",companyTag[i],30)!=null)
+					{
+						log(LogStatus.INFO, companyTag[i]+" record is available on company tab", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, companyTag[i]+" record is not available on company tab", YesNo.No);
+						result.add(companyTag[i]+" record is not available on company tab");
+					}
+
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
+				result.add("Not able to click on Companies tab name");
+			}
+		}
+		if(peopleTag !=null)
+		{
+
+			if(click(driver, getTaggedRecordName("People",30), "People tab", action.SCROLLANDBOOLEAN))
+			{
+				log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+
+				for(int i=0; i<peopleTag.length; i++)
+				{
+					if(getTaggedRecordName("People",peopleTag[i],30)!=null)
+					{
+						log(LogStatus.INFO, peopleTag[i]+" record is available on people tab", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, peopleTag[i]+" record is not available on people tab", YesNo.No);
+						result.add(peopleTag[i]+" record is not available on people tab");
+					}
+
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+				result.add("Not able to click on People tab name");
+			}
+
+		}
+		if(dealTag !=null)
+		{
+
+			if(click(driver, getTaggedRecordName("Deals",30), "Deals tab", action.SCROLLANDBOOLEAN))
+			{
+				log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+
+				for(int i=0; i<dealTag.length; i++)
+				{
+					if(getTaggedRecordName("Deals",dealTag[i],30)!=null)
+					{
+						log(LogStatus.INFO, dealTag[i]+" record is available on deal tab", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, dealTag[i]+" record is not available on deal tab", YesNo.No);
+						result.add(dealTag[i]+" record is not available on deal tab");
+					}
+
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+				result.add("Not able to click on Deals tab name");
+			}
+
+		}	
+		return result;
+
+	}
+
+	/**
+	 * @author Sourabh Saini 
+	 * @param dueDate
+	 * @param subjectName
+	 * @param notes
+	 * @param editNote
+	 * @param addNote
+	 * @return return Empty ArrayList if test case is passed
+	 */
+
+
+	public ArrayList<String> verifyRecordOnInteractionCard(String dueDate, String subjectName, String notes, boolean editNote, boolean addNote)
+	{
+		boolean flag=false;
+		String xPath;
+		WebElement ele;
+		ArrayList<String> result=new ArrayList<String>();
+		if(dueDate!="" && dueDate!=null)
+		{
+			xPath="//a[text()='"+subjectName+"']/../preceding-sibling::div//lightning-badge";
+			ele=CommonLib.FindElement(driver, xPath, "Due Date", action.SCROLLANDBOOLEAN, 30);
+			String date=getText(driver, ele, "Due Date", action.SCROLLANDBOOLEAN);
+			
+			String[] actualDate=new String[1];
+			if(date.contains(","))
+			{
+				String[] val=date.split(",");
+				actualDate[0]=val[0];
+			}
+			else
+			{
+			actualDate[0]=date;
+			}
+			if(dueDate.contains(actualDate[0]))
+			{
+				log(LogStatus.INFO, "Actual result : "+date+" has been matched with expected result : "+dueDate+" for Due Date", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Actual result : "+date+" is not matched with expected result : "+dueDate+" for Due Date", YesNo.No);
+				result.add("Actual result : "+date+" is not matched with expected result : "+dueDate+" for Due Date");
+			}
+
+		}
+
+		if(subjectName!="" && subjectName!=null)
+		{
+			xPath="//a[@class=\"interaction_sub subject_text\" and text()='"+subjectName+"']";
+			ele=CommonLib.FindElement(driver, xPath, "Subject", action.SCROLLANDBOOLEAN, 30);
+			String subName=getText(driver, ele, "Subject", action.SCROLLANDBOOLEAN);
+			if(subjectName.contains(subName))
+			{
+				log(LogStatus.INFO, "Actual result : "+subName+" has been matched with expected result : "+dueDate+" for Subject", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Actual result : "+subName+" is not matched with expected result : "+dueDate+" for Subject", YesNo.No);
+				result.add("Actual result : "+subName+" is not matched with expected result : "+dueDate+" for Subject");
+			}
+
+		}
+		if(notes!="" && notes!=null)
+		{
+			xPath="//a[@class=\"interaction_sub subject_text\" and text()='"+subjectName+"']/../following-sibling::div[contains(@class,'slds-text-title')]";
+			ele=CommonLib.FindElement(driver, xPath, "Notes", action.SCROLLANDBOOLEAN, 30);
+			String note=getText(driver, ele, "notes", action.SCROLLANDBOOLEAN);
+			if(note.contains(notes))
+			{
+				log(LogStatus.INFO, "Actual result : "+note+" has been matched with expected result : "+notes+" for notes", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Actual result : "+note+" is not matched with expected result : "+notes+" for notes", YesNo.No);
+				result.add("Actual result : "+note+" is not matched with expected result : "+notes+" for notes");
+			}
+
+		}
+		if(editNote==true)
+		{
+			xPath="//a[text()='"+subjectName+"']/../preceding-sibling::div//button[@title='Edit Note']";
+			ele=CommonLib.FindElement(driver, xPath, "Notes", action.SCROLLANDBOOLEAN, 30);
+			if(ele!=null)
+			{
+				log(LogStatus.INFO, "Edit Notes button is visible", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Edit Notes button is not visible", YesNo.No);
+				result.add("Edit Notes button is not visible");
+			}
+		}
+		if(addNote==true)
+		{
+			xPath="//a[text()='"+subjectName+"']/../preceding-sibling::div//button[@title='Add Note']";
+			ele=CommonLib.FindElement(driver, xPath, "Notes", action.SCROLLANDBOOLEAN, 30);
+			if(ele!=null)
+			{
+				log(LogStatus.INFO, "Add Notes button is visible", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Add Notes button is not visible", YesNo.No);
+				result.add("Add Notes button is not visible");
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * @author Sourabh Saini 
+	 * @param name
+	 * @param title
+	 * @param deals
+	 * @param meetingAndCalls
+	 * @param email
+	 * @return return Empty ArrayList if test case is passed
+	 */
+	
+	public ArrayList<String> verifyRecordOnContactSectionAcuity(String name, String title, String deals, String meetingAndCalls, String email)
+	{
+		String xPath="";
+		WebElement ele=null;
+		ArrayList<String> result=new ArrayList<String>();
+		if(name!=null && name!="")
+		{
+
+			xPath="//td[@data-label='Name']//a[text()='"+name+"']";
+			ele=CommonLib.FindElement(driver, xPath, "Name", action.SCROLLANDBOOLEAN, 30);
+			if(ele!=null)
+			{
+				log(LogStatus.INFO, name+" is avalable in contact section", YesNo.No);		
+				sa.assertTrue(true,  name+" is avalable in contact section");	
+
+				if(title!=null && title!="") 
+				{
+					xPath="//a[text()='"+name+"']/ancestor::td[@data-label='Name']/..//td[@data-label='Title']//span";
+					ele=CommonLib.FindElement(driver, xPath, "title", action.SCROLLANDBOOLEAN, 30);
+					String actualTitle=getText(driver, ele, "Title", action.SCROLLANDBOOLEAN);
+					if(actualTitle.equalsIgnoreCase(title))
+					{
+						log(LogStatus.INFO, "Actual result "+actualTitle+" of Title has been matched with Expected result : "+title, YesNo.No);		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Actual result "+actualTitle+" of Title is not matched with Expected result : "+title, YesNo.No);		
+						result.add("Actual result "+actualTitle+" of Title is not matched with Expected result : "+title);
+					}
+				}
+
+				if(deals!=null && deals!="") 
+				{
+					xPath="//a[text()='"+name+"']/ancestor::td[@data-label='Name']/..//td[@data-label='Deals']//span";
+					ele=CommonLib.FindElement(driver, xPath, "deal", action.SCROLLANDBOOLEAN, 30);
+					String actualDeal=getText(driver, ele, "deal", action.SCROLLANDBOOLEAN);
+					if(actualDeal.equalsIgnoreCase(deals))
+					{
+						log(LogStatus.INFO, "Actual result "+actualDeal+" of deal has been matched with Expected resut : "+deals, YesNo.No);		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Actual result "+actualDeal+" of deal are not matched with Expected resut : "+deals, YesNo.No);		
+						result.add("Actual result "+actualDeal+" of deal are not matched with Expected resut : "+deals);
+					}
+				}
+
+				if(meetingAndCalls!=null && meetingAndCalls!="") 
+				{
+					xPath="//a[text()='"+name+"']/ancestor::td[@data-label='Name']/..//td[@data-label='Meetings and Calls']//span";
+					ele=CommonLib.FindElement(driver, xPath, "meeting and call", action.SCROLLANDBOOLEAN, 30);
+					String actualmeetingAndCalls=getText(driver, ele, "meeting and call", action.SCROLLANDBOOLEAN);
+					if(actualmeetingAndCalls.equalsIgnoreCase(meetingAndCalls))
+					{
+						log(LogStatus.INFO, "Actual result "+actualmeetingAndCalls+" of meeting and call has been matched with Expected result : "+meetingAndCalls, YesNo.No);		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Actual result "+actualmeetingAndCalls+" of meeting and call are not matched with Expected resut : "+meetingAndCalls, YesNo.No);	
+						result.add("Actual result "+actualmeetingAndCalls+" of meeting and call are not matched with Expected resut : "+meetingAndCalls);
+					}
+				}
+				if(email!=null && email!="") 
+				{
+					xPath="//a[text()='"+name+"']/ancestor::td[@data-label='Name']/..//td[@data-label='Emails']//span";
+					ele=CommonLib.FindElement(driver, xPath, "email", action.SCROLLANDBOOLEAN, 30);
+					String actualEmail=getText(driver, ele, "email", action.SCROLLANDBOOLEAN);
+					if(actualEmail.equalsIgnoreCase(email))
+					{
+						log(LogStatus.INFO, "Actual result "+actualEmail+" of email has been matched with Expected result : "+email, YesNo.No);		
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Actual result "+actualEmail+" of email are not matched with Expected resut : "+email, YesNo.No);	
+						result.add("Actual result "+actualEmail+" of email are not matched with Expected resut : "+email);
+					}
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, name+" is not avalable in contact section", YesNo.No);		
+				result.add(name+" is not avalable in contact section");
+				sa.assertTrue(false,  name+" is not avalable in contact section");	
+			}
+		}
+		return result;
+	}
+	
+	public ArrayList<String> verifyNotesPopupWithPrefilledValue(String subject, String Notes, String[] tag)
+	{
+		String xPath;
+		WebElement ele;
+		ArrayList<String> result=new ArrayList<String>();
+		if(subject!=null && subject!="")
+		{
+			String actualSubject=getSubjectInput(10).getAttribute("value");
+			log(LogStatus.INFO, "Successfully get the value from the clipboard", YesNo.No);	
+			if(subject.equals(actualSubject))
+			{
+				log(LogStatus.INFO, "Subject value has been verify", YesNo.No);	
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Subject value is not verify", YesNo.No);	
+				result.add("Subject value is not verify");
+			}
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on subject textbox", YesNo.No);	
+			result.add("Not able to click on subject textbox");
+		}
+
+
+		if(Notes!=null && Notes!="")
+		{
+			String actualNotes=getText(driver, getNotesText(20), "Notes", action.SCROLLANDBOOLEAN);
+			if(Notes.equals(actualNotes))
+			{
+				log(LogStatus.INFO, "Notes value has been verified", YesNo.No);	
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Notes value is not verified", YesNo.No);
+				result.add("Notes value is not verified");
+			}
+		}
+
+		if(tag!=null && tag.length!=0)
+		{
+			for(int i=0; i<tag.length; i++)
+			{
+				xPath="//lightning-pill//span[text()='"+tag[i]+"']";
+				ele=FindElement(driver, xPath, tag[i]+" tag", action.SCROLLANDBOOLEAN, 15);
+				if(ele!=null)
+				{
+					log(LogStatus.INFO, tag[i]+" tag has been verified", YesNo.No);	
+				}
+				else
+				{
+					log(LogStatus.ERROR, tag[i]+" tag is not verified", YesNo.No);	
+					result.add(tag[i]+" tag is not verified");
+				}
+			}
+		}
+		return result;
 	}
 
 }

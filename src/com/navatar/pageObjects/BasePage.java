@@ -6832,7 +6832,7 @@ public abstract class BasePage extends BaseLib {
 	}
 	
 	public WebElement activityTimelineButton(String btnName, int timeOut) {
-		String xPath="//div[@class='menuList' and text()='"+btnName+"']";
+		String xPath="//div[@class=\"menuList\" and text()='"+btnName+"']";
 		
 		return isDisplayed(driver, FindElement(driver, xPath, btnName+" button", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, btnName+" button");
 	}
@@ -6855,6 +6855,63 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getSuccessMsg(int timeOut) {
 		return isDisplayed(driver, successMsg, "Visibility", timeOut, "Sucsess Message");
 	}
+	
+	@FindBy(xpath = "//span[text()='Interactions']/ancestor::div[contains(@class,'slds-p-bottom_none')]//a[text()='View All']")
+	private WebElement interactionViewAllBtn;
+
+	public WebElement getInteractionViewAllBtn(int timeOut) {
+		return isDisplayed(driver, interactionViewAllBtn, "Visibility", timeOut, "View All Interaction button");
+	}
+	
+	public WebElement getIntractionSubjectName(String intractionSubjectName,int timeOut) {
+
+		return FindElement(driver,
+				"//h2[contains(text(),'All Interactions')]/ancestor::div[@class='slds-modal__container']//td[@data-label='Subject']//a[text()='"+intractionSubjectName+"']",
+				"Intraction", action.SCROLLANDBOOLEAN, timeOut);
+
+	}
+	
+	public WebElement getTaggedRecordName(String taggedTabName, String recordName, int timeOut) {
+
+		return FindElement(driver,
+				"//span[text()='"+taggedTabName+"']/ancestor::table//lightning-formatted-url//a[text()='"+recordName+"']",
+				"tagged", action.SCROLLANDBOOLEAN, timeOut);
+
+	}
+	
+	public WebElement getTaggedRecordName(String tagTabName, int timeOut) {
+
+		return FindElement(driver,
+				"//div[@class='slds-radio_button-group']//span[contains(text(),'"+tagTabName+"')]",
+				"tagged tab name", action.SCROLLANDBOOLEAN, timeOut);
+
+	}
+	
+	@FindBy(xpath = "//footer/button[text()='Tag']")
+	private WebElement footerTagButton;
+
+	public WebElement getfooterTagButton(int timeOut) {
+		return isDisplayed(driver, footerTagButton, "Visibility", timeOut, "footer tag button");
+	}
+	
+
+	@FindBy(xpath = "//label[text()='Subject']/..//input[contains(@data-id,'combobox')]")
+	private WebElement subjectInput;
+
+	public WebElement getSubjectInput(int timeOut) {
+		return isDisplayed(driver, subjectInput, "Visibility", timeOut, "Subject Input");
+	}
+	
+
+	@FindBy(xpath = "//span[text()='Notes']/ancestor::div[@aria-label='Notes']//lightning-formatted-rich-text/span")
+	private WebElement notesText;
+
+	public WebElement getNotesText(int timeOut) {
+		return isDisplayed(driver, notesText, "Visibility", timeOut, "Notes text");
+	}
+	
+	
+	
 	
 	
 

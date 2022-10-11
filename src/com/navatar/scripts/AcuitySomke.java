@@ -1,31 +1,9 @@
 package com.navatar.scripts;
 
-import static com.navatar.generic.CommonLib.exit;
-import static com.navatar.generic.CommonLib.log;
-import static com.navatar.generic.CommonLib.removeNumbersFromString;
-import static com.navatar.generic.CommonLib.switchOnWindow;
-import static com.navatar.generic.CommonLib.switchToDefaultContent;
-import static com.navatar.generic.CommonVariables.AS_ContactEmail;
-import static com.navatar.generic.CommonVariables.AS_ContactFirstName;
-import static com.navatar.generic.CommonVariables.AS_ContactLastName;
-import static com.navatar.generic.CommonVariables.AS_ContactLegalName;
-import static com.navatar.generic.CommonVariables.AS_DealCompany;
-import static com.navatar.generic.CommonVariables.AS_DealName;
-import static com.navatar.generic.CommonVariables.AS_DealStage;
-import static com.navatar.generic.CommonVariables.AS_FirmLegalName1;
-import static com.navatar.generic.CommonVariables.AS_FirmRecordType1;
-import static com.navatar.generic.CommonVariables.AS_FundInvestmentCategory;
-import static com.navatar.generic.CommonVariables.AS_FundName;
-import static com.navatar.generic.CommonVariables.AS_FundType;
-import static com.navatar.generic.CommonVariables.adminPassword;
-import static com.navatar.generic.CommonVariables.appName;
-import static com.navatar.generic.CommonVariables.crmUser1FirstName;
-import static com.navatar.generic.CommonVariables.crmUser1LastName;
-import static com.navatar.generic.CommonVariables.crmUserLience;
-import static com.navatar.generic.CommonVariables.crmUserProfile;
-import static com.navatar.generic.CommonVariables.environment;
-import static com.navatar.generic.CommonVariables.gmailUserName;
-import static com.navatar.generic.CommonVariables.superAdminUserName;
+import static com.navatar.generic.CommonLib.*;
+import static com.navatar.generic.CommonVariables.*;
+
+import java.util.ArrayList;
 
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
@@ -34,10 +12,9 @@ import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.EmailLib;
+import com.navatar.generic.EnumConstants.CreationPage;
 import com.navatar.generic.EnumConstants.Environment;
-import com.navatar.generic.EnumConstants.GlobalActionItem;
-import com.navatar.generic.EnumConstants.NavigationMenuItems;
-import com.navatar.generic.EnumConstants.PageName;
+import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
@@ -49,7 +26,6 @@ import com.navatar.pageObjects.FundsPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
 import com.navatar.pageObjects.InstitutionsPageBusinessLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
-import com.navatar.pageObjects.NavigationPageBusineesLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
@@ -160,16 +136,14 @@ public class AcuitySomke extends BaseLib{
 	@Test
 	public void ASTc002_CreateTaskToVerifyDataOnInteractionCard(String projectName) {
 
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp=new ContactsPageBusinessLayer(driver);
 		DealPageBusinessLayer dp=new DealPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		FundsPageBusinessLayer fd=new FundsPageBusinessLayer(driver);
-
-
 
 		String xPath="";
 		WebElement ele;
@@ -189,47 +163,30 @@ public class AcuitySomke extends BaseLib{
 		String fundName=AS_FundName;
 		String fundType=AS_FundType;
 		String fundInvestmentCategory=AS_FundInvestmentCategory;
-
+		String[] suggestedTag=AS_ATSuggestedTag1.split("<break>");
 		String companyRecord=accountName[1];
-		
-		int status=0;
+		int status=0; 
 
-		
-		String[][] basicsection= {{"Subject","test"},{"Notes","it is teasting data"},{"Related_To","Int Institution<break>Int Intermediary"}};
-		String[][] advanceSection= {{"Priority","High"}};        String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
-		
-		lp.CRMLogin(superAdminUserName, adminPassword, appName);
-		String navigationMenuName="Meeting";
+		String[][] basicsection= {{"Subject",AS_ATSubject1},{"Notes",AS_ATNotes1},{"Related_To",AS_ATRelatedTo1}};
+		String[][] advanceSection= {{"Due Date Only",AS_ATAdvanceDueDate1}};
 
-		/*
-		 * NavigationPageBusineesLayer npbl= new NavigationPageBusineesLayer(driver);
-		 * boolean flag=false; if (npbl.clickOnNavatarEdgeLinkHomePage(projectName,
-		 * NavigationMenuItems.Create.toString(), action.BOOLEAN, 30)) {
-		 * log(LogStatus.INFO,
-		 * "Able to Click on "+navigationMenuName+" Going to click on : "
-		 * +NavigationMenuItems.Create.toString()+" for creation ", YesNo.No); ele =
-		 * npbl.getNavigationLabel(projectName, navigationMenuName, action.BOOLEAN, 10);
-		 * if (ele!=null && CommonLib.click(driver, ele, navigationMenuName,
-		 * action.BOOLEAN)) { log(LogStatus.INFO,
-		 * "Click on "+navigationMenuName+" so going for creation", YesNo.No); flag =
-		 * true; } else { log(LogStatus.ERROR, "Not Able to Click on "
-		 * +navigationMenuName+" so cannot create data related to this ", YesNo.Yes);
-		 * sa.assertTrue(false,"Not Able to Click on "
-		 * +navigationMenuName+" so cannot create data related to this "); } } else {
-		 * log(LogStatus.ERROR,
-		 * "Not Able to Click on "+NavigationMenuItems.Create.toString()
-		 * +" so cannot click on : "+navigationMenuName+" for creation ", YesNo.Yes);
-		 * sa.assertTrue(false,"Not Able to Click on "+NavigationMenuItems.Create.
-		 * toString()+" so cannot click on : "+navigationMenuName+" for creation "); }
-		 */
-        
-		bp.createActivityTimeline(projectName,true,"Task", basicsection, advanceSection,taskSection);
-		System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
-		CommonLib.ThreadSleep(50000);
-/*
+		String[] completedate=AS_ATAdvanceDueDate1.split("/");
+		char dayNum=completedate[1].charAt(0);
+		String day;
+		if(dayNum=='0')
+		{
+			day=completedate[1].replaceAll("0", "");
+		}
+		else
+		{
+			day=completedate[1];
+		}
+
+		String date=completedate[0]+"/"+day+"/"+completedate[2];
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);	
 		if(accountName.length==recordType.length)
 		{
-
 			for(int i=0; i<accountName.length; i++)
 			{
 				if (lp.clickOnTab(projectName, tabObj1)) {
@@ -315,8 +272,8 @@ public class AcuitySomke extends BaseLib{
 						}
 						else
 						{
-							log(LogStatus.INFO, dealName[i]+" deal is not created", YesNo.No);
-							sa.assertTrue(true,  dealName[i]+" deal is not created");	
+							log(LogStatus.ERROR, dealName[i]+" deal is not created", YesNo.No);
+							sa.assertTrue(false,  dealName[i]+" deal is not created");	
 						}
 
 					}
@@ -339,37 +296,70 @@ public class AcuitySomke extends BaseLib{
 						{
 							log(LogStatus.INFO, fundName+" Fund has been created", YesNo.No);
 							sa.assertTrue(true, fundName+" Fund has been created");
-							
-							
+
+
 							if (lp.clickOnTab(projectName, tabObj1)) {
 
 								log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
-								
+
 								if(bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,companyRecord , 30))
 								{
 									log(LogStatus.INFO, companyRecord+" reocrd has been open", YesNo.No);
 									if(bp.clicktabOnPage("Communications"))
 									{
 										log(LogStatus.INFO, "clicked on Communications tab", YesNo.No);
-										
-										
+
+										if(bp.createActivityTimeline(projectName,false,"New Task", basicsection, advanceSection,null,suggestedTag))
+										{
+											log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
+											sa.assertTrue(true, "Activity timeline record has been created");
+											ThreadSleep(4000);
+											if(bp.clicktabOnPage("Acuity"))
+											{
+												log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+												ArrayList<String> result=bp.verifyRecordOnInteractionCard(date,AS_ATSubject1, AS_ATNotes1, true, false);
+												if(result.isEmpty())
+												{
+													log(LogStatus.PASS, AS_ATSubject1+" record has been verified on intraction", YesNo.No);
+													sa.assertTrue(true, AS_ATSubject1+" record has been verified on intraction");
+												}
+												else
+												{
+													log(LogStatus.ERROR, AS_ATSubject1+" record is not verified on intraction", YesNo.No);
+													sa.assertTrue(false, AS_ATSubject1+" record is not verified on intraction");
+												}
+											}
+											else
+											{
+												log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
+												sa.assertTrue(false, "Not able to click on Acuity Tab");
+											}
+										}
+										else
+										{
+											log(LogStatus.FAIL, "Activity timeline record is not created", YesNo.No);
+											sa.assertTrue(false, "Activity timeline record is not created");
+										}
+
 									}
 									else
 									{
 										log(LogStatus.ERROR, "Not able to click on Communications tab", YesNo.No);
+										sa.assertTrue(false, "Not able to click on Communications tab");
 									}
-									
+
 								}
 								else
 								{
 									log(LogStatus.ERROR, "Not able to open "+companyRecord+" reocrd", YesNo.No);
+									sa.assertTrue(false, "Not able to open "+companyRecord+" reocrd");
 								}
 							}
 							else
 							{
 								log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj1, YesNo.No);
+								sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 							}
-							
 						}
 						else
 						{
@@ -378,25 +368,22 @@ public class AcuitySomke extends BaseLib{
 						}
 
 					}
-
 					else
 					{
 						log(LogStatus.ERROR, "Not able to click on "+tabObj3+" Tab", YesNo.No);
 						sa.assertTrue(false,  "Not able to click on "+tabObj3+" Tab");	
 					}
-
-
 				}
 				else
 				{
-					log(LogStatus.FAIL, "Deal records are not created", YesNo.No);
+					log(LogStatus.ERROR, "Deal records are not created", YesNo.No);
 					sa.assertTrue(false,  "Deal records are not created");
 				}
 
 			}
 			else
 			{
-				log(LogStatus.FAIL, "Contact records are not created", YesNo.No);
+				log(LogStatus.ERROR, "Contact records are not created", YesNo.No);
 				sa.assertTrue(false,  "Contact records are not created");
 			}
 		}
@@ -406,12 +393,602 @@ public class AcuitySomke extends BaseLib{
 			sa.assertTrue(false,  "Firm records are not created");	
 		}
 
+		lp.CRMlogout();
+		sa.assertAll();
 
+
+	}
+
+	@Parameters({ "projectName" })
+
+	@Test
+	public void ASTc003_VerifyImpactAfterCreationOfTask(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
+		String[] Companies=AS_ACompanies1.split("<break>");
+		String[] People = new String[1];
+		String[] Deals = new String[1];
+		People[0]=AS_APeople1;
+		Deals[0]=AS_ADeals1;
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if(bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,AS_FirmLegalName2 , 30))
+			{
+				log(LogStatus.INFO, AS_FirmLegalName2+" reocrd has been open", YesNo.No);
+
+				ArrayList<String> result=bp.verifyRecordOnTagged(Companies, People, Deals);
+				if(result.isEmpty())
+				{
+					log(LogStatus.INFO, "Records on Company, People and Deals Tagged have been matched", YesNo.No);
+					sa.assertTrue(true,  "Records on Company, People and Deals Tagged have been matched");		
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Records on Company, People and Deals Tagged are not matched", YesNo.No);
+					sa.assertTrue(false,  "Records on Company, People and Deals Tagged are not matched");	
+				}
+				ArrayList<String> result1=bp.verifyRecordOnContactSectionAcuity(AS_AContactName1, null, null, AS_AMeetingsAndCalls1, null);
+				if(result1.isEmpty())
+				{
+					log(LogStatus.INFO, "Records on Contact slot have been matched", YesNo.No);
+					sa.assertTrue(true,  "Records on Contact slot have been matched");		
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Records on Contact slot are not matched", YesNo.No);
+					sa.assertTrue(false,  "Records on Contact slot are not matched");	
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+AS_FirmLegalName2+" record", YesNo.No);
+				sa.assertTrue(false,  "Not able to open "+AS_FirmLegalName2+" record");	
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on "+tabObj1+" tab", YesNo.No);
+			sa.assertTrue(false,  "Not able to click on "+tabObj1+" tab");	
+		}
+		
+		if (lp.clickOnTab(projectName, tabObj2)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+
+			if(bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,AS_ContactName2 , 30))
+			{
+				log(LogStatus.INFO, AS_ContactName2+" reocrd has been open", YesNo.No);
+
+				ArrayList<String> result=bp.verifyRecordOnTagged(Companies, People, Deals);
+				if(result.isEmpty())
+				{
+					log(LogStatus.INFO, "Records on Company, People and Deals Tagged have been matched", YesNo.No);
+					sa.assertTrue(true,  "Records on Company, People and Deals Tagged have been matched");		
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Records on Company, People and Deals Tagged are not matched", YesNo.No);
+					sa.assertTrue(false,  "Records on Company, People and Deals Tagged are not matched");	
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+AS_ContactName2+" record", YesNo.No);
+				sa.assertTrue(false,  "Not able to open "+AS_ContactName2+" record");	
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on "+tabObj2+" tab", YesNo.No);
+			sa.assertTrue(false,  "Not able to click on "+tabObj2+" tab");	
+		}
 
 		lp.CRMlogout();
 		sa.assertAll();
 
+	}
+	
+	@Parameters({ "projectName" })
+
+	@Test
+	public void ASTc004_CreateEventToVerifyDataOnInteractionCard(String projectName) {
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp=new ContactsPageBusinessLayer(driver);
+		DealPageBusinessLayer dp=new DealPageBusinessLayer(driver);
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
+		FundsPageBusinessLayer fd=new FundsPageBusinessLayer(driver);
+		
+		String[][] basicsection= {{"Subject",AS_ATSubject2},{"Notes",AS_ATNotes2},{"Related_To",AS_ATRelatedTo2}};
+		String[][] advanceSection= {{"Start Date",AS_ATAdvanceStartDate1},{"End Date",AS_ATAdvanceEndDate1}};
+		String[] suggestedTag=new String[1];
+		suggestedTag[0]=AS_ATSuggestedTag2;
+		String[] completedate=AS_ATAdvanceStartDate1.split("/");
+		char dayNum=completedate[1].charAt(0);
+		String day;
+		if(dayNum=='0')
+		{
+			day=completedate[1].replaceAll("0", "");
+		}
+		else
+		{
+			day=completedate[1];
+		}
+
+		String date=completedate[0]+"/"+day+"/"+completedate[2];
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if(bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, AS_FirmLegalName2 , 30))
+			{
+				log(LogStatus.INFO, AS_FirmLegalName2+" reocrd has been open", YesNo.No);
+				if(bp.clicktabOnPage("Communications"))
+				{
+					log(LogStatus.INFO, "clicked on Communications tab", YesNo.No);
+
+					if(bp.createActivityTimeline(projectName,false,AS_ATActivityType2, basicsection, advanceSection,null,suggestedTag))
+					{
+						log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created");
+						ThreadSleep(4000);
+						if(bp.clicktabOnPage("Acuity"))
+						{
+							log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+							ArrayList<String> result=bp.verifyRecordOnInteractionCard(date,AS_ATSubject2, AS_ATNotes2, false, true);
+							if(result.isEmpty())
+							{
+								log(LogStatus.PASS, AS_ATSubject2+" record has been verified on intraction", YesNo.No);
+								sa.assertTrue(true, AS_ATSubject2+" record has been verified on intraction");
+							}
+							else
+							{
+								log(LogStatus.ERROR, AS_ATSubject2+" record is not verified on intraction", YesNo.No);
+								sa.assertTrue(false, AS_ATSubject2+" record is not verified on intraction");
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
+							sa.assertTrue(false, "Not able to click on Acuity Tab");
+						}
+					}
+					else
+					{
+						log(LogStatus.FAIL, "Activity timeline record is not created", YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created");
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Communications tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on Communications tab");
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+AS_FirmLegalName2+" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+AS_FirmLegalName2+" reocrd");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj1, YesNo.No);
+			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+
+	@Parameters({ "projectName" })
+
+	@Test
+	public void ASTc005_VerifyImpactAfterCreationOfEvent(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
+
+		String[] Companies = AS_ACompanies2.split("<break>");
+		String[] People = new String[1];
+		String[] Deals = new String[1];
+		People[0] = AS_APeople2;
+		Deals[0] = AS_ADeals2;
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if(bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,AS_FirmLegalName4 , 30))
+			{
+				log(LogStatus.INFO, AS_FirmLegalName4+" reocrd has been open", YesNo.No);
+
+				ArrayList<String> result=bp.verifyRecordOnTagged(Companies, People, Deals);
+				if(result.isEmpty())
+				{
+					log(LogStatus.INFO, "Records on Company, People and Deals Tagged have been matched", YesNo.No);
+					sa.assertTrue(true,  "Records on Company, People and Deals Tagged have been matched");		
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Records on Company, People and Deals Tagged are not matched", YesNo.No);
+					sa.assertTrue(false,  "Records on Company, People and Deals Tagged are not matched");	
+				}
+				ArrayList<String> result1=bp.verifyRecordOnContactSectionAcuity(AS_AContactName2, null, null, AS_AMeetingsAndCalls2, null);
+				if(result1.isEmpty())
+				{
+					log(LogStatus.INFO, "Records on Contact slot have been matched", YesNo.No);
+					sa.assertTrue(true,  "Records on Contact slot have been matched");		
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Records on Contact slot are not matched", YesNo.No);
+					sa.assertTrue(false,  "Records on Contact slot are not matched");	
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+AS_FirmLegalName4+" record", YesNo.No);
+				sa.assertTrue(false,  "Not able to open "+AS_FirmLegalName4+" record");	
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on "+tabObj1+" tab", YesNo.No);
+			sa.assertTrue(false,  "Not able to click on "+tabObj1+" tab");	
+		}
+		
+		if (lp.clickOnTab(projectName, tabObj2)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+
+			if(bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,AS_ContactName3 , 30))
+			{
+				log(LogStatus.INFO, AS_ContactName3+" reocrd has been open", YesNo.No);
+
+				ArrayList<String> result=bp.verifyRecordOnTagged(Companies, People, Deals);
+				if(result.isEmpty())
+				{
+					log(LogStatus.INFO, "Records on Company, People and Deals Tagged have been matched", YesNo.No);
+					sa.assertTrue(true,  "Records on Company, People and Deals Tagged have been matched");		
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Records on Company, People and Deals Tagged are not matched", YesNo.No);
+					sa.assertTrue(false,  "Records on Company, People and Deals Tagged are not matched");	
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+AS_ContactName3+" record", YesNo.No);
+				sa.assertTrue(false,  "Not able to open "+AS_ContactName3+" record");	
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on "+tabObj2+" tab", YesNo.No);
+			sa.assertTrue(false,  "Not able to click on "+tabObj2+" tab");	
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	@Parameters({ "projectName" })
+
+	@Test
+	public void ASTc006_CreateLogACallToVerifyDataOnInteractionCard(String projectName) {
+		
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp=new ContactsPageBusinessLayer(driver);
+		DealPageBusinessLayer dp=new DealPageBusinessLayer(driver);
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
+		FundsPageBusinessLayer fd=new FundsPageBusinessLayer(driver);
+		
+		String[][] basicsection= {{"Subject",AS_ATSubject3},{"Notes",AS_ATNotes3},{"Related_To",AS_ATRelatedTo3}};
+		String[][] advanceSection= {{"Due Date Only",AS_ATAdvanceDueDate2}};
+		
+		String[] completedate=AS_ATAdvanceDueDate2.split("/");
+		char dayNum=completedate[1].charAt(0);
+		String day;
+		if(dayNum=='0')
+		{
+			day=completedate[1].replaceAll("0", "");
+		}
+		else
+		{
+			day=completedate[1];
+		}
+
+		String date=completedate[0]+"/"+day+"/"+completedate[2];
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if(bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, AS_FirmLegalName5 , 30))
+			{
+				log(LogStatus.INFO, AS_FirmLegalName5+" reocrd has been open", YesNo.No);
+				if(bp.clicktabOnPage("Communications"))
+				{
+					log(LogStatus.INFO, "clicked on Communications tab", YesNo.No);
+
+					if(bp.createActivityTimeline(projectName,false,AS_ATActivityType3, basicsection, advanceSection,null,null))
+					{
+						log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
+						sa.assertTrue(true, "Activity timeline record has been created");
+						ThreadSleep(4000);
+						if(bp.clicktabOnPage("Acuity"))
+						{
+							log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+							ArrayList<String> result=bp.verifyRecordOnInteractionCard(date,AS_ATSubject3, AS_ATNotes3, true, false);
+							if(result.isEmpty())
+							{
+								log(LogStatus.PASS, AS_ATSubject3+" record has been verified on intraction", YesNo.No);
+								sa.assertTrue(true, AS_ATSubject3+" record has been verified on intraction");
+							}
+							else
+							{
+								log(LogStatus.ERROR, AS_ATSubject3+" record is not verified on intraction", YesNo.No);
+								sa.assertTrue(false, AS_ATSubject3+" record is not verified on intraction");
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
+							sa.assertTrue(false, "Not able to click on Acuity Tab");
+						}
+					}
+					else
+					{
+						log(LogStatus.FAIL, "Activity timeline record is not created", YesNo.No);
+						sa.assertTrue(false, "Activity timeline record is not created");
+					}
+
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Communications tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on Communications tab");
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+AS_FirmLegalName5+" reocrd", YesNo.No);
+				sa.assertTrue(false, "Not able to open "+AS_FirmLegalName5+" reocrd");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj1, YesNo.No);
+			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
+		}
+		
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	
+	@Parameters({ "projectName" })
+
+	@Test
+	public void ASTc007_VerifyImpactAfterCreationOfCall(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
+
+		String[] Companies = AS_ACompanies3.split("<break>");
+		String[] People = new String[1];
+		String[] Deals = new String[1];
+		People[0] = AS_APeople3;
+		Deals[0] = AS_ADeals3;
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if(bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,AS_FirmLegalName6 , 30))
+			{
+				log(LogStatus.INFO, AS_FirmLegalName6+" reocrd has been open", YesNo.No);
+
+				ArrayList<String> result=bp.verifyRecordOnTagged(Companies, People, Deals);
+				if(result.isEmpty())
+				{
+					log(LogStatus.INFO, "Records on Company, People and Deals Tagged have been matched", YesNo.No);
+					sa.assertTrue(true,  "Records on Company, People and Deals Tagged have been matched");		
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Records on Company, People and Deals Tagged are not matched", YesNo.No);
+					sa.assertTrue(false,  "Records on Company, People and Deals Tagged are not matched");	
+				}
+				ArrayList<String> result1=bp.verifyRecordOnContactSectionAcuity(AS_AContactName3, null, null, AS_AMeetingsAndCalls3, null);
+				if(result1.isEmpty())
+				{
+					log(LogStatus.INFO, "Records on Contact slot have been matched", YesNo.No);
+					sa.assertTrue(true,  "Records on Contact slot have been matched");		
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Records on Contact slot are not matched", YesNo.No);
+					sa.assertTrue(false,  "Records on Contact slot are not matched");	
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+AS_FirmLegalName6+" record", YesNo.No);
+				sa.assertTrue(false,  "Not able to open "+AS_FirmLegalName6+" record");	
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on "+tabObj1+" tab", YesNo.No);
+			sa.assertTrue(false,  "Not able to click on "+tabObj1+" tab");	
+		}
+		
+		if (lp.clickOnTab(projectName, tabObj2)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+
+			if(bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,AS_ContactName4 , 30))
+			{
+				log(LogStatus.INFO, AS_ContactName4+" reocrd has been open", YesNo.No);
+
+				ArrayList<String> result=bp.verifyRecordOnTagged(Companies, People, Deals);
+				if(result.isEmpty())
+				{
+					log(LogStatus.INFO, "Records on Company, People and Deals Tagged have been matched", YesNo.No);
+					sa.assertTrue(true,  "Records on Company, People and Deals Tagged have been matched");		
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Records on Company, People and Deals Tagged are not matched", YesNo.No);
+					sa.assertTrue(false,  "Records on Company, People and Deals Tagged are not matched");	
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+AS_ContactName4+" record", YesNo.No);
+				sa.assertTrue(false,  "Not able to open "+AS_ContactName4+" record");	
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on "+tabObj2+" tab", YesNo.No);
+			sa.assertTrue(false,  "Not able to click on "+tabObj2+" tab");	
+		}
+
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	
+	@Parameters({ "projectName" })
+
+	@Test
+	public void ASTc008_VerifyInteractionCard(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
+
+		String[] Companies = AS_ACompanies3.split("<break>");
+		String[] People = new String[1];
+		String[] Deals = new String[1];
+		People[0] = AS_APeople3;
+		Deals[0] = AS_ADeals3;
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if(bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,AS_FirmLegalName6 , 30))
+			{
+				log(LogStatus.INFO, AS_FirmLegalName6+" reocrd has been open", YesNo.No);
+				
+				String xPath="//button[text()='Edit Note']";
+				WebElement ele=CommonLib.FindElement(driver, xPath, "email", action.SCROLLANDBOOLEAN, 30);
+				click(driver, ele, xPath, action.SCROLLANDBOOLEAN);
+				ThreadSleep(10000);
+				String[] val= {"Int Institution","Int Company","Int Deal 01","Int Fund 01"};
+				ArrayList<String> result= bp.verifyNotesPopupWithPrefilledValue("Int Task", "For verification of task fund",val );
+				if(result.isEmpty())
+				{
+					System.err.println("Waoooooooo");
+				}
+				else
+				{
+					System.err.println("Nooooooooooo");
+				}
+
+				
+/*
+				ArrayList<String> result=bp.verifyRecordOnTagged(Companies, People, Deals);
+				if(result.isEmpty())
+				{
+					log(LogStatus.INFO, "Records on Company, People and Deals Tagged have been matched", YesNo.No);
+					sa.assertTrue(true,  "Records on Company, People and Deals Tagged have been matched");		
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Records on Company, People and Deals Tagged are not matched", YesNo.No);
+					sa.assertTrue(false,  "Records on Company, People and Deals Tagged are not matched");	
+				}
+				ArrayList<String> result1=bp.verifyRecordOnContactSectionAcuity(AS_AContactName3, null, null, AS_AMeetingsAndCalls3, null);
+				if(result1.isEmpty())
+				{
+					log(LogStatus.INFO, "Records on Contact slot have been matched", YesNo.No);
+					sa.assertTrue(true,  "Records on Contact slot have been matched");		
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Records on Contact slot are not matched", YesNo.No);
+					sa.assertTrue(false,  "Records on Contact slot are not matched");	
+				}*/
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+AS_FirmLegalName6+" record", YesNo.No);
+				sa.assertTrue(false,  "Not able to open "+AS_FirmLegalName6+" record");	
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on "+tabObj1+" tab", YesNo.No);
+			sa.assertTrue(false,  "Not able to click on "+tabObj1+" tab");	
+		}
+	/*	
+		if (lp.clickOnTab(projectName, tabObj2)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+
+			if(bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,AS_ContactName4 , 30))
+			{
+				log(LogStatus.INFO, AS_ContactName4+" reocrd has been open", YesNo.No);
+
+				ArrayList<String> result=bp.verifyRecordOnTagged(Companies, People, Deals);
+				if(result.isEmpty())
+				{
+					log(LogStatus.INFO, "Records on Company, People and Deals Tagged have been matched", YesNo.No);
+					sa.assertTrue(true,  "Records on Company, People and Deals Tagged have been matched");		
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Records on Company, People and Deals Tagged are not matched", YesNo.No);
+					sa.assertTrue(false,  "Records on Company, People and Deals Tagged are not matched");	
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open "+AS_ContactName4+" record", YesNo.No);
+				sa.assertTrue(false,  "Not able to open "+AS_ContactName4+" record");	
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on "+tabObj2+" tab", YesNo.No);
+			sa.assertTrue(false,  "Not able to click on "+tabObj2+" tab");	
+		}
 */
+		lp.CRMlogout();
+		sa.assertAll();
 	}
 
 
