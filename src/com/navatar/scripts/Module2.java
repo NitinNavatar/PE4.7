@@ -363,7 +363,7 @@ public class Module2 extends BaseLib{
 //						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
 //					}
 		        
-		        bp.createActivityTimeline(projectName,false,"New Task", basicsection, advanceSection,null);
+		        bp.createActivityTimeline(projectName,false,"New Task", basicsection, advanceSection,null,null);
 				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 				CommonLib.ThreadSleep(50000);
 					
@@ -428,7 +428,7 @@ public class Module2 extends BaseLib{
 
 
 
-               bp.createActivityTimeline(projectName,false,"New Task", basicsection, advanceSection,null);
+               bp.createActivityTimeline(projectName,false,"New Task", basicsection, advanceSection,null,null);
 				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 				CommonLib.ThreadSleep(50000);
 					
@@ -556,7 +556,7 @@ public class Module2 extends BaseLib{
 
 
 
-            bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null);
+            bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null);
 				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 				CommonLib.ThreadSleep(50000);
 					
@@ -658,7 +658,7 @@ public class Module2 extends BaseLib{
 
 
 
-            bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null);
+            bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null);
 				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 				CommonLib.ThreadSleep(50000);
 					
@@ -761,7 +761,7 @@ public class Module2 extends BaseLib{
 
 
 
-                bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null);
+                bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null);
 				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 				CommonLib.ThreadSleep(50000);
 					
@@ -897,7 +897,7 @@ public class Module2 extends BaseLib{
 
 
 
-                 bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null);
+                 bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null);
 				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 				CommonLib.ThreadSleep(50000);
 					
@@ -1668,7 +1668,7 @@ public class Module2 extends BaseLib{
 
 
 
-                bp.createActivityTimeline(projectName,false,"New Task", basicsection, advanceSection,null);
+                bp.createActivityTimeline(projectName,false,"New Task", basicsection, advanceSection,null,null);
 				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 				CommonLib.ThreadSleep(50000);
 					
