@@ -6832,7 +6832,8 @@ public abstract class BasePage extends BaseLib {
 	}
 	
 	public WebElement activityTimelineButton(String btnName, int timeOut) {
-		String xPath="//div[@class='menuList' and text()='"+btnName+"']";
+//		String xPath="//div[contains(@class,'ViewMode-normal')]//div[@class='tabs cActivityTab']//div[@class='menuList' and text()='New Task']";
+		String xPath="//div[@class=\"menuList\" and text()='"+btnName+"']";
 		
 		return isDisplayed(driver, FindElement(driver, xPath, btnName+" button", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, btnName+" button");
 	}

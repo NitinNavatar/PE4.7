@@ -4,6 +4,7 @@ import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
 import static com.navatar.generic.SmokeCommonVariables.adminPassword;
 import static com.navatar.generic.SmokeCommonVariables.crmUser1EmailID;
+import static com.navatar.generic.SmokeCommonVariables.todaysDate;
 import static com.navatar.pageObjects.NavigationPageBusineesLayer.navigationParentLabelWithChildAndOrder;
 import static com.navatar.pageObjects.NavigationPageBusineesLayer.navigationParentLabelWithChildSorted;
 import static com.navatar.pageObjects.NavigationPageBusineesLayer.navigationParentLabelWithOrder;
@@ -39,6 +40,7 @@ import com.navatar.generic.EnumConstants.IndiviualInvestorFieldLabel;
 import com.navatar.generic.EnumConstants.InstitutionPageFieldLabelText;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.NavatarSetupSideMenuTab;
+import com.navatar.generic.EnumConstants.NavigationMenuItems;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.ObjectName;
 import com.navatar.generic.EnumConstants.ObjectType;
@@ -390,7 +392,8 @@ public class Module3New extends BaseLib {
 		String filesName = "";
 
 		// Verification on navigation menu
-		navigationMenuName = NavigationMenuItems.Bulk_Actions.toString();
+	/*	navigationMenuName = NavigationMenuItems.Bulk_Actions.toString();*/
+		navigationMenuName = NavigationMenuItems.Create.toString();
 
 		filesName=BulkActions_DefaultValues.Bulk_Email.toString()+","+
 				BulkActions_DefaultValues.Bulk_Fundraising.toString()+","+
@@ -411,10 +414,10 @@ public class Module3New extends BaseLib {
 		}
 		refresh(driver);
 
-		navigationMenuName = NavigationMenuItems.New_Interactions.toString();
-
+		/*navigationMenuName = NavigationMenuItems.New_Interactions.toString();*/
+		navigationMenuName = NavigationMenuItems.Create.toString();
 		filesName=NewInteractions_DefaultValues.Call.toString()+","+
-				NewInteractions_DefaultValues.Meeting.toString()+","+
+				/*NewInteractions_DefaultValues.Meeting.toString()+","+*/
 				NewInteractions_DefaultValues.Task.toString();
 
 		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
@@ -434,7 +437,7 @@ public class Module3New extends BaseLib {
 		refresh(driver);
 
 
-		navigationMenuName = NavigationMenuItems.Create_New.toString();
+		navigationMenuName = NavigationMenuItems.Create.toString();
 
 		filesName=CreateNew_DefaultValues.New_Deal.toString()+","+
 				CreateNew_DefaultValues.New_Institution.toString()+","+
@@ -474,7 +477,8 @@ public class Module3New extends BaseLib {
 				NavatarSetupSideMenuTab.CommitmentCreation };
 		NavatarSetupSideMenuTab setupSideMenuTab = null;
 
-		navigationMenuName = NavigationMenuItems.Bulk_Actions.toString();
+		/*navigationMenuName = NavigationMenuItems.Bulk_Actions.toString();*/
+		navigationMenuName = NavigationMenuItems.Create.toString();
 		String[] navigationLabel = { BulkActions_DefaultValues.Bulk_Email.toString(),
 				BulkActions_DefaultValues.Bulk_Commitments.toString(),
 				BulkActions_DefaultValues.Bulk_Fundraising.toString() };
@@ -693,12 +697,12 @@ lp.CRMlogout();
 		NavatarSetupSideMenuTab[] navatarSetupSideMenuTab = {NavatarSetupSideMenuTab.DealCreation,NavatarSetupSideMenuTab.IndividualInvestorCreation};
 		NavatarSetupSideMenuTab setupSideMenuTab=null;
 
-		navigationMenuName = NavigationMenuItems.Bulk_Actions.toString();
-		
+	/*	navigationMenuName = NavigationMenuItems.Bulk_Actions.toString();*/
+		navigationMenuName = NavigationMenuItems.Create.toString();
 		String[] vfPage = {"Deal_Creation","IndividualInvestor"};
 		String[] navigationLabels = {BulkActions_DefaultValues.Deal_Creation.toString(),
 				BulkActions_DefaultValues.Individual_Investor_Creation.toString()};
-		
+		String[] urlLabels = {"/apex/navpeII__Deal_Creation?retURL=/lightning/page/home","/apex/navpeII__IndividualInvestor?retURL=/lightning/page/home"};
 
 		boolean flag=false;
 		//// CHeck
@@ -742,7 +746,7 @@ lp.CRMlogout();
 		for (int i = 0; i < navigationLabels.length; i++) {
 			String navigationLabelValue=navigationLabels[i];
 			String orderLabelValue=String.valueOf(i+4);
-			String urlLabelValue="";
+			String urlLabelValue=urlLabels[i];
 			String navigationTypeLabelValue=navigationMenuName;
 			
 			String[][] labelWithValue= {{navigationLabel,navigationLabelValue},{orderLabel,orderLabelValue},
@@ -777,7 +781,7 @@ lp.CRMlogout();
 			}
 		}
 		for (int i = 0; i < navigationLabels.length; i++) {
-			String urlLabelValue="";
+			String urlLabelValue=urlLabels[i];
 			flag=false;
 			 if (hp.clickOnSetUpLink()) {
 				 String parentID = switchOnWindow(driver);
@@ -1020,7 +1024,8 @@ lp.CRMlogout();
 		home.switchToLighting();
 
 		// Verification on navigation menu
-		navigationMenuName = NavigationMenuItems.Bulk_Actions.toString();
+		/*navigationMenuName = NavigationMenuItems.Bulk_Actions.toString();*/
+		navigationMenuName = NavigationMenuItems.Create.toString();
 		NavigationPageBusineesLayer  npbl = new NavigationPageBusineesLayer(driver) ;
 		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
 
@@ -1236,17 +1241,20 @@ lp.CRMlogout();
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		TaskPageBusinessLayer tp = new TaskPageBusinessLayer(driver);
-		NavigationPageBusineesLayer  npbl = new NavigationPageBusineesLayer(driver) ;
+		NavigationPageBusineesLayer  npbl = new NavigationPageBusineesLayer(driver);
+		BasePageBusinessLayer  bl = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
-		navigationMenuName = NavigationMenuItems.New_Interactions.toString();
+		/*navigationMenuName = NavigationMenuItems.New_Interactions.toString();*/
+		navigationMenuName = NavigationMenuItems.Create.toString();
 
 		String[]  newInteractionsNavigationLinks = {NewInteractions_DefaultValues.Call.toString(),
-				NewInteractions_DefaultValues.Meeting.toString(),
+				/*NewInteractions_DefaultValues.Meeting.toString(),*/
 				NewInteractions_DefaultValues.Task.toString()};
 		int i=0;
 		boolean flag = false;
+		WebElement ele;
 		String adminUerName = crmUser1FirstName+" "+crmUser1LastName;
 		String subject ="";
 		String dueDate=todaysDate;
@@ -1254,47 +1262,61 @@ lp.CRMlogout();
 		String priority="";
 		String contactNAme= M3Contact1FName+" "+M3Contact1LName;
 		String[][] dropDownLabelWithValues = new String[3][];
+		String[][] dropDownLabel1WithValues = new String[3][];
 
 		for (i=0;i<newInteractionsNavigationLinks.length;i++) {
 			String newInteractionsNavigationLink=newInteractionsNavigationLinks[i];
 			flag=false;
-			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
-				log(LogStatus.INFO, "Able to Click on "+navigationMenuName+" Going to click on : "+newInteractionsNavigationLink+" for creation ", YesNo.No);
+			String[][] basicsection= {{"Subject",M3Call1Subject},{"Related_To",M3Contact1FName+" "+M3Contact1LName}};
+			String[][] advanceSection= {{"Priority","Normal"},{"Due Date Only",todaysDate}};
+	        String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
+			if(bl.createActivityTimeline(projectName, true, newInteractionsNavigationLink, basicsection, advanceSection, null))
+//			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 30)) {
+//				log(LogStatus.INFO, "Able to Click on "+navigationMenuName+" Going to click on : "+newInteractionsNavigationLink+" for creation ", YesNo.No);
 
-				WebElement ele = npbl.getNavigationLabel(projectName, newInteractionsNavigationLink, action.BOOLEAN, 10);
-				if (ele!=null && click(driver, ele, newInteractionsNavigationLink, action.BOOLEAN)) {
-					log(LogStatus.INFO, "Click on "+newInteractionsNavigationLink+" so going for creation", YesNo.No);
-					flag = true;
-				} else {
-					log(LogStatus.ERROR, "Not Able to Click on "+newInteractionsNavigationLink+" so cannot create data related to this ", YesNo.Yes);
-					sa.assertTrue(false,"Not Able to Click on "+newInteractionsNavigationLink+" so cannot create data related to this ");
-
-				}
-				flag=true;
-				if (flag) {
-
-					ele=cp.getCrossButtonForAlreadySelectedItem(projectName, PageName.CallPopUp, PageLabel.Assigned_To.toString(),false, adminUerName, action.SCROLLANDBOOLEAN, 20);
-					if (ele!=null) {
-						log(LogStatus.INFO, adminUerName+" Found For Label "+PageLabel.Assigned_To.toString(),YesNo.No);	
-					} else {
-						sa.assertTrue(false,adminUerName+" not Found For Label "+PageLabel.Assigned_To.toString());
-						log(LogStatus.ERROR, adminUerName+" not Found For Label "+PageLabel.Assigned_To.toString(),YesNo.Yes);
-
-					}
+//				WebElement ele = npbl.getNavigationLabel(projectName, newInteractionsNavigationLink, action.BOOLEAN, 10);
+//				if (ele!=null && click(driver, ele, newInteractionsNavigationLink, action.BOOLEAN)) {
+//					log(LogStatus.INFO, "Click on "+newInteractionsNavigationLink+" so going for creation", YesNo.No);
+//					flag = true;
+//				} else {
+//					log(LogStatus.ERROR, "Not Able to Click on "+newInteractionsNavigationLink+" so cannot create data related to this ", YesNo.Yes);
+//					sa.assertTrue(false,"Not Able to Click on "+newInteractionsNavigationLink+" so cannot create data related to this ");
+//
+//				}
+//				flag=true;
+//				if (flag) {
+//
+//					ele=cp.getCrossButtonForAlreadySelectedItem(projectName, PageName.CallPopUp, PageLabel.Assigned_To.toString(),false, adminUerName, action.SCROLLANDBOOLEAN, 20);
+//					if (ele!=null) {
+//						log(LogStatus.INFO, adminUerName+" Found For Label "+PageLabel.Assigned_To.toString(),YesNo.No);	
+//					} else {
+//						sa.assertTrue(false,adminUerName+" not Found For Label "+PageLabel.Assigned_To.toString());
+//						log(LogStatus.ERROR, adminUerName+" not Found For Label "+PageLabel.Assigned_To.toString(),YesNo.Yes);
+//
+//					}
 
 					if (i==0) {
 						subject =M3Call1Subject;
 						status=M3Call1Status;
 						priority=M3Cal11Priority;
-
-						String[][] dropDownLabelWithValues1 = {{PageLabel.Status.toString(),status},
-								{PageLabel.Priority.toString(),priority}};
-
-						dropDownLabelWithValues=dropDownLabelWithValues1;
+						
+//						String[][] dropDownLabel1WithValues1 = {{PageLabel.Subject.toString(),subject},
+//								{PageLabel.Name.toString(),contactNAme}};
+//
+//						dropDownLabel1WithValues=dropDownLabel1WithValues1;
+//
+//						String[][] dropDownLabelWithValues1 = {{PageLabel.Status.toString(),status},
+//								{PageLabel.Priority.toString(),priority}};
+//
+//						dropDownLabelWithValues=dropDownLabelWithValues1;
 
 					} else if(i==1) {
 
 						subject =M3Meeting1Subject;
+						String[][] dropDownLabel1WithValues2 = {{PageLabel.Subject.toString(),subject},
+								{PageLabel.Name.toString(),contactNAme}};
+
+						dropDownLabel1WithValues=dropDownLabel1WithValues2;
 
 						dropDownLabelWithValues=null;
 
@@ -1302,54 +1324,59 @@ lp.CRMlogout();
 						subject =M3Task1Subject;
 						status=M3Task1Status;
 						priority=M3Task1Priority;
+						
+						String[][] dropDownLabel1WithValues3 = {{PageLabel.Subject.toString(),subject},
+								{PageLabel.Name.toString(),contactNAme}};
+
+						dropDownLabel1WithValues=dropDownLabel1WithValues3;
 						String[][] dropDownLabelWithValues3 = {{PageLabel.Status.toString(),status},
 								{PageLabel.Priority.toString(),priority}};	
 						dropDownLabelWithValues=dropDownLabelWithValues3;
 					}
 
-					if (tp.enteringSubjectAndSelectDropDownValuesonTaskPopUp(projectName, PageName.TaskPage, subject, dropDownLabelWithValues, action.SCROLLANDBOOLEAN, 10)) {
-						log(LogStatus.INFO, "Entered value to Subject Text Box ", YesNo.No);
-						ThreadSleep(1000);
-						if(i!=1) {
-						if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), dueDate, PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Entered value to Due Date Text Box", YesNo.No);
-							ThreadSleep(1000);
-						}else {
-							log(LogStatus.ERROR, "Not able to enter value on duedate textbox "+newInteractionsNavigationLink, YesNo.Yes);
-							sa.assertTrue(false,"Not able to enter value on duedate textbox "+newInteractionsNavigationLink );
-						}
-						}
-						flag = cp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Name.toString(), TabName.TaskTab, contactNAme, action.SCROLLANDBOOLEAN, 10);		
-						if (flag) {
-							ele=cp.getCrossButtonForAlreadySelectedItem(projectName, PageName.TaskPage, PageLabel.Name.toString(),true, contactNAme, action.SCROLLANDBOOLEAN, 5);
-							if (ele!=null) {
-								log(LogStatus.INFO, contactNAme+" Found For Label "+PageLabel.Name.toString()+" at "+newInteractionsNavigationLink,YesNo.No);	
-							} else {
-								sa.assertTrue(false,contactNAme+" not Found For Label "+PageLabel.Name.toString()+" at "+newInteractionsNavigationLink);
-								log(LogStatus.ERROR, contactNAme+" not Found For Label "+PageLabel.Name.toString()+" at "+newInteractionsNavigationLink,YesNo.Yes);
-							}
-						} else {
-							sa.assertTrue(false,"Not Able to Select "+contactNAme+" For Label "+PageLabel.Name);
-							log(LogStatus.SKIP,"Not Able to Select "+contactNAme+" For Label "+PageLabel.Name,YesNo.Yes);
-
-						}
-						if (clickUsingJavaScript(driver, tp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO,"successfully created : "+subject+" for "+newInteractionsNavigationLink,  YesNo.No);
-							ExcelUtils.writeData(phase1DataSheetFilePath,dueDate, "Task1", excelLabel.Variable_Name, "M3CALL1", excelLabel.Due_Date);
-							ele = tp.getCreatedConfirmationMsg(projectName, 15);
-							if (ele!=null) {
-								String actualValue = ele.getText().trim();
-								String expectedValue=tp.taskCreatesMsg(projectName, subject);
-								if (expectedValue.contains(actualValue)) {
-									log(LogStatus.INFO,expectedValue+" matched FOR Confirmation Msg", YesNo.No);
-								} else {
-									log(LogStatus.ERROR,"Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg", YesNo.Yes);
-									BaseLib.sa.assertTrue(false, "Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg");
-								}
-							} else {
-								sa.assertTrue(false,"Created Task Msg Ele not Found");
-								log(LogStatus.SKIP,"Created Task Msg Ele not Found",YesNo.Yes);
-							}
+//					if (tp.enteringSubjectAndSelectDropDownValuesonTaskPopUp(projectName, PageName.TaskPage, subject, dropDownLabelWithValues, action.SCROLLANDBOOLEAN, 10)) {
+//						log(LogStatus.INFO, "Entered value to Subject Text Box ", YesNo.No);
+//						ThreadSleep(1000);
+//						if(i!=1) {
+//						if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), dueDate, PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
+//							log(LogStatus.INFO, "Entered value to Due Date Text Box", YesNo.No);
+//							ThreadSleep(1000);
+//						}else {
+//							log(LogStatus.ERROR, "Not able to enter value on duedate textbox "+newInteractionsNavigationLink, YesNo.Yes);
+//							sa.assertTrue(false,"Not able to enter value on duedate textbox "+newInteractionsNavigationLink );
+//						}
+//						}
+//						flag = cp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Name.toString(), TabName.TaskTab, contactNAme, action.SCROLLANDBOOLEAN, 10);		
+//						if (flag) {
+//							ele=cp.getCrossButtonForAlreadySelectedItem(projectName, PageName.TaskPage, PageLabel.Name.toString(),true, contactNAme, action.SCROLLANDBOOLEAN, 5);
+//							if (ele!=null) {
+//								log(LogStatus.INFO, contactNAme+" Found For Label "+PageLabel.Name.toString()+" at "+newInteractionsNavigationLink,YesNo.No);	
+//							} else {
+//								sa.assertTrue(false,contactNAme+" not Found For Label "+PageLabel.Name.toString()+" at "+newInteractionsNavigationLink);
+//								log(LogStatus.ERROR, contactNAme+" not Found For Label "+PageLabel.Name.toString()+" at "+newInteractionsNavigationLink,YesNo.Yes);
+//							}
+//						} else {
+//							sa.assertTrue(false,"Not Able to Select "+contactNAme+" For Label "+PageLabel.Name);
+//							log(LogStatus.SKIP,"Not Able to Select "+contactNAme+" For Label "+PageLabel.Name,YesNo.Yes);
+//
+//						}
+//						if (clickUsingJavaScript(driver, tp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+//							log(LogStatus.INFO,"successfully created : "+subject+" for "+newInteractionsNavigationLink,  YesNo.No);
+//							ExcelUtils.writeData(phase1DataSheetFilePath,dueDate, "Task1", excelLabel.Variable_Name, "M3CALL1", excelLabel.Due_Date);
+//							ele = tp.getCreatedConfirmationMsg(projectName, 15);
+//							if (ele!=null) {
+//								String actualValue = ele.getText().trim();
+//								String expectedValue=tp.taskCreatesMsg(projectName, subject);
+//								if (expectedValue.contains(actualValue)) {
+//									log(LogStatus.INFO,expectedValue+" matched FOR Confirmation Msg", YesNo.No);
+//								} else {
+//									log(LogStatus.ERROR,"Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg", YesNo.Yes);
+//									BaseLib.sa.assertTrue(false, "Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg");
+//								}
+//							} else {
+//								sa.assertTrue(false,"Created Task Msg Ele not Found");
+//								log(LogStatus.SKIP,"Created Task Msg Ele not Found",YesNo.Yes);
+//							}
 							
 							if(i!=1) {
 								String[][] fieldsWithValues= {
@@ -1367,17 +1394,17 @@ lp.CRMlogout();
 								
 								tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
 							}
-						}
-						else {
-							log(LogStatus.ERROR, "Save Button is not visible so could not be create "+newInteractionsNavigationLink, YesNo.Yes);
-							sa.assertTrue(false,"Save Button is not visible so could not be create "+newInteractionsNavigationLink );
-						}
-
-
-					}else {
-						log(LogStatus.ERROR, "Subject textbox is not visible so could not be create "+newInteractionsNavigationLink, YesNo.Yes);
-						sa.assertTrue(false,"Subject textbox is not visible so could not be create "+newInteractionsNavigationLink );
-					}
+//						}
+//						else {
+//							log(LogStatus.ERROR, "Save Button is not visible so could not be create "+newInteractionsNavigationLink, YesNo.Yes);
+//							sa.assertTrue(false,"Save Button is not visible so could not be create "+newInteractionsNavigationLink );
+//						}
+//
+//
+//					}else {
+//						log(LogStatus.ERROR, "Subject textbox is not visible so could not be create "+newInteractionsNavigationLink, YesNo.Yes);
+//						sa.assertTrue(false,"Subject textbox is not visible so could not be create "+newInteractionsNavigationLink );
+//					}
 
 
 
@@ -1401,11 +1428,11 @@ lp.CRMlogout();
 						sa.assertTrue(false,"Not able to click on Contact tab so can not check created "+subject+" for contact "+contactNAme);
 					}
 				}
-			} else {
-				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot click on : "+newInteractionsNavigationLink+" for creation ", YesNo.Yes);
-				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot click on : "+newInteractionsNavigationLink+" for creation ");
-			}
-		}
+//			} else {
+//				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot click on : "+newInteractionsNavigationLink+" for creation ", YesNo.Yes);
+//				sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot click on : "+newInteractionsNavigationLink+" for creation ");
+//			}
+//		}
 		lp.CRMlogout();
 		sa.assertAll();
 
@@ -1422,7 +1449,7 @@ lp.CRMlogout();
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
-		navigationMenuName = NavigationMenuItems.Create_New.toString();
+		navigationMenuName = NavigationMenuItems.Create.toString();
 
 		String[]  createNewNavigationLinks = {CreateNew_DefaultValues.New_Deal.toString(),
 				CreateNew_DefaultValues.New_Contact.toString(),
@@ -1563,7 +1590,8 @@ lp.CRMlogout();
 		NavigationPageBusineesLayer  npbl = new NavigationPageBusineesLayer(driver) ;
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
-		navigationMenuName = NavigationMenuItems.New_Interactions.toString();
+	/*	navigationMenuName = NavigationMenuItems.New_Interactions.toString();*/
+		navigationMenuName = NavigationMenuItems.Create.toString();
 
 		String[]  newInteractionsNavigationLinks = {
 				NewInteractions_DefaultValues.Meeting.toString(),
@@ -1640,7 +1668,8 @@ lp.CRMlogout();
 		
 		// Bulk Email 
 		
-		navigationMenuName = NavigationMenuItems.Bulk_Actions.toString();
+	/*	navigationMenuName = NavigationMenuItems.Bulk_Actions.toString();*/
+		navigationMenuName = NavigationMenuItems.Create.toString();
 		String[]  newInteractionsNavigationLinks = {
 				BulkActions_DefaultValues.Bulk_Email.toString(),
 				BulkActions_DefaultValues.Bulk_Fundraising.toString(),
@@ -1697,10 +1726,11 @@ lp.CRMlogout();
 		
 		// New Interaction
 		
-		navigationMenuName = NavigationMenuItems.New_Interactions.toString();
+		/*navigationMenuName = NavigationMenuItems.New_Interactions.toString();*/
+		navigationMenuName = NavigationMenuItems.Create.toString();
 		String[]  newInteractionsNavigationLinks1 = {
 				NewInteractions_DefaultValues.Call.toString(),
-				NewInteractions_DefaultValues.Meeting.toString(),
+				/*NewInteractions_DefaultValues.Meeting.toString(),*/
 				NewInteractions_DefaultValues.Task.toString()};
 		i=0;
 		for (String newInteractionsNavigationLink : newInteractionsNavigationLinks1) {
@@ -1752,7 +1782,7 @@ lp.CRMlogout();
 		
 		// Create New 
 		
-		navigationMenuName = NavigationMenuItems.Create_New.toString();
+		navigationMenuName = NavigationMenuItems.Create.toString();
 		String[]  newInteractionsNavigationLinks2 = {
 				CreateNew_DefaultValues.New_Deal.toString(),
 				CreateNew_DefaultValues.New_Contact.toString(),
@@ -1818,9 +1848,7 @@ lp.CRMlogout();
 		NavigationPageBusineesLayer  npbl = new NavigationPageBusineesLayer(driver) ;
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
-		String[] navigationMenuNames = {NavigationMenuItems.Bulk_Actions.toString(),
-				NavigationMenuItems.New_Interactions.toString(),
-				NavigationMenuItems.Create_New.toString()};
+		String[] navigationMenuNames = {NavigationMenuItems.Create.toString()};
 
 		WebElement ele = null;
 
@@ -1861,7 +1889,7 @@ lp.CRMlogout();
 		boolean flag = false;
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		lp.switchToClassic();
-		if(dataload.dataImportWizard(ObjectName.Navigation, ObjectType.Custom, "\\UploadFiles\\Module 3\\UploadCSV\\Navigation Menu Test Data - Parent.csv", DataImportType.AddNewRecords, "9")) {
+		if(dataload.dataImportWizard(ObjectName.Navigation, ObjectType.Custom, "\\UploadFiles\\Module 3\\UploadCSV\\Navigation Menu Test Data - Parent.csv", DataImportType.AddNewRecords, "8")) {
 			appLog.info("Parent Data is imported Successfully in "+ObjectName.Navigation);
 			flag=true;
 		}else {
@@ -1950,7 +1978,8 @@ lp.CRMlogout();
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
-		navigationMenuName=NavigationMenuItems.New_Interactions.toString();
+		/*navigationMenuName=NavigationMenuItems.New_Interactions.toString();*/
+		navigationMenuName=NavigationMenuItems.Create.toString();
 		String updatedName="";
 		WebElement ele;
 		String navigationLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name);
@@ -2039,7 +2068,8 @@ lp.CRMlogout();
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
-		navigationMenuName=NavigationMenuItems.New_Interactions.toString();
+		/*navigationMenuName=NavigationMenuItems.New_Interactions.toString();*/
+		navigationMenuName=NavigationMenuItems.Create.toString();
 		String updatedOrder="";
 		String[] navigationLabels=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name).split(breakSP);
 		String[] updatedOrderLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Updated_Order).split(breakSP);
@@ -2115,7 +2145,8 @@ lp.CRMlogout();
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 
-		navigationMenuName=NavigationMenuItems.New_Interactions.toString();
+		/*navigationMenuName=NavigationMenuItems.New_Interactions.toString();*/
+		navigationMenuName=NavigationMenuItems.Create.toString();
 		String all ="All ";
 		String link="";
 		String name="";
@@ -2255,7 +2286,8 @@ lp.CRMlogout();
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		lp.CRMLogin(superAdminUserName, adminPassword);
 		WebElement ele;
-		navigationMenuName=NavigationMenuItems.New_Interactions.toString();
+		/*navigationMenuName=NavigationMenuItems.New_Interactions.toString();*/
+		navigationMenuName=NavigationMenuItems.Create.toString();
 		String navigationLabel=dashBoardTab;
 		String navLb;
 		navLb=navigationLabel;
@@ -2542,7 +2574,8 @@ lp.CRMlogout();
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		WebElement ele;
-		navigationMenuName=NavigationMenuItems.New_Interactions.toString();
+		/*navigationMenuName=NavigationMenuItems.New_Interactions.toString();*/
+		navigationMenuName=NavigationMenuItems.Create.toString();
 		String actionObjectLabel=CSVLabel.Action_Object.toString();
 		String actionObjectLabelValue=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Action_Object);;
 		String navigationLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name);
@@ -2787,8 +2820,8 @@ lp.CRMlogout();
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		WebElement ele;
-		navigationMenuName=NavigationMenuItems.New_Interactions.toString();
-
+		/*navigationMenuName=NavigationMenuItems.New_Interactions.toString();*/
+		navigationMenuName=NavigationMenuItems.Create.toString();
 		String dependentTC="M3Tc019_CreateRecordTypeFundAndFundOfFundsForFundObjectAndAddTheFromTheProfiles";
 		String recordTypeList=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Record_Type);
 		String recordTypeArray[] =recordTypeList.split(breakSP);
@@ -3034,7 +3067,8 @@ lp.CRMlogout();
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		boolean flag=false;
-		navigationMenuName=NavigationMenuItems.New_Interactions.toString();
+		/*navigationMenuName=NavigationMenuItems.New_Interactions.toString();*/
+		navigationMenuName=NavigationMenuItems.Create.toString();
 		 
 		String navigationLabel=CSVLabel.Navigation_Label.toString();
 		String navigationLabelValue=tabCustomObj;
@@ -3176,7 +3210,8 @@ lp.CRMlogout();
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		WebElement ele;
-		navigationMenuName=NavigationMenuItems.New_Interactions.toString();
+		/*navigationMenuName=NavigationMenuItems.New_Interactions.toString();*/
+		navigationMenuName=NavigationMenuItems.Create.toString();
 		String actionObjectLabel=CSVLabel.Action_Object.toString();
 		String actionObjectLabelValue=tabCustomObjAPIName;
 		String navigationLabel=tabCustomObj;
@@ -3353,7 +3388,8 @@ lp.CRMlogout();
 		lp.CRMLogin(superAdminUserName, adminPassword);
 
 		WebElement ele;
-		navigationMenuName=NavigationMenuItems.New_Interactions.toString();
+	/*	navigationMenuName=NavigationMenuItems.New_Interactions.toString();*/
+		navigationMenuName=NavigationMenuItems.Create.toString();
 		String dependentTC="M3Tc023_CreateRecordTypeForCustomObjectAndAddTheFromTheProfiles";
 		String recordTypeList=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Record_Type);
 		String recordTypeArray[] =recordTypeList.split(breakSP);
@@ -3579,7 +3615,8 @@ lp.CRMlogout();
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		WebElement ele;
-		navigationMenuName=NavigationMenuItems.New_Interactions.toString();
+		/*navigationMenuName=NavigationMenuItems.New_Interactions.toString();*/
+		navigationMenuName=NavigationMenuItems.Create.toString();
 		String dependentTC="M3Tc026_1_DeActivateARecordTypeForInstitution_Action";
 		String navigationLabel=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTC, excelLabel.Record_Type);
 
@@ -3704,7 +3741,8 @@ lp.CRMlogout();
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
-		navigationMenuName=NavigationMenuItems.New_Interactions.toString();
+		/*navigationMenuName=NavigationMenuItems.New_Interactions.toString();*/
+		navigationMenuName=NavigationMenuItems.Create.toString();
 		String link="";
 		WebElement ele;
 		String tab=navigationTab;
@@ -3797,7 +3835,8 @@ lp.CRMlogout();
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
-		navigationMenuName=NavigationMenuItems.New_Interactions.toString();
+		/*navigationMenuName=NavigationMenuItems.New_Interactions.toString();*/
+		navigationMenuName=NavigationMenuItems.Create.toString();
 		WebElement ele;
 
 		String navigationLabelValues=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Navigation_Label_Name)+"<break>"+tabCustomObj;
@@ -3893,7 +3932,8 @@ lp.CRMlogout();
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		//////////////////////////////////////////////////
 		
-		String navigationMenuName=NavigationMenuItems.New_Interactions.toString();
+	/*	String navigationMenuName=NavigationMenuItems.New_Interactions.toString();*/
+		String navigationMenuName=NavigationMenuItems.Create.toString();
 		int order = 3;
 		
 		String[] AllParents=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, currentlyExecutingTC, excelLabel.Parent).split(breakSP);
@@ -3981,7 +4021,8 @@ lp.CRMlogout();
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 		WebElement ele;
-		navigationMenuName=NavigationMenuItems.New_Interactions.toString();
+		/*navigationMenuName=NavigationMenuItems.New_Interactions.toString();*/
+		navigationMenuName=NavigationMenuItems.Create.toString();
 		
 		String dependentTc = "M3Tc029_VerifyWhereChildNodeIsMovedFromOneParentToAnotherInNavigationMenu";
 		String[] AllParents=ExcelUtils.readData(phase1DataSheetFilePath,"FilePath",excelLabel.TestCases_Name, dependentTc, excelLabel.Parent).split(breakSP);
@@ -4301,9 +4342,9 @@ lp.CRMlogout();
 		switchToDefaultContent(driver);
 		refresh(driver);
 		List<String> ExpectedNavigationMenuitem=new LinkedList<String>();
-		ExpectedNavigationMenuitem.add(NavigationMenuItems.Bulk_Actions.toString());
-		ExpectedNavigationMenuitem.add(NavigationMenuItems.New_Interactions.toString());
-		ExpectedNavigationMenuitem.add(NavigationMenuItems.Create_New.toString());
+		ExpectedNavigationMenuitem.add(NavigationMenuItems.Create.toString());
+		ExpectedNavigationMenuitem.add(NavigationMenuItems.Research.toString());
+		ExpectedNavigationMenuitem.add(NavigationMenuItems.Support.toString());
 		ExpectedNavigationMenuitem.add(customNavigationMenu);
 		List<String> ActualNavigationMenuitem=home.getNavigationMenuitem();
 		if (ExpectedNavigationMenuitem.equals(ActualNavigationMenuitem)) {

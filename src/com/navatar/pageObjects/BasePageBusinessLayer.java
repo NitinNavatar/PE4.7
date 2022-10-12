@@ -3086,14 +3086,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		WebElement ele;
 		String type = "";
 		if (activityType == ActivityType.Next) {
-			type = "upcoming";
+			type = "Next";
 		} else if (activityType == ActivityType.Past) {
 			type = "past";
 		}
 
-		String nextStepsXpath = "//div[contains(@id,'" + type + "-activities-section')]";
+		String nextStepsXpath ="//div[contains(@class,'" + type + "')]";
 
-		String subjectXpath = nextStepsXpath + "//a[@title='" + subject + "']";
+		String subjectXpath = nextStepsXpath + "/following-sibling::div//*[@title='" + subject + "']";
 
 		String eleXpath = "";
 
@@ -4780,7 +4780,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		WebElement ele = moreStepsBtn(projectName, EnableDisable.Enable, 10);
 		click(driver, ele, "More Steps", action.BOOLEAN);
 		ThreadSleep(2000);
-		String xpath = "//a[text()='" + taskName + "']";
+//		String xpath = "//a[text()='" + taskName + "']";
+		String xpath = "//h3[@title='" + taskName + "']/a";
 		ele = FindElement(driver, xpath, taskName, action.SCROLLANDBOOLEAN, 20);
 		ele = isDisplayed(driver, ele, "Visibility", 20, taskName);
 		return ele;
@@ -10725,7 +10726,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		else
 		{
-			if(CommonLib.click(driver, activityTimelineButton(buttonName,30),buttonName+" button" , action.BOOLEAN))
+			if(CommonLib.clickUsingJavaScript(driver, activityTimelineButton(buttonName,30),buttonName+" button" , action.BOOLEAN))
 			{
 				log(LogStatus.INFO, "Clicked on "+buttonName+" button name", YesNo.No);
 			}

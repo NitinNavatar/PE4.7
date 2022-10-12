@@ -1546,7 +1546,7 @@ public class PECloudSmoke extends BaseLib{
 		refresh(driver);
 
 
-		navigationMenuName = NavigationMenuItems.Create_New.toString();
+		navigationMenuName = NavigationMenuItems.Create.toString();
 
 		filesName=CreateNew_DefaultValues.New_Deal.toString()+","+
 				CreateNew_DefaultValues.New_Institution.toString()+","+
@@ -2435,7 +2435,7 @@ public class PECloudSmoke extends BaseLib{
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
-		navigationMenuName = NavigationMenuItems.Create_New.toString();
+		navigationMenuName = NavigationMenuItems.Create.toString();
 
 		String[]  createNewNavigationLinks = {CreateNew_DefaultValues.New_Deal.toString(),
 				CreateNew_DefaultValues.New_Institution.toString(),
@@ -3529,7 +3529,7 @@ public class PECloudSmoke extends BaseLib{
 			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2,YesNo.Yes);
 		}
 
-		navigationMenuName=NavigationMenuItems.Create_New.toString();
+		navigationMenuName=NavigationMenuItems.Create.toString();
 		boolean flag = false;
 		WebElement ele=null;
 		String createNewNavigationLink=CreateNew_DefaultValues.New_Deal.toString();
@@ -3989,7 +3989,7 @@ public class PECloudSmoke extends BaseLib{
 			sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2);
 			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2,YesNo.Yes);
 		}
-		navigationMenuName = NavigationMenuItems.Create_New.toString();
+		navigationMenuName = NavigationMenuItems.Create.toString();
 		boolean flag = false;
 		WebElement ele=null;
 		String createNewNavigationLink = CreateNew_DefaultValues.New_Deal.toString();
