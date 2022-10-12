@@ -1968,8 +1968,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (fieldlabel.equalsIgnoreCase("Assigned To")
 				&& PageName.TaskPage.toString().equalsIgnoreCase(pageName.toString())) {
 
-			xpath = "//span[text()='" + fieldlabel + "']/../following-sibling::div//li/a/span[text()='" + name
-					+ "']/following-sibling::a";
+			xpath = "//span[text()='" + name + "']/..//following-sibling::lightning-button-icon/button";
 			ele = FindElement(driver, xpath, "Cross Button For  : " + name + " For Label : " + fieldlabel, action,
 					timeOut);
 			return ele;
@@ -11521,68 +11520,581 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				sa.assertTrue(false,  name+" is not avalable in contact section");	
 			}
 		}
+		else
+		{
+			log(LogStatus.ERROR, "Please provide the contact name. Contat name should not be null or blank", YesNo.No);		
+			result.add("Please provide the contact name. Contat name should not be null or blank");
+		}
 		return result;
 	}
-	
-	public ArrayList<String> verifyNotesPopupWithPrefilledValue(String subject, String Notes, String[] tag)
+
+	public ArrayList<String> verifyNotesPopupWithPrefilledValueAndOnSameUrl(String url,String subject, String Notes, String[] tag)
 	{
 		String xPath;
 		WebElement ele;
 		ArrayList<String> result=new ArrayList<String>();
-		if(subject!=null && subject!="")
-		{
-			String actualSubject=getSubjectInput(10).getAttribute("value");
-			log(LogStatus.INFO, "Successfully get the value from the clipboard", YesNo.No);	
-			if(subject.equals(actualSubject))
-			{
-				log(LogStatus.INFO, "Subject value has been verify", YesNo.No);	
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Subject value is not verify", YesNo.No);	
-				result.add("Subject value is not verify");
-			}
 
-		}
-		else
-		{
-			log(LogStatus.ERROR, "Not able to click on subject textbox", YesNo.No);	
-			result.add("Not able to click on subject textbox");
-		}
+		String currentUrl=getURL(driver, 10);
 
-
-		if(Notes!=null && Notes!="")
+		if(url.equals(currentUrl))
 		{
-			String actualNotes=getText(driver, getNotesText(20), "Notes", action.SCROLLANDBOOLEAN);
-			if(Notes.equals(actualNotes))
+			log(LogStatus.INFO, "popun is open in the same page", YesNo.No);	
+			if(subject!=null && subject!="")
 			{
-				log(LogStatus.INFO, "Notes value has been verified", YesNo.No);	
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Notes value is not verified", YesNo.No);
-				result.add("Notes value is not verified");
-			}
-		}
+				String actualSubject=getAttribute(driver, getSubjectInput(15), "Subject", "value");
 
-		if(tag!=null && tag.length!=0)
-		{
-			for(int i=0; i<tag.length; i++)
-			{
-				xPath="//lightning-pill//span[text()='"+tag[i]+"']";
-				ele=FindElement(driver, xPath, tag[i]+" tag", action.SCROLLANDBOOLEAN, 15);
-				if(ele!=null)
+				log(LogStatus.INFO, "Successfully get the value from the clipboard", YesNo.No);	
+				if(subject.equals(actualSubject))
 				{
-					log(LogStatus.INFO, tag[i]+" tag has been verified", YesNo.No);	
+					log(LogStatus.INFO, "Subject value has been verify", YesNo.No);	
 				}
 				else
 				{
-					log(LogStatus.ERROR, tag[i]+" tag is not verified", YesNo.No);	
-					result.add(tag[i]+" tag is not verified");
+					log(LogStatus.ERROR, "Subject value is not verify", YesNo.No);	
+					result.add("Subject value is not verify");
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on subject textbox", YesNo.No);	
+				result.add("Not able to click on subject textbox");
+			}
+
+
+			if(Notes!=null && Notes!="")
+			{
+				String actualNotes=getText(driver, getNotesText(20), "Notes", action.SCROLLANDBOOLEAN);
+				if(Notes.equals(actualNotes))
+				{
+					log(LogStatus.INFO, "Notes value has been verified", YesNo.No);	
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Notes value is not verified", YesNo.No);
+					result.add("Notes value is not verified");
+				}
+			}
+
+			if(tag!=null && tag.length!=0)
+			{
+				for(int i=0; i<tag.length; i++)
+				{
+					xPath="//lightning-pill//span[text()='"+tag[i]+"']";
+					ele=FindElement(driver, xPath, tag[i]+" tag", action.SCROLLANDBOOLEAN, 15);
+					if(ele!=null)
+					{
+						log(LogStatus.INFO, tag[i]+" tag has been verified", YesNo.No);	
+					}
+					else
+					{
+						log(LogStatus.ERROR, tag[i]+" tag is not verified", YesNo.No);	
+						result.add(tag[i]+" tag is not verified");
+					}
 				}
 			}
 		}
+		else
+		{
+			log(LogStatus.ERROR, "Popup is not open on the same page", YesNo.No);	
+			result.add(" Popup is not open on the same page");
+		}
 		return result;
 	}
+	
+	
+	/**
+	 * @author Sourabh Saini 
+	 * @param projectName
+	 * @param basicSection
+	 * @param advanceSection
+	 * @param taskSection
+	 * @param suggestedTags
+	 * @param removeTagName
+	 * @return return true if test case is passed
+	 */
+
+	public boolean updateActivityTimelineRecord(String projectName, String[][] basicSection, String[][] advanceSection, String[][] taskSection,String[] suggestedTags, String[] removeTagName)
+	{
+		NavigationPageBusineesLayer npbl= new NavigationPageBusineesLayer(driver);
+		String xPath="";
+		WebElement ele;
+		boolean flag=false;
+		ThreadSleep(9000);
+
+		
+		if(removeTagName!=null && removeTagName.length!=0)
+		{
+			for(int i=0; i<removeTagName.length; i++)
+			{
+				ele=getCrossButtonForAlreadySelectedItem(projectName, PageName.TaskPage, "Assigned To",
+						false, removeTagName[i], action.SCROLLANDBOOLEAN, 10);
+				if(ele!=null)
+				{
+					if(CommonLib.clickUsingJavaScript(driver, ele, removeTagName[i]+" tag name"))
+					{
+						log(LogStatus.INFO, "clicked on cross button of "+removeTagName[i], YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on cross button of "+removeTagName[i], YesNo.No);
+						sa.assertTrue(false, "Not able to click on cross button of "+removeTagName[i]);
+						return false;
+					}
+					
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to get the element of "+removeTagName[i], YesNo.No);
+					sa.assertTrue(false, "Not able to get the element of "+removeTagName[i]);
+					return false;
+				}
+			}
+		}
+
+		
+		if(basicSection!=null )
+		{
+
+			for(String[] val:basicSection)
+			{
+				String labelName=val[0];
+				String value=val[1];
+
+				if(labelName.equalsIgnoreCase(excelLabel.Subject.toString()))
+				{
+					xPath="//label[text()='"+labelName+"']/..//input[contains(@data-id,'combobox')]";
+					ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+					if(CommonLib.sendKeys(driver, ele, value, labelName+" label", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, value+" value has been passed in "+labelName+" field", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, value+" value is not passed in "+labelName+" field", YesNo.No);
+						sa.assertTrue(false, value+" value is not passed in "+labelName+" field");
+						return false;
+
+					}
+				}
+				else
+					if(labelName.equalsIgnoreCase(excelLabel.Notes.toString()))
+					{
+						xPath="//div[span[span[text()='"+labelName+"']]]//div[@class='slds-rich-text-editor__textarea slds-grid']";
+						ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+						if(CommonLib.clickUsingJavaScript(driver, ele, labelName+" paragraph"))
+						{
+							log(LogStatus.INFO, "Clicked on "+labelName+" paragraph", YesNo.No);
+							ThreadSleep(2000);
+							xPath="//div[span[span[text()='"+labelName+"']]]//div[@role='textbox']//p";
+							ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+							if(sendKeys(driver, ele, value, labelName+" paragraph", action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, value+" has been passed on "+labelName+" paragraph", YesNo.No);
+
+								CommonLib.ThreadSleep(2000);
+							}
+							else
+							{
+								log(LogStatus.ERROR, value+" is not passed on "+labelName+" paragraph", YesNo.No);
+								sa.assertTrue(false, value+" is not passed on "+labelName+" paragraph");
+								return false;
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on "+labelName+" paragraph", YesNo.No);
+							sa.assertTrue(false, "Not able to click on "+labelName+" paragraph");
+							return false;
+						}
+
+					}else
+						if(labelName.equalsIgnoreCase(excelLabel.Related_To.toString()))
+						{
+							ArrayList<String> tagList=new ArrayList<String>();
+
+							if(value.contains("<break>"))
+							{
+								String[] data=value.split("<break>");
+								for(int i=0; i<data.length; i++)
+								{
+									tagList.add(data[i]);
+								}
+							}
+							else
+							{
+								tagList.add(value);
+							}
+
+							for(int i=0; i<tagList.size(); i++)
+							{
+
+								xPath="//input[@placeholder='Search']";
+								ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 2);
+								if(ele==null)	
+								{	
+									xPath="//*[@title='Tag']";
+									ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+									if(CommonLib.clickUsingJavaScript(driver, ele, labelName+" paragraph"))
+									{
+										log(LogStatus.INFO, "Clicked on Tag button", YesNo.No);
+									}
+									else
+									{
+										log(LogStatus.ERROR,"Not able to click on Tag button", YesNo.No);
+										sa.assertTrue(false, "Not able to click on Tag button");
+										return false;
+									}
+
+								}
+
+								xPath="//input[@placeholder='Search']";
+								ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 2);
+								if(sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN))
+								{
+									log(LogStatus.INFO, tagList.get(i)+" value has been passed in "+labelName+" field", YesNo.No);
+									ThreadSleep(3000);
+									xPath="//ul[@class='drop_ul']//li[text()='"+tagList.get(i)+"']";
+									ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+									if(click(driver, ele, tagList+" dropdown", action.SCROLLANDBOOLEAN))
+									{
+										log(LogStatus.INFO, "clicked on "+tagList.get(i)+" value", YesNo.No);	
+									}
+									else
+									{
+										log(LogStatus.ERROR, "Not able to click on "+tagList.get(i)+" value", YesNo.No);
+										sa.assertTrue(false, "Not able to click on "+tagList.get(i)+" value");
+										return false;
+									}
+
+								}
+								else {
+									log(LogStatus.ERROR, tagList.get(i)+" value is not passed in "+labelName+" field", YesNo.No);
+									sa.assertTrue(false, tagList.get(i)+" value is not passed in "+labelName+" field");
+									return false;
+								}
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Label Name is not correct", YesNo.No);
+							sa.assertTrue(false, "Label Name is not correct");
+							return false;
+						}							
+			}
+
+		}
+		if(advanceSection!=null)
+		{
+			if(clickUsingJavaScript(driver, getSectionBtn("Advanced",30), "Advanced section", action.SCROLLANDBOOLEAN))
+			{
+				log(LogStatus.INFO, "clicked on Advanced section", YesNo.No);
+				for(String[] val:advanceSection)
+				{
+					String labelName=val[0];
+					String value=val[1];
+					//String fieldType=val[2];
+
+
+					if(labelName.contains("Start Date"))
+					{
+						xPath="//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='Start Date Time']/..//label[text()='Date']/..//input";
+						ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+						if(CommonLib.sendKeys(driver, ele, value, labelName+" label", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, value+" value has been passed in "+labelName+" field", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, value+" value is not passed in "+labelName+" field", YesNo.No);
+							sa.assertTrue(false, value+" value is not passed in "+labelName+" field");
+							return false;
+						}		
+					}	
+					else if(labelName.contains("Start Time"))	
+					{
+						xPath="//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='Start Date Time']/..//label[text()='Time']/..//input";
+						ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+						if(CommonLib.sendKeys(driver, ele, value, labelName+" label", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, value+" value has been passed in "+labelName+" field", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, value+" value is not passed in "+labelName+" field", YesNo.No);
+							sa.assertTrue(false, value+" value is not passed in "+labelName+" field");
+							return false;
+						}	
+
+					}
+					else if(labelName.contains("End Date"))	
+					{
+						xPath="//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='End Date Time']/..//label[text()='Date']/..//input";
+						ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+						if(CommonLib.sendKeys(driver, ele, value, labelName+" label", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, value+" value has been passed in "+labelName+" field", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, value+" value is not passed in "+labelName+" field", YesNo.No);
+							sa.assertTrue(false, value+" value is not passed in "+labelName+" field");
+							return false;
+						}	
+
+					}
+					else if(labelName.contains("End Time"))	
+					{
+						xPath="//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='End Date Time']/..//label[text()='Time']/..//input";
+						ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+						if(CommonLib.sendKeys(driver, ele, value, labelName+" label", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, value+" value has been passed in "+labelName+" field", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, value+" value is not passed in "+labelName+" field", YesNo.No);
+							sa.assertTrue(false, value+" value is not passed in "+labelName+" field");
+							return false;
+						}	
+
+					}
+
+					else if(labelName.contains(excelLabel.Location.toString()) || labelName.contains("Due Date Only"))
+					{
+
+						xPath="//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"+labelName+"']/..//input";
+						ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+						if(CommonLib.sendKeys(driver, ele, value, labelName+" label", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, value+" value has been passed in "+labelName+" field", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, value+" value is not passed in "+labelName+" field", YesNo.No);
+							sa.assertTrue(false, value+" value is not passed in "+labelName+" field");
+							return false;
+						}
+
+					}
+
+					else 
+						if(labelName.equalsIgnoreCase(excelLabel.Status.toString()) || labelName.equalsIgnoreCase(excelLabel.Priority.toString()))
+						{
+							xPath="//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"+labelName+"']/..//button";
+							ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+							xPath="//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"+labelName+"']/..//span[@class='slds-truncate']";
+							if(CommonLib.dropDownHandle(driver, ele, xPath, labelName+" dropdown", value))
+							{
+								log(LogStatus.INFO, value+" value has been selected from "+labelName+" field", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, value+" value is not selected from "+labelName+" field", YesNo.No);
+								sa.assertTrue(false, value+" value is not selected from "+labelName+" field");
+								return false;
+							}
+						}
+						else if(labelName.equalsIgnoreCase("All-Day Event"))
+						{
+
+							if(value.equals("true"))
+							{
+								xPath="//span[text()='All-Day Event']/../../input";
+								ele=FindElement(driver, xPath, labelName+" name", action.SCROLLANDBOOLEAN, 30);
+								if(isSelected(driver, ele, labelName+" checkbox"))
+								{
+									log(LogStatus.INFO, labelName+" checkbox is already selected", YesNo.No);
+
+								}
+								else
+								{
+									if(click(driver, ele, labelName+" checkbox", action.SCROLLANDBOOLEAN))
+									{
+										log(LogStatus.INFO, labelName+" checkbox has been selected", YesNo.No);
+									}
+									else
+									{
+										log(LogStatus.ERROR, labelName+" checkbox is not selected", YesNo.No);
+										sa.assertTrue(false, labelName+" checkbox is not selected");
+										return false;
+									}
+								}
+
+							}
+							else
+							{
+								xPath="//span[text()='All-Day Event']/../../input";
+								ele=FindElement(driver, xPath, labelName+" name", action.SCROLLANDBOOLEAN, 30);
+								if(!isSelected(driver, ele, labelName+" checkbox"))
+								{
+									log(LogStatus.INFO, labelName+" checkbox is not selected", YesNo.No);
+
+								}
+								else
+								{
+									if(click(driver, ele, labelName+" checkbox", action.SCROLLANDBOOLEAN))
+									{
+										log(LogStatus.INFO, labelName+" checkbox has been unselected", YesNo.No);
+									}
+									else
+									{
+										log(LogStatus.ERROR, labelName+" checkbox is not unselected", YesNo.No);
+										sa.assertTrue(false, labelName+" checkbox is not unselected");
+										return false;
+									}
+								}
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "label name is not correct", YesNo.No);
+							sa.assertTrue(false, "label name is not correct");
+							return false;
+						}
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on Advanced search section", YesNo.No);
+				sa.assertTrue(false, "Not able to click on Advanced search section");
+				return false;
+			}
+		}
+		if(taskSection!=null)
+		{
+
+			xPath="//span[text()='Advanced']/parent::button[@aria-expanded='true']";
+			ele=FindElement(driver, xPath, "Advance section", action.SCROLLANDBOOLEAN, 3);
+			if(ele==null)
+			{
+				if(clickUsingJavaScript(driver, getSectionBtn("Advanced",3), "Advanced section", action.SCROLLANDBOOLEAN))
+				{
+					log(LogStatus.INFO, "clicked on Advanced section", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Advanced section", YesNo.No);
+					sa.assertTrue(false, "Not able to click on Advanced section");
+					return false;
+				}
+			}
+
+			if(clickUsingJavaScript(driver, getSectionBtn("Tasks",30), "Tasks section", action.SCROLLANDBOOLEAN))
+			{
+				log(LogStatus.INFO, "clicked on Tasks section", YesNo.No);
+
+				for(String[] val:taskSection)
+				{
+					String labelName=val[0];
+					String value=val[1];
+
+					if(labelName.equalsIgnoreCase(excelLabel.Subject.toString()) || labelName.equals("Due Date Only"))
+					{
+						xPath="//span[text()='Tasks']/ancestor::lightning-accordion[1]//label[text()='"+labelName+"']/..//input";
+						ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+						if(CommonLib.sendKeys(driver, ele, value, labelName+" label", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, value+" value has been passed in "+labelName+" field", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, value+" value is not passed in "+labelName+" field", YesNo.No);
+							sa.assertTrue(false, value+" value is not passed in "+labelName+" field");
+							return false;
+						}
+					}
+					else
+						if(labelName.equalsIgnoreCase(excelLabel.Status.toString()))
+						{
+							xPath="//span[text()='Tasks']/ancestor::lightning-accordion[1]//label[text()='"+labelName+"']/..//button";
+							ele=CommonLib.FindElement(driver, xPath, labelName+" label", action.SCROLLANDBOOLEAN, 30);
+							xPath="//span[text()='Tasks']/ancestor::lightning-accordion[1]//label[text()='"+labelName+"']/..//span[@class='slds-truncate']";
+							if(CommonLib.dropDownHandle(driver, ele, xPath, labelName+" dropdown", value))
+							{
+								log(LogStatus.INFO, value+" value has been selected from "+labelName+" field", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, value+" value is not selected from "+labelName+" field", YesNo.No);
+								sa.assertTrue(false, value+" value is not selected from "+labelName+" field");
+								return false;
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Label name is not correct", YesNo.No);
+							sa.assertTrue(false, "Label name is not correct");
+							return false;
+						}
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on Tasks section", YesNo.No);
+				sa.assertTrue(false, "Not able to click on Tasks section");
+				return false;
+			}
+		}
+
+		if(click(driver, getfooterSaveOrCancelButton("Save",20), "Save button", action.SCROLLANDBOOLEAN))
+		{
+			log(LogStatus.INFO, "clicked on Save button", YesNo.No);
+
+
+			if(suggestedTags!=null)
+			{
+				for(int i=0; i<suggestedTags.length; i++)
+				{
+					xPath="//lightning-base-formatted-text[text()='"+suggestedTags[i]+"']/ancestor::th[@data-label='Reference Found']/..//td//input";
+					ele=CommonLib.FindElement(driver, xPath, suggestedTags[i]+" sugested Tag", action.SCROLLANDBOOLEAN, 30);
+					if(click(driver, ele, suggestedTags[i]+" suggested tag", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on "+suggestedTags[i]+" suggested tag checkbox button", YesNo.No);
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on "+suggestedTags[i]+" suggested tag checkbox button", YesNo.No);
+						sa.assertTrue(false, "Not able to click on "+suggestedTags[i]+" suggested tag checkbox button");
+						return false;
+					}
+				}
+				if(click(driver, getfooterTagButton(30), "Tag Button", action.SCROLLANDBOOLEAN))
+				{
+					log(LogStatus.INFO, "clicked on footer tag button", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on footer tag button", YesNo.No);
+					sa.assertTrue(false, "Not able to click on footer tag button");
+					return false;
+				}
+			}
+			if(getSuccessMsg(30)!=null)
+			{
+				log(LogStatus.INFO, "Activity timeline record has been created", YesNo.No);
+				flag=true;
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Activity timeline record is not created", YesNo.No);
+				sa.assertTrue(false, "Activity timeline record is not created");
+				return false;
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on Save button", YesNo.No);
+			sa.assertTrue(false, "Not able to click on Save button");
+			return false;
+		}
+
+		return flag;
+	}
+	
+	
+
 
 }

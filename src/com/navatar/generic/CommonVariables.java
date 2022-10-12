@@ -1078,10 +1078,10 @@ public class CommonVariables {
 		//Task
 		public static String AS_ATActivityType1,AS_ATActivityType2,AS_ATActivityType3;
 		public static String AS_ATSubject1,AS_ATSubject2,AS_ATSubject3;
-		public static String AS_ATNotes1,AS_ATNotes2,AS_ATNotes3;
+		public static String AS_ATNotes1,AS_ATNotes2,AS_ATNotes3,AS_ATNotes4,AS_ATNotes5;
 		public static String AS_ATRelatedTo1,AS_ATRelatedTo2,AS_ATRelatedTo3;
 		public static String AS_ATAdvanceDueDate1,AS_ATAdvanceDueDate2;
-		public static String AS_ATSuggestedTag1,AS_ATSuggestedTag2;
+		public static String AS_ATSuggestedTag1,AS_ATSuggestedTag2,AS_ATSuggestedTag3,AS_ATSuggestedTag4;
 		public static String AS_ATAdvanceStartDate1;
 		public static String AS_ATAdvanceEndDate1;
 		
@@ -5685,6 +5685,8 @@ public class CommonVariables {
 				AS_ATNotes1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AT_001", excelLabel.Notes);
 				AS_ATNotes2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AT_002", excelLabel.Notes);
 				AS_ATNotes3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AT_003", excelLabel.Notes);
+				AS_ATNotes4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AT_004", excelLabel.Notes);
+				AS_ATNotes5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AT_005", excelLabel.Notes);
 				
 				
 				AS_ATRelatedTo1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AT_001", excelLabel.Related_To);
@@ -5703,6 +5705,8 @@ public class CommonVariables {
 				
 				AS_ATSuggestedTag1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AT_001", excelLabel.Suggested_Tag);
 				AS_ATSuggestedTag2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AT_002", excelLabel.Suggested_Tag);
+				AS_ATSuggestedTag3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AT_004", excelLabel.Suggested_Tag);
+				AS_ATSuggestedTag4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AT_005", excelLabel.Suggested_Tag);
 				
 				
 				

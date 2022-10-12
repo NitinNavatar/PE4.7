@@ -885,12 +885,16 @@ public class AcuitySomke extends BaseLib{
 	public void ASTc008_VerifyInteractionCard(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
-
-		String[] Companies = AS_ACompanies3.split("<break>");
-		String[] People = new String[1];
-		String[] Deals = new String[1];
-		People[0] = AS_APeople3;
-		Deals[0] = AS_ADeals3;
+		String subjectName=AS_ATSubject1;
+		//String notes=AS_ATNotes1;
+		String notes="For verification of Task after Edit";
+		
+		
+		String[] tag=AS_ATRelatedTo1.split("<break>");
+		String[][] basicSection= {{"Notes",AS_ATNotes4}};
+		
+		String[] suggestedTag=new String[1];
+		suggestedTag[0]=AS_ATSuggestedTag3;
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 
@@ -902,46 +906,56 @@ public class AcuitySomke extends BaseLib{
 			if(bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,AS_FirmLegalName6 , 30))
 			{
 				log(LogStatus.INFO, AS_FirmLegalName6+" reocrd has been open", YesNo.No);
-				
-				String xPath="//button[text()='Edit Note']";
+
+				String xPath="//a[text()='"+subjectName+"']/../preceding-sibling::div//button[@title='Edit Note']";
 				WebElement ele=CommonLib.FindElement(driver, xPath, "email", action.SCROLLANDBOOLEAN, 30);
-				click(driver, ele, xPath, action.SCROLLANDBOOLEAN);
-				ThreadSleep(10000);
-				String[] val= {"Int Institution","Int Company","Int Deal 01","Int Fund 01"};
-				ArrayList<String> result= bp.verifyNotesPopupWithPrefilledValue("Int Task", "For verification of task fund",val );
-				if(result.isEmpty())
+				String url=getURL(driver, 10);
+
+				if(click(driver, ele, xPath, action.SCROLLANDBOOLEAN))
 				{
-					System.err.println("Waoooooooo");
+					log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+					ThreadSleep(10000);
+					ArrayList<String> result= bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url,subjectName, notes,tag);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "Notes Popup has been verified and Notes popup is opening in same page with prefilled value", YesNo.No);
+						sa.assertTrue(true, "Notes Popup has been verified and Notes popup is opening in same page with prefilled value");
+						refresh(driver);
+						ThreadSleep(2000);
+						if(click(driver, ele, xPath, action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+							String[] test= {"Int Institution","Int Company"};
+							if(bp.updateActivityTimelineRecord(projectName, basicSection, null, null, suggestedTag, test))
+							{
+								log(LogStatus.INFO, "Activity Timeline has been updated", YesNo.No);
+								sa.assertTrue(true, "Activity Timeline has been updated");
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to update activity timeline", YesNo.No);
+								sa.assertTrue(false, "Not able to update activity timeline");
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit Note button");
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value", YesNo.No);
+						sa.assertTrue(false, "Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value");
+					}
 				}
 				else
 				{
-					System.err.println("Nooooooooooo");
+					log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+					sa.assertTrue(false, "Not able to click on Edit Note button");
 				}
 
-				
-/*
-				ArrayList<String> result=bp.verifyRecordOnTagged(Companies, People, Deals);
-				if(result.isEmpty())
-				{
-					log(LogStatus.INFO, "Records on Company, People and Deals Tagged have been matched", YesNo.No);
-					sa.assertTrue(true,  "Records on Company, People and Deals Tagged have been matched");		
-				}
-				else
-				{
-					log(LogStatus.ERROR, "Records on Company, People and Deals Tagged are not matched", YesNo.No);
-					sa.assertTrue(false,  "Records on Company, People and Deals Tagged are not matched");	
-				}
-				ArrayList<String> result1=bp.verifyRecordOnContactSectionAcuity(AS_AContactName3, null, null, AS_AMeetingsAndCalls3, null);
-				if(result1.isEmpty())
-				{
-					log(LogStatus.INFO, "Records on Contact slot have been matched", YesNo.No);
-					sa.assertTrue(true,  "Records on Contact slot have been matched");		
-				}
-				else
-				{
-					log(LogStatus.ERROR, "Records on Contact slot are not matched", YesNo.No);
-					sa.assertTrue(false,  "Records on Contact slot are not matched");	
-				}*/
 			}
 			else
 			{
@@ -954,42 +968,92 @@ public class AcuitySomke extends BaseLib{
 			log(LogStatus.ERROR, "Not able to click on "+tabObj1+" tab", YesNo.No);
 			sa.assertTrue(false,  "Not able to click on "+tabObj1+" tab");	
 		}
-	/*	
-		if (lp.clickOnTab(projectName, tabObj2)) {
+		
+		
+		
+		String subjectName1=AS_ATSubject2;
+		String notes1=AS_ATNotes2;
+		String[] tag1=AS_ATRelatedTo2.split("<break>");
+		String[][] basicSection1= {{"Notes",AS_ATNotes5}};
+		String[] suggestedTag1=new String[1];
+		suggestedTag1[0]=AS_ATSuggestedTag4;
+		
+		
+		if (lp.clickOnTab(projectName, tabObj1)) {
 
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-			if(bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,AS_ContactName4 , 30))
+			if(bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,AS_FirmLegalName6 , 30))
 			{
-				log(LogStatus.INFO, AS_ContactName4+" reocrd has been open", YesNo.No);
+				log(LogStatus.INFO, AS_FirmLegalName6+" reocrd has been open", YesNo.No);
 
-				ArrayList<String> result=bp.verifyRecordOnTagged(Companies, People, Deals);
-				if(result.isEmpty())
+				String xPath="//a[text()='"+subjectName1+"']/../preceding-sibling::div//button[@title='Add Note']";
+				WebElement ele=CommonLib.FindElement(driver, xPath, "email", action.SCROLLANDBOOLEAN, 30);
+				String url=getURL(driver, 10);
+
+				if(click(driver, ele, xPath, action.SCROLLANDBOOLEAN))
 				{
-					log(LogStatus.INFO, "Records on Company, People and Deals Tagged have been matched", YesNo.No);
-					sa.assertTrue(true,  "Records on Company, People and Deals Tagged have been matched");		
+					log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+					ThreadSleep(10000);
+					ArrayList<String> result= bp.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url,subjectName1, notes1,tag1);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "Notes Popup has been verified and Notes popup is opening in same page with prefilled value", YesNo.No);
+						sa.assertTrue(true, "Notes Popup has been verified and Notes popup is opening in same page with prefilled value");
+						refresh(driver);
+						ThreadSleep(2000);
+						if(click(driver, ele, xPath, action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+							if(bp.updateActivityTimelineRecord(projectName,basicSection1, null, null, suggestedTag1,null))
+							{
+								log(LogStatus.INFO, "Activity Timeline has been updated", YesNo.No);
+								sa.assertTrue(true, "Activity Timeline has been updated");
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to update activity timeline", YesNo.No);
+								sa.assertTrue(false,   "Not able to update activity timeline");
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit Note button");
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value", YesNo.No);
+						sa.assertTrue(false, "Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value");
+					}
 				}
 				else
 				{
-					log(LogStatus.ERROR, "Records on Company, People and Deals Tagged are not matched", YesNo.No);
-					sa.assertTrue(false,  "Records on Company, People and Deals Tagged are not matched");	
+					log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+					sa.assertTrue(false, "Not able to click on Edit Note button");
 				}
+
 			}
 			else
 			{
-				log(LogStatus.ERROR, "Not able to open "+AS_ContactName4+" record", YesNo.No);
-				sa.assertTrue(false,  "Not able to open "+AS_ContactName4+" record");	
+				log(LogStatus.ERROR, "Not able to open "+AS_FirmLegalName6+" record", YesNo.No);
+				sa.assertTrue(false,  "Not able to open "+AS_FirmLegalName6+" record");	
 			}
 		}
 		else
 		{
-			log(LogStatus.ERROR, "Not able to click on "+tabObj2+" tab", YesNo.No);
-			sa.assertTrue(false,  "Not able to click on "+tabObj2+" tab");	
+			log(LogStatus.ERROR, "Not able to click on "+tabObj1+" tab", YesNo.No);
+			sa.assertTrue(false,  "Not able to click on "+tabObj1+" tab");	
 		}
-*/
+			
 		lp.CRMlogout();
 		sa.assertAll();
 	}
+	
+	
 
 
 }
