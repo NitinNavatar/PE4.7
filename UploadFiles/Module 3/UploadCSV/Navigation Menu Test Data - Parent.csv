@@ -1,6 +1,5 @@
 Navigation Label,Navigation Type,Order,Parent,Action Object,Action Record Type,List View Object,List View Name,URL
 Home,New Interactions,5,,,,,,/lightning/page/home
-Accounts,New Interactions,6,,Account,,,,
 Contact,New Interactions,25,,Contact,,,,
 Fund,New Interactions,-5,,navpeII__Fund__c,,,,
 Fundraising,New Interactions,90,,navpeII__Fundraising__c,,,,

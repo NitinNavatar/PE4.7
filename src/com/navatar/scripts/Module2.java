@@ -17,6 +17,7 @@ import java.util.List;
 
 import com.android.dx.cf.iface.Field;
 import com.navatar.generic.BaseLib;
+import com.navatar.generic.CommonLib;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.SoftAssert;
@@ -287,23 +288,30 @@ public class Module2 extends BaseLib{
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS2Name, 20)) {
+				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+				click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
 				scrollThroughOutWindow(driver);
 				ThreadSleep(3000);
-				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task , 10);
-				scrollDownThroughWebelement(driver, ele, "new task");
-				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task.toString(), action.BOOLEAN)) {
-				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.Add , 10);
-				
-				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.Add.toString(), action.BOOLEAN)) {
-					log(LogStatus.ERROR,"able to click on add button", YesNo.Yes);
-				}else {
-					log(LogStatus.ERROR,"could not click on add button", YesNo.Yes);
-					sa.assertTrue(false,"could not click on add button" );
-				}
+				WebElement ele;
+				String[][] basicsection= {{"Subject",TWTask1Subject},{"Related_To",Smoke_TWContact3FName+" "+Smoke_TWContact3LName}};
+				String[][] advanceSection= {{"Priority","Normal"},{"Due Date Only",todaysDate}};
+		        String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
+//				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task , 10);
+//				scrollDownThroughWebelement(driver, ele, "new task");
+//				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task.toString(), action.BOOLEAN)) {
+//				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.Add , 10);
+//				
+//				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.Add.toString(), action.BOOLEAN)) {
+//					log(LogStatus.ERROR,"able to click on add button", YesNo.Yes);
+//				}else {
+//					log(LogStatus.ERROR,"could not click on add button", YesNo.Yes);
+//					sa.assertTrue(false,"could not click on add button" );
+//				}
 				
 				//out of scope
 //				scrollDownThroughWebelement(driver, ip.relatedAssociations(projectName).get(0), "related associatons");
@@ -332,34 +340,42 @@ public class Module2 extends BaseLib{
 //					}
 				
 					//3
-					boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 10);		
-					if (flag) {
-						log(LogStatus.SKIP,"Selected "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.No);
-
-					} else {
-						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name);
-						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.Yes);
-
-					}
-					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask1Subject, "Subject", action.SCROLLANDBOOLEAN)) {
-								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
-									log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
-								}
-								else {
-									log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
-									sa.assertTrue(false,"save button is not clickable so task not created" );
-								}
-					}
-					else {
-						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
-						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
-					}
-					ThreadSleep(2000);
+//					boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 10);		
+//					if (flag) {
+//						log(LogStatus.SKIP,"Selected "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.No);
+//
+//					} else {
+//						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name);
+//						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.Yes);
+//
+//					}
+//					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask1Subject, "Subject", action.SCROLLANDBOOLEAN)) {
+//								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+//									log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
+//								}
+//								else {
+//									log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
+//									sa.assertTrue(false,"save button is not clickable so task not created" );
+//								}
+//					}
+//					else {
+//						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
+//						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
+//					}
+		        
+		        bp.createActivityTimeline(projectName,false,"New Task", basicsection, advanceSection,null,null);
+				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
+				CommonLib.ThreadSleep(50000);
+					
 					refresh(driver);
 					ThreadSleep(2000);
+					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+					click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
+					ThreadSleep(2000);
 					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.Object3Page,ActivityType.Next, TWTask1Subject, SubjectElement.SubjectLink, 10);
+					ThreadSleep(2000);
 					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
-						String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTask1Subject},
+						String[][] fieldsWithValues= {{PageLabel.Subject_updated.toString(),TWTask1Subject},
 								{PageLabel.Watchlist.toString(),Watchlist.True.toString()}};
 
 						tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
@@ -381,10 +397,10 @@ public class Module2 extends BaseLib{
 				sa.assertTrue(false,"could not find "+Smoke_TWINS2Name );
 			}
 			
-		}else {
-			log(LogStatus.ERROR, "could not click on object 1 tab", YesNo.Yes);
-			sa.assertTrue(false,"could not click on object 1 tab" );
-		}
+//		}else {
+//			log(LogStatus.ERROR, "could not click on object 1 tab", YesNo.Yes);
+//			sa.assertTrue(false,"could not click on object 1 tab" );
+//		}
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -396,20 +412,42 @@ public class Module2 extends BaseLib{
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS1Name, 20)) {
-				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task , 10);
-				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task.toString(), action.BOOLEAN)) {				
-				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.Add , 10);
+				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+				click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
+				scrollThroughOutWindow(driver);
+				ThreadSleep(3000);
+				WebElement ele;
+				String[][] basicsection= {{"Subject",TWTask2Subject},{"Related_To",Smoke_TWContact1FName+" "+Smoke_TWContact1LName}};
+				String[][] advanceSection= {{"Priority","Normal"},{"Due Date Only",todaysDate}};
+		        String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
+
+
+
+               bp.createActivityTimeline(projectName,false,"New Task", basicsection, advanceSection,null,null);
+				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
+				CommonLib.ThreadSleep(50000);
+					
+					refresh(driver);
+					ThreadSleep(2000);
+					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+					click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
+					ThreadSleep(2000);
 				
-				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.Add.toString(), action.BOOLEAN)) {
-					log(LogStatus.ERROR,"able to click on add button", YesNo.Yes);
-				}else {
-					log(LogStatus.ERROR,"could not click on add button", YesNo.Yes);
-					sa.assertTrue(false,"could not click on add button" );
-				}
+//				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task , 10);
+//				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task.toString(), action.BOOLEAN)) {				
+//				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.Add , 10);
+//				
+//				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.Add.toString(), action.BOOLEAN)) {
+//					log(LogStatus.ERROR,"able to click on add button", YesNo.Yes);
+//				}else {
+//					log(LogStatus.ERROR,"could not click on add button", YesNo.Yes);
+//					sa.assertTrue(false,"could not click on add button" );
+//				}
 
 				
 				//out of scope
@@ -437,35 +475,35 @@ public class Module2 extends BaseLib{
 //						}
 //					}
 					//3
-					boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact1FName+" "+Smoke_TWContact1LName, action.SCROLLANDBOOLEAN, 10);		
-					if (flag) {
-						log(LogStatus.SKIP,"Selected "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.No);
-
-					} else {
-						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name);
-						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.Yes);
-
-					}
-
-					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask2Subject, "Subject", action.SCROLLANDBOOLEAN)) {
-								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
-									log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
-								}
-								else {
-									log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
-									sa.assertTrue(false,"save button is not clickable so task not created" );
-								}
-					}
-					else {
-						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
-						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
-					}
-					ThreadSleep(2000);
-					refresh(driver);
-					ThreadSleep(2000);
+//					boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact1FName+" "+Smoke_TWContact1LName, action.SCROLLANDBOOLEAN, 10);		
+//					if (flag) {
+//						log(LogStatus.SKIP,"Selected "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.No);
+//
+//					} else {
+//						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name);
+//						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.Yes);
+//
+//					}
+//
+//					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask2Subject, "Subject", action.SCROLLANDBOOLEAN)) {
+//								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+//									log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
+//								}
+//								else {
+//									log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
+//									sa.assertTrue(false,"save button is not clickable so task not created" );
+//								}
+//					}
+//					else {
+//						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
+//						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
+//					}
+//					ThreadSleep(2000);
+//					refresh(driver);
+//					ThreadSleep(2000);
 					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.Object3Page,ActivityType.Next, TWTask2Subject, SubjectElement.SubjectLink, 10);
 					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
-						String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTask2Subject},
+						String[][] fieldsWithValues= {{PageLabel.Subject_updated.toString(),TWTask2Subject},
 								{PageLabel.Watchlist.toString(),Watchlist.False.toString()}};
 
 						tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
@@ -487,10 +525,10 @@ public class Module2 extends BaseLib{
 				sa.assertTrue(false,"could not find "+Smoke_TWINS1Name );
 			}
 			
-		}else {
-			log(LogStatus.ERROR, "could not click on object 1 tab", YesNo.Yes);
-			sa.assertTrue(false,"could not click on object 1 tab" );
-		}
+//		}else {
+//			log(LogStatus.ERROR, "could not click on object 1 tab", YesNo.Yes);
+//			sa.assertTrue(false,"could not click on object 1 tab" );
+//		}
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -502,53 +540,76 @@ public class Module2 extends BaseLib{
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-		
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS2Name, 20)) {
-				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Call , 10);
-				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Call.toString(), action.BOOLEAN)) {
-				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Call , 10);
-					//3
-					boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 10);		
-					if (flag) {
-						log(LogStatus.SKIP,"Selected "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.No);
-
-					} else {
-						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name);
-						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.Yes);
-
-					}
-
-					ele=ip.getLabelTextBox("PE", PageName.NewTaskPage.toString(), "Subject",20);
-					ThreadSleep(1000);
-					JavascriptExecutor js = (JavascriptExecutor) driver;
-					ele.clear();
-					ThreadSleep(1000);
-					js.executeScript("arguments[0].value='"+TWTask3Subject+"';", ele);
-					ele.sendKeys(Keys.BACK_SPACE);
-					ele.sendKeys(Keys.ENTER);
-					ThreadSleep(1000);
 				
-					if (sendKeys(driver, ele, TWTask3Subject, "Subject", action.SCROLLANDBOOLEAN)) {
-								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
-									log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
-								}
-								else {
-									log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
-									sa.assertTrue(false,"save button is not clickable so task not created" );
-								}
-					}
-					else {
-						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
-						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
-					}
-					ThreadSleep(2000);
+				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+				click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
+				scrollThroughOutWindow(driver);
+				ThreadSleep(3000);
+				WebElement ele;
+				String[][] basicsection= {{"Subject",TWTask3Subject},{"Related_To",Smoke_TWContact3FName+" "+Smoke_TWContact3LName}};
+				String[][] advanceSection= {{"Priority","Normal"}};
+		        String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
+
+
+
+            bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null);
+				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
+				CommonLib.ThreadSleep(50000);
+					
 					refresh(driver);
 					ThreadSleep(2000);
+					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+					click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
+					ThreadSleep(2000);
+					
+					//out of scopr
+//				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Call , 10);
+//				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Call.toString(), action.BOOLEAN)) {
+//				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Call , 10);
+//					//3
+//					boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 10);		
+//					if (flag) {
+//						log(LogStatus.SKIP,"Selected "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.No);
+//
+//					} else {
+//						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name);
+//						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.Yes);
+//
+//					}
+//
+//					ele=ip.getLabelTextBox("PE", PageName.NewTaskPage.toString(), "Subject",20);
+//					ThreadSleep(1000);
+//					JavascriptExecutor js = (JavascriptExecutor) driver;
+//					ele.clear();
+//					ThreadSleep(1000);
+//					js.executeScript("arguments[0].value='"+TWTask3Subject+"';", ele);
+//					ele.sendKeys(Keys.BACK_SPACE);
+//					ele.sendKeys(Keys.ENTER);
+//					ThreadSleep(1000);
+//				
+//					if (sendKeys(driver, ele, TWTask3Subject, "Subject", action.SCROLLANDBOOLEAN)) {
+//								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+//									log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
+//								}
+//								else {
+//									log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
+//									sa.assertTrue(false,"save button is not clickable so task not created" );
+//								}
+//					}
+//					else {
+//						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
+//						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
+//					}
+//					ThreadSleep(2000);
+//					refresh(driver);
+//					ThreadSleep(2000);
 					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.Object3Page,ActivityType.Past, TWTask3Subject, SubjectElement.SubjectLink, 10);
 					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
-						String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTask3Subject},
+						String[][] fieldsWithValues= {{PageLabel.Subject_updated.toString(),TWTask3Subject},
 								{PageLabel.Watchlist.toString(),Watchlist.True.toString()}};
 
 						tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
@@ -566,10 +627,10 @@ public class Module2 extends BaseLib{
 				sa.assertTrue(false,"could not find "+Smoke_TWINS1Name );
 			}
 			
-		}else {
-			log(LogStatus.ERROR, "could not click on object 1 tab", YesNo.Yes);
-			sa.assertTrue(false,"could not click on object 1 tab" );
-		}
+//		}else {
+//			log(LogStatus.ERROR, "could not click on object 1 tab", YesNo.Yes);
+//			sa.assertTrue(false,"could not click on object 1 tab" );
+//		}
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -581,53 +642,77 @@ public class Module2 extends BaseLib{
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS1Name, 20)) {
-				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Call , 10);
-				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Call.toString(), action.BOOLEAN)) {
-				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Call , 10);
-					//3
-					boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact1FName+" "+Smoke_TWContact1LName, action.SCROLLANDBOOLEAN, 10);		
-					if (flag) {
-						log(LogStatus.SKIP,"Selected "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.No);
+				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+				click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
+				scrollThroughOutWindow(driver);
+				ThreadSleep(3000);
+				WebElement ele;
+				String[][] basicsection= {{"Subject",TWTask4Subject},{"Related_To",Smoke_TWContact1FName+" "+Smoke_TWContact1LName}};
+				String[][] advanceSection= {{"Priority","Normal"}};
+		        String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
 
-					} else {
-						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name);
-						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.Yes);
 
-					}
-//					due is removed from log a call layout
-//					tp.getdueDateTextBoxInNewTask(projectName, 20).clear();	
-					ele=ip.getLabelTextBox("PE", PageName.NewTaskPage.toString(), "Subject",20);
-					ThreadSleep(1000);
-					JavascriptExecutor js = (JavascriptExecutor) driver;
-					ele.clear();
-					ThreadSleep(1000);
-					js.executeScript("arguments[0].value='"+TWTask4Subject+"';", ele);
-					ele.sendKeys(Keys.BACK_SPACE);
-					ele.sendKeys(Keys.ENTER);
-					ThreadSleep(1000);
-					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask4Subject, "Subject", action.SCROLLANDBOOLEAN)) {
-								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
-									log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
-								}
-								else {
-									log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
-									sa.assertTrue(false,"save button is not clickable so task not created" );
-								}
-					}
-					else {
-						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
-						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
-					}
-					ThreadSleep(2000);
+
+            bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null);
+				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
+				CommonLib.ThreadSleep(50000);
+					
 					refresh(driver);
 					ThreadSleep(2000);
+					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+					click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
+					ThreadSleep(2000);
+					//out of scope
+//				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Call , 10);
+//				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Call.toString(), action.BOOLEAN)) {
+//				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Call , 10);
+//					//3
+//					boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact1FName+" "+Smoke_TWContact1LName, action.SCROLLANDBOOLEAN, 10);		
+//					if (flag) {
+//						log(LogStatus.SKIP,"Selected "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.No);
+//
+//					} else {
+//						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name);
+//						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.Yes);
+//
+//					}
+//					due is removed from log a call layout
+//					tp.getdueDateTextBoxInNewTask(projectName, 20).clear();	
+					
+					//out of scope
+//					ele=ip.getLabelTextBox("PE", PageName.NewTaskPage.toString(), "Subject",20);
+//					ThreadSleep(1000);
+//					JavascriptExecutor js = (JavascriptExecutor) driver;
+//					ele.clear();
+//					ThreadSleep(1000);
+//					js.executeScript("arguments[0].value='"+TWTask4Subject+"';", ele);
+//					ele.sendKeys(Keys.BACK_SPACE);
+//					ele.sendKeys(Keys.ENTER);
+//					ThreadSleep(1000);
+//					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask4Subject, "Subject", action.SCROLLANDBOOLEAN)) {
+//								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+//									log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
+//								}
+//								else {
+//									log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
+//									sa.assertTrue(false,"save button is not clickable so task not created" );
+//								}
+//					}
+//					else {
+//						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
+//						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
+//					}
+//					ThreadSleep(2000);
+//					refresh(driver);
+//					ThreadSleep(2000);
 					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.Object3Page,ActivityType.Past, TWTask4Subject, SubjectElement.SubjectLink, 10);
 					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
-						String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTask4Subject},
+						String[][] fieldsWithValues= {{PageLabel.Subject_updated.toString(),TWTask4Subject},
 								{PageLabel.Watchlist.toString(),Watchlist.False.toString()}};
 
 						tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
@@ -645,10 +730,10 @@ public class Module2 extends BaseLib{
 				sa.assertTrue(false,"could not find "+Smoke_TWINS1Name );
 			}
 			
-		}else {
-			log(LogStatus.ERROR, "could not click on object 1 tab", YesNo.Yes);
-			sa.assertTrue(false,"could not click on object 1 tab" );
-		}
+//		}else {
+//			log(LogStatus.ERROR, "could not click on object 1 tab", YesNo.Yes);
+//			sa.assertTrue(false,"could not click on object 1 tab" );
+//		}
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -660,20 +745,42 @@ public class Module2 extends BaseLib{
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS2Name, 20)) {
-				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task , 10);
-				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task.toString(), action.BOOLEAN)) {
-					ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.Add , 10);
-				
-				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.Add.toString(), action.BOOLEAN)) {
-					log(LogStatus.ERROR,"able to click on add button", YesNo.Yes);
-				}else {
-					log(LogStatus.ERROR,"could not click on add button", YesNo.Yes);
-					sa.assertTrue(false,"could not click on add button" );
-				}
+				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+				click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
+				scrollThroughOutWindow(driver);
+				ThreadSleep(3000);
+				WebElement ele;
+				String[][] basicsection= {{"Subject",TWTask5Subject},{"Related_To",Smoke_TWContact1FName+" "+Smoke_TWContact1LName},{"Related_To",Smoke_TWContact3FName+" "+Smoke_TWContact3LName}};
+				String[][] advanceSection= {{"Priority","Normal"},{"Due Date Only",todaysDate}};
+		        String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
+
+
+
+                bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null);
+				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
+				CommonLib.ThreadSleep(50000);
+					
+					refresh(driver);
+					ThreadSleep(2000);
+					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+					click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
+					ThreadSleep(2000);
+					//out of scope 2
+//				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task , 10);
+//				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task.toString(), action.BOOLEAN)) {
+//					ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.Add , 10);
+//				
+//				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.Add.toString(), action.BOOLEAN)) {
+//					log(LogStatus.ERROR,"able to click on add button", YesNo.Yes);
+//				}else {
+//					log(LogStatus.ERROR,"could not click on add button", YesNo.Yes);
+//					sa.assertTrue(false,"could not click on add button" );
+//				}
 				//out of scope
 //				scrollDownThroughWebelement(driver, ip.relatedAssociations(projectName).get(0), "related associatons");
 //				if (clickUsingJavaScript(driver, ip.getrelatedAssociationsdropdownButton(projectName, 10), "dropdown button for related associations")) {
@@ -700,44 +807,45 @@ public class Module2 extends BaseLib{
 //						}
 //					}
 					//3
-					boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 10);		
-					if (flag) {
-						log(LogStatus.SKIP,"Selected "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.No);
-
-					} else {
-						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name);
-						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.Yes);
-
-					}
-					flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact1FName+" "+Smoke_TWContact1LName, action.SCROLLANDBOOLEAN, 10);		
-					if (flag) {
-						log(LogStatus.SKIP,"Selected "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.No);
-
-					} else {
-						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name);
-						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.Yes);
-
-					}
-					
-					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask5Subject, "Subject", action.SCROLLANDBOOLEAN)) {
-								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
-									log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
-								}
-								else {
-									log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
-									sa.assertTrue(false,"save button is not clickable so task not created" );
-								}
-					}
-					else {
-						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
-						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
-					}
-					ThreadSleep(2000);
-					refresh(driver);
-					ThreadSleep(2000);
+					//out of scope 2
+//					boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 10);		
+//					if (flag) {
+//						log(LogStatus.SKIP,"Selected "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.No);
+//
+//					} else {
+//						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name);
+//						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.Yes);
+//
+//					}
+//					flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact1FName+" "+Smoke_TWContact1LName, action.SCROLLANDBOOLEAN, 10);		
+//					if (flag) {
+//						log(LogStatus.SKIP,"Selected "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.No);
+//
+//					} else {
+//						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name);
+//						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.Yes);
+//
+//					}
+//					
+//					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask5Subject, "Subject", action.SCROLLANDBOOLEAN)) {
+//								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+//									log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
+//								}
+//								else {
+//									log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
+//									sa.assertTrue(false,"save button is not clickable so task not created" );
+//								}
+//					}
+//					else {
+//						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
+//						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
+//					}
+//					ThreadSleep(2000);
+//					refresh(driver);
+//					ThreadSleep(2000);
 					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.Object3Page,ActivityType.Next, TWTask5Subject, SubjectElement.SubjectLink, 10);
 					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
-						String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTask5Subject},
+						String[][] fieldsWithValues= {{PageLabel.Subject_updated.toString(),TWTask5Subject},
 								{PageLabel.Watchlist.toString(),Watchlist.True.toString()}};
 
 						tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
@@ -759,10 +867,10 @@ public class Module2 extends BaseLib{
 				sa.assertTrue(false,"could not find "+Smoke_TWINS2Name );
 			}
 			
-		}else {
-			log(LogStatus.ERROR, "could not click on object 1 tab", YesNo.Yes);
-			sa.assertTrue(false,"could not click on object 1 tab" );
-		}
+//		}else {
+//			log(LogStatus.ERROR, "could not click on object 1 tab", YesNo.Yes);
+//			sa.assertTrue(false,"could not click on object 1 tab" );
+//		}
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -774,13 +882,34 @@ public class Module2 extends BaseLib{
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-		
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, Smoke_TWINS2Name, 20)) {
-				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Call , 10);
-				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Call.toString(), action.BOOLEAN)) {
-				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Call , 10);
+				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+				click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
+				scrollThroughOutWindow(driver);
+				ThreadSleep(3000);
+				WebElement ele;
+				String[][] basicsection= {{"Subject",TWTask6Subject},{"Related_To",Smoke_TWContact3FName+" "+Smoke_TWContact3LName},{"Related_To",Smoke_TWContact1FName+" "+Smoke_TWContact1LName}};
+				String[][] advanceSection= {{"Priority","Normal"},{"Due Date Only",todaysDate}};
+		        String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
+
+
+
+                 bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null);
+				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
+				CommonLib.ThreadSleep(50000);
+					
+					refresh(driver);
+					ThreadSleep(2000);
+					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+					click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
+					ThreadSleep(2000);
+				//out of scope 2
+//				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Call , 10);
+//				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Call.toString(), action.BOOLEAN)) {
+//				ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Call , 10);
 				
 				
 				//out of scope
@@ -809,54 +938,56 @@ public class Module2 extends BaseLib{
 //						}
 //					}
 					//3
-					boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 10);		
-					if (flag) {
-						log(LogStatus.SKIP,"Selected "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.No);
-
-					} else {
-						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name);
-						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.Yes);
-
-					}
-					flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact1FName+" "+Smoke_TWContact1LName, action.SCROLLANDBOOLEAN, 10);		
-					if (flag) {
-						log(LogStatus.SKIP,"Selected "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.No);
-
-					} else {
-						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name);
-						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.Yes);
-
-					}
+					// out of scope 2
+//					boolean flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact3FName+" "+Smoke_TWContact3LName, action.SCROLLANDBOOLEAN, 10);		
+//					if (flag) {
+//						log(LogStatus.SKIP,"Selected "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.No);
+//
+//					} else {
+//						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name);
+//						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact3FName+" "+Smoke_TWContact3LName+" For Label "+PageLabel.Name,YesNo.Yes);
+//
+//					}
+//					flag=ip.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.Object1Page, PageLabel.Name.toString(), TabName.Object1Tab, Smoke_TWContact1FName+" "+Smoke_TWContact1LName, action.SCROLLANDBOOLEAN, 10);		
+//					if (flag) {
+//						log(LogStatus.SKIP,"Selected "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.No);
+//
+//					} else {
+//						sa.assertTrue(false,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name);
+//						log(LogStatus.SKIP,"Not Able to Select "+Smoke_TWContact1FName+" "+Smoke_TWContact1LName+" For Label "+PageLabel.Name,YesNo.Yes);
+//
+//					}
 //				due is removed from log a call layout	
-//					tp.getdueDateTextBoxInNewTask(projectName, 20).clear();		
-					ele=ip.getLabelTextBox("PE", PageName.NewTaskPage.toString(), "Subject",20);
-					ThreadSleep(1000);
-					JavascriptExecutor js = (JavascriptExecutor) driver;
-					ele.clear();
-					ThreadSleep(1000);
-					js.executeScript("arguments[0].value='"+TWTask6Subject+"';", ele);
-					ele.sendKeys(Keys.BACK_SPACE);
-					ele.sendKeys(Keys.ENTER);
-					ThreadSleep(1000);
-					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask6Subject, "Subject", action.SCROLLANDBOOLEAN)) {
-								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
-									log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
-								}
-								else {
-									log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
-									sa.assertTrue(false,"save button is not clickable so task not created" );
-								}
-					}
-					else {
-						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
-						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
-					}
-					ThreadSleep(2000);
-					refresh(driver);
-					ThreadSleep(2000);
+//					tp.getdueDateTextBoxInNewTask(projectName, 20).clear();	
+					// out of scope 2
+//					ele=ip.getLabelTextBox("PE", PageName.NewTaskPage.toString(), "Subject",20);
+//					ThreadSleep(1000);
+//					JavascriptExecutor js = (JavascriptExecutor) driver;
+//					ele.clear();
+//					ThreadSleep(1000);
+//					js.executeScript("arguments[0].value='"+TWTask6Subject+"';", ele);
+//					ele.sendKeys(Keys.BACK_SPACE);
+//					ele.sendKeys(Keys.ENTER);
+//					ThreadSleep(1000);
+//					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTask6Subject, "Subject", action.SCROLLANDBOOLEAN)) {
+//								if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+//									log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
+//								}
+//								else {
+//									log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
+//									sa.assertTrue(false,"save button is not clickable so task not created" );
+//								}
+//					}
+//					else {
+//						log(LogStatus.ERROR, "subject textbox is not visible so task could not be created", YesNo.Yes);
+//						sa.assertTrue(false,"subject textbox is not visible so task could not be created" );
+//					}
+//					ThreadSleep(2000);
+//					refresh(driver);
+//					ThreadSleep(2000);
 					ele = cp.getElementForActivityTimeLineTask(projectName, PageName.Object3Page,ActivityType.Past, TWTask6Subject, SubjectElement.SubjectLink, 10);
 					if (click(driver, ele, "task name",action.SCROLLANDBOOLEAN)) {
-						String[][] fieldsWithValues= {{PageLabel.Subject.toString(),TWTask6Subject},
+						String[][] fieldsWithValues= {{PageLabel.Subject_updated.toString(),TWTask6Subject},
 								{PageLabel.Watchlist.toString(),Watchlist.True.toString()}};
 
 						tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 10);
@@ -878,10 +1009,10 @@ public class Module2 extends BaseLib{
 				sa.assertTrue(false,"could not find "+Smoke_TWINS2Name );
 			}
 			
-		}else {
-			log(LogStatus.ERROR, "could not click on object 1 tab", YesNo.Yes);
-			sa.assertTrue(false,"could not click on object 1 tab" );
-		}
+//		}else {
+//			log(LogStatus.ERROR, "could not click on object 1 tab", YesNo.Yes);
+//			sa.assertTrue(false,"could not click on object 1 tab" );
+//		}
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -1521,45 +1652,66 @@ public class Module2 extends BaseLib{
 		TaskPageBusinessLayer tp= new TaskPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object2Tab, Smoke_TWContact5FName+" "+Smoke_TWContact5LName, 20)) {
-				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task , 10);
-				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task.toString(), action.BOOLEAN)) {
+				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+				click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
+				scrollThroughOutWindow(driver);
+				ThreadSleep(3000);
+				WebElement ele;
+				String[][] basicsection= {{"Subject",TWTaskCR1Subject}};
+				String[][] advanceSection= {{"Priority","Normal"},{"Due Date Only",todaysDate}};
+		        String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
+
+
+
+                bp.createActivityTimeline(projectName,false,"New Task", basicsection, advanceSection,null,null);
+				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
+				CommonLib.ThreadSleep(50000);
 					
-					ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.Add , 10);
-					
-					if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.Add.toString(), action.BOOLEAN)) {
-						log(LogStatus.ERROR,"able to click on add button", YesNo.Yes);
-					}else {
-						log(LogStatus.ERROR,"could not click on add button", YesNo.Yes);
-						sa.assertTrue(false,"could not click on add button" );
-					}
+					refresh(driver);
 					ThreadSleep(2000);
-					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTaskCR1Subject, "Subject", action.SCROLLANDBOOLEAN)) {
-					if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), "", PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
-						
-					if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
-					}
-					else {
-						log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
-						sa.assertTrue(false,"save button is not clickable so task not created" );
-					}
-					}
-					else {
-						log(LogStatus.ERROR, "due date textbox is not visible", YesNo.Yes);
-						sa.assertTrue(false,"due date textbox is not visible" );
-					}
-				}else {
-					log(LogStatus.ERROR, "subject textbox is not clickable", YesNo.Yes);
-					sa.assertTrue(false,"subject textbox is not clickable" );
-				}
-				}else {
-					log(LogStatus.ERROR, "new task button not clickable", YesNo.Yes);
-					sa.assertTrue(false,"new task button not clickable" );
-				}
+					WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+					click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
+					ThreadSleep(2000);
+//				WebElement ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.New_Task , 10);
+//				if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.New_Task.toString(), action.BOOLEAN)) {
+//					
+//					ele=lp.getActivityTimeLineItem(projectName,PageName.Object1Page,ActivityTimeLineItem.Add , 10);
+//					
+//					if (clickUsingJavaScript(driver, ele, ActivityTimeLineItem.Add.toString(), action.BOOLEAN)) {
+//						log(LogStatus.ERROR,"able to click on add button", YesNo.Yes);
+//					}else {
+//						log(LogStatus.ERROR,"could not click on add button", YesNo.Yes);
+//						sa.assertTrue(false,"could not click on add button" );
+//					}
+//					ThreadSleep(2000);
+//					if (sendKeys(driver, ip.getLabelTextBox(projectName, PageName.NewTaskPage.toString(), "Subject",20), TWTaskCR1Subject, "Subject", action.SCROLLANDBOOLEAN)) {
+//					if (sendKeys(driver, tp.getdueDateTextBoxInNewTask(projectName, 20), "", PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
+//						
+//					if (clickUsingJavaScript(driver, ip.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+//						log(LogStatus.INFO,"successfully created task",  YesNo.Yes);
+//					}
+//					else {
+//						log(LogStatus.ERROR, "save button is not clickable so task not created", YesNo.Yes);
+//						sa.assertTrue(false,"save button is not clickable so task not created" );
+//					}
+//					}
+//					else {
+//						log(LogStatus.ERROR, "due date textbox is not visible", YesNo.Yes);
+//						sa.assertTrue(false,"due date textbox is not visible" );
+//					}
+//				}else {
+//					log(LogStatus.ERROR, "subject textbox is not clickable", YesNo.Yes);
+//					sa.assertTrue(false,"subject textbox is not clickable" );
+//				}
+//				}else {
+//					log(LogStatus.ERROR, "new task button not clickable", YesNo.Yes);
+//					sa.assertTrue(false,"new task button not clickable" );
+//				}
 				refresh(driver);
 				
 				if (cp.clickOnShowMoreActionDownArrow(projectName, PageName.Object2Page, ShowMoreActionDropDownList.Contact_Transfer, 10)) {
