@@ -3492,7 +3492,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			click(driver, ele, "More Tab", action.BOOLEAN);
 			ThreadSleep(3000);
 
-			xpath = "//a/span[text()='" + related + "']";
+			//xpath = "//a/span[text()='" + related + "']";
+			xpath = "//a[text()='" + related + "']";
 			ele = isDisplayed(driver,
 					FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut), "visiblity",
 					30, relatedTab.toString());

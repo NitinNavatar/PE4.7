@@ -1768,6 +1768,9 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			if (CommonLib.click(driver, getEditPageBackButton(projectName, 50), "Edit Page Back Button",
 					action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on Edit Page Back Button", YesNo.No);
+				WebElement ele1 = getRelatedTab(projectName, RelatedTab.SDG_Tab.toString().replace("_", " "), 10);
+                click(driver, ele1, RelatedTab.SDG_Tab.toString().replace("_", " "), action.BOOLEAN);
+                ThreadSleep(2000);
 				WebElement alreadyAddedComponentToHomePage = FindElement(driver, "//a[text()='" + Title + "']",
 						"Component Title ", action.SCROLLANDBOOLEAN, 10);
 				if (alreadyAddedComponentToHomePage != null) {
