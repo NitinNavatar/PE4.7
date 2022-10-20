@@ -110,6 +110,8 @@ public class CommonVariables {
 	public static String crmUser2FirstName,crmUser2LastName,crmUser2EmailID;
 	public static String crmUser3FirstName,crmUser3LastName,crmUser3EmailID,crmUser3Profile,crmUser3Lience;
 
+	public static String glUser1FirstName,glUser1LastName,glUser1EmailID,glUserProfile,glUserLience;
+	
 	public static String gmailUserName,gmailUserName2,gmailPassword;
 
 	public static String tabCustomObj,tabCustomObjField,tabCustomObjAPIName;
@@ -1169,6 +1171,13 @@ public class CommonVariables {
 		crmUser3EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User3", excelLabel.User_Email);
 		crmUser3Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User3", excelLabel.User_Profile);
 		crmUser3Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User3", excelLabel.User_License);
+		
+		
+		glUser1FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "Usergl", excelLabel.User_First_Name);
+		glUser1LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "Usergl", excelLabel.User_Last_Name);
+		glUser1EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "Usergl", excelLabel.User_Email);
+		glUserProfile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "Usergl", excelLabel.User_Profile);
+		glUserLience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "Usergl", excelLabel.User_License);
 		
 		//****************************************************************	Toggle Variable **********************************************************//
 

@@ -98,6 +98,31 @@ public class NavigationPage extends BasePageBusinessLayer {
 		return FindElements(driver, "//div[contains(@id,'treeview')]//ul//li/span[3]", "Navigation List item");
 	}
 	
+	
+	@FindBy(xpath="//div[contains(@class,'body_container')]//div//input[contains(@class,'slds-input')]")
+	private WebElement navigationResearch;
+
+	/**
+	 * @return the navigationResearch
+	 */
+	public WebElement getNavigationResearch(String projectName,int timeOut) {
+		
+			return isDisplayed(driver, navigationResearch,  "Visibility", timeOut, "Navigation Research");	
+	}
+	
+	
+	@FindBy(xpath="//div[contains(@class,'body_container')]//div//button[contains(@class,'slds-button')]")
+	private WebElement navigationResearchButton;
+
+	/**
+	 * @return the navigationResearchBUtton
+	 */
+	public WebElement getNavigationResearchButton(String projectName,int timeOut) {
+		
+			return isDisplayed(driver, navigationResearchButton,  "Visibility", timeOut, "Navigation Research Button");	
+	}
+	
+	
 	@FindBy(xpath="//*[text()='Navigation Type']/..//div//button")
 	private WebElement navigationTypeLabel;
 
