@@ -99,6 +99,28 @@ public class NavigationPage extends BasePageBusinessLayer {
 		return FindElements(driver, "//div[contains(@id,'treeview')]//ul//li/span[3]", "Navigation List item");
 	}
 
+	@FindBy(xpath = "//div[contains(@class,'body_container')]//div//input[contains(@class,'slds-input')]")
+	private WebElement navigationResearch;
+
+	/**
+	 * @return the navigationResearch
+	 */
+	public WebElement getNavigationResearch(String projectName, int timeOut) {
+
+		return isDisplayed(driver, navigationResearch, "Visibility", timeOut, "Navigation Research");
+	}
+
+	@FindBy(xpath = "//div[contains(@class,'body_container')]//div//button[contains(@class,'slds-button')]")
+	private WebElement navigationResearchButton;
+
+	/**
+	 * @return the navigationResearchBUtton
+	 */
+	public WebElement getNavigationResearchButton(String projectName, int timeOut) {
+
+		return isDisplayed(driver, navigationResearchButton, "Visibility", timeOut, "Navigation Research Button");
+	}
+
 	@FindBy(xpath = "//*[text()='Navigation Type']/..//div//button")
 	private WebElement navigationTypeLabel;
 
@@ -137,32 +159,31 @@ public class NavigationPage extends BasePageBusinessLayer {
 		}
 	}
 
-	
 	@FindBy(xpath = "//div[@class='slds-m-around_medium']//div/input")
 	private WebElement researchSearchBox;
-	public WebElement researchSearchBox( int timeOut) {
+
+	public WebElement researchSearchBox(int timeOut) {
 
 		return isDisplayed(driver, researchSearchBox, "Visibility", timeOut, "researchSearchBox");
 
 	}
-	
+
 	@FindBy(xpath = "//lightning-input/following-sibling::lightning-button/button[text()='Research']")
 	private WebElement researchButton;
-	public WebElement researchButton( int timeOut) {
+
+	public WebElement researchButton(int timeOut) {
 
 		return isDisplayed(driver, researchButton, "Visibility", timeOut, "researchButton");
 
 	}
-	
+
 	@FindBy(xpath = "//div[@class='slds-card__body']//slot//div/span")
 	private WebElement researchErrorMsg;
-	public WebElement researchErrorMsg( int timeOut) {
+
+	public WebElement researchErrorMsg(int timeOut) {
 
 		return isDisplayed(driver, researchErrorMsg, "Visibility", timeOut, "researchErrorMsg");
 
 	}
-	
-	
-	
-	
+
 }

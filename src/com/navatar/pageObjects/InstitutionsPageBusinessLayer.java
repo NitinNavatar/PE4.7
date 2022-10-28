@@ -140,6 +140,8 @@ public class InstitutionsPageBusinessLayer extends InstitutionsPage {
 				}
 				if (click(driver, getNavigationTabSaveBtn(projectName,timeOut), "save button", action.SCROLLANDBOOLEAN)) {
 					appLog.info("clicked on save button");
+					ThreadSleep(4000);
+					refresh(driver);
 
 					String str = getText(driver, verifyCreatedItemOnPage(Header.Company, institutionName), "legal Name Label Text",action.SCROLLANDBOOLEAN);
 					if (str != null) {
@@ -2251,5 +2253,5 @@ public boolean clickOnCreatedInstitution(String environment,String mode,String i
 
 	}
 
-
+	
 }

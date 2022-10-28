@@ -238,18 +238,20 @@ public class DealPage extends BasePageBusinessLayer {
 
 		return isDisplayed(driver, stageField, "Visibility", timeOut, "Stage field");
 	}
-	
+
 	public WebElement dealRecordTypeRadioButton(String dealRecordType, int timeOut) {
-		String xpath = "//span[text()='"+dealRecordType+"']/../preceding-sibling::div/input";
+		String xpath = "//span[text()='" + dealRecordType + "']/../preceding-sibling::div/input";
 
 		try {
-			return FindElement(driver, xpath, "dealRecordTypeRadioButton: "+dealRecordType, action.SCROLLANDBOOLEAN, timeOut);
+			return FindElement(driver, xpath, "dealRecordTypeRadioButton: " + dealRecordType, action.SCROLLANDBOOLEAN,
+					timeOut);
 
 		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, xpath, "dealRecordTypeRadioButton: "+dealRecordType, action.SCROLLANDBOOLEAN, timeOut);
+			return FindElement(driver, xpath, "dealRecordTypeRadioButton: " + dealRecordType, action.SCROLLANDBOOLEAN,
+					timeOut);
 		}
 	}
-	
+
 	@FindBy(xpath = "//span[text()='Next']/parent::button")
 	private WebElement nextButtonOnForm;
 
@@ -257,30 +259,31 @@ public class DealPage extends BasePageBusinessLayer {
 
 		return isDisplayed(driver, nextButtonOnForm, "Visibility", timeOut, "nextButtonOnForm");
 	}
-	
+
 	public WebElement dropDownWithLabelName(String labelName, int timeOut) {
-		String xpath = "//*[text()='"+labelName+"']/..//button";
+		String xpath = "//*[text()='" + labelName + "']/..//button";
 
 		try {
-			return FindElement(driver, xpath, "dropDownWithLabelName: "+labelName, action.SCROLLANDBOOLEAN, timeOut);
+			return FindElement(driver, xpath, "dropDownWithLabelName: " + labelName, action.SCROLLANDBOOLEAN, timeOut);
 
 		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, xpath, "dropDownWithLabelName: "+labelName, action.SCROLLANDBOOLEAN, timeOut);
+			return FindElement(driver, xpath, "dropDownWithLabelName: " + labelName, action.SCROLLANDBOOLEAN, timeOut);
 		}
 	}
-	
+
 	public WebElement textBoxBasedOnLabelName(String labelName, int timeOut) {
-		String xpath = "//label[text()='"+labelName+"']/parent::lightning-input/div/input";
+		String xpath = "//label[text()='" + labelName + "']/parent::lightning-input/div/input";
 
 		try {
-			return FindElement(driver, xpath, "textBoxBasedOnLabelName: "+labelName, action.SCROLLANDBOOLEAN, timeOut);
+			return FindElement(driver, xpath, "textBoxBasedOnLabelName: " + labelName, action.SCROLLANDBOOLEAN,
+					timeOut);
 
 		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, xpath, "dropDownWitextBoxBasedOnLabelNamethLabelName: "+labelName, action.SCROLLANDBOOLEAN, timeOut);
+			return FindElement(driver, xpath, "dropDownWitextBoxBasedOnLabelNamethLabelName: " + labelName,
+					action.SCROLLANDBOOLEAN, timeOut);
 		}
 	}
-	
-	
+
 	@FindBy(xpath = "//button[@name='CancelEdit']")
 	private WebElement cancelButton;
 
@@ -288,7 +291,5 @@ public class DealPage extends BasePageBusinessLayer {
 
 		return isDisplayed(driver, cancelButton, "Visibility", timeOut, "Cancel button ");
 	}
-	
-	
 
 }

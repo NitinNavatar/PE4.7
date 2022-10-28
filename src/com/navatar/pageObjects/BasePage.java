@@ -13,6 +13,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import com.navatar.generic.BaseLib;
+import com.navatar.generic.CommonLib;
 import com.navatar.generic.SoftAssert;
 import com.navatar.generic.EnumConstants.*;
 import static com.navatar.generic.AppListeners.appLog;
@@ -6808,6 +6809,43 @@ public abstract class BasePage extends BaseLib {
 				"Visibility", timeOut, tabName + " tab name");
 	}
 
+	public WebElement getTaggedRecordName(String taggedTabName, String recordName, int timeOut) {
+
+		return FindElement(driver, "//span[text()='" + taggedTabName
+				+ "']/ancestor::table//lightning-formatted-url//a[text()='" + recordName + "']", "tagged",
+				action.SCROLLANDBOOLEAN, timeOut);
+
+	}
+
+	public WebElement getTaggedRecordName(String tagTabName, int timeOut) {
+
+		return FindElement(driver,
+				"//div[@class='slds-radio_button-group']//span[contains(text(),'" + tagTabName + "')]",
+				"tagged tab name", action.SCROLLANDBOOLEAN, timeOut);
+
+	}
+
+	@FindBy(xpath = "//footer/button[text()='Tag']")
+	private WebElement footerTagButton;
+
+	public WebElement getfooterTagButton(int timeOut) {
+		return isDisplayed(driver, footerTagButton, "Visibility", timeOut, "footer tag button");
+	}
+
+	@FindBy(xpath = "//label[text()='Subject']/..//input[contains(@data-id,'combobox')]")
+	private WebElement subjectInput;
+
+	public WebElement getSubjectInput(int timeOut) {
+		return isDisplayed(driver, subjectInput, "Visibility", timeOut, "Subject Input");
+	}
+
+	@FindBy(xpath = "//span[text()='Notes']/ancestor::div[@aria-label='Notes']//lightning-formatted-rich-text/span")
+	private WebElement notesText;
+
+	public WebElement getNotesText(int timeOut) {
+		return isDisplayed(driver, notesText, "Visibility", timeOut, "Notes text");
+	}
+
 	public WebElement dealNameLinkInAcuityTab(String dealName, int timeOut) {
 
 		try {
@@ -7172,13 +7210,6 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, successMsg, "Visibility", timeOut, "Sucsess Message");
 	}
 
-	@FindBy(xpath = "//footer/button[text()='Tag']")
-	private WebElement footerTagButton;
-
-	public WebElement getfooterTagButton(int timeOut) {
-		return isDisplayed(driver, footerTagButton, "Visibility", timeOut, "footer tag button");
-	}
-
 	@FindBy(xpath = "//div[text()='Task']/parent::h1//div/span")
 	private WebElement taskDetailPageHeader;
 
@@ -7287,7 +7318,8 @@ public abstract class BasePage extends BaseLib {
 	public List<WebElement> recordsUnderGridInResearchResults(String gridName) {
 		return FindElements(driver,
 				"//div[contains(@class,'slds-table_header-fixed_container')]//table//tbody//tr/ancestor::div[contains(@class,'slds-size_1-of-1')]//ul/li[2]/span[contains(text(),'"
-						+ gridName + " ("+"')]/ancestor::div[@class ='slds-grid slds-wrap']/following-sibling::div//tbody/tr",
+						+ gridName + " ("
+						+ "')]/ancestor::div[@class ='slds-grid slds-wrap']/following-sibling::div//tbody/tr",
 				"recordsUnderGridInResearchResults");
 	}
 

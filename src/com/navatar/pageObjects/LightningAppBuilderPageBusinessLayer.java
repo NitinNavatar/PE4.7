@@ -261,7 +261,7 @@ public class LightningAppBuilderPageBusinessLayer extends LightningAppBuilderPag
 
 		CommonLib.ThreadSleep(25000);
 		String xpath = "//a[text()='" + sdgtableName
-				+ "']/ancestor::div[contains(@class,'slds-card__header')]/following-sibling::div//tbody//td";
+				+ "']/ancestor::div[contains(@class,'slds-card__header')]/following-sibling::div//tbody//td/span";
 		List<WebElement> ele = CommonLib.FindElements(driver, xpath, "SDG Data");
 		ArrayList<String> sdgDataFromOrg = new ArrayList<String>();
 		for (int i = 0; i < ele.size(); i++) {

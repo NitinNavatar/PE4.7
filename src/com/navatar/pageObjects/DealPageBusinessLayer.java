@@ -3,6 +3,7 @@ package com.navatar.pageObjects;
 import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.ToggleDeal1;
+import static com.navatar.generic.CommonVariables.tabObj4;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		log(LogStatus.INFO, "Going to verify Open Request with information as: " + requestID + " >> " + dateRequested
 				+ " >> " + request + " >> " + status, YesNo.No);
 		boolean flag = false;
+
 		String requestIdXpath = "//*[contains(text(),'" + requestID + "')]/../../../..";
 		String dateRequestedXpath = "/following-sibling::td//*[text()='" + dateRequested + "']/../../..";
 		String requestXpath = "/following-sibling::td//*[text()='" + request + "']/../../..";
@@ -86,6 +88,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		log(LogStatus.INFO, "Going to verify Closed Request with information as: " + requestID + " >> " + dateRequested
 				+ " >> " + request, YesNo.No);
 		boolean flag = false;
+
 		String requestIdXpath = "//*[contains(text(),'" + requestID + "')]/../../../..";
 		String dateRequestedXpath = "/following-sibling::td//*[text()='" + dateRequested + "']/../../..";
 		String requestXpath = "/following-sibling::td//*[text()='" + request + "']";
@@ -358,6 +361,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	 * @return WebElement
 	 */
 	public WebElement findDeactivateLink(String projectName, String stage) {
+
 		String xpath = "//th[text()='" + stage + "']/preceding-sibling::td//a[contains(@title,'Deactivate')]";
 		WebElement ele = FindElement(driver, xpath, "deactivate", action.SCROLLANDBOOLEAN, 10);
 		scrollDownThroughWebelement(driver, ele, "deactivate link for " + stage);
@@ -371,6 +375,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	 * @return WebElement
 	 */
 	public WebElement findActivateLink(String projectName, String stage) {
+
 		String xpath = "//th[text()='" + stage + "']/preceding-sibling::td//a[contains(@title,'Activate')]";
 		WebElement ele = FindElement(driver, xpath, "Activate", action.SCROLLANDBOOLEAN, 10);
 		scrollDownThroughWebelement(driver, ele, "Activate link for " + stage);
@@ -411,8 +416,10 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	 * @return WebElement
 	 */
 	public WebElement getCompanyNameOnconvertToPortfolioMessage(int timeOut) {
+
 		String xpath = "//h2[text()='Convert to Portfolio']/../following-sibling::*//article//p";
 		WebElement ele = FindElement(driver, xpath, "company name convert to portfolio", action.SCROLLANDBOOLEAN, 10);
+
 		return isDisplayed(driver, ele, "Visibility", timeOut, "company name convert to portfolio");
 
 	}
@@ -496,8 +503,10 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	 * @return WebElement
 	 */
 	public WebElement getconvertToPortfolioMessageUnhandledFlow(int timeOut) {
+
 		String xpath = "//h2[text()='Convert to Portfolio']/../following-sibling::*//article//*[contains(text(),'processing')]/..";
 		WebElement ele = FindElement(driver, xpath, "unhandled flow message", action.SCROLLANDBOOLEAN, 10);
+
 		return isDisplayed(driver, ele, "Visibility", timeOut, "unhandled flow message");
 
 	}
@@ -507,8 +516,10 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	 * @return WebElement
 	 */
 	public WebElement getconvertToPortfolioMessageRecordTypeInvalid(int timeOut) {
+
 		String xpath = "//h2[text()='Convert to Portfolio']/../following-sibling::*//article//p";
 		WebElement ele = FindElement(driver, xpath, "RT invalid", action.SCROLLANDBOOLEAN, 10);
+
 		return isDisplayed(driver, ele, "Visibility", timeOut, "RT invalid");
 
 	}
@@ -518,12 +529,14 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	 * @param timeOut
 	 * @return boolean
 	 */
+
 	public boolean checkValueOfPathComponentValueOfStage(String expected, int timeOut) {
 		String xpath = "//span[@class='current slds-path__stage']/following-sibling::span";
 		WebElement ele = FindElement(driver, xpath, "path component", action.SCROLLANDBOOLEAN, 10);
 		ele = isDisplayed(driver, ele, "Visibility", timeOut, "path component");
 		if (ele != null) {
 			String stage = ele.getText();
+
 			if (stage.equalsIgnoreCase(expected)) {
 				log(LogStatus.INFO, "successfully verified stage " + stage, YesNo.No);
 				return true;
@@ -575,6 +588,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		msg = convertingPortfoliaMsg;
 		String xpath = "//h2[text()='Convert to Portfolio']/../following-sibling::*//*[text()='" + msg + "']";
 		WebElement ele = FindElement(driver, xpath, msg, action.SCROLLANDBOOLEAN, 10);
+
 		return isDisplayed(driver, ele, "Visibility", timeOut, msg);
 
 	}
@@ -882,5 +896,4 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return flag;
 
 	}
-
 }
