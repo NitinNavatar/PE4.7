@@ -1253,7 +1253,12 @@ public static enum PermissionType{
 
 
 		}},Watchlist,Highest_Stage_Reached,Deal_Quality_Score,Average_Deal_Quality_Score,Total_Deals_Shown, Profile_Image,Industry,Watch_list,Deal_Conversion_Date,Portfolio_Company,Related_Associations,Name, Subject,Subject_updated , Due_Date, New_Task, Related_To
-		, Comments, Edit, Assigned_To, Start_Date, End_Date, End_Time, Start_Time, Type, 
+		, Comments, Edit, Assigned_To{
+			@Override
+			public String toString() {
+				return "Assigned To ID";
+			}
+		}, Start_Date, End_Date, End_Time, Start_Time, Type, 
 		Date{
 			@Override
 			public String toString() {
@@ -1597,12 +1602,12 @@ public static enum PermissionType{
     	Bulk_Actions {
 			@Override
 			public String toString() {
-				return "Bulk Actions";
+				return "Create";
 			}
     	},New_Interactions{
 			@Override
 			public String toString() {
-				return "New Interactions";
+				return "Create";
 			}
     	},Create{
 			@Override
@@ -1675,17 +1680,17 @@ public static enum PermissionType{
     	New_Deal {
 			@Override
 			public String toString() {
-				return "New Deal";
+				return "Deal";
 			}
     	},New_Institution{
 			@Override
 			public String toString() {
-				return "New Firm";
+				return "Firm";
 			}
     	},New_Contact{
 			@Override
 			public String toString() {
-				return "New Contact";
+				return "Contact";
 			}
     	};
     };

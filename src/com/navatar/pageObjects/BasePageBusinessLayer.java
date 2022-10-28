@@ -1965,7 +1965,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		WebElement ele;
 		String fieldlabel = label.replace("_", " ");
 		appLog.info(" >>>>>>>>>>>>>>>>   label:" + label);
-		if (fieldlabel.equalsIgnoreCase("Assigned To")
+		if (fieldlabel.equalsIgnoreCase("Assigned To ID")
 				&& PageName.TaskPage.toString().equalsIgnoreCase(pageName.toString())) {
 
 			xpath = "//span[text()='" + name + "']/..//following-sibling::lightning-button-icon/button";
@@ -1973,14 +1973,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					timeOut);
 			return ele;
 		}
-		if (label.equalsIgnoreCase(PageLabel.Name.toString()) || label.equalsIgnoreCase("Assigned To"))
+		if (label.equalsIgnoreCase(PageLabel.Name.toString()) || label.equalsIgnoreCase("Assigned To ID"))
 			isMultipleAssociation = true;
 		if (PageName.CallPopUp.toString().equalsIgnoreCase(pageName.toString())
 				|| (PageLabel.Name.toString().equalsIgnoreCase(label)
 						&& PageName.TaskPage.toString().equalsIgnoreCase(pageName.toString())
 						&& isMultipleAssociation)) {
-			xpath = "//span[text()='" + fieldlabel + "']/../following-sibling::div//li/a/span[text()='" + name
-					+ "']/following-sibling::a";
+			xpath = "//label[text()='"+fieldlabel+"']/..//span[text()='"+name+"']/..//button[@title='Remove']";
 		} else if (PageLabel.Related_To.toString().equalsIgnoreCase(label)
 				|| PageLabel.Related_Associations.toString().equalsIgnoreCase(label) || isMultipleAssociation) {
 			xpath = "//span[text()='" + fieldlabel + "']/../..//span[text()='" + name
@@ -2980,7 +2979,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		// WebElement ele;
 		WebElement element = null;
 		;
-		xpath = "//div[@class='slds-card-wrapper activityPanel']";
+		xpath = "//div[@class='cActivityTimeline' and @id='completeDiv']";
 		List<WebElement> eles = FindElements(driver, xpath, "");
 
 		for (WebElement ele : eles) {
@@ -5405,6 +5404,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	public boolean verifyNoDataAtActivityHistorySection(String environment, String mode, TabName tabName, int timeOut) {
 		WebElement ele = getActivityHistoryNoRecordsToDisplay(environment, mode, timeOut);
+		ThreadSleep(2000);
 		String msg;
 		boolean flag = false;
 		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
@@ -5415,6 +5415,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		} else {
 			msg = ele.getText();
+			ThreadSleep(2000);
 			CommonLib.log(LogStatus.INFO, "Grid Message : " + msg, YesNo.No);
 			if (msg.contains(BasePageBusinessLayer.noPastActivityMsg1)
 					&& msg.contains(BasePageBusinessLayer.noPastActivityMsg2)) {

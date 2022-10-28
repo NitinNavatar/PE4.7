@@ -3424,7 +3424,7 @@ public abstract class BasePage extends BaseLib {
 	@FindBy(xpath = "//h3[text()='Activity History']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//tr//th")
 	private WebElement activityHistoryNoRecordsToDisplayMsg_Classic;
 
-	@FindBy(xpath = "//div[contains(@class,'emptyPastActivities')]")
+	@FindBy(xpath = "//div[contains(@class,'emptyListContent')]")
 	private WebElement activityHistoryNoRecordsToDisplayMsg_Lighting;
 
 	/**
