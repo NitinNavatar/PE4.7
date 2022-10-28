@@ -3428,6 +3428,23 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 			return null;
 		}
 	}
+
+	/**
+	 * 
+	 * @author Ankur Huria
+	 * @description- This method is used to convert Date From one format to another
+	 */
+	public static String convertDateFromOneFormatToAnother(String oldDateString, String oldDateFormat,
+			String newDateFormat) {
+		try {
+			SimpleDateFormat format1 = new SimpleDateFormat(oldDateFormat);
+			SimpleDateFormat format2 = new SimpleDateFormat(newDateFormat);
+			Date date = format1.parse(oldDateString);
+			return format2.format(date);
+		} catch (Exception e) {
+			e.getMessage();
+			return null;
+		}
+	}
+
 }
-
-

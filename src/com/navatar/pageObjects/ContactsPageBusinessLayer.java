@@ -2,7 +2,6 @@ package com.navatar.pageObjects;
 
 import static com.navatar.generic.AppListeners.appLog;
 
-
 import java.util.ArrayList;
 
 import java.time.LocalDate;
@@ -85,7 +84,6 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 			finalLabelName = labelName;
 		}
 		String xpath = "";
-		
 
 		xpath = "//span[@class='test-id__field-label'][text()='" + finalLabelName + "']/../following-sibling::div/span";
 
@@ -367,6 +365,26 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 				if (sendKeys(driver, ele, emailID, "Email ID", action.SCROLLANDBOOLEAN)) {
 					if (labelNames != null && labelValue != null) {
 						for (int i = 0; i < labelNames.length; i++) {
+
+							if (labelNames[i].equalsIgnoreCase(excelLabel.Contact_Type.toString().replace("_", " "))) {
+
+								String firmDropDownElements = "//*[text()='" + labelNames[i]
+										+ "']/..//button/../following-sibling::div//lightning-base-combobox-item";
+								if (CommonLib.dropDownHandle(driver, dropDownWithLabelName(labelNames[i], 20),
+										firmDropDownElements, labelNames[i] + "DropDown", labelValue[i])) {
+									log(LogStatus.INFO, labelNames[i] + " has been Selected to:  " + labelValue[i],
+											YesNo.No);
+									continue;
+								} else {
+									sa.assertTrue(false,
+											labelNames[i] + " has not been Selected to:  " + labelValue[i]);
+									log(LogStatus.ERROR, labelNames[i] + " has not been Selected to:  " + labelValue[i],
+											YesNo.Yes);
+									continue;
+								}
+
+							}
+
 							ele = getContactPageTextBoxOrRichTextBoxWebElement(projectName, labelNames[i].trim(), 30);
 							if (sendKeysAndPressEnter(driver, ele, labelValue[i], labelNames[i] + " text box",
 									action.SCROLLANDBOOLEAN)) {
@@ -404,6 +422,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 											"Not able to select " + labelValue[i] + " in " + labelNames[i] + " field");
 								}
 							}
+
 						}
 
 					}
@@ -1452,37 +1471,30 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		return flag;
 
 	}
-	
-	
-	public boolean CreateNewContactFromTab(String projectName,ArrayList<String> labelName,ArrayList<String> value,ArrayList<String> inputType)
-	{
+
+	public boolean CreateNewContactFromTab(String projectName, ArrayList<String> labelName, ArrayList<String> value,
+			ArrayList<String> inputType) {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		boolean flag=false;
+		boolean flag = false;
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
-		if(CommonLib.clickUsingJavaScript(driver, getContactTab(50), "Contact tab", action.SCROLLANDBOOLEAN))
-		{
+		if (CommonLib.clickUsingJavaScript(driver, getContactTab(50), "Contact tab", action.SCROLLANDBOOLEAN)) {
 			appLog.info("Clicked on contact tab");
-			
-			if(BP.createNewRecordThroughSDG(projectName, "Contacts", "New Contact", labelName, value, inputType, 50))
-			{
+
+			if (BP.createNewRecordThroughSDG(projectName, "Contacts", "New Contact", labelName, value, inputType, 50)) {
 				log(LogStatus.PASS, "New Fundraising Contact has been created", YesNo.No);
 				sa.assertTrue(true, "New Fundraising Contact has been created");
-				flag=true;
-			}
-			else
-			{
+				flag = true;
+			} else {
 				log(LogStatus.FAIL, "New Fundraising Contact is not created", YesNo.No);
 				sa.assertTrue(false, "New Fundraising Contact is not created");
 			}
-			
-		}
-		else
-		{
+
+		} else {
 			appLog.error("Not able to click on fundraising contact tab");
 		}
 		return flag;
-		
+
 	}
 
 	/**
@@ -2917,7 +2929,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 	}
 
 	public ArrayList<String> verifyContactTierDetails(ArrayList<String> listViewName) {
-		
+
 		ArrayList<String> result = new ArrayList<String>();
 		if (click(driver, getEditTierButton(30), "Edit Tier Button", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked in EditTierButton", YesNo.No);
@@ -2937,19 +2949,22 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 					Collections.sort(list);
 
 				} else {
-					log(LogStatus.ERROR, "Not Able to get the elements of Tier Field, So not able to Continue", YesNo.No);
+					log(LogStatus.ERROR, "Not Able to get the elements of Tier Field, So not able to Continue",
+							YesNo.No);
 					result.add("Not Able to get the elements of Tier Field, So not able to Continue");
 				}
 				System.out.println(list.size());
 				System.out.println(listViewName.size());
 				for (int i = 1; i < lists.size(); i++) {
 					if (list.get(i).equals(listViewName.get(i))) {
-						log(LogStatus.INFO, "Expected Record: "+list.get(i) + " is matched with Actual Record: " + listViewName.get(i), YesNo.No);
-						
+						log(LogStatus.INFO, "Expected Record: " + list.get(i) + " is matched with Actual Record: "
+								+ listViewName.get(i), YesNo.No);
+
 					} else {
-						log(LogStatus.ERROR, "Expected Record: "+list.get(i) + " is not matched with Actual Record: " + listViewName.get(i),
-								YesNo.No);
-						result.add("Expected Record: "+list.get(i) + " is not matched with Actual Record: " + listViewName.get(i));
+						log(LogStatus.ERROR, "Expected Record: " + list.get(i) + " is not matched with Actual Record: "
+								+ listViewName.get(i), YesNo.No);
+						result.add("Expected Record: " + list.get(i) + " is not matched with Actual Record: "
+								+ listViewName.get(i));
 					}
 				}
 			} else {

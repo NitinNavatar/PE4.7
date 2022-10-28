@@ -5547,5 +5547,45 @@ public class HomePageBusineesLayer extends HomePage {
 		Collections.sort(sortedExpectedAmount, Collections.reverseOrder());
 		return sortedExpectedAmount;
 	}
+	
+	
+	/**
+	 * @author Ankur Huria
+	 */
+	public void notificationPopUpClose() {
+		
+		if(notificationPopUpCloseButton(10) != null)
+		{
+			if (clickUsingJavaScript(driver, notificationPopUpCloseButton(10),
+					"Notification PopUp Close Button", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.PASS, "Clicked on Notification Popup Close Button", YesNo.No);
+				if(notificationPopUpCloseButton(2) == null)
+				{
+					log(LogStatus.INFO,
+							"Notification Popup has been Closed",
+							YesNo.No);
+				}
+			
+			else
+			{
+				log(LogStatus.FAIL, "Notification Popup has not been Closed", YesNo.Yes);
+				sa.assertTrue(false, "Notification Popup has not been Closed");
+			}
+			} else {
+				log(LogStatus.FAIL, "Not Able Click on Notification Popup Close Button", YesNo.Yes);
+				sa.assertTrue(false, "Not Able Click on Notification Popup Close Button");
+			}
+		}
+		else
+		{
+			log(LogStatus.INFO,
+					"Notification Popup not showing, so not able to close it",
+					YesNo.No);
+		}
+		
+	}
+	
+	
+	
 
 }

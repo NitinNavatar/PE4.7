@@ -970,4 +970,20 @@ public class ContactsPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, TierDropdown, "Visibility", timeOut, "TierDropdown");
 	}
 
+	
+	
+	public WebElement dropDownWithLabelName(String labelName, int timeOut) {
+		String xpath = "//*[text()='"+labelName+"']/..//button";
+
+		try {
+			return FindElement(driver, xpath, "dropDownWithLabelName: "+labelName, action.SCROLLANDBOOLEAN, timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "dropDownWithLabelName: "+labelName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+	
+	
+	
+
 }

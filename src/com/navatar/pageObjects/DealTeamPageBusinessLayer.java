@@ -43,7 +43,7 @@ public class DealTeamPageBusinessLayer extends DealTeamPage{
 				label=reuestData[0].replace("_", " ");
 				value=reuestData[1];
 
-				if(PageLabel.Team_Member.toString().equals(reuestData[0]) || PageLabel.Deal.toString().equals(reuestData[0])){
+				if(PageLabel.Team_Member.toString().equals(reuestData[0]) || PageLabel.Deal.toString().equals(reuestData[0]) ||PageLabel.Deal_Contact.toString().equals(reuestData[0])){
 					if (sendKeys(driver, getListTextbox(projectName,label, timeOut), value, label+" : "+value,action)) {
 						ThreadSleep(3000);
 						log(LogStatus.INFO,"Able to send "+value+" to label : "+label,YesNo.Yes);
@@ -106,7 +106,7 @@ public class DealTeamPageBusinessLayer extends DealTeamPage{
 				ThreadSleep(3000);
 				refresh(driver);
 				ThreadSleep(3000);
-				xpath="//*[text()='Deal Team']/../*/*[@slot='primaryField']/*";
+				xpath="//*[text()='Deal Team']/parent::h1//slot/lightning-formatted-text";
 				ele = FindElement(driver, xpath, "dt id", action, timeOut);
 				if (ele!=null) {
 					String id=getText(driver, ele, "deal team id",action.SCROLLANDBOOLEAN);

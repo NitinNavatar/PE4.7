@@ -1084,12 +1084,14 @@ public boolean clickOnCreatedInstitution(String environment,String mode,String i
 
 						if(labelNames!=null && labelValue!=null ) {
 							for(int i=0; i<labelNames.length; i++) {
-								//											
+								//									
+								if(labelNames[i]!="") {
 								if(fieldValueVerificationOnInstitutionPage(environment, mode, null, labelNames[i].replace("_", " ").trim(),labelValue[i])){
 									appLog.info(labelNames[i]+" label value "+labelValue[i]+" is matched successfully.");
 								}else {
 									appLog.info(labelNames[i]+" label value "+labelValue[i]+" is not matched successfully.");
 									BaseLib.sa.assertTrue(false, labelNames[i]+" label value "+labelValue[i]+" is not matched.");
+								}
 								}
 
 							}

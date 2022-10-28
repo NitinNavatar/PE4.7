@@ -1017,5 +1017,15 @@ public class SetupPage extends BasePageBusinessLayer {
 			return FindElement(driver, xpath, "sectionInPageLayout", action.SCROLLANDBOOLEAN, timeOut);
 		}
 	}
+	
+	
+	@FindBy(xpath = "//div[@class='errorMsg']")
+	private WebElement errorMsgRecordType;
+
+	public WebElement errorMsgRecordType(int timeOut) {
+		return isDisplayed(driver, errorMsgRecordType, "Visibility", timeOut, "errorMsgRecordType");
+	}
+	
+	
 
 }

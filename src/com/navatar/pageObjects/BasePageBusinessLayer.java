@@ -3348,10 +3348,18 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			tabName = "Entities";
 		} else if (TabName.contains("Inst")) {
 			tabName = "Institutions";
-		}else if (TabName.contains("Fundraising")) {
+		} else if (TabName.contains("Fundraising")) {
 			tabName = "Fundraisings";
 		} else if (TabName.contains("Fund")) {
 			tabName = "Funds";
+		} else if (TabName.contains("Firm"))
+
+		{
+			tabName = "Firms";
+		} else if (TabName.contains("Deal"))
+
+		{
+			tabName = "Deals";
 		} else {
 			tabName = TabName;
 		}
@@ -3366,6 +3374,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				if (clickUsingJavaScript(driver, ele, tabName + " :Tab")) {
 					CommonLib.log(LogStatus.INFO, "Tab found", YesNo.No);
 					appLog.info("Clicked on Tab : " + tabName);
+
 					flag = true;
 				} else {
 					appLog.error("Not Able to Click on Tab : " + tabName);
@@ -5041,13 +5050,16 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			String relatedTo, String contactName) {
 		WebElement ele;
 		String xpath;
-		click(driver, getRelatedTab(RelatedTab.Communications.toString(), 20), RelatedTab.Communications.toString(), action.BOOLEAN);
+		click(driver, getRelatedTab(RelatedTab.Communications.toString(), 20), RelatedTab.Communications.toString(),
+				action.BOOLEAN);
 		ThreadSleep(5000);
-		ele=	isDisplayed(driver, FindElement(driver, "//button[contains(@class,'moresteps')]", "More steps", action.BOOLEAN, 20), "visibility", 20, "");
+		ele = isDisplayed(driver,
+				FindElement(driver, "//button[contains(@class,'moresteps')]", "More steps", action.BOOLEAN, 20),
+				"visibility", 20, "");
 
-			click(driver, ele, "More steps", action.BOOLEAN);
-			log(LogStatus.INFO, "click on more steps button", YesNo.No);
-		
+		click(driver, ele, "More steps", action.BOOLEAN);
+		log(LogStatus.INFO, "click on more steps button", YesNo.No);
+
 		if (tabName.toString().equalsIgnoreCase(TabName.ContactTab.toString())) {
 			if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
 				if (relatedTo == null) {
@@ -5079,7 +5091,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					xpath = "//div[contains(@class,'slds-section__content')]//a[text()='" + subject
 							+ "']/ancestor::div[@class='slds-media']//a[text()='" + relatedTo + "']";
 				}
-				xpath = "//div[@class='cActivityTimeline']//a[text()='"+subject+"']";
+				xpath = "//div[@class='cActivityTimeline']//a[text()='" + subject + "']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			}
 		} else if (tabName.toString().equalsIgnoreCase(TabName.InstituitonsTab.toString())) {
@@ -5108,7 +5120,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				}
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			} else {
-				xpath = "//div[@class='cActivityTimeline']//a[text()='"+subject+"']";
+				xpath = "//div[@class='cActivityTimeline']//a[text()='" + subject + "']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			}
 		} else {
@@ -5126,20 +5138,23 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			String relatedTo, String contactName) {
 		WebElement ele = null;
 		String xpath;
-		click(driver, getRelatedTab(RelatedTab.Communications.toString(), 20), RelatedTab.Communications.toString(), action.BOOLEAN);
+		click(driver, getRelatedTab(RelatedTab.Communications.toString(), 20), RelatedTab.Communications.toString(),
+				action.BOOLEAN);
 		ThreadSleep(5000);
-		ele=	isDisplayed(driver, FindElement(driver, "//button[contains(@class,'moresteps')]", "More steps", action.BOOLEAN, 20), "visibility", 20, "");
+		ele = isDisplayed(driver,
+				FindElement(driver, "//button[contains(@class,'moresteps')]", "More steps", action.BOOLEAN, 20),
+				"visibility", 20, "");
 
 		click(driver, ele, "More steps", action.BOOLEAN);
 		log(LogStatus.INFO, "click on more steps button", YesNo.No);
-	
+
 		if (tabName.toString().equalsIgnoreCase(TabName.ContactTab.toString())) {
 			if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
 				xpath = "//h3[text()='Activity History']/ancestor::div[@class='bRelatedList']//div[@class='pbBody']//tr//th/a[contains(text(),'"
 						+ subject + "')]/../following-sibling::td/a[text()='" + relatedTo + "']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			} else {
-				xpath = "//div[@class='cActivityTimeline']//a[text()='"+subject+"']";
+				xpath = "//div[@class='cActivityTimeline']//a[text()='" + subject + "']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			}
 		} else if (tabName.toString().equalsIgnoreCase(TabName.InstituitonsTab.toString())) {
@@ -5149,7 +5164,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						+ "']/../following-sibling::td/a[text()='" + relatedTo + "']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			} else {
-				xpath = "//div[@class='cActivityTimeline']//a[text()='"+subject+"']";
+				xpath = "//div[@class='cActivityTimeline']//a[text()='" + subject + "']";
 				ele = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 			}
 		} else {
@@ -5167,7 +5182,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			String institutionName) {
 		WebElement ele;
 		String xpath;
-		click(driver, getRelatedTab(RelatedTab.Affiliations.toString(), 20), RelatedTab.Affiliations.toString(), action.BOOLEAN);
+		click(driver, getRelatedTab(RelatedTab.Affiliations.toString(), 20), RelatedTab.Affiliations.toString(),
+				action.BOOLEAN);
 		ThreadSleep(2000);
 		if (tabName.toString().equalsIgnoreCase(TabName.ContactTab.toString())) {
 			if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
@@ -7860,6 +7876,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return negativeResult;
 	}
+
 	/**
 	 * @author Ankur Huria
 	 * @param ExpectedButtonsOnPage
@@ -8102,7 +8119,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 * @param SDGName
 	 * @param datas
 	 */
-	
+
 	@SuppressWarnings("unused")
 	public boolean createNewRecordThroughSDG(String projectName, String sdgName, String actionButtonName,
 			List<String> labels, List<String> values, List<String> typesOfFields, int timeOut) {
@@ -8118,7 +8135,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			for (String label : labels) {
 
 				if (typesOfFields.get(i).equalsIgnoreCase("SearchDropDown")) {
-					String DropDownElements ="//label[text()=\""+label+"\"]/following-sibling::div//div[contains(@class,\"slds-combobox__form-element\")]/input//parent::div/following-sibling::div//li//lightning-base-combobox-item/span/following-sibling::span/span[1]/span";
+					String DropDownElements = "//label[text()=\"" + label
+							+ "\"]/following-sibling::div//div[contains(@class,\"slds-combobox__form-element\")]/input//parent::div/following-sibling::div//li//lightning-base-combobox-item/span/following-sibling::span/span[1]/span";
 
 					if (CommonLib.dropDownHandle(driver, home.searchDropDownBoxThroughSDG(label, 30), DropDownElements,
 							"searchDropDownBoxThroughSDG", values.get(i))) {
@@ -8157,17 +8175,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 										} else {
 											sa.assertTrue(false, "Value: " + values.get(i)
-											+ " has not been Chosen, So Not Able to Continue to Create Record in SDG: "
-											+ sdgName);
+													+ " has not been Chosen, So Not Able to Continue to Create Record in SDG: "
+													+ sdgName);
 											log(LogStatus.ERROR, "Value: " + values.get(i)
-											+ " has not been Chosen, So Not Able to Continue to Create Record in SDG: "
-											+ sdgName, YesNo.Yes);
+													+ " has not been Chosen, So Not Able to Continue to Create Record in SDG: "
+													+ sdgName, YesNo.Yes);
 										}
 									} else {
 										sa.assertTrue(false, "Not Able to Chose the " + label + " " + values.get(i)
-										+ " on SDG:  " + sdgName);
+												+ " on SDG:  " + sdgName);
 										log(LogStatus.ERROR, "Not Able to Chose the " + label + " " + values.get(i)
-										+ " on SDG:  " + sdgName, YesNo.Yes);
+												+ " on SDG:  " + sdgName, YesNo.Yes);
 									}
 
 								} else {
@@ -8177,17 +8195,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									log(LogStatus.ERROR,
 											"Not Able to Click on MultipickList Navigation Button of Label Role on SDG:  "
 													+ sdgName,
-													YesNo.Yes);
+											YesNo.Yes);
 								}
 
 							} else {
 								sa.assertTrue(false,
 										"Not Able to Click on Button Value so cannot move to Chosen of Label " + label
-										+ " on SDG:  " + sdgName);
+												+ " on SDG:  " + sdgName);
 								log(LogStatus.SKIP,
 										"Not Able to Click on " + values.get(i)
-										+ " Button Value so cannot move to Chosen of Label " + label
-										+ " on SDG:  " + sdgName,
+												+ " Button Value so cannot move to Chosen of Label " + label
+												+ " on SDG:  " + sdgName,
 										YesNo.Yes);
 							}
 
@@ -8247,44 +8265,35 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				}
 
 				if (typesOfFields.get(i).equalsIgnoreCase("Checkbox")) {
-					String xPath="//span[text()='"+label+"']/../following-sibling::div//input";
-					WebElement ele=CommonLib.FindElement(driver, xPath, label+ " checkbox", action.SCROLLANDBOOLEAN, 50);
-					if(values.get(i).equalsIgnoreCase("select"))
-					{
-						if(!CommonLib.isSelected(driver, ele, label+" checkbox"))
-						{
-							if (CommonLib.click(driver, ele, label+ " Checkbox", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO, values+" checkbox has been clicked", YesNo.No);
+					String xPath = "//span[text()='" + label + "']/../following-sibling::div//input";
+					WebElement ele = CommonLib.FindElement(driver, xPath, label + " checkbox", action.SCROLLANDBOOLEAN,
+							50);
+					if (values.get(i).equalsIgnoreCase("select")) {
+						if (!CommonLib.isSelected(driver, ele, label + " checkbox")) {
+							if (CommonLib.click(driver, ele, label + " Checkbox", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, values + " checkbox has been clicked", YesNo.No);
 							} else {
-								sa.assertTrue(false, values+" checkbox is not clicked");
-								log(LogStatus.ERROR, values+" checkbox is not clicked", YesNo.Yes);
+								sa.assertTrue(false, values + " checkbox is not clicked");
+								log(LogStatus.ERROR, values + " checkbox is not clicked", YesNo.Yes);
 							}
-						}
-						else
-						{
-							log(LogStatus.INFO, values+" checkbox is already selected", YesNo.No);
+						} else {
+							log(LogStatus.INFO, values + " checkbox is already selected", YesNo.No);
 						}
 
-
-						if(values.get(i).equalsIgnoreCase("unselect"))
-						{
-							if(CommonLib.isSelected(driver, ele, label+" checkbox"))
-							{
-								if (CommonLib.click(driver, ele, label+ " Checkbox", action.SCROLLANDBOOLEAN)) {
-									log(LogStatus.INFO, values+" checkbox has been unselected", YesNo.No);
+						if (values.get(i).equalsIgnoreCase("unselect")) {
+							if (CommonLib.isSelected(driver, ele, label + " checkbox")) {
+								if (CommonLib.click(driver, ele, label + " Checkbox", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, values + " checkbox has been unselected", YesNo.No);
 								} else {
-									sa.assertTrue(false, values+" checkbox is not unselected");
-									log(LogStatus.ERROR, values+" checkbox is not unselected", YesNo.Yes);
+									sa.assertTrue(false, values + " checkbox is not unselected");
+									log(LogStatus.ERROR, values + " checkbox is not unselected", YesNo.Yes);
 								}
-							}
-							else
-							{
-								log(LogStatus.INFO, values+" checkbox is already unselected", YesNo.No);
+							} else {
+								log(LogStatus.INFO, values + " checkbox is already unselected", YesNo.No);
 							}
 						}
 					}
 				}
-
 
 				i++;
 			}
@@ -8310,69 +8319,56 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	}
 
-	
-	public ArrayList<String> verifyEditOrLockIconOnSDgRecord(String sdgName,ArrayList<String> recordName,ArrayList<String> iconType)
-	{
+	public ArrayList<String> verifyEditOrLockIconOnSDgRecord(String sdgName, ArrayList<String> recordName,
+			ArrayList<String> iconType) {
 		String xPath;
 		WebElement ele;
-		ArrayList<String> result=new ArrayList<String>();
-		if(recordName.size()==iconType.size())
-		{
-			for(int i=0; i<recordName.size(); i++)
-			{
-				xPath="//a[text()='"+sdgName+"']/ancestor::article//td[contains(@data-label,'"+recordName.get(i)+"')]//span";
-				ele=FindElement(driver, xPath, recordName.get(i)+" record", null, 50);
-				scrollDownThroughWebelementInCenter(driver, ele, recordName.get(i)+" record");
+		ArrayList<String> result = new ArrayList<String>();
+		if (recordName.size() == iconType.size()) {
+			for (int i = 0; i < recordName.size(); i++) {
+				xPath = "//a[text()='" + sdgName + "']/ancestor::article//td[contains(@data-label,'" + recordName.get(i)
+						+ "')]//span";
+				ele = FindElement(driver, xPath, recordName.get(i) + " record", null, 50);
+				scrollDownThroughWebelementInCenter(driver, ele, recordName.get(i) + " record");
 				ThreadSleep(1500);
-				if(mouseOverOperation(driver, ele))
-				{
-					log(LogStatus.INFO, "The mouse has been hover to "+recordName.get(i), YesNo.No);	
-					if(iconType.get(i).equals("Lock"))
-					{
-						xPath="//a[text()='"+sdgName+"']/ancestor::article//td[contains(@data-label,'"+recordName.get(i)+"')]//button[@title='Locked']";
-						ele=CommonLib.FindElement(driver, xPath, recordName.get(i), null, 20);
-						if(CommonLib.checkElementVisibility(driver, ele, recordName.get(i)+" record lock icon", 20))
-						{
-							log(LogStatus.INFO, "Locked icon is visible on "+recordName.get(i), YesNo.No);
+				if (mouseOverOperation(driver, ele)) {
+					log(LogStatus.INFO, "The mouse has been hover to " + recordName.get(i), YesNo.No);
+					if (iconType.get(i).equals("Lock")) {
+						xPath = "//a[text()='" + sdgName + "']/ancestor::article//td[contains(@data-label,'"
+								+ recordName.get(i) + "')]//button[@title='Locked']";
+						ele = CommonLib.FindElement(driver, xPath, recordName.get(i), null, 20);
+						if (CommonLib.checkElementVisibility(driver, ele, recordName.get(i) + " record lock icon",
+								20)) {
+							log(LogStatus.INFO, "Locked icon is visible on " + recordName.get(i), YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "Locked icon is not visible on " + recordName.get(i), YesNo.No);
+							result.add("Locked icon is not visible on " + recordName.get(i));
 						}
-						else
-						{
-							log(LogStatus.ERROR, "Locked icon is not visible on "+recordName.get(i), YesNo.No);
-							result.add("Locked icon is not visible on "+recordName.get(i));
+					} else if (iconType.get(i).equals("Edit")) {
+						xPath = "//a[text()='" + sdgName + "']/ancestor::article//td[contains(@data-label,'"
+								+ recordName.get(i) + "')]//button[@title='Edit']";
+						ele = CommonLib.FindElement(driver, xPath, recordName.get(i), null, 20);
+						if (CommonLib.checkElementVisibility(driver, ele, recordName.get(i) + " record edit icon",
+								20)) {
+							log(LogStatus.INFO, "Edit icon is visible on " + recordName.get(i), YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "Edit icon is not visible on " + recordName.get(i), YesNo.No);
+							result.add("Edit icon is not visible on " + recordName.get(i));
 						}
-					}
-					else if(iconType.get(i).equals("Edit"))
-					{
-						xPath="//a[text()='"+sdgName+"']/ancestor::article//td[contains(@data-label,'"+recordName.get(i)+"')]//button[@title='Edit']";
-						ele=CommonLib.FindElement(driver, xPath, recordName.get(i), null, 20);
-						if(CommonLib.checkElementVisibility(driver, ele, recordName.get(i)+" record edit icon", 20))
-						{
-							log(LogStatus.INFO, "Edit icon is visible on "+recordName.get(i), YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Edit icon is not visible on "+recordName.get(i), YesNo.No);
-							result.add("Edit icon is not visible on "+recordName.get(i));
-						}
-					}
-					else
-					{
+					} else {
 						log(LogStatus.ERROR, "Icon type is not correct", YesNo.No);
 						result.add("Icon type is not correct");
 					}
-				}
-				else
-				{
-					log(LogStatus.ERROR, "Not abe to hover to "+recordName.get(i), YesNo.No);
-					result.add("Not abe to hover to "+recordName.get(i));
+				} else {
+					log(LogStatus.ERROR, "Not abe to hover to " + recordName.get(i), YesNo.No);
+					result.add("Not abe to hover to " + recordName.get(i));
 				}
 			}
 		}
 
 		return result;
 	}
-	
-	
+
 	/**
 	 * @author Ankur Huria
 	 * @param activityTimeLineTab
@@ -8747,7 +8743,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						else if (type.equalsIgnoreCase("SearchDropDownTextBox")) {
 
 							activityTimelineSearchDropDown(label, 30)
-							.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+									.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 							if (CommonLib.sendKeys(driver, activityTimelineSearchDropDown(label, 30), value,
 									label + " Input Box", action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, value + " value has been Entered in label: " + label, YesNo.No);
@@ -8760,8 +8756,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 
 						else if (type.equalsIgnoreCase("TextBox")) {
-							if(label.equals("To"))
-							{
+							if (label.equals("To")) {
 								if (CommonLib.sendKeys(driver, activityTimelineToTextBoxElement(label, 30), value,
 										label + " Input Box", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, value + " value has been Entered in label: " + label, YesNo.No);
@@ -8773,43 +8768,37 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								}
 							}
 
-							else if(label.equals("Body"))
-							{
-								if(CommonLib.switchToFrame(driver, 50, getckEditorIframe(50)))
-								{
-								
-								
-								if(CommonLib.switchToFrame(driver, 50, getemailBodyIframe(50)))
-								{
-									log(LogStatus.INFO, "Switched to email body iframe", YesNo.No);
-									if (CommonLib.sendKeys(driver, activityTimelineBodyTextBoxElement(label, 30), value,
-											label + " Input Box", action.SCROLLANDBOOLEAN)) {
-										log(LogStatus.INFO, value + " value has been Entered in label: " + label, YesNo.No);
-										status++;
-									} else {
-										sa.assertTrue(false, value + " value has not been Entered in label: " + label);
-										log(LogStatus.ERROR, value + " value has not been Entered in label: " + label,
-												YesNo.Yes);
-									}	
+							else if (label.equals("Body")) {
+								if (CommonLib.switchToFrame(driver, 50, getckEditorIframe(50))) {
 
-								}
-								else
-								{
-									sa.assertTrue(false, "Not able to switch to email body Iframe");
-									log(LogStatus.ERROR, "Not able to switch to email body Iframe", YesNo.Yes);
-								}
-								}
-								else
-								{
+									if (CommonLib.switchToFrame(driver, 50, getemailBodyIframe(50))) {
+										log(LogStatus.INFO, "Switched to email body iframe", YesNo.No);
+										if (CommonLib.sendKeys(driver, activityTimelineBodyTextBoxElement(label, 30),
+												value, label + " Input Box", action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, value + " value has been Entered in label: " + label,
+													YesNo.No);
+											status++;
+										} else {
+											sa.assertTrue(false,
+													value + " value has not been Entered in label: " + label);
+											log(LogStatus.ERROR,
+													value + " value has not been Entered in label: " + label,
+													YesNo.Yes);
+										}
+
+									} else {
+										sa.assertTrue(false, "Not able to switch to email body Iframe");
+										log(LogStatus.ERROR, "Not able to switch to email body Iframe", YesNo.Yes);
+									}
+								} else {
 									sa.assertTrue(false, "Not able to switch to ck editor Iframe");
 									log(LogStatus.ERROR, "Not able to switch to ck editor Iframe", YesNo.Yes);
-									
+
 								}
 								CommonLib.switchToDefaultContent(driver);
 							}
 
-							else
-							{
+							else {
 
 								if (CommonLib.sendKeys(driver, activityTimelineTextBoxElement(label, 30), value,
 										label + " Input Box", action.SCROLLANDBOOLEAN)) {
@@ -8830,7 +8819,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							log(LogStatus.SKIP,
 									"Either One of Them Data is Empty, So Not Able to Enter details for It, Label: "
 											+ label + " ,Value: " + value + " & Type: " + type,
-											YesNo.Yes);
+									YesNo.Yes);
 						}
 
 					}
@@ -8838,10 +8827,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					else {
 						sa.assertTrue(false,
 								"Either One of Them Data is Empty, So Not Able to Enter details for It, Label: " + label
-								+ " ,Value: " + value + " & Type: " + type);
+										+ " ,Value: " + value + " & Type: " + type);
 						log(LogStatus.SKIP,
 								"Either One of Them Data is Empty, So Not Able to Enter details for It, Label: " + label
-								+ " ,Value: " + value + " & Type: " + type,
+										+ " ,Value: " + value + " & Type: " + type,
 								YesNo.Yes);
 					}
 
@@ -8917,71 +8906,66 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		else
 			return false;
 	}
-	
-	public boolean verifyActivityRecord(String recordActivityTitle)
-	{
+
+	public boolean verifyActivityRecord(String recordActivityTitle) {
 		String xPath;
 		List<WebElement> elements;
-		boolean flag=false;
-		ArrayList<String> expectedUpcomingAndOverdueRecord=new ArrayList<String>();
-		ArrayList<String> expectedThisMonthRecord=new ArrayList<String>();
-		ArrayList<String> actualUpcomingAndOverdueRecord=new ArrayList<String>();
-		ArrayList<String> actualThisMonthRecord=new ArrayList<String>();
-		
-		String[] recordAndActivityTitle=recordActivityTitle.split("<Break>");
-		for(int i=0; i<recordAndActivityTitle.length;i++)
-		{
-			String activityTitle=recordAndActivityTitle[i].split("<Br>")[1];
-			if(activityTitle.equals("UpcomingAndOverdue"))
-			{
+		boolean flag = false;
+		ArrayList<String> expectedUpcomingAndOverdueRecord = new ArrayList<String>();
+		ArrayList<String> expectedThisMonthRecord = new ArrayList<String>();
+		ArrayList<String> actualUpcomingAndOverdueRecord = new ArrayList<String>();
+		ArrayList<String> actualThisMonthRecord = new ArrayList<String>();
+
+		String[] recordAndActivityTitle = recordActivityTitle.split("<Break>");
+		for (int i = 0; i < recordAndActivityTitle.length; i++) {
+			String activityTitle = recordAndActivityTitle[i].split("<Br>")[1];
+			if (activityTitle.equals("UpcomingAndOverdue")) {
 				expectedUpcomingAndOverdueRecord.add(recordAndActivityTitle[i].split("<Br>")[0]);
-			}
-			else if(activityTitle.equals("ThisMonth"))
-			{
+			} else if (activityTitle.equals("ThisMonth")) {
 				expectedThisMonthRecord.add(recordAndActivityTitle[i].split("<Br>")[0]);
-			}
-			else
-			{
+			} else {
 				log(LogStatus.ERROR, "Activity titles are not correct", YesNo.No);
 				return false;
 			}
 		}
-		//for Upcoming and Overdue recrd
-		xPath="//button[text()='Upcoming & Overdue']/ancestor::div[contains(@class,'open-activity-group')]//a[@rel='noreferrer']";
-		elements=CommonLib.FindElements(driver, xPath, "Upcoming and overdue record");
-		for(WebElement ele:elements)
-		{
-			actualUpcomingAndOverdueRecord.add(CommonLib.getText(driver, ele, "Upcoming and overdue record", action.SCROLLANDBOOLEAN));
+		// for Upcoming and Overdue recrd
+		xPath = "//button[text()='Upcoming & Overdue']/ancestor::div[contains(@class,'open-activity-group')]//a[@rel='noreferrer']";
+		elements = CommonLib.FindElements(driver, xPath, "Upcoming and overdue record");
+		for (WebElement ele : elements) {
+			actualUpcomingAndOverdueRecord
+					.add(CommonLib.getText(driver, ele, "Upcoming and overdue record", action.SCROLLANDBOOLEAN));
 		}
-		//for This Month
-		xPath="//span[text()='This Month']/ancestor::div[contains(@class,'past-activity-group')]//a[@rel='noreferrer']";
-		elements=CommonLib.FindElements(driver, xPath, "This Month record");
-		for(WebElement ele:elements)
-		{
+		// for This Month
+		xPath = "//span[text()='This Month']/ancestor::div[contains(@class,'past-activity-group')]//a[@rel='noreferrer']";
+		elements = CommonLib.FindElements(driver, xPath, "This Month record");
+		for (WebElement ele : elements) {
 			actualThisMonthRecord.add(CommonLib.getText(driver, ele, "This Month record", action.SCROLLANDBOOLEAN));
 		}
-		
-		if(actualUpcomingAndOverdueRecord.containsAll(actualUpcomingAndOverdueRecord) && actualThisMonthRecord.containsAll(expectedThisMonthRecord))
-		{
-			log(LogStatus.INFO, "Record on the Upcoming & Overdue and This month has been verified Upcoming & Overdue : "+actualUpcomingAndOverdueRecord+ " This Month : "+actualThisMonthRecord, YesNo.No);
-		    flag=true;
-		}
-		else
-		{
-			log(LogStatus.ERROR, "Record on the Upcoming & Overdue and This month are not verified Upcoming & Overdue : "+actualUpcomingAndOverdueRecord+ " This Month : "+actualThisMonthRecord, YesNo.No);
-				
+
+		if (actualUpcomingAndOverdueRecord.containsAll(actualUpcomingAndOverdueRecord)
+				&& actualThisMonthRecord.containsAll(expectedThisMonthRecord)) {
+			log(LogStatus.INFO,
+					"Record on the Upcoming & Overdue and This month has been verified Upcoming & Overdue : "
+							+ actualUpcomingAndOverdueRecord + " This Month : " + actualThisMonthRecord,
+					YesNo.No);
+			flag = true;
+		} else {
+			log(LogStatus.ERROR,
+					"Record on the Upcoming & Overdue and This month are not verified Upcoming & Overdue : "
+							+ actualUpcomingAndOverdueRecord + " This Month : " + actualThisMonthRecord,
+					YesNo.No);
+
 		}
 		return flag;
 	}
-	
-	
+
 	/**
 	 * @author Ankur Huria
 	 * @param SDGGridName
 	 */
 
 	public void verifyColumnAscendingDescendingOrder(String sdgGridName, List<String> columnNames,
-			List<String> dateColumns,List<String> amountColumns, String FirstColumnAscYesOrNoByDefault) {
+			List<String> dateColumns, List<String> amountColumns, String FirstColumnAscYesOrNoByDefault) {
 
 		List<WebElement> headerList = sdgGridAllHeadersLabelNameList(sdgGridName);
 		List<String> columnDataText = headerList.stream().map(s -> s.getText()).collect(Collectors.toList()).stream()
@@ -9015,17 +8999,15 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 							if (CommonLib.checkSorting(driver, SortOrder.Assecending,
 									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
-								log(LogStatus.PASS,   "Verified "+SortOrder.Assecending+" Sorting on SDG: " + sdgGridName.toString()
-								+ " for Column " + columnName, YesNo.No);
+								log(LogStatus.PASS, "Verified " + SortOrder.Assecending + " Sorting on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
 							} else {
-								log(LogStatus.FAIL,  SortOrder.Assecending+" Sorting not working on SDG: " + sdgGridName.toString()
-								+ " for Column " + columnName, YesNo.No);
-								sa.assertTrue(false, SortOrder.Assecending+" Sorting not working on SDG: " + sdgGridName.toString()
-								+ " for Column " + columnName);
+								log(LogStatus.FAIL, SortOrder.Assecending + " Sorting not working on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+								sa.assertTrue(false, SortOrder.Assecending + " Sorting not working on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName);
 							}
-						}
-						else
-						{
+						} else {
 
 							List<Integer> expectedAmount = new ArrayList<Integer>();
 							List<String> actualAmount = new ArrayList<String>();
@@ -9036,27 +9018,23 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
 									.collect(Collectors.toList());
 
-							for(String val:actualAmount)
-							{
-								String[] splitedAmount=val.split("[.]", 0);
-								String amount=splitedAmount[0].replace("$", "").replace(",", "");
-								int amou=Integer.parseInt(amount);
+							for (String val : actualAmount) {
+								String[] splitedAmount = val.split("[.]", 0);
+								String amount = splitedAmount[0].replace("$", "").replace(",", "");
+								int amou = Integer.parseInt(amount);
 								sortedActualAmount.add(amou);
 							}
 
-							expectedAmount=amountToAscendingOrder(actualDateListWebElement);
+							expectedAmount = amountToAscendingOrder(actualDateListWebElement);
 
-							if(sortedActualAmount.equals(expectedAmount))
-							{
-								log(LogStatus.PASS, "Verified "+SortOrder.Assecending+" Sorting on SDG: " + sdgGridName.toString()
-								+ " for Column " + columnName, YesNo.No);
-							}
-							else
-							{
-								log(LogStatus.FAIL, SortOrder.Assecending+" Sorting not working on SDG: " + sdgGridName.toString()
-								+ " for Column " + columnName, YesNo.No);
-								sa.assertTrue(false, SortOrder.Assecending+" Sorting not working on SDG: " + sdgGridName.toString()
-								+ " for Column " + columnName);	
+							if (sortedActualAmount.equals(expectedAmount)) {
+								log(LogStatus.PASS, "Verified " + SortOrder.Assecending + " Sorting on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+							} else {
+								log(LogStatus.FAIL, SortOrder.Assecending + " Sorting not working on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+								sa.assertTrue(false, SortOrder.Assecending + " Sorting not working on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName);
 							}
 
 						}
@@ -9074,13 +9052,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						expectedDateListText = dateToAscendingOrder(actualDateListWebElement);
 
 						if (actualDateListText.equals(expectedDateListText)) {
-							log(LogStatus.PASS, "Verified "+SortOrder.Assecending+" Sorting on SDG: " + sdgGridName.toString()
-							+ " for Column " + columnName, YesNo.No);
+							log(LogStatus.PASS, "Verified " + SortOrder.Assecending + " Sorting on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
 						} else {
-							log(LogStatus.FAIL, SortOrder.Assecending+" Sorting not working on SDG: " + sdgGridName.toString()
-							+ " for Column " + columnName, YesNo.No);
-							sa.assertTrue(false, SortOrder.Assecending+" Sorting not working on SDG: " + sdgGridName.toString()
-							+ " for Column " + columnName);
+							log(LogStatus.FAIL, SortOrder.Assecending + " Sorting not working on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+							sa.assertTrue(false, SortOrder.Assecending + " Sorting not working on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName);
 						}
 
 					}
@@ -9105,17 +9083,15 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 							if (CommonLib.checkSorting(driver, SortOrder.Decending,
 									sdgGridColumnsDataList(sdgGridName.toString(), columnIndex + 1))) {
-								log(LogStatus.PASS, "Verified "+SortOrder.Decending+" Sorting on SDG: " + sdgGridName.toString()
-								+ " for Column " + columnName, YesNo.No);
+								log(LogStatus.PASS, "Verified " + SortOrder.Decending + " Sorting on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
 							} else {
-								log(LogStatus.FAIL, SortOrder.Decending+" Sorting not working on SDG: " + sdgGridName.toString()
-								+ " for Column " + columnName, YesNo.No);
-								sa.assertTrue(false, SortOrder.Decending+" Sorting not working on SDG: " + sdgGridName.toString()
-								+ " for Column " + columnName);
+								log(LogStatus.FAIL, SortOrder.Decending + " Sorting not working on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+								sa.assertTrue(false, SortOrder.Decending + " Sorting not working on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName);
 							}
-						}
-						else
-						{
+						} else {
 
 							List<Integer> expectedAmount = new ArrayList<Integer>();
 							List<String> actualAmount = new ArrayList<String>();
@@ -9126,27 +9102,23 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
 									.collect(Collectors.toList());
 
-							for(String val:actualAmount)
-							{
-								String[] splitedAmount=val.split("[.]", 0);
-								String amount=splitedAmount[0].replace("$", "").replace(",", "");
-								int amou=Integer.parseInt(amount);
+							for (String val : actualAmount) {
+								String[] splitedAmount = val.split("[.]", 0);
+								String amount = splitedAmount[0].replace("$", "").replace(",", "");
+								int amou = Integer.parseInt(amount);
 								sortedActualAmount.add(amou);
 							}
 
-							expectedAmount=amountToDescendingOrder(actualDateListWebElement);
+							expectedAmount = amountToDescendingOrder(actualDateListWebElement);
 
-							if(sortedActualAmount.equals(expectedAmount))
-							{
-								log(LogStatus.PASS, "Verified "+SortOrder.Decending+" Sorting on SDG: " + sdgGridName.toString()
-								+ " for Column " + columnName, YesNo.No);
-							}
-							else
-							{
-								log(LogStatus.FAIL, SortOrder.Decending+" Sorting not working on SDG: " + sdgGridName.toString()
-								+ " for Column " + columnName, YesNo.No);
-								sa.assertTrue(false, SortOrder.Decending+" Sorting not working on SDG: " + sdgGridName.toString()
-								+ " for Column " + columnName);	
+							if (sortedActualAmount.equals(expectedAmount)) {
+								log(LogStatus.PASS, "Verified " + SortOrder.Decending + " Sorting on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+							} else {
+								log(LogStatus.FAIL, SortOrder.Decending + " Sorting not working on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+								sa.assertTrue(false, SortOrder.Decending + " Sorting not working on SDG: "
+										+ sdgGridName.toString() + " for Column " + columnName);
 							}
 
 						}
@@ -9164,13 +9136,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						expectedDateListText = dateToDescendingOrder(actualDateListWebElement);
 
 						if (actualDateListText.equals(expectedDateListText)) {
-							log(LogStatus.PASS, "Verified "+SortOrder.Decending+" Sorting on SDG: " + sdgGridName.toString()
-							+ " for Column " + columnName, YesNo.No);
+							log(LogStatus.PASS, "Verified " + SortOrder.Decending + " Sorting on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
 						} else {
-							log(LogStatus.FAIL, SortOrder.Decending+" Sorting not working on SDG: " + sdgGridName.toString()
-							+ " for Column " + columnName, YesNo.No);
-							sa.assertTrue(false, SortOrder.Decending+" Sorting not working on SDG: " + sdgGridName.toString()
-							+ " for Column " + columnName);
+							log(LogStatus.FAIL, SortOrder.Decending + " Sorting not working on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName, YesNo.No);
+							sa.assertTrue(false, SortOrder.Decending + " Sorting not working on SDG: "
+									+ sdgGridName.toString() + " for Column " + columnName);
 						}
 
 					}
@@ -9191,7 +9163,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 	}
 
-/**
+	/**
 	 * @author Ankur Huria
 	 * @param SDGName
 	 * @param datas
@@ -9367,46 +9339,42 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return dateStringResult;
 	}
-	
+
 	public List<Integer> amountToAscendingOrder(List<WebElement> amountListElements) {
-		
-		List<String> expectedAmount=new ArrayList<String>();
-		List<Integer> sortedExpectedAmount=new ArrayList<Integer>();
-		
-		expectedAmount = amountListElements.stream().map(date -> date.getText())
-				.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
-				.collect(Collectors.toList());
-		
-		for(String val:expectedAmount)
-		{
-			String[] splitedAmount=val.split("[.]", 0);
-			String amount=splitedAmount[0].replace("$", "").replace(",", "");
-			int amou=Integer.parseInt(amount);
+
+		List<String> expectedAmount = new ArrayList<String>();
+		List<Integer> sortedExpectedAmount = new ArrayList<Integer>();
+
+		expectedAmount = amountListElements.stream().map(date -> date.getText()).collect(Collectors.toList()).stream()
+				.filter(x -> !x.equals("")).collect(Collectors.toList());
+
+		for (String val : expectedAmount) {
+			String[] splitedAmount = val.split("[.]", 0);
+			String amount = splitedAmount[0].replace("$", "").replace(",", "");
+			int amou = Integer.parseInt(amount);
 			sortedExpectedAmount.add(amou);
 		}
 		Collections.sort(sortedExpectedAmount);
-		return sortedExpectedAmount;		
+		return sortedExpectedAmount;
 	}
-		
-    public List<Integer> amountToDescendingOrder(List<WebElement> amountListElements) {
-		
-		List<String> expectedAmount=new ArrayList<String>();
-		List<Integer> sortedExpectedAmount=new ArrayList<Integer>();
-		expectedAmount = amountListElements.stream().map(date -> date.getText())
-				.collect(Collectors.toList()).stream().filter(x -> !x.equals(""))
-				.collect(Collectors.toList());
-		
-		for(String val:expectedAmount)
-		{
-			String[] splitedAmount=val.split("[.]", 0);
-			String amount=splitedAmount[0].replace("$", "").replace(",", "");
-			int amou=Integer.parseInt(amount);
+
+	public List<Integer> amountToDescendingOrder(List<WebElement> amountListElements) {
+
+		List<String> expectedAmount = new ArrayList<String>();
+		List<Integer> sortedExpectedAmount = new ArrayList<Integer>();
+		expectedAmount = amountListElements.stream().map(date -> date.getText()).collect(Collectors.toList()).stream()
+				.filter(x -> !x.equals("")).collect(Collectors.toList());
+
+		for (String val : expectedAmount) {
+			String[] splitedAmount = val.split("[.]", 0);
+			String amount = splitedAmount[0].replace("$", "").replace(",", "");
+			int amou = Integer.parseInt(amount);
 			sortedExpectedAmount.add(amou);
 		}
 		Collections.sort(sortedExpectedAmount, Collections.reverseOrder());
-		return sortedExpectedAmount;		
+		return sortedExpectedAmount;
 	}
-    
+
 	/**
 	 * @author Ankur Huria
 	 * @param expectedListOfSectionHeaders
@@ -9809,8 +9777,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return flag;
 	}
-
-	
 
 	public ArrayList<String> VerifyInlineEditingForContactsAndAffiliationsGrid(String record) {
 		String xPath = "";
@@ -10663,6 +10629,1640 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 		return negativeResult;
+	}
+
+	public boolean clicktabOnPage(String tabName) {
+		if (CommonLib.click(driver, getTabNameOnPage(tabName, 30), tabName, action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "clicked on " + tabName + " tab name", YesNo.No);
+
+			String text = CommonLib.getAttribute(driver, getVerificationPartTabNameOnPage(tabName, 20),
+					tabName + " tab", "class");
+			if (text.contains("slds-is-active")) {
+				log(LogStatus.INFO, tabName + " tab has been open", YesNo.No);
+				return true;
+			} else {
+				log(LogStatus.ERROR, "Not able to open tab " + tabName, YesNo.No);
+				return false;
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + tabName + " tab name", YesNo.No);
+			return false;
+		}
+
+	}
+
+	/**
+	 * @author Sourabh Saini
+	 * @param name
+	 * @param title
+	 * @param deals
+	 * @param meetingAndCalls
+	 * @param email
+	 * @return return Empty ArrayList if test case is passed
+	 */
+
+	public ArrayList<String> verifyRecordOnContactSectionAcuity(String name, String title, String deals,
+			String meetingAndCalls, String email) {
+		String xPath = "";
+		WebElement ele = null;
+		ArrayList<String> result = new ArrayList<String>();
+		if (name != null && name != "") {
+
+			xPath = "//td[@data-label='Name']//a[text()='" + name + "']";
+			ele = CommonLib.FindElement(driver, xPath, "Name", action.SCROLLANDBOOLEAN, 30);
+			if (ele != null) {
+				log(LogStatus.INFO, name + " is avalable in contact section", YesNo.No);
+				sa.assertTrue(true, name + " is avalable in contact section");
+
+				if (title != null && title != "") {
+					xPath = "//a[text()='" + name
+							+ "']/ancestor::td[@data-label='Name']/..//td[@data-label='Title']//span";
+					ele = CommonLib.FindElement(driver, xPath, "title", action.SCROLLANDBOOLEAN, 30);
+					String actualTitle = getText(driver, ele, "Title", action.SCROLLANDBOOLEAN);
+					if (actualTitle.equalsIgnoreCase(title)) {
+						log(LogStatus.INFO, "Actual result " + actualTitle
+								+ " of Title has been matched with Expected result : " + title, YesNo.No);
+					} else {
+						log(LogStatus.ERROR, "Actual result " + actualTitle
+								+ " of Title is not matched with Expected result : " + title, YesNo.No);
+						result.add("Actual result " + actualTitle + " of Title is not matched with Expected result : "
+								+ title);
+					}
+				}
+
+				if (deals != null && deals != "") {
+					xPath = "//a[text()='" + name
+							+ "']/ancestor::td[@data-label='Name']/..//td[@data-label='Deals']//span";
+					ele = CommonLib.FindElement(driver, xPath, "deal", action.SCROLLANDBOOLEAN, 30);
+					String actualDeal = getText(driver, ele, "deal", action.SCROLLANDBOOLEAN);
+					if (actualDeal.equalsIgnoreCase(deals)) {
+						log(LogStatus.INFO, "Actual result " + actualDeal
+								+ " of deal has been matched with Expected resut : " + deals + " of contact: " + name,
+								YesNo.No);
+					} else {
+						log(LogStatus.ERROR, "Actual result " + actualDeal
+								+ " of deal are not matched with Expected resut : " + deals + " of contact: " + name,
+								YesNo.No);
+						result.add("Actual result " + actualDeal + " of deal are not matched with Expected resut : "
+								+ deals + " of contact: " + name);
+					}
+				}
+
+				if (meetingAndCalls != null && meetingAndCalls != "") {
+					xPath = "//a[text()='" + name
+							+ "']/ancestor::td[@data-label='Name']/..//td[@data-label='Meetings and Calls']//span";
+					ele = CommonLib.FindElement(driver, xPath, "meeting and call", action.SCROLLANDBOOLEAN, 30);
+					String actualmeetingAndCalls = getText(driver, ele, "meeting and call", action.SCROLLANDBOOLEAN);
+					if (actualmeetingAndCalls.equalsIgnoreCase(meetingAndCalls)) {
+						log(LogStatus.INFO,
+								"Actual result " + actualmeetingAndCalls
+										+ " of meeting and call has been matched with Expected result : "
+										+ meetingAndCalls + " of contact: " + name,
+								YesNo.No);
+					} else {
+						log(LogStatus.ERROR,
+								"Actual result " + actualmeetingAndCalls
+										+ " of meeting and call are not matched with Expected resut : "
+										+ meetingAndCalls + " of contact: " + name,
+								YesNo.No);
+						result.add("Actual result " + actualmeetingAndCalls
+								+ " of meeting and call are not matched with Expected resut : " + meetingAndCalls
+								+ " of contact: " + name);
+					}
+				}
+				if (email != null && email != "") {
+					xPath = "//a[text()='" + name
+							+ "']/ancestor::td[@data-label='Name']/..//td[@data-label='Emails']//span";
+					ele = CommonLib.FindElement(driver, xPath, "email", action.SCROLLANDBOOLEAN, 30);
+					String actualEmail = getText(driver, ele, "email", action.SCROLLANDBOOLEAN);
+					if (actualEmail.equalsIgnoreCase(email)) {
+						log(LogStatus.INFO, "Actual result " + actualEmail
+								+ " of email has been matched with Expected result : " + email + " of contact: " + name,
+								YesNo.No);
+					} else {
+						log(LogStatus.ERROR, "Actual result " + actualEmail
+								+ " of email are not matched with Expected resut : " + email + " of contact: " + name,
+								YesNo.No);
+						result.add("Actual result " + actualEmail + " of email are not matched with Expected resut : "
+								+ email + " of contact: " + name);
+					}
+				}
+			} else {
+				log(LogStatus.ERROR, name + " is not avalable in contact section", YesNo.No);
+				result.add(name + " is not avalable in contact section");
+				sa.assertTrue(false, name + " is not avalable in contact section");
+			}
+		} else {
+			log(LogStatus.ERROR, "Provided Contact Name should not be null in DataSheet", YesNo.No);
+			result.add("Provided Contact Name should not be null in DataSheet");
+			sa.assertTrue(false, "Provided Contact Name should not be null in DataSheet");
+		}
+		return result;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param contactName
+	 * @param teamMember
+	 * @param title
+	 * @param deals
+	 * @param meetingAndCalls
+	 * @param email
+	 * @return return Empty ArrayList if test case is passed
+	 */
+
+	public ArrayList<String> verifyRecordOnConnectionsPopUpOfContactInAcuity(String contactName, String teamMember,
+			String title, String deals, String meetingAndCalls, String email) {
+
+		ArrayList<String> result = new ArrayList<String>();
+
+		if (contactName != null && contactName != "") {
+
+			if (contactNameUserIconButton(contactName, 30) != null) {
+
+				if (click(driver, contactNameUserIconButton(contactName, 30), "Contact Name: " + contactName,
+						action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Contact: " + contactName, YesNo.No);
+
+					if (connectionPopUpTeamMember(teamMember, 20) != null) {
+
+						if (title != null && title != "") {
+
+							String actualTitle = getText(driver, connectionPopUpTitle(teamMember, title, 30), "Title",
+									action.SCROLLANDBOOLEAN);
+							if (actualTitle.equalsIgnoreCase(title)) {
+								log(LogStatus.INFO, "Actual result " + actualTitle
+										+ " of Title has been matched with Expected result : " + title
+										+ " of Team Member: " + teamMember + " under Record page: " + contactName,
+										YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Actual result " + actualTitle
+										+ " of Title is not matched with Expected result : " + title
+										+ " of Team Member: " + teamMember + " under Record page: " + contactName,
+										YesNo.No);
+								result.add("Actual result " + actualTitle
+										+ " of Title is not matched with Expected result : " + title
+										+ " of Team Member: " + teamMember + " under Record page: " + contactName);
+							}
+						}
+
+						if (deals != null && deals != "") {
+
+							String actualDeal = getText(driver, connectionPopUpDealsCount(teamMember, deals, 30),
+									"deal", action.SCROLLANDBOOLEAN);
+							if (actualDeal.equalsIgnoreCase(deals)) {
+								log(LogStatus.INFO, "Actual result " + actualDeal
+										+ " of deal has been matched with Expected resut : " + deals
+										+ " of Team Member: " + teamMember + " under Record page: " + contactName,
+										YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Actual result " + actualDeal
+										+ " of deal are not matched with Expected resut : " + deals
+										+ " of Team Member: " + teamMember + " under Record page: " + contactName,
+										YesNo.No);
+								result.add("Actual result " + actualDeal
+										+ " of deal are not matched with Expected resut : " + deals
+										+ " of Team Member: " + teamMember + " under Record page: " + contactName);
+							}
+						}
+
+						if (meetingAndCalls != null && meetingAndCalls != "") {
+
+							String actualmeetingAndCalls = getText(driver,
+									connectionPopUpMeetingCallsCount(teamMember, meetingAndCalls, 30),
+									"meeting and call", action.SCROLLANDBOOLEAN);
+							if (actualmeetingAndCalls.equalsIgnoreCase(meetingAndCalls)) {
+								log(LogStatus.INFO,
+										"Actual result " + actualmeetingAndCalls
+												+ " of meeting and call has been matched with Expected result : "
+												+ meetingAndCalls + " of Team Member: " + teamMember
+												+ " under Record page: " + contactName,
+										YesNo.No);
+							} else {
+								log(LogStatus.ERROR,
+										"Actual result " + actualmeetingAndCalls
+												+ " of meeting and call are not matched with Expected resut : "
+												+ meetingAndCalls + " of Team Member: " + teamMember
+												+ " under Record page: " + contactName,
+										YesNo.No);
+								result.add("Actual result " + actualmeetingAndCalls
+										+ " of meeting and call are not matched with Expected resut : "
+										+ meetingAndCalls + " of Team Member: " + teamMember + " under Record page: "
+										+ contactName);
+							}
+						}
+						if (email != null && email != "") {
+
+							String actualEmail = getText(driver, connectionPopUpEmailCount(teamMember, email, 30),
+									"email", action.SCROLLANDBOOLEAN);
+							if (actualEmail.equalsIgnoreCase(email)) {
+								log(LogStatus.INFO, "Actual result " + actualEmail
+										+ " of email has been matched with Expected result : " + email
+										+ " of Team Member: " + teamMember + " under Record page: " + contactName,
+										YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Actual result " + actualEmail
+										+ " of email are not matched with Expected resut : " + email
+										+ " of Team Member: " + teamMember + " under Record page: " + contactName,
+										YesNo.No);
+								result.add("Actual result " + actualEmail
+										+ " of email are not matched with Expected resut : " + email
+										+ " of Team Member: " + teamMember + " under Record page: " + contactName);
+							}
+						}
+
+						click(driver, connectionClosePopupButton(15), "Close Button", action.SCROLLANDBOOLEAN);
+
+					} else {
+						log(LogStatus.ERROR,
+								"No Team Member found of name: " + teamMember + " for contact: " + contactName,
+								YesNo.No);
+						result.add("No Team Member found of name: " + teamMember + " for contact: " + contactName);
+						if (connectionClosePopupButton(15) != null) {
+							click(driver, connectionClosePopupButton(15), "Close Button", action.SCROLLANDBOOLEAN);
+						}
+
+					}
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on Contact: " + contactName, YesNo.No);
+					result.add("Not Able to Click on Contact: " + contactName);
+
+				}
+			} else {
+				log(LogStatus.ERROR, contactName + " is not avalable in contact section, So Can not Click on User Icon",
+						YesNo.No);
+				result.add(contactName + " is not avalable in contact section, So Can not Click on User Icon");
+
+			}
+		} else {
+			log(LogStatus.ERROR, "Provided Contact Name should not be null in DataSheet", YesNo.No);
+			result.add("Provided Contact Name should not be null in DataSheet");
+
+		}
+		return result;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param recordNameOfRecordPage
+	 * @param teamMember
+	 * @param title
+	 * @param deals
+	 * @param meetingAndCalls
+	 * @param email
+	 * @return return Empty ArrayList if test case is passed
+	 */
+
+	public ArrayList<String> verifyRecordOnConnectionsSectionInAcuity(String recordNameOfRecordPage, String teamMember,
+			String title, String deals, String meetingAndCalls, String email) {
+		String xPath = "";
+		WebElement ele = null;
+		ArrayList<String> result = new ArrayList<String>();
+
+		if (connectionTeamMember(teamMember, 20) != null) {
+
+			if (title != null && title != "") {
+
+				String actualTitle = getText(driver, connectionTitle(teamMember, title, 30), "Title",
+						action.SCROLLANDBOOLEAN);
+				if (actualTitle.equalsIgnoreCase(title)) {
+					log(LogStatus.INFO,
+							"Actual result " + actualTitle + " of Title has been matched with Expected result : "
+									+ title + " of Team Member: " + teamMember + "under Record page of "
+									+ recordNameOfRecordPage,
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Actual result " + actualTitle + " of Title is not matched with Expected result : " + title
+									+ " of Team Member: " + teamMember + "under Record page of "
+									+ recordNameOfRecordPage,
+							YesNo.No);
+					result.add("Actual result " + actualTitle + " of Title is not matched with Expected result : "
+							+ title + " of Team Member: " + teamMember + "under Record page of "
+							+ recordNameOfRecordPage);
+				}
+			}
+
+			if (deals != null && deals != "") {
+
+				String actualDeal = getText(driver, connectionDealsCount(teamMember, deals, 30), "deal",
+						action.SCROLLANDBOOLEAN);
+				if (actualDeal.equalsIgnoreCase(deals)) {
+					log(LogStatus.INFO,
+							"Actual result " + actualDeal + " of deal has been matched with Expected resut : " + deals
+									+ " of Team Member: " + teamMember + "under Record page of "
+									+ recordNameOfRecordPage,
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Actual result " + actualDeal + " of deal are not matched with Expected resut : " + deals
+									+ " of Team Member: " + teamMember + "under Record page of "
+									+ recordNameOfRecordPage,
+							YesNo.No);
+					result.add("Actual result " + actualDeal + " of deal are not matched with Expected resut : " + deals
+							+ " of Team Member: " + teamMember + "under Record page of " + recordNameOfRecordPage);
+				}
+			}
+
+			if (meetingAndCalls != null && meetingAndCalls != "") {
+
+				String actualmeetingAndCalls = getText(driver,
+						connectionMeetingCallsCount(teamMember, meetingAndCalls, 30), "meeting and call",
+						action.SCROLLANDBOOLEAN);
+				if (actualmeetingAndCalls.equalsIgnoreCase(meetingAndCalls)) {
+					log(LogStatus.INFO, "Actual result " + actualmeetingAndCalls
+							+ " of meeting and call has been matched with Expected result : " + meetingAndCalls
+							+ " of Team Member: " + teamMember + "under Record page of " + recordNameOfRecordPage,
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR, "Actual result " + actualmeetingAndCalls
+							+ " of meeting and call are not matched with Expected resut : " + meetingAndCalls
+							+ " of Team Member: " + teamMember + "under Record page of " + recordNameOfRecordPage,
+							YesNo.No);
+					result.add("Actual result " + actualmeetingAndCalls
+							+ " of meeting and call are not matched with Expected resut : " + meetingAndCalls
+							+ " of Team Member: " + teamMember + "under Record page of " + recordNameOfRecordPage);
+				}
+			}
+			if (email != null && email != "") {
+
+				String actualEmail = getText(driver, connectionEmailCount(teamMember, email, 30), "email",
+						action.SCROLLANDBOOLEAN);
+				if (actualEmail.equalsIgnoreCase(email)) {
+					log(LogStatus.INFO,
+							"Actual result " + actualEmail + " of email has been matched with Expected result : "
+									+ email + " of Team Member: " + teamMember + "under Record page of "
+									+ recordNameOfRecordPage,
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Actual result " + actualEmail + " of email are not matched with Expected resut : " + email
+									+ " of Team Member: " + teamMember + "under Record page of "
+									+ recordNameOfRecordPage,
+							YesNo.No);
+					result.add("Actual result " + actualEmail + " of email are not matched with Expected resut : "
+							+ email + " of Team Member: " + teamMember + "under Record page of "
+							+ recordNameOfRecordPage);
+				}
+			}
+
+		} else {
+			log(LogStatus.ERROR,
+					"No Team Member found of name: " + teamMember + "under Record page of " + recordNameOfRecordPage,
+					YesNo.No);
+			result.add(
+					"No Team Member found of name: " + teamMember + "under Record page of " + recordNameOfRecordPage);
+
+		}
+
+		return result;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param recordNameOfRecordPage
+	 * @param dealName
+	 * @param company
+	 * @param stage
+	 * @param dateReceived
+	 * @return return Empty ArrayList if test case is passed
+	 */
+
+	public ArrayList<String> verifyRecordOnDealsSectionInAcuity(String recordNameOfRecordPage, String dealName,
+			String company, String stage, String dateReceived) {
+
+		ArrayList<String> result = new ArrayList<String>();
+
+		if (dealAcuityDealName(dealName, 20) != null) {
+
+			if (company != null && company != "") {
+
+				String actualCompany = getText(driver, dealAcuityCompanyName(dealName, company, 20), "Title",
+						action.SCROLLANDBOOLEAN);
+				if (actualCompany.equalsIgnoreCase(company)) {
+					log(LogStatus.INFO,
+							"Actual result " + actualCompany + " of Company has been matched with Expected result : "
+									+ company + " of Deal Name: " + dealName + " under Record Page of "
+									+ recordNameOfRecordPage,
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Actual result " + actualCompany + " of Company is not matched with Expected result : "
+									+ company + " of Deal Name: " + dealName + " under Record Page of "
+									+ recordNameOfRecordPage,
+							YesNo.No);
+					result.add("Actual result " + actualCompany + " of Company is not matched with Expected result : "
+							+ company + " of Deal Name: " + dealName + " under Record Page of "
+							+ recordNameOfRecordPage);
+				}
+			}
+
+			if (stage != null && stage != "") {
+
+				String actualStage = getText(driver, dealAcuityStageName(dealName, stage, 20), "deal",
+						action.SCROLLANDBOOLEAN);
+				if (actualStage.equalsIgnoreCase(stage)) {
+					log(LogStatus.INFO,
+							"Actual result " + actualStage + " of Stage has been matched with Expected resut : " + stage
+									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Actual result " + actualStage + " of Stage are not matched with Expected resut : " + stage
+									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							YesNo.No);
+					result.add("Actual result " + actualStage + " of Stage are not matched with Expected resut : "
+							+ stage + " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage);
+				}
+			}
+
+			if (dateReceived != null && dateReceived != "") {
+
+				String actualDateReceived = getText(driver, dealAcuityDateReceived(dealName, dateReceived, 20),
+						"meeting and call", action.SCROLLANDBOOLEAN);
+				if (actualDateReceived.equalsIgnoreCase(dateReceived)) {
+					log(LogStatus.INFO,
+							"Actual result " + actualDateReceived
+									+ " of Date Received has been matched with Expected result : " + dateReceived
+									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Actual result " + actualDateReceived
+									+ " of Date Received are not matched with Expected resut : " + dateReceived
+									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							YesNo.No);
+					result.add("Actual result " + actualDateReceived
+							+ " of Date Received are not matched with Expected resut : " + dateReceived
+							+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage);
+				}
+			}
+
+		} else {
+			log(LogStatus.ERROR,
+					"No Deal Name found of name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+					YesNo.No);
+			result.add("No Deal Name found of name: " + dealName + " under Record Page of " + recordNameOfRecordPage);
+
+		}
+
+		return result;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param recordNameOfRecordPage
+	 * @param dealName
+	 * @param company
+	 * @param stage
+	 * @param dateReceived
+	 * @return return Empty ArrayList if test case is passed
+	 */
+
+	public ArrayList<String> verifyRecordOnDealsPopUpSectionInAcuity(String recordNameOfRecordPage, String dealName,
+			String company, String stage, String dateReceived) {
+
+		ArrayList<String> result = new ArrayList<String>();
+
+		if (dealAcuityPopUpDealName(dealName, 20) != null) {
+
+			if (company != null && company != "") {
+
+				String actualCompany = getText(driver, dealAcuityPopUpCompanyName(dealName, company, 20), "Title",
+						action.SCROLLANDBOOLEAN);
+				if (actualCompany.equalsIgnoreCase(company)) {
+					log(LogStatus.INFO,
+							"Actual result " + actualCompany + " of Company has been matched with Expected result : "
+									+ company + " of Deal Name: " + dealName + " under Record Page of "
+									+ recordNameOfRecordPage,
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Actual result " + actualCompany + " of Company is not matched with Expected result : "
+									+ company + " of Deal Name: " + dealName + " under Record Page of "
+									+ recordNameOfRecordPage,
+							YesNo.No);
+					result.add("Actual result " + actualCompany + " of Company is not matched with Expected result : "
+							+ company + " of Deal Name: " + dealName + " under Record Page of "
+							+ recordNameOfRecordPage);
+				}
+			}
+
+			if (stage != null && stage != "") {
+
+				String actualStage = getText(driver, dealAcuityPopUpStageName(dealName, stage, 20), "deal",
+						action.SCROLLANDBOOLEAN);
+				if (actualStage.equalsIgnoreCase(stage)) {
+					log(LogStatus.INFO,
+							"Actual result " + actualStage + " of Stage has been matched with Expected resut : " + stage
+									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Actual result " + actualStage + " of Stage are not matched with Expected resut : " + stage
+									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							YesNo.No);
+					result.add("Actual result " + actualStage + " of Stage are not matched with Expected resut : "
+							+ stage + " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage);
+				}
+			}
+
+			if (dateReceived != null && dateReceived != "") {
+
+				String actualDateReceived = getText(driver, dealAcuityPopUpDateReceived(dealName, dateReceived, 20),
+						"meeting and call", action.SCROLLANDBOOLEAN);
+				if (actualDateReceived.equalsIgnoreCase(dateReceived)) {
+					log(LogStatus.INFO,
+							"Actual result " + actualDateReceived
+									+ " of Date Received has been matched with Expected result : " + dateReceived
+									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Actual result " + actualDateReceived
+									+ " of Date Received are not matched with Expected resut : " + dateReceived
+									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							YesNo.No);
+					result.add("Actual result " + actualDateReceived
+							+ " of Date Received are not matched with Expected resut : " + dateReceived
+							+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage);
+				}
+			}
+
+			click(driver, connectionClosePopupButton(15), "Close Button", action.SCROLLANDBOOLEAN);
+
+		} else {
+			log(LogStatus.ERROR,
+					"No Deal Name found of name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+					YesNo.No);
+			result.add("No Deal Name found of name: " + dealName + " under Record Page of " + recordNameOfRecordPage);
+
+			if (connectionClosePopupButton(15) != null) {
+				click(driver, connectionClosePopupButton(15), "Close Button", action.SCROLLANDBOOLEAN);
+			}
+
+		}
+
+		return result;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param recordNameOfRecordPage
+	 * @param fundraisingName
+	 * @param fundName
+	 * @param stage
+	 * @param targetClosedDate
+	 * @return return Empty ArrayList if test case is passed
+	 */
+
+	public ArrayList<String> verifyRecordOnFundraisingsSectionInAcuity(String recordNameOfRecordPage,
+			String fundraisingName, String fundName, String stage, String targetClosedDate) {
+
+		ArrayList<String> result = new ArrayList<String>();
+
+		if (fundraisingsAcuityFundraisingsName(fundraisingName, 20) != null) {
+
+			if (fundName != null && fundName != "") {
+
+				String actualFund = getText(driver, fundraisingsAcuityFundName(fundraisingName, fundName, 20),
+						"Fund: " + fundName, action.SCROLLANDBOOLEAN);
+				if (actualFund.equalsIgnoreCase(fundName)) {
+					log(LogStatus.INFO,
+							"Actual result " + actualFund + " of Fund has been matched with Expected result : "
+									+ fundName + " of Fundraising Name: " + fundraisingName + " under Record Page of "
+									+ recordNameOfRecordPage,
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Actual result " + actualFund + " of Fund is not matched with Expected result : " + fundName
+									+ " of Fundraising Name: " + fundraisingName + " under Record Page of "
+									+ recordNameOfRecordPage,
+							YesNo.No);
+					result.add("Actual result " + actualFund + " of Fund is not matched with Expected result : "
+							+ fundName + " of Fundraising Name: " + fundraisingName + " under Record Page of "
+							+ recordNameOfRecordPage);
+				}
+			}
+
+			if (stage != null && stage != "") {
+
+				String actualStage = getText(driver, fundraisingsAcuityStageName(fundraisingName, stage, 20),
+						"Stage: " + stage, action.SCROLLANDBOOLEAN);
+				if (actualStage.equalsIgnoreCase(stage)) {
+					log(LogStatus.INFO,
+							"Actual result " + actualStage + " of Stage has been matched with Expected resut : " + stage
+									+ " of Fundraising Name: " + fundraisingName + " under Record Page of "
+									+ recordNameOfRecordPage,
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Actual result " + actualStage + " of Stage are not matched with Expected resut : " + stage
+									+ " of Fundraising Name: " + fundraisingName + " under Record Page of "
+									+ recordNameOfRecordPage,
+							YesNo.No);
+					result.add("Actual result " + actualStage + " of Stage are not matched with Expected resut : "
+							+ stage + " of Fundraising Name: " + fundraisingName + " under Record Page of "
+							+ recordNameOfRecordPage);
+				}
+			}
+
+			if (targetClosedDate != null && targetClosedDate != "") {
+
+				String actualTargetClosedDate = getText(driver,
+						fundrasingsAcuityTargetClosedDate(fundraisingName, targetClosedDate, 20),
+						"Target Closed Date: " + targetClosedDate, action.SCROLLANDBOOLEAN);
+				if (actualTargetClosedDate.equalsIgnoreCase(targetClosedDate)) {
+					log(LogStatus.INFO,
+							"Actual result " + actualTargetClosedDate
+									+ " of targetClosedDate has been matched with Expected result : " + targetClosedDate
+									+ " of Fundraising Name: " + fundraisingName + " under Record Page of "
+									+ recordNameOfRecordPage,
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Actual result " + actualTargetClosedDate
+									+ " of targetClosedDate are not matched with Expected resut : " + targetClosedDate
+									+ " of Fundraising Name: " + fundraisingName + " under Record Page of "
+									+ recordNameOfRecordPage,
+							YesNo.No);
+					result.add("Actual result " + actualTargetClosedDate
+							+ " of targetClosedDate are not matched with Expected resut : " + targetClosedDate
+							+ " of Fundraising Name: " + fundraisingName + " under Record Page of "
+							+ recordNameOfRecordPage);
+				}
+			}
+
+		} else {
+			log(LogStatus.ERROR, "No Fundraising Name found of name: " + fundraisingName + " under Record Page of "
+					+ recordNameOfRecordPage, YesNo.No);
+			result.add("No Fundraising Name found of name: " + fundraisingName + " under Record Page of "
+					+ recordNameOfRecordPage);
+
+		}
+
+		return result;
+	}
+
+	/**
+	 * @author Sourabh Saini
+	 * @param projectName
+	 * @param fromNavigation
+	 * @param buttonName
+	 * @param basicSection
+	 * @param advanceSection
+	 * @param taskSection
+	 * @param suggestedTags
+	 * @return return true if test case is passed
+	 */
+
+	public boolean createActivityTimeline(String projectName, boolean fromNavigation, String buttonName,
+			String[][] basicSection, String[][] advanceSection, String[][] taskSection, String[] suggestedTags) {
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		String xPath = "";
+		WebElement ele;
+		boolean flag = false;
+
+		if (fromNavigation == true) {
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, NavigationMenuItems.Create.toString(), action.BOOLEAN,
+					30)) {
+				log(LogStatus.INFO, "Able to Click on " + buttonName + " Going to click on : "
+						+ NavigationMenuItems.Create.toString() + " for creation ", YesNo.No);
+				ele = npbl.getNavigationLabel(projectName, buttonName, action.BOOLEAN, 10);
+				if (ele != null && CommonLib.click(driver, ele, buttonName, action.BOOLEAN)) {
+					log(LogStatus.INFO, "Click on " + buttonName + " so going for creation", YesNo.No);
+
+				} else {
+					log(LogStatus.ERROR,
+							"Not Able to Click on " + buttonName + " so cannot create data related to this ",
+							YesNo.Yes);
+					sa.assertTrue(false,
+							"Not Able to Click on " + buttonName + " so cannot create data related to this ");
+					return false;
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on " + NavigationMenuItems.Create.toString()
+						+ " so cannot click on : " + buttonName + " for creation ", YesNo.Yes);
+				sa.assertTrue(false, "Not Able to Click on " + NavigationMenuItems.Create.toString()
+						+ " so cannot click on : " + buttonName + " for creation ");
+				return false;
+			}
+		} else {
+			if (CommonLib.clickUsingJavaScript(driver, activityTimelineButton(buttonName, 30), buttonName + " button",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on " + buttonName + " button name", YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Not able to click on " + buttonName, YesNo.No);
+				sa.assertTrue(false, "Not able to click on " + buttonName);
+				return false;
+			}
+		}
+		CommonLib.ThreadSleep(9000);
+		if (basicSection != null) {
+
+			for (String[] val : basicSection) {
+				String labelName = val[0];
+				String value = val[1];
+
+				if (labelName.equalsIgnoreCase(excelLabel.Subject.toString())) {
+					xPath = "//label[text()='" + labelName + "']/..//input[contains(@data-id,'combobox')]";
+					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+					if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
+					} else {
+						log(LogStatus.ERROR, value + " value is not passed in " + labelName + " field", YesNo.No);
+						sa.assertTrue(false, value + " value is not passed in " + labelName + " field");
+						return false;
+
+					}
+				} else if (labelName.equalsIgnoreCase(excelLabel.Notes.toString())) {
+					xPath = "//div[span[span[text()='" + labelName
+							+ "']]]//div[@class='slds-rich-text-editor__textarea slds-grid']";
+					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+					if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
+						log(LogStatus.INFO, "Clicked on " + labelName + " paragraph", YesNo.No);
+						ThreadSleep(2000);
+						xPath = "//div[span[span[text()='" + labelName + "']]]//div[@role='textbox']//p";
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						if (sendKeys(driver, ele, value, labelName + " paragraph", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, value + " has been passed on " + labelName + " paragraph", YesNo.No);
+
+							CommonLib.ThreadSleep(2000);
+						} else {
+							log(LogStatus.ERROR, value + " is not passed on " + labelName + " paragraph", YesNo.No);
+							sa.assertTrue(false, value + " is not passed on " + labelName + " paragraph");
+							return false;
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on " + labelName + " paragraph", YesNo.No);
+						sa.assertTrue(false, "Not able to click on " + labelName + " paragraph");
+						return false;
+					}
+
+				} else if (labelName.equalsIgnoreCase(excelLabel.Related_To.toString())) {
+					ArrayList<String> tagList = new ArrayList<String>();
+
+					if (value.contains("<break>")) {
+						String[] data = value.split("<break>");
+						for (int i = 0; i < data.length; i++) {
+							tagList.add(data[i]);
+						}
+					} else {
+						tagList.add(value);
+					}
+
+					for (int i = 0; i < tagList.size(); i++) {
+
+						xPath = "//input[@placeholder='Search']";
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 2);
+						if (ele == null) {
+							xPath = "//*[@title='Tag']";
+							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
+									30);
+							if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
+								log(LogStatus.INFO, "Clicked on Tag button", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Not able to click on Tag button", YesNo.No);
+								sa.assertTrue(false, "Not able to click on Tag button");
+								return false;
+							}
+
+						}
+
+						xPath = "//input[@placeholder='Search']";
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 2);
+						if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, tagList.get(i) + " value has been passed in " + labelName + " field",
+									YesNo.No);
+							ThreadSleep(3000);
+							xPath = "//ul[@class='drop_ul']//li[text()='" + tagList.get(i) + "']";
+							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
+									30);
+							if (click(driver, ele, tagList + " dropdown", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "clicked on " + tagList.get(i) + " value", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Not able to click on " + tagList.get(i) + " value", YesNo.No);
+								sa.assertTrue(false, "Not able to click on " + tagList.get(i) + " value");
+								return false;
+							}
+
+						} else {
+							log(LogStatus.ERROR, tagList.get(i) + " value is not passed in " + labelName + " field",
+									YesNo.No);
+							sa.assertTrue(false, tagList.get(i) + " value is not passed in " + labelName + " field");
+							return false;
+						}
+					}
+				} else {
+					log(LogStatus.ERROR, "Label Name is not correct", YesNo.No);
+					sa.assertTrue(false, "Label Name is not correct");
+					return false;
+				}
+			}
+
+		}
+		if (advanceSection != null) {
+			if (clickUsingJavaScript(driver, getSectionBtn("Advanced", 30), "Advanced section",
+					action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "clicked on Advanced section", YesNo.No);
+				for (String[] val : advanceSection) {
+					String labelName = val[0];
+					String value = val[1];
+					// String fieldType=val[2];
+
+					if (labelName.contains("Start Date")) {
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='Start Date Time']/..//label[text()='Date']/..//input";
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, value + " value is not passed in " + labelName + " field", YesNo.No);
+							sa.assertTrue(false, value + " value is not passed in " + labelName + " field");
+							return false;
+						}
+					} else if (labelName.contains("Start Time")) {
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='Start Date Time']/..//label[text()='Time']/..//input";
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, value + " value is not passed in " + labelName + " field", YesNo.No);
+							sa.assertTrue(false, value + " value is not passed in " + labelName + " field");
+							return false;
+						}
+
+					} else if (labelName.contains("End Date")) {
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='End Date Time']/..//label[text()='Date']/..//input";
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, value + " value is not passed in " + labelName + " field", YesNo.No);
+							sa.assertTrue(false, value + " value is not passed in " + labelName + " field");
+							return false;
+						}
+
+					} else if (labelName.contains("End Time")) {
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='End Date Time']/..//label[text()='Time']/..//input";
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, value + " value is not passed in " + labelName + " field", YesNo.No);
+							sa.assertTrue(false, value + " value is not passed in " + labelName + " field");
+							return false;
+						}
+
+					}
+
+					else if (labelName.contains(excelLabel.Location.toString())
+							|| labelName.contains("Due Date Only")) {
+
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
+								+ labelName + "']/..//input";
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, value + " value is not passed in " + labelName + " field", YesNo.No);
+							sa.assertTrue(false, value + " value is not passed in " + labelName + " field");
+							return false;
+						}
+
+					}
+
+					else if (labelName.equalsIgnoreCase(excelLabel.Status.toString())
+							|| labelName.equalsIgnoreCase(excelLabel.Priority.toString())) {
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
+								+ labelName + "']/..//button";
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
+								+ labelName + "']/..//span[@class='slds-truncate']";
+						if (CommonLib.dropDownHandle(driver, ele, xPath, labelName + " dropdown", value)) {
+							log(LogStatus.INFO, value + " value has been selected from " + labelName + " field",
+									YesNo.No);
+						} else {
+							log(LogStatus.ERROR, value + " value is not selected from " + labelName + " field",
+									YesNo.No);
+							sa.assertTrue(false, value + " value is not selected from " + labelName + " field");
+							return false;
+						}
+					} else if (labelName.equalsIgnoreCase("All-Day Event")) {
+
+						if (value.equals("true")) {
+							xPath = "//span[text()='All-Day Event']/../../input";
+							ele = FindElement(driver, xPath, labelName + " name", action.SCROLLANDBOOLEAN, 30);
+							if (isSelected(driver, ele, labelName + " checkbox")) {
+								log(LogStatus.INFO, labelName + " checkbox is already selected", YesNo.No);
+
+							} else {
+								if (click(driver, ele, labelName + " checkbox", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, labelName + " checkbox has been selected", YesNo.No);
+								} else {
+									log(LogStatus.ERROR, labelName + " checkbox is not selected", YesNo.No);
+									sa.assertTrue(false, labelName + " checkbox is not selected");
+									return false;
+								}
+							}
+
+						} else {
+							xPath = "//span[text()='All-Day Event']/../../input";
+							ele = FindElement(driver, xPath, labelName + " name", action.SCROLLANDBOOLEAN, 30);
+							if (!isSelected(driver, ele, labelName + " checkbox")) {
+								log(LogStatus.INFO, labelName + " checkbox is not selected", YesNo.No);
+
+							} else {
+								if (click(driver, ele, labelName + " checkbox", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, labelName + " checkbox has been unselected", YesNo.No);
+								} else {
+									log(LogStatus.ERROR, labelName + " checkbox is not unselected", YesNo.No);
+									sa.assertTrue(false, labelName + " checkbox is not unselected");
+									return false;
+								}
+							}
+						}
+					} else {
+						log(LogStatus.ERROR, "label name is not correct", YesNo.No);
+						sa.assertTrue(false, "label name is not correct");
+						return false;
+					}
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on Advanced search section", YesNo.No);
+				sa.assertTrue(false, "Not able to click on Advanced search section");
+				return false;
+			}
+		}
+		if (taskSection != null) {
+
+			xPath = "//span[text()='Advanced']/parent::button[@aria-expanded='true']";
+			ele = FindElement(driver, xPath, "Advance section", action.SCROLLANDBOOLEAN, 3);
+			if (ele == null) {
+				if (clickUsingJavaScript(driver, getSectionBtn("Advanced", 3), "Advanced section",
+						action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "clicked on Advanced section", YesNo.No);
+				} else {
+					log(LogStatus.ERROR, "Not able to click on Advanced section", YesNo.No);
+					sa.assertTrue(false, "Not able to click on Advanced section");
+					return false;
+				}
+			}
+
+			if (clickUsingJavaScript(driver, getSectionBtn("Tasks", 30), "Tasks section", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "clicked on Tasks section", YesNo.No);
+
+				for (String[] val : taskSection) {
+					String labelName = val[0];
+					String value = val[1];
+
+					if (labelName.equalsIgnoreCase(excelLabel.Subject.toString())
+							|| labelName.equals("Due Date Only")) {
+						xPath = "//span[text()='Tasks']/ancestor::lightning-accordion[1]//label[text()='" + labelName
+								+ "']/..//input";
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, value + " value is not passed in " + labelName + " field", YesNo.No);
+							sa.assertTrue(false, value + " value is not passed in " + labelName + " field");
+							return false;
+						}
+					} else if (labelName.equalsIgnoreCase(excelLabel.Status.toString())) {
+						xPath = "//span[text()='Tasks']/ancestor::lightning-accordion[1]//label[text()='" + labelName
+								+ "']/..//button";
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						xPath = "//span[text()='Tasks']/ancestor::lightning-accordion[1]//label[text()='" + labelName
+								+ "']/..//span[@class='slds-truncate']";
+						if (CommonLib.dropDownHandle(driver, ele, xPath, labelName + " dropdown", value)) {
+							log(LogStatus.INFO, value + " value has been selected from " + labelName + " field",
+									YesNo.No);
+						} else {
+							log(LogStatus.ERROR, value + " value is not selected from " + labelName + " field",
+									YesNo.No);
+							sa.assertTrue(false, value + " value is not selected from " + labelName + " field");
+							return false;
+						}
+					} else {
+						log(LogStatus.ERROR, "Label name is not correct", YesNo.No);
+						sa.assertTrue(false, "Label name is not correct");
+						return false;
+					}
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to click on Tasks section", YesNo.No);
+				sa.assertTrue(false, "Not able to click on Tasks section");
+				return false;
+			}
+		}
+
+		if (click(driver, getfooterSaveOrCancelButton("Save", 20), "Save button", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "clicked on Save button", YesNo.No);
+
+			if (suggestedTags != null) {
+				for (int i = 0; i < suggestedTags.length; i++) {
+					xPath = "//lightning-base-formatted-text[text()='" + suggestedTags[i]
+							+ "']/ancestor::th[@data-label='Reference Found']/..//td//input";
+					ele = CommonLib.FindElement(driver, xPath, suggestedTags[i] + " sugested Tag",
+							action.SCROLLANDBOOLEAN, 30);
+					if (click(driver, ele, suggestedTags[i] + " suggested tag", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "clicked on " + suggestedTags[i] + " suggested tag checkbox button",
+								YesNo.No);
+
+					} else {
+						log(LogStatus.ERROR,
+								"Not able to click on " + suggestedTags[i] + " suggested tag checkbox button",
+								YesNo.No);
+						sa.assertTrue(false,
+								"Not able to click on " + suggestedTags[i] + " suggested tag checkbox button");
+						return false;
+					}
+				}
+				if (click(driver, getfooterTagButton(30), "Tag Button", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "clicked on footer tag button", YesNo.No);
+				} else {
+					log(LogStatus.ERROR, "Not able to click on footer tag button", YesNo.No);
+					sa.assertTrue(false, "Not able to click on footer tag button");
+					return false;
+				}
+			}
+
+			if (getSuccessMsg(30) != null) {
+				log(LogStatus.INFO, "Activity timeline record has been created", YesNo.No);
+				flag = true;
+			} else {
+				log(LogStatus.ERROR, "Activity timeline record is not created", YesNo.No);
+				sa.assertTrue(false, "Activity timeline record is not created");
+				return false;
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on Save button", YesNo.No);
+			sa.assertTrue(false, "Not able to click on Save button");
+			return false;
+		}
+
+		return flag;
+	}
+
+	/**
+	 * @author Sourabh Saini
+	 * @param dueDate
+	 * @param subjectName
+	 * @param notes
+	 * @param editNote
+	 * @param addNote
+	 * @return return Empty ArrayList if test case is passed
+	 */
+
+	public ArrayList<String> verifyRecordOnInteractionCard(String dueDate, String subjectName, String notes,
+			boolean editNote, boolean addNote) {
+		boolean flag = false;
+		String xPath;
+		WebElement ele;
+		ArrayList<String> result = new ArrayList<String>();
+		if (dueDate != "" && dueDate != null) {
+			xPath = "//a[text()='" + subjectName + "']/../preceding-sibling::div//lightning-badge";
+			ele = CommonLib.FindElement(driver, xPath, "Due Date", action.SCROLLANDBOOLEAN, 30);
+			String date = getText(driver, ele, "Due Date", action.SCROLLANDBOOLEAN);
+
+			String[] actualDate = new String[1];
+			if (date.contains(",")) {
+				String[] val = date.split(",");
+				actualDate[0] = val[0];
+			} else {
+				actualDate[0] = date;
+			}
+			if (dueDate.contains(actualDate[0])) {
+				log(LogStatus.INFO, "Actual result : " + date + " has been matched with expected result : " + dueDate
+						+ " for Due Date", YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Actual result : " + date + " is not matched with expected result : " + dueDate
+						+ " for Due Date", YesNo.No);
+				result.add("Actual result : " + date + " is not matched with expected result : " + dueDate
+						+ " for Due Date");
+			}
+
+		}
+
+		if (subjectName != "" && subjectName != null) {
+			xPath = "//a[@class=\"interaction_sub subject_text\" and text()='" + subjectName + "']";
+			ele = CommonLib.FindElement(driver, xPath, "Subject", action.SCROLLANDBOOLEAN, 30);
+			String subName = getText(driver, ele, "Subject", action.SCROLLANDBOOLEAN);
+			if (subjectName.contains(subName)) {
+				log(LogStatus.INFO, "Actual result : " + subName + " has been matched with expected result : " + dueDate
+						+ " for Subject", YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Actual result : " + subName + " is not matched with expected result : " + dueDate
+						+ " for Subject", YesNo.No);
+				result.add("Actual result : " + subName + " is not matched with expected result : " + dueDate
+						+ " for Subject");
+			}
+
+		}
+		if (notes != "" && notes != null) {
+			xPath = "//a[@class=\"interaction_sub subject_text\" and text()='" + subjectName
+					+ "']/../following-sibling::div[contains(@class,'slds-text-title')]";
+			ele = CommonLib.FindElement(driver, xPath, "Notes", action.SCROLLANDBOOLEAN, 30);
+			String note = getText(driver, ele, "notes", action.SCROLLANDBOOLEAN);
+			if (note.contains(notes)) {
+				log(LogStatus.INFO,
+						"Actual result : " + note + " has been matched with expected result : " + notes + " for notes",
+						YesNo.No);
+			} else {
+				log(LogStatus.ERROR,
+						"Actual result : " + note + " is not matched with expected result : " + notes + " for notes",
+						YesNo.No);
+				result.add(
+						"Actual result : " + note + " is not matched with expected result : " + notes + " for notes");
+			}
+
+		}
+		if (editNote == true) {
+			xPath = "//a[text()='" + subjectName + "']/../preceding-sibling::div//button[@title='Edit Note']";
+			ele = CommonLib.FindElement(driver, xPath, "Notes", action.SCROLLANDBOOLEAN, 30);
+			if (ele != null) {
+				log(LogStatus.INFO, "Edit Notes button is visible", YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Edit Notes button is not visible", YesNo.No);
+				result.add("Edit Notes button is not visible");
+			}
+		}
+		if (addNote == true) {
+			xPath = "//a[text()='" + subjectName + "']/../preceding-sibling::div//button[@title='Add Note']";
+			ele = CommonLib.FindElement(driver, xPath, "Notes", action.SCROLLANDBOOLEAN, 30);
+			if (ele != null) {
+				log(LogStatus.INFO, "Add Notes button is visible", YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Add Notes button is not visible", YesNo.No);
+				result.add("Add Notes button is not visible");
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param projectName
+	 * @param searchItem
+	 * @return return true if it found error msg
+	 */
+	public boolean searchAnItemAndFoundErrorMsgInResearch(String projectName, String searchItem) {
+
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		boolean flag = false;
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, NavigationMenuItems.Research.toString(), action.BOOLEAN,
+				30)) {
+			log(LogStatus.INFO, "Able to Click on Research Going to click on : "
+					+ NavigationMenuItems.Research.toString() + " for Research an Item", YesNo.No);
+
+			if (CommonLib.sendKeys(driver, npbl.researchSearchBox(20), searchItem, "Research Search Box",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "Enter Value in Research Search Box: " + searchItem, YesNo.No);
+
+				if (click(driver, npbl.researchButton(20), "Research Button", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Research Button", YesNo.No);
+
+					if (CommonLib.getText(driver, npbl.researchErrorMsg(20), "Research Error Msg", action.BOOLEAN)
+							.contains("Your search term must have 2 or more characters.")) {
+						log(LogStatus.INFO, "Error Msg Found: " + "  Your search term must have 2 or more characters.",
+								YesNo.No);
+						flag = true;
+					} else {
+						log(LogStatus.ERROR,
+								"Not Able to Find The Error Msg on Research after Text Pass: " + searchItem, YesNo.Yes);
+						sa.assertTrue(false,
+								"Not Able to Find The Error Msg on Research after Text Pass: " + searchItem);
+					}
+				}
+
+				else {
+					log(LogStatus.ERROR, "Not Able to Click on Research Button", YesNo.Yes);
+					sa.assertTrue(false, "Not Able to Click on Research Button");
+				}
+
+			} else {
+
+				log(LogStatus.ERROR, "Not Able to Enter Value in Research Search Box: " + searchItem, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to Enter Value in Research Search Box: " + searchItem);
+
+			}
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on " + NavigationMenuItems.Research.toString()
+					+ " so cannot click on it for Research an Item", YesNo.Yes);
+			sa.assertTrue(false, "Not Able to Click on " + NavigationMenuItems.Research.toString()
+					+ " so cannot click on it for Research an Item");
+
+		}
+		return flag;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param projectName
+	 * @param searchString
+	 * @return return true if it found the text you have searched, otherwise false
+	 */
+	public boolean searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(String projectName, String searchString) {
+
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+
+		boolean flag = false;
+		try {
+
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, NavigationMenuItems.Research.toString(),
+					action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on Research Going to click on : "
+						+ NavigationMenuItems.Research.toString() + " for Research an Item", YesNo.No);
+
+				if (CommonLib.sendKeys(driver, npbl.researchSearchBox(20), searchString, "Research Search Box",
+						action.BOOLEAN)) {
+					log(LogStatus.INFO, "Enter Value in Research Search Box: " + searchString, YesNo.No);
+
+					if (click(driver, npbl.researchButton(20), "Research Button", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Research Button", YesNo.No);
+
+						if (noResultMsgInResearch(3) == null) {
+							CommonLib.refresh(driver);
+							CommonLib.ThreadSleep(3000);
+							List<String> sideNavCountExceptAllCategories = researchSideNavCountResultsExceptAllCategories()
+									.stream().map(x -> x.getText().trim().replace("New Items", "").replace(":", "")
+											.replaceAll("[\\t\\n\\r]+", "").trim())
+									.collect(Collectors.toList());
+
+							List<String> researchResultsGridCounts = researchResultsGridCounts().stream()
+									.map(x -> x.getText().trim()).collect(Collectors.toList());
+
+							int researchAllCategoriesCount = 0;
+							if (researchAllCategoriesCount(10) != null) {
+								researchAllCategoriesCount = Integer.parseInt(
+										researchAllCategoriesCount(10).getText().trim().replace("New Items", "")
+												.replaceAll("[\\t\\n\\r]+", "").replace(":", "").trim());
+							}
+							int sideNavTotalCount = 0;
+							for (String sideNavCount : sideNavCountExceptAllCategories) {
+								sideNavTotalCount = sideNavTotalCount + Integer.parseInt(sideNavCount);
+							}
+
+							int gridTotalCount = 0;
+							for (String gridCounts : researchResultsGridCounts) {
+								gridTotalCount = Integer.parseInt(
+										gridCounts.substring(gridCounts.indexOf("(") + 1, gridCounts.indexOf(")")))
+										+ gridTotalCount;
+							}
+
+							if (sideNavTotalCount == gridTotalCount) {
+								log(LogStatus.INFO, "----Total Count of Grids and Side Nav are Same and i.e. "
+										+ gridTotalCount + " for Record Search " + searchString + "----", YesNo.No);
+								log(LogStatus.INFO, "----Now Going to Verify with All Categories for Record Search "
+										+ searchString + "----", YesNo.No);
+
+								if (researchAllCategoriesCount == gridTotalCount) {
+									log(LogStatus.INFO,
+											"----Total Count of Grids and Side Nav and All Categories are Same and i.e. "
+													+ researchAllCategoriesCount + " for Record Search " + searchString
+													+ "----",
+											YesNo.No);
+									flag = true;
+
+								} else {
+
+									log(LogStatus.ERROR,
+											"----Total Count of Grids and Side Nav and All Categories are not Same, Total grid Count: "
+													+ gridTotalCount + " and Total Nav Count: " + sideNavTotalCount
+													+ "and Total All Categories Count " + researchAllCategoriesCount
+													+ " for Record Search " + searchString + "----",
+											YesNo.Yes);
+									sa.assertTrue(false,
+											"----Total Count of Grids and Side Nav and All Categories are not Same, Total grid Count: "
+													+ gridTotalCount + " and Total Nav Count: " + sideNavTotalCount
+													+ "and Total All Categories Count " + researchAllCategoriesCount
+													+ " for Record Search " + searchString + "----");
+
+								}
+
+							} else {
+
+								log(LogStatus.ERROR,
+										"----Total Count of Grids and Side Nav are not Same, Total grid Count: "
+												+ gridTotalCount + " and Total Nav Count: " + sideNavTotalCount
+												+ " for Record Search " + searchString + "----",
+										YesNo.Yes);
+								sa.assertTrue(false,
+										"----Total Count of Grids and Side Nav are not Same, Total grid Count: "
+												+ gridTotalCount + " and Total Nav Count: " + sideNavTotalCount
+												+ " for Record Search " + searchString + "----");
+
+							}
+
+						} else {
+							log(LogStatus.ERROR, "No Result Found for the Text: " + searchString, YesNo.Yes);
+							sa.assertTrue(false, "No Result Found for the Text: " + searchString);
+						}
+
+					}
+
+					else {
+						log(LogStatus.ERROR, "Not Able to Click on Research Button", YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Click on Research Button");
+					}
+
+				} else {
+
+					log(LogStatus.ERROR, "Not Able to Enter Value in Research Search Box: " + searchString, YesNo.Yes);
+					sa.assertTrue(false, "Not Able to Enter Value in Research Search Box: " + searchString);
+
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on " + NavigationMenuItems.Research.toString()
+						+ " so cannot click on it for Research an Item", YesNo.Yes);
+				sa.assertTrue(false, "Not Able to Click on " + NavigationMenuItems.Research.toString()
+						+ " so cannot click on it for Research an Item");
+
+			}
+
+			return flag;
+		} catch (Exception e) {
+			log(LogStatus.ERROR, "Exception: " + e.getMessage(), YesNo.Yes);
+			return flag;
+		}
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param projectName
+	 * @param searchString
+	 * @return return true if it found the text you have searched, otherwise false
+	 */
+	public boolean searchAnItemInResearchAndVerify(String projectName, String searchString) {
+
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		int loopCount = 0;
+		int status = 0;
+		int resultLoopCount = 0;
+		String searchItem = searchString.trim().replaceAll(" +", " ");
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, NavigationMenuItems.Research.toString(), action.BOOLEAN,
+				30)) {
+			log(LogStatus.INFO, "Able to Click on Research Going to click on : "
+					+ NavigationMenuItems.Research.toString() + " for Research an Item", YesNo.No);
+
+			if (CommonLib.sendKeys(driver, npbl.researchSearchBox(20), searchString, "Research Search Box",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "Enter Value in Research Search Box: " + searchString, YesNo.No);
+
+				if (click(driver, npbl.researchButton(20), "Research Button", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Research Button", YesNo.No);
+
+					if (noResultMsgInResearch(8) == null) {
+						CommonLib.refresh(driver);
+						CommonLib.ThreadSleep(5000);
+						List<String> sideNavLinkText = researchSideNavLinksWithResults().stream()
+								.map(x -> x.getText().trim().replace("New Items", "").replaceAll("[\\t\\n\\r]+", " "))
+								.collect(Collectors.toList());
+						int navLinkLoop = 0;
+						for (WebElement sideNavLink : researchSideNavLinksWithResults())
+
+						{
+							String navText = sideNavLinkText.get(navLinkLoop).trim();
+							if (clickUsingJavaScript(driver, sideNavLink, "sideNavLink: " + navText,
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on NavLink: " + navText, YesNo.No);
+								List<String> searchResultsInTextForm = null;
+								searchResultsInTextForm = searchItemsInResearch().stream()
+										.map(x -> x.getText().toLowerCase().replace("\n", " "))
+										.collect(Collectors.toList());
+								if (!searchResultsInTextForm.isEmpty()) {
+
+									String[] searchItemArray;
+									if (searchItem.startsWith("\"") && searchItem.endsWith("\"")) {
+										searchItemArray = new String[1];
+										searchItemArray[0] = searchString;
+										searchItem = searchItem.replace("\"", "");
+
+									} else {
+										searchItemArray = searchItem.split(" ");
+									}
+									if (searchItemArray.length > 1) {
+										log(LogStatus.INFO, "Total No. of Records of searched Item: " + searchString
+												+ " are " + searchResultsInTextForm.size(), YesNo.No);
+										int loopReset = 0;
+										int recordNumber;
+										recordNumber = 0;
+										loopCount = 0;
+										for (String searchResultInTextForm : searchResultsInTextForm) {
+
+											loopReset = 0;
+											recordNumber = loopCount + 1;
+											int i = 0;
+											for (i = 0; i < searchItemArray.length; i++) {
+												if (searchResultInTextForm.contains(searchItemArray[i].toLowerCase())) {
+													log(LogStatus.INFO,
+															"Text Found: " + searchItemArray[i] + " in Record no. "
+																	+ recordNumber + " of NavLink: " + navText
+																	+ " of Record: " + searchString,
+															YesNo.No);
+													status++;
+													loopReset++;
+													break;
+												}
+
+											}
+											if (loopReset == 0) {
+												log(LogStatus.ERROR,
+														"No Text Found: " + searchString + " in Record No. "
+																+ recordNumber + " of NavLink: " + navText
+																+ ", Actual Row: " + searchResultInTextForm,
+														YesNo.Yes);
+											}
+
+											loopCount++;
+										}
+										resultLoopCount = resultLoopCount + loopCount;
+
+									}
+
+									else {
+
+										int recordNumber;
+										recordNumber = 0;
+										loopCount = 0;
+										for (String searchResultInTextForm : searchResultsInTextForm) {
+											recordNumber = loopCount + 1;
+
+											if (searchResultInTextForm.contains(searchItem.toLowerCase())) {
+												log(LogStatus.INFO,
+														"Text Found: " + searchItem + " in Record no. " + recordNumber
+																+ " of NavLink: " + navText + " of Record: "
+																+ searchItem,
+														YesNo.No);
+												status++;
+											}
+
+											else {
+												log(LogStatus.ERROR,
+														"No Text Found: " + searchItem + " in Record No. "
+																+ recordNumber + " of NavLink: " + navText
+																+ ", Actual Row: " + searchResultInTextForm,
+														YesNo.Yes);
+												sa.assertTrue(false,
+														"No Text Found: " + searchItem + " in Record No. "
+																+ recordNumber + " of NavLink: " + navText
+																+ ", Actual Row: " + searchResultInTextForm);
+											}
+
+											loopCount++;
+										}
+										resultLoopCount = resultLoopCount + loopCount;
+									}
+
+								} else {
+									log(LogStatus.ERROR,
+											"Not Found Any Result on Research after Text Pass: " + searchString,
+											YesNo.Yes);
+									sa.assertTrue(false,
+											"Not Found Any Result on Research after Text Pass: " + searchString);
+								}
+
+							} else {
+
+								log(LogStatus.ERROR, "Not Able to Click on NavLink: " + navText, YesNo.Yes);
+								sa.assertTrue(false, "Not Able to Click on NavLink: " + navText);
+
+							}
+
+							navLinkLoop++;
+						}
+
+					} else {
+						log(LogStatus.ERROR, "No Result Found for the Text: " + searchString, YesNo.Yes);
+						sa.assertTrue(false, "No Result Found for the Text: " + searchString);
+					}
+
+				}
+
+				else {
+					log(LogStatus.ERROR, "Not Able to Click on Research Button", YesNo.Yes);
+					sa.assertTrue(false, "Not Able to Click on Research Button");
+				}
+
+			} else {
+
+				log(LogStatus.ERROR, "Not Able to Enter Value in Research Search Box: " + searchString, YesNo.Yes);
+				sa.assertTrue(false, "Not Able to Enter Value in Research Search Box: " + searchString);
+
+			}
+		} else {
+			log(LogStatus.ERROR, "Not Able to Click on " + NavigationMenuItems.Research.toString()
+					+ " so cannot click on it for Research an Item", YesNo.Yes);
+			sa.assertTrue(false, "Not Able to Click on " + NavigationMenuItems.Research.toString()
+					+ " so cannot click on it for Research an Item");
+
+		}
+
+		if (resultLoopCount == status && status != 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param projectName
+	 * @param searchString
+	 * @return return true if it found the text you have searched, otherwise false
+	 */
+	public boolean searchAnItemInResearchAndVerifyItsCountInGridNotMoreThan5(String projectName, String searchString) {
+
+		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+
+		int loopCount = 0;
+		int status = 0;
+		try {
+
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, NavigationMenuItems.Research.toString(),
+					action.BOOLEAN, 30)) {
+				log(LogStatus.INFO, "Able to Click on Research Going to click on : "
+						+ NavigationMenuItems.Research.toString() + " for Research an Item", YesNo.No);
+
+				if (CommonLib.sendKeys(driver, npbl.researchSearchBox(20), searchString, "Research Search Box",
+						action.BOOLEAN)) {
+					log(LogStatus.INFO, "Enter Value in Research Search Box: " + searchString, YesNo.No);
+
+					if (click(driver, npbl.researchButton(20), "Research Button", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Research Button", YesNo.No);
+
+						if (noResultMsgInResearch(3) == null) {
+							CommonLib.refresh(driver);
+							CommonLib.ThreadSleep(3000);
+
+							List<String> researchResultsGridNames = researchResultsGridCounts().stream()
+									.map(x -> x.getText().trim()).collect(Collectors.toList());
+
+							for (String gridName : researchResultsGridNames) {
+								String gridNameAfterTrim = gridName.substring(0, gridName.indexOf(" ("));
+
+								int gridCount = recordsUnderGridInResearchResults(gridNameAfterTrim).size();
+
+								if (gridCount <= 5 && gridCount >= 1) {
+									log(LogStatus.INFO,
+											"----Total Count of Grids are less than or equal to 5 and i.e. " + gridCount
+													+ " in section: " + gridNameAfterTrim + " for Record Search "
+													+ searchString + "----",
+											YesNo.No);
+									status++;
+								} else {
+
+									log(LogStatus.ERROR,
+											"----Total Count of Grids are not less than or equal to 5 and i.e. "
+													+ gridCount + " in section: " + gridNameAfterTrim
+													+ " for Record Search " + searchString + "----",
+											YesNo.Yes);
+									sa.assertTrue(false,
+											"----Total Count of Grids are not less than or equal to 5 and i.e. "
+													+ gridCount + " in section: " + gridNameAfterTrim
+													+ " for Record Search " + searchString + "----");
+								}
+
+								loopCount++;
+							}
+
+						} else {
+							log(LogStatus.ERROR, "No Result Found for the Text: " + searchString, YesNo.Yes);
+							sa.assertTrue(false, "No Result Found for the Text: " + searchString);
+						}
+
+					}
+
+					else {
+						log(LogStatus.ERROR, "Not Able to Click on Research Button", YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Click on Research Button");
+					}
+
+				} else {
+
+					log(LogStatus.ERROR, "Not Able to Enter Value in Research Search Box: " + searchString, YesNo.Yes);
+					sa.assertTrue(false, "Not Able to Enter Value in Research Search Box: " + searchString);
+
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on " + NavigationMenuItems.Research.toString()
+						+ " so cannot click on it for Research an Item", YesNo.Yes);
+				sa.assertTrue(false, "Not Able to Click on " + NavigationMenuItems.Research.toString()
+						+ " so cannot click on it for Research an Item");
+
+			}
+
+			if (loopCount == status && status != 0)
+				return true;
+
+			else
+				return false;
+
+		} catch (Exception e) {
+			log(LogStatus.ERROR, "Exception: " + e.getMessage(), YesNo.Yes);
+			return false;
+		}
 	}
 
 }

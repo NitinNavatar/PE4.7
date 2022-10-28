@@ -108,7 +108,10 @@ public class CommonVariables {
 	public static String crmUser1FirstName,crmUser1LastName,crmUser1EmailID,crmUserProfile,crmUserLience;
 	public static String crmUser2FirstName,crmUser2LastName,crmUser2EmailID;
 	public static String crmUser3FirstName,crmUser3LastName,crmUser3EmailID,crmUser3Profile,crmUser3Lience;
-
+	public static String crmUser4FirstName,crmUser4LastName,crmUser4EmailID,crmUser4Profile,crmUser4Lience ;
+	public static String crmUser5FirstName,crmUser5LastName,crmUser5EmailID,crmUser5Profile,crmUser5Lience ;
+	
+	
 	public static String gmailUserName,gmailUserName2,gmailPassword;
 
 	public static String tabCustomObj,tabCustomObjField,tabCustomObjAPIName;
@@ -1046,6 +1049,7 @@ public class CommonVariables {
 		
 		public static String PEFSTG_Tc019_buttonName;
 		public static String PEFSTG_Tc019_tabName;
+		public static String outLookAddress;
 		
 		
 		
@@ -1080,6 +1084,7 @@ public class CommonVariables {
 		
 
 		SDG = "Sortable Data Grids";
+		outLookAddress = "https://outlook.office365.com/";
 
 		AppDeveloperName=ExcelUtils.readDataFromPropertyFile("AppDeveloperName");
 		AppDescription=ExcelUtils.readDataFromPropertyFile("AppDescription");
@@ -1133,6 +1138,19 @@ public class CommonVariables {
 		crmUser3EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User3", excelLabel.User_Email);
 		crmUser3Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User3", excelLabel.User_Profile);
 		crmUser3Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User3", excelLabel.User_License);
+		
+		crmUser4FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User4", excelLabel.User_First_Name);
+		crmUser4LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User4", excelLabel.User_Last_Name);
+		crmUser4EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User4", excelLabel.User_Email);
+		crmUser4Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User4", excelLabel.User_Profile);
+		crmUser4Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User4", excelLabel.User_License);
+		
+		
+		crmUser5FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User5", excelLabel.User_First_Name);
+		crmUser5LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User5", excelLabel.User_Last_Name);
+		crmUser5EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User5", excelLabel.User_Email);
+		crmUser5Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User5", excelLabel.User_Profile);
+		crmUser5Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User5", excelLabel.User_License);
 		
 		//****************************************************************	Toggle Variable **********************************************************//
 
