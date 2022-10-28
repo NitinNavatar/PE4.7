@@ -2429,4 +2429,11 @@ public class HomePage extends BasePageBusinessLayer {
 		return ele;
 	}
 
+	@FindBy(xpath = "//h2[@title='Notifications']/preceding-sibling::button")
+	private WebElement notificationPopUpCloseButton;
+
+	public WebElement notificationPopUpCloseButton(int timeOut) {
+		return isDisplayed(driver, notificationPopUpCloseButton, "Visibility", timeOut, "notificationPopUpCloseButton");
+	}
+
 }

@@ -72,8 +72,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 				index = "[2]";
 			}
 			ThreadSleep(3000);
-			click(driver, FindElement(driver, "//a[text()='Home' or @title='Home']" , "home tsb link in setup",
-					action.BOOLEAN, 10),"", action.BOOLEAN);
+			click(driver, FindElement(driver, "//a[text()='Home' or @title='Home']", "home tsb link in setup",
+					action.BOOLEAN, 10), "", action.BOOLEAN);
 			if (sendKeys(driver, getQucikSearchInSetupPage(10), o, o, action.BOOLEAN)) {
 
 				ThreadSleep(2000);
@@ -2310,24 +2310,31 @@ public class SetupPageBusinessLayer extends SetupPage {
 			if (click(driver, getCustomFieldNextBtn2(30), "next button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.PASS, "Clicked on Next button", YesNo.No);
 				ThreadSleep(1000);
-				if (layOut != null) {
-					if (selectVisibleTextFromDropDown(driver, getApplyOneLayoutToAllProfiles(120), "Page Layout",
-							layOut)) {
-						log(LogStatus.INFO, "Select Existing Page Layout drop down " + layOut, YesNo.No);
-						ThreadSleep(1000);
-					} else {
-						log(LogStatus.ERROR, "Not able to select value from Existing Page Layout drop down " + layOut,
-								YesNo.Yes);
+
+				if (errorMsgRecordType(7) == null) {
+					if (layOut != null) {
+						if (selectVisibleTextFromDropDown(driver, getApplyOneLayoutToAllProfiles(120), "Page Layout",
+								layOut)) {
+							log(LogStatus.INFO, "Select Existing Page Layout drop down " + layOut, YesNo.No);
+							ThreadSleep(1000);
+						} else {
+							log(LogStatus.ERROR,
+									"Not able to select value from Existing Page Layout drop down " + layOut,
+									YesNo.Yes);
+						}
 					}
-				}
-				if (clickUsingJavaScript(driver, getCustomTabSaveBtn(projectName, 10), "save button",
-						action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.ERROR, "Click on save Button ", YesNo.No);
-					ThreadSleep(10000);
-					flag = true;
+					if (clickUsingJavaScript(driver, getCustomTabSaveBtn(projectName, 10), "save button",
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Click on save Button ", YesNo.No);
+						ThreadSleep(10000);
+						flag = true;
+					} else {
+						log(LogStatus.ERROR, "Not Able to Click on save Button ", YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Click on save Button ");
+					}
 				} else {
-					log(LogStatus.ERROR, "Not Able to Click on save Button ", YesNo.Yes);
-					sa.assertTrue(false, "Not Able to Click on save Button ");
+					log(LogStatus.INFO, "Duplicate Record Found: ", YesNo.No);
+					flag = true;
 				}
 			} else {
 				log(LogStatus.FAIL, "Not able to click on next button so cannot record Type", YesNo.Yes);
@@ -4938,38 +4945,37 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return flag;
 	}
 
-	public ArrayList<String> verifyDescriptionOnFirm(ArrayList<String> recordName,ArrayList<String> des)
-	{
-		String xPath="";
+	public ArrayList<String> verifyDescriptionOnFirm(ArrayList<String> recordName, ArrayList<String> des) {
+		String xPath = "";
 		WebElement ele;
-		ArrayList<String> Description=new ArrayList<String>();
-		ArrayList<String> result=new ArrayList<String>();
+		ArrayList<String> Description = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<String>();
 
-		for(int i=0;i<des.size()-1;i++)
-		{
-			xPath="//section[@class='related-list-card']//tbody//span[text()='"+recordName.get(i)+"']/ancestor::td/following-sibling::td[1]//span"; 
-			ele=CommonLib.FindElement(driver, xPath, recordName.get(i)+" description", action.SCROLLANDBOOLEAN, 50);
-			String text=CommonLib.getText(driver, ele, recordName.get(i)+" description : ", action.SCROLLANDBOOLEAN);
+		for (int i = 0; i < des.size() - 1; i++) {
+			xPath = "//section[@class='related-list-card']//tbody//span[text()='" + recordName.get(i)
+					+ "']/ancestor::td/following-sibling::td[1]//span";
+			ele = CommonLib.FindElement(driver, xPath, recordName.get(i) + " description", action.SCROLLANDBOOLEAN, 50);
+			String text = CommonLib.getText(driver, ele, recordName.get(i) + " description : ",
+					action.SCROLLANDBOOLEAN);
 			Description.add(text);
-		}	
+		}
 
-		for(int i=0;i<des.size()-1;i++)
-		{
+		for (int i = 0; i < des.size() - 1; i++) {
 
-			if(Description.get(i).equals(des.get(i)) )
-			{
-				log(LogStatus.INFO, "Description \""+des.get(i)+"\" has been verified", YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Description \""+des.get(i)+ "\"  is not matched with the \""+Description.get(i)+ "\"", YesNo.Yes);
-				result.add("Description \""+des.get(i)+ "\"  is not matched with the \""+Description.get(i)+ "\"");
+			if (Description.get(i).equals(des.get(i))) {
+				log(LogStatus.INFO, "Description \"" + des.get(i) + "\" has been verified", YesNo.No);
+			} else {
+				log(LogStatus.ERROR,
+						"Description \"" + des.get(i) + "\"  is not matched with the \"" + Description.get(i) + "\"",
+						YesNo.Yes);
+				result.add(
+						"Description \"" + des.get(i) + "\"  is not matched with the \"" + Description.get(i) + "\"");
 			}
 		}
 
 		return result;
 	}
-	
+
 	public boolean VerifyDefaultRecordTypeForObject(String profileName, String recordTypeName) {
 		boolean flag = false;
 		String xPath = "";
@@ -5335,223 +5341,240 @@ public class SetupPageBusinessLayer extends SetupPage {
 	 * @return empty list if all field matched in page layout
 	 */
 	/**
-     * @author Sourabh Kumar
-     * @param layoutName
-     * @param timeout
-     * @return empty list if all field matched in page layout
-     */
-    public List<String> verifyFieldsAvailabilityAndNonAvailabilityOnPageLayout(String sectionsInPageLayout,
-            String PageLayouts, String fieldsAlreadyAddedLayoutWise, String fieldsNotAlreadyAddedLayoutWise,
-            int timeOut) {
-        List<String> result = new ArrayList<>();
+	 * @author Sourabh Kumar
+	 * @param layoutName
+	 * @param timeout
+	 * @return empty list if all field matched in page layout
+	 */
+	public List<String> verifyFieldsAvailabilityAndNonAvailabilityOnPageLayout(String sectionsInPageLayout,
+			String PageLayouts, String fieldsAlreadyAddedLayoutWise, String fieldsNotAlreadyAddedLayoutWise,
+			int timeOut) {
+		List<String> result = new ArrayList<>();
 
-        String layoutName = "";
-        String fieldName = "";
-        String[] sectionsInPageLayoutList = sectionsInPageLayout.split("<break>");
-        String[] PageLayoutsList = PageLayouts.split("<break>");
-        String[] fieldsAlreadyAddedLayoutWiseList = fieldsAlreadyAddedLayoutWise.split("<break>");
-        String[] fieldsNotAlreadyAddedLayoutWiseList = fieldsNotAlreadyAddedLayoutWise.split("<break>");
+		String layoutName = "";
+		String fieldName = "";
+		String[] sectionsInPageLayoutList = sectionsInPageLayout.split("<break>");
+		String[] PageLayoutsList = PageLayouts.split("<break>");
+		String[] fieldsAlreadyAddedLayoutWiseList = fieldsAlreadyAddedLayoutWise.split("<break>");
+		String[] fieldsNotAlreadyAddedLayoutWiseList = fieldsNotAlreadyAddedLayoutWise.split("<break>");
 
-        String[] fieldAdded;
-        String[] fieldNotAdded;
+		String[] fieldAdded;
+		String[] fieldNotAdded;
 
-        if (sectionsInPageLayoutList.length == PageLayoutsList.length
-                && PageLayoutsList.length == fieldsAlreadyAddedLayoutWiseList.length
-                && fieldsAlreadyAddedLayoutWiseList.length == fieldsNotAlreadyAddedLayoutWiseList.length) {
-            log(LogStatus.INFO, "Expected Data Size Matched: " + sectionsInPageLayoutList.length
-                    + " So, Going for Further Process of Validations", YesNo.No);
+		if (sectionsInPageLayoutList.length == PageLayoutsList.length
+				&& PageLayoutsList.length == fieldsAlreadyAddedLayoutWiseList.length
+				&& fieldsAlreadyAddedLayoutWiseList.length == fieldsNotAlreadyAddedLayoutWiseList.length) {
+			log(LogStatus.INFO, "Expected Data Size Matched: " + sectionsInPageLayoutList.length
+					+ " So, Going for Further Process of Validations", YesNo.No);
 
-            for (int a = 0; a < PageLayoutsList.length; a++) {
+			for (int a = 0; a < PageLayoutsList.length; a++) {
 
-                layoutName = PageLayoutsList[a];
-                fieldAdded = fieldsAlreadyAddedLayoutWiseList[a].split("<fieldAdded>");
-                fieldNotAdded = fieldsNotAlreadyAddedLayoutWiseList[a].split("<fieldNotAdded>");
+				layoutName = PageLayoutsList[a];
+				fieldAdded = fieldsAlreadyAddedLayoutWiseList[a].split("<fieldAdded>");
+				fieldNotAdded = fieldsNotAlreadyAddedLayoutWiseList[a].split("<fieldNotAdded>");
 
-                if (openAlreadyCreatedPageLayout(layoutName, ObjectFeatureName.pageLayouts, 60)) {
-                    log(LogStatus.PASS, "Successfully Open page layout :" + layoutName, YesNo.No);
+				if (openAlreadyCreatedPageLayout(layoutName, ObjectFeatureName.pageLayouts, 60)) {
+					log(LogStatus.PASS, "Successfully Open page layout :" + layoutName, YesNo.No);
 
-                    ThreadSleep(5000);
-                    switchToFrame(driver, 60, getSetUpPageIframe(120));
-                    CommonLib.ThreadSleep(5000);
-                    if (clickUsingJavaScript(driver, sectionInPageLayoutButton(sectionsInPageLayoutList[a], 20),
-                            "Section in Page Layout: " + sectionsInPageLayoutList[a], action.SCROLLANDBOOLEAN)) {
-                        log(LogStatus.INFO, "Clicked on section: " + sectionsInPageLayoutList[a]
-                                + " in the page layout :" + layoutName, YesNo.No);
-                        CommonLib.ThreadSleep(3000);
+					ThreadSleep(5000);
+					switchToFrame(driver, 60, getSetUpPageIframe(120));
+					CommonLib.ThreadSleep(5000);
+					if (clickUsingJavaScript(driver, sectionInPageLayoutButton(sectionsInPageLayoutList[a], 20),
+							"Section in Page Layout: " + sectionsInPageLayoutList[a], action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on section: " + sectionsInPageLayoutList[a]
+								+ " in the page layout :" + layoutName, YesNo.No);
+						CommonLib.ThreadSleep(3000);
 
-                        if (fieldAdded.length != 0 && !fieldAdded[0].equals("")) {
-                            for (int i = 0; i < fieldAdded.length; i++) {
+						if (fieldAdded.length != 0 && !fieldAdded[0].equals("")) {
+							for (int i = 0; i < fieldAdded.length; i++) {
 
-                                fieldName = fieldAdded[i];
+								fieldName = fieldAdded[i];
 
-                                if (sendKeysAndPressEnter(driver, getQuickFindInPageLayout_Lighting(timeOut), fieldName,
-                                        fieldName + " field", action.BOOLEAN)) {
-                                    ThreadSleep(1000);
-                                    List<WebElement> lst = getFieldsInPageLayoutList();
-                                    List<WebElement> lst2 = FindElements(driver,
-                                            "//div[@id='fieldTrough']//div[contains(@class,'item')]/span", "");
-                                    int size = lst.size();
-                                    for (int b = 0; b < size; b++) {
-                                        String at = lst.get(b).getAttribute("class");
-                                        String at2 = lst2.get(b).getText().replace("...", "");
+								if (sendKeysAndPressEnter(driver, getQuickFindInPageLayout_Lighting(timeOut), fieldName,
+										fieldName + " field", action.BOOLEAN)) {
+									ThreadSleep(1000);
+									List<WebElement> lst = getFieldsInPageLayoutList();
+									List<WebElement> lst2 = FindElements(driver,
+											"//div[@id='fieldTrough']//div[contains(@class,'item')]/span", "");
+									int size = lst.size();
+									for (int b = 0; b < size; b++) {
+										String at = lst.get(b).getAttribute("class");
+										String at2 = lst2.get(b).getText().replace("...", "");
 
-                                        if (fieldName.contains(at2)) {
+										if (fieldName.contains(at2)) {
 
-                                            log(LogStatus.PASS, fieldName
-                                                    + " field successfully found in the page layout :" + layoutName,
-                                                    YesNo.No);
+											log(LogStatus.PASS, fieldName
+													+ " field successfully found in the page layout :" + layoutName,
+													YesNo.No);
 
-                                            if (!at.contains("item unused")) {
+											if (!at.contains("item unused")) {
 
-                                                log(LogStatus.PASS, fieldName
-                                                        + " field is appearing in "+sectionsInPageLayoutList[a]+" on the page layout of: " + layoutName,
-                                                        YesNo.No);
+												log(LogStatus.PASS,
+														fieldName + " field is appearing in "
+																+ sectionsInPageLayoutList[a]
+																+ " on the page layout of: " + layoutName,
+														YesNo.No);
 
-                                            } else {
-                                                log(LogStatus.FAIL, fieldName + " field is not appearing in "+sectionsInPageLayoutList[a]+" on the page layout of: " + layoutName, YesNo.No);
-                                                result.add(fieldName + " field is not appearing in "+sectionsInPageLayoutList[a]+" on the page layout of: " + layoutName);
+											} else {
+												log(LogStatus.FAIL,
+														fieldName + " field is not appearing in "
+																+ sectionsInPageLayoutList[a]
+																+ " on the page layout of: " + layoutName,
+														YesNo.No);
+												result.add(fieldName + " field is not appearing in "
+														+ sectionsInPageLayoutList[a] + " on the page layout of: "
+														+ layoutName);
 
-                                            }
-                                            break;
+											}
+											break;
 
-                                        } else {
-                                            if (b == size - 1) {
+										} else {
+											if (b == size - 1) {
 
-                                                log(LogStatus.FAIL, fieldName + " field  not found in the page layout :"
-                                                        + layoutName, YesNo.No);
-                                                result.add(fieldName + " field not found in the page layout :"
-                                                        + layoutName);
+												log(LogStatus.FAIL, fieldName + " field  not found in the page layout :"
+														+ layoutName, YesNo.No);
+												result.add(fieldName + " field not found in the page layout :"
+														+ layoutName);
 
-                                            }
+											}
 
-                                        }
+										}
 
-                                    }
+									}
 
-                                } else {
-                                    log(LogStatus.FAIL,
-                                            "Not able to search field: " + fieldName + " in quick find input",
-                                            YesNo.No);
-                                    result.add("Not able to search field: " + fieldName + " in quick find input");
+								} else {
+									log(LogStatus.FAIL,
+											"Not able to search field: " + fieldName + " in quick find input",
+											YesNo.No);
+									result.add("Not able to search field: " + fieldName + " in quick find input");
 
-                                }
+								}
 
-                            }
-                        } else {
-                            log(LogStatus.ERROR,
-                                    "No data present in case of Field Already Added for Layout: " + layoutName,
-                                    YesNo.No);
+							}
+						} else {
+							log(LogStatus.ERROR,
+									"No data present in case of Field Already Added for Layout: " + layoutName,
+									YesNo.No);
 
-                        }
+						}
 
-                        if (fieldNotAdded.length != 0 && !fieldNotAdded[0].equals("")) {
-                            for (int i = 0; i < fieldNotAdded.length; i++) {
+						if (fieldNotAdded.length != 0 && !fieldNotAdded[0].equals("")) {
+							for (int i = 0; i < fieldNotAdded.length; i++) {
 
-                                fieldName = fieldNotAdded[i];
+								fieldName = fieldNotAdded[i];
 
-                                if (sendKeysAndPressEnter(driver, getQuickFindInPageLayout_Lighting(timeOut), fieldName,
-                                        fieldName + " field", action.BOOLEAN)) {
-                                    ThreadSleep(1000);
-                                    List<WebElement> lst = getFieldsInPageLayoutList();
-                                    List<WebElement> lst2 = FindElements(driver,
-                                            "//div[@id='fieldTrough']//div[contains(@class,'item')]/span", "");
-                                    int size = lst.size();
-                                    for (int b = 0; b < size; b++) {
-                                        String at = lst.get(b).getAttribute("class");
-                                        String at2 = lst2.get(b).getText().replace("...", "");
+								if (sendKeysAndPressEnter(driver, getQuickFindInPageLayout_Lighting(timeOut), fieldName,
+										fieldName + " field", action.BOOLEAN)) {
+									ThreadSleep(1000);
+									List<WebElement> lst = getFieldsInPageLayoutList();
+									List<WebElement> lst2 = FindElements(driver,
+											"//div[@id='fieldTrough']//div[contains(@class,'item')]/span", "");
+									int size = lst.size();
+									for (int b = 0; b < size; b++) {
+										String at = lst.get(b).getAttribute("class");
+										String at2 = lst2.get(b).getText().replace("...", "");
 
-                                        if (fieldName.contains(at2)) {
+										if (fieldName.contains(at2)) {
 
-                                            log(LogStatus.PASS, fieldName
-                                                    + " field successfully found in the page layout :" + layoutName,
-                                                    YesNo.No);
+											log(LogStatus.PASS, fieldName
+													+ " field successfully found in the page layout :" + layoutName,
+													YesNo.No);
 
-                                            if (!at.contains("item unused")) {
+											if (!at.contains("item unused")) {
 
-                                                log(LogStatus.FAIL, fieldName + " field is not appearing in "+sectionsInPageLayoutList[a]+" on the page layout of: " + layoutName,
-                                                        YesNo.No);
-                                                result.add(fieldName + " field is not appearing in "+sectionsInPageLayoutList[a]+" on the page layout of: " + layoutName);
+												log(LogStatus.FAIL,
+														fieldName + " field is not appearing in "
+																+ sectionsInPageLayoutList[a]
+																+ " on the page layout of: " + layoutName,
+														YesNo.No);
+												result.add(fieldName + " field is not appearing in "
+														+ sectionsInPageLayoutList[a] + " on the page layout of: "
+														+ layoutName);
 
-                                            } else {
-                                                log(LogStatus.PASS,fieldName + " field is appearing in "+sectionsInPageLayoutList[a]+" on the page layout of: " + layoutName, YesNo.No);
+											} else {
+												log(LogStatus.PASS,
+														fieldName + " field is appearing in "
+																+ sectionsInPageLayoutList[a]
+																+ " on the page layout of: " + layoutName,
+														YesNo.No);
 
-                                            }
-                                            break;
+											}
+											break;
 
-                                        } else {
-                                            if (b == size - 1) {
+										} else {
+											if (b == size - 1) {
 
-                                                log(LogStatus.FAIL, fieldName + " field  not found in the page layout :"
-                                                        + layoutName, YesNo.No);
-                                                result.add(fieldName + " field not found in the page layout :"
-                                                        + layoutName);
+												log(LogStatus.FAIL, fieldName + " field  not found in the page layout :"
+														+ layoutName, YesNo.No);
+												result.add(fieldName + " field not found in the page layout :"
+														+ layoutName);
 
-                                            }
+											}
 
-                                        }
+										}
 
-                                    }
+									}
 
-                                } else {
-                                    log(LogStatus.FAIL,
-                                            "Not able to search field: " + fieldName + " in quick find input",
-                                            YesNo.No);
-                                    result.add("Not able to search field: " + fieldName + " in quick find input");
+								} else {
+									log(LogStatus.FAIL,
+											"Not able to search field: " + fieldName + " in quick find input",
+											YesNo.No);
+									result.add("Not able to search field: " + fieldName + " in quick find input");
 
-                                }
+								}
 
-                            }
-                        } else {
-                            log(LogStatus.ERROR,
-                                    "No data present in case of Field Not Already Added for Layout: " + layoutName,
-                                    YesNo.No);
+							}
+						} else {
+							log(LogStatus.ERROR,
+									"No data present in case of Field Not Already Added for Layout: " + layoutName,
+									YesNo.No);
 
-                        }
+						}
 
-                        if (fieldNotAdded.length == 1 && fieldNotAdded[0].equals("") && fieldAdded.length == 1
-                                && fieldAdded[0].equals("")) {
-                            log(LogStatus.ERROR,
-                                    "No data present in Both case of Field Not Already Added & Field Already Added for Layout: "
-                                            + layoutName,
-                                    YesNo.No);
-                            result.add(
-                                    "No data present in Both case of Field Not Already Added & Field Already Added for Layout: "
-                                            + layoutName);
-                        }
+						if (fieldNotAdded.length == 1 && fieldNotAdded[0].equals("") && fieldAdded.length == 1
+								&& fieldAdded[0].equals("")) {
+							log(LogStatus.ERROR,
+									"No data present in Both case of Field Not Already Added & Field Already Added for Layout: "
+											+ layoutName,
+									YesNo.No);
+							result.add(
+									"No data present in Both case of Field Not Already Added & Field Already Added for Layout: "
+											+ layoutName);
+						}
 
-                    }
+					}
 
-                    else {
-                        log(LogStatus.ERROR, "Not Able  to Click on section: " + sectionsInPageLayoutList[a]
-                                + " in the page layout :" + layoutName, YesNo.No);
-                        result.add("Not Able  to Click on section: " + sectionsInPageLayoutList[a]
-                                + " in the page layout :" + layoutName);
+					else {
+						log(LogStatus.ERROR, "Not Able  to Click on section: " + sectionsInPageLayoutList[a]
+								+ " in the page layout :" + layoutName, YesNo.No);
+						result.add("Not Able  to Click on section: " + sectionsInPageLayoutList[a]
+								+ " in the page layout :" + layoutName);
 
-                    }
+					}
 
-                } else {
-                    log(LogStatus.FAIL, "Not able to Open page layout :" + layoutName, YesNo.No);
-                    result.add("Not able to Open page layout :" + layoutName);
+				} else {
+					log(LogStatus.FAIL, "Not able to Open page layout :" + layoutName, YesNo.No);
+					result.add("Not able to Open page layout :" + layoutName);
 
-                }
-                switchToDefaultContent(driver);
+				}
+				switchToDefaultContent(driver);
 
-            }
-        } else {
+			}
+		} else {
 
-            log(LogStatus.INFO,
-                    "Expected Data Size Not Matched, sectionsInPageLayoutList: " + sectionsInPageLayoutList.length
-                            + " , PageLayouts: " + PageLayouts.length() + ", FieldsAlreadyAddedLayoutWise : "
-                            + fieldsAlreadyAddedLayoutWise.length() + ", fieldsNotAlreadyAddedLayoutWise : "
-                            + fieldsNotAlreadyAddedLayoutWise.length()
-                            + " So, Not Going for Further Process of Validations",
-                    YesNo.No);
+			log(LogStatus.INFO,
+					"Expected Data Size Not Matched, sectionsInPageLayoutList: " + sectionsInPageLayoutList.length
+							+ " , PageLayouts: " + PageLayouts.length() + ", FieldsAlreadyAddedLayoutWise : "
+							+ fieldsAlreadyAddedLayoutWise.length() + ", fieldsNotAlreadyAddedLayoutWise : "
+							+ fieldsNotAlreadyAddedLayoutWise.length()
+							+ " So, Not Going for Further Process of Validations",
+					YesNo.No);
 
-            result.add("Expected Data Size Not Matched, sectionsInPageLayoutList: " + sectionsInPageLayoutList.length
-                    + " , PageLayouts: " + PageLayouts.length() + ", FieldsAlreadyAddedLayoutWise : "
-                    + fieldsAlreadyAddedLayoutWise.length() + ", fieldsNotAlreadyAddedLayoutWise : "
-                    + fieldsNotAlreadyAddedLayoutWise.length() + " So, Not Going for Further Process of Validations");
-        }
-        return result;
-    }
+			result.add("Expected Data Size Not Matched, sectionsInPageLayoutList: " + sectionsInPageLayoutList.length
+					+ " , PageLayouts: " + PageLayouts.length() + ", FieldsAlreadyAddedLayoutWise : "
+					+ fieldsAlreadyAddedLayoutWise.length() + ", fieldsNotAlreadyAddedLayoutWise : "
+					+ fieldsNotAlreadyAddedLayoutWise.length() + " So, Not Going for Further Process of Validations");
+		}
+		return result;
+	}
 }

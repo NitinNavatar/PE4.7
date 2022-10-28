@@ -689,6 +689,13 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, addUtilityItem, "Visibility", timeOut, "Add Utility Item");
 	}
 
+	@FindBy(xpath = "//*[@Title='Research']")
+	private WebElement researchItem;
+
+	public WebElement getResearchItem(int timeOut) {
+		return isDisplayed(driver, researchItem, "Visibility", timeOut, "Research Item");
+	}
+	
 	@FindBy(xpath = "//div[@class='paletteSearch']//input")
 	private WebElement searchIconOnUtilityItem;
 
@@ -1017,5 +1024,15 @@ public class SetupPage extends BasePageBusinessLayer {
 			return FindElement(driver, xpath, "sectionInPageLayout", action.SCROLLANDBOOLEAN, timeOut);
 		}
 	}
+	
+	
+	@FindBy(xpath = "//div[@class='errorMsg']")
+	private WebElement errorMsgRecordType;
+
+	public WebElement errorMsgRecordType(int timeOut) {
+		return isDisplayed(driver, errorMsgRecordType, "Visibility", timeOut, "errorMsgRecordType");
+	}
+	
+	
 
 }

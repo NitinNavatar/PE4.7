@@ -141,6 +141,10 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
                 appLog.info("Successfully Switched to Lighting");
                 if(getAppNameXpathInLightning(appName, 5)!=null) {
                     appLog.info(appName+" app is open successfully in lightning ");
+                    if(notificationPopup(10) != null)
+                    {
+                    	 click(driver, notificationPopup(10), "notificationPopup", action.BOOLEAN);
+                    }
                     return true;
                 }else {
                     if(click(driver, getAppLuncherXpath(30), "app luncher xpath", action.SCROLLANDBOOLEAN)) {
