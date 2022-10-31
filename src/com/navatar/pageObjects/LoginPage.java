@@ -364,4 +364,13 @@ public class LoginPage extends BasePageBusinessLayer{
 	
 	}
 	
+	
+	@FindBy(xpath = "//button[@title='Close']/lightning-icon/parent::button")
+	private WebElement notificationPopup;
+
+	public WebElement notificationPopup(int timeOut) {
+		return isDisplayed(driver, notificationPopup, "Visibility", timeOut, "notificationPopup");
+	}
+	
+	
 }

@@ -1613,10 +1613,16 @@ public class HomePage extends BasePageBusinessLayer {
 				+ field.replaceAll("_", " ") + "')]";
 
 		WebElement ele = FindElement(driver, xpath, "edit button for " + field, action.SCROLLANDBOOLEAN, timeOut);
+		mouseOverOperation(driver, ele);
+		ThreadSleep(2000);
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("return arguments[0].setAttribute('Styles','display: inline-block;')", ele);
 		ThreadSleep(2000);
+		ele = FindElement(driver, "//*[text()='" + dataName + "']/ancestor::tr//td[contains(@data-label,'"
+				+ field.replaceAll("_", " ") + "')]//button", "edit button for " + field, action.SCROLLANDBOOLEAN, timeOut);
+		ThreadSleep(2000);
 		doubleClickUsingAction(driver, ele);
+		
 		return true;
 	}
 
@@ -2421,6 +2427,13 @@ public class HomePage extends BasePageBusinessLayer {
 				timeOut);
 
 		return ele;
+	}
+
+	@FindBy(xpath = "//h2[@title='Notifications']/preceding-sibling::button")
+	private WebElement notificationPopUpCloseButton;
+
+	public WebElement notificationPopUpCloseButton(int timeOut) {
+		return isDisplayed(driver, notificationPopUpCloseButton, "Visibility", timeOut, "notificationPopUpCloseButton");
 	}
 
 }

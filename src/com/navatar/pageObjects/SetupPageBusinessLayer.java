@@ -75,8 +75,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 				index = "[2]";
 			}
 			ThreadSleep(3000);
-			click(driver, FindElement(driver, "//a[text()='Home' or @title='Home']" , "home tsb link in setup",
-					action.BOOLEAN, 10),"", action.BOOLEAN);
+			click(driver, FindElement(driver, "//a[text()='Home' or @title='Home']", "home tsb link in setup",
+					action.BOOLEAN, 10), "", action.BOOLEAN);
 			if (sendKeys(driver, getQucikSearchInSetupPage(10), o, o, action.BOOLEAN)) {
 
 				ThreadSleep(2000);
@@ -2313,24 +2313,31 @@ public class SetupPageBusinessLayer extends SetupPage {
 			if (click(driver, getCustomFieldNextBtn2(30), "next button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.PASS, "Clicked on Next button", YesNo.No);
 				ThreadSleep(1000);
-				if (layOut != null) {
-					if (selectVisibleTextFromDropDown(driver, getApplyOneLayoutToAllProfiles(120), "Page Layout",
-							layOut)) {
-						log(LogStatus.INFO, "Select Existing Page Layout drop down " + layOut, YesNo.No);
-						ThreadSleep(1000);
-					} else {
-						log(LogStatus.ERROR, "Not able to select value from Existing Page Layout drop down " + layOut,
-								YesNo.Yes);
+
+				if (errorMsgRecordType(7) == null) {
+					if (layOut != null) {
+						if (selectVisibleTextFromDropDown(driver, getApplyOneLayoutToAllProfiles(120), "Page Layout",
+								layOut)) {
+							log(LogStatus.INFO, "Select Existing Page Layout drop down " + layOut, YesNo.No);
+							ThreadSleep(1000);
+						} else {
+							log(LogStatus.ERROR,
+									"Not able to select value from Existing Page Layout drop down " + layOut,
+									YesNo.Yes);
+						}
 					}
-				}
-				if (clickUsingJavaScript(driver, getCustomTabSaveBtn(projectName, 10), "save button",
-						action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.ERROR, "Click on save Button ", YesNo.No);
-					ThreadSleep(10000);
-					flag = true;
+					if (clickUsingJavaScript(driver, getCustomTabSaveBtn(projectName, 10), "save button",
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Click on save Button ", YesNo.No);
+						ThreadSleep(10000);
+						flag = true;
+					} else {
+						log(LogStatus.ERROR, "Not Able to Click on save Button ", YesNo.Yes);
+						sa.assertTrue(false, "Not Able to Click on save Button ");
+					}
 				} else {
-					log(LogStatus.ERROR, "Not Able to Click on save Button ", YesNo.Yes);
-					sa.assertTrue(false, "Not Able to Click on save Button ");
+					log(LogStatus.INFO, "Duplicate Record Found: ", YesNo.No);
+					flag = true;
 				}
 			} else {
 				log(LogStatus.FAIL, "Not able to click on next button so cannot record Type", YesNo.Yes);
@@ -4941,32 +4948,31 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return flag;
 	}
 
-	public ArrayList<String> verifyDescriptionOnFirm(ArrayList<String> recordName,ArrayList<String> des)
-	{
-		String xPath="";
+	public ArrayList<String> verifyDescriptionOnFirm(ArrayList<String> recordName, ArrayList<String> des) {
+		String xPath = "";
 		WebElement ele;
-		ArrayList<String> Description=new ArrayList<String>();
-		ArrayList<String> result=new ArrayList<String>();
+		ArrayList<String> Description = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<String>();
 
-		for(int i=0;i<des.size()-1;i++)
-		{
-			xPath="//section[@class='related-list-card']//tbody//span[text()='"+recordName.get(i)+"']/ancestor::td/following-sibling::td[1]//span"; 
-			ele=CommonLib.FindElement(driver, xPath, recordName.get(i)+" description", action.SCROLLANDBOOLEAN, 50);
-			String text=CommonLib.getText(driver, ele, recordName.get(i)+" description : ", action.SCROLLANDBOOLEAN);
+		for (int i = 0; i < des.size() - 1; i++) {
+			xPath = "//section[@class='related-list-card']//tbody//span[text()='" + recordName.get(i)
+					+ "']/ancestor::td/following-sibling::td[1]//span";
+			ele = CommonLib.FindElement(driver, xPath, recordName.get(i) + " description", action.SCROLLANDBOOLEAN, 50);
+			String text = CommonLib.getText(driver, ele, recordName.get(i) + " description : ",
+					action.SCROLLANDBOOLEAN);
 			Description.add(text);
-		}	
+		}
 
-		for(int i=0;i<des.size()-1;i++)
-		{
+		for (int i = 0; i < des.size() - 1; i++) {
 
-			if(Description.get(i).equals(des.get(i)) )
-			{
-				log(LogStatus.INFO, "Description \""+des.get(i)+"\" has been verified", YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Description \""+des.get(i)+ "\"  is not matched with the \""+Description.get(i)+ "\"", YesNo.Yes);
-				result.add("Description \""+des.get(i)+ "\"  is not matched with the \""+Description.get(i)+ "\"");
+			if (Description.get(i).equals(des.get(i))) {
+				log(LogStatus.INFO, "Description \"" + des.get(i) + "\" has been verified", YesNo.No);
+			} else {
+				log(LogStatus.ERROR,
+						"Description \"" + des.get(i) + "\"  is not matched with the \"" + Description.get(i) + "\"",
+						YesNo.Yes);
+				result.add(
+						"Description \"" + des.get(i) + "\"  is not matched with the \"" + Description.get(i) + "\"");
 			}
 		}
 
@@ -5337,12 +5343,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 	 * @param timeout
 	 * @return empty list if all field matched in page layout
 	 */
-	/**
-	 * @author Sourabh Kumar
-	 * @param layoutName
-	 * @param timeout
-	 * @return empty list if all field matched in page layout
-	 */
+
 	public List<String> verifyFieldsAvailabilityAndNonAvailabilityOnPageLayout(String sectionsInPageLayout,
 			String PageLayouts, String fieldsAlreadyAddedLayoutWise, String fieldsNotAlreadyAddedLayoutWise,
 			int timeOut) {
@@ -5406,13 +5407,21 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 											if (!at.contains("item unused")) {
 
-												log(LogStatus.PASS, fieldName
-														+ " field is appearing in "+sectionsInPageLayoutList[a]+" on the page layout of: " + layoutName,
+												log(LogStatus.PASS,
+														fieldName + " field is appearing in "
+																+ sectionsInPageLayoutList[a]
+																+ " on the page layout of: " + layoutName,
 														YesNo.No);
 
 											} else {
-												log(LogStatus.FAIL, fieldName + " field is not appearing in "+sectionsInPageLayoutList[a]+" on the page layout of: " + layoutName, YesNo.No);
-												result.add(fieldName + " field is not appearing in "+sectionsInPageLayoutList[a]+" on the page layout of: " + layoutName);
+												log(LogStatus.FAIL,
+														fieldName + " field is not appearing in "
+																+ sectionsInPageLayoutList[a]
+																+ " on the page layout of: " + layoutName,
+														YesNo.No);
+												result.add(fieldName + " field is not appearing in "
+														+ sectionsInPageLayoutList[a] + " on the page layout of: "
+														+ layoutName);
 
 											}
 											break;
@@ -5471,12 +5480,21 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 											if (!at.contains("item unused")) {
 
-												log(LogStatus.FAIL, fieldName + " field is not appearing in "+sectionsInPageLayoutList[a]+" on the page layout of: " + layoutName,
+												log(LogStatus.FAIL,
+														fieldName + " field is not appearing in "
+																+ sectionsInPageLayoutList[a]
+																+ " on the page layout of: " + layoutName,
 														YesNo.No);
-												result.add(fieldName + " field is not appearing in "+sectionsInPageLayoutList[a]+" on the page layout of: " + layoutName);
+												result.add(fieldName + " field is not appearing in "
+														+ sectionsInPageLayoutList[a] + " on the page layout of: "
+														+ layoutName);
 
 											} else {
-												log(LogStatus.PASS,fieldName + " field is appearing in "+sectionsInPageLayoutList[a]+" on the page layout of: " + layoutName, YesNo.No);
+												log(LogStatus.PASS,
+														fieldName + " field is appearing in "
+																+ sectionsInPageLayoutList[a]
+																+ " on the page layout of: " + layoutName,
+														YesNo.No);
 
 											}
 											break;
@@ -5516,7 +5534,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 							log(LogStatus.ERROR,
 									"No data present in Both case of Field Not Already Added & Field Already Added for Layout: "
 											+ layoutName,
-											YesNo.No);
+									YesNo.No);
 							result.add(
 									"No data present in Both case of Field Not Already Added & Field Already Added for Layout: "
 											+ layoutName);
@@ -5544,10 +5562,10 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 			log(LogStatus.INFO,
 					"Expected Data Size Not Matched, sectionsInPageLayoutList: " + sectionsInPageLayoutList.length
-					+ " , PageLayouts: " + PageLayouts.length() + ", FieldsAlreadyAddedLayoutWise : "
-					+ fieldsAlreadyAddedLayoutWise.length() + ", fieldsNotAlreadyAddedLayoutWise : "
-					+ fieldsNotAlreadyAddedLayoutWise.length()
-					+ " So, Not Going for Further Process of Validations",
+							+ " , PageLayouts: " + PageLayouts.length() + ", FieldsAlreadyAddedLayoutWise : "
+							+ fieldsAlreadyAddedLayoutWise.length() + ", fieldsNotAlreadyAddedLayoutWise : "
+							+ fieldsNotAlreadyAddedLayoutWise.length()
+							+ " So, Not Going for Further Process of Validations",
 					YesNo.No);
 
 			result.add("Expected Data Size Not Matched, sectionsInPageLayoutList: " + sectionsInPageLayoutList.length
@@ -5557,8 +5575,6 @@ public class SetupPageBusinessLayer extends SetupPage {
 		}
 		return result;
 	}
-
-
 
 	public boolean removeRecordTypeOfObject(String profileName, RecordType recordType) {
 		boolean flag = false;
@@ -5909,4 +5925,5 @@ public class SetupPageBusinessLayer extends SetupPage {
 		}
 		return result;
 	}
+
 }
