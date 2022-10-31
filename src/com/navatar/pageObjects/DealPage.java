@@ -149,7 +149,7 @@ public class DealPage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "//div[@title='New']")
+	@FindBy(xpath = "//div[@title='New']/parent::a")
 	private WebElement NewButton;
 
 	public WebElement getDealNewButton(int timeOut) {

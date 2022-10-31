@@ -103,8 +103,7 @@ public class AcuitySmoke extends BaseLib {
 
 		}
 		lp.CRMlogout();
-		closeBrowser();
-		// driver.switchTo().window(parentWindow);
+		closeBrowser(); // driver.switchTo().window(parentWindow);
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
 		String passwordResetLink = null;
@@ -1136,22 +1135,23 @@ public class AcuitySmoke extends BaseLib {
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
-		String[] institutionName = "DummyCom<Break>DummyInsti<Break>DummyInt".split("<Break>", -1);
-		String[] recordType = "Company<Break>Institution<Break>Intermediary".split("<Break>", -1);
 
-		String[] contactFirstNames = "DummyAshish<Break>DummyAshish".split("<Break>", -1);
-		String[] contactLastNames = "TC<Break>TC1".split("<Break>", -1);
-		String[] contactEmailIds = "dtc@atc.in<Break>dtc1@atc.in".split("<Break>", -1);
-		String[] otherContactLabels = "Contact Type<Break>Contact Type".split("<Break>", -1);
-		String[] otherContactValues = "Banker<Break>Contact".split("<Break>", -1);
-		String[] contactInstitutionsName = "DummyCom<Break>DummyInt".split("<Break>", -1);
+		String[] institutionName = AS_FirmLegalName7.split("<Break>", -1);
+		String[] recordType = AS_FirmRecordType7.split("<Break>", -1);
 
-		String[] dealRecordType = "".split("<Break>", -1);
-		String[] dealName = "SmokeDummy deal".split("<Break>", -1);
-		String[] dealCompany = "DummyCom".split("<Break>", -1);
-		String[] dealStage = "Parked".split("<Break>", -1);
-		String otherLabels = "Source Firm<Break>Source Contact<Break>Date Received";
-		String otherLabelValues = "DummyInt<Break>DummyAshish TC<Break>-15";
+		String[] contactFirstNames = AS_ContactFirstName5.split("<Break>", -1);
+		String[] contactLastNames = AS_ContactLastName5.split("<Break>", -1);
+		String[] contactEmailIds = AS_ContactEmail5.split("<Break>", -1);
+		String[] otherContactLabels = AS_ContactOtherLabelNames5.split("<Break>", -1);
+		String[] otherContactValues = AS_ContactOtherLabelValues5.split("<Break>", -1);
+		String[] contactInstitutionsName = AS_ContactLegalName5.split("<Break>", -1);
+
+		String[] dealRecordType = AS_DealRecordType2.split("<Break>", -1);
+		String[] dealName = AS_DealName2.split("<Break>", -1);
+		String[] dealCompany = AS_DealCompany2.split("<Break>", -1);
+		String[] dealStage = AS_DealStage2.split("<Break>", -1);
+		String otherLabels = AS_DealOtherLabelNames2;
+		String otherLabelValues = AS_DealOtherLabelValues2;
 
 		int firmLoopCount = 0;
 
@@ -1220,6 +1220,9 @@ public class AcuitySmoke extends BaseLib {
 						otherLabelValues)) {
 					log(LogStatus.INFO, dealName[i] + " deal has been created", YesNo.No);
 
+					ExcelUtils.writeData(AcuityDataSheetFilePath, otherLabelValues.split("<Break>", -1)[2], "Deal",
+							excelLabel.Variable_Name, "AS_Deal2", excelLabel.Date);
+
 				} else {
 					log(LogStatus.ERROR, dealName[i] + " deal is not created", YesNo.No);
 					sa.assertTrue(false, dealName[i] + " deal is not created");
@@ -1246,11 +1249,11 @@ public class AcuitySmoke extends BaseLib {
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 
-		String firmName = "DummyCom";
+		String firmName = AS_FirmLegalName8;
 		String subTabName = "Acuity";
-		String dealName = "SmokeDummy deal";
+		String dealName = AS_DealName2;
 
-		String contactName = "DummyAshish TC";
+		String contactName = AS_ContactName6;
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -1430,15 +1433,15 @@ public class AcuitySmoke extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		DealTeamPageBusinessLayer DTP = new DealTeamPageBusinessLayer(driver);
 
-		String firmName = "DummyInt";
+		String firmName = AS_FirmLegalName9;
 		String subTabName = "Acuity";
-		String dealName = "SmokeDummy deal";
+		String dealName = AS_DealName2;
 
-		String contactName = "DummyAshish TC1";
+		String contactName = AS_ContactName7;
 		String dealTeamMember = crmUser1FirstName + " " + crmUser1LastName;
-		String company = "DummyCom";
-		String stage = "Parked";
-		String dateReceived = "9/28/2022";
+		String company = AS_FirmLegalName8;
+		String stage = AS_DealStage2;
+		String dateReceived = AS_DealDate2;
 
 		String[][] data = { { PageLabel.Team_Member.toString(), dealTeamMember },
 				{ PageLabel.Deal.toString(), dealName }, { PageLabel.Deal_Contact.toString(), contactName } };
@@ -1642,14 +1645,14 @@ public class AcuitySmoke extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 
-		String firmName = "DummyInt";
+		String firmName = AS_FirmLegalName9;
 		String subTabName = "Acuity";
-		String dealName = "SmokeDummy deal";
+		String dealName = AS_DealName2;
 
-		String contactName = "DummyAshish TC1";
-		String company = "DummyCom";
-		String stage = "Parked";
-		String dateReceived = "9/28/2022";
+		String contactName = AS_ContactName7;
+		String company = AS_FirmLegalName8;
+		String stage = AS_DealStage2;
+		String dateReceived = AS_DealDate2;
 		String teamMemberName = crmUser1FirstName + " " + crmUser1LastName;
 
 		String actualDealCount = null;
@@ -1817,12 +1820,19 @@ public class AcuitySmoke extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		/*
+		 * String firmName = "DummyInt"; String subTabName = "Acuity"; String dealName =
+		 * "SmokeDummy deal";
+		 * 
+		 * String contactName = "DummyAshish TC1"; String teamMember = crmUser1FirstName
+		 * + " " + crmUser1LastName;
+		 */
 
-		String firmName = "DummyInt";
+		String firmName = AS_FirmLegalName9;
 		String subTabName = "Acuity";
-		String dealName = "SmokeDummy deal";
+		String dealName = AS_DealName2;
 
-		String contactName = "DummyAshish TC1";
+		String contactName = AS_ContactName7;
 		String teamMember = crmUser1FirstName + " " + crmUser1LastName;
 
 		String actualDealCount = null;
@@ -2176,17 +2186,17 @@ public class AcuitySmoke extends BaseLib {
 
 		String subTabName = "Acuity";
 
-		String[] fundNames = "SD Fund".split("<Break>", -1);
-		String[] fundTypes = "Fund".split("<Break>", -1);
-		String[] investmentCategories = "Fund".split("<Break>", -1);
+		String[] fundNames = AS_FundName2.split("<Break>", -1);
+		String[] fundTypes = AS_FundType2.split("<Break>", -1);
+		String[] investmentCategories = AS_FundInvestmentCategory2.split("<Break>", -1);
 		String otherLabelFields = null;
 		String otherLabelValues = null;
 
-		String ClosingDate = "9/26/2022";
-		String[] fundraisingNames = "SD Fundraising".split("<Break>", -1);
-		String[] fundraisingsFundName = "SD Fund".split("<Break>", -1);
-		String[] fundraisingsInstitutionName = "DummyInsti".split("<Break>", -1);
-		String[] fundraisingsStageName = "Prospect".split("<Break>", -1);
+		String ClosingDate = AS_FundraisingClosingDate1;
+		String[] fundraisingNames = AS_FundraisingName1.split("<Break>", -1);
+		String[] fundraisingsFundName = AS_FundraisingFundName1.split("<Break>", -1);
+		String[] fundraisingsInstitutionName = AS_FundraisingLegalName1.split("<Break>", -1);
+		String[] fundraisingsStageName = AS_FundraisingStageName1.split("<Break>", -1);
 		String[] fundraisingsClosingDate = convertDateFromOneFormatToAnother(ClosingDate, "MM/dd/yyyy", "dd/MMM/yyyy")
 				.split("<Break>", -1);
 
@@ -2321,27 +2331,29 @@ public class AcuitySmoke extends BaseLib {
 
 		String subTabName = "Acuity";
 
-		String[] institutionName = "Nav Cmp<Break>Nav Ins".split("<Break>", -1);
-		String[] recordType = "Company<Break>Institution".split("<Break>", -1);
+		String[] institutionName = AS_FirmLegalName10.split("<Break>", -1);
+		String[] recordType = AS_FirmRecordType10.split("<Break>", -1);
 
-		String[] contactFirstNames = "Nav<Break>Nav".split("<Break>", -1);
-		String[] contactLastNames = "Cont1<Break>Cont2".split("<Break>", -1);
-		String[] contactEmailIds = "1investorportal+nvContact1@gmail.com<Break>1investorportal+nvContact2@gmail.com"
-				.split("<Break>", -1);
-		String[] otherContactLabels = "Title<Break>Title".split("<Break>", -1);
-		String[] otherContactValues = "CTO<Break>Dev".split("<Break>", -1);
+		String[] contactFirstNames = AS_ContactFirstName8.split("<Break>", -1);
+		String[] contactLastNames = AS_ContactLastName8.split("<Break>", -1);
+		String[] contactEmailIds = AS_ContactEmail8.split("<Break>", -1);
+		String[] otherContactLabels = AS_ContactOtherLabelNames8.split("<Break>", -1);
+		String[] otherContactValues = AS_ContactOtherLabelValues8.split("<Break>", -1);
 
-		String[][] callBasicSection = { { "Subject", "Nav Call" }, { "Notes", "Call from Navigation" },
-				{ "Related_To", "Nav Cmp<break>Nav Ins<break>Nav Cont1" } };
-		String[][] meetingBasicSection = { { "Subject", "Nav Meeting" }, { "Notes", "Meeting from Navigation" },
-				{ "Related_To", "Nav Cmp<break>Nav Ins<break>Nav Cont1" } };
+		String[][] callBasicSection = { { "Subject", AS_ATSubject6 }, { "Notes", AS_ATNotes6 },
+				{ "Related_To", AS_ATRelatedTo6 } };
+		/*
+		 * String[][] meetingBasicSection = { { "Subject", "Nav Meeting" }, { "Notes",
+		 * "Meeting from Navigation" }, { "Related_To",
+		 * "Nav Cmp<break>Nav Ins<break>Nav Cont1" } };
+		 */
 
-		String[][] taskBasicSection = { { "Subject", "Nav Task" }, { "Notes", "Task from Navigation" },
-				{ "Related_To", "Nav Cmp<break>Nav Ins<break>Nav Cont1" } };
+		String[][] taskBasicSection = { { "Subject", AS_ATSubject7 }, { "Notes", AS_ATNotes7 },
+				{ "Related_To", AS_ATRelatedTo7 } };
 		List<String> activityTimeLines = new ArrayList<String>();
-		activityTimeLines.add("Nav Call");
-		activityTimeLines.add("Nav Meeting");
-		activityTimeLines.add("Nav Task");
+		activityTimeLines.add(AS_ATSubject6);
+		/* activityTimeLines.add("Nav Meeting"); */
+		activityTimeLines.add(AS_ATSubject7);
 
 		int firmLoopCount = 0;
 
@@ -2402,23 +2414,26 @@ public class AcuitySmoke extends BaseLib {
 			contactLoopCount++;
 		}
 
-		log(LogStatus.INFO, "---------Now Going to Create Call in Activity Timeline Section---------", YesNo.No);
+		log(LogStatus.INFO,
+				"---------Now Going to Create Call: " + AS_ATSubject6 + " in Activity Timeline Section---------",
+				YesNo.No);
 		CommonLib.refresh(driver);
-		if (BP.createActivityTimeline(projectName, true, "Call", callBasicSection, null, null, null)) {
+		if (BP.createActivityTimeline(projectName, true, AS_ATActivityType6, callBasicSection, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
 
 			ThreadSleep(4000);
 			if (CommonLib.getText(driver, BP.taskDetailPageHeader(15), "Call: " + callBasicSection, action.BOOLEAN)
-					.equalsIgnoreCase("Nav Call")) {
-				log(LogStatus.PASS, "-----Task Detail Page: " + "Nav Call" + " has been open after Call Create-----",
+					.equalsIgnoreCase(AS_ATSubject6)) {
+				log(LogStatus.PASS, "-----Task Detail Page: " + AS_ATSubject6 + " has been open after Call Create-----",
 						YesNo.No);
 			}
 
 			else {
 				log(LogStatus.FAIL,
-						"-----Task Detail Page: " + "Nav Call" + " has not been open after Call Create-----", YesNo.No);
+						"-----Task Detail Page: " + AS_ATSubject6 + " has not been open after Call Create-----",
+						YesNo.No);
 				sa.assertTrue(false,
-						"-----Task Detail Page: " + "Nav Call" + " has not been open after Call Create-----");
+						"-----Task Detail Page: " + AS_ATSubject6 + " has not been open after Call Create-----");
 			}
 
 		} else {
@@ -2426,50 +2441,49 @@ public class AcuitySmoke extends BaseLib {
 			sa.assertTrue(false, "Activity timeline record is not created");
 		}
 
-		log(LogStatus.INFO, "---------Now Going to Create Meeting in Activity Timeline Section---------", YesNo.No);
+		/*
+		 * log(LogStatus.INFO,
+		 * "---------Now Going to Create Meeting in Activity Timeline Section---------",
+		 * YesNo.No); CommonLib.refresh(driver); if
+		 * (BP.createActivityTimeline(projectName, true, "Meeting", meetingBasicSection,
+		 * null, null, null)) { log(LogStatus.PASS,
+		 * "Activity timeline record has been created", YesNo.No);
+		 * 
+		 * ThreadSleep(4000); if (CommonLib .getText(driver,
+		 * BP.eventDetailPageHeader(15), "Meeting: " + meetingBasicSection,
+		 * action.BOOLEAN) .equalsIgnoreCase("Nav Meeting")) { log(LogStatus.PASS,
+		 * "-----Event Detail Page: " + "Nav Meeting" +
+		 * " has been open after Meeting Create-----", YesNo.No); }
+		 * 
+		 * else { log(LogStatus.FAIL, "-----Event Detail Page: " + "Nav Meeting" +
+		 * " has not been open after Meeting Create-----", YesNo.No);
+		 * sa.assertTrue(false, "-----Event Detail Page: " + "Nav Meeting" +
+		 * " has not been open after Meeting Create-----"); }
+		 * 
+		 * } else { log(LogStatus.FAIL, "Activity timeline record is not created",
+		 * YesNo.No); sa.assertTrue(false, "Activity timeline record is not created"); }
+		 */
+
+		log(LogStatus.INFO,
+				"---------Now Going to Create Task: " + AS_ATSubject7 + " in Activity Timeline Section---------",
+				YesNo.No);
 		CommonLib.refresh(driver);
-		if (BP.createActivityTimeline(projectName, true, "Meeting", meetingBasicSection, null, null, null)) {
-			log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
-
-			ThreadSleep(4000);
-			if (CommonLib
-					.getText(driver, BP.eventDetailPageHeader(15), "Meeting: " + meetingBasicSection, action.BOOLEAN)
-					.equalsIgnoreCase("Nav Meeting")) {
-				log(LogStatus.PASS,
-						"-----Event Detail Page: " + "Nav Meeting" + " has been open after Meeting Create-----",
-						YesNo.No);
-			}
-
-			else {
-				log(LogStatus.FAIL,
-						"-----Event Detail Page: " + "Nav Meeting" + " has not been open after Meeting Create-----",
-						YesNo.No);
-				sa.assertTrue(false,
-						"-----Event Detail Page: " + "Nav Meeting" + " has not been open after Meeting Create-----");
-			}
-
-		} else {
-			log(LogStatus.FAIL, "Activity timeline record is not created", YesNo.No);
-			sa.assertTrue(false, "Activity timeline record is not created");
-		}
-
-		log(LogStatus.INFO, "---------Now Going to Create Task in Activity Timeline Section---------", YesNo.No);
-		CommonLib.refresh(driver);
-		if (BP.createActivityTimeline(projectName, true, "Task", taskBasicSection, null, null, null)) {
+		if (BP.createActivityTimeline(projectName, true, AS_ATActivityType7, taskBasicSection, null, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
 
 			ThreadSleep(4000);
 			if (CommonLib.getText(driver, BP.taskDetailPageHeader(15), "Task: " + taskBasicSection, action.BOOLEAN)
-					.equalsIgnoreCase("Nav Task")) {
-				log(LogStatus.PASS, "-----Task Detail Page: " + "Nav Task" + " has been open after Task Create-----",
+					.equalsIgnoreCase(AS_ATSubject7)) {
+				log(LogStatus.PASS, "-----Task Detail Page: " + AS_ATSubject7 + " has been open after Task Create-----",
 						YesNo.No);
 			}
 
 			else {
 				log(LogStatus.FAIL,
-						"-----Task Detail Page: " + "Nav Task" + " has not been open after Task Create-----", YesNo.No);
+						"-----Task Detail Page: " + AS_ATSubject7 + " has not been open after Task Create-----",
+						YesNo.No);
 				sa.assertTrue(false,
-						"-----Task Detail Page: " + "Nav Task" + " has not been open after Task Create-----");
+						"-----Task Detail Page: " + AS_ATSubject7 + " has not been open after Task Create-----");
 			}
 
 		} else {
@@ -2490,12 +2504,13 @@ public class AcuitySmoke extends BaseLib {
 
 					ArrayList<String> result1 = BP.verifyRecordOnInteractionCard(null, "Nav Call", null, false, false);
 					if (result1.isEmpty()) {
-						log(LogStatus.PASS, "Nav Call" + " record has been verified on intraction", YesNo.No);
+						log(LogStatus.PASS, AS_ATSubject6 + " record has been verified on intraction", YesNo.No);
 
 					} else {
-						log(LogStatus.ERROR, "Nav Call" + " record is not verified on intraction, Reason: " + result1,
-								YesNo.No);
-						sa.assertTrue(false, "Nav Call" + " record is not verified on intraction, Reason: " + result1);
+						log(LogStatus.ERROR,
+								AS_ATSubject6 + " record is not verified on intraction, Reason: " + result1, YesNo.No);
+						sa.assertTrue(false,
+								AS_ATSubject6 + " record is not verified on intraction, Reason: " + result1);
 					}
 					ArrayList<String> result2 = BP.verifyRecordOnInteractionCard(null, "Nav Meeting", null, false,
 							false);
@@ -2510,12 +2525,13 @@ public class AcuitySmoke extends BaseLib {
 					}
 					ArrayList<String> result3 = BP.verifyRecordOnInteractionCard(null, "Nav Task", null, false, false);
 					if (result3.isEmpty()) {
-						log(LogStatus.PASS, "Nav Task" + " record has been verified on intraction", YesNo.No);
+						log(LogStatus.PASS, AS_ATSubject7 + " record has been verified on intraction", YesNo.No);
 
 					} else {
-						log(LogStatus.ERROR, "Nav Task" + " record is not verified on intraction, Reason: " + result1,
-								YesNo.No);
-						sa.assertTrue(false, "Nav Task" + " record is not verified on intraction, Reason: " + result1);
+						log(LogStatus.ERROR,
+								AS_ATSubject7 + " record is not verified on intraction, Reason: " + result1, YesNo.No);
+						sa.assertTrue(false,
+								AS_ATSubject7 + " record is not verified on intraction, Reason: " + result1);
 					}
 
 					log(LogStatus.INFO, "---------Now Going to Verify Activity Timeline Section under ---------",
@@ -2569,6 +2585,7 @@ public class AcuitySmoke extends BaseLib {
 		sa.assertAll();
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	@Parameters({ "projectName" })
 
 	@Test
@@ -2583,9 +2600,9 @@ public class AcuitySmoke extends BaseLib {
 		FundRaisingPageBusinessLayer fr = new FundRaisingPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 
-		String dealRecordTypeList = "BuySide Deal<break>SellSide Deal";
-		String fundRecordTypeList = "Mutual Fund<break>Pension Fund";
-		String fundraisingRecordTypeList = "FDKRT01<break>MKDRT01";
+		String dealRecordTypeList = AS_DealRecordType3;
+		String fundRecordTypeList = AS_FundRecordType3;
+		String fundraisingRecordTypeList = AS_FundraisingRecordType2;
 		String dealRecordTypeArray[] = dealRecordTypeList.split(breakSP, -1);
 		String fundRecordTypeArray[] = fundRecordTypeList.split(breakSP, -1);
 		String fundraisingRecordTypeArray[] = fundraisingRecordTypeList.split(breakSP, -1);
@@ -2622,42 +2639,33 @@ public class AcuitySmoke extends BaseLib {
 		boolean isMakeDefault = true;
 		boolean flag = false;
 
-		String[] institutionName = "Research Institution 01<Break>Research Company 01<Break>Research Intermediary 01<Break>Research Advisor 01<Break>Research Lender 01<Break>Research Limited Partner 01<Break>Research Portfolio Company 01"
-				.split("<Break>", -1);
-		String[] recordType = "Institution<Break>Company<Break>Intermediary<Break>Advisor<Break>Lender<Break>Limited Partner<Break>Portfolio Company"
-				.split("<Break>", -1);
-		String[] labelsOfFirmPopUp = "<Break><Break><Break><Break><Break>Parent Firm<Break>".split("<Break>", -1);
-		String[] valuesOfFirmPopUp = "<Break><Break><Break><Break><Break>Research Institution 01<Break>"
-				.split("<Break>", -1);
+		String[] institutionName = AS_FirmLegalName11.split("<Break>", -1);
+		String[] recordType = AS_FirmRecordType11.split("<Break>", -1);
+		String[] labelsOfFirmPopUp = AS_FirmLabelNames11.split("<Break>", -1);
+		String[] valuesOfFirmPopUp = AS_FirmLabelValues11.split("<Break>", -1);
 
-		String[] contactFirstNames = "Research<Break>Research<Break>Research<Break>Research<Break>Research<Break>Research<Break>Research"
-				.split("<Break>", -1);
-		String[] contactLastNames = "Inst Contact1<Break>Com Contact2<Break>Int Contact3<Break>Adv Contact4<Break>Len Contact5<Break>Com LP Contact6<Break>Com PC Contact7"
-				.split("<Break>", -1);
-		String[] contactEmailIds = "1investorportal+ResearchInstContact1@gmail.com<Break>1investorportal+ResearchComContact2@gmail.com<Break>1investorportal+ResearchIntContact3@gmail.com<Break>1investorportal+ResearchAdvContact4@gmail.com<Break>1investorportal+ResearchLenContact5@gmail.com<Break>1investorportal+ResearchLpContact6@gmail.com<Break>1investorportal+ResearchPcContact7@gmail.com"
-				.split("<Break>", -1);
+		String[] contactFirstNames = AS_ContactFirstName9.split("<Break>", -1);
+		String[] contactLastNames = AS_ContactLastName9.split("<Break>", -1);
+		String[] contactEmailIds = AS_ContactEmail9.split("<Break>", -1);
 
-		String[] dealRecordTypes = "BuySide Deal<Break>SellSide Deal<Break>BuySide Deal".split("<Break>", -1);
-		String[] dealName = "Research Inst Deal 01<Break>Research Com Deal 02<Break>Research Int Deal 03"
-				.split("<Break>", -1);
-		String[] dealCompany = "Research Institution 01<Break>Research Company 01<Break>Research Intermediary 01"
-				.split("<Break>", -1);
-		String[] dealStage = "NDA Signed<Break>IOI<Break>LOI".split("<Break>", -1);
+		String[] dealRecordTypes = AS_DealRecordType4.split("<Break>", -1);
+		String[] dealName = AS_DealName4.split("<Break>", -1);
+		String[] dealCompany = AS_DealCompany4.split("<Break>", -1);
+		String[] dealStage = AS_DealStage4.split("<Break>", -1);
 
-		String[] fundNames = "Research Fund 001<Break>Research Fund 002<Break>Research Fund 003".split("<Break>", -1);
-		String[] fundRecordTypes = "Mutual Fund<Break>Pension Fund<Break>Mutual Fund".split("<Break>", -1);
-		String[] fundTypes = "Fund<Break>Fund<Break>Fund".split("<Break>", -1);
-		String[] investmentCategories = "Fund<Break>Fund<Break>Fund".split("<Break>", -1);
+		String[] fundNames = AS_FundName4.split("<Break>", -1);
+		String[] fundRecordTypes = AS_FundRecordType4.split("<Break>", -1);
+		String[] fundTypes = AS_FundType4.split("<Break>", -1);
+		String[] investmentCategories = AS_FundInvestmentCategory4.split("<Break>", -1);
 		String otherLabelFields = null;
 		String otherLabelValues = null;
 
-		String[] ClosingDates = "12/27/2022<Break>11/25/2022<Break>10/27/2022".split("<Break>", -1);
-		String[] fundraisingRecordTypes = "FDKRT01<Break>MKDRT01<Break>FDKRT01".split("<Break>", -1);
-		String[] fundraisingNames = "Research FR 01<Break>Research FR 01<Break>Research FR 01".split("<Break>", -1);
+		String[] ClosingDates = AS_FundraisingClosingDate3.split("<Break>", -1);
+		String[] fundraisingRecordTypes = AS_FundraisingRecordType3.split("<Break>", -1);
+		String[] fundraisingNames = AS_FundraisingName3.split("<Break>", -1);
 		String[] fundraisingsFundName = fundNames;
-		String[] fundraisingsInstitutionName = "Research Institution 01<Break>Research Limited Partner 01<Break>Research Institution 01"
-				.split("<Break>", -1);
-		String[] fundraisingsStageName = "Prospect<Break>Interested<Break>Prospect".split("<Break>", -1);
+		String[] fundraisingsInstitutionName = AS_FundraisingLegalName3.split("<Break>", -1);
+		String[] fundraisingsStageName = AS_FundraisingStageName3.split("<Break>", -1);
 		String[] fundraisingsClosingDate = new String[ClosingDates.length];
 
 		int loop = 0;
@@ -2670,15 +2678,13 @@ public class AcuitySmoke extends BaseLib {
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt("10"));
 //        ExcelUtils.writeData(AcuityDataSheetFilePath, AdvanceDueDate, "Activity Timeline" , excelLabel.Variable_Name, "AT_001", excelLabel.Advance_Due_Date);
 
-		String[][] task1BasicSection = { { "Subject", "Research Task 01" },
-				{ "Notes", "Task For Power Search Smoke Researching" }, { "Related_To",
-						"Research Inst Contact1<break>Research Company 01<break>Research Limited Partner 01<break>Research Inst Deal 01" } };
+		String[][] task1BasicSection = { { "Subject", AS_ATSubject8 }, { "Notes", AS_ATNotes8 },
+				{ "Related_To", AS_ATRelatedTo8 } };
 
 		String[][] task1AdvancedSection = { { "Due Date Only", AdvanceDueDate } };
 
-		String[][] task2BasicSection = { { "Subject", "Research Task 02" },
-				{ "Notes", "Task For Power Search Smoke Researching" }, { "Related_To",
-						"Research Inst Contact2<break>Research Institution 01<break>Research Lender 01<break>Research Fund 002<break>Research FR 01" } };
+		String[][] task2BasicSection = { { "Subject", AS_ATSubject9 }, { "Notes", AS_ATNotes9 },
+				{ "Related_To", AS_ATRelatedTo9 } };
 
 		String[][] task2AdvancedSection = { { "Due Date Only", AdvanceDueDate } };
 
@@ -2694,12 +2700,25 @@ public class AcuitySmoke extends BaseLib {
 						if (sp.clickOnObjectFeature("", Mode.Lightning.toString(), object.Deal,
 								ObjectFeatureName.recordTypes)) {
 							if (i == 0) {
-								flag = sp.createRecordTypeForObject(projectName, dealRecordType[i], isMakeAvailable,
-										profileForSelection, isMakeDefault, null, 10);
+								if (sp.listOfRecordTypes().contains(dealRecordType[i][0][1])) {
+									log(LogStatus.INFO, "Record Type: " + dealRecordType[i][0][1]
+											+ " is already created, So not going to Create", YesNo.No);
+									flag = true;
+								} else {
+									flag = sp.createRecordTypeForObject(projectName, dealRecordType[i], isMakeAvailable,
+											profileForSelection, isMakeDefault, null, 10);
+								}
 							} else {
 								isMakeDefault = false;
-								flag = sp.createRecordTypeForObject(projectName, dealRecordType[i], isMakeAvailable,
-										profileForSelection, isMakeDefault, null, 10);
+
+								if (sp.listOfRecordTypes().contains(dealRecordType[i][0][1])) {
+									log(LogStatus.INFO, "Record Type: " + dealRecordType[i][0][1]
+											+ " is already created, So not going to Create", YesNo.No);
+									flag = true;
+								} else {
+									flag = sp.createRecordTypeForObject(projectName, dealRecordType[i], isMakeAvailable,
+											profileForSelection, isMakeDefault, null, 10);
+								}
 							}
 							if (flag) {
 								log(LogStatus.INFO, "Created Record Type : " + dealRecordTypeArray[i], YesNo.No);
@@ -2745,12 +2764,25 @@ public class AcuitySmoke extends BaseLib {
 						if (sp.clickOnObjectFeature("", Mode.Lightning.toString(), object.Fund,
 								ObjectFeatureName.recordTypes)) {
 							if (i == 0) {
-								flag = sp.createRecordTypeForObject(projectName, fundrecordType[i], isMakeAvailable,
-										profileForSelection, isMakeDefault, null, 10);
+								if (sp.listOfRecordTypes().contains(fundrecordType[i][0][1])) {
+									log(LogStatus.INFO, "Record Type: " + fundrecordType[i][0][1]
+											+ " is already created, So not going to Create", YesNo.No);
+									flag = true;
+								} else {
+									flag = sp.createRecordTypeForObject(projectName, fundrecordType[i], isMakeAvailable,
+											profileForSelection, isMakeDefault, null, 10);
+								}
 							} else {
 								isMakeDefault = false;
-								flag = sp.createRecordTypeForObject(projectName, fundrecordType[i], isMakeAvailable,
-										profileForSelection, isMakeDefault, null, 10);
+
+								if (sp.listOfRecordTypes().contains(fundrecordType[i][0][1])) {
+									log(LogStatus.INFO, "Record Type: " + fundrecordType[i][0][1]
+											+ " is already created, So not going to Create", YesNo.No);
+									flag = true;
+								} else {
+									flag = sp.createRecordTypeForObject(projectName, fundrecordType[i], isMakeAvailable,
+											profileForSelection, isMakeDefault, null, 10);
+								}
 							}
 							if (flag) {
 								log(LogStatus.INFO, "Created Record Type : " + fundRecordTypeArray[i], YesNo.No);
@@ -2796,12 +2828,25 @@ public class AcuitySmoke extends BaseLib {
 						if (sp.clickOnObjectFeature("", Mode.Lightning.toString(), object.Fundraising,
 								ObjectFeatureName.recordTypes)) {
 							if (i == 0) {
-								flag = sp.createRecordTypeForObject(projectName, fundraisingrecordType[i],
-										isMakeAvailable, profileForSelection, isMakeDefault, null, 10);
+
+								if (sp.listOfRecordTypes().contains(fundraisingrecordType[i][0][1])) {
+									log(LogStatus.INFO, "Record Type: " + fundraisingrecordType[i][0][1]
+											+ " is already created, So not going to Create", YesNo.No);
+									flag = true;
+								} else {
+									flag = sp.createRecordTypeForObject(projectName, fundraisingrecordType[i],
+											isMakeAvailable, profileForSelection, isMakeDefault, null, 10);
+								}
 							} else {
 								isMakeDefault = false;
-								flag = sp.createRecordTypeForObject(projectName, fundraisingrecordType[i],
-										isMakeAvailable, profileForSelection, isMakeDefault, null, 10);
+								if (sp.listOfRecordTypes().contains(fundraisingrecordType[i][0][1])) {
+									log(LogStatus.INFO, "Record Type: " + fundraisingrecordType[i][0][1]
+											+ " is already created, So not going to Create", YesNo.No);
+									flag = true;
+								} else {
+									flag = sp.createRecordTypeForObject(projectName, fundraisingrecordType[i],
+											isMakeAvailable, profileForSelection, isMakeDefault, null, 10);
+								}
 							}
 							if (flag) {
 								log(LogStatus.INFO, "Created Record Type : " + fundraisingRecordTypeArray[i], YesNo.No);
@@ -2982,28 +3027,31 @@ public class AcuitySmoke extends BaseLib {
 			sa.assertTrue(false, "No Fund is created, So not able to Create Fundraising: " + fundraisingNames);
 		}
 
-		log(LogStatus.INFO, "---------Now Going to Create Task in Activity Timeline Section---------", YesNo.No);
+		log(LogStatus.INFO,
+				"---------Now Going to Create Task: " + AS_ATSubject8 + " in Activity Timeline Section---------",
+				YesNo.No);
 		CommonLib.refresh(driver);
 		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
 			home.notificationPopUpClose();
-			if (BP.createActivityTimeline(projectName, true, "Task", task1BasicSection, task1AdvancedSection, null,
-					null)) {
+			if (BP.createActivityTimeline(projectName, true, AS_ATActivityType8, task1BasicSection,
+					task1AdvancedSection, null, null)) {
 				log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
 
 				ThreadSleep(4000);
-				if (CommonLib.getText(driver, BP.taskDetailPageHeader(15), "Task: " + task1BasicSection, action.BOOLEAN)
-						.equalsIgnoreCase("Nav Task")) {
+				if (CommonLib.getText(driver, BP.taskDetailPageHeader(15), "Task: " + AS_ATSubject8, action.BOOLEAN)
+						.equalsIgnoreCase(AS_ATSubject8)) {
 					log(LogStatus.PASS,
-							"-----Task Detail Page: " + "Nav Task" + " has been open after Task Create-----", YesNo.No);
+							"-----Task Detail Page: " + AS_ATSubject8 + " has been open after Task Create-----",
+							YesNo.No);
 				}
 
 				else {
 					log(LogStatus.FAIL,
-							"-----Task Detail Page: " + "Nav Task" + " has not been open after Task Create-----",
+							"-----Task Detail Page: " + AS_ATSubject8 + " has not been open after Task Create-----",
 							YesNo.No);
 					sa.assertTrue(false,
-							"-----Task Detail Page: " + "Nav Task" + " has not been open after Task Create-----");
+							"-----Task Detail Page: " + AS_ATSubject8 + " has not been open after Task Create-----");
 				}
 
 			} else {
@@ -3022,25 +3070,29 @@ public class AcuitySmoke extends BaseLib {
 
 		lp.CRMLogin(superAdminUserName, adminPassword);
 
-		log(LogStatus.INFO, "---------Now Going to Create Task in Activity Timeline Section---------", YesNo.No);
+		log(LogStatus.INFO,
+				"---------Now Going to Create Task: " + AS_ATSubject9 + " in Activity Timeline Section---------",
+				YesNo.No);
 		CommonLib.refresh(driver);
 
 		home.notificationPopUpClose();
-		if (BP.createActivityTimeline(projectName, true, "Task", task2BasicSection, task2AdvancedSection, null, null)) {
+		if (BP.createActivityTimeline(projectName, true, AS_ATActivityType9, task2BasicSection, task2AdvancedSection,
+				null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
 
 			ThreadSleep(4000);
-			if (CommonLib.getText(driver, BP.taskDetailPageHeader(15), "Task: " + task2BasicSection, action.BOOLEAN)
-					.equalsIgnoreCase("Nav Task")) {
-				log(LogStatus.PASS, "-----Task Detail Page: " + "Nav Task" + " has been open after Task Create-----",
+			if (CommonLib.getText(driver, BP.taskDetailPageHeader(15), "Task: " + AS_ATSubject9, action.BOOLEAN)
+					.equalsIgnoreCase(AS_ATSubject9)) {
+				log(LogStatus.PASS, "-----Task Detail Page: " + AS_ATSubject9 + " has been open after Task Create-----",
 						YesNo.No);
 			}
 
 			else {
 				log(LogStatus.FAIL,
-						"-----Task Detail Page: " + "Nav Task" + " has not been open after Task Create-----", YesNo.No);
+						"-----Task Detail Page: " + AS_ATSubject9 + " has not been open after Task Create-----",
+						YesNo.No);
 				sa.assertTrue(false,
-						"-----Task Detail Page: " + "Nav Task" + " has not been open after Task Create-----");
+						"-----Task Detail Page: " + AS_ATSubject9 + " has not been open after Task Create-----");
 			}
 
 		} else {
@@ -3085,8 +3137,9 @@ public class AcuitySmoke extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+//		String searchItemInResearch = "Test";
 
-		String searchItemInResearch = "Test";
+		String searchItemInResearch = AS_ResearchString1;
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -3118,8 +3171,7 @@ public class AcuitySmoke extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
-		String[] searchItemsInResearch = "Research Account<Break>Research Company<Break>Research Inst Deal<Break>Research FR 01"
-				.split("<Break>", -1);
+		String[] searchItemsInResearch = AS_ResearchString2.split("<Break>", -1);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -3155,8 +3207,7 @@ public class AcuitySmoke extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
-		String[] searchItemsInResearch = "FR <Break>Research Company  <Break>Research Inst Deal <Break>Research FR 01 "
-				.split("<Break>", -1);
+		String[] searchItemsInResearch = AS_ResearchString3.split("<Break>", -1);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -3192,8 +3243,7 @@ public class AcuitySmoke extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
-		String[] searchItemsInResearch = "\"Research Institution\"<Break> \"Research FR\"<Break>\"Research Limited Partner 01\""
-				.split("<Break>", -1);
+		String[] searchItemsInResearch = AS_ResearchString4.split("<Break>", -1);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -3229,7 +3279,7 @@ public class AcuitySmoke extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
-		String[] searchItemsInResearch = "Research<Break>Institution".split("<Break>", -1);
+		String[] searchItemsInResearch = AS_ResearchString5.split("<Break>", -1);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -3270,7 +3320,7 @@ public class AcuitySmoke extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
-		String[] searchItemsInResearch = "Research<Break>Institution".split("<Break>", -1);
+		String[] searchItemsInResearch = AS_ResearchString5.split("<Break>", -1);
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 

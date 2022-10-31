@@ -822,10 +822,8 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 							|| labelNames[i].equalsIgnoreCase("Pipeline Data Date")
 							|| labelNames[i].equalsIgnoreCase("Last Stage Change Date")) {
 
-						String value = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MMM/yyyy",
-								Integer.parseInt(labelValue[i]));
-
-						String[] date = value.split("/");
+						String[] date = CommonLib.convertDateFromOneFormatToAnother(labelValue[i], "MM/dd/yyyy", "dd/MMM/yyyy").split("/");
+					
 
 						if (click(driver, calendarInputBox(labelNames[i], 30), labelNames[i] + " Input Box",
 								action.SCROLLANDBOOLEAN)) {
@@ -833,11 +831,11 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 							if (CommonLib.datePickerHandle(driver, monthInDatePicker(30),
 									previousMonthButtonInDatePicker(30), labelNames[i] + " Picker", date[2], date[1],
 									date[0])) {
-								log(LogStatus.INFO, "Date has been Selected  " + value, YesNo.No);
+								log(LogStatus.INFO, "Date has been Selected  " + labelValue[i], YesNo.No);
 								status++;
 							} else {
-								sa.assertTrue(false, "Date has not been Selected  " + value);
-								log(LogStatus.ERROR, "Date has not been Selected  " + value, YesNo.Yes);
+								sa.assertTrue(false, "Date has not been Selected  " + labelValue[i]);
+								log(LogStatus.ERROR, "Date has not been Selected  " + labelValue[i], YesNo.Yes);
 							}
 						} else {
 							sa.assertTrue(false, "Not Able to Click on " + labelNames[i] + " Calendar input Box");

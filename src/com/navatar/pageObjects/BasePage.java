@@ -21,6 +21,7 @@ import static com.navatar.generic.CommonLib.*;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Parul Singh
@@ -571,7 +572,7 @@ public abstract class BasePage extends BaseLib {
 	}
 
 	public WebElement getCustomTabSaveBtn(String projectName, int timeOut) {
-		List<WebElement> eleList = FindElements(driver, "//*[@title='Save' or text()='Save']", "Save Button");
+		List<WebElement> eleList = FindElements(driver, "//button[@title='Save' or text()='Save']", "Save Button");
 		for (WebElement webElement : eleList) {
 			webElement = isDisplayed(driver, webElement, "Visibility", 2, "Custom Tab Save Button lightning");
 			if (webElement != null) {
@@ -617,7 +618,7 @@ public abstract class BasePage extends BaseLib {
 
 	}
 
-	@FindBy(xpath = "//*[@title='Save' or text()='Save']")
+	@FindBy(xpath = "//button[@title='Save' or text()='Save']")
 	private WebElement save_Lightning;
 
 	@FindBy(xpath = "//input[@placeholder='Search all items...']")
@@ -3940,7 +3941,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, moreTabIConLighting, "Visibility", timeOut, "More Tab ICon Lighting");
 	}
 
-	@FindBy(xpath = "//*[@title='New']")
+	@FindBy(xpath = "//*[@title='New']/parent::a")
 	private WebElement newButtonLighting;
 
 	/**
@@ -7321,6 +7322,12 @@ public abstract class BasePage extends BaseLib {
 						+ gridName + " ("
 						+ "')]/ancestor::div[@class ='slds-grid slds-wrap']/following-sibling::div//tbody/tr",
 				"recordsUnderGridInResearchResults");
+	}
+
+	public List<String> listOfRecordTypes() {
+		return FindElements(driver, "//tbody//tr/td/a/span", "listOfRecordTypes").stream().map(x -> x.getText())
+				.collect(Collectors.toList());
+
 	}
 
 }
