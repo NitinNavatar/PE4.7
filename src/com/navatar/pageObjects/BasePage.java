@@ -6911,9 +6911,226 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, notesText, "Visibility", timeOut, "Notes text");
 	}
 	
-	
-	
-	
-	
 
+	@FindBy(xpath = "//span[text()='Interactions']/ancestor::div[contains(@class,'slds-p-bottom_none')]//a[text()='View All']")
+	private WebElement viewAllBtnOnIntration;
+
+	public WebElement getViewAllBtnOnIntration(int timeOut) {
+		return isDisplayed(driver, viewAllBtnOnIntration, "Visibility", timeOut, "view All button");
+	}
+	
+	@FindBy(xpath = "//div[contains(@class,'slds-page-header__title')]")
+	private WebElement pageHeaderTitle;
+
+	public WebElement getPageHeaderTitle(int timeOut) {
+		return isDisplayed(driver, pageHeaderTitle, "Visibility", timeOut, "page header title");
+	}
+	
+	public WebElement dealAcuityPopUpDealName(String dealName, int timeOut) {
+
+	       String xpath = "//div[@class='slds-modal__container']//a[text()='" + dealName
+	                + "']/ancestor::th[@data-label='Deal Name']//a";
+	        try {
+	            return FindElement(driver, xpath, "Header: " + dealName, action.SCROLLANDBOOLEAN, timeOut);
+	        } catch (StaleElementReferenceException e) {
+	            return FindElement(driver, xpath, "Header: " + dealName, action.SCROLLANDBOOLEAN, timeOut);
+	        }
+	   }
+
+	   public WebElement dealAcuityPopUpCompanyName(String dealName, String company, int timeOut) {
+	       String xpath = "//div[@class='slds-modal__container']//a[text()='" + dealName
+	                + "']/ancestor::th[@data-label='Deal Name']/following-sibling::td[@data-label='Company']//span";
+	        try {
+	            return FindElement(driver, xpath, "Header: " + company, action.SCROLLANDBOOLEAN, timeOut);
+	        } catch (StaleElementReferenceException e) {
+	            return FindElement(driver, xpath, "Header: " + company, action.SCROLLANDBOOLEAN, timeOut);
+	        }
+	   }
+
+	   public WebElement dealAcuityPopUpStageName(String dealName, String stage, int timeOut) {
+
+	       String xpath = "//div[@class='slds-modal__container']//a[text()='" + dealName
+	                + "']/ancestor::th[@data-label='Deal Name']/following-sibling::td[@data-label='Stage']//span";
+	        try {
+	            return FindElement(driver, xpath, "Header: " + stage, action.SCROLLANDBOOLEAN, timeOut);
+	        } catch (StaleElementReferenceException e) {
+	            return FindElement(driver, xpath, "Header: " + stage, action.SCROLLANDBOOLEAN, timeOut);
+	        }
+	   }
+
+	   public WebElement dealAcuityPopUpDateReceived(String dealName, String dateReceived, int timeOut) {
+
+	       String xpath = "//div[@class='slds-modal__container']//a[text()='" + dealName
+	                + "']/ancestor::th[@data-label='Deal Name']/following-sibling::td[@data-label='Date Received']//span";
+	        try {
+	            return FindElement(driver, xpath, "Header: " + dateReceived, action.SCROLLANDBOOLEAN, timeOut);
+	        } catch (StaleElementReferenceException e) {
+	            return FindElement(driver, xpath, "Header: " + dateReceived, action.SCROLLANDBOOLEAN, timeOut);
+	        }
+	   }
+	   
+	   @FindBy(xpath = "//header/button[@title='Close']")
+	    private WebElement connectionClosePopupButton;
+	   
+	   public WebElement connectionClosePopupButton(int timeOut) {
+	        return isDisplayed(driver, connectionClosePopupButton, "Visibility", timeOut, "connectionClosePopupButton");
+	    }
+	   
+	   public WebElement contactNameUserIconButton(String contactName, int timeOut) {
+
+			String xpath = "//td[@data-label='Name']//a[text()='" + contactName
+					+ "']/ancestor::td/preceding-sibling::td//button";
+			try {
+				return FindElement(driver, xpath, "Header: " + contactName, action.SCROLLANDBOOLEAN, timeOut);
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpath, "Header: " + contactName, action.SCROLLANDBOOLEAN, timeOut);
+			}
+
+		}
+
+
+
+
+
+	public WebElement connectionPopUpTeamMember(String teamMember, int timeOut) {
+
+			String xpath = "//div[@class='slds-modal__container']//a[text()='" + teamMember
+					+ "']/ancestor::th[@data-label='Team Member']//a";
+			try {
+				return FindElement(driver, xpath, "Header: " + teamMember, action.SCROLLANDBOOLEAN, timeOut);
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpath, "Header: " + teamMember, action.SCROLLANDBOOLEAN, timeOut);
+			}
+
+		}
+
+		public WebElement connectionPopUpTitle(String teamMember, String title, int timeOut) {
+
+			String xpath = "//div[@class='slds-modal__container']//a[text()='" + teamMember
+					+ "']/ancestor::th[@data-label='Team Member']/following-sibling::td[@data-label='Title']//span";
+			try {
+				return FindElement(driver, xpath, "Header: " + title, action.SCROLLANDBOOLEAN, timeOut);
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpath, "Header: " + title, action.SCROLLANDBOOLEAN, timeOut);
+			}
+
+		}
+
+		public WebElement connectionPopUpDealsCount(String teamMember, String deals, int timeOut) {
+
+			String xpath = "//div[@class='slds-modal__container']//a[text()='" + teamMember
+					+ "']/ancestor::th[@data-label='Team Member']/following-sibling::td[@data-label='Deals']//span";
+			try {
+				return FindElement(driver, xpath, "Header: " + deals, action.SCROLLANDBOOLEAN, timeOut);
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpath, "Header: " + deals, action.SCROLLANDBOOLEAN, timeOut);
+			}
+
+		}
+
+		public WebElement connectionPopUpMeetingCallsCount(String teamMember, String meetingAndCalls, int timeOut) {
+
+			String xpath = "//a[text()='" + teamMember
+					+ "']/ancestor::th[@data-label='Team Member']/following-sibling::td[@data-label='Meetings and Calls']//span";
+			try {
+				return FindElement(driver, xpath, "Header: " + meetingAndCalls, action.SCROLLANDBOOLEAN, timeOut);
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpath, "Header: " + meetingAndCalls, action.SCROLLANDBOOLEAN, timeOut);
+			}
+
+		}
+
+		public WebElement connectionPopUpEmailCount(String teamMember, String email, int timeOut) {
+
+			String xpath = "//div[@class='slds-modal__container']//a[text()='" + teamMember
+					+ "']/ancestor::th[@data-label='Team Member']/following-sibling::td[@data-label='Meetings and Calls']//span";
+			try {
+				return FindElement(driver, xpath, "Header: " + email, action.SCROLLANDBOOLEAN, timeOut);
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpath, "Header: " + email, action.SCROLLANDBOOLEAN, timeOut);
+			}
+
+		}
+		
+		public WebElement contactDealCount(String contactName, int timeOut) {
+		       String xpath = "//a[text()='" + contactName
+		                + "']/ancestor::td[@data-label='Name']/..//td[@data-label='Deals']//span//button";
+		        try {
+		            return FindElement(driver, xpath, "Contact Header: " + contactName, action.SCROLLANDBOOLEAN, timeOut);
+		        } catch (StaleElementReferenceException e) {
+		            return FindElement(driver, xpath, "Contact Header: " + contactName, action.SCROLLANDBOOLEAN, timeOut);
+		        }
+		   }
+		
+		
+		public WebElement contactMeetingAndCallCount(String contactName, int timeOut) {
+		       String xpath = "//a[text()='"+contactName+"']/ancestor::td[@data-label='Name']/..//td[@data-label='Meetings and Calls']//span//button";
+		        try {
+		            return FindElement(driver, xpath, "Contact Header: " + contactName, action.SCROLLANDBOOLEAN, timeOut);
+		        } catch (StaleElementReferenceException e) {
+		            return FindElement(driver, xpath, "Contact Header: " + contactName, action.SCROLLANDBOOLEAN, timeOut);
+		        }
+		   }
+		
+		public WebElement contactConnectionsCount(String contactName, int timeOut) {
+		       String xpath = "//a[text()='"+contactName+"']/ancestor::tr//td[@role='gridcell']//button[@name='Connections']";
+		        try {
+		            return FindElement(driver, xpath, "Contact Header: " + contactName, action.SCROLLANDBOOLEAN, timeOut);
+		        } catch (StaleElementReferenceException e) {
+		            return FindElement(driver, xpath, "Contact Header: " + contactName, action.SCROLLANDBOOLEAN, timeOut);
+		        }
+		   }
+		
+		
+		
+		
+		  @FindBy(xpath = "//h2[contains(@class,'slds-text-heading_medium') and contains(text(),'Meetings and Calls')]")
+		    private WebElement meetingAndCallPopUp;
+		   
+		   public WebElement getMeetingAndCallPopUp(int timeOut) {
+		        return isDisplayed(driver, meetingAndCallPopUp, "Visibility", timeOut, "Meeting and calls popup");
+		    }
+
+		   @FindBy(xpath = "//li[contains(@class,'slds-dropdown-trigger_click')]//button[@class='slds-button slds-button_icon-border-filled']")
+		    private WebElement actionEroBtn;
+		   
+		   public WebElement getactionEroBtn(int timeOut) {
+		        return isDisplayed(driver, actionEroBtn, "Visibility", timeOut, "Action aero button");
+		    }
+		   
+		   @FindBy(xpath = "//a[@role='menuitem']/span[text()='Export']")
+		    private WebElement exportBtn;
+		   
+		   public WebElement getExportBtn(int timeOut) {
+		        return isDisplayed(driver, exportBtn, "Visibility", timeOut, "Export button");
+		    }
+		   
+		   @FindBy(xpath = "//h2[text()='Export']")
+		    private WebElement exportPopup;
+		   
+		   public WebElement getExportPopup(int timeOut) {
+		        return isDisplayed(driver, exportPopup, "Visibility", timeOut, "Export Popup");
+		    }
+		 
+		   @FindBy(xpath = "//h2[text()='Export']/ancestor::div[contains(@class,'slds-modal__container')]//button[@title='Close this window']")
+		    private WebElement exportPopupCloseBtn;
+		   
+		   public WebElement getexportPopupCloseBtn(int timeOut) {
+		        return isDisplayed(driver, exportPopupCloseBtn, "Visibility", timeOut, "Export Popup close button");
+		    }
+		   
+		   public WebElement getUtilityRecord(String utilityRecordName, int timeOut) {
+		       String xpath = "//ul[contains(@class,'utilitybar')]//li//span[text()='"+utilityRecordName+"']";
+		        try {
+		            return FindElement(driver, xpath, "Utility header: " + utilityRecordName, action.SCROLLANDBOOLEAN, timeOut);
+		        } catch (StaleElementReferenceException e) {
+		            return FindElement(driver, xpath, "Utility header: " + utilityRecordName, action.SCROLLANDBOOLEAN, timeOut);
+		        }
+		   }
+		   
+		   
+		   
+		
+		 
+		 
 }
