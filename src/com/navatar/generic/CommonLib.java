@@ -3405,8 +3405,8 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 	/**
 	 * 
 	 * @author Ankur Huria
-	 * @description- This method is used to get Future date according to the time
-	 *               zone.
+	 * @description- This method is used to get Future date and past date according to the time
+	 *               zone. pass the Month in the capital letter
 	 */
 	public static String getFutureDateAccToTimeZone(String timeZone, String format, int daysToAdd) {
 		try {
@@ -3428,6 +3428,23 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 			return null;
 		}
 	}
+
+	/**
+	 * 
+	 * @author Ankur Huria
+	 * @description- This method is used to convert Date From one format to another
+	 */
+	public static String convertDateFromOneFormatToAnother(String oldDateString, String oldDateFormat,
+			String newDateFormat) {
+		try {
+			SimpleDateFormat format1 = new SimpleDateFormat(oldDateFormat);
+			SimpleDateFormat format2 = new SimpleDateFormat(newDateFormat);
+			Date date = format1.parse(oldDateString);
+			return format2.format(date);
+		} catch (Exception e) {
+			e.getMessage();
+			return null;
+		}
+	}
+
 }
-
-

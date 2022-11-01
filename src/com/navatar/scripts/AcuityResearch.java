@@ -346,7 +346,38 @@ public void GLTc003_VerifyTheResearchFunctionality(String projectName) {
 			if (ele!=null && ele.equalsIgnoreCase("Research Findings")) {
 			log(LogStatus.ERROR, ele +" is visible", YesNo.Yes);
 			sa.assertTrue(false, ele +" is visible");
-			}		
+			}
+			
+			
+			//Research Findings
+			String value="";
+	        String type="";
+	        String[][] EntityOrAccounts = {{ ADEIns1, ADEIns1RecordType ,null} , { ADEIns2, ADEIns2RecordType ,null},
+	         { ADEIns3, ADEIns3RecordType ,null}, { ADEIns4, ADEIns4RecordType ,null}, { ADEIns5, ADEIns5RecordType ,null},
+	         { ADEIns6, ADEIns6RecordType ,null}};
+	        
+
+
+
+	       for (String[] accounts : EntityOrAccounts) {
+	            if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
+	                log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);    
+	                value = accounts[0];
+	                type = accounts[1];
+	                if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
+	                    log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);    
+	                } else {
+	                    sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
+	                    log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+value+" of record type : "+type,YesNo.Yes);
+	                }
+
+
+
+
+	            } else {
+	                sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object1Tab);
+	                log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object1Tab,YesNo.Yes);
+	            }
 			
 	} else {
 		log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName, YesNo.Yes);
