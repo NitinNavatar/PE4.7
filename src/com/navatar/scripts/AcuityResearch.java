@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.server.handler.SwitchToParentFrame;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -57,7 +58,7 @@ public class AcuityResearch extends BaseLib{
 	@Parameters({ "projectName" })
 
 	@Test
-	public void GLTc001_CreateGLUser(String projectName) {
+	public void ARTc001_CreateUsers(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -157,7 +158,7 @@ public class AcuityResearch extends BaseLib{
 	
 	@Parameters({ "projectName"})
 	@Test
-	public void GLTc002_VerifyTheNavigationMenuItems(String projectName) {
+	public void ARTc002_VerifyTheNavigationMenuItems(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -321,64 +322,54 @@ public class AcuityResearch extends BaseLib{
 
 @Parameters({ "projectName"})
 @Test
-public void GLTc003_VerifyTheResearchFunctionality(String projectName) {
+public void ARTc003_VerifyTheResearchFunctionality(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 	SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-	String errorName = "Your search term must have 2 or more characters.";
+	String errorName = "  Your search term must have 2 or more characters.";
 	String xpath;
 	String ele;
+	
+	String[][] val = {{MRSD_1_ResearchFindings},{MRSD_2_ResearchFindings},{MRSD_3_ResearchFindings},{MRSD_4_ResearchFindings},{MRSD_5_ResearchFindings},{MRSD_6_ResearchFindings},{MRSD_7_ResearchFindings},{MRSD_8_ResearchFindings},{MRSD_9_ResearchFindings}};
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	ThreadSleep(5000);
 	
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(clickUsingJavaScript(driver, bp.getResearchButton(20),"Research Button", action.BOOLEAN)) {
+		if(clickUsingJavaScript(driver, bp.getResearchButton(10),"Research Button", action.BOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Research Button", YesNo.No);
 			ThreadSleep(2000);
-			clickUsingJavaScript(driver, bp.getResearchMinimize(20),"Research Button", action.BOOLEAN);
-			ThreadSleep(4000);
-			xpath = "(//h2[contains(@class,'vertical__title')]";
+			clickUsingJavaScript(driver, bp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+			ThreadSleep(8000);
+			xpath = "//h2[contains(@class,'vertical__title')]";
 			ele = FindElement(driver, xpath,"Research Findings", action.BOOLEAN, 10).getText();
 			if (ele!=null && ele.equalsIgnoreCase("Research Findings")) {
-			log(LogStatus.ERROR, ele +" is visible", YesNo.Yes);
-			sa.assertTrue(false, ele +" is visible");
+			log(LogStatus.PASS, ele +" is visible", YesNo.Yes);
+			sa.assertTrue(true, ele +" is visible");
+			}
+			log(LogStatus.PASS, val[1][0] +" is geting from excel", YesNo.Yes);
+			log(LogStatus.PASS, val[2][0] +" is geting from excel", YesNo.Yes);
+			ArrayList<String> Data = bp.verifyDataonResearchPage(projectName, mode, val);
+			if (Data.isEmpty()) {
+				log(LogStatus.PASS, "Data has been Matched", YesNo.No);
+				sa.assertTrue(true, "Data has been Matched");
+			} else {
+				log(LogStatus.ERROR, "Data is not Matched", YesNo.Yes);
+				sa.assertTrue(false, "Data is not Matched : " + Data);
 			}
 			
-			
-			//Research Findings
-			String value="";
-	        String type="";
-	        String[][] EntityOrAccounts = {{ ADEIns1, ADEIns1RecordType ,null} , { ADEIns2, ADEIns2RecordType ,null},
-	         { ADEIns3, ADEIns3RecordType ,null}, { ADEIns4, ADEIns4RecordType ,null}, { ADEIns5, ADEIns5RecordType ,null},
-	         { ADEIns6, ADEIns6RecordType ,null}};
-	        
-
-
-
-	       for (String[] accounts : EntityOrAccounts) {
-	            if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
-	                log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);    
-	                value = accounts[0];
-	                type = accounts[1];
-	                if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
-	                    log(LogStatus.INFO,"successfully Created Account/Entity : "+value+" of record type : "+type,YesNo.No);    
-	                } else {
-	                    sa.assertTrue(false,"Not Able to Create Account/Entity : "+value+" of record type : "+type);
-	                    log(LogStatus.SKIP,"Not Able to Create Account/Entity : "+value+" of record type : "+type,YesNo.Yes);
-	                }
-
-
-
-
-	            } else {
-	                sa.assertTrue(false,"Not Able to Click on Tab : "+TabName.Object1Tab);
-	                log(LogStatus.SKIP,"Not Able to Click on Tab : "+TabName.Object1Tab,YesNo.Yes);
-	            }
-			
+			xpath = "(//div[contains(@class,'left_small')]//span)[2]";
+			ele = FindElement(driver, xpath, errorName, action.BOOLEAN, 10).getText();
+			if(ele.equalsIgnoreCase(errorName)){
+				log(LogStatus.PASS, ele +" has been Matched with " +errorName, YesNo.No);
+				sa.assertTrue(true, ele +" has been Matched with " +errorName);
+			} else {
+				log(LogStatus.ERROR, ele +" is not Matched with " +errorName, YesNo.Yes);
+				sa.assertTrue(false, ele +" is not Matched with " +errorName);
+			}
 	} else {
 		log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName, YesNo.Yes);
 		sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName);

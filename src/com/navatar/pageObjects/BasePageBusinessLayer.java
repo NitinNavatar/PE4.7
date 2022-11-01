@@ -13886,9 +13886,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	}
 	
 	
-	
-	public ArrayList<String> verifyDataonResearchPage(String environment, String mode, String appPageName,
-			String FieldName, String[][] Data) {
+	public ArrayList<String> verifyDataonResearchPage(String environment, String mode, String[][] Data) {
 		
 		String tableData = null;
 		ArrayList<String> verifyData = new ArrayList<String>();
@@ -13906,28 +13904,32 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ArrayList<String> DataFromOrg = new ArrayList<String>();
 		for (int i = 0; i < ele.size(); i++) {
 			try {
-				tableData = CommonLib.getText(driver, ele.get(i), ele.get(i) + " from SDG table",
+				tableData = CommonLib.getText(driver, ele.get(i), ele.get(i) + " from Org",
 						action.SCROLLANDBOOLEAN);
-
+				ThreadSleep(2000);
+				xpath = "//div[contains(@class,'active')]//a[text()='"+ tableData +"']";
+				driver.findElement(By.xpath(xpath)).click();
+				ThreadSleep(2000);
 				if (tableData != "") {
 					DataFromOrg.add(tableData);
 				}
 
 			} catch (Exception ex) {
 				ex.printStackTrace();
-				log(LogStatus.ERROR, "Could not get the " + ele.get(i) + " Data from the SDG", YesNo.Yes);
-				verifyData.add("Could not get the " + ele.get(i) + " from the SDG");
+				log(LogStatus.ERROR, "Could not get the " + ele.get(i) + " Data from File", YesNo.Yes);
+				verifyData.add("Could not get the " + ele.get(i) + " from File");
 
 			}
 		}
-
+		
+		
 		for (int i = 0; i < DataFromExcel.size(); i++) {
 			if (DataFromOrg.get(i).equals(DataFromExcel.get(i))) {
 				log(LogStatus.INFO, "Data from Excel : " + DataFromExcel.get(i)
-						+ " has been matched with the Org SDG Data : " + DataFromOrg.get(i), YesNo.No);
+						+ " has been matched with the Org Data : " + DataFromOrg.get(i), YesNo.No);
 			} else {
 				log(LogStatus.ERROR, "Data from Excel : " + DataFromExcel.get(i)
-						+ " is not matched with the Org SDG Data : " + DataFromOrg.get(i), YesNo.Yes);
+						+ " is not matched with the Org Data : " + DataFromOrg.get(i), YesNo.Yes);
 				verifyData.add(DataFromExcel.get(i));
 
 			}
