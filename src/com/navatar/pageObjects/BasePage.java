@@ -7453,5 +7453,12 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, researchFindings, "Visibility", timeOut, "Research Findings");
 
 	}
+	
+	
+	public WebElement getFieldName(String tableName, int timeOut) {
+		String xpath = "//div[contains(@class,'active')]//a[text()='"+ tableName +"']";
+		
+		return FindElement(driver, xpath, "Field Header Name: " + tableName, action.SCROLLANDBOOLEAN, timeOut);
+	}
 
 }

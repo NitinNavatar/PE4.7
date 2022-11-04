@@ -2326,7 +2326,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 									YesNo.Yes);
 						}
 					}
-					if (clickUsingJavaScript(driver, getCustomTabSaveBtn(projectName, 10), "save button",
+					if (clickUsingJavaScript(driver, getCustomTabSaveBtn(10), "save button",
 							action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Click on save Button ", YesNo.No);
 						ThreadSleep(10000);

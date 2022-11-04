@@ -13886,7 +13886,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	}
 	
 	
-	public ArrayList<String> verifyDataonResearchPage(String environment, String mode, String[][] Data) {
+	public ArrayList<String> verifyFieldonResearchPage(String environment, String mode, String[][] Data) {
 		
 		String tableData = null;
 		ArrayList<String> verifyData = new ArrayList<String>();
@@ -13907,8 +13907,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				tableData = CommonLib.getText(driver, ele.get(i), ele.get(i) + " from Org",
 						action.SCROLLANDBOOLEAN);
 				ThreadSleep(2000);
-				xpath = "//div[contains(@class,'active')]//a[text()='"+ tableData +"']";
-				driver.findElement(By.xpath(xpath)).click();
+				click(driver, getFieldName(tableData,10), xpath, action.BOOLEAN);
 				ThreadSleep(2000);
 				if (tableData != "") {
 					DataFromOrg.add(tableData);
@@ -13936,7 +13935,29 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 		return verifyData;
-		
 	}
+	
+	
+public ArrayList<String> verifyFieldWithDataonResearchPage(String environment, String mode, String[][] Data) {
+		
+		ArrayList<String> verifyData = new ArrayList<String>();
+		int row = Data.length;
+		ArrayList<String> DataFromExcel = new ArrayList<String>();
+		
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < Data[0].length; j++) {
+				DataFromExcel.add(Data[i][j]);
+				
+				String xpath = "//div[contains(@class,'active')]//a[text()='"+ Data[i][j]+"']";
+				WebElement ele = CommonLib.FindElement(driver, xpath, Data[i][j], action.BOOLEAN, 10);
+				click(driver, ele, xpath, action.BOOLEAN);
+				
+				
+				
+			}
+		}
+		
 
+		return verifyData;
+	}
 }
