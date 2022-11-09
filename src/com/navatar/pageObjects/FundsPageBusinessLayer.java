@@ -1274,7 +1274,7 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 			return false;
 		}
 
-		if (recordType != null && !recordType.isBlank()) {
+		if (recordType != null && !recordType.isEmpty()) {
 			if (CommonLib.click(driver, recordTypeRadioButton(recordType, 20), "Radio button: " + recordType,
 					action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on the radio button: " + recordType, YesNo.No);

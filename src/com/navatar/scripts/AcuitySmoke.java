@@ -2551,14 +2551,14 @@ public class AcuitySmoke extends BaseLib {
 		String[] institutionName = AS_FirmLegalName13.split("<Break>", -1);
 		String[] recordType = AS_FirmRecordType13.split("<Break>", -1);
 
-		String[] contactFirstNames = AS_ContactFirstName11.split("<Break>", -1);
-		String[] contactLastNames = AS_ContactLastName11.split("<Break>", -1);
-		String[] contactEmailIds = AS_ContactEmail11.split("<Break>", -1);
-		String[] otherContactLabels = AS_ContactOtherLabelNames11.split("<Break>", -1);
-		String[] otherContactValues = AS_ContactOtherLabelValues11.split("<Break>", -1);
+		String[] contactFirstNames = AS_ContactFirstName8.split("<Break>", -1);
+		String[] contactLastNames = AS_ContactLastName8.split("<Break>", -1);
+		String[] contactEmailIds = AS_ContactEmail8.split("<Break>", -1);
+		String[] otherContactLabels = AS_ContactOtherLabelNames8.split("<Break>", -1);
+		String[] otherContactValues = AS_ContactOtherLabelValues8.split("<Break>", -1);
 		String[] contactInstitutionsName = AS_ContactLegalName8.split("<Break>", -1);
 
-		String[] dealRecordType = AS_DealRecordType5.split("<Break>", -1);
+		String[] dealRecordType = AS_DealRecordType3.split("<Break>", -1);
 		String[] dealName = AS_DealName3.split("<Break>", -1);
 		String[] dealCompany = AS_DealCompany3.split("<Break>", -1);
 		String[] dealStage = AS_DealStage3.split("<Break>", -1);
@@ -3907,7 +3907,8 @@ public class AcuitySmoke extends BaseLib {
 				if (BP.clicktabOnPage(subTabName)) {
 					log(LogStatus.PASS, "Clicked on Tab: " + subTabName, YesNo.No);
 
-					ArrayList<String> result1 = BP.verifyRecordOnInteractionCard(null, "Nav Call", null, false, false, null);
+					ArrayList<String> result1 = BP.verifyRecordOnInteractionCard(null, "Nav Call", null, false, false,
+							null);
 					if (result1.isEmpty()) {
 						log(LogStatus.PASS, AS_ATSubject13 + " record has been verified on intraction", YesNo.No);
 
@@ -3928,7 +3929,8 @@ public class AcuitySmoke extends BaseLib {
 						sa.assertTrue(false,
 								"Nav Meeting" + " record is not verified on intraction, Reason: " + result1);
 					}
-					ArrayList<String> result3 = BP.verifyRecordOnInteractionCard(null, "Nav Task", null, false, false, null);
+					ArrayList<String> result3 = BP.verifyRecordOnInteractionCard(null, "Nav Task", null, false, false,
+							null);
 					if (result3.isEmpty()) {
 						log(LogStatus.PASS, AS_ATSubject14 + " record has been verified on intraction", YesNo.No);
 
@@ -4004,8 +4006,9 @@ public class AcuitySmoke extends BaseLib {
 		FundsPageBusinessLayer fund = new FundsPageBusinessLayer(driver);
 		FundRaisingPageBusinessLayer fr = new FundRaisingPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		
-		String dealRecordTypeList = AS_DealRecordType5;
+
+		String dealRecordTypeList = AS_DealRecordType4;
+
 		String fundRecordTypeList = AS_FundRecordType3;
 		String fundraisingRecordTypeList = AS_FundraisingRecordType2;
 		String dealRecordTypeArray[] = dealRecordTypeList.split(breakSP, -1);
@@ -4755,7 +4758,7 @@ public class AcuitySmoke extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-	
+
 	@Parameters({ "projectName" })
 	@Test
 	public void AcuitySmokeTc041_1_CreateDealUser(String projectName) {

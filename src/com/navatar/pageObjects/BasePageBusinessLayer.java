@@ -3607,6 +3607,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ele = isDisplayed(driver, ele, "Visibility", 10, head + " : " + itemName);
 		return ele;
 	}
+	
+	public WebElement verifydefaultCreatedItemOnPageAcuty(Header header, String TabName) {
+		WebElement ele;
+		String xpath = "";
+		String head = header.toString().replace("_", " ");
+		ThreadSleep(3000);
+		xpath = "//*[contains(@class,'slds-is-active')  and contains(@title,'"+TabName+"')]";
+		ele = FindElement(driver, xpath, "Header : " + TabName, action.BOOLEAN, 30);
+		ele = isDisplayed(driver, ele, "Visibility", 10, head + " : " + TabName);
+		return ele;
+	}
 
 	/**
 	 * @author Akul Bhutani
@@ -11006,7 +11017,90 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return result;
 	}
+	
+	public ArrayList<String> verifyDealsSectionBoxInAcuity(String recordNameOfRecordPage, String dealName,
+			String company, String stage, String dateReceived) {
 
+		ArrayList<String> result = new ArrayList<String>();
+
+		if (dealAcuityDealName(dealName, 20) != null) {
+
+			if (company != null && company != "") {
+
+				String actualCompany = getText(driver, dealAcuityCompanyName(dealName, company, 20), "Title",
+						action.SCROLLANDBOOLEAN);
+				if (actualCompany.equalsIgnoreCase(company)) {
+					log(LogStatus.INFO,
+							"Actual result " + actualCompany + " of Company has been matched with Expected result : "
+									+ company + " of Deal Name: " + dealName + " under Record Page of "
+									+ recordNameOfRecordPage,
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Actual result " + actualCompany + " of Company is not matched with Expected result : "
+									+ company + " of Deal Name: " + dealName + " under Record Page of "
+									+ recordNameOfRecordPage,
+							YesNo.No);
+					result.add("Actual result " + actualCompany + " of Company is not matched with Expected result : "
+							+ company + " of Deal Name: " + dealName + " under Record Page of "
+							+ recordNameOfRecordPage);
+				}
+			}
+
+			if (stage != null && stage != "") {
+
+				String actualStage = getText(driver, dealAcuityStageName(dealName, stage, 20), "deal",
+						action.SCROLLANDBOOLEAN);
+				if (actualStage.equalsIgnoreCase(stage)) {
+					log(LogStatus.INFO,
+							"Actual result " + actualStage + " of Stage has been matched with Expected resut : " + stage
+									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Actual result " + actualStage + " of Stage are not matched with Expected resut : " + stage
+									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							YesNo.No);
+					result.add("Actual result " + actualStage + " of Stage are not matched with Expected resut : "
+							+ stage + " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage);
+				}
+			}
+
+			if (dateReceived != null && dateReceived != "") {
+
+				String actualDateReceived = getText(driver, dealAcuityDateReceived(dealName, dateReceived, 20),
+						"meeting and call", action.SCROLLANDBOOLEAN);
+				if (actualDateReceived.equalsIgnoreCase(dateReceived)) {
+					log(LogStatus.INFO,
+							"Actual result " + actualDateReceived
+									+ " of Date Received has been matched with Expected result : " + dateReceived
+									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Actual result " + actualDateReceived
+									+ " of Date Received are not matched with Expected resut : " + dateReceived
+									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							YesNo.No);
+					result.add("Actual result " + actualDateReceived
+							+ " of Date Received are not matched with Expected resut : " + dateReceived
+							+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage);
+				}
+			}
+
+		} else {
+			log(LogStatus.ERROR,
+					"No Deal Name found of name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+					YesNo.No);
+			result.add("No Deal Name found of name: " + dealName + " under Record Page of " + recordNameOfRecordPage);
+
+		}
+
+		return result;
+	}
+
+	
+	
 	/**
 	 * @author Ankur Huria
 	 * @param recordNameOfRecordPage
@@ -11103,6 +11197,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return result;
 	}
+	
+	
 	/**
 	 * @author Ankur Huria
 	 * @param recordNameOfRecordPage
@@ -13896,10 +13992,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	}
 	
-	
-	
-	public ArrayList<String> verifyDataonResearchPage(String environment, String mode, String appPageName,
-			String FieldName, String[][] Data) {
+	public ArrayList<String> verifyFieldonResearchPage(String environment, String mode, String[][] Data) {
 		
 		String tableData = null;
 		ArrayList<String> verifyData = new ArrayList<String>();
@@ -13917,37 +14010,40 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ArrayList<String> DataFromOrg = new ArrayList<String>();
 		for (int i = 0; i < ele.size(); i++) {
 			try {
-				tableData = CommonLib.getText(driver, ele.get(i), ele.get(i) + " from SDG table",
+				tableData = CommonLib.getText(driver, ele.get(i), ele.get(i) + " from Org",
 						action.SCROLLANDBOOLEAN);
-
+				ThreadSleep(2000);
+				click(driver, getFieldName(tableData,10), xpath, action.BOOLEAN);
+				ThreadSleep(2000);
 				if (tableData != "") {
 					DataFromOrg.add(tableData);
 				}
 
 			} catch (Exception ex) {
 				ex.printStackTrace();
-				log(LogStatus.ERROR, "Could not get the " + ele.get(i) + " Data from the SDG", YesNo.Yes);
-				verifyData.add("Could not get the " + ele.get(i) + " from the SDG");
+				log(LogStatus.ERROR, "Could not get the " + ele.get(i) + " Data from File", YesNo.Yes);
+				verifyData.add("Could not get the " + ele.get(i) + " from File");
 
 			}
 		}
-
+		
+		
 		for (int i = 0; i < DataFromExcel.size(); i++) {
 			if (DataFromOrg.get(i).equals(DataFromExcel.get(i))) {
 				log(LogStatus.INFO, "Data from Excel : " + DataFromExcel.get(i)
-						+ " has been matched with the Org SDG Data : " + DataFromOrg.get(i), YesNo.No);
+						+ " has been matched with the Org Data : " + DataFromOrg.get(i), YesNo.No);
 			} else {
 				log(LogStatus.ERROR, "Data from Excel : " + DataFromExcel.get(i)
-						+ " is not matched with the Org SDG Data : " + DataFromOrg.get(i), YesNo.Yes);
+						+ " is not matched with the Org Data : " + DataFromOrg.get(i), YesNo.Yes);
 				verifyData.add(DataFromExcel.get(i));
 
 			}
 		}
 
 		return verifyData;
-		
 	}
 	
+
 	public boolean verifySectionsAndTooltipOnAcuityTab(List<String> sectionHeaderName,List<String> toolTipMessage)
 	{
 		String xPath;
@@ -14449,6 +14545,31 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		}
 		return result;
+	}
+
+	
+public ArrayList<String> verifyFieldWithDataonResearchPage(String environment, String mode, String[][] Data) {
+		
+		ArrayList<String> verifyData = new ArrayList<String>();
+		int row = Data.length;
+		ArrayList<String> DataFromExcel = new ArrayList<String>();
+		
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < Data[0].length; j++) {
+				DataFromExcel.add(Data[i][j]);
+				
+				String xpath = "//div[contains(@class,'active')]//a[text()='"+ Data[i][j]+"']";
+				WebElement ele = CommonLib.FindElement(driver, xpath, Data[i][j], action.BOOLEAN, 10);
+				click(driver, ele, xpath, action.BOOLEAN);
+				
+				
+				
+			}
+		}
+		
+
+		return verifyData;
 
 	}
+
 }

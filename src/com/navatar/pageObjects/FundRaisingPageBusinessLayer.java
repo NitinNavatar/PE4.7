@@ -678,7 +678,7 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage {
 		if (click(driver, getNewButton(environment, mode, 60), "New Button", action.SCROLLANDBOOLEAN)) {
 			ThreadSleep(500);
 
-			if (fundraisingRecordType != null && !fundraisingRecordType.isBlank()) {
+			if (fundraisingRecordType != null && !fundraisingRecordType.isEmpty()) {
 				if (CommonLib.click(driver, recordTypeRadioButton(fundraisingRecordType, 20),
 						"Radio button: " + fundraisingRecordType, action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on the radio button: " + fundraisingRecordType, YesNo.No);
