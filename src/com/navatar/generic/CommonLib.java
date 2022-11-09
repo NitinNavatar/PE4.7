@@ -328,6 +328,22 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 		return true;
 	}
 
+	public static String mouseOverGetTextOperation(WebDriver driver, WebElement webElement) {
+		String toolTip;
+		Actions actions = new Actions(driver);
+		try {
+			actions.moveToElement(webElement).build().perform();
+			toolTip = webElement.getAttribute("title");
+			appLog.info("Mouse over Successfull");
+			appLog.info("Tooltip text is : " + toolTip);
+		} catch (Exception e) {
+			appLog.info("Mouse over UnSuccessfull");
+			return null;
+		}
+		return toolTip;
+	}
+	
+	
 	public static boolean mouseOverClickOperation(WebDriver driver, WebElement webElement) {
 		Actions actions = new Actions(driver);
 		try {

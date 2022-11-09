@@ -2551,14 +2551,14 @@ public class AcuitySmoke extends BaseLib {
 		String[] institutionName = AS_FirmLegalName13.split("<Break>", -1);
 		String[] recordType = AS_FirmRecordType13.split("<Break>", -1);
 
-		String[] contactFirstNames = AS_ContactFirstName11.split("<Break>", -1);
-		String[] contactLastNames = AS_ContactLastName11.split("<Break>", -1);
-		String[] contactEmailIds = AS_ContactEmail11.split("<Break>", -1);
-		String[] otherContactLabels = AS_ContactOtherLabelNames11.split("<Break>", -1);
-		String[] otherContactValues = AS_ContactOtherLabelValues11.split("<Break>", -1);
+		String[] contactFirstNames = AS_ContactFirstName8.split("<Break>", -1);
+		String[] contactLastNames = AS_ContactLastName8.split("<Break>", -1);
+		String[] contactEmailIds = AS_ContactEmail8.split("<Break>", -1);
+		String[] otherContactLabels = AS_ContactOtherLabelNames8.split("<Break>", -1);
+		String[] otherContactValues = AS_ContactOtherLabelValues8.split("<Break>", -1);
 		String[] contactInstitutionsName = AS_ContactLegalName8.split("<Break>", -1);
 
-		String[] dealRecordType = AS_DealRecordType5.split("<Break>", -1);
+		String[] dealRecordType = AS_DealRecordType3.split("<Break>", -1);
 		String[] dealName = AS_DealName3.split("<Break>", -1);
 		String[] dealCompany = AS_DealCompany3.split("<Break>", -1);
 		String[] dealStage = AS_DealStage3.split("<Break>", -1);
@@ -4005,7 +4005,7 @@ public class AcuitySmoke extends BaseLib {
 		FundRaisingPageBusinessLayer fr = new FundRaisingPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 
-		String dealRecordTypeList = AS_DealRecordType5;
+		String dealRecordTypeList = AS_DealRecordType4;
 		String fundRecordTypeList = AS_FundRecordType3;
 		String fundraisingRecordTypeList = AS_FundraisingRecordType2;
 		String dealRecordTypeArray[] = dealRecordTypeList.split(breakSP, -1);
