@@ -218,12 +218,12 @@ Fundraising_ContactPage, Financing, Financial_Performance, Marketing_Initiative,
 			public String toString() {
 				return "Management Meeting";
 		}
-		},IOI,IndicationOfInterest{
+		},IOI,IOL,IndicationOfInterest{
 			@Override
 			public String toString() {
 				return "Indication of Interest";
 		}
-		},LOI,Due_Diligence,Parked,Closed,Closed_Updated,NonDisclosureAgreement{
+		},LOI,Due_Diligence,Parked,Closed,Closed_Updated,DD,NonDisclosureAgreement{
 			@Override
 			public String toString() {
 				return "Non-Disclosure Agreement";

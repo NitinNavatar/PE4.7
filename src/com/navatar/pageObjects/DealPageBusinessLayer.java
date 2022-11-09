@@ -794,8 +794,9 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 
 							if (click(driver,
 									FindElement(driver,
-											"//span[text()='" + labelValue[i]
-													+ "']/ancestor::lightning-base-combobox-item",
+//											"//span[text()='" + labelValue[i]
+//													+ "']/ancestor::lightning-base-combobox-item",
+													"//*[text()='" + labelNames[i]+ "']/..//*[@title='" + labelValue[i]+ "']",	
 											"Legal Name List", action.THROWEXCEPTION, 30),
 									labelNames[i] + "   :   Account Name", action.BOOLEAN)) {
 								appLog.info(labelNames[i] + "  is present in list.");

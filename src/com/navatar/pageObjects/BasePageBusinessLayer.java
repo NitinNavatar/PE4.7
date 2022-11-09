@@ -3607,6 +3607,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ele = isDisplayed(driver, ele, "Visibility", 10, head + " : " + itemName);
 		return ele;
 	}
+	
+	public WebElement verifydefaultCreatedItemOnPageAcuty(Header header, String TabName) {
+		WebElement ele;
+		String xpath = "";
+		String head = header.toString().replace("_", " ");
+		ThreadSleep(3000);
+		xpath = "//*[contains(@class,'slds-is-active')  and contains(@title,'"+TabName+"')]";
+		ele = FindElement(driver, xpath, "Header : " + TabName, action.BOOLEAN, 30);
+		ele = isDisplayed(driver, ele, "Visibility", 10, head + " : " + TabName);
+		return ele;
+	}
 
 	/**
 	 * @author Akul Bhutani
@@ -11006,7 +11017,90 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return result;
 	}
+	
+	public ArrayList<String> verifyDealsSectionBoxInAcuity(String recordNameOfRecordPage, String dealName,
+			String company, String stage, String dateReceived) {
 
+		ArrayList<String> result = new ArrayList<String>();
+
+		if (dealAcuityDealName(dealName, 20) != null) {
+
+			if (company != null && company != "") {
+
+				String actualCompany = getText(driver, dealAcuityCompanyName(dealName, company, 20), "Title",
+						action.SCROLLANDBOOLEAN);
+				if (actualCompany.equalsIgnoreCase(company)) {
+					log(LogStatus.INFO,
+							"Actual result " + actualCompany + " of Company has been matched with Expected result : "
+									+ company + " of Deal Name: " + dealName + " under Record Page of "
+									+ recordNameOfRecordPage,
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Actual result " + actualCompany + " of Company is not matched with Expected result : "
+									+ company + " of Deal Name: " + dealName + " under Record Page of "
+									+ recordNameOfRecordPage,
+							YesNo.No);
+					result.add("Actual result " + actualCompany + " of Company is not matched with Expected result : "
+							+ company + " of Deal Name: " + dealName + " under Record Page of "
+							+ recordNameOfRecordPage);
+				}
+			}
+
+			if (stage != null && stage != "") {
+
+				String actualStage = getText(driver, dealAcuityStageName(dealName, stage, 20), "deal",
+						action.SCROLLANDBOOLEAN);
+				if (actualStage.equalsIgnoreCase(stage)) {
+					log(LogStatus.INFO,
+							"Actual result " + actualStage + " of Stage has been matched with Expected resut : " + stage
+									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Actual result " + actualStage + " of Stage are not matched with Expected resut : " + stage
+									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							YesNo.No);
+					result.add("Actual result " + actualStage + " of Stage are not matched with Expected resut : "
+							+ stage + " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage);
+				}
+			}
+
+			if (dateReceived != null && dateReceived != "") {
+
+				String actualDateReceived = getText(driver, dealAcuityDateReceived(dealName, dateReceived, 20),
+						"meeting and call", action.SCROLLANDBOOLEAN);
+				if (actualDateReceived.equalsIgnoreCase(dateReceived)) {
+					log(LogStatus.INFO,
+							"Actual result " + actualDateReceived
+									+ " of Date Received has been matched with Expected result : " + dateReceived
+									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							YesNo.No);
+				} else {
+					log(LogStatus.ERROR,
+							"Actual result " + actualDateReceived
+									+ " of Date Received are not matched with Expected resut : " + dateReceived
+									+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+							YesNo.No);
+					result.add("Actual result " + actualDateReceived
+							+ " of Date Received are not matched with Expected resut : " + dateReceived
+							+ " of Deal Name: " + dealName + " under Record Page of " + recordNameOfRecordPage);
+				}
+			}
+
+		} else {
+			log(LogStatus.ERROR,
+					"No Deal Name found of name: " + dealName + " under Record Page of " + recordNameOfRecordPage,
+					YesNo.No);
+			result.add("No Deal Name found of name: " + dealName + " under Record Page of " + recordNameOfRecordPage);
+
+		}
+
+		return result;
+	}
+
+	
+	
 	/**
 	 * @author Ankur Huria
 	 * @param recordNameOfRecordPage
@@ -11103,6 +11197,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return result;
 	}
+	
+	
 	/**
 	 * @author Ankur Huria
 	 * @param recordNameOfRecordPage
@@ -13884,6 +13980,154 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return flag;
 
 	}
-
+	
+	
+	public ArrayList<String> verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(String InteractionSectionmessage,List<String> contactsSectionHeaderName,String contactsSectionHeaderMessage, List<String> dealsSectionHeaderName,String dealsSectionHeaderMessage,List<String> connectionsSectionHeaderName,String connectionsSectionHeaderMessage)
+	{
+		String xPath;
+		WebElement ele;
+		List<WebElement> elements;
+		ArrayList<String> result=new ArrayList<String>();
+		
+		if(InteractionSectionmessage!=null && !"".equals(InteractionSectionmessage))
+		{
+		      xPath="//span[@title='Interactions']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div/div";
+		      ele=FindElement(driver, xPath, "Interaction section message", action.SCROLLANDBOOLEAN, 20);
+		      String text=getText(driver, ele, "Interaction section message", action.SCROLLANDBOOLEAN);
+		      if(text.equals(InteractionSectionmessage))
+		      {
+		    	  log(LogStatus.INFO, InteractionSectionmessage+" message has been verified on Interaction section", YesNo.No);	
+		      }
+		      else
+		      {
+		    	  log(LogStatus.ERROR, InteractionSectionmessage+" message is not verified on Interaction section", YesNo.No);
+		    	  result.add(InteractionSectionmessage+" message is not verified on Interaction section");
+		      }
+		}
+		if(!contactsSectionHeaderName.isEmpty())
+		{
+			ArrayList<String> actualContactsSectionHeaderName=new ArrayList<String>();
+			xPath="//span[@title='Contacts']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//span[@class='slds-truncate' and @title!='']";
+			elements=FindElements(driver, xPath, "Contact section headers");
+			for(WebElement el: elements)
+			{
+				actualContactsSectionHeaderName.add(getText(driver, el, "Contact section headers", action.SCROLLANDBOOLEAN));
+			}
+			
+			xPath="//span[@title='Contacts']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//lightning-icon";
+			elements=FindElements(driver, xPath, "Contact section headers");
+			for(WebElement el: elements)
+			{
+				actualContactsSectionHeaderName.add(getAttribute(driver, el, "Contact section headers", "title"));
+			}
+			
+			
+			if(contactsSectionHeaderName.containsAll(actualContactsSectionHeaderName))
+			{
+				 log(LogStatus.INFO, "The Header name of contact section have been verified "+actualContactsSectionHeaderName, YesNo.No);	
+			}
+			else
+			{
+				log(LogStatus.ERROR, "The Header name of contact section are not verified "+actualContactsSectionHeaderName, YesNo.No);		
+				result.add("The Header name of contact section are not verified "+actualContactsSectionHeaderName);
+			}
+		}
+		if(contactsSectionHeaderMessage!=null && !"".equals(contactsSectionHeaderMessage))
+		{
+			xPath="//span[@title='Contacts']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//div[text()='"+contactsSectionHeaderMessage+"']";
+			ele=FindElement(driver, xPath, "Message on Contact section", action.SCROLLANDBOOLEAN, 15);
+			if(ele!=null)
+			{
+				 log(LogStatus.INFO, "The meessage : "+contactsSectionHeaderMessage+" has been verified on Contect section", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "The meessage : "+contactsSectionHeaderMessage+" is not verified on Contect section", YesNo.No);
+				result.add("The meessage : "+contactsSectionHeaderMessage+" is not verified on Contect section");
+			}
+		}
+		
+		if(!dealsSectionHeaderName.isEmpty())
+		{
+			ArrayList<String> actualDealsSectionHeaderName=new ArrayList<String>();
+			xPath="//span[@title='Deals']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//span[@class='slds-truncate' and text()!='']";
+			elements=FindElements(driver, xPath, "Deal section headers");
+			for(WebElement el: elements)
+			{
+				actualDealsSectionHeaderName.add(getText(driver, el, "deal section headers", action.SCROLLANDBOOLEAN));
+			}
+			if(dealsSectionHeaderName.containsAll(actualDealsSectionHeaderName))
+			{
+				 log(LogStatus.INFO, "The Headers name of deal section have been verified "+actualDealsSectionHeaderName, YesNo.No);	
+			}
+			else
+			{
+				log(LogStatus.ERROR, "The Headers name of deal section are not verified "+actualDealsSectionHeaderName, YesNo.No);
+				result.add("The Headers name of deal section are not verified "+actualDealsSectionHeaderName);
+			}
+		}
+				
+		if(dealsSectionHeaderMessage!=null && !"".equals(dealsSectionHeaderMessage))
+		{
+			xPath="//span[@title='Deals']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//div[text()='"+dealsSectionHeaderMessage+"']";
+			ele=FindElement(driver, xPath, "Message on deal section", action.SCROLLANDBOOLEAN, 15);
+			if(ele!=null)
+			{
+				 log(LogStatus.INFO, "The meessage : "+dealsSectionHeaderMessage+" has been verified on deal secton", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "The meessage : "+dealsSectionHeaderMessage+" is not verified on deal secton", YesNo.No);
+				result.add("The meessage : "+dealsSectionHeaderMessage+" is not verified on deal secton");
+			}
+		}
+		
+		if(!connectionsSectionHeaderName.isEmpty())
+		{
+			ArrayList<String> actualConnectionsSectionHeaderName=new ArrayList<String>();
+			xPath="//span[@title='Connections']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//span[@class='slds-truncate' and @title!='']";
+			elements=FindElements(driver, xPath, "Connections section headers");
+			for(WebElement el: elements)
+			{
+				actualConnectionsSectionHeaderName.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
+			}
+			
+			xPath="//span[@title='Connections']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//lightning-icon";
+			elements=FindElements(driver, xPath, "Connections section headers");
+			for(WebElement el: elements)
+			{
+				actualConnectionsSectionHeaderName.add(getAttribute(driver, el, "Connections section headers", "title"));
+			}
+			
+			
+			if(connectionsSectionHeaderName.containsAll(actualConnectionsSectionHeaderName))
+			{
+				 log(LogStatus.INFO, "The Header name of Connections section have been verified "+actualConnectionsSectionHeaderName, YesNo.No);	
+			}
+			else
+			{
+				log(LogStatus.ERROR, "The Header name of Connections section are not verified "+actualConnectionsSectionHeaderName, YesNo.No);		
+				result.add("The Header name of Connections section are not verified "+actualConnectionsSectionHeaderName);
+			}
+		}
+		
+		if(connectionsSectionHeaderMessage!=null && !"".equals(connectionsSectionHeaderMessage))
+		{
+			xPath="//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//div[text()='"+connectionsSectionHeaderMessage+"']";
+			ele=FindElement(driver, xPath, "Message on Connections section", action.SCROLLANDBOOLEAN, 15);
+			if(ele!=null)
+			{
+				 log(LogStatus.INFO, "The meessage : "+connectionsSectionHeaderMessage+" has been verified on Connection section", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "The meessage : "+connectionsSectionHeaderMessage+" is not verified on Connection section", YesNo.No);
+				result.add("The meessage : "+connectionsSectionHeaderMessage+" is not verified on Connection section");
+			}
+		}
+		
+		return result;
+	}
+	
 
 }
