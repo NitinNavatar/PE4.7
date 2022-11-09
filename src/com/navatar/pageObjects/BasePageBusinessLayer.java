@@ -11787,7 +11787,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		boolean flag = false;
 		if (click(driver, getInteractionViewAllBtn(30), "Interaction view all button", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on view all button of Interaction", YesNo.No);
-
 			if (getIntractionSubjectName(intractionSubjectName, 30) != null) {
 				log(LogStatus.INFO, intractionSubjectName + " intraction Record has been created", YesNo.No);
 				flag = true;
@@ -11813,9 +11812,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	public ArrayList<String> verifyRecordOnTagged(String[] companyTag, String peopleTag[], String dealTag[]) {
 		ArrayList<String> result = new ArrayList<String>();
 		if (companyTag != null) {
+			
 			if (click(driver, getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
-
 				for (int i = 0; i < companyTag.length; i++) {
 					if (getTaggedRecordName("Companies", companyTag[i], 30) != null) {
 						log(LogStatus.INFO, companyTag[i] + " record is available on company tab", YesNo.No);
@@ -11823,9 +11822,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						log(LogStatus.ERROR, companyTag[i] + " record is not available on company tab", YesNo.No);
 						result.add(companyTag[i] + " record is not available on company tab");
 					}
-
 				}
-
 			} else {
 				log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
 				result.add("Not able to click on Companies tab name");
@@ -11843,14 +11840,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						log(LogStatus.ERROR, peopleTag[i] + " record is not available on people tab", YesNo.No);
 						result.add(peopleTag[i] + " record is not available on people tab");
 					}
-
 				}
-
 			} else {
 				log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
 				result.add("Not able to click on People tab name");
 			}
-
 		}
 		if (dealTag != null) {
 
@@ -11864,17 +11858,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						log(LogStatus.ERROR, dealTag[i] + " record is not available on deal tab", YesNo.No);
 						result.add(dealTag[i] + " record is not available on deal tab");
 					}
-
 				}
-
 			} else {
 				log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
 				result.add("Not able to click on Deals tab name");
 			}
-
 		}
 		return result;
-
 	}
 
 	/**
@@ -11887,11 +11877,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 * @return return Empty ArrayList if test case is passed
 	 */
 
-	public ArrayList<String> verifyRecordOnInteractionCard(String dueDate, String subjectName, String notes, boolean editNote, boolean addNote)
+	public ArrayList<String> verifyRecordOnInteractionCard(String dueDate, String subjectName, String notes, boolean editNote, boolean addNote, String[] relatedTo)
 	{
-		boolean flag=false;
 		String xPath;
 		WebElement ele;
+		List<WebElement> elements;
 		ArrayList<String> result=new ArrayList<String>();
 		if(dueDate!="" && dueDate!=null)
 		{
@@ -11928,12 +11918,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			String subName=getText(driver, ele, "Subject", action.SCROLLANDBOOLEAN);
 			if(subjectName.contains(subName))
 			{
-				log(LogStatus.INFO, "Actual result : "+subName+" has been matched with expected result : "+dueDate+" for Subject", YesNo.No);
+				log(LogStatus.INFO, "Actual result : "+subName+" has been matched with expected result : "+subjectName+" for Subject", YesNo.No);
 			}
 			else
 			{
-				log(LogStatus.ERROR, "Actual result : "+subName+" is not matched with expected result : "+dueDate+" for Subject", YesNo.No);
-				result.add("Actual result : "+subName+" is not matched with expected result : "+dueDate+" for Subject");
+				log(LogStatus.ERROR, "Actual result : "+subName+" is not matched with expected result : "+subjectName+" for Subject", YesNo.No);
+				result.add("Actual result : "+subName+" is not matched with expected result : "+subjectName+" for Subject");
 			}
 
 		}
@@ -11953,6 +11943,35 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 
 		}
+		
+		if(relatedTo!=null)
+		{
+			xPath="//a[@class='interaction_sub subject_text' and text()='Nav Task 1']/../following-sibling::div[contains(@class,'cls_myPill')]//span[@class='slds-pill__label']";
+			elements=FindElements(driver, xPath, "Related to elements");
+			String[] actualRelatedTo = new String[elements.size()]; 
+			for(int i=0; i<elements.size(); i++)
+			{
+				actualRelatedTo[i]=getText(driver, elements.get(i), "related to value", action.SCROLLANDBOOLEAN);
+			}
+			for(int i=0; i<relatedTo.length; i++)
+			{
+				int status=0;
+				for(int j=0; j<actualRelatedTo.length; j++)
+				{			
+					if(relatedTo[i].equals(actualRelatedTo[j]))
+					{
+						log(LogStatus.INFO, "Actual result : "+actualRelatedTo[j]+" has been matched with expected result : "+relatedTo[i]+" for tagged value", YesNo.No);
+				        status++;
+					}			
+				}
+				if(status==0)
+				{
+					log(LogStatus.ERROR, "Expected result : "+relatedTo[i]+" is not matched with the actual result for tagged value", YesNo.No);
+					result.add("Expected result : "+relatedTo[i]+" is not matched with the actual result for tagged value");
+				}
+			}
+		}
+		
 		if(editNote==true)
 		{
 			xPath="//a[text()='"+subjectName+"']/../preceding-sibling::div//button[@title='Edit Note']";
@@ -12472,14 +12491,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			ele=CommonLib.FindElement(driver, xPath, "Name", action.SCROLLANDBOOLEAN, 30);
 			if(ele!=null)
 			{
-				log(LogStatus.INFO, name+" is avalable in contact section", YesNo.No);		
-				sa.assertTrue(true,  name+" is avalable in contact section");	
+				log(LogStatus.INFO, name+" is available in contact section", YesNo.No);		
+				sa.assertTrue(true,  name+" is available in contact section");	
 
 				if(title!=null && title!="") 
 				{
 					xPath="//a[text()='"+name+"']/ancestor::td[@data-label='Name']/..//td[@data-label='Title']//span";
 					ele=CommonLib.FindElement(driver, xPath, "title", action.SCROLLANDBOOLEAN, 30);
-					String actualTitle=getText(driver, ele, "Title", action.SCROLLANDBOOLEAN);
+					String actualTitle=getText(driver, ele, "title", action.SCROLLANDBOOLEAN);
 					if(actualTitle.equalsIgnoreCase(title))
 					{
 						log(LogStatus.INFO, "Actual result "+actualTitle+" of Title has been matched with Expected result : "+title, YesNo.No);		
@@ -12498,12 +12517,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					String actualDeal=getText(driver, ele, "deal", action.SCROLLANDBOOLEAN);
 					if(actualDeal.equalsIgnoreCase(deals))
 					{
-						log(LogStatus.INFO, "Actual result "+actualDeal+" of deal has been matched with Expected resut : "+deals, YesNo.No);		
+						log(LogStatus.INFO, "Actual result : "+actualDeal+" of deal has been matched with Expected resut : "+deals, YesNo.No);		
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Actual result "+actualDeal+" of deal are not matched with Expected result : "+deals, YesNo.No);		
-						result.add("Actual result "+actualDeal+" of deal are not matched with Expected result : "+deals);
+						log(LogStatus.ERROR, "Actual result : "+actualDeal+" of deal are not matched with Expected result : "+deals, YesNo.No);		
+						result.add("Actual result : "+actualDeal+" of deal are not matched with Expected result : "+deals);
 					}
 				}
 
@@ -12522,6 +12541,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						result.add("Actual result "+actualmeetingAndCalls+" of meeting and call are not matched with Expected result : "+meetingAndCalls);
 					}
 				}
+				
 				if(email!=null && email!="") 
 				{
 					xPath="//a[text()='"+name+"']/ancestor::td[@data-label='Name']/..//td[@data-label='Emails']//span";
@@ -12536,13 +12556,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						log(LogStatus.ERROR, "Actual result "+actualEmail+" of email are not matched with Expected result : "+email, YesNo.No);	
 						result.add("Actual result "+actualEmail+" of email are not matched with Expected result : "+email);
 					}
-				}
+				}			
 			}
 			else
 			{
-				log(LogStatus.ERROR, name+" is not avalable in contact section", YesNo.No);		
-				result.add(name+" is not avalable in contact section");
-				sa.assertTrue(false,  name+" is not avalable in contact section");	
+				log(LogStatus.ERROR, name+" is not available in contact section", YesNo.No);		
+				result.add(name+" is not available in contact section");
+				sa.assertTrue(false,  name+" is not available in contact section");	
 			}
 		}
 		else
@@ -12580,14 +12600,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.ERROR, "Subject value is not verify", YesNo.No);	
 					result.add("Subject value is not verify");
 				}
-
 			}
 			else
 			{
 				log(LogStatus.ERROR, "Not able to click on subject textbox", YesNo.No);	
 				result.add("Not able to click on subject textbox");
 			}
-
 
 			if(Notes!=null && Notes!="")
 			{
@@ -12627,9 +12645,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			result.add(" Popup is not open on the same page");
 		}
 		return result;
-	}
-
-	
+	}	
 	
 	/**
 	 * @author Sourabh Saini
@@ -12651,7 +12667,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		boolean flag=false;
 		ThreadSleep(9000);
 
-
 		if(removeTagName!=null && removeTagName.length!=0)
 		{
 			for(int i=0; i<removeTagName.length; i++)
@@ -12670,7 +12685,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						sa.assertTrue(false, "Not able to click on cross button of "+removeTagName[i]);
 						return false;
 					}
-
 				}
 				else
 				{
@@ -13109,7 +13123,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				if(getSuccessMsg(30)!=null)
 				{
 					log(LogStatus.INFO, "Activity timeline record has been updated", YesNo.No);
-					
+
 
 					for(int i=0; i<suggestedTags.length; i++)
 					{
@@ -13147,8 +13161,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					sa.assertTrue(false, "Activity timeline record is not created");
 					return false;
 				}
-
-
 			}
 			else
 			{
@@ -13209,7 +13221,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				for(int i=0; i<actualSubjectName.size(); i++)
 				{
 					int k=0;
-
 					for(int j=0; j<subjectName.size(); j++)
 					{
 						if(actualSubjectName.get(i).equals(subjectName.get(j)))
@@ -13225,14 +13236,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						log(LogStatus.ERROR, actualSubjectName.get(i)+" is not present on the intraction card", YesNo.No);
 						return false;
 					}
-
 				}
 				if(subjectName.size()==status)
 				{
 					log(LogStatus.INFO, "All subject names are present on view all page Intraction card :- "+actualSubjectName, YesNo.No);
 					flag= true;
 				}
-
 			}
 			else
 			{
@@ -13246,14 +13255,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			return false;
 		}
 		return flag;
-
 	}
 
 	public boolean verifyCountofIntractionCard(int IntractionCardCount)
 	{
 		String xPath;
 		List<WebElement> elements;
-        ThreadSleep(4000);
+		ThreadSleep(4000);
 		xPath="//div[@class='slds-grid allcardheight']//article";
 		elements=CommonLib.FindElements(driver, xPath, "Intraction card");
 		if(elements.size()==IntractionCardCount)
@@ -13265,9 +13273,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		{
 			log(LogStatus.ERROR, "the count of Intraction card is not verified", YesNo.No);
 			return false;
-
 		}
-
 	}
 
 	public boolean verifySubjectLinkRedirectionOnIntraction(WebDriver driver, String subjectName)
@@ -13282,17 +13288,24 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			log(LogStatus.INFO, "clicked on "+subjectName, YesNo.No);
 
 			String windowID=switchOnWindow(driver);
-
-			if(getPageHeaderTitle(20)!=null)
+			if(windowID!=null)
 			{
-				log(LogStatus.INFO, subjectName+" link is redirecting to Details Page", YesNo.No);
-				driver.close();
-				driver.switchTo().window(windowID);
-				flag=true;
+
+				if(getPageHeaderTitle(20)!=null)
+				{
+					log(LogStatus.INFO, subjectName+" link is redirecting to Details Page", YesNo.No);
+					driver.close();
+					driver.switchTo().window(windowID);
+					flag=true;
+				}
+				else
+				{
+					log(LogStatus.ERROR, subjectName+" links is not redirecting to Details Page", YesNo.No);
+				}
 			}
 			else
 			{
-				log(LogStatus.ERROR, subjectName+" links is not redirecting to Details Page", YesNo.No);
+				log(LogStatus.ERROR, subjectName+" url did not open in new tab", YesNo.No);
 			}
 		}
 		else
@@ -13317,14 +13330,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			ele=FindElement(driver, xPath, "All Intraction popup", action.SCROLLANDBOOLEAN, 20);
 			if(ele!=null)
 			{
-				log(LogStatus.INFO, "All Intraction popup has been open", YesNo.No);
+				log(LogStatus.INFO, recordName+" Interaction popup have been open", YesNo.No);
 				flag=true;
 			}
 			else
 			{
-				log(LogStatus.ERROR, "All Intraction popup is not open", YesNo.No);
+				log(LogStatus.ERROR, recordName+" Interaction popup is not open", YesNo.No);
 			}
-
 		}
 		else
 		{
@@ -13403,7 +13415,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
 					result.add("Not able to click on People tab name");
 				}
-
 			}
 			else if(taggedName.toString().equals("Deals"))
 			{
@@ -13936,5 +13947,508 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return verifyData;
 		
 	}
+	
+	public boolean verifySectionsAndTooltipOnAcuityTab(List<String> sectionHeaderName,List<String> toolTipMessage)
+	{
+		String xPath;
+		List<WebElement> elements;
+		List<String> expectedSectionHeaderName=new ArrayList<String>();
+		List<String> expectedTooltipName=new ArrayList<String>();
 
+		xPath="//slot//span[contains(@class,'slds-page-header__title')]";
+		elements=FindElements(driver, xPath, "Acuity section Header Name");
+		for(WebElement ele:elements)
+		{
+			expectedSectionHeaderName.add(getText(driver, ele, "Acuity Section Name", action.SCROLLANDBOOLEAN));
+			expectedTooltipName.add(getAttribute(driver, ele, "Acuity Section Name", "title"));
+		}
+		
+		if(sectionHeaderName.containsAll(expectedSectionHeaderName))
+		{
+			log(LogStatus.INFO, "Expected Section header name : "+expectedSectionHeaderName+" have been matched with the Actual Header Name : "+sectionHeaderName, YesNo.No);
+			
+			if(toolTipMessage.containsAll(expectedTooltipName))
+			{
+				log(LogStatus.INFO, "Expected Tooltip message : "+expectedTooltipName+" have been matched with the Actual Tooltip message : "+toolTipMessage, YesNo.No);
+				return true;
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Expected Tooltip message : "+expectedTooltipName+" is not matched with the Actual Tooltip message : "+toolTipMessage, YesNo.No);	
+				sa.assertTrue(false, "Expected Tooltip message : "+expectedTooltipName+" is not matched with the Actual Tooltip message : "+toolTipMessage);
+				
+				return false;		
+			}			
+		}
+		else
+		{			
+			log(LogStatus.ERROR, "Expected Section header name : "+expectedSectionHeaderName+" are not  matched with the Actual Header Name : "+sectionHeaderName, YesNo.No);
+			sa.assertTrue(false, "Expected Section header name : "+expectedSectionHeaderName+" are not  matched with the Actual Header Name : "+sectionHeaderName);
+			return false;
+		}	
+	}
+
+	public boolean verifyTabsOnTaggedSection(List<String> tabName, String defaultSelectedTab)
+	{
+		boolean flag=false;
+		String xPath;
+		List<WebElement> elements;
+		WebElement ele;
+		List<String> expectedTabName=new ArrayList<String>();
+		
+		xPath="//slot//span[@title='Tagged']/ancestor::div[contains(@class,'slds-p-vertical_small')]//span[@class='slds-radio_faux']";
+		elements=FindElements(driver, xPath, "Tabs name");
+		for(WebElement el:elements)
+		{
+			expectedTabName.add(getText(driver, el, "TabsName", action.SCROLLANDBOOLEAN));
+		}
+		if(expectedTabName.containsAll(expectedTabName))
+		{
+			log(LogStatus.INFO, "Expected tab name : "+expectedTabName+" have been matched with the Actual tab Name : "+tabName+" on Tagged section", YesNo.No);
+			
+				xPath="//span[@class=\"slds-truncate\" and @title='"+defaultSelectedTab+"']";
+				ele=FindElement(driver, xPath, "header of selected tag", action.SCROLLANDBOOLEAN, 15);
+				if(ele!=null)
+				{
+					log(LogStatus.INFO, defaultSelectedTab+" tab is default selected on Tagged", YesNo.No);	
+					flag=true;
+				}
+				else
+				{
+					log(LogStatus.ERROR, defaultSelectedTab+" tab is not default selected on Tagged", YesNo.No);	
+				}	
+		}
+		else
+		{			
+		log(LogStatus.ERROR, "Expected Section header name : "+expectedTabName+" are not  matched with the Actual Header Name : "+tabName+" on Tagged section", YesNo.No);
+		}	
+		return flag;
+	}
+	
+	public ArrayList<String> verifyColumnsAndMessageOnTabsOfTagged(List<String> tabName, String message)
+	{
+		String xPath;
+		WebElement ele;
+		ArrayList<String> result=new ArrayList<String>();
+		
+		for(String val:tabName)
+		{
+			
+			if(click(driver, getTaggedRecordName(val,25), val+" tab", action.BOOLEAN))
+			{
+				log(LogStatus.INFO, "clicked on "+val+" tab", YesNo.No);	
+				xPath="//span[@class=\"slds-truncate\" and @title='"+val+"']";
+				ele=FindElement(driver, xPath, val+" column", action.SCROLLANDBOOLEAN, 15);
+				if(ele!=null)
+				{
+					log(LogStatus.INFO, "First column "+val+" has been verified on "+val+" tab of Tagged section", YesNo.No);	
+				}
+				else
+				{
+					log(LogStatus.ERROR, "First column "+val+" is not verified verified on "+val+" tab of Tagged section", YesNo.No);	
+					result.add("First column "+val+" is not verified verified on "+val+" tab of Tagged section");
+				}
+				
+				xPath="//span[@class='slds-th__action']//lightning-icon[@title='Times Referenced']";
+				ele=FindElement(driver, xPath, "Times Referenced column", action.SCROLLANDBOOLEAN, 15);
+				if(ele!=null)
+				{
+					log(LogStatus.INFO, "Second column Times Referenced has been verified on "+val+" tab of Tagged section", YesNo.No);	
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Second column Times Referenced is not verified verified on "+val+" tab of Tagged section", YesNo.No);	
+					result.add("Second column Times Referenced is not verified verified on "+val+" tab of Tagged section");
+				}
+				
+				xPath="//span[@class=\"slds-truncate\" and text()='"+val+"']/ancestor::div[@class=\"iconC heightC\"]//div[text()='"+message+"']";
+				ele=FindElement(driver, xPath, "Message on Tagged", action.SCROLLANDBOOLEAN, 15);
+				if(ele!=null)
+				{
+					log(LogStatus.INFO, message+" message is visible on Tagged section", YesNo.No);	
+				}
+				else
+				{
+					log(LogStatus.ERROR, message+" message is not visible on Tagged section", YesNo.No);	
+					result.add(message+" message is not visible on Tagged section");
+				}				
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on "+val+" tab", YesNo.No);	
+				result.add("Not able to click on "+val+" tab");
+			}
+			
+		}
+		
+		return result;
+		
+	}
+	
+	
+	public ArrayList<String> verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(String InteractionSectionmessage,List<String> contactsSectionHeaderName,String contactsSectionHeaderMessage, List<String> dealsSectionHeaderName,String dealsSectionHeaderMessage,List<String> connectionsSectionHeaderName,String connectionsSectionHeaderMessage)
+	{
+		String xPath;
+		WebElement ele;
+		List<WebElement> elements;
+		ArrayList<String> result=new ArrayList<String>();
+		
+		if(InteractionSectionmessage!=null && !"".equals(InteractionSectionmessage))
+		{
+		      xPath="//span[@title='Interactions']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div/div";
+		      ele=FindElement(driver, xPath, "Interaction section message", action.SCROLLANDBOOLEAN, 20);
+		      String text=getText(driver, ele, "Interaction section message", action.SCROLLANDBOOLEAN);
+		      if(text.equals(InteractionSectionmessage))
+		      {
+		    	  log(LogStatus.INFO, InteractionSectionmessage+" message has been verified on Interaction section", YesNo.No);	
+		      }
+		      else
+		      {
+		    	  log(LogStatus.ERROR, InteractionSectionmessage+" message is not verified on Interaction section", YesNo.No);
+		    	  result.add(InteractionSectionmessage+" message is not verified on Interaction section");
+		      }
+		}
+		if(!contactsSectionHeaderName.isEmpty())
+		{
+			ArrayList<String> actualContactsSectionHeaderName=new ArrayList<String>();
+			xPath="//span[@title='Contacts']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//span[@class='slds-truncate' and @title!='']";
+			elements=FindElements(driver, xPath, "Contact section headers");
+			for(WebElement el: elements)
+			{
+				actualContactsSectionHeaderName.add(getText(driver, el, "Contact section headers", action.SCROLLANDBOOLEAN));
+			}
+			
+			xPath="//span[@title='Contacts']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//lightning-icon";
+			elements=FindElements(driver, xPath, "Contact section headers");
+			for(WebElement el: elements)
+			{
+				actualContactsSectionHeaderName.add(getAttribute(driver, el, "Contact section headers", "title"));
+			}
+			
+			
+			if(contactsSectionHeaderName.containsAll(actualContactsSectionHeaderName))
+			{
+				 log(LogStatus.INFO, "The Header name of contact section have been verified "+actualContactsSectionHeaderName, YesNo.No);	
+			}
+			else
+			{
+				log(LogStatus.ERROR, "The Header name of contact section are not verified "+actualContactsSectionHeaderName, YesNo.No);		
+				result.add("The Header name of contact section are not verified "+actualContactsSectionHeaderName);
+			}
+		}
+		if(contactsSectionHeaderMessage!=null && !"".equals(contactsSectionHeaderMessage))
+		{
+			xPath="//span[@title='Contacts']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//div[text()='"+contactsSectionHeaderMessage+"']";
+			ele=FindElement(driver, xPath, "Message on Contact section", action.SCROLLANDBOOLEAN, 15);
+			if(ele!=null)
+			{
+				 log(LogStatus.INFO, "The meessage : "+contactsSectionHeaderMessage+" has been verified on Contect section", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "The meessage : "+contactsSectionHeaderMessage+" is not verified on Contect section", YesNo.No);
+				result.add("The meessage : "+contactsSectionHeaderMessage+" is not verified on Contect section");
+			}
+		}
+		
+		if(!dealsSectionHeaderName.isEmpty())
+		{
+			ArrayList<String> actualDealsSectionHeaderName=new ArrayList<String>();
+			xPath="//span[@title='Deals']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//span[@class='slds-truncate' and text()!='']";
+			elements=FindElements(driver, xPath, "Deal section headers");
+			for(WebElement el: elements)
+			{
+				actualDealsSectionHeaderName.add(getText(driver, el, "deal section headers", action.SCROLLANDBOOLEAN));
+			}
+			if(dealsSectionHeaderName.containsAll(actualDealsSectionHeaderName))
+			{
+				 log(LogStatus.INFO, "The Headers name of deal section have been verified "+actualDealsSectionHeaderName, YesNo.No);	
+			}
+			else
+			{
+				log(LogStatus.ERROR, "The Headers name of deal section are not verified "+actualDealsSectionHeaderName, YesNo.No);
+				result.add("The Headers name of deal section are not verified "+actualDealsSectionHeaderName);
+			}
+		}
+				
+		if(dealsSectionHeaderMessage!=null && !"".equals(dealsSectionHeaderMessage))
+		{
+			xPath="//span[@title='Deals']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//div[text()='"+dealsSectionHeaderMessage+"']";
+			ele=FindElement(driver, xPath, "Message on deal section", action.SCROLLANDBOOLEAN, 15);
+			if(ele!=null)
+			{
+				 log(LogStatus.INFO, "The meessage : "+dealsSectionHeaderMessage+" has been verified on deal secton", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "The meessage : "+dealsSectionHeaderMessage+" is not verified on deal secton", YesNo.No);
+				result.add("The meessage : "+dealsSectionHeaderMessage+" is not verified on deal secton");
+			}
+		}
+		
+		if(!connectionsSectionHeaderName.isEmpty())
+		{
+			ArrayList<String> actualConnectionsSectionHeaderName=new ArrayList<String>();
+			xPath="//span[@title='Connections']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//span[@class='slds-truncate' and @title!='']";
+			elements=FindElements(driver, xPath, "Connections section headers");
+			for(WebElement el: elements)
+			{
+				actualConnectionsSectionHeaderName.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
+			}
+			
+			xPath="//span[@title='Connections']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//lightning-icon";
+			elements=FindElements(driver, xPath, "Connections section headers");
+			for(WebElement el: elements)
+			{
+				actualConnectionsSectionHeaderName.add(getAttribute(driver, el, "Connections section headers", "title"));
+			}
+			
+			
+			if(connectionsSectionHeaderName.containsAll(actualConnectionsSectionHeaderName))
+			{
+				 log(LogStatus.INFO, "The Header name of Connections section have been verified "+actualConnectionsSectionHeaderName, YesNo.No);	
+			}
+			else
+			{
+				log(LogStatus.ERROR, "The Header name of Connections section are not verified "+actualConnectionsSectionHeaderName, YesNo.No);		
+				result.add("The Header name of Connections section are not verified "+actualConnectionsSectionHeaderName);
+			}
+		}
+		
+		if(connectionsSectionHeaderMessage!=null && !"".equals(connectionsSectionHeaderMessage))
+		{
+			xPath="//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//div[text()='"+connectionsSectionHeaderMessage+"']";
+			ele=FindElement(driver, xPath, "Message on Connections section", action.SCROLLANDBOOLEAN, 15);
+			if(ele!=null)
+			{
+				 log(LogStatus.INFO, "The meessage : "+connectionsSectionHeaderMessage+" has been verified on Connection section", YesNo.No);
+			}
+			else
+			{
+				log(LogStatus.ERROR, "The meessage : "+connectionsSectionHeaderMessage+" is not verified on Connection section", YesNo.No);
+				result.add("The meessage : "+connectionsSectionHeaderMessage+" is not verified on Connection section");
+			}
+		}
+		
+		return result;
+	}
+	
+	
+	
+	public ArrayList<String> verifyToolTipOnDealsConnctionsAndContactsHeader(List<String> dealSectionHeaderTooltip, List<String> contactsSectionHeaderTooltip, List<String> connectionsSectionHeaderTooltip)
+	{
+		String xPath;
+		List<WebElement> elements;
+		ArrayList<String> result=new ArrayList<String>();
+		if(!dealSectionHeaderTooltip.isEmpty())
+		{
+			ArrayList<String> actualDealsSectionHeaderTooltip=new ArrayList<String>();
+			xPath="//span[@title='Deals']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//span[@class='slds-truncate' and text()!='']";
+			elements=FindElements(driver, xPath, "Deal section headers");
+			for(WebElement el: elements)
+			{
+				actualDealsSectionHeaderTooltip.add(getAttribute(driver, el, "deal section headers", "title"));
+			}
+			if(dealSectionHeaderTooltip.containsAll(actualDealsSectionHeaderTooltip))
+			{
+				 log(LogStatus.INFO, "The Tooltip on Headers name of deal section have been verified "+actualDealsSectionHeaderTooltip, YesNo.No);	
+			}
+			else
+			{
+				log(LogStatus.ERROR, "The Tooltip on Headers name of deal section are not verified "+actualDealsSectionHeaderTooltip, YesNo.No);
+				result.add("The Tooltip on Headers name of deal section are not verified "+actualDealsSectionHeaderTooltip);
+			}
+		}
+		
+		
+		if(!contactsSectionHeaderTooltip.isEmpty())
+		{
+			ArrayList<String> ExpectedTooltip=new ArrayList<String>();
+			
+			xPath="//span[@title='Contacts']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//span[@class='slds-truncate' and @title!='']";		
+    		elements=FindElements(driver, xPath, "Contact section headers");
+
+			for(WebElement el: elements)
+			{
+				ExpectedTooltip.add(getAttribute(driver, el, "Contact section headers Tooltip", "title"));
+			}
+			
+			xPath="//span[@title='Contacts']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//lightning-icon";
+			elements=FindElements(driver, xPath, "Contact section headers");
+			for(WebElement el: elements)
+			{
+				ExpectedTooltip.add(getAttribute(driver, el, "Contact section headers Tooltip", "title"));
+			}
+			
+			if(contactsSectionHeaderTooltip.containsAll(ExpectedTooltip))
+			{
+				 log(LogStatus.INFO, "The Tooltip on Header of contact section have been verified "+contactsSectionHeaderTooltip, YesNo.No);	
+			}
+			else
+			{
+				log(LogStatus.ERROR, "The Tooltip on Header of contact section are not verified "+contactsSectionHeaderTooltip, YesNo.No);		
+				result.add("The Tooltip on Header of contact section are not verified "+contactsSectionHeaderTooltip);
+			}
+		}
+		
+		
+		if(!connectionsSectionHeaderTooltip.isEmpty())
+		{
+			ArrayList<String> ExpectedTooltip=new ArrayList<String>();
+			
+			xPath="//span[@title='Connections']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//span[@class='slds-truncate' and @title!='']";		
+    		elements=FindElements(driver, xPath, "Connections section headers");
+
+			for(WebElement el: elements)
+			{
+				ExpectedTooltip.add(getAttribute(driver, el, "Connections section headers Tooltip", "title"));
+			}
+			
+			xPath="//span[@title='Connections']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//lightning-icon";
+			elements=FindElements(driver, xPath, "Connections section headers");
+			for(WebElement el: elements)
+			{
+				ExpectedTooltip.add(getAttribute(driver, el, "Connections section headers Tooltip", "title"));
+			}
+			
+			if(connectionsSectionHeaderTooltip.containsAll(ExpectedTooltip))
+			{
+				 log(LogStatus.INFO, "The Tooltip on Header of Connections section have been verified "+connectionsSectionHeaderTooltip, YesNo.No);	
+			}
+			else
+			{
+				log(LogStatus.ERROR, "The Tooltip on Header of Connections section are not verified "+connectionsSectionHeaderTooltip, YesNo.No);		
+				result.add("The Tooltip on Header of contact Connections are not verified "+connectionsSectionHeaderTooltip);
+			}
+		}	
+		return result;
+	}
+	
+	
+	/**
+	 * @author Sourabh Saini
+	 * @param companyTagName
+	 * @param companyTimesReferenced
+	 * @param peopleTagName
+	 * @param propleTimesReferenced
+	 * @param dealTagName
+	 * @param dealTimesReferenced
+	 * @return return Empty ArrayList if test case is passed
+	 */
+
+	public ArrayList<String> verifyRecordAndReferencedTypeOnTagged(String[] companyTagName,String[] companyTimesReferenced, String[] peopleTagName, String[] propleTimesReferenced, String[] dealTagName, String[] dealTimesReferenced) {
+		ArrayList<String> result = new ArrayList<String>();
+		if (companyTagName != null && companyTimesReferenced!=null) {
+			if(companyTagName.length==companyTimesReferenced.length)
+			{
+				if (click(driver, getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
+
+					for (int i = 0; i < companyTagName.length; i++) {
+
+						if (getTaggedRecordName("Companies", companyTagName[i], 30) != null) {
+							log(LogStatus.INFO, companyTagName[i] + " record is available on company tab of Tagged", YesNo.No);
+							if(getTaggedRecordTimeReference("Companies", companyTagName[i], companyTimesReferenced[i],30)!=null)
+							{
+								log(LogStatus.INFO, "Time Reference : "+companyTimesReferenced[i]+" is verified against "+companyTagName[i]+" record on company tab of Tagged", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Time Reference : "+companyTimesReferenced[i]+" is not verified against "+companyTagName[i]+" record on company tab of Tagged", YesNo.No);
+								result.add("Time Reference : "+companyTimesReferenced[i]+" is not verified against "+companyTagName[i]+" record on company tab of Tagged");
+							}
+
+						} else {
+							log(LogStatus.ERROR, companyTagName[i] + " record is not available on company tab of Tagged", YesNo.No);
+							result.add(companyTagName[i] + " record is not available on company tab of Tagged");
+						}
+
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
+					result.add("Not able to click on Companies tab name");
+				}
+			}
+			else {
+				log(LogStatus.ERROR, "The size of tagged company name and size of tagged time reference is not equal", YesNo.No);
+				result.add( "The size of tagged company name and size of tagged time reference is not equal");
+			}
+		}
+				
+		if (peopleTagName != null && propleTimesReferenced!=null) {
+			if(peopleTagName.length==propleTimesReferenced.length)
+			{
+				if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+					for (int i = 0; i < peopleTagName.length; i++) {
+						if (getTaggedRecordName("People", peopleTagName[i], 30) != null) {
+							log(LogStatus.INFO, peopleTagName[i] + " record is available on people tab of Tagged", YesNo.No);
+
+							if(getTaggedRecordTimeReference("People", peopleTagName[i], propleTimesReferenced[i],30)!=null)
+							{
+								log(LogStatus.INFO, "Time Reference : "+propleTimesReferenced[i]+" is verified against "+peopleTagName[i]+" record on people tab of Tagged", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Time Reference : "+propleTimesReferenced[i]+" is not verified against "+peopleTagName[i]+" record on people tab of Tagged", YesNo.No);
+								result.add("Time Reference : "+propleTimesReferenced[i]+" is not verified against "+peopleTagName[i]+" record on people tab of Tagged");
+							}
+
+						} else {
+							log(LogStatus.ERROR, peopleTagName[i] + " record is not available on people tab", YesNo.No);
+							result.add(peopleTagName[i] + " record is not available on people tab");
+						}
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+					result.add("Not able to click on People tab name");
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "The size of tagged people name and size of tagged time reference is not equal", YesNo.No);
+				result.add( "The size of tagged people name and size of tagged time reference is not equal");
+			}
+		}
+		
+		if (dealTagName != null && dealTimesReferenced!=null) {
+			if(dealTagName.length == dealTimesReferenced.length)
+			{
+			if (click(driver, getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+
+				for (int i = 0; i < dealTagName.length; i++) {
+					if (getTaggedRecordName("Deals", dealTagName[i], 6) != null) {
+						log(LogStatus.INFO, dealTagName[i] + " record is available on deal tab of tagged", YesNo.No);
+						
+						if(getTaggedRecordTimeReference("Deals", dealTagName[i], dealTimesReferenced[i],6)!=null)
+						{
+							log(LogStatus.INFO, "Time Reference : "+dealTimesReferenced[i]+" is verified against "+dealTagName[i]+" record on deals tab of Tagged", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Time Reference : "+dealTimesReferenced[i]+" is not verified against "+dealTagName[i]+" record on deals tab of Tagged", YesNo.No);
+							result.add("Time Reference : "+dealTimesReferenced[i]+" is not verified against "+dealTagName[i]+" record on deals tab of Tagged");
+						}						
+						
+					} else {
+						log(LogStatus.ERROR, dealTagName[i] + " record is not available on deal tab of tagged", YesNo.No);
+						result.add(dealTagName[i] + " record is not available on deal tab of tagged");
+					}
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+				result.add("Not able to click on Deals tab name");
+			}
+			}
+		}
+		return result;
+
+	}
 }

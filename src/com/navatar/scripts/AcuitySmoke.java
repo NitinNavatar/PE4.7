@@ -301,7 +301,7 @@ public class AcuitySmoke extends BaseLib {
 											if (bp.clicktabOnPage("Acuity")) {
 												log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 												ArrayList<String> result = bp.verifyRecordOnInteractionCard(date,
-														AS_ATSubject1, AS_ATNotes1, true, false);
+														AS_ATSubject1, AS_ATNotes1, true, false, null);
 												if (result.isEmpty()) {
 													log(LogStatus.PASS,
 															AS_ATSubject1 + " record has been verified on intraction",
@@ -486,7 +486,7 @@ public class AcuitySmoke extends BaseLib {
 						if (bp.clicktabOnPage("Acuity")) {
 							log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 							ArrayList<String> result = bp.verifyRecordOnInteractionCard(date, AS_ATSubject3,
-									AS_ATNotes3, true, false);
+									AS_ATNotes3, true, false, null);
 							if (result.isEmpty()) {
 								log(LogStatus.PASS, subjectName + " record has been verified on intraction", YesNo.No);
 								sa.assertTrue(true, subjectName + " record has been verified on intraction");
@@ -763,7 +763,7 @@ public class AcuitySmoke extends BaseLib {
 							if (bp.clicktabOnPage("Acuity")) {
 								log(LogStatus.INFO, "clicked on Acuity Tab", YesNo.No);
 								ArrayList<String> result = bp.verifyRecordOnInteractionCard(date, AS_ATSubject4,
-										AS_ATNotes6, false, false);
+										AS_ATNotes6, false, false, null);
 								if (result.isEmpty()) {
 									log(LogStatus.PASS, AS_ATSubject4 + " record has been verified on intraction",
 											YesNo.No);
@@ -780,7 +780,7 @@ public class AcuitySmoke extends BaseLib {
 												if (bp.clicktabOnPage("Acuity")) {
 													log(LogStatus.INFO, "clicked on Acuity Tab", YesNo.No);
 													ArrayList<String> result1 = bp.verifyRecordOnInteractionCard(date1,
-															AS_ATSubject5, AS_ATNotes7, false, false);
+															AS_ATSubject5, AS_ATNotes7, false, false, null);
 													if (result1.isEmpty()) {
 														log(LogStatus.PASS,
 																AS_ATSubject5
@@ -810,7 +810,7 @@ public class AcuitySmoke extends BaseLib {
 																		ArrayList<String> result2 = bp
 																				.verifyRecordOnInteractionCard(null,
 																						AS_ATSubject6, AS_ATNotes8,
-																						false, false);
+																						false, false, null);
 																		if (result2.isEmpty()) {
 																			log(LogStatus.PASS, AS_ATSubject6
 																					+ " record has been verified on intraction",
@@ -1563,7 +1563,7 @@ public class AcuitySmoke extends BaseLib {
 											if (bp.clicktabOnPage("Acuity")) {
 												log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 												ArrayList<String> result = bp.verifyRecordOnInteractionCard(null,
-														subjectName, notes, true, false);
+														subjectName, notes, true, false, null);
 												if (result.isEmpty()) {
 													log(LogStatus.PASS,
 															subjectName + " record has been verified on intraction",
@@ -1601,7 +1601,7 @@ public class AcuitySmoke extends BaseLib {
 																		ArrayList<String> result1 = bp
 																				.verifyRecordOnInteractionCard(null,
 																						subjectName1, notes1, true,
-																						false);
+																						false, null);
 																		if (result1.isEmpty()) {
 																			log(LogStatus.PASS, subjectName
 																					+ " record has been verified on intraction",
@@ -3907,7 +3907,7 @@ public class AcuitySmoke extends BaseLib {
 				if (BP.clicktabOnPage(subTabName)) {
 					log(LogStatus.PASS, "Clicked on Tab: " + subTabName, YesNo.No);
 
-					ArrayList<String> result1 = BP.verifyRecordOnInteractionCard(null, "Nav Call", null, false, false);
+					ArrayList<String> result1 = BP.verifyRecordOnInteractionCard(null, "Nav Call", null, false, false, null);
 					if (result1.isEmpty()) {
 						log(LogStatus.PASS, AS_ATSubject13 + " record has been verified on intraction", YesNo.No);
 
@@ -3918,7 +3918,7 @@ public class AcuitySmoke extends BaseLib {
 								AS_ATSubject13 + " record is not verified on intraction, Reason: " + result1);
 					}
 					ArrayList<String> result2 = BP.verifyRecordOnInteractionCard(null, "Nav Meeting", null, false,
-							false);
+							false, null);
 					if (result2.isEmpty()) {
 						log(LogStatus.PASS, "Nav Meeting" + " record has been verified on intraction", YesNo.No);
 
@@ -3928,7 +3928,7 @@ public class AcuitySmoke extends BaseLib {
 						sa.assertTrue(false,
 								"Nav Meeting" + " record is not verified on intraction, Reason: " + result1);
 					}
-					ArrayList<String> result3 = BP.verifyRecordOnInteractionCard(null, "Nav Task", null, false, false);
+					ArrayList<String> result3 = BP.verifyRecordOnInteractionCard(null, "Nav Task", null, false, false, null);
 					if (result3.isEmpty()) {
 						log(LogStatus.PASS, AS_ATSubject14 + " record has been verified on intraction", YesNo.No);
 
@@ -4004,7 +4004,7 @@ public class AcuitySmoke extends BaseLib {
 		FundsPageBusinessLayer fund = new FundsPageBusinessLayer(driver);
 		FundRaisingPageBusinessLayer fr = new FundRaisingPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-
+		
 		String dealRecordTypeList = AS_DealRecordType5;
 		String fundRecordTypeList = AS_FundRecordType3;
 		String fundraisingRecordTypeList = AS_FundraisingRecordType2;
@@ -4542,7 +4542,6 @@ public class AcuitySmoke extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-//		String searchItemInResearch = "Test";
 
 		String searchItemInResearch = AS_ResearchString1;
 
@@ -4756,7 +4755,7 @@ public class AcuitySmoke extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void AcuitySmokeTc041_1_CreateDealUser(String projectName) {

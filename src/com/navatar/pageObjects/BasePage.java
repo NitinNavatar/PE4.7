@@ -6817,6 +6817,14 @@ public abstract class BasePage extends BaseLib {
 				action.SCROLLANDBOOLEAN, timeOut);
 
 	}
+	
+	public WebElement getTaggedRecordTimeReference(String taggedTabName, String recordName,String timeReferenceCount, int timeOut) {
+
+		return FindElement(driver, "//span[text()='"+taggedTabName+"']/ancestor::table//lightning-formatted-url//a[text()='"+recordName+"']/ancestor::tr//td//button[text()='"+timeReferenceCount+"']", "tagged",action.SCROLLANDBOOLEAN, timeOut);
+
+	}
+	
+	
 
 	public WebElement getTaggedRecordName(String tagTabName, int timeOut) {
 
