@@ -7460,5 +7460,11 @@ public abstract class BasePage extends BaseLib {
 		
 		return FindElement(driver, xpath, "Field Header Name: " + tableName, action.SCROLLANDBOOLEAN, timeOut);
 	}
+	
+	public List<WebElement> researchFindingsCountForAllResults() {
+		return FindElements(driver,
+				"//div[contains(@class,'active')]//h2/following-sibling::div//a/span",
+				"researchFIndingsCountResults");
+	}
 
 }

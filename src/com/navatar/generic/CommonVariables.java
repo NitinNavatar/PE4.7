@@ -1152,6 +1152,8 @@ public class CommonVariables {
 	    public static String MRSD_11_Count,MRSD_12_Count,MRSD_13_Count,MRSD_14_Count,MRSD_15_Count,MRSD_16_Count,MRSD_17_Count,MRSD_18_Count,MRSD_19_Count,
 	    MRSD_20_Count,MRSD_21_Count,MRSD_22_Count,MRSD_23_Count,MRSD_24_Count,MRSD_25_Count;    
 	    
+	    
+	    public static String ACR_1_Search,ACR_1_All,ACR_1_Firms,ACR_1_Advisor,ACR_1_Company,ACR_1_Institution,ACR_1_Intermediary,ACR_1_Lender,ACR_1_LP,ACR_1_PC,ACR_1_Contacts,ACR_1_deals,ACR_1_Fund,ACR_1_Fundraising,ACR_1_Interactionss,ACR_1_RA,ACR_1_RC;
 
 	public CommonVariables(Object obj) {
 		//TODO Auto-generated constructor stub
@@ -6070,6 +6072,25 @@ public class CommonVariables {
 				MRSD_24_Count=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"ResearchData",excelLabel.Variable_Name, "MRSD_24", excelLabel.Individuals);
 				MRSD_25_Count=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"ResearchData",excelLabel.Variable_Name, "MRSD_25", excelLabel.Individuals);
 
+				
+				ACR_1_Search=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_1", excelLabel.ResearchFindings);
+				ACR_1_All=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_1", excelLabel.All_Categories);
+				ACR_1_Firms=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_1", excelLabel.Firms);
+				ACR_1_Advisor=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_1", excelLabel.Advisor);
+				ACR_1_Company=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_1", excelLabel.Company);
+				ACR_1_Institution=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_1", excelLabel.Institution);
+				ACR_1_Intermediary=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_1", excelLabel.Intermediary);
+				ACR_1_Lender=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_1", excelLabel.Lender);
+				ACR_1_LP=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_1", excelLabel.Limited_Partner);
+				ACR_1_PC=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_1", excelLabel.Portfolio_Company);
+				ACR_1_Contacts=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_1", excelLabel.Contacts);
+				ACR_1_deals=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_1", excelLabel.Deals);
+				ACR_1_Fund=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_1", excelLabel.Fund);
+				ACR_1_Fundraising=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_1", excelLabel.Fundraising);
+				ACR_1_Interactionss=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_1", excelLabel.Interactions);
+				ACR_1_RA=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_1", excelLabel.Referenced_Accounts);
+				ACR_1_RC=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_1", excelLabel.Referenced_Contacts);
+				
 				
 				AR_ContactRecordType1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AR_Contact1", excelLabel.Record_Type);
 				

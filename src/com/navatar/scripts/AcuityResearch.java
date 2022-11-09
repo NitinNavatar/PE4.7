@@ -8,6 +8,7 @@ import static com.navatar.generic.SmokeCommonVariables.crmUser1EmailID;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -805,13 +806,14 @@ public class AcuityResearch extends BaseLib{
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	
+	lp.CRMLogin(superAdminUserName, adminPassword, appName);
+	ThreadSleep(2000);
 	String xpath,ele;
 	String searchValues[] = {"Sumo"};
 	String[][] val = {{MRSD_11_ResearchFindings,MRSD_11_Count},{MRSD_12_ResearchFindings,MRSD_12_Count},{MRSD_13_ResearchFindings,MRSD_13_Count},{MRSD_14_ResearchFindings,MRSD_14_Count},{MRSD_15_ResearchFindings,MRSD_15_Count},
 			{MRSD_16_ResearchFindings,MRSD_16_Count},{MRSD_17_ResearchFindings,MRSD_17_Count},{MRSD_18_ResearchFindings,MRSD_18_Count},{MRSD_19_ResearchFindings,MRSD_19_Count},{MRSD_20_ResearchFindings,MRSD_20_Count},
 			{MRSD_21_ResearchFindings,MRSD_21_Count},{MRSD_22_ResearchFindings,MRSD_22_Count},{MRSD_23_ResearchFindings,MRSD_23_Count},{MRSD_24_ResearchFindings,MRSD_24_Count},{MRSD_25_ResearchFindings,MRSD_25_Count}};
-	lp.CRMLogin(superAdminUserName, adminPassword, appName);
-	ThreadSleep(2000);
 	
 	for(String searchValue : searchValues) {
 		log(LogStatus.PASS, "WOrking for " + searchValue, YesNo.Yes);
@@ -855,4 +857,73 @@ public class AcuityResearch extends BaseLib{
 	lp.CRMlogout();
 	sa.assertAll();
 }
+
+@Parameters({ "projectName"})
+@Test
+	public void ARTc006_VerifyResearchFuncationalityforValidData(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	
+	lp.CRMLogin(superAdminUserName, adminPassword, appName);
+	ThreadSleep(2000);
+	
+	String xpath,value = "";
+	String searchValues[] = {ACR_1_Search};
+	String findings[] = {ACR_1_All,ACR_1_Firms,ACR_1_Advisor,ACR_1_Company,ACR_1_Institution,ACR_1_Intermediary,ACR_1_Lender,ACR_1_LP,ACR_1_PC,ACR_1_Contacts,ACR_1_deals,ACR_1_Fund,ACR_1_Fundraising,ACR_1_Interactionss,ACR_1_RA,ACR_1_RC};
+	
+	
+	for(String searchValue : searchValues) {
+		log(LogStatus.INFO,
+				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+						+ searchValue + "---------",
+				YesNo.No);
+		CommonLib.refresh(driver);
+		home.notificationPopUpClose();
+		if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
+			log(LogStatus.INFO,
+					"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+							+ searchValue + "---------",
+					YesNo.No);
+		} else {
+			log(LogStatus.FAIL,
+					"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+							+ searchValue + "---------",
+					YesNo.No);
+			sa.assertTrue(false,
+					"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+							+ searchValue + "---------");
+		
+				
+//			xpath = "/span";
+//			List<String> findingsCount = bp.researchFindingsCountForAllResults()
+//					.stream().map(x -> x.getText().trim().replace("New Items", "").replace(":", "")
+//							.replaceAll("[\\t\\n\\r]+", "").trim())
+//					.collect(Collectors.toList());
+//
+//			List<String> researchResultsGridCounts = bp.researchResultsGridCounts().stream()
+//					.map(x -> x.getText().trim()).collect(Collectors.toList());
+//			
+//			int size = findings.length;
+//			
+//			int [] find = new int [size];
+//					 
+//			for(int i=1; i<=size;i++)
+//			{
+//				find[i] = Integer.parseInt(findings[i]);
+//				if(find[i] != 0 && findings[i] != null)
+//				{
+//					String ExcelCounts = findings[i];
+//					log(LogStatus.PASS, "Excel counts are: "+ExcelCounts, YesNo.No);
+//				}
+//			}
+	}
 }
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();
+	
+}
+
+	}
