@@ -869,7 +869,7 @@ public class AcuityResearch extends BaseLib{
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	ThreadSleep(2000);
 	
-	String xpath,value = "";
+	String xpath,gridText;
 	String searchValues[] = {ACR_1_Search};
 	String findings[] = {ACR_1_All,ACR_1_Firms,ACR_1_Advisor,ACR_1_Company,ACR_1_Institution,ACR_1_Intermediary,ACR_1_Lender,ACR_1_LP,ACR_1_PC,ACR_1_Contacts,ACR_1_deals,ACR_1_Fund,ACR_1_Fundraising,ACR_1_Interactionss,ACR_1_RA,ACR_1_RC};
 	
@@ -879,8 +879,6 @@ public class AcuityResearch extends BaseLib{
 				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 						+ searchValue + "---------",
 				YesNo.No);
-		CommonLib.refresh(driver);
-		home.notificationPopUpClose();
 		if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 			log(LogStatus.INFO,
 					"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
@@ -896,6 +894,9 @@ public class AcuityResearch extends BaseLib{
 							+ searchValue + "---------");
 		
 				
+			
+			
+			
 //			xpath = "/span";
 //			List<String> findingsCount = bp.researchFindingsCountForAllResults()
 //					.stream().map(x -> x.getText().trim().replace("New Items", "").replace(":", "")
@@ -918,7 +919,41 @@ public class AcuityResearch extends BaseLib{
 //					log(LogStatus.PASS, "Excel counts are: "+ExcelCounts, YesNo.No);
 //				}
 //			}
-	}
+	}	
+		
+		
+		List<String> sideNavCountExceptAllCategories = bp.researchSideNavCountResultsExceptAllCategories()
+				.stream().map(x -> x.getText().trim().replace("New Items", "").replace(":", "")
+						.replaceAll("[\\t\\n\\r]+", "").trim())
+				.collect(Collectors.toList());
+		for(String navWiseHeading : sideNavCountExceptAllCategories) {
+			log(LogStatus.INFO,"Values for Navigation Menu is : " + bp.researchSideNavCountResultsExceptAllCategories().stream().map(x -> x.getText()),YesNo.No);
+		log(LogStatus.INFO,"Name of Field in the Navigation Menu is : " + navWiseHeading,YesNo.No);
+		}
+		List<String> researchResultsGridCounts = bp.researchResultsGridCounts().stream()
+				.map(x -> x.getText().trim()).collect(Collectors.toList());
+		for (String gridName : researchResultsGridCounts) {
+		String gridWiseHeading = gridName.substring(0,gridName.indexOf(" "));
+		log(LogStatus.INFO,"Name of Field in the grid is : " + gridWiseHeading,YesNo.No);
+		
+		xpath = "//span[@title='"+ gridWiseHeading +"']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//tbody/tr";
+		List<WebElement> ele = FindElements(driver, xpath,"");
+		for(WebElement gridData : ele)
+		{
+			gridText = gridData.getText();
+			log(LogStatus.INFO,"In " + gridWiseHeading +" Text in Grid is : " + gridText,YesNo.No);
+			if(gridText.toLowerCase().contains(searchValue.toLowerCase()))
+			{
+				log(LogStatus.INFO,"In " + gridWiseHeading + " Text in Grid is : " + gridText,YesNo.No);
+				sa.assertTrue(true,"In " + gridWiseHeading + " Search Keyword" + searchValue + "is contained in " + gridText);
+			}
+			else
+			{
+				log(LogStatus.ERROR,"In " + gridWiseHeading + " Text in Grid is : " + gridText,YesNo.No);
+				sa.assertTrue(false,"In " + gridWiseHeading +" Search Keyword" + searchValue + "does not contain in " + gridText);
+			}
+		}
+		}
 }
 	switchToDefaultContent(driver);
 	lp.CRMlogout();
