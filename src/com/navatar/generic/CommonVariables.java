@@ -1171,6 +1171,7 @@ public class CommonVariables {
 	    public static String ADEIns7,ADEIns7RecordType;
 	    public static String ADEIns8,ADEIns8RecordType;
 	    public static String ADEIns9,ADEIns9RecordType;
+	    public static String ADEIns10,ADEIns10RecordType;
 	    
 	    //contact
 	    public static String ADEContact1FName,ADEContact1LName,ADEContact1EmailID,ADEContact1RecordType;
@@ -6185,6 +6186,9 @@ public class CommonVariables {
 					
 					ADEIns9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ADEIns9", excelLabel.Legal_Name);
 					ADEIns9RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ADEIns9", excelLabel.Record_Type);
+					
+					ADEIns10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ADEIns10", excelLabel.Legal_Name);
+					ADEIns10RecordType=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ADEIns10", excelLabel.Record_Type);
 					
 					ADEContact1FName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact1", excelLabel.Contact_FirstName);
 					ADEContact1LName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ADEContact1", excelLabel.Contact_LastName);

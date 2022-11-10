@@ -8,6 +8,7 @@ import static com.navatar.generic.SmokeCommonVariables.crmUser1EmailID;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,11 +20,13 @@ import com.navatar.generic.*;
 import com.navatar.generic.EnumConstants.CreationPage;
 import com.navatar.generic.EnumConstants.Environment;
 import com.navatar.generic.EnumConstants.Header;
+import com.navatar.generic.EnumConstants.InstRecordType;
 import com.navatar.generic.EnumConstants.InstitutionPageFieldLabelText;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.PageName;
+import com.navatar.generic.EnumConstants.RelatedTab;
 import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
 import com.navatar.generic.EnumConstants.SortOrder;
 import com.navatar.generic.EnumConstants.Stage;
@@ -436,54 +439,88 @@ public class AcuityDealsEmails extends BaseLib {
 				sa.assertAll();
 	
 	}
-//	@Parameters({ "projectName"})
-//	@Test
-//	public void ADETc006_VerifyDealscardsectionvisibilityinAcuitytabforexistingAccountsANDContacts(String projectName) {
-//		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-//		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
-//		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
-//		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-//		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
-//		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-//		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-//		
-//		String AccountName =ADEIns1;
-//		String filename="Deal name,Stage,Date recieved";	
-//		String xpath = "//span[text()= 'Deals']/ancestor::div[@class='slds-p-vertical_small']//lightning-datatable[contains(@class,'dealDataTable')]//th//span";
-//		List<WebElement> ele = FindElements(driver, xpath,filename);
-//		String contactsSectionHeaderMessage = erromessage;
-//		
-//		ArrayList<String> dealsSectionHeaderName=new ArrayList<String>();
-//		
-//		ArrayList<String> connectionsSectionHeaderName=new ArrayList<String>();
-//		
-//		ArrayList<String> contactsSectionHeaderName=new ArrayList<String>();
-//	
-//		
-//		if (cp.clickOnTab(projectName, tabObj1)) {
-//			log(LogStatus.INFO,"Clicked on Tab : "+tabObj1+" For : "+AccountName,YesNo.No);
-//			ThreadSleep(1000);
-//			if (cp.clickOnAlreadyCreatedItem(projectName, AccountName, 30)) {
-//				log(LogStatus.INFO,"Clicked on  : "+AccountName+" For : "+tabObj2,YesNo.No);
-//				ThreadSleep(2000);
-//				if(bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(" ",contactsSectionHeaderName,contactsSectionHeaderMessage,dealsSectionHeaderName," ",connectionsSectionHeaderName," ")) {
-//				
-//				if (cp.clickOnTab(projectName, tabObj1)) {
-//					log(LogStatus.INFO,"Clicked on Tab : "+tabObj1+" For : "+AccountName1,YesNo.No);
-//					ThreadSleep(1000);
-//					if (cp.clickOnAlreadyCreatedItem(projectName, AccountName1, 30)) {
-//						log(LogStatus.INFO,"Clicked on  : "+AccountName1+" For : "+tabObj2,YesNo.No);
-//						ThreadSleep(2000);
-//						
-//						String contactName=ADEContact1FName+" "+ADEContact1LName;	
-//						
-//						if (cp.clickOnTab(projectName, tabObj2)) {
-//							log(LogStatus.INFO,"Clicked on Tab : "+tabObj2+" For : "+contactName,YesNo.No);
-//							ThreadSleep(1000);
-//							if (cp.clickOnAlreadyCreatedItem(projectName, contactName, 30)) {
-//								log(LogStatus.INFO,"Clicked on  : "+contactName+" For : "+tabObj2,YesNo.No);
-//								ThreadSleep(2000);
-//				
+	@Parameters({ "projectName"})
+	@Test
+	public void ADETc006_VerifyDealscardsectionvisibilityinAcuitytabforexistingAccountsANDContacts(String projectName) {
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		String ContactName= ADEContact1FName+" "+ ADEContact1LName;
+		String AccountName =ADEIns1;
+		String dealHeader="Deal Name<break>Company<break>Stage<break>Date Received";
+		String message="No items to display";
+		
+		ArrayList<String> connectionsSectionHeaderName=new ArrayList<String>();
+		
+		ArrayList<String> contactsSectionHeaderName=new ArrayList<String>();
+		
+		String[] arrDealHeader=dealHeader.split("<break>");
+		List<String> dealHeaders = new ArrayList<String>(Arrays.asList(arrDealHeader));
+	
+		
+		if (cp.clickOnTab(projectName, tabObj1)) {
+			log(LogStatus.INFO,"Clicked on Tab : "+tabObj1+" For : "+AccountName,YesNo.No);
+			ThreadSleep(1000);
+			if (cp.clickOnAlreadyCreatedItem(projectName, AccountName, 30)) {
+				log(LogStatus.INFO,"Clicked on  : "+AccountName+" For : "+tabObj2,YesNo.No);
+				ThreadSleep(2000);
+				ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,contactsSectionHeaderName,null,dealHeaders,message,connectionsSectionHeaderName,null);
+				if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The header name and message are not verified on Deals Section ", YesNo.No);
+						sa.assertTrue(false, "The header name and message are not verified on  Deals Section ");
+					}
+                 }else{
+				
+				sa.assertTrue(false,"Not Able to open created source firm : "+ADEIns1);
+				log(LogStatus.SKIP,"Not Able to open created source firm : "+ADEIns1,YesNo.Yes);
+			
+             }
+               } else {
+	              log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+	           sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+                 }
+		
+		if(fp.clickOnTab(environment,mode, TabName.Object2Tab)){
+			log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);
+			
+			if(fp.clickOnAlreadyCreatedItem(projectName, ContactName, 30)){
+				
+				log(LogStatus.INFO,"open created item"+ContactName,YesNo.No);
+				ThreadSleep(2000);
+				ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,contactsSectionHeaderName,null,dealHeaders,message,connectionsSectionHeaderName,null);
+				if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The header name and message have been verified  Deals Section ", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The header name and message are not verified on Deals Section ", YesNo.No);
+						sa.assertTrue(false, "The header name and message are not verified on  Deals Section ");
+					}
+                }else{
+				
+				sa.assertTrue(false,"Not Able to open created source contact : "+ContactName);
+				log(LogStatus.SKIP,"Not Able to open created source contact : "+ContactName,YesNo.Yes);
+			
+             }
+               } else {
+	              log(LogStatus.ERROR, "Not able to click on " + tabObj2 + " tab", YesNo.Yes);
+	           sa.assertTrue(false, "Not able to click on " + tabObj2 + " tab");
+                 }
+		ThreadSleep(5000);
+		lp.CRMlogout();
+		sa.assertAll();
+
+}
 
 
 @Parameters({ "projectName"})
@@ -558,18 +595,35 @@ public void ADETc010_CreatedealsrecordtypecompanyandverifytheimpactDealtabbothco
                } else {
 	              log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
 	           sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
-                 }		
+                 }	
+	
 	if(fp.clickOnTab(environment,mode, TabName.Object1Tab)){
 		log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
-							if(fp.clickOnAlreadyCreatedItem(projectName, ADEIns4, 30)){	
-								
-							}
-							ThreadSleep(5000);
-							lp.CRMlogout();
-							sa.assertAll();
+		
+		if(fp.clickOnAlreadyCreatedItem(projectName, ADEIns1, 30)){
+			
+			log(LogStatus.INFO,"open created item"+ADEIns1,YesNo.No);
+			
+			if (BP.dealAcuityDealName("Test D", 30) != null) {
+				log(LogStatus.PASS, "Deal Name: " + "Test D" + " is hyperlink and is present", YesNo.No);
+			}else {
+				sa.assertTrue(true,"is hyperlink and not present  : "+"Test D"+" For : "+TabName.Object4Tab);
+				log(LogStatus.SKIP,"is hyperlink and not present  : "+"Test D"+" For : "+TabName.Object4Tab,YesNo.Yes);
+			}
+		 }else{
 				
-				}}
-
+				sa.assertTrue(false,"Not Able to open created source firm : "+ADEIns1);
+				log(LogStatus.SKIP,"Not Able to open created source firm : "+ADEIns1,YesNo.Yes);
+			
+             }
+               } else {
+	              log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+	           sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	            }
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();
+}
 
 
 @Parameters({ "projectName"})
@@ -738,13 +792,13 @@ public void ADETc011_CreatedealsrecordtypecompanyandverifytheimpactDealtabbothco
 				}
              }else{
 				
-				sa.assertTrue(false,"Not Able to open created source firm : "+ContactName);
-				log(LogStatus.SKIP,"Not Able to open created source firm : "+ContactName,YesNo.Yes);
+				sa.assertTrue(false,"Not Able to open created source contact : "+ContactName);
+				log(LogStatus.SKIP,"Not Able to open created source contact : "+ContactName,YesNo.Yes);
 			
              }
                } else {
-	              log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
-	           sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	              log(LogStatus.ERROR, "Not able to click on " + tabObj2 + " tab", YesNo.Yes);
+	           sa.assertTrue(false, "Not able to click on " + tabObj2 + " tab");
                  }
 	ThreadSleep(5000);
 	lp.CRMlogout();
@@ -1128,7 +1182,7 @@ public void ADETc016_RestoreDeletedDealsandDealSectionAccounts(String projectNam
 			ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 			FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 			BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-			lp.CRMLogin(superAdminUserName, adminPassword, appName);
+			lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 			WebElement ele = null ;
 		
 			
@@ -1195,7 +1249,141 @@ public void ADETc016_RestoreDeletedDealsandDealSectionAccounts(String projectNam
 
 @Parameters({ "projectName"})
 @Test
-public void ADETc017_1_RenameStageNamesCheckImpactDealSectionAccountContact(String projectName) {
+public void ADETc017_EditExistingCompanyDealVerifyimpactDealCompanyAccount(String projectName) {
+			LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+			ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+			FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+			BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+			lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+			String dealname ="ADECTD New";
+			
+			if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+				if (fp.clickOnAlreadyCreatedItem(projectName, "TD", 10)){
+					if (fp.UpdateDealName(projectName,dealname , 10)) {
+						log(LogStatus.INFO,"successfully changed name to "+dealname,YesNo.Yes);
+					}else {
+						sa.assertTrue(false,"not able to change name to "+dealname);
+						log(LogStatus.SKIP,"not able to change name to "+dealname,YesNo.Yes);
+					}
+					if (fp.changeStage(projectName, Stage.LOI.toString(), 10)) {
+						log(LogStatus.INFO,"successfully changed stage to "+Stage.LOI,YesNo.Yes);
+						
+					}else {
+						sa.assertTrue(false,"not able to change stage to "+Stage.LOI);
+						log(LogStatus.SKIP,"not able to change stage to "+Stage.LOI,YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false,"not able to find pipeline "+"TD");
+					log(LogStatus.SKIP,"not able to find pipeline "+"TD",YesNo.Yes);
+				}
+			}else {
+				sa.assertTrue(false,"not able to click on deal tab");
+				log(LogStatus.SKIP,"not able to click on deal tab",YesNo.Yes);
+			}
+			String dealName = "ADECTD New";
+			String stage ="LOI";
+			String dateReceived ="11/2/2022";
+			
+			if(fp.clickOnTab(environment,mode, TabName.Object1Tab)){
+				log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
+				
+				if(fp.clickOnAlreadyCreatedItem(projectName, ADEIns1, 30)){
+					
+					log(LogStatus.INFO,"open created item"+ADEIns1,YesNo.No);
+					
+					if (BP.dealAcuityDealName(dealName, 30) != null) {
+						log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
+						if (BP.dealAcuityStageName(dealName,stage, 30) != null) {
+							log(LogStatus.PASS, "Stage Name: " + stage + " is present", YesNo.No);
+							if (BP.dealAcuityDateReceived(dealName,dateReceived, 30) != null) {
+								log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
+								
+								} else {
+									log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+									sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
+
+								}
+						} else {
+							log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
+							sa.assertTrue(false, "stage name not present: " + stage);
+
+						}
+
+							}	else {
+							log(LogStatus.FAIL, "date received not present: " +dateReceived , YesNo.Yes);
+							sa.assertTrue(false, "date receivednot present: " + dateReceived);
+						}
+		             }else{
+						
+						sa.assertTrue(false,"Not Able to open created source firm : "+ADEIns1);
+						log(LogStatus.SKIP,"Not Able to open created source firm : "+ADEIns1,YesNo.Yes);
+					
+		             }
+		               } else {
+			              log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+			           sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+			            }
+			String dealName1 = "ADECTD New";
+			String stage1 ="LOI";
+			String dateReceived1 ="11/2/2022";
+			String companyname = ADEIns2;
+			if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+				if (fp.clickOnAlreadyCreatedItem(projectName, "ADECTD New", 10)){
+					if (fp.UpdateCompanyName(projectName,companyname , 10)) {
+						log(LogStatus.INFO,"successfully changed name to "+companyname,YesNo.Yes);
+					}else {
+						sa.assertTrue(false,"not able to change name to "+companyname);
+						log(LogStatus.SKIP,"not able to change name to "+companyname,YesNo.Yes);
+					}	
+					if(fp.clickOnTab(environment,mode, TabName.Object1Tab)){
+						log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
+						
+						if(fp.clickOnAlreadyCreatedItem(projectName, ADEIns2, 30)){
+							
+							log(LogStatus.INFO,"open created item"+ADEIns2,YesNo.No);
+							
+							if (BP.dealAcuityDealName(dealName1, 30) != null) {
+								log(LogStatus.PASS, "Deal Name: " + dealName1 + " is hyperlink and is present", YesNo.No);
+								if (BP.dealAcuityStageName(dealName1,stage1, 30) != null) {
+									log(LogStatus.PASS, "Stage Name: " + stage1 + " is present", YesNo.No);
+									if (BP.dealAcuityDateReceived(dealName1,dateReceived1, 30) != null) {
+										log(LogStatus.PASS, "Date Received: " + dateReceived1 + " is present", YesNo.No);
+										
+										} else {
+											log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName1, YesNo.Yes);
+											sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName1);
+
+										}
+								} else {
+									log(LogStatus.FAIL, "stage name not present: " + stage1, YesNo.Yes);
+									sa.assertTrue(false, "stage name not present: " + stage1);
+
+								}
+
+									}	else {
+									log(LogStatus.FAIL, "date received not present: " +dateReceived1 , YesNo.Yes);
+									sa.assertTrue(false, "date receivednot present: " + dateReceived1);
+								}
+				             }else{
+								
+								sa.assertTrue(false,"Not Able to open created source firm : "+ADEIns2);
+								log(LogStatus.SKIP,"Not Able to open created source firm : "+ADEIns2,YesNo.Yes);
+							
+				             }
+				               } else {
+					              log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+					           sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+					            }
+					
+				}
+
+			switchToDefaultContent(driver);
+			lp.CRMlogout();
+			sa.assertAll();
+		}}
+@Parameters({ "projectName"})
+@Test
+public void ADETc018_1_RenameStageNamesCheckImpactDealSectionAccountContact(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 	HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
@@ -1282,7 +1470,7 @@ public void ADETc017_1_RenameStageNamesCheckImpactDealSectionAccountContact(Stri
 
 @Parameters({ "projectName"})
 @Test
-public void ADETc017_2_RenameStageNamesCheckImpactDealSectionAccountContact(String projectName) {
+public void ADETc018_2_RenameStageNamesCheckImpactDealSectionAccountContact(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
@@ -1327,7 +1515,11 @@ public void ADETc017_2_RenameStageNamesCheckImpactDealSectionAccountContact(Stri
 	              log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
 	           sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
 	            }
+	
+	
 	refresh(driver);
+	
+	
 	if(fp.clickOnTab(environment,mode, TabName.Object1Tab)){
 		log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
 		
@@ -1353,15 +1545,267 @@ public void ADETc017_2_RenameStageNamesCheckImpactDealSectionAccountContact(Stri
 					} else {
 						log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
 						sa.assertTrue(false, "stage name not present: " + stage);
-					}
-		             }else{
+					
+		             }
+		}else{
 						
 						sa.assertTrue(false,"Not Able to open created source firm : "+ADEIns1);
 						log(LogStatus.SKIP,"Not Able to open created source firm : "+ADEIns1,YesNo.Yes);
-					
 		             }
+		             
 		               } else {
 			              log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
 			           sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
-			            }}}
+			            }
+	              switchToDefaultContent(driver);
+	               lp.CRMlogout();
+	           sa.assertAll();
+	}
+
+@Parameters({ "projectName"})
+@Test
+public void ADETc019_ChangeCompanyTypeRecordPortfolioforAccountVerifyDealSectionAccount(String projectName) {
+			LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+			ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+			FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+			BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+			InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+			InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
+			BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+			DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+			lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+			String value="";
+			String type="";
+			String[][] EntityOrAccounts = {{ ADEIns10,ADEIns10RecordType ,null}};
+			String labelName1[]={excelLabel.Record_Type.toString()};
+			String labelValues1[]={InstRecordType.Portfolio_Company.toString()};
+			
+			for (String[] accounts : EntityOrAccounts) {
+				if (lp.clickOnTab(projectName, tabObj1)) {
+					log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
+					value = accounts[0];
+					type = accounts[1];
+					if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
+						log(LogStatus.INFO, "successfully Created Account/Entity : " + value + " of record type : " + type,
+								YesNo.No);
+					} else {
+						sa.assertTrue(false, "Not Able to Create Account/Entity : " + value + " of record type : " + type);
+						log(LogStatus.SKIP, "Not Able to Create Account/Entity : " + value + " of record type : " + type,
+								YesNo.Yes);
+					}
+				} else {
+					sa.assertTrue(false, "Not Able to Click on Tab : " + tabObj1);
+					log(LogStatus.SKIP, "Not Able to Click on Tab : " + tabObj1, YesNo.Yes);
+				}
+			}
+				String recordType = "";
+				String dealName = "MNC D1";
+				String companyName =ADEIns10;
+				String stage ="DD";
+				String dateReceived = todaysDate;
+				String ContactName= ADEContact2FName+" "+ ADEContact2LName;
+
+				String labellabels = "Date Received";
+				String otherLabelValues =todaysDate;
+				if (lp.clickOnTab(projectName, tabObj4)) {
+					log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
+					ThreadSleep(3000);
+					if (dp.createDeal(recordType, dealName, companyName, stage, labellabels,
+							otherLabelValues)) {
+						log(LogStatus.INFO, dealName + " deal has been created", YesNo.No);
+
+						
+					} else {
+						log(LogStatus.ERROR, dealName + " deal is not created", YesNo.No);
+						sa.assertTrue(false, dealName + " deal is not created");
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on " + tabObj4 + " Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on " + tabObj4 + " Tab");
+				}
+				
+				
+				if(fp.clickOnTab(environment,mode, TabName.Object1Tab)){
+					log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);
 					
+					if(fp.clickOnAlreadyCreatedItem(projectName, ADEIns10, 30)){
+						
+						log(LogStatus.INFO,"open created item"+ADEIns10,YesNo.No);
+						
+						if (BP.dealAcuityDealName(dealName, 30) != null) {
+							log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
+							if (BP.dealAcuityStageName(dealName,stage, 30) != null) {
+								log(LogStatus.PASS, "Stage Name: " + stage + " is present", YesNo.No);
+								if (BP.dealAcuityDateReceived(dealName,dateReceived, 30) != null) {
+									log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
+									
+									} else {
+										log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+										sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
+
+									}
+							} else {
+								log(LogStatus.FAIL, "stage name not present: " + stage, YesNo.Yes);
+								sa.assertTrue(false, "stage name not present: " + stage);
+
+							}
+
+								}	else {
+								log(LogStatus.FAIL, "date received not present: " +dateReceived , YesNo.Yes);
+								sa.assertTrue(false, "date receivednot present: " + dateReceived);
+							}
+			             }else{
+							
+							sa.assertTrue(false,"Not Able to open created source firm : "+ADEIns10);
+							log(LogStatus.SKIP,"Not Able to open created source firm : "+ADEIns10,YesNo.Yes);
+						
+			             }
+			               } else {
+				              log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+				           sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+				            }
+				
+				
+				
+				if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
+					if (ip.clickOnAlreadyCreatedItem(projectName, "MNC D1", 10)) {
+						if (click(driver, dp.getconvertToPortfolio(10),"convert to portfolio button", action.BOOLEAN)) {
+							if (click(driver, dp.getnextButton(10),"next button", action.BOOLEAN)) {
+								String text=dp.getconvertToPortfolioMessageAfterNext(10).getText();
+								if (text.contains(dp.convertToPortfolioAfterNext(M6Ins2))) {
+									log(LogStatus.INFO,"successfully verified convert to portfolio message congratulations",YesNo.Yes);
+									
+								}else {
+									sa.assertTrue(false,"could not verify convert to portfolio message Expected: "+dp.convertToPortfolioAfterNext(M6Ins2)+" actual: "+text);
+									log(LogStatus.SKIP,"could not verify convert to portfolio message Expected: "+dp.convertToPortfolioAfterNext(M6Ins2)+" actual: "+text,YesNo.Yes);
+								}
+								if (dp.getconvertToPortfolioCrossButton(10)!=null) {
+									log(LogStatus.INFO,"cross button is present",YesNo.Yes);
+									
+								}else {
+									sa.assertTrue(false,"could not verify cross icon presence");
+									log(LogStatus.SKIP,"could not verify cross icon presence",YesNo.Yes);
+								}
+								if (click(driver, dp.getfinishButton(10), "finish", action.BOOLEAN)) {
+									log(LogStatus.INFO, "successfully verified finish button after convert to portfolio", YesNo.No);
+								}else {
+									sa.assertTrue(false,"could not verify convert to portfolio as finish button not clicked");
+									log(LogStatus.SKIP,"could not verify convert to portfolio as finish button not clicked",YesNo.Yes);
+								}
+							}else {
+								sa.assertTrue(false,"could not verify convert to portfolio as finish button not clicked");
+								log(LogStatus.SKIP,"could not verify convert to portfolio as finish button not clicked",YesNo.Yes);
+							}
+						}else {
+							sa.assertTrue(false,"could not verify convert to portfolio as finish button not clicked");
+							log(LogStatus.SKIP,"could not verify convert to portfolio as finish button not clicked",YesNo.Yes);
+						}
+					}else {
+						sa.assertTrue(false,"could not click on "+M6Deal2);
+						log(LogStatus.SKIP,"could not click on "+M6Deal2,YesNo.Yes);
+					}
+				}else {
+					sa.assertTrue(false,"could not click on deal tab");
+					log(LogStatus.SKIP,"could not click on deal tab",YesNo.Yes);
+				}
+				
+				
+				if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
+					if (ip.clickOnAlreadyCreatedItem(projectName, ADEIns10, 10)) {
+						for(int i = 0;i<labelName1.length;i++) {
+						if (ip.fieldValueVerificationOnInstitutionPage(environment,mode,TabName.Object1Tab, labelName1[i],labelValues1[i])) {
+							log(LogStatus.SKIP,"successfully verified "+labelName1[i],YesNo.No);
+
+						}else {
+							sa.assertTrue(false,"Not Able to verify "+labelName1[i]);
+							log(LogStatus.SKIP,"Not Able to verify "+labelName1[i],YesNo.Yes);
+						
+						 
+						}
+						String TabName1 = "";
+						String str = getText(driver, bp.verifydefaultCreatedItemOnPageAcuty(Header.Company, "Acuity"), "legal Name Label Text",action.SCROLLANDBOOLEAN);
+						if (str != null) {
+							if (str.contains(TabName1)) {
+								appLog.info("created institution " + TabName1 + " is verified successfully.");
+								appLog.info(TabName1 + " is created successfully.");
+							} else {
+								appLog.error("Created  " + TabName1 + " is not matched with " + str);
+							}
+						} else {
+							appLog.error("Created  " + TabName1 + " is not visible");
+						}
+						}
+					}else{
+								
+								sa.assertTrue(false,"Not Able to open created source firm : "+ADEIns10);
+								log(LogStatus.SKIP,"Not Able to open created source firm : "+ADEIns10,YesNo.Yes);
+							
+				             
+				               }
+				}else {
+					              log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+					           sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+					            }
+						switchToDefaultContent(driver);
+						lp.CRMlogout();
+						sa.assertAll();
+				}
+						
+	
+@Parameters({ "projectName"})
+@Test
+public void ADETc020_1_UpdatefieldcolumnNamesCheckDealsectionAccountandContactTab(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
+	SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+	String parentID=null;
+	String updateLabel="Updated Stage";
+	lp.CRMLogin(superAdminUserName, adminPassword, appName);
+	if (home.clickOnSetUpLink()) {
+		parentID=switchOnWindow(driver);
+		if (parentID!=null) {
+			if (sp.searchStandardOrCustomObject(environment, mode,object.Override)){
+				log(LogStatus.INFO, "click on Object : " +object.valueOf("Override"), YesNo.No);
+				ThreadSleep(2000);				
+				switchToFrame(driver, 30, sp.getSetUpPageIframe(60));
+				ThreadSleep(5000);	
+				if(selectVisibleTextFromDropDown(driver, sp.getOverrideSetupComponentDropdown(10), "Override setup component dropdown", "Custom Field")){
+					log(LogStatus.INFO, "Select custom field text in setup component dropdown in override setup page", YesNo.No);
+					ThreadSleep(5000);	
+					
+					if(selectVisibleTextFromDropDown(driver, sp.getOverrideObjectDropdown(10), "Override object dropdown",PageLabel.Deal.toString())){
+						log(LogStatus.INFO, "Select "+PageLabel.Deal.toString()+" text in object dropdown in override setup page", YesNo.No);
+						ThreadSleep(5000);	
+						if(sp.updateFieldLabelInOverridePage(driver, PageLabel.Stage.toString(), updateLabel, action.SCROLLANDBOOLEAN)){
+							log(LogStatus.INFO, "Field label: "+PageLabel.Stage.toString()+" successfully update to "+updateLabel, YesNo.No);
+							
+						}else{
+							log(LogStatus.ERROR, "Not able to update Field label: "+PageLabel.Stage.toString()+" successfully update to "+updateLabel, YesNo.Yes);
+							sa.assertTrue(false, "Not able to update Field label: "+PageLabel.Stage.toString()+" to "+updateLabel);	
+						}
+					}else{
+						log(LogStatus.ERROR, "Not able to select text: "+PageLabel.Activity.toString()+" in  object dropdown in override page", YesNo.Yes);
+						sa.assertTrue(false, "Not able to select text: "+PageLabel.Activity.toString()+" in  object dropdown in override page");
+					}
+				}else{
+					log(LogStatus.ERROR, "Not able to select text: Custom Field in  setup component dropdown in override page", YesNo.Yes);
+					sa.assertTrue(false, "Not able to select text: Custom Field in  setup component dropdown in override page");
+				}
+			
+		}else{
+			
+			log(LogStatus.PASS, "Not able to click on Object : " + object.valueOf("Override"), YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on Object : " + object.valueOf("Override"));
+		}
+		}else {
+			sa.assertTrue(false,"new window is not found, so cannot change watchlist label");
+			log(LogStatus.SKIP,"new window is not found, so cannot change watchlist label",YesNo.Yes);
+		}
+	}else {
+		sa.assertTrue(false,"setup link is not clickable");
+		log(LogStatus.SKIP,"setup link is not clickable",YesNo.Yes);
+	}
+	lp.CRMlogout();
+	sa.assertAll();
+}}
+				

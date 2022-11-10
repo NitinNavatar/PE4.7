@@ -3476,15 +3476,15 @@ public class SetupPageBusinessLayer extends SetupPage {
 		int count = 10;
 		ele2 = FindElement(driver, masterFieldLabel, "", action.SCROLLANDBOOLEAN, 10);
 
-		while (!setup.getOverrideSetupFieldNextBtn(20).getAttribute("class").contains("disabled") && ele2 == null
-				&& count < 5) {
-			click(driver, setup.getOverrideSetupFieldNextBtn(20), "override field next button",
+		do {
+			clickUsingJavaScript(driver, setup.getOverrideSetupFieldNextBtn(20), "override field next button",
 					action.SCROLLANDBOOLEAN);
 			log(LogStatus.INFO, "Successfully click on override next button going to find field label:" + fieldName
 					+ " on next page", YesNo.No);
 			ele2 = FindElement(driver, masterFieldLabel, "", action.SCROLLANDBOOLEAN, 10);
 			count++;
-		}
+		}while (!setup.getOverrideSetupFieldNextBtn(20).getAttribute("class").contains("disabled") && ele2 == null
+				&& count < 5);
 
 		if (ele2 != null) {
 			ele = FindElement(driver, fieldLabelOverride, fieldName, action.SCROLLANDBOOLEAN, 10);

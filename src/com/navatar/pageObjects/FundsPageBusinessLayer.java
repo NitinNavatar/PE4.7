@@ -1379,5 +1379,91 @@ public class FundsPageBusinessLayer extends FundsPage implements FundsPageErrorM
 //		}
 		return false;
 	}
+	/**
+	 * @author sahil bansal
+	 * @param projectName
+	 * @param dealname
+	 * @param timeOut
+	 * @return true if successfully change stage
+	 */
+	public boolean UpdateDealName(String projectName, String dealname, int timeOut) {
+		boolean flag = true;
+		WebElement ele;
+		ThreadSleep(2000);
+		if (clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Edit, 10)) {
+			ThreadSleep(2000);
+			ele = getLabelTextBox(projectName, PageName.DealPage.toString(), PageLabel.Deal_Name.toString(), timeOut);
+			if (sendKeys(driver, ele, dealname, "Deal Name", action.BOOLEAN)) {
+				appLog.info("Successfully Entered value on Deal Name TextBox : " + dealname);
+			} else {
+				appLog.error("Not Able to Entered value on Deal Name TextBox : " + dealname);
+			}
+				ThreadSleep(1000);
+			ThreadSleep(2000);
+			if (click(driver, getCustomTabSaveBtn(projectName, 30), "Save Button", action.SCROLLANDBOOLEAN)) {
+				appLog.error("Click on save Button");
+				flag = true;
+				ThreadSleep(2000);
+			} else {
+				appLog.error("Not Able to Click on save Button");
+			}
+		} else {
+			appLog.error("Not Able to Click on edit Button");
+		}
+		return flag;
+	}
+	
+	/**
+	 * @author sahil bansal
+	 * @param projectName
+	 * @param companyname
+	 * @param timeOut
+	 * @return true if successfully change stage
+	 */
+	public boolean UpdateCompanyName(String projectName, String companyname, int timeOut) {
+		boolean flag = true;
+		
+		ThreadSleep(2000);
+		if (clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Edit, 10)) {
+			ThreadSleep(2000);
+			if (click(driver, getCompanyCrossIcon(projectName, 60), "Company Cross Icon", action.SCROLLANDBOOLEAN)) {
+				appLog.info("Clicked on Legal Cross icon");
+				ThreadSleep(3000);
+			} else {
+				appLog.info("Not able to click on Cross Icon button");
+				log(LogStatus.INFO, "Not able to clicked on edit button so cannot Account Name ", YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to clicked on edit button so cannot Account Name ");
+			}
+			if (sendKeys(driver, getCompanyName(projectName, 60), companyname, "Company Name",
+					action.SCROLLANDBOOLEAN)) {
+				ThreadSleep(1000);
+				if (click(driver,
+						FindElement(driver,
+								"//input[contains(@placeholder,'Search')]/../following-sibling::*//*[@title='"
+										+ companyname + "']",
+								"Company Name List", action.BOOLEAN, 30),
+						companyname + "   :   Company Name", action.BOOLEAN)) {
+					appLog.info(companyname + "  is present in list.");
+				} else {
+					appLog.info(companyname + "  is not present in the list.");
+					return false;
+				}
 
+			} else {
+				appLog.error("Not able to enter Company name");
+				return false;
+			}
+			ThreadSleep(2000);
+			if (click(driver, getCustomTabSaveBtn(projectName, 30), "Save Button", action.SCROLLANDBOOLEAN)) {
+				appLog.error("Click on save Button");
+				flag = true;
+				ThreadSleep(2000);
+			} else {
+				appLog.error("Not Able to Click on save Button");
+			}
+		} else {
+			appLog.error("Not Able to Click on edit Button");
+		}
+		return flag;
+	}
 }
