@@ -26,6 +26,7 @@ import com.navatar.generic.SoftAssert;
 import com.navatar.generic.CommonLib.*;
 import com.navatar.generic.EnumConstants.*;
 import com.relevantcodes.extentreports.LogStatus;
+import com.relevantcodes.extentreports.model.Log;
 import com.navatar.generic.CommonVariables;
 
 import static com.navatar.generic.AppListeners.*;
@@ -12192,7 +12193,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 							List<String> researchResultsGridCounts = researchResultsGridCounts().stream()
 									.map(x -> x.getText().trim()).collect(Collectors.toList());
-
+							
+							log(LogStatus.INFO,"Data in researchResultGridCount is : " + researchResultsGridCounts,YesNo.No);
+							
+							
 							int researchAllCategoriesCount = 0;
 							if (researchAllCategoriesCount(10) != null) {
 								researchAllCategoriesCount = Integer.parseInt(
