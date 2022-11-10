@@ -1618,11 +1618,13 @@ public class HomePage extends BasePageBusinessLayer {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("return arguments[0].setAttribute('Styles','display: inline-block;')", ele);
 		ThreadSleep(2000);
-		ele = FindElement(driver, "//*[text()='" + dataName + "']/ancestor::tr//td[contains(@data-label,'"
-				+ field.replaceAll("_", " ") + "')]//button", "edit button for " + field, action.SCROLLANDBOOLEAN, timeOut);
+		ele = FindElement(
+				driver, "//*[text()='" + dataName + "']/ancestor::tr//td[contains(@data-label,'"
+						+ field.replaceAll("_", " ") + "')]//button",
+				"edit button for " + field, action.SCROLLANDBOOLEAN, timeOut);
 		ThreadSleep(2000);
 		doubleClickUsingAction(driver, ele);
-		
+
 		return true;
 	}
 
@@ -2434,6 +2436,20 @@ public class HomePage extends BasePageBusinessLayer {
 
 	public WebElement notificationPopUpCloseButton(int timeOut) {
 		return isDisplayed(driver, notificationPopUpCloseButton, "Visibility", timeOut, "notificationPopUpCloseButton");
+	}
+
+	@FindBy(xpath = "//div[contains(@class,'slds-p-horizontal_medium')]//child::a")
+	private List<WebElement> notificationOptions;
+
+	public List<WebElement> getNotificationOptions() {
+		return notificationOptions;
+	}
+
+	@FindBy(xpath = "//div[contains(@class,'slds-p-horizontal_medium' )]//child::button[text()='Add Note']")
+	private List<WebElement> notificationButtons;
+
+	public List<WebElement> getnotificationButtons() {
+		return notificationButtons;
 	}
 
 }

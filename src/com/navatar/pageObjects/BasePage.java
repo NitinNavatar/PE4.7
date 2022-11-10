@@ -7237,6 +7237,12 @@ public abstract class BasePage extends BaseLib {
 				"//lightning-vertical-navigation-item-badge[contains(@class,'slds-nav-vertical__item')]/a/span/ancestor::lightning-vertical-navigation-item-badge/a[not(text()='All Categories')]/span",
 				"researchSideNavCountResultsExceptAllCategories");
 	}
+	
+	public List<WebElement> researchSideNavLabelsWhichHasCountResultsExceptAllCategories() {
+		return FindElements(driver,
+				"//lightning-vertical-navigation-item-badge[contains(@class,'slds-nav-vertical__item')]/a/span/ancestor::lightning-vertical-navigation-item-badge/a[not(text()='All Categories')]",
+				"researchSideNavLabelsWhichHasCountResultsExceptAllCategories");
+	}
 	/*
 	 * public List<WebElement> researchSideNavResultsExceptAllCategories() { return
 	 * FindElements(driver,
@@ -7454,4 +7460,25 @@ public abstract class BasePage extends BaseLib {
 				"researchFIndingsCountResults");
 	}
 
+	
+	@FindBy(xpath = "//*[local-name()='svg' and @class='slds-icon slds-icon-text-default slds-icon_small']/../..")
+	private WebElement notificationIcon;
+
+	public WebElement getNotificationIcon() {
+		return notificationIcon;
+	}
+
+	@FindBy(xpath = "//div[contains(@class,'slds-grid slds-wrap slds-border_top')]//child::a")
+	private List<WebElement> notificationOptions;
+
+	public List<WebElement> getNotificationOptions() {
+		return notificationOptions;
+	}
+
+	@FindBy(xpath = "//div[contains(@class,'slds-grid slds-wrap slds-border_top')]//child::button[text()='Add Note']")
+	private List<WebElement> notificationButtons;
+
+	public List<WebElement> getnotificationButtons() {
+		return notificationButtons;
+	}
 }

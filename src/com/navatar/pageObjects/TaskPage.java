@@ -13,95 +13,118 @@ public class TaskPage extends BasePageBusinessLayer {
 		super(driver);
 		// TODO Auto-generated constructor stub
 	}
-	
-	@FindBy(xpath="//button[@title='Refresh']")
+
+	@FindBy(xpath = "//button[@title='Refresh']")
 	private WebElement refreshIcon;
 
 	/**
 	 * @return the taskRayFrame
 	 */
-	public WebElement getRefreshIcon(String projectName,int timeOut) {
+	public WebElement getRefreshIcon(String projectName, int timeOut) {
 		return isDisplayed(driver, refreshIcon, "Visibility", timeOut, "Refresh Icon");
 	}
-	
-	@FindBy(xpath="(//*[@role='dialog']//button)[1]")
+
+	@FindBy(xpath = "(//*[@role='dialog']//button)[1]")
 	private WebElement taskPagePopUp;
-	
-	/**
-	 * @return the taskRayFrame
-	 */
-	public WebElement getTaskPagePopUp(String projectName,int timeOut) {
-		return isDisplayed(driver, taskPagePopUp, "Visibility", timeOut, "Task Page Pop Up");
-	}
-	
 
 	/**
 	 * @return the taskRayFrame
 	 */
-	public WebElement getTaskNameLinkInSideMMenu(String projectName,String taskName,int timeOut) {
+	public WebElement getTaskPagePopUp(String projectName, int timeOut) {
+		return isDisplayed(driver, taskPagePopUp, "Visibility", timeOut, "Task Page Pop Up");
+	}
+
+	/**
+	 * @return the taskRayFrame
+	 */
+	public WebElement getTaskNameLinkInSideMMenu(String projectName, String taskName, int timeOut) {
 		WebElement ele = getTaskPagePopUp(projectName, 10);
-		if (ele!=null) {
+		if (ele != null) {
 			click(driver, ele, "Task Page Pop Up", action.BOOLEAN);
-		} 
-		
-		String xpath="//div[@class='oneConsoleObjectHome']//div//span[text()='"+taskName+"']";
+		}
+
+		String xpath = "//div[@class='oneConsoleObjectHome']//div//span[text()='" + taskName + "']";
 		ele = FindElement(driver, xpath, taskName, action.SCROLLANDBOOLEAN, timeOut);
 		return isDisplayed(driver, ele, "Visibility", timeOut, taskName);
 	}
-	
-	
+
 	@FindBy(xpath = "//iframe[@title='accessibility title']")
-	 private WebElement taskPageFrame;
-	
+	private WebElement taskPageFrame;
+
 	/**
 	 * @return the taskPageFrame
 	 */
-	public WebElement getTaskPageFrame(String projectName,int timeOut) {
+	public WebElement getTaskPageFrame(String projectName, int timeOut) {
 		return isDisplayed(driver, taskPageFrame, "Visibility", timeOut, "task Page Frame");
 	}
-	
+
 	@FindBy(xpath = "//div[@id='popupOpenId']//h2")
-	 private WebElement taskPoUpEditHeader;
-	
+	private WebElement taskPoUpEditHeader;
+
 	/**
 	 * @return the taskPoUpEditHeader
 	 */
-	public WebElement getTaskPoUpEditHeader(String projectName,int timeOut) {
+	public WebElement getTaskPoUpEditHeader(String projectName, int timeOut) {
 		return isDisplayed(driver, taskPoUpEditHeader, "Visibility", timeOut, "task PoUp EditHeader");
 	}
-	
-	
-	
+
 	@FindBy(xpath = "//label[text()='Related Contacts']//following-sibling::div")
-	 private WebElement relatedContactsLabel;
-	
+	private WebElement relatedContactsLabel;
+
 	/**
 	 * @return the taskPoUpEditHeader
 	 */
-	public WebElement getRelatedContactsLabel(String projectName,int timeOut) {
+	public WebElement getRelatedContactsLabel(String projectName, int timeOut) {
 		return relatedContactsLabel;
-		//return isDisplayed(driver, relatedContactsLabel, "Visibility", timeOut, "Related Contact Label");
+		// return isDisplayed(driver, relatedContactsLabel, "Visibility", timeOut,
+		// "Related Contact Label");
 	}
+
 	@FindBy(xpath = "//span[text()='Comments']/..//following-sibling::div")
-	 private WebElement commentsLabel;
-	
+	private WebElement commentsLabel;
+
 	/**
 	 * @return the taskPoUpEditHeader
 	 */
-	public WebElement getCommentsLabel(String projectName,int timeOut) {
+	public WebElement getCommentsLabel(String projectName, int timeOut) {
 		return relatedContactsLabel;
-		//return isDisplayed(driver, relatedContactsLabel, "Visibility", timeOut, "Related Contact Label");
+		// return isDisplayed(driver, relatedContactsLabel, "Visibility", timeOut,
+		// "Related Contact Label");
 	}
-	
+
 	@FindBy(xpath = "//div[contains(@class,'hint')]//ul[contains(@class,'error')]")
-	 private WebElement DaysErrorMsg;
-	
+	private WebElement DaysErrorMsg;
+
 	/**
 	 * @return the taskPoUpEditHeader
 	 */
-	public WebElement get14DaysErrorMsg(String projectName,int timeOut) {
-		
+	public WebElement get14DaysErrorMsg(String projectName, int timeOut) {
+
 		return isDisplayed(driver, DaysErrorMsg, "Visibility", timeOut, "14DaysErrorMsg");
 	}
-	
+
+	@FindBy(xpath = "//div[text()='Edit Comments']/ancestor::a")
+	private WebElement editCommentsButton;
+
+	public WebElement editCommentsButton(int timeOut) {
+
+		return isDisplayed(driver, editCommentsButton, "Visibility", timeOut, "editCommentsButton");
+	}
+
+	@FindBy(xpath = "//span[@id='quickTextKeyboardTip']/following-sibling::textarea")
+	private WebElement commentTextArea;
+
+	public WebElement commentTextArea(int timeOut) {
+
+		return isDisplayed(driver, commentTextArea, "Visibility", timeOut, "commentTextArea");
+	}
+
+	@FindBy(xpath = "//span[text()='Cancel']/ancestor::button[contains(@class,'uiButton--default')]")
+	private WebElement commentTextAreaCancelButton;
+
+	public WebElement commentTextAreaCancelButton(int timeOut) {
+
+		return isDisplayed(driver, commentTextAreaCancelButton, "Visibility", timeOut, "commentTextAreaCancelButton");
+	}
+
 }
