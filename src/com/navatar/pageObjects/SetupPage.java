@@ -231,7 +231,8 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, totalPageNo, "Visibility", timeOut, "total no of page");
 	}
 
-	@FindBy(xpath = "//table[@id='nextBtn']")
+	/* @FindBy(xpath = "//table[@id='nextBtn']") */
+	@FindBy(xpath = "//button[text()='Next']")
 	private WebElement overrideSetupFieldNextBtn;
 
 	public WebElement getOverrideSetupFieldNextBtn(int timeOut) {
