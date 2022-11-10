@@ -7416,29 +7416,6 @@ public abstract class BasePage extends BaseLib {
 		}
 	}
 	
-	public WebElement getFieldName(String tableName, int timeOut) {
-		String xpath = "//div[contains(@class,'active')]//a[text()='"+ tableName +"']";
-		
-		return FindElement(driver, xpath, "Field Header Name: " + tableName, action.SCROLLANDBOOLEAN, timeOut);
-	}
-	
-	@FindBy(xpath = "(//div[contains(@class,'DOCKED')]//div//button)[1]")
-	private WebElement researchMinimize;
-
-	public WebElement getResearchMinimize(int timeOut) {
-	return isDisplayed(driver, researchMinimize, "Visibility", timeOut, "Research Minimize");
-	
-	}
-	@FindBy(xpath = "//div[contains(@class,'DOCKED')]//div//input")
-	private WebElement textAreaResearch;
-
-	public WebElement getTextAreaResearch(int timeOut) {
-		return isDisplayed(driver, textAreaResearch, "Visibility", timeOut, "Text Area Research");
-
-	}
-
-	
-	
 	//Acuity Research
 	@FindBy(xpath = "//div[contains(@class,'DOCKED')]//div//input")
 	private WebElement textAreaResearch;
