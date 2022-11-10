@@ -7416,6 +7416,7 @@ public abstract class BasePage extends BaseLib {
 		}
 	}
 	
+
 	//Acuity Research
 	@FindBy(xpath = "//div[contains(@class,'DOCKED')]//div//input")
 	private WebElement textAreaResearch;
