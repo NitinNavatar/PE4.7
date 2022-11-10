@@ -14547,29 +14547,105 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
-	
-public ArrayList<String> verifyFieldWithDataonResearchPage(String environment, String mode, String[][] Data) {
-		
+
+	public ArrayList<String> verifyFieldWithDataonResearchPage(String environment, String mode, String[][] Data) {
+
 		ArrayList<String> verifyData = new ArrayList<String>();
 		int row = Data.length;
 		ArrayList<String> DataFromExcel = new ArrayList<String>();
-		
+
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < Data[0].length; j++) {
 				DataFromExcel.add(Data[i][j]);
-				
+
 				String xpath = "//div[contains(@class,'active')]//a[text()='"+ Data[i][j]+"']";
 				WebElement ele = CommonLib.FindElement(driver, xpath, Data[i][j], action.BOOLEAN, 10);
-				click(driver, ele, xpath, action.BOOLEAN);
-				
-				
-				
+				click(driver, ele, xpath, action.BOOLEAN);			
 			}
 		}
-		
-
 		return verifyData;
-
 	}
 
+	public ArrayList<String> verifyRecordsonInteractionsPopup(String[] date, String[] subject, String[] details, String[] assignedTo, String[] correspondenceHeader) {
+		String xPath;
+		WebElement ele;
+		ArrayList<String> result=new ArrayList<String>();
+		if(correspondenceHeader!=null && correspondenceHeader.length!=0)
+		{
+			for(int i=0; i<correspondenceHeader.length; i++)
+			{
+				if(date!=null && date.length!=0 && date[i]!="")
+				{		
+					xPath="//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"+correspondenceHeader[i]+"']/ancestor::tr//td[@data-label='Date']//lightning-base-formatted-text";
+					ele=FindElement(driver, xPath, "date ", action.BOOLEAN, 25);
+					String actDate=getText(driver, ele, "date ", action.BOOLEAN);
+					if(actDate.equalsIgnoreCase(date[i]))
+					{
+						log(LogStatus.INFO, "actual date : "+actDate+" has been matched with the Expected date : "+date[i], YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "actual date : "+actDate+" is not matched with the Expected date : "+date[i], YesNo.No);
+						result.add("actual date : "+actDate+" is not matched with the Expected date : "+date[i]);
+					}
+				}
+				if(subject!=null && subject.length!=0 && subject[i]!="")
+				{		
+					xPath="//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"+correspondenceHeader[i]+"']/ancestor::tr//td[@data-label='Subject']//a";
+					ele=FindElement(driver, xPath, "subject ", action.BOOLEAN, 25);
+					String actSubject=getText(driver, ele, "subject ", action.BOOLEAN);
+					if(actSubject.equalsIgnoreCase(subject[i]))
+					{
+						log(LogStatus.INFO, "actual subject : "+actSubject+" has been matched with the Expected subject : "+subject[i], YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "actual subject : "+actSubject+" is not matched with the Expected subject : "+subject[i], YesNo.No);
+						result.add("actual subject : "+actSubject+" is not matched with the Expected subject : "+subject[i]);
+					}
+				}
+				if(details!=null && details.length!=0 && details[i]!="")
+				{		
+					xPath="//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"+correspondenceHeader[i]+"']/ancestor::tr//td[@data-label='Details']//button";
+					ele=FindElement(driver, xPath, "details ", action.BOOLEAN, 25);
+					String actDetails=getText(driver, ele, "details ", action.BOOLEAN);
+					if(actDetails.equalsIgnoreCase(details[i]))
+					{
+						log(LogStatus.INFO, "actual details : "+actDetails+" has been matched with the Expected details : "+details[i], YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "actual details : "+actDetails+" is not matched with the Expected details : "+details[i], YesNo.No);
+						result.add("actual details : "+actDetails+" is not matched with the Expected details : "+details[i]);
+					}
+				}
+				if(assignedTo!=null && assignedTo.length!=0 && assignedTo[i]!="")
+				{		
+					xPath="//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"+correspondenceHeader[i]+"']/ancestor::tr//td[@data-label='Assigned To']//a";
+					ele=FindElement(driver, xPath, "assigned to ", action.BOOLEAN, 25);
+					String actAssigned=getText(driver, ele, "assigned to ", action.BOOLEAN);
+					if(actAssigned.equalsIgnoreCase(assignedTo[i]))
+					{
+						log(LogStatus.INFO, "actual AssignedTo value : "+actAssigned+" has been matched with the Expected AssignedTo value : "+assignedTo[i], YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "actual AssignedTo value : "+actAssigned+" is not matched with the Expected AssignedTo value : "+assignedTo[i], YesNo.No);
+						result.add("actual AssignedTo value : "+actAssigned+" is not matched with the Expected AssignedTo value : "+assignedTo[i]);
+					}
+				}
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Either correspondence is null or Empty. Please provide data to verify data on interaction popup " , YesNo.No);
+			result.add("Either correspondence is null or Empty. Please provide data to verify data on interaction popup");
+		}
+		return result;
+	}
 }
+
+
+
+
+
