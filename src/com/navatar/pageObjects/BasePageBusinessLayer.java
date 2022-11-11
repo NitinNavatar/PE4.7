@@ -14381,4 +14381,82 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return actualNotificationItemList;
 	}
+	
+	
+	public ArrayList<String> verifyUIOfConnectionPopup(String recordName, ArrayList<String> headingName, String message)
+	{
+		String xPath;
+		WebElement ele;
+		List<WebElement> elements;
+		ArrayList<String> result=new ArrayList<String>();
+
+		xPath="//h2[text()='Connections of "+recordName+"']";
+		ele=FindElement(driver, xPath, "connection header name", action.SCROLLANDBOOLEAN, 30);
+		if(ele!=null)
+		{
+			log(LogStatus.INFO,"Connection popup has been open and heading of connection popup has been verified",YesNo.No);			
+			xPath="//h2[text()='Connections of "+recordName+"']/preceding-sibling::button[@title='Close']";
+			ele=FindElement(driver, xPath, "cross icon", action.SCROLLANDBOOLEAN, 25);
+			if(ele!=null)
+			{
+				log(LogStatus.INFO,"Cross icon is visible on Connection popup", YesNo.No);				
+				if (!headingName.isEmpty()) {
+					ArrayList<String> actualHeadingName = new ArrayList<String>();
+					xPath = "//h2[contains(text(),'Connections')]/ancestor::div[@class='slds-modal__container']//span[@class='slds-truncate' and @title!='']";
+					elements = FindElements(driver, xPath, "Connections section headers");
+					for (WebElement el : elements) {
+						actualHeadingName.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
+					}
+
+					xPath = "//h2[contains(text(),'Connections')]/ancestor::div[@class='slds-modal__container']//lightning-icon[@title!='Close']";
+					elements = FindElements(driver, xPath, "Connections section headers");
+					for (WebElement el : elements) {
+						actualHeadingName.add(getAttribute(driver, el, "Connections section headers", "title"));
+					}
+
+					if (headingName.containsAll(actualHeadingName)) {
+						log(LogStatus.INFO,
+								"The Header name of Connections section have been verified " + actualHeadingName,
+								YesNo.No);
+					} else {
+						log(LogStatus.ERROR,
+								"The Header name of Connections section are not verified " + actualHeadingName,
+								YesNo.No);
+						result.add("The Header name of Connections section are not verified " + actualHeadingName);
+					}
+				}
+
+				if(message!=null && message!="")
+				{
+					xPath="//h2[contains(text(),'Connections of')]/ancestor::div[@class='slds-modal__container']//div[text()='No items to display']";
+					ele=FindElement(driver, xPath, "message on popup", action.SCROLLANDBOOLEAN, 20);
+					if(ele!=null)
+					{
+						log(LogStatus.INFO, message+": Message is visible on Connection popup", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, message+": Message is not visible on Connection popup", YesNo.No);
+						result.add(message+": Message is not visible on Connection popup");
+					}			
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR,"Cross icon is not visible on Connection popup", YesNo.No);
+				result.add("Cross icon is not visible on Connection popup");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Either Connection popup did not open or Connection popup heading is not verified",YesNo.No);
+			result.add("Either Connection popup did not open or Connection popup heading is not verified");
+		}
+
+
+		return result;
+
+	}
+
+	
 }
