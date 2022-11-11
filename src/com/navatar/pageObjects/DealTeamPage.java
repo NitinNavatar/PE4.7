@@ -49,4 +49,11 @@ public class DealTeamPage extends BasePageBusinessLayer{
 	public WebElement getDtid(String projectName,int timeOut) {
 		return isDisplayed(driver, getDtid, "Visibility", timeOut, "getDtid");
 	}
+	@FindBy(xpath = "//label[text()='Deal Contact']/following-sibling::div//button")
+	private WebElement DealContactCrossIcon;
+
+	public WebElement getDealContactCrossIcon(String projectName, int timeOut) {
+		return isDisplayed(driver, DealContactCrossIcon, "Visibility", timeOut, "DealContactCrossIcon");
+	}
+	
 }

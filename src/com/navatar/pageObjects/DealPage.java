@@ -291,5 +291,11 @@ public class DealPage extends BasePageBusinessLayer {
 
 		return isDisplayed(driver, cancelButton, "Visibility", timeOut, "Cancel button ");
 	}
+	@FindBy(xpath = "//label[text()='Source Firm']/following-sibling::div//button")
+	private WebElement SourceFirmCrossIcon;
 
+	public WebElement getSourceFirmCrossIcon(String projectName, int timeOut) {
+		return isDisplayed(driver, SourceFirmCrossIcon, "Visibility", timeOut, "SourceFirmCrossIcon");
+	}
+	
 }
