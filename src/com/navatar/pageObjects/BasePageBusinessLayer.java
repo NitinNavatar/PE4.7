@@ -11927,7 +11927,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 		if (relatedTo != null) {
-			xPath = "//a[@class='interaction_sub subject_text' and text()='Nav Task 1']/../following-sibling::div[contains(@class,'cls_myPill')]//span[@class='slds-pill__label']";
+			xPath = "//a[@class='interaction_sub subject_text' and text()='"+subjectName+"']/../following-sibling::div[contains(@class,'cls_myPill')]//span[@class='slds-pill__label']";
 			elements = FindElements(driver, xPath, "Related to elements");
 			String[] actualRelatedTo = new String[elements.size()];
 			for (int i = 0; i < elements.size(); i++) {
