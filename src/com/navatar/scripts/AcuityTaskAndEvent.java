@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -857,7 +858,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String taskDueDate="08/31/2022";
 		String taskStatus="In Progress";
 		String taskPriority="Normal";
-		
+
 		String[] verifyRelatedToField= {"Test Contact 1",crmUser6FirstName+" "+crmUser6LastName,"+2"};
 
 		String[] completedate = taskDueDate.split("/");
@@ -900,11 +901,133 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String[][] advanceSection = { { "Due Date Only", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
-		/*		
+
 		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
-		 */		
+
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage("Acuity")) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+						ArrayList<String> result = bp.verifyRecordOnInteractionCard(date,taskSubject, taskNotes, true, false,verifyRelatedToField);
+						if (result.isEmpty()) {
+							log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
+							sa.assertTrue(true,taskSubject + " record has been verified on intraction");
+						} else {
+							log(LogStatus.ERROR,taskSubject + " record is not verified on intraction",YesNo.No);
+							sa.assertTrue(false,taskSubject + " record is not verified on intraction");
+						}
+
+						ArrayList<String> result1=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+						if(result1.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName, YesNo.No);
+							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName);
+						}
+
+						ArrayList<String> result2=bp.verifyRecordOnContactSectionAcuity(contactSectionName1, contactSectionTitle1, contactSectionDeal1, contactSectionMeetingAndCalls1, contactSectionEmail1);
+						if(result2.isEmpty())
+						{
+							log(LogStatus.INFO, contactSectionName1+" record on Contact section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, contactSectionName1+" record on Contact section is not verified for "+recordName, YesNo.No);
+							sa.assertTrue(false, contactSectionName1+" record on Contact section is not verified for "+recordName);
+						}
+
+						ArrayList<String> result3=bp.verifyRecordOnDealsSectionInAcuity(recordName, dealSectionName, null, dealSectionStage, dealSectionDateRecieved);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, dealSectionName+" record on Deal section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  dealSectionName+" record on Deal section is not verified for "+recordName, YesNo.No);
+							sa.assertTrue(false,  dealSectionName+" record on Deal section is not verified for "+recordName);
+						}
+
+						ArrayList<String> result4=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, null, null, dealTaggedName, dealTaggedTimeReference);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, dealSectionName+" record on Deal section has been verified for "+recordName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  dealSectionName+" record on Deal section is not verified for "+recordName, YesNo.No);
+							sa.assertTrue(false,  dealSectionName+" record on Deal section is not verified for "+recordName);
+						}
+
+						if (bp.verifySubjectLinkRedirectionOnIntraction(driver,taskSubject)) {
+							log(LogStatus.INFO, "page successfully redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);			
+						}
+						else
+						{
+							log(LogStatus.ERROR, "page is not redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);		
+							sa.assertTrue(false,  "page is not redirecting to the "+ taskSubject+ " page on new tab");
+
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
+
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
+		}		
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATETc008_VerifyConnectionPopupOnAccountPage(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String recordName="Test Account 1";
+		String contactName="Test Contact 1";
+		ArrayList<String> headerName=new ArrayList<String>();
+		headerName.add("Team Member");
+		headerName.add("Title");
+		headerName.add("Deals");
+		headerName.add("Meetings and Calls");
+		headerName.add("Emails");
+		
+		String message="No items to display";
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 		if (lp.clickOnTab(projectName, tabObj1)) {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
@@ -915,97 +1038,54 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 				if (bp.clicktabOnPage("Acuity")) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-
-					ArrayList<String> result = bp.verifyRecordOnInteractionCard(date,taskSubject, taskNotes, true, false,verifyRelatedToField);
-					if (result.isEmpty()) {
-						log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
-						sa.assertTrue(true,taskSubject + " record has been verified on intraction");
-					} else {
-						log(LogStatus.ERROR,taskSubject + " record is not verified on intraction",YesNo.No);
-						sa.assertTrue(false,taskSubject + " record is not verified on intraction");
-					}
-
-					ArrayList<String> result1=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
-					if(result1.isEmpty())
+					String xPath="//a[text()='"+contactName+"']/ancestor::tr//button[@title='Connections']";
+					WebElement ele=FindElement(driver, xPath, "Connection icon of "+contactName, action.SCROLLANDBOOLEAN, 20);
+					if(click(driver, ele, "Connection icon of "+contactName, action.SCROLLANDBOOLEAN))
 					{
-						log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
+						log(LogStatus.INFO, "clicked on Connection icon of "+contactName, YesNo.No);
+						
+						ArrayList<String> result=bp.verifyUIOfConnectionPopup(contactName, headerName, message);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The UI of Connections popup have been verified", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The UI of Connections popup have been verified", YesNo.No);
+							sa.assertTrue(false,  "The UI of Connections popup have been verified");
+							
+						}
 					}
 					else
 					{
-						log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName, YesNo.No);
-						sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName);
+						log(LogStatus.ERROR, "Not able to Connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false,  "Not able to Connection icon of "+contactName);
 					}
-
-					ArrayList<String> result2=bp.verifyRecordOnContactSectionAcuity(contactSectionName1, contactSectionTitle1, contactSectionDeal1, contactSectionMeetingAndCalls1, contactSectionEmail1);
-					if(result2.isEmpty())
-					{
-						log(LogStatus.INFO, contactSectionName1+" record on Contact section has been verified for "+recordName, YesNo.No);
-					}
-					else
-					{
-						log(LogStatus.ERROR, contactSectionName1+" record on Contact section is not verified for "+recordName, YesNo.No);
-						sa.assertTrue(false, contactSectionName1+" record on Contact section is not verified for "+recordName);
-					}
-
-					ArrayList<String> result3=bp.verifyRecordOnDealsSectionInAcuity(recordName, dealSectionName, null, dealSectionStage, dealSectionDateRecieved);
-					if(result3.isEmpty())
-					{
-						log(LogStatus.INFO, dealSectionName+" record on Deal section has been verified for "+recordName, YesNo.No);
-					}
-					else
-					{
-						log(LogStatus.ERROR,  dealSectionName+" record on Deal section is not verified for "+recordName, YesNo.No);
-						sa.assertTrue(false,  dealSectionName+" record on Deal section is not verified for "+recordName);
-					}
-
-					ArrayList<String> result4=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, null, null, dealTaggedName, dealTaggedTimeReference);
-					if(result4.isEmpty())
-					{
-						log(LogStatus.INFO, dealSectionName+" record on Deal section has been verified for "+recordName, YesNo.No);
-					}
-					else
-					{
-						log(LogStatus.ERROR,  dealSectionName+" record on Deal section is not verified for "+recordName, YesNo.No);
-						sa.assertTrue(false,  dealSectionName+" record on Deal section is not verified for "+recordName);
-					}
-
-					if (bp.verifySubjectLinkRedirectionOnIntraction(driver,taskSubject)) {
-						log(LogStatus.INFO, "page successfully redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);			
-					}
-					else
-					{
-						log(LogStatus.ERROR, "page is not redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);		
-						sa.assertTrue(false,  "page is not redirecting to the "+ taskSubject+ " page on new tab");
-
-					}
+					
 				}
 				else
 				{
 					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
 				}
 			}
 			else
 			{
 				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
 			}
 		}
 		else
 		{
 			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
 		}
-
-		/*    }
-	 	else
-		{
-	 		log(LogStatus.PASS, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
-			sa.assertTrue(true, "Activity timeline record is not created,  Subject name : "+taskSubject);
-		}
-		 */
-		
 		lp.CRMlogout();	
 		sa.assertAll();	
-
 	}
+
+
+	
 
 
 }
