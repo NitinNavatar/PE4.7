@@ -1,10 +1,12 @@
 package com.navatar.pageObjects;
 
-import static com.navatar.generic.CommonLib.isDisplayed;
-
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import com.navatar.generic.EnumConstants.action;
+
 import static com.navatar.generic.CommonLib.*;
 
 public class TaskPage extends BasePageBusinessLayer {
@@ -126,5 +128,15 @@ public class TaskPage extends BasePageBusinessLayer {
 
 		return isDisplayed(driver, commentTextAreaCancelButton, "Visibility", timeOut, "commentTextAreaCancelButton");
 	}
+	
+	@FindBy(xpath = "//span[text()='Save']/ancestor::button[contains(@class,'slds-button_brand')]")
+	private WebElement commentTextAreaSaveButton;
 
+	public WebElement commentTextAreaSaveButton(int timeOut) {
+
+		return isDisplayed(driver, commentTextAreaSaveButton, "Visibility", timeOut, "commentTextAreaSaveButton");
+	}
+
+	
+	
 }
