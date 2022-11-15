@@ -5,9 +5,12 @@ import static com.navatar.generic.CommonLib.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.navatar.generic.BaseLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.EnumConstants.AttendeeLabels;
 import com.navatar.generic.EnumConstants.PageLabel;
+import com.navatar.generic.EnumConstants.PageName;
+import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
@@ -43,7 +46,7 @@ public class DealTeamPageBusinessLayer extends DealTeamPage{
 				label=reuestData[0].replace("_", " ");
 				value=reuestData[1];
 
-				if(PageLabel.Team_Member.toString().equals(reuestData[0]) || PageLabel.Deal.toString().equals(reuestData[0])){
+				if(PageLabel.Team_Member.toString().equals(reuestData[0]) || PageLabel.Deal.toString().equals(reuestData[0]) ||PageLabel.Deal_Contact.toString().equals(reuestData[0])){
 					if (sendKeys(driver, getListTextbox(projectName,label, timeOut), value, label+" : "+value,action)) {
 						ThreadSleep(3000);
 						log(LogStatus.INFO,"Able to send "+value+" to label : "+label,YesNo.Yes);
@@ -106,7 +109,7 @@ public class DealTeamPageBusinessLayer extends DealTeamPage{
 				ThreadSleep(3000);
 				refresh(driver);
 				ThreadSleep(3000);
-				xpath="//*[text()='Deal Team']/../*/*[@slot='primaryField']/*";
+				xpath="//*[text()='Deal Team']/parent::h1//slot/lightning-formatted-text";
 				ele = FindElement(driver, xpath, "dt id", action, timeOut);
 				if (ele!=null) {
 					String id=getText(driver, ele, "deal team id",action.SCROLLANDBOOLEAN);
@@ -135,4 +138,170 @@ public class DealTeamPageBusinessLayer extends DealTeamPage{
 		return flag;
 	}
 	
+	
+	public boolean createDealTeam(String projectName,String[][] requestInfo,action action,int timeOut) {
+		boolean flag=true;
+		String label;
+		String value;
+		String xpath="";
+		WebElement ele;
+		
+		if(clickUsingJavaScript(driver, getNewButton(projectName, timeOut), "deal team")) {
+			log(LogStatus.INFO,"click on New deal team Button",YesNo.Yes);
+
+			for (String[] reuestData : requestInfo) {
+				label=reuestData[0].replace("_", " ");
+				value=reuestData[1];
+
+				if(PageLabel.Team_Member.toString().equals(reuestData[0]) || PageLabel.Deal.toString().equals(reuestData[0])){
+					if (sendKeys(driver, getListTextbox(projectName,label, timeOut), value, label+" : "+value,action)) {
+						ThreadSleep(3000);
+						log(LogStatus.INFO,"Able to send "+value+" to label : "+label,YesNo.Yes);
+						if (click(driver,FindElement(driver,"//span[contains(@class,'listbox')]//*[@title='"+value+"']","ATTENDEE Name List", action, 30),
+								value + "   :   Company Name", action)) {
+							log(LogStatus.INFO,"Able to select "+value+" to label : "+label,YesNo.No);
+						} else {
+							sa.assertTrue(false,"Not Able to select "+value+" to label : "+label);
+							log(LogStatus.SKIP,"Not Able to select "+value+" to label : "+label,YesNo.Yes);
+							flag=false;
+						}
+
+					} else {
+						sa.assertTrue(false,"Not Able to send "+value+" to label : "+label);
+						log(LogStatus.SKIP,"Not Able to send "+value+" to label : "+label,YesNo.Yes);
+						return false;
+					}
+				}else if(PageLabel.Team_Member_Role.toString().equals(reuestData[0]) || PageLabel.Deal_Contact_Type.toString().equals(reuestData[0])) {
+
+					if (click(driver, getListTextbox(projectName, label, 10), label, action)) {
+						ThreadSleep(2000);
+						log(LogStatus.INFO,"Able to Click on "+label,YesNo.No);
+
+						xpath="//span[@title='"+value+"']";
+						ele = FindElement(driver,xpath, value,action, timeOut);
+						ThreadSleep(4000);
+						if (click(driver, ele, value, action)) {
+							log(LogStatus.INFO,"Able to select "+value+" to label : "+label,YesNo.No);	
+						} else {
+							sa.assertTrue(false,"Not Able to select "+value+" to label : "+label);
+							log(LogStatus.SKIP,"Not Able to select "+value+" to label : "+label,YesNo.Yes);
+							flag=false;
+						}
+
+					} else {
+						sa.assertTrue(false,"Not Able to Click on "+label);
+						log(LogStatus.SKIP,"Not Able to Click on "+label,YesNo.Yes);
+						flag=false;
+					}
+
+				}
+
+			}
+
+			if (click(driver, getRecordPageSettingSave(timeOut), "save button", action)) {
+				appLog.info("clicked on save button");
+				
+			} else {
+				sa.assertTrue(false,"Not Able to Click on save button so cannot create deal team");
+				log(LogStatus.SKIP,"Not Able to Click on save button so cannot create deal team",YesNo.Yes);
+				flag=false;
+			}
+
+
+		}else {
+			sa.assertTrue(false,"Not able to click on deal team button");
+			log(LogStatus.SKIP,"Not able to click on deal team button",YesNo.Yes);
+			flag=false;
+
+		}
+		return flag;
+	}
+
+	/**
+	 * @author sahil bansal
+	 * @param projectName
+	 * @param companyname
+	 * @param timeOut
+	 * @return true if successfully change stage
+	 */
+	public boolean UpdateDealContactName(String projectName,String[][] requestInfo, int timeOut) {
+		boolean flag = true;
+		String label;
+		String value;
+		String xpath="";
+		WebElement ele;
+		for (String[] reuestData : requestInfo) {
+			label=reuestData[0].replace("_", " ");
+			value=reuestData[1];
+			
+		ThreadSleep(2000);
+		if (clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Edit, 10)) {
+			ThreadSleep(2000);
+			if (click(driver, getDealContactCrossIcon(projectName, 60), "Deal Contact Cross Icon", action.SCROLLANDBOOLEAN)) {
+				appLog.info("Clicked on Legal Cross icon");
+				ThreadSleep(3000);
+			} else {
+				appLog.info("Not able to click on Cross Icon button");
+				log(LogStatus.INFO, "Not able to clicked on edit button so cannot Account Name ", YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to clicked on edit button so cannot Account Name ");
+			}
+			if(PageLabel.Team_Member.toString().equals(reuestData[0]) || PageLabel.Deal.toString().equals(reuestData[0]) ||PageLabel.Deal_Contact.toString().equals(reuestData[0])){
+				if (sendKeys(driver, getListTextbox(projectName,label, timeOut), value, label+" : "+value,action.BOOLEAN)) {
+					ThreadSleep(3000);
+					log(LogStatus.INFO,"Able to send "+value+" to label : "+label,YesNo.Yes);
+					if (click(driver,FindElement(driver,"//span[contains(@class,'listbox')]//*[@title='"+value+"']","ATTENDEE Name List", action.BOOLEAN, 30),
+							value + "   :   Company Name", action.BOOLEAN)) {
+						log(LogStatus.INFO,"Able to select "+value+" to label : "+label,YesNo.No);
+					} else {
+						sa.assertTrue(false,"Not Able to select "+value+" to label : "+label);
+						log(LogStatus.SKIP,"Not Able to select "+value+" to label : "+label,YesNo.Yes);
+						flag=false;
+					}
+
+				} else {
+					sa.assertTrue(false,"Not Able to send "+value+" to label : "+label);
+					log(LogStatus.SKIP,"Not Able to send "+value+" to label : "+label,YesNo.Yes);
+					return false;
+				}
+
+				} else {
+					sa.assertTrue(false,"Not Able to Click on "+label);
+					log(LogStatus.SKIP,"Not Able to Click on "+label,YesNo.Yes);
+					flag=false;
+				}
+
+			}
+			if (click(driver, getRecordPageSettingSave(timeOut), "save button", action.BOOLEAN)) {
+				appLog.info("clicked on save button");
+				
+				ThreadSleep(3000);
+				refresh(driver);
+				ThreadSleep(3000);
+				xpath="//*[text()='Deal Team']/parent::h1//slot/lightning-formatted-text";
+				ele = FindElement(driver, xpath, "dt id", action.BOOLEAN, timeOut);
+				if (ele!=null) {
+					String id=getText(driver, ele, "deal team id",action.SCROLLANDBOOLEAN);
+//					ExcelUtils.writeData(phase1DataSheetFilePath,id, "Deal Team", excelLabel.Variable_Name, basedOnValue,
+//							excelLabel.DTID);
+//				
+//					log(LogStatus.INFO,"successfully created and noted id of DT"+id+" and deal name "+dealName,YesNo.No);	
+
+			} else {
+				sa.assertTrue(false,"Not Able to Click on save button so cannot create deal team");
+				log(LogStatus.SKIP,"Not Able to Click on save button so cannot create deal team",YesNo.Yes);
+				flag=false;
+			}
+
+
+		}else {
+			sa.assertTrue(false,"Not able to click on deal team button");
+			log(LogStatus.SKIP,"Not able to click on deal team button",YesNo.Yes);
+			flag=false;
+
+		}
+		return flag;
+	}
+		
+		return flag;
+	}
 }

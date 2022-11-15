@@ -56,6 +56,7 @@ import com.navatar.generic.EnumConstants.ObjectName;
 import com.navatar.generic.EnumConstants.ObjectType;
 import com.navatar.generic.EnumConstants.PermissionType;
 import com.navatar.generic.EnumConstants.RecordType;
+import com.navatar.generic.EnumConstants.RelatedTab;
 import com.navatar.generic.EnumConstants.ReportField;
 import com.navatar.generic.EnumConstants.ReportFormatName;
 import com.navatar.generic.EnumConstants.SDGCreationLabel;
@@ -5847,7 +5848,6 @@ public class Module9 extends BaseLib {
 		sa.assertAll();
 	}
 
-	
 	@Parameters({ "projectName" })
 	@Test
 	public void M9Tc042_VerifyFilterApplyOnFundPrepAndVerifyRecords(String projectName) {
@@ -6321,7 +6321,10 @@ public class Module9 extends BaseLib {
 															+ rowCountAfterFilter + "----------------");
 
 										}
-
+											ThreadSleep(2000);
+											WebElement ele1 = BP.getRelatedTab(projectName, RelatedTab.SDG_Tab.toString().replace("_", " "), 10);
+							                click(driver, ele1, RelatedTab.SDG_Tab.toString().replace("_", " "), action.BOOLEAN);
+							                ThreadSleep(2000);
 										if (home.verifyColumnRecordsRedirecting(SDGGridName.Firm_with_Primary_Member,
 												columnInSDG)) {
 											log(LogStatus.FAIL, columnInSDG + " Column contains the Redirect URL for : "
@@ -6335,7 +6338,7 @@ public class Module9 extends BaseLib {
 													YesNo.No);
 
 										}
-
+											ThreadSleep(2000);
 										if (home.verifyBlankDataCorrespondingToBlankData(TitleOfSDG, 3, 4)) {
 											log(LogStatus.INFO,
 													"Primary Member column will appear blank in case of no primary contact against that account",

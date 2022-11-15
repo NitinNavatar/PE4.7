@@ -1029,106 +1029,130 @@ public class HomePageBusineesLayer extends HomePage {
 
 	}
 
-	public String taskCreatesMsg(String projectName,String taskName) {
-		return "Task \""+taskName+"\" was created"+"Task \""+taskName+"\" was created."+"Task "+taskName+" was created"+"Task "+taskName+" was created.";
-		
+	public String taskCreatesMsg(String projectName, String taskName) {
+		return "Task \"" + taskName + "\" was created" + "Task \"" + taskName + "\" was created." + "Task " + taskName
+				+ " was created" + "Task " + taskName + " was created.";
+
 	}
+
 	/**
 	 * @param projectName
 	 * @param globalActionItem
 	 * @param labelsWithValue
 	 * @return true if able to click on Global action and enter value
 	 */
-	public boolean clickOnNvaigationMenuAndEnterValueOnTask(String projectName,NavigationMenuItems navigationMenuName,NewInteractions_DefaultValues navigationMenuItems,String subject,String dueDate,String contactNAme,String[][] dropDownLabelWithValues){
-		boolean flag=false;
-		if (ClickOnItemOnNavatarEdge(navigationMenuItems.toString(), navigationMenuName.toString(), action.BOOLEAN, 20)) {
-			log(LogStatus.INFO, "clicked on "+navigationMenuName.toString()+" link", YesNo.No);
-			WebElement ele = getNavigationLabel( navigationMenuItems.toString(), action.BOOLEAN, 10);
-			if (ele!=null && click(driver, ele, navigationMenuItems.toString(), action.BOOLEAN)) {
-				log(LogStatus.INFO, "Click on "+navigationMenuItems+" so going for creation", YesNo.No);
-				
-				if (enteringSubjectAndSelectDropDownValuesonTaskPopUp(projectName, PageName.TaskPage, subject, dropDownLabelWithValues, action.SCROLLANDBOOLEAN, 10)) {
+	public boolean clickOnNvaigationMenuAndEnterValueOnTask(String projectName, NavigationMenuItems navigationMenuName,
+			NewInteractions_DefaultValues navigationMenuItems, String subject, String dueDate, String contactNAme,
+			String[][] dropDownLabelWithValues) {
+		boolean flag = false;
+		if (ClickOnItemOnNavatarEdge(navigationMenuItems.toString(), navigationMenuName.toString(), action.BOOLEAN,
+				20)) {
+			log(LogStatus.INFO, "clicked on " + navigationMenuName.toString() + " link", YesNo.No);
+			WebElement ele = getNavigationLabel(navigationMenuItems.toString(), action.BOOLEAN, 10);
+			if (ele != null && click(driver, ele, navigationMenuItems.toString(), action.BOOLEAN)) {
+				log(LogStatus.INFO, "Click on " + navigationMenuItems + " so going for creation", YesNo.No);
+
+				if (enteringSubjectAndSelectDropDownValuesonTaskPopUp(projectName, PageName.TaskPage, subject,
+						dropDownLabelWithValues, action.SCROLLANDBOOLEAN, 10)) {
 					log(LogStatus.INFO, "Entered value to Subject Text Box ", YesNo.No);
 					ThreadSleep(1000);
-					
-					if(navigationMenuName.toString().equalsIgnoreCase("Task")||navigationMenuName.toString().equalsIgnoreCase("Call")) {
-					if (sendKeys(driver, getdueDateTextBoxInNewTask(projectName, 20), dueDate, PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Entered value to Due Date Text Box", YesNo.No);
-						ThreadSleep(1000);
-					}else {
-						log(LogStatus.ERROR, "Not able to enter value on duedate textbox "+dueDate, YesNo.Yes);
-						sa.assertTrue(false,"Not able to enter value on duedate textbox "+dueDate );
-					}
-					}else {
-						if (sendKeys(driver, getdueDateTextBoxInNewTask(projectName, 20), dueDate, PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
+
+					if (navigationMenuName.toString().equalsIgnoreCase("Task")
+							|| navigationMenuName.toString().equalsIgnoreCase("Call")) {
+						if (sendKeys(driver, getdueDateTextBoxInNewTask(projectName, 20), dueDate,
+								PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Entered value to Due Date Text Box", YesNo.No);
 							ThreadSleep(1000);
-						}else {
-							log(LogStatus.ERROR, "Not able to enter value on duedate textbox "+dueDate, YesNo.Yes);
-							sa.assertTrue(false,"Not able to enter value on duedate textbox "+dueDate );
-						}
-					}
-					
-					flag = selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Name.toString(), TabName.TaskTab, contactNAme, action.SCROLLANDBOOLEAN, 10);		
-					if (flag) {
-						ele=getCrossButtonForAlreadySelectedItem(projectName, PageName.TaskPage, PageLabel.Name.toString(),true, contactNAme, action.SCROLLANDBOOLEAN, 5);
-						if (ele!=null) {
-							log(LogStatus.INFO, contactNAme+" Found For Label "+PageLabel.Name.toString()+" at "+navigationMenuItems,YesNo.No);	
 						} else {
-							sa.assertTrue(false,contactNAme+" not Found For Label "+PageLabel.Name.toString()+" at "+navigationMenuItems);
-							log(LogStatus.ERROR, contactNAme+" not Found For Label "+PageLabel.Name.toString()+" at "+navigationMenuItems,YesNo.Yes);
+							log(LogStatus.ERROR, "Not able to enter value on duedate textbox " + dueDate, YesNo.Yes);
+							sa.assertTrue(false, "Not able to enter value on duedate textbox " + dueDate);
 						}
 					} else {
-						sa.assertTrue(false,"Not Able to Select "+contactNAme+" For Label "+PageLabel.Name);
-						log(LogStatus.SKIP,"Not Able to Select "+contactNAme+" For Label "+PageLabel.Name,YesNo.Yes);
+						if (sendKeys(driver, getdueDateTextBoxInNewTask(projectName, 20), dueDate,
+								PageLabel.Due_Date.toString(), action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Entered value to Due Date Text Box", YesNo.No);
+							ThreadSleep(1000);
+						} else {
+							log(LogStatus.ERROR, "Not able to enter value on duedate textbox " + dueDate, YesNo.Yes);
+							sa.assertTrue(false, "Not able to enter value on duedate textbox " + dueDate);
+						}
+					}
+
+					flag = selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName,
+							PageName.TaskPage, PageLabel.Name.toString(), TabName.TaskTab, contactNAme,
+							action.SCROLLANDBOOLEAN, 10);
+					if (flag) {
+						ele = getCrossButtonForAlreadySelectedItem(projectName, PageName.TaskPage,
+								PageLabel.Name.toString(), true, contactNAme, action.SCROLLANDBOOLEAN, 5);
+						if (ele != null) {
+							log(LogStatus.INFO, contactNAme + " Found For Label " + PageLabel.Name.toString() + " at "
+									+ navigationMenuItems, YesNo.No);
+						} else {
+							sa.assertTrue(false, contactNAme + " not Found For Label " + PageLabel.Name.toString()
+									+ " at " + navigationMenuItems);
+							log(LogStatus.ERROR, contactNAme + " not Found For Label " + PageLabel.Name.toString()
+									+ " at " + navigationMenuItems, YesNo.Yes);
+						}
+					} else {
+						sa.assertTrue(false, "Not Able to Select " + contactNAme + " For Label " + PageLabel.Name);
+						log(LogStatus.SKIP, "Not Able to Select " + contactNAme + " For Label " + PageLabel.Name,
+								YesNo.Yes);
 
 					}
-					if (clickUsingJavaScript(driver, getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO,"successfully created : "+subject+" for "+navigationMenuItems,  YesNo.No);
-						//ExcelUtils.writeData(phase1DataSheetFilePath,dueDate, "Task1", excelLabel.Variable_Name, "M3CALL1", excelLabel.Due_Date);
+					if (clickUsingJavaScript(driver, getCustomTabSaveBtn(projectName, 20), "save",
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "successfully created : " + subject + " for " + navigationMenuItems,
+								YesNo.No);
+						// ExcelUtils.writeData(phase1DataSheetFilePath,dueDate, "Task1",
+						// excelLabel.Variable_Name, "M3CALL1", excelLabel.Due_Date);
 						ele = getCreatedConfirmationMsg(projectName, 15);
-						if (ele!=null) {
+						if (ele != null) {
 							String actualValue = ele.getText().trim();
-							String expectedValue=taskCreatesMsg(projectName, subject);
+							String expectedValue = taskCreatesMsg(projectName, subject);
 							if (expectedValue.contains(actualValue)) {
-								log(LogStatus.INFO,expectedValue+" matched FOR Confirmation Msg", YesNo.No);
+								log(LogStatus.INFO, expectedValue + " matched FOR Confirmation Msg", YesNo.No);
 							} else {
-								log(LogStatus.ERROR,"Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg", YesNo.Yes);
-								BaseLib.sa.assertTrue(false, "Actual : "+actualValue+" Expected : "+expectedValue+" not matched FOR Confirmation Msg");
+								log(LogStatus.ERROR, "Actual : " + actualValue + " Expected : " + expectedValue
+										+ " not matched FOR Confirmation Msg", YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "Actual : " + actualValue + " Expected : " + expectedValue
+										+ " not matched FOR Confirmation Msg");
 							}
 						} else {
-							sa.assertTrue(false,"Created Task Msg Ele not Found");
-							log(LogStatus.SKIP,"Created Task Msg Ele not Found",YesNo.Yes);
+							sa.assertTrue(false, "Created Task Msg Ele not Found");
+							log(LogStatus.SKIP, "Created Task Msg Ele not Found", YesNo.Yes);
 						}
-						
-						
-					}
-					else {
-						log(LogStatus.ERROR, "Save Button is not visible so could not be create "+navigationMenuItems, YesNo.Yes);
-						sa.assertTrue(false,"Save Button is not visible so could not be create "+navigationMenuItems );
+
+					} else {
+						log(LogStatus.ERROR, "Save Button is not visible so could not be create " + navigationMenuItems,
+								YesNo.Yes);
+						sa.assertTrue(false,
+								"Save Button is not visible so could not be create " + navigationMenuItems);
 					}
 
-
-				}else {
-					log(LogStatus.ERROR, "Subject textbox is not visible so could not be create "+navigationMenuItems, YesNo.Yes);
-					sa.assertTrue(false,"Subject textbox is not visible so could not be create "+navigationMenuItems );
+				} else {
+					log(LogStatus.ERROR, "Subject textbox is not visible so could not be create " + navigationMenuItems,
+							YesNo.Yes);
+					sa.assertTrue(false,
+							"Subject textbox is not visible so could not be create " + navigationMenuItems);
 				}
-				
+
 			} else {
-				log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuItems+" so cannot create data related to this ", YesNo.Yes);
-				sa.assertTrue(false,"Not Able to Click on "+navigationMenuItems+" so cannot create data related to this ");
+				log(LogStatus.ERROR,
+						"Not Able to Click on " + navigationMenuItems + " so cannot create data related to this ",
+						YesNo.Yes);
+				sa.assertTrue(false,
+						"Not Able to Click on " + navigationMenuItems + " so cannot create data related to this ");
 
 			}
-			
-			
 
 		} else {
-			sa.assertTrue(false,"Not Able to Click on Global Action Related item");
-			log(LogStatus.SKIP,"Not Able to Click on Global Action Related item",YesNo.Yes);
+			sa.assertTrue(false, "Not Able to Click on Global Action Related item");
+			log(LogStatus.SKIP, "Not Able to Click on Global Action Related item", YesNo.Yes);
 		}
-		
+
 		return true;
 	}
+
 	/**
 	 * @author Azhar Alam
 	 * @param environment
@@ -1164,10 +1188,11 @@ public class HomePageBusineesLayer extends HomePage {
 		return false;
 	}
 
-	public boolean clickOnTemplateForReportOnBulkEmail(String environment, String mode,String reportName , String templateName
-			) {
+	public boolean clickOnTemplateForReportOnBulkEmail(String environment, String mode, String reportName,
+			String templateName) {
 		WebElement ele;
-		String xpath = "//span[text()='" + reportName + "']/ancestor::ul//span[contains(@id,'extd')][text()='" + templateName + "']";
+		String xpath = "//span[text()='" + templateName + "']/ancestor::ul//span[contains(@id,'extd')][text()='"
+				+ reportName + "']";
 		ele = FindElement(driver, xpath, reportName + " : " + templateName, action.SCROLLANDBOOLEAN, 10);
 		ThreadSleep(2000);
 		if (clickUsingJavaScript(driver, ele, reportName + " : " + templateName, action.SCROLLANDBOOLEAN)) {
@@ -3246,9 +3271,9 @@ public class HomePageBusineesLayer extends HomePage {
 				if (click(driver, deleteRecordConfirmBtn(Title), "Delete Confirm Button", action.BOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on Delete Confirm Button", YesNo.No);
 					flag = true;
-					 String msg = getText(dDriver, deleteRecordMsg(10), "", action.BOOLEAN).trim();
-					if (msg != null && !msg.equalsIgnoreCase("")&&!msg.isEmpty()) {
-						
+					String msg = getText(dDriver, deleteRecordMsg(10), "", action.BOOLEAN).trim();
+					if (msg != null && !msg.equalsIgnoreCase("") && !msg.isEmpty()) {
+
 						if (msg.contains("Successfully")) {
 							log(LogStatus.INFO, "Message Verified: " + msg, YesNo.No);
 							CommonLib.ThreadSleep(30000);
@@ -4878,9 +4903,6 @@ public class HomePageBusineesLayer extends HomePage {
 		return size;
 
 	}
-	
-	
-	
 
 	/*	*//**
 			 * @author Ankur Huria
@@ -5546,6 +5568,80 @@ public class HomePageBusineesLayer extends HomePage {
 		}
 		Collections.sort(sortedExpectedAmount, Collections.reverseOrder());
 		return sortedExpectedAmount;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 */
+	public void notificationPopUpClose() {
+
+		if (notificationPopUpCloseButton(10) != null) {
+			if (clickUsingJavaScript(driver, notificationPopUpCloseButton(10), "Notification PopUp Close Button",
+					action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.PASS, "Clicked on Notification Popup Close Button", YesNo.No);
+				if (notificationPopUpCloseButton(2) == null) {
+					log(LogStatus.INFO, "Notification Popup has been Closed", YesNo.No);
+				}
+
+				else {
+					log(LogStatus.FAIL, "Notification Popup has not been Closed", YesNo.Yes);
+					sa.assertTrue(false, "Notification Popup has not been Closed");
+				}
+			} else {
+				log(LogStatus.FAIL, "Not Able Click on Notification Popup Close Button", YesNo.Yes);
+				sa.assertTrue(false, "Not Able Click on Notification Popup Close Button");
+			}
+		} else {
+			log(LogStatus.INFO, "Notification Popup not showing, so not able to close it", YesNo.No);
+		}
+
+	}
+
+	public List<String> verifyNotificationOptions(String... eventName) {
+
+		List<WebElement> notificationOptionsList = getNotificationOptions();
+		List<WebElement> notificationButtonsList = getnotificationButtons();
+		List<String> actualNotificationItemList = new ArrayList<String>();
+		boolean flag = false;
+
+		for (WebElement e : notificationOptionsList) {
+			String text = e.getText();
+
+			for (int i = 0; i < eventName.length; i++) {
+				if (text.equals(eventName[i])) {
+
+					if (e.isDisplayed()) {
+						flag = false;
+
+						if (notificationButtonsList != null) {
+							for (WebElement e1 : notificationButtonsList) {
+
+								if (notificationButtonsList.indexOf(e1) == notificationOptionsList.indexOf(e)) {
+									if (e1.isDisplayed())
+										flag = true;
+									break;
+								} else {
+									continue;
+								}
+							}
+						} else {
+							log(LogStatus.ERROR, "Add note button list is empty..might locator has mismatched",
+									YesNo.Yes);
+						}
+						if (flag) {
+							log(LogStatus.PASS, "Event name is visible" + text, YesNo.No);
+							log(LogStatus.PASS, "Add note Button is visible for " + text, YesNo.No);
+							actualNotificationItemList.add(text);
+						} else {
+							log(LogStatus.FAIL, "Add note Button is not visible for " + text, YesNo.Yes);
+						}
+
+					}
+				}
+			}
+		}
+
+		return actualNotificationItemList;
 	}
 
 }

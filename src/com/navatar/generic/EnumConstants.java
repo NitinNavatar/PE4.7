@@ -74,8 +74,7 @@ public class EnumConstants {
 		Mailing_Address,Total_Commitments,Commitment_Amount,Partner_Type,Tax_Forms,Final_Commitment_Date,Company,Bank_Name,Placement_Fee,Fund_Investment_Category,Total_CoInvestment_Commitments,Total_Fund_Commitments, Institution_Type, Fund_Preferences, Industry_Preferences, Shipping_Street, Shipping_City, Shipping_State, Shipping_Zip, Shipping_Country, Mobile_Phone, Assistant, Asst_Phone, Phone,Total_Call_Amount_Received, Total_Amount_Called,Total_Amount_Received,Total_Uncalled_Amount,Total_Commitment_Due,Commitment_Called,Called_Due,Preferred_Mode_of_Contact,Percent,Contact_Tier,Pipeline_Comments,
 		Parent_Field_Name,Override_Label,APIName,FieldOrder,URL,Region,Industry,Attendee_Staff,Marketing_Event,Notes,DTID,Member,File,EffectiveDate,ReceiptDate,
 		SDG_Row_Number, My_Records,Global_Filter_Query,Field_Data_SDG,Filter_Search, Filter_PickList, Filter_Label,SDG_Misc,Highlighted_Colors,Highlighted_Colors_RGB, Referenced_Component_Heading, Introduction_Date,TotalCommitment, Priority, Project_Type, Project_Name, Task_Name, Status, Fund_InvestmentCategory,FundInvestmentID,Comment, Updated_Priority, Updated_Subject, Updated_Comment,Updated_Stage, Start_Date, End_Date, Data_Type, Field_Label, Length, Decimal_Places, Options, Deal_Name, SDG_Name, sObjectName, SDG_Tag, Object_Name, Field_Set_Label, NameSpace_PreFix, Page_Layout,Fields_Name, Toggle_Button, Request, Date_Requested, Request_Tracker_ID, Marketing_Event_Name, Date, TabName, Item,Filter_Value,Select_List_Item, RelatedTab, ToggleButton, Column_Name1, Column_Name2,Field_Type, FieldLabel_SubString, ExtraFieldsName, Column_Name, Navigation_Label_Name, Redirection_Label_Name, Update_Navigation_Label_Name, Updated_Order,Parent_Institution,Entity_Type, Parent, Navigation_Label_With_Parent, List_View_Object, List_View_Name, Action_Object, Coverage_Name,Action_Order,Event,Event_Payload,Action_Type, Sector, Assigned_To, Location, Event_PayLoad, Institution,Firm, Contact, Type_Of_Debt, Amount, Frequency, Fiscal_Year_end, Marketing_Initiative, Client, Advisor,List_Accessibility,Field,Operators,Filter,Fundraising_Stage,Count_as_per_fundraising_stage,Fundraising_Count, Partnership,SDG_Data_Count,AppPage_Name,SDG_TableName,SDG_DataProviderName
-
-		,Default_Sort,Date_Field,Field_Name,Field_Value,Filter_Condition,TextBox_Type,Page_Layout_Name,Button_Name,Tag,Advance_Due_Date,Advance_Start_Date,Advance_End_Date,Suggested_Tag,People,Deals,Meetings_And_Calls;
+		,Default_Sort,Date_Field,Field_Name,Field_Value,Filter_Condition,TextBox_Type,Page_Layout_Name,Button_Name,Tag,Advance_Due_Date,Advance_Start_Date,Advance_End_Date,Suggested_Tag,People,Deals,Meetings_And_Calls,Day,Contact_Type, Other_LabelNames, Other_LabelValues,Search_String, Output, ResearchFindings, All_Categories, Firms, Intermediary, Lender, Portfolio_Company, Contacts, Fund, Interactions, Referenced_Accounts, Referenced_Contacts;
 
 
 };
@@ -219,12 +218,12 @@ Fundraising_ContactPage, Financing, Financial_Performance, Marketing_Initiative,
 			public String toString() {
 				return "Management Meeting";
 		}
-		},IOI,IndicationOfInterest{
+		},IOI,IOL,IndicationOfInterest{
 			@Override
 			public String toString() {
 				return "Indication of Interest";
 		}
-		},LOI,Due_Diligence,Parked,Closed,Closed_Updated,NonDisclosureAgreement{
+		},LOI,Due_Diligence,Parked,Closed,Closed_Updated,DD,NonDisclosureAgreement{
 			@Override
 			public String toString() {
 				return "Non-Disclosure Agreement";
@@ -809,7 +808,7 @@ public static enum PermissionType{
 	}
 
 	public static enum RecordType{
-		Company,Institution,IndividualInvestor,Contact, PipeLine, Fund, Fundraising,Partnerships,Master,Advisor,Fund_Manager,Fund_Manager_Fund,Indivisual_investor,Intermediary,Lender,Limited_Partner,Portfolio_Company;
+		Company,Institution,IndividualInvestor,Contact, PipeLine, Fund, Fundraising,Partnerships,Master,Advisor,Fund_Manager,Fund_Manager_Fund,Indivisual_investor,Intermediary,Lender,Limited_Partner,Portfolio_Company,Deal;
 	}
 	
 	public static enum searchContactInEmailProspectGrid{
@@ -1208,7 +1207,7 @@ public static enum PermissionType{
 			public String toString() {
 				return "Q&A";
 			}
-		}, Overview,Events, Fund_Management, Fund_Investments, Fundraising_Contacts, Fundraising_Contact, Communications;	  
+		}, Overview,Events, Fund_Management, Fund_Investments, Fundraising_Contacts, Fundraising_Contact, Communications, SDG_Tab;	  
 	};
 	
 	public static enum Header{
@@ -1252,8 +1251,13 @@ public static enum PermissionType{
 			return "Rename-Under Evaluation";
 
 
-		}},Watchlist,Highest_Stage_Reached,Deal_Quality_Score,Average_Deal_Quality_Score,Total_Deals_Shown, Profile_Image,Industry,Watch_list,Deal_Conversion_Date,Portfolio_Company,Related_Associations,Name, Subject,Subject_updated , Due_Date, New_Task, Related_To
-		, Comments, Edit, Assigned_To, Start_Date, End_Date, End_Time, Start_Time, Type, 
+		}},Watchlist,Stage,Highest_Stage_Reached,Deal_Quality_Score,Average_Deal_Quality_Score,Date_Received,Total_Deals_Shown, Profile_Image,Industry,Watch_list,Deal_Conversion_Date,Portfolio_Company,Related_Associations,Name, Subject,Subject_updated , Due_Date, New_Task, Related_To
+		, Comments, Edit, Assigned_To{
+			@Override
+			public String toString() {
+				return "Assigned To ID";
+			}
+		}, Start_Date, End_Date, End_Time, Start_Time, Type, 
 		Date{
 			@Override
 			public String toString() {
@@ -1270,7 +1274,7 @@ public static enum PermissionType{
 				public String toString() {
 					return "Lender Status";
 				}
-			}
+			}, Deal_Contact
 		};
 	
 	public static enum Links{
@@ -1597,12 +1601,12 @@ public static enum PermissionType{
     	Bulk_Actions {
 			@Override
 			public String toString() {
-				return "Bulk Actions";
+				return "Create";
 			}
     	},New_Interactions{
 			@Override
 			public String toString() {
-				return "New Interactions";
+				return "Create";
 			}
     	},Create{
 			@Override
@@ -1615,6 +1619,7 @@ public static enum PermissionType{
 				return "Reports";
 			}
     	},Support{
+
 			@Override
 			public String toString() {
 				return "Support";
@@ -1626,6 +1631,7 @@ public static enum PermissionType{
 			
 			}
     	}
+
     };
     
     public static enum BulkActions_DefaultValues{
@@ -1844,5 +1850,9 @@ public static enum PermissionType{
     
     public static enum Condition{
     	activate,deactivate,replaceWithValue,replaceWithBlank,SelectCheckbox,UnSelectCheckbox;  		
+    }
+    
+    public static enum TaggedName{
+    	Companies,People,Deals;  		
     }
 }
