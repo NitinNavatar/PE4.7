@@ -1613,10 +1613,13 @@ public static enum PermissionType{
 			public String toString() {
 				return "Create";
 			}
+    	},Reports{
+			@Override
+			public String toString() {
+				return "Reports";
+			}
+    	},Support{
 
-    	} 
-
-    	,Support{
 			@Override
 			public String toString() {
 				return "Support";

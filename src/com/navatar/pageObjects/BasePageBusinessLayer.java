@@ -3482,7 +3482,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			xpath = "//li[@title='" + related + "']//a";
 		else
 			xpath = "//li//*[@title='" + related + "' or text()='" + related + "']";
-		xpath = "//li//*[@title='" + related + "' or text()='" + related + "']";
+	xpath = "//li//*[@title='" + related + "' or text()='" + related + "']";
 		ele = isDisplayed(driver, FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut),
 				"visiblity", 30, relatedTab.toString());
 		if (ele != null) {
@@ -14150,16 +14150,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
-	/**
-	 * @author Sourabh Saini
-	 * @param companyTagName
-	 * @param companyTimesReferenced
-	 * @param peopleTagName
-	 * @param propleTimesReferenced
-	 * @param dealTagName
-	 * @param dealTimesReferenced
-	 * @return return Empty ArrayList if test case is passed
-	 */
+
 
 	public ArrayList<String> verifyRecordAndReferencedTypeOnTagged(String[] companyTagName,
 			String[] companyTimesReferenced, String[] peopleTagName, String[] propleTimesReferenced,
@@ -14195,6 +14186,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									companyTagName[i] + " record is not available on company tab of Tagged", YesNo.No);
 							result.add(companyTagName[i] + " record is not available on company tab of Tagged");
 						}
+
 
 					}
 				} else {
