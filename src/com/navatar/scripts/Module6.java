@@ -770,6 +770,7 @@ public class Module6 extends BaseLib{
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		SetupPageBusinessLayer sp=new SetupPageBusinessLayer(driver);
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		WebElement ele=null;
 		int total=1;
 		double avgDealQualityScore=dealReceivedScore/total;
@@ -815,6 +816,9 @@ public class Module6 extends BaseLib{
 			
 			if (click(driver, fp.sourceFirmLink(10), "source firm link", action.SCROLLANDBOOLEAN)) {
 				for(i = 0;i<labelName1.length;i++) {
+					WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+					click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+					ThreadSleep(3000);
 				if (ip.fieldValueVerificationOnInstitutionPage(environment,mode,TabName.Object1Tab, labelName1[i],labelValues1[i])) {
 					log(LogStatus.SKIP,"successfully verified "+labelName1[i],YesNo.No);
 					
@@ -845,6 +849,7 @@ public class Module6 extends BaseLib{
 		HomePageBusineesLayer home=new HomePageBusineesLayer(driver);
 		SDGPageBusinessLayer sdg = new SDGPageBusinessLayer(driver);
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		int total=1;
 		double avgDealQualityScore=loiScore/total;
@@ -859,8 +864,9 @@ public class Module6 extends BaseLib{
 		if (ip.clickOnTab(projectName, TabName.Object4Tab)) {
 			if (ip.clickOnAlreadyCreatedItem(projectName, M6Deal20, 10)) {
 				if (fp.changeStage(projectName, Stage.LOI.toString(), 10)) {
-					ele=ip.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
-					click(driver, ele, "details", action.SCROLLANDBOOLEAN);
+					WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+					click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+					ThreadSleep(3000);
 					for (i =0;i<labelName.length;i++) {
 						if (fp.FieldValueVerificationOnFundPage(projectName, labelName[i],labelValues[i])) {
 							log(LogStatus.INFO,"successfully verified "+labelName[i],YesNo.Yes);
@@ -2383,7 +2389,7 @@ public class Module6 extends BaseLib{
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		String labelName[]={excelLabel.Highest_Stage_Reached.toString(),excelLabel.Stage.toString()
 		};
-		String labelValues[]={Stage.Closed_Updated.toString(),Stage.Closed_Updated.toString()};
+		String labelValues[]={Stage.Closed.toString(),Stage.Closed_Updated.toString()};
 
 		
 		if (ip.clickOnTab(projectName, TabName.Object4Tab)) {

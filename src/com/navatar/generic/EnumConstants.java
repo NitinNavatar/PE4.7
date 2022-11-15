@@ -1609,6 +1609,11 @@ public static enum PermissionType{
 			public String toString() {
 				return "Create";
 			}
+    	},Reports{
+			@Override
+			public String toString() {
+				return "Reports";
+			}
     	},Support{
 			@Override
 			public String toString() {
@@ -1675,17 +1680,17 @@ public static enum PermissionType{
     	New_Deal {
 			@Override
 			public String toString() {
-				return "New Deal";
+				return "Deal";
 			}
     	},New_Institution{
 			@Override
 			public String toString() {
-				return "New Firm";
+				return "Firm";
 			}
     	},New_Contact{
 			@Override
 			public String toString() {
-				return "New Contact";
+				return "Contact";
 			}
     	};
     };

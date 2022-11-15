@@ -3473,7 +3473,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			xpath = "//li[@title='" + related + "']//a";
 		else
 			xpath = "//li//*[@title='" + related + "' or text()='" + related + "']";
-		xpath = "//li//*[@title='" + related + "' or text()='" + related + "']";
+	xpath = "//li//*[@title='" + related + "' or text()='" + related + "']";
 		ele = isDisplayed(driver, FindElement(driver, xpath, relatedTab.toString(), action.SCROLLANDBOOLEAN, timeOut),
 				"visiblity", 30, relatedTab.toString());
 		if (ele != null) {
@@ -11617,7 +11617,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	public boolean updateActivityTimelineRecord(String projectName, String[][] basicSection, String[][] advanceSection, String[][] taskSection,String[] suggestedTags, String[] removeTagName)
 	{
-		NavigationPageBusineesLayer npbl= new NavigationPageBusineesLayer(driver);
+	
 		String xPath="";
 		WebElement ele;
 		boolean flag=false;
