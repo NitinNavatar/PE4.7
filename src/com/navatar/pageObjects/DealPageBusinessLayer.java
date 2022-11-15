@@ -375,6 +375,19 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	 * @param stage
 	 * @return WebElement
 	 */
+	public WebElement findDeleteLink(String projectName, String stage) {
+
+		String xpath = "//th[text()='" + stage + "']/preceding-sibling::td//a[contains(@title,'Del')]";
+		WebElement ele = FindElement(driver, xpath, "delete", action.SCROLLANDBOOLEAN, 10);
+		scrollDownThroughWebelement(driver, ele, "delete link for " + stage);
+		return isDisplayed(driver, ele, "Visibility", 10, "delete " + stage);
+
+	}
+	/**
+	 * @param projectName
+	 * @param stage
+	 * @return WebElement
+	 */
 	public WebElement findActivateLink(String projectName, String stage) {
 
 		String xpath = "//th[text()='" + stage + "']/preceding-sibling::td//a[contains(@title,'Activate')]";
@@ -1025,4 +1038,10 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return flag;
 					
 				}
+	@FindBy(xpath = "//*[text()='Replace value on records with ']/../..//select")
+	private WebElement replacevalueforstage;
+
+	public WebElement getreplacevalueforstage(String projectName, int timeOut) {
+		return isDisplayed(driver, replacevalueforstage, "Visibility", timeOut, "replacevalueforstage");
+	}
 }

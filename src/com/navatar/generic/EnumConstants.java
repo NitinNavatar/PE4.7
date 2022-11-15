@@ -1031,7 +1031,7 @@ public static enum PermissionType{
 		};
 	
 	public static enum ShowMoreActionDropDownList{
-		 New_Task,New_Call,Edit, Delete, New_Meeting,LogCaLLWithMultiple{
+		 New_Task,New_Call,Edit, Delete,DS, New_Meeting,LogCaLLWithMultiple{
 				@Override
 				public String toString() {
 					return "Log a Call with Multiple Associations";
