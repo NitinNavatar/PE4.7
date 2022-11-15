@@ -14,7 +14,9 @@ import static com.navatar.generic.CommonVariables.*;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.server.handler.FindElement;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -54,12 +56,28 @@ public class Module7New extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 		
 		String value="";
 		String type="";
 		String[][] EntityOrAccounts = {{ M7NIns1, M7NIns1RecordType ,null},{ M7NIns6, M7NIns6RecordType ,null}};
-
+		String xpath= "//section[contains(@class,'open notification')]//button[@title='Close']";
+		
+          WebElement ele= CommonLib.isDisplayed(driver,CommonLib.FindElement(driver,xpath, "Notification close button", action.BOOLEAN,
+        			30), "Visibility", 20, "Notifiction close button");
+        
+        if(ele!=null) {
+             click(driver, ele, "Notification close button", action.BOOLEAN);
+             ThreadSleep(3000);
+             ele= CommonLib.isDisplayed(driver, CommonLib.FindElement(driver, "", "", action.BOOLEAN, 30), "Visibility", 20, "Notifiction close button");
+             if(ele==null) {
+                 appLog.info("Successfully closed notification close button");
+             }else {
+                 
+             }
+        }
+		
 		for (String[] accounts : EntityOrAccounts) {
 			if (lp.clickOnTab(projectName, tabObj1)) {
 				log(LogStatus.INFO,"Click on Tab : "+TabName.Object1Tab,YesNo.No);	
@@ -148,13 +166,12 @@ public void M7NTc003_CreateStandardTaskForTomLathamAndVerifyLastTouchpointOnCont
 			{PageLabel.Name.toString(),contactName},
 			{PageLabel.Status.toString(),M7NTask1Status}};
 	
-	String[][] basicsection= {{"Subject",M7NTask1dueDate},{"Related_To",M7NContact2FName+" "+M7NContact2LName}};
-	String[][] advanceSection= {{"Priority","Normal"},{"Due Date Only",yesterdaysDate}};
+	String[][] basicsection= {{"Subject",M7NTask1Subject},{"Related_To",M7NContact2FName+" "+M7NContact2LName}};
+	String[][] advanceSection= {{"Priority","Normal"},{"Due Date Only",yesterdaysDate},{"Status","Completed"}};
      String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
 
 
-
-     bp.createActivityTimeline(projectName,true,"New Task", basicsection, advanceSection,null,null);
+     bp.createActivityTimeline(projectName,true,"Task", basicsection, advanceSection,null,null);
 	System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 	CommonLib.ThreadSleep(50000);
 
@@ -173,15 +190,15 @@ public void M7NTc003_CreateStandardTaskForTomLathamAndVerifyLastTouchpointOnCont
 //		sa.assertTrue(false,"Not Able to Click/Enter Value : "+task);
 //		log(LogStatus.SKIP,"Not Able to Click/Enter Value : "+task,YesNo.Yes);	
 //	}
-	if (flag) {
+//	if (flag) {
 		if (cp.clickOnTab(projectName, tabObj2)) {
 			log(LogStatus.INFO,"Clicked on Tab : "+tabObj2+" For : "+contactName,YesNo.No);
 			ThreadSleep(1000);
 			if (cp.clickOnAlreadyCreatedItem(projectName, contactName, 30)) {
 				log(LogStatus.INFO,"Clicked on  : "+contactName+" For : "+tabObj2,YesNo.No);
 				ThreadSleep(2000);
-				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
-				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+				WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele2, RelatedTab.Details.toString(), action.BOOLEAN);
 				ThreadSleep(3000);
 				 ele=cp.getlastTouchPointValue(projectName, 10);
 				String value="";
@@ -206,10 +223,10 @@ public void M7NTc003_CreateStandardTaskForTomLathamAndVerifyLastTouchpointOnCont
 			sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2+" For : "+contactName);
 			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2+" For : "+contactName,YesNo.Yes);
 		}	
-	} else {
-		sa.assertTrue(false,"Task is not created so cannot check Last Touch Point for "+contactName);
-		log(LogStatus.SKIP,"Task is not created so cannot check Last Touch Point for "+contactName,YesNo.Yes);
-	}
+//	} else {
+//		sa.assertTrue(false,"Task is not created so cannot check Last Touch Point for "+contactName);
+//		log(LogStatus.SKIP,"Task is not created so cannot check Last Touch Point for "+contactName,YesNo.Yes);
+//	}
 	switchToDefaultContent(driver);
 	lp.CRMlogout();
 	sa.assertAll();
@@ -236,7 +253,7 @@ public void M7NTc004_CreateMultiTaggedTaskforContactJamesRoseAndVerifyLastTouchP
 			{PageLabel.Status.toString(),M7NTask2Status}};
 
 	String[][] basicsection= {{"Subject",M7NTask2Subject},{"Related_To",M7NContact1FName+" "+M7NContact1LName}};
-	String[][] advanceSection= {{"Priority",M7NTask2Status},{"Due Date Only",M7NTask2dueDate}};
+	String[][] advanceSection= {{"Due Date Only",M7NTask2dueDate},{"Status","Completed"}};
             String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
 
 		if (cp.clickOnTab(projectName, tabObj2)) {
@@ -471,7 +488,7 @@ public void M7NTc06_CreatLogACallForContactJhonAleaxVerifyLastTouchpointOnContac
 	
                       /*due date and status removed*/
 	String[][] basicsection= {{"Subject",M7NTask3Subject},{"Related_To",M7NContact4FName+" "+M7NContact4LName}};
-	String[][] advanceSection= {{"Priority","Normal"},{"Due Date Only",M7NTask3dueDate}};
+	String[][] advanceSection= {{"Due Date Only",M7NTask3dueDate}};
     String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
 
     bp.createActivityTimeline(projectName,true,"Call", basicsection, advanceSection,null,null);
@@ -557,7 +574,7 @@ public void M7NTc07_CreateMultiTaggedCallforContactSamanthaRaoAndVerifyLastTouch
 	
 	/*due date and status removed*/
 	String[][] basicsection= {{"Subject",M7NTask4Subject},{"Related_To",M7NContact6FName+" "+M7NContact6LName}};
-	String[][] advanceSection= {{"Priority","Normal"},{"Due Date Only",M7NTask4dueDate}};
+	String[][] advanceSection= {{"Due Date Only",M7NTask4dueDate}};
     String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
 
 	
@@ -719,7 +736,7 @@ public void M7NTc08_CreateMultiTaggedCallforContactJohnAlexaAndVerifyLastTouchPo
 	
 	/*due date and status removed*/
 	        String[][] basicsection= {{"Subject",M7NTask5Subject},{"Related_To",M7NContact6FName+" "+M7NContact6LName}};
-	        String[][] advanceSection= {{"Priority","Normal"},{"Due Date Only",M7NTask5dueDate}};
+	        String[][] advanceSection= {{"Due Date Only",M7NTask5dueDate}};
             String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
 
 	
@@ -1295,6 +1312,7 @@ public void M7NTc014_CreateEventfromCalendarforContactJohrYathamAndVerifyLastTou
 	GlobalActionPageBusinessLayer gp = new GlobalActionPageBusinessLayer(driver);
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+	BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 	boolean flag=false;
 	WebElement ele = null ;
@@ -1310,6 +1328,9 @@ public void M7NTc014_CreateEventfromCalendarforContactJohrYathamAndVerifyLastTou
 			{PageLabel.Start_Time.toString(),M7NEvent2StartTime},
 			{PageLabel.End_Date.toString(),M7NEvent2EndDate},
 			{PageLabel.End_Time.toString(),M7NEvent2EndTime}};
+	String[][] basicsection= {{"Subject",M7NEvent2Subject},{"Related_To",primaryContact},{"Related_To",secondaryContact}};
+	String[][] advanceSection= {{"Start Date Time",M7NEvent2StartDate},{"End Date Time",M7NEvent2EndDate}};
+            String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
 	
 	if (lp.clickAnyCellonCalender(projectName)) {
 		log(LogStatus.INFO,"Able to click on Calendar/Event Link",YesNo.No);
@@ -1317,7 +1338,10 @@ public void M7NTc014_CreateEventfromCalendarforContactJohrYathamAndVerifyLastTou
 		 * gp.enterValueForNewEvent(projectName, GlobalActionItem.New_Event, Event2,
 		 * 10);
 		 */
-		
+
+        bp.updateActivityTimelineRecord(projectName, basicsection, advanceSection,null,null,null);
+        System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
+        CommonLib.ThreadSleep(50000);
 		gp.enterValueForTask(projectName, PageName.Object2Page, Event2, 20);
 		String relatedValue=M7NIns6;
 		flag = lp.selectRelatedAssociationOrContactOrRelatedToDropDownAndClickOnItem(projectName, PageName.TaskPage, PageLabel.Related_To.toString(), TabName.Object1Tab, relatedValue, action.SCROLLANDBOOLEAN, 10);		
@@ -1905,7 +1929,7 @@ public void M7NTc019_DeleteMATouchpointEvent_3AndVerifyImpactOnLastTouchPointOnC
 								sa.assertTrue(false,"Last Touch Point should be Blank for "+contactName+" Actual Last Touch Point Date : "+actualValue );
 							}
 						} else {
-							expectedValue=M7Event2EndDate;
+							expectedValue=M7NEvent2EndDate;
 							if (cp.verifyDate(expectedValue, actualValue)) {
 								log(LogStatus.INFO,expectedValue+" successfully verified last touch point date For : "+contactName, YesNo.No);
 							}
@@ -2887,7 +2911,7 @@ public void M7NTc030_CreateacontactwithouttaskandupdatetheTierafterupgrade(Strin
 			ThreadSleep(3000);
 			int days=90;
 			String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-			String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+			String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/dd/yyyy", "America/Los_Angles");
 			if(cp.verifyDate(expectedDate,actualDate)){
 				log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 
@@ -2896,7 +2920,7 @@ public void M7NTc030_CreateacontactwithouttaskandupdatetheTierafterupgrade(Strin
 				log(LogStatus.SKIP,"Next touch point value is not matched As after "+days+" days from created date  in contact :"+contactName,YesNo.Yes);
 			}
 			switchToDefaultContent(driver);
-			lp.CRMlogout();
+ 			lp.CRMlogout();
 			sa.assertAll();
 		}
 
@@ -2998,6 +3022,7 @@ public void M7NTc032_CreateacontactCallandupdatetheNameafterupgrade(String proje
 	String[][] advanceSection= {{"Priority","Normal"},{"Due Date Only",M7NTask8dueDate}};
             String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
             bp.createActivityTimeline(projectName,true,"Call", basicsection, advanceSection,null,null);
+            ExcelUtils.writeData(phase1DataSheetFilePath,M7NTask8dueDate, "Task1", excelLabel.Variable_Name, "M7NTask8", excelLabel.Due_Date);
 			System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 			CommonLib.ThreadSleep(50000);
 			//out of scope 2
@@ -3017,6 +3042,7 @@ public void M7NTc032_CreateacontactCallandupdatetheNameafterupgrade(String proje
 //		sa.assertTrue(false,"Not Able to Click/Enter Value : "+task);
 //		log(LogStatus.SKIP,"Not Able to Click/Enter Value : "+task,YesNo.Yes);	
 //	}
+			
 	if (cp.clickOnTab(projectName, tabObj2)) {
 		log(LogStatus.INFO,"Clicked on Tab : "+tabObj2+" For : "+contactName,YesNo.No);
 		ThreadSleep(1000);
@@ -3043,37 +3069,45 @@ public void M7NTc032_CreateacontactCallandupdatetheNameafterupgrade(String proje
 			log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2+" For : "+contactName,YesNo.Yes);
 		}
 			
-			
+	String[][] basicsection1= {{"Subject","Callupgrade"},{"Related_To",M7NContact13FName+" "+M7NContact13LName}};
+	String[][] advanceSection1= {{"Priority","Normal"},{"Due Date Only",M7NTask8dueDate}};
+            String[][] taskSection1= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};	
 	
 	if (cp.clickOnTab(projectName, tabObj2)) {
 		log(LogStatus.INFO,"Clicked on Tab : "+tabObj2+" For : "+contactName,YesNo.No);
 		if (cp.clickOnAlreadyCreatedItem(projectName, contactName, 30)) {
 			log(LogStatus.INFO,"Clicked on  : "+contactName+" For : "+tabObj2,YesNo.No);
+			WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+			click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
+			ThreadSleep(2000);
 			if (click(driver, lp.getTaskLink(projectName, task), task, action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO,"Click on Task : "+task,YesNo.No);
 				if (lp.clickOnShowMoreActionDownArrow(projectName, PageName.TaskPage, ShowMoreActionDropDownList.Edit, 20)) {
 					log(LogStatus.INFO,"Able to Click on Edit button : "+task,YesNo.No);
 					ThreadSleep(2000);
+					bp.updateActivityTimelineRecord(projectName,basicsection1, advanceSection1,null,null,null);
+					System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
+					CommonLib.ThreadSleep(50000);
 				
-					if (sendKeys(driver, gp.getLabelTextBoxForGobalAction(projectName, GlobalActionItem.Log_a_Call, PageLabel.Subject.toString(),20), M7NTask8Updated_Subject, "Updated Subject", action.BOOLEAN)) {
-						log(LogStatus.INFO, "Value Entered to subject "+M7NTask8Updated_Subject, YesNo.No);	
-						ele=gp.getLabelTextBoxForGobalAction(projectName, GlobalActionItem.Log_a_Call, PageLabel.Subject.toString(),20);
-						click(driver, ele, "", action.BOOLEAN);
-						
-						  JavascriptExecutor js = (JavascriptExecutor) driver;
-						  ele.clear();
-						  ThreadSleep(1000);
-						  js.executeScript("arguments[0].value='CallUpgrade';",ele);
-						  ele.sendKeys(Keys.BACK_SPACE);
-						  ele.sendKeys(Keys.ENTER);
-						  ThreadSleep(1000);
-						  ThreadSleep(2000);
-						 
-						if (clickUsingJavaScript(driver, lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
+//					if (sendKeys(driver, gp.getLabelTextBoxForGobalAction(projectName, GlobalActionItem.Log_a_Call, PageLabel.Subject.toString(),20), M7NTask8Updated_Subject, "Updated Subject", action.BOOLEAN)) {
+//						log(LogStatus.INFO, "Value Entered to subject "+M7NTask8Updated_Subject, YesNo.No);	
+//						ele=gp.getLabelTextBoxForGobalAction(projectName, GlobalActionItem.Log_a_Call, PageLabel.Subject.toString(),20);
+//						click(driver, ele, "", action.BOOLEAN);
+//						
+//						  JavascriptExecutor js = (JavascriptExecutor) driver;
+//						  ele.clear();
+//						  ThreadSleep(1000);
+//						  js.executeScript("arguments[0].value='CallUpgrade';",ele);
+//						  ele.sendKeys(Keys.BACK_SPACE);
+//						  ele.sendKeys(Keys.ENTER);
+//						  ThreadSleep(1000);
+//						  ThreadSleep(2000);
+//						 
+//						if (clickUsingJavaScript(driver, lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+//							log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
 							ThreadSleep(5000);
 							flag=true;
-							String[][] fieldsWithValues= {{PageLabel.End.toString(),M7NTask8Subject}};
+							String[][] fieldsWithValues= {{PageLabel.Subject.toString(),M7NTask8Subject}};
 							tp.fieldVerificationForTaskInViewMode(projectName, PageName.TaskPage, fieldsWithValues, action.BOOLEAN, 30);	
 						}else {
 							log(LogStatus.ERROR, "save button is not clickable so task not Updated : "+task, YesNo.Yes);
@@ -3095,14 +3129,14 @@ public void M7NTc032_CreateacontactCallandupdatetheNameafterupgrade(String proje
 				log(LogStatus.SKIP,"Not Able to Click on Task : "+task,YesNo.Yes);
 			}
 
-		} else {
-			sa.assertTrue(false,"Item Not Found : "+contactName+" For : "+tabObj2);
-			log(LogStatus.SKIP,"Item Not Found : "+contactName+" For : "+tabObj2,YesNo.Yes);
-		}
-	} else {
-		sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2+" For : "+contactName);
-		log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2+" For : "+contactName,YesNo.Yes);
-	}
+//		} else {
+//			sa.assertTrue(false,"Item Not Found : "+contactName+" For : "+tabObj2);
+//			log(LogStatus.SKIP,"Item Not Found : "+contactName+" For : "+tabObj2,YesNo.Yes);
+//		}
+//	} else {
+//		sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2+" For : "+contactName);
+//		log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2+" For : "+contactName,YesNo.Yes);
+//	}
 	refresh(driver);		
 	ThreadSleep(5000);
 	if (cp.clickOnTab(projectName, tabObj2)) {
@@ -3144,7 +3178,7 @@ public void M7NTc032_CreateacontactCallandupdatetheNameafterupgrade(String proje
 	ThreadSleep(3000);
 	int days=120;
 	String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-	String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+	String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/dd/yyyy", "America/Los_Angles");
 	if(cp.verifyDate(expectedDate, actualDate)){
 		log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 
@@ -3427,7 +3461,7 @@ public void M7NTc034_CreateContactWithoutCallAndCreateTheTaskAfterUpgradeTier(St
 	ThreadSleep(3000);
 	int days=120;
 	String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-	String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+	String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/dd/yyyy", "America/Los_Angles");
 	if(cp.verifyDate(expectedDate, actualDate)){
 		log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 
@@ -3462,7 +3496,7 @@ public void M7NTc034_CreateContactWithoutCallAndCreateTheTaskAfterUpgradeTier(St
 					
 					int days1=90;
 					String actualDate1= cp.getNextTouchPointDateValue(projectName, 30).getText();
-					String expectedDate1 =previousOrForwardDateAccordingToTimeZone(days1, "MM/dd/yyyy", "America/Los_Angles");
+					String expectedDate1 =previousOrForwardDateAccordingToTimeZone(days1, "M/dd/yyyy", "America/Los_Angles");
 					if(cp.verifyDate(expectedDate1, actualDate1)){
 						log(LogStatus.INFO,"Next touch point value is matched As after "+days1+" days from created date  in :"+contactName,YesNo.No);	
 
@@ -3664,8 +3698,8 @@ public void M7NTc036_NoraMingContactWithoutTierandVerifyLastTouchPointandNextTou
 			if (cp.clickOnAlreadyCreatedItem(projectName, contactName, 30)) {
 				log(LogStatus.INFO,"Clicked on  : "+contactName+" For : "+tabObj2,YesNo.No);
 				ThreadSleep(2000);
-				WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
-				click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
+				WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele2, RelatedTab.Details.toString(), action.BOOLEAN);
 				ThreadSleep(2000);
 				 ele=cp.getlastTouchPointValue(projectName, 10);
 				String value="";
@@ -3692,7 +3726,7 @@ public void M7NTc036_NoraMingContactWithoutTierandVerifyLastTouchPointandNextTou
 		}
 		int days=120;
 		String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-		String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+		String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/dd/yyyy", "America/Los_Angles");
 		if(cp.verifyDate(expectedDate, actualDate)){
 			log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 
@@ -3726,8 +3760,8 @@ public void M7NTc037_NoraMingContactWithoutTier123andVerifyLastTouchPointandNext
 				log(LogStatus.INFO,"Contact tier updated as: "+tier,YesNo.No);	
 				refresh(driver);		
 				ThreadSleep(5000);
-				WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
-				click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
+				WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele2, RelatedTab.Details.toString(), action.BOOLEAN);
 				ThreadSleep(2000);
 				String lastTouchPoint= cp.getlastTouchPointValue(projectName, 30).getText();
 				if(lastTouchPoint.contains("")||lastTouchPoint.equalsIgnoreCase("")){
@@ -3740,7 +3774,7 @@ public void M7NTc037_NoraMingContactWithoutTier123andVerifyLastTouchPointandNext
 				
 				int days=90;
 				String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/dd/yyyy", "America/Los_Angles");
 				if(cp.verifyDate(expectedDate, actualDate)){
 					log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 
@@ -3788,7 +3822,7 @@ public void M7NTc037_NoraMingContactWithoutTier123andVerifyLastTouchPointandNext
 				
 				int days=120;
 				String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/dd/yyyy", "America/Los_Angles");
 				if(cp.verifyDate(expectedDate,actualDate)){
 					log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 
@@ -3836,7 +3870,7 @@ public void M7NTc037_NoraMingContactWithoutTier123andVerifyLastTouchPointandNext
 				
 				int days=180;
 				String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/dd/yyyy", "America/Los_Angles");
 				if(cp.verifyDate(expectedDate, actualDate)){
 					log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 
@@ -3906,7 +3940,7 @@ public void M7NTc038_WisselyStingContactWithoutTierandVerifyLastTouchPointandNex
 		}
 		int days=120;
 		String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-		String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+		String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/dd/yyyy", "America/Los_Angles");
 		if(cp.verifyDate(expectedDate, actualDate)){
 			log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 
@@ -4035,7 +4069,7 @@ public void M7NTc039_WisselyStingContactWithCallandVerifyLastTouchPointandNextTo
 		ThreadSleep(3000);
 		int days=120;
 		String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-		String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+		String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/dd/yyyy", "America/Los_Angles");
 		if(cp.verifyDate(expectedDate, actualDate)){
 			log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 		
@@ -4088,8 +4122,8 @@ public void M7NTc040_UpdateWoxKittContactVerifyLastTouchPointandNextTouchPointDa
 			if (cp.clickOnAlreadyCreatedItem(projectName, contactName, 30)) {
 				log(LogStatus.INFO,"Clicked on  : "+contactName+" For : "+tabObj2,YesNo.No);
 				ThreadSleep(2000);
-				WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
-				click(driver, ele2, RelatedTab.Communications.toString(), action.BOOLEAN);
+				WebElement ele2 = bp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele2, RelatedTab.Details.toString(), action.BOOLEAN);
 				ThreadSleep(2000);
 				String lastTouchPoint= cp.getlastTouchPointValue(projectName, 30).getText();
 				if(lastTouchPoint.contains("")||lastTouchPoint.equalsIgnoreCase("")){
@@ -4101,12 +4135,12 @@ public void M7NTc040_UpdateWoxKittContactVerifyLastTouchPointandNextTouchPointDa
 				}
 				refresh(driver);	
 				ThreadSleep(10000);
-				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
-				click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
+				WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+				click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
 				ThreadSleep(2000);
 				int days=120;
 				String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/dd/yyyy", "America/Los_Angles");
 				if(cp.verifyDate(expectedDate, actualDate)){
 					log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 
@@ -4140,8 +4174,8 @@ public void M7NTc040_UpdateWoxKittContactVerifyLastTouchPointandNextTouchPointDa
 					}	
 		refresh(driver);		
 		ThreadSleep(5000);
-		WebElement ele3 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
-		click(driver, ele3, RelatedTab.Communications.toString(), action.BOOLEAN);
+		WebElement ele3 = bp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+		click(driver, ele3, RelatedTab.Details.toString(), action.BOOLEAN);
 		ThreadSleep(2000);
 		String lastTouchPoint1= cp.getlastTouchPointValue(projectName, 30).getText();
 		if(lastTouchPoint1.contains("")||lastTouchPoint1.equalsIgnoreCase("")){
@@ -4153,12 +4187,12 @@ public void M7NTc040_UpdateWoxKittContactVerifyLastTouchPointandNextTouchPointDa
 		}
 		refresh(driver);	
 		ThreadSleep(10000);
-		WebElement ele4 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
-		click(driver, ele4, RelatedTab.Communications.toString(), action.BOOLEAN);
+		WebElement ele4 = bp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+		click(driver, ele4, RelatedTab.Details.toString(), action.BOOLEAN);
 		ThreadSleep(2000);
 		int days1=120;
 		String actualDate1= cp.getNextTouchPointDateValue(projectName, 30).getText();
-		String expectedDate1 =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+		String expectedDate1 =previousOrForwardDateAccordingToTimeZone(days, "M/dd/yyyy", "America/Los_Angles");
 		if(cp.verifyDate(expectedDate1, actualDate1)){
 			log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 
@@ -4204,7 +4238,7 @@ public void M7NTc041_EllinaBingContactWithTier1andVerifyLastTouchPointandNextTou
 				
 				int days=90;
 				String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/dd/yyyy", "America/Los_Angles");
 				if(cp.verifyDate(expectedDate, actualDate)){
 					log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 
@@ -4260,9 +4294,10 @@ public void M7NTc041_1_EllinaBingContactWithCallandVerifyLastTouchPointandNextTo
 		if (cp.clickOnAlreadyCreatedItem(projectName, contactName, 30)) {
 			log(LogStatus.INFO,"Clicked on  : "+contactName+" For : "+tabObj2,YesNo.No);
 			ThreadSleep(2000);
-			ExcelUtils.writeData(phase1DataSheetFilePath,M7NTask11dueDate, "Task1", excelLabel.Variable_Name, "M7NTask11", excelLabel.Due_Date);
-			ThreadSleep(1000);
+	
 			 bp.createActivityTimeline(projectName,false,"Log a Call", basicsection, advanceSection,null,null);
+				ExcelUtils.writeData(phase1DataSheetFilePath,M7NTask11dueDate, "Task1", excelLabel.Variable_Name, "M7NTask11", excelLabel.Due_Date);
+				ThreadSleep(1000);
 				System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
 				CommonLib.ThreadSleep(50000);
 				//out of scope 2
@@ -4341,7 +4376,7 @@ public void M7NTc041_1_EllinaBingContactWithCallandVerifyLastTouchPointandNextTo
 		ThreadSleep(3000);
 		int days=90;
 		String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-		String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+		String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/dd/yyyy", "America/Los_Angles");
 		if(cp.verifyDate(expectedDate, actualDate)){
 			log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 		
@@ -4360,30 +4395,44 @@ public void M7NTc042_EllinaBingContactWithUpdateCallandVerifyLastTouchPointandNe
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 	TaskPageBusinessLayer tp = new TaskPageBusinessLayer(driver);
+	BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 	boolean flag=false;
 	WebElement ele = null ;
 	String contactName=M7NContact20FName+" "+M7NContact20LName;
 	M7NTask11dueDate=previousOrForwardDate(+1, "M/d/YYYY");
 	String task = M7NTask11Subject;
+	
+	String[][] basicsection= {{"Subject",M7NTask11Subject}};
+	String[][] advanceSection= {{"Priority","Normal"},{"Due Date Only",M7NTask11dueDate}};
+            String[][] taskSection= {{"Subject","ABC"},{"Due Date Only","06/04/2020"},{"Status","In Progress"}};
 	if (cp.clickOnTab(projectName, tabObj2)) {
 		log(LogStatus.INFO,"Clicked on Tab : "+tabObj2+" For : "+contactName,YesNo.No);
 		if (cp.clickOnAlreadyCreatedItem(projectName, contactName, 30)) {
 			log(LogStatus.INFO,"Clicked on  : "+contactName+" For : "+tabObj2,YesNo.No);
+			WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Communications.toString(), 10);
+			click(driver, ele1, RelatedTab.Communications.toString(), action.BOOLEAN);
+			ThreadSleep(2000);
 			if (click(driver, lp.getTaskLink(projectName, task), task, action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO,"Click on Task : "+task,YesNo.No);
 				if (lp.clickOnShowMoreActionDownArrow(projectName, PageName.TaskPage, ShowMoreActionDropDownList.Edit, 20)) {
 					log(LogStatus.INFO,"Able to Click on Edit button : "+task,YesNo.No);
 					ThreadSleep(2000);
-					if (sendKeys(driver, gp.getLabelTextBoxForGobalAction(projectName, GlobalActionItem.Log_a_Call, PageLabel.Due_Date.toString(),20), M7NTask11dueDate, "Due Date", action.BOOLEAN)) {
-						log(LogStatus.INFO, "Value Entered to due date "+M7NTask11dueDate, YesNo.No);
-						ExcelUtils.writeData(phase1DataSheetFilePath,M7NTask11dueDate, "Task1", excelLabel.Variable_Name, "M7NTask11", excelLabel.Due_Date);
-						ThreadSleep(1000);
-						ele=gp.getLabelTextBoxForGobalAction(projectName, GlobalActionItem.Log_a_Call, PageLabel.Subject.toString(),20);
-						click(driver, ele, "", action.BOOLEAN);
-						ThreadSleep(2000);
-						if (clickUsingJavaScript(driver, lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
+					bp.updateActivityTimelineRecord(projectName, basicsection, advanceSection,null,null,null);
+					ExcelUtils.writeData(phase1DataSheetFilePath,M7NTask11dueDate, "Task1", excelLabel.Variable_Name, "M7NTask11", excelLabel.Due_Date);
+					ThreadSleep(1000);
+					System.err.println("donnnnnnnnnnneeeeeeeeeeeeeeeeeeeeeeeeeeeeee...................................................................");
+					CommonLib.ThreadSleep(50000);
+//					if (sendKeys(driver, gp.getLabelTextBoxForGobalAction(projectName, GlobalActionItem.Log_a_Call, PageLabel.Due_Date.toString(),20), M7NTask11dueDate, "Due Date", action.BOOLEAN)) {
+//						log(LogStatus.INFO, "Value Entered to due date "+M7NTask11dueDate, YesNo.No);
+//						ExcelUtils.writeData(phase1DataSheetFilePath,M7NTask11dueDate, "Task1", excelLabel.Variable_Name, "M7NTask11", excelLabel.Due_Date);
+//						ThreadSleep(1000);
+//						ele=gp.getLabelTextBoxForGobalAction(projectName, GlobalActionItem.Log_a_Call, PageLabel.Subject.toString(),20);
+//						click(driver, ele, "", action.BOOLEAN);
+//						ThreadSleep(2000);
+//						if (clickUsingJavaScript(driver, lp.getCustomTabSaveBtn(projectName,20), "save", action.SCROLLANDBOOLEAN)) {
+//							log(LogStatus.INFO,"successfully Updated task : "+task,  YesNo.No);
+					refresh(driver);
 							ThreadSleep(5000);
 							flag=true;
 							String[][] fieldsWithValues= {{PageLabel.Subject.toString(),M7NTask8Subject}};
@@ -4408,14 +4457,14 @@ public void M7NTc042_EllinaBingContactWithUpdateCallandVerifyLastTouchPointandNe
 				log(LogStatus.SKIP,"Not Able to Click on Task : "+task,YesNo.Yes);
 			}
 
-		} else {
-			sa.assertTrue(false,"Item Not Found : "+contactName+" For : "+tabObj2);
-			log(LogStatus.SKIP,"Item Not Found : "+contactName+" For : "+tabObj2,YesNo.Yes);
-		}
-	} else {
-		sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2+" For : "+contactName);
-		log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2+" For : "+contactName,YesNo.Yes);
-	}
+//		} else {
+//			sa.assertTrue(false,"Item Not Found : "+contactName+" For : "+tabObj2);
+//			log(LogStatus.SKIP,"Item Not Found : "+contactName+" For : "+tabObj2,YesNo.Yes);
+//		}
+//	} else {
+//		sa.assertTrue(false,"Not Able to Click on Tab : "+tabObj2+" For : "+contactName);
+//		log(LogStatus.SKIP,"Not Able to Click on Tab : "+tabObj2+" For : "+contactName,YesNo.Yes);
+//	}
 	refresh(driver);		
 	ThreadSleep(5000);
 	if (cp.clickOnTab(projectName, tabObj2)) {
@@ -4424,6 +4473,9 @@ public void M7NTc042_EllinaBingContactWithUpdateCallandVerifyLastTouchPointandNe
 		if (cp.clickOnAlreadyCreatedItem(projectName, contactName, 30)) {
 			log(LogStatus.INFO,"Clicked on  : "+contactName+" For : "+tabObj2,YesNo.No);
 			ThreadSleep(2000);
+			WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+			click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+			ThreadSleep(3000);
 			 ele=cp.getlastTouchPointValue(projectName, 10);
 			if (ele!=null) {
 				String expectedValue = M7NTask11dueDate; 
@@ -4449,9 +4501,12 @@ public void M7NTc042_EllinaBingContactWithUpdateCallandVerifyLastTouchPointandNe
 	}
 	refresh(driver);	
 	ThreadSleep(10000);
+	WebElement ele1 = bp.getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
+	click(driver, ele1, RelatedTab.Details.toString(), action.BOOLEAN);
+	ThreadSleep(3000);
 	int days=91;
 	String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-	String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+	String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/dd/yyyy", "America/Los_Angles");
 	if(cp.verifyDate(expectedDate, actualDate)){
 		log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 	
@@ -5102,7 +5157,7 @@ public void M7NTc049_Update4contactswithtier123andnoneAndVerifyVerifyLastTouchPo
 				
 				int days=90;
 				String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/dd/yyyy", "America/Los_Angles");
 				if(cp.verifyDate(expectedDate, actualDate)){
 					log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 
@@ -5150,7 +5205,7 @@ public void M7NTc049_Update4contactswithtier123andnoneAndVerifyVerifyLastTouchPo
 				
 				int days=120;
 				String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/dd/yyyy", "America/Los_Angles");
 				if(cp.verifyDate(expectedDate, actualDate)){
 					log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName1,YesNo.No);	
 
@@ -5199,7 +5254,7 @@ public void M7NTc049_Update4contactswithtier123andnoneAndVerifyVerifyLastTouchPo
 				
 				int days=180;
 				String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/dd/yyyy", "America/Los_Angles");
 				if(cp.verifyDate(expectedDate, actualDate)){
 					log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName2,YesNo.No);	
 
@@ -5240,7 +5295,7 @@ public void M7NTc049_Update4contactswithtier123andnoneAndVerifyVerifyLastTouchPo
 				
 				int days=120;
 				String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/dd/yyyy", "America/Los_Angles");
 				if(cp.verifyDate(expectedDate, actualDate)){
 					log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName3,YesNo.No);	
 
@@ -5572,7 +5627,7 @@ public void M7NTc050_Updatecontactswithtier12AndVerifyVerifyLastTouchPointandNex
 			ThreadSleep(3000);
 				int days=123;
 				String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/dd/yyyy", "America/Los_Angles");
 				if(cp.verifyDate(expectedDate, actualDate)){
 					log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 
@@ -5643,7 +5698,7 @@ public void M7NTc051_UpdatecontactROBERTswithtier3AndVerifyVerifyLastTouchPointa
 			ThreadSleep(3000);
 				int days=183;
 				String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/dd/yyyy", "America/Los_Angles");
 				if(cp.verifyDate(expectedDate, actualDate)){
 					log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 
@@ -5698,7 +5753,7 @@ public void M7NTc052_UpdateJamesContactswithtier1andAndVerifyVerifyLastTouchPoin
 				
 				int days=90;
 				String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/dd/yyyy", "America/Los_Angles");
 				if(cp.verifyDate(expectedDate, actualDate)){
 					log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 
@@ -5845,7 +5900,7 @@ public void M7NTc053_UpdateTerryContactswithtier1andAndVerifyVerifyLastTouchPoin
 				
 				int days=180;
 				String actualDate= cp.getNextTouchPointDateValue(projectName, 30).getText();
-				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "MM/dd/yyyy", "America/Los_Angles");
+				String expectedDate =previousOrForwardDateAccordingToTimeZone(days, "M/dd/yyyy", "America/Los_Angles");
 				if(cp.verifyDate(expectedDate, actualDate)){
 					log(LogStatus.INFO,"Next touch point value is matched As after "+days+" days from created date  in :"+contactName,YesNo.No);	
 
