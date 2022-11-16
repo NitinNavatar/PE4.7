@@ -11862,8 +11862,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 * @return return Empty ArrayList if test case is passed
 	 */
 
-	public ArrayList<String> verifyRecordOnInteractionCard(String dueDate, String subjectName, String notes,
-			boolean editNote, boolean addNote, String[] relatedTo) {
+	public ArrayList<String> verifyRecordOnInteractionCard(String dueDate, IconType icon, String subjectName,
+			String notes, boolean editNote, boolean addNote, String[] relatedTo, String[] relatedAssociation) {
 		String xPath;
 		WebElement ele;
 		List<WebElement> elements;
@@ -11888,6 +11888,23 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						+ " for Due Date", YesNo.No);
 				result.add("Actual result : " + date + " is not matched with expected result : " + dueDate
 						+ " for Due Date");
+			}
+
+		}
+
+		if (icon != null) {
+
+			xPath = "//a[text()='" + subjectName + "']/../preceding-sibling::div//lightning-icon";
+			ele = FindElement(driver, xPath, "Activity icon", action.SCROLLANDBOOLEAN, 20);
+			String iconval = getAttribute(driver, ele, "Icon", "title");
+			if (icon.toString().equals(iconval)) {
+				log(LogStatus.INFO, "Actual icon type : " + iconval + " has been matched with expected icon type : "
+						+ icon.toString(), YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Actual icon type : " + iconval + " is not matched with expected icon type : "
+						+ icon.toString(), YesNo.No);
+				result.add("Actual icon type : " + iconval + " is not matched with expected icon type : "
+						+ icon.toString());
 			}
 
 		}
@@ -11973,6 +11990,51 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				result.add("Add Notes button is not visible");
 			}
 		}
+
+		if (relatedAssociation != null) {
+			xPath = "//a[@class=\"interaction_sub subject_text\" and text()='" + subjectName
+					+ "']/../following-sibling::div[contains(@class,'cls_myPill')]//span[@class=\"slds-pill__label\" and starts-with(@title,'+')]";
+			ele = FindElement(driver, xPath, "extra tagged", action.SCROLLANDBOOLEAN, 20);
+			if (click(driver, ele, "extra tagged", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "clicked on tagged value", YesNo.No);
+
+				xPath = "//h2[text()='Tagged']/../following-sibling::div//a";
+				elements = FindElements(driver, xPath, "Tagged element");
+				String[] actualExtraTaggedRecord = new String[elements.size()];
+				for (int i = 0; i < elements.size(); i++) {
+					actualExtraTaggedRecord[i] = getText(driver, elements.get(i), "Extra Tagged",
+							action.SCROLLANDBOOLEAN);
+				}
+
+				for (int i = 0; i < relatedAssociation.length; i++) {
+					int status = 0;
+					for (int j = 0; j < actualExtraTaggedRecord.length; j++) {
+
+						if (relatedAssociation[i].equals(actualExtraTaggedRecord[j])) {
+							log(LogStatus.INFO,
+									"Actual result of related association: " + actualExtraTaggedRecord[j]
+											+ " has been matched with the expected result of related association : "
+											+ relatedAssociation[i],
+									YesNo.No);
+							status++;
+						}
+
+					}
+					if (status == 0) {
+						log(LogStatus.ERROR,
+								"The result: " + relatedAssociation[i] + " is not available on related association",
+								YesNo.No);
+						result.add("The result of tagged: " + relatedAssociation[i]
+								+ " is not available on related association");
+					}
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to click on tagged value", YesNo.No);
+				result.add("Not able to click on tagged value");
+			}
+		}
+
 		return result;
 	}
 
@@ -14115,17 +14177,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return result;
 	}
-
-	/**
-	 * @author Sourabh Saini
-	 * @param companyTagName
-	 * @param companyTimesReferenced
-	 * @param peopleTagName
-	 * @param propleTimesReferenced
-	 * @param dealTagName
-	 * @param dealTimesReferenced
-	 * @return return Empty ArrayList if test case is passed
-	 */
 
 	public ArrayList<String> verifyRecordAndReferencedTypeOnTagged(String[] companyTagName,
 			String[] companyTimesReferenced, String[] peopleTagName, String[] propleTimesReferenced,

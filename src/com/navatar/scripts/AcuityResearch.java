@@ -6,6 +6,7 @@ import static com.navatar.generic.SmokeCommonVariables.adminPassword;
 import static com.navatar.generic.SmokeCommonVariables.crmUser1EmailID;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,6 +50,7 @@ import com.navatar.pageObjects.HomePageBusineesLayer;
 import com.navatar.pageObjects.InstitutionsPageBusinessLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
 import com.navatar.pageObjects.NavigationPageBusineesLayer;
+import com.navatar.pageObjects.ResearchPageBusinessLayer;
 import com.navatar.pageObjects.SDGPageBusinessLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
@@ -806,11 +808,12 @@ public class AcuityResearch extends BaseLib{
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	ThreadSleep(2000);
 	String xpath,ele;
-	String searchValues[] = {"Sumo"};
+	String searchValues[] = {"NSAdmin"};
 	String[][] val = {{MRSD_11_ResearchFindings,MRSD_11_Count},{MRSD_12_ResearchFindings,MRSD_12_Count},{MRSD_13_ResearchFindings,MRSD_13_Count},{MRSD_14_ResearchFindings,MRSD_14_Count},{MRSD_15_ResearchFindings,MRSD_15_Count},
 			{MRSD_16_ResearchFindings,MRSD_16_Count},{MRSD_17_ResearchFindings,MRSD_17_Count},{MRSD_18_ResearchFindings,MRSD_18_Count},{MRSD_19_ResearchFindings,MRSD_19_Count},{MRSD_20_ResearchFindings,MRSD_20_Count},
 			{MRSD_21_ResearchFindings,MRSD_21_Count},{MRSD_22_ResearchFindings,MRSD_22_Count},{MRSD_23_ResearchFindings,MRSD_23_Count},{MRSD_24_ResearchFindings,MRSD_24_Count},{MRSD_25_ResearchFindings,MRSD_25_Count}};
@@ -851,6 +854,35 @@ public class AcuityResearch extends BaseLib{
 		sa.assertTrue(false,"Not Able to send value "+searchValue);
 	}
 }
+	
+	//UI Verification Navigation/Section
+		if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
+			log(LogStatus.INFO,
+					"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+							+ searchValue + "---------",
+					YesNo.No);
+		} else {
+			log(LogStatus.FAIL,
+					"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+							+ searchValue + "---------",
+					YesNo.No);
+			sa.assertTrue(false,
+					"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+							+ searchValue + "---------");
+		}
+		
+//		List<String> researchResultsGridCounts = rp.gridInResearchResults(headerName).stream()
+//				.map(x -> x.getText().trim()).collect(Collectors.toList());
+//		
+//		for(String resultGridCount: researchResultsGridCounts)
+//		{
+//			
+//		}
+		String filePath = "C:\\Users\\Nitin Garg\\git\\PE4.7Automation\\AcuityDataSheet.xlsx";
+		String data = ExcelUtils.readAllDataForARow(filePath, "ResearchData", 1, Boolean.TRUE);
+		
+		System.out.println(data);
+	
 	refresh(driver);
 	}
 	switchToDefaultContent(driver);
@@ -862,16 +894,18 @@ public class AcuityResearch extends BaseLib{
 @Test
 	public void ARTc006_VerifyResearchFuncationalityforValidData(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
 	
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	ThreadSleep(2000);
 	
-	String xpath,gridText;
-	String searchValues[] = {ACR_1_Search};
-	String findings[] = {ACR_1_All,ACR_1_Firms,ACR_1_Advisor,ACR_1_Company,ACR_1_Institution,ACR_1_Intermediary,ACR_1_Lender,ACR_1_LP,ACR_1_PC,ACR_1_Contacts,ACR_1_deals,ACR_1_Fund,ACR_1_Fundraising,ACR_1_Interactionss,ACR_1_RA,ACR_1_RC};
+	String headerName;
+	String searchValues[] = {"MG Corp"};
+	//String searchValues[] = {ACR_1_Search,ACR_2_Search,ACR_3_Search};
+	//String findings[] = {ACR_1_All,ACR_1_Firms,ACR_1_Advisor,ACR_1_Company,ACR_1_Institution,ACR_1_Intermediary,ACR_1_Lender,ACR_1_LP,ACR_1_PC,ACR_1_Contacts,ACR_1_deals,ACR_1_Fund,ACR_1_Fundraising,ACR_1_Interactionss,ACR_1_RA,ACR_1_RC};
+	String findings[] = ACR_1_All.split("<break>");
+	List<String> expectedFindingValues = Arrays.asList(findings);
 	
 	
 	for(String searchValue : searchValues) {
@@ -892,10 +926,6 @@ public class AcuityResearch extends BaseLib{
 			sa.assertTrue(false,
 					"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
 							+ searchValue + "---------");
-		
-				
-			
-			
 			
 //			xpath = "/span";
 //			List<String> findingsCount = bp.researchFindingsCountForAllResults()
@@ -919,41 +949,51 @@ public class AcuityResearch extends BaseLib{
 //					log(LogStatus.PASS, "Excel counts are: "+ExcelCounts, YesNo.No);
 //				}
 //			}
-	}	
-		
-		
-		List<String> sideNavCountExceptAllCategories = bp.researchSideNavCountResultsExceptAllCategories()
-				.stream().map(x -> x.getText().trim().replace("New Items", "").replace(":", "")
-						.replaceAll("[\\t\\n\\r]+", "").trim())
-				.collect(Collectors.toList());
-		for(String navWiseHeading : sideNavCountExceptAllCategories) {
-			log(LogStatus.INFO,"Values for Navigation Menu is : " + bp.researchSideNavCountResultsExceptAllCategories().stream().map(x -> x.getText()),YesNo.No);
-		log(LogStatus.INFO,"Name of Field in the Navigation Menu is : " + navWiseHeading,YesNo.No);
+	}
+		if (rp.mouseHoverOnNavigationAndGetText()) {
+			log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+		} else {
+			log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+			sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
 		}
-		List<String> researchResultsGridCounts = bp.researchResultsGridCounts().stream()
-				.map(x -> x.getText().trim()).collect(Collectors.toList());
-		for (String gridName : researchResultsGridCounts) {
-		String gridWiseHeading = gridName.substring(0,gridName.indexOf(" "));
-		log(LogStatus.INFO,"Name of Field in the grid is : " + gridWiseHeading,YesNo.No);
 		
-		xpath = "//span[@title='"+ gridWiseHeading +"']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//tbody/tr";
-		List<WebElement> ele = FindElements(driver, xpath,"");
-		for(WebElement gridData : ele)
-		{
-			gridText = gridData.getText();
-			log(LogStatus.INFO,"In " + gridWiseHeading +" Text in Grid is : " + gridText,YesNo.No);
-			if(gridText.toLowerCase().contains(searchValue.toLowerCase()))
-			{
-				log(LogStatus.INFO,"In " + gridWiseHeading + " Text in Grid is : " + gridText,YesNo.No);
-				sa.assertTrue(true,"In " + gridWiseHeading + " Search Keyword" + searchValue + "is contained in " + gridText);
-			}
-			else
-			{
-				log(LogStatus.ERROR,"In " + gridWiseHeading + " Text in Grid is : " + gridText,YesNo.No);
-				sa.assertTrue(false,"In " + gridWiseHeading +" Search Keyword" + searchValue + "does not contain in " + gridText);
-			}
+		if (rp.mouseHoverOnGridAndGetText()) {
+			log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+		} else {
+			log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+			sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
 		}
+		int gridSize = rp.getElementsFromGrid().size();
+		log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+		for(int i=0; i<gridSize; i++)
+		{		
+			headerName = rp.getElementsFromGrid().get(i).getText();
+			String recordName = rp.clickOnRecordUsingGridName(headerName, 30).getText();
+			rp.clickOperationOnRecordForGrid(headerName,recordName);
+			rp.VerifyViewMoreOption(headerName);
+			rp.VerifyViewMoreOption(headerName);
+			
+			
 		}
+		
+//		for(int i=0; i<gridSize; i++)
+//		{
+//		clickOperationOnRecordForGrid();
+//		}
+		//ResaerchPageBusinessLayer
+//			if(gridText.toLowerCase().contains(searchValue.toLowerCase()))
+//			{
+//				log(LogStatus.INFO,"In " + gridWiseHeading + " Text in Grid is : " + gridText,YesNo.No);
+//				sa.assertTrue(true,"In " + gridWiseHeading + " Search Keyword" + searchValue + "is contained in " + gridText);
+//			}
+//			else
+//			{
+//				log(LogStatus.ERROR,"In " + gridWiseHeading + " Text in Grid is : " + gridText,YesNo.No);
+//				sa.assertTrue(false,"In " + gridWiseHeading +" Search Keyword" + searchValue + "does not contain in " + gridText);
+//			}
+//		}
+		
+//		}
 }
 	switchToDefaultContent(driver);
 	lp.CRMlogout();
@@ -962,3 +1002,16 @@ public class AcuityResearch extends BaseLib{
 }
 
 	}
+
+//
+//for(String expectedFinding : expectedFindingValues) {
+//	if(expectedFinding.toLowerCase().contains(searchValue.toLowerCase())){
+//		log(LogStatus.INFO,"In " + gridWiseHeading + " Text in Grid is : " + expectedFinding,YesNo.No);
+//		sa.assertTrue(true,"In " + gridWiseHeading + " Search Keyword" + searchValue + "is contained in " + expectedFinding);
+//	}
+//	else
+//	{
+//		log(LogStatus.ERROR,"In " + gridWiseHeading + " Text in Grid is : " + expectedFinding,YesNo.No);
+//		sa.assertTrue(false,"In " + gridWiseHeading +" Search Keyword" + searchValue + "does not contain in " + expectedFinding);
+//	}
+//	}
