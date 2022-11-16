@@ -7541,4 +7541,60 @@ public abstract class BasePage extends BaseLib {
 		return suggestedTagsCheckBoxAllInput;
 	}
 
+	@FindBy(xpath = "//div[@class='slds-modal__container']//span[text()='Advanced']/ancestor::section[contains(@class,'slds-accordion__section')]/div[2]//lightning-layout//label[text()='Assigned To ID']/../div//span/span[2]")
+	private WebElement assignedToVerificationInAdvance;
+
+	public WebElement assignedToVerificationInAdvance() {
+		return assignedToVerificationInAdvance;
+	}
+
+	@FindBy(xpath = "//div[@class='slds-modal__container']//span[text()='Advanced']/ancestor::section[contains(@class,'slds-accordion__section')]/div[2]//lightning-layout//label[text()='Status']/../div//button/span")
+	private WebElement statusVerificationInAdvanced;
+
+	public WebElement statusVerificationInAdvanced() {
+		return statusVerificationInAdvanced;
+	}
+
+	@FindBy(xpath = "//div[@class='slds-modal__container']//span[text()='Advanced']/ancestor::section[contains(@class,'slds-accordion__section')]/div[2]//lightning-layout//label[text()='Due Date Only']/../div//input")
+	private WebElement dueDateOnlyVerificationInAdvanced;
+
+	public WebElement dueDateOnlyVerificationInAdvanced() {
+		return dueDateOnlyVerificationInAdvanced;
+	}
+
+	@FindBy(xpath = "//div[@class='slds-modal__container']//span[text()='Advanced']/ancestor::section[contains(@class,'slds-accordion__section')]/div[2]//lightning-layout//label[text()='Priority']/../div//button/span")
+	private WebElement priorityVerificationInAdvanced;
+
+	public WebElement priorityVerificationInAdvanced() {
+		return priorityVerificationInAdvanced;
+	}
+
+	@FindBy(xpath = "//div[@class='slds-modal__container']//span[text()='Tasks']/ancestor::div[@class='slds-accordion__summary']/following-sibling::div//label[text()='Subject']/../div//input")
+	private WebElement subjectVerificationInTasks;
+
+	public WebElement subjectVerificationInTasks() {
+		return subjectVerificationInTasks;
+	}
+
+	@FindBy(xpath = "//div[@class='slds-modal__container']//span[text()='Tasks']/ancestor::div[@class='slds-accordion__summary']/following-sibling::div//label[text()='Assigned To ID']/../div//span/span[2]")
+	private WebElement assignedToVerificationInTasks;
+
+	public WebElement assignedToVerificationInTasks() {
+		return assignedToVerificationInTasks;
+	}
+
+	@FindBy(xpath = "//div[@class='slds-modal__container']//span[text()='Tasks']/ancestor::div[@class='slds-accordion__summary']/following-sibling::div//label[text()='Status']/../div//button/span")
+	private WebElement statusVerificationInTasks;
+
+	public WebElement statusVerificationInTasks() {
+		return statusVerificationInTasks;
+	}
+
+	@FindBy(xpath = "//div[@class='slds-modal__container']//span[text()='Tasks']/ancestor::div[@class='slds-accordion__summary']/following-sibling::div//label[text()='Due Date Only']/../div//input")
+	private WebElement dueDateOnlyVerificationInTasks;
+
+	public WebElement dueDateOnlyVerificationInTasks() {
+		return dueDateOnlyVerificationInTasks;
+	}
+
 }
