@@ -6817,14 +6817,16 @@ public abstract class BasePage extends BaseLib {
 				action.SCROLLANDBOOLEAN, timeOut);
 
 	}
-	
-	public WebElement getTaggedRecordTimeReference(String taggedTabName, String recordName,String timeReferenceCount, int timeOut) {
 
-		return FindElement(driver, "//span[text()='"+taggedTabName+"']/ancestor::table//lightning-formatted-url//a[text()='"+recordName+"']/ancestor::tr//td//button[text()='"+timeReferenceCount+"']", "tagged",action.SCROLLANDBOOLEAN, timeOut);
+	public WebElement getTaggedRecordTimeReference(String taggedTabName, String recordName, String timeReferenceCount,
+			int timeOut) {
+
+		return FindElement(driver,
+				"//span[text()='" + taggedTabName + "']/ancestor::table//lightning-formatted-url//a[text()='"
+						+ recordName + "']/ancestor::tr//td//button[text()='" + timeReferenceCount + "']",
+				"tagged", action.SCROLLANDBOOLEAN, timeOut);
 
 	}
-	
-	
 
 	public WebElement getTaggedRecordName(String tagTabName, int timeOut) {
 
@@ -6854,7 +6856,6 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getNotesText(int timeOut) {
 		return isDisplayed(driver, notesText, "Visibility", timeOut, "Notes text");
 	}
-	
 
 	public WebElement dealNameLinkInAcuityTab(String dealName, int timeOut) {
 
@@ -7237,7 +7238,7 @@ public abstract class BasePage extends BaseLib {
 				"//lightning-vertical-navigation-item-badge[contains(@class,'slds-nav-vertical__item')]/a/span/ancestor::lightning-vertical-navigation-item-badge/a[not(text()='All Categories')]/span",
 				"researchSideNavCountResultsExceptAllCategories");
 	}
-	
+
 	public List<WebElement> researchSideNavLabelsWhichHasCountResultsExceptAllCategories() {
 		return FindElements(driver,
 				"//lightning-vertical-navigation-item-badge[contains(@class,'slds-nav-vertical__item')]/a/span/ancestor::lightning-vertical-navigation-item-badge/a[not(text()='All Categories')]",
@@ -7421,9 +7422,8 @@ public abstract class BasePage extends BaseLib {
 			return FindElement(driver, xpath, "Utility header: " + utilityRecordName, action.SCROLLANDBOOLEAN, timeOut);
 		}
 	}
-	
 
-	//Acuity Research
+	// Acuity Research
 	@FindBy(xpath = "//div[contains(@class,'DOCKED')]//div//input")
 	private WebElement textAreaResearch;
 
@@ -7431,17 +7431,15 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, textAreaResearch, "Visibility", timeOut, "Text Area Research");
 
 	}
-	
-	
+
 	@FindBy(xpath = "(//div[contains(@class,'DOCKED')]//div//button)[1]")
 	private WebElement researchMinimize;
 
 	public WebElement getResearchMinimize(int timeOut) {
-	return isDisplayed(driver, researchMinimize, "Visibility", timeOut, "Research Minimize");
-	
+		return isDisplayed(driver, researchMinimize, "Visibility", timeOut, "Research Minimize");
+
 	}
-	
-	
+
 	@FindBy(xpath = "(//div[contains(@class,'DOCKED')]//div//button)[2]")
 	private WebElement researchPopOut;
 
@@ -7449,8 +7447,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, researchPopOut, "Visibility", timeOut, "Research Pop-Out");
 
 	}
-	
-	
+
 	@FindBy(xpath = "(//div[contains(@class,'DOCKED')]//div//button)[3]")
 	private WebElement researchButton;
 
@@ -7458,7 +7455,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, researchButton, "Visibility", timeOut, "Research Button");
 
 	}
-	
+
 	@FindBy(xpath = "(//h2[contains(@class,'vertical__title')]")
 	private WebElement researchFindings;
 
@@ -7466,21 +7463,18 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, researchFindings, "Visibility", timeOut, "Research Findings");
 
 	}
-	
-	
+
 	public WebElement getFieldName(String tableName, int timeOut) {
-		String xpath = "//div[contains(@class,'active')]//a[text()='"+ tableName +"']";
-		
+		String xpath = "//div[contains(@class,'active')]//a[text()='" + tableName + "']";
+
 		return FindElement(driver, xpath, "Field Header Name: " + tableName, action.SCROLLANDBOOLEAN, timeOut);
 	}
-	
+
 	public List<WebElement> researchFindingsCountForAllResults() {
-		return FindElements(driver,
-				"//div[contains(@class,'active')]//h2/following-sibling::div//a/span",
+		return FindElements(driver, "//div[contains(@class,'active')]//h2/following-sibling::div//a/span",
 				"researchFIndingsCountResults");
 	}
 
-	
 	@FindBy(xpath = "//*[local-name()='svg' and @class='slds-icon slds-icon-text-default slds-icon_small']/../..")
 	private WebElement notificationIcon;
 
@@ -7501,4 +7495,50 @@ public abstract class BasePage extends BaseLib {
 	public List<WebElement> getnotificationButtons() {
 		return notificationButtons;
 	}
+
+	public WebElement editButtonOnInteractionCard(String subjectName, int timeOut) {
+		String xpath = "//a[text()='" + subjectName + "']/../preceding-sibling::div//button[@title='Edit Note']";
+		WebElement ele = FindElement(driver, xpath, "Header Found: " + subjectName, action.SCROLLANDBOOLEAN, timeOut);
+		try {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "Header Found: " + subjectName);
+
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "] Header Found: " + subjectName);
+		}
+	}
+
+	public WebElement suggestedTagHeading(int timeOut) {
+		String xpath = "//header//h2[text()='Suggested Tags']";
+		WebElement ele = FindElement(driver, xpath, "Suggested Tags", action.SCROLLANDBOOLEAN, timeOut);
+		try {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "Suggested Tags");
+
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "Suggested Tags");
+		}
+	}
+
+	public List<WebElement> listOfColumnsOfSuggestedTags() {
+		return FindElements(driver, "//div[contains(@id,'modal-content')]//div/span/span",
+				"listOfColumnsOfSuggestedTags");
+	}
+
+	@FindBy(xpath = "//lightning-layout-item//p[contains(@class,'slds-m-top_small')]")
+	private WebElement suggestedTagCountOfCheckBoxes;
+
+	public WebElement suggestedTagCountOfCheckBoxes() {
+		return suggestedTagCountOfCheckBoxes;
+	}
+
+	public List<WebElement> suggestedTagFooterButtons() {
+		return FindElements(driver, "//section//footer/button", "suggestedTagFooterButtons");
+	}
+
+	@FindBy(xpath = "//div[contains(@id,'modal-content')]//div//thead//th//input")
+	private WebElement suggestedTagsCheckBoxAllInput;
+
+	public WebElement suggestedTagsCheckBoxAllInput() {
+		return suggestedTagsCheckBoxAllInput;
+	}
+
 }

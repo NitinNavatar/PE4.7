@@ -1144,6 +1144,9 @@ public class CommonVariables {
 	    public static String AS_ATitle1;
 	    public static String AS_AContactDeals1;
 	    public static String AS_AMeetingsAndCalls1,AS_AMeetingsAndCalls2,AS_AMeetingsAndCalls3,AS_AMeetingsAndCalls4;
+	    
+	    //Advance Due Date
+	    public static String AMNNR_AdvanceDueDate17;
 	    	    
 	    
 	    //Report Name
@@ -6107,6 +6110,10 @@ public class CommonVariables {
 				AS_AMeetingsAndCalls4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "Con_004", excelLabel.Meetings_And_Calls);
 				
 				
+				
+				
+				
+				
 				//Report
 				
 				AS_ReportName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Reports",excelLabel.Variable_Name, "R_001", excelLabel.Report_Name);
@@ -6120,6 +6127,9 @@ public class CommonVariables {
 				AS_ResearchString3 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Research",excelLabel.Variable_Name, "AS_Research3", excelLabel.Search_String);
 				AS_ResearchString4 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Research",excelLabel.Variable_Name, "AS_Research4", excelLabel.Search_String);
 				AS_ResearchString5 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Research",excelLabel.Variable_Name, "AS_Research5", excelLabel.Search_String);
+				
+				
+				
 				
 
 				try {
@@ -6343,6 +6353,36 @@ public class CommonVariables {
 				AR_FundraisingRecordType1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "AR_Fundraising1", excelLabel.Record_Type);
 				
 				AR_FundRecordType1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "AR_Fund1", excelLabel.Record_Type);
+				
+				
+				
+				
+			case "AcuityMeetingNotesNotificationReminder" :
+				
+				try {
+					dataFile=new FileInputStream(new File(AcuityDataSheetFilePath));
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					dataWb=WorkbookFactory.create(dataFile);
+				} catch (EncryptedDocumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvalidFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+				//Advance Due Date
+				AMNNR_AdvanceDueDate17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_017", excelLabel.Advance_Due_Date);
+				
+				
 				
 				try {
 					dataFile.close();

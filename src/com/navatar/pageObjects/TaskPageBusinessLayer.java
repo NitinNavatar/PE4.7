@@ -437,6 +437,7 @@ public class TaskPageBusinessLayer extends TaskPage {
 	public boolean editCommentsIntask(String task, String updatedValue) {
 		boolean flag = false;
 
+		CommonLib.refresh(driver);
 		if (click(driver, editCommentsButton(30), "", action.BOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Edit Comments Button", YesNo.No);
 			if (CommonLib.clearTextBox(commentTextArea(20))) {
@@ -446,7 +447,18 @@ public class TaskPageBusinessLayer extends TaskPage {
 
 					if (click(driver, commentTextAreaSaveButton(30), "", action.BOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Save Button", YesNo.No);
-						flag = true;
+						CommonLib.refresh(driver);
+						String actualCommentValue = CommonLib.getText(driver, commentsLabelValueInTaskDetailPage(20),
+								"commentsLabelValueInTaskDetailPage", action.BOOLEAN);
+						if (actualCommentValue.equals(updatedValue)) {
+							log(LogStatus.INFO, "Value of Comments in Task Detail Matched and i.e. " + updatedValue,
+									YesNo.No);
+							flag = true;
+						} else {
+							log(LogStatus.ERROR, "Value of Comments in Task Detail not Matched, Expected: "
+									+ updatedValue + " and Actual: " + actualCommentValue, YesNo.Yes);
+						}
+
 					} else {
 						log(LogStatus.ERROR, "Not Able to Click on Save Button For : " + task, YesNo.Yes);
 

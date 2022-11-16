@@ -138,5 +138,13 @@ public class TaskPage extends BasePageBusinessLayer {
 	}
 
 	
+	@FindBy(xpath = "//span[text()='Comments']/parent::div/following-sibling::div/span/span")
+	private WebElement commentsLabelValueInTaskDetailPage;
+
+	public WebElement commentsLabelValueInTaskDetailPage(int timeOut) {
+
+		return isDisplayed(driver, commentsLabelValueInTaskDetailPage, "Visibility", timeOut, "commentsLabelValueInTaskDetailPage");
+	}
+	
 	
 }
