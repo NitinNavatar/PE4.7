@@ -106,8 +106,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				ThreadSleep(4000);
 				if (BP.clicktabOnPage("Acuity")) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, task1SubjecName,
-							task1Notes, true, false, relatedToVerify);
+					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, null,
+							task1SubjecName, task1Notes, true, false, relatedToVerify, null);
 					if (result.isEmpty()) {
 						log(LogStatus.PASS,
 								"------" + task1SubjecName + " record has been verified on intraction------", YesNo.No);
@@ -118,8 +118,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 									+ updatedCommentOfTask + "------", YesNo.No);
 
 							CommonLib.refresh(driver);
-							ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(getAdvanceDueDate,
-									task1SubjecName, updatedCommentOfTask, true, false, relatedToVerify);
+							ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, null,
+									task1SubjecName, updatedCommentOfTask, true, false, relatedToVerify, null);
 							if (updatedresult.isEmpty()) {
 								log(LogStatus.PASS,
 										"------" + task1SubjecName + " record has been verified on intraction------",
@@ -273,8 +273,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				ThreadSleep(4000);
 				if (BP.clicktabOnPage("Acuity")) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, task1SubjecName,
-							task1Notes, true, false, relatedToVerify);
+					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, null,
+							task1SubjecName, task1Notes, true, false, relatedToVerify, null);
 					if (result.isEmpty()) {
 						log(LogStatus.PASS,
 								"------" + task1SubjecName + " record has been verified on intraction------", YesNo.No);
@@ -315,8 +315,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										CommonLib.refresh(driver);
 										ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(
-												getAdvanceDueDate, task1SubjecName, updatedNotesOfTask, true, false,
-												updatedRelatedToVerify);
+												getAdvanceDueDate, null, task1SubjecName, updatedNotesOfTask, true,
+												false, updatedRelatedToVerify, null);
 										if (updatedresult.isEmpty()) {
 											log(LogStatus.PASS,
 													"------" + task1SubjecName
@@ -742,8 +742,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				ThreadSleep(4000);
 				if (BP.clicktabOnPage("Acuity")) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, task1SubjecName,
-							task1Notes, true, false, relatedToVerify);
+					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, null,
+							task1SubjecName, task1Notes, true, false, relatedToVerify, null);
 					if (result.isEmpty()) {
 						log(LogStatus.PASS,
 								"------" + task1SubjecName + " record has been verified on intraction------", YesNo.No);
@@ -786,8 +786,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										CommonLib.refresh(driver);
 										ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(
-												getAdvanceDueDate, task1SubjecName, updatedNotesOfTask, true, false,
-												updatedRelatedToVerify);
+												getAdvanceDueDate, null, task1SubjecName, updatedNotesOfTask, true,
+												false, updatedRelatedToVerify, null);
 										if (updatedresult.isEmpty()) {
 											log(LogStatus.PASS,
 													"------" + task1SubjecName
