@@ -11928,7 +11928,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					+ "']/../following-sibling::div[contains(@class,'slds-text-title')]";
 			ele = CommonLib.FindElement(driver, xPath, "Notes", action.SCROLLANDBOOLEAN, 30);
 			String note = getText(driver, ele, "notes", action.SCROLLANDBOOLEAN);
-			if (note.contains(notes)) {
+			if (note.contains(notes.trim().replaceAll(" +", " "))) {
 				log(LogStatus.INFO,
 						"Actual result : " + note + " has been matched with expected result : " + notes + " for notes",
 						YesNo.No);
@@ -13127,7 +13127,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					if (suggestedTags.length > 0) {
 						if (suggestedTags[0].equalsIgnoreCase("All Records Select")) {
-
+							CommonLib.ThreadSleep(5000);
 							if (click(driver, suggestedTagsCheckBoxAllInput(), "suggestedTagsCheckBoxAllInput",
 									action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on All Checkbox Input box of Suggested Tags Popup",
@@ -15263,6 +15263,298 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 		return flag;
+	}
+
+	public boolean verifySubjectLinkRedirectionOnIntractionAndAbleToClickOnEditButtonInTaskDetailPage(WebDriver driver,
+			String subjectName) {
+		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
+		String xPath;
+		WebElement ele;
+		boolean flag = false;
+		xPath = "//a[@class=\"interaction_sub subject_text\" and text()='" + subjectName + "']";
+		ele = FindElement(driver, xPath, "Subject Name", action.SCROLLANDBOOLEAN, 30);
+		if (CommonLib.clickUsingJavaScript(driver, ele, "Subject Name on Intraction")) {
+			log(LogStatus.INFO, "clicked on " + subjectName, YesNo.No);
+
+			String windowID = switchOnWindow(driver);
+			if (windowID != null) {
+
+				if (getPageHeaderTitle(20) != null) {
+					log(LogStatus.INFO, subjectName + " link is redirecting to Details Page", YesNo.No);
+
+					if (click(driver, taskBP.downArrowButton(20), "downArrowButton", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
+
+						if (click(driver, taskBP.buttonInTheDownArrowList("Edit", 20), "Edit Button in downArrowButton",
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Edit Button in  Down Arrow Button", YesNo.No);
+							
+							flag = true;
+						} else {
+							log(LogStatus.ERROR, "Not Able Click on Edit button in Down Arrow Button", YesNo.Yes);
+							driver.close();
+							driver.switchTo().window(windowID);
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Not Able Click on Down Arrow Button", YesNo.Yes);
+						driver.close();
+						driver.switchTo().window(windowID);
+					}
+
+				} else {
+					log(LogStatus.ERROR,
+							subjectName
+									+ " links is not redirecting to Details Page, So Not able to Click on Edit Button",
+							YesNo.No);
+				}
+			} else {
+				log(LogStatus.ERROR, subjectName + " url did not open in new tab", YesNo.No);
+			}
+		} else {
+			log(LogStatus.ERROR, "not able to click on " + subjectName, YesNo.No);
+		}
+		return flag;
+	}
+
+	public ArrayList<String> verifyNotesPopupWithPrefilledValueAndOnSameUrl(String url,
+			String[][] basicSectionVerificationData, String[][] advancedSectionVerificationData,
+			String[][] tasksSectionVerificationData) {
+		String xPath;
+		WebElement ele;
+		ArrayList<String> result = new ArrayList<String>();
+
+		String currentUrl = getURL(driver, 10);
+		ThreadSleep(4000);
+
+		if (url.equals(currentUrl)) {
+			log(LogStatus.INFO, "popup is open in the same page", YesNo.No);
+
+			if (basicSectionVerificationData != null) {
+
+				for (String[] val : basicSectionVerificationData) {
+					String labelName = val[0];
+					String value = val[1];
+
+					if (labelName.equalsIgnoreCase(excelLabel.Subject.toString())) {
+
+						String actualSubject = getAttribute(driver, getSubjectInput(15), "Subject", "value");
+
+						log(LogStatus.INFO, "Successfully get the value from Subject field", YesNo.No);
+						if (value.equals(actualSubject)) {
+							log(LogStatus.INFO, "Subject value has been verify", YesNo.No);
+						} else {
+							log(LogStatus.ERROR,
+									"Subject value is not verify, Expected: " + value + " but Actual: " + actualSubject,
+									YesNo.No);
+							result.add("Subject value is not verify, Expected: " + value + " but Actual: "
+									+ actualSubject);
+						}
+					}
+
+					else if (labelName.equalsIgnoreCase(excelLabel.Notes.toString())) {
+						String actualNotes = getText(driver, getNotesText(20), "Notes", action.SCROLLANDBOOLEAN);
+						if (actualNotes.contains(value)) {
+							log(LogStatus.INFO, "Notes value has been verified", YesNo.No);
+						} else {
+							log(LogStatus.ERROR,
+									"Notes value is not verified, Expected: " + value + " but Actual: " + actualNotes,
+									YesNo.No);
+							result.add(
+									"Notes value is not verified, Expected: " + value + " but Actual: " + actualNotes);
+						}
+					}
+
+					else if (labelName.equalsIgnoreCase(excelLabel.Related_To.toString())) {
+						String[] tag = value.split("<break>", -1);
+						for (int i = 0; i < tag.length; i++) {
+							xPath = "//lightning-pill//span[text()='" + tag[i] + "']";
+							ele = FindElement(driver, xPath, tag[i] + " tag", action.SCROLLANDBOOLEAN, 15);
+							if (ele != null) {
+								log(LogStatus.INFO, tag[i] + " tag has been verified", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, tag[i] + " tag is not verified", YesNo.No);
+								result.add(tag[i] + " tag is not verified");
+							}
+						}
+					}
+				}
+			}
+
+			if (advancedSectionVerificationData != null) {
+
+				if (clickUsingJavaScript(driver, getSectionBtn("Advanced", 30), "Advanced section",
+						action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "clicked on Advanced section", YesNo.No);
+
+					for (String[] val : advancedSectionVerificationData) {
+						String labelName = val[0];
+						String value = val[1];
+
+						if (labelName.contains("Assigned To ID")) {
+
+							String actualAssignedToId = getText(driver, assignedToVerificationInAdvance(),
+									"Assigned To ID", action.SCROLLANDBOOLEAN);
+
+							log(LogStatus.INFO, "Successfully get the value from Assigned To ID field", YesNo.No);
+							if (value.equals(actualAssignedToId)) {
+								log(LogStatus.INFO, "Assigned To ID value has been verify", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Assigned To ID value is not verify, Expected: " + value
+										+ " but Actual: " + actualAssignedToId, YesNo.No);
+								result.add("Assigned To ID value is not verify, Expected: " + value + " but Actual: "
+										+ actualAssignedToId);
+							}
+						}
+
+						else if (labelName.equalsIgnoreCase(excelLabel.Status.toString())) {
+							String actualStatus = getText(driver, statusVerificationInAdvanced(),
+									excelLabel.Status.toString(), action.SCROLLANDBOOLEAN);
+							if (actualStatus.contains(value)) {
+								log(LogStatus.INFO, "Status value has been verified", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "STatus value is not verified, Expected: " + value
+										+ " but Actual: " + actualStatus, YesNo.No);
+								result.add("Status value is not verified, Expected: " + value + " but Actual: "
+										+ actualStatus);
+							}
+						}
+
+						else if (labelName.equalsIgnoreCase("Due Date Only")) {
+
+							String actualDueDateOnly = getAttribute(driver, dueDateOnlyVerificationInAdvanced(),
+									"Due Date Only", "value");
+
+							if (actualDueDateOnly.contains(value)) {
+								log(LogStatus.INFO, "Due Date Only value has been verified", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Due Date Only value is not verified, Expected: " + value
+										+ " but Actual: " + actualDueDateOnly, YesNo.No);
+								result.add("Due Date Only value is not verified, Expected: " + value + " but Actual: "
+										+ actualDueDateOnly);
+							}
+						}
+
+						else if (labelName.equalsIgnoreCase(excelLabel.Priority.toString())) {
+
+							String actualPriority = getText(driver, priorityVerificationInAdvanced(),
+									excelLabel.Priority.toString(), action.SCROLLANDBOOLEAN);
+
+							if (actualPriority.contains(value)) {
+								log(LogStatus.INFO, "Priority value has been verified", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Priority value is not verified, Expected: " + value
+										+ " but Actual: " + actualPriority, YesNo.No);
+								result.add("Priority value is not verified, Expected: " + value + " but Actual: "
+										+ actualPriority);
+							}
+						}
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not able to click on Advanced search section", YesNo.No);
+					
+					result.add("Not able to click on Advanced search section");
+					
+
+				}
+			}
+
+			if (tasksSectionVerificationData != null) {
+
+				xPath = "//span[text()='Advanced']/parent::button[@aria-expanded='true']";
+				ele = FindElement(driver, xPath, "Advance section", action.SCROLLANDBOOLEAN, 3);
+				if (ele == null) {
+					if (clickUsingJavaScript(driver, getSectionBtn("Advanced", 3), "Advanced section",
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "clicked on Advanced section", YesNo.No);
+					} else {
+						log(LogStatus.ERROR, "Not able to click on Advanced section", YesNo.No);
+
+						result.add("Not able to click on Advanced section");
+
+					}
+				}
+
+				if (clickUsingJavaScript(driver, getSectionBtn("Tasks", 30), "Tasks section",
+						action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "clicked on Tasks section", YesNo.No);
+
+					for (String[] val : tasksSectionVerificationData) {
+						String labelName = val[0];
+						String value = val[1];
+
+						if (labelName.equalsIgnoreCase(excelLabel.Subject.toString())) {
+
+							String actualSubject = getAttribute(driver, subjectVerificationInTasks(), "Subject",
+									"value");
+
+							log(LogStatus.INFO, "Successfully get the value from Subject field", YesNo.No);
+							if (value.equals(actualSubject)) {
+								log(LogStatus.INFO, "Subject value has been verify", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Subject value is not verify, Expected: " + value + " but Actual: "
+										+ actualSubject, YesNo.No);
+								result.add("Subject value is not verify, Expected: " + value + " but Actual: "
+										+ actualSubject);
+							}
+						}
+
+						else if (labelName.contains("Assigned To ID")) {
+
+							String actualAssignedToId = getText(driver, assignedToVerificationInTasks(),
+									"Assigned To ID", action.SCROLLANDBOOLEAN);
+
+							log(LogStatus.INFO, "Successfully get the value from Assigned To ID field", YesNo.No);
+							if (value.equals(actualAssignedToId)) {
+								log(LogStatus.INFO, "Assigned To ID value has been verify", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Assigned To ID value is not verify, Expected: " + value
+										+ " but Actual: " + actualAssignedToId, YesNo.No);
+								result.add("Assigned To ID value is not verify, Expected: " + value + " but Actual: "
+										+ actualAssignedToId);
+							}
+						} else if (labelName.equalsIgnoreCase(excelLabel.Status.toString())) {
+							String actualStatus = getText(driver, statusVerificationInTasks(),
+									excelLabel.Status.toString(), action.SCROLLANDBOOLEAN);
+							if (actualStatus.contains(value)) {
+								log(LogStatus.INFO, "Status value has been verified", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Status value is not verified, Expected: " + value
+										+ " but Actual: " + actualStatus, YesNo.No);
+								result.add("Status value is not verified, Expected: " + value + " but Actual: "
+										+ actualStatus);
+							}
+						}
+
+						else if (labelName.equalsIgnoreCase("Due Date Only")) {
+
+							String actualDueDateOnly = getAttribute(driver, dueDateOnlyVerificationInTasks(),
+									"Due Date Only", "value");
+
+							if (actualDueDateOnly.contains(value)) {
+								log(LogStatus.INFO, "Due Date Only value has been verified", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Due Date Only value is not verified, Expected: " + value
+										+ " but Actual: " + actualDueDateOnly, YesNo.No);
+								result.add("Due Date Only value is not verified, Expected: " + value + " but Actual: "
+										+ actualDueDateOnly);
+							}
+						}
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not able to click on Tasks section", YesNo.No);
+					result.add("Not able to click on Tasks section");
+
+				}
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Popup is not open on the same page", YesNo.No);
+			result.add(" Popup is not open on the same page");
+		}
+		return result;
 	}
 
 }

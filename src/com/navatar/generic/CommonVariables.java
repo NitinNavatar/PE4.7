@@ -6500,6 +6500,7 @@ public class CommonVariables {
 					e.printStackTrace();
 				}
 			
+
 				break;
 			default:
 				break;
@@ -6508,7 +6509,6 @@ public class CommonVariables {
 			
 		public static void method3(Object obj) {
 			switch(obj.getClass().getSimpleName()) {
-				
 				
                 case "AcuityTaskAndEvent" :
 				
