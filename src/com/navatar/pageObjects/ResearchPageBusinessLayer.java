@@ -200,12 +200,12 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 			
 			if(!headerAndValue.get(header).equalsIgnoreCase("NA")) {
 				
-				log(LogStatus.ERROR, "Header :"+header +" is enable in excel so  going to verify in research page", YesNo.No);
+				log(LogStatus.INFO, "Header :"+header +" is enable in excel so  going to verify in research page", YesNo.No);
 
 				ele=researchFindingsLeftPanelHeadingName(header, action, timeout);
 				
 				if(ele!=null) {
-					log(LogStatus.ERROR, "Header :"+header +" is  visible in left panel of research page", YesNo.No);
+					log(LogStatus.INFO, "Header :"+header +" is  visible in left panel of research page", YesNo.No);
 					String headerText = ele.getText().split(":")[0].trim();
 					if(headerText.equalsIgnoreCase(header)) {
 						log(LogStatus.INFO, "Header :"+header +" is matched with excel label:"+headerText+" in left panel of research page", YesNo.No);
@@ -220,28 +220,28 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 								log(LogStatus.INFO, "Header Count  :"+headerAndValue.get(header) +" is matched with excel label count:"+headerCount+" for header :"+header+"in left panel of research page", YesNo.No);
 								flag=true;
 							}else {
-								log(LogStatus.ERROR, "Header Count  :"+headerAndValue.get(header) +" is not matched with excel label count:"+headerCount+" for header :"+header+"in left panel of research page", YesNo.No);
+								log(LogStatus.SKIP, "Header Count  :"+headerAndValue.get(header) +" is not matched with excel label count:"+headerCount+" for header :"+header+"in left panel of research page", YesNo.No);
 								sa.assertTrue(false,"Header Count  :"+headerAndValue.get(header) +" is not matched with excel label count:"+headerCount+" for header :"+header+"in left panel of research page");
 							}
 							
 						}else {
-							log(LogStatus.ERROR, "Header Count  :"+headerAndValue.get(header) +" is not visible for header :"+header+"in left panel of research page", YesNo.No);
+							log(LogStatus.SKIP, "Header Count  :"+headerAndValue.get(header) +" is not visible for header :"+header+"in left panel of research page", YesNo.No);
 							sa.assertTrue(false,"Header Count  :"+headerAndValue.get(header) +" is not visible for header :"+header+"in left panel of research page");
 
 						}
 					}else {
-						log(LogStatus.ERROR,  "Header :"+header +" is not matched with excel label:"+headerText+" in left panel of research page", YesNo.No);
+						log(LogStatus.SKIP,  "Header :"+header +" is not matched with excel label:"+headerText+" in left panel of research page", YesNo.No);
 						sa.assertTrue(false, "Header :"+header +" is not matched with excel label:"+headerText+" in left panel of research page");
 
 					}
 				}else {
-					log(LogStatus.ERROR, "Header :"+header +" is not visible in left panel of research page", YesNo.No);
+					log(LogStatus.SKIP, "Header :"+header +" is not visible in left panel of research page", YesNo.No);
 					sa.assertTrue(false,"Header :"+header +" is not visible in left panel of research page");
 
 				}
 				
 			}else {
-				log(LogStatus.ERROR, "Header :"+header +" is disable in excel so cannot going to verify in research page", YesNo.No);
+				log(LogStatus.SKIP, "Header :"+header +" is disable in excel so cannot going to verify in research page", YesNo.No);
 				sa.assertTrue(false,"Header :"+header +" is disable in excel so cannot going to verify in research page");
 			}
 			

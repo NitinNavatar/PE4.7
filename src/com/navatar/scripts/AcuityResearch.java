@@ -26,11 +26,14 @@ import com.navatar.generic.EnumConstants.BulkActions_DefaultValues;
 import com.navatar.generic.EnumConstants.Condition;
 import com.navatar.generic.EnumConstants.CreateNew_DefaultValues;
 import com.navatar.generic.EnumConstants.CreationPage;
+import com.navatar.generic.EnumConstants.DataImportType;
 import com.navatar.generic.EnumConstants.Environment;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.NavigationMenuItems;
 import com.navatar.generic.EnumConstants.NewInteractions_DefaultValues;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
+import com.navatar.generic.EnumConstants.ObjectName;
+import com.navatar.generic.EnumConstants.ObjectType;
 import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.Stage;
@@ -43,6 +46,7 @@ import com.navatar.generic.EnumConstants.recordTypeLabel;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.ContactsPageBusinessLayer;
+import com.navatar.pageObjects.DataLoaderWizardPageBusinessLayer;
 import com.navatar.pageObjects.DealPageBusinessLayer;
 import com.navatar.pageObjects.FieldAndRelationshipPageBusinessLayer;
 import com.navatar.pageObjects.FundRaisingPageBusinessLayer;
@@ -453,7 +457,10 @@ public class AcuityResearch extends BaseLib{
 					{ recordTypeLabel.Active.toString(), "" } },
 			{ { recordTypeLabel.Record_Type_Label.toString(), dealRecordTypeArray[1] },
 					{ recordTypeLabel.Description.toString(), dealRecordTypeArray[1] + recordTypeDescription },
-					{ recordTypeLabel.Active.toString(), "" } } };
+					{ recordTypeLabel.Active.toString(), "" } },
+			{ { recordTypeLabel.Record_Type_Label.toString(), dealRecordTypeArray[2] },
+						{ recordTypeLabel.Description.toString(), dealRecordTypeArray[2] + recordTypeDescription },
+						{ recordTypeLabel.Active.toString(), "" } }};
 
 	String[][][] fundrecordType = {
 			{ { recordTypeLabel.Record_Type_Label.toString(), fundRecordTypeArray[0] },
@@ -805,7 +812,179 @@ public class AcuityResearch extends BaseLib{
 
 @Parameters({ "projectName"})
 @Test
-	public void ARTc005_VerifyTheResearchFunctionality(String projectName) {
+	public void ARTc005_UpdateRecordTypesAsInactive(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	SetupPageBusinessLayer sp = new SetupPageBusinessLayer(driver);
+	
+	lp.CRMLogin(superAdminUserName, adminPassword);
+	
+	String dealRecordTypeList = AR_DealRecordType1;
+	String fundRecordTypeList = AR_FundRecordType1;
+	String fundraisingRecordTypeList = AR_FundraisingRecordType1;
+	String dealRecordTypeArray[] = dealRecordTypeList.split(breakSP, -1);
+	String fundRecordTypeArray[] = fundRecordTypeList.split(breakSP, -1);
+	String fundraisingRecordTypeArray[] = fundraisingRecordTypeList.split(breakSP, -1);
+	
+	String[][] dealRecordType = { { recordTypeLabel.Active.toString(), "" } ,
+			{ recordTypeLabel.Active.toString(), "" } ,
+			{ recordTypeLabel.Active.toString(), "" } };
+
+	String[][] fundRecordType = { { recordTypeLabel.Active.toString(), "" } ,
+			{ recordTypeLabel.Active.toString(), "" } ,
+			{ recordTypeLabel.Active.toString(), "" } };
+
+	String[][] fundraisingRecordType = { { recordTypeLabel.Active.toString(), "" } ,
+			{ recordTypeLabel.Active.toString(), "" } ,
+			{ recordTypeLabel.Active.toString(), "" } };
+
+
+	boolean flag = false;
+	String parentID=null;
+	
+	
+	for (int i = 0; i < dealRecordTypeArray.length; i++) {
+		home.notificationPopUpClose();
+		if (home.clickOnSetUpLink()) {
+			flag = false;
+			parentID = switchOnWindow(driver);
+			if (parentID != null) {
+				if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(), object.Deal)) {
+					if (sp.clickOnObjectFeature("", Mode.Lightning.toString(), object.Deal,
+							ObjectFeatureName.recordTypes)) {
+						if (sp.clickOnAlreadyCreatedLayout(dealRecordTypeArray[i])) {
+							if (sp.editRecordTypeForObject(projectName, dealRecordType, 10)) {
+								log(LogStatus.ERROR,dealRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
+							}else {
+								log(LogStatus.ERROR,dealRecordTypeArray[i]+" not updated ",YesNo.Yes);
+								sa.assertTrue(false, dealRecordTypeArray[i]+" not updated ");
+							}
+						
+						}else {
+							log(LogStatus.ERROR, dealRecordTypeArray[i]+" is not clickable", YesNo.Yes);
+							sa.assertTrue(false, dealRecordTypeArray[i]+" is not clickable");
+						}
+				
+					}else {
+						log(LogStatus.ERROR, "object feature "+ObjectFeatureName.recordTypes+" is not clickable", YesNo.Yes);
+						sa.assertTrue(false, "object feature "+ObjectFeatureName.recordTypes+" is not clickable");
+					}
+				}else {
+					log(LogStatus.ERROR, "Deal object could not be found in object manager", YesNo.Yes);
+					sa.assertTrue(false, "Deal object could not be found in object manager");
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+				switchToDefaultContent(driver);
+			}else {
+				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch");
+			}
+		}else {
+			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "could not click on setup link");
+		}
+
+	}
+
+	for (int i = 0; i < fundRecordTypeArray.length; i++) {
+		home.notificationPopUpClose();
+		if (home.clickOnSetUpLink()) {
+			flag = false;
+			parentID = switchOnWindow(driver);
+			if (parentID != null) {
+				if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(), object.Fund)) {
+					if (sp.clickOnObjectFeature("", Mode.Lightning.toString(), object.Fund,
+							ObjectFeatureName.recordTypes)) {
+						if (sp.clickOnAlreadyCreatedLayout(fundRecordTypeArray[i])) {
+							if (sp.editRecordTypeForObject(projectName, fundRecordType, 10)) {
+								log(LogStatus.ERROR,fundRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
+							}else {
+								log(LogStatus.ERROR,fundRecordTypeArray[i]+" not updated ",YesNo.Yes);
+								sa.assertTrue(false, fundRecordTypeArray[i]+" not updated ");
+							}
+						
+						}else {
+							log(LogStatus.ERROR, fundRecordTypeArray[i]+" is not clickable", YesNo.Yes);
+							sa.assertTrue(false, fundRecordTypeArray[i]+" is not clickable");
+						}
+				
+					}else {
+						log(LogStatus.ERROR, "object feature "+ObjectFeatureName.recordTypes+" is not clickable", YesNo.Yes);
+						sa.assertTrue(false, "object feature "+ObjectFeatureName.recordTypes+" is not clickable");
+					}
+				}else {
+					log(LogStatus.ERROR, "Fund object could not be found in object manager", YesNo.Yes);
+					sa.assertTrue(false, "Fund object could not be found in object manager");
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+				switchToDefaultContent(driver);
+			}else {
+				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch");
+			}
+		}else {
+			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "could not click on setup link");
+		}
+
+	}
+
+	for (int i = 0; i < fundraisingRecordTypeArray.length; i++) {
+		home.notificationPopUpClose();
+		if (home.clickOnSetUpLink()) {
+			flag = false;
+			parentID = switchOnWindow(driver);
+			if (parentID != null) {
+				if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(), object.Fundraising)) {
+					if (sp.clickOnObjectFeature("", Mode.Lightning.toString(), object.Fundraising,
+							ObjectFeatureName.recordTypes)) {
+						if (sp.clickOnAlreadyCreatedLayout(fundraisingRecordTypeArray[i])) {
+							if (sp.editRecordTypeForObject(projectName, fundraisingRecordType, 10)) {
+								log(LogStatus.ERROR,fundraisingRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
+							}else {
+								log(LogStatus.ERROR,fundraisingRecordTypeArray[i]+" not updated ",YesNo.Yes);
+								sa.assertTrue(false, fundraisingRecordTypeArray[i]+" not updated ");
+							}
+						
+						}else {
+							log(LogStatus.ERROR, fundraisingRecordTypeArray[i]+" is not clickable", YesNo.Yes);
+							sa.assertTrue(false, fundraisingRecordTypeArray[i]+" is not clickable");
+						}
+				
+					}else {
+						log(LogStatus.ERROR, "object feature "+ObjectFeatureName.recordTypes+" is not clickable", YesNo.Yes);
+						sa.assertTrue(false, "object feature "+ObjectFeatureName.recordTypes+" is not clickable");
+					}
+				}else {
+					log(LogStatus.ERROR, "Fundraising object could not be found in object manager", YesNo.Yes);
+					sa.assertTrue(false, "Fundraising object could not be found in object manager");
+				}
+				driver.close();
+				driver.switchTo().window(parentID);
+				switchToDefaultContent(driver);
+			}else {
+				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+				sa.assertTrue(false, "could not find new window to switch");
+			}
+		}else {
+			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
+			sa.assertTrue(false, "could not click on setup link");
+		}
+
+	}
+
+	
+	lp.switchToLighting();
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();
+}
+
+@Parameters({ "projectName"})
+@Test
+	public void ARTc006_VerifyTheResearchFunctionality(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -893,7 +1072,7 @@ public class AcuityResearch extends BaseLib{
 
 @Parameters({ "projectName"})
 @Test
-	public void ARTc006_VerifyResearchFuncationalityforValidData(String projectName) {
+	public void ARTc007_VerifyResearchFuncationalityforValidData(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
@@ -925,7 +1104,12 @@ public class AcuityResearch extends BaseLib{
 							+ searchValue + "---------",
 					YesNo.No);
 			
-			rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+			if(rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10)) {
+				
+				log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			} else {
+				log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			}
 
 		} else {
 			log(LogStatus.FAIL,
