@@ -73,18 +73,17 @@ public class AcuityResearch extends BaseLib{
 //	String upDated="Updated";
 	String customNavigationMenu = "Custom Navigation Menu";
 
-	@Parameters({ "projectName" })
-
+	@Parameters({ "projectName"})
 	@Test
-	public void ARTc001_CreateUsers(String projectName) {
+	public void ARTc001_createCRMUser(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		String parentWindow = null;
-		String[] splitedUserLastName = removeNumbersFromString(glUser1LastName);
+		String[] splitedUserLastName = removeNumbersFromString(crmUser1LastName);
 		String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
 		String emailId = lp.generateRandomEmailId(gmailUserName);
-
+		ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",excelLabel.User_Last_Name);
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		boolean flag = false;
 		for (int i = 0; i < 3; i++) {
@@ -94,20 +93,19 @@ public class AcuityResearch extends BaseLib{
 					parentWindow = switchOnWindow(driver);
 					if (parentWindow == null) {
 						sa.assertTrue(false,
-								"No new window is open after click on setup link in lighting mode so cannot create gl User1");
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User1");
 						log(LogStatus.SKIP,
-								"No new window is open after click on setup link in lighting mode so cannot create gl User1",
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User1",
 								YesNo.Yes);
-						exit("No new window is open after click on setup link in lighting mode so cannot create gl User1");
+						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
 					}
-					if (setup.createPEUser(glUser1FirstName, UserLastName, emailId, glUserLience, glUserProfile)) {
-						log(LogStatus.INFO,
-								"GLSearch User is created Successfully: " + glUser1FirstName + " " + UserLastName,
-								YesNo.No);
-						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User01",
+					if (setup.createPEUser( crmUser1FirstName, UserLastName, emailId, crmUserLience,
+							crmUserProfile)) {
+						log(LogStatus.INFO, "CRM User is created Successfully: " + crmUser1FirstName + " " + UserLastName, YesNo.No);
+						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User1",
 								excelLabel.User_Email);
-						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name,
-								"User1", excelLabel.User_Last_Name);
+						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",
+								excelLabel.User_Last_Name);
 						flag = true;
 						break;
 
@@ -117,56 +115,57 @@ public class AcuityResearch extends BaseLib{
 
 				}
 			} catch (Exception e) {
+				// TODO Auto-generated catch block
 				log(LogStatus.INFO, "could not find setup link, trying again..", YesNo.No);
 			}
 
 		}
 		if (flag) {
-
-			if (!environment.equalsIgnoreCase(Environment.Sandbox.toString())) {
-				switchToDefaultContent(driver);
-				CommonLib.ThreadSleep(5000);
-				if (setup.installedPackages(glUser1FirstName, UserLastName)) {
-					appLog.info("PE Package is installed Successfully in GLSearch User: " + glUser1FirstName + " "
+			if(!environment.equalsIgnoreCase(Environment.Sandbox.toString())) {
+				if (setup.installedPackages(crmUser1FirstName, UserLastName)) {
+					appLog.info("PE Package is installed Successfully in CRM User: " + crmUser1FirstName + " "
 							+ UserLastName);
 
 				} else {
 					appLog.error(
-							"Not able to install PE package in GLSearch User1: " + glUser1FirstName + " " + UserLastName);
+							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
 					sa.assertTrue(false,
-							"Not able to install PE package in GLSearch User1: " + glUser1FirstName + " " + UserLastName);
+							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
 					log(LogStatus.ERROR,
-							"Not able to install PE package in GLSearch User1: " + glUser1FirstName + " " + UserLastName,
+							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName,
 							YesNo.Yes);
 				}
 			}
-		} else {
+			
+
+		}else{
 
 			log(LogStatus.ERROR, "could not click on setup link, test case fail", YesNo.Yes);
 			sa.assertTrue(false, "could not click on setup link, test case fail");
 
 		}
+
 		lp.CRMlogout();
 		closeBrowser();
-		//		driver.switchTo().window(parentWindow);
 		config(ExcelUtils.readDataFromPropertyFile("Browser"));
 		lp = new LoginPageBusinessLayer(driver);
-		String passwordResetLink = null;
+		String passwordResetLink=null;
 		try {
 			passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
 					ExcelUtils.readDataFromPropertyFile("gmailUserName"),
 					ExcelUtils.readDataFromPropertyFile("gmailPassword"));
 		} catch (InterruptedException e2) {
+			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
 		appLog.info("ResetLinkIs: " + passwordResetLink);
 		driver.get(passwordResetLink);
 		if (lp.setNewPassword()) {
-			appLog.info("Password is set successfully for GLSearch User1: " + glUser1FirstName + " " + UserLastName);
+			appLog.info("Password is set successfully for CRM User1: " + crmUser1FirstName + " " + UserLastName );
 		} else {
-			appLog.info("Password is not set for GLSearch User1: " + glUser1FirstName + " " + UserLastName);
-			sa.assertTrue(false, "Password is not set for GLSearch User1: " + glUser1FirstName + " " + UserLastName);
-			log(LogStatus.ERROR, "Password is not set for GLSearch User1: " + glUser1FirstName + " " + UserLastName,
+			appLog.info("Password is not set for CRM User1: " + crmUser1FirstName + " " + UserLastName);
+			sa.assertTrue(false, "Password is not set for CRM User1: " + crmUser1FirstName + " " + UserLastName);
+			log(LogStatus.ERROR, "Password is not set for CRM User1: " + crmUser1FirstName + " " + UserLastName,
 					YesNo.Yes);
 		}
 		lp.CRMlogout();
@@ -487,14 +486,22 @@ public class AcuityResearch extends BaseLib{
 	boolean flag = false;
 	String parentID=null;
 	
-	object[] objectsName = {object.Contact,object.Account,object.Fund,object.Fundraising,object.Deal} ;
-	String [][] fieldsType = {{"Email","Custom Firm Email",""},{"Phone","Custom Firm Phone",""},{"Text","Custom Firm Text","255"},{"Text Area","Custom Firm TA",""},{"Text Area (Long)","Custom Firm LTA","32768"},{"Text Area (Rich)","Custom Firm RTA","32768"}};
+	object[] objectsName = {object.Contact,object.Firm,object.Fund,object.Fundraising,object.Deal} ;
+	//String [][] fieldsType = {{"Email","Custom" + objectName[i]+ "Email",""},{"Phone","Custom Firm Phone",""},{"Text","Custom Firm Text","255"},{"Text Area","Custom Firm TA",""},{"Text Area (Long)","Custom Firm LTA","32768"},{"Text Area (Rich)","Custom Firm RTA","32768"}};
 	String a="",name = "" ,length = "", field = "";
 	
 	if (home.clickOnSetUpLink()) {
 		parentID=switchOnWindow(driver);
 		if (parentID!=null) {
 			for(object objectName : objectsName){
+				String Email = "Custom " + objectName+ " Email";
+				String Phone = "Custom " + objectName+ " Phone";
+				String Text = "Custom " + objectName+ " Text";
+				String TA = "Custom " + objectName+ " TA";
+				String LTA = "Custom " + objectName+ " LTA";
+				String RTA = "Custom " + objectName+ " RTA";
+				System.out.println(" " + Email + " " +Phone + " " + Text + " " + TA + " " + LTA + " " + RTA);
+				String [][] fieldsType = {{"Email",Email,""},{"Phone",Phone,""},{"Text",Text,"255"},{"Text Area",TA,""},{"Text Area (Long)",LTA,"32768"},{"Text Area (Rich)",RTA,"32768"}};
 				for(String[] fieldType : fieldsType) {
 					field=fieldType[0];
 					name=fieldType[1];
