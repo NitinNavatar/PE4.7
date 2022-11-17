@@ -8,16 +8,20 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.navatar.generic.CommonLib;
+import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.ReportDashboardFolderType;
 import com.navatar.generic.EnumConstants.ReportField;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
+import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.generic.EnumConstants.object;
 import com.relevantcodes.extentreports.LogStatus;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import static com.navatar.generic.CommonLib.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -128,12 +132,15 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 				.stream().map(x -> x.getText().trim().replace("New Items", "").replace(":", "")
 						.replaceAll("[\\t\\n\\r]+", "").trim()).collect(Collectors.toList());
 		for (String countFromSideNavInString : sideNavCountExceptAllCategories) {
-			int countFromSideNav = Integer.parseInt(countFromSideNavInString);
-			if(countFromSideNav > 5)
-			{
-				log(LogStatus.INFO,"Count is greater than 5, so we can see view more option for" + headerName ,YesNo.No);
+			Integer countFromSideNav = Integer.valueOf(countFromSideNavInString);
+			int newCountFromSideNav = countFromSideNav;
+			
+			//log(LogStatus.INFO,"Count is greater than 5, so we can see view more option for " + newCountFromSideNav,YesNo.No);
+			if(newCountFromSideNav > 5) {
+				log(LogStatus.INFO,"Count is greater than 5, so we can see view more option for " + headerName ,YesNo.No);
 				if(clickUsingJavaScript(driver, getViewMoreOptionUsingHeaderName(headerName, 20), "View More"))
 				{
+					log(LogStatus.INFO,"Count is greater than 5 " + headerName ,YesNo.No);
 					int TotalNumberOfRecords = getAllRecordsUsingHeaderName(headerName,20).size();
 					log(LogStatus.INFO,"Total Number Of Records are : " + TotalNumberOfRecords,YesNo.No);
 					if(TotalNumberOfRecords == countFromSideNav) {
@@ -141,7 +148,10 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 						clickUsingJavaScript(driver, getAllCategoriesLink(10), "All Categories");
 					}
 				}
-				
+			}else {
+				log(LogStatus.ERROR,"Count is less than 5, so we can't check view more option for " + headerName ,YesNo.No);
+				break;
+//				sa.assertTrue(false,"In " + gridWiseHeading +" Search Keyword" + searchValue + "does not contain in " + gridText);
 			}
 		}
 		
@@ -172,4 +182,73 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 	
 		}
 	}
+	
+	
+	public boolean VerifyNameAndCountForResearchLeftPanel(String variableName,action action, int timeout ) {
+		WebElement ele=null;
+		boolean flag=false;
+		HashMap<String, ArrayList<String>> headersAndValues = ExcelUtils.dataRead(AcuityDataSheetFilePath,"SearchData",excelLabel.Variable_Name, variableName);
+		
+		HashMap<String,String> headerAndValue =   new HashMap<String,String>();
+		
+		for(int i = 0; i < headersAndValues.get("headers").size(); i++)
+		{
+			headerAndValue.put(headersAndValues.get("headers").get(i), headersAndValues.get("value").get(i));
+		}
+				
+		for(String header: headersAndValues.get("headers")) {
+			
+			if(!headerAndValue.get(header).equalsIgnoreCase("NA")) {
+				
+				log(LogStatus.ERROR, "Header :"+header +" is enable in excel so  going to verify in research page", YesNo.No);
+
+				ele=researchFindingsLeftPanelHeadingName(header, action, timeout);
+				
+				if(ele!=null) {
+					log(LogStatus.ERROR, "Header :"+header +" is  visible in left panel of research page", YesNo.No);
+					String headerText = ele.getText().split(":")[0].trim();
+					if(headerText.equalsIgnoreCase(header)) {
+						log(LogStatus.INFO, "Header :"+header +" is matched with excel label:"+headerText+" in left panel of research page", YesNo.No);
+						
+						ele =researchFindingsLeftPanelHeadingCount(header, action, timeout);
+						if(ele!=null) {
+							
+							log(LogStatus.INFO, "Header Count  :"+headerAndValue.get(header) +" is visible for header :"+header+"in left panel of research page", YesNo.No);
+							String headerCount = ele.getText().trim().replace("New Items", "").replace(":", "")
+									.replaceAll("[\\t\\n\\r]+", "").trim();
+							if(headerCount.equalsIgnoreCase(headerAndValue.get(header))) {
+								log(LogStatus.INFO, "Header Count  :"+headerAndValue.get(header) +" is matched with excel label count:"+headerCount+" for header :"+header+"in left panel of research page", YesNo.No);
+								flag=true;
+							}else {
+								log(LogStatus.ERROR, "Header Count  :"+headerAndValue.get(header) +" is not matched with excel label count:"+headerCount+" for header :"+header+"in left panel of research page", YesNo.No);
+								sa.assertTrue(false,"Header Count  :"+headerAndValue.get(header) +" is not matched with excel label count:"+headerCount+" for header :"+header+"in left panel of research page");
+							}
+							
+						}else {
+							log(LogStatus.ERROR, "Header Count  :"+headerAndValue.get(header) +" is not visible for header :"+header+"in left panel of research page", YesNo.No);
+							sa.assertTrue(false,"Header Count  :"+headerAndValue.get(header) +" is not visible for header :"+header+"in left panel of research page");
+
+						}
+					}else {
+						log(LogStatus.ERROR,  "Header :"+header +" is not matched with excel label:"+headerText+" in left panel of research page", YesNo.No);
+						sa.assertTrue(false, "Header :"+header +" is not matched with excel label:"+headerText+" in left panel of research page");
+
+					}
+				}else {
+					log(LogStatus.ERROR, "Header :"+header +" is not visible in left panel of research page", YesNo.No);
+					sa.assertTrue(false,"Header :"+header +" is not visible in left panel of research page");
+
+				}
+				
+			}else {
+				log(LogStatus.ERROR, "Header :"+header +" is disable in excel so cannot going to verify in research page", YesNo.No);
+				sa.assertTrue(false,"Header :"+header +" is disable in excel so cannot going to verify in research page");
+			}
+			
+			
+		}
+		
+		return flag;
+	}
+	
 }

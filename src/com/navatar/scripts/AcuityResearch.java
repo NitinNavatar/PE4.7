@@ -19,6 +19,7 @@ import org.testng.annotations.Test;
 
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
+import com.navatar.generic.CommonVariables;
 import com.navatar.generic.EmailLib;
 import com.navatar.generic.EnumConstants.AppSetting;
 import com.navatar.generic.EnumConstants.BulkActions_DefaultValues;
@@ -901,14 +902,19 @@ public class AcuityResearch extends BaseLib{
 	ThreadSleep(2000);
 	
 	String headerName;
-	String searchValues[] = {"MG Corp"};
-	//String searchValues[] = {ACR_1_Search,ACR_2_Search,ACR_3_Search};
+
+	//String searchValues[] = {"MG Corp"};
+	String searchValues[] = {ACR_1_Search};//,ACR_2_Search,ACR_3_Search};
 	//String findings[] = {ACR_1_All,ACR_1_Firms,ACR_1_Advisor,ACR_1_Company,ACR_1_Institution,ACR_1_Intermediary,ACR_1_Lender,ACR_1_LP,ACR_1_PC,ACR_1_Contacts,ACR_1_deals,ACR_1_Fund,ACR_1_Fundraising,ACR_1_Interactionss,ACR_1_RA,ACR_1_RC};
 	String findings[] = ACR_1_All.split("<break>");
 	List<String> expectedFindingValues = Arrays.asList(findings);
 	
 	
 	for(String searchValue : searchValues) {
+		
+		String varibale =ExcelUtils.readData(AcuityDataSheetFilePath,"SearchData",excelLabel.ResearchFindings, searchValue, excelLabel.Variable_Name);
+		
+		
 		log(LogStatus.INFO,
 				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 						+ searchValue + "---------",
@@ -918,6 +924,9 @@ public class AcuityResearch extends BaseLib{
 					"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
 							+ searchValue + "---------",
 					YesNo.No);
+			
+			rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+
 		} else {
 			log(LogStatus.FAIL,
 					"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
@@ -971,7 +980,6 @@ public class AcuityResearch extends BaseLib{
 			String recordName = rp.clickOnRecordUsingGridName(headerName, 30).getText();
 			rp.clickOperationOnRecordForGrid(headerName,recordName);
 			rp.VerifyViewMoreOption(headerName);
-			rp.VerifyViewMoreOption(headerName);
 			
 			
 		}
@@ -994,24 +1002,11 @@ public class AcuityResearch extends BaseLib{
 //		}
 		
 //		}
-}
+	}
 	switchToDefaultContent(driver);
 	lp.CRMlogout();
 	sa.assertAll();
 	
-}
-
 	}
 
-//
-//for(String expectedFinding : expectedFindingValues) {
-//	if(expectedFinding.toLowerCase().contains(searchValue.toLowerCase())){
-//		log(LogStatus.INFO,"In " + gridWiseHeading + " Text in Grid is : " + expectedFinding,YesNo.No);
-//		sa.assertTrue(true,"In " + gridWiseHeading + " Search Keyword" + searchValue + "is contained in " + expectedFinding);
-//	}
-//	else
-//	{
-//		log(LogStatus.ERROR,"In " + gridWiseHeading + " Text in Grid is : " + expectedFinding,YesNo.No);
-//		sa.assertTrue(false,"In " + gridWiseHeading +" Search Keyword" + searchValue + "does not contain in " + expectedFinding);
-//	}
-//	}
+}
