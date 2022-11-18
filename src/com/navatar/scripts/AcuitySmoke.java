@@ -1816,7 +1816,7 @@ public class AcuitySmoke extends BaseLib {
 							"Meetings and call Count", action.BOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Meeting and call Count of Record: " + contactName, YesNo.No);
 
-						ArrayList<String> result2 = bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(null, call1,
+						ArrayList<String> result2 = bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(null,null, call1,
 								null, null);
 						if (result2.isEmpty()) {
 							log(LogStatus.INFO, "Records on Meetings and call slot have been matched for :" + call1,
@@ -1837,7 +1837,7 @@ public class AcuitySmoke extends BaseLib {
 							"Meetings and call Count", action.BOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Meeting and call Count of Record: " + contactName, YesNo.No);
 
-						ArrayList<String> result3 = bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(null, call2,
+						ArrayList<String> result3 = bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(null, null, call2,
 								null, null);
 						if (result3.isEmpty()) {
 							log(LogStatus.INFO, "Records on Meetings and call slot have been matched for :" + call2,

@@ -13,6 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.navatar.generic.EnumConstants.excelLabel;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
@@ -740,6 +741,38 @@ public class ExcelUtils {
 		}
 		return k;
 	}
+	public static int getColumnNumberBasedOnLabel(String path, String sheetName, String label) {
+		int k = 0;
+		try {
+			fis = new FileInputStream(new File(path));
+			wb = WorkbookFactory.create(fis);
+			Sheet sheet = wb.getSheet(sheetName);
+			int lastColumnNumber = sheet.getRow(0).getLastCellNum();
+			for (int i = 0; i < lastColumnNumber; i++) {
+				if (getValueBasedOnCellType(sheet.getRow(0).getCell(i)).equalsIgnoreCase(label.toString())) {
+					k = i;
+					break;
+				} else {
+					if (i == lastColumnNumber - 1) {
+						AppListeners.appLog.info(label.toString() + " is not present in the excel.");
+						System.out.println(label.toString() + " is not present in the excel.");
+					}
+				}
+			}
+		} catch (EncryptedDocumentException | InvalidFormatException | IOException e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		} finally {
+			try {
+				wb.close();
+				fis.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+//				e.printStackTrace();
+			}
+		}
+		return k;
+	}
 
 	public static int getLastColumn(String filePath, String sheetName, int rowNum) {
 //		return wb.getSheet(sheetName).getPhysicalNumberOfRows();
@@ -1244,5 +1277,46 @@ public class ExcelUtils {
 		return k;
 	}
 
+	public static HashMap<String, ArrayList<String>> dataRead(String filePath, String sheetName, excelLabel basedOnLabel, String basedOnValue) {
+		HashMap<String, ArrayList<String>> map=	new HashMap<String,ArrayList<String>>();
+		ArrayList<String> headerList= new ArrayList<>();
+		ArrayList<String> headervalue= new ArrayList<>();
+		try {
+			fis = new FileInputStream(new File(filePath));
+			wb = WorkbookFactory.create(fis);
+			Sheet sheet = wb.getSheet(sheetName);
+			int row=ExcelUtils.getRowNumberBasedOnLabelAndValue(filePath, sheetName, basedOnLabel, basedOnValue);
+			int lastColumnNumber = sheet.getRow(0).getLastCellNum();
+			for(int i=2;i<lastColumnNumber;i++) {
+				
+				headerList.add(ExcelUtils.getValueBasedOnCellType(sheet.getRow(0).getCell(i)).replaceAll("_", " "));
+			}
+			
+			for(String header:headerList) {
+				headervalue.add(ExcelUtils.getValueBasedOnCellType(sheet.getRow(row).getCell(ExcelUtils.getColumnNumberBasedOnLabel(filePath, sheetName, header))));
+
+				
+			}
+			
+			
+			System.out.println("List1:"+String.valueOf(headerList));
+			System.out.println("List2:"+headervalue);
+			map.put("headers", headerList);
+			map.put("value", headervalue);
+			//return getValueBasedOnCellType();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		} finally {
+			try {
+				wb.close();
+				fis.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+//				e.printStackTrace();
+			}
+		}
+		return map;
+	}
 	
 }

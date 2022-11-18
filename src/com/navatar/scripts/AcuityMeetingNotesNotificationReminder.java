@@ -3,7 +3,6 @@ package com.navatar.scripts;
 
 import static com.navatar.generic.CommonLib.ThreadSleep;
 import static com.navatar.generic.CommonLib.click;
-import static com.navatar.generic.CommonLib.convertDateFromOneFormatToAnother;
 import static com.navatar.generic.CommonLib.getURL;
 import static com.navatar.generic.CommonLib.log;
 import static com.navatar.generic.CommonLib.refresh;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -35,8 +33,10 @@ import com.navatar.pageObjects.FundsPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
 
 import com.navatar.pageObjects.LoginPageBusinessLayer;
+
 import com.navatar.pageObjects.NavigationPageBusineesLayer;
 import com.navatar.pageObjects.TaskPageBusinessLayer;
+
 import com.relevantcodes.extentreports.LogStatus;
 
 public class AcuityMeetingNotesNotificationReminder extends BaseLib {
@@ -1980,7 +1980,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][][] task1UpdateTaskSection = { task1UpdateTaskSection1, task1UpdateTaskSection2,
 				task1UpdateTaskSection3 };
 
-		String[] relatedToVerify = ("Martha<break>"+crmUser1FirstName + " " + crmUser1LastName+"<break>+1").split("<break>");
+		String[] relatedToVerify = ("Martha<break>" + crmUser1FirstName + " " + crmUser1LastName + "<break>+1")
+				.split("<break>");
 		String[] updatedRelatedToVerify = "Martha<break>con 6<break>+5".split("<break>");
 
 		String updatedRelatedTo = relatedTo + "<break>" + "con 6<break>con 7<break>con 8<break>Acc 4";

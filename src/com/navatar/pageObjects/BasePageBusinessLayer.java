@@ -10763,7 +10763,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 						}
 						if (email != null && email != "") {
-
 							String actualEmail = getText(driver, connectionPopUpEmailCount(teamMember, email, 30),
 									"email", action.SCROLLANDBOOLEAN);
 							if (actualEmail.equalsIgnoreCase(email)) {
@@ -12033,6 +12032,18 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						result.add("The result of tagged: " + relatedAssociation[i]
 								+ " is not available on related association");
 					}
+				}
+				
+				xPath="//h2[text()='Tagged']/../button[@title='Close']";
+				ele=FindElement(driver, xPath, "close button of Tagged popup", action.SCROLLANDBOOLEAN, 10);
+				if(click(driver, ele, xPath, action.SCROLLANDBOOLEAN))
+				{
+					log(LogStatus.INFO, "Clicked on close button of tagged", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on close button of tagged", YesNo.No);
+					result.add("Not able to click on close button of tagged");
 				}
 
 			} else {
@@ -13408,7 +13419,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
-	public ArrayList<String> verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(String date, String subjectName,
+	public ArrayList<String> verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(String icon,String date, String subjectName,
 			String details, String assignedTO) {
 		ArrayList<String> result = new ArrayList<String>();
 		String xPath;
@@ -13416,6 +13427,24 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (getMeetingAndCallPopUp(20) != null) {
 			if (subjectName != null && subjectName != "") {
 				log(LogStatus.INFO, "Meeting and calls popup has been open", YesNo.No);
+				
+				if(icon!=null)
+				{
+					xPath="//a[text()='"+subjectName+"']/ancestor::td[@data-label='Subject']/../th[@data-label='Type']//lightning-icon";
+					ele=FindElement(driver, xPath, "Icon type", action.SCROLLANDBOOLEAN, 20);
+					String iconName=getAttribute(driver, ele, "Icon type", "class");
+					if(iconName.toString().contains(icon))
+					{
+						log(LogStatus.INFO, icon+ " icon has been verified against "+subjectName+" on Meetings and Calls popup"  , YesNo.No);
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, icon+ " icon is not verified against "+subjectName+" on Meetings and Calls popup"  , YesNo.No);
+						result.add(icon+ " icon is not verified against "+subjectName+" on Meetings and Calls popup");
+					}
+				}
+				
 				if (date != null && date != "") {
 					xPath = "//a[text()='" + subjectName
 							+ "']/ancestor::td[@data-label='Subject']/../td[@data-label='Date']//lightning-base-formatted-text";
@@ -13444,7 +13473,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						log(LogStatus.INFO, "Expected subject: " + subjectName
 								+ " has been matched with the actual subject: " + actualSubject, YesNo.No);
 					} else {
-						log(LogStatus.INFO, "Expected subject: " + subjectName
+						log(LogStatus.ERROR, "Expected subject: " + subjectName
 								+ " is not matched with the actual subject: " + actualSubject, YesNo.No);
 						result.add("Expected subject: " + subjectName + " is not matched with the actual subject : "
 								+ actualSubject);
@@ -13462,7 +13491,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						log(LogStatus.INFO, "Expected details: " + details
 								+ " has been matched with the actual details: " + actualDetails, YesNo.No);
 					} else {
-						log(LogStatus.INFO, "Expected details: " + details + " is not matched with the actual details: "
+						log(LogStatus.ERROR, "Expected details: " + details + " is not matched with the actual details: "
 								+ actualDetails, YesNo.No);
 						result.add("Expected details: " + details + " is not matched with the actual details: "
 								+ actualDetails);
@@ -13481,7 +13510,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 										+ " has been matched with the actual Assigned to : " + actualAssignedTO,
 								YesNo.No);
 					} else {
-						log(LogStatus.INFO,
+						log(LogStatus.ERROR,
 								"Expected Assigned to : " + assignedTO
 										+ " is not matched with the actual Assigned to : " + actualAssignedTO,
 								YesNo.No);
@@ -13524,7 +13553,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				if (click(driver, ele, "Meeting and calls count", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Sucessfully clicked on Meeting and call count", YesNo.No);
 
-					String date = null, subject = null, details = null, assignedTo = null;
+					String date = null, subject = null, details = null, assignedTo = null,icon=null;;
+					 
 					for (String[] meetingAndCall : meetingAndCallsPopupColumnAndValue) {
 						String val = meetingAndCall[0];
 						if (val.equalsIgnoreCase("date")) {
@@ -13536,9 +13566,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						} else if (val.equalsIgnoreCase("AssignedTo")) {
 							assignedTo = meetingAndCall[1];
 						}
+						else if(val.equalsIgnoreCase("iconType"))
+						{
+							icon=meetingAndCall[1];
+						}
 					}
 					ArrayList<String> result = new ArrayList<String>();
-					result = verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(date, subject, details, assignedTo);
+					result = verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(icon,date, subject, details, assignedTo);
 					if (result.isEmpty()) {
 						log(LogStatus.INFO, "The records have been verified on Meeting and call popup", YesNo.No);
 					} else {

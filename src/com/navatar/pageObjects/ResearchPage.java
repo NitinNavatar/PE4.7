@@ -92,13 +92,25 @@ public class ResearchPage extends BasePageBusinessLayer {
 	public WebElement getViewMoreOptionUsingHeaderName(String headerName, int timeOut) {
 
 		try {
-			return FindElement(driver,"//span[contains(text(),'" + headerName +"')]/ancestor::div/following-sibling::div//button[text()='View more']",
+			return FindElement(driver,"//span[text()='" + headerName +"']/ancestor::ul/..//following-sibling::div//button[text()='View more']",
 					"Record Header: " + headerName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
-			return FindElement(driver,"//span[contains(text(),'" + headerName +"')]/ancestor::div/following-sibling::div//button[text()='View more']",
+			return FindElement(driver,"//span[text()='" + headerName +"']/ancestor::ul/..//following-sibling::div//button[text()='View more']",
 					"Record Header: " + headerName, action.SCROLLANDBOOLEAN, timeOut);
 		}
 
+	}
+	
+	
+	public WebElement researchFindingsLeftPanelHeadingName(String headerName,action action ,int timeout ) {
+		return isDisplayed(driver,  FindElement(driver, "//div[contains(@class,'active')]//h2/following-sibling::div//a[text()='"+ headerName +"']",
+				"researchFindingsLeftPanelHeadingCountForAllResults",action,timeout), "Visibility", timeout, headerName+":Name");
+	}
+	
+	public WebElement researchFindingsLeftPanelHeadingCount(String headerName,action action ,int timeout) {
+		return isDisplayed(driver,  FindElement(driver, "//div[contains(@class,'active')]//h2/following-sibling::div//a[text()='"+ headerName +"']/span",
+				"researchFindingsLeftPanelHeadingCountForAllResults",action,timeout), "Visibility", timeout, headerName+":count");
+		
 	}
 	
 //	@FindBy()

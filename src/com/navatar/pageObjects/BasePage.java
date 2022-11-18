@@ -6949,7 +6949,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement connectionEmailCount(String teamMember, String email, int timeOut) {
 
 		String xpath = "//a[text()='" + teamMember
-				+ "']/ancestor::th[@data-label='Team Member']/following-sibling::td[@data-label='Meetings and Calls']//span";
+				+ "']/ancestor::th[@data-label='Team Member']/following-sibling::td[@data-label='Emails']//span";
 		try {
 			return FindElement(driver, xpath, "Header: " + email, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7020,7 +7020,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement connectionPopUpEmailCount(String teamMember, String email, int timeOut) {
 
 		String xpath = "//div[@class='slds-modal__container']//a[text()='" + teamMember
-				+ "']/ancestor::th[@data-label='Team Member']/following-sibling::td[@data-label='Meetings and Calls']//span";
+				+ "']/ancestor::th[@data-label='Team Member']/following-sibling::td[@data-label='Emails']//span";
 		try {
 			return FindElement(driver, xpath, "Header: " + email, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
