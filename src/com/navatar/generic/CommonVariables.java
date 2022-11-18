@@ -6238,7 +6238,7 @@ public class CommonVariables {
 				}
 				
 				
-				
+				break;
 				
 				case "AcuityDealsEmails" :
 					
@@ -6352,6 +6352,9 @@ public class CommonVariables {
 					ADEDealOtherLabelValues1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "ADEDeal1", excelLabel.Other_LabelValues);	
 					ADEDealDate1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "ADEDeal1", excelLabel.Date);
 					
+					
+					
+					break;
 				
 			case "AcuityResearch" :
 				
@@ -6446,7 +6449,7 @@ public class CommonVariables {
 				
 				AR_FundRecordType1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "AR_Fund1", excelLabel.Record_Type);
 				
-				
+				break;
 				
 				
 			case "AcuityMeetingNotesNotificationReminder" :
@@ -6684,7 +6687,7 @@ public class CommonVariables {
 				}
 				
 				
-				
+				break;
 				
 
 		default:
