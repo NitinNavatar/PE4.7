@@ -13,6 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.navatar.generic.EnumConstants.excelLabel;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
@@ -54,6 +55,61 @@ public class ExcelUtils {
 
 	}
 
+
+	@SuppressWarnings("deprecation")
+	public static String readAllDataForARow(String filePath, String sheetName, int cellNum,
+			Boolean numericTypeValue) {
+		String value = "";
+		try {
+			File src = new File(filePath);
+			FileInputStream fis = new FileInputStream(src);
+			XSSFWorkbook wb = new XSSFWorkbook(fis);
+			XSSFSheet sh1 = wb.getSheet(sheetName);
+			int rowCount = sh1.getLastRowNum();
+			System.err.println("rowCount : " + rowCount);
+			String a = "";
+			DataFormatter df = new DataFormatter();
+			for (int row = 1; row <= rowCount; row++) {
+				if (numericTypeValue) {
+					XSSFRow row1 = sh1.getRow(row);
+					XSSFCell cell = row1.getCell(cellNum);
+					cell.setCellType(CellType.NUMERIC);
+					a = String.valueOf(cell.getNumericCellValue());
+//					AppListeners.appLog.info("Id : "+a);
+					String[] ss = a.split("E");
+//					AppListeners.appLog.info("ss0 >> "+ss[0]);
+//					AppListeners.appLog.info("ss1 >> "+ss[1]);
+					if (ss.length > 1) {
+						Double d = Double.valueOf(ss[0]) * Math.pow(10, Integer.parseInt(ss[1]));
+//						System.err.println(d);
+						a = String.valueOf(new BigDecimal(Math.round(d)).toBigInteger());
+//						AppListeners.appLog.info(" Final Id : "+a);
+						value = a + "<break>" + value;
+					} else {
+//						AppListeners.appLog.info(" Final Id : "+a);
+						value = a + "<break>" + value;
+					}
+				} else {
+					a = df.formatCellValue((sh1.getRow(row).getCell(cellNum)));
+					if (row < rowCount) {
+						value = value + a + "<break>";
+					} else {
+						value = value + a;
+					}
+
+				}
+			}
+			fis.close();
+			wb.close();
+		} catch (Exception e) {
+			AppListeners.appLog.info("<<<<<<<<<<<<<Exception Error : >>>>>>>>>> :" + e);
+			BaseLib.sa.assertTrue(false, "File Not Found : " + filePath);
+			value = null;
+		}
+		return value;
+
+	}
+	
 	/**
 	 * @author Ankur Rana
 	 * @param sheetName Name of the sheet which have all the test case ID and the
@@ -685,6 +741,38 @@ public class ExcelUtils {
 		}
 		return k;
 	}
+	public static int getColumnNumberBasedOnLabel(String path, String sheetName, String label) {
+		int k = 0;
+		try {
+			fis = new FileInputStream(new File(path));
+			wb = WorkbookFactory.create(fis);
+			Sheet sheet = wb.getSheet(sheetName);
+			int lastColumnNumber = sheet.getRow(0).getLastCellNum();
+			for (int i = 0; i < lastColumnNumber; i++) {
+				if (getValueBasedOnCellType(sheet.getRow(0).getCell(i)).equalsIgnoreCase(label.toString())) {
+					k = i;
+					break;
+				} else {
+					if (i == lastColumnNumber - 1) {
+						AppListeners.appLog.info(label.toString() + " is not present in the excel.");
+						System.out.println(label.toString() + " is not present in the excel.");
+					}
+				}
+			}
+		} catch (EncryptedDocumentException | InvalidFormatException | IOException e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		} finally {
+			try {
+				wb.close();
+				fis.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+//				e.printStackTrace();
+			}
+		}
+		return k;
+	}
 
 	public static int getLastColumn(String filePath, String sheetName, int rowNum) {
 //		return wb.getSheet(sheetName).getPhysicalNumberOfRows();
@@ -1189,5 +1277,46 @@ public class ExcelUtils {
 		return k;
 	}
 
+	public static HashMap<String, ArrayList<String>> dataRead(String filePath, String sheetName, excelLabel basedOnLabel, String basedOnValue) {
+		HashMap<String, ArrayList<String>> map=	new HashMap<String,ArrayList<String>>();
+		ArrayList<String> headerList= new ArrayList<>();
+		ArrayList<String> headervalue= new ArrayList<>();
+		try {
+			fis = new FileInputStream(new File(filePath));
+			wb = WorkbookFactory.create(fis);
+			Sheet sheet = wb.getSheet(sheetName);
+			int row=ExcelUtils.getRowNumberBasedOnLabelAndValue(filePath, sheetName, basedOnLabel, basedOnValue);
+			int lastColumnNumber = sheet.getRow(0).getLastCellNum();
+			for(int i=2;i<lastColumnNumber;i++) {
+				
+				headerList.add(ExcelUtils.getValueBasedOnCellType(sheet.getRow(0).getCell(i)).replaceAll("_", " "));
+			}
+			
+			for(String header:headerList) {
+				headervalue.add(ExcelUtils.getValueBasedOnCellType(sheet.getRow(row).getCell(ExcelUtils.getColumnNumberBasedOnLabel(filePath, sheetName, header))));
+
+				
+			}
+			
+			
+			System.out.println("List1:"+String.valueOf(headerList));
+			System.out.println("List2:"+headervalue);
+			map.put("headers", headerList);
+			map.put("value", headervalue);
+			//return getValueBasedOnCellType();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		} finally {
+			try {
+				wb.close();
+				fis.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+//				e.printStackTrace();
+			}
+		}
+		return map;
+	}
 	
 }

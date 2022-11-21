@@ -128,7 +128,7 @@ public class TaskPage extends BasePageBusinessLayer {
 
 		return isDisplayed(driver, commentTextAreaCancelButton, "Visibility", timeOut, "commentTextAreaCancelButton");
 	}
-	
+
 	@FindBy(xpath = "//span[text()='Save']/ancestor::button[contains(@class,'slds-button_brand')]")
 	private WebElement commentTextAreaSaveButton;
 
@@ -137,6 +137,33 @@ public class TaskPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, commentTextAreaSaveButton, "Visibility", timeOut, "commentTextAreaSaveButton");
 	}
 
-	
-	
+	@FindBy(xpath = "//a[contains(@title,' more actions')]")
+	private WebElement downArrowButton;
+
+	public WebElement downArrowButton(int timeOut) {
+
+		return isDisplayed(driver, downArrowButton, "Visibility", timeOut, "downArrowButton");
+	}
+
+	@FindBy(xpath = "//span[text()='Comments']/parent::div/following-sibling::div/span/span")
+	private WebElement commentsLabelValueInTaskDetailPage;
+
+	public WebElement commentsLabelValueInTaskDetailPage(int timeOut) {
+
+		return isDisplayed(driver, commentsLabelValueInTaskDetailPage, "Visibility", timeOut,
+				"commentsLabelValueInTaskDetailPage");
+	}
+
+	public WebElement buttonInTheDownArrowList(String buttonName, int timeOut) {
+		String xpath = "//div[contains(@class,'actionMenu')]//li/a/div[text()='" + buttonName + "']/parent::a";
+		WebElement ele = FindElement(driver, xpath, "buttonInTheDownArrowList: " + buttonName, action.SCROLLANDBOOLEAN,
+				timeOut);
+		try {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "buttonInTheDownArrowList: " + buttonName);
+
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "buttonInTheDownArrowList: " + buttonName);
+		}
+	}
+
 }

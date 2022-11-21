@@ -1689,6 +1689,19 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 		}
 		return driver.findElements(By.xpath(xpath));
 	}
+	
+	
+	public static List<WebElement> FindElements(WebDriver driver, String xpath) {
+		for (int i = 0; i < 41; i++) {
+			if (driver.findElements(By.xpath(xpath)).isEmpty()) {
+				ThreadSleep(250);
+				CommonLib.waitForPageLoad(driver);
+			} else {
+				break;
+			}
+		}
+		return driver.findElements(By.xpath(xpath));
+	}
 
 	/**
 	 * @author Ankur Rana

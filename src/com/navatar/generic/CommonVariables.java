@@ -1144,6 +1144,9 @@ public class CommonVariables {
 	    public static String AS_ATitle1;
 	    public static String AS_AContactDeals1;
 	    public static String AS_AMeetingsAndCalls1,AS_AMeetingsAndCalls2,AS_AMeetingsAndCalls3,AS_AMeetingsAndCalls4;
+	    
+	    //Advance Due Date
+	    public static String AMNNR_AdvanceDueDate17;
 	    	    
 	    
 	    //Report Name
@@ -1261,33 +1264,43 @@ public class CommonVariables {
 	    
 	    /*********** Activity Timeline *************/
 	 // Activity TimeLine
-	 		public static String ATE_ATActivityType1,ATE_ATActivityType2;
-	 		public static String ATE_ATSubject1,ATE_ATSubject2;
-	 		public static String ATE_ATNotes1,ATE_ATNotes2;
-	 		public static String ATE_ATRelatedTo1,ATE_ATRelatedTo2;
+	 		public static String ATE_ATActivityType1,ATE_ATActivityType2,ATE_ATActivityType3;
+	 		public static String ATE_ATSubject1,ATE_ATSubject2,ATE_ATSubject3;
+	 		public static String ATE_ATNotes1,ATE_ATNotes2,ATE_ATNotes3;
+	 		public static String ATE_ATRelatedTo1,ATE_ATRelatedTo2,ATE_ATRelatedTo3;
 	 		public static String ATE_AdvanceDueDate1,ATE_AdvanceDueDate2;
 	 		public static String ATE_AdvanceStatus1;
 	 		public static String ATE_AdvancePriority1,ATE_AdvancePriority2;
+	 		public static String ATE_AdvanceStartDate1;
+	 		public static String ATE_AdvanceEndDate1;
+	 		
 	 		
 	 		
 	 		/***************** Tagged Section ********************/
 	 		
-	 		public static String ATE_TaggedCompanyName1,ATE_TaggedCompanyName2;
-	 		public static String ATE_TaggedCompanyTimeReference1,ATE_TaggedCompanyTimeReference2;
-	 		public static String ATE_TaggedDealName1,ATE_TaggedDealName2;
-	 		public static String ATE_TaggedDealTimeReference1,ATE_TaggedDealTimeReference2;
-	 		public static String ATE_TaggedPeopleName1;
-	 		public static String ATE_TaggedPeopleTimeReference1;
+	 		public static String ATE_TaggedCompanyName1,ATE_TaggedCompanyName2,ATE_TaggedCompanyName3,ATE_TaggedCompanyName4,ATE_TaggedCompanyName5,ATE_TaggedCompanyName6,ATE_TaggedCompanyName7;
+	 		public static String ATE_TaggedCompanyTimeReference1,ATE_TaggedCompanyTimeReference2,ATE_TaggedCompanyTimeReference3,ATE_TaggedCompanyTimeReference4,ATE_TaggedCompanyTimeReference5,ATE_TaggedCompanyTimeReference6,ATE_TaggedCompanyTimeReference7;
+	 		public static String ATE_TaggedDealName1,ATE_TaggedDealName2,ATE_TaggedDealName3,ATE_TaggedDealName4,ATE_TaggedDealName5;
+	 		public static String ATE_TaggedDealTimeReference1,ATE_TaggedDealTimeReference2,ATE_TaggedDealTimeReference3,ATE_TaggedDealTimeReference4,ATE_TaggedDealTimeReference5;
+	 		public static String ATE_TaggedPeopleName1,ATE_TaggedPeopleName2,ATE_TaggedPeopleName3,ATE_TaggedPeopleName4;
+	 		public static String ATE_TaggedPeopleTimeReference1,ATE_TaggedPeopleTimeReference2,ATE_TaggedPeopleTimeReference3,ATE_TaggedPeopleTimeReference4;
 	 		
 	 		
+	 		/*********************** Connection Section on Acuity **********************/
+	 		
+	 		public static String ATE_ConnectionTeamMember1,ATE_ConnectionTeamMember2;
+	 		public static String ATE_ConnectionTitle1,ATE_ConnectionTitle2;
+	 		public static String ATE_ConnectionDeals1,ATE_ConnectionDeals2;
+	 		public static String ATE_ConnectionMeetingAndCall1,ATE_ConnectionMeetingAndCall2;
+	 		public static String ATE_ConnectionEmail1,ATE_ConnectionEmail2;
 	 		
 	 		
 	 		/******************* Related To on Acuity ****************/
-	 		public static String ATE_ARelatedTo1,ATE_ARelatedTo2;
+	 		public static String ATE_ARelatedTo1,ATE_ARelatedTo2,ATE_ARelatedTo3;
 	 		
 	 		
 	 		/******************* Related Association on Acuity ****************/
-	 		public static String ATE_ARelatedAsso1;
+	 		public static String ATE_ARelatedAsso1,ATE_ARelatedAsso2,ATE_ARelatedAsso3;
 	 		
 	 		
 	    
@@ -1466,6 +1479,7 @@ public class CommonVariables {
 	
 		method(obj);
 		method2(obj);
+		method3(obj);
 		System.err.println("");
 		AppListeners.appLog.info("Done with intialization. Enjoy the show.\nTotal Time Taken: "+((System.currentTimeMillis()-StartTime)/1000)+" seconds.");
 
@@ -6204,6 +6218,10 @@ public class CommonVariables {
 				AS_AMeetingsAndCalls4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "Con_004", excelLabel.Meetings_And_Calls);
 				
 				
+				
+				
+				
+				
 				//Report
 				
 				AS_ReportName=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Reports",excelLabel.Variable_Name, "R_001", excelLabel.Report_Name);
@@ -6217,6 +6235,9 @@ public class CommonVariables {
 				AS_ResearchString3 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Research",excelLabel.Variable_Name, "AS_Research3", excelLabel.Search_String);
 				AS_ResearchString4 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Research",excelLabel.Variable_Name, "AS_Research4", excelLabel.Search_String);
 				AS_ResearchString5 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Research",excelLabel.Variable_Name, "AS_Research5", excelLabel.Search_String);
+				
+				
+				
 				
 
 				try {
@@ -6233,7 +6254,7 @@ public class CommonVariables {
 				}
 				
 				
-				
+				break;
 				
 				case "AcuityDealsEmails" :
 					
@@ -6369,6 +6390,9 @@ public class CommonVariables {
 					ADEDealOtherLabelValues1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "ADEDeal1", excelLabel.Other_LabelValues);	
 					ADEDealDate1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "ADEDeal1", excelLabel.Date);
 					
+					
+					
+					break;
 				
 			case "AcuityResearch" :
 				
@@ -6463,6 +6487,36 @@ public class CommonVariables {
 				
 				AR_FundRecordType1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "AR_Fund1", excelLabel.Record_Type);
 				
+				break;
+				
+				
+			case "AcuityMeetingNotesNotificationReminder" :
+				
+				try {
+					dataFile=new FileInputStream(new File(AcuityDataSheetFilePath));
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					dataWb=WorkbookFactory.create(dataFile);
+				} catch (EncryptedDocumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvalidFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+				//Advance Due Date
+				AMNNR_AdvanceDueDate17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_017", excelLabel.Advance_Due_Date);
+				
+		
+				
 				try {
 					dataFile.close();
 				} catch (IOException e) {
@@ -6476,8 +6530,15 @@ public class CommonVariables {
 					e.printStackTrace();
 				}
 			
-				
-				
+
+				break;
+			default:
+				break;
+			}
+		}
+			
+		public static void method3(Object obj) {
+			switch(obj.getClass().getSimpleName()) {
 				
                 case "AcuityTaskAndEvent" :
 				
@@ -6591,22 +6652,26 @@ public class CommonVariables {
 			    ATE_Contact1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATE_Con1", excelLabel.ContactName);
 			    ATE_Contact2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATE_Con2", excelLabel.ContactName);
 			    ATE_Contact3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATE_Con3", excelLabel.ContactName);
-
+			    
 			    
 			    // Activity Timeline
 			    ATE_ATActivityType1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATE_001", excelLabel.Action_Type);
 			    ATE_ATActivityType2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATE_002", excelLabel.Action_Type);
+			    ATE_ATActivityType3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATE_003", excelLabel.Action_Type);
 				 
 			    
 			    ATE_ATSubject1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATE_001", excelLabel.Subject);
 			    ATE_ATSubject2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATE_002", excelLabel.Subject);
+			    ATE_ATSubject3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATE_003", excelLabel.Subject);
 				 
 			    
 		 		ATE_ATNotes1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATE_001", excelLabel.Notes);
 		 		ATE_ATNotes2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATE_002", excelLabel.Notes);	 
+		 		ATE_ATNotes3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATE_003", excelLabel.Notes);	 
 		 		
 		        ATE_ATRelatedTo1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATE_001", excelLabel.Related_To);
 		        ATE_ATRelatedTo2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATE_002", excelLabel.Related_To);
+		        ATE_ATRelatedTo3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATE_003", excelLabel.Related_To);
 				 
 		        
 		 		ATE_AdvanceDueDate1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATE_001", excelLabel.Advance_Due_Date);
@@ -6617,13 +6682,10 @@ public class CommonVariables {
 			 	
 		 		ATE_AdvancePriority1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATE_001", excelLabel.Advance_Priority);
 		 		ATE_AdvancePriority2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATE_002", excelLabel.Advance_Priority);
-			 	
-		 		
-		 		
-		 		
-		 		
-		 		
-		 		
+			 			
+		 		ATE_AdvanceStartDate1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATE_003", excelLabel.Advance_Start_Date);
+		 		ATE_AdvanceEndDate1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "ATE_003", excelLabel.Advance_End_Date);
+				 
 		 		
 		 		/***************** Tagged section **********************/
 
@@ -6631,18 +6693,41 @@ public class CommonVariables {
 		 		
 		 		ATE_TaggedCompanyName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE002", excelLabel.Company);
 		 		ATE_TaggedCompanyName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE004", excelLabel.Company);
+		 		ATE_TaggedCompanyName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE005", excelLabel.Company);
+		 		ATE_TaggedCompanyName4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE006", excelLabel.Company);
+		 		ATE_TaggedCompanyName5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE007", excelLabel.Company);
+		 		ATE_TaggedCompanyName6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE008", excelLabel.Company);
+		 		ATE_TaggedCompanyName7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE009", excelLabel.Company);
 			 	
 		 		ATE_TaggedCompanyTimeReference1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE002", excelLabel.Companies_Count);
 		 		ATE_TaggedCompanyTimeReference2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE004", excelLabel.Companies_Count);
+		 		ATE_TaggedCompanyTimeReference3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE005", excelLabel.Companies_Count);
+		 		ATE_TaggedCompanyTimeReference4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE006", excelLabel.Companies_Count);
+		 		ATE_TaggedCompanyTimeReference5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE007", excelLabel.Companies_Count);
+		 		ATE_TaggedCompanyTimeReference6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE008", excelLabel.Companies_Count);
+		 		ATE_TaggedCompanyTimeReference7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE009", excelLabel.Companies_Count);
 			 		 		
 		 		ATE_TaggedDealName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE002", excelLabel.Deals);
 		 		ATE_TaggedDealName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE004", excelLabel.Deals);
+		 		ATE_TaggedDealName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE005", excelLabel.Deals);
+		 		ATE_TaggedDealName4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE006", excelLabel.Deals);
+		 		ATE_TaggedDealName5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE007", excelLabel.Deals);
 		 		
 		 		ATE_TaggedDealTimeReference1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE002", excelLabel.Deals_Count);
 		 		ATE_TaggedDealTimeReference2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE004", excelLabel.Deals_Count);
+		 		ATE_TaggedDealTimeReference3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE005", excelLabel.Deals_Count);
+		 		ATE_TaggedDealTimeReference4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE006", excelLabel.Deals_Count);
+		 		ATE_TaggedDealTimeReference5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE007", excelLabel.Deals_Count);
 			    
 		 		ATE_TaggedPeopleName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE004", excelLabel.People);
+		 		ATE_TaggedPeopleName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE005", excelLabel.People);
+		 		ATE_TaggedPeopleName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE006", excelLabel.People);
+		 		ATE_TaggedPeopleName4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE007", excelLabel.People);
+		 			 		
 		 		ATE_TaggedPeopleTimeReference1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE004", excelLabel.People_Count);
+		 		ATE_TaggedPeopleTimeReference2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE005", excelLabel.People_Count);
+		 		ATE_TaggedPeopleTimeReference3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE006", excelLabel.People_Count);
+		 		ATE_TaggedPeopleTimeReference4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE007", excelLabel.People_Count);
 		 		
 		 		
 		 		
@@ -6650,12 +6735,34 @@ public class CommonVariables {
 		 		/**************** Related To on Acuity ****************/
 		 		ATE_ARelatedTo1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE002", excelLabel.Related_To);
 		 		ATE_ARelatedTo2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE004", excelLabel.Related_To);
+		 		ATE_ARelatedTo3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE005", excelLabel.Related_To);
 			    
 		 		
 		 		/**************** Related Association on Acuity ****************/
 		 		
 		 		ATE_ARelatedAsso1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE002", excelLabel.Related_Association);
-			    
+		 		ATE_ARelatedAsso2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE004", excelLabel.Related_Association);
+		 		ATE_ARelatedAsso3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE005", excelLabel.Related_Association);
+				
+		 		
+		 		/******************* Connection Section on Acuity ****************/
+		 		
+		 		ATE_ConnectionTeamMember1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE004", excelLabel.Connection_TeamMember);
+		 		ATE_ConnectionTeamMember2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE005", excelLabel.Connection_TeamMember);
+			       
+		 		ATE_ConnectionTitle1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE004", excelLabel.Connection_Title);
+		 		ATE_ConnectionTitle2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE005", excelLabel.Connection_Title);
+		 		
+		 		ATE_ConnectionDeals1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE004", excelLabel.Connection_Deal);
+		 		ATE_ConnectionDeals2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE005", excelLabel.Connection_Deal);
+		 		
+		 		ATE_ConnectionMeetingAndCall1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE004", excelLabel.Connection_MeetingsAndCall);
+		 		ATE_ConnectionMeetingAndCall2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE005", excelLabel.Connection_MeetingsAndCall);
+		 		
+		 		ATE_ConnectionEmail1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE004", excelLabel.Connection_Email);
+		 		ATE_ConnectionEmail2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE005", excelLabel.Connection_Email);
+		 		
+		 		
 		 		
 				try {
 					dataFile.close();
@@ -6668,16 +6775,15 @@ public class CommonVariables {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+
 				}
 				
 				
+				break;
 				
-				
-
 		default:
 			break;
 		}
-
 		
 	}
 
