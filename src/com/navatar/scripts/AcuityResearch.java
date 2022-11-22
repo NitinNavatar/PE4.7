@@ -80,7 +80,7 @@ public class AcuityResearch extends BaseLib{
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		String parentWindow = null;
-		String[] splitedUserLastName = removeNumbersFromString(crmUser1LastName);
+		String[] splitedUserLastName = removeNumbersFromString(glUser1LastName);
 		String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
 		String emailId = lp.generateRandomEmailId(gmailUserName);
 		ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",excelLabel.User_Last_Name);
@@ -99,9 +99,9 @@ public class AcuityResearch extends BaseLib{
 								YesNo.Yes);
 						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
 					}
-					if (setup.createPEUser( crmUser1FirstName, UserLastName, emailId, crmUserLience,
-							crmUserProfile)) {
-						log(LogStatus.INFO, "CRM User is created Successfully: " + crmUser1FirstName + " " + UserLastName, YesNo.No);
+					if (setup.createPEUser( glUser1FirstName, UserLastName, emailId, glUserLience,
+							glUserProfile)) {
+						log(LogStatus.INFO, "GL User is created Successfully: " + glUser1FirstName + " " + UserLastName, YesNo.No);
 						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User1",
 								excelLabel.User_Email);
 						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",
@@ -122,17 +122,17 @@ public class AcuityResearch extends BaseLib{
 		}
 		if (flag) {
 			if(!environment.equalsIgnoreCase(Environment.Sandbox.toString())) {
-				if (setup.installedPackages(crmUser1FirstName, UserLastName)) {
-					appLog.info("PE Package is installed Successfully in CRM User: " + crmUser1FirstName + " "
+				if (setup.installedPackages(glUser1FirstName, UserLastName)) {
+					appLog.info("PE Package is installed Successfully in CRM User: " + glUser1FirstName + " "
 							+ UserLastName);
 
 				} else {
 					appLog.error(
-							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
+							"Not able to install PE package in CRM User1: " + glUser1FirstName + " " + UserLastName);
 					sa.assertTrue(false,
-							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
+							"Not able to install PE package in CRM User1: " + glUser1FirstName + " " + UserLastName);
 					log(LogStatus.ERROR,
-							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName,
+							"Not able to install PE package in CRM User1: " + glUser1FirstName + " " + UserLastName,
 							YesNo.Yes);
 				}
 			}
@@ -161,11 +161,11 @@ public class AcuityResearch extends BaseLib{
 		appLog.info("ResetLinkIs: " + passwordResetLink);
 		driver.get(passwordResetLink);
 		if (lp.setNewPassword()) {
-			appLog.info("Password is set successfully for CRM User1: " + crmUser1FirstName + " " + UserLastName );
+			appLog.info("Password is set successfully for GL User1: " + glUser1FirstName + " " + UserLastName );
 		} else {
-			appLog.info("Password is not set for CRM User1: " + crmUser1FirstName + " " + UserLastName);
-			sa.assertTrue(false, "Password is not set for CRM User1: " + crmUser1FirstName + " " + UserLastName);
-			log(LogStatus.ERROR, "Password is not set for CRM User1: " + crmUser1FirstName + " " + UserLastName,
+			appLog.info("Password is not set for GL User1: " + glUser1FirstName + " " + UserLastName);
+			sa.assertTrue(false, "Password is not set for GL User1: " + glUser1FirstName + " " + UserLastName);
+			log(LogStatus.ERROR, "Password is not set for GL User1: " + glUser1FirstName + " " + UserLastName,
 					YesNo.Yes);
 		}
 		lp.CRMlogout();
@@ -180,7 +180,7 @@ public class AcuityResearch extends BaseLib{
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(glUser1EmailID, adminPassword);
 		String xpath;
 		String ele;
 
@@ -349,7 +349,6 @@ public class AcuityResearch extends BaseLib{
 	String[][] val = {{MRSD_1_ResearchFindings},{MRSD_2_ResearchFindings},{MRSD_3_ResearchFindings},{MRSD_4_ResearchFindings},{MRSD_5_ResearchFindings},{MRSD_6_ResearchFindings},{MRSD_7_ResearchFindings},{MRSD_8_ResearchFindings},{MRSD_9_ResearchFindings}};
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	ThreadSleep(2000);
-	
 	for(String searchValue : searchValues) {
 		log(LogStatus.PASS, "WOrking for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
@@ -481,8 +480,8 @@ public class AcuityResearch extends BaseLib{
 
 	
 	String[] profileForSelection = { "PE Standard User", "System Administrator" };
-	boolean isMakeAvailable = true;
-	boolean isMakeDefault = true;
+	boolean isMakeAvailable = false;
+	boolean isMakeDefault = false;
 	boolean flag = false;
 	String parentID=null;
 	
@@ -500,7 +499,7 @@ public class AcuityResearch extends BaseLib{
 				String TA = "Custom " + objectName+ " TA";
 				String LTA = "Custom " + objectName+ " LTA";
 				String RTA = "Custom " + objectName+ " RTA";
-				System.out.println(" " + Email + " " +Phone + " " + Text + " " + TA + " " + LTA + " " + RTA);
+				//System.out.println(" " + Email + " " +Phone + " " + Text + " " + TA + " " + LTA + " " + RTA);
 				String [][] fieldsType = {{"Email",Email,""},{"Phone",Phone,""},{"Text",Text,"255"},{"Text Area",TA,""},{"Text Area (Long)",LTA,"32768"},{"Text Area (Rich)",RTA,"32768"}};
 				for(String[] fieldType : fieldsType) {
 					field=fieldType[0];
@@ -833,17 +832,7 @@ public class AcuityResearch extends BaseLib{
 	String fundRecordTypeArray[] = fundRecordTypeList.split(breakSP, -1);
 	String fundraisingRecordTypeArray[] = fundraisingRecordTypeList.split(breakSP, -1);
 	
-	String[][] dealRecordType = { { recordTypeLabel.Active.toString(), "" } ,
-			{ recordTypeLabel.Active.toString(), "" } ,
-			{ recordTypeLabel.Active.toString(), "" } };
-
-	String[][] fundRecordType = { { recordTypeLabel.Active.toString(), "" } ,
-			{ recordTypeLabel.Active.toString(), "" } ,
-			{ recordTypeLabel.Active.toString(), "" } };
-
-	String[][] fundraisingRecordType = { { recordTypeLabel.Active.toString(), "" } ,
-			{ recordTypeLabel.Active.toString(), "" } ,
-			{ recordTypeLabel.Active.toString(), "" } };
+	String[][] RecordType = { { recordTypeLabel.Active.toString(), "" }};
 
 
 	boolean flag = false;
@@ -856,11 +845,11 @@ public class AcuityResearch extends BaseLib{
 			flag = false;
 			parentID = switchOnWindow(driver);
 			if (parentID != null) {
-				if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(), object.Deal)) {
-					if (sp.clickOnObjectFeature("", Mode.Lightning.toString(), object.Deal,
+				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Deal)) {
+					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Deal,
 							ObjectFeatureName.recordTypes)) {
 						if (sp.clickOnAlreadyCreatedLayout(dealRecordTypeArray[i])) {
-							if (sp.editRecordTypeForObject(projectName, dealRecordType, 10)) {
+							if (sp.editRecordTypeForObject(projectName, RecordType, 10)) {
 								log(LogStatus.ERROR,dealRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
 							}else {
 								log(LogStatus.ERROR,dealRecordTypeArray[i]+" not updated ",YesNo.Yes);
@@ -900,11 +889,11 @@ public class AcuityResearch extends BaseLib{
 			flag = false;
 			parentID = switchOnWindow(driver);
 			if (parentID != null) {
-				if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(), object.Fund)) {
-					if (sp.clickOnObjectFeature("", Mode.Lightning.toString(), object.Fund,
+				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Fund)) {
+					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Fund,
 							ObjectFeatureName.recordTypes)) {
 						if (sp.clickOnAlreadyCreatedLayout(fundRecordTypeArray[i])) {
-							if (sp.editRecordTypeForObject(projectName, fundRecordType, 10)) {
+							if (sp.editRecordTypeForObject(projectName, RecordType, 10)) {
 								log(LogStatus.ERROR,fundRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
 							}else {
 								log(LogStatus.ERROR,fundRecordTypeArray[i]+" not updated ",YesNo.Yes);
@@ -944,11 +933,11 @@ public class AcuityResearch extends BaseLib{
 			flag = false;
 			parentID = switchOnWindow(driver);
 			if (parentID != null) {
-				if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(), object.Fundraising)) {
-					if (sp.clickOnObjectFeature("", Mode.Lightning.toString(), object.Fundraising,
+				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Fundraising)) {
+					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Fundraising,
 							ObjectFeatureName.recordTypes)) {
 						if (sp.clickOnAlreadyCreatedLayout(fundraisingRecordTypeArray[i])) {
-							if (sp.editRecordTypeForObject(projectName, fundraisingRecordType, 10)) {
+							if (sp.editRecordTypeForObject(projectName, RecordType, 10)) {
 								log(LogStatus.ERROR,fundraisingRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
 							}else {
 								log(LogStatus.ERROR,fundraisingRecordTypeArray[i]+" not updated ",YesNo.Yes);
@@ -1093,7 +1082,7 @@ public class AcuityResearch extends BaseLib{
 	String searchValues[] = {ACR_1_Search};//,ACR_2_Search,ACR_3_Search};
 	//String findings[] = {ACR_1_All,ACR_1_Firms,ACR_1_Advisor,ACR_1_Company,ACR_1_Institution,ACR_1_Intermediary,ACR_1_Lender,ACR_1_LP,ACR_1_PC,ACR_1_Contacts,ACR_1_deals,ACR_1_Fund,ACR_1_Fundraising,ACR_1_Interactionss,ACR_1_RA,ACR_1_RC};
 	String findings[] = ACR_1_All.split("<break>");
-	List<String> expectedFindingValues = Arrays.asList(findings);
+	//List<String> expectedFindingValues = Arrays.asList(findings);
 	
 	
 	for(String searchValue : searchValues) {
@@ -1169,8 +1158,19 @@ public class AcuityResearch extends BaseLib{
 		{		
 			headerName = rp.getElementsFromGrid().get(i).getText();
 			String recordName = rp.clickOnRecordUsingGridName(headerName, 30).getText();
-			rp.clickOperationOnRecordForGrid(headerName,recordName);
-			rp.VerifyViewMoreOption(headerName);
+			
+			if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+				log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+			} else {
+				log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+				sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+			}
+			if (rp.VerifyViewMoreOption(headerName)) {
+				log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+			} else {
+				log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+				sa.assertTrue(false,"--------- Not able to click on view more option for" + headerName + " ---------");
+			}
 			
 			
 		}

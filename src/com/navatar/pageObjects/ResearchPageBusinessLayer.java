@@ -56,8 +56,10 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 	}
 	
 	
-	public void clickOperationOnRecordForGrid(String headerName, String recordName) { 
+	public boolean clickOperationOnRecordForGrid(String headerName, String recordName) { 
 
+		boolean flag = false; 
+		
 		if (clickUsingJavaScript(driver, clickOnRecordUsingGridName(headerName, 30),
 				"Grid Name: " + headerName, action.BOOLEAN)) {
 			log(LogStatus.PASS, "Clicked on Grid Name: " + headerName, YesNo.No);
@@ -66,18 +68,19 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 				if (!parentWindowId.isEmpty()) {
 					log(LogStatus.PASS, "New Window Open after click on Grid Link: " + headerName,
 							YesNo.No);
-
+					flag = true;
 					if (RecordPagesHeader(recordName, 20) != null) {//need to update according to Research
 						log(LogStatus.PASS, "----Detail Page is redirecting for Record: "
 								+ recordName + "-----", YesNo.No);
 						driver.close();
 						driver.switchTo().window(parentWindowId);
-
+						flag = true;
 					} else {
 						log(LogStatus.FAIL, "----Detail Page is not redirecting for Record: "
 								+ recordName + "-----", YesNo.Yes);
 						sa.assertTrue(false, "----Detail Page is not showing for Record: "
 								+ recordName + "-----");
+						flag = false;
 						driver.close();
 						driver.switchTo().window(parentWindowId);
 
@@ -87,6 +90,7 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 					log(LogStatus.FAIL, "No New Window Open after click on Grid Link: " + headerName,
 							YesNo.Yes);
 					sa.assertTrue(false, "No New Window Open after click on Grid Link: " + headerName);
+					flag = false;
 				}
 			} catch (Exception e) {
 				log(LogStatus.FAIL,
@@ -96,12 +100,14 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 				sa.assertTrue(false,
 						"Not able to switch to window after click on Grid Link, Msg showing: "
 								+ e.getMessage());
+				flag = false;
 			}
 		} else {
 			log(LogStatus.FAIL, "Not able to Click on Grid Name: " + headerName, YesNo.Yes);
 			sa.assertTrue(false, "Not able to Click on Grid Name: " + headerName);
-
+			flag = false;
 		}
+		return flag;
 	}
 	
 	
@@ -127,7 +133,8 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 		}
 	}
 	
-	public void VerifyViewMoreOption(String headerName) {
+	public boolean VerifyViewMoreOption(String headerName) {
+		boolean flag = false;
 		List<String> sideNavCountExceptAllCategories = researchSideNavCountResultsExceptAllCategories()
 				.stream().map(x -> x.getText().trim().replace("New Items", "").replace(":", "")
 						.replaceAll("[\\t\\n\\r]+", "").trim()).collect(Collectors.toList());
@@ -146,15 +153,18 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 					if(TotalNumberOfRecords == countFromSideNav) {
 						log(LogStatus.INFO,"Total number of records are matched with given count",YesNo.No);
 						clickUsingJavaScript(driver, getAllCategoriesLink(10), "All Categories");
+						flag = true;
 					}
+					flag = true;
 				}
 			}else {
 				log(LogStatus.ERROR,"Count is less than 5, so we can't check view more option for " + headerName ,YesNo.No);
+				flag = false;
 				break;
 //				sa.assertTrue(false,"In " + gridWiseHeading +" Search Keyword" + searchValue + "does not contain in " + gridText);
 			}
 		}
-		
+		return flag;
 	}
 	
 	public void VerifyNameAndCountFromNavAndGrid(){
