@@ -2543,8 +2543,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 			}
 		}
 		flag = false;
-		if (click(driver, getCustomTabSaveBtn(projectName, 10), "save button", action.SCROLLANDBOOLEAN)) {
-			log(LogStatus.ERROR, "Click on save Button ", YesNo.No);
+		if (click(driver, getCustomTabSaveBtn( 10), "save button", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Click on save Button ", YesNo.No);
 			ThreadSleep(10000);
 			flag = true;
 		} else {
