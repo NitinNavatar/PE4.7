@@ -7597,4 +7597,87 @@ public abstract class BasePage extends BaseLib {
 		return dueDateOnlyVerificationInTasks;
 	}
 
+	public WebElement testCustomObjectTextBoxInput(String fieldName, int timeOut) {
+
+		String xpath = "//label[text()='" + fieldName + "']/following-sibling::div/input";
+		try {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + fieldName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + fieldName);
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + fieldName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + fieldName);
+		}
+	}
+
+	public WebElement testCustomObjectFooterButton(String buttonName, int timeOut) {
+
+		String xpath = "//records-form-footer//li//button[text()='" + buttonName + "']";
+		try {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + buttonName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + buttonName);
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + buttonName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + buttonName);
+		}
+	}
+
+	public WebElement testCustomObjectNewButton(int timeOut) {
+
+		String xpath = "//div[text()='New']/parent::a";
+		try {
+			return isDisplayed(driver, FindElement(driver, xpath, "New Button", action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + "New Button");
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, FindElement(driver, xpath, "New Button", action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + "New Button");
+		}
+	}
+
+	@FindBy(xpath = "//section[contains(@class,'slds-fade-in-open')]//div[@class='slds-modal__container']//h2")
+	private WebElement notePopUpHeading;
+
+	public WebElement notePopUpHeading() {
+		return notePopUpHeading;
+	}
+
+	public WebElement notePopUpCrossButton(int timeOut) {
+
+		String xpath = "//section[contains(@class,'slds-fade-in-open')]//div[@class='slds-modal__container']//button[@title='Close']";
+		try {
+			return isDisplayed(driver, FindElement(driver, xpath, "Cross Button", action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + "Cross Button");
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, FindElement(driver, xpath, "Cross Button", action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + "Cross Button");
+		}
+	}
+
+	public WebElement notePopUpAddMoreButton(int timeOut) {
+
+		String xpath = "//section[contains(@class,'slds-fade-in-open')]//div[@class='slds-modal__container']//button[text()='Add more']";
+		try {
+			return FindElement(driver, xpath, "Add More Button", action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Add More Button", action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+
+	public List<WebElement> notePopUpFooterButtons() {
+		return FindElements(driver,
+				"//section[contains(@class,'slds-fade-in-open')]//div[@class='slds-modal__container']//footer//button",
+				"notePopUpFooterButtons");
+	}
+	
+	public WebElement taskSectonInNotePopUpNotExpanded(int timeOut) {
+		String xPath = "//span[@class=\"slds-accordion__summary-content\" and text()='Tasks']/ancestor::button[@aria-expanded='false']";
+
+		return isDisplayed(driver,
+				FindElement(driver, xPath, "Task" + " section", action.SCROLLANDBOOLEAN, timeOut), "Visibility",
+				timeOut, "Task" + " section");
+	}
+
 }
