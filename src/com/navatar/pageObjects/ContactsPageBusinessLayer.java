@@ -3269,4 +3269,43 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		return result;
 	}
 
+	/**
+	 * @author Sahil Bansal
+	 * @param projectName
+	 * @param pageName
+	 * @param legalName
+	 * @description This is used to update legal name of contact
+	 */
+	public boolean UpdateLastName(String projectName, PageName pageName, String contactLastName) {
+
+		if (clickOnShowMoreActionDownArrow(projectName, pageName, ShowMoreActionDropDownList.Edit, 30)) {
+			log(LogStatus.INFO, "clicked on edit button", YesNo.No);
+
+			if (sendKeys(driver, getContactLastName(projectName, 60), contactLastName, "Contact Last Name",
+					action.BOOLEAN)) {
+				ThreadSleep(2000);
+
+			} else {
+				appLog.error("Not able to enter last name");
+				return false;
+			}
+		}
+
+		if (click(driver, getNavigationTabSaveBtn(projectName, 60), "Save Button", action.SCROLLANDBOOLEAN)) {
+			appLog.info("Clicked on save button");
+			ThreadSleep(3000);
+			if (getNavigationTabSaveBtn(projectName, 5) != null) {
+				click(driver, getNavigationTabSaveBtn(projectName, 60), "save", action.BOOLEAN);
+			}
+			return true;
+		} else {
+			appLog.info("Not able to click on save button");
+			log(LogStatus.INFO, "Not able to clicked on edit button so cannot Account Name ", YesNo.Yes);
+			BaseLib.sa.assertTrue(false, "Not able to clicked on edit button so cannot Account Name ");
+		}
+
+		return false;
+	}
+	
+	
 }

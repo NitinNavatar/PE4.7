@@ -375,6 +375,19 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	 * @param stage
 	 * @return WebElement
 	 */
+	public WebElement findDeleteLink(String projectName, String stage) {
+
+		String xpath = "//th[text()='" + stage + "']/preceding-sibling::td//a[contains(@title,'Del')]";
+		WebElement ele = FindElement(driver, xpath, "delete", action.SCROLLANDBOOLEAN, 10);
+		scrollDownThroughWebelement(driver, ele, "delete link for " + stage);
+		return isDisplayed(driver, ele, "Visibility", 10, "delete " + stage);
+
+	}
+	/**
+	 * @param projectName
+	 * @param stage
+	 * @return WebElement
+	 */
 	public WebElement findActivateLink(String projectName, String stage) {
 
 		String xpath = "//th[text()='" + stage + "']/preceding-sibling::td//a[contains(@title,'Activate')]";
@@ -943,7 +956,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 //														+ "']/ancestor::lightning-base-combobox-item",
 														"//*[text()='" + labelNames[i]+ "']/..//*[@title='" + labelValue[i]+ "']",	
 												"Legal Name List", action.THROWEXCEPTION, 30),
-										labelNames[i] + "   :   Account Name", action.BOOLEAN)) {
+										labelNames[i] + "   :   labelNames[i]", action.BOOLEAN)) {
 									appLog.info(labelNames[i] + "  is present in list.");
 									status++;
 
@@ -1025,4 +1038,115 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return flag;
 					
 				}
+	
+	/**
+	 * @author sahil bansal
+	 * @param projectName
+	 * @param companyname
+	 * @param timeOut
+	 * @return true if successfully change stage
+	 */
+	public boolean UpdateOtherLabledaterecieved(String projectName, String otherLabels,
+			String otherLabelValues, int timeOut) {
+		boolean flag = true;
+		WebElement ele;
+		String[] labelNames = null;
+		String[] labelValue = null;
+		if (otherLabels != null && !"".equalsIgnoreCase(otherLabels)) {
+			labelNames = otherLabels.split("<Break>", -1);
+			labelValue = otherLabelValues.split("<Break>", -1);
+			if (clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Edit, 10)) {
+				ThreadSleep(2000);
+		}}
+		ThreadSleep(2000);
+			int loopCount = 0;
+			int status = 0;
+			if (labelNames != null && labelValue != null) {
+				for (int i = 0; i < labelNames.length; i++) {
+                                if (labelNames[i].equalsIgnoreCase("Date Received")
+								|| labelNames[i].equalsIgnoreCase("LOI Due Date")
+								|| labelNames[i].equalsIgnoreCase("NDA Signed Date")
+								|| labelNames[i].equalsIgnoreCase("Management Meeting Date")
+								|| labelNames[i].equalsIgnoreCase("Pipeline Data Date")
+								|| labelNames[i].equalsIgnoreCase("Last Stage Change Date")) {
+
+							String[] date = CommonLib.convertDateFromOneFormatToAnother(labelValue[i], "MM/dd/yyyy", "dd/MMM/yyyy").split("/");
+						
+
+							if (click(driver, calendarInputBox(labelNames[i], 30), labelNames[i] + " Input Box",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Click on " + labelNames[i] + " Calendar Input Box", YesNo.No);
+								if (CommonLib.datePickerHandle(driver, monthInDatePicker(30),
+										previousMonthButtonInDatePicker(30), labelNames[i] + " Picker", date[2], date[1],
+										date[0])) {
+									log(LogStatus.INFO, "Date has been Selected  " + labelValue[i], YesNo.No);
+									status++;
+								} else {
+									sa.assertTrue(false, "Date has not been Selected  " + labelValue[i]);
+									log(LogStatus.ERROR, "Date has not been Selected  " + labelValue[i], YesNo.Yes);
+								}
+							} else {
+								sa.assertTrue(false, "Not Able to Click on " + labelNames[i] + " Calendar input Box");
+								log(LogStatus.ERROR, "Not Able to Click on " + labelNames[i] + " Calendar input Box",
+										YesNo.Yes);
+							}
+
+						} else {
+
+							if (CommonLib.sendKeys(driver, textBoxBasedOnLabelName(labelNames[i], 10), labelValue[i],
+									"textBoxBasedOnLabelName: " + labelNames[i], action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, labelValue[i] + " value has been passed in " + labelNames[i], YesNo.No);
+								status++;
+							} else {
+								log(LogStatus.ERROR, labelValue[i] + " value is not passed in " + labelNames[i], YesNo.No);
+								sa.assertTrue(false, labelValue[i] + " value is not passed in " + labelNames[i]);
+
+							}
+						}
+
+						loopCount++;
+					}
+
+				}
+
+				if (status == loopCount) {
+					if (CommonLib.click(driver, getSaveButton(30), tabObj4 + " save button", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on save button", YesNo.No);
+
+					} else {
+						log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
+
+					}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on the new button", YesNo.No);
+			}
+
+			return flag;
+
+		}
+	/**
+	 * @param company
+	 * @param timeOut
+	 * @return WebElement
+	 */
+	public String dealbottomcount( int timeOut) {
+		String xpath = "//span[@title='Deals']/ancestor::div[contains(@class,'left_small')]//table";
+		WebElement dealElement = FindElement(driver, xpath,"dealbottomcount", action.BOOLEAN, 10);
+		return isDisplayed(driver, dealElement, xpath, 10, "").getAttribute("data-num-rows");
+	}
+	
+	public String dealbottomname(String dealbottomcount, int timeOut) {
+		String xpath = "//span[@title='Deals']/ancestor::div[contains(@class,'left_small')]//table//tr[@data-row-number='"+dealbottomcount+"']//a";
+		WebElement dealElement = FindElement(driver, xpath,"dealbottomname", action.BOOLEAN, 10);
+		return isDisplayed(driver, dealElement, xpath, 10, "").getAttribute("title");
+	}
+	
+	public String dealtopname(String dealbottomcount, int timeOut) {
+		String xpath = "//span[@title='Deals']/ancestor::div[contains(@class,'left_small')]//table//tr[@data-row-number='1']//a";
+		WebElement dealElement = FindElement(driver, xpath,"dealtopname", action.BOOLEAN, 10);
+		return isDisplayed(driver, dealElement, xpath, 10, "").getAttribute("title");
+	}
+	public List<WebElement> listOfDealNames (int timeout){
+		return FindElements(driver, "//span[@title='Deals']/ancestor::div[@class='slds-col slds-size_6-of-12 slds-p-left_small']//table[contains(@class,'slds-table slds-table_header-fixed')]");
+	}
 }

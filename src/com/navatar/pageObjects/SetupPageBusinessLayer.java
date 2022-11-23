@@ -3482,6 +3482,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 					action.SCROLLANDBOOLEAN);
 			log(LogStatus.INFO, "Successfully click on override next button going to find field label:" + fieldName
 					+ " on next page", YesNo.No);
+			ThreadSleep(2000);
 			ele2 = FindElement(driver, masterFieldLabel, "", action.SCROLLANDBOOLEAN, 10);
 			count++;
 		}while (!setup.getOverrideSetupFieldNextBtn(20).getAttribute("class").contains("disabled") && ele2 == null
@@ -3490,12 +3491,15 @@ public class SetupPageBusinessLayer extends SetupPage {
 		if (ele2 != null) {
 			ele = FindElement(driver, fieldLabelOverride, fieldName, action.SCROLLANDBOOLEAN, 10);
 			ThreadSleep(2000);
+		
 			if (doubleClickUsingAction(driver, ele)) {
 				log(LogStatus.INFO, "going for edit override field label of field:" + fieldName, YesNo.No);
 				ThreadSleep(2000);
 				Actions ac = new Actions(driver);
+				JavascriptExecutor js=  (JavascriptExecutor)driver;
+				//js.executeScript("arguments[0].setAttribute(arguments[1],arguments[2])", ele,"Value","");
+				doubleClickUsingAction(driver, ele);
 				ac.moveToElement(ele).sendKeys(UpdatedfieldName).sendKeys(Keys.ENTER).build().perform();
-				;
 				log(LogStatus.INFO, "Pass value:" + UpdatedfieldName + " to override field label of field:" + fieldName,
 						YesNo.No);
 				ThreadSleep(2000);
