@@ -14,6 +14,7 @@ import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.RecordType;
 import com.navatar.generic.EnumConstants.RelatedTab;
+import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
@@ -2252,6 +2253,29 @@ public boolean clickOnCreatedInstitution(String environment,String mode,String i
 		return flag;
 
 	}
-
-	
+	public boolean UpdateLegalNameAccount(String projectName,String institutionName ,int timeOut) {
+		boolean flag=false;
+		refresh(driver);
+		ThreadSleep(3000);
+		if (clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Edit, 10)) {
+			ThreadSleep(2000);
+		} else {
+			appLog.error("Not able to click on Edit button so cannot create : "+ institutionName);
+		}
+		ThreadSleep(3000);
+		if (sendKeys(driver, getLegalName(projectName,timeOut), institutionName, "leagl name text box",action.SCROLLANDBOOLEAN)) {
+			appLog.info("passed data in text box: " + institutionName);
+		} else {
+			appLog.error("Not able to enter legal name so cannot update : "+ institutionName);
+		}
+		ThreadSleep(3000);
+			if (click(driver, getNavigationTabSaveBtn(projectName,timeOut), "save button", action.SCROLLANDBOOLEAN)) {
+				appLog.info("clicked on save button");
+				flag = true;
+			} else {
+				appLog.error("Not able to click on Edit button so cannot create : "+ institutionName);
+			}
+			return flag;
+	}
+		
 }
