@@ -56,8 +56,10 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 	}
 	
 	
-	public void clickOperationOnRecordForGrid(String headerName, String recordName) { 
+	public boolean clickOperationOnRecordForGrid(String headerName, String recordName) { 
 
+		boolean flag = false; 
+		
 		if (clickUsingJavaScript(driver, clickOnRecordUsingGridName(headerName, 30),
 				"Grid Name: " + headerName, action.BOOLEAN)) {
 			log(LogStatus.PASS, "Clicked on Grid Name: " + headerName, YesNo.No);
@@ -66,18 +68,19 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 				if (!parentWindowId.isEmpty()) {
 					log(LogStatus.PASS, "New Window Open after click on Grid Link: " + headerName,
 							YesNo.No);
-
+					flag = true;
 					if (RecordPagesHeader(recordName, 20) != null) {//need to update according to Research
 						log(LogStatus.PASS, "----Detail Page is redirecting for Record: "
 								+ recordName + "-----", YesNo.No);
 						driver.close();
 						driver.switchTo().window(parentWindowId);
-
+						flag = true;
 					} else {
 						log(LogStatus.FAIL, "----Detail Page is not redirecting for Record: "
 								+ recordName + "-----", YesNo.Yes);
 						sa.assertTrue(false, "----Detail Page is not showing for Record: "
 								+ recordName + "-----");
+						flag = false;
 						driver.close();
 						driver.switchTo().window(parentWindowId);
 
@@ -87,6 +90,7 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 					log(LogStatus.FAIL, "No New Window Open after click on Grid Link: " + headerName,
 							YesNo.Yes);
 					sa.assertTrue(false, "No New Window Open after click on Grid Link: " + headerName);
+					flag = false;
 				}
 			} catch (Exception e) {
 				log(LogStatus.FAIL,
@@ -96,12 +100,14 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 				sa.assertTrue(false,
 						"Not able to switch to window after click on Grid Link, Msg showing: "
 								+ e.getMessage());
+				flag = false;
 			}
 		} else {
 			log(LogStatus.FAIL, "Not able to Click on Grid Name: " + headerName, YesNo.Yes);
 			sa.assertTrue(false, "Not able to Click on Grid Name: " + headerName);
-
+			flag = false;
 		}
+		return flag;
 	}
 	
 	
@@ -127,34 +133,36 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 		}
 	}
 	
-	public void VerifyViewMoreOption(String headerName) {
-		List<String> sideNavCountExceptAllCategories = researchSideNavCountResultsExceptAllCategories()
-				.stream().map(x -> x.getText().trim().replace("New Items", "").replace(":", "")
-						.replaceAll("[\\t\\n\\r]+", "").trim()).collect(Collectors.toList());
-		for (String countFromSideNavInString : sideNavCountExceptAllCategories) {
-			Integer countFromSideNav = Integer.valueOf(countFromSideNavInString);
-			int newCountFromSideNav = countFromSideNav;
-			
+	public boolean VerifyViewMoreOption(String headerName) {
+		boolean flag = false;
+//		List<String> sideNavCountExceptAllCategories = researchSideNavCountResultsExceptAllCategories()
+//				.stream().map(x -> x.getText().trim().replace("New Items", "").replace(":", "")
+//						.replaceAll("[\\t\\n\\r]+", "").trim()).collect(Collectors.toList());
+		int count=Integer.valueOf(headerName.split("\\(")[1].split("\\)")[0].trim());
+		
+		
 			//log(LogStatus.INFO,"Count is greater than 5, so we can see view more option for " + newCountFromSideNav,YesNo.No);
-			if(newCountFromSideNav > 5) {
+			if(count > 5) {
 				log(LogStatus.INFO,"Count is greater than 5, so we can see view more option for " + headerName ,YesNo.No);
 				if(clickUsingJavaScript(driver, getViewMoreOptionUsingHeaderName(headerName, 20), "View More"))
 				{
 					log(LogStatus.INFO,"Count is greater than 5 " + headerName ,YesNo.No);
 					int TotalNumberOfRecords = getAllRecordsUsingHeaderName(headerName,20).size();
 					log(LogStatus.INFO,"Total Number Of Records are : " + TotalNumberOfRecords,YesNo.No);
-					if(TotalNumberOfRecords == countFromSideNav) {
+					if(TotalNumberOfRecords == count) {
 						log(LogStatus.INFO,"Total number of records are matched with given count",YesNo.No);
 						clickUsingJavaScript(driver, getAllCategoriesLink(10), "All Categories");
+						flag = true;
 					}
+					flag = true;
 				}
 			}else {
 				log(LogStatus.ERROR,"Count is less than 5, so we can't check view more option for " + headerName ,YesNo.No);
-				break;
+				flag = false;
 //				sa.assertTrue(false,"In " + gridWiseHeading +" Search Keyword" + searchValue + "does not contain in " + gridText);
 			}
-		}
 		
+		return flag;
 	}
 	
 	public void VerifyNameAndCountFromNavAndGrid(){
@@ -184,9 +192,9 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 	}
 	
 	
-	public boolean VerifyNameAndCountForResearchLeftPanel(String variableName,action action, int timeout ) {
+	public ArrayList<String> VerifyNameAndCountForResearchLeftPanel(String variableName,action action, int timeout ) {
 		WebElement ele=null;
-		boolean flag=false;
+		ArrayList<String> list = new ArrayList<>();
 		HashMap<String, ArrayList<String>> headersAndValues = ExcelUtils.dataRead(AcuityDataSheetFilePath,"SearchData",excelLabel.Variable_Name, variableName);
 		
 		HashMap<String,String> headerAndValue =   new HashMap<String,String>();
@@ -210,45 +218,69 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 					if(headerText.equalsIgnoreCase(header)) {
 						log(LogStatus.INFO, "Header :"+header +" is matched with excel label:"+headerText+" in left panel of research page", YesNo.No);
 						
-						ele =researchFindingsLeftPanelHeadingCount(header, action, timeout);
-						if(ele!=null) {
+						if(Integer.valueOf(headerAndValue.get(header))!=0) {
 							
-							log(LogStatus.INFO, "Header Count  :"+headerAndValue.get(header) +" is visible for header :"+header+"in left panel of research page", YesNo.No);
-							String headerCount = ele.getText().trim().replace("New Items", "").replace(":", "")
-									.replaceAll("[\\t\\n\\r]+", "").trim();
-							if(headerCount.equalsIgnoreCase(headerAndValue.get(header))) {
-								log(LogStatus.INFO, "Header Count  :"+headerAndValue.get(header) +" is matched with excel label count:"+headerCount+" for header :"+header+"in left panel of research page", YesNo.No);
-								flag=true;
-							}else {
-								log(LogStatus.SKIP, "Header Count  :"+headerAndValue.get(header) +" is not matched with excel label count:"+headerCount+" for header :"+header+"in left panel of research page", YesNo.No);
-								sa.assertTrue(false,"Header Count  :"+headerAndValue.get(header) +" is not matched with excel label count:"+headerCount+" for header :"+header+"in left panel of research page");
-							}
-							
-						}else {
-							log(LogStatus.SKIP, "Header Count  :"+headerAndValue.get(header) +" is not visible for header :"+header+"in left panel of research page", YesNo.No);
-							sa.assertTrue(false,"Header Count  :"+headerAndValue.get(header) +" is not visible for header :"+header+"in left panel of research page");
+							log(LogStatus.INFO, "Header Count  :" + headerAndValue.get(header)
+							+ " is enable for header :" + header + " so going for verify in left panel of research page",
+							YesNo.No);
+							ele = researchFindingsLeftPanelHeadingCount(header, action, timeout);
+							if (ele != null) {
 
+								log(LogStatus.INFO, "Header Count  :" + headerAndValue.get(header)
+										+ " is visible for header :" + header + "in left panel of research page",
+										YesNo.No);
+								String headerCount = ele.getText().trim().replace("New Items", "").replace(":", "")
+										.replaceAll("[\\t\\n\\r]+", "").trim();
+								if (headerCount.equalsIgnoreCase(headerAndValue.get(header))) {
+									log(LogStatus.INFO,
+											"Header Count  :" + headerAndValue.get(header)
+													+ " is matched with excel label count:" + headerCount
+													+ " for header :" + header + "in left panel of research page",
+											YesNo.No);
+								} else {
+									log(LogStatus.SKIP,
+											"Header Count  :" + headerAndValue.get(header)
+													+ " is not matched with excel label count:" + headerCount
+													+ " for header :" + header + "in left panel of research page",
+											YesNo.No);
+						
+									list.add("Header Count  :" + headerAndValue.get(header)
+									+ " is not matched with excel label count:" + headerCount
+									+ " for header :" + header + "in left panel of research page");
+								}
+
+							} else {
+								log(LogStatus.SKIP, "Header Count  :" + headerAndValue.get(header)
+										+ " is not visible for header :" + header + "in left panel of research page",
+										YesNo.No);
+								list.add("Header Count  :" + headerAndValue.get(header)
+								+ " is not visible for header :" + header + "in left panel of research page");
+
+
+							}
+						} else {
+							
+							log(LogStatus.SKIP, "Header Count  :" + headerAndValue.get(header)
+							+ " is disbale for header :" + header + "in left panel of research page",
+							YesNo.No);
 						}
 					}else {
 						log(LogStatus.SKIP,  "Header :"+header +" is not matched with excel label:"+headerText+" in left panel of research page", YesNo.No);
-						sa.assertTrue(false, "Header :"+header +" is not matched with excel label:"+headerText+" in left panel of research page");
-
+						list.add("Header :"+header +" is not matched with excel label:"+headerText+" in left panel of research page");
 					}
 				}else {
 					log(LogStatus.SKIP, "Header :"+header +" is not visible in left panel of research page", YesNo.No);
-					sa.assertTrue(false,"Header :"+header +" is not visible in left panel of research page");
+					list.add("Header :"+header +" is not visible in left panel of research page");
 
 				}
 				
 			}else {
-				log(LogStatus.SKIP, "Header :"+header +" is disable in excel so cannot going to verify in research page", YesNo.No);
-				sa.assertTrue(false,"Header :"+header +" is disable in excel so cannot going to verify in research page");
-			}
+				log(LogStatus.SKIP, "Header :"+header +" is disable in excel so cannot going to verify in research page", YesNo.No);			}
 			
 			
 		}
 		
-		return flag;
+		return list;
 	}
 	
 }
