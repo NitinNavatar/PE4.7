@@ -7218,7 +7218,6 @@ public class CommonVariables {
 		 		ATE_TaggedDealName15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE017", excelLabel.Deals);
 		 		ATE_TaggedDealName16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE018", excelLabel.Deals);
 		 		
-		 		
 		 		ATE_TaggedDealTimeReference1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE002", excelLabel.Deals_Count);
 		 		ATE_TaggedDealTimeReference2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE004", excelLabel.Deals_Count);
 		 		ATE_TaggedDealTimeReference3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE005", excelLabel.Deals_Count);

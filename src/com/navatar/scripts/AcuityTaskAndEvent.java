@@ -5381,7 +5381,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		}
 		else
 		{
-			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
 			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
 		}
 
