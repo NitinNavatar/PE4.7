@@ -2,6 +2,7 @@ package com.navatar.scripts;
 
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
+import static com.navatar.generic.ExcelUtils.readAllDataForAColumn;
 import static com.navatar.generic.SmokeCommonVariables.adminPassword;
 import static com.navatar.generic.SmokeCommonVariables.crmUser1EmailID;
 
@@ -75,12 +76,12 @@ public class AcuityResearch extends BaseLib{
 
 	@Parameters({ "projectName"})
 	@Test
-	public void ARTc001_createCRMUser(String projectName) {
+	public void ARTc001_CreateUsers(String projectName) {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		String parentWindow = null;
-		String[] splitedUserLastName = removeNumbersFromString(crmUser1LastName);
+		String[] splitedUserLastName = removeNumbersFromString(glUser1LastName);
 		String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
 		String emailId = lp.generateRandomEmailId(gmailUserName);
 		ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",excelLabel.User_Last_Name);
@@ -99,9 +100,9 @@ public class AcuityResearch extends BaseLib{
 								YesNo.Yes);
 						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
 					}
-					if (setup.createPEUser( crmUser1FirstName, UserLastName, emailId, crmUserLience,
-							crmUserProfile)) {
-						log(LogStatus.INFO, "CRM User is created Successfully: " + crmUser1FirstName + " " + UserLastName, YesNo.No);
+					if (setup.createPEUser( glUser1FirstName, UserLastName, emailId, glUserLience,
+							glUserProfile)) {
+						log(LogStatus.INFO, "GL User is created Successfully: " + glUser1FirstName + " " + UserLastName, YesNo.No);
 						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User1",
 								excelLabel.User_Email);
 						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",
@@ -122,17 +123,17 @@ public class AcuityResearch extends BaseLib{
 		}
 		if (flag) {
 			if(!environment.equalsIgnoreCase(Environment.Sandbox.toString())) {
-				if (setup.installedPackages(crmUser1FirstName, UserLastName)) {
-					appLog.info("PE Package is installed Successfully in CRM User: " + crmUser1FirstName + " "
+				if (setup.installedPackages(glUser1FirstName, UserLastName)) {
+					appLog.info("PE Package is installed Successfully in CRM User: " + glUser1FirstName + " "
 							+ UserLastName);
 
 				} else {
 					appLog.error(
-							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
+							"Not able to install PE package in CRM User1: " + glUser1FirstName + " " + UserLastName);
 					sa.assertTrue(false,
-							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName);
+							"Not able to install PE package in CRM User1: " + glUser1FirstName + " " + UserLastName);
 					log(LogStatus.ERROR,
-							"Not able to install PE package in CRM User1: " + crmUser1FirstName + " " + UserLastName,
+							"Not able to install PE package in CRM User1: " + glUser1FirstName + " " + UserLastName,
 							YesNo.Yes);
 				}
 			}
@@ -161,11 +162,11 @@ public class AcuityResearch extends BaseLib{
 		appLog.info("ResetLinkIs: " + passwordResetLink);
 		driver.get(passwordResetLink);
 		if (lp.setNewPassword()) {
-			appLog.info("Password is set successfully for CRM User1: " + crmUser1FirstName + " " + UserLastName );
+			appLog.info("Password is set successfully for GL User1: " + glUser1FirstName + " " + UserLastName );
 		} else {
-			appLog.info("Password is not set for CRM User1: " + crmUser1FirstName + " " + UserLastName);
-			sa.assertTrue(false, "Password is not set for CRM User1: " + crmUser1FirstName + " " + UserLastName);
-			log(LogStatus.ERROR, "Password is not set for CRM User1: " + crmUser1FirstName + " " + UserLastName,
+			appLog.info("Password is not set for GL User1: " + glUser1FirstName + " " + UserLastName);
+			sa.assertTrue(false, "Password is not set for GL User1: " + glUser1FirstName + " " + UserLastName);
+			log(LogStatus.ERROR, "Password is not set for GL User1: " + glUser1FirstName + " " + UserLastName,
 					YesNo.Yes);
 		}
 		lp.CRMlogout();
@@ -180,7 +181,7 @@ public class AcuityResearch extends BaseLib{
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(glUser1EmailID, adminPassword);
 		String xpath;
 		String ele;
 
@@ -349,7 +350,6 @@ public class AcuityResearch extends BaseLib{
 	String[][] val = {{MRSD_1_ResearchFindings},{MRSD_2_ResearchFindings},{MRSD_3_ResearchFindings},{MRSD_4_ResearchFindings},{MRSD_5_ResearchFindings},{MRSD_6_ResearchFindings},{MRSD_7_ResearchFindings},{MRSD_8_ResearchFindings},{MRSD_9_ResearchFindings}};
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	ThreadSleep(2000);
-	
 	for(String searchValue : searchValues) {
 		log(LogStatus.PASS, "WOrking for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
@@ -481,8 +481,8 @@ public class AcuityResearch extends BaseLib{
 
 	
 	String[] profileForSelection = { "PE Standard User", "System Administrator" };
-	boolean isMakeAvailable = true;
-	boolean isMakeDefault = true;
+	boolean isMakeAvailable = false;
+	boolean isMakeDefault = false;
 	boolean flag = false;
 	String parentID=null;
 	
@@ -500,7 +500,7 @@ public class AcuityResearch extends BaseLib{
 				String TA = "Custom " + objectName+ " TA";
 				String LTA = "Custom " + objectName+ " LTA";
 				String RTA = "Custom " + objectName+ " RTA";
-				System.out.println(" " + Email + " " +Phone + " " + Text + " " + TA + " " + LTA + " " + RTA);
+				//System.out.println(" " + Email + " " +Phone + " " + Text + " " + TA + " " + LTA + " " + RTA);
 				String [][] fieldsType = {{"Email",Email,""},{"Phone",Phone,""},{"Text",Text,"255"},{"Text Area",TA,""},{"Text Area (Long)",LTA,"32768"},{"Text Area (Rich)",RTA,"32768"}};
 				for(String[] fieldType : fieldsType) {
 					field=fieldType[0];
@@ -833,17 +833,7 @@ public class AcuityResearch extends BaseLib{
 	String fundRecordTypeArray[] = fundRecordTypeList.split(breakSP, -1);
 	String fundraisingRecordTypeArray[] = fundraisingRecordTypeList.split(breakSP, -1);
 	
-	String[][] dealRecordType = { { recordTypeLabel.Active.toString(), "" } ,
-			{ recordTypeLabel.Active.toString(), "" } ,
-			{ recordTypeLabel.Active.toString(), "" } };
-
-	String[][] fundRecordType = { { recordTypeLabel.Active.toString(), "" } ,
-			{ recordTypeLabel.Active.toString(), "" } ,
-			{ recordTypeLabel.Active.toString(), "" } };
-
-	String[][] fundraisingRecordType = { { recordTypeLabel.Active.toString(), "" } ,
-			{ recordTypeLabel.Active.toString(), "" } ,
-			{ recordTypeLabel.Active.toString(), "" } };
+	String[][] RecordType = { { recordTypeLabel.Active.toString(), "Not Checked" }};
 
 
 	boolean flag = false;
@@ -856,11 +846,11 @@ public class AcuityResearch extends BaseLib{
 			flag = false;
 			parentID = switchOnWindow(driver);
 			if (parentID != null) {
-				if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(), object.Deal)) {
-					if (sp.clickOnObjectFeature("", Mode.Lightning.toString(), object.Deal,
+				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Deal)) {
+					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Deal,
 							ObjectFeatureName.recordTypes)) {
 						if (sp.clickOnAlreadyCreatedLayout(dealRecordTypeArray[i])) {
-							if (sp.editRecordTypeForObject(projectName, dealRecordType, 10)) {
+							if (sp.editRecordTypeForObject(projectName, RecordType, 10)) {
 								log(LogStatus.ERROR,dealRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
 							}else {
 								log(LogStatus.ERROR,dealRecordTypeArray[i]+" not updated ",YesNo.Yes);
@@ -900,11 +890,11 @@ public class AcuityResearch extends BaseLib{
 			flag = false;
 			parentID = switchOnWindow(driver);
 			if (parentID != null) {
-				if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(), object.Fund)) {
-					if (sp.clickOnObjectFeature("", Mode.Lightning.toString(), object.Fund,
+				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Fund)) {
+					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Fund,
 							ObjectFeatureName.recordTypes)) {
 						if (sp.clickOnAlreadyCreatedLayout(fundRecordTypeArray[i])) {
-							if (sp.editRecordTypeForObject(projectName, fundRecordType, 10)) {
+							if (sp.editRecordTypeForObject(projectName, RecordType, 10)) {
 								log(LogStatus.ERROR,fundRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
 							}else {
 								log(LogStatus.ERROR,fundRecordTypeArray[i]+" not updated ",YesNo.Yes);
@@ -944,11 +934,11 @@ public class AcuityResearch extends BaseLib{
 			flag = false;
 			parentID = switchOnWindow(driver);
 			if (parentID != null) {
-				if (sp.searchStandardOrCustomObject("", Mode.Lightning.toString(), object.Fundraising)) {
-					if (sp.clickOnObjectFeature("", Mode.Lightning.toString(), object.Fundraising,
+				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Fundraising)) {
+					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Fundraising,
 							ObjectFeatureName.recordTypes)) {
 						if (sp.clickOnAlreadyCreatedLayout(fundraisingRecordTypeArray[i])) {
-							if (sp.editRecordTypeForObject(projectName, fundraisingRecordType, 10)) {
+							if (sp.editRecordTypeForObject(projectName, RecordType, 10)) {
 								log(LogStatus.ERROR,fundraisingRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
 							}else {
 								log(LogStatus.ERROR,fundraisingRecordTypeArray[i]+" not updated ",YesNo.Yes);
@@ -991,21 +981,22 @@ public class AcuityResearch extends BaseLib{
 
 @Parameters({ "projectName"})
 @Test
-	public void ARTc006_VerifyTheResearchFunctionality(String projectName) {
+	public void ARTc006_VerifyResearchFunctionalityForValidData(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
-	
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	ThreadSleep(2000);
 	String xpath,ele;
-	String searchValues[] = {"NSAdmin"};
-	String[][] val = {{MRSD_11_ResearchFindings,MRSD_11_Count},{MRSD_12_ResearchFindings,MRSD_12_Count},{MRSD_13_ResearchFindings,MRSD_13_Count},{MRSD_14_ResearchFindings,MRSD_14_Count},{MRSD_15_ResearchFindings,MRSD_15_Count},
-			{MRSD_16_ResearchFindings,MRSD_16_Count},{MRSD_17_ResearchFindings,MRSD_17_Count},{MRSD_18_ResearchFindings,MRSD_18_Count},{MRSD_19_ResearchFindings,MRSD_19_Count},{MRSD_20_ResearchFindings,MRSD_20_Count},
-			{MRSD_21_ResearchFindings,MRSD_21_Count},{MRSD_22_ResearchFindings,MRSD_22_Count},{MRSD_23_ResearchFindings,MRSD_23_Count},{MRSD_24_ResearchFindings,MRSD_24_Count},{MRSD_25_ResearchFindings,MRSD_25_Count}};
+	String headerName;
+	String[]  searchValues = {""};
+	
 	
 	for(String searchValue : searchValues) {
+		
+		String varibale =ExcelUtils.readData(AcuityDataSheetFilePath,"SearchData",excelLabel.ResearchFindings, searchValue, excelLabel.Variable_Name);
+		
 		log(LogStatus.PASS, "WOrking for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
@@ -1026,96 +1017,29 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS, ele +" is visible", YesNo.Yes);
 			sa.assertTrue(true, ele +" is visible");
 			}
-			ArrayList<String> Data = bp.verifyFieldonResearchPage(projectName, mode, val);
-			if (Data.isEmpty()) {
-				log(LogStatus.PASS, "Data has been Matched", YesNo.No);
-				sa.assertTrue(true, "Data has been Matched");
-				
-			} else {
-				log(LogStatus.ERROR, "Data is not Matched", YesNo.Yes);
-				sa.assertTrue(false, "Data is not Matched : " + Data);
-			}
 			
 	} else {
 		log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
 		sa.assertTrue(false,"Not Able to send value "+searchValue);
 	}
 }
-	
-	//UI Verification Navigation/Section
+	log(LogStatus.INFO,
+			"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+					+ searchValue + "---------",
+			YesNo.No);
+		
 		if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 			log(LogStatus.INFO,
 					"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
 							+ searchValue + "---------",
 					YesNo.No);
-		} else {
-			log(LogStatus.FAIL,
-					"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-							+ searchValue + "---------",
-					YesNo.No);
-			sa.assertTrue(false,
-					"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-							+ searchValue + "---------");
-		}
-		
-//		List<String> researchResultsGridCounts = rp.gridInResearchResults(headerName).stream()
-//				.map(x -> x.getText().trim()).collect(Collectors.toList());
-//		
-//		for(String resultGridCount: researchResultsGridCounts)
-//		{
-//			
-//		}
-		String filePath = "C:\\Users\\Nitin Garg\\git\\PE4.7Automation\\AcuityDataSheet.xlsx";
-		String data = ExcelUtils.readAllDataForARow(filePath, "ResearchData", 1, Boolean.TRUE);
-		
-		System.out.println(data);
-	
-	refresh(driver);
-	}
-	switchToDefaultContent(driver);
-	lp.CRMlogout();
-	sa.assertAll();
-}
-
-@Parameters({ "projectName"})
-@Test
-	public void ARTc007_VerifyResearchFuncationalityforValidData(String projectName) {
-	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
-	
-	lp.CRMLogin(superAdminUserName, adminPassword, appName);
-	ThreadSleep(2000);
-	
-	String headerName;
-
-	//String searchValues[] = {"MG Corp"};
-	String searchValues[] = {ACR_1_Search};//,ACR_2_Search,ACR_3_Search};
-	//String findings[] = {ACR_1_All,ACR_1_Firms,ACR_1_Advisor,ACR_1_Company,ACR_1_Institution,ACR_1_Intermediary,ACR_1_Lender,ACR_1_LP,ACR_1_PC,ACR_1_Contacts,ACR_1_deals,ACR_1_Fund,ACR_1_Fundraising,ACR_1_Interactionss,ACR_1_RA,ACR_1_RC};
-	String findings[] = ACR_1_All.split("<break>");
-	List<String> expectedFindingValues = Arrays.asList(findings);
-	
-	
-	for(String searchValue : searchValues) {
-		
-		String varibale =ExcelUtils.readData(AcuityDataSheetFilePath,"SearchData",excelLabel.ResearchFindings, searchValue, excelLabel.Variable_Name);
-		
-		
-		log(LogStatus.INFO,
-				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
-						+ searchValue + "---------",
-				YesNo.No);
-		if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
-			log(LogStatus.INFO,
-					"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-							+ searchValue + "---------",
-					YesNo.No);
-			
-			if(rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10)) {
+		ArrayList<String>list=	rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+			if(list.isEmpty()) {
 				
 				log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
 			} else {
 				log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+				sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
 			}
 
 		} else {
@@ -1127,28 +1051,6 @@ public class AcuityResearch extends BaseLib{
 					"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
 							+ searchValue + "---------");
 			
-//			xpath = "/span";
-//			List<String> findingsCount = bp.researchFindingsCountForAllResults()
-//					.stream().map(x -> x.getText().trim().replace("New Items", "").replace(":", "")
-//							.replaceAll("[\\t\\n\\r]+", "").trim())
-//					.collect(Collectors.toList());
-//
-//			List<String> researchResultsGridCounts = bp.researchResultsGridCounts().stream()
-//					.map(x -> x.getText().trim()).collect(Collectors.toList());
-//			
-//			int size = findings.length;
-//			
-//			int [] find = new int [size];
-//					 
-//			for(int i=1; i<=size;i++)
-//			{
-//				find[i] = Integer.parseInt(findings[i]);
-//				if(find[i] != 0 && findings[i] != null)
-//				{
-//					String ExcelCounts = findings[i];
-//					log(LogStatus.PASS, "Excel counts are: "+ExcelCounts, YesNo.No);
-//				}
-//			}
 	}
 		if (rp.mouseHoverOnNavigationAndGetText()) {
 			log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
@@ -1169,30 +1071,20 @@ public class AcuityResearch extends BaseLib{
 		{		
 			headerName = rp.getElementsFromGrid().get(i).getText();
 			String recordName = rp.clickOnRecordUsingGridName(headerName, 30).getText();
-			rp.clickOperationOnRecordForGrid(headerName,recordName);
-			rp.VerifyViewMoreOption(headerName);
 			
-			
+			if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+				log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+			} else {
+				log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+				sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+			}
+			if (rp.VerifyViewMoreOption(headerName)) {
+				log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+			} else {
+				log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+			}
 		}
-		
-//		for(int i=0; i<gridSize; i++)
-//		{
-//		clickOperationOnRecordForGrid();
-//		}
-		//ResaerchPageBusinessLayer
-//			if(gridText.toLowerCase().contains(searchValue.toLowerCase()))
-//			{
-//				log(LogStatus.INFO,"In " + gridWiseHeading + " Text in Grid is : " + gridText,YesNo.No);
-//				sa.assertTrue(true,"In " + gridWiseHeading + " Search Keyword" + searchValue + "is contained in " + gridText);
-//			}
-//			else
-//			{
-//				log(LogStatus.ERROR,"In " + gridWiseHeading + " Text in Grid is : " + gridText,YesNo.No);
-//				sa.assertTrue(false,"In " + gridWiseHeading +" Search Keyword" + searchValue + "does not contain in " + gridText);
-//			}
-//		}
-		
-//		}
+
 	}
 	switchToDefaultContent(driver);
 	lp.CRMlogout();
@@ -1200,4 +1092,122 @@ public class AcuityResearch extends BaseLib{
 	
 	}
 
+@Parameters({ "projectName"})
+@Test
+	public void ARTc007_VerifyResearchFunctionalityForValidData(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
+	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+	lp.CRMLogin(superAdminUserName, adminPassword, appName);
+	ThreadSleep(2000);
+	String xpath,ele;
+	String headerName;
+	ArrayList<String> list=new ArrayList<>();
+	
+	String[] searchValues = readAllDataForAColumn(AcuityDataSheetFilePath, "SearchData" , 1,false).split("<break>");
+	
+	
+	for(String searchValue : searchValues) {
+		
+		String varibale =ExcelUtils.readData(AcuityDataSheetFilePath,"SearchData",excelLabel.ResearchFindings, searchValue, excelLabel.Variable_Name);
+		
+		log(LogStatus.PASS, "WOrking for " + searchValue, YesNo.Yes);
+	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+		xpath = "//div[contains(@class,'DOCKED')]//div//input";
+		if(sendKeysAndPressEnter(driver, bp.getTextAreaResearch(10),searchValue, xpath, action.BOOLEAN)){
+			ThreadSleep(2000);
+			clickUsingJavaScript(driver, bp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+			ThreadSleep(8000);
+			xpath = "//div[contains(@class,'normal')]//span[contains(@class,'italic')]";
+			ele = FindElement(driver, xpath,searchValue, action.BOOLEAN, 10).getText();
+			if (ele.equals(searchValue)) {
+			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
+			sa.assertTrue(true, ele +" is matched with " +searchValue);
+			}
+			xpath = "//h2[contains(@class,'vertical__title')]";
+			ele = FindElement(driver, xpath,"Research Findings", action.BOOLEAN, 10).getText();
+			if (ele!=null && ele.equalsIgnoreCase("Research Findings")) {
+			log(LogStatus.PASS, ele +" is visible", YesNo.Yes);
+			sa.assertTrue(true, ele +" is visible");
+			}
+			
+	} else {
+		log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
+		sa.assertTrue(false,"Not Able to send value "+searchValue);
+	}
+}
+	log(LogStatus.INFO,
+			"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+					+ searchValue + "---------",
+			YesNo.No);
+		
+		if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
+			log(LogStatus.INFO,
+					"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+							+ searchValue + "---------",
+					YesNo.No);
+			
+
+		} else {
+			log(LogStatus.FAIL,
+					"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+							+ searchValue + "---------",
+					YesNo.No);
+			sa.assertTrue(false,
+					"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+							+ searchValue + "---------");
+			
+	}
+		list=	rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+
+		if(list.isEmpty()) {
+			
+			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+		} else {
+			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+		}
+		
+		if (rp.mouseHoverOnNavigationAndGetText()) {
+			log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+		} else {
+			log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+			sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+		}
+		
+		if (rp.mouseHoverOnGridAndGetText()) {
+			log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+		} else {
+			log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+			sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+		}
+		int gridSize = rp.getElementsFromGrid().size();
+		log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+		for(int i=0; i<gridSize; i++)
+		{		
+			headerName = rp.getElementsFromGrid().get(i).getText();
+			String recordName = rp.clickOnRecordUsingGridName(headerName, 30).getText();
+			
+			if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+				log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+			} else {
+				log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+				sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+			}
+			if (rp.VerifyViewMoreOption(headerName)) {
+				log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+			} else {
+				log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+				sa.assertTrue(false,"--------- Not able to click on view more option for" + headerName + " ---------");
+			}
+		}
+
+	}
+	switchToDefaultContent(driver);
+	lp.CRMlogout();
+	sa.assertAll();
+	
+	}
 }

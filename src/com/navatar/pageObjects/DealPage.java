@@ -297,5 +297,10 @@ public class DealPage extends BasePageBusinessLayer {
 	public WebElement getSourceFirmCrossIcon(String projectName, int timeOut) {
 		return isDisplayed(driver, SourceFirmCrossIcon, "Visibility", timeOut, "SourceFirmCrossIcon");
 	}
-	
+	@FindBy(xpath = "//*[text()='Replace value on records with ']/../..//select")
+	private WebElement replacevalueforstage;
+
+	public WebElement getreplacevalueforstage(String projectName, int timeOut) {
+		return isDisplayed(driver, replacevalueforstage, "Visibility", timeOut, "replacevalueforstage");
+	}
 }

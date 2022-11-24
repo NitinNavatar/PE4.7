@@ -1319,4 +1319,77 @@ public class ExcelUtils {
 		return map;
 	}
 	
+	
+	 /* @author Ravi kumar
+	  * @param filepath
+	 * @param sheetName
+	 * @param columnName
+	 * @return String
+	 * @description This method read the cell data according to column Name passed.
+	 */
+	public static String readDataForResearch(String filepath, String sheetName, String columnName) {
+		String value = "";
+		String testCaseName;
+		String tcName = AppListeners.currentlyExecutingTC;
+		String colName;
+		int cellNum = 0;
+		try {
+			fis = new FileInputStream(new File(filepath));
+			wb = WorkbookFactory.create(fis);
+			DataFormatter df = new DataFormatter();
+			int lastRow = wb.getSheet(sheetName).getLastRowNum();
+			System.out.println(lastRow);
+			for (int i = 1; i <= lastRow; i++) {
+				try {
+					Cell cell = wb.getSheet(sheetName).getRow(i).getCell(0);
+					testCaseName = getValueBasedOnCellType(cell);
+					if (!testCaseName.isEmpty() && tcName.contains(testCaseName)) {
+						int lastColumnNum = wb.getSheet(sheetName).getRow(0).getLastCellNum();
+						System.out.println(lastColumnNum);
+						for (int j = 0; j <= lastColumnNum; j++) {
+							try {
+								cell = wb.getSheet(sheetName).getRow(0).getCell(j);
+								colName = getValueBasedOnCellType(cell);
+								if (!colName.isEmpty() && colName.equalsIgnoreCase(columnName)) {
+									cellNum = j;
+									break;
+								} else {
+									if (j == lastColumnNum) {
+										AppListeners.appLog.info(columnName + " is not found.");
+										return "";
+									}
+									continue;
+								}
+							} catch (Exception e) {
+								AppListeners.appLog.info("Column number '" + j
+										+ "' is blank. So will not be able to read data from column number '" + j
+										+ "'. Kindly Delete the column or enter some value.");
+							}
+						}
+						cell = wb.getSheet(sheetName).getRow(i).getCell(cellNum);
+						value = getValueBasedOnCellType(cell);
+						break;
+					} else {
+						if (i == lastRow) {
+							AppListeners.appLog.info(tcName + " is not found.");
+							break;
+						}
+						continue;
+					}
+				} catch (Exception e) {
+					AppListeners.appLog
+							.info("Row number '" + i + "' is blank. So will not be able to read data from row number '"
+									+ i + "'. Kindly Delete the row or enter some value.");
+				}
+			}
+			fis.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			AppListeners.appLog
+					.info("File Path '" + path + "' or Sheet Name '" + sheetName + "' is wrong kindly re-check.");
+			return null;
+		}
+		return value;
+
+	}
 }
