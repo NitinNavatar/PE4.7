@@ -565,6 +565,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 		InstitutionsPageBusinessLayer ins = new InstitutionsPageBusinessLayer(driver);
 		String labelNames[] = null;
 		String labelValue[] = null;
+		boolean flag = false;
 		if (otherLabelFields != null && otherLabelValues != null) {
 			labelNames = otherLabelFields.split(",");
 			labelValue = otherLabelValues.split(",");
@@ -576,7 +577,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 			} else {
 				appLog.error("Not able to click on related list tab so cannot create contact: " + contactFirstName + " "
 						+ contactLastName);
-				return false;
+				return flag;
 			}
 
 			if (click(driver, ins.getNewContactBtn(projectName, 30), "new contact button in " + projectName,
@@ -585,7 +586,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 			} else {
 				appLog.error("Not able to click on new button on institution page so cannot create contact: "
 						+ contactFirstName + " " + contactLastName);
-				return false;
+				return flag;
 			}
 		} else {
 			refresh(driver);
@@ -603,11 +604,11 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 							ThreadSleep(1000);
 						} else {
 							appLog.error("Not Able to Clicked on Next Button");
-							return false;
+							return flag;
 						}
 					} else {
 						appLog.error("Not Able to Clicked on radio Button for record type : " + recordType);
-						return false;
+						return flag;
 					}
 
 				}
@@ -615,7 +616,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 			} else {
 				appLog.error("Not able to click on New Button so cannot create Contact: " + contactFirstName + " "
 						+ contactLastName);
-				return false;
+				return flag;
 			}
 		}
 		WebElement ele = null;
@@ -638,12 +639,12 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 							appLog.info(legalName + "  is present in list.");
 						} else {
 							appLog.info(legalName + "  is not present in the list.");
-							return false;
+							return flag;
 						}
 
 					} else {
 						appLog.error("Not able to enter legal name");
-						return false;
+						return flag;
 					}
 				}
 				ThreadSleep(2000);
@@ -753,7 +754,9 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 						if (getNavigationTabSaveBtn(projectName, 5) != null) {
 							click(driver, getNavigationTabSaveBtn(projectName, 60), "save", action.BOOLEAN);
 						}
+						
 						ThreadSleep(3000);
+						
 						if (creationPage.toString().equalsIgnoreCase(CreationPage.AccountPage.toString())) {
 							if (clickOnGridSection_Lightning(projectName, RelatedList.Contacts, 30)) {
 								ele = isDisplayed(driver,
@@ -768,7 +771,7 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 									if (contactFullName.contains(contactFirstName + " " + contactLastName)) {
 										appLog.info("Contact Created Successfully :" + contactFirstName + " "
 												+ contactLastName);
-										return true;
+										flag= true;
 									} else {
 										appLog.error("Contact did not get created successfully :" + contactFirstName
 												+ " " + contactLastName);

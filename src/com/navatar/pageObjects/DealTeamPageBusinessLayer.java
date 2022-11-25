@@ -113,8 +113,7 @@ public class DealTeamPageBusinessLayer extends DealTeamPage{
 				ele = FindElement(driver, xpath, "dt id", action, timeOut);
 				if (ele!=null) {
 					String id=getText(driver, ele, "deal team id",action.SCROLLANDBOOLEAN);
-					ExcelUtils.writeData(phase1DataSheetFilePath,id, "Deal Team", excelLabel.Variable_Name, basedOnValue,
-							excelLabel.DTID);
+					
 				
 					log(LogStatus.INFO,"successfully created and noted id of DT"+id+" and deal name "+dealName,YesNo.No);	
 				} else {
