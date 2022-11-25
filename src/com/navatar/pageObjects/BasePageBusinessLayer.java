@@ -13861,55 +13861,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	}
 
-	public ArrayList<String> verifyFieldonResearchPage(String environment, String mode, String[][] Data) {
-
-		String tableData = null;
-		ArrayList<String> verifyData = new ArrayList<String>();
-		int row = Data.length;
-		ArrayList<String> DataFromExcel = new ArrayList<String>();
-
-		for (int i = 0; i < row; i++) {
-			for (int j = 0; j < Data[0].length; j++) {
-				DataFromExcel.add(Data[i][j]);
-			}
-		}
-
-		String xpath = "//div[contains(@class,'active')]//a";
-		List<WebElement> ele = CommonLib.FindElements(driver, xpath, "Data");
-		ArrayList<String> DataFromOrg = new ArrayList<String>();
-		for (int i = 0; i < ele.size(); i++) {
-			try {
-				tableData = CommonLib.getText(driver, ele.get(i), ele.get(i) + " from Org", action.SCROLLANDBOOLEAN);
-				ThreadSleep(2000);
-				click(driver, getFieldName(tableData, 10), xpath, action.BOOLEAN);
-				ThreadSleep(2000);
-				if (tableData != "") {
-					DataFromOrg.add(tableData);
-				}
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				log(LogStatus.ERROR, "Could not get the " + ele.get(i) + " Data from File", YesNo.Yes);
-				verifyData.add("Could not get the " + ele.get(i) + " from File");
-
-			}
-		}
-
-		for (int i = 0; i < DataFromExcel.size(); i++) {
-			if (DataFromOrg.get(i).equals(DataFromExcel.get(i))) {
-				log(LogStatus.INFO, "Data from Excel : " + DataFromExcel.get(i)
-						+ " has been matched with the Org Data : " + DataFromOrg.get(i), YesNo.No);
-			} else {
-				log(LogStatus.ERROR, "Data from Excel : " + DataFromExcel.get(i)
-						+ " is not matched with the Org Data : " + DataFromOrg.get(i), YesNo.Yes);
-				verifyData.add(DataFromExcel.get(i));
-
-			}
-		}
-
-		return verifyData;
-	}
-
 	public boolean verifySectionsAndTooltipOnAcuityTab(List<String> sectionHeaderName, List<String> toolTipMessage) {
 		String xPath;
 		List<WebElement> elements;

@@ -1336,10 +1336,9 @@ public class ExcelUtils {
 		try {
 			fis = new FileInputStream(new File(filepath));
 			wb = WorkbookFactory.create(fis);
-			DataFormatter df = new DataFormatter();
 			int lastRow = wb.getSheet(sheetName).getLastRowNum();
 			System.out.println(lastRow);
-			for (int i = 1; i <= lastRow; i++) {
+			for (int i = 2; i <= lastRow; i++) {//changed value of i from 1 to 2
 				try {
 					Cell cell = wb.getSheet(sheetName).getRow(i).getCell(0);
 					testCaseName = getValueBasedOnCellType(cell);

@@ -7425,58 +7425,7 @@ public abstract class BasePage extends BaseLib {
 		}
 	}
 
-	// Acuity Research
-	@FindBy(xpath = "//div[contains(@class,'DOCKED')]//div//input")
-	private WebElement textAreaResearch;
-
-	public WebElement getTextAreaResearch(int timeOut) {
-		return isDisplayed(driver, textAreaResearch, "Visibility", timeOut, "Text Area Research");
-
-	}
-
-	@FindBy(xpath = "(//div[contains(@class,'DOCKED')]//div//button)[1]")
-	private WebElement researchMinimize;
-
-	public WebElement getResearchMinimize(int timeOut) {
-		return isDisplayed(driver, researchMinimize, "Visibility", timeOut, "Research Minimize");
-
-	}
-
-	@FindBy(xpath = "(//div[contains(@class,'DOCKED')]//div//button)[2]")
-	private WebElement researchPopOut;
-
-	public WebElement getResearchPopOut(int timeOut) {
-		return isDisplayed(driver, researchPopOut, "Visibility", timeOut, "Research Pop-Out");
-
-	}
-
-	@FindBy(xpath = "(//div[contains(@class,'DOCKED')]//div//button)[3]")
-	private WebElement researchButton;
-
-	public WebElement getResearchButton(int timeOut) {
-		return isDisplayed(driver, researchButton, "Visibility", timeOut, "Research Button");
-
-	}
-
-	@FindBy(xpath = "(//h2[contains(@class,'vertical__title')]")
-	private WebElement researchFindings;
-
-	public WebElement getResearchFindings(int timeOut) {
-		return isDisplayed(driver, researchFindings, "Visibility", timeOut, "Research Findings");
-
-	}
-
-	public WebElement getFieldName(String tableName, int timeOut) {
-		String xpath = "//div[contains(@class,'active')]//a[text()='" + tableName + "']";
-
-		return FindElement(driver, xpath, "Field Header Name: " + tableName, action.SCROLLANDBOOLEAN, timeOut);
-	}
-
-	public List<WebElement> researchFindingsCountForAllResults() {
-		return FindElements(driver, "//div[contains(@class,'active')]//h2/following-sibling::div//a/span",
-				"researchFIndingsCountResults");
-	}
-
+	
 	@FindBy(xpath = "//*[local-name()='svg' and @class='slds-icon slds-icon-text-default slds-icon_small']/../..")
 	private WebElement notificationIcon;
 
