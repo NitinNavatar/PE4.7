@@ -11879,14 +11879,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			ele = CommonLib.FindElement(driver, xPath, "Due Date", action.SCROLLANDBOOLEAN, 30);
 			String date = getText(driver, ele, "Due Date", action.SCROLLANDBOOLEAN);
 
-			String[] actualDate = new String[1];
-			if (date.contains(",")) {
-				String[] val = date.split(",");
-				actualDate[0] = val[0];
-			} else {
-				actualDate[0] = date;
-			}
-			if (dueDate.equals(actualDate[0])) {
+			if (dueDate.toLowerCase().trim().equals(date.toLowerCase().trim())) {
 				log(LogStatus.INFO, "Actual result : " + date + " has been matched with expected result : " + dueDate
 						+ " for Due Date", YesNo.No);
 			} else {
@@ -18133,6 +18126,224 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			return false;
 		}
 		return flag;
+	}
+	
+	public ArrayList<String> verifyRecordOnContactSectionAcuity(String[] name, String title[], String deals[],
+			String meetingAndCalls[], String email[]) {
+		String xPath = "";
+		WebElement ele = null;
+		ArrayList<String> result = new ArrayList<String>();
+		if (name.length!=0) {
+			if(name.length==title.length && name.length==deals.length && name.length==meetingAndCalls.length && name.length==email.length)
+			{
+				for(int i=0; i<name.length; i++)
+				{
+					if(name[i]!=null && name[i]!="")
+					{
+						xPath = "//td[@data-label='Name']//a[text()='" + name[i] + "']";
+						ele = CommonLib.FindElement(driver, xPath, name[i]+" Contact name", action.SCROLLANDBOOLEAN, 30);
+						String actualName=getText(driver, ele, name[i]+" Contact name", action.SCROLLANDBOOLEAN);
+						if (actualName.toLowerCase().trim().equals(name[i].toLowerCase().trim())) {								
+							log(LogStatus.INFO, "Expected contact name : "+name[i]+" has been match with the Actual Contact Name : "+actualName, YesNo.No);
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Expected contact name : "+name[i]+" is not match with the Actual Contact Name : "+actualName, YesNo.No);
+							result.add("Expected contact name : "+name[i]+" is not match with the Actual Contact Name : "+actualName);	
+						}
+
+
+						if (title[i] != null && title[i]!="") {
+							xPath = "//a[text()='" + name[i]
+									+ "']/ancestor::td[@data-label='Name']/..//td[@data-label='Title']//span";
+							ele = CommonLib.FindElement(driver, xPath, "title", action.SCROLLANDBOOLEAN, 30);
+							String actualTitle = getText(driver, ele, "title", action.SCROLLANDBOOLEAN);
+							if (actualTitle.toLowerCase().trim().equals(title[i].toLowerCase().trim())) {
+								log(LogStatus.INFO, "Actual result " + actualTitle
+										+ " of Title has been matched with Expected result : " + title[i], YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Actual result " + actualTitle
+										+ " of Title is not matched with Expected result : " + title[i], YesNo.No);
+								result.add("Actual result " + actualTitle + " of Title is not matched with Expected result : "
+										+ title[i]);
+							}
+						}
+
+
+						if (deals[i] != null && deals[i] != "") {
+							xPath = "//a[text()='" + name[i]
+									+ "']/ancestor::td[@data-label='Name']/..//td[@data-label='Deals']//span";
+							ele = CommonLib.FindElement(driver, xPath, "deal", action.SCROLLANDBOOLEAN, 30);
+							String actualDeal = getText(driver, ele, "deal", action.SCROLLANDBOOLEAN);
+							if (actualDeal.toLowerCase().trim().equals(deals[i].toLowerCase().trim())) {
+								log(LogStatus.INFO, "Actual result : " + actualDeal
+										+ " of deal has been matched with Expected resut : " + deals[i], YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Actual result : " + actualDeal
+										+ " of deal are not matched with Expected result : " + deals[i], YesNo.No);
+								result.add("Actual result : " + actualDeal + " of deal are not matched with Expected result : "
+										+ deals[i]);
+							}
+						}
+
+
+						if (meetingAndCalls[i] != null && meetingAndCalls[i]!="") {
+							xPath = "//a[text()='" + name[i]
+									+ "']/ancestor::td[@data-label='Name']/..//td[@data-label='Meetings and Calls']//span";
+							ele = CommonLib.FindElement(driver, xPath, "meeting and call", action.SCROLLANDBOOLEAN, 30);
+							String actualmeetingAndCalls = getText(driver, ele, "meeting and call", action.SCROLLANDBOOLEAN);
+							if (actualmeetingAndCalls.toLowerCase().trim().equals(meetingAndCalls[i].toLowerCase().trim())) {
+								log(LogStatus.INFO, "Actual result " + actualmeetingAndCalls
+										+ " of meeting and call has been matched with Expected result : " + meetingAndCalls[i],
+										YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Actual result " + actualmeetingAndCalls
+										+ " of meeting and call are not matched with Expected result : " + meetingAndCalls[i],
+										YesNo.No);
+								result.add("Actual result " + actualmeetingAndCalls
+										+ " of meeting and call are not matched with Expected result : " + meetingAndCalls[i]);
+							}
+						}
+				
+
+						if (email[i] != null && email[i]!="") {
+							xPath = "//a[text()='" + name[i]
+									+ "']/ancestor::td[@data-label='Name']/..//td[@data-label='Emails']//span";
+							ele = CommonLib.FindElement(driver, xPath, "email", action.SCROLLANDBOOLEAN, 30);
+							String actualEmail = getText(driver, ele, "email", action.SCROLLANDBOOLEAN);
+							if (actualEmail.toLowerCase().trim().equals(email[i].toLowerCase().trim())) {
+								log(LogStatus.INFO, "Actual result " + actualEmail
+										+ " of email has been matched with Expected result : " + email[i], YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Actual result " + actualEmail
+										+ " of email are not matched with Expected result : " + email[i], YesNo.No);
+								result.add("Actual result " + actualEmail + " of email are not matched with Expected result : "
+										+ email[i]);
+							}
+						}
+			
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Either name is null or blank", YesNo.No);
+						result.add("Either name is null or blank");	
+					}
+				}
+			}
+			else {
+				log(LogStatus.ERROR, "The length of Expected Contact Name, Contact title, Contact deal, Contact meeting and call, Contact Email are not equal.", YesNo.No);
+				result.add("The length of Expected Contact Name, Contact title, Contact deal, Contact meeting and call, Contact Email are not equal.");
+			}
+		}
+		else {
+			log(LogStatus.ERROR, "Please provide the contact name. Contat name should not be blank", YesNo.No);
+			result.add("Please provide the contact name. Contat name should not be blank");
+		}
+
+		return result;
+	}
+	
+	
+	public ArrayList<String> verifyRecordsonInteractionsViewAllPopup(String[] icon,String[] date, String[] subject, String[] details,
+			String[] assignedTo, String[] correspondenceHeader) {
+		String xPath;
+		WebElement ele;
+		ArrayList<String> result = new ArrayList<String>();
+		if (correspondenceHeader != null && correspondenceHeader.length != 0) {
+			for (int i = 0; i < correspondenceHeader.length; i++) {
+				
+				if(icon[i]!=null && icon.length!=0 && icon[i]!="")
+				{
+					xPath="//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"+correspondenceHeader[i]+"']/ancestor::tr//th[@data-label='Type']//lightning-icon";
+				    ele=FindElement(driver, xPath, "Icon type of "+correspondenceHeader[i], action.SCROLLANDBOOLEAN, 20);
+				    String iconVal=getAttribute(driver, ele, "Icon type", "class");
+				    if(iconVal.contains(icon[i].toLowerCase()))
+				    {
+				    	log(LogStatus.INFO,"The icon :"+icon[i]+" has been verified against "+correspondenceHeader[i]+" record",YesNo.No);
+				    }
+				    else
+				    {
+				    	log(LogStatus.ERROR,"The icon :"+icon[i]+" is not verified against "+correspondenceHeader[i]+" record",YesNo.No);
+				    	result.add("The icon :"+icon[i]+" is not verified against "+correspondenceHeader[i]+" record");
+				    }
+				}
+				
+				if (date != null && date.length != 0 && date[i] != "") {
+					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
+							+ correspondenceHeader[i]
+							+ "']/ancestor::tr//td[@data-label='Date']//lightning-base-formatted-text";
+					ele = FindElement(driver, xPath, "date ", action.SCROLLANDBOOLEAN, 25);
+					String actDate = getText(driver, ele, "date ", action.SCROLLANDBOOLEAN);
+					if (actDate.equalsIgnoreCase(date[i])) {
+						log(LogStatus.INFO,
+								"actual date : " + actDate + " has been matched with the Expected date : " + date[i]+" of subject : "+subject[i],
+								YesNo.No);
+					} else {
+						log(LogStatus.ERROR,
+								"actual date : " + actDate + " is not matched with the Expected date : " + date[i]+" of subject : "+subject[i],
+								YesNo.No);
+						result.add("actual date : " + actDate + " is not matched with the Expected date : " + date[i]+" of subject : "+subject[i]);
+					}
+				}
+				if (subject != null && subject.length != 0 && subject[i] != "") {
+					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
+							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Subject']//a";
+					ele = FindElement(driver, xPath, "subject ", action.SCROLLANDBOOLEAN, 25);
+					String actSubject = getText(driver, ele, "subject ", action.SCROLLANDBOOLEAN);
+					if (actSubject.equalsIgnoreCase(subject[i])) {
+						log(LogStatus.INFO, "actual subject : " + actSubject
+								+ " has been matched with the Expected subject : " + subject[i], YesNo.No);
+					} else {
+						log(LogStatus.ERROR, "actual subject : " + actSubject
+								+ " is not matched with the Expected subject : " + subject[i], YesNo.No);
+						result.add("actual subject : " + actSubject + " is not matched with the Expected subject : "
+								+ subject[i]);
+					}
+				}
+				if (details != null && details.length != 0 && details[i] != "") {
+					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
+							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Details']//button";
+					ele = FindElement(driver, xPath, "details ", action.SCROLLANDBOOLEAN, 25);
+					String actDetails = getText(driver, ele, "details ", action.SCROLLANDBOOLEAN);
+					if (actDetails.trim().equalsIgnoreCase(actDetails.trim().replaceAll(" +", " "))) {
+						log(LogStatus.INFO, "actual details : " + actDetails
+								+ " has been matched with the Expected details : " + details[i]+" of subject : "+subject[i], YesNo.No);
+					} else {
+						log(LogStatus.ERROR, "actual details : " + actDetails
+								+ " is not matched with the Expected details : " + details[i]+" of subject : "+subject[i], YesNo.No);
+						result.add("actual details : " + actDetails + " is not matched with the Expected details : "
+								+ details[i]+" of subject : "+subject[i]);
+					}
+				}
+				if (assignedTo != null && assignedTo.length != 0 && assignedTo[i] != "") {
+					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
+							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Assigned To']//a";
+					ele = FindElement(driver, xPath, "assigned to ", action.SCROLLANDBOOLEAN, 25);
+					String actAssigned = getText(driver, ele, "assigned to ", action.SCROLLANDBOOLEAN);
+					if (actAssigned.equalsIgnoreCase(assignedTo[i])) {
+						log(LogStatus.INFO,
+								"actual AssignedTo value : " + actAssigned
+										+ " has been matched with the Expected AssignedTo value : " + assignedTo[i]+" of subject : "+subject[i],
+								YesNo.No);
+					} else {
+						log(LogStatus.ERROR,
+								"actual AssignedTo value : " + actAssigned
+										+ " is not matched with the Expected AssignedTo value : " + assignedTo[i]+" of subject : "+subject[i],
+								YesNo.No);
+						result.add("actual AssignedTo value : " + actAssigned
+								+ " is not matched with the Expected AssignedTo value : " + assignedTo[i]+" of subject : "+subject[i]);
+					}
+				}
+			}
+		} else {
+			log(LogStatus.ERROR,
+					"Either correspondence is null or Empty. Please provide data to verify data on interaction popup ",
+					YesNo.No);
+			result.add(
+					"Either correspondence is null or Empty. Please provide data to verify data on interaction popup");
+		}
+		return result;
 	}
 
 }
