@@ -3,6 +3,7 @@ package com.navatar.scripts;
 
 import static com.navatar.generic.CommonLib.ThreadSleep;
 import static com.navatar.generic.CommonLib.click;
+import static com.navatar.generic.CommonLib.getText;
 import static com.navatar.generic.CommonLib.getURL;
 import static com.navatar.generic.CommonLib.log;
 import static com.navatar.generic.CommonLib.refresh;
@@ -61,7 +62,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String task1Notes = "";
 		String relatedTo = "Con 1<break>con 2<break>con 3<break>Sumo Logic<break>Houlihan Lokey<break>Vertica";
 		String priority = "Normal";
-		String status = "Not started";
+		String status = "Not Started";
 
 		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
 				{ "Related_To", relatedTo } };
@@ -863,8 +864,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				sa.assertTrue(false, "Not able to open " + recordName + " record");
 			}
 		} else {
-			log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj1, YesNo.No);
-			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
+			log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj2, YesNo.No);
+			sa.assertTrue(false, "Not able to click on Tab : " + tabObj2);
 		}
 
 		ThreadSleep(5000);
@@ -2096,7 +2097,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 									if (BP.updateActivityTimelineRecordForMultipleFollowUpTasks(projectName,
 											task1UpdateBasicSection, null, task1UpdateTaskSection, updatedSuggestedTags,
-											null)) {
+											null, false, false)) {
 										log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
 
 										CommonLib.refresh(driver);
@@ -2663,8 +2664,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[] updatedRemoveRelatedAssociation = "Maxtra<break>Demo Deal".split("<break>", -1);
 
-		String updatedRelatedTo = "Mutual Fund<break>FC Fundraising<break>Acc 1";
-
 		String[] updatedSuggestedTags = null;
 
 		String verificationUpdatedRelatedTo = "Con 1<break>con 2<break>Acc 3<break>con 4<break>con 5";
@@ -3103,6 +3102,2756 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		} else {
 			log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj1, YesNo.No);
 			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
+		}
+
+		ThreadSleep(5000);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName" })
+
+	@Test
+	public void AcuityMNNRTc059_CreateATaskAndTagContact1to50InCommentSectionAndCheckInPopUpContact1To50ShouldGetDisplayWithoutAnyContactGetsMissout(
+			String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
+
+		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt("3"));
+		String getAdvanceDueDate = AdvanceDueDate;
+
+		String task1SubjectName = "Task bulk contact";
+		String task1Notes = "";
+		String relatedTo = "Max<break>Martha<break>Acc 3<break>Maxtra";
+
+		String priority = "Normal";
+		String status = "Completed";
+		String task1ButtonName = "Task";
+		String[] suggestedTags = null;
+		String verificationRelatedTo = relatedTo;
+
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", relatedTo } };
+
+		String[][] task1AdvancedSection = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", verificationRelatedTo } };
+
+		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String recordName = "Acc 3";
+		String recordType = "Company";
+
+		String[] RelatedToVerifyInInteraction = "Max<break>Martha<break>+3".split("<break>");
+
+		String updatedNotesOfTask = "Con 1, con 2, con 3, con 4, con 5, con 6, con 7, con 8, con 9, con 10, con 11, con 12, con 13, con 14, con 15, con 16, con 17, con 18, con 19, con 20, con 21, con 22, con 23, con 24, con 25, con 26, con 27, con 28, con 29, con 30, con 31, con 32, con 33, con 34, con 35, con 36, con 37, con 38, con 39, con 40, con 41, con 42, con 43, con 44, con 45, con 46, con 47, con 48, con 49, con 50";
+
+		String[][] task1UpdateBasicSection = { { "Notes", updatedNotesOfTask } };
+		String[] updatedSuggestedTags = "Con 1<break>con 2<break>con 3<break>con 4<break>con 5<break>con 6<break>con 7<break>con 8<break>con 9<break>con 10<break>con 11<break>con 12<break>con 13<break>con 14<break>con 15<break>con 16<break>con 17<break>con 18<break>con 19<break>con 20<break>con 21<break>con 22<break>con 23<break>con 24<break>con 25<break>con 26<break>con 27<break>con 28<break>con 29<break>con 30<break>con 31<break>con 32<break>con 33<break>con 34<break>con 35<break>con 36<break>con 37<break>con 38<break>con 39<break>con 40<break>con 41<break>con 42<break>con 43<break>con 44<break>con 45<break>con 46<break>con 47<break>con 48"
+				.split("<break>", -1);
+
+		String[] updatedRelatedToVerifyInInteraction = "Max<break>Martha<break>+51".split("<break>", -1);
+		String[] updatedRelatedAssociationVerifyInInteraction = updatedSuggestedTags;
+
+		String updatedRelatedToVerifyInNotes = (relatedTo + "<break>"
+				+ "Con 1<break>con 2<break>con 3<break>con 4<break>con 5<break>con 6<break>con 7<break>con 8<break>con 9<break>con 10<break>con 11<break>con 12<break>con 13<break>con 14<break>con 15<break>con 16<break>con 17<break>con 18<break>con 19<break>con 20<break>con 21<break>con 22<break>con 23<break>con 24<break>con 25<break>con 26<break>con 27<break>con 28<break>con 29<break>con 30<break>con 31<break>con 32<break>con 33<break>con 34<break>con 35<break>con 36<break>con 37<break>con 38<break>con 39<break>con 40<break>con 41<break>con 42<break>con 43<break>con 44<break>con 45<break>con 46<break>con 47<break>con 48");
+
+		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName },
+				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
+
+		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		/*
+		 * ExcelUtils.writeData(AcuityDataSheetFilePath, AdvanceDueDate,
+		 * "Activity Timeline", excelLabel.Variable_Name, "AMNNR_018",
+		 * excelLabel.Advance_Due_Date);
+		 */
+
+		CommonLib.refresh(driver);
+
+		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+			home.notificationPopUpClose();
+			if (BP.createActivityTimeline(projectName, true, task1ButtonName, task1BasicSection, task1AdvancedSection,
+					null, suggestedTags)) {
+				log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
+
+			} else {
+				log(LogStatus.FAIL, "Activity timeline record is not created", YesNo.No);
+				sa.assertTrue(false, "Activity timeline record is not created");
+			}
+
+		} else {
+			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
+			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
+		}
+
+		CommonLib.refresh(driver);
+
+		log(LogStatus.INFO,
+				"---------Now Going to Verify Task: " + task1SubjectName + " in Edit Mode of Task Detail Page---------",
+				YesNo.No);
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+					30)) {
+				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
+				ThreadSleep(4000);
+				if (BP.clicktabOnPage("Acuity")) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, null,
+							task1SubjectName, task1Notes, true, false, RelatedToVerifyInInteraction, null);
+					if (result.isEmpty()) {
+						log(LogStatus.PASS,
+								"------" + task1SubjectName + " record has been verified on intraction------",
+								YesNo.No);
+						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+							String url = getURL(driver, 10);
+
+							ThreadSleep(10000);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
+									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
+											task1AdvancedSectionVerification, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,
+										"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+										YesNo.No);
+
+								refresh(driver);
+
+								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+									ThreadSleep(10000);
+
+									if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection, null,
+											null, updatedSuggestedTags, null)) {
+										log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
+
+										CommonLib.refresh(driver);
+
+										ThreadSleep(10000);
+
+										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+											String url2 = getURL(driver, 10);
+
+											ThreadSleep(10000);
+											ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
+													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
+															updatedTask1BasicSectionVerification,
+															updatedTask1AdvancedSectionVerification, null);
+											if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
+												log(LogStatus.INFO,
+														"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated,
+														YesNo.No);
+												sa.assertTrue(false,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated);
+
+											}
+
+											CommonLib.refresh(driver);
+											CommonLib.ThreadSleep(5000);
+											ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(
+													getAdvanceDueDate, null, task1SubjectName, updatedNotesOfTask, true,
+													false, updatedRelatedToVerifyInInteraction,
+													updatedRelatedAssociationVerifyInInteraction);
+											if (updatedresult.isEmpty()) {
+												log(LogStatus.PASS,
+														"------" + task1SubjectName
+																+ " record has been verified on intraction------",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------",
+														YesNo.No);
+												sa.assertTrue(false,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------");
+											}
+
+										} else {
+											log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+											sa.assertTrue(false, "Not able to click on Edit Note button");
+										}
+
+									} else {
+										log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
+										sa.assertTrue(false, "Activity timeline record has not Updated");
+									}
+
+								} else {
+									log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+									sa.assertTrue(false, "Not able to click on Edit Note button");
+								}
+
+							} else {
+								log(LogStatus.ERROR,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult,
+										YesNo.No);
+								sa.assertTrue(false,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit Note button");
+						}
+
+					} else {
+						log(LogStatus.ERROR, "------" + task1SubjectName
+								+ " record is not verified on intraction, Reason: " + result + "------", YesNo.No);
+						sa.assertTrue(false, "------" + task1SubjectName
+								+ " record is not verified on intraction, Reason: " + result + "------");
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on Acuity Tab");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to open " + recordName + " record of record type " + recordType,
+						YesNo.No);
+				sa.assertTrue(false, "Not able to open " + recordName + " record of record type " + recordType);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj1, YesNo.No);
+			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
+		}
+
+		ThreadSleep(5000);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName" })
+
+	@Test
+	public void AcuityMNNRTc061_CreateATaskAndTag13RecordsForRelatedAssociationAnd50Contacts(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
+
+		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt("3"));
+		String getAdvanceDueDate = AdvanceDueDate;
+
+		String task1SubjectName = "Task bulk Firm contact";
+		String task1Notes = "";
+		String relatedTo = "Max<break>Martha<break>Vertica<break>Maxtra";
+
+		String priority = "Normal";
+		String status = "Completed";
+		String task1ButtonName = "Task";
+		String[] suggestedTags = null;
+		String verificationRelatedTo = relatedTo;
+
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", relatedTo } };
+
+		String[][] task1AdvancedSection = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", verificationRelatedTo } };
+
+		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String recordName = "Vertica";
+		String recordType = "Company";
+
+		String[] RelatedToVerifyInInteraction = "Max<break>Martha<break>+3".split("<break>");
+
+		String updatedNotesOfTask = "Con 1, con 2, con 3, con 4, con 5, con 6, con 7, con 8, con 9, con 10, con 11, con 12, con 13, con 14, con 15, con 16, con 17, con 18, con 19, con 20, con 21, con 22, con 23, con 24, con 25, con 26, con 27, con 28, con 29, con 30, con 31, con 32, con 33, con 34, con 35, con 36, con 37, con 38, con 39, con 40, con 41, con 42, con 43, con 44, con 45, con 46, con 47, con 48, con 49, con 50, Acc 1, Acc 2, Acc 3, Acc 4, Acc 5, Acc 6, Acc 7, Acc 8, Acc 9, Acc 10, Acc 11, Acc 12, Acc 13";
+
+		String[][] task1UpdateBasicSection = { { "Notes", updatedNotesOfTask } };
+		String[] updatedSuggestedTags = "Con 1<break>con 2<break>con 3<break>con 4<break>con 5<break>con 6<break>con 7<break>con 8<break>con 9<break>con 10<break>con 11<break>con 12<break>con 13<break>con 14<break>con 15<break>con 16<break>con 17<break>con 18<break>con 19<break>con 20<break>con 21<break>con 22<break>con 23<break>con 24<break>con 25<break>con 26<break>con 27<break>con 28<break>con 29<break>con 30<break>con 31<break>con 32<break>con 33<break>con 34<break>con 35<break>con 36<break>con 37<break>con 38<break>con 39<break>con 40<break>con 41<break>con 42<break>con 43<break>con 44<break>con 45<break>con 46<break>con 47<break>con 48<break>Acc 1<break>Acc 2<break>Acc 3<break>Acc 4<break>Acc 5<break>Acc 6<break>Acc 7<break>Acc 8<break>Acc 9<break>Acc 10<break>Acc 11<break>Acc 12<break>Acc 13"
+				.split("<break>", -1);
+
+		String[] updatedRelatedToVerifyInInteraction = "Max<break>Martha<break>+64".split("<break>", -1);
+		String[] updatedRelatedAssociationVerifyInInteraction = updatedSuggestedTags;
+
+		String updatedRelatedToVerifyInNotes = (relatedTo + "<break>"
+				+ "Con 1<break>con 2<break>con 3<break>con 4<break>con 5<break>con 6<break>con 7<break>con 8<break>con 9<break>con 10<break>con 11<break>con 12<break>con 13<break>con 14<break>con 15<break>con 16<break>con 17<break>con 18<break>con 19<break>con 20<break>con 21<break>con 22<break>con 23<break>con 24<break>con 25<break>con 26<break>con 27<break>con 28<break>con 29<break>con 30<break>con 31<break>con 32<break>con 33<break>con 34<break>con 35<break>con 36<break>con 37<break>con 38<break>con 39<break>con 40<break>con 41<break>con 42<break>con 43<break>con 44<break>con 45<break>con 46<break>con 47<break>con 48<break>Acc 1<break>Acc 2<break>Acc 3<break>Acc 4<break>Acc 5<break>Acc 6<break>Acc 7<break>Acc 8<break>Acc 9<break>Acc 10<break>Acc 11<break>Acc 12<break>Acc 13");
+
+		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName },
+				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
+
+		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		/*
+		 * ExcelUtils.writeData(AcuityDataSheetFilePath, AdvanceDueDate,
+		 * "Activity Timeline", excelLabel.Variable_Name, "AMNNR_018",
+		 * excelLabel.Advance_Due_Date);
+		 */
+
+		CommonLib.refresh(driver);
+
+		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+			home.notificationPopUpClose();
+			if (BP.createActivityTimeline(projectName, true, task1ButtonName, task1BasicSection, task1AdvancedSection,
+					null, suggestedTags)) {
+				log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
+
+			} else {
+				log(LogStatus.FAIL, "Activity timeline record is not created", YesNo.No);
+				sa.assertTrue(false, "Activity timeline record is not created");
+			}
+
+		} else {
+			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
+			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
+		}
+
+		CommonLib.refresh(driver);
+
+		log(LogStatus.INFO,
+				"---------Now Going to Verify Task: " + task1SubjectName + " in Edit Mode of Task Detail Page---------",
+				YesNo.No);
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+					30)) {
+				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
+				ThreadSleep(4000);
+				if (BP.clicktabOnPage("Acuity")) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, null,
+							task1SubjectName, task1Notes, true, false, RelatedToVerifyInInteraction, null);
+					if (result.isEmpty()) {
+						log(LogStatus.PASS,
+								"------" + task1SubjectName + " record has been verified on intraction------",
+								YesNo.No);
+						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+							String url = getURL(driver, 10);
+
+							ThreadSleep(10000);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
+									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
+											task1AdvancedSectionVerification, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,
+										"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+										YesNo.No);
+
+								refresh(driver);
+
+								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+									ThreadSleep(10000);
+
+									if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection, null,
+											null, updatedSuggestedTags, null)) {
+										log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
+
+										CommonLib.refresh(driver);
+
+										ThreadSleep(10000);
+
+										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+											String url2 = getURL(driver, 10);
+
+											ThreadSleep(10000);
+											ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
+													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
+															updatedTask1BasicSectionVerification,
+															updatedTask1AdvancedSectionVerification, null);
+											if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
+												log(LogStatus.INFO,
+														"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated,
+														YesNo.No);
+												sa.assertTrue(false,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated);
+
+											}
+
+											CommonLib.refresh(driver);
+											CommonLib.ThreadSleep(5000);
+											ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(
+													getAdvanceDueDate, null, task1SubjectName, updatedNotesOfTask, true,
+													false, updatedRelatedToVerifyInInteraction,
+													updatedRelatedAssociationVerifyInInteraction);
+											if (updatedresult.isEmpty()) {
+												log(LogStatus.PASS,
+														"------" + task1SubjectName
+																+ " record has been verified on intraction------",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------",
+														YesNo.No);
+												sa.assertTrue(false,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------");
+											}
+
+										} else {
+											log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+											sa.assertTrue(false, "Not able to click on Edit Note button");
+										}
+
+									} else {
+										log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
+										sa.assertTrue(false, "Activity timeline record has not Updated");
+									}
+
+								} else {
+									log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+									sa.assertTrue(false, "Not able to click on Edit Note button");
+								}
+
+							} else {
+								log(LogStatus.ERROR,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult,
+										YesNo.No);
+								sa.assertTrue(false,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit Note button");
+						}
+
+					} else {
+						log(LogStatus.ERROR, "------" + task1SubjectName
+								+ " record is not verified on intraction, Reason: " + result + "------", YesNo.No);
+						sa.assertTrue(false, "------" + task1SubjectName
+								+ " record is not verified on intraction, Reason: " + result + "------");
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on Acuity Tab");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to open " + recordName + " record of record type " + recordType,
+						YesNo.No);
+				sa.assertTrue(false, "Not able to open " + recordName + " record of record type " + recordType);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj1, YesNo.No);
+			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
+		}
+
+		ThreadSleep(5000);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName" })
+
+	@Test
+	public void AcuityMNNRTc062_CreateATaskWithMeetingNotesByTaggingCustomObjectsInIt(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
+
+		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt("3"));
+		String getAdvanceDueDate = AdvanceDueDate;
+
+		String task1SubjectName = "Task Custom Object";
+		String task1Notes = "Send the quotation to Martha, jhon, con 11 and Custom Object 1.1 belonging to the Firm Nexus, Custom Object 1.2";
+		String relatedTo = "Martha<break>Jhon<break>con 11<break>Sumo Logic<break>Vertica";
+
+		String priority = "Normal";
+		String status = "In Progress";
+		String task1ButtonName = "Task";
+		String[] suggestedTags = "Custom Object 1.1<break>Custom Object 1.2<break>Custom Object 1.3".split("<break>",
+				-1);
+		String verificationRelatedTo = relatedTo + "<break>"
+				+ "Custom Object 1.1<break>Custom Object 1.2<break>Custom Object 1.3";
+
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", relatedTo } };
+
+		String[][] task1AdvancedSection = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", verificationRelatedTo } };
+
+		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String recordName = "Martha";
+
+		String[] RelatedToVerifyInInteraction = "Martha<break>Jhon<break>+7".split("<break>", -1);
+
+		String updatedNotesOfTask = "keep in loop  con 4, con 5 Acc 5, Custom Object 1.2, Custom object 1.3";
+
+		String[][] task1UpdateBasicSection = { { "Notes", updatedNotesOfTask } };
+		String[] updatedSuggestedTags = "con 4<break>con 5<break>Acc 5".split("<break>", -1);
+
+		String[] updatedRelatedToVerifyInInteraction = "Martha<break>Jhon<break>+10".split("<break>", -1);
+		String[] updatedRelatedAssociationVerifyInInteraction = updatedSuggestedTags;
+
+		String updatedRelatedToVerifyInNotes = (verificationRelatedTo + "<break>" + "con 4<break>con 5<break>Acc 5");
+
+		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName },
+				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
+
+		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		/*
+		 * ExcelUtils.writeData(AcuityDataSheetFilePath, AdvanceDueDate,
+		 * "Activity Timeline", excelLabel.Variable_Name, "AMNNR_018",
+		 * excelLabel.Advance_Due_Date);
+		 */
+
+		CommonLib.refresh(driver);
+
+		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+			home.notificationPopUpClose();
+			if (BP.createActivityTimeline(projectName, true, task1ButtonName, task1BasicSection, task1AdvancedSection,
+					null, suggestedTags)) {
+				log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
+
+			} else {
+				log(LogStatus.FAIL, "Activity timeline record is not created", YesNo.No);
+				sa.assertTrue(false, "Activity timeline record is not created");
+			}
+
+		} else {
+			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
+			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
+		}
+
+		CommonLib.refresh(driver);
+
+		log(LogStatus.INFO,
+				"---------Now Going to Verify Task: " + task1SubjectName + " in Edit Mode of Task Detail Page---------",
+				YesNo.No);
+		if (lp.clickOnTab(projectName, tabObj2)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, recordName, 30)) {
+				log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
+				ThreadSleep(4000);
+				if (BP.clicktabOnPage("Acuity")) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, null,
+							task1SubjectName, task1Notes, true, false, RelatedToVerifyInInteraction, null);
+					if (result.isEmpty()) {
+						log(LogStatus.PASS,
+								"------" + task1SubjectName + " record has been verified on intraction------",
+								YesNo.No);
+						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+							String url = getURL(driver, 10);
+
+							ThreadSleep(10000);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
+									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
+											task1AdvancedSectionVerification, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,
+										"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+										YesNo.No);
+
+								refresh(driver);
+
+								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+									ThreadSleep(10000);
+
+									if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection, null,
+											null, updatedSuggestedTags, null)) {
+										log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
+
+										CommonLib.refresh(driver);
+
+										ThreadSleep(10000);
+
+										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+											String url2 = getURL(driver, 10);
+
+											ThreadSleep(10000);
+											ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
+													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
+															updatedTask1BasicSectionVerification,
+															updatedTask1AdvancedSectionVerification, null);
+											if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
+												log(LogStatus.INFO,
+														"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated,
+														YesNo.No);
+												sa.assertTrue(false,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated);
+
+											}
+
+											CommonLib.refresh(driver);
+											CommonLib.ThreadSleep(5000);
+											ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(
+													getAdvanceDueDate, null, task1SubjectName, updatedNotesOfTask, true,
+													false, updatedRelatedToVerifyInInteraction,
+													updatedRelatedAssociationVerifyInInteraction);
+											if (updatedresult.isEmpty()) {
+												log(LogStatus.PASS,
+														"------" + task1SubjectName
+																+ " record has been verified on intraction------",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------",
+														YesNo.No);
+												sa.assertTrue(false,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------");
+											}
+
+										} else {
+											log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+											sa.assertTrue(false, "Not able to click on Edit Note button");
+										}
+
+									} else {
+										log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
+										sa.assertTrue(false, "Activity timeline record has not Updated");
+									}
+
+								} else {
+									log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+									sa.assertTrue(false, "Not able to click on Edit Note button");
+								}
+
+							} else {
+								log(LogStatus.ERROR,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult,
+										YesNo.No);
+								sa.assertTrue(false,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit Note button");
+						}
+
+					} else {
+						log(LogStatus.ERROR, "------" + task1SubjectName
+								+ " record is not verified on intraction, Reason: " + result + "------", YesNo.No);
+						sa.assertTrue(false, "------" + task1SubjectName
+								+ " record is not verified on intraction, Reason: " + result + "------");
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on Acuity Tab");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to open " + recordName + " record", YesNo.No);
+				sa.assertTrue(false, "Not able to open " + recordName + " record");
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj2, YesNo.No);
+			sa.assertTrue(false, "Not able to click on Tab : " + tabObj2);
+		}
+
+		ThreadSleep(5000);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName" })
+
+	@Test
+	public void AcuityMNNRTc063_VerifyRemovingSomeOfTheTaggedFromNotesPopUpAndVerifyTheSameInInteractionSection(
+			String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
+
+		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt("3"));
+		String getAdvanceDueDate = AdvanceDueDate;
+
+		String task1SubjectName = "Task Demo";
+		String task1Notes = "Follow up with Contacts con 4, con 5 about Demo Deal";
+		String relatedTo = "Con 1<break>con 2<break>Acc 3<break>Maxtra";
+
+		String priority = "Normal";
+		String status = "In Progress";
+		String task1ButtonName = "Task";
+		String[] suggestedTags = "con 4<break>con 5<break>Demo Deal".split("<break>", -1);
+		String verificationRelatedTo = relatedTo + "<break>" + "con 4<break>con 5<break>Demo Deal";
+
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", relatedTo } };
+
+		String[][] task1AdvancedSection = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", verificationRelatedTo } };
+
+		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String recordName = "Acc 3";
+		String recordType = "Company";
+
+		String[] RelatedToVerifyInInteraction = "Con 1<break>con 2<break>+6".split("<break>", -1);
+
+		String updatedNotesOfTask = null;
+
+		String[][] task1UpdateBasicSection = null;
+		String[] updatedSuggestedTags = "".split("<break>", -1);
+		String[] updatedRemoveRelatedAssociation = "Maxtra<break>Demo Deal".split("<break>", -1);
+		String[] updatedRelatedToVerifyInInteraction = "Con 1<break>con 2<break>+4".split("<break>", -1);
+		String[] updatedRelatedAssociationVerifyInInteraction = "Acc 3<break>con 4<break>con 5".split("<break>", -1);
+
+		String updatedRelatedToVerifyInNotes = "Con 1<break>con 2<break>Acc 3<break>con 4<break>con 5";
+
+		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", updatedRelatedToVerifyInNotes } };
+
+		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		/*
+		 * ExcelUtils.writeData(AcuityDataSheetFilePath, AdvanceDueDate,
+		 * "Activity Timeline", excelLabel.Variable_Name, "AMNNR_018",
+		 * excelLabel.Advance_Due_Date);
+		 */
+
+		CommonLib.refresh(driver);
+
+		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+			home.notificationPopUpClose();
+			if (BP.createActivityTimeline(projectName, true, task1ButtonName, task1BasicSection, task1AdvancedSection,
+					null, suggestedTags)) {
+				log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
+
+			} else {
+				log(LogStatus.FAIL, "Activity timeline record is not created", YesNo.No);
+				sa.assertTrue(false, "Activity timeline record is not created");
+			}
+
+		} else {
+			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
+			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
+		}
+
+		CommonLib.refresh(driver);
+
+		log(LogStatus.INFO,
+				"---------Now Going to Verify Task: " + task1SubjectName + " in Edit Mode of Task Detail Page---------",
+				YesNo.No);
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+					30)) {
+				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
+				ThreadSleep(4000);
+				if (BP.clicktabOnPage("Acuity")) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, null,
+							task1SubjectName, task1Notes, true, false, RelatedToVerifyInInteraction, null);
+					if (result.isEmpty()) {
+						log(LogStatus.PASS,
+								"------" + task1SubjectName + " record has been verified on intraction------",
+								YesNo.No);
+						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+							String url = getURL(driver, 10);
+
+							ThreadSleep(10000);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
+									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
+											task1AdvancedSectionVerification, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,
+										"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+										YesNo.No);
+
+								refresh(driver);
+
+								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+									ThreadSleep(10000);
+
+									if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection, null,
+											null, updatedSuggestedTags, updatedRemoveRelatedAssociation)) {
+										log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
+
+										CommonLib.refresh(driver);
+
+										ThreadSleep(10000);
+
+										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+											String url2 = getURL(driver, 10);
+
+											ThreadSleep(10000);
+											ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
+													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
+															updatedTask1BasicSectionVerification,
+															updatedTask1AdvancedSectionVerification, null);
+											if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
+												log(LogStatus.INFO,
+														"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated,
+														YesNo.No);
+												sa.assertTrue(false,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated);
+
+											}
+
+											CommonLib.refresh(driver);
+											CommonLib.ThreadSleep(5000);
+											ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(
+													getAdvanceDueDate, null, task1SubjectName, updatedNotesOfTask, true,
+													false, updatedRelatedToVerifyInInteraction,
+													updatedRelatedAssociationVerifyInInteraction);
+											if (updatedresult.isEmpty()) {
+												log(LogStatus.PASS,
+														"------" + task1SubjectName
+																+ " record has been verified on intraction------",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------",
+														YesNo.No);
+												sa.assertTrue(false,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------");
+											}
+
+										} else {
+											log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+											sa.assertTrue(false, "Not able to click on Edit Note button");
+										}
+
+									} else {
+										log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
+										sa.assertTrue(false, "Activity timeline record has not Updated");
+									}
+
+								} else {
+									log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+									sa.assertTrue(false, "Not able to click on Edit Note button");
+								}
+
+							} else {
+								log(LogStatus.ERROR,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult,
+										YesNo.No);
+								sa.assertTrue(false,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit Note button");
+						}
+
+					} else {
+						log(LogStatus.ERROR, "------" + task1SubjectName
+								+ " record is not verified on intraction, Reason: " + result + "------", YesNo.No);
+						sa.assertTrue(false, "------" + task1SubjectName
+								+ " record is not verified on intraction, Reason: " + result + "------");
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on Acuity Tab");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to open " + recordName + " record of record type " + recordType,
+						YesNo.No);
+				sa.assertTrue(false, "Not able to open " + recordName + " record of record type " + recordType);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj1, YesNo.No);
+			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
+		}
+
+		ThreadSleep(5000);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName" })
+
+	@Test
+	public void AcuityMNNRTc064_VerifyChangingTheStatusOfTaskFromAdvancedSectionOfNotesPopUpAndItsEffectOnInteractionSection(
+			String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+
+		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt("0"));
+		String getAdvanceDueDate = AdvanceDueDate;
+
+		String task1SubjectName = "Task Advance";
+		String task1Notes = "Follow up with Contacts Con 4, Con 5 about demo deal";
+		String relatedTo = "Maxjonic<break>Maxtra<break>Con 1<break>con 2";
+
+		String priority = "Normal";
+		String status = "Not Started";
+		String task1ButtonName = "Task";
+		String[] suggestedTags = "con 4<break>con 5<break>Demo Deal".split("<break>", -1);
+		String verificationRelatedTo = relatedTo + "<break>" + "con 4<break>con 5<break>Demo Deal";
+
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", relatedTo } };
+
+		String[][] task1AdvancedSection = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", verificationRelatedTo } };
+
+		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String recordName = "Maxjonic";
+		String recordType = "Intermediary";
+
+		String[] RelatedToVerifyInInteraction = "Con 1<break>con 2<break>+6".split("<break>", -1);
+
+		String updatedNotesOfTask = task1Notes;
+		String updatedStatus = "Completed";
+		String[][] task1UpdateBasicSection = null;
+		String[][] task1UpdateAdvancedSection = { { "Status", updatedStatus } };
+
+		String[] updatedSuggestedTags = "".split("<break>", -1);
+
+		String[] updatedRelatedToVerifyInInteraction = RelatedToVerifyInInteraction;
+		String[] updatedRelatedAssociationVerifyInInteraction = "Maxjonic<break>Maxtra<break>con 4<break>con 5<break>Demo Deal"
+				.split("<break>", -1);
+
+		String updatedRelatedToVerifyInNotes = verificationRelatedTo;
+
+		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName },
+				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
+
+		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", updatedStatus },
+				{ "Priority", priority } };
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		/*
+		 * ExcelUtils.writeData(AcuityDataSheetFilePath, AdvanceDueDate,
+		 * "Activity Timeline", excelLabel.Variable_Name, "AMNNR_018",
+		 * excelLabel.Advance_Due_Date);
+		 */
+
+		CommonLib.refresh(driver);
+
+		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+			home.notificationPopUpClose();
+			if (BP.createActivityTimeline(projectName, true, task1ButtonName, task1BasicSection, task1AdvancedSection,
+					null, suggestedTags)) {
+				log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
+
+			} else {
+				log(LogStatus.FAIL, "Activity timeline record is not created", YesNo.No);
+				sa.assertTrue(false, "Activity timeline record is not created");
+			}
+
+		} else {
+			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
+			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
+		}
+
+		CommonLib.refresh(driver);
+
+		log(LogStatus.INFO,
+				"---------Now Going to Verify Task: " + task1SubjectName + " in Edit Mode of Task Detail Page---------",
+				YesNo.No);
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+					30)) {
+				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
+				ThreadSleep(4000);
+				if (BP.clicktabOnPage("Acuity")) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, null,
+							task1SubjectName, task1Notes, true, false, RelatedToVerifyInInteraction, null);
+					if (result.isEmpty()) {
+						log(LogStatus.PASS,
+								"------" + task1SubjectName + " record has been verified on intraction------",
+								YesNo.No);
+						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+							String url = getURL(driver, 10);
+
+							ThreadSleep(10000);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
+									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
+											task1AdvancedSectionVerification, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,
+										"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+										YesNo.No);
+
+								refresh(driver);
+
+								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+									ThreadSleep(10000);
+
+									if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection,
+											task1UpdateAdvancedSection, null, updatedSuggestedTags, null)) {
+										log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
+
+										CommonLib.refresh(driver);
+
+										ThreadSleep(10000);
+
+										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+											String url2 = getURL(driver, 10);
+
+											ThreadSleep(10000);
+											ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
+													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
+															updatedTask1BasicSectionVerification,
+															updatedTask1AdvancedSectionVerification, null);
+											if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
+												log(LogStatus.INFO,
+														"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated,
+														YesNo.No);
+												sa.assertTrue(false,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated);
+
+											}
+
+											CommonLib.refresh(driver);
+											CommonLib.ThreadSleep(5000);
+											ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(
+													getAdvanceDueDate, null, task1SubjectName, updatedNotesOfTask, true,
+													false, updatedRelatedToVerifyInInteraction,
+													updatedRelatedAssociationVerifyInInteraction);
+											if (updatedresult.isEmpty()) {
+												log(LogStatus.PASS,
+														"------" + task1SubjectName
+																+ " record has been verified on intraction------",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------",
+														YesNo.No);
+												sa.assertTrue(false,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------");
+											}
+
+										} else {
+											log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+											sa.assertTrue(false, "Not able to click on Edit Note button");
+										}
+
+									} else {
+										log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
+										sa.assertTrue(false, "Activity timeline record has not Updated");
+									}
+
+								} else {
+									log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+									sa.assertTrue(false, "Not able to click on Edit Note button");
+								}
+
+							} else {
+								log(LogStatus.ERROR,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult,
+										YesNo.No);
+								sa.assertTrue(false,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit Note button");
+						}
+
+					} else {
+						log(LogStatus.ERROR, "------" + task1SubjectName
+								+ " record is not verified on intraction, Reason: " + result + "------", YesNo.No);
+						sa.assertTrue(false, "------" + task1SubjectName
+								+ " record is not verified on intraction, Reason: " + result + "------");
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on Acuity Tab");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to open " + recordName + " record of record type " + recordType,
+						YesNo.No);
+				sa.assertTrue(false, "Not able to open " + recordName + " record of record type " + recordType);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj1, YesNo.No);
+			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
+		}
+
+		ThreadSleep(5000);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName" })
+
+	@Test
+	public void AcuityMNNRTc065_VerifyChangingTheDueDateToFutureOfTaskFromAdvancedSectionOfNotesPopUpAndItsEffectOnInteractionSection(
+			String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+
+		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt("0"));
+		String getUpdatedAdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy",
+				Integer.parseInt("1"));
+		String getAdvanceDueDate = AdvanceDueDate;
+
+		String task1SubjectName = "Task Advance";
+		String task1Notes = "Follow up with Contacts Con 4, Con 5 about demo deal";
+		String relatedTo = "Maxjonic<break>Maxtra<break>con 4<break>con 5<break>Demo Deal";
+
+		String priority = "Normal";
+		String status = "Completed";
+
+		String verificationRelatedTo = relatedTo;
+
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", verificationRelatedTo } };
+
+		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String recordName = "Maxjonic";
+		String recordType = "Intermediary";
+
+		String[] RelatedToVerifyInInteraction = "Con 1<break>con 2<break>+6".split("<break>", -1);
+
+		String updatedNotesOfTask = task1Notes;
+
+		String[][] task1UpdateBasicSection = null;
+		String[][] task1UpdateAdvancedSection = { { "Due Date Only", getUpdatedAdvanceDueDate } };
+
+		String[] updatedSuggestedTags = "".split("<break>", -1);
+
+		String[] updatedRelatedToVerifyInInteraction = RelatedToVerifyInInteraction;
+		String[] updatedRelatedAssociationVerifyInInteraction = "Maxjonic<break>Maxtra<break>con 4<break>con 5<break>Demo Deal"
+				.split("<break>", -1);
+
+		String updatedRelatedToVerifyInNotes = verificationRelatedTo;
+
+		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName },
+				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
+
+		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getUpdatedAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		/*
+		 * ExcelUtils.writeData(AcuityDataSheetFilePath, AdvanceDueDate,
+		 * "Activity Timeline", excelLabel.Variable_Name, "AMNNR_018",
+		 * excelLabel.Advance_Due_Date);
+		 */
+
+		CommonLib.refresh(driver);
+
+		log(LogStatus.INFO,
+				"---------Now Going to Verify Task: " + task1SubjectName + " in Edit Mode of Task Detail Page---------",
+				YesNo.No);
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+					30)) {
+				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
+				ThreadSleep(4000);
+				if (BP.clicktabOnPage("Acuity")) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, null,
+							task1SubjectName, task1Notes, true, false, RelatedToVerifyInInteraction, null);
+					if (result.isEmpty()) {
+						log(LogStatus.PASS,
+								"------" + task1SubjectName + " record has been verified on intraction------",
+								YesNo.No);
+						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+							String url = getURL(driver, 10);
+
+							ThreadSleep(10000);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
+									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
+											task1AdvancedSectionVerification, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,
+										"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+										YesNo.No);
+
+								refresh(driver);
+
+								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+									ThreadSleep(10000);
+
+									if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection,
+											task1UpdateAdvancedSection, null, updatedSuggestedTags, null)) {
+										log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
+
+										CommonLib.refresh(driver);
+
+										ThreadSleep(10000);
+
+										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+											String url2 = getURL(driver, 10);
+
+											ThreadSleep(10000);
+											ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
+													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
+															updatedTask1BasicSectionVerification,
+															updatedTask1AdvancedSectionVerification, null);
+											if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
+												log(LogStatus.INFO,
+														"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated,
+														YesNo.No);
+												sa.assertTrue(false,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated);
+
+											}
+
+											CommonLib.refresh(driver);
+											CommonLib.ThreadSleep(5000);
+											ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(
+													getUpdatedAdvanceDueDate, null, task1SubjectName,
+													updatedNotesOfTask, true, false,
+													updatedRelatedToVerifyInInteraction,
+													updatedRelatedAssociationVerifyInInteraction);
+											if (updatedresult.isEmpty()) {
+												log(LogStatus.PASS,
+														"------" + task1SubjectName
+																+ " record has been verified on intraction------",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------",
+														YesNo.No);
+												sa.assertTrue(false,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------");
+											}
+
+										} else {
+											log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+											sa.assertTrue(false, "Not able to click on Edit Note button");
+										}
+
+									} else {
+										log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
+										sa.assertTrue(false, "Activity timeline record has not Updated");
+									}
+
+								} else {
+									log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+									sa.assertTrue(false, "Not able to click on Edit Note button");
+								}
+
+							} else {
+								log(LogStatus.ERROR,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult,
+										YesNo.No);
+								sa.assertTrue(false,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit Note button");
+						}
+
+					} else {
+						log(LogStatus.ERROR, "------" + task1SubjectName
+								+ " record is not verified on intraction, Reason: " + result + "------", YesNo.No);
+						sa.assertTrue(false, "------" + task1SubjectName
+								+ " record is not verified on intraction, Reason: " + result + "------");
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on Acuity Tab");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to open " + recordName + " record of record type " + recordType,
+						YesNo.No);
+				sa.assertTrue(false, "Not able to open " + recordName + " record of record type " + recordType);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj1, YesNo.No);
+			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
+		}
+
+		ThreadSleep(5000);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName" })
+
+	@Test
+	public void AcuityMNNRTc066_VerifyChangingTheAssigneeOfTaskFromAdvancedSectionOfNotesPopUpAndItsEffectOnInteractionSection(
+			String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+
+		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt("1"));
+
+		String getAdvanceDueDate = AdvanceDueDate;
+
+		String task1SubjectName = "Task Advance";
+		String task1Notes = "Follow up with Contacts Con 4, Con 5 about demo deal";
+		String relatedTo = "Maxjonic<break>Maxtra<break>con 4<break>con 5<break>Demo Deal";
+
+		String priority = "Normal";
+		String status = "Completed";
+
+		String verificationRelatedTo = relatedTo;
+
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", verificationRelatedTo } };
+
+		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String recordName = "Maxjonic";
+		String recordType = "Intermediary";
+
+		String[] RelatedToVerifyInInteraction = "Con 1<break>con 2<break>+6".split("<break>", -1);
+
+		String updatedNotesOfTask = task1Notes;
+
+		String[][] task1UpdateBasicSection = null;
+		String[][] task1UpdateAdvancedSection = { { "Assigned To ID", crmUser2FirstName + " " + crmUser2LastName } };
+
+		String[] updatedSuggestedTags = "".split("<break>", -1);
+
+		String[] updatedRelatedToVerifyInInteraction = RelatedToVerifyInInteraction;
+		String[] updatedRelatedAssociationVerifyInInteraction = "Maxjonic<break>Maxtra<break>con 4<break>con 5<break>Demo Deal"
+				.split("<break>", -1);
+
+		String updatedRelatedToVerifyInNotes = verificationRelatedTo;
+
+		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName },
+				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
+
+		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser2FirstName + " " + crmUser2LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		/*
+		 * ExcelUtils.writeData(AcuityDataSheetFilePath, AdvanceDueDate,
+		 * "Activity Timeline", excelLabel.Variable_Name, "AMNNR_018",
+		 * excelLabel.Advance_Due_Date);
+		 */
+
+		CommonLib.refresh(driver);
+
+		log(LogStatus.INFO,
+				"---------Now Going to Verify Task: " + task1SubjectName + " in Edit Mode of Task Detail Page---------",
+				YesNo.No);
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+					30)) {
+				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
+				ThreadSleep(4000);
+				if (BP.clicktabOnPage("Acuity")) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, null,
+							task1SubjectName, task1Notes, true, false, RelatedToVerifyInInteraction, null);
+					if (result.isEmpty()) {
+						log(LogStatus.PASS,
+								"------" + task1SubjectName + " record has been verified on intraction------",
+								YesNo.No);
+						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+							String url = getURL(driver, 10);
+
+							ThreadSleep(10000);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
+									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
+											task1AdvancedSectionVerification, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,
+										"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+										YesNo.No);
+
+								refresh(driver);
+
+								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+									ThreadSleep(10000);
+
+									if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection,
+											task1UpdateAdvancedSection, null, updatedSuggestedTags, null)) {
+										log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
+
+										CommonLib.refresh(driver);
+
+										ThreadSleep(10000);
+
+										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+											String url2 = getURL(driver, 10);
+
+											ThreadSleep(10000);
+											ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
+													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
+															updatedTask1BasicSectionVerification,
+															updatedTask1AdvancedSectionVerification, null);
+											if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
+												log(LogStatus.INFO,
+														"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated,
+														YesNo.No);
+												sa.assertTrue(false,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated);
+
+											}
+
+											CommonLib.refresh(driver);
+											CommonLib.ThreadSleep(5000);
+											ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(
+													getAdvanceDueDate, null, task1SubjectName, updatedNotesOfTask, true,
+													false, updatedRelatedToVerifyInInteraction,
+													updatedRelatedAssociationVerifyInInteraction);
+											if (updatedresult.isEmpty()) {
+												log(LogStatus.PASS,
+														"------" + task1SubjectName
+																+ " record has been verified on intraction------",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------",
+														YesNo.No);
+												sa.assertTrue(false,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------");
+											}
+
+										} else {
+											log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+											sa.assertTrue(false, "Not able to click on Edit Note button");
+										}
+
+									} else {
+										log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
+										sa.assertTrue(false, "Activity timeline record has not Updated");
+									}
+
+								} else {
+									log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+									sa.assertTrue(false, "Not able to click on Edit Note button");
+								}
+
+							} else {
+								log(LogStatus.ERROR,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult,
+										YesNo.No);
+								sa.assertTrue(false,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit Note button");
+						}
+
+					} else {
+						log(LogStatus.ERROR, "------" + task1SubjectName
+								+ " record is not verified on intraction, Reason: " + result + "------", YesNo.No);
+						sa.assertTrue(false, "------" + task1SubjectName
+								+ " record is not verified on intraction, Reason: " + result + "------");
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on Acuity Tab");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to open " + recordName + " record of record type " + recordType,
+						YesNo.No);
+				sa.assertTrue(false, "Not able to open " + recordName + " record of record type " + recordType);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj1, YesNo.No);
+			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
+		}
+
+		ThreadSleep(5000);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName" })
+
+	@Test
+	public void AcuityMNNRTc067_VerifyChangingTheSubjectOfTaskFromNotesPopUpAndItsEffectOnInteractionSection(
+			String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+
+		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt("1"));
+
+		String getAdvanceDueDate = AdvanceDueDate;
+
+		String task1SubjectName = "Task Advance";
+		String task1Notes = "Follow up with Contacts Con 4, Con 5 about demo deal";
+		String relatedTo = "Maxjonic<break>Maxtra<break>con 4<break>con 5<break>Demo Deal";
+
+		String priority = "Normal";
+		String status = "Completed";
+
+		String verificationRelatedTo = relatedTo;
+
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", verificationRelatedTo } };
+
+		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser2FirstName + " " + crmUser2LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String recordName = "Maxjonic";
+		String recordType = "Intermediary";
+
+		String[] RelatedToVerifyInInteraction = "Con 1<break>con 2<break>+6".split("<break>", -1);
+
+		String updatedNotesOfTask = task1Notes;
+
+		String task1UpdatedSubjectName = "Task Advance Updated";
+		String[][] task1UpdateBasicSection = { { "Subject", task1UpdatedSubjectName } };
+		;
+		String[][] task1UpdateAdvancedSection = null;
+
+		String[] updatedSuggestedTags = "".split("<break>", -1);
+
+		String[] updatedRelatedToVerifyInInteraction = RelatedToVerifyInInteraction;
+		String[] updatedRelatedAssociationVerifyInInteraction = "Maxjonic<break>Maxtra<break>con 4<break>con 5<break>Demo Deal"
+				.split("<break>", -1);
+
+		String updatedRelatedToVerifyInNotes = verificationRelatedTo;
+
+		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1UpdatedSubjectName },
+				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
+
+		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser2FirstName + " " + crmUser2LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		/*
+		 * ExcelUtils.writeData(AcuityDataSheetFilePath, AdvanceDueDate,
+		 * "Activity Timeline", excelLabel.Variable_Name, "AMNNR_018",
+		 * excelLabel.Advance_Due_Date);
+		 */
+
+		CommonLib.refresh(driver);
+
+		log(LogStatus.INFO,
+				"---------Now Going to Verify Task: " + task1SubjectName + " in Edit Mode of Task Detail Page---------",
+				YesNo.No);
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+					30)) {
+				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
+				ThreadSleep(4000);
+				if (BP.clicktabOnPage("Acuity")) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, null,
+							task1SubjectName, task1Notes, true, false, RelatedToVerifyInInteraction, null);
+					if (result.isEmpty()) {
+						log(LogStatus.PASS,
+								"------" + task1SubjectName + " record has been verified on intraction------",
+								YesNo.No);
+						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+							String url = getURL(driver, 10);
+
+							ThreadSleep(10000);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
+									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
+											task1AdvancedSectionVerification, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,
+										"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+										YesNo.No);
+
+								refresh(driver);
+
+								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+									ThreadSleep(10000);
+
+									if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection,
+											task1UpdateAdvancedSection, null, updatedSuggestedTags, null)) {
+										log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
+
+										CommonLib.refresh(driver);
+
+										ThreadSleep(10000);
+
+										if (click(driver, BP.editButtonOnInteractionCard(task1UpdatedSubjectName, 20),
+												"Edit Note Button of: " + task1UpdatedSubjectName,
+												action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+											String url2 = getURL(driver, 10);
+
+											ThreadSleep(10000);
+											ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
+													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
+															updatedTask1BasicSectionVerification,
+															updatedTask1AdvancedSectionVerification, null);
+											if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
+												log(LogStatus.INFO,
+														"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated,
+														YesNo.No);
+												sa.assertTrue(false,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated);
+
+											}
+
+											CommonLib.refresh(driver);
+											CommonLib.ThreadSleep(5000);
+
+											String xPath = "//a[@class=\"interaction_sub subject_text\" and text()='"
+													+ task1SubjectName + "']";
+											WebElement ele = CommonLib.FindElement(driver, xPath, "Subject",
+													action.SCROLLANDBOOLEAN, 15);
+											String subName = getText(driver, ele, "Subject", action.SCROLLANDBOOLEAN);
+											if (task1SubjectName.equals(subName)) {
+												log(LogStatus.INFO, "Verified: After Update the Name of Subject to "
+														+ task1UpdatedSubjectName + ", Previous Named: "
+														+ task1SubjectName + " Interaction card should not be there",
+														YesNo.No);
+											} else {
+												log(LogStatus.ERROR, "After Update the Name of Subject to "
+														+ task1UpdatedSubjectName + ", Previous Named: "
+														+ task1SubjectName
+														+ " Interaction card is showing, which should not be there",
+														YesNo.No);
+												result.add("After Update the Name of Subject to "
+														+ task1UpdatedSubjectName + ", Previous Named: "
+														+ task1SubjectName
+														+ " Interaction card is showing, which should not be there");
+											}
+
+											ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(
+													getAdvanceDueDate, null, task1UpdatedSubjectName,
+													updatedNotesOfTask, true, false,
+													updatedRelatedToVerifyInInteraction,
+													updatedRelatedAssociationVerifyInInteraction);
+											if (updatedresult.isEmpty()) {
+												log(LogStatus.PASS,
+														"------" + task1SubjectName
+																+ " record has been verified on intraction------",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------",
+														YesNo.No);
+												sa.assertTrue(false,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------");
+											}
+
+										} else {
+											log(LogStatus.ERROR, "Not able to click on Edit Note button of Task: "
+													+ task1UpdatedSubjectName, YesNo.No);
+											sa.assertTrue(false, "Not able to click on Edit Note button of Task: "
+													+ task1UpdatedSubjectName);
+										}
+
+									} else {
+										log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
+										sa.assertTrue(false, "Activity timeline record has not Updated");
+									}
+
+								} else {
+									log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+									sa.assertTrue(false, "Not able to click on Edit Note button");
+								}
+
+							} else {
+								log(LogStatus.ERROR,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult,
+										YesNo.No);
+								sa.assertTrue(false,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit Note button");
+						}
+
+					} else {
+						log(LogStatus.ERROR, "------" + task1SubjectName
+								+ " record is not verified on intraction, Reason: " + result + "------", YesNo.No);
+						sa.assertTrue(false, "------" + task1SubjectName
+								+ " record is not verified on intraction, Reason: " + result + "------");
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on Acuity Tab");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to open " + recordName + " record of record type " + recordType,
+						YesNo.No);
+				sa.assertTrue(false, "Not able to open " + recordName + " record of record type " + recordType);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj1, YesNo.No);
+			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
+		}
+
+		ThreadSleep(5000);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName" })
+
+	@Test
+	public void AcuityMNNRTc068_VerifyWhenTheOrgHasSameDealNameAsOfTheCompanyNameAndIsTaggedInTheTask(
+			String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+
+		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt("0"));
+		String getAdvanceDueDate = AdvanceDueDate;
+		String task1SubjectName = "Task TQW";
+		String task1Notes = "Areca";
+		String relatedTo = "Acc 12";
+
+		String priority = "Normal";
+		String status = "In Progress";
+		String task1ButtonName = "Task";
+
+		String[] SuggestedTags = "areca".split("<break>", -1);
+
+		String verificationRelatedTo = relatedTo + "<break>" + "areca";
+
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", relatedTo } };
+
+		String[][] task1AdvancedSection = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", verificationRelatedTo } };
+
+		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String recordName = "Acc 12";
+		String recordType = "Institution";
+
+		String[] RelatedToVerifyInInteraction = ("areca<break>" + crmUser1FirstName + " " + crmUser1LastName
+				+ "<break>+1").split("<break>", -1);
+
+		String updatedNotesOfTask = " Sumo Kind";
+
+		String[][] task1UpdateBasicSection = { { "Notes", updatedNotesOfTask } };
+
+		String[] updatedSuggestedTags = "Sumo Kind==Firm<break>Sumo Kind==Deal<break>Sumo Kind==Contact<break>Sumo Kind Fund==Fund<break>Sumo Kind Fundraising==Fundraising"
+				.split("<break>", -1);
+
+		String[] updatedRelatedToVerifyInInteraction = "areca<break>Sumo Kind<break>+6".split("<break>", -1);
+		String[] updatedRelatedAssociationVerifyInInteraction = null;
+
+		String updatedRelatedToVerifyInNotes = ("Acc 12==Firm<break>areca==Contact" + "<break>"
+				+ "Sumo Kind==Firm<break>Sumo Kind==Deal<break>Sumo Kind==Contact<break>Sumo Kind Fund==Fund<break>Sumo Kind Fundraising==Fundraising");
+
+		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName },
+				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
+
+		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		log(LogStatus.INFO,
+				"---------Now Going to Create Task: " + task1SubjectName + " in Activity Timeline Section---------",
+				YesNo.No);
+
+		/*
+		 * ExcelUtils.writeData(AcuityDataSheetFilePath, AdvanceDueDate,
+		 * "Activity Timeline", excelLabel.Variable_Name, "AMNNR_018",
+		 * excelLabel.Advance_Due_Date);
+		 */
+		CommonLib.refresh(driver);
+		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+			home.notificationPopUpClose();
+			if (BP.createActivityTimeline(projectName, true, task1ButtonName, task1BasicSection, task1AdvancedSection,
+					null, SuggestedTags)) {
+				log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
+
+			} else {
+				log(LogStatus.FAIL, "Activity timeline record is not created", YesNo.No);
+				sa.assertTrue(false, "Activity timeline record is not created");
+			}
+
+		} else {
+			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
+			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
+		}
+
+		CommonLib.refresh(driver);
+
+		log(LogStatus.INFO,
+				"---------Now Going to Verify Task: " + task1SubjectName + " in Edit Mode of Task Detail Page---------",
+				YesNo.No);
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+					30)) {
+				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
+				ThreadSleep(4000);
+				if (BP.clicktabOnPage("Acuity")) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, null,
+							task1SubjectName, task1Notes, true, false, RelatedToVerifyInInteraction, null);
+					if (result.isEmpty()) {
+						log(LogStatus.PASS,
+								"------" + task1SubjectName + " record has been verified on intraction------",
+								YesNo.No);
+						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+							String url = getURL(driver, 10);
+
+							ThreadSleep(10000);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
+									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
+											task1AdvancedSectionVerification, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,
+										"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+										YesNo.No);
+
+								refresh(driver);
+
+								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+									ThreadSleep(10000);
+
+									if (BP.updateActivityTimelineRecordForMultipleFollowUpTasksAndVerifyUIOfSuggestedTags(
+											projectName, task1UpdateBasicSection, null, null, updatedSuggestedTags,
+											null)) {
+										log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
+
+										CommonLib.refresh(driver);
+
+										ThreadSleep(10000);
+
+										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+											String url2 = getURL(driver, 10);
+
+											ThreadSleep(10000);
+											ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
+													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
+															updatedTask1BasicSectionVerification,
+															updatedTask1AdvancedSectionVerification, null);
+											if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
+												log(LogStatus.INFO,
+														"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated,
+														YesNo.No);
+												sa.assertTrue(false,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated);
+
+											}
+
+											CommonLib.refresh(driver);
+											CommonLib.ThreadSleep(5000);
+											ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(
+													getAdvanceDueDate, null, task1SubjectName, updatedNotesOfTask, true,
+													false, updatedRelatedToVerifyInInteraction,
+													updatedRelatedAssociationVerifyInInteraction);
+											if (updatedresult.isEmpty()) {
+												log(LogStatus.PASS,
+														"------" + task1SubjectName
+																+ " record has been verified on intraction------",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------",
+														YesNo.No);
+												sa.assertTrue(false,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------");
+											}
+
+										} else {
+											log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+											sa.assertTrue(false, "Not able to click on Edit Note button");
+										}
+
+									} else {
+										log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
+										sa.assertTrue(false, "Activity timeline record has not Updated");
+									}
+
+								} else {
+									log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+									sa.assertTrue(false, "Not able to click on Edit Note button");
+								}
+
+							} else {
+								log(LogStatus.ERROR,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult,
+										YesNo.No);
+								sa.assertTrue(false,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit Note button");
+						}
+
+					} else {
+						log(LogStatus.ERROR, "------" + task1SubjectName
+								+ " record is not verified on intraction, Reason: " + result + "------", YesNo.No);
+						sa.assertTrue(false, "------" + task1SubjectName
+								+ " record is not verified on intraction, Reason: " + result + "------");
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on Acuity Tab");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to open " + recordName + " record of record type " + recordType,
+						YesNo.No);
+				sa.assertTrue(false, "Not able to open " + recordName + " record of record type " + recordType);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj1, YesNo.No);
+			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
+		}
+
+		ThreadSleep(5000);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+	@Parameters({ "projectName" })
+
+	@Test
+	public void AcuityMNNRTc069_VerifyWhenUserTagsAccountsAndContactsInNotesTextAreaAndClicksOnCloseButtonOrCrossIcon(
+			String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
+
+		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt("4"));
+		String getAdvanceDueDate = AdvanceDueDate;
+
+		String task1SubjectName = "Task Demo 3";
+		String task1Notes = "";
+		String relatedTo = "Acc 3<break>Maxtra<break>Con 1<break>con 2<break>Demo Deal";
+
+		String priority = "Normal";
+		String status = "In Progress";
+		String task1ButtonName = "Task";
+		String[] suggestedTags = null;
+		String verificationRelatedTo = relatedTo;
+
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", relatedTo } };
+
+		String[][] task1AdvancedSection = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", verificationRelatedTo } };
+
+		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String recordName = "Acc 3";
+		String recordType = "Company";
+
+		String[] RelatedToVerifyInInteraction = "Con 1<break>con 2<break>+4".split("<break>", -1);
+
+		String updatedNotesOfTask = task1Notes;
+
+		String updatedRelatedToInNotes = "con 6<break>con 7";
+		String[][] task1UpdateBasicSection = { { "Related_To", updatedRelatedToInNotes } };
+
+		String[] updatedSuggestedTags = null;
+
+		String[] updatedRelatedToVerifyInInteraction = RelatedToVerifyInInteraction;
+		String[] updatedRelatedAssociationVerifyInInteraction = "Acc 3<break>Maxtra<break>Demo Deal".split("<break>",
+				-1);
+
+		String updatedRelatedToVerifyInNotes = verificationRelatedTo;
+
+		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName },
+				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
+
+		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		/*
+		 * ExcelUtils.writeData(AcuityDataSheetFilePath, AdvanceDueDate,
+		 * "Activity Timeline", excelLabel.Variable_Name, "AMNNR_018",
+		 * excelLabel.Advance_Due_Date);
+		 */
+
+		CommonLib.refresh(driver);
+
+		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+			home.notificationPopUpClose();
+			if (BP.createActivityTimeline(projectName, true, task1ButtonName, task1BasicSection, task1AdvancedSection,
+					null, suggestedTags)) {
+				log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
+
+			} else {
+				log(LogStatus.FAIL, "Activity timeline record is not created", YesNo.No);
+				sa.assertTrue(false, "Activity timeline record is not created");
+			}
+
+		} else {
+			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
+			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
+		}
+
+		CommonLib.refresh(driver);
+
+		log(LogStatus.INFO,
+				"---------Now Going to Verify Task: " + task1SubjectName + " in Edit Mode of Task Detail Page---------",
+				YesNo.No);
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab, recordType, recordName,
+					30)) {
+				log(LogStatus.INFO, recordName + " record of record type " + recordType + " has been open", YesNo.No);
+				ThreadSleep(4000);
+				if (BP.clicktabOnPage("Acuity")) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, null,
+							task1SubjectName, task1Notes, true, false, RelatedToVerifyInInteraction, null);
+					if (result.isEmpty()) {
+						log(LogStatus.PASS,
+								"------" + task1SubjectName + " record has been verified on intraction------",
+								YesNo.No);
+						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+							String url = getURL(driver, 10);
+
+							ThreadSleep(10000);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
+									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
+											task1AdvancedSectionVerification, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,
+										"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+										YesNo.No);
+
+								refresh(driver);
+
+								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+									ThreadSleep(10000);
+
+									if (BP.updateActivityTimelineRecordForMultipleFollowUpTasks(projectName,
+											task1UpdateBasicSection, null, null, updatedSuggestedTags, null, true,
+											false)) {
+										log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
+
+										CommonLib.refresh(driver);
+
+										ThreadSleep(10000);
+
+										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+											String url2 = getURL(driver, 10);
+
+											ThreadSleep(10000);
+											ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
+													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
+															updatedTask1BasicSectionVerification,
+															updatedTask1AdvancedSectionVerification, null);
+											if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
+												log(LogStatus.INFO,
+														"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated,
+														YesNo.No);
+												sa.assertTrue(false,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated);
+
+											}
+
+											CommonLib.refresh(driver);
+											CommonLib.ThreadSleep(5000);
+											ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(
+													getAdvanceDueDate, null, task1SubjectName, updatedNotesOfTask, true,
+													false, updatedRelatedToVerifyInInteraction,
+													updatedRelatedAssociationVerifyInInteraction);
+											if (updatedresult.isEmpty()) {
+												log(LogStatus.PASS,
+														"------" + task1SubjectName
+																+ " record has been verified on intraction------",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------",
+														YesNo.No);
+												sa.assertTrue(false,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------");
+											}
+
+										} else {
+											log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+											sa.assertTrue(false, "Not able to click on Edit Note button");
+										}
+
+									} else {
+										log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
+										sa.assertTrue(false, "Activity timeline record has not Updated");
+									}
+
+								} else {
+									log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+									sa.assertTrue(false, "Not able to click on Edit Note button");
+								}
+
+								refresh(driver);
+
+								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+									ThreadSleep(10000);
+
+									if (BP.updateActivityTimelineRecordForMultipleFollowUpTasks(projectName,
+											task1UpdateBasicSection, null, null, updatedSuggestedTags, null, false,
+											true)) {
+										log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
+
+										CommonLib.refresh(driver);
+
+										ThreadSleep(10000);
+
+										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+											String url2 = getURL(driver, 10);
+
+											ThreadSleep(10000);
+											ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
+													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
+															updatedTask1BasicSectionVerification,
+															updatedTask1AdvancedSectionVerification, null);
+											if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
+												log(LogStatus.INFO,
+														"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated,
+														YesNo.No);
+												sa.assertTrue(false,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated);
+
+											}
+
+											CommonLib.refresh(driver);
+											CommonLib.ThreadSleep(5000);
+											ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(
+													getAdvanceDueDate, null, task1SubjectName, updatedNotesOfTask, true,
+													false, updatedRelatedToVerifyInInteraction,
+													updatedRelatedAssociationVerifyInInteraction);
+											if (updatedresult.isEmpty()) {
+												log(LogStatus.PASS,
+														"------" + task1SubjectName
+																+ " record has been verified on intraction------",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------",
+														YesNo.No);
+												sa.assertTrue(false,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------");
+											}
+
+										} else {
+											log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+											sa.assertTrue(false, "Not able to click on Edit Note button");
+										}
+
+									} else {
+										log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
+										sa.assertTrue(false, "Activity timeline record has not Updated");
+									}
+
+								} else {
+									log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+									sa.assertTrue(false, "Not able to click on Edit Note button");
+								}
+
+							} else {
+								log(LogStatus.ERROR,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult,
+										YesNo.No);
+								sa.assertTrue(false,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit Note button");
+						}
+
+					} else {
+						log(LogStatus.ERROR, "------" + task1SubjectName
+								+ " record is not verified on intraction, Reason: " + result + "------", YesNo.No);
+						sa.assertTrue(false, "------" + task1SubjectName
+								+ " record is not verified on intraction, Reason: " + result + "------");
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on Acuity Tab");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to open " + recordName + " record of record type " + recordType,
+						YesNo.No);
+				sa.assertTrue(false, "Not able to open " + recordName + " record of record type " + recordType);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj1, YesNo.No);
+			sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
+		}
+
+		ThreadSleep(5000);
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+	
+	
+	
+	@Parameters({ "projectName" })
+
+	@Test
+	public void AcuityMNNRTc070_VerifyWhenEditButtonIsClickedForTheTaskHavingFollowUpTaskAndIsDeletedFromTaskDetailPage(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
+
+		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt("3"));
+		String getAdvanceDueDate = AdvanceDueDate;
+
+		String task1SubjectName = "Task Custom Object";
+		String task1Notes = "Send the quotation to Martha, jhon, con 11 and Custom Object 1.1 belonging to the Firm Nexus, Custom Object 1.2";
+		String relatedTo = "Martha<break>Jhon<break>con 11<break>Sumo Logic<break>Vertica";
+
+		String priority = "Normal";
+		String status = "In Progress";
+		String task1ButtonName = "Task";
+		String[] suggestedTags = "Custom Object 1.1<break>Custom Object 1.2<break>Custom Object 1.3".split("<break>",
+				-1);
+		String verificationRelatedTo = relatedTo + "<break>"
+				+ "Custom Object 1.1<break>Custom Object 1.2<break>Custom Object 1.3";
+
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", relatedTo } };
+
+		String[][] task1AdvancedSection = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", verificationRelatedTo } };
+
+		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String recordName = "Martha";
+
+		String[] RelatedToVerifyInInteraction = "Martha<break>Jhon<break>+7".split("<break>", -1);
+
+		String updatedNotesOfTask = "keep in loop  con 4, con 5 Acc 5, Custom Object 1.2, Custom object 1.3";
+
+		String[][] task1UpdateBasicSection = { { "Notes", updatedNotesOfTask } };
+		String[] updatedSuggestedTags = "con 4<break>con 5<break>Acc 5".split("<break>", -1);
+
+		String[] updatedRelatedToVerifyInInteraction = "Martha<break>Jhon<break>+10".split("<break>", -1);
+		String[] updatedRelatedAssociationVerifyInInteraction = updatedSuggestedTags;
+
+		String updatedRelatedToVerifyInNotes = (verificationRelatedTo + "<break>" + "con 4<break>con 5<break>Acc 5");
+
+		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName },
+				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
+
+		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		lp.CRMLogin(crmUser1EmailID, adminPassword);
+
+		/*
+		 * ExcelUtils.writeData(AcuityDataSheetFilePath, AdvanceDueDate,
+		 * "Activity Timeline", excelLabel.Variable_Name, "AMNNR_018",
+		 * excelLabel.Advance_Due_Date);
+		 */
+
+		CommonLib.refresh(driver);
+
+		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+			home.notificationPopUpClose();
+			if (BP.createActivityTimeline(projectName, true, task1ButtonName, task1BasicSection, task1AdvancedSection,
+					null, suggestedTags)) {
+				log(LogStatus.PASS, "Activity timeline record has been created", YesNo.No);
+
+			} else {
+				log(LogStatus.FAIL, "Activity timeline record is not created", YesNo.No);
+				sa.assertTrue(false, "Activity timeline record is not created");
+			}
+
+		} else {
+			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
+			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
+		}
+
+		CommonLib.refresh(driver);
+
+		log(LogStatus.INFO,
+				"---------Now Going to Verify Task: " + task1SubjectName + " in Edit Mode of Task Detail Page---------",
+				YesNo.No);
+		if (lp.clickOnTab(projectName, tabObj2)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+
+			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, recordName, 30)) {
+				log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
+				ThreadSleep(4000);
+				if (BP.clicktabOnPage("Acuity")) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					ArrayList<String> result = BP.verifyRecordOnInteractionCard(getAdvanceDueDate, null,
+							task1SubjectName, task1Notes, true, false, RelatedToVerifyInInteraction, null);
+					if (result.isEmpty()) {
+						log(LogStatus.PASS,
+								"------" + task1SubjectName + " record has been verified on intraction------",
+								YesNo.No);
+						if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+								"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+							String url = getURL(driver, 10);
+
+							ThreadSleep(10000);
+							ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
+									.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url, task1BasicSectionVerification,
+											task1AdvancedSectionVerification, null);
+							if (NotesPopUpPrefilledNegativeResult.isEmpty()) {
+								log(LogStatus.INFO,
+										"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+										YesNo.No);
+
+								refresh(driver);
+
+								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+									ThreadSleep(10000);
+
+									if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection, null,
+											null, updatedSuggestedTags, null)) {
+										log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
+
+										CommonLib.refresh(driver);
+
+										ThreadSleep(10000);
+
+										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+											String url2 = getURL(driver, 10);
+
+											ThreadSleep(10000);
+											ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
+													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
+															updatedTask1BasicSectionVerification,
+															updatedTask1AdvancedSectionVerification, null);
+											if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
+												log(LogStatus.INFO,
+														"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated,
+														YesNo.No);
+												sa.assertTrue(false,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated);
+
+											}
+
+											CommonLib.refresh(driver);
+											CommonLib.ThreadSleep(5000);
+											ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(
+													getAdvanceDueDate, null, task1SubjectName, updatedNotesOfTask, true,
+													false, updatedRelatedToVerifyInInteraction,
+													updatedRelatedAssociationVerifyInInteraction);
+											if (updatedresult.isEmpty()) {
+												log(LogStatus.PASS,
+														"------" + task1SubjectName
+																+ " record has been verified on intraction------",
+														YesNo.No);
+
+											} else {
+												log(LogStatus.ERROR,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------",
+														YesNo.No);
+												sa.assertTrue(false,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------");
+											}
+
+										} else {
+											log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+											sa.assertTrue(false, "Not able to click on Edit Note button");
+										}
+
+									} else {
+										log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
+										sa.assertTrue(false, "Activity timeline record has not Updated");
+									}
+
+								} else {
+									log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+									sa.assertTrue(false, "Not able to click on Edit Note button");
+								}
+
+							} else {
+								log(LogStatus.ERROR,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult,
+										YesNo.No);
+								sa.assertTrue(false,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResult);
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+							sa.assertTrue(false, "Not able to click on Edit Note button");
+						}
+
+					} else {
+						log(LogStatus.ERROR, "------" + task1SubjectName
+								+ " record is not verified on intraction, Reason: " + result + "------", YesNo.No);
+						sa.assertTrue(false, "------" + task1SubjectName
+								+ " record is not verified on intraction, Reason: " + result + "------");
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on Acuity Tab");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to open " + recordName + " record", YesNo.No);
+				sa.assertTrue(false, "Not able to open " + recordName + " record");
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj2, YesNo.No);
+			sa.assertTrue(false, "Not able to click on Tab : " + tabObj2);
 		}
 
 		ThreadSleep(5000);

@@ -1,23 +1,14 @@
 package com.navatar.pageObjects;
 
-import static com.navatar.generic.AppListeners.appLog;
-
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.ExcelUtils;
-import com.navatar.generic.EnumConstants.Mode;
-import com.navatar.generic.EnumConstants.ReportDashboardFolderType;
-import com.navatar.generic.EnumConstants.ReportField;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
-import com.navatar.generic.EnumConstants.object;
 import com.relevantcodes.extentreports.LogStatus;
-import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import static com.navatar.generic.CommonLib.*;
 
 import java.util.ArrayList;
@@ -54,7 +45,6 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 		return false;
 	}
 	}
-	
 	
 	public boolean clickOperationOnRecordForGrid(String headerName, String recordName) { 
 
@@ -110,7 +100,6 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 		return flag;
 	}
 	
-	
 	public boolean mouseHoverOnGridAndGetText() { 
 		int gridSize = getElementsFromGrid().size();
 		try {
@@ -135,22 +124,21 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 	
 	public boolean VerifyViewMoreOption(String headerName) {
 		boolean flag = false;
-		List<String> sideNavCountExceptAllCategories = researchSideNavCountResultsExceptAllCategories()
-				.stream().map(x -> x.getText().trim().replace("New Items", "").replace(":", "")
-						.replaceAll("[\\t\\n\\r]+", "").trim()).collect(Collectors.toList());
-		for (String countFromSideNavInString : sideNavCountExceptAllCategories) {
-			Integer countFromSideNav = Integer.valueOf(countFromSideNavInString);
-			int newCountFromSideNav = countFromSideNav;
-			
+//		List<String> sideNavCountExceptAllCategories = researchSideNavCountResultsExceptAllCategories()
+//				.stream().map(x -> x.getText().trim().replace("New Items", "").replace(":", "")
+//						.replaceAll("[\\t\\n\\r]+", "").trim()).collect(Collectors.toList());
+		int count=Integer.valueOf(headerName.split("\\(")[1].split("\\)")[0].trim());
+		
+		
 			//log(LogStatus.INFO,"Count is greater than 5, so we can see view more option for " + newCountFromSideNav,YesNo.No);
-			if(newCountFromSideNav > 5) {
+			if(count > 5) {
 				log(LogStatus.INFO,"Count is greater than 5, so we can see view more option for " + headerName ,YesNo.No);
 				if(clickUsingJavaScript(driver, getViewMoreOptionUsingHeaderName(headerName, 20), "View More"))
 				{
 					log(LogStatus.INFO,"Count is greater than 5 " + headerName ,YesNo.No);
 					int TotalNumberOfRecords = getAllRecordsUsingHeaderName(headerName,20).size();
 					log(LogStatus.INFO,"Total Number Of Records are : " + TotalNumberOfRecords,YesNo.No);
-					if(TotalNumberOfRecords == countFromSideNav) {
+					if(TotalNumberOfRecords == count) {
 						log(LogStatus.INFO,"Total number of records are matched with given count",YesNo.No);
 						clickUsingJavaScript(driver, getAllCategoriesLink(10), "All Categories");
 						flag = true;
@@ -160,10 +148,9 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 			}else {
 				log(LogStatus.ERROR,"Count is less than 5, so we can't check view more option for " + headerName ,YesNo.No);
 				flag = false;
-				break;
 //				sa.assertTrue(false,"In " + gridWiseHeading +" Search Keyword" + searchValue + "does not contain in " + gridText);
 			}
-		}
+		
 		return flag;
 	}
 	
@@ -193,12 +180,17 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 		}
 	}
 	
-	
-	public boolean VerifyNameAndCountForResearchLeftPanel(String variableName,action action, int timeout ) {
+	public ArrayList<String> VerifyNameAndCountForResearchLeftPanel(String variableName,action action, int timeout ) {
 		WebElement ele=null;
-		boolean flag=false;
-		HashMap<String, ArrayList<String>> headersAndValues = ExcelUtils.dataRead(AcuityDataSheetFilePath,"SearchData",excelLabel.Variable_Name, variableName);
+		ArrayList<String> list = new ArrayList<>();
+		HashMap<String, ArrayList<String>> headersAndValues;
 		
+		if(variableName.contains("ACR_")) {
+			headersAndValues = ExcelUtils.dataRead(ResearchDataSheetFilePath,"SearchData",excelLabel.Variable_Name, variableName);
+		}
+		else {
+			headersAndValues = ExcelUtils.dataRead(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, variableName);
+		}
 		HashMap<String,String> headerAndValue =   new HashMap<String,String>();
 		
 		for(int i = 0; i < headersAndValues.get("headers").size(); i++)
@@ -220,45 +212,116 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 					if(headerText.equalsIgnoreCase(header)) {
 						log(LogStatus.INFO, "Header :"+header +" is matched with excel label:"+headerText+" in left panel of research page", YesNo.No);
 						
-						ele =researchFindingsLeftPanelHeadingCount(header, action, timeout);
-						if(ele!=null) {
+						if(Integer.valueOf(headerAndValue.get(header))!=0) {
 							
-							log(LogStatus.INFO, "Header Count  :"+headerAndValue.get(header) +" is visible for header :"+header+"in left panel of research page", YesNo.No);
-							String headerCount = ele.getText().trim().replace("New Items", "").replace(":", "")
-									.replaceAll("[\\t\\n\\r]+", "").trim();
-							if(headerCount.equalsIgnoreCase(headerAndValue.get(header))) {
-								log(LogStatus.INFO, "Header Count  :"+headerAndValue.get(header) +" is matched with excel label count:"+headerCount+" for header :"+header+"in left panel of research page", YesNo.No);
-								flag=true;
-							}else {
-								log(LogStatus.SKIP, "Header Count  :"+headerAndValue.get(header) +" is not matched with excel label count:"+headerCount+" for header :"+header+"in left panel of research page", YesNo.No);
-								sa.assertTrue(false,"Header Count  :"+headerAndValue.get(header) +" is not matched with excel label count:"+headerCount+" for header :"+header+"in left panel of research page");
-							}
-							
-						}else {
-							log(LogStatus.SKIP, "Header Count  :"+headerAndValue.get(header) +" is not visible for header :"+header+"in left panel of research page", YesNo.No);
-							sa.assertTrue(false,"Header Count  :"+headerAndValue.get(header) +" is not visible for header :"+header+"in left panel of research page");
+							log(LogStatus.INFO, "Header Count  :" + headerAndValue.get(header)
+							+ " is enable for header :" + header + " so going for verify in left panel of research page",
+							YesNo.No);
+							ele = researchFindingsLeftPanelHeadingCount(header, action, timeout);
+							if (ele != null) {
 
+								log(LogStatus.INFO, "Header Count  :" + headerAndValue.get(header)
+										+ " is visible for header :" + header + "in left panel of research page",
+										YesNo.No);
+								String headerCount = ele.getText().trim().replace("New Items", "").replace(":", "")
+										.replaceAll("[\\t\\n\\r]+", "").trim();
+								if (headerCount.equalsIgnoreCase(headerAndValue.get(header))) {
+									log(LogStatus.INFO,
+											"Header Count  :" + headerAndValue.get(header)
+													+ " is matched with excel label count:" + headerCount
+													+ " for header :" + header + "in left panel of research page",
+											YesNo.No);
+								} else {
+									log(LogStatus.SKIP,
+											"Header Count  :" + headerAndValue.get(header)
+													+ " is not matched with excel label count:" + headerCount
+													+ " for header :" + header + "in left panel of research page",
+											YesNo.No);
+						
+									list.add("Header Count  :" + headerAndValue.get(header)
+									+ " is not matched with excel label count:" + headerCount
+									+ " for header :" + header + "in left panel of research page");
+								}
+
+							} else {
+								log(LogStatus.SKIP, "Header Count  :" + headerAndValue.get(header)
+										+ " is not visible for header :" + header + "in left panel of research page",
+										YesNo.No);
+								list.add("Header Count  :" + headerAndValue.get(header)
+								+ " is not visible for header :" + header + "in left panel of research page");
+
+							}
+						} else {
+							
+							log(LogStatus.SKIP, "Header Count  :" + headerAndValue.get(header)
+							+ " is disbale for header :" + header + "in left panel of research page",
+							YesNo.No);
 						}
 					}else {
 						log(LogStatus.SKIP,  "Header :"+header +" is not matched with excel label:"+headerText+" in left panel of research page", YesNo.No);
-						sa.assertTrue(false, "Header :"+header +" is not matched with excel label:"+headerText+" in left panel of research page");
-
+						list.add("Header :"+header +" is not matched with excel label:"+headerText+" in left panel of research page");
 					}
 				}else {
 					log(LogStatus.SKIP, "Header :"+header +" is not visible in left panel of research page", YesNo.No);
-					sa.assertTrue(false,"Header :"+header +" is not visible in left panel of research page");
+					list.add("Header :"+header +" is not visible in left panel of research page");
 
 				}
 				
 			}else {
-				log(LogStatus.SKIP, "Header :"+header +" is disable in excel so cannot going to verify in research page", YesNo.No);
-				sa.assertTrue(false,"Header :"+header +" is disable in excel so cannot going to verify in research page");
-			}
-			
-			
+				log(LogStatus.SKIP, "Header :"+header +" is disable in excel so cannot going to verify in research page", YesNo.No);			}
 		}
 		
-		return flag;
+		return list;
 	}
+
+	public ArrayList<String> verifyFieldonResearchPage(String environment, String mode, String[][] Data) {
+
+		String tableData = null;
+		ArrayList<String> verifyData = new ArrayList<String>();
+		int row = Data.length;
+		ArrayList<String> DataFromExcel = new ArrayList<String>();
+
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < Data[0].length; j++) {
+				DataFromExcel.add(Data[i][j]);
+			}
+		}
+
+		String xpath = "//div[contains(@class,'active')]//a";
+		List<WebElement> ele = CommonLib.FindElements(driver, xpath, "Data");
+		ArrayList<String> DataFromOrg = new ArrayList<String>();
+		for (int i = 0; i < ele.size(); i++) {
+			try {
+				tableData = CommonLib.getText(driver, ele.get(i), ele.get(i) + " from Org", action.SCROLLANDBOOLEAN);
+				ThreadSleep(2000);
+				click(driver, getFieldName(tableData, 10), xpath, action.BOOLEAN);
+				ThreadSleep(2000);
+				if (tableData != "") {
+					DataFromOrg.add(tableData);
+				}
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				log(LogStatus.ERROR, "Could not get the " + ele.get(i) + " Data from File", YesNo.Yes);
+				verifyData.add("Could not get the " + ele.get(i) + " from File");
+
+			}
+		}
+
+		for (int i = 0; i < DataFromExcel.size(); i++) {
+			if (DataFromOrg.get(i).equals(DataFromExcel.get(i))) {
+				log(LogStatus.INFO, "Data from Excel : " + DataFromExcel.get(i)
+						+ " has been matched with the Org Data : " + DataFromOrg.get(i), YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Data from Excel : " + DataFromExcel.get(i)
+						+ " is not matched with the Org Data : " + DataFromOrg.get(i), YesNo.Yes);
+				verifyData.add(DataFromExcel.get(i));
+
+			}
+		}
+
+		return verifyData;
+	}
+
 	
 }

@@ -16,6 +16,8 @@ import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.SoftAssert;
 import com.navatar.generic.EnumConstants.*;
+import com.relevantcodes.extentreports.LogStatus;
+
 import static com.navatar.generic.AppListeners.appLog;
 import static com.navatar.generic.CommonLib.*;
 
@@ -7447,58 +7449,7 @@ public abstract class BasePage extends BaseLib {
 		}
 	}
 
-	// Acuity Research
-	@FindBy(xpath = "//div[contains(@class,'DOCKED')]//div//input")
-	private WebElement textAreaResearch;
-
-	public WebElement getTextAreaResearch(int timeOut) {
-		return isDisplayed(driver, textAreaResearch, "Visibility", timeOut, "Text Area Research");
-
-	}
-
-	@FindBy(xpath = "(//div[contains(@class,'DOCKED')]//div//button)[1]")
-	private WebElement researchMinimize;
-
-	public WebElement getResearchMinimize(int timeOut) {
-		return isDisplayed(driver, researchMinimize, "Visibility", timeOut, "Research Minimize");
-
-	}
-
-	@FindBy(xpath = "(//div[contains(@class,'DOCKED')]//div//button)[2]")
-	private WebElement researchPopOut;
-
-	public WebElement getResearchPopOut(int timeOut) {
-		return isDisplayed(driver, researchPopOut, "Visibility", timeOut, "Research Pop-Out");
-
-	}
-
-	@FindBy(xpath = "(//div[contains(@class,'DOCKED')]//div//button)[3]")
-	private WebElement researchButton;
-
-	public WebElement getResearchButton(int timeOut) {
-		return isDisplayed(driver, researchButton, "Visibility", timeOut, "Research Button");
-
-	}
-
-	@FindBy(xpath = "(//h2[contains(@class,'vertical__title')]")
-	private WebElement researchFindings;
-
-	public WebElement getResearchFindings(int timeOut) {
-		return isDisplayed(driver, researchFindings, "Visibility", timeOut, "Research Findings");
-
-	}
-
-	public WebElement getFieldName(String tableName, int timeOut) {
-		String xpath = "//div[contains(@class,'active')]//a[text()='" + tableName + "']";
-
-		return FindElement(driver, xpath, "Field Header Name: " + tableName, action.SCROLLANDBOOLEAN, timeOut);
-	}
-
-	public List<WebElement> researchFindingsCountForAllResults() {
-		return FindElements(driver, "//div[contains(@class,'active')]//h2/following-sibling::div//a/span",
-				"researchFIndingsCountResults");
-	}
-
+	
 	@FindBy(xpath = "//*[local-name()='svg' and @class='slds-icon slds-icon-text-default slds-icon_small']/../..")
 	private WebElement notificationIcon;
 
@@ -7695,13 +7646,143 @@ public abstract class BasePage extends BaseLib {
 				"//section[contains(@class,'slds-fade-in-open')]//div[@class='slds-modal__container']//footer//button",
 				"notePopUpFooterButtons");
 	}
-	
+
 	public WebElement taskSectonInNotePopUpNotExpanded(int timeOut) {
 		String xPath = "//span[@class=\"slds-accordion__summary-content\" and text()='Tasks']/ancestor::button[@aria-expanded='false']";
 
-		return isDisplayed(driver,
-				FindElement(driver, xPath, "Task" + " section", action.SCROLLANDBOOLEAN, timeOut), "Visibility",
-				timeOut, "Task" + " section");
+		return isDisplayed(driver, FindElement(driver, xPath, "Task" + " section", action.SCROLLANDBOOLEAN, timeOut),
+				"Visibility", timeOut, "Task" + " section");
+	}
+
+	public WebElement crossButtonOfRelatedAssociation(String relatedAssociationName, int timeOut) {
+
+		String xpath = "//div/lightning-pill/span/span[2][text()='" + relatedAssociationName
+				+ "']/preceding-sibling::span/following-sibling::lightning-button-icon/button";
+		try {
+			return FindElement(driver, xpath, "Cross Button of Related Association: " + relatedAssociationName,
+					action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Cross Button of Related Association: " + relatedAssociationName,
+					action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+
+	public List<WebElement> taggedRelatedToInNotePopUp() {
+		return FindElements(driver, "//div/lightning-pill[not(contains(@class,'d_flex'))]/span/span[2]",
+				"taggedRelatedToInNotePopUp");
+	}
+
+	public WebElement relatedAssocitionWithIcon(String relatedAssociationName, String recordType, int timeOut) {
+
+		if (recordType.equalsIgnoreCase("Firm") || recordType.equalsIgnoreCase("Account")) {
+			String xpath = "//div/lightning-pill[not(contains(@class,'d_flex'))]/span/span[2][text()='"
+					+ relatedAssociationName + "']/preceding-sibling::span//*[@data-key='account']";
+			try {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			}
+		} else if (recordType.equalsIgnoreCase("Deal")) {
+			String xpath = "//div/lightning-pill[not(contains(@class,'d_flex'))]/span/span[2][text()='"
+					+ relatedAssociationName + "']/preceding-sibling::span//*[@data-key='custom47']";
+			try {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			}
+		} else if (recordType.equalsIgnoreCase("Contact")) {
+
+			String xpath = "//div/lightning-pill[not(contains(@class,'d_flex'))]/span/span[2][text()='"
+					+ relatedAssociationName + "']/preceding-sibling::span//*[@data-key='contact']";
+			try {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			}
+
+		} else if (recordType.equalsIgnoreCase("Fund")) {
+
+			String xpath = "//div/lightning-pill[not(contains(@class,'d_flex'))]/span/span[2][text()='"
+					+ relatedAssociationName + "']/preceding-sibling::span//*[@data-key='custom34']";
+			try {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			}
+
+		} else if (recordType.equalsIgnoreCase("Fundraising")) {
+
+			String xpath = "//div/lightning-pill[not(contains(@class,'d_flex'))]/span/span[2][text()='"
+					+ relatedAssociationName + "']/preceding-sibling::span//*[@data-key='custom3']";
+			try {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			}
+
+		} else if (recordType.equalsIgnoreCase("User")) {
+
+			String xpath = "//div/lightning-pill[not(contains(@class,'d_flex'))]/span/span[2][text()='"
+					+ relatedAssociationName + "']/preceding-sibling::span//*[@data-key='user']";
+			try {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			}
+
+		}
+
+		else if (recordType.equalsIgnoreCase("CustomObject")) {
+			String xpath = "//div/lightning-pill[not(contains(@class,'d_flex'))]/span/span[2][text()='"
+					+ relatedAssociationName + "']/preceding-sibling::span//*[@data-key='custom20']";
+			try {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			} catch (StaleElementReferenceException e) {
+				return FindElement(driver, xpath, recordType + " & its Icon: " + relatedAssociationName,
+						action.SCROLLANDBOOLEAN, timeOut);
+			}
+
+		}
+
+		else {
+
+			log(LogStatus.ERROR, "Please Provide the correct Icon Name, Provided by you: " + recordType, YesNo.No);
+			sa.assertTrue(false, "Please Provide the correct Icon Name, Provided by you: " + recordType);
+			return null;
+		}
+
+	}
+
+	public WebElement crossIconButtonInNotePopUp(int timeOut) {
+		String xPath = "//header/button[@title='Close']";
+
+		return isDisplayed(driver, FindElement(driver, xPath, "Cross icon", action.SCROLLANDBOOLEAN, timeOut),
+				"Visibility", timeOut, "Cross Icon");
+	}
+
+	public WebElement subjectOfInteractionCard(String subjectName, int timeOut) {
+		String xpath = "//a[@class='interaction_sub subject_text' and text()='" + subjectName + "']";
+		WebElement ele = FindElement(driver, xpath, "subjectOfInteractionCard: " + subjectName, action.SCROLLANDBOOLEAN,
+				timeOut);
+		try {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "subjectOfInteractionCard: " + subjectName);
+
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "subjectOfInteractionCard: " + subjectName);
+		}
 	}
 	
 	@FindBy(xpath = "//div[@class='slds-modal__container']//p[text()='No item display']")
