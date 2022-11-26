@@ -6888,6 +6888,20 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	}
+	
+	public WebElement CompanyRecordPage(String companyname, int timeOut) {
+
+		try {
+			return FindElement(driver,
+					"//div[text()='Firm']/parent::h1//lightning-formatted-text[text()='" + companyname + "']",
+					"Company header: " + companyname, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver,
+					"//div[text()='Firm']/parent::h1//lightning-formatted-text[text()='\"+dealName+\"']",
+					"Company header: " + companyname, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
 
 	public WebElement contactDealCount(String contactName, int timeOut) {
 
@@ -6912,6 +6926,16 @@ public abstract class BasePage extends BaseLib {
 
 	}
 
+	public WebElement DealContactname(String contactName, int timeOut) {
+
+		String xpath = "//a[text()='" + contactName + "']";
+		try {
+			return FindElement(driver, xpath, "Header: " + contactName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Header: " + contactName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
 	public WebElement connectionTitle(String teamMember, String title, int timeOut) {
 
 		String xpath = "//a[text()='" + teamMember
@@ -7760,5 +7784,32 @@ public abstract class BasePage extends BaseLib {
 			return isDisplayed(driver, ele, "Visibility", timeOut, "subjectOfInteractionCard: " + subjectName);
 		}
 	}
+	
+	@FindBy(xpath = "//div[@class='slds-modal__container']//p[text()='No item display']")
+	private WebElement ErrorMsg;
 
+	/**
+	 * @return the navigationPopUpHeader
+	 */
+	public WebElement getErrorMsg(int timeOut) {
+		WebElement ele = isDisplayed(driver, ErrorMsg, "Visibility", timeOut, "ErrorMsg");
+		return ele;
+	}
+	
+	@FindBy(xpath = "//div[@class='slds-modal__container']//h2[contains(text(),'Deals with')]")
+	private WebElement DealCountPopHeader;
+
+	
+	public WebElement getDealCountPopHeader(int timeOut) {
+		WebElement ele = isDisplayed(driver, DealCountPopHeader, "Visibility", timeOut, "DealCountPopHeader");
+		return ele;
+	}
+	@FindBy(xpath = "//a[@title='ADENCOM']")
+	private WebElement anywhereonpage;
+
+	
+	public WebElement getanywhereonpage(int timeOut) {
+		WebElement ele = isDisplayed(driver, anywhereonpage, "Visibility", timeOut, "anywhereonpage");
+		return ele;
+	}
 }
