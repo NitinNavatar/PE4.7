@@ -131,7 +131,7 @@ public class CommonVariables {
 	public static String gmailUserName,gmailUserName2,gmailPassword;
 
 	public static String tabCustomObj,tabCustomObjField,tabCustomObjAPIName;
-	public static String tabObj1,tabObj2,tabObj3,tabObj4,tabObj5,tabObj6,tabObj7,tabObj8Coverage;
+	public static String tabObj1,tabObj2,tabObj3,tabObj4,tabObj5,tabObj6,tabObj7,tabObj8Coverage,tabObj9;
 
 	public static String ToggleLP1;
 	public static String TogglePartnerShip1;
@@ -1077,6 +1077,8 @@ public class CommonVariables {
 		public static String AS_FirmLabelValues17;;
 		public static String AS_FirmRecordType1,AS_FirmRecordType2, AS_FirmRecordType13,AS_FirmRecordType16,AS_FirmRecordType17;
 		
+		public static String AR_RecordType1;
+		
 		//Contact
 		public static String AS_ContactFirstName,AS_ContactFirstName2, AS_ContactFirstName8,AS_ContactFirstName11,AS_ContactFirstName12;
 		public static String AS_ContactLastName,AS_ContactLastName2, AS_ContactLastName8,AS_ContactLastName11,AS_ContactLastName12;
@@ -1160,7 +1162,7 @@ public class CommonVariables {
 	    
 
 	    public static String MRSD_1_ResearchFindings,MRSD_2_ResearchFindings,MRSD_3_ResearchFindings,MRSD_4_ResearchFindings,MRSD_5_ResearchFindings,MRSD_6_ResearchFindings,MRSD_7_ResearchFindings,MRSD_8_ResearchFindings,MRSD_9_ResearchFindings;
-	    public static String AR_Firm1,AR_Firm2,AR_Firm3;
+	    public static String AR_Firm1,AR_Firm2,AR_Firm3,AR_Firm4,AR_Firm5,AR_Firm6,AR_Firm7;
 	    
 	    public static String ADEIns1,ADEIns1RecordType;
 	    public static String ADEIns2,ADEIns2RecordType;
@@ -1379,6 +1381,7 @@ public class CommonVariables {
 		tabObj6=ExcelUtils.readDataFromPropertyFile("Object6");
 		tabObj7=ExcelUtils.readDataFromPropertyFile("Object7");
 		tabObj8Coverage=ExcelUtils.readDataFromPropertyFile("Object8");
+		tabObj9=ExcelUtils.readDataFromPropertyFile("Object9");
 		tabCustomObjField=ExcelUtils.readDataFromPropertyFile("CustomTabFieldName");
 		System.err.println("smokeExcelPathCommonVariable : "+testCasesFilePath);
 		todaysDate=getDateAccToTimeZone(BasePageErrorMessage.AmericaLosAngelesTimeZone, "MM/dd/YYYY");
@@ -6488,8 +6491,12 @@ public class CommonVariables {
 
 				
 				AR_Firm1=ExcelUtils.readData(dataWb,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up1", excelLabel.Name);
-				AR_Firm2=ExcelUtils.readData(dataWb,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up2", excelLabel.ResearchFindings);
+				AR_Firm2=ExcelUtils.readData(dataWb,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up2", excelLabel.Name);
 				AR_Firm3=ExcelUtils.readData(dataWb,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up3", excelLabel.Name);
+				AR_Firm4=ExcelUtils.readData(dataWb,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up4", excelLabel.Name);
+				AR_Firm5=ExcelUtils.readData(dataWb,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up5", excelLabel.Name);
+				AR_Firm6=ExcelUtils.readData(dataWb,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up6", excelLabel.Name);
+				AR_Firm7=ExcelUtils.readData(dataWb,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up7", excelLabel.Name);
 				
 				AR_ContactRecordType1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AR_Contact1", excelLabel.Record_Type);
 				

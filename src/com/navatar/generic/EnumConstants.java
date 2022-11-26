@@ -1236,7 +1236,7 @@ public static enum PermissionType{
 	
 	
 	public static enum PageLabel{
-		First_Name,Last_Name,Email, Fund_Name, Deal_Name,Status, Investment_Type,Meeting_Type{
+		First_Name,Last_Name,Email, Fund_Name, Fundraising_Name,Deal_Name,Status, Investment_Type,Meeting_Type{
 			@Override
 			public String toString() {
 				return "Meeting Type";

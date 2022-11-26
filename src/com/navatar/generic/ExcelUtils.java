@@ -1287,7 +1287,7 @@ public class ExcelUtils {
 			Sheet sheet = wb.getSheet(sheetName);
 			int row=ExcelUtils.getRowNumberBasedOnLabelAndValue(filePath, sheetName, basedOnLabel, basedOnValue);
 			int lastColumnNumber = sheet.getRow(0).getLastCellNum();
-			for(int i=2;i<lastColumnNumber;i++) {
+			for(int i=3;i<lastColumnNumber;i++) {
 				
 				headerList.add(ExcelUtils.getValueBasedOnCellType(sheet.getRow(0).getCell(i)).replaceAll("_", " "));
 			}
@@ -1338,7 +1338,7 @@ public class ExcelUtils {
 			wb = WorkbookFactory.create(fis);
 			int lastRow = wb.getSheet(sheetName).getLastRowNum();
 			System.out.println(lastRow);
-			for (int i = 2; i <= lastRow; i++) {//changed value of i from 1 to 2
+			for (int i = 1; i <= lastRow; i++) {//changed value of i from 1 to 2
 				try {
 					Cell cell = wb.getSheet(sheetName).getRow(i).getCell(0);
 					testCaseName = getValueBasedOnCellType(cell);
