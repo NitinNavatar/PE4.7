@@ -13583,7 +13583,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.INFO, "Sucessfully clicked on Meeting and call count", YesNo.No);
 
 					String date = null, subject = null, details = null, assignedTo = null, icon = null;
-					;
 
 					for (String[] meetingAndCall : meetingAndCallsPopupColumnAndValue) {
 						String val = meetingAndCall[0];
@@ -18324,7 +18323,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							+ "']/ancestor::tr//td[@data-label='Date']//lightning-base-formatted-text";
 					ele = FindElement(driver, xPath, "date ", action.SCROLLANDBOOLEAN, 25);
 					String actDate = getText(driver, ele, "date ", action.SCROLLANDBOOLEAN);
-					if (actDate.equalsIgnoreCase(date[i])) {
+					if (actDate.trim().equalsIgnoreCase(date[i].trim())) {
 						log(LogStatus.INFO,
 								"actual date : " + actDate + " has been matched with the Expected date : " + date[i]+" of subject : "+subject[i],
 								YesNo.No);
@@ -18394,5 +18393,350 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return result;
 	}
+	
+	
+	public boolean verifyCountOfRelatedAssociationOnTaggedPopupOnInteractionSctionOfFirstRecord()
+	{
+		String xPath;
+		WebElement ele;
+		List<WebElement> elements;
+		boolean flag=false;
+		
+		xPath="(//span[text()='Interactions']/ancestor::div[contains(@class,'slds-p-bottom_none')]//span[@class=\"slds-pill__label\" and starts-with(text(),'+')])[1]";
+		ele=FindElement(driver, xPath, "Tagged record", action.SCROLLANDBOOLEAN, 20);
+		String InteractionData=getText(driver, ele, "Tagged record", action.SCROLLANDBOOLEAN);
+		String replacedVal=InteractionData.replace("+", "");
+		int countOnInteraction=Integer.parseInt(replacedVal); 
+		if(clickUsingJavaScript(driver, ele, "Tagged record", action.SCROLLANDBOOLEAN))
+		{
+			log(LogStatus.INFO,"Clicked on Tagged record for Tagged popup",YesNo.No);
+			ThreadSleep(3000);
+			xPath="//h2[text()='Tagged']/../..//a";
+			elements=FindElements(driver, xPath, "Record on Tagged section");
+			if(countOnInteraction==elements.size())
+			{
+				log(LogStatus.INFO,"The count has been verified on Tagged popup",YesNo.No);
+				if(click(driver, popupCloseButton("Tagged",20), "Tagged popup close", action.SCROLLANDBOOLEAN))
+				{
+					log(LogStatus.INFO,"clicked on close button of Tagged popup",YesNo.No);
+					flag=true;
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Not able to click on close button of Tagged popup",YesNo.No);	
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR,"The count is not verified on Tagged popup",YesNo.No);
+				if(click(driver, popupCloseButton("Tagged",20), "Tagged popup close", action.SCROLLANDBOOLEAN))
+				{
+					log(LogStatus.INFO,"clicked on close button of Tagged popup",YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR,"Not able to click on close button of Tagged popup",YesNo.No);	
+				}
+			}			
+		}
+		else
+		{
+			log(LogStatus.ERROR,"Not able to click on Tagged record for Tagged popup",YesNo.No);
+		}
+		
+		return true;
+		
+	}
+	
+	
+	public ArrayList<String> verifyRecordOnConnectionsPopUpOfContactInAcuity(String contactName, String[] teamMember,
+			String[] title, String[] deals, String[] meetingAndCalls, String[] email) {
+
+		ArrayList<String> result = new ArrayList<String>();
+
+		if (contactName != null && contactName != "") {
+
+			if (contactNameUserIconButton(contactName, 30) != null) {
+
+				if (CommonLib.clickUsingJavaScript(driver, contactNameUserIconButton(contactName, 30), "Contact Name: " + contactName,
+						action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactName, YesNo.No);
+
+					if(teamMember.length==title.length && teamMember.length==deals.length && teamMember.length==meetingAndCalls.length && teamMember.length==meetingAndCalls.length && teamMember.length==email.length)
+					{
+						for(int i=0; i<teamMember.length; i++)
+						{
+							if (connectionPopUpTeamMember(teamMember[i], 20) != null) {
+								if (title[i] != null && title[i] != "") {
+									String actualTitle = getText(driver, connectionPopUpTitle(teamMember[i], title[i], 30), "Title",
+											action.SCROLLANDBOOLEAN);
+									if (actualTitle.equalsIgnoreCase(title[i])) {
+										log(LogStatus.INFO, "Actual result " + actualTitle
+												+ " of Title has been matched with Expected result : " + title[i]
+														+ " of Team Member: " + teamMember[i] + " under Record page: " + contactName+" for user "+teamMember[i],
+														YesNo.No);
+									} else {
+										log(LogStatus.ERROR, "Actual result " + actualTitle
+												+ " of Title is not matched with Expected result : " + title[i]
+														+ " of Team Member: " + teamMember[i] + " under Record page: " + contactName+" for user "+teamMember[i],
+														YesNo.No);
+										result.add("Actual result " + actualTitle
+												+ " of Title is not matched with Expected result : " + title[i]
+														+ " of Team Member: " + teamMember[i] + " under Record page: " + contactName+" for user "+teamMember[i]);
+									}
+								}
+
+								if (deals[i] != null && deals[i] != "") {
+
+									String actualDeal = getText(driver, connectionPopUpDealsCount(teamMember[i], deals[i], 30),
+											"deal", action.SCROLLANDBOOLEAN);
+									if (actualDeal.equalsIgnoreCase(deals[i])) {
+										log(LogStatus.INFO, "Actual result " + actualDeal
+												+ " of deal has been matched with Expected resut : " + deals[i]
+														+ " of Team Member: " + teamMember[i] + " under Record page: " + contactName+" for user "+teamMember[i],
+														YesNo.No);
+									} else {
+										log(LogStatus.ERROR, "Actual result " + actualDeal
+												+ " of deal are not matched with Expected resut : " + deals[i]
+														+ " of Team Member: " + teamMember[i] + " under Record page: " + contactName+" for user "+teamMember[i],
+														YesNo.No);
+										result.add("Actual result " + actualDeal
+												+ " of deal are not matched with Expected resut : " + deals[i]
+														+ " of Team Member: " + teamMember[i] + " under Record page: " + contactName+" for user "+teamMember[i]);
+									}
+								}
+
+								if (meetingAndCalls[i] != null && meetingAndCalls[i] != "") {
+
+									String actualmeetingAndCalls = getText(driver,
+											connectionPopUpMeetingCallsCount(teamMember[i], meetingAndCalls[i], 30),
+											"meeting and call", action.SCROLLANDBOOLEAN);
+									if (actualmeetingAndCalls.equalsIgnoreCase(meetingAndCalls[i])) {
+										log(LogStatus.INFO,
+												"Actual result " + actualmeetingAndCalls
+												+ " of meeting and call has been matched with Expected result : "
+												+ meetingAndCalls[i] + " of Team Member: " + teamMember[i]
+														+ " under Record page: " + contactName+" for user "+teamMember[i],
+														YesNo.No);
+									} else {
+										log(LogStatus.ERROR,
+												"Actual result " + actualmeetingAndCalls
+												+ " of meeting and call are not matched with Expected resut : "
+												+ meetingAndCalls[i] + " of Team Member: " + teamMember[i]
+														+ " under Record page: " + contactName+" for user "+teamMember[i],
+														YesNo.No);
+										result.add("Actual result " + actualmeetingAndCalls
+												+ " of meeting and call are not matched with Expected resut : "
+												+ meetingAndCalls[i] + " of Team Member: " + teamMember[i] + " under Record page: "
+												+ contactName+" for user "+teamMember[i]);
+									}
+								}
+								if (email[i] != null && email[i] != "") {
+									String actualEmail = getText(driver, connectionPopUpEmailCount(teamMember[i], email[i], 30),
+											"email", action.SCROLLANDBOOLEAN);
+									if (actualEmail.equalsIgnoreCase(email[i])) {
+										log(LogStatus.INFO, "Actual result " + actualEmail
+												+ " of email has been matched with Expected result : " + email[i]
+														+ " of Team Member: " + teamMember[i] + " under Record page: " + contactName+" for user "+teamMember[i],
+														YesNo.No);
+									} else {
+										log(LogStatus.ERROR, "Actual result " + actualEmail
+												+ " of email are not matched with Expected resut : " + email[i]
+														+ " of Team Member: " + teamMember[i] + " under Record page: " + contactName+" for user "+teamMember[i],
+														YesNo.No);
+										result.add("Actual result " + actualEmail
+												+ " of email are not matched with Expected resut : " + email[i]
+														+ " of Team Member: " + teamMember[i] + " under Record page: " + contactName+" for user "+teamMember[i]);
+									}
+								}
+							} else {
+								log(LogStatus.ERROR,
+										"No Team Member found of name: " + teamMember[i] + " for contact: " + contactName,
+										YesNo.No);
+								result.add("No Team Member found of name: " + teamMember[i] + " for contact: " + contactName);
+								if (connectionClosePopupButton(15) != null) {
+									click(driver, connectionClosePopupButton(15), "Close Button", action.SCROLLANDBOOLEAN);
+								}
+
+							}
+						}
+						if(click(driver, connectionClosePopupButton(15), "Close Button", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO,"Clicked on close button of meeting and call popup",YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.INFO,"Not able to click on close button of meeting and call popup",YesNo.No);
+							result.add("Not able to click on close button of meeting and call popup");
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The size of Team member, Title, deal, meeting and call, email are not equal", YesNo.No);
+						result.add("The size of Team member, Title, deal, meeting and call, email are not equal");
+					}
+				} else {
+					log(LogStatus.ERROR, "Not Able to Click on Contact: " + contactName, YesNo.No);
+					result.add("Not Able to Click on Contact: " + contactName);
+
+				}
+			} else {
+				log(LogStatus.ERROR, contactName + " is not avalable in contact section, So Can not Click on User Icon",
+						YesNo.No);
+				result.add(contactName + " is not avalable in contact section, So Can not Click on User Icon");
+
+			}
+		} else {
+			log(LogStatus.ERROR, "Provided Contact Name should not be null in DataSheet", YesNo.No);
+			result.add("Provided Contact Name should not be null in DataSheet");
+
+		}
+		return result;
+	}
+
+	
+	
+	public ArrayList<String> verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(String[] icon, String[] date,
+			String[] subjectName, String[] details, String[] assignedTO) {
+		ArrayList<String> result = new ArrayList<String>();
+		String xPath;
+		WebElement ele;
+
+		if(icon.length==date.length && icon.length==subjectName.length && icon.length==details.length && icon.length==assignedTO.length)
+		{
+			if (getMeetingAndCallPopUp(20) != null) {
+				log(LogStatus.INFO, "Meeting and calls popup has been open", YesNo.No);
+				for(int i=0; i<subjectName.length; i++) 
+				{
+					if (subjectName[i] != null && subjectName[i] != "") {
+						if (icon[i] != null && icon[i]!="") {
+							xPath = "//a[text()='" + subjectName[i]
+									+ "']/ancestor::td[@data-label='Subject']/../th[@data-label='Type']//lightning-icon";
+							ele = FindElement(driver, xPath, "Icon type", action.SCROLLANDBOOLEAN, 20);
+							String iconName = getAttribute(driver, ele, "Icon type", "class");
+							if (iconName.contains(icon[i].toLowerCase())) {
+								log(LogStatus.INFO, icon[i] + " icon has been verified against " + subjectName[i]
+										+ " on Meetings and Calls popup", YesNo.No);
+
+							} else {
+								log(LogStatus.ERROR,
+										icon + " icon is not verified against " + subjectName[i] + " on Meetings and Calls popup",
+										YesNo.No);
+								result.add(
+										icon + " icon is not verified against " + subjectName[i] + " on Meetings and Calls popup");
+							}
+						}
+
+						if (date[i] != null) {
+							xPath = "//a[text()='" + subjectName[i]
+									+ "']/ancestor::td[@data-label='Subject']/../td[@data-label='Date']//lightning-base-formatted-text";
+							ele = FindElement(driver, xPath, "Date column", action.SCROLLANDBOOLEAN, 30);
+
+							String actualDate = getText(driver, ele, "Date", action.BOOLEAN);
+							
+							String[] completedate = date[i].split("/");
+							char dayMonth = completedate[0].charAt(0);
+							String month;
+							if (dayMonth == '0') {
+								month = completedate[0].replaceAll("0", "");
+							} else {
+								month = completedate[0];
+							}
+							String expectedDate = month + "/" +completedate[1]  + "/" + completedate[2];
+							
+							if (actualDate.trim().equalsIgnoreCase(expectedDate.trim())) {
+								log(LogStatus.INFO,
+										"Expected date: " + date[i] + " has been matched with the actual date: " + actualDate+" for subject: "+subjectName[i]+" on meeting and call popup",
+										YesNo.No);
+							} else {
+								log(LogStatus.INFO,
+										"Expected date: " + date[i] + " is not matched with the actual date: " + actualDate+" for subject: "+subjectName[i]+" on meeting and call popup",
+										YesNo.No);
+								result.add("Expected date: " + date[i] + " is not matched with the actual date: " + actualDate+" for subject: "+subjectName[i]+" on meeting and call popup");
+							}
+						}
+
+						if (subjectName[i] != null && subjectName[i] != "") {
+							xPath = "//td[@data-label='Subject']//a[text()='" + subjectName[i] + "']";
+							ele = FindElement(driver, xPath, "Subject column", action.SCROLLANDBOOLEAN, 30);
+
+							String actualSubject = getText(driver, ele, "subject", action.BOOLEAN);
+							if (actualSubject.equalsIgnoreCase(subjectName[i].trim())) {
+								log(LogStatus.INFO, "Expected subject: " + subjectName[i]
+										+ " has been matched with the actual subject: " + actualSubject, YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Expected subject: " + subjectName[i]
+										+ " is not matched with the actual subject: " + actualSubject, YesNo.No);
+								result.add("Expected subject: " + subjectName[i] + " is not matched with the actual subject : "
+										+ actualSubject);
+							}
+						}
+
+						if (details[i] != null) {
+							xPath = "//a[text()='" + subjectName[i]
+									+ "']/ancestor::td[@data-label='Subject']/../td[@data-label='Details']//button";
+							ele = FindElement(driver, xPath, "Details column", action.SCROLLANDBOOLEAN, 30);
+
+							String actualDetails = getText(driver, ele, "Details", action.BOOLEAN);
+						
+							System.out.println(details[i].trim().replaceAll(" +", " "));
+							if (actualDetails.equals(details[i].trim().replaceAll(" +", " "))) {
+								log(LogStatus.INFO, "Expected details: " + details[i]
+										+ " has been matched with the actual details: " + actualDetails+" for subject: "+subjectName[i]+" on meeting and call popup", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Expected details: " + details[i]
+										+ " is not matched with the actual details: " + actualDetails, YesNo.No);
+								result.add("Expected details: " + details[i] + " is not matched with the actual details: "
+										+ actualDetails+" for subject: "+subjectName[i]+" on meeting and call popup");
+							}
+						}
+
+						if (assignedTO[i] != null && assignedTO[i] != "") {
+							xPath = "//a[text()='" + subjectName[i]
+									+ "']/ancestor::td[@data-label='Subject']/../td[@data-label='Assigned To']//a";
+							ele = FindElement(driver, xPath, "Assigned To column", action.SCROLLANDBOOLEAN, 30);
+
+							String actualAssignedTO = getText(driver, ele, "Assigned To", action.BOOLEAN);
+							if (actualAssignedTO.equalsIgnoreCase(assignedTO[i])) {
+								log(LogStatus.INFO,
+										"Expected Assigned to : " + assignedTO[i]
+												+ " has been matched with the actual Assigned to : " + actualAssignedTO+" for subject: "+subjectName[i]+" on meeting and call popup",
+												YesNo.No);
+							} else {
+								log(LogStatus.ERROR,
+										"Expected Assigned to : " + assignedTO[i]
+												+ " is not matched with the actual Assigned to : " + actualAssignedTO+" for subject: "+subjectName[i]+" on meeting and call popup",
+												YesNo.No);
+								result.add("Expected Assigned to : " + assignedTO[i]
+										+ " is not matched with the actual Assigned to : " + actualAssignedTO+" for subject: "+subjectName[i]+" on meeting and call popup");
+							}
+						}
+					} else {
+						log(LogStatus.ERROR, "Either subject name is empty or null", YesNo.No);
+						result.add("Either subject name is empty or null");
+					}
+				}
+
+				xPath = "//h2[contains(text(),'Meetings and Calls')]/../button//lightning-primitive-icon";
+				ele = FindElement(driver, xPath, "close icon", action.SCROLLANDBOOLEAN, 30);
+				if (CommonLib.clickUsingJavaScript(driver, ele, "close icon")) {
+					log(LogStatus.INFO, "Clicked on close icon of popup", YesNo.No);
+				} else {
+					log(LogStatus.ERROR, "Not able to click on close icon of popup", YesNo.No);
+					result.add("Not able to click on close icon of popup");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Meeting and calls popup is not open", YesNo.No);
+				result.add("Meeting and calls popup is not open");
+			}
+		}
+		else {
+			log(LogStatus.ERROR, "The length of Icon, Date, Subject and Assigned to are not equal.", YesNo.No);
+			result.add("The length of Icon, Date, Subject and Assigned to are not equal.");
+		}
+		return result;
+	}
+
 
 }

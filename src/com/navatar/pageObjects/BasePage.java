@@ -7811,5 +7811,17 @@ public abstract class BasePage extends BaseLib {
 			return isDisplayed(driver, ele, "Visibility", timeOut, "subjectOfInteractionCard: " + subjectName);
 		}
 	}
+	
+	public WebElement popupCloseButton(String popupName, int timeOut) {
+		String xpath = "//h2[text()='"+popupName+"']/..//lightning-icon[@title='Close']";
+		WebElement ele = FindElement(driver, xpath, popupName+" close button", action.SCROLLANDBOOLEAN, timeOut);
+		try {
+			return isDisplayed(driver, ele, "Visibility", timeOut, popupName+" close button");
+
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, ele, "Visibility", timeOut, popupName+" close button");
+		}
+	}
+	
 
 }
