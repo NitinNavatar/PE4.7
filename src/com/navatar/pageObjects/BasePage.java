@@ -6888,6 +6888,20 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	}
+	
+	public WebElement CompanyRecordPage(String companyname, int timeOut) {
+
+		try {
+			return FindElement(driver,
+					"//div[text()='Firm']/parent::h1//lightning-formatted-text[text()='" + companyname + "']",
+					"Company header: " + companyname, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver,
+					"//div[text()='Firm']/parent::h1//lightning-formatted-text[text()='\"+dealName+\"']",
+					"Company header: " + companyname, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
 
 	public WebElement contactDealCount(String contactName, int timeOut) {
 
@@ -6912,6 +6926,16 @@ public abstract class BasePage extends BaseLib {
 
 	}
 
+	public WebElement DealContactname(String contactName, int timeOut) {
+
+		String xpath = "//a[text()='" + contactName + "']";
+		try {
+			return FindElement(driver, xpath, "Header: " + contactName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Header: " + contactName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
 	public WebElement connectionTitle(String teamMember, String title, int timeOut) {
 
 		String xpath = "//a[text()='" + teamMember
@@ -7425,58 +7449,7 @@ public abstract class BasePage extends BaseLib {
 		}
 	}
 
-	// Acuity Research
-	@FindBy(xpath = "//div[contains(@class,'DOCKED')]//div//input")
-	private WebElement textAreaResearch;
-
-	public WebElement getTextAreaResearch(int timeOut) {
-		return isDisplayed(driver, textAreaResearch, "Visibility", timeOut, "Text Area Research");
-
-	}
-
-	@FindBy(xpath = "(//div[contains(@class,'DOCKED')]//div//button)[1]")
-	private WebElement researchMinimize;
-
-	public WebElement getResearchMinimize(int timeOut) {
-		return isDisplayed(driver, researchMinimize, "Visibility", timeOut, "Research Minimize");
-
-	}
-
-	@FindBy(xpath = "(//div[contains(@class,'DOCKED')]//div//button)[2]")
-	private WebElement researchPopOut;
-
-	public WebElement getResearchPopOut(int timeOut) {
-		return isDisplayed(driver, researchPopOut, "Visibility", timeOut, "Research Pop-Out");
-
-	}
-
-	@FindBy(xpath = "(//div[contains(@class,'DOCKED')]//div//button)[3]")
-	private WebElement researchButton;
-
-	public WebElement getResearchButton(int timeOut) {
-		return isDisplayed(driver, researchButton, "Visibility", timeOut, "Research Button");
-
-	}
-
-	@FindBy(xpath = "(//h2[contains(@class,'vertical__title')]")
-	private WebElement researchFindings;
-
-	public WebElement getResearchFindings(int timeOut) {
-		return isDisplayed(driver, researchFindings, "Visibility", timeOut, "Research Findings");
-
-	}
-
-	public WebElement getFieldName(String tableName, int timeOut) {
-		String xpath = "//div[contains(@class,'active')]//a[text()='" + tableName + "']";
-
-		return FindElement(driver, xpath, "Field Header Name: " + tableName, action.SCROLLANDBOOLEAN, timeOut);
-	}
-
-	public List<WebElement> researchFindingsCountForAllResults() {
-		return FindElements(driver, "//div[contains(@class,'active')]//h2/following-sibling::div//a/span",
-				"researchFIndingsCountResults");
-	}
-
+	
 	@FindBy(xpath = "//*[local-name()='svg' and @class='slds-icon slds-icon-text-default slds-icon_small']/../..")
 	private WebElement notificationIcon;
 
@@ -7824,4 +7797,32 @@ public abstract class BasePage extends BaseLib {
 	}
 	
 
+	@FindBy(xpath = "//div[@class='slds-modal__container']//p[text()='No item display']")
+	private WebElement ErrorMsg;
+
+
+	/**
+	 * @return the navigationPopUpHeader
+	 */
+	public WebElement getErrorMsg(int timeOut) {
+		WebElement ele = isDisplayed(driver, ErrorMsg, "Visibility", timeOut, "ErrorMsg");
+		return ele;
+	}
+	
+	@FindBy(xpath = "//div[@class='slds-modal__container']//h2[contains(text(),'Deals with')]")
+	private WebElement DealCountPopHeader;
+
+	
+	public WebElement getDealCountPopHeader(int timeOut) {
+		WebElement ele = isDisplayed(driver, DealCountPopHeader, "Visibility", timeOut, "DealCountPopHeader");
+		return ele;
+	}
+	@FindBy(xpath = "//a[@title='ADENCOM']")
+	private WebElement anywhereonpage;
+
+	
+	public WebElement getanywhereonpage(int timeOut) {
+		WebElement ele = isDisplayed(driver, anywhereonpage, "Visibility", timeOut, "anywhereonpage");
+		return ele;
+	}
 }

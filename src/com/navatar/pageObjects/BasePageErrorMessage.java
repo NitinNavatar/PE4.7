@@ -73,6 +73,7 @@ public interface BasePageErrorMessage {
 	public static String filter="Organizer__c = '<<recordid>>' or recordtype.developername = 'Firm_Events'";
 	public static String onclickTitle="Event_Invitees";
 	public static String HitASnagMessage="Record Type: this ID value isn't valid for the user:";
+	public static String ErrorMessage="No item display";
 	public static String OldTaskMsg(String user,String contactName,  int otherContactNum) {
 		String msg="a Task";
 		if (user==null) {
