@@ -7811,8 +7811,21 @@ public abstract class BasePage extends BaseLib {
 		}
 	}
 	
+	public WebElement popupCloseButton(String popupName, int timeOut) {
+		String xpath = "//h2[text()='"+popupName+"']/..//lightning-icon[@title='Close']";
+		WebElement ele = FindElement(driver, xpath, popupName+" close button", action.SCROLLANDBOOLEAN, timeOut);
+		try {
+			return isDisplayed(driver, ele, "Visibility", timeOut, popupName+" close button");
+
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, ele, "Visibility", timeOut, popupName+" close button");
+		}
+	}
+	
+
 	@FindBy(xpath = "//div[@class='slds-modal__container']//p[text()='No item display']")
 	private WebElement ErrorMsg;
+
 
 	/**
 	 * @return the navigationPopUpHeader

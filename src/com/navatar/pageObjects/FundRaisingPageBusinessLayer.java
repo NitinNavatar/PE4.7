@@ -10,6 +10,10 @@ import org.openqa.selenium.support.FindBy;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
+
+
+import com.navatar.generic.EnumConstants.PageLabel;
+
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
 import com.navatar.generic.EnumConstants.YesNo;
@@ -32,6 +36,8 @@ import javax.management.ObjectName;
  */
 public class FundRaisingPageBusinessLayer extends FundRaisingPage {
 
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	
 	/**
 	 * @param driver
 	 */
@@ -878,6 +884,7 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage {
 		}
 		return false;
 	}
+
 	
 	/**
 	 * @author sahil bansal
@@ -924,6 +931,33 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage {
 				appLog.error("Not able to enter legal Name");
 			}
 			return flag;
-	
 }
+
+	public boolean UpdateFundRaisingName(String projectName, String fundraisingName, int timeOut) {
+		boolean flag = true;
+		WebElement ele;
+		ThreadSleep(2000);
+		if (bp.clickOnShowMoreActionDownArrow(projectName, PageName.FundraisingPage, ShowMoreActionDropDownList.Edit, 10)) {
+			ThreadSleep(2000);
+			ele = bp.getLabelTextBox(projectName, PageName.FundraisingPage.toString(), PageLabel.Fundraising_Name.toString(), timeOut);
+			if (sendKeys(driver, ele, fundraisingName, "Fundraising Name", action.BOOLEAN)) {
+				appLog.info("Successfully Entered value on Fundraising Name TextBox : " + fundraisingName);
+			} else {
+				appLog.error("Not Able to Entered value on Fundraising Name TextBox : " + fundraisingName);
+			}
+				ThreadSleep(1000);
+			ThreadSleep(2000);
+			if (click(driver, getCustomTabSaveBtn(projectName, 30), "Save Button", action.SCROLLANDBOOLEAN)) {
+				appLog.error("Click on save Button");
+				flag = true;
+				ThreadSleep(2000);
+			} else {
+				appLog.error("Not Able to Click on save Button");
+			}
+		} else {
+			appLog.error("Not Able to Click on edit Button");
+		}
+		return flag;
+	}
+	
 }
