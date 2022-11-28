@@ -1177,4 +1177,11 @@ public class SetupPage extends BasePageBusinessLayer {
 	
 	
 
+	@FindBy(xpath = "//input[@id='Title']")
+	private WebElement userTitle;
+
+	public WebElement getUserTitle(int timeOut) {
+		return isDisplayed(driver, userTitle, "Visibility", timeOut, "user title");
+	}
+
 }

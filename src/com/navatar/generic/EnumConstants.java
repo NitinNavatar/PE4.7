@@ -21,7 +21,7 @@ public class EnumConstants {
 		Folder_Description,Fund_Size,Fund_VintageYear,Fund_Description,Disclaimer_Name,Disclaimer_Description,StandardPath,CommonPath,SharedPath,InternalPath,MyProfile_FName,MyProfile_LName,Updated_FirmName,Updated_FirstName,Updated_LastName,Title,Business_Phone,Mailing_City,Mailing_State,Mailing_Zip,Mailing_Country,Firm_Contact,KeyWord_For_Search,AllFirms_Count,OnlineImportPath,AdvisorInvolvementID,FOLDER_NAME,INVALID_FOLDER_NAME,
 		TargetRegistrationURL,TargetLoginURL,Watermarking,UpdateInstitution_NameFormManageInvestor,UpdatedLimitedPartner_NameFormManageInvestor,HomePageAlertCount,FundsPageALertCount,ContactPageALertCount,BillingZip,UpdateFund_NameFromUpdateInfoIWR,UpdateFund_NameFromUpdateInfoFR,ContactName,FundName,Module_Name,Execute,Statistics,FRW_Value,INV_Value,FRW_DocumentsName,
 		INV_DocumentsName,Updated_InstitutionName_From_InvestorSide,Activity_Count,Viewed_Or_DownloadedAnyFile,Account_Name,Logo_Name,Contact_Access,ContactUpdatedEmailID, Path, DrawdownID, CapitalCalllID, CapitalAmount,ManagementFee, OtherFee, InvestmentAmount,CallAmount, CallDate, DueDate, CallAmountReceived,ReceivedDate, AmountDue,CapitalReturn,Dividends,RealizedGain,OtherProceeds,TotalDistributions,FundDistributionID,InvestorDistributionID,Capital_Returned_Recallable,
-		Capital_Returned_NonRecallable,Start_Time,End_Time,Test_Custom_Object_Name,Average_Deal_Quality_Score,Total_Deals_Shown,Deal_Quality_Score,Meeting_Type,Item_ID {
+		Capital_Returned_NonRecallable,Start_Time,End_Time,Test_Custom_Object_Name,Average_Deal_Quality_Score,Total_Deals_Shown,Deal_Quality_Score,Meeting_Type,User_Title,Item_ID {
 				@Override
 			    public String toString() {
 			      return "Item Id";
@@ -63,7 +63,7 @@ public class EnumConstants {
 		}
 		, Pipeline_Name, Company_Name
 			
-		, Stage, Source, Source_Firm, Source_Contact, Deal_Type, Employees, Website, Email, Legal_Name, Name, Investment_Size,Updated_Investment_Size, Log_In_Date{
+		, Stage, Source, Source_Firm, Source_Contact, Deal_Type, Employees, Website, Email, Legal_Name,Target_Close_Date, Name, Investment_Size,Updated_Investment_Size, Log_In_Date{
 			@Override
 			public String toString() {
 				return "Date Received";
@@ -73,7 +73,7 @@ public class EnumConstants {
 		, Due_Date,Investment_Likely_Amount,Closing,Total_Fundraising_Contacts,Fundraising_Contact_ID,Fundraising,Role, Other_Address,Label,
 		Mailing_Address,Total_Commitments,Commitment_Amount,Partner_Type,Tax_Forms,Final_Commitment_Date,Company,Bank_Name,Placement_Fee,Fund_Investment_Category,Total_CoInvestment_Commitments,Total_Fund_Commitments, Institution_Type, Fund_Preferences, Industry_Preferences, Shipping_Street, Shipping_City, Shipping_State, Shipping_Zip, Shipping_Country, Mobile_Phone, Assistant, Asst_Phone, Phone,Total_Call_Amount_Received, Total_Amount_Called,Total_Amount_Received,Total_Uncalled_Amount,Total_Commitment_Due,Commitment_Called,Called_Due,Preferred_Mode_of_Contact,Percent,Contact_Tier,Pipeline_Comments,
 		Parent_Field_Name,Override_Label,APIName,FieldOrder,URL,Region,Industry,Attendee_Staff,Marketing_Event,Notes,DTID,Member,File,EffectiveDate,ReceiptDate,
-		SDG_Row_Number, My_Records,Global_Filter_Query,Field_Data_SDG,Filter_Search, Filter_PickList, Filter_Label,SDG_Misc,Highlighted_Colors,Highlighted_Colors_RGB, Referenced_Component_Heading, Introduction_Date,TotalCommitment, Priority, Project_Type, Project_Name, Task_Name, Status, Fund_InvestmentCategory,FundInvestmentID,Comment, Updated_Priority, Updated_Subject, Updated_Comment,Updated_Stage, Start_Date, End_Date, Data_Type, Field_Label, Length, Decimal_Places, Options, Deal_Name, SDG_Name, sObjectName, SDG_Tag, Object_Name, Field_Set_Label, NameSpace_PreFix, Page_Layout,Fields_Name, Toggle_Button, Request, Date_Requested, Request_Tracker_ID, Marketing_Event_Name, Date, TabName, Item,Filter_Value,Select_List_Item, RelatedTab, ToggleButton, Column_Name1, Column_Name2,Field_Type, FieldLabel_SubString, ExtraFieldsName, Column_Name, Navigation_Label_Name, Redirection_Label_Name, Update_Navigation_Label_Name, Updated_Order,Parent_Institution,Entity_Type, Parent, Navigation_Label_With_Parent, List_View_Object, List_View_Name, Action_Object, Coverage_Name,Action_Order,Event,Event_Payload,Action_Type, Sector, Assigned_To, Location, Event_PayLoad, Institution,Firm, Contact, Type_Of_Debt, Amount, Frequency, Fiscal_Year_end, Marketing_Initiative, Client, Advisor,List_Accessibility,Field,Operators,Filter,Fundraising_Stage,Count_as_per_fundraising_stage,Fundraising_Count, Partnership,SDG_Data_Count,AppPage_Name,SDG_TableName,SDG_DataProviderName
+		SDG_Row_Number, My_Records,Global_Filter_Query,Field_Data_SDG,Filter_Search, Filter_PickList, Filter_Label,SDG_Misc,Highlighted_Colors,Highlighted_Colors_RGB, Referenced_Component_Heading, Introduction_Date,TotalCommitment, Priority, Project_Type, Project_Name, Task_Name, Status, Fund_InvestmentCategory,FundInvestmentID,Comment, Updated_Priority, Updated_Subject, Updated_Comment,Updated_Stage, Start_Date, End_Date, Data_Type, Field_Label, Length, Decimal_Places, Options, Deal_Name,DealTeamID, SDG_Name, sObjectName, SDG_Tag, Object_Name, Field_Set_Label, NameSpace_PreFix, Page_Layout,Fields_Name, Toggle_Button, Request, Date_Requested, Request_Tracker_ID, Marketing_Event_Name, Date, TabName, Item,Filter_Value,Select_List_Item, RelatedTab, ToggleButton, Column_Name1, Column_Name2,Field_Type, FieldLabel_SubString, ExtraFieldsName, Column_Name, Navigation_Label_Name, Redirection_Label_Name, Update_Navigation_Label_Name, Updated_Order,Parent_Institution,Entity_Type, Parent, Navigation_Label_With_Parent, List_View_Object, List_View_Name, Action_Object, Coverage_Name,Action_Order,Event,Event_Payload,Action_Type, Sector, Assigned_To, Location, Event_PayLoad, Institution,Firm, Contact, Type_Of_Debt, Amount, Frequency, Fiscal_Year_end, Marketing_Initiative, Client, Advisor,List_Accessibility,Field,Operators,Filter,Fundraising_Stage,Count_as_per_fundraising_stage,Fundraising_Count, Partnership,SDG_Data_Count,AppPage_Name,SDG_TableName,SDG_DataProviderName
 		,Default_Sort,Date_Field,Field_Name,Field_Value,Filter_Condition,TextBox_Type,Page_Layout_Name,Button_Name,Tag,Advance_Due_Date,Advance_Start_Date,Advance_End_Date,Suggested_Tag,People,Deals,Meetings_And_Calls,Day,Contact_Type, Other_LabelNames, Other_LabelValues,Search_String, Output, ResearchFindings, All_Categories, Firms, Intermediary, Lender, Portfolio_Company, Contacts, Fund, Interactions, Referenced_Accounts, Referenced_Contacts,Section,ContactHeader,dealHeader,ConnectionHeader,Deal_Company,Deal_Stage,Deal_DateRecieved,Advance_Status,Advance_Priority,Companies_Count,People_Count,Deals_Count,Contact_Name,Contact_Deals,Contact_Meetings_And_Calls,Contact_Email,Related_Association,Connection_TeamMember,Connection_Title,Connection_Deal,Connection_MeetingsAndCall,Connection_Email;
 
 
@@ -234,7 +234,7 @@ Fundraising_ContactPage, Financing, Financial_Performance, Marketing_Initiative,
 			public String toString() {
 				return "Declined/Dead";
 		}
-		},Prospect,Interested,Sent_PPM,Declined,Verbal_Commitment,Follow_up_Diligence,New_Interested,New_Stage_Verification;
+		},Prospect,Interested,Sent_PPM,Declined,Deny,Verbal_Commitment,Follow_up_Diligence,New_Interested,New_Stage_Verification;
 	}
 	public static enum YesNo {
 		Yes,No,YesWinium;
@@ -1242,7 +1242,7 @@ public static enum PermissionType{
 	
 	
 	public static enum PageLabel{
-		First_Name,Last_Name,Email, Fund_Name, Deal_Name,Status, Investment_Type,Meeting_Type{
+		First_Name,Last_Name,Email, Fund_Name, Fundraising_Name,Deal_Name,Status, Investment_Type,Meeting_Type{
 			@Override
 			public String toString() {
 				return "Meeting Type";
@@ -1274,7 +1274,7 @@ public static enum PermissionType{
 					return "Navigation Type";
 				}
 			},
-		Contact_Name, Tax_Forms,Partner_Type,Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places, Values, Is_Touchpoint,Description, Request, Date_Requested, Attendee_Staff, Label, Panel_Width, Panel_Height,Deal,Team_Member_Role,Member, Page_Layout_Name,Organizer,Convert_to_Portfolio, Deal_Contact_Type, Team_Member, Location, End, All_Day_Event, Role, 
+		Contact_Name, Tax_Forms,Partner_Type,Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places, Values, Is_Touchpoint,Description, Request, Date_Requested, Attendee_Staff, Label, Panel_Width, Panel_Height,Deal,Fundraising,Team_Member_Role,Member, Page_Layout_Name,Organizer,Convert_to_Portfolio, Deal_Contact_Type, Team_Member, Location, End, All_Day_Event, Role, 
 		Lender_Status{
 				@Override
 				public String toString() {

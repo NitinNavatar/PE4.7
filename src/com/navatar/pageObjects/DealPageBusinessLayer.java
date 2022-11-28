@@ -930,14 +930,14 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		ThreadSleep(2000);
 		if (clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Edit, 10)) {
 			ThreadSleep(2000);
-			if (click(driver, getSourceFirmCrossIcon(projectName, 60), "Company Cross Icon", action.SCROLLANDBOOLEAN)) {
-				appLog.info("Clicked on Legal Cross icon");
-				ThreadSleep(3000);
-			} else {
-				appLog.info("Not able to click on Cross Icon button");
-				log(LogStatus.INFO, "Not able to clicked on edit button so cannot Account Name ", YesNo.Yes);
-				BaseLib.sa.assertTrue(false, "Not able to clicked on edit button so cannot Account Name ");
-			}
+//			if (click(driver, getSourceFirmCrossIcon(projectName, 60), "Company Cross Icon", action.SCROLLANDBOOLEAN)) {
+//				appLog.info("Clicked on Legal Cross icon");
+//				ThreadSleep(3000);
+//			} else {
+//				appLog.info("Not able to click on Cross Icon button");
+//				log(LogStatus.INFO, "Not able to clicked on edit button so cannot Account Name ", YesNo.Yes);
+//				BaseLib.sa.assertTrue(false, "Not able to clicked on edit button so cannot Account Name ");
+//			}
 			int loopCount = 0;
 			int status = 0;
 			if (labelNames != null && labelValue != null) {

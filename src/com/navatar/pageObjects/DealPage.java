@@ -303,4 +303,10 @@ public class DealPage extends BasePageBusinessLayer {
 	public WebElement getreplacevalueforstage(String projectName, int timeOut) {
 		return isDisplayed(driver, replacevalueforstage, "Visibility", timeOut, "replacevalueforstage");
 	}
+	@FindBy(xpath = "//input[@id='ReplaceValueWithNullValue']")
+	private WebElement replacevaluewithNullforstage;
+
+	public WebElement getreplacevaluewithNullforstage(String projectName, int timeOut) {
+		return isDisplayed(driver, replacevaluewithNullforstage, "Visibility", timeOut, "replacevaluewithNullforstage");
+	}
 }

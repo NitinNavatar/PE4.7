@@ -6425,7 +6425,7 @@ public class Module8HomepageSDG extends BaseLib {
 								YesNo.Yes);
 						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
 					}
-					if (setup.createPEUser(crmUser3FirstName, UserLastName, emailId, crmUser3Lience, crmUser3Profile)) {
+					if (setup.createPEUser(crmUser3FirstName, UserLastName, emailId, crmUser3Lience, crmUser3Profile, null)) {
 						log(LogStatus.INFO,
 								"CRM User is created Successfully: " + crmUser3FirstName + " " + UserLastName,
 								YesNo.No);

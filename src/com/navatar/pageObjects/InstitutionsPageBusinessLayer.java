@@ -2277,5 +2277,37 @@ public boolean clickOnCreatedInstitution(String environment,String mode,String i
 			}
 			return flag;
 	}
-		
+	
+	public boolean UpdateRecordTypeAccount(String projectName,String mode, String recordType , int timeOut ) {	
+		boolean flag=false;
+		ThreadSleep(3000);
+		ThreadSleep(10000);
+		if(clickUsingJavaScript(driver, geteditRecordTypeButton(projectName, timeOut), "edit Record Type button")) {
+			appLog.info("clicked on edit Record Type button");
+
+			if (!recordType.equals("") || !recordType.isEmpty()) {
+				ThreadSleep(2000);
+				if(click(driver, getRadioButtonforRecordType(recordType, timeOut), "Radio Button for : "+recordType, action.SCROLLANDBOOLEAN)){
+					appLog.info("Clicked on radio Button for institution for record type : "+recordType);
+					if (click(driver, getContinueOrNextButton(projectName,timeOut), "Continue Button", action.BOOLEAN)) {
+						appLog.info("Clicked on Continue or Nxt Button");	
+						ThreadSleep(1000);
+					}else{
+						appLog.error("Not Able to Clicked on Next Button");
+						return false;	
+					}
+				}else{
+					appLog.error("Not Able to Clicked on radio Button for record type : "+recordType);
+					return false;
+				}
+
+			}
+	}
+		if (click(driver, getNavigationTabSaveBtn(projectName,timeOut), "save button", action.SCROLLANDBOOLEAN)) {
+			appLog.info("clicked on save button");
+			ThreadSleep(4000);
+			refresh(driver);
+		}
+		return true;
+	}
 }
