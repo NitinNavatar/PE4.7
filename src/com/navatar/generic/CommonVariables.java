@@ -1263,6 +1263,26 @@ public class CommonVariables {
 	  		public static String ADEDealTeamMember8;
 	  		public static String ADEDealTeamRole8;
 	  		public static String ADEDealTeamID8;
+	  		
+	  		public static String ADEDealTeamName9;
+	  		public static String ADEDealContact9;
+	  		public static String ADEDealTeamMember9;
+	  		public static String ADEDealTeamRole9;
+	  		public static String ADEDealTeamID9;
+	  		
+	  		public static String ADEDealTeamName10;
+	  		public static String ADEDealContact10;
+	  		public static String ADEDealTeamMember10;
+	  		public static String ADEDealTeamRole10;
+	  		public static String ADEDealTeamID10;
+	  		
+	  		//Fund
+	  		public static String ADEFundName;
+			public static String ADEFundType;
+			
+			//FR
+			public static String ADEFundraisingName,ADEInstitutionName,ADERFundName,ADEStage,ADEClosing,ADEInvestmentLikelyAmountMN,ADENote,ADETargetClosingDate;
+			public static String ADEFundraisingName1,ADEInstitutionName1,ADERFundName1,ADEStage1,ADEClosing1,ADEInvestmentLikelyAmountMN1,ADENote1,ADETargetClosingDate1;
 	    
 	    
 	    
@@ -6558,6 +6578,33 @@ public class CommonVariables {
 					ADEDealTeamRole8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_08", excelLabel.Role);
 					ADEDealTeamID8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_08", excelLabel.DealTeamID);
 					
+					ADEDealTeamName9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_09", excelLabel.Deal_Name);
+					ADEDealContact9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_09", excelLabel.Contact);
+					ADEDealTeamMember9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_09", excelLabel.Member);
+					ADEDealTeamRole9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_09", excelLabel.Role);
+					ADEDealTeamID9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_09", excelLabel.DealTeamID);
+					
+					ADEDealTeamName10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_10", excelLabel.Deal_Name);
+					ADEDealContact10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_10", excelLabel.Contact);
+					ADEDealTeamMember10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_10", excelLabel.Member);
+					ADEDealTeamRole10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_10", excelLabel.Role);
+					ADEDealTeamID10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_10", excelLabel.DealTeamID);
+					
+					//Fund
+					
+					ADEFundName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "ADEF1", excelLabel.Fund_Name);
+					ADEFundType = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "ADEF1", excelLabel.Fund_Type);
+					
+					//Fundrasing
+					ADEFundraisingName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR1", excelLabel.FundRaising_Name);
+					ADEInstitutionName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR1", excelLabel.Institutions_Name);
+					ADERFundName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR1", excelLabel.Fund_Name);
+					ADETargetClosingDate = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR1", excelLabel.Target_Close_Date);
+					
+					ADEFundraisingName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR2", excelLabel.FundRaising_Name);
+					ADEInstitutionName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR2", excelLabel.Institutions_Name);
+					ADERFundName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR2", excelLabel.Fund_Name);
+					ADEStage1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR2", excelLabel.Stage);
 					
 					break;
 				

@@ -63,7 +63,7 @@ public class EnumConstants {
 		}
 		, Pipeline_Name, Company_Name
 			
-		, Stage, Source, Source_Firm, Source_Contact, Deal_Type, Employees, Website, Email, Legal_Name, Name, Investment_Size,Updated_Investment_Size, Log_In_Date{
+		, Stage, Source, Source_Firm, Source_Contact, Deal_Type, Employees, Website, Email, Legal_Name,Target_Close_Date, Name, Investment_Size,Updated_Investment_Size, Log_In_Date{
 			@Override
 			public String toString() {
 				return "Date Received";
@@ -234,7 +234,7 @@ Fundraising_ContactPage, Financing, Financial_Performance, Marketing_Initiative,
 			public String toString() {
 				return "Declined/Dead";
 		}
-		},Prospect,Interested,Sent_PPM,Declined,Verbal_Commitment,Follow_up_Diligence,New_Interested,New_Stage_Verification;
+		},Prospect,Interested,Sent_PPM,Declined,Deny,Verbal_Commitment,Follow_up_Diligence,New_Interested,New_Stage_Verification;
 	}
 	public static enum YesNo {
 		Yes,No,YesWinium;
@@ -1268,7 +1268,7 @@ public static enum PermissionType{
 					return "Navigation Type";
 				}
 			},
-		Contact_Name, Tax_Forms,Partner_Type,Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places, Values, Is_Touchpoint,Description, Request, Date_Requested, Attendee_Staff, Label, Panel_Width, Panel_Height,Deal,Team_Member_Role,Member, Page_Layout_Name,Organizer,Convert_to_Portfolio, Deal_Contact_Type, Team_Member, Location, End, All_Day_Event, Role, 
+		Contact_Name, Tax_Forms,Partner_Type,Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places, Values, Is_Touchpoint,Description, Request, Date_Requested, Attendee_Staff, Label, Panel_Width, Panel_Height,Deal,Fundraising,Team_Member_Role,Member, Page_Layout_Name,Organizer,Convert_to_Portfolio, Deal_Contact_Type, Team_Member, Location, End, All_Day_Event, Role, 
 		Lender_Status{
 				@Override
 				public String toString() {

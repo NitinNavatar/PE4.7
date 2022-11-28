@@ -6889,6 +6889,20 @@ public abstract class BasePage extends BaseLib {
 
 	}
 	
+	public WebElement FundRaisingRecordPage(String fundraisingsName, int timeOut) {
+
+		try {
+			return FindElement(driver,
+					"//div[text()='Fundraising']/parent::h1//lightning-formatted-text[text()='" + fundraisingsName + "']",
+					"Deal Header: " + fundraisingsName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver,
+					"//div[text()='Fundraising']/parent::h1//lightning-formatted-text[text()='"+fundraisingsName+"']",
+					"Deal Header: " + fundraisingsName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+	
 	public WebElement CompanyRecordPage(String companyname, int timeOut) {
 
 		try {
@@ -7092,6 +7106,18 @@ public abstract class BasePage extends BaseLib {
 	}
 
 	public WebElement teamMemberDealCount(String teamMemberName, int timeOut) {
+
+		String xpath = "//a[text()='" + teamMemberName
+				+ "']/ancestor::th[@data-label='Team Member']/..//td[@data-label='Deals']//span//button";
+		try {
+			return FindElement(driver, xpath, "TeamMember Header: " + teamMemberName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "TeamMember Header: " + teamMemberName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+	
+	public WebElement teamMemberpopupDealCount(String teamMemberName, int timeOut) {
 
 		String xpath = "//a[text()='" + teamMemberName
 				+ "']/ancestor::th[@data-label='Team Member']/..//td[@data-label='Deals']//span//button";
@@ -7824,5 +7850,11 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getanywhereonpage(int timeOut) {
 		WebElement ele = isDisplayed(driver, anywhereonpage, "Visibility", timeOut, "anywhereonpage");
 		return ele;
+	}
+	@FindBy(xpath = "//div[contains(@class,'recordTypeName')]/following-sibling::lightning-button-icon/button")
+	private WebElement editRecordTypeButton;
+
+	public WebElement geteditRecordTypeButton(String projectName, int timeOut) {
+		return isDisplayed(driver, editRecordTypeButton, "Visibility", timeOut, "editRecordTypeButton");
 	}
 }

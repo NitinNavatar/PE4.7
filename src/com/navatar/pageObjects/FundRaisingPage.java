@@ -404,7 +404,12 @@ public class FundRaisingPage extends BasePage {
 		return isDisplayed(driver, newFundraisingContactBtn, "Visibility", timeOut, "Fundraising Contact button");
 	}
 	
-	
+	@FindBy(xpath = "//label[text()='Legal Name']/following-sibling::div//button")
+	private WebElement LegalNameCrossIcon;
+
+	public WebElement getLegalNameCrossIcon(String projectName, int timeOut) {
+		return isDisplayed(driver, LegalNameCrossIcon, "Visibility", timeOut, "LegalNameCrossIcon");
+	}
 	
 
 }
