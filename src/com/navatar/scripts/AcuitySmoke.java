@@ -55,7 +55,7 @@ public class AcuitySmoke extends BaseLib {
 								YesNo.Yes);
 						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
 					}
-					if (setup.createPEUser(crmUser1FirstName, UserLastName, emailId, crmUserLience, crmUserProfile)) {
+					if (setup.createPEUser(crmUser1FirstName, UserLastName, emailId, crmUserLience, crmUserProfile, null)) {
 						log(LogStatus.INFO,
 								"CRM User is created Successfully: " + crmUser1FirstName + " " + UserLastName,
 								YesNo.No);
@@ -2343,7 +2343,7 @@ public class AcuitySmoke extends BaseLib {
 								YesNo.Yes);
 						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
 					}
-					if (setup.createPEUser(crmUser2FirstName, UserLastName, emailId, crmUserLience, crmUserProfile)) {
+					if (setup.createPEUser(crmUser2FirstName, UserLastName, emailId, crmUserLience, crmUserProfile, null)) {
 						log(LogStatus.INFO,
 								"CRM User is created Successfully: " + crmUser2FirstName + " " + UserLastName,
 								YesNo.No);
@@ -4785,7 +4785,7 @@ public class AcuitySmoke extends BaseLib {
 								YesNo.Yes);
 						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
 					}
-					if (setup.createPEUser(crmUser4FirstName, UserLastName, emailId, crmUserLience, crmUser4Profile)) {
+					if (setup.createPEUser(crmUser4FirstName, UserLastName, emailId, crmUserLience, crmUser4Profile, null)) {
 						log(LogStatus.INFO,
 								"CRM User is created Successfully: " + crmUser4FirstName + " " + UserLastName,
 								YesNo.No);

@@ -34,7 +34,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
-		for(int k=5; k<11; k++)
+		for(int k=0; k<11; k++)
 		{
 			lp = new LoginPageBusinessLayer(driver);
 			home = new HomePageBusineesLayer(driver);
@@ -43,7 +43,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			String[] lastName= {crmUser6LastName,crmUser7LastName,crmUser8LastName,crmUser9LastName,crmUser10LastName,crmUser11LastName,crmUser12LastName,crmUser13LastName,crmUser14LastName,crmUser15LastName,crmUser16LastName};
 			String[] userLicence= {crmUser6Lience,crmUser7Lience,crmUser8Lience,crmUser9Lience,crmUser10Lience,crmUser11Lience,crmUser12Lience,crmUser13Lience,crmUser14Lience,crmUser15Lience,crmUser16Lience};
 			String[] userProfile= {crmUser6Profile,crmUser7Profile,crmUser8Profile,crmUser9Profile,crmUser10Profile,crmUser11Profile,crmUser12Profile,crmUser13Profile,crmUser14Profile,crmUser15Profile,crmUser16Profile};
-
+            String[] userTitle= {crmUser6Title,crmUser7Title,crmUser8Title,crmUser9Title,crmUser10Title,crmUser11Title,crmUser12Title,crmUser13Title,crmUser14Title,crmUser15Title,crmUser16Title};
 			String parentWindow = null;
 			String[] splitedUserLastName = removeNumbersFromString(lastName[k]);
 			String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
@@ -65,7 +65,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 									YesNo.Yes);
 							exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
 						}
-						if (setup.createPEUser(firstName[k], UserLastName, emailId, userLicence[k], userProfile[k])) {
+						if (setup.createPEUser(firstName[k], UserLastName, emailId, userLicence[k], userProfile[k], userTitle[k])) {
 							log(LogStatus.INFO,
 									"CRM User is created Successfully: " + firstName[k] + " " + UserLastName,
 									YesNo.No);
@@ -135,7 +135,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						YesNo.Yes);
 			}
 			lp.CRMlogout();
-			ThreadSleep(10000);
+			ThreadSleep(8000);
 
 		}
 		sa.assertAll();
@@ -273,7 +273,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 
 	@Parameters({ "projectName" })
