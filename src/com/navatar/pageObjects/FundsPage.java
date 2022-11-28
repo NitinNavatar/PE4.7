@@ -285,4 +285,11 @@ public class FundsPage extends BasePageBusinessLayer {
 	public WebElement getCompanyCrossIcon(String projectName, int timeOut) {
 		return isDisplayed(driver, CompanyCrossIcon, "Visibility", timeOut, "CompanyCrossIcon");
 	}
+	
+	@FindBy(xpath = "//label[text()='Legal Name']/following-sibling::div//button")
+	private WebElement LegalNameCrossIcon;
+
+	public WebElement getLegalNameCrossIcon(String projectName, int timeOut) {
+		return isDisplayed(driver, LegalNameCrossIcon, "Visibility", timeOut, "LegalNameCrossIcon");
+	}
 }

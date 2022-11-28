@@ -14123,6 +14123,48 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return result;
 	}
+	
+	public ArrayList<String> verifyHeaderNameAndMessageOnFundraisigContactsConnectionsAndDealsSection(List<String> FundraisingSectionHeaderName,
+			String FundraisngSectionHeaderMessage ) {
+		String xPath;
+		WebElement ele;
+		List<WebElement> elements;
+		ArrayList<String> result = new ArrayList<String>();
+		
+		if (!FundraisingSectionHeaderName.isEmpty()) {
+			ArrayList<String> actualFundraisingSectionHeaderName = new ArrayList<String>();
+			xPath = "//span[@title='Fundraisings']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//span[@class='slds-truncate' and text()!='']";
+			elements = FindElements(driver, xPath, "Fundraising section headers");
+			for (WebElement el : elements) {
+				actualFundraisingSectionHeaderName.add(getText(driver, el, "Fundraising section headers", action.SCROLLANDBOOLEAN));
+			}
+			if (FundraisingSectionHeaderName.containsAll(FundraisingSectionHeaderName)) {
+				log(LogStatus.INFO,
+						"The Headers name of Fundraising section have been verified " + actualFundraisingSectionHeaderName,
+						YesNo.No);
+			} else {
+				log(LogStatus.ERROR,
+						"The Headers name of Fundraising section are not verified " + actualFundraisingSectionHeaderName, YesNo.No);
+				result.add("The Headers name of Fundraising section are not verified " + actualFundraisingSectionHeaderName);
+			}
+		}
+
+		if (FundraisngSectionHeaderMessage != null && !"".equals(FundraisngSectionHeaderMessage)) {
+			xPath = "//span[@title='Fundraisings']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//div[text()='"
+					+ FundraisngSectionHeaderMessage + "']";
+			ele = FindElement(driver, xPath, "Message on Fundraisisng section", action.SCROLLANDBOOLEAN, 15);
+			if (ele != null) {
+				log(LogStatus.INFO, "The meessage : " + FundraisngSectionHeaderMessage + " has been verified on deal secton",
+						YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "The meessage : " + FundraisngSectionHeaderMessage + " is not verified on deal secton",
+						YesNo.No);
+				result.add("The meessage : " + FundraisngSectionHeaderMessage + " is not verified on deal secton");
+			}
+			return result;
+		}
+		return result;
+	}
 
 	public ArrayList<String> verifyToolTipOnDealsConnctionsAndContactsHeader(List<String> dealSectionHeaderTooltip,
 			List<String> contactsSectionHeaderTooltip, List<String> connectionsSectionHeaderTooltip) {

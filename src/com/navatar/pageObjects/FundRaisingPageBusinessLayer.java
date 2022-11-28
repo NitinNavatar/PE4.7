@@ -8,7 +8,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.navatar.generic.ExcelUtils;
+import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
+import com.navatar.generic.EnumConstants.PageName;
+import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.relevantcodes.extentreports.LogStatus;
@@ -216,6 +219,8 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage {
 		WebElement ele = FindElement(driver, xpath, stage, action, timeOut);
 		return ele;
 	}
+	
+	
 
 	// Lightning Mthod....
 	/**
@@ -873,5 +878,52 @@ public class FundRaisingPageBusinessLayer extends FundRaisingPage {
 		}
 		return false;
 	}
-
+	
+	/**
+	 * @author sahil bansal
+	 * @param projectName
+	 * @param companyname
+	 * @param timeOut
+	 * @return true if successfully change stage
+	 */
+	public boolean UpdateLegalName(String projectName,String mode, String legalName, int timeOut) {
+		boolean flag = true;
+		
+		ThreadSleep(2000);
+		
+			if (click(driver, getLegalNameCrossIcon(projectName, 60), "Company Cross Icon", action.SCROLLANDBOOLEAN)) {
+				appLog.info("Clicked on Legal Cross icon");
+				ThreadSleep(3000);
+			} else {
+				appLog.info("Not able to click on Cross Icon button");
+				log(LogStatus.INFO, "Not able to clicked on edit button so cannot Account Name ", YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to clicked on edit button so cannot Account Name ");
+			}
+			if (sendKeys(driver, getLegalName(projectName, mode, 60), legalName, "Legal Name",
+					action.BOOLEAN)) {
+				ThreadSleep(500);
+				if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+					ThreadSleep(1000);
+					if (click(driver,
+							FindElement(driver,
+									"//*[contains(@class,'slds-listbox__option-text')]/*[@title='" + legalName
+											+ "']",
+									"Legal Name List", action.THROWEXCEPTION, 30),
+							legalName + "   :   Legal Name", action.SCROLLANDBOOLEAN)) {
+						appLog.info(legalName + "  is present in list.");
+					} else {
+						appLog.info(legalName + "  is not present in the list.");
+					}
+				}
+				if (click(driver, getCustomTabSaveBtn("", 60), "Save Button", action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(500);
+				} else {
+					appLog.error("Not able to click on save button");
+				}
+			} else {
+				appLog.error("Not able to enter legal Name");
+			}
+			return flag;
+	
+}
 }
