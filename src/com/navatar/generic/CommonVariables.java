@@ -3100,6 +3100,7 @@ public class CommonVariables {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			break;
 		case "Module8HomepageSDG" :
 			try {
 				dataFile=new FileInputStream(new File(phase1DataSheetFilePath));
@@ -4059,6 +4060,7 @@ public class CommonVariables {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			break;
 			
 			 /**
 			  * @author Ankur Huria
@@ -5747,7 +5749,8 @@ public class CommonVariables {
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						}	
+						}
+						break;
 			
 			
 			case "PEFSTG":
@@ -5934,7 +5937,7 @@ public class CommonVariables {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+			break;
 			
 			
 			

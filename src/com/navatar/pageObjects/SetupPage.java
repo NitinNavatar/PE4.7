@@ -1123,5 +1123,58 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, errorMsgRecordType, "Visibility", timeOut, "errorMsgRecordType");
 	}
 	
+	
+	public WebElement editButtonInRenameTabAndLabels(String tabName, int timeOut) {
+		String xpath = "//th[text()='"+tabName+"']//preceding-sibling::td[@class='actionColumn']//a[text()='Edit']";
+
+		try {
+			return FindElement(driver, xpath, tabName, action.SCROLLANDBOOLEAN, timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, tabName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+	
+	
+	@FindBy(xpath = "//input[@name='goNext']")
+	private WebElement nextButton;
+
+	public WebElement nextButton(int timeOut) {
+		return isDisplayed(driver, nextButton, "Visibility", timeOut, "nextButton");
+	}
+	
+	
+	public WebElement renameLabelNameSingularTextBox(String labelName, int timeOut) {
+		String xpath = "//th[text()='"+labelName+"']/following-sibling::td/input[@type=\"text\" and contains(@title,\"Singular\")]";
+
+		try {
+			return FindElement(driver, xpath, "renameLabelNameSingularTextBox", action.SCROLLANDBOOLEAN, timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "renameLabelNameSingularTextBox", action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+	
+	public WebElement renameLabelNamePluralTextBox(String labelName, int timeOut) {
+		String xpath = "//th[text()='"+labelName+"']/following-sibling::td/input[@type=\"text\" and contains(@title,\"Plural\")]";
+
+		try {
+			return FindElement(driver, xpath, "renameLabelNamePluralTextBox", action.SCROLLANDBOOLEAN, timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "renameLabelNamePluralTextBox", action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+	
+	/*
+	 * @FindBy(xpath = "//div[@class='pbBottomButtons']//input[@title='Save']")
+	 * private WebElement footerSaveBtn;
+	 * 
+	 * public WebElement getfooterSaveBtn(int timeOut) { return isDisplayed(driver,
+	 * footerSaveBtn, "Visibility", timeOut, "footer save button"); }
+	 */
+	
+	
+	
 
 }

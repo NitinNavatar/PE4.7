@@ -6851,6 +6851,19 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getSubjectInput(int timeOut) {
 		return isDisplayed(driver, subjectInput, "Visibility", timeOut, "Subject Input");
 	}
+	
+	
+	public WebElement getSubjectInput(String subjectName, int timeOut) {
+
+		String xpath = "//label[text()='"+subjectName+"']/..//input[contains(@data-id,'combobox')]";
+		try {
+			return FindElement(driver, xpath, "Header: " + subjectName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Header: " + subjectName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+	
 
 	@FindBy(xpath = "//span[text()='Notes']/ancestor::div[@aria-label='Notes']//lightning-formatted-rich-text/span")
 	private WebElement notesText;
@@ -7543,60 +7556,124 @@ public abstract class BasePage extends BaseLib {
 		return suggestedTagsCheckBoxAllInput;
 	}
 
-	@FindBy(xpath = "//div[@class='slds-modal__container']//span[text()='Advanced']/ancestor::section[contains(@class,'slds-accordion__section')]/div[2]//lightning-layout//label[text()='Assigned To ID']/../div//span/span[2]")
-	private WebElement assignedToVerificationInAdvance;
+	public WebElement assignedToVerificationInAdvance(String fieldName, int timeOut) {
 
-	public WebElement assignedToVerificationInAdvance() {
-		return assignedToVerificationInAdvance;
+		String xpath = "//div[@class='slds-modal__container']//span[text()='Advanced']/ancestor::section[contains(@class,'slds-accordion__section')]/div[2]//lightning-layout//label[text()='"
+				+ fieldName + "']/../div//span/span[2]";
+		try {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + fieldName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + fieldName);
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + fieldName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + fieldName);
+		}
 	}
 
-	@FindBy(xpath = "//div[@class='slds-modal__container']//span[text()='Advanced']/ancestor::section[contains(@class,'slds-accordion__section')]/div[2]//lightning-layout//label[text()='Status']/../div//button/span")
-	private WebElement statusVerificationInAdvanced;
+	public WebElement statusVerificationInAdvanced(String fieldName, int timeOut) {
 
-	public WebElement statusVerificationInAdvanced() {
-		return statusVerificationInAdvanced;
+		String xpath = "//div[@class='slds-modal__container']//span[text()='Advanced']/ancestor::section[contains(@class,'slds-accordion__section')]/div[2]//lightning-layout//label[text()='"
+				+ fieldName + "']/../div//button/span";
+		try {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + fieldName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + fieldName);
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + fieldName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + fieldName);
+		}
 	}
 
-	@FindBy(xpath = "//div[@class='slds-modal__container']//span[text()='Advanced']/ancestor::section[contains(@class,'slds-accordion__section')]/div[2]//lightning-layout//label[text()='Due Date Only']/../div//input")
-	private WebElement dueDateOnlyVerificationInAdvanced;
+	public WebElement dueDateOnlyVerificationInAdvanced(String fieldName, int timeOut) {
 
-	public WebElement dueDateOnlyVerificationInAdvanced() {
-		return dueDateOnlyVerificationInAdvanced;
+		String xpath = "//div[@class='slds-modal__container']//span[text()='Advanced']/ancestor::section[contains(@class,'slds-accordion__section')]/div[2]//lightning-layout//label[text()='"
+				+ fieldName + "']/../div//input";
+		try {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + fieldName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + fieldName);
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + fieldName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + fieldName);
+		}
 	}
 
-	@FindBy(xpath = "//div[@class='slds-modal__container']//span[text()='Advanced']/ancestor::section[contains(@class,'slds-accordion__section')]/div[2]//lightning-layout//label[text()='Priority']/../div//button/span")
-	private WebElement priorityVerificationInAdvanced;
+	public WebElement priorityVerificationInAdvanced(String fieldName, int timeOut) {
 
-	public WebElement priorityVerificationInAdvanced() {
-		return priorityVerificationInAdvanced;
+		String xpath = "//div[@class='slds-modal__container']//span[text()='Advanced']/ancestor::section[contains(@class,'slds-accordion__section')]/div[2]//lightning-layout//label[text()='"
+				+ fieldName + "']/../div//button/span";
+		try {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + fieldName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + fieldName);
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + fieldName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + fieldName);
+		}
 	}
 
-	@FindBy(xpath = "//div[@class='slds-modal__container']//span[text()='Tasks']/ancestor::div[@class='slds-accordion__summary']/following-sibling::div//label[text()='Subject']/../div//input")
-	private WebElement subjectVerificationInTasks;
+	public WebElement subjectVerificationInTasks(String fieldName, int timeOut) {
 
-	public WebElement subjectVerificationInTasks() {
-		return subjectVerificationInTasks;
+		String xpath = "//div[@class='slds-modal__container']//span[text()='Tasks']/ancestor::div[@class='slds-accordion__summary']/following-sibling::div//label[text()='"
+				+ fieldName + "']/../div//input";
+		try {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + fieldName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + fieldName);
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + fieldName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + fieldName);
+		}
 	}
 
-	@FindBy(xpath = "//div[@class='slds-modal__container']//span[text()='Tasks']/ancestor::div[@class='slds-accordion__summary']/following-sibling::div//label[text()='Assigned To ID']/../div//span/span[2]")
-	private WebElement assignedToVerificationInTasks;
+	public WebElement assignedToVerificationInTasks(String fieldName, int timeOut) {
 
-	public WebElement assignedToVerificationInTasks() {
-		return assignedToVerificationInTasks;
+		String xpath = "//div[@class='slds-modal__container']//span[text()='Tasks']/ancestor::div[@class='slds-accordion__summary']/following-sibling::div//label[text()='"
+				+ fieldName + "']/../div//span/span[2]";
+		try {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + fieldName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + fieldName);
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + fieldName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + fieldName);
+		}
 	}
 
-	@FindBy(xpath = "//div[@class='slds-modal__container']//span[text()='Tasks']/ancestor::div[@class='slds-accordion__summary']/following-sibling::div//label[text()='Status']/../div//button/span")
-	private WebElement statusVerificationInTasks;
+	public WebElement statusVerificationInTasks(String fieldName, int timeOut) {
 
-	public WebElement statusVerificationInTasks() {
-		return statusVerificationInTasks;
+		String xpath = "//div[@class='slds-modal__container']//span[text()='Tasks']/ancestor::div[@class='slds-accordion__summary']/following-sibling::div//label[text()='"
+				+ fieldName + "']/../div//button/span";
+		try {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + fieldName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + fieldName);
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + fieldName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + fieldName);
+		}
 	}
 
-	@FindBy(xpath = "//div[@class='slds-modal__container']//span[text()='Tasks']/ancestor::div[@class='slds-accordion__summary']/following-sibling::div//label[text()='Due Date Only']/../div//input")
-	private WebElement dueDateOnlyVerificationInTasks;
+	public WebElement dueDateOnlyVerificationInTasks(String fieldName, int timeOut) {
 
-	public WebElement dueDateOnlyVerificationInTasks() {
-		return dueDateOnlyVerificationInTasks;
+		String xpath = "//div[@class='slds-modal__container']//span[text()='Tasks']/ancestor::div[@class='slds-accordion__summary']/following-sibling::div//label[text()='"
+				+ fieldName + "']/../div//input";
+		try {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + fieldName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + fieldName);
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + fieldName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "Header: " + fieldName);
+		}
 	}
 
 	public WebElement testCustomObjectTextBoxInput(String fieldName, int timeOut) {
@@ -7801,7 +7878,7 @@ public abstract class BasePage extends BaseLib {
 	}
 
 	public WebElement subjectOfInteractionCard(String subjectName, int timeOut) {
-		String xpath = "//a[@class='interaction_sub subject_text' and text()='" + subjectName + "']";
+		String xpath = "//a[@class=\"interaction_sub subject_text\" and text()=\"" + subjectName + "\"]";
 		WebElement ele = FindElement(driver, xpath, "subjectOfInteractionCard: " + subjectName, action.SCROLLANDBOOLEAN,
 				timeOut);
 		try {
@@ -7809,6 +7886,57 @@ public abstract class BasePage extends BaseLib {
 
 		} catch (StaleElementReferenceException e) {
 			return isDisplayed(driver, ele, "Visibility", timeOut, "subjectOfInteractionCard: " + subjectName);
+		}
+	}
+
+	public List<String> acuityViewAllPopUpIcons() {
+		return FindElements(driver,
+				"//h2[contains(text(),'All Interactions')]/..//following-sibling::div//th[@data-label='Type']//lightning-icon",
+				"acuityViewAllPopUpIcons").stream().map(x -> CommonLib.getAttribute(driver, x, "Icons", "class"))
+				.collect(Collectors.toList());
+
+	}
+
+	public List<String> acuityViewAllPopUpDates() {
+		return FindElements(driver,
+				"//h2[contains(text(),'All Interactions')]/..//following-sibling::div//tr//td[@data-label='Date']//lightning-base-formatted-text",
+				"acuityViewAllPopUpDates").stream().map(x -> CommonLib.getText(driver, x, "Dates", action.BOOLEAN))
+				.collect(Collectors.toList());
+
+	}
+
+	public List<String> acuityViewAllPopUpSubjects() {
+		return FindElements(driver,
+				"//h2[contains(text(),'All Interactions')]/..//following-sibling::div//tr//td[@data-label='Subject']//a",
+				"acuityViewAllPopUpSubjects").stream()
+				.map(x -> CommonLib.getText(driver, x, "Subjects", action.BOOLEAN)).collect(Collectors.toList());
+
+	}
+
+	public List<String> acuityViewAllPopUpDetails() {
+		return FindElements(driver,
+				"//h2[contains(text(),'All Interactions')]/..//following-sibling::div//tr//td[@data-label='Details']//button",
+				"acuityViewAllPopUpDescriptions").stream()
+				.map(x -> CommonLib.getText(driver, x, "Details", action.BOOLEAN)).collect(Collectors.toList());
+
+	}
+
+	public List<String> acuityViewAllPopUpAssignedTo() {
+		return FindElements(driver,
+				"//h2[contains(text(),'All Interactions')]/..//following-sibling::div//tr//td[@data-label='Assigned To']//a",
+				"acuityViewAllPopUpAssignedTo").stream()
+				.map(x -> CommonLib.getText(driver, x, "AssignedTo", action.BOOLEAN)).collect(Collectors.toList());
+
+	}
+
+	public WebElement valueOfLabelInDetailPage(String labelName, int timeOut) {
+		String xpath = "//span[normalize-space(text()) ='" + labelName + "']/parent::div/following-sibling::div";
+
+		try {
+			return FindElement(driver, xpath, "User Header Found: " + labelName, action.SCROLLANDBOOLEAN, timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "User Header Found: " + labelName, action.SCROLLANDBOOLEAN, timeOut);
 		}
 	}
 

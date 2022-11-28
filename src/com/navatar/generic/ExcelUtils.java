@@ -1392,4 +1392,22 @@ public class ExcelUtils {
 		return value;
 
 	}
+	
+	
+	public static String readData(Workbook wb,  String sheetName, int rowNum, int cellNum) {
+		String value = "";
+		try {
+			
+//			wb.getSheet(sheetName).getRow(rowNum).getLastCellNum();
+			Cell cell = wb.getSheet(sheetName).getRow(rowNum).getCell(cellNum);
+			value = getValueBasedOnCellType(cell);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			AppListeners.appLog.info("There is no value at the location you passed.");
+			return null;
+		}
+		return value;
+
+	}
 }

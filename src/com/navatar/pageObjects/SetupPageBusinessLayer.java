@@ -24,6 +24,7 @@ import com.navatar.generic.EnumConstants.LookUpIcon;
 import com.navatar.generic.EnumConstants.Mode;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.PageLabel;
+import com.navatar.generic.EnumConstants.PermissionType;
 import com.navatar.generic.EnumConstants.PopUpName;
 import com.navatar.generic.EnumConstants.RecordType;
 import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
@@ -70,7 +71,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 		if (objectName == object.Global_Actions || objectName == object.Activity_Setting
 				|| objectName == object.App_Manager || objectName == object.Lightning_App_Builder
 				|| objectName == object.Profiles || objectName == object.Override || objectName == object.Tabs
-				|| objectName == object.Users || objectName == object.Sharing_Settings) {
+				|| objectName == object.Users || objectName == object.Sharing_Settings
+				|| objectName == object.Rename_Tabs_And_Labels) {
 			if (objectName == object.Global_Actions || objectName == object.Tabs || objectName == object.Users) {
 				index = "[2]";
 			}
@@ -80,8 +82,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 			if (sendKeys(driver, getQucikSearchInSetupPage(10), o, o, action.BOOLEAN)) {
 
 				ThreadSleep(2000);
-				if (click(driver, FindElement(driver, "(//mark[text()='" + o + "'])" + index, objectName.toString(),
-						action.BOOLEAN, 10), objectName.toString(), action.BOOLEAN)) {
+				if (click(driver, FindElement(driver, "(//mark[text()='" + o + "'])" + index + "/parent::a",
+						objectName.toString(), action.BOOLEAN, 10), objectName.toString(), action.BOOLEAN)) {
 					return true;
 				} else {
 					log(LogStatus.ERROR, "could not click on " + objectName, YesNo.Yes);
@@ -2326,8 +2328,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 									YesNo.Yes);
 						}
 					}
-					if (clickUsingJavaScript(driver, getCustomTabSaveBtn(10), "save button",
-							action.SCROLLANDBOOLEAN)) {
+					if (clickUsingJavaScript(driver, getCustomTabSaveBtn(10), "save button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Click on save Button ", YesNo.No);
 						ThreadSleep(10000);
 						flag = true;
@@ -2448,7 +2449,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 		ThreadSleep(2000);
 		switchToFrame(driver, 60, getSetUpPageIframe(120));
 		for (String[] labelValue : labelWithValue) {
-			//xpath = "//*[text()='" + labelValue[0] + "']/..//following-sibling::td[text()='" + labelValue[1] + "']";
+			// xpath = "//*[text()='" + labelValue[0] +
+			// "']/..//following-sibling::td[text()='" + labelValue[1] + "']";
 			xpath = "//*[text()='" + labelValue[0] + "']/..//following-sibling::td/img[@title='" + labelValue[1] + "']";
 			ele = FindElement(driver, xpath, labelValue[0] + " with Value " + labelValue[1], action.BOOLEAN, 10);
 			if (ele != null) {
@@ -2544,7 +2546,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 			}
 		}
 		flag = false;
-		if (click(driver, getCustomTabSaveBtn( 10), "save button", action.SCROLLANDBOOLEAN)) {
+		if (click(driver, getCustomTabSaveBtn(10), "save button", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Click on save Button ", YesNo.No);
 			ThreadSleep(10000);
 			flag = true;
@@ -3485,19 +3487,20 @@ public class SetupPageBusinessLayer extends SetupPage {
 			ThreadSleep(2000);
 			ele2 = FindElement(driver, masterFieldLabel, "", action.SCROLLANDBOOLEAN, 10);
 			count++;
-		}while (!setup.getOverrideSetupFieldNextBtn(20).getAttribute("class").contains("disabled") && ele2 == null
+		} while (!setup.getOverrideSetupFieldNextBtn(20).getAttribute("class").contains("disabled") && ele2 == null
 				&& count < 5);
 
 		if (ele2 != null) {
 			ele = FindElement(driver, fieldLabelOverride, fieldName, action.SCROLLANDBOOLEAN, 10);
 			ThreadSleep(2000);
-		
+
 			if (doubleClickUsingAction(driver, ele)) {
 				log(LogStatus.INFO, "going for edit override field label of field:" + fieldName, YesNo.No);
 				ThreadSleep(2000);
 				Actions ac = new Actions(driver);
-				JavascriptExecutor js=  (JavascriptExecutor)driver;
-				//js.executeScript("arguments[0].setAttribute(arguments[1],arguments[2])", ele,"Value","");
+				JavascriptExecutor js = (JavascriptExecutor) driver;
+				// js.executeScript("arguments[0].setAttribute(arguments[1],arguments[2])",
+				// ele,"Value","");
 				doubleClickUsingAction(driver, ele);
 				ac.moveToElement(ele).sendKeys(UpdatedfieldName).sendKeys(Keys.ENTER).build().perform();
 				log(LogStatus.INFO, "Pass value:" + UpdatedfieldName + " to override field label of field:" + fieldName,
@@ -4888,49 +4891,112 @@ public class SetupPageBusinessLayer extends SetupPage {
 			ThreadSleep(5000);
 			if (clickUsingJavaScript(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "able to click on edit button", YesNo.No);
-				switchToDefaultContent(driver);
-				switchToFrame(driver, 60, getSetUpPageIframe(120));
+
 				String OnObject = "";
-				String permission = "";
+				String[] permissions;
+				String[] givenOrNot;
 				for (String[] strings : LabelswithCheck) {
 
+					switchToDefaultContent(driver);
+					switchToFrame(driver, 60, getSetUpPageIframe(120));
 					OnObject = strings[0];
-					permission = strings[1];
-					xpath = "(//*[text()='" + OnObject + "']/following-sibling::*//td/input[contains(@title,'"
-							+ permission + "')])[1]";
-					ele = FindElement(driver, xpath, OnObject + " with permission " + permission,
-							action.SCROLLANDBOOLEAN, timeOut);
-					CommonLib.ThreadSleep(4000);
+					permissions = strings[1].split("<break>", -1);
+					givenOrNot = strings[2].split("<break>", -1);
 
-					String checked = CommonLib.getAttribute(driver, ele, "CheckBox", "checked");
-					if (!"true".equals(checked)) {
+					int loopCount = 0;
+					for (String permission : permissions) {
+						xpath = "(//*[text()='" + OnObject + "']/following-sibling::*//td/input[contains(@title,'"
+								+ permission + "')])[1]";
+						ele = FindElement(driver, xpath, OnObject + " with permission " + permission,
+								action.SCROLLANDBOOLEAN, timeOut);
+						CommonLib.ThreadSleep(4000);
 
-						if (clickUsingJavaScript(driver, ele, OnObject + " with permission " + permission,
-								action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "clicked on checkbox " + permission + " for " + OnObject, YesNo.No);
-							CommonLib.ThreadSleep(4000);
+						String checked = CommonLib.getAttribute(driver, ele, "CheckBox", "checked");
 
-						} else {
-							log(LogStatus.ERROR, "Not Able clicked on checkbox " + permission + " for " + OnObject,
-									YesNo.Yes);
-							sa.assertTrue(false,
-									permission + " permission not change for " + userName + " on object " + OnObject);
-							log(LogStatus.FAIL,
-									permission + " permission not change for " + userName + " on object " + OnObject,
-									YesNo.Yes);
+						if (givenOrNot[loopCount].equals(PermissionType.givePermission.toString()))
 
+						{
+
+							if (!"true".equals(checked)) {
+
+								if (click(driver, ele, OnObject + " with permission " + permission,
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on checkbox " + permission + " for " + OnObject,
+											YesNo.No);
+									CommonLib.ThreadSleep(4000);
+									if (CommonLib.isAlertPresent(driver)) {
+										CommonLib.switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+									}
+									CommonLib.ThreadSleep(4000);
+
+								} else {
+									log(LogStatus.ERROR,
+											"Not Able clicked on checkbox " + permission + " for " + OnObject,
+											YesNo.Yes);
+									sa.assertTrue(false, permission + " permission not change for " + userName
+											+ " on object " + OnObject);
+									log(LogStatus.FAIL, permission + " permission not change for " + userName
+											+ " on object " + OnObject, YesNo.Yes);
+
+								}
+
+							} else {
+								log(LogStatus.INFO, "Not clicked on checkbox " + permission + " for " + OnObject
+										+ " as it is already Checked", YesNo.No);
+
+							}
+						} else if (givenOrNot[loopCount].equals(PermissionType.removePermission.toString()))
+
+						{
+
+							if ("true".equals(checked)) {
+
+								if (click(driver, ele, OnObject + " with permission " + permission,
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on checkbox " + permission + " for " + OnObject,
+											YesNo.No);
+									CommonLib.ThreadSleep(4000);
+									if (CommonLib.isAlertPresent(driver)) {
+										CommonLib.switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+									}
+									CommonLib.ThreadSleep(4000);
+
+								} else {
+									log(LogStatus.ERROR,
+											"Not Able clicked on checkbox " + permission + " for " + OnObject,
+											YesNo.Yes);
+									sa.assertTrue(false, permission + " permission not change for " + userName
+											+ " on object " + OnObject);
+									log(LogStatus.FAIL, permission + " permission not change for " + userName
+											+ " on object " + OnObject, YesNo.Yes);
+
+								}
+
+							} else {
+								log(LogStatus.INFO, "Not clicked on checkbox " + permission + " for " + OnObject
+										+ " as it is already UnChecked", YesNo.No);
+
+							}
 						}
 
-					} else {
-						log(LogStatus.INFO, "Not clicked on checkbox " + permission + " for " + OnObject
-								+ " as it is already Checked", YesNo.No);
-
+						else {
+							log(LogStatus.ERROR, "Please Provide the correct data for permission given or not",
+									YesNo.Yes);
+							sa.assertTrue(false, "Please Provide the correct data for permission given or not");
+						}
+						loopCount++;
 					}
 
 				}
 				switchToDefaultContent(driver);
+				if (CommonLib.isAlertPresent(driver)) {
+					CommonLib.switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+				}
 				switchToFrame(driver, 60, getSetUpPageIframe(120));
 				CommonLib.ThreadSleep(5000);
+				if (CommonLib.isAlertPresent(driver)) {
+					CommonLib.switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+				}
 				if (clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
 						action.SCROLLANDBOOLEAN)) {
 					flag = true;
@@ -5877,6 +5943,399 @@ public class SetupPageBusinessLayer extends SetupPage {
 			}
 		}
 		return result;
+	}
+
+	public boolean objectPermissionGivenOrRemove(String[][] objectAndPermissionAndGivenOrGivenNot,
+			String[] userTypesToGivePermissions) {
+
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+
+		boolean flag = false;
+		String parentID = null;
+		for (String userName : userTypesToGivePermissions) {
+			switchToDefaultContent(driver);
+			if (home.clickOnSetUpLink()) {
+				parentID = switchOnWindow(driver);
+				if (parentID != null) {
+					log(LogStatus.INFO, "Able to switch on new window, so going to set permission for objects"
+							+ objectAndPermissionAndGivenOrGivenNot, YesNo.No);
+					ThreadSleep(500);
+					if (setup.searchStandardOrCustomObject(environment, mode, object.Profiles)) {
+						log(LogStatus.INFO, "click on Object : " + object.Profiles, YesNo.No);
+						ThreadSleep(2000);
+						if (setup.permissionChangeOfUserONObject(driver, userName,
+								objectAndPermissionAndGivenOrGivenNot, 20)) {
+							log(LogStatus.PASS,
+									"Permission Set for Object is: " + objectAndPermissionAndGivenOrGivenNot, YesNo.No);
+							flag = true;
+
+						} else {
+							sa.assertTrue(false,
+									"Permission not Set for Object is: " + objectAndPermissionAndGivenOrGivenNot);
+							log(LogStatus.FAIL,
+									"Permission not Set for Object is: " + objectAndPermissionAndGivenOrGivenNot,
+									YesNo.Yes);
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to search/click on " + object.Profiles, YesNo.Yes);
+						sa.assertTrue(false, "Not able to search/click on " + object.Profiles);
+					}
+
+				} else {
+					log(LogStatus.FAIL,
+							"could not find new window to switch, so cannot to set permission for object: "
+									+ "Permission not Set for Object is: " + objectAndPermissionAndGivenOrGivenNot,
+							YesNo.Yes);
+					sa.assertTrue(false, "could not find new window to switch, so cannot to set permission for object: "
+							+ "Permission not Set for Object is: " + objectAndPermissionAndGivenOrGivenNot);
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on setup link");
+			}
+		}
+
+		if (parentID != null) {
+			driver.close();
+			driver.switchTo().window(parentID);
+		}
+		return flag;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param driver
+	 * @param userName
+	 * @param LabelswithCheck
+	 * @param timeOut
+	 * @return true if able to change permission for particular object for
+	 *         particular type for particular user
+	 */
+	public boolean renameLabelsOfFields(WebDriver driver, String tabName, String[] labelsWithValues, int timeOut) {
+
+		switchToDefaultContent(driver);
+		switchToFrame(driver, 60, getSetUpPageIframe(120));
+		boolean flag = false;
+
+		if (clickUsingJavaScript(driver, editButtonInRenameTabAndLabels(tabName, timeOut), tabName,
+				action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "able to click on Edit Button of Tab: " + tabName, YesNo.No);
+			switchToDefaultContent(driver);
+			switchToFrame(driver, 60, getSetUpPageIframe(120));
+
+			if (clickUsingJavaScript(driver, nextButton(timeOut), "Next Button", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "able to click on Next Button of Tab: " + tabName, YesNo.No);
+				switchToDefaultContent(driver);
+				switchToFrame(driver, 60, getSetUpPageIframe(120));
+
+				for (String labelAndValue : labelsWithValues) {
+					String[] labelValue = null;
+					String labelName = "";
+					String value = "";
+					labelValue = labelAndValue.split("<break>", -1);
+					labelName = labelValue[0];
+					value = labelValue[1];
+					CommonLib.ThreadSleep(1000);
+					if (CommonLib.sendKeys(driver, renameLabelNameSingularTextBox(labelName, timeOut), value,
+							labelName + " input ", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Enter the Value: " + value + " to InputBox of Labeled: " + labelName,
+								YesNo.No);
+
+					} else {
+						log(LogStatus.ERROR, "Not able to Pass value: " + value + " to input box labeled: " + labelName,
+								YesNo.Yes);
+					}
+
+				}
+
+				switchToDefaultContent(driver);
+
+				switchToFrame(driver, 60, getSetUpPageIframe(120));
+				CommonLib.ThreadSleep(5000);
+
+				if (clickUsingJavaScript(driver, getfooterSaveBtn(30), "Save Button", action.SCROLLANDBOOLEAN)) {
+
+					log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
+
+					ThreadSleep(8000);
+					switchToDefaultContent(driver);
+					CommonLib.refresh(driver);
+
+					switchToFrame(driver, 60, getSetUpPageIframe(120));
+					if (editButtonInRenameTabAndLabels(tabName, timeOut) != null) {
+						flag = true;
+					}
+
+				} else {
+					log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not Able to Click on Next Button for tab: " + tabName, YesNo.Yes);
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not able to click on Edit button of tab: " + tabName, YesNo.Yes);
+		}
+		return flag;
+	}
+
+	public boolean renameLabelsOfFields(WebDriver driver, String[] tabNames, String[][] labelsWithValues2d,
+			int timeOut) {
+
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+
+		boolean flag = false;
+		String parentID = null;
+		int loopCount = 0;
+		for (String[] labelsWithValues : labelsWithValues2d) {
+			switchToDefaultContent(driver);
+			if (home.clickOnSetUpLink()) {
+				parentID = switchOnWindow(driver);
+				if (parentID != null) {
+					log(LogStatus.INFO, "Able to switch on new window, so going to set Label Names: " + labelsWithValues
+							+ " for tab: " + tabNames[loopCount], YesNo.No);
+					ThreadSleep(500);
+					if (setup.searchStandardOrCustomObject(environment, mode, object.Rename_Tabs_And_Labels)) {
+						log(LogStatus.INFO, "click on Object : " + object.Rename_Tabs_And_Labels, YesNo.No);
+						ThreadSleep(2000);
+						if (setup.renameLabelsOfFields(driver, tabNames[loopCount], labelsWithValues, timeOut)) {
+							log(LogStatus.PASS, "Label Names: " + labelsWithValues + " for tab: " + tabNames[loopCount]
+									+ " has been set", YesNo.No);
+							flag = true;
+
+						} else {
+							sa.assertTrue(false, "Label Names: " + labelsWithValues + " for tab: " + tabNames[loopCount]
+									+ " has not been set");
+							log(LogStatus.FAIL, "Label Names: " + labelsWithValues + " for tab: " + tabNames[loopCount]
+									+ " has not been set", YesNo.Yes);
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to search/click on " + object.Rename_Tabs_And_Labels, YesNo.Yes);
+						sa.assertTrue(false, "Not able to search/click on " + object.Rename_Tabs_And_Labels);
+					}
+
+				} else {
+					log(LogStatus.FAIL, "could not find new window to switch, so not able to set Label Names: "
+							+ labelsWithValues + " for tab: " + tabNames[loopCount], YesNo.Yes);
+					sa.assertTrue(false, "could not find new window to switch, so not able to set Label Names: "
+							+ labelsWithValues + " for tab: " + tabNames[loopCount]);
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on setup link");
+			}
+			loopCount++;
+		}
+
+		if (parentID != null) {
+			driver.close();
+			driver.switchTo().window(parentID);
+		}
+		return flag;
+	}
+
+	/**
+	 * @author Ankur Huria
+	 * @param driver
+	 * @param userName
+	 * @param LabelswithCheck
+	 * @param timeOut
+	 * @return true if able to change permission for particular object for
+	 *         particular type for particular user
+	 */
+	public boolean permissionChangeOfGeneralAndAdministrative(WebDriver driver, String userName,
+			String[][] LabelswithCheck, int timeOut) {
+
+		switchToDefaultContent(driver);
+		switchToFrame(driver, 60, getSetUpPageIframe(120));
+		boolean flag = false;
+		;
+		String xpath = "";
+		xpath = "//th//a[text()='" + userName + "']";
+		ThreadSleep(2000);
+		WebElement ele = FindElement(driver, xpath, userName, action.SCROLLANDBOOLEAN, timeOut);
+		ele = isDisplayed(driver, ele, "visibility", timeOut, userName);
+		if (clickUsingJavaScript(driver, ele, userName.toString(), action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "able to click on " + userName, YesNo.No);
+			switchToDefaultContent(driver);
+			switchToFrame(driver, 60, getSetUpPageIframe(120));
+			xpath = "//*[@id='topButtonRow']//input[@name='edit']";
+			ele = FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, timeOut);
+			ThreadSleep(5000);
+			if (clickUsingJavaScript(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "able to click on edit button", YesNo.No);
+
+				String OnLabel = "";
+
+				String givenOrNot;
+				for (String[] strings : LabelswithCheck) {
+
+					switchToDefaultContent(driver);
+					switchToFrame(driver, 60, getSetUpPageIframe(120));
+					OnLabel = strings[0];
+
+					givenOrNot = strings[1];
+
+					xpath = "(//*[text()='" + OnLabel + "']/parent::td/following-sibling::td/input)[1]";
+					ele = FindElement(driver, xpath, OnLabel + " with permission " + givenOrNot,
+							action.SCROLLANDBOOLEAN, timeOut);
+					CommonLib.ThreadSleep(4000);
+
+					String checked = CommonLib.getAttribute(driver, ele, "CheckBox", "checked");
+
+					if (givenOrNot.equals(PermissionType.givePermission.toString()))
+
+					{
+
+						if (!"true".equals(checked)) {
+
+							if (click(driver, ele, OnLabel + " with permission " + givenOrNot,
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "clicked on checkbox " + givenOrNot + " for " + OnLabel, YesNo.No);
+
+								CommonLib.ThreadSleep(4000);
+
+							} else {
+								log(LogStatus.ERROR, "Not Able clicked on checkbox " + givenOrNot + " for " + OnLabel,
+										YesNo.Yes);
+								sa.assertTrue(false, givenOrNot + " permission not change for " + userName
+										+ " on object " + OnLabel);
+								log(LogStatus.FAIL,
+										givenOrNot + " permission not change for " + userName + " on object " + OnLabel,
+										YesNo.Yes);
+
+							}
+
+						} else {
+							log(LogStatus.INFO, "Not clicked on checkbox " + givenOrNot + " for " + OnLabel
+									+ " as it is already Checked", YesNo.No);
+
+						}
+					} else if (givenOrNot.equals(PermissionType.removePermission.toString()))
+
+					{
+
+						if ("true".equals(checked)) {
+
+							if (click(driver, ele, OnLabel + " with permission " + givenOrNot,
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "clicked on checkbox " + givenOrNot + " for " + OnLabel, YesNo.No);
+
+								CommonLib.ThreadSleep(4000);
+
+							} else {
+								log(LogStatus.ERROR, "Not Able clicked on checkbox " + givenOrNot + " for " + OnLabel,
+										YesNo.Yes);
+								sa.assertTrue(false, givenOrNot + " permission not change for " + userName
+										+ " on object " + OnLabel);
+								log(LogStatus.FAIL,
+										givenOrNot + " permission not change for " + userName + " on object " + OnLabel,
+										YesNo.Yes);
+
+							}
+
+						} else {
+							log(LogStatus.INFO, "Not clicked on checkbox " + givenOrNot + " for " + OnLabel
+									+ " as it is already UnChecked", YesNo.No);
+
+						}
+					}
+
+					else {
+						log(LogStatus.ERROR, "Please Provide the correct data for permission given or not", YesNo.Yes);
+						sa.assertTrue(false, "Please Provide the correct data for permission given or not");
+					}
+
+				}
+				switchToDefaultContent(driver);
+
+				switchToFrame(driver, 60, getSetUpPageIframe(120));
+				CommonLib.ThreadSleep(5000);
+
+				if (clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
+						action.SCROLLANDBOOLEAN)) {
+					flag = true;
+					log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
+
+					ThreadSleep(12000);
+					switchToDefaultContent(driver);
+					CommonLib.refresh(driver);
+				} else {
+					log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
+				}
+
+			} else {
+				log(LogStatus.ERROR, "not able to click on edit button", YesNo.Yes);
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + userName, YesNo.Yes);
+		}
+		return flag;
+	}
+
+	public boolean permissionChangeOfGeneralAndAdministrative(String[][] objectAndPermissionAndGivenOrGivenNot,
+			String[] userTypesToGivePermissions) {
+
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+
+		boolean flag = false;
+		String parentID = null;
+		for (String userName : userTypesToGivePermissions) {
+			switchToDefaultContent(driver);
+			if (home.clickOnSetUpLink()) {
+				parentID = switchOnWindow(driver);
+				if (parentID != null) {
+					log(LogStatus.INFO, "Able to switch on new window, so going to set permission for objects"
+							+ objectAndPermissionAndGivenOrGivenNot, YesNo.No);
+					ThreadSleep(500);
+					if (setup.searchStandardOrCustomObject(environment, mode, object.Profiles)) {
+						log(LogStatus.INFO, "click on Object : " + object.Profiles, YesNo.No);
+						ThreadSleep(2000);
+						if (setup.permissionChangeOfGeneralAndAdministrative(driver, userName,
+								objectAndPermissionAndGivenOrGivenNot, 20)) {
+							log(LogStatus.PASS,
+									"Permission Set for Object is: " + objectAndPermissionAndGivenOrGivenNot, YesNo.No);
+							flag = true;
+
+						} else {
+							sa.assertTrue(false,
+									"Permission not Set for Object is: " + objectAndPermissionAndGivenOrGivenNot);
+							log(LogStatus.FAIL,
+									"Permission not Set for Object is: " + objectAndPermissionAndGivenOrGivenNot,
+									YesNo.Yes);
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to search/click on " + object.Profiles, YesNo.Yes);
+						sa.assertTrue(false, "Not able to search/click on " + object.Profiles);
+					}
+
+				} else {
+					log(LogStatus.FAIL,
+							"could not find new window to switch, so cannot to set permission for object: "
+									+ "Permission not Set for Object is: " + objectAndPermissionAndGivenOrGivenNot,
+							YesNo.Yes);
+					sa.assertTrue(false, "could not find new window to switch, so cannot to set permission for object: "
+							+ "Permission not Set for Object is: " + objectAndPermissionAndGivenOrGivenNot);
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on setup link");
+			}
+		}
+
+		if (parentID != null) {
+			driver.close();
+			driver.switchTo().window(parentID);
+		}
+		return flag;
 	}
 
 }
