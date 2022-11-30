@@ -7825,4 +7825,16 @@ public abstract class BasePage extends BaseLib {
 		WebElement ele = isDisplayed(driver, anywhereonpage, "Visibility", timeOut, "anywhereonpage");
 		return ele;
 	}
+	
+	public WebElement Time(String tagName, int timeOut) {
+		String xpath = "//span[text()='"+tagName+"']/ancestor::table//button[@name='timesRef']";
+		WebElement ele = FindElement(driver, xpath, tagName+" close button", action.SCROLLANDBOOLEAN, timeOut);
+		try {
+			return isDisplayed(driver, ele, "Visibility", timeOut, tagName+" close button");
+
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, ele, "Visibility", timeOut, tagName+" close button");
+		}
+	}
+	
 }
