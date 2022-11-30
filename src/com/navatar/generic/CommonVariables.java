@@ -1292,7 +1292,7 @@ public class CommonVariables {
 	    public static String ATERecord1,ATERecord2,ATERecord3,ATERecord4,ATERecord5,ATERecord6,ATERecord7;
 	    
 	    //Acuity sections
-	    public static String ATE_Section1;
+	    public static String ATE_Section1,ATE_Section2;
 	  
 	    //Acuity Tabs
 	    public static String ATE_Tabs1;
@@ -6752,6 +6752,7 @@ public class CommonVariables {
 			    
 			    //Acuity sections
 			    ATE_Section1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE001", excelLabel.Section);
+			    ATE_Section2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE002", excelLabel.Section);
 				
 			    //Acuity Tabs
 			    ATE_Tabs1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE001", excelLabel.TabName);

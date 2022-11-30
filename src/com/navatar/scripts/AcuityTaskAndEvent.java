@@ -154,8 +154,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String message=bp.acuityDefaultMessage;
 
 		String contactHeader=ATE_ContactHeader1;
-		String dealHeader=ATE_DealHeader1;
-
 
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
@@ -167,11 +165,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String[] arrContactHeader=contactHeader.split("<break>");
 		List<String> contactHeaders = new ArrayList<String>(Arrays.asList(arrContactHeader));
 
-		String[] arrDealHeader=dealHeader.split("<break>");
-		List<String> dealHeaders = new ArrayList<String>(Arrays.asList(arrDealHeader));
-
 		List<String> connectionHeaders=new ArrayList<String>();
 		List<String> connectionTooltips=new ArrayList<String>();
+		List<String> blankList=new ArrayList<String>();
 
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
@@ -209,31 +205,31 @@ public class AcuityTaskAndEvent extends BaseLib {
 						}
 						else
 						{
-							log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified ", YesNo.No);
-							sa.assertTrue(false, "The Column name, Time referenced and message are not verified ");
+							log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. "+result, YesNo.No);
+							sa.assertTrue(false, "The Column name, Time referenced and message are not verified. "+result);
 						}
 
-						ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, contactHeaders, message, dealHeaders, message,connectionHeaders,null);
+						ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, contactHeaders, message, blankList, null,connectionHeaders,null);
 
 						if(result1.isEmpty())
 						{
-							log(LogStatus.INFO, "The header name and message have been verified on Interaction, Contacts and Deals Section ", YesNo.No);
+							log(LogStatus.INFO, "The header name and message have been verified on Interaction and Contacts ", YesNo.No);
 						}
 						else
 						{
-							log(LogStatus.ERROR, "The header name and message are not verified on Interaction, Contacts and Deals Section ", YesNo.No);
-							sa.assertTrue(false, "The header name and message are not verified on Interaction, Contacts and Deals Section ");
+							log(LogStatus.ERROR, "The header name and message are not verified on Interaction and Contacts. "+result1, YesNo.No);
+							sa.assertTrue(false, "The header name and message are not verified on Interaction and Contacts "+result1);
 						}
 
-						ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(dealHeaders, contactHeaders, connectionTooltips);
+						ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList, contactHeaders, connectionTooltips);
 						if(result2.isEmpty())
 						{
-							log(LogStatus.INFO, "The Tooltip on Deal and Contacts header have been verified", YesNo.No);
+							log(LogStatus.INFO, "The Tooltip on Contact header have been verified", YesNo.No);
 						}
 						else
 						{
-							log(LogStatus.ERROR, "The Tooltip on Deal and Contacts header are not verified", YesNo.No);
-							sa.assertTrue(false, "The Tooltip on Deal and Contacts header are not verified");
+							log(LogStatus.ERROR, "The Tooltip on Contact header are not verified. "+result2, YesNo.No);
+							sa.assertTrue(false, "The Tooltip on Contact header are not verified. "+result2);
 						}
 
 
@@ -269,7 +265,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 			log(LogStatus.ERROR, "Not able to click on tab : "+tabObj1, YesNo.No);
 			sa.assertTrue(false,  "Not able to click on tab : "+tabObj1);
 		}
-
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
@@ -283,19 +278,12 @@ public class AcuityTaskAndEvent extends BaseLib {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 
 		String recordName=ATE_Contact1;
-		String sectionHeader=ATE_Section1;
+		String sectionHeader=ATE_Section2;
 		String tabsOnTagged=ATE_Tabs1;
 		String defaultTabOntagged="Companies";
 		String message=bp.acuityDefaultMessage;
 
 		String connectionHeader=ATE_ConnectionHeader1;
-
-		String dealHeader=ATE_DealHeader1;
-
-		String dealName=ATE_DealName1;
-		String dealCompany=ATE_DealCompany1;
-		String dealStage=ATE_DealStage1;
-		String dealDateRecived=ATE_DealDateRecieved1;
 
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
@@ -307,10 +295,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String[] arrConnnectionHeader=connectionHeader.split("<break>");
 		List<String> connnectionHeaders = new ArrayList<String>(Arrays.asList(arrConnnectionHeader));
 
-		String[] arrDealHeader=dealHeader.split("<break>");
-		List<String> dealHeaders = new ArrayList<String>(Arrays.asList(arrDealHeader));
-
-		List<String> contactHeaders=new ArrayList<String>();
+		List<String> blankList=new ArrayList<String>();
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -327,7 +312,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 					if(bp.verifySectionsAndTooltipOnAcuityTab(sectionHeaderName,sectionHeaderName))
 					{
-						log(LogStatus.INFO, "Section Headers have been verified on acuity tab", YesNo.No);
+						log(LogStatus.INFO, "Tagged Section Headers have been verified on acuity tab", YesNo.No);
 
 						if(bp.verifyTabsOnTaggedSection(tabNameOnTagged,defaultTabOntagged))
 						{
@@ -347,44 +332,32 @@ public class AcuityTaskAndEvent extends BaseLib {
 						}
 						else
 						{
-							log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified ", YesNo.No);
-							sa.assertTrue(false, "The Column name, Time referenced and message are not verified ");
+							log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. "+result, YesNo.No);
+							sa.assertTrue(false, "The Column name, Time referenced and message are not verified. "+result);
 						}
-
-						ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, contactHeaders, null, dealHeaders, null,connnectionHeaders,message);
+						
+						ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, blankList, null, blankList, null,connnectionHeaders,message);
 
 						if(result1.isEmpty())
 						{
-							log(LogStatus.INFO, "The header name and message have been verified on Interaction, Connections and Deals Section ", YesNo.No);
+							log(LogStatus.INFO, "The header name and message have been verified on Interaction and Connection Section. "+result1, YesNo.No);
 						}
 						else
 						{
-							log(LogStatus.ERROR, "The header name and message are not verified on Interaction, Connections and Deals Section ", YesNo.No);
-							sa.assertTrue(false, "The header name and message are not verified on Interaction, Connections and Deals Section ");
+							log(LogStatus.ERROR, "The header name and message are not verified on Interaction and Connection Section. "+result1, YesNo.No);
+							sa.assertTrue(false, "The header name and message are not verified on Interaction and Connection Deals Section. "+result1);
 						}
 
-						ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(dealHeaders, contactHeaders, connnectionHeaders);
+						ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList, blankList, connnectionHeaders);
 						if(result2.isEmpty())
 						{
-							log(LogStatus.INFO, "The Tooltip on Deal and Contacts header have been verified", YesNo.No);
+							log(LogStatus.INFO, "The Tooltip on connection header have been verified", YesNo.No);
 						}
 						else
 						{
-							log(LogStatus.ERROR, "The Tooltip on Deal and Contacts header are not verified", YesNo.No);
-							sa.assertTrue(false, "The Tooltip on Deal and Contacts header are not verified");
+							log(LogStatus.ERROR, "The Tooltip on connection header are not verified. "+result2, YesNo.No);
+							sa.assertTrue(false, "The Tooltip on connnection header are not verified. "+result2);
 						}
-
-						ArrayList<String> result3=bp.verifyRecordOnDealsSectionInAcuity(recordName, dealName, dealCompany, dealStage, dealDateRecived);
-						if(result3.isEmpty())
-						{
-							log(LogStatus.INFO, "The records on Deal section have been verified for "+recordName, YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "The records on Deal section are not verified for "+recordName, YesNo.No);
-							sa.assertTrue(false, "The records on Deal section are not verified for "+recordName);
-						}
-
 
 						if (!bp.verifyViewAllButtonOnIntractionCard(5)) {
 							log(LogStatus.INFO, "view All Button is not visible on Interaction section", YesNo.No);
@@ -397,8 +370,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Section headers and Tooltip are not verified on acuity tab", YesNo.No);
-						sa.assertTrue(false, "Section headers and Tooltip are not verified on acuity tab");
+						log(LogStatus.ERROR, "Tagged section headers and Tooltip are not verified on acuity tab", YesNo.No);
+						sa.assertTrue(false, "Tagged section headers and Tooltip are not verified on acuity tab");
 					}
 				}
 				else
