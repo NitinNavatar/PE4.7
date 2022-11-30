@@ -21,7 +21,7 @@ public class EnumConstants {
 		Folder_Description,Fund_Size,Fund_VintageYear,Fund_Description,Disclaimer_Name,Disclaimer_Description,StandardPath,CommonPath,SharedPath,InternalPath,MyProfile_FName,MyProfile_LName,Updated_FirmName,Updated_FirstName,Updated_LastName,Title,Business_Phone,Mailing_City,Mailing_State,Mailing_Zip,Mailing_Country,Firm_Contact,KeyWord_For_Search,AllFirms_Count,OnlineImportPath,AdvisorInvolvementID,FOLDER_NAME,INVALID_FOLDER_NAME,
 		TargetRegistrationURL,TargetLoginURL,Watermarking,UpdateInstitution_NameFormManageInvestor,UpdatedLimitedPartner_NameFormManageInvestor,HomePageAlertCount,FundsPageALertCount,ContactPageALertCount,BillingZip,UpdateFund_NameFromUpdateInfoIWR,UpdateFund_NameFromUpdateInfoFR,ContactName,FundName,Module_Name,Execute,Statistics,FRW_Value,INV_Value,FRW_DocumentsName,
 		INV_DocumentsName,Updated_InstitutionName_From_InvestorSide,Activity_Count,Viewed_Or_DownloadedAnyFile,Account_Name,Logo_Name,Contact_Access,ContactUpdatedEmailID, Path, DrawdownID, CapitalCalllID, CapitalAmount,ManagementFee, OtherFee, InvestmentAmount,CallAmount, CallDate, DueDate, CallAmountReceived,ReceivedDate, AmountDue,CapitalReturn,Dividends,RealizedGain,OtherProceeds,TotalDistributions,FundDistributionID,InvestorDistributionID,Capital_Returned_Recallable,
-		Capital_Returned_NonRecallable,Start_Time,End_Time,Test_Custom_Object_Name,Average_Deal_Quality_Score,Total_Deals_Shown,Deal_Quality_Score,Meeting_Type,Item_ID {
+		Capital_Returned_NonRecallable,Start_Time,End_Time,Test_Custom_Object_Name,Average_Deal_Quality_Score,Total_Deals_Shown,Deal_Quality_Score,Meeting_Type,User_Title,Item_ID {
 				@Override
 			    public String toString() {
 			      return "Item Id";
@@ -63,7 +63,7 @@ public class EnumConstants {
 		}
 		, Pipeline_Name, Company_Name
 			
-		, Stage, Source, Source_Firm, Source_Contact, Deal_Type, Employees, Website, Email, Legal_Name, Name, Investment_Size,Updated_Investment_Size, Log_In_Date{
+		, Stage, Source, Source_Firm, Source_Contact, Deal_Type, Employees, Website, Email, Legal_Name,Target_Close_Date, Name, Investment_Size,Updated_Investment_Size, Log_In_Date{
 			@Override
 			public String toString() {
 				return "Date Received";
@@ -234,7 +234,7 @@ Fundraising_ContactPage, Financing, Financial_Performance, Marketing_Initiative,
 			public String toString() {
 				return "Declined/Dead";
 		}
-		},Prospect,Interested,Sent_PPM,Declined,Verbal_Commitment,Follow_up_Diligence,New_Interested,New_Stage_Verification;
+		},Prospect,Interested,Sent_PPM,Declined,Deny,Verbal_Commitment,Follow_up_Diligence,New_Interested,New_Stage_Verification;
 	}
 	public static enum YesNo {
 		Yes,No,YesWinium;
@@ -407,7 +407,13 @@ Fundraising_ContactPage, Financing, Financial_Performance, Marketing_Initiative,
 		public String toString() {
 			return CommonVariables.tabCustomObj;
 		}
-	},Navigation,navatarEdgeMenu, Affiliation, Financing,Commitment, Advisor,User, Company_Information
+	},Navigation,navatarEdgeMenu, Affiliation, Financing,Commitment, Advisor,User, Company_Information,
+		Rename_Tabs_And_Labels{
+		@Override
+		public String toString() {
+			return "Rename Tabs and Labels";
+		}
+	}
 	};
 
 	
@@ -1268,7 +1274,7 @@ public static enum PermissionType{
 					return "Navigation Type";
 				}
 			},
-		Contact_Name, Tax_Forms,Partner_Type,Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places, Values, Is_Touchpoint,Description, Request, Date_Requested, Attendee_Staff, Label, Panel_Width, Panel_Height,Deal,Team_Member_Role,Member, Page_Layout_Name,Organizer,Convert_to_Portfolio, Deal_Contact_Type, Team_Member, Location, End, All_Day_Event, Role, 
+		Contact_Name, Tax_Forms,Partner_Type,Owner, Activity, Related_Contacts, Account_Name, Length, Decimal_Places, Values, Is_Touchpoint,Description, Request, Date_Requested, Attendee_Staff, Label, Panel_Width, Panel_Height,Deal,Fundraising,Team_Member_Role,Member, Page_Layout_Name,Organizer,Convert_to_Portfolio, Deal_Contact_Type, Team_Member, Location, End, All_Day_Event, Role, 
 		Lender_Status{
 				@Override
 				public String toString() {

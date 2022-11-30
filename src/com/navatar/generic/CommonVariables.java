@@ -113,17 +113,17 @@ public class CommonVariables {
 
 	public static String crmUser4FirstName,crmUser4LastName,crmUser4EmailID,crmUser4Profile,crmUser4Lience ;
 	public static String crmUser5FirstName,crmUser5LastName,crmUser5EmailID,crmUser5Profile,crmUser5Lience ;
-	public static String crmUser6FirstName,crmUser6LastName,crmUser6EmailID,crmUser6Profile,crmUser6Lience ;
-	public static String crmUser7FirstName,crmUser7LastName,crmUser7EmailID,crmUser7Profile,crmUser7Lience ;
-	public static String crmUser8FirstName,crmUser8LastName,crmUser8EmailID,crmUser8Profile,crmUser8Lience ;
-	public static String crmUser9FirstName,crmUser9LastName,crmUser9EmailID,crmUser9Profile,crmUser9Lience ;
-	public static String crmUser10FirstName,crmUser10LastName,crmUser10EmailID,crmUser10Profile,crmUser10Lience ;
-	public static String crmUser11FirstName,crmUser11LastName,crmUser11EmailID,crmUser11Profile,crmUser11Lience ;
-	public static String crmUser12FirstName,crmUser12LastName,crmUser12EmailID,crmUser12Profile,crmUser12Lience ;
-	public static String crmUser13FirstName,crmUser13LastName,crmUser13EmailID,crmUser13Profile,crmUser13Lience ;
-	public static String crmUser14FirstName,crmUser14LastName,crmUser14EmailID,crmUser14Profile,crmUser14Lience ;
-	public static String crmUser15FirstName,crmUser15LastName,crmUser15EmailID,crmUser15Profile,crmUser15Lience ;
-	public static String crmUser16FirstName,crmUser16LastName,crmUser16EmailID,crmUser16Profile,crmUser16Lience ;
+	public static String crmUser6FirstName,crmUser6LastName,crmUser6EmailID,crmUser6Profile,crmUser6Lience,crmUser6Title ;
+	public static String crmUser7FirstName,crmUser7LastName,crmUser7EmailID,crmUser7Profile,crmUser7Lience,crmUser7Title ;
+	public static String crmUser8FirstName,crmUser8LastName,crmUser8EmailID,crmUser8Profile,crmUser8Lience,crmUser8Title ;
+	public static String crmUser9FirstName,crmUser9LastName,crmUser9EmailID,crmUser9Profile,crmUser9Lience,crmUser9Title ;
+	public static String crmUser10FirstName,crmUser10LastName,crmUser10EmailID,crmUser10Profile,crmUser10Lience,crmUser10Title ;
+	public static String crmUser11FirstName,crmUser11LastName,crmUser11EmailID,crmUser11Profile,crmUser11Lience,crmUser11Title ;
+	public static String crmUser12FirstName,crmUser12LastName,crmUser12EmailID,crmUser12Profile,crmUser12Lience,crmUser12Title ;
+	public static String crmUser13FirstName,crmUser13LastName,crmUser13EmailID,crmUser13Profile,crmUser13Lience,crmUser13Title ;
+	public static String crmUser14FirstName,crmUser14LastName,crmUser14EmailID,crmUser14Profile,crmUser14Lience,crmUser14Title ;
+	public static String crmUser15FirstName,crmUser15LastName,crmUser15EmailID,crmUser15Profile,crmUser15Lience,crmUser15Title ;
+	public static String crmUser16FirstName,crmUser16LastName,crmUser16EmailID,crmUser16Profile,crmUser16Lience,crmUser16Title ;
 	
 	public static String glUser1FirstName,glUser1LastName,glUser1EmailID,glUserProfile,glUserLience;
 
@@ -1263,6 +1263,26 @@ public class CommonVariables {
 	  		public static String ADEDealTeamMember8;
 	  		public static String ADEDealTeamRole8;
 	  		public static String ADEDealTeamID8;
+	  		
+	  		public static String ADEDealTeamName9;
+	  		public static String ADEDealContact9;
+	  		public static String ADEDealTeamMember9;
+	  		public static String ADEDealTeamRole9;
+	  		public static String ADEDealTeamID9;
+	  		
+	  		public static String ADEDealTeamName10;
+	  		public static String ADEDealContact10;
+	  		public static String ADEDealTeamMember10;
+	  		public static String ADEDealTeamRole10;
+	  		public static String ADEDealTeamID10;
+	  		
+	  		//Fund
+	  		public static String ADEFundName;
+			public static String ADEFundType;
+			
+			//FR
+			public static String ADEFundraisingName,ADEInstitutionName,ADERFundName,ADEStage,ADEClosing,ADEInvestmentLikelyAmountMN,ADENote,ADETargetClosingDate;
+			public static String ADEFundraisingName1,ADEInstitutionName1,ADERFundName1,ADEStage1,ADEClosing1,ADEInvestmentLikelyAmountMN1,ADENote1,ADETargetClosingDate1;
 	    
 	    
 	    
@@ -1272,7 +1292,7 @@ public class CommonVariables {
 	    public static String ATERecord1,ATERecord2,ATERecord3,ATERecord4,ATERecord5,ATERecord6,ATERecord7;
 	    
 	    //Acuity sections
-	    public static String ATE_Section1;
+	    public static String ATE_Section1,ATE_Section2;
 	  
 	    //Acuity Tabs
 	    public static String ATE_Tabs1;
@@ -1495,69 +1515,81 @@ public class CommonVariables {
 		crmUser6EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User6", excelLabel.User_Email);
 		crmUser6Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User6", excelLabel.User_Profile);
 		crmUser6Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User6", excelLabel.User_License);
+		crmUser6Title=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User6", excelLabel.User_Title);
+		
 		
 		crmUser7FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User7", excelLabel.User_First_Name);
 		crmUser7LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User7", excelLabel.User_Last_Name);
 		crmUser7EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User7", excelLabel.User_Email);
 		crmUser7Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User7", excelLabel.User_Profile);
 		crmUser7Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User7", excelLabel.User_License);
-
+		crmUser7Title=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User7", excelLabel.User_Title);
+		
 
 		crmUser8FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User8", excelLabel.User_First_Name);
 		crmUser8LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User8", excelLabel.User_Last_Name);
 		crmUser8EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User8", excelLabel.User_Email);
 		crmUser8Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User8", excelLabel.User_Profile);
 		crmUser8Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User8", excelLabel.User_License);
-
+		crmUser8Title=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User8", excelLabel.User_Title);
+		
 		crmUser9FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User9", excelLabel.User_First_Name);
 		crmUser9LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User9", excelLabel.User_Last_Name);
 		crmUser9EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User9", excelLabel.User_Email);
 		crmUser9Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User9", excelLabel.User_Profile);
 		crmUser9Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User9", excelLabel.User_License);
-
+		crmUser9Title=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User9", excelLabel.User_Title);
+		
 		crmUser10FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User10", excelLabel.User_First_Name);
 		crmUser10LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User10", excelLabel.User_Last_Name);
 		crmUser10EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User10", excelLabel.User_Email);
 		crmUser10Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User10", excelLabel.User_Profile);
 		crmUser10Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User10", excelLabel.User_License);
-
+		crmUser10Title=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User10", excelLabel.User_Title);
+		
 		crmUser11FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User11", excelLabel.User_First_Name);
 		crmUser11LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User11", excelLabel.User_Last_Name);
 		crmUser11EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User11", excelLabel.User_Email);
 		crmUser11Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User11", excelLabel.User_Profile);
 		crmUser11Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User11", excelLabel.User_License);
-
+		crmUser11Title=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User11", excelLabel.User_Title);
+		
 		crmUser12FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User12", excelLabel.User_First_Name);
 		crmUser12LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User12", excelLabel.User_Last_Name);
 		crmUser12EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User12", excelLabel.User_Email);
 		crmUser12Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User12", excelLabel.User_Profile);
 		crmUser12Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User12", excelLabel.User_License);
-
+		crmUser12Title=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User12", excelLabel.User_Title);
+		
 		crmUser13FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User13", excelLabel.User_First_Name);
 		crmUser13LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User13", excelLabel.User_Last_Name);
 		crmUser13EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User13", excelLabel.User_Email);
 		crmUser13Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User13", excelLabel.User_Profile);
 		crmUser13Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User13", excelLabel.User_License);
-
+		crmUser13Title=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User13", excelLabel.User_Title);
+		
 		crmUser14FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User14", excelLabel.User_First_Name);
 		crmUser14LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User14", excelLabel.User_Last_Name);
 		crmUser14EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User14", excelLabel.User_Email);
 		crmUser14Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User14", excelLabel.User_Profile);
 		crmUser14Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User14", excelLabel.User_License);
-
+		crmUser14Title=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User14", excelLabel.User_Title);
+		
 		crmUser15FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User15", excelLabel.User_First_Name);
 		crmUser15LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User15", excelLabel.User_Last_Name);
 		crmUser15EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User15", excelLabel.User_Email);
 		crmUser15Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User15", excelLabel.User_Profile);
 		crmUser15Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User15", excelLabel.User_License);
-
+		crmUser15Title=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User15", excelLabel.User_Title);
+		
 
 		crmUser16FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User16", excelLabel.User_First_Name);
 		crmUser16LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User16", excelLabel.User_Last_Name);
 		crmUser16EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User16", excelLabel.User_Email);
 		crmUser16Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User16", excelLabel.User_Profile);
 		crmUser16Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User16", excelLabel.User_License);
-
+		crmUser16Title=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User16", excelLabel.User_Title);
+		
 
 		
 		
@@ -3181,6 +3213,7 @@ public class CommonVariables {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			break;
 		case "Module8HomepageSDG" :
 			try {
 				dataFile=new FileInputStream(new File(phase1DataSheetFilePath));
@@ -4140,6 +4173,7 @@ public class CommonVariables {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			break;
 			
 			 /**
 			  * @author Ankur Huria
@@ -5828,7 +5862,8 @@ public class CommonVariables {
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						}	
+						}
+						break;
 			
 			
 			case "PEFSTG":
@@ -6015,7 +6050,7 @@ public class CommonVariables {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+			break;
 			
 			
 			
@@ -6557,6 +6592,33 @@ public class CommonVariables {
 					ADEDealTeamRole8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_08", excelLabel.Role);
 					ADEDealTeamID8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_08", excelLabel.DealTeamID);
 					
+					ADEDealTeamName9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_09", excelLabel.Deal_Name);
+					ADEDealContact9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_09", excelLabel.Contact);
+					ADEDealTeamMember9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_09", excelLabel.Member);
+					ADEDealTeamRole9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_09", excelLabel.Role);
+					ADEDealTeamID9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_09", excelLabel.DealTeamID);
+					
+					ADEDealTeamName10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_10", excelLabel.Deal_Name);
+					ADEDealContact10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_10", excelLabel.Contact);
+					ADEDealTeamMember10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_10", excelLabel.Member);
+					ADEDealTeamRole10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_10", excelLabel.Role);
+					ADEDealTeamID10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal Team",excelLabel.Variable_Name, "ADT_10", excelLabel.DealTeamID);
+					
+					//Fund
+					
+					ADEFundName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "ADEF1", excelLabel.Fund_Name);
+					ADEFundType = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "ADEF1", excelLabel.Fund_Type);
+					
+					//Fundrasing
+					ADEFundraisingName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR1", excelLabel.FundRaising_Name);
+					ADEInstitutionName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR1", excelLabel.Institutions_Name);
+					ADERFundName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR1", excelLabel.Fund_Name);
+					ADETargetClosingDate = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR1", excelLabel.Target_Close_Date);
+					
+					ADEFundraisingName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR2", excelLabel.FundRaising_Name);
+					ADEInstitutionName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR2", excelLabel.Institutions_Name);
+					ADERFundName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR2", excelLabel.Fund_Name);
+					ADEStage1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR2", excelLabel.Stage);
 					
 					break;
 				
@@ -6701,6 +6763,7 @@ public class CommonVariables {
 			    
 			    //Acuity sections
 			    ATE_Section1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE001", excelLabel.Section);
+			    ATE_Section2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE002", excelLabel.Section);
 				
 			    //Acuity Tabs
 			    ATE_Tabs1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE001", excelLabel.TabName);

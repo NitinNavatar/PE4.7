@@ -138,7 +138,7 @@ public class Module5New extends BaseLib {
 						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
 					}
 					if (setup.createPEUser( crmUser1FirstName, UserLastName, emailId, crmUserLience,
-							crmUserProfile)) {
+							crmUserProfile, null)) {
 						log(LogStatus.INFO, "CRM User is created Successfully: " + crmUser1FirstName + " " + UserLastName, YesNo.No);
 						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User1",
 								excelLabel.User_Email);

@@ -371,4 +371,63 @@ public class CustomObjPageBusinessLayer extends CustomObjPage {
 
 	}
 
+	public boolean objectPermissionGivenOrRemove(String[][] objectAndPermissionAndGivenOrGivenNot,
+			String[] userTypesToGivePermissions) {
+
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+
+		boolean flag = false;
+		String parentID = null;
+		for (String userName : userTypesToGivePermissions) {
+			switchToDefaultContent(driver);
+			if (home.clickOnSetUpLink()) {
+				parentID = switchOnWindow(driver);
+				if (parentID != null) {
+					log(LogStatus.INFO, "Able to switch on new window, so going to set permission for objects"
+							+ objectAndPermissionAndGivenOrGivenNot, YesNo.No);
+					ThreadSleep(500);
+					if (setup.searchStandardOrCustomObject(environment, mode, object.Profiles)) {
+						log(LogStatus.INFO, "click on Object : " + object.Profiles, YesNo.No);
+						ThreadSleep(2000);
+						if (setup.permissionChangeOfUserONObject(driver, userName,
+								objectAndPermissionAndGivenOrGivenNot, 20)) {
+							log(LogStatus.PASS,
+									"Permission Set for Object is: " + objectAndPermissionAndGivenOrGivenNot, YesNo.No);
+							flag = true;
+
+						} else {
+							sa.assertTrue(false,
+									"Permission not Set for Object is: " + objectAndPermissionAndGivenOrGivenNot);
+							log(LogStatus.FAIL,
+									"Permission not Set for Object is: " + objectAndPermissionAndGivenOrGivenNot,
+									YesNo.Yes);
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to search/click on " + object.Profiles, YesNo.Yes);
+						sa.assertTrue(false, "Not able to search/click on " + object.Profiles);
+					}
+
+				} else {
+					log(LogStatus.FAIL,
+							"could not find new window to switch, so cannot to set permission for object: "
+									+ "Permission not Set for Object is: " + objectAndPermissionAndGivenOrGivenNot,
+							YesNo.Yes);
+					sa.assertTrue(false, "could not find new window to switch, so cannot to set permission for object: "
+							+ "Permission not Set for Object is: " + objectAndPermissionAndGivenOrGivenNot);
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to click on setup link", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on setup link");
+			}
+		}
+
+		if (parentID != null) {
+			driver.close();
+			driver.switchTo().window(parentID);
+		}
+		return flag;
+	}
+
 }
