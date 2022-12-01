@@ -75,7 +75,7 @@ public class AcuityDealsEmails extends BaseLib {
 						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
 					}
 					if (setup.createPEUser( crmUser1FirstName, UserLastName, emailId, crmUserLience,
-							crmUserProfile)) {
+							crmUserProfile,null)) {
 						log(LogStatus.INFO, "CRM User is created Successfully: " + crmUser1FirstName + " " + UserLastName, YesNo.No);
 						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User1",
 								excelLabel.User_Email);
@@ -5466,7 +5466,7 @@ public void ADETc041_createCRMUser2(String projectName) {
 					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
 				}
 				if (setup.createPEUser( crmUser1FirstName, UserLastName, emailId, crmUserLience,
-						crmUserProfile)) {
+						crmUserProfile,null)) {
 					log(LogStatus.INFO, "CRM User is created Successfully: " + crmUser1FirstName + " " + UserLastName, YesNo.No);
 					ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User2",
 							excelLabel.User_Email);
@@ -8713,39 +8713,39 @@ public void ADETc072_VerifyDealCountContactGetsRemovedDealTeamWhenRemoveeAddeeAr
 	String DealCountInFirm = "1";
 	String actualDealCount = null;
 
-//	if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
-//		log(LogStatus.INFO, "Click on Tab : " + TabName.Object2Tab, YesNo.No);
-//
-//	ADEContact19EmailID = lp.generateRandomEmailId(gmailUserName);
-//	ExcelUtils.writeData(AcuityDataSheetFilePath, ADEContact19EmailID, "Contact", excelLabel.Variable_Name,
-//			"ADEContact19", excelLabel.Contact_EmailId);
-//
-//	if (cp.createContactAcuity(projectName, ADEContact19FName, ADEContact19LName, ADEIns3, ADEContact19EmailID,
-//			ADEContact19RecordType, null, null, CreationPage.ContactPage, null, null)) {
-//		log(LogStatus.INFO, "successfully Created Contact : " + ADEContact19LName + " " + ADEContact19LName,
-//				YesNo.No);
-//	} else {
-//		sa.assertTrue(false, "Not Able to Create Contact : " + ADEContact19FName + " " + ADEContact19LName);
-//		log(LogStatus.SKIP, "Not Able to Create Contact: " + ADEContact19LName + " " + ADEContact19LName,
-//				YesNo.Yes);
-//	}
-//	}
-//	if (lp.clickOnTab(projectName, TabName.Deal_Team)) {
-//		if (fp.clickOnAlreadyCreatedItem(projectName, ADEDealTeamID12, 10)) {
-//			if (DTP.UpdateDealContactName(projectName, data1, 30)) {
-//				log(LogStatus.INFO, "successfully changed name to " + contactName, YesNo.Yes);
-//			} else {
-//				sa.assertTrue(false, "not able to change name to " + contactName);
-//				log(LogStatus.SKIP, "not able to change name to " + contactName, YesNo.Yes);
-//			}
-//		} else {
-//			log(LogStatus.ERROR, "Not able to click on " + ADEDealTeamID12 + " tab", YesNo.Yes);
-//			sa.assertTrue(false, "Not able to click on " + ADEDealTeamID12 + " tab");
-//		}
-//	} else {
-//		log(LogStatus.ERROR, "Not able to click on " + TabName.Deal_Team + " tab", YesNo.Yes);
-//		sa.assertTrue(false, "Not able to click on " + TabName.Deal_Team + " tab");
-//	}
+	if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
+		log(LogStatus.INFO, "Click on Tab : " + TabName.Object2Tab, YesNo.No);
+
+	ADEContact19EmailID = lp.generateRandomEmailId(gmailUserName);
+	ExcelUtils.writeData(AcuityDataSheetFilePath, ADEContact19EmailID, "Contact", excelLabel.Variable_Name,
+			"ADEContact19", excelLabel.Contact_EmailId);
+
+	if (cp.createContactAcuity(projectName, ADEContact19FName, ADEContact19LName, ADEIns3, ADEContact19EmailID,
+			ADEContact19RecordType, null, null, CreationPage.ContactPage, null, null)) {
+		log(LogStatus.INFO, "successfully Created Contact : " + ADEContact19LName + " " + ADEContact19LName,
+				YesNo.No);
+	} else {
+		sa.assertTrue(false, "Not Able to Create Contact : " + ADEContact19FName + " " + ADEContact19LName);
+		log(LogStatus.SKIP, "Not Able to Create Contact: " + ADEContact19LName + " " + ADEContact19LName,
+				YesNo.Yes);
+	}
+	}
+	if (lp.clickOnTab(projectName, TabName.Deal_Team)) {
+		if (fp.clickOnAlreadyCreatedItem(projectName, ADEDealTeamID12, 10)) {
+			if (DTP.UpdateDealContactName(projectName, data1, 30)) {
+				log(LogStatus.INFO, "successfully changed name to " + contactName, YesNo.Yes);
+			} else {
+				sa.assertTrue(false, "not able to change name to " + contactName);
+				log(LogStatus.SKIP, "not able to change name to " + contactName, YesNo.Yes);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + ADEDealTeamID12 + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + ADEDealTeamID12 + " tab");
+		}
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + TabName.Deal_Team + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + TabName.Deal_Team + " tab");
+	}
 	if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 		log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 

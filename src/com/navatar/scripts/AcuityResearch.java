@@ -96,7 +96,7 @@ public class AcuityResearch extends BaseLib{
 						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
 					}
 					if (setup.createPEUser( glUser1FirstName, UserLastName, emailId, glUserLience,
-							glUserProfile)) {
+							glUserProfile, null)) {
 						log(LogStatus.INFO, "GL User is created Successfully: " + glUser1FirstName + " " + UserLastName, YesNo.No);
 						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User1",
 								excelLabel.User_Email);
@@ -353,6 +353,7 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
 			sa.assertTrue(true, ele +" is matched with " +searchValue);
 			}
+			ele = rp.getResearchFindings(10).getText();
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele!=null && ele.equalsIgnoreCase("Research Findings")) {
 			log(LogStatus.PASS, ele +" is visible", YesNo.Yes);
