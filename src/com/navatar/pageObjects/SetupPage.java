@@ -1123,5 +1123,11 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, errorMsgRecordType, "Visibility", timeOut, "errorMsgRecordType");
 	}
 	
+	@FindBy(xpath = "//select[@id='p5']")
+	private WebElement defaultRecord;
 
+	public WebElement getdefaultRecord(int timeOut) {
+		return defaultRecord;
+	}
+	
 }
