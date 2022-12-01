@@ -260,6 +260,7 @@ public class AppListeners extends By implements ITestListener, IInvokedMethodLis
 			CommonLib.checkForLoaderImage(driver, "//section/lightning-spinner[@class='slds-spinner_container']", 120);
 			
 			
+			
 	}
 
 	@Override

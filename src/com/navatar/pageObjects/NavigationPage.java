@@ -14,6 +14,7 @@ import static com.navatar.generic.CommonLib.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class NavigationPage extends BasePageBusinessLayer {
 
@@ -185,5 +186,27 @@ public class NavigationPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, researchErrorMsg, "Visibility", timeOut, "researchErrorMsg");
 
 	}
+
+	public List<String> navList() {
+		List<String> navItems = FindElements(driver, "//div[contains(@id,'treeview')]//li/span[3]", "Nav List").stream()
+				.map(x -> x.getText()).collect(Collectors.toList());
+
+		if (navItems.isEmpty()) {
+			return FindElements(driver, "//div[contains(@id,'treeview')]//li/span[3]", "Nav List").stream()
+					.map(x -> x.getText()).collect(Collectors.toList());
+		}
+		return navItems;
+	}
+	
+	@FindBy(xpath = "//button[@title='Minimize']")
+	private WebElement createNavPopUpMinimizeButton;
+
+	public WebElement createNavPopUpMinimizeButton(int timeOut) {
+
+		return isDisplayed(driver, createNavPopUpMinimizeButton, "Visibility", timeOut, "createNavPopUpMinimizeButton");
+
+	}
+	
+	
 
 }

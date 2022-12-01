@@ -166,4 +166,24 @@ public class TaskPage extends BasePageBusinessLayer {
 		}
 	}
 
+	@FindBy(xpath = "//div//span[text()='Delete']/parent::button")
+	private WebElement taskDeleteConfirmButton;
+
+	public WebElement taskDeleteConfirmButton(int timeOut) {
+
+		return isDisplayed(driver, taskDeleteConfirmButton, "Visibility", timeOut,
+				"taskDeleteConfirmButton");
+	}
+	
+	@FindBy(xpath = "//div[contains(@class,'toastContent')]")
+	private WebElement taskDeletedMsg;
+
+	public WebElement taskDeletedMsg(int timeOut) {
+
+		return isDisplayed(driver, taskDeletedMsg, "Visibility", timeOut,
+				"taskDeletedMsg");
+	}
+	
+	
+	
 }
