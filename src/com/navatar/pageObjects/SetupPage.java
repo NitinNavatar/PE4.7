@@ -1124,6 +1124,10 @@ public class SetupPage extends BasePageBusinessLayer {
 	}
 	
 	
+	@FindBy(xpath = "//select[@id='p5']")
+	private WebElement defaultRecord;
+
+	
 	public WebElement editButtonInRenameTabAndLabels(String tabName, int timeOut) {
 		String xpath = "//th[text()='"+tabName+"']//preceding-sibling::td[@class='actionColumn']//a[text()='Edit']";
 
@@ -1183,5 +1187,9 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getUserTitle(int timeOut) {
 		return isDisplayed(driver, userTitle, "Visibility", timeOut, "user title");
 	}
-
+	
+	public WebElement getdefaultRecord(int timeOut) {
+		return defaultRecord;
+	}
+	
 }

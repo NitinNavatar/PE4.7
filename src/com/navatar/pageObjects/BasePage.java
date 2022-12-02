@@ -7996,5 +7996,38 @@ public abstract class BasePage extends BaseLib {
 	public WebElement geteditRecordTypeButton(String projectName, int timeOut) {
 		return isDisplayed(driver, editRecordTypeButton, "Visibility", timeOut, "editRecordTypeButton");
 	}
+
+	@FindBy(xpath = "//td[@class='pbButton']//input[@title='Edit']")
+	private WebElement EditUserLink;
+
+	/**
+	 * @return the newUserLink
+	 */
+	public WebElement getEditUserLink(int timeOut) {
+		return isDisplayed(driver, EditUserLink, "Visibility", timeOut, "Edit User Link");
+	}
+	@FindBy(xpath = "//input[@name='active']")
+	private WebElement ActiveUserCheckBox;
+
+	/**
+	 * @return the salesforceCRMContentUserCheckBox
+	 */
+	public WebElement getActiveUserCheckBox(int timeOut) {
+		return isDisplayed(driver, ActiveUserCheckBox, "Visibility", timeOut,
+				"Active User Check Box");
+	}
+	@FindBy(xpath = "//input[@id='simpleDialog0button0']")
+	private WebElement popupOKbutton;
+
+	/**
+	 * @return the salesforceCRMContentUserCheckBox
+	 */
+	public WebElement getpopupOKbutton(int timeOut) {
+		return isDisplayed(driver, popupOKbutton, "Visibility", timeOut,
+				"pop up OK button");
+	}
+
+
 }
+
 

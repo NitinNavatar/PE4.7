@@ -19069,7 +19069,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return flag;
 	}
 
-	
 	/**
 	 * @author Ankur Huria
 	 * @param projectName
