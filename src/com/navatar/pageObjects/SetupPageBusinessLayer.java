@@ -11,6 +11,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.DoubleClickAction;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Screen;
@@ -2185,7 +2186,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 					flag = true;
 				}
 			}
-			xpath = "//*[text()='Accounts']/..//a[text()='Edit']";
+			xpath = "//*[text()='" + recordType + "']/..//a[text()='Edit']";
 			ele = FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, timeOut);
 			if (click(driver, ele, "Edit Button", action.BOOLEAN)) {
 				log(LogStatus.INFO, "able to click on edit button for record type settiing", YesNo.No);
@@ -2456,9 +2457,10 @@ public class SetupPageBusinessLayer extends SetupPage {
 	 * @author Azhar Alam
 	 * @param labelWithValue
 	 */
-	public void recordTypeVerification(String[][] labelWithValue) {
+	public boolean recordTypeVerification(String[][] labelWithValue) {
 		String xpath = "";
 		WebElement ele;
+		boolean flag = false;
 		switchToDefaultContent(driver);
 		ThreadSleep(2000);
 		switchToFrame(driver, 60, getSetUpPageIframe(120));
@@ -2469,11 +2471,13 @@ public class SetupPageBusinessLayer extends SetupPage {
 			ele = FindElement(driver, xpath, labelValue[0] + " with Value " + labelValue[1], action.BOOLEAN, 10);
 			if (ele != null) {
 				log(LogStatus.PASS, labelValue[0] + " with Value " + labelValue[1] + " verified", YesNo.No);
+				flag = true;
 			} else {
 				log(LogStatus.ERROR, labelValue[0] + " with Value " + labelValue[1] + " not verified", YesNo.Yes);
 				sa.assertTrue(false, labelValue[0] + " with Value " + labelValue[1] + " not verified");
 			}
 		}
+		return flag;
 	}
 
 	/**
@@ -5958,6 +5962,86 @@ public class SetupPageBusinessLayer extends SetupPage {
 		}
 		return result;
 	}
+	public boolean editPEUser(String userfirstname, String userlastname, String email) {
+		boolean flag = false;
+		WebElement ele = null;
+		if (click(driver, getExpandUserIcon(30), "expand User Icon", action.SCROLLANDBOOLEAN)) {
+			appLog.info("clicked on user expand icon");
+				if (click(driver, getUsersLink(30), "User Link", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on users link");
+					switchToFrame(driver, 20, getSetUpPageIframe(20));
+					CommonLib.ThreadSleep(3000);
+					try {
+						ele = new WebDriverWait(driver, 50)
+								.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[text()='" + email
+										+ "']/parent::td//preceding-sibling::td[@class='actionColumn']//a[text()='Edit']")));
+					} catch (Exception ex) {
+						ex.printStackTrace();
+						log(LogStatus.ERROR, "Could not found the Element of the edit button", YesNo.Yes);
+						flag = false;
+					}
+					if (click(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
+						appLog.info("Clicked on the edit button against " + email);
+						switchToDefaultContent(driver);
+						switchToFrame(driver, 50, getuserEditPageIframe(50));
+						ThreadSleep(3000);
+						
+					switchToFrame(driver, 20, getSetUpPageIframe(20));
+					if (sendKeys(driver, getUserFirstName(60), userfirstname, "User First Name",
+							action.SCROLLANDBOOLEAN)) {
+						if (sendKeys(driver, getUserLastName(60), userlastname, "User Last Name",
+								action.SCROLLANDBOOLEAN)) {
+										if (click(driver, getActiveUserCheckBox(60),
+												"Active User check Box", action.SCROLLANDBOOLEAN)) {
+											ThreadSleep(5000);
+											if (click(driver, getpopupOKbutton(60),
+													"pop up OK button", action.SCROLLANDBOOLEAN)) {
+											if (clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(30),
+													"Save Button", action.SCROLLANDBOOLEAN)) {
+												appLog.info("clicked on save button");
+												appLog.info("CRM User is updated successfully: " + userfirstname + " "
+														+ userlastname);
+												return true;
+											} else {
+												appLog.error("Not able to click on save buttton so cannot create user: "
+														+ userfirstname + " " + userlastname);
+											}
+
+
+										} else {
+											appLog.info("Not able to click on Active user checkbox");
+										}
+										} else {
+											appLog.info("Not able to click on pop up OK button");
+										}
+
+						} else {
+							appLog.error("Not able to pass user last name in text box: " + userlastname
+									+ " so cannot create user: " + userfirstname + " " + userlastname);
+						}
+					} else {
+						appLog.error("Not able pass user first name in text box: " + userfirstname
+								+ " so cannot create user: " + userfirstname + " " + userlastname);
+					}
+
+				} else {
+					appLog.error("Not able to click on edit user button so cannot update user: " + userfirstname + " "
+							+ userlastname);
+				}
+
+			} else {
+				appLog.error(
+						"Not able to click on users link so cannot update user: " + userfirstname + " " + userlastname);
+			}
+
+		} else {
+			appLog.error("Not able to click on manage user expand icon so cannot update user: " + userfirstname + " "
+					+ userlastname);
+		}
+		switchToDefaultContent(driver);
+		return false;
+	}
+
 
 	public boolean objectPermissionGivenOrRemove(String[][] objectAndPermissionAndGivenOrGivenNot,
 			String[] userTypesToGivePermissions) {
@@ -6352,4 +6436,76 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return flag;
 	}
 
+	public boolean giveAndRemoveObjectPermissionFromProfiles(
+			String profileForSelection, String[] objects) {
+		boolean flag = false;
+		WebElement ele = null;
+		if (searchStandardOrCustomObject(environment, mode, object.Profiles)) {
+			log(LogStatus.INFO, "click on Object : " + object.Profiles, YesNo.No);
+			ThreadSleep(2000);
+			switchToDefaultContent(driver);
+			switchToFrame(driver, 60, getSetUpPageIframe(60));
+
+			String xpath = "";
+			xpath = "//th//a[text()='" + profileForSelection + "']";
+			ele = FindElement(driver, xpath, profileForSelection, action.SCROLLANDBOOLEAN, 10);
+			ele = isDisplayed(driver, ele, "visibility", 10, profileForSelection);
+			if (click(driver, ele, profileForSelection.toString(), action.BOOLEAN)) {
+				log(LogStatus.INFO, "able to click on " + profileForSelection, YesNo.No);
+				ThreadSleep(2000);
+				switchToDefaultContent(driver);
+				ThreadSleep(5000);
+				switchToFrame(driver, 60, getSetUpPageIframe(60));
+				xpath = "//td[@id='topButtonRow']//input[@title='Edit']";
+				ele = FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, 10);
+				ele = isDisplayed(driver, ele, "visibility", 10, "Edit Button");
+				if (click(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "able to click on edit button for "+ profileForSelection +" Profiles settiing", YesNo.No);
+					switchToDefaultContent(driver);
+					ThreadSleep(5000);
+					switchToFrame(driver, 60, getSetUpPageIframe(60));
+					ThreadSleep(2000);
+					for(int i = 0; i < objects.length; i++) {
+					xpath = "(//h3[contains(text(),'Object Permissions')]/..//following-sibling::div//th[text()='"+objects[i]+"']/..//input)[1]";
+					ele = FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, 10);
+					ele = isDisplayed(driver, ele, "visibility", 10, "Edit Button");
+					
+					if (click(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "able to click on checkbox for edit ", YesNo.No);
+						switchToDefaultContent(driver);
+						ThreadSleep(5000);
+						switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+						switchToFrame(driver, 60, getSetUpPageIframe(60));
+						ThreadSleep(2000);
+						}else {
+							log(LogStatus.ERROR, "not able to click on edit button for record : " + objects[i] , YesNo.Yes);
+							sa.assertTrue(false, "not able to click on edit button for record : " + objects[i]);
+						}
+					}
+					if (click(driver, getViewAccessbilityDropDownSaveButton(10), "save button",
+							action.BOOLEAN)) {
+						log(LogStatus.INFO, "save button", YesNo.No);
+						return true;
+
+					} else {
+						log(LogStatus.ERROR,
+								"Not able to click on save button",YesNo.Yes);
+					}
+					}else {
+						log(LogStatus.ERROR, "not able to click on edit button for record type settiing", YesNo.Yes);
+						sa.assertTrue(false,"not able to click on edit button for record type settiing");
+			}
+			}else {
+				log(LogStatus.ERROR, profileForSelection+" profile is not clickable", YesNo.Yes);
+				sa.assertTrue(false,profileForSelection+" profile is not clickable");
+			}
+			
+		} else {
+			log(LogStatus.ERROR, "profiles tab is not clickable", YesNo.Yes);
+			sa.assertTrue(false,"profiles tab is not clickable");
+		}
+
+		return flag;
+	}
 }
+

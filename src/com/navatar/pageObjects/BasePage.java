@@ -7976,57 +7976,144 @@ public abstract class BasePage extends BaseLib {
 		return ele;
 	}
 
+	public WebElement Time(String tagName, int timeOut) {
+		String xpath = "//span[text()='" + tagName + "']/ancestor::table//button[@name='timesRef']";
+		WebElement ele = FindElement(driver, xpath, tagName + " close button", action.SCROLLANDBOOLEAN, timeOut);
+		try {
+			return isDisplayed(driver, ele, "Visibility", timeOut, tagName + " close button");
+
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, ele, "Visibility", timeOut, tagName + " close button");
+		}
+	}
+
 	@FindBy(xpath = "//div[contains(@class,'recordTypeName')]/following-sibling::lightning-button-icon/button")
 	private WebElement editRecordTypeButton;
 
 	public WebElement geteditRecordTypeButton(String projectName, int timeOut) {
 		return isDisplayed(driver, editRecordTypeButton, "Visibility", timeOut, "editRecordTypeButton");
 	}
-	
+
 	@FindBy(xpath = "//div/p//b[text() = \"You don't have any notifications right now.\"]")
 	private WebElement notificationMsgInRecordPage;
 
-	public WebElement notificationMsgInRecordPage( int timeOut) {
+	public WebElement notificationMsgInRecordPage(int timeOut) {
 		return isDisplayed(driver, notificationMsgInRecordPage, "Visibility", timeOut, "notificationMsgInRecordPage");
 	}
-	
+
 	@FindBy(xpath = "//section/lightning-layout//slot/span[text()='Notifications']")
 	private WebElement notificationHeaderInRecordDetailsPage;
 
-	public WebElement notificationHeaderInRecordDetailsPage( int timeOut) {
-		return isDisplayed(driver, notificationHeaderInRecordDetailsPage, "Visibility", timeOut, "notificationHeaderInRecordDetailsPage");
+	public WebElement notificationHeaderInRecordDetailsPage(int timeOut) {
+		return isDisplayed(driver, notificationHeaderInRecordDetailsPage, "Visibility", timeOut,
+				"notificationHeaderInRecordDetailsPage");
 	}
-	
-	
+
 	@FindBy(xpath = "//section/lightning-layout//slot//lightning-icon[@title='Close']")
 	private WebElement notificationCloseIconInRecordDetailsPage;
 
-	public WebElement notificationCloseIconInRecordDetailsPage( int timeOut) {
-		return isDisplayed(driver, notificationCloseIconInRecordDetailsPage, "Visibility", timeOut, "notificationCloseIconInRecordDetailsPage");
+	public WebElement notificationCloseIconInRecordDetailsPage(int timeOut) {
+		return isDisplayed(driver, notificationCloseIconInRecordDetailsPage, "Visibility", timeOut,
+				"notificationCloseIconInRecordDetailsPage");
 	}
-	
+
 	@FindBy(xpath = "//div[text()='Edit']/parent::a")
 	private WebElement editButtonInEventDetailPage;
 
-	public WebElement editButtonInEventDetailPage( int timeOut) {
+	public WebElement editButtonInEventDetailPage(int timeOut) {
 		return isDisplayed(driver, editButtonInEventDetailPage, "Visibility", timeOut, "editButtonInEventDetailPage");
 	}
-	
-	
-	
-	public WebElement eventNotPopUpAdvanceSectionDateTime(String parentLabelName, String subLabelName,int timeOut) {
-		String xpath = "//legend[text()=\""+parentLabelName+"\"]/parent::fieldset//label[text()=\""+subLabelName+"\"]/following-sibling::div//input";
+
+	public WebElement eventNotPopUpAdvanceSectionDateTime(String parentLabelName, String subLabelName, int timeOut) {
+		String xpath = "//legend[text()=\"" + parentLabelName + "\"]/parent::fieldset//label[text()=\"" + subLabelName
+				+ "\"]/following-sibling::div//input";
 
 		try {
-			return FindElement(driver, xpath, subLabelName+" of "+ parentLabelName, action.SCROLLANDBOOLEAN, timeOut);
+			return FindElement(driver, xpath, subLabelName + " of " + parentLabelName, action.SCROLLANDBOOLEAN,
+					timeOut);
 
 		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, xpath, subLabelName+" of "+ parentLabelName, action.SCROLLANDBOOLEAN, timeOut);
+			return FindElement(driver, xpath, subLabelName + " of " + parentLabelName, action.SCROLLANDBOOLEAN,
+					timeOut);
 		}
 	}
-	
-	
-	
-	
-	
+
+	@FindBy(xpath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//lightning-icon[@title='Filter']")
+	private WebElement filterIconOnInteractionPopup;
+
+	public WebElement getFilterIconOnInteractionPopup(int timeOut) {
+		return isDisplayed(driver, filterIconOnInteractionPopup, "Visibility", timeOut,
+				"filter icon on interaction popup");
+	}
+
+	@FindBy(xpath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//h3")
+	private WebElement headingOnFilterSectionInteractionPopup;
+
+	public WebElement getheadingOnFilterSectionInteractionPopup(int timeOut) {
+		return isDisplayed(driver, headingOnFilterSectionInteractionPopup, "Visibility", timeOut,
+				"filter heading on filter section of interaction popup");
+	}
+
+	@FindBy(xpath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//lightning-icon[@title='Close']")
+	private WebElement closeIconOnFilterSectiOnInteractionPopup;
+
+	public WebElement getcloseIconOnFilterSectiOnInteractionPopup(int timeOut) {
+		return isDisplayed(driver, closeIconOnFilterSectiOnInteractionPopup, "Visibility", timeOut,
+				"close icon on filter section of interaction popup");
+	}
+
+	@FindBy(xpath = "//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//lightning-icon[@title='Filter']")
+	private WebElement filterIconOnMeetingAndCallPopup;
+
+	public WebElement getfilterIconOnMeetingAndCallPopup(int timeOut) {
+		return isDisplayed(driver, filterIconOnMeetingAndCallPopup, "Visibility", timeOut,
+				"filter icon on Meeting and call popup");
+	}
+
+	@FindBy(xpath = "//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//h3")
+	private WebElement headingOnFilterSectionMeetingAndCallPopup;
+
+	public WebElement getheadingOnFilterSectionMeetingAndCallPopup(int timeOut) {
+		return isDisplayed(driver, headingOnFilterSectionMeetingAndCallPopup, "Visibility", timeOut,
+				"filter heading on filter section of meeting and call popup");
+	}
+
+	@FindBy(xpath = "//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//lightning-icon[@title='Close']")
+	private WebElement closeIconOnFilterSectiOnMeetingAndCallPopup;
+
+	public WebElement getcloseIconOnFilterSectiOnMeetingAndCallPopup(int timeOut) {
+		return isDisplayed(driver, closeIconOnFilterSectiOnMeetingAndCallPopup, "Visibility", timeOut,
+				"close icon on filter section of interaction popup");
+	}
+
+	@FindBy(xpath = "//td[@class='pbButton']//input[@title='Edit']")
+	private WebElement EditUserLink;
+
+	/**
+	 * @return the newUserLink
+	 */
+	public WebElement getEditUserLink(int timeOut) {
+		return isDisplayed(driver, EditUserLink, "Visibility", timeOut, "Edit User Link");
+	}
+
+	@FindBy(xpath = "//input[@name='active']")
+	private WebElement ActiveUserCheckBox;
+
+	/**
+	 * @return the salesforceCRMContentUserCheckBox
+	 */
+	public WebElement getActiveUserCheckBox(int timeOut) {
+		return isDisplayed(driver, ActiveUserCheckBox, "Visibility", timeOut, "Active User Check Box");
+	}
+
+	@FindBy(xpath = "//input[@id='simpleDialog0button0']")
+	private WebElement popupOKbutton;
+
+	/**
+	 * @return the salesforceCRMContentUserCheckBox
+	 */
+	public WebElement getpopupOKbutton(int timeOut) {
+		return isDisplayed(driver, popupOKbutton, "Visibility", timeOut, "pop up OK button");
+	}
+
 }

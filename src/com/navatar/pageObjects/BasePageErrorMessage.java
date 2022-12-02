@@ -72,7 +72,7 @@ public interface BasePageErrorMessage {
 	public static String titleHighlightColor="RecordType.DeveloperName;Firm_Events:#6464FF,Third_Party_Event:#D2691E;";
 	public static String filter="Organizer__c = '<<recordid>>' or recordtype.developername = 'Firm_Events'";
 	public static String onclickTitle="Event_Invitees";
-	public static String HitASnagMessage="Record Type: this ID value isn't valid for the user:";
+	public static String HitASnagMessage="Record Type ID: this ID value isn't valid for the user:";
 	public static String ErrorMessage="No item display";
 	public static String OldTaskMsg(String user,String contactName,  int otherContactNum) {
 		String msg="a Task";
@@ -150,6 +150,7 @@ public interface BasePageErrorMessage {
 	public static String currentPhotoTextMsg="Current Photo:";
 	
 	public static String acuityDefaultMessage="No items to display";
+	public static String acuityDefaultMessage1="No item display";
 	
 	
 }
