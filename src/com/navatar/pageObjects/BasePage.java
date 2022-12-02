@@ -7982,4 +7982,51 @@ public abstract class BasePage extends BaseLib {
 	public WebElement geteditRecordTypeButton(String projectName, int timeOut) {
 		return isDisplayed(driver, editRecordTypeButton, "Visibility", timeOut, "editRecordTypeButton");
 	}
+	
+	@FindBy(xpath = "//div/p//b[text() = \"You don't have any notifications right now.\"]")
+	private WebElement notificationMsgInRecordPage;
+
+	public WebElement notificationMsgInRecordPage( int timeOut) {
+		return isDisplayed(driver, notificationMsgInRecordPage, "Visibility", timeOut, "notificationMsgInRecordPage");
+	}
+	
+	@FindBy(xpath = "//section/lightning-layout//slot/span[text()='Notifications']")
+	private WebElement notificationHeaderInRecordDetailsPage;
+
+	public WebElement notificationHeaderInRecordDetailsPage( int timeOut) {
+		return isDisplayed(driver, notificationHeaderInRecordDetailsPage, "Visibility", timeOut, "notificationHeaderInRecordDetailsPage");
+	}
+	
+	
+	@FindBy(xpath = "//section/lightning-layout//slot//lightning-icon[@title='Close']")
+	private WebElement notificationCloseIconInRecordDetailsPage;
+
+	public WebElement notificationCloseIconInRecordDetailsPage( int timeOut) {
+		return isDisplayed(driver, notificationCloseIconInRecordDetailsPage, "Visibility", timeOut, "notificationCloseIconInRecordDetailsPage");
+	}
+	
+	@FindBy(xpath = "//div[text()='Edit']/parent::a")
+	private WebElement editButtonInEventDetailPage;
+
+	public WebElement editButtonInEventDetailPage( int timeOut) {
+		return isDisplayed(driver, editButtonInEventDetailPage, "Visibility", timeOut, "editButtonInEventDetailPage");
+	}
+	
+	
+	
+	public WebElement eventNotPopUpAdvanceSectionDateTime(String parentLabelName, String subLabelName,int timeOut) {
+		String xpath = "//legend[text()=\""+parentLabelName+"\"]/parent::fieldset//label[text()=\""+subLabelName+"\"]/following-sibling::div//input";
+
+		try {
+			return FindElement(driver, xpath, subLabelName+" of "+ parentLabelName, action.SCROLLANDBOOLEAN, timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, subLabelName+" of "+ parentLabelName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+	
+	
+	
+	
+	
 }

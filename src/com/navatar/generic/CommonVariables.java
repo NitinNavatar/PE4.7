@@ -129,6 +129,7 @@ public class CommonVariables {
 
 	
 	public static String gmailUserName,gmailUserName2,gmailPassword;
+	public static String rgOutLookUser1Email, rgOutLookUser1Password;
 
 	public static String tabCustomObj,tabCustomObjField,tabCustomObjAPIName;
 	public static String tabObj1,tabObj2,tabObj3,tabObj4,tabObj5,tabObj6,tabObj7,tabObj8Coverage,tabObj9;
@@ -1430,6 +1431,8 @@ public class CommonVariables {
 
 		SDG = "Sortable Data Grids";
 		outLookAddress = "https://outlook.office365.com/";
+		rgOutLookUser1Email = ExcelUtils.readDataFromPropertyFile("outLookUser1Email");
+		rgOutLookUser1Password = ExcelUtils.readDataFromPropertyFile("outLookUser1Password");
 
 		AppDeveloperName=ExcelUtils.readDataFromPropertyFile("AppDeveloperName");
 		AppDescription=ExcelUtils.readDataFromPropertyFile("AppDescription");

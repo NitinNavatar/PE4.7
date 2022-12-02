@@ -2451,5 +2451,29 @@ public class HomePage extends BasePageBusinessLayer {
 	public List<WebElement> getnotificationButtons() {
 		return notificationButtons;
 	}
+	
+	
+	@FindBy(xpath = "//div//h2/b[text()='Notifications']")
+	private WebElement notificationHeader;
+
+	public WebElement notificationHeader(int timeOut) {
+		return isDisplayed(driver, notificationHeader, "Visibility", timeOut, "notificationHeader");
+	}
+	
+	
+	public WebElement addNoteButtonOfEventInHomePageNotification(String eventName, int timeOut) {
+
+		String xpath = "//lightning-layout//lightning-layout-item//a/b[text()=\""+eventName+"\"]/ancestor::slot//button[text()=\"Add Note\"]";
+		try {
+			return FindElement(driver, xpath, "Add Note Button of event in HomePage: "+eventName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Add Note Button of event in HomePage: "+eventName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+	
+	
+	
+	
 
 }
