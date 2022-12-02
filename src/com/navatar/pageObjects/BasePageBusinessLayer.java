@@ -18953,95 +18953,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	}
 
-	
-	public boolean clickOnSubjectOfInteractionEitherOnCardOrInViewAllPopUp(String subjectName) {
-		boolean flag = false;
-		if (subjectOfInteractionCard(subjectName, 15) != null) {
-
-			if (click(driver, subjectOfInteractionCard(subjectName, 15), "Subject Name: " + subjectName,
-					action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "clicked on Subject: " + subjectName + " value", YesNo.No);
-
-				String windowID = switchOnWindow(driver);
-				if (windowID != null) {
-
-					if (getPageHeaderTitle(20) != null) {
-						log(LogStatus.INFO, subjectName + " link is redirecting to Details Page", YesNo.No);
-
-						flag = true;
-
-					} else {
-						log(LogStatus.ERROR, subjectName + " links is not redirecting to Details Page", YesNo.No);
-
-					}
-				} else {
-					log(LogStatus.ERROR, subjectName + " url did not open in new tab", YesNo.No);
-
-				}
-
-			} else {
-				log(LogStatus.ERROR, "Not able to click on Subject: " + subjectName + " value", YesNo.Yes);
-
-			}
-
-		} else {
-
-			log(LogStatus.INFO,
-					subjectName + " has not found in Interaction Cards, So going to check in View All PopUp", YesNo.No);
-			if (getInteractionViewAllBtn(8) != null) {
-
-				if (click(driver, getInteractionViewAllBtn(8), "View All Button", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on View All Button", YesNo.No);
-
-					if (getIntractionSubjectName(subjectName, 10) != null) {
-
-						if (clickUsingJavaScript(driver, getIntractionSubjectName(subjectName, 15),
-								"Subject Name: " + subjectName, action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "clicked on Subject: " + subjectName + " value", YesNo.No);
-
-							String windowID = switchOnWindow(driver);
-							if (windowID != null) {
-
-								if (getPageHeaderTitle(20) != null) {
-									log(LogStatus.INFO, subjectName + " link is redirecting to Details Page", YesNo.No);
-
-									flag = true;
-
-								} else {
-									log(LogStatus.ERROR, subjectName + " links is not redirecting to Details Page",
-											YesNo.No);
-
-								}
-							} else {
-								log(LogStatus.ERROR, subjectName + " url did not open in new tab", YesNo.No);
-
-							}
-
-						} else {
-							log(LogStatus.ERROR, "Not able to click on Subject: " + subjectName + " value", YesNo.Yes);
-
-						}
-
-					} else {
-						log(LogStatus.ERROR,
-								"Subject: " + subjectName
-										+ " also not found in View All popup, So not able to perform click operation",
-								YesNo.Yes);
-					}
-
-				} else {
-					log(LogStatus.ERROR, "Not able to Click on View All Button", YesNo.Yes);
-
-				}
-
-			} else {
-				log(LogStatus.ERROR, "View All Button is not present, So not able to Click on Subject: " + subjectName,
-						YesNo.Yes);
-			}
-		}
-		return flag;
-	}
-
 	public boolean clickOnSubjectOfInteractionEitherOnCardOrInViewAllPopUp(String subjectName) {
 
 		boolean flag = false;
@@ -19287,7 +19198,421 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 		return result;
-
 	}
+	
+	public ArrayList<String> verifyFilterIconAndFilterRecordsOnInteractionsPopup(String[] filterValue,  String[] filterIconType)
+	{
+
+		String xPath;
+		WebElement ele;
+		List<WebElement> elements;
+
+		ArrayList<String> result = new ArrayList<String>();
+		if(getFilterIconOnInteractionPopup(20)!=null)
+		{
+			log(LogStatus.INFO, "Filter Icon is visible on Interaction popup", YesNo.No);
+
+			if(clickUsingJavaScript(driver, getFilterIconOnInteractionPopup(20), "Filter icon on Interaction popup"))
+			{
+				log(LogStatus.INFO, "clicked on filter icon", YesNo.No);
+
+				String filterHeading=getText(driver, getheadingOnFilterSectionInteractionPopup(20), "Filter heading", action.SCROLLANDBOOLEAN);
+				if(filterHeading.trim().equals("Filters"))
+				{
+					log(LogStatus.INFO, "Filters heading has been verified on Filter section", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Filters heading is not verified on Filter section", YesNo.No);
+					result.add("Filters heading is not verified on Filter section");
+				}
+
+				if(getcloseIconOnFilterSectiOnInteractionPopup(20)!=null)
+				{
+					log(LogStatus.INFO, "Close icon visibles on Filter section", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Close icon is not visible on Filter section", YesNo.No);
+					result.add("Close icon is not visible on Filter section");
+				}
+
+				xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[@class='slds-form-element__label']";
+				elements=FindElements(driver, xPath, "Filter type");
+				String[] actulaFilterType=new String[elements.size()];
+				for(int i=0; i<actulaFilterType.length; i++)
+				{
+					actulaFilterType[i]=getText(driver, elements.get(i), "Filter value", action.SCROLLANDBOOLEAN);
+				}
+
+				for(int i=0; i<filterValue.length; i++)
+				{
+					int k=0;
+					for(int j=0; j<actulaFilterType.length; j++)
+					{
+						if(filterValue[i].trim().equals(actulaFilterType[j].trim()))
+						{
+							log(LogStatus.INFO, "Expected filter type: "+filterValue[i]+" has been matched with the Actual filter type: "+actulaFilterType[j], YesNo.No);
+							k++;
+						}					
+					}
+					if(k==0)
+					{
+						log(LogStatus.ERROR, "Expected filter type: "+filterValue[i]+" did not match in filter section", YesNo.No);
+						result.add("Expected filter type: "+filterValue[i]+" did not match in filter section");
+					}	
+				}
+
+
+				xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//input[@name='All']";
+				ele=FindElement(driver, xPath, "All Record checkbox", action.BOOLEAN, 20);
+				if(ele!=null)
+				{
+					if(isSelected(driver, ele, "All types filter"))
+					{
+						if(click(driver, ele, "All types checkbox", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Click on the All types checkbox, so All types checkbox has been unselected", YesNo.No);
+							for(int i=1; i<filterValue.length; i++)
+							{
+								xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[text()='"+filterValue[i]+"']/../../input";
+								ele=FindElement(driver, xPath, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN, 20);
+								if(click(driver, ele, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN))
+								{
+									log(LogStatus.INFO, "clicked on the checkbox of "+filterValue[i], YesNo.No);
+
+									xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//div[text()='No items to display']";
+									ele=FindElement(driver, xPath, "No Item ", action.SCROLLANDBOOLEAN, 10);
+									if(ele!=null)
+									{
+										xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//th[@data-label='Type']//lightning-icon";
+										elements=FindElements(driver, xPath, "Icon");
+
+										for(int j=0; j<elements.size(); j++)
+										{
+											String iconType=getAttribute(driver, elements.get(j), "Icon class", "class");
+											if(iconType.toLowerCase().trim().contains(filterIconType[i].toLowerCase().trim()))
+											{
+												log(LogStatus.INFO, filterValue[i]+" filter has been verfied on interaction popup", YesNo.No);
+											}
+											else
+											{
+												log(LogStatus.ERROR, filterValue[i]+" filter are not verfied on interaction popup", YesNo.No);
+												result.add(filterValue[i]+" filter are not verfied on interaction popup");
+											}
+										}
+
+
+										xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[text()='"+filterValue[i]+"']/../../input";
+										ele=FindElement(driver, xPath, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN, 20);
+										if(click(driver, ele, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN))
+										{
+											log(LogStatus.INFO, "clicked on the checkbox of "+filterValue[i], YesNo.No);
+										}
+										else
+										{
+											log(LogStatus.ERROR, "Not able to click on the checkbox of "+filterValue[i]+". So "+filterValue[i]+" filter did not unselect", YesNo.No);
+											result.add("Not able to click on the checkbox of "+filterValue[i]+". So "+filterValue[i]+" filter did not unselect");
+										}
+
+									}
+									else
+									{
+										log(LogStatus.INFO, "records are not available on "+filterValue[i]+" filter", YesNo.No);
+										xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[text()='"+filterValue[i]+"']/../../input";
+										ele=FindElement(driver, xPath, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN, 20);
+										if(click(driver, ele, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN))
+										{
+											log(LogStatus.INFO, "clicked on the checkbox of "+filterValue[i], YesNo.No);
+										}
+										else
+										{
+											log(LogStatus.ERROR, "Not able to click on the checkbox of "+filterValue[i]+". So "+filterValue[i]+" filter did not unselect", YesNo.No);
+											result.add("Not able to click on the checkbox of "+filterValue[i]+". So "+filterValue[i]+" filter did not unselect");
+										}
+									}
+
+								}
+								else
+								{
+									log(LogStatus.ERROR, "Not able to click on the checkbox of "+filterValue[i], YesNo.No);
+									result.add("Not able to click on the checkbox of "+filterValue[i]);
+								}
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the All types checkbox, so All types checkbox selected", YesNo.No);
+							result.add("Not able to click on the All types checkbox, so All types checkbox selected");
+						}
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to get the element of All Types filter", YesNo.No);
+						result.add("Not able to get the element of All Types filter");
+					}
+				}
+				
+				int filterValueLength=filterValue.length;
+				int filterIconTypeLength=filterIconType.length;
+				
+				xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[text()='"+filterValue[filterValueLength-1]+"']/../../input";
+				ele=FindElement(driver, xPath, filterValue[filterValueLength-1]+" checkbox", action.SCROLLANDBOOLEAN, 20);
+				if(click(driver, ele, filterValue[filterValueLength-1]+" checkbox", action.SCROLLANDBOOLEAN))
+				{
+					log(LogStatus.INFO, "clicked on the checkbox of "+filterValue[filterValueLength-1], YesNo.No);
+					xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[text()='"+filterValue[filterValueLength-2]+"']/../../input";
+					ele=FindElement(driver, xPath, filterValue[filterValueLength-2]+" checkbox", action.SCROLLANDBOOLEAN, 20);
+					if(click(driver, ele, filterValue[filterValueLength-2]+" checkbox", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the checkbox of "+filterValue[filterValueLength-2], YesNo.No);
+
+						xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//div[text()='No items to display']";
+						ele=FindElement(driver, xPath, "No Item ", action.SCROLLANDBOOLEAN, 10);
+						if(ele!=null)
+						{
+							xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//th[@data-label='Type']//lightning-icon";
+							elements=FindElements(driver, xPath, "Icon");
+
+							for(int j=0; j<elements.size(); j++)
+							{
+								String iconType=getAttribute(driver, elements.get(j), "Icon class", "class");
+								if(iconType.toLowerCase().trim().contains(filterIconType[filterIconTypeLength-1].toLowerCase().trim()) || iconType.toLowerCase().trim().contains(filterIconType[filterIconTypeLength-2].toLowerCase().trim()))
+								{
+									log(LogStatus.INFO, iconType+ " filter records has been verfied on interaction popup", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, iconType+ " filter records are not verfied on interaction popup", YesNo.No);
+									result.add(iconType+ "filter records are not verfied on interaction popup");
+								}
+							}
+						}
+						else
+						{
+							log(LogStatus.INFO, "records are not showing after applying the filter", YesNo.No);
+						}
+						
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on checkbox of "+filterValue[filterValueLength-2], YesNo.No);
+						result.add("Not able to click on checkbox of "+filterValue[filterValueLength-2]);
+					}			
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on checkbox of "+filterValue[filterValueLength-1], YesNo.No);
+					result.add("Not able to click on checkbox of "+filterValue[filterValueLength-1]);
+				}
+
+				if(clickUsingJavaScript(driver, getcloseIconOnFilterSectiOnInteractionPopup(20), "close button of filter secton"))
+				{
+					log(LogStatus.INFO, "Clicked on filter close close button", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on filter close button", YesNo.No);
+					result.add("Not able to click on filter close button");	
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on filter icon", YesNo.No);
+				result.add("Not able to click on filter icon");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Filter Icon does not visible on Interaction popup", YesNo.No);
+			result.add("Filter Icon does not visible on Interaction popup");
+		}
+
+		return result;
+	}
+
+	
+	public ArrayList<String> verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(String[] filterValue,  String[] filterIconType)
+	{
+
+		String xPath;
+		WebElement ele;
+		List<WebElement> elements;
+
+		ArrayList<String> result = new ArrayList<String>();
+		if(getfilterIconOnMeetingAndCallPopup(20)!=null)
+		{
+			log(LogStatus.INFO, "Filter Icon is visible on Meetings and Calls popup", YesNo.No);
+
+			if(clickUsingJavaScript(driver, getfilterIconOnMeetingAndCallPopup(20), "Filter icon on Meetings and Calls popup"))
+			{
+				log(LogStatus.INFO, "clicked on filter icon", YesNo.No);
+
+				String filterHeading=getText(driver, getheadingOnFilterSectionMeetingAndCallPopup(20), "Filter heading", action.SCROLLANDBOOLEAN);
+				if(filterHeading.trim().equals("Filters"))
+				{
+					log(LogStatus.INFO, "Filters heading has been verified on Filter section", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Filters heading is not verified on Filter section", YesNo.No);
+					result.add("Filters heading is not verified on Filter section");
+				}
+
+				if(getcloseIconOnFilterSectiOnMeetingAndCallPopup(20)!=null)
+				{
+					log(LogStatus.INFO, "Close icon visibles on Filter section", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Close icon is not visible on Filter section", YesNo.No);
+					result.add("Close icon is not visible on Filter section");
+				}
+
+				xPath="//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//span[@class='slds-form-element__label']";
+				elements=FindElements(driver, xPath, "Filter type");
+				String[] actulaFilterType=new String[elements.size()];
+				for(int i=0; i<actulaFilterType.length; i++)
+				{
+					actulaFilterType[i]=getText(driver, elements.get(i), "Filter value", action.SCROLLANDBOOLEAN);
+				}
+
+				for(int i=0; i<filterValue.length; i++)
+				{
+					int k=0;
+					for(int j=0; j<actulaFilterType.length; j++)
+					{
+						if(filterValue[i].trim().equals(actulaFilterType[j].trim()))
+						{
+							log(LogStatus.INFO, "Expected filter type: "+filterValue[i]+" has been matched with the Actual filter type: "+actulaFilterType[j], YesNo.No);
+							k++;
+						}					
+					}
+					if(k==0)
+					{
+						log(LogStatus.ERROR, "Expected filter type: "+filterValue[i]+" did not match in filter section", YesNo.No);
+						result.add("Expected filter type: "+filterValue[i]+" did not match in filter section");
+					}	
+				}
+
+
+				xPath="//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//input[@name='All']";
+				ele=FindElement(driver, xPath, "All Record checkbox", action.BOOLEAN, 20);
+				if(ele!=null)
+				{
+					if(isSelected(driver, ele, "All types filter"))
+					{
+						if(click(driver, ele, "All types checkbox", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Click on the All types checkbox, so All types checkbox has been unselected", YesNo.No);
+							for(int i=1; i<filterValue.length; i++)
+							{
+								xPath="//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//span[text()='"+filterValue[i]+"']/../../input";
+								ele=FindElement(driver, xPath, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN, 20);
+								if(click(driver, ele, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN))
+								{
+									log(LogStatus.INFO, "clicked on the checkbox of "+filterValue[i], YesNo.No);
+
+									xPath="//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//div[text()='No items to display']";
+									ele=FindElement(driver, xPath, "No Item ", action.SCROLLANDBOOLEAN, 10);
+									if(ele!=null)
+									{
+										xPath="//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//th[@data-label='Type']//lightning-icon";
+										elements=FindElements(driver, xPath, "Icon");
+
+										for(int j=0; j<elements.size(); j++)
+										{
+											String iconType=getAttribute(driver, elements.get(j), "Icon class", "class");
+											if(iconType.toLowerCase().trim().contains(filterIconType[i].toLowerCase().trim()))
+											{
+												log(LogStatus.INFO, filterValue[i]+" filter has been verfied on Meetings and Calls popup", YesNo.No);
+											}
+											else
+											{
+												log(LogStatus.ERROR, filterValue[i]+" filter are not verfied on Meetings and Calls popup", YesNo.No);
+												result.add(filterValue[i]+" filter are not verfied on Meetings and Calls popup");
+											}
+										}
+
+
+										xPath="//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//span[text()='"+filterValue[i]+"']/../../input";
+										ele=FindElement(driver, xPath, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN, 20);
+										if(click(driver, ele, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN))
+										{
+											log(LogStatus.INFO, "clicked on the checkbox of "+filterValue[i], YesNo.No);
+										}
+										else
+										{
+											log(LogStatus.ERROR, "Not able to click on the checkbox of "+filterValue[i]+". So "+filterValue[i]+" filter did not unselect", YesNo.No);
+											result.add("Not able to click on the checkbox of "+filterValue[i]+". So "+filterValue[i]+" filter did not unselect");
+										}
+
+									}
+									else
+									{
+										log(LogStatus.INFO, "records are not available on "+filterValue[i]+" filter", YesNo.No);
+										xPath="//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//span[text()='"+filterValue[i]+"']/../../input";
+										ele=FindElement(driver, xPath, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN, 20);
+										if(click(driver, ele, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN))
+										{
+											log(LogStatus.INFO, "clicked on the checkbox of "+filterValue[i], YesNo.No);
+										}
+										else
+										{
+											log(LogStatus.ERROR, "Not able to click on the checkbox of "+filterValue[i]+". So "+filterValue[i]+" filter did not unselect", YesNo.No);
+											result.add("Not able to click on the checkbox of "+filterValue[i]+". So "+filterValue[i]+" filter did not unselect");
+										}
+									}
+
+								}
+								else
+								{
+									log(LogStatus.ERROR, "Not able to click on the checkbox of "+filterValue[i], YesNo.No);
+									result.add("Not able to click on the checkbox of "+filterValue[i]);
+								}
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the All types checkbox, so All types checkbox selected", YesNo.No);
+							result.add("Not able to click on the All types checkbox, so All types checkbox selected");
+						}
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to get the element of All Types filter", YesNo.No);
+						result.add("Not able to get the element of All Types filter");
+					}
+				}	
+
+				if(clickUsingJavaScript(driver, getcloseIconOnFilterSectiOnMeetingAndCallPopup(20), "close button of filter secton"))
+				{
+					log(LogStatus.INFO, "Clicked on filter close close button", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on filter close button", YesNo.No);
+					result.add("Not able to click on filter close button");	
+				}
+
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on filter icon", YesNo.No);
+				result.add("Not able to click on filter icon");
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Filter Icon does not visible on Meetings and Calls popup", YesNo.No);
+			result.add("Filter Icon does not visible on Meetings and Calls popup");
+		}
+
+		return result;
+	}
+
 
 }

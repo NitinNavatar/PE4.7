@@ -7996,5 +7996,50 @@ public abstract class BasePage extends BaseLib {
 	public WebElement geteditRecordTypeButton(String projectName, int timeOut) {
 		return isDisplayed(driver, editRecordTypeButton, "Visibility", timeOut, "editRecordTypeButton");
 	}
+	
+	@FindBy(xpath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//lightning-icon[@title='Filter']")
+	private WebElement filterIconOnInteractionPopup;
+
+	public WebElement getFilterIconOnInteractionPopup(int timeOut) {
+		return isDisplayed(driver, filterIconOnInteractionPopup, "Visibility", timeOut, "filter icon on interaction popup");
+	}
+	
+	@FindBy(xpath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//h3")
+	private WebElement headingOnFilterSectionInteractionPopup;
+
+	public WebElement getheadingOnFilterSectionInteractionPopup(int timeOut) {
+		return isDisplayed(driver, headingOnFilterSectionInteractionPopup, "Visibility", timeOut, "filter heading on filter section of interaction popup");
+	}
+	
+	@FindBy(xpath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//lightning-icon[@title='Close']")
+	private WebElement closeIconOnFilterSectiOnInteractionPopup;
+
+	public WebElement getcloseIconOnFilterSectiOnInteractionPopup(int timeOut) {
+		return isDisplayed(driver, closeIconOnFilterSectiOnInteractionPopup, "Visibility", timeOut, "close icon on filter section of interaction popup");
+	}
+	
+	
+	@FindBy(xpath = "//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//lightning-icon[@title='Filter']")
+	private WebElement filterIconOnMeetingAndCallPopup;
+
+	public WebElement getfilterIconOnMeetingAndCallPopup(int timeOut) {
+		return isDisplayed(driver, filterIconOnMeetingAndCallPopup, "Visibility", timeOut, "filter icon on Meeting and call popup");
+	}
+	
+	@FindBy(xpath = "//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//h3")
+	private WebElement headingOnFilterSectionMeetingAndCallPopup;
+
+	public WebElement getheadingOnFilterSectionMeetingAndCallPopup(int timeOut) {
+		return isDisplayed(driver, headingOnFilterSectionMeetingAndCallPopup, "Visibility", timeOut, "filter heading on filter section of meeting and call popup");
+	}
+	
+	
+	@FindBy(xpath = "//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//lightning-icon[@title='Close']")
+	private WebElement closeIconOnFilterSectiOnMeetingAndCallPopup;
+
+	public WebElement getcloseIconOnFilterSectiOnMeetingAndCallPopup(int timeOut) {
+		return isDisplayed(driver, closeIconOnFilterSectiOnMeetingAndCallPopup, "Visibility", timeOut, "close icon on filter section of interaction popup");
+	}
+	
 }
 

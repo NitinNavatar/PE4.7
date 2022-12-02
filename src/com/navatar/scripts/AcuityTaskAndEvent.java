@@ -9521,8 +9521,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	
-	
+		
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc0051_VerifyIntermediaryContactAcuityTab(String projectName) {
@@ -9710,5 +9709,569 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
+	
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATETc0052_VerifyUIOfFilterSectionOnAccountAcuityTab(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATERecord3;
+		String contactName=ATE_ContactName22;
+
+		String xPath;
+		WebElement ele;
+		
+		String[] filterType= {"All Types","Emails","Events","Logged Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+		
+		String[] filterType1= {"All Types","Events","Logged Calls"};
+		String[] recordIconType1= {"event","call"};
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String companyTagName=ATE_TaggedCompanyName35;
+		String companyTagTimeReferenceCount=ATE_TaggedCompanyTimeReference35;
+		
+		String peopleTagName=ATE_TaggedPeopleName21;
+		String peopleTagTimeReferenceCount=ATE_TaggedPeopleTimeReference21;
+		
+		String dealTagName=ATE_TaggedDealName18;
+		String dealTagTimeReferenceCount=ATE_TaggedDealTimeReference18;
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage("Acuity")) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+					
+					if (click(driver, bp.getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Companies", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
+							
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result);
+							}				
+							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+companyTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+companyTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Companies tab name");
+					}
+					
+					
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							
+							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+							
+							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+								
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+
+						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+						if(clickUsingJavaScript(driver, ele, "close button"))
+						{
+							log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+						}
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+									
+					xPath="//a[text()='"+contactName+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
+					ele=FindElement(driver, xPath, "meeting and call count of "+contactName, action.SCROLLANDBOOLEAN, 20);
+					if(click(driver, ele, contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
+
+						ArrayList<String> result4=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+						if(result4.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+contactName, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4);
+						}
+						xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+						ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
+						if(clickUsingJavaScript(driver, ele, "close button"))
+						{
+							log(LogStatus.INFO, "clicked on close button of all Meetings and Calls with popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
+					}
+					
+					
+					xPath="//a[text()='"+contactName+"']/ancestor::tr//td//button[@title='Connections']";
+					ele=FindElement(driver, xPath, "Connection icon of "+contactName, action.SCROLLANDBOOLEAN, 20);
+					if(clickUsingJavaScript(driver, ele, "Connection icon of "+contactName))
+					{
+						log(LogStatus.INFO, "Clicked on the connection icon of "+contactName, YesNo.No);
+						
+						xPath="//a[text()='"+userName1+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
+						ele=FindElement(driver, xPath, "meeting and call count of "+userName1, action.SCROLLANDBOOLEAN, 20);
+						if(click(driver, ele, userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+							ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+							if(result5.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+							}
+							xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Meetings and Calls with popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+							sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+						}	
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the connection icon of "+contactName, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the connection icon of "+contactName);
+					}
+					
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATETc0053_VerifyUIOfFilterSectionOnContactAcuityTab(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String recordName=ATE_Contact1;
+		String contactName=ATE_ContactName22;
+
+		String xPath;
+		WebElement ele;
+		
+		String[] filterType= {"All Types","Emails","Events","Logged Calls","Tasks"};
+		String[] recordIconType= {"email","event","call","task"};
+		
+		String[] filterType1= {"All Types","Events","Logged Calls"};
+		String[] recordIconType1= {"event","call"};
+		
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		
+		String companyTagName=ATE_TaggedCompanyName30;
+		String companyTagTimeReferenceCount=ATE_TaggedCompanyTimeReference30;
+		
+		String peopleTagName=ATE_TaggedPeopleName17;
+		String peopleTagTimeReferenceCount=ATE_TaggedPeopleTimeReference17;
+		
+		String dealTagName=ATE_TaggedDealName19;
+		String dealTagTimeReferenceCount=ATE_TaggedDealTimeReference19;
+		
+		
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj2)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage("Acuity")) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+					
+					if (click(driver, bp.getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Companies", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
+							
+							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result);
+							}				
+							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+companyTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+companyTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Companies tab name");
+					}
+					
+					
+					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+							ArrayList<String> result1=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result1.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+peopleTagName+" from people tag", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
+							}
+							
+							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on People tab name");
+					}
+					
+					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
+
+							ArrayList<String> result2=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+							if(result2.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
+							}	
+							
+							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+							}
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+dealTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+dealTagName);
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Deals tab name");
+					}				
+								
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+						ArrayList<String> result3=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
+						if(result3.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on View All button"+result3, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
+						}	
+
+						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
+						if(clickUsingJavaScript(driver, ele, "close button"))
+						{
+							log(LogStatus.INFO, "clicked on close button of all Interaction popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
+							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
+						}
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+													
+						xPath="//a[text()='"+userName1+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
+						ele=FindElement(driver, xPath, "meeting and call count of "+userName1, action.SCROLLANDBOOLEAN, 20);
+						if(click(driver, ele, userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+							ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+							if(result5.isEmpty())
+							{
+								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+							}
+							xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+							ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
+							if(clickUsingJavaScript(driver, ele, "close button"))
+							{
+								log(LogStatus.INFO, "clicked on close button of all Meetings and Calls with popup", YesNo.No);
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
+								sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+							sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+						}	
+					
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+		lp.CRMlogout();	
+		sa.assertAll();	
+	}
+	
+	
 	
 }
