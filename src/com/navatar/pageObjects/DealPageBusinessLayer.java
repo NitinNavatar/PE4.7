@@ -1146,6 +1146,11 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		WebElement dealElement = FindElement(driver, xpath,"dealtopname", action.BOOLEAN, 10);
 		return isDisplayed(driver, dealElement, xpath, 10, "").getAttribute("title");
 	}
+	public String UserName(String teamMemberName, int timeOut) {
+		String xpath = "(//div//a[@title='CRM2 Cred'])[2]";
+		WebElement userElement = FindElement(driver, xpath,"username", action.BOOLEAN, 10);
+		return isDisplayed(driver, userElement, xpath, 10, "").getAttribute("title");
+	}
 	public List<WebElement> listOfDealNames (int timeout){
 		return FindElements(driver, "//span[@title='Deals']/ancestor::div[@class='slds-col slds-size_6-of-12 slds-p-left_small']//table[contains(@class,'slds-table slds-table_header-fixed')]");
 	}

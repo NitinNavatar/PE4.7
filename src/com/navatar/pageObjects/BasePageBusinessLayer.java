@@ -11916,14 +11916,44 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			xPath = "//a[text()='" + subjectName + "']/../preceding-sibling::div//lightning-badge";
 			ele = CommonLib.FindElement(driver, xPath, "Due Date", action.SCROLLANDBOOLEAN, 30);
 			String date = getText(driver, ele, "Due Date", action.SCROLLANDBOOLEAN);
+			String actualDate;
+			if(date.contains(","))
+			{
+			String[] val=date.split(",");
+			actualDate=val[0];
+			}
+			else
+			{
+				actualDate=date;	
+			}
+			
+			String[] splittedDate = dueDate.split("/");
+			char dayMonth = splittedDate[0].charAt(0);
+			char day=splittedDate[1].charAt(0);
+			String month;
+			if (dayMonth == '0') {
+				month = splittedDate[0].replaceAll("0", "");
+			} else {
+				month = splittedDate[0];
+			}
+			String finalDay;
+			if (day == '0') {
+				finalDay = splittedDate[1].replaceAll("0", "");
+			} else {
+				finalDay = splittedDate[1];
+			}
 
-			if (dueDate.toLowerCase().trim().equals(date.toLowerCase().trim())) {
-				log(LogStatus.INFO, "Actual result : " + date + " has been matched with expected result : " + dueDate
+			String expectedDate = month + "/" + finalDay + "/" + splittedDate[2];
+
+			
+			
+			if (expectedDate.trim().equals(actualDate.trim())) {
+				log(LogStatus.INFO, "Actual result : " + actualDate + " has been matched with expected result : " + expectedDate
 						+ " for Due Date", YesNo.No);
 			} else {
-				log(LogStatus.ERROR, "Actual result : " + date + " is not matched with expected result : " + dueDate
+				log(LogStatus.ERROR, "Actual result : " + actualDate + " is not matched with expected result : " + expectedDate
 						+ " for Due Date", YesNo.No);
-				result.add("Actual result : " + date + " is not matched with expected result : " + dueDate
+				result.add("Actual result : " + actualDate + " is not matched with expected result : " + expectedDate
 						+ " for Due Date");
 			}
 
@@ -14476,7 +14506,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ele = FindElement(driver, xPath, "date ", action.BOOLEAN, 25);
 					String actDate = getText(driver, ele, "date ", action.BOOLEAN);
 
-
 					String[] completedate = date[i].split("/");
 					char dayMonth = completedate[0].charAt(0);
 					String month;
@@ -14486,9 +14515,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						month = completedate[0];
 					}
 					String expectedDate = month + "/" +completedate[1]  + "/" + completedate[2];
-
-
-
+					
 					if (actDate.equalsIgnoreCase(expectedDate)) {
 						log(LogStatus.INFO,
 								"actual date : " + actDate + " has been matched with the Expected date : " +expectedDate,
@@ -14658,7 +14685,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				}
 
 				if (message != null && message != "") {
-					xPath = "//h2[contains(text(),'Connections of')]/ancestor::div[@class='slds-modal__container']//div[text()='No items to display']";
+					xPath = "//h2[contains(text(),'Connections of')]/ancestor::div[@class='slds-modal__container']//p[text()='"+message+"']";
 					ele = FindElement(driver, xPath, "message on popup", action.SCROLLANDBOOLEAN, 20);
 					if (ele != null) {
 						log(LogStatus.INFO, message + ": Message is visible on Connection popup", YesNo.No);
@@ -18953,10 +18980,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	}
 
+	
 	public boolean clickOnSubjectOfInteractionEitherOnCardOrInViewAllPopUp(String subjectName) {
-
 		boolean flag = false;
-
 		if (subjectOfInteractionCard(subjectName, 15) != null) {
 
 			if (click(driver, subjectOfInteractionCard(subjectName, 15), "Subject Name: " + subjectName,
@@ -19028,7 +19054,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								"Subject: " + subjectName
 										+ " also not found in View All popup, So not able to perform click operation",
 								YesNo.Yes);
-
 					}
 
 				} else {
@@ -19039,9 +19064,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			} else {
 				log(LogStatus.ERROR, "View All Button is not present, So not able to Click on Subject: " + subjectName,
 						YesNo.Yes);
-
 			}
-
 		}
 		return flag;
 	}
