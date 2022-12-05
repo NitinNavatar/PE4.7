@@ -16,6 +16,7 @@ import static com.navatar.generic.CommonLib.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HomePage extends BasePageBusinessLayer {
 
@@ -2451,29 +2452,51 @@ public class HomePage extends BasePageBusinessLayer {
 	public List<WebElement> getnotificationButtons() {
 		return notificationButtons;
 	}
-	
-	
+
 	@FindBy(xpath = "//div//h2/b[text()='Notifications']")
 	private WebElement notificationHeader;
 
 	public WebElement notificationHeader(int timeOut) {
 		return isDisplayed(driver, notificationHeader, "Visibility", timeOut, "notificationHeader");
 	}
-	
-	
+
 	public WebElement addNoteButtonOfEventInHomePageNotification(String eventName, int timeOut) {
 
-		String xpath = "//lightning-layout//lightning-layout-item//a/b[text()=\""+eventName+"\"]/ancestor::slot//button[text()=\"Add Note\"]";
+		String xpath = "//lightning-layout//lightning-layout-item//a/b[text()=\"" + eventName
+				+ "\"]/ancestor::slot//button[text()=\"Add Note\"]";
 		try {
-			return FindElement(driver, xpath, "Add Note Button of event in HomePage: "+eventName, action.SCROLLANDBOOLEAN, timeOut);
+			return FindElement(driver, xpath, "Add Note Button of event in HomePage: " + eventName,
+					action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, xpath, "Add Note Button of event in HomePage: "+eventName, action.SCROLLANDBOOLEAN, timeOut);
+			return FindElement(driver, xpath, "Add Note Button of event in HomePage: " + eventName,
+					action.SCROLLANDBOOLEAN, timeOut);
 		}
 
 	}
-	
-	
-	
-	
+
+	public WebElement eventLinkInHomePageNotification(String eventName, int timeOut) {
+
+		String xpath = "//lightning-layout//lightning-layout-item//a/b[text()=\"" + eventName + "\"]/parent::a";
+		try {
+			return FindElement(driver, xpath, "Add Note Button of event in HomePage: " + eventName,
+					action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Add Note Button of event in HomePage: " + eventName,
+					action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+
+	@FindBy(xpath = "//section/div[@class='slds-modal__container']//footer//button")
+	private List<WebElement> notificationFooterButtons;
+
+	public List<String> notificationFooterButtons() {
+		List<String> notificationFooterButtonsText = notificationFooterButtons.stream().map(x -> x.getText())
+				.collect(Collectors.toList());
+		if (notificationFooterButtonsText.size() == 0) {
+			return notificationFooterButtons.stream().map(x -> x.getText()).collect(Collectors.toList());
+		} else
+			return notificationFooterButtonsText;
+	}
 
 }
