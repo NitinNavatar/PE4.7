@@ -11922,7 +11922,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			} else {
 				actualDate = date;
 			}
-
 			String[] splittedDate = dueDate.split("/");
 			char dayMonth = splittedDate[0].charAt(0);
 			char day = splittedDate[1].charAt(0);
@@ -13522,7 +13521,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
-	public ArrayList<String> verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(String icon, String date,
+	public ArrayList<String> verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(String icon, String dueDate,
 			String subjectName, String details, String assignedTO) {
 		ArrayList<String> result = new ArrayList<String>();
 		String xPath;
@@ -13549,21 +13548,47 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 				}
 
-				if (date != null && date != "") {
+				if (dueDate != null && dueDate != "") {
 					xPath = "//a[text()='" + subjectName
 							+ "']/ancestor::td[@data-label='Subject']/../td[@data-label='Date']//lightning-base-formatted-text";
 					ele = FindElement(driver, xPath, "Date column", action.SCROLLANDBOOLEAN, 30);
 
-					String actualDate = getText(driver, ele, "Date", action.BOOLEAN);
-					if (date.equalsIgnoreCase(actualDate)) {
+					String date = getText(driver, ele, "Date", action.BOOLEAN);
+					String actualDate;
+					if (date.contains(",")) {
+						String[] val = date.split(",");
+						actualDate = val[0];
+					} else {
+						actualDate = date;
+					}
+					String[] splittedDate = dueDate.split("/");
+					char dayMonth = splittedDate[0].charAt(0);
+					char day = splittedDate[1].charAt(0);
+					String month;
+					if (dayMonth == '0') {
+						month = splittedDate[0].replaceAll("0", "");
+					} else {
+						month = splittedDate[0];
+					}
+					String finalDay;
+					if (day == '0') {
+						finalDay = splittedDate[1].replaceAll("0", "");
+					} else {
+						finalDay = splittedDate[1];
+					}
+
+					String expectedDate = month + "/" + finalDay + "/" + splittedDate[2];
+
+					
+					if (actualDate.trim().equalsIgnoreCase(expectedDate.trim())) {
 						log(LogStatus.INFO,
-								"Expected date: " + date + " has been matched with the actual date: " + actualDate,
+								"Expected date: " + expectedDate + " has been matched with the actual date: " + actualDate,
 								YesNo.No);
 					} else {
 						log(LogStatus.INFO,
-								"Expected date: " + date + " is not matched with the actual date: " + actualDate,
+								"Expected date: " + expectedDate + " is not matched with the actual date: " + actualDate,
 								YesNo.No);
-						result.add("Expected date: " + date + " is not matched with the actual date: " + actualDate);
+						result.add("Expected date: " + expectedDate + " is not matched with the actual date: " + actualDate);
 					}
 
 				}
