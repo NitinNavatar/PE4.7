@@ -1280,7 +1280,7 @@ public static enum PermissionType{
 				public String toString() {
 					return "Lender Status";
 				}
-			}, Deal_Contact
+			}, Deal_Contact, Stage_Upd, Pipeline_Comments, Pipeline_Comments_Upd, Legal_Name, Status_Notes, Legal_Name_Upd, Status_Notes_Upd
 		};
 	
 	public static enum Links{
