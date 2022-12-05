@@ -5658,4 +5658,76 @@ public class HomePageBusineesLayer extends HomePage {
 
 	}
 
+	public List<String> verifyNotificationUIOnHomePage() {
+
+		List<String> negativeResults = new ArrayList<String>();
+
+		List<String> expectedNotificationFooterButtons = Arrays.asList(new String[] { "Snooze", "Close" });
+		if (notificationHeader(5) != null) {
+			log(LogStatus.PASS, "Notification Header is present there: " + notificationHeader(5).getText(), YesNo.No);
+
+			if (notificationPopUpCloseButton(10) != null) {
+				log(LogStatus.PASS, "Notification Close Icon is there", YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Notification Close Icon is not there", YesNo.No);
+				negativeResults.add("Notification Close Icon is not there");
+			}
+
+			if (notificationFooterButtons().containsAll(expectedNotificationFooterButtons)) {
+				log(LogStatus.PASS, "Notification Footer Buttons present: " + expectedNotificationFooterButtons,
+						YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Notification Footer Buttons not present: " + expectedNotificationFooterButtons,
+						YesNo.No);
+				negativeResults.add("Notification Footer Buttons not present: " + expectedNotificationFooterButtons);
+			}
+
+		} else {
+			log(LogStatus.FAIL, "Notification Header is not present there", YesNo.No);
+			negativeResults.add("Notification Header is not present there");
+		}
+
+		return negativeResults;
+	}
+
+	public List<String> verifyNotificationOptionsNotContains(String... eventName) {
+
+		List<WebElement> notificationOptionsList = getNotificationOptions();
+
+		List<String> negativeResults = new ArrayList<String>();
+
+		if (notificationHeader(5) != null) {
+			log(LogStatus.PASS, "Notification Header is present there: " + notificationHeader(5).getText()+" in Home Page", YesNo.No);
+
+		} else {
+			log(LogStatus.FAIL, "Notification Header is not present there in Home Page", YesNo.No);
+			negativeResults.add("Notification Header is not present there in Home Page");
+		}
+		List<String> notificationOptionsListInText = notificationOptionsList.stream()
+				.map(x -> CommonLib.getText(driver, x, "Event Name", action.BOOLEAN)).collect(Collectors.toList());
+
+		if (notificationOptionsListInText.size() != 0) {
+			for (int i = 0; i < eventName.length; i++) {
+				if (!notificationOptionsListInText.contains(eventName[i])) {
+
+					log(LogStatus.PASS, "Event: " + eventName[i] + " is not present there in Notification Pane of HomePage",
+							YesNo.No);
+				}
+
+				else {
+
+					log(LogStatus.FAIL, "Event: " + eventName[i] + " is present there in Notification Pane of HomePage", YesNo.No);
+					negativeResults.add("Event: " + eventName[i] + " is present there in Notification Pane of HomePage");
+				}
+			}
+		} else {
+
+			log(LogStatus.FAIL, "Either Notification Pane is not open or might be Locator gets changed", YesNo.No);
+			negativeResults.add("Either Notification Pane is not open or might be Locator gets changed");
+		}
+
+		return negativeResults;
+
+	}
+
 }
