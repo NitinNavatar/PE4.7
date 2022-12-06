@@ -335,6 +335,13 @@ public class OutlookPage extends BasePageBusinessLayer {
 
 	}
 	
+	@FindBy(xpath = "//div[@aria-label='Bcc']")
+	private WebElement bccLinkBox;
+
+	public WebElement getBCCLink(int timeOut) {
+		return isDisplayed(driver, bccLinkBox, "Visibility", timeOut, "BCC link");
+
+	}
 
 	@FindBy(xpath = "//div[@aria-label='Bcc']")
 	private WebElement bccInputBox;
@@ -355,7 +362,7 @@ public class OutlookPage extends BasePageBusinessLayer {
 	@FindBy(xpath = "//div[@class='elementToProof']")
 	private WebElement messageInputBox;
 
-	public WebElement getMessageInputBox(int timeOut) {
+	public WebElement getMailMessageInputBox(int timeOut) {
 		return isDisplayed(driver, messageInputBox, "Visibility", timeOut, "message input box");
 
 	}

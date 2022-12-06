@@ -375,87 +375,82 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		
 	}
 		
-	public boolean sendMailFromRGOutlook(action action,int timeout) {
+	public boolean sendMailFromRGOutlook(String to,String cc,String bcc,String subject,String message ,action action,int timeout) {
 		boolean flag=false;
-		String beforeSyncTime =null;
-		String afterSyncTime =null;
-		WebElement ele =null;
-		int count=0;
-		
-		if (click(driver, getNewEmailButton(timeout), "new email button", action.SCROLLANDBOOLEAN)) {
+
+		if (click(driver, getNewEmailButton(timeout), "new email button", action)) {
 			log(LogStatus.INFO, "Clicked on new email button", YesNo.No);
 			ThreadSleep(2000);
-			if (click(driver, getOpenRevenueGridButton(timeout), "open Revenue grid button", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on open Revenue grid button", YesNo.No);
+			if (sendKeys(driver, getToInputBox(timeout), to, "to input box", action)) {
+				log(LogStatus.INFO, "enter value in To box :"+to, YesNo.No);
 				ThreadSleep(2000);
-				if (click(driver, getRevenueGridMainMenuButton(timeout), "Revenue grid menu button", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on Revenue grid menu button", YesNo.No);
+				if (sendKeys(driver, getCCInputBox(timeout), cc, "cc input box", action)) {
+					log(LogStatus.INFO, "enter value in CC box :"+cc, YesNo.No);
 					ThreadSleep(1000);
 					
-					if (click(driver, getSyncSettingButton(timeout), "sync setting button", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on sync setting button", YesNo.No);
-						ThreadSleep(1000);
-						String parentWindow = switchOnWindow(driver);
-						if(parentWindow!=null) {
-							
-							beforeSyncTime = getForceSyncLastSession(timeout).getText();
-							
-							if (click(driver, getForceSyncButton(timeout), "force sync button", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO, "Clicked on force sync button", YesNo.No);
+					if(bcc!=null) {
+						
+						if (click(driver, getBCCLink(timeout), "bcc link", action)) {
+							log(LogStatus.INFO, "Clicked on bcc link button", YesNo.No);
+							ThreadSleep(1000);
+							if (sendKeys(driver, getBCCInputBox(timeout), bcc, "bcc input box", action)) {
+								log(LogStatus.INFO, "able to enter value in BCC box :"+bcc, YesNo.No);
 								ThreadSleep(1000);
-								ele=getForceSyncSuccessErrorMessage(timeout);
-								if(ele!=null) {
-									ThreadSleep(2000);
-									log(LogStatus.INFO, "sucess message present force sync is done", YesNo.No);
-									afterSyncTime = getForceSyncLastSession(timeout).getText();
-									
-									while(beforeSyncTime.equalsIgnoreCase(afterSyncTime) && count<30) {
-										refresh(driver);
-										ThreadSleep(20000);
-										afterSyncTime = getForceSyncLastSession(timeout).getText();
-										count++;
-										if(beforeSyncTime.equalsIgnoreCase(afterSyncTime)) {
-											log(LogStatus.INFO, "Force sync in successfully updated", YesNo.No);
-											flag=true;
-											break;
-										}
-										
-									}
-									driver.close();
-									driver.switchTo().window(parentWindow);
-								
-								}else {
-									log(LogStatus.ERROR, "sucess message not present force sync not completed", YesNo.Yes);
-									BaseLib.sa.assertTrue(false, "sucess message not present force sync not completed");
-								}
-							} else {
-								log(LogStatus.ERROR, "Not able to click on force sync button", YesNo.Yes);
-								BaseLib.sa.assertTrue(false, "Not able to click on force sync button");
+							}else {
+								log(LogStatus.ERROR, "Not able to enter value in BCC box :"+bcc, YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "Not able to enter value in BCC box :"+bcc);
 							}
-							
-							log(LogStatus.ERROR, "Not able to click on force sync button", YesNo.Yes);
-							BaseLib.sa.assertTrue(false, "Not able to click on force sync button");
 						}else {
-							log(LogStatus.ERROR, "No new window is open after click on sync setting button", YesNo.Yes);
-							BaseLib.sa.assertTrue(false, "No new window is open after click on sync setting button");
-						}
-					} else {
-						log(LogStatus.ERROR, "Not able to click on sync setting button", YesNo.Yes);
-						BaseLib.sa.assertTrue(false, "Not able to click on sync setting button");
+							log(LogStatus.ERROR, "Not able to click on bcc link button", YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Not able to click on bcc link button");
+						}		
 					}
 					
+					if (sendKeys(driver, getSubjectInputBox(timeout), subject, "subject input box", action)) {
+						
+						log(LogStatus.INFO, "enter value in subject box :"+subject, YesNo.No);
+						ThreadSleep(1000);
+						if(message!=null) {
+							if (sendKeys(driver, getMailMessageInputBox(timeout),message , "message input box", action)) {
+								log(LogStatus.INFO, "enter value in message box :"+message, YesNo.No);
+								ThreadSleep(1000);
+								
+							} else {
+								log(LogStatus.ERROR, "Not able to enter value in message box :"+message, YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "Not able to enter value in message box :"+message);
+							}
+							
+						}
+						
+						if (click(driver, getSendButton(timeout), "Send button", action)) {
+							log(LogStatus.INFO, "Clicked on Send button", YesNo.No);
+							ThreadSleep(2000);
+							flag=true;
+							
+						} else {
+							log(LogStatus.ERROR, "Not able to clicked on send button", YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Not able to clicked on send button");
+						}
+						
+						
+					} else {
+						log(LogStatus.ERROR, "Not able to enter value in subject box :"+subject, YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to enter value in subject box :"+subject);
+					}
+					
+					
 				} else {
-					log(LogStatus.ERROR, "Not able to click on Revenue grid menu button", YesNo.Yes);
-					BaseLib.sa.assertTrue(false, "Not able to click on Revenue grid menu button");
+					log(LogStatus.ERROR, "Not able to enter value in CC box :"+cc, YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not able to enter value in CC box :"+cc);
 				}
 				
 			} else {
-				log(LogStatus.ERROR, "Not able to click on open revenue grid button", YesNo.Yes);
-				BaseLib.sa.assertTrue(false, "Not able to click on open revenue grid button");
+				log(LogStatus.ERROR, "Not able to enter value in To box :"+to, YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to enter value in To box :"+to);
 			}
 			
 		} else {
-			log(LogStatus.ERROR, "Not able to new email button", YesNo.Yes);
+			log(LogStatus.ERROR, "Not able to click on new email button", YesNo.Yes);
 			BaseLib.sa.assertTrue(false, "Not able to click on new email button");
 		}
 		
