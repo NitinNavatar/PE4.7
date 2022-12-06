@@ -125,7 +125,7 @@ public class CommonVariables {
 	public static String crmUser15FirstName,crmUser15LastName,crmUser15EmailID,crmUser15Profile,crmUser15Lience,crmUser15Title ;
 	public static String crmUser16FirstName,crmUser16LastName,crmUser16EmailID,crmUser16Profile,crmUser16Lience,crmUser16Title ;
 	
-	public static String glUser1FirstName,glUser1LastName,glUser1EmailID,glUserProfile,glUserLience;
+	public static String glUser1FirstName,glUser1LastName,glUser1EmailID,glUserProfile,glUserLience,glUser3EmailID;
 
 	
 	public static String gmailUserName,gmailUserName2,gmailPassword;
@@ -1165,7 +1165,9 @@ public class CommonVariables {
 	    public static String MRSD_1_ResearchFindings,MRSD_2_ResearchFindings,MRSD_3_ResearchFindings,MRSD_4_ResearchFindings,MRSD_5_ResearchFindings,MRSD_6_ResearchFindings,MRSD_7_ResearchFindings,MRSD_8_ResearchFindings,MRSD_9_ResearchFindings;
 	    public static String AR_Firm1Name,AR_Contact1Name;
 	    public static String AR_Firm1,AR_Firm2,AR_Firm3,AR_Firm4,AR_Firm5,AR_Firm6,AR_Firm7,AR_Firm8,AR_Firm9,AR_Firm10,AR_Firm11,AR_Firm12,AR_Firm13,AR_Firm14,AR_Firm15,AR_Firm16,AR_Firm17,AR_Firm18,AR_Firm19,AR_Firm20,AR_Firm21,AR_Firm22,
-	    AR_Firm23,AR_Firm24,AR_Firm25,AR_Firm26,AR_Firm27,AR_Firm28,AR_Firm29,ARNewFirm1Name,ARNewFirm2Name,ARNewFirm1RecordType,ARNewFirm2RecordType;
+	    AR_Firm23,AR_Firm24,AR_Firm25,AR_Firm26,AR_Firm27,AR_Firm28,AR_Firm29,AR_Firm30,AR_Firm31,AR_Firm32,AR_Firm33,AR_Firm34,AR_Firm35,AR_Firm36,AR_Firm37,AR_Firm38,AR_Firm39,AR_Firm40,AR_Firm41,AR_Firm42,AR_Firm43,AR_Firm44,AR_Firm45,AR_Firm46,
+	    AR_Firm47,AR_Firm48,AR_Firm49,AR_Firm50,AR_Firm51,AR_Data1,AR_Data2,AR_Data3,
+	    ARNewFirm1Name,ARNewFirm2Name,ARNewFirm1RecordType,ARNewFirm2RecordType;
 	    public static String ARUpdated1Name,ARUpdated2Name,ARUpdated3Name,ARUpdated4Name;
 	    
 	    public static String ADEIns1,ADEIns1RecordType;
@@ -1635,6 +1637,10 @@ public class CommonVariables {
 		glUser1EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "Usergl", excelLabel.User_Email);
 		glUserProfile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "Usergl", excelLabel.User_Profile);
 		glUserLience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "Usergl", excelLabel.User_License);
+		
+		glUser3EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User3", excelLabel.User_Email);
+
+
 
 		
 		//****************************************************************	Toggle Variable **********************************************************//
@@ -7797,6 +7803,32 @@ public class CommonVariables {
 					AR_Firm27=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up27", excelLabel.Name);
 					AR_Firm28=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up28", excelLabel.Name);
 					AR_Firm29=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up29", excelLabel.Name);
+					AR_Firm30=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up30", excelLabel.Name);
+					AR_Firm31=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up31", excelLabel.Name);
+					AR_Firm32=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up32", excelLabel.Name);
+					AR_Firm33=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up33", excelLabel.Name);
+					AR_Firm34=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up34", excelLabel.Name);
+					AR_Firm35=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up35", excelLabel.Name);
+					AR_Firm36=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up36", excelLabel.Name);
+					AR_Firm37=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up37", excelLabel.Name);
+					AR_Firm38=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up38", excelLabel.Name);
+					AR_Firm39=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up39", excelLabel.Name);
+					AR_Firm40=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up40", excelLabel.Name);
+					AR_Firm41=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up41", excelLabel.Name);
+					AR_Firm42=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up42", excelLabel.Name);
+					AR_Firm43=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up43", excelLabel.Name);
+					AR_Firm44=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up44", excelLabel.Name);
+					AR_Firm45=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up45", excelLabel.Name);
+					AR_Firm46=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up46", excelLabel.Name);
+					AR_Firm47=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up47", excelLabel.Name);
+					AR_Firm48=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up48", excelLabel.Name);
+					AR_Firm49=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up49", excelLabel.Name);
+					AR_Firm50=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up50", excelLabel.Name);
+					AR_Firm51=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up51", excelLabel.Name);
+					
+					AR_Data1=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_1", excelLabel.ResearchFindings);
+					AR_Data2=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_37", excelLabel.ResearchFindings);
+					AR_Data3=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"SearchData",excelLabel.Variable_Name, "ACR_22", excelLabel.ResearchFindings);
 					
 					ARUpdated1Name=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedRecordType",excelLabel.Variable_Name, "ARURT_1", excelLabel.Name);
 					ARUpdated2Name=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedRecordType",excelLabel.Variable_Name, "ARURT_2", excelLabel.Name);
