@@ -14499,35 +14499,64 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 				}
 
-				if (date != null && date.length != 0 && date[i] != "") {
+				if (date != null && date.length != 0 && date[i] != "" && date[i] != null) {
 					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
 							+ correspondenceHeader[i]
 									+ "']/ancestor::tr//td[@data-label='Date']//lightning-base-formatted-text";
 					ele = FindElement(driver, xPath, "date ", action.BOOLEAN, 25);
 					String actDate = getText(driver, ele, "date ", action.BOOLEAN);
 
-					String[] completedate = date[i].split("/");
-					char dayMonth = completedate[0].charAt(0);
+                    String actualDate=null;
+					
+					if(actDate.contains(","))
+					{
+						actualDate=actDate.split(",")[0];
+					}
+					else
+					{
+						actualDate=actDate;
+					}
+					
+					String dueDate;	
+					if(date[i].contains(","))
+					{
+						dueDate=date[i].split(",")[0];
+					}
+					else
+					{
+						dueDate=date[i];
+					}
+					
+					String[] splittedDate = dueDate.split("/");
+					char dayMonth = splittedDate[0].charAt(0);
+					char day=splittedDate[1].charAt(0);
 					String month;
 					if (dayMonth == '0') {
-						month = completedate[0].replaceAll("0", "");
+						month = splittedDate[0].replaceAll("0", "");
 					} else {
-						month = completedate[0];
+						month = splittedDate[0];
 					}
-					String expectedDate = month + "/" +completedate[1]  + "/" + completedate[2];
+					String finalDay;
+					if (day == '0') {
+						finalDay = splittedDate[1].replaceAll("0", "");
+					} else {
+						finalDay = splittedDate[1];
+					}
+
+					String expectedDate = month + "/" + finalDay + "/" + splittedDate[2];
 					
-					if (actDate.equalsIgnoreCase(expectedDate)) {
+					if (actualDate.trim().equalsIgnoreCase(expectedDate.trim())) {
 						log(LogStatus.INFO,
-								"actual date : " + actDate + " has been matched with the Expected date : " +expectedDate,
+								"actual date : " + actualDate + " has been matched with the Expected date : " +expectedDate,
 								YesNo.No);
 					} else {
 						log(LogStatus.ERROR,
-								"actual date : " + actDate + " is not matched with the Expected date : " + expectedDate,
+								"actual date : " + actualDate + " is not matched with the Expected date : " + expectedDate,
 								YesNo.No);
-						result.add("actual date : " + actDate + " is not matched with the Expected date : " + expectedDate);
+						result.add("actual date : " + actualDate + " is not matched with the Expected date : " + expectedDate);
 					}
 				}
-				if (subject != null && subject.length != 0 && subject[i] != "") {
+				if (subject != null && subject.length != 0 && subject[i] != "" && subject[i] != null) {
 					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
 							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Subject']//a";
 					ele = FindElement(driver, xPath, "subject ", action.BOOLEAN, 25);
@@ -14542,7 +14571,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								+ subject[i]);
 					}
 				}
-				if (details != null && details.length != 0 && details[i] != "") {
+				if (details != null && details.length != 0 && details[i] != "" && details[i] != null) {
 					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
 							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Details']//button";
 					ele = FindElement(driver, xPath, "details ", action.BOOLEAN, 25);
@@ -14557,7 +14586,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								+ details[i]);
 					}
 				}
-				if (assignedTo != null && assignedTo.length != 0 && assignedTo[i] != "") {
+				if (assignedTo != null && assignedTo.length != 0 && assignedTo[i] != "" && assignedTo[i] != null) {
 					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
 							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Assigned To']//a";
 					ele = FindElement(driver, xPath, "assigned to ", action.BOOLEAN, 25);
@@ -18442,8 +18471,28 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									+ "']/ancestor::tr//td[@data-label='Date']//lightning-base-formatted-text";
 					ele = FindElement(driver, xPath, "date ", action.SCROLLANDBOOLEAN, 25);
 					String actDate = getText(driver, ele, "date ", action.SCROLLANDBOOLEAN);
-
-					String[] splittedDate = date[i].split("/");
+					String actualDate=null;
+					
+					if(actDate.contains(","))
+					{
+						actualDate=actDate.split(",")[0];
+					}
+					else
+					{
+						actualDate=actDate;
+					}
+					
+					String dueDate;	
+					if(date[i].contains(","))
+					{
+						dueDate=date[i].split(",")[0];
+					}
+					else
+					{
+						dueDate=date[i];
+					}
+					
+					String[] splittedDate = dueDate.split("/");
 					char dayMonth = splittedDate[0].charAt(0);
 					char day=splittedDate[1].charAt(0);
 					String month;
@@ -18462,15 +18511,15 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					String expectedDate = month + "/" + finalDay + "/" + splittedDate[2];
 
 
-					if (actDate.trim().equalsIgnoreCase(expectedDate.trim())) {
+					if (actualDate.trim().equalsIgnoreCase(expectedDate.trim())) {
 						log(LogStatus.INFO,
-								"actual date : " + actDate + " has been matched with the Expected date : " + expectedDate+" of subject : "+subject[i],
+								"actual date : " + actualDate + " has been matched with the Expected date : " + expectedDate+" of subject : "+subject[i],
 								YesNo.No);
 					} else {
 						log(LogStatus.ERROR,
-								"actual date : " + actDate + " is not matched with the Expected date : " + expectedDate+" of subject : "+subject[i],
+								"actual date : " + actualDate + " is not matched with the Expected date : " + expectedDate+" of subject : "+subject[i],
 								YesNo.No);
-						result.add("actual date : " + actDate + " is not matched with the Expected date : " + expectedDate+" of subject : "+subject[i]);
+						result.add("actual date : " + actualDate + " is not matched with the Expected date : " + expectedDate+" of subject : "+subject[i]);
 					}
 				}
 				if (subject != null && subject.length != 0 && subject[i] != "") {
@@ -19306,7 +19355,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 									xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//div[text()='No items to display']";
 									ele=FindElement(driver, xPath, "No Item ", action.SCROLLANDBOOLEAN, 10);
-									if(ele!=null)
+									if(ele==null)
 									{
 										xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//th[@data-label='Type']//lightning-icon";
 										elements=FindElements(driver, xPath, "Icon");
@@ -19314,7 +19363,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 										for(int j=0; j<elements.size(); j++)
 										{
 											String iconType=getAttribute(driver, elements.get(j), "Icon class", "class");
-											if(iconType.toLowerCase().trim().contains(filterIconType[i].toLowerCase().trim()))
+											if(iconType.toLowerCase().trim().contains(filterIconType[i-1].toLowerCase().trim()))
 											{
 												log(LogStatus.INFO, filterValue[i]+" filter has been verfied on interaction popup", YesNo.No);
 											}
@@ -19393,7 +19442,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 						xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//div[text()='No items to display']";
 						ele=FindElement(driver, xPath, "No Item ", action.SCROLLANDBOOLEAN, 10);
-						if(ele!=null)
+						if(ele==null)
 						{
 							xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//th[@data-label='Type']//lightning-icon";
 							elements=FindElements(driver, xPath, "Icon");
@@ -19540,7 +19589,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 									xPath="//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//div[text()='No items to display']";
 									ele=FindElement(driver, xPath, "No Item ", action.SCROLLANDBOOLEAN, 10);
-									if(ele!=null)
+									if(ele==null)
 									{
 										xPath="//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//th[@data-label='Type']//lightning-icon";
 										elements=FindElements(driver, xPath, "Icon");
@@ -19548,7 +19597,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 										for(int j=0; j<elements.size(); j++)
 										{
 											String iconType=getAttribute(driver, elements.get(j), "Icon class", "class");
-											if(iconType.toLowerCase().trim().contains(filterIconType[i].toLowerCase().trim()))
+											if(iconType.toLowerCase().trim().contains(filterIconType[i-1].toLowerCase().trim()))
 											{
 												log(LogStatus.INFO, filterValue[i]+" filter has been verfied on Meetings and Calls popup", YesNo.No);
 											}
@@ -19634,6 +19683,66 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			result.add("Filter Icon does not visible on Meetings and Calls popup");
 		}
 
+		return result;
+	}
+	
+	
+	
+	public ArrayList<String> verifyRecordShouldNotVisibleOnTagged(String[] companyTag, String peopleTag[], String dealTag[]) {
+		ArrayList<String> result = new ArrayList<String>();
+		if (companyTag != null) {
+
+			if (click(driver, getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
+				for (int i = 0; i < companyTag.length; i++) {
+					if (getTaggedRecordName("Companies", companyTag[i],10) == null) {
+						log(LogStatus.INFO, companyTag[i] + " record is not available on company tab", YesNo.No);
+					} else {
+						log(LogStatus.ERROR, companyTag[i] + " record is available on company tab", YesNo.No);
+						result.add(companyTag[i] + " record is available on company tab");
+					}
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
+				result.add("Not able to click on Companies tab name");
+			}
+		}
+		if (peopleTag != null) {
+
+			if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+
+				for (int i = 0; i < peopleTag.length; i++) {
+					if (getTaggedRecordName("People", peopleTag[i], 10) == null) {
+						log(LogStatus.INFO, peopleTag[i] + " record is not available on people tab", YesNo.No);
+					} else {
+						log(LogStatus.ERROR, peopleTag[i] + " record is available on people tab", YesNo.No);
+						result.add(peopleTag[i] + " record is available on people tab");
+					}
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+				result.add("Not able to click on People tab name");
+			}
+		}
+		if (dealTag != null) {
+
+			if (click(driver, getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+
+				for (int i = 0; i < dealTag.length; i++) {
+					if (getTaggedRecordName("Deals", dealTag[i], 10) == null) {
+						log(LogStatus.INFO, dealTag[i] + " record is not available on deal tab", YesNo.No);
+					} else {
+						log(LogStatus.ERROR, dealTag[i] + " record is available on deal tab", YesNo.No);
+						result.add(dealTag[i] + " record is available on deal tab");
+					}
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+				result.add("Not able to click on Deals tab name");
+			}
+		}
 		return result;
 	}
 
