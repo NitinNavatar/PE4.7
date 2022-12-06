@@ -1,11 +1,14 @@
 package com.navatar.pageObjects;
 
-import static com.navatar.generic.CommonLib.click;
+import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonLib.log;
 import static com.navatar.generic.CommonLib.sendKeys;
 import static com.navatar.generic.CommonVariables.*;
 
+import java.util.Date;
+
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
@@ -210,4 +213,179 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 	}
 
+	public boolean openRGGridAndDoForceSync(action action,int timeout) {
+		boolean flag=false;
+		String beforeSyncTime =null;
+		String afterSyncTime =null;
+		WebElement ele =null;
+		int count=0;
+		
+		if (click(driver, getRevenueGridButton(timeout), "Revenue grid button", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on Revenue grid button", YesNo.No);
+			ThreadSleep(1000);
+			if (click(driver, getOpenRevenueGridButton(timeout), "open Revenue grid button", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on open Revenue grid button", YesNo.No);
+				ThreadSleep(2000);
+				if (click(driver, getRevenueGridMainMenuButton(timeout), "Revenue grid menu button", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Revenue grid menu button", YesNo.No);
+					ThreadSleep(1000);
+					
+					if (click(driver, getSyncSettingButton(timeout), "sync setting button", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on sync setting button", YesNo.No);
+						ThreadSleep(1000);
+						String parentWindow = switchOnWindow(driver);
+						if(parentWindow!=null) {
+							
+							beforeSyncTime = getForceSyncLastSession(timeout).getText();
+							
+							if (click(driver, getForceSyncButton(timeout), "force sync button", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on force sync button", YesNo.No);
+								ThreadSleep(1000);
+								ele=getForceSyncSuccessErrorMessage(timeout);
+								if(ele!=null) {
+									ThreadSleep(2000);
+									log(LogStatus.INFO, "sucess message present force sync is done", YesNo.No);
+									afterSyncTime = getForceSyncLastSession(timeout).getText();
+									
+									while(beforeSyncTime.equalsIgnoreCase(afterSyncTime) && count<30) {
+										refresh(driver);
+										ThreadSleep(20000);
+										afterSyncTime = getForceSyncLastSession(timeout).getText();
+										count++;
+										if(beforeSyncTime.equalsIgnoreCase(afterSyncTime)) {
+											log(LogStatus.INFO, "Force sync in successfully updated", YesNo.No);
+											flag=true;
+											break;
+										}
+										
+									}
+									driver.close();
+									driver.switchTo().window(parentWindow);
+								
+								}else {
+									log(LogStatus.ERROR, "sucess message not present force sync not completed", YesNo.Yes);
+									BaseLib.sa.assertTrue(false, "sucess message not present force sync not completed");
+								}
+							} else {
+								log(LogStatus.ERROR, "Not able to click on force sync button", YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "Not able to click on force sync button");
+							}
+							
+							log(LogStatus.ERROR, "Not able to click on force sync button", YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Not able to click on force sync button");
+						}else {
+							log(LogStatus.ERROR, "No new window is open after click on sync setting button", YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "No new window is open after click on sync setting button");
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on sync setting button", YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to click on sync setting button");
+					}
+					
+				} else {
+					log(LogStatus.ERROR, "Not able to click on Revenue grid menu button", YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not able to click on Revenue grid menu button");
+				}
+				
+			} else {
+				log(LogStatus.ERROR, "Not able to click on open revenue grid button", YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to click on open revenue grid button");
+			}
+			
+		} else {
+			log(LogStatus.ERROR, "Not able to click on revenue grid button", YesNo.Yes);
+			BaseLib.sa.assertTrue(false, "Not able to click on revenue grid button");
+		}
+		
+		return flag;
+		
+	}
+		
+	public boolean sendMailFromRGOutlook(action action,int timeout) {
+		boolean flag=false;
+		String beforeSyncTime =null;
+		String afterSyncTime =null;
+		WebElement ele =null;
+		int count=0;
+		
+		if (click(driver, getNewEmailButton(timeout), "new email button", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on new email button", YesNo.No);
+			ThreadSleep(2000);
+			if (click(driver, getOpenRevenueGridButton(timeout), "open Revenue grid button", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on open Revenue grid button", YesNo.No);
+				ThreadSleep(2000);
+				if (click(driver, getRevenueGridMainMenuButton(timeout), "Revenue grid menu button", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Revenue grid menu button", YesNo.No);
+					ThreadSleep(1000);
+					
+					if (click(driver, getSyncSettingButton(timeout), "sync setting button", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on sync setting button", YesNo.No);
+						ThreadSleep(1000);
+						String parentWindow = switchOnWindow(driver);
+						if(parentWindow!=null) {
+							
+							beforeSyncTime = getForceSyncLastSession(timeout).getText();
+							
+							if (click(driver, getForceSyncButton(timeout), "force sync button", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on force sync button", YesNo.No);
+								ThreadSleep(1000);
+								ele=getForceSyncSuccessErrorMessage(timeout);
+								if(ele!=null) {
+									ThreadSleep(2000);
+									log(LogStatus.INFO, "sucess message present force sync is done", YesNo.No);
+									afterSyncTime = getForceSyncLastSession(timeout).getText();
+									
+									while(beforeSyncTime.equalsIgnoreCase(afterSyncTime) && count<30) {
+										refresh(driver);
+										ThreadSleep(20000);
+										afterSyncTime = getForceSyncLastSession(timeout).getText();
+										count++;
+										if(beforeSyncTime.equalsIgnoreCase(afterSyncTime)) {
+											log(LogStatus.INFO, "Force sync in successfully updated", YesNo.No);
+											flag=true;
+											break;
+										}
+										
+									}
+									driver.close();
+									driver.switchTo().window(parentWindow);
+								
+								}else {
+									log(LogStatus.ERROR, "sucess message not present force sync not completed", YesNo.Yes);
+									BaseLib.sa.assertTrue(false, "sucess message not present force sync not completed");
+								}
+							} else {
+								log(LogStatus.ERROR, "Not able to click on force sync button", YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "Not able to click on force sync button");
+							}
+							
+							log(LogStatus.ERROR, "Not able to click on force sync button", YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Not able to click on force sync button");
+						}else {
+							log(LogStatus.ERROR, "No new window is open after click on sync setting button", YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "No new window is open after click on sync setting button");
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on sync setting button", YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to click on sync setting button");
+					}
+					
+				} else {
+					log(LogStatus.ERROR, "Not able to click on Revenue grid menu button", YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not able to click on Revenue grid menu button");
+				}
+				
+			} else {
+				log(LogStatus.ERROR, "Not able to click on open revenue grid button", YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to click on open revenue grid button");
+			}
+			
+		} else {
+			log(LogStatus.ERROR, "Not able to new email button", YesNo.Yes);
+			BaseLib.sa.assertTrue(false, "Not able to click on new email button");
+		}
+		
+		return flag;
+		
+	}
 }
