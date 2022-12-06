@@ -2509,7 +2509,7 @@ public class AcuitySmoke extends BaseLib {
 					YesNo.No);
 
 			if (op.createEventThroughOutlook(eventTitle, eventAttendees, startDate, endDate, startTime, endTime,
-					descriptionBox)) {
+					descriptionBox, false)) {
 				log(LogStatus.INFO, "-----Event Created Msg is showing, So Event of Title: " + eventTitle
 						+ " has been created-----", YesNo.No);
 

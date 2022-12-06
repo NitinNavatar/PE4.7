@@ -983,7 +983,12 @@ public class ContactsPage extends BasePageBusinessLayer {
 		}
 	}
 	
-	
+	@FindBy(xpath = "//p[@title='Phone']")
+	private WebElement phoneFieldOnContactPage;
+
+	public WebElement getPhoneFieldOnContactPage(int timeOut) {
+		return isDisplayed(driver, phoneFieldOnContactPage, "Visibility", timeOut, "Phone Field On Contact Page");
+	}
 	
 
 }

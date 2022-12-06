@@ -1,11 +1,19 @@
 package com.navatar.pageObjects;
 
-import static com.navatar.generic.CommonLib.click;
+import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonLib.log;
 import static com.navatar.generic.CommonLib.sendKeys;
+import static com.navatar.generic.CommonLib.switchToDefaultContent;
 import static com.navatar.generic.CommonVariables.*;
 
+import java.util.Date;
+
+import java.sql.DriverAction;
+
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
@@ -21,15 +29,19 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 	}
 
 	public boolean createEventThroughOutlook(String eventTitle, String eventAttendees, String startDate, String endDate,
-			String startTime, String endTime, String descriptionBox) {
+			String startTime, String endTime, String descriptionBox, boolean allDayToggle) {
 
 		boolean flag = false;
+
 		String[] attendees = eventAttendees.split("<Break>", -1);
 		if (click(driver, calendarButton(30), "calendarButton", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Calendar Button", YesNo.No);
 
-			if (click(driver, newEventButton(30), "newEventButton", action.SCROLLANDBOOLEAN)) {
+			CommonLib.ThreadSleep(4000);
+			if (CommonLib.clickUsingJavaScript(driver, newEventButton(30), "newEventButton", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on newEventButton", YesNo.No);
+
+				eventTitleInputBox(30).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 				if (sendKeys(driver, eventTitleInputBox(30), eventTitle, "Input Value : " + eventTitle,
 						action.BOOLEAN)) {
 					CommonLib.log(LogStatus.INFO, "Entered Value: " + eventTitle, YesNo.No);
@@ -38,95 +50,158 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 						if (sendKeys(driver, inviteAttendeesInputBox(30), attendee,
 								"Input Attendee Value : " + attendee, action.BOOLEAN)) {
 							CommonLib.log(LogStatus.INFO, "Entered Value: " + attendee, YesNo.No);
+
+							if (click(driver, inviteAttendeeSuggestionBoxName(attendee, 4),
+									"Suggested Invitee: " + attendee, action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Suggested Invitee: " + attendee, YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "Not able to Click on Suggested Invitee: " + attendee, YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "Not able to Click on Suggested Invitee: " + attendee);
+								return false;
+							}
 						} else {
 
 							CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + attendee, YesNo.Yes);
 							BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + attendee);
+
 							return false;
 						}
 
 						CommonLib.ThreadSleep(1000);
 					}
 
-					if (sendKeys(driver, startDateInputBox(30), startDate, "Input Value : " + startDate,
-							action.BOOLEAN)) {
-						CommonLib.log(LogStatus.INFO, "Entered Value: " + startDate, YesNo.No);
+					if (allDayToggle) {
+						String toggleFlag = CommonLib.getAttribute(driver, allDayToggleButton(20),
+								"All Day Toggle Button", "aria-checked");
+						if (toggleFlag.contains("false")) {
 
-						if (sendKeys(driver, startTimeInputBox(30), startTime, "Input Value : " + startTime,
-								action.BOOLEAN)) {
-							CommonLib.log(LogStatus.INFO, "Entered Value: " + startTime, YesNo.No);
+							if (click(driver, allDayToggleButton(20), "All Day Toggle Button",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on All Day Toggle Button", YesNo.No);
 
-							if (sendKeys(driver, endDateInputBox(30), endDate, "Input Value : " + startDate,
-									action.BOOLEAN)) {
-								CommonLib.log(LogStatus.INFO, "Entered Value: " + endDate, YesNo.No);
+								toggleFlag = CommonLib.getAttribute(driver, allDayToggleButton(20),
+										"All Day Toggle Button", "aria-checked");
 
-								if (sendKeys(driver, endTimeInputBox(30), endTime, "Input Value : " + startTime,
-										action.BOOLEAN)) {
-									CommonLib.log(LogStatus.INFO, "Entered Value: " + endTime, YesNo.No);
-
-									if (sendKeys(driver, newEventDescriptionBox(30), descriptionBox,
-											"Input Value : " + descriptionBox, action.BOOLEAN)) {
-										CommonLib.log(LogStatus.INFO, "Entered Value: " + descriptionBox, YesNo.No);
-
-										if (click(driver, eventSendButton(30), "eventSendButton",
-												action.SCROLLANDBOOLEAN)) {
-											log(LogStatus.INFO, "Clicked on eventSendButton", YesNo.No);
-											if (eventCreatedMsg(30) != null) {
-												log(LogStatus.INFO,
-														"-----Event Created Msg is showing, So Event of Title: "
-																+ eventTitle + " has been created-----",
-														YesNo.No);
-												flag = true;
-											}
-
-											else {
-
-												log(LogStatus.ERROR,
-														"-----Event Created Msg is not showing, So Event of Title: "
-																+ eventTitle + " has not been created-----",
-														YesNo.Yes);
-												BaseLib.sa.assertTrue(false,
-														"-----Event Created Msg is not showing, So Event of Title: "
-																+ eventTitle + " has not been created-----");
-											}
-
-										} else {
-											log(LogStatus.ERROR, "Not able to Click on eventSendButton", YesNo.Yes);
-											BaseLib.sa.assertTrue(false, "Not able to Click on eventSendButton");
-										}
-
-									} else {
-
-										CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + descriptionBox,
-												YesNo.Yes);
-										BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + descriptionBox);
-
-									}
-
+								if (toggleFlag.contains("true")) {
+									log(LogStatus.INFO, "All Day toggle Button has been Enabled", YesNo.No);
 								} else {
-
-									CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + endTime, YesNo.Yes);
-									BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + endTime);
-
+									log(LogStatus.ERROR, "All Day toggle Button has not been Enable after Click on it",
+											YesNo.Yes);
+									BaseLib.sa.assertTrue(false,
+											"All Day toggle Button has not been Enable after Click on it");
 								}
 							} else {
-
-								CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + endDate, YesNo.Yes);
-								BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + endDate);
-
+								log(LogStatus.ERROR, "Not able to Click on All Day Toggle Button", YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "Not able to Click on All Day Toggle Button");
 							}
+						}
+
+					}
+
+					if (startDate != null || !"".equalsIgnoreCase(startDate)) {
+
+						startDateInputBox(30).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+						if (sendKeys(driver, startDateInputBox(30), startDate, "Input Value : " + startDate,
+								action.BOOLEAN)) {
+							CommonLib.log(LogStatus.INFO, "Entered Value: " + startDate, YesNo.No);
 
 						} else {
 
-							CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + startTime, YesNo.Yes);
-							BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + startTime);
+							CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + startDate, YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + startDate);
 
 						}
+
+					}
+
+					if (!allDayToggle) {
+						if (startTime != null || !"".equalsIgnoreCase(startTime)) {
+
+							startTimeInputBox(30).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+							if (sendKeys(driver, startTimeInputBox(30), startTime, "Input Value : " + startTime,
+									action.BOOLEAN)) {
+								CommonLib.log(LogStatus.INFO, "Entered Value: " + startTime, YesNo.No);
+
+							} else {
+
+								CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + startTime, YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + startTime);
+
+							}
+
+						}
+					}
+
+					if (endDate != null || !"".equalsIgnoreCase(endDate)) {
+
+						endDateInputBox(30).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+						if (sendKeys(driver, endDateInputBox(30), endDate, "Input Value : " + endDate,
+								action.BOOLEAN)) {
+							CommonLib.log(LogStatus.INFO, "Entered Value: " + endDate, YesNo.No);
+
+						} else {
+
+							CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + endDate, YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + endDate);
+
+						}
+					}
+
+					if (!allDayToggle) {
+						if (endTime != null || !"".equalsIgnoreCase(endTime)) {
+
+							endTimeInputBox(30).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+							if (sendKeys(driver, endTimeInputBox(30), endTime, "Input Value : " + endTime,
+									action.BOOLEAN)) {
+								CommonLib.log(LogStatus.INFO, "Entered Value: " + endTime, YesNo.No);
+
+							} else {
+
+								CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + endTime, YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + endTime);
+
+							}
+
+						}
+					}
+
+					if (descriptionBox != null || !"".equalsIgnoreCase(descriptionBox)) {
+
+						newEventDescriptionBox(30).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+						if (sendKeys(driver, newEventDescriptionBox(30), descriptionBox,
+								"Input Value : " + descriptionBox, action.BOOLEAN)) {
+							CommonLib.log(LogStatus.INFO, "Entered Value: " + descriptionBox, YesNo.No);
+
+						} else {
+
+							CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + descriptionBox, YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + descriptionBox);
+
+						}
+
+					}
+
+					if (click(driver, eventSendButton(30), "eventSendButton", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on eventSendButton", YesNo.No);
+						if (eventCreatedMsg(30) != null) {
+							log(LogStatus.INFO, "-----Event Created Msg is showing, So Event of Title: " + eventTitle
+									+ " has been created-----", YesNo.No);
+
+							flag = true;
+						}
+
+						else {
+
+							log(LogStatus.ERROR, "-----Event Created Msg is not showing, So Event of Title: "
+									+ eventTitle + " has not been created-----", YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "-----Event Created Msg is not showing, So Event of Title: "
+									+ eventTitle + " has not been created-----");
+
+						}
+
 					} else {
-
-						CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + startDate, YesNo.Yes);
-						BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + startDate);
-
+						log(LogStatus.ERROR, "Not able to Click on eventSendButton", YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to Click on eventSendButton");
 					}
 
 				} else {
@@ -151,13 +226,15 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 	public boolean outLookLogin(String userName, String userPassword) {
 		driver.get(outLookAddress);
 		boolean flag = false;
+
 		if (sendKeys(driver, loginEmailInputBox(30), userName, "Input Value : " + userName, action.BOOLEAN)) {
 			CommonLib.log(LogStatus.INFO, "Entered Value: " + userName, YesNo.No);
 
 			if (click(driver, loginNextButton(30), "loginNextButton", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on loginNextButton", YesNo.No);
 
-				if (sendKeys(driver, loginPasswordInputBox(30), userPassword, "Input Value : " + userPassword, action.BOOLEAN)) {
+				if (sendKeys(driver, loginPasswordInputBox(30), userPassword, "Input Value : " + userPassword,
+						action.BOOLEAN)) {
 					CommonLib.log(LogStatus.INFO, "Entered Value: " + userPassword, YesNo.No);
 
 					if (click(driver, loginSignInButton(30), "loginSignInButton", action.SCROLLANDBOOLEAN)) {
@@ -208,6 +285,218 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		}
 		return flag;
 
+	}
+
+	public boolean openRGGridAndDoForceSync(action action,int timeout) {
+		boolean flag=false;
+		String beforeSyncTime =null;
+		String afterSyncTime =null;
+		WebElement ele =null;
+		int count=0;
+		
+		if (click(driver, getRevenueGridButton(timeout), "Revenue grid button", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on Revenue grid button", YesNo.No);
+			ThreadSleep(1000);
+			if (click(driver, getOpenRevenueGridButton(timeout), "open Revenue grid button", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on open Revenue grid button", YesNo.No);
+				ThreadSleep(2000);
+				if (click(driver, getRevenueGridMainMenuButton(timeout), "Revenue grid menu button", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Revenue grid menu button", YesNo.No);
+					ThreadSleep(1000);
+					
+					if (click(driver, getSyncSettingButton(timeout), "sync setting button", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on sync setting button", YesNo.No);
+						ThreadSleep(1000);
+						String parentWindow = switchOnWindow(driver);
+						if(parentWindow!=null) {
+							
+							beforeSyncTime = getForceSyncLastSession(timeout).getText();
+							
+							if (click(driver, getForceSyncButton(timeout), "force sync button", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on force sync button", YesNo.No);
+								ThreadSleep(1000);
+								ele=getForceSyncSuccessErrorMessage(timeout);
+								if(ele!=null) {
+									ThreadSleep(2000);
+									log(LogStatus.INFO, "sucess message present force sync is done", YesNo.No);
+									afterSyncTime = getForceSyncLastSession(timeout).getText();
+									
+									while(beforeSyncTime.equalsIgnoreCase(afterSyncTime) && count<30) {
+										refresh(driver);
+										ThreadSleep(20000);
+										afterSyncTime = getForceSyncLastSession(timeout).getText();
+										count++;
+										if(beforeSyncTime.equalsIgnoreCase(afterSyncTime)) {
+											log(LogStatus.INFO, "Force sync in successfully updated", YesNo.No);
+											flag=true;
+											break;
+										}
+										
+									}
+									driver.close();
+									driver.switchTo().window(parentWindow);
+								
+								}else {
+									log(LogStatus.ERROR, "sucess message not present force sync not completed", YesNo.Yes);
+									BaseLib.sa.assertTrue(false, "sucess message not present force sync not completed");
+								}
+							} else {
+								log(LogStatus.ERROR, "Not able to click on force sync button", YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "Not able to click on force sync button");
+							}
+							
+							log(LogStatus.ERROR, "Not able to click on force sync button", YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Not able to click on force sync button");
+						}else {
+							log(LogStatus.ERROR, "No new window is open after click on sync setting button", YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "No new window is open after click on sync setting button");
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on sync setting button", YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to click on sync setting button");
+					}
+					
+				} else {
+					log(LogStatus.ERROR, "Not able to click on Revenue grid menu button", YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not able to click on Revenue grid menu button");
+				}
+				
+			} else {
+				log(LogStatus.ERROR, "Not able to click on open revenue grid button", YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to click on open revenue grid button");
+			}
+			
+		} else {
+			log(LogStatus.ERROR, "Not able to click on revenue grid button", YesNo.Yes);
+			BaseLib.sa.assertTrue(false, "Not able to click on revenue grid button");
+		}
+		
+		return flag;
+		
+	}
+		
+	public boolean sendMailFromRGOutlook(String to,String cc,String bcc,String subject,String message ,action action,int timeout) {
+		boolean flag=false;
+
+		if (click(driver, getNewEmailButton(timeout), "new email button", action)) {
+			log(LogStatus.INFO, "Clicked on new email button", YesNo.No);
+			ThreadSleep(2000);
+			if (sendKeys(driver, getToInputBox(timeout), to, "to input box", action)) {
+				log(LogStatus.INFO, "enter value in To box :"+to, YesNo.No);
+				ThreadSleep(2000);
+				if (sendKeys(driver, getCCInputBox(timeout), cc, "cc input box", action)) {
+					log(LogStatus.INFO, "enter value in CC box :"+cc, YesNo.No);
+					ThreadSleep(1000);
+					
+					if(bcc!=null) {
+						
+						if (click(driver, getBCCLink(timeout), "bcc link", action)) {
+							log(LogStatus.INFO, "Clicked on bcc link button", YesNo.No);
+							ThreadSleep(1000);
+							if (sendKeys(driver, getBCCInputBox(timeout), bcc, "bcc input box", action)) {
+								log(LogStatus.INFO, "able to enter value in BCC box :"+bcc, YesNo.No);
+								ThreadSleep(1000);
+							}else {
+								log(LogStatus.ERROR, "Not able to enter value in BCC box :"+bcc, YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "Not able to enter value in BCC box :"+bcc);
+							}
+						}else {
+							log(LogStatus.ERROR, "Not able to click on bcc link button", YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Not able to click on bcc link button");
+						}		
+					}
+					
+					if (sendKeys(driver, getSubjectInputBox(timeout), subject, "subject input box", action)) {
+						
+						log(LogStatus.INFO, "enter value in subject box :"+subject, YesNo.No);
+						ThreadSleep(1000);
+						if(message!=null) {
+							if (sendKeys(driver, getMailMessageInputBox(timeout),message , "message input box", action)) {
+								log(LogStatus.INFO, "enter value in message box :"+message, YesNo.No);
+								ThreadSleep(1000);
+								
+							} else {
+								log(LogStatus.ERROR, "Not able to enter value in message box :"+message, YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "Not able to enter value in message box :"+message);
+							}
+							
+						}
+						
+						if (click(driver, getSendButton(timeout), "Send button", action)) {
+							log(LogStatus.INFO, "Clicked on Send button", YesNo.No);
+							ThreadSleep(2000);
+							flag=true;
+							
+						} else {
+							log(LogStatus.ERROR, "Not able to clicked on send button", YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Not able to clicked on send button");
+						}
+						
+						
+					} else {
+						log(LogStatus.ERROR, "Not able to enter value in subject box :"+subject, YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to enter value in subject box :"+subject);
+					}
+					
+					
+				} else {
+					log(LogStatus.ERROR, "Not able to enter value in CC box :"+cc, YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not able to enter value in CC box :"+cc);
+				}
+				
+			} else {
+				log(LogStatus.ERROR, "Not able to enter value in To box :"+to, YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to enter value in To box :"+to);
+			}
+			
+		} else {
+			log(LogStatus.ERROR, "Not able to click on new email button", YesNo.Yes);
+			BaseLib.sa.assertTrue(false, "Not able to click on new email button");
+		}
+		
+		return flag;
+		
+	}
+	public boolean loginAndCreateEventThroughOutLook(String userName, String userPassword, String eventTitle,
+			String eventAttendees, String startDate, String endDate, String startTime, String endTime,
+			String descriptionBox, boolean allDayToggle) {
+		// ((JavascriptExecutor) driver).executeScript("window.open()");
+		boolean flag = false;
+		String newWindowCode = "window. open('about:blank','_blank');";
+		((JavascriptExecutor) driver).executeScript(newWindowCode);
+		String parentId = CommonLib.switchOnWindow(driver);
+		if (parentId != null) {
+			log(LogStatus.INFO, "Switched to New Tab", YesNo.No);
+			if (outLookLogin(userName, userPassword)) {
+				log(LogStatus.INFO, "Logged In to Outlook for Id: " + userName, YesNo.No);
+				if (createEventThroughOutlook(eventTitle, eventAttendees, startDate, endDate, startTime, endTime,
+						descriptionBox, allDayToggle)) {
+					log(LogStatus.INFO, "Event: " + eventTitle + " Created through outlook", YesNo.No);
+					flag = true;
+					driver.close();
+					driver.switchTo().window(parentId);
+				} else {
+					CommonLib.log(LogStatus.ERROR, "Not able to Create Event: " + eventTitle + " through outlook",
+							YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not able to Create Event: " + eventTitle + " through outlook");
+					driver.close();
+					driver.switchTo().window(parentId);
+				}
+			}
+
+			else {
+				CommonLib.log(LogStatus.ERROR, "Not able to Login to Oulook for id: " + userName, YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to Login to Oulook for id: " + userName);
+				driver.close();
+				driver.switchTo().window(parentId);
+			}
+
+		} else {
+			CommonLib.log(LogStatus.ERROR, "Not Able to switch to new tab", YesNo.Yes);
+			BaseLib.sa.assertTrue(false, "Not Able to switch to new tab");
+		}
+
+		return flag;
 	}
 
 }

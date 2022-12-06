@@ -127,6 +127,7 @@ public class CommonVariables {
 
 	
 	public static String gmailUserName,gmailUserName2,gmailPassword;
+	public static String rgOutLookUser1Email, rgOutLookUser1Password;
 
 	public static String tabCustomObj,tabCustomObjField,tabCustomObjAPIName;
 	public static String tabObj1,tabObj2,tabObj3,tabObj4,tabObj5,tabObj6,tabObj7,tabObj8Coverage,tabObj9;
@@ -1161,7 +1162,8 @@ public class CommonVariables {
 
 	    public static String MRSD_1_ResearchFindings,MRSD_2_ResearchFindings,MRSD_3_ResearchFindings,MRSD_4_ResearchFindings,MRSD_5_ResearchFindings,MRSD_6_ResearchFindings,MRSD_7_ResearchFindings,MRSD_8_ResearchFindings,MRSD_9_ResearchFindings;
 	    public static String AR_Firm1Name,AR_Contact1Name;
-	    public static String AR_Firm1,AR_Firm2,AR_Firm3,AR_Firm4,AR_Firm5,AR_Firm6,AR_Firm7,AR_Firm8,AR_Firm9,AR_Firm10,AR_Firm11,AR_Firm12,AR_Firm13,AR_Firm14,AR_Firm15,AR_Firm16,AR_Firm17,AR_Firm18,AR_Firm19,AR_Firm20,AR_Firm21,AR_Firm22,AR_Firm23,AR_Firm24,ARNewFirm1Name,ARNewFirm2Name,ARNewFirm1RecordType,ARNewFirm2RecordType;
+	    public static String AR_Firm1,AR_Firm2,AR_Firm3,AR_Firm4,AR_Firm5,AR_Firm6,AR_Firm7,AR_Firm8,AR_Firm9,AR_Firm10,AR_Firm11,AR_Firm12,AR_Firm13,AR_Firm14,AR_Firm15,AR_Firm16,AR_Firm17,AR_Firm18,AR_Firm19,AR_Firm20,AR_Firm21,AR_Firm22,
+	    AR_Firm23,AR_Firm24,AR_Firm25,AR_Firm26,AR_Firm27,AR_Firm28,AR_Firm29,ARNewFirm1Name,ARNewFirm2Name,ARNewFirm1RecordType,ARNewFirm2RecordType;
 	    public static String ARUpdated1Name,ARUpdated2Name,ARUpdated3Name,ARUpdated4Name;
 	    
 	    public static String ADEIns1,ADEIns1RecordType;
@@ -1515,6 +1517,8 @@ public class CommonVariables {
 
 		SDG = "Sortable Data Grids";
 		outLookAddress = "https://outlook.office365.com/";
+		rgOutLookUser1Email = ExcelUtils.readDataFromPropertyFile("outLookUser1Email");
+		rgOutLookUser1Password = ExcelUtils.readDataFromPropertyFile("outLookUser1Password");
 
 		AppDeveloperName=ExcelUtils.readDataFromPropertyFile("AppDeveloperName");
 		AppDescription=ExcelUtils.readDataFromPropertyFile("AppDescription");
@@ -7967,6 +7971,11 @@ public class CommonVariables {
 					AR_Firm22=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up22", excelLabel.Name);
 					AR_Firm23=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up23", excelLabel.Name);
 					AR_Firm24=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up24", excelLabel.Name);
+					AR_Firm25=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up25", excelLabel.Name);
+					AR_Firm26=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up26", excelLabel.Name);
+					AR_Firm27=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up27", excelLabel.Name);
+					AR_Firm28=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up28", excelLabel.Name);
+					AR_Firm29=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, "AR_Up29", excelLabel.Name);
 					
 					ARUpdated1Name=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedRecordType",excelLabel.Variable_Name, "ARURT_1", excelLabel.Name);
 					ARUpdated2Name=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"UpdatedRecordType",excelLabel.Variable_Name, "ARURT_2", excelLabel.Name);
