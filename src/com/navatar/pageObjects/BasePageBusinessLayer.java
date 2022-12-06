@@ -14496,132 +14496,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return verifyData;
 	}
 
-	public ArrayList<String> verifyRecordsonInteractionsViewAllPopup(String[] icon, String[] date, String[] subject,
-			String[] details, String[] assignedTo, String[] correspondenceHeader) {
-		String xPath;
-		WebElement ele;
-		ArrayList<String> result = new ArrayList<String>();
-		if (correspondenceHeader != null && correspondenceHeader.length != 0) {
-			for (int i = 0; i < correspondenceHeader.length; i++) {
-
-				if (icon[i] != null && icon.length != 0 && icon[i] != "") {
-					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
-							+ correspondenceHeader[i] + "']/ancestor::tr//th[@data-label='Type']//lightning-icon";
-					ele = FindElement(driver, xPath, "Icon type of " + correspondenceHeader[i], action.SCROLLANDBOOLEAN,
-							20);
-					String iconVal = getAttribute(driver, ele, "Icon type", "class");
-					if (iconVal.contains(icon[i].toLowerCase())) {
-						log(LogStatus.INFO, "The icon :" + icon[i] + " has been verified against "
-								+ correspondenceHeader[i] + " record", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The icon :" + icon[i] + " is not verified against "
-								+ correspondenceHeader[i] + " record", YesNo.No);
-						result.add("The icon :" + icon[i] + " is not verified against " + correspondenceHeader[i]
-								+ " record");
-					}
-				}
-
-				if (date != null && date.length != 0 && date[i] != "") {
-					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
-							+ correspondenceHeader[i]
-							+ "']/ancestor::tr//td[@data-label='Date']//lightning-base-formatted-text";
-					ele = FindElement(driver, xPath, "date ", action.SCROLLANDBOOLEAN, 25);
-					String actDate = getText(driver, ele, "date ", action.SCROLLANDBOOLEAN);
-
-					String[] splittedDate = date[i].split("/");
-					char dayMonth = splittedDate[0].charAt(0);
-					char day = splittedDate[1].charAt(0);
-					String month;
-					if (dayMonth == '0') {
-						month = splittedDate[0].replaceAll("0", "");
-					} else {
-						month = splittedDate[0];
-					}
-					String finalDay;
-					if (day == '0') {
-						finalDay = splittedDate[1].replaceAll("0", "");
-					} else {
-						finalDay = splittedDate[1];
-					}
-
-					String expectedDate = month + "/" + finalDay + "/" + splittedDate[2];
-
-					if (actDate.trim().equalsIgnoreCase(expectedDate.trim())) {
-						log(LogStatus.INFO, "actual date : " + actDate + " has been matched with the Expected date : "
-								+ expectedDate + " of subject : " + subject[i], YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "actual date : " + actDate + " is not matched with the Expected date : "
-								+ expectedDate + " of subject : " + subject[i], YesNo.No);
-						result.add("actual date : " + actDate + " is not matched with the Expected date : "
-								+ expectedDate + " of subject : " + subject[i]);
-					}
-				}
-				if (subject != null && subject.length != 0 && subject[i] != "") {
-					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
-							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Subject']//a";
-					ele = FindElement(driver, xPath, "subject ", action.SCROLLANDBOOLEAN, 25);
-					String actSubject = getText(driver, ele, "subject ", action.SCROLLANDBOOLEAN);
-					if (actSubject.equalsIgnoreCase(subject[i])) {
-						log(LogStatus.INFO, "actual subject : " + actSubject
-								+ " has been matched with the Expected subject : " + subject[i], YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "actual subject : " + actSubject
-								+ " is not matched with the Expected subject : " + subject[i], YesNo.No);
-						result.add("actual subject : " + actSubject + " is not matched with the Expected subject : "
-								+ subject[i]);
-					}
-				}
-				if (details != null && details.length != 0 && details[i] != "") {
-					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
-							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Details']//button";
-					ele = FindElement(driver, xPath, "details ", action.SCROLLANDBOOLEAN, 25);
-					String actDetails = getText(driver, ele, "details ", action.SCROLLANDBOOLEAN);
-					if (actDetails.trim().equalsIgnoreCase(actDetails.trim().replaceAll(" +", " "))) {
-						log(LogStatus.INFO,
-								"actual details : " + actDetails + " has been matched with the Expected details : "
-										+ details[i] + " of subject : " + subject[i],
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"actual details : " + actDetails + " is not matched with the Expected details : "
-										+ details[i] + " of subject : " + subject[i],
-								YesNo.No);
-						result.add("actual details : " + actDetails + " is not matched with the Expected details : "
-								+ details[i] + " of subject : " + subject[i]);
-					}
-				}
-				if (assignedTo != null && assignedTo.length != 0 && assignedTo[i] != "") {
-					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
-							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Assigned To']//a";
-					ele = FindElement(driver, xPath, "assigned to ", action.SCROLLANDBOOLEAN, 25);
-					String actAssigned = getText(driver, ele, "assigned to ", action.SCROLLANDBOOLEAN);
-					if (actAssigned.equalsIgnoreCase(assignedTo[i])) {
-						log(LogStatus.INFO,
-								"actual AssignedTo value : " + actAssigned
-										+ " has been matched with the Expected AssignedTo value : " + assignedTo[i]
-										+ " of subject : " + subject[i],
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"actual AssignedTo value : " + actAssigned
-										+ " is not matched with the Expected AssignedTo value : " + assignedTo[i]
-										+ " of subject : " + subject[i],
-								YesNo.No);
-						result.add("actual AssignedTo value : " + actAssigned
-								+ " is not matched with the Expected AssignedTo value : " + assignedTo[i]
-								+ " of subject : " + subject[i]);
-					}
-				}
-			}
-		} else {
-			log(LogStatus.ERROR,
-					"Either correspondence is null or Empty. Please provide data to verify data on interaction popup ",
-					YesNo.No);
-			result.add(
-					"Either correspondence is null or Empty. Please provide data to verify data on interaction popup");
-		}
-		return result;
-	}
 
 	public ArrayList<String> verifyRecordsonInteractionsViewAllPopup(IconType[] icon, String[] date, String[] subject,
 			String[] details, String[] assignedTo, String[] correspondenceHeader) {
@@ -14648,35 +14522,64 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 				}
 
-				if (date != null && date.length != 0 && date[i] != "") {
+				if (date != null && date.length != 0 && date[i] != "" && date[i] != null) {
 					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
 							+ correspondenceHeader[i]
-							+ "']/ancestor::tr//td[@data-label='Date']//lightning-base-formatted-text";
+									+ "']/ancestor::tr//td[@data-label='Date']//lightning-base-formatted-text";
 					ele = FindElement(driver, xPath, "date ", action.BOOLEAN, 25);
 					String actDate = getText(driver, ele, "date ", action.BOOLEAN);
 
-					String[] completedate = date[i].split("/");
-					char dayMonth = completedate[0].charAt(0);
+                    String actualDate=null;
+					
+					if(actDate.contains(","))
+					{
+						actualDate=actDate.split(",")[0];
+					}
+					else
+					{
+						actualDate=actDate;
+					}
+					
+					String dueDate;	
+					if(date[i].contains(","))
+					{
+						dueDate=date[i].split(",")[0];
+					}
+					else
+					{
+						dueDate=date[i];
+					}
+					
+					String[] splittedDate = dueDate.split("/");
+					char dayMonth = splittedDate[0].charAt(0);
+					char day=splittedDate[1].charAt(0);
 					String month;
 					if (dayMonth == '0') {
-						month = completedate[0].replaceAll("0", "");
+						month = splittedDate[0].replaceAll("0", "");
 					} else {
-						month = completedate[0];
+						month = splittedDate[0];
 					}
-					String expectedDate = month + "/" + completedate[1] + "/" + completedate[2];
+					String finalDay;
+					if (day == '0') {
+						finalDay = splittedDate[1].replaceAll("0", "");
+					} else {
+						finalDay = splittedDate[1];
+					}
 
-					if (actDate.equalsIgnoreCase(expectedDate)) {
-						log(LogStatus.INFO, "actual date : " + actDate + " has been matched with the Expected date : "
-								+ expectedDate, YesNo.No);
+					String expectedDate = month + "/" + finalDay + "/" + splittedDate[2];
+					
+					if (actualDate.trim().equalsIgnoreCase(expectedDate.trim())) {
+						log(LogStatus.INFO,
+								"actual date : " + actualDate + " has been matched with the Expected date : " +expectedDate,
+								YesNo.No);
 					} else {
 						log(LogStatus.ERROR,
-								"actual date : " + actDate + " is not matched with the Expected date : " + expectedDate,
+								"actual date : " + actualDate + " is not matched with the Expected date : " + expectedDate,
 								YesNo.No);
-						result.add("actual date : " + actDate + " is not matched with the Expected date : "
-								+ expectedDate);
+						result.add("actual date : " + actualDate + " is not matched with the Expected date : " + expectedDate);
 					}
 				}
-				if (subject != null && subject.length != 0 && subject[i] != "") {
+				if (subject != null && subject.length != 0 && subject[i] != "" && subject[i] != null) {
 					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
 							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Subject']//a";
 					ele = FindElement(driver, xPath, "subject ", action.BOOLEAN, 25);
@@ -14691,7 +14594,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								+ subject[i]);
 					}
 				}
-				if (details != null && details.length != 0 && details[i] != "") {
+				if (details != null && details.length != 0 && details[i] != "" && details[i] != null) {
 					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
 							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Details']//button";
 					ele = FindElement(driver, xPath, "details ", action.BOOLEAN, 25);
@@ -14706,7 +14609,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								+ details[i]);
 					}
 				}
-				if (assignedTo != null && assignedTo.length != 0 && assignedTo[i] != "") {
+				if (assignedTo != null && assignedTo.length != 0 && assignedTo[i] != "" && assignedTo[i] != null) {
 					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
 							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Assigned To']//a";
 					ele = FindElement(driver, xPath, "assigned to ", action.BOOLEAN, 25);
@@ -14714,12 +14617,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					if (actAssigned.equalsIgnoreCase(assignedTo[i])) {
 						log(LogStatus.INFO,
 								"actual AssignedTo value : " + actAssigned
-										+ " has been matched with the Expected AssignedTo value : " + assignedTo[i],
+								+ " has been matched with the Expected AssignedTo value : " + assignedTo[i],
 								YesNo.No);
 					} else {
 						log(LogStatus.ERROR,
 								"actual AssignedTo value : " + actAssigned
-										+ " is not matched with the Expected AssignedTo value : " + assignedTo[i],
+								+ " is not matched with the Expected AssignedTo value : " + assignedTo[i],
 								YesNo.No);
 						result.add("actual AssignedTo value : " + actAssigned
 								+ " is not matched with the Expected AssignedTo value : " + assignedTo[i]);
@@ -14735,6 +14638,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		return result;
 	}
+
 
 	public List<String> verifyNotificationOptionsOnRecordDetailsPage(String... eventName) {
 
@@ -18645,6 +18549,149 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
+
+	public ArrayList<String> verifyRecordsonInteractionsViewAllPopup(String[] icon,String[] date, String[] subject, String[] details,
+			String[] assignedTo, String[] correspondenceHeader) {
+		String xPath;
+		WebElement ele;
+		ArrayList<String> result = new ArrayList<String>();
+		if (correspondenceHeader != null && correspondenceHeader.length != 0) {
+			for (int i = 0; i < correspondenceHeader.length; i++) {
+
+				if(icon[i]!=null && icon.length!=0 && icon[i]!="")
+				{
+					xPath="//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"+correspondenceHeader[i]+"']/ancestor::tr//th[@data-label='Type']//lightning-icon";
+					ele=FindElement(driver, xPath, "Icon type of "+correspondenceHeader[i], action.SCROLLANDBOOLEAN, 20);
+					String iconVal=getAttribute(driver, ele, "Icon type", "class");
+					if(iconVal.contains(icon[i].toLowerCase()))
+					{
+						log(LogStatus.INFO,"The icon :"+icon[i]+" has been verified against "+correspondenceHeader[i]+" record",YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR,"The icon :"+icon[i]+" is not verified against "+correspondenceHeader[i]+" record",YesNo.No);
+						result.add("The icon :"+icon[i]+" is not verified against "+correspondenceHeader[i]+" record");
+					}
+				}
+
+				if (date != null && date.length != 0 && date[i] != "") {
+					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
+							+ correspondenceHeader[i]
+									+ "']/ancestor::tr//td[@data-label='Date']//lightning-base-formatted-text";
+					ele = FindElement(driver, xPath, "date ", action.SCROLLANDBOOLEAN, 25);
+					String actDate = getText(driver, ele, "date ", action.SCROLLANDBOOLEAN);
+					String actualDate=null;
+					
+					if(actDate.contains(","))
+					{
+						actualDate=actDate.split(",")[0];
+					}
+					else
+					{
+						actualDate=actDate;
+					}
+					
+					String dueDate;	
+					if(date[i].contains(","))
+					{
+						dueDate=date[i].split(",")[0];
+					}
+					else
+					{
+						dueDate=date[i];
+					}
+					
+					String[] splittedDate = dueDate.split("/");
+					char dayMonth = splittedDate[0].charAt(0);
+					char day=splittedDate[1].charAt(0);
+					String month;
+					if (dayMonth == '0') {
+						month = splittedDate[0].replaceAll("0", "");
+					} else {
+						month = splittedDate[0];
+					}
+					String finalDay;
+					if (day == '0') {
+						finalDay = splittedDate[1].replaceAll("0", "");
+					} else {
+						finalDay = splittedDate[1];
+					}
+
+					String expectedDate = month + "/" + finalDay + "/" + splittedDate[2];
+
+
+					if (actualDate.trim().equalsIgnoreCase(expectedDate.trim())) {
+						log(LogStatus.INFO,
+								"actual date : " + actualDate + " has been matched with the Expected date : " + expectedDate+" of subject : "+subject[i],
+								YesNo.No);
+					} else {
+						log(LogStatus.ERROR,
+								"actual date : " + actualDate + " is not matched with the Expected date : " + expectedDate+" of subject : "+subject[i],
+								YesNo.No);
+						result.add("actual date : " + actualDate + " is not matched with the Expected date : " + expectedDate+" of subject : "+subject[i]);
+					}
+				}
+				if (subject != null && subject.length != 0 && subject[i] != "") {
+					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
+							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Subject']//a";
+					ele = FindElement(driver, xPath, "subject ", action.SCROLLANDBOOLEAN, 25);
+					String actSubject = getText(driver, ele, "subject ", action.SCROLLANDBOOLEAN);
+					if (actSubject.equalsIgnoreCase(subject[i])) {
+						log(LogStatus.INFO, "actual subject : " + actSubject
+								+ " has been matched with the Expected subject : " + subject[i], YesNo.No);
+					} else {
+						log(LogStatus.ERROR, "actual subject : " + actSubject
+								+ " is not matched with the Expected subject : " + subject[i], YesNo.No);
+						result.add("actual subject : " + actSubject + " is not matched with the Expected subject : "
+								+ subject[i]);
+					}
+				}
+				if (details != null && details.length != 0 && details[i] != "") {
+					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
+							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Details']//button";
+					ele = FindElement(driver, xPath, "details ", action.SCROLLANDBOOLEAN, 25);
+					String actDetails = getText(driver, ele, "details ", action.SCROLLANDBOOLEAN);
+					if (actDetails.trim().equalsIgnoreCase(actDetails.trim().replaceAll(" +", " "))) {
+						log(LogStatus.INFO, "actual details : " + actDetails
+								+ " has been matched with the Expected details : " + details[i]+" of subject : "+subject[i], YesNo.No);
+					} else {
+						log(LogStatus.ERROR, "actual details : " + actDetails
+								+ " is not matched with the Expected details : " + details[i]+" of subject : "+subject[i], YesNo.No);
+						result.add("actual details : " + actDetails + " is not matched with the Expected details : "
+								+ details[i]+" of subject : "+subject[i]);
+					}
+				}
+				if (assignedTo != null && assignedTo.length != 0 && assignedTo[i] != "") {
+					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
+							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Assigned To']//a";
+					ele = FindElement(driver, xPath, "assigned to ", action.SCROLLANDBOOLEAN, 25);
+					String actAssigned = getText(driver, ele, "assigned to ", action.SCROLLANDBOOLEAN);
+					if (actAssigned.equalsIgnoreCase(assignedTo[i])) {
+						log(LogStatus.INFO,
+								"actual AssignedTo value : " + actAssigned
+								+ " has been matched with the Expected AssignedTo value : " + assignedTo[i]+" of subject : "+subject[i],
+								YesNo.No);
+					} else {
+						log(LogStatus.ERROR,
+								"actual AssignedTo value : " + actAssigned
+								+ " is not matched with the Expected AssignedTo value : " + assignedTo[i]+" of subject : "+subject[i],
+								YesNo.No);
+						result.add("actual AssignedTo value : " + actAssigned
+								+ " is not matched with the Expected AssignedTo value : " + assignedTo[i]+" of subject : "+subject[i]);
+					}
+				}
+			}
+		} else {
+			log(LogStatus.ERROR,
+					"Either correspondence is null or Empty. Please provide data to verify data on interaction popup ",
+					YesNo.No);
+			result.add(
+					"Either correspondence is null or Empty. Please provide data to verify data on interaction popup");
+		}
+		return result;
+	}
+
+
 	public boolean verifyCountOfRelatedAssociationOnTaggedPopupOnInteractionSctionOfFirstRecord() {
 		String xPath;
 		WebElement ele;
@@ -19339,224 +19386,232 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
-	public ArrayList<String> verifyFilterIconAndFilterRecordsOnInteractionsPopup(String[] filterValue,
-			String[] filterIconType) {
+	public ArrayList<String> verifyFilterIconAndFilterRecordsOnInteractionsPopup(String[] filterValue,  String[] filterIconType)
+	{
 
 		String xPath;
 		WebElement ele;
 		List<WebElement> elements;
 
 		ArrayList<String> result = new ArrayList<String>();
-		if (getFilterIconOnInteractionPopup(20) != null) {
+		if(getFilterIconOnInteractionPopup(20)!=null)
+		{
 			log(LogStatus.INFO, "Filter Icon is visible on Interaction popup", YesNo.No);
 
-			if (clickUsingJavaScript(driver, getFilterIconOnInteractionPopup(20), "Filter icon on Interaction popup")) {
+			if(clickUsingJavaScript(driver, getFilterIconOnInteractionPopup(20), "Filter icon on Interaction popup"))
+			{
 				log(LogStatus.INFO, "clicked on filter icon", YesNo.No);
 
-				String filterHeading = getText(driver, getheadingOnFilterSectionInteractionPopup(20), "Filter heading",
-						action.SCROLLANDBOOLEAN);
-				if (filterHeading.trim().equals("Filters")) {
+				String filterHeading=getText(driver, getheadingOnFilterSectionInteractionPopup(20), "Filter heading", action.SCROLLANDBOOLEAN);
+				if(filterHeading.trim().equals("Filters"))
+				{
 					log(LogStatus.INFO, "Filters heading has been verified on Filter section", YesNo.No);
-				} else {
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Filters heading is not verified on Filter section", YesNo.No);
 					result.add("Filters heading is not verified on Filter section");
 				}
 
-				if (getcloseIconOnFilterSectiOnInteractionPopup(20) != null) {
+				if(getcloseIconOnFilterSectiOnInteractionPopup(20)!=null)
+				{
 					log(LogStatus.INFO, "Close icon visibles on Filter section", YesNo.No);
-				} else {
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Close icon is not visible on Filter section", YesNo.No);
 					result.add("Close icon is not visible on Filter section");
 				}
 
-				xPath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[@class='slds-form-element__label']";
-				elements = FindElements(driver, xPath, "Filter type");
-				String[] actulaFilterType = new String[elements.size()];
-				for (int i = 0; i < actulaFilterType.length; i++) {
-					actulaFilterType[i] = getText(driver, elements.get(i), "Filter value", action.SCROLLANDBOOLEAN);
+				xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[@class='slds-form-element__label']";
+				elements=FindElements(driver, xPath, "Filter type");
+				String[] actulaFilterType=new String[elements.size()];
+				for(int i=0; i<actulaFilterType.length; i++)
+				{
+					actulaFilterType[i]=getText(driver, elements.get(i), "Filter value", action.SCROLLANDBOOLEAN);
 				}
 
-				for (int i = 0; i < filterValue.length; i++) {
-					int k = 0;
-					for (int j = 0; j < actulaFilterType.length; j++) {
-						if (filterValue[i].trim().equals(actulaFilterType[j].trim())) {
-							log(LogStatus.INFO,
-									"Expected filter type: " + filterValue[i]
-											+ " has been matched with the Actual filter type: " + actulaFilterType[j],
-									YesNo.No);
+				for(int i=0; i<filterValue.length; i++)
+				{
+					int k=0;
+					for(int j=0; j<actulaFilterType.length; j++)
+					{
+						if(filterValue[i].trim().equals(actulaFilterType[j].trim()))
+						{
+							log(LogStatus.INFO, "Expected filter type: "+filterValue[i]+" has been matched with the Actual filter type: "+actulaFilterType[j], YesNo.No);
 							k++;
-						}
+						}					
 					}
-					if (k == 0) {
-						log(LogStatus.ERROR,
-								"Expected filter type: " + filterValue[i] + " did not match in filter section",
-								YesNo.No);
-						result.add("Expected filter type: " + filterValue[i] + " did not match in filter section");
-					}
+					if(k==0)
+					{
+						log(LogStatus.ERROR, "Expected filter type: "+filterValue[i]+" did not match in filter section", YesNo.No);
+						result.add("Expected filter type: "+filterValue[i]+" did not match in filter section");
+					}	
 				}
 
-				xPath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//input[@name='All']";
-				ele = FindElement(driver, xPath, "All Record checkbox", action.BOOLEAN, 20);
-				if (ele != null) {
-					if (isSelected(driver, ele, "All types filter")) {
-						if (click(driver, ele, "All types checkbox", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO,
-									"Click on the All types checkbox, so All types checkbox has been unselected",
-									YesNo.No);
-							for (int i = 1; i < filterValue.length; i++) {
-								xPath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[text()='"
-										+ filterValue[i] + "']/../../input";
-								ele = FindElement(driver, xPath, filterValue[i] + " checkbox", action.SCROLLANDBOOLEAN,
-										20);
-								if (click(driver, ele, filterValue[i] + " checkbox", action.SCROLLANDBOOLEAN)) {
-									log(LogStatus.INFO, "clicked on the checkbox of " + filterValue[i], YesNo.No);
 
-									xPath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//div[text()='No items to display']";
-									ele = FindElement(driver, xPath, "No Item ", action.SCROLLANDBOOLEAN, 10);
-									if (ele != null) {
-										xPath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//th[@data-label='Type']//lightning-icon";
-										elements = FindElements(driver, xPath, "Icon");
+				xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//input[@name='All']";
+				ele=FindElement(driver, xPath, "All Record checkbox", action.BOOLEAN, 20);
+				if(ele!=null)
+				{
+					if(isSelected(driver, ele, "All types filter"))
+					{
+						if(click(driver, ele, "All types checkbox", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Click on the All types checkbox, so All types checkbox has been unselected", YesNo.No);
+							for(int i=1; i<filterValue.length; i++)
+							{
+								xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[text()='"+filterValue[i]+"']/../../input";
+								ele=FindElement(driver, xPath, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN, 20);
+								if(click(driver, ele, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN))
+								{
+									log(LogStatus.INFO, "clicked on the checkbox of "+filterValue[i], YesNo.No);
 
-										for (int j = 0; j < elements.size(); j++) {
-											String iconType = getAttribute(driver, elements.get(j), "Icon class",
-													"class");
-											if (iconType.toLowerCase().trim()
-													.contains(filterIconType[i].toLowerCase().trim())) {
-												log(LogStatus.INFO,
-														filterValue[i]
-																+ " filter has been verfied on interaction popup",
-														YesNo.No);
-											} else {
-												log(LogStatus.ERROR,
-														filterValue[i] + " filter are not verfied on interaction popup",
-														YesNo.No);
-												result.add(filterValue[i]
-														+ " filter are not verfied on interaction popup");
+									xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//div[text()='No items to display']";
+									ele=FindElement(driver, xPath, "No Item ", action.SCROLLANDBOOLEAN, 10);
+									if(ele==null)
+									{
+										xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//th[@data-label='Type']//lightning-icon";
+										elements=FindElements(driver, xPath, "Icon");
+
+										for(int j=0; j<elements.size(); j++)
+										{
+											String iconType=getAttribute(driver, elements.get(j), "Icon class", "class");
+											if(iconType.toLowerCase().trim().contains(filterIconType[i-1].toLowerCase().trim()))
+											{
+												log(LogStatus.INFO, filterValue[i]+" filter has been verfied on interaction popup", YesNo.No);
+											}
+											else
+											{
+												log(LogStatus.ERROR, filterValue[i]+" filter are not verfied on interaction popup", YesNo.No);
+												result.add(filterValue[i]+" filter are not verfied on interaction popup");
 											}
 										}
 
-										xPath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[text()='"
-												+ filterValue[i] + "']/../../input";
-										ele = FindElement(driver, xPath, filterValue[i] + " checkbox",
-												action.SCROLLANDBOOLEAN, 20);
-										if (click(driver, ele, filterValue[i] + " checkbox", action.SCROLLANDBOOLEAN)) {
-											log(LogStatus.INFO, "clicked on the checkbox of " + filterValue[i],
-													YesNo.No);
-										} else {
-											log(LogStatus.ERROR,
-													"Not able to click on the checkbox of " + filterValue[i] + ". So "
-															+ filterValue[i] + " filter did not unselect",
-													YesNo.No);
-											result.add("Not able to click on the checkbox of " + filterValue[i]
-													+ ". So " + filterValue[i] + " filter did not unselect");
+
+										xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[text()='"+filterValue[i]+"']/../../input";
+										ele=FindElement(driver, xPath, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN, 20);
+										if(click(driver, ele, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN))
+										{
+											log(LogStatus.INFO, "clicked on the checkbox of "+filterValue[i], YesNo.No);
+										}
+										else
+										{
+											log(LogStatus.ERROR, "Not able to click on the checkbox of "+filterValue[i]+". So "+filterValue[i]+" filter did not unselect", YesNo.No);
+											result.add("Not able to click on the checkbox of "+filterValue[i]+". So "+filterValue[i]+" filter did not unselect");
 										}
 
-									} else {
-										log(LogStatus.INFO,
-												"records are not available on " + filterValue[i] + " filter", YesNo.No);
-										xPath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[text()='"
-												+ filterValue[i] + "']/../../input";
-										ele = FindElement(driver, xPath, filterValue[i] + " checkbox",
-												action.SCROLLANDBOOLEAN, 20);
-										if (click(driver, ele, filterValue[i] + " checkbox", action.SCROLLANDBOOLEAN)) {
-											log(LogStatus.INFO, "clicked on the checkbox of " + filterValue[i],
-													YesNo.No);
-										} else {
-											log(LogStatus.ERROR,
-													"Not able to click on the checkbox of " + filterValue[i] + ". So "
-															+ filterValue[i] + " filter did not unselect",
-													YesNo.No);
-											result.add("Not able to click on the checkbox of " + filterValue[i]
-													+ ". So " + filterValue[i] + " filter did not unselect");
+									}
+									else
+									{
+										log(LogStatus.INFO, "records are not available on "+filterValue[i]+" filter", YesNo.No);
+										xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[text()='"+filterValue[i]+"']/../../input";
+										ele=FindElement(driver, xPath, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN, 20);
+										if(click(driver, ele, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN))
+										{
+											log(LogStatus.INFO, "clicked on the checkbox of "+filterValue[i], YesNo.No);
+										}
+										else
+										{
+											log(LogStatus.ERROR, "Not able to click on the checkbox of "+filterValue[i]+". So "+filterValue[i]+" filter did not unselect", YesNo.No);
+											result.add("Not able to click on the checkbox of "+filterValue[i]+". So "+filterValue[i]+" filter did not unselect");
 										}
 									}
 
-								} else {
-									log(LogStatus.ERROR, "Not able to click on the checkbox of " + filterValue[i],
-											YesNo.No);
-									result.add("Not able to click on the checkbox of " + filterValue[i]);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "Not able to click on the checkbox of "+filterValue[i], YesNo.No);
+									result.add("Not able to click on the checkbox of "+filterValue[i]);
 								}
 							}
-						} else {
-							log(LogStatus.ERROR,
-									"Not able to click on the All types checkbox, so All types checkbox selected",
-									YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the All types checkbox, so All types checkbox selected", YesNo.No);
 							result.add("Not able to click on the All types checkbox, so All types checkbox selected");
 						}
 
-					} else {
+					}
+					else
+					{
 						log(LogStatus.ERROR, "Not able to get the element of All Types filter", YesNo.No);
 						result.add("Not able to get the element of All Types filter");
 					}
 				}
+				
+				int filterValueLength=filterValue.length;
+				int filterIconTypeLength=filterIconType.length;
+				
+				xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[text()='"+filterValue[filterValueLength-1]+"']/../../input";
+				ele=FindElement(driver, xPath, filterValue[filterValueLength-1]+" checkbox", action.SCROLLANDBOOLEAN, 20);
+				if(click(driver, ele, filterValue[filterValueLength-1]+" checkbox", action.SCROLLANDBOOLEAN))
+				{
+					log(LogStatus.INFO, "clicked on the checkbox of "+filterValue[filterValueLength-1], YesNo.No);
+					xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[text()='"+filterValue[filterValueLength-2]+"']/../../input";
+					ele=FindElement(driver, xPath, filterValue[filterValueLength-2]+" checkbox", action.SCROLLANDBOOLEAN, 20);
+					if(click(driver, ele, filterValue[filterValueLength-2]+" checkbox", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the checkbox of "+filterValue[filterValueLength-2], YesNo.No);
 
-				int filterValueLength = filterValue.length;
-				int filterIconTypeLength = filterIconType.length;
+						xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//div[text()='No items to display']";
+						ele=FindElement(driver, xPath, "No Item ", action.SCROLLANDBOOLEAN, 10);
+						if(ele==null)
+						{
+							xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//th[@data-label='Type']//lightning-icon";
+							elements=FindElements(driver, xPath, "Icon");
 
-				xPath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[text()='"
-						+ filterValue[filterValueLength - 1] + "']/../../input";
-				ele = FindElement(driver, xPath, filterValue[filterValueLength - 1] + " checkbox",
-						action.SCROLLANDBOOLEAN, 20);
-				if (click(driver, ele, filterValue[filterValueLength - 1] + " checkbox", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "clicked on the checkbox of " + filterValue[filterValueLength - 1], YesNo.No);
-					xPath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[text()='"
-							+ filterValue[filterValueLength - 2] + "']/../../input";
-					ele = FindElement(driver, xPath, filterValue[filterValueLength - 2] + " checkbox",
-							action.SCROLLANDBOOLEAN, 20);
-					if (click(driver, ele, filterValue[filterValueLength - 2] + " checkbox", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "clicked on the checkbox of " + filterValue[filterValueLength - 2],
-								YesNo.No);
-
-						xPath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//div[text()='No items to display']";
-						ele = FindElement(driver, xPath, "No Item ", action.SCROLLANDBOOLEAN, 10);
-						if (ele != null) {
-							xPath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//th[@data-label='Type']//lightning-icon";
-							elements = FindElements(driver, xPath, "Icon");
-
-							for (int j = 0; j < elements.size(); j++) {
-								String iconType = getAttribute(driver, elements.get(j), "Icon class", "class");
-								if (iconType.toLowerCase().trim()
-										.contains(filterIconType[filterIconTypeLength - 1].toLowerCase().trim())
-										|| iconType.toLowerCase().trim().contains(
-												filterIconType[filterIconTypeLength - 2].toLowerCase().trim())) {
-									log(LogStatus.INFO,
-											iconType + " filter records has been verfied on interaction popup",
-											YesNo.No);
-								} else {
-									log(LogStatus.ERROR,
-											iconType + " filter records are not verfied on interaction popup",
-											YesNo.No);
-									result.add(iconType + "filter records are not verfied on interaction popup");
+							for(int j=0; j<elements.size(); j++)
+							{
+								String iconType=getAttribute(driver, elements.get(j), "Icon class", "class");
+								if(iconType.toLowerCase().trim().contains(filterIconType[filterIconTypeLength-1].toLowerCase().trim()) || iconType.toLowerCase().trim().contains(filterIconType[filterIconTypeLength-2].toLowerCase().trim()))
+								{
+									log(LogStatus.INFO, iconType+ " filter records has been verfied on interaction popup", YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, iconType+ " filter records are not verfied on interaction popup", YesNo.No);
+									result.add(iconType+ "filter records are not verfied on interaction popup");
 								}
 							}
-						} else {
+						}
+						else
+						{
 							log(LogStatus.INFO, "records are not showing after applying the filter", YesNo.No);
 						}
-
-					} else {
-						log(LogStatus.ERROR, "Not able to click on checkbox of " + filterValue[filterValueLength - 2],
-								YesNo.No);
-						result.add("Not able to click on checkbox of " + filterValue[filterValueLength - 2]);
+						
 					}
-				} else {
-					log(LogStatus.ERROR, "Not able to click on checkbox of " + filterValue[filterValueLength - 1],
-							YesNo.No);
-					result.add("Not able to click on checkbox of " + filterValue[filterValueLength - 1]);
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on checkbox of "+filterValue[filterValueLength-2], YesNo.No);
+						result.add("Not able to click on checkbox of "+filterValue[filterValueLength-2]);
+					}			
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on checkbox of "+filterValue[filterValueLength-1], YesNo.No);
+					result.add("Not able to click on checkbox of "+filterValue[filterValueLength-1]);
 				}
 
-				if (clickUsingJavaScript(driver, getcloseIconOnFilterSectiOnInteractionPopup(20),
-						"close button of filter secton")) {
+				if(clickUsingJavaScript(driver, getcloseIconOnFilterSectiOnInteractionPopup(20), "close button of filter secton"))
+				{
 					log(LogStatus.INFO, "Clicked on filter close close button", YesNo.No);
-				} else {
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Not able to click on filter close button", YesNo.No);
-					result.add("Not able to click on filter close button");
+					result.add("Not able to click on filter close button");	
 				}
 
-			} else {
+			}
+			else
+			{
 				log(LogStatus.ERROR, "Not able to click on filter icon", YesNo.No);
 				result.add("Not able to click on filter icon");
 			}
-		} else {
+		}
+		else
+		{
 			log(LogStatus.ERROR, "Filter Icon does not visible on Interaction popup", YesNo.No);
 			result.add("Filter Icon does not visible on Interaction popup");
 		}
@@ -19611,175 +19666,243 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return negativeResults;
 	}
 
-	public ArrayList<String> verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(String[] filterValue,
-			String[] filterIconType) {
+	public ArrayList<String> verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(String[] filterValue,  String[] filterIconType)
+	{
 
 		String xPath;
 		WebElement ele;
 		List<WebElement> elements;
 
 		ArrayList<String> result = new ArrayList<String>();
-		if (getfilterIconOnMeetingAndCallPopup(20) != null) {
+		if(getfilterIconOnMeetingAndCallPopup(20)!=null)
+		{
 			log(LogStatus.INFO, "Filter Icon is visible on Meetings and Calls popup", YesNo.No);
 
-			if (clickUsingJavaScript(driver, getfilterIconOnMeetingAndCallPopup(20),
-					"Filter icon on Meetings and Calls popup")) {
+			if(clickUsingJavaScript(driver, getfilterIconOnMeetingAndCallPopup(20), "Filter icon on Meetings and Calls popup"))
+			{
 				log(LogStatus.INFO, "clicked on filter icon", YesNo.No);
 
-				String filterHeading = getText(driver, getheadingOnFilterSectionMeetingAndCallPopup(20),
-						"Filter heading", action.SCROLLANDBOOLEAN);
-				if (filterHeading.trim().equals("Filters")) {
+				String filterHeading=getText(driver, getheadingOnFilterSectionMeetingAndCallPopup(20), "Filter heading", action.SCROLLANDBOOLEAN);
+				if(filterHeading.trim().equals("Filters"))
+				{
 					log(LogStatus.INFO, "Filters heading has been verified on Filter section", YesNo.No);
-				} else {
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Filters heading is not verified on Filter section", YesNo.No);
 					result.add("Filters heading is not verified on Filter section");
 				}
 
-				if (getcloseIconOnFilterSectiOnMeetingAndCallPopup(20) != null) {
+				if(getcloseIconOnFilterSectiOnMeetingAndCallPopup(20)!=null)
+				{
 					log(LogStatus.INFO, "Close icon visibles on Filter section", YesNo.No);
-				} else {
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Close icon is not visible on Filter section", YesNo.No);
 					result.add("Close icon is not visible on Filter section");
 				}
 
-				xPath = "//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//span[@class='slds-form-element__label']";
-				elements = FindElements(driver, xPath, "Filter type");
-				String[] actulaFilterType = new String[elements.size()];
-				for (int i = 0; i < actulaFilterType.length; i++) {
-					actulaFilterType[i] = getText(driver, elements.get(i), "Filter value", action.SCROLLANDBOOLEAN);
+				xPath="//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//span[@class='slds-form-element__label']";
+				elements=FindElements(driver, xPath, "Filter type");
+				String[] actulaFilterType=new String[elements.size()];
+				for(int i=0; i<actulaFilterType.length; i++)
+				{
+					actulaFilterType[i]=getText(driver, elements.get(i), "Filter value", action.SCROLLANDBOOLEAN);
 				}
 
-				for (int i = 0; i < filterValue.length; i++) {
-					int k = 0;
-					for (int j = 0; j < actulaFilterType.length; j++) {
-						if (filterValue[i].trim().equals(actulaFilterType[j].trim())) {
-							log(LogStatus.INFO,
-									"Expected filter type: " + filterValue[i]
-											+ " has been matched with the Actual filter type: " + actulaFilterType[j],
-									YesNo.No);
+				for(int i=0; i<filterValue.length; i++)
+				{
+					int k=0;
+					for(int j=0; j<actulaFilterType.length; j++)
+					{
+						if(filterValue[i].trim().equals(actulaFilterType[j].trim()))
+						{
+							log(LogStatus.INFO, "Expected filter type: "+filterValue[i]+" has been matched with the Actual filter type: "+actulaFilterType[j], YesNo.No);
 							k++;
-						}
+						}					
 					}
-					if (k == 0) {
-						log(LogStatus.ERROR,
-								"Expected filter type: " + filterValue[i] + " did not match in filter section",
-								YesNo.No);
-						result.add("Expected filter type: " + filterValue[i] + " did not match in filter section");
-					}
+					if(k==0)
+					{
+						log(LogStatus.ERROR, "Expected filter type: "+filterValue[i]+" did not match in filter section", YesNo.No);
+						result.add("Expected filter type: "+filterValue[i]+" did not match in filter section");
+					}	
 				}
 
-				xPath = "//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//input[@name='All']";
-				ele = FindElement(driver, xPath, "All Record checkbox", action.BOOLEAN, 20);
-				if (ele != null) {
-					if (isSelected(driver, ele, "All types filter")) {
-						if (click(driver, ele, "All types checkbox", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO,
-									"Click on the All types checkbox, so All types checkbox has been unselected",
-									YesNo.No);
-							for (int i = 1; i < filterValue.length; i++) {
-								xPath = "//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//span[text()='"
-										+ filterValue[i] + "']/../../input";
-								ele = FindElement(driver, xPath, filterValue[i] + " checkbox", action.SCROLLANDBOOLEAN,
-										20);
-								if (click(driver, ele, filterValue[i] + " checkbox", action.SCROLLANDBOOLEAN)) {
-									log(LogStatus.INFO, "clicked on the checkbox of " + filterValue[i], YesNo.No);
 
-									xPath = "//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//div[text()='No items to display']";
-									ele = FindElement(driver, xPath, "No Item ", action.SCROLLANDBOOLEAN, 10);
-									if (ele != null) {
-										xPath = "//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//th[@data-label='Type']//lightning-icon";
-										elements = FindElements(driver, xPath, "Icon");
+				xPath="//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//input[@name='All']";
+				ele=FindElement(driver, xPath, "All Record checkbox", action.BOOLEAN, 20);
+				if(ele!=null)
+				{
+					if(isSelected(driver, ele, "All types filter"))
+					{
+						if(click(driver, ele, "All types checkbox", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Click on the All types checkbox, so All types checkbox has been unselected", YesNo.No);
+							for(int i=1; i<filterValue.length; i++)
+							{
+								xPath="//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//span[text()='"+filterValue[i]+"']/../../input";
+								ele=FindElement(driver, xPath, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN, 20);
+								if(click(driver, ele, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN))
+								{
+									log(LogStatus.INFO, "clicked on the checkbox of "+filterValue[i], YesNo.No);
 
-										for (int j = 0; j < elements.size(); j++) {
-											String iconType = getAttribute(driver, elements.get(j), "Icon class",
-													"class");
-											if (iconType.toLowerCase().trim()
-													.contains(filterIconType[i].toLowerCase().trim())) {
-												log(LogStatus.INFO, filterValue[i]
-														+ " filter has been verfied on Meetings and Calls popup",
-														YesNo.No);
-											} else {
-												log(LogStatus.ERROR,
-														filterValue[i]
-																+ " filter are not verfied on Meetings and Calls popup",
-														YesNo.No);
-												result.add(filterValue[i]
-														+ " filter are not verfied on Meetings and Calls popup");
+									xPath="//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//div[text()='No items to display']";
+									ele=FindElement(driver, xPath, "No Item ", action.SCROLLANDBOOLEAN, 10);
+									if(ele==null)
+									{
+										xPath="//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//th[@data-label='Type']//lightning-icon";
+										elements=FindElements(driver, xPath, "Icon");
+
+										for(int j=0; j<elements.size(); j++)
+										{
+											String iconType=getAttribute(driver, elements.get(j), "Icon class", "class");
+											if(iconType.toLowerCase().trim().contains(filterIconType[i-1].toLowerCase().trim()))
+											{
+												log(LogStatus.INFO, filterValue[i]+" filter has been verfied on Meetings and Calls popup", YesNo.No);
+											}
+											else
+											{
+												log(LogStatus.ERROR, filterValue[i]+" filter are not verfied on Meetings and Calls popup", YesNo.No);
+												result.add(filterValue[i]+" filter are not verfied on Meetings and Calls popup");
 											}
 										}
 
-										xPath = "//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//span[text()='"
-												+ filterValue[i] + "']/../../input";
-										ele = FindElement(driver, xPath, filterValue[i] + " checkbox",
-												action.SCROLLANDBOOLEAN, 20);
-										if (click(driver, ele, filterValue[i] + " checkbox", action.SCROLLANDBOOLEAN)) {
-											log(LogStatus.INFO, "clicked on the checkbox of " + filterValue[i],
-													YesNo.No);
-										} else {
-											log(LogStatus.ERROR,
-													"Not able to click on the checkbox of " + filterValue[i] + ". So "
-															+ filterValue[i] + " filter did not unselect",
-													YesNo.No);
-											result.add("Not able to click on the checkbox of " + filterValue[i]
-													+ ". So " + filterValue[i] + " filter did not unselect");
+
+										xPath="//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//span[text()='"+filterValue[i]+"']/../../input";
+										ele=FindElement(driver, xPath, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN, 20);
+										if(click(driver, ele, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN))
+										{
+											log(LogStatus.INFO, "clicked on the checkbox of "+filterValue[i], YesNo.No);
+										}
+										else
+										{
+											log(LogStatus.ERROR, "Not able to click on the checkbox of "+filterValue[i]+". So "+filterValue[i]+" filter did not unselect", YesNo.No);
+											result.add("Not able to click on the checkbox of "+filterValue[i]+". So "+filterValue[i]+" filter did not unselect");
 										}
 
-									} else {
-										log(LogStatus.INFO,
-												"records are not available on " + filterValue[i] + " filter", YesNo.No);
-										xPath = "//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//span[text()='"
-												+ filterValue[i] + "']/../../input";
-										ele = FindElement(driver, xPath, filterValue[i] + " checkbox",
-												action.SCROLLANDBOOLEAN, 20);
-										if (click(driver, ele, filterValue[i] + " checkbox", action.SCROLLANDBOOLEAN)) {
-											log(LogStatus.INFO, "clicked on the checkbox of " + filterValue[i],
-													YesNo.No);
-										} else {
-											log(LogStatus.ERROR,
-													"Not able to click on the checkbox of " + filterValue[i] + ". So "
-															+ filterValue[i] + " filter did not unselect",
-													YesNo.No);
-											result.add("Not able to click on the checkbox of " + filterValue[i]
-													+ ". So " + filterValue[i] + " filter did not unselect");
+									}
+									else
+									{
+										log(LogStatus.INFO, "records are not available on "+filterValue[i]+" filter", YesNo.No);
+										xPath="//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//span[text()='"+filterValue[i]+"']/../../input";
+										ele=FindElement(driver, xPath, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN, 20);
+										if(click(driver, ele, filterValue[i]+" checkbox", action.SCROLLANDBOOLEAN))
+										{
+											log(LogStatus.INFO, "clicked on the checkbox of "+filterValue[i], YesNo.No);
+										}
+										else
+										{
+											log(LogStatus.ERROR, "Not able to click on the checkbox of "+filterValue[i]+". So "+filterValue[i]+" filter did not unselect", YesNo.No);
+											result.add("Not able to click on the checkbox of "+filterValue[i]+". So "+filterValue[i]+" filter did not unselect");
 										}
 									}
 
-								} else {
-									log(LogStatus.ERROR, "Not able to click on the checkbox of " + filterValue[i],
-											YesNo.No);
-									result.add("Not able to click on the checkbox of " + filterValue[i]);
+								}
+								else
+								{
+									log(LogStatus.ERROR, "Not able to click on the checkbox of "+filterValue[i], YesNo.No);
+									result.add("Not able to click on the checkbox of "+filterValue[i]);
 								}
 							}
-						} else {
-							log(LogStatus.ERROR,
-									"Not able to click on the All types checkbox, so All types checkbox selected",
-									YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on the All types checkbox, so All types checkbox selected", YesNo.No);
 							result.add("Not able to click on the All types checkbox, so All types checkbox selected");
 						}
 
-					} else {
+					}
+					else
+					{
 						log(LogStatus.ERROR, "Not able to get the element of All Types filter", YesNo.No);
 						result.add("Not able to get the element of All Types filter");
 					}
-				}
+				}	
 
-				if (clickUsingJavaScript(driver, getcloseIconOnFilterSectiOnMeetingAndCallPopup(20),
-						"close button of filter secton")) {
+				if(clickUsingJavaScript(driver, getcloseIconOnFilterSectiOnMeetingAndCallPopup(20), "close button of filter secton"))
+				{
 					log(LogStatus.INFO, "Clicked on filter close close button", YesNo.No);
-				} else {
+				}
+				else
+				{
 					log(LogStatus.ERROR, "Not able to click on filter close button", YesNo.No);
-					result.add("Not able to click on filter close button");
+					result.add("Not able to click on filter close button");	
 				}
 
-			} else {
+			}
+			else
+			{
 				log(LogStatus.ERROR, "Not able to click on filter icon", YesNo.No);
 				result.add("Not able to click on filter icon");
 			}
-		} else {
+		}
+		else
+		{
 			log(LogStatus.ERROR, "Filter Icon does not visible on Meetings and Calls popup", YesNo.No);
 			result.add("Filter Icon does not visible on Meetings and Calls popup");
 		}
 
+		return result;
+	}
+	
+	
+	
+	public ArrayList<String> verifyRecordShouldNotVisibleOnTagged(String[] companyTag, String peopleTag[], String dealTag[]) {
+		ArrayList<String> result = new ArrayList<String>();
+		if (companyTag != null) {
+
+			if (click(driver, getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
+				for (int i = 0; i < companyTag.length; i++) {
+					if (getTaggedRecordName("Companies", companyTag[i],10) == null) {
+						log(LogStatus.INFO, companyTag[i] + " record is not available on company tab", YesNo.No);
+					} else {
+						log(LogStatus.ERROR, companyTag[i] + " record is available on company tab", YesNo.No);
+						result.add(companyTag[i] + " record is available on company tab");
+					}
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
+				result.add("Not able to click on Companies tab name");
+			}
+		}
+		if (peopleTag != null) {
+
+			if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+
+				for (int i = 0; i < peopleTag.length; i++) {
+					if (getTaggedRecordName("People", peopleTag[i], 10) == null) {
+						log(LogStatus.INFO, peopleTag[i] + " record is not available on people tab", YesNo.No);
+					} else {
+						log(LogStatus.ERROR, peopleTag[i] + " record is available on people tab", YesNo.No);
+						result.add(peopleTag[i] + " record is available on people tab");
+					}
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
+				result.add("Not able to click on People tab name");
+			}
+		}
+		if (dealTag != null) {
+
+			if (click(driver, getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+
+				for (int i = 0; i < dealTag.length; i++) {
+					if (getTaggedRecordName("Deals", dealTag[i], 10) == null) {
+						log(LogStatus.INFO, dealTag[i] + " record is not available on deal tab", YesNo.No);
+					} else {
+						log(LogStatus.ERROR, dealTag[i] + " record is available on deal tab", YesNo.No);
+						result.add(dealTag[i] + " record is available on deal tab");
+					}
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+				result.add("Not able to click on Deals tab name");
+			}
+		}
 		return result;
 	}
 

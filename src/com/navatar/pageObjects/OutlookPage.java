@@ -34,6 +34,14 @@ public class OutlookPage extends BasePageBusinessLayer {
 
 	}
 
+	@FindBy(xpath = "//span[text()='New email']/ancestor::button")
+	private WebElement newEmailButton;
+
+	public WebElement getNewEmailButton(int timeOut) {
+		return isDisplayed(driver, newEmailButton, "Visibility", timeOut, "new email button");
+
+	}
+
 	@FindBy(xpath = "//input[@placeholder='Add a title']")
 	private WebElement eventTitleInputBox;
 
@@ -257,7 +265,7 @@ public class OutlookPage extends BasePageBusinessLayer {
 	@FindBy(xpath = "//button[@name='Revenue Grid for Salesforce CRM']")
 	private WebElement revenueGridButton;
 
-	public WebElement revenueGridButton(int timeOut) {
+	public WebElement getRevenueGridButton(int timeOut) {
 		return isDisplayed(driver, revenueGridButton, "Visibility", timeOut, "revenueGridButton");
 
 	}
@@ -265,7 +273,7 @@ public class OutlookPage extends BasePageBusinessLayer {
 	@FindBy(xpath = "//button[@name='Open Revenue Grid']")
 	private WebElement openRevenueGridButton;
 
-	public WebElement openRevenueGridButton(int timeOut) {
+	public WebElement getOpenRevenueGridButton(int timeOut) {
 		return isDisplayed(driver, openRevenueGridButton, "Visibility", timeOut, "openRevenueGridButton");
 
 	}
@@ -273,8 +281,97 @@ public class OutlookPage extends BasePageBusinessLayer {
 	@FindBy(xpath = "//button[@title='Open the main menu']")
 	private WebElement revenueGridMainMenuButton;
 
-	public WebElement revenueGridMainMenuButton(int timeOut) {
+	public WebElement getRevenueGridMainMenuButton(int timeOut) {
 		return isDisplayed(driver, revenueGridMainMenuButton, "Visibility", timeOut, "revenueGridMainMenuButton");
+
+	}
+	
+	@FindBy(xpath = "//div[@title='Open sync settings in browser']")
+	private WebElement syncSettingMenu;
+
+	public WebElement getSyncSettingButton(int timeOut) {
+		return isDisplayed(driver, syncSettingMenu, "Visibility", timeOut, "sync setting button");
+
+	}
+	
+	@FindBy(xpath = "//button[@title='Force Sync']")
+	private WebElement forceSyncButton;
+
+	public WebElement getForceSyncButton(int timeOut) {
+		return isDisplayed(driver, forceSyncButton, "Visibility", timeOut, "force Sync button");
+
+	}
+	
+	@FindBy(xpath = "//div[@class='ajs-message ajs-error ajs-visible']")
+	private WebElement forceSyncSuccessErrorMessage;
+
+	public WebElement getForceSyncSuccessErrorMessage(int timeOut) {
+		return isDisplayed(driver, forceSyncSuccessErrorMessage, "Visibility", timeOut, "force Sync success/error message");
+
+	}
+	
+	@FindBy(xpath = "//h3[@title='Last Session']/..//span")
+	private WebElement forceSyncLastSession;
+
+	public WebElement getForceSyncLastSession(int timeOut) {
+		return isDisplayed(driver, forceSyncLastSession, "Visibility", timeOut, "force Sync Last session");
+
+	}
+	
+	@FindBy(xpath = "//div[@aria-label='To']")
+	private WebElement toInputBox;
+
+	public WebElement getToInputBox(int timeOut) {
+		return isDisplayed(driver, toInputBox, "Visibility", timeOut, "To input box");
+
+	}
+	
+	
+	@FindBy(xpath = "//div[@aria-label='Cc']")
+	private WebElement ccInputBox;
+
+	public WebElement getCCInputBox(int timeOut) {
+		return isDisplayed(driver, ccInputBox, "Visibility", timeOut, "CC input box");
+
+	}
+	
+	@FindBy(xpath = "//div[@aria-label='Bcc']")
+	private WebElement bccLinkBox;
+
+	public WebElement getBCCLink(int timeOut) {
+		return isDisplayed(driver, bccLinkBox, "Visibility", timeOut, "BCC link");
+
+	}
+
+	@FindBy(xpath = "//div[@aria-label='Bcc']")
+	private WebElement bccInputBox;
+
+	public WebElement getBCCInputBox(int timeOut) {
+		return isDisplayed(driver, bccInputBox, "Visibility", timeOut, "BCC input box");
+
+	}
+	
+	@FindBy(xpath = "//input[@aria-label='Add a subject']")
+	private WebElement subjectInputBox;
+
+	public WebElement getSubjectInputBox(int timeOut) {
+		return isDisplayed(driver, subjectInputBox, "Visibility", timeOut, "subject input box");
+
+	}
+	
+	@FindBy(xpath = "//div[@class='elementToProof']")
+	private WebElement messageInputBox;
+
+	public WebElement getMailMessageInputBox(int timeOut) {
+		return isDisplayed(driver, messageInputBox, "Visibility", timeOut, "message input box");
+
+	}
+	
+	@FindBy(xpath = "//button[@aria-label='Send']")
+	private WebElement sendButton;
+
+	public WebElement getSendButton(int timeOut) {
+		return isDisplayed(driver, sendButton, "Visibility", timeOut, "send Button ");
 
 	}
 

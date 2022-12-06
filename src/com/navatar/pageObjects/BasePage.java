@@ -8116,4 +8116,22 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, popupOKbutton, "Visibility", timeOut, "pop up OK button");
 	}
 
+
+	
+	public WebElement getEditButton(int timeOut) {
+		return isDisplayed(driver, editButton, "Visibility", timeOut,
+				"Edit button");
+	}
+	@FindBy(xpath = "//button[@class='slds-button slds-button_neutral' and @name='Edit']")
+	private WebElement editButton;
+	
+
+	public WebElement getEditButtonOnActivityPage(int timeOut) {
+		return isDisplayed(driver, editButtonOnActivityPage, "Visibility", timeOut,
+				"Edit button");
+	}
+	@FindBy(xpath = "//a[@class='forceActionLink']/div[@title='Edit']")
+	private WebElement editButtonOnActivityPage;
+	
+
 }

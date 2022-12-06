@@ -43,7 +43,10 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.EmailLib;
@@ -59,6 +62,8 @@ import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
 import com.relevantcodes.extentreports.LogStatus;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 public class Demo extends BaseLib {
 	Scanner scn = new Scanner(System.in);
 	static String breakSP = "<break>";
@@ -71,115 +76,59 @@ public class Demo extends BaseLib {
 	public static  String NavigationMenuTestData_PESheet = "asd";
 	public static Scanner x;
 
-	public static void main(String[] args) throws ParseException {
-		String[] toggles=null;
-		String SmokeACDContact1FName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Contact_FirstName);
-		String SmokeACDContact1LName=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Contact_LastName);
-		String SmokeACDContact1Inst=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Institutions_Name);;
-		String SmokeACDContact1EmailID=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Contact_EmailId);
-		String SmokeACDContact1Title=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Title);
-		String SmokeACDContact1Phone=ExcelUtils.readData(phase1DataSheetFilePath,"Contacts",excelLabel.Variable_Name, "SMOKEACDCON1", excelLabel.Phone);
-		System.out.println(SmokeACDContact1FName);
-		System.out.println(SmokeACDContact1LName);
-		System.out.println(SmokeACDContact1Inst);
-		System.out.println(SmokeACDContact1EmailID);
-		System.out.println(SmokeACDContact1Title);
-		System.out.println(SmokeACDContact1Phone);
-	}
-
-	public  void testDemo(){
-		config(ExcelUtils.readDataFromPropertyFile("Browser"));
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		String passwordResetLink=null;
-		try {
-			passwordResetLink = new EmailLib().getResetPasswordLink("passwordreset",
-					ExcelUtils.readDataFromPropertyFile("gmailUserName"),
-					ExcelUtils.readDataFromPropertyFile("gmailPassword"));
-		} catch (InterruptedException e2) {
-			e2.printStackTrace();
-		}
-		appLog.info("ResetLinkIs: " + passwordResetLink);
-		driver.get(passwordResetLink);
-		if (lp.setNewPassword()) {
-			appLog.info("Password is set successfully for CRM User1: " + crmUser1FirstName + " "   );
-		} else {
-			appLog.info("Password is not set for CRM User1: " + crmUser1FirstName + " " );
-			sa.assertTrue(false, "Password is not set for CRM User1: " + crmUser1FirstName + " "  );
-			log(LogStatus.ERROR, "Password is not set for CRM User1: " + crmUser1FirstName + " "  ,
-					YesNo.Yes);
-		}
-
-	}
-	public static String getDaysDifferenceOfTwoDates(String startDate, String endDate,String format)  {   
-		long days_difference = 0;
-		long time_difference =0;
-        SimpleDateFormat obj = new SimpleDateFormat(format); 
-        obj.format(startDate);
-        obj.format(endDate);
-        try {   
-            Date date1 = obj.parse(startDate);   
-            Date date2 = obj.parse(endDate);   
-             time_difference = date2.getTime() - date1.getTime();  
-             days_difference = (time_difference / (1000*60*60*24)) % 365;   
- 
-        }catch(ParseException excep){
-        	  excep.printStackTrace(); 
-        	
-        }
-        
-        return String.valueOf(days_difference);
-    }
-
-	//method to add elements in the HashMap  
-
-	//sort elements by values  
-	public static	Map<String, Integer> sortByValue(boolean order,Map<String, Integer> map)   
-	{  
-		//convert HashMap into List   
-		List<Entry<String, Integer>> list = new LinkedList<Entry<String, Integer>>(map.entrySet());  
-		//sorting the list elements  
-		Collections.sort(list, new Comparator<Entry<String, Integer>>()   
-		{  
-			public int compare(Entry<String, Integer> o1, Entry<String, Integer> o2)   
-			{  
-				if (order)   
-				{  
-					//compare two object and return an integer  
-					return o1.getValue().compareTo(o2.getValue());}   
-				else   
-				{  
-					return o2.getValue().compareTo(o1.getValue());  
-				}  
-			}  
-		});  
-		//prints the sorted HashMap  
-		Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();  
-		for (Entry<String, Integer> entry : list)   
-		{  
-			sortedMap.put(entry.getKey(), entry.getValue());  
-		}  
-		//printMap(sortedMap);  
-		return sortedMap;
-	}   
-	//method for printing the elements  
-	public void printMap(Map<String, Integer> map)   
-	{  
-		System.out.println("label\t order ");  
-		for (Entry<String, Integer> entry : map.entrySet())   
-		{  
-			System.out.println(entry.getKey() +"\t"+entry.getValue());  
-		}  
-		System.out.println("\n");  
-	}  
 	
-	public void printMap1(Map<Integer, String> map)   
-	{  
-		System.out.println("label\t order ");  
-		for (Entry<Integer, String> entry : map.entrySet())   
-		{  
-			System.out.println(entry.getKey() +"\t"+entry.getValue());  
-		}  
-		System.out.println("\n");  
-	} 
+	public static void test(String[] args) {
+		
+		WebDriverManager.chromedriver().setup();
+		WebDriver driver= new ChromeDriver();
+		driver.get("https://outlook.office365.com/");
+			ThreadSleep(5000);		//marksmith@blackfordcapital-ng.com
+		  //driver.findElement(By.xpath("//input[@name='loginfmt']")).sendKeys("atyaginavatar123@outlook.com");
+		  driver.findElement(By.xpath("//input[@name='loginfmt']")).sendKeys("christinewilkinson@blackfordcapital-ng.com");
 
+//		  driver.findElement(By.xpath("//input[@id='username']")).sendKeys("jaugust@railworks-ng.com");
+
+		  ThreadSleep(2000);
+		  WebElement submitButton= driver.findElement(By.xpath("//input[@id='idSIButton9']"));
+				  submitButton .click();
+			ThreadSleep(5000); //navatar@123
+		 // driver.findElement(By.xpath("//input[@id='password']")).sendKeys("1Navatar11");
+		  
+		  driver.findElement(By.xpath("//input[@name='passwd']")).sendKeys("Navatar008");
+		 // driver.findElement(By.xpath("//input[@name='passwd']")).sendKeys("Navatar@098");
+
+		  ThreadSleep(2000);
+		  //driver.findElement(By.xpath("//button[@id='submitBtn']")).click();
+		  driver.findElement(By.xpath("//input[@id='idSIButton9']")).click();
+		  ThreadSleep(2000);
+		  submitButton= driver.findElement(By.xpath("//input[@id='idSIButton9']"));
+		  if(submitButton.isDisplayed()) {
+			  submitButton .click();
+		  }
+		  ThreadSleep(2000);
+		  driver.findElement(By.xpath("//button[@aria-label='Calendar']")).click();
+
+		  ThreadSleep(5000);
+		  driver.findElement(By.xpath("//button[@id='NewEventButtonAnchor']")).click();
+		  driver.findElement(By.xpath("//button[@id='NewEventButtonAnchor']")).click();
+		  ThreadSleep(2000);
+		  
+		  // revenue grid button CRM : //button[contains(@aria-label,'Revenue Grid for Salesforce CRM')]
+		  // open revenue grid : //button[@name='Open Revenue Grid']
+		  // three line setting menu : //button[@title='Open the main menu'][@data-name='setting-button']
+		  // Sync setting menu option : //div[@title='Open sync settings in browser']
+		  //force sync button : //button[@title='Force Sync']
+		  
+		  // error/success message : //div[@class='ajs-message ajs-error ajs-visible']  need to check text with contains (Retry in 5 Minutes.)
+		  //last session time :    //h3[@title='Last Session']/..//span
+		  
+		  
+		  							
+	}
+	
+	public static void main(String[] args) {
+		String time=todaysDate;
+		System.out.println("Date:"+new Date().toLocaleString());
+		System.out.println("Date1:"+time);
+	}
 }
