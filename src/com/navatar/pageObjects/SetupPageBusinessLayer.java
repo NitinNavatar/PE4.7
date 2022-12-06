@@ -11,6 +11,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.DoubleClickAction;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Screen;
@@ -2185,7 +2186,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 					flag = true;
 				}
 			}
-			xpath = "//*[text()='Accounts']/..//a[text()='Edit']";
+			xpath = "//*[text()='" + recordType + "']/..//a[text()='Edit']";
 			ele = FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, timeOut);
 			if (click(driver, ele, "Edit Button", action.BOOLEAN)) {
 				log(LogStatus.INFO, "able to click on edit button for record type settiing", YesNo.No);
@@ -2456,9 +2457,10 @@ public class SetupPageBusinessLayer extends SetupPage {
 	 * @author Azhar Alam
 	 * @param labelWithValue
 	 */
-	public void recordTypeVerification(String[][] labelWithValue) {
+	public boolean recordTypeVerification(String[][] labelWithValue) {
 		String xpath = "";
 		WebElement ele;
+		boolean flag = false;
 		switchToDefaultContent(driver);
 		ThreadSleep(2000);
 		switchToFrame(driver, 60, getSetUpPageIframe(120));
@@ -2469,11 +2471,13 @@ public class SetupPageBusinessLayer extends SetupPage {
 			ele = FindElement(driver, xpath, labelValue[0] + " with Value " + labelValue[1], action.BOOLEAN, 10);
 			if (ele != null) {
 				log(LogStatus.PASS, labelValue[0] + " with Value " + labelValue[1] + " verified", YesNo.No);
+				flag = true;
 			} else {
 				log(LogStatus.ERROR, labelValue[0] + " with Value " + labelValue[1] + " not verified", YesNo.Yes);
 				sa.assertTrue(false, labelValue[0] + " with Value " + labelValue[1] + " not verified");
 			}
 		}
+		return flag;
 	}
 
 	/**
@@ -3997,7 +4001,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 				ThreadSleep(1000);
 				if (sendKeys(driver, getQuickSearchInObjectManager_Lighting(50), fieldLabel, "search text box",
 						action.BOOLEAN)) {
-					String xpath = "//span[text()='" + fieldLabel + "']/..";
+					String xpath = "//a//span[text()='" + fieldLabel + "']/..";
 					ele = isDisplayed(driver, FindElement(driver, xpath, "field set label text", action.BOOLEAN, 3),
 							"visibility", 3, "field set label text");
 					if (ele != null) {
@@ -6428,6 +6432,131 @@ public class SetupPageBusinessLayer extends SetupPage {
 		if (parentID != null) {
 			driver.close();
 			driver.switchTo().window(parentID);
+		}
+		return flag;
+	}
+
+	public boolean giveAndRemoveObjectPermissionFromProfiles(
+			String profileForSelection, String[] objects, String[] permissionTypes, String status) {
+		boolean flag = false;
+		WebElement ele = null;
+		String value = "Checked" ;
+		if (searchStandardOrCustomObject(environment, mode, object.Profiles)) {
+			log(LogStatus.INFO, "click on Object : " + object.Profiles, YesNo.No);
+			ThreadSleep(2000);
+			switchToDefaultContent(driver);
+			switchToFrame(driver, 60, getSetUpPageIframe(60));
+
+			String xpath = "";
+			xpath = "//th//a[text()='" + profileForSelection + "']";
+			ele = FindElement(driver, xpath, profileForSelection, action.SCROLLANDBOOLEAN, 10);
+			ele = isDisplayed(driver, ele, "visibility", 10, profileForSelection);
+			if (click(driver, ele, profileForSelection.toString(), action.BOOLEAN)) {
+				log(LogStatus.INFO, "able to click on " + profileForSelection, YesNo.No);
+				ThreadSleep(2000);
+				switchToDefaultContent(driver);
+				ThreadSleep(5000);
+				switchToFrame(driver, 60, getSetUpPageIframe(60));
+				xpath = "//td[@id='topButtonRow']//input[@title='Edit']";
+				ele = FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, 10);
+				ele = isDisplayed(driver, ele, "visibility", 10, "Edit Button");
+				if (click(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "able to click on edit button for "+ profileForSelection +" Profiles settiing", YesNo.No);
+					switchToDefaultContent(driver);
+					ThreadSleep(5000);
+					switchToFrame(driver, 60, getSetUpPageIframe(60));
+					ThreadSleep(2000);
+					for(int i = 0; i < objects.length; i++) {
+						for(int j = 0; j < permissionTypes.length; j++) {
+					//xpath = "(//h3[contains(text(),'Object Permissions')]/..//following-sibling::div//th[text()='"+objects[i]+"']/..//input)[1]";
+					xpath = "//h3[contains(text(),'Object Permissions')]/..//following-sibling::div//th[text()='"+objects[i]+"s']/..//input[contains(@title,'" + permissionTypes[j] + " " +objects[i]+"s')]";
+					ele = FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, 10);
+					ele = isDisplayed(driver, ele, "visibility", 10, "Edit Button");
+					//if(ele.getAttribute(status) != null) {
+					if(value.equalsIgnoreCase(status)) {
+						if(isSelected(driver, ele, "")) {
+							//alreday checked
+						}else {
+							if (click(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "able to click on checkbox for edit ", YesNo.No);
+								switchToDefaultContent(driver);
+								ThreadSleep(5000);
+								switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+								switchToFrame(driver, 60, getSetUpPageIframe(60));
+								ThreadSleep(2000);
+								}else {
+									log(LogStatus.ERROR, "not able to click on edit button for record : " + objects[i] , YesNo.Yes);
+									sa.assertTrue(false, "not able to click on edit button for record : " + objects[i]);
+									}
+						}
+					}else {
+						
+						if(isSelected(driver, ele, "")) {
+							if (click(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "able to click on checkbox for edit ", YesNo.No);
+								switchToDefaultContent(driver);
+								ThreadSleep(5000);
+								switchToAlertAndAcceptOrDecline(driver, 10, action.ACCEPT);
+								switchToFrame(driver, 60, getSetUpPageIframe(60));
+								ThreadSleep(2000);
+								}else {
+									log(LogStatus.ERROR, "not able to click on edit button for record : " + objects[i] , YesNo.Yes);
+									sa.assertTrue(false, "not able to click on edit button for record : " + objects[i]);
+									}
+						}else {
+							//already disable
+						}
+					
+						}
+					}
+					
+					}
+					if (click(driver, getViewAccessbilityDropDownSaveButton(10), "save button",
+							action.BOOLEAN)) {
+						log(LogStatus.INFO, "save button", YesNo.No);
+						recordTypeVerificationForProfiles(objects,status);
+						return true;
+
+					} else {
+						log(LogStatus.ERROR,
+								"Not able to click on save button",YesNo.Yes);
+					}
+					}else {
+						log(LogStatus.ERROR, "not able to click on edit button for record type settiing", YesNo.Yes);
+						sa.assertTrue(false,"not able to click on edit button for record type settiing");
+			}
+			}else {
+				log(LogStatus.ERROR, profileForSelection+" profile is not clickable", YesNo.Yes);
+				sa.assertTrue(false,profileForSelection+" profile is not clickable");
+			}
+			
+		} else {
+			log(LogStatus.ERROR, "profiles tab is not clickable", YesNo.Yes);
+			sa.assertTrue(false,"profiles tab is not clickable");
+		}
+
+		return flag;
+	}
+
+	public boolean recordTypeVerificationForProfiles(String[] labels, String status) {
+		String xpath = "";
+		WebElement ele;
+		boolean flag = false;
+		switchToDefaultContent(driver);
+		ThreadSleep(2000);
+		switchToFrame(driver, 60, getSetUpPageIframe(120));
+		for (String labelValue : labels) {
+			// xpath = "//*[text()='" + labelValue[0] +
+			// "']/..//following-sibling::td[text()='" + labelValue[1] + "']";
+			xpath = "//h3[contains(text(),'Object Permissions')]/..//following-sibling::div//th[text()='" +labelValue+ "s']/..//img[contains(@id,'"+labelValue+"') and (@alt ='" + status +"')]";
+			ele = FindElement(driver, xpath, labelValue + " with Value " + status, action.BOOLEAN, 10);
+			if (ele != null) {
+				log(LogStatus.PASS, labelValue + " with Value " + status + " verified", YesNo.No);
+				flag = true;
+			} else {
+				log(LogStatus.ERROR, labelValue + " with Value " + status + " not verified", YesNo.Yes);
+				sa.assertTrue(false, labelValue + " with Value " + status + " not verified");
+			}
 		}
 		return flag;
 	}

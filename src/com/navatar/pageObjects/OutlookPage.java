@@ -50,7 +50,7 @@ public class OutlookPage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "//input[@aria-label='Invite attendees']")
+	@FindBy(xpath = "//div[@aria-label='Invite attendees']")
 	private WebElement inviteAttendeesInputBox;
 
 	public WebElement inviteAttendeesInputBox(int timeOut) {
@@ -130,7 +130,7 @@ public class OutlookPage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "//input[@id='username']")
+	@FindBy(xpath = "//input[@name='loginfmt']")
 	private WebElement loginEmailInputBox;
 
 	public WebElement loginEmailInputBox(int timeOut) {
@@ -146,7 +146,7 @@ public class OutlookPage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "//input[@label='Password']")
+	@FindBy(xpath = "//input[@name='passwd']")
 	private WebElement loginPasswordInputBox;
 
 	public WebElement loginPasswordInputBox(int timeOut) {
@@ -154,7 +154,7 @@ public class OutlookPage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "//button[@id='submitBtn']")
+	@FindBy(xpath = "//input[@value='Sign in']")
 	private WebElement loginSignInButton;
 
 	public WebElement loginSignInButton(int timeOut) {
@@ -366,6 +366,101 @@ public class OutlookPage extends BasePageBusinessLayer {
 	public WebElement getSendButton(int timeOut) {
 		return isDisplayed(driver, sendButton, "Visibility", timeOut, "send Button ");
 
+	}
+
+	public WebElement sideNavButtonUnderFolderSection(String sideNavButtonName, int timeOut) {
+		String xpath = "//span[text()='Folders']/parent::div/parent::div/following-sibling::div//span[text()=\""
+				+ sideNavButtonName + "\"]/ancestor::div[@title=\"" + sideNavButtonName + "\"]";
+		try {
+			return FindElement(driver, xpath, "Nav Header Under Folder: " + sideNavButtonName, action.SCROLLANDBOOLEAN,
+					timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Nav Header Under Folder: " + sideNavButtonName, action.SCROLLANDBOOLEAN,
+					timeOut);
+		}
+	}
+
+	public WebElement sideNavSectionButton(String sideNavSectionName, int timeOut) {
+		String xpath = "//span[text()='" + sideNavSectionName + "']/preceding-sibling::button";
+		try {
+			return FindElement(driver, xpath, "Nav Section Button: " + sideNavSectionName, action.SCROLLANDBOOLEAN,
+					timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Nav Section Button: " + sideNavSectionName, action.SCROLLANDBOOLEAN,
+					timeOut);
+		}
+	}
+
+	public WebElement sideNavSectionExpandedOrNot(String sideNavSectionName, int timeOut) {
+		String xpath = "//span[text()=\"" + sideNavSectionName + "\"]/parent::div[@aria-expanded=\"true\"]";
+		try {
+			return FindElement(driver, xpath, "Nav Section Expanded: " + sideNavSectionName, action.SCROLLANDBOOLEAN,
+					timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Nav Section Expanded: " + sideNavSectionName, action.SCROLLANDBOOLEAN,
+					timeOut);
+		}
+	}
+
+	public WebElement emailSectionHeading(String emailsSectionName, int timeOut) {
+		String xpath = "//span[text()=\"" + emailsSectionName + "\"]/parent::div[@role=\"heading\"]";
+		try {
+			return FindElement(driver, xpath, "Email Section Name: " + emailsSectionName, action.SCROLLANDBOOLEAN,
+					timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Email Section Name: " + emailsSectionName, action.SCROLLANDBOOLEAN,
+					timeOut);
+		}
+	}
+
+	public List<WebElement> listOfSubjectsOfSentBoxEmails() {
+		return FindElements(driver,
+				"//div[@aria-label = \"Message list\"]//div[@role=\"region\"]/div/div/div/div//div[contains(@class,\"ZfoST\")]/following-sibling::div/div[2]/div[contains(@class,\"IjzWp\")]/span",
+				"listOfSubjectsOfSentBoxEmails");
+	}
+
+	public WebElement inviteAttendeeSuggestionBoxName(String attendeeName, int timeOut) {
+		String xpath = "//span[text()='" + attendeeName + "']/ancestor::button";
+		try {
+			return FindElement(driver, xpath, "Invitee Suggestion Name: " + attendeeName, action.SCROLLANDBOOLEAN,
+					timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Invitee Suggestion Name: " + attendeeName, action.SCROLLANDBOOLEAN,
+					timeOut);
+		}
+	}
+
+	@FindBy(xpath = "//label[text()='All day']/parent::div//button")
+	private WebElement allDayToggleButton;
+
+	public WebElement allDayToggleButton(int timeOut) {
+		return isDisplayed(driver, allDayToggleButton, "Visibility", timeOut, "allDayToggleButton");
+
+	}
+
+	@FindBy(xpath = "//input[@aria-label='Search']")
+	private WebElement globalSearchButton;
+
+	public WebElement globalSearchButton(int timeOut) {
+		return isDisplayed(driver, globalSearchButton, "Visibility", timeOut, "globalSearchButton");
+
+	}
+
+	@FindBy(xpath = "//div[@class='ms-Dropdown-container L2ulM']")
+	private WebElement globalSearchCategoryButton;
+
+	public WebElement globalSearchCategoryButton(int timeOut) {
+		return isDisplayed(driver, globalSearchCategoryButton, "Visibility", timeOut, "globalSearchCategoryButton");
+
+	}
+
+	public WebElement globalSearchCategoryDropDownButton(String buttonName, int timeOut) {
+		String xpath = "//span[text()='" + buttonName + "']/ancestor::button";
+		try {
+			return FindElement(driver, xpath, "Button Name: " + buttonName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Button Name: " + buttonName, action.SCROLLANDBOOLEAN, timeOut);
+		}
 	}
 
 }

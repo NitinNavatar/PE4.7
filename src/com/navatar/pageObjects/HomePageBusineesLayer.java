@@ -5601,47 +5601,133 @@ public class HomePageBusineesLayer extends HomePage {
 
 		List<WebElement> notificationOptionsList = getNotificationOptions();
 		List<WebElement> notificationButtonsList = getnotificationButtons();
-		List<String> actualNotificationItemList = new ArrayList<String>();
 		boolean flag = false;
+		List<String> negativeResults = new ArrayList<String>();
 
-		for (WebElement e : notificationOptionsList) {
-			String text = e.getText();
+		if (notificationHeader(5) != null) {
+			log(LogStatus.PASS, "Notification Header is present there: " + notificationHeader(5).getText(), YesNo.No);
 
-			for (int i = 0; i < eventName.length; i++) {
-				if (text.equals(eventName[i])) {
+		} else {
+			log(LogStatus.FAIL, "Notification Header is not present there", YesNo.No);
+			negativeResults.add("Notification Header is not present there");
+		}
+		List<String> notificationOptionsListInText = notificationOptionsList.stream()
+				.map(x -> CommonLib.getText(driver, x, "Event Name", action.BOOLEAN)).collect(Collectors.toList());
 
-					if (e.isDisplayed()) {
-						flag = false;
+		for (int i = 0; i < eventName.length; i++) {
+			if (notificationOptionsListInText.contains(eventName[i])) {
 
-						if (notificationButtonsList != null) {
-							for (WebElement e1 : notificationButtonsList) {
+				if (notificationOptionsList.get(notificationOptionsListInText.indexOf(eventName[i])).isDisplayed()) {
+					flag = false;
 
-								if (notificationButtonsList.indexOf(e1) == notificationOptionsList.indexOf(e)) {
-									if (e1.isDisplayed())
-										flag = true;
-									break;
-								} else {
-									continue;
-								}
+					if (notificationButtonsList != null) {
+						for (WebElement actualEventButton : notificationButtonsList) {
+
+							if (notificationButtonsList.indexOf(actualEventButton) == notificationOptionsListInText
+									.indexOf(eventName[i])) {
+								if (actualEventButton.isDisplayed())
+									flag = true;
+								break;
+							} else {
+								continue;
 							}
-						} else {
-							log(LogStatus.ERROR, "Add note button list is empty..might locator has mismatched",
-									YesNo.Yes);
 						}
-						if (flag) {
-							log(LogStatus.PASS, "Event name is visible" + text, YesNo.No);
-							log(LogStatus.PASS, "Add note Button is visible for " + text, YesNo.No);
-							actualNotificationItemList.add(text);
-						} else {
-							log(LogStatus.FAIL, "Add note Button is not visible for " + text, YesNo.Yes);
-						}
-
+					} else {
+						log(LogStatus.ERROR, "Add note button list is empty..might locator has mismatched", YesNo.Yes);
 					}
+					if (flag) {
+						log(LogStatus.PASS, "Event name is visible" + eventName[i], YesNo.No);
+						log(LogStatus.PASS, "Add note Button is visible for " + eventName[i], YesNo.No);
+
+					} else {
+						log(LogStatus.FAIL, "Button for Event: " + eventName[i] + " is not visible", YesNo.No);
+						negativeResults.add("Button for Event: " + eventName[i] + " is not visible");
+					}
+
 				}
+			}
+
+			else {
+
+				log(LogStatus.FAIL, "Event: " + eventName[i] + " is not present there in Notification Pane", YesNo.No);
+				negativeResults.add("Event: " + eventName[i] + " is not present there in Notification Pane");
 			}
 		}
 
-		return actualNotificationItemList;
+		return negativeResults;
+
+	}
+
+	public List<String> verifyNotificationUIOnHomePage() {
+
+		List<String> negativeResults = new ArrayList<String>();
+
+		List<String> expectedNotificationFooterButtons = Arrays.asList(new String[] { "Snooze", "Close" });
+		if (notificationHeader(5) != null) {
+			log(LogStatus.PASS, "Notification Header is present there: " + notificationHeader(5).getText(), YesNo.No);
+
+			if (notificationPopUpCloseButton(10) != null) {
+				log(LogStatus.PASS, "Notification Close Icon is there", YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Notification Close Icon is not there", YesNo.No);
+				negativeResults.add("Notification Close Icon is not there");
+			}
+
+			if (notificationFooterButtons().containsAll(expectedNotificationFooterButtons)) {
+				log(LogStatus.PASS, "Notification Footer Buttons present: " + expectedNotificationFooterButtons,
+						YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Notification Footer Buttons not present: " + expectedNotificationFooterButtons,
+						YesNo.No);
+				negativeResults.add("Notification Footer Buttons not present: " + expectedNotificationFooterButtons);
+			}
+
+		} else {
+			log(LogStatus.FAIL, "Notification Header is not present there", YesNo.No);
+			negativeResults.add("Notification Header is not present there");
+		}
+
+		return negativeResults;
+	}
+
+	public List<String> verifyNotificationOptionsNotContains(String... eventName) {
+
+		List<WebElement> notificationOptionsList = getNotificationOptions();
+
+		List<String> negativeResults = new ArrayList<String>();
+
+		if (notificationHeader(5) != null) {
+			log(LogStatus.PASS, "Notification Header is present there: " + notificationHeader(5).getText()+" in Home Page", YesNo.No);
+
+		} else {
+			log(LogStatus.FAIL, "Notification Header is not present there in Home Page", YesNo.No);
+			negativeResults.add("Notification Header is not present there in Home Page");
+		}
+		List<String> notificationOptionsListInText = notificationOptionsList.stream()
+				.map(x -> CommonLib.getText(driver, x, "Event Name", action.BOOLEAN)).collect(Collectors.toList());
+
+		if (notificationOptionsListInText.size() != 0) {
+			for (int i = 0; i < eventName.length; i++) {
+				if (!notificationOptionsListInText.contains(eventName[i])) {
+
+					log(LogStatus.PASS, "Event: " + eventName[i] + " is not present there in Notification Pane of HomePage",
+							YesNo.No);
+				}
+
+				else {
+
+					log(LogStatus.FAIL, "Event: " + eventName[i] + " is present there in Notification Pane of HomePage", YesNo.No);
+					negativeResults.add("Event: " + eventName[i] + " is present there in Notification Pane of HomePage");
+				}
+			}
+		} else {
+
+			log(LogStatus.FAIL, "Either Notification Pane is not open or might be Locator gets changed", YesNo.No);
+			negativeResults.add("Either Notification Pane is not open or might be Locator gets changed");
+		}
+
+		return negativeResults;
+
 	}
 
 }

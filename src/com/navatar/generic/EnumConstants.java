@@ -413,7 +413,7 @@ Fundraising_ContactPage, Financing, Financial_Performance, Marketing_Initiative,
 		public String toString() {
 			return "Rename Tabs and Labels";
 		}
-	}
+	}, Event
 	};
 
 	
@@ -1280,7 +1280,7 @@ public static enum PermissionType{
 				public String toString() {
 					return "Lender Status";
 				}
-			}, Deal_Contact
+			}, Deal_Contact, Stage_Upd, Pipeline_Comments, Pipeline_Comments_Upd, Legal_Name, Status_Notes, Legal_Name_Upd, Status_Notes_Upd
 		};
 	
 	public static enum Links{
