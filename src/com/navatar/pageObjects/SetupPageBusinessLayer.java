@@ -73,7 +73,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 				|| objectName == object.App_Manager || objectName == object.Lightning_App_Builder
 				|| objectName == object.Profiles || objectName == object.Override || objectName == object.Tabs
 				|| objectName == object.Users || objectName == object.Sharing_Settings
-				|| objectName == object.Rename_Tabs_And_Labels) {
+				|| objectName == object.Rename_Tabs_And_Labels || objectName == object.Custom_Metadata_Types) {
 			if (objectName == object.Global_Actions || objectName == object.Tabs || objectName == object.Users) {
 				index = "[2]";
 			}
@@ -508,12 +508,12 @@ public class SetupPageBusinessLayer extends SetupPage {
 												"Salesforce CRM Content User check Box", action.SCROLLANDBOOLEAN)) {
 											ThreadSleep(2000);
 
-											if(title!=null && title!="")
-											{
+//											if(title!=null && title!="")
+//											{
 												if(sendKeys(driver, getUserTitle(20), title, "User title", action.SCROLLANDBOOLEAN))
 												{
 													appLog.info(title+" value has been passed in user title");
-													ThreadSleep(1000);
+													ThreadSleep(2000);
 													if (clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(30),
 															"Save Button", action.SCROLLANDBOOLEAN)) {
 														appLog.info("clicked on save button");
@@ -529,7 +529,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 												{
 													appLog.error(title+" value is not passed in user title");
 												}
-											}
+//											}
 
 										} else {
 											appLog.info("Not able to click on content user checkbox");

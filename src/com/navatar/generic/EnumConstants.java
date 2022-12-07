@@ -413,7 +413,7 @@ Fundraising_ContactPage, Financing, Financial_Performance, Marketing_Initiative,
 		public String toString() {
 			return "Rename Tabs and Labels";
 		}
-	}, Event
+	}, Event, Custom_Metadata_Types
 	};
 
 	
