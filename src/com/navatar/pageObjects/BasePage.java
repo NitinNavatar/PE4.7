@@ -8115,5 +8115,19 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getpopupOKbutton(int timeOut) {
 		return isDisplayed(driver, popupOKbutton, "Visibility", timeOut, "pop up OK button");
 	}
+	
+	
+	public WebElement addButtonOnInteractionCard(String subjectName, int timeOut) {
+		String xpath = "//a[text()='" + subjectName + "']/../preceding-sibling::div//button[@title='Add Note']";
+		WebElement ele = FindElement(driver, xpath, "Header Found: " + subjectName, action.SCROLLANDBOOLEAN, timeOut);
+		try {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "Header Found: " + subjectName);
+
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "] Header Found: " + subjectName);
+		}
+	}
+	
+	
 
 }

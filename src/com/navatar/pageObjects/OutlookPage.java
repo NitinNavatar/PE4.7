@@ -49,6 +49,17 @@ public class OutlookPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, inviteAttendeesInputBox, "Visibility", timeOut, "inviteAttendeesInputBox");
 
 	}
+	
+	public WebElement crossButtonOfAttendeeInEditOutLook(String attendeeName, int timeOut) {
+		String xpath = "//div[@aria-label=\"Invite attendees\"]//span[text()=\""+attendeeName+"\"]/parent::span//span[@id=\"removeButton\"]";
+		try {
+			return FindElement(driver, xpath, "Attendee Header: " + attendeeName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Attendee Header: " + attendeeName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+	
+	
 
 	@FindBy(xpath = "//input[@aria-label='Start date']")
 	private WebElement startDateInputBox;
@@ -212,27 +223,11 @@ public class OutlookPage extends BasePageBusinessLayer {
 		return FindElements(driver, "//div[@class='zw21U CT1Ra']", "createdEventsNameAccToDateSelected");
 	}
 
-	@FindBy(xpath = "//span[text()='Cancel']/ancestor::button")
-	private WebElement eventCancelButton;
-
-	public WebElement eventCancelButton(int timeOut) {
-		return isDisplayed(driver, eventCancelButton, "Visibility", timeOut, "eventCancelButton");
-
-	}
-
 	@FindBy(xpath = "//span[text()='This event']/ancestor::button")
 	private WebElement thisEventDropDownValue;
 
 	public WebElement thisEventDropDownValue(int timeOut) {
 		return isDisplayed(driver, thisEventDropDownValue, "Visibility", timeOut, "thisEventDropDownValue");
-
-	}
-
-	@FindBy(xpath = "//span[text()='Edit']/ancestor::button")
-	private WebElement eventEditButton;
-
-	public WebElement eventEditButton(int timeOut) {
-		return isDisplayed(driver, eventEditButton, "Visibility", timeOut, "eventEditButton");
 
 	}
 
@@ -373,4 +368,67 @@ public class OutlookPage extends BasePageBusinessLayer {
 		}
 	}
 
+	@FindBy(xpath = "//button[contains(@class,'monthAndYear')]/span")
+	private WebElement actualMonth;
+
+	public WebElement getActualMonth(int timeOut) {
+		return isDisplayed(driver, actualMonth, "Visibility", timeOut, "actualMonth");
+
+	}
+
+	@FindBy(xpath = "//div[contains(@class,'monthComponents')]//i[@data-icon-name='Down']")
+	private WebElement downArrow;
+
+	public WebElement getdownArrowValue(int timeOut) {
+		return isDisplayed(driver, downArrow, "Visibility", timeOut, "downArrow");
+
+	}
+
+	@FindBy(xpath = "//div[contains(@class,'monthComponents')]//i[@data-icon-name='Up']")
+	private WebElement upArrow;
+
+	public WebElement getUpArrowValue(int timeOut) {
+		return isDisplayed(driver, upArrow, "Visibility", timeOut, "upArrow");
+
+	}
+
+	@FindBy(xpath = "//div[@class='pQPSJ']//div[contains(@class,'CT1Ra')]")
+	private List<WebElement> listOfEventNames;
+
+	public List<WebElement> getlistOfEventNames() {
+		return listOfEventNames;
+
+	}
+
+	@FindBy(xpath = "//button[@name='Edit']")
+	private WebElement eventEditButton;
+
+	public WebElement getEventEditButton(int timeOut) {
+		return isDisplayed(driver, eventEditButton, "Visibility", timeOut, "Event edit button");
+
+	}
+
+	@FindBy(xpath = "//div[@title='Calendar']//child::i")
+	private WebElement getOutlookCalenderIcon;
+
+	public WebElement getOutlookCalenderIcon(int timeOut) {
+		return isDisplayed(driver, getOutlookCalenderIcon, "Visibility", timeOut, "calenderIcon");
+
+	}
+
+	@FindBy(xpath = "//button[@name='Cancel']")
+	private WebElement eventCancelButton;
+
+	public WebElement getEventCancelButton(int timeOut) {
+		return isDisplayed(driver, eventCancelButton, "Visibility", timeOut, "Event Cancel button");
+
+	}
+	
+	@FindBy(xpath = "//span[text()='Update sent']")
+	private WebElement eventUpdateMsg;
+
+	public WebElement eventUpdateMsg(int timeOut) {
+		return isDisplayed(driver, eventUpdateMsg, "Visibility", timeOut, "eventUpdateMsg");
+
+	}
 }
