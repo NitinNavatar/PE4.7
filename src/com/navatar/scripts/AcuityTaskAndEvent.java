@@ -418,6 +418,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String[] relatedToData=ATE_ARelatedTo1.split("<break>");
 		String[] verifyRelatedToField= {relatedToData[0],crmUser6FirstName+" "+crmUser6LastName,relatedToData[1]};
+		String[] relatedAssociation=ATE_ARelatedAsso1.split("<break>");
 		
 		String contactSectionName=ATE_ContactName2;
 		String contactSectionTitle=ATE_ContactTitle2;
@@ -458,7 +459,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					if (bp.clicktabOnPage("Acuity")) {
 						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-						ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Task,taskSubject, taskNotes, true, false,verifyRelatedToField,null);
+						ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Task,taskSubject, taskNotes, true, false,verifyRelatedToField,relatedAssociation);
 						if (result.isEmpty()) {
 							log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
 							sa.assertTrue(true,taskSubject + " record has been verified on intraction");
@@ -757,6 +758,17 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String taskPriority=ATE_AdvancePriority2;
 
 		String[] relatedToData=ATE_ARelatedTo2.split("<break>");
+		String[] relatedAssocVal=ATE_ARelatedAsso2.split("<break>");
+
+		String userName=crmUser6FirstName+" "+crmUser6LastName;
+
+		String[] relatedAssociation=new String[relatedAssocVal.length+1];
+		relatedAssociation[0]=userName;
+		for(int i=1; i<relatedAssociation.length; i++)
+		{
+			relatedAssociation[i]=relatedAssocVal[i-1];
+		}
+
 
 		String contactSectionName=ATE_ContactName4;
 		String contactSectionTitle=ATE_ContactTitle4;
@@ -814,7 +826,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					if (bp.clicktabOnPage("Acuity")) {
 						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-						ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Call,taskSubject, taskNotes, true, false,relatedToData,null);
+						ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Call,taskSubject, taskNotes, true, false,relatedToData,relatedAssociation);
 						if (result.isEmpty()) {
 							log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
 							sa.assertTrue(true,taskSubject + " record has been verified on intraction");
@@ -1282,95 +1294,194 @@ public class AcuityTaskAndEvent extends BaseLib {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 
 		String recordName=ATERecord3;
-		String activityType=ATE_ATActivityType79;
-		String taskSubject=ATE_ATSubject79;
-		String taskRelatedTo=ATE_ATRelatedTo9;
-		String taskNotes=ATE_ATNotes79;
 
-		String dueDay=ATE_Day6;
-		String taskDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDay));
-		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate, "Activity Timeline", excelLabel.Variable_Name,
-				"ATE_079", excelLabel.Advance_Due_Date);
+		String activityType=ATE_ATActivityType3;
+		String taskSubject=ATE_ATSubject3;
+		String taskRelatedTo=ATE_ATRelatedTo3;
+		String taskNotes=ATE_ATNotes3;
 
-		String taskStatus=ATE_AdvanceStatus6;
-		String taskPriority=ATE_AdvancePriority7;
-
-		String activityType1=ATE_ATActivityType80;
-		String taskSubject1=ATE_ATSubject80;
-		String taskRelatedTo1=ATE_ATRelatedTo10;
-		String taskNotes1=ATE_ATNotes80;
-		String dueDay1=ATE_Day7;
-		String taskDueDate1 = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(dueDay1));
-		ExcelUtils.writeData(AcuityDataSheetFilePath, taskDueDate1, "Activity Timeline", excelLabel.Variable_Name,
-				"ATE_080", excelLabel.Advance_Due_Date);
-		String taskStatus1=ATE_AdvanceStatus7;
-		String taskPriority1=ATE_AdvancePriority8;
-
-
-		String activityType2=ATE_ATActivityType81;
-		String taskSubject2=ATE_ATSubject81;
-		String taskRelatedTo2=ATE_ATRelatedTo11;
-		String taskNotes2=ATE_ATNotes81;
-
-		String taskStartDay=ATE_Day8;
+		String taskStartDay=ATE_Day14;
 		String advanceStartDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(taskStartDay));
 		ExcelUtils.writeData(AcuityDataSheetFilePath, advanceStartDate, "Activity Timeline", excelLabel.Variable_Name,
-				"ATE_081", excelLabel.Advance_Start_Date);
+				"ATE_003", excelLabel.Advance_Start_Date);
 
-		String taskEndDay=ATE_EndDay2;
+		String taskEndDay=ATE_EndDay5;
 		String advanceEndDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "MM/dd/yyyy", Integer.parseInt(taskEndDay));
-		ExcelUtils.writeData(AcuityDataSheetFilePath, advanceStartDate, "Activity Timeline", excelLabel.Variable_Name,
-				"ATE_081", excelLabel.Advance_End_Date);
+		ExcelUtils.writeData(AcuityDataSheetFilePath, advanceEndDate, "Activity Timeline", excelLabel.Variable_Name,
+				"ATE_003", excelLabel.Advance_End_Date);
 
-		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Due Date Only", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
+		String userName1=crmUser6FirstName+" "+crmUser6LastName;
+		String userName2=crmUser7FirstName+" "+crmUser7LastName;
+		String userName3=crmUser8FirstName+" "+crmUser8LastName;
+		String userName4=crmUser9FirstName+" "+crmUser9LastName;
+		String userName5=crmUser10FirstName+" "+crmUser10LastName;
+		String userName6=crmUser11FirstName+" "+crmUser11LastName;
+		String userName7=crmUser12FirstName+" "+crmUser12LastName;
+		String userName8=crmUser13FirstName+" "+crmUser13LastName;
+		String userName9=crmUser14FirstName+" "+crmUser14LastName;
+		String userName10=crmUser15FirstName+" "+crmUser15LastName;
+		String userName11=crmUser16FirstName+" "+crmUser16LastName;
 
-		String[][] basicsection1 = { { "Subject", taskSubject1 }, { "Notes", taskNotes1 }, { "Related_To", taskRelatedTo1 } };
-		String[][] advanceSection1 = { { "Due Date Only", taskDueDate1 }, {"Status", taskStatus1}, {"Priority", taskPriority1} };
+		String assignedToUser=null;
+		String[] userData= {ATE_User3};
 
-		String[][] basicsection2 = { { "Subject", taskSubject2 }, { "Notes", taskNotes2 }, { "Related_To", taskRelatedTo2 } };
-		String[][] advanceSection2 = { { "Start Date", advanceStartDate },{"End Date",advanceEndDate}};	
-
-		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
-
-		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null)) {
-			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
-			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
-
-		}
-		else
+		for(int i=0; i<userData.length; i++)
 		{
-			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
-			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
-		}	
-
-		if (bp.createActivityTimeline(projectName, true, activityType1, basicsection1, advanceSection1, null, null)) {
-			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject1, YesNo.No);
-			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject1);
-
-		}
-		else
-		{
-			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
-			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
-		}
-
-		if (lp.clickAnyCellonCalender(projectName)) {
-			log(LogStatus.INFO,"Able to click on Calendar/Event Link",YesNo.No);
-
-			if (bp.updateActivityTimelineRecord(projectName, basicsection2, advanceSection2, null, null,null)) {
-				log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject2, YesNo.No);
-				sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject2);
-
+			if(userData[i].toLowerCase().trim().equals("pe user 1"))
+			{
+				assignedToUser=userName1;
+			}
+			else if(userData[i].toLowerCase().trim().equals("pe user 2"))
+			{
+				assignedToUser=userName2;
+			}
+			else if(userData[i].toLowerCase().trim().equals("pe user 3"))
+			{
+				assignedToUser=userName3;
+			}else if(userData[i].toLowerCase().trim().equals("pe user 4"))
+			{
+				assignedToUser=userName4;
+			}else if(userData[i].toLowerCase().trim().equals("pe user 5"))
+			{
+				assignedToUser=userName5;
+			}else if(userData[i].toLowerCase().trim().equals("pe user 6"))
+			{
+				assignedToUser=userName6;
+			}else if(userData[i].toLowerCase().trim().equals("pe user 7"))
+			{
+				assignedToUser=userName7;
+			}
+			else if(userData[i].toLowerCase().trim().equals("pe user 8"))
+			{
+				assignedToUser=userName8;
+			}else if(userData[i].toLowerCase().trim().equals("pe user 9"))
+			{
+				assignedToUser=userName9;
+			}else if(userData[i].toLowerCase().trim().equals("pe user 10"))
+			{
+				assignedToUser=userName10;
+			}
+			else if(userData[i].toLowerCase().trim().equals("pe user 11"))
+			{
+				assignedToUser=userName11;
 			}
 			else
 			{
-				log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject2, YesNo.No);
-				sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject2);
+				Assertion hardAssert = new Assertion();
+				log(LogStatus.ERROR, "user data is not correct on ecxel", YesNo.No);
+				hardAssert.assertTrue(true == false);
+			}
+		}
+
+		String[] companiesTaggedName= {ATE_TaggedCompanyName3,ATE_TaggedCompanyName4,ATE_TaggedCompanyName5,ATE_TaggedCompanyName6,ATE_TaggedCompanyName7};
+		String[] companiesTaggedTimeReference= {ATE_TaggedCompanyTimeReference3,ATE_TaggedCompanyTimeReference4,ATE_TaggedCompanyTimeReference5,ATE_TaggedCompanyTimeReference6,ATE_TaggedCompanyTimeReference7};
+
+		String[] dealTaggedName= {ATE_TaggedDealName3,ATE_TaggedDealName4,ATE_TaggedDealName5};
+		String[] dealTaggedTimeReference= {ATE_TaggedDealTimeReference3,ATE_TaggedDealTimeReference4,ATE_TaggedDealTimeReference5};
+
+		String[] peopleTagName={ATE_TaggedPeopleName2,ATE_TaggedPeopleName3,ATE_TaggedPeopleName4};
+		String[] peopleTaggedTimeReference={ATE_TaggedPeopleTimeReference2,ATE_TaggedPeopleTimeReference3,ATE_TaggedPeopleTimeReference4};
+
+		String[] relatedToData=ATE_ARelatedTo3.split("<break>");
+
+		String[] relatedAssocVal=ATE_ARelatedAsso3.split("<break>");
+
+		String[] relatedAssociation=new String[relatedAssocVal.length+1];
+		relatedAssociation[0]=userName2;
+		for(int i=1; i<relatedAssociation.length; i++)
+		{
+			relatedAssociation[i]=relatedAssocVal[i-1];
+		}
+
+
+		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
+		String[][] advanceSection = { { "Start Date", advanceStartDate },{"End Date",advanceEndDate}, {"Assigned To ID",assignedToUser}};	
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+		int k=0; 
+		if (lp.clickAnyCellonCalender(projectName)) {
+			log(LogStatus.INFO,"Able to click on Calendar/Event Link",YesNo.No);
+
+			refresh(driver);
+			if (bp.updateActivityTimelineRecord(projectName, basicsection, advanceSection, null, null,null)) {
+				log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
+				sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+				k++;
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
+				sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
 			}
 		} else {
 			log(LogStatus.ERROR,"Not Able to Click on Calendar/Event Link",YesNo.Yes);
 			sa.assertTrue(false,"Not Able to Click on Calendar/Event Link");	
+		}
+		refresh(driver);
+		ThreadSleep(3000);
+		if(k!=0)
+		{
+			if (lp.clickOnTab(projectName, tabObj1)) {
+
+				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+						recordName, 30)) {
+					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+					if (bp.clicktabOnPage("Acuity")) {
+						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+						ArrayList<String> result=bp.verifyRecordOnInteractionCard(advanceStartDate, IconType.Meeting,taskSubject, taskNotes, false, true, relatedToData,relatedAssociation);
+						if(result.isEmpty())
+						{
+							log(LogStatus.INFO, "The task has been verified on Interaction card. subject name: "+taskSubject , YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The task is not verified on Interaction card. subject name: "+taskSubject+". "+result , YesNo.No);
+							sa.assertTrue(false,  "The task is not verified on Interaction card. subject name: "+taskSubject+". "+result);
+						}
+
+						ArrayList<String> result1=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference);
+						if(result1.isEmpty())
+						{
+							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result1, YesNo.No);
+							sa.assertTrue(false,  "The record name and Time reference are not verifed. "+result1);
+						}
+
+						if (bp.verifySubjectLinkRedirectionOnIntraction(driver,taskSubject)) {
+							log(LogStatus.INFO, "page successfully redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);			
+						}
+						else
+						{
+							log(LogStatus.ERROR, "page is not redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);		
+							sa.assertTrue(false,  "page is not redirecting to the "+ taskSubject+ " page on new tab");
+
+						}
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Acuity tab");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+					sa.assertTrue(false,  "Not able to open record "+recordName);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			}
 		}
 
 		lp.CRMlogout();	
@@ -1450,8 +1561,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 				if (bp.clicktabOnPage("Acuity")) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-
-
 
 					ArrayList<String> result=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactName, connectionTeamMember, connectionTitle, connectionDeal, connectionMeetingAndCall, connectionEmail);
 					if(result.isEmpty())
@@ -1636,7 +1745,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
 
-					ArrayList<String> result1=bp.verifyRecordOnInteractionCard(taskDueDate1, IconType.Event,taskSubject1, taskDetails1, false, true, relatedToData,relatedAssociation);
+					ArrayList<String> result1=bp.verifyRecordOnInteractionCard(taskDueDate1, IconType.Meeting, taskSubject1, taskDetails1, false, true, relatedToData,relatedAssociation);
 					if(result1.isEmpty())
 					{
 						log(LogStatus.INFO, "The task has been verified on Interaction card. subject name: "+taskSubject1 , YesNo.No);
@@ -4863,10 +4972,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 				log(LogStatus.ERROR, "user data is not correct on ecxel", YesNo.No);
 				hardAssert.assertTrue(true == false);
 			}
-		}
-		for(int i=0; i<subjectName.length; i++)
-		{
-			System.out.println("Icon - "+iconType[i]+" ||  subject - "+subjectName[i]+"  ||  Date - "+date[i] );
 		}
 
 

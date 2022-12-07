@@ -5513,14 +5513,14 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, calenderIcon, "Visibility", timeOut, "View Calendar");
 	}
 
-	@FindBy(xpath = "//div[contains(@class,'eventList')]")
-	private WebElement calenderCellIcon;
+	@FindBy(xpath = "//button[text()='New Event' and contains(@class,'new-event-button')]")
+	private WebElement newEventBtn;
 
 	/**
 	 * @return the emailProspectFolderDropDownList
 	 */
-	public WebElement getCalenderCellIcon(int timeOut) {
-		return isDisplayed(driver, calenderCellIcon, "Visibility", timeOut, "Calender Cell Icon");
+	public WebElement getNewEventBtn(int timeOut) {
+		return isDisplayed(driver, newEventBtn, "Visibility", timeOut, "Calender Cell Icon");
 	}
 
 	@FindBy(xpath = "//*[contains(text(),' New ')]/../following-sibling::footer/*[@title='Save' or text()='Save']")
