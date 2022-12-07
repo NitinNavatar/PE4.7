@@ -73,7 +73,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 				|| objectName == object.App_Manager || objectName == object.Lightning_App_Builder
 				|| objectName == object.Profiles || objectName == object.Override || objectName == object.Tabs
 				|| objectName == object.Users || objectName == object.Sharing_Settings
-				|| objectName == object.Rename_Tabs_And_Labels) {
+				|| objectName == object.Rename_Tabs_And_Labels || objectName == object.Custom_Metadata_Types) {
 			if (objectName == object.Global_Actions || objectName == object.Tabs || objectName == object.Users) {
 				index = "[2]";
 			}
@@ -508,12 +508,12 @@ public class SetupPageBusinessLayer extends SetupPage {
 												"Salesforce CRM Content User check Box", action.SCROLLANDBOOLEAN)) {
 											ThreadSleep(2000);
 
-											if(title!=null && title!="")
-											{
+//											if(title!=null && title!="")
+//											{
 												if(sendKeys(driver, getUserTitle(20), title, "User title", action.SCROLLANDBOOLEAN))
 												{
 													appLog.info(title+" value has been passed in user title");
-													ThreadSleep(1000);
+													ThreadSleep(2000);
 													if (clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(30),
 															"Save Button", action.SCROLLANDBOOLEAN)) {
 														appLog.info("clicked on save button");
@@ -529,7 +529,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 												{
 													appLog.error(title+" value is not passed in user title");
 												}
-											}
+//											}
 
 										} else {
 											appLog.info("Not able to click on content user checkbox");
@@ -5967,53 +5967,53 @@ public class SetupPageBusinessLayer extends SetupPage {
 		WebElement ele = null;
 		if (click(driver, getExpandUserIcon(30), "expand User Icon", action.SCROLLANDBOOLEAN)) {
 			appLog.info("clicked on user expand icon");
-				if (click(driver, getUsersLink(30), "User Link", action.SCROLLANDBOOLEAN)) {
-					appLog.info("clicked on users link");
-					switchToFrame(driver, 20, getSetUpPageIframe(20));
-					CommonLib.ThreadSleep(3000);
-					try {
-						ele = new WebDriverWait(driver, 50)
-								.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[text()='" + email
-										+ "']/parent::td//preceding-sibling::td[@class='actionColumn']//a[text()='Edit']")));
-					} catch (Exception ex) {
-						ex.printStackTrace();
-						log(LogStatus.ERROR, "Could not found the Element of the edit button", YesNo.Yes);
-						flag = false;
-					}
-					if (click(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
-						appLog.info("Clicked on the edit button against " + email);
-						switchToDefaultContent(driver);
-						switchToFrame(driver, 50, getuserEditPageIframe(50));
-						ThreadSleep(3000);
-						
+			if (click(driver, getUsersLink(30), "User Link", action.SCROLLANDBOOLEAN)) {
+				appLog.info("clicked on users link");
+				switchToFrame(driver, 20, getSetUpPageIframe(20));
+				CommonLib.ThreadSleep(3000);
+				try {
+					ele = new WebDriverWait(driver, 50)
+							.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[text()='" + email
+									+ "']/parent::td//preceding-sibling::td[@class='actionColumn']//a[text()='Edit']")));
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					log(LogStatus.ERROR, "Could not found the Element of the edit button", YesNo.Yes);
+					flag = false;
+				}
+				if (click(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
+					appLog.info("Clicked on the edit button against " + email);
+					switchToDefaultContent(driver);
+					switchToFrame(driver, 50, getuserEditPageIframe(50));
+					ThreadSleep(3000);
+
 					switchToFrame(driver, 20, getSetUpPageIframe(20));
 					if (sendKeys(driver, getUserFirstName(60), userfirstname, "User First Name",
 							action.SCROLLANDBOOLEAN)) {
 						if (sendKeys(driver, getUserLastName(60), userlastname, "User Last Name",
 								action.SCROLLANDBOOLEAN)) {
-										if (click(driver, getActiveUserCheckBox(60),
-												"Active User check Box", action.SCROLLANDBOOLEAN)) {
-											ThreadSleep(5000);
-											if (click(driver, getpopupOKbutton(60),
-													"pop up OK button", action.SCROLLANDBOOLEAN)) {
-											if (clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(30),
-													"Save Button", action.SCROLLANDBOOLEAN)) {
-												appLog.info("clicked on save button");
-												appLog.info("CRM User is updated successfully: " + userfirstname + " "
-														+ userlastname);
-												return true;
-											} else {
-												appLog.error("Not able to click on save buttton so cannot create user: "
-														+ userfirstname + " " + userlastname);
-											}
+							if (click(driver, getActiveUserCheckBox(60),
+									"Active User check Box", action.SCROLLANDBOOLEAN)) {
+								ThreadSleep(5000);
+								if (click(driver, getpopupOKbutton(60),
+										"pop up OK button", action.SCROLLANDBOOLEAN)) {
+									if (clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(30),
+											"Save Button", action.SCROLLANDBOOLEAN)) {
+										appLog.info("clicked on save button");
+										appLog.info("CRM User is updated successfully: " + userfirstname + " "
+												+ userlastname);
+										return true;
+									} else {
+										appLog.error("Not able to click on save buttton so cannot create user: "
+												+ userfirstname + " " + userlastname);
+									}
 
 
-										} else {
-											appLog.info("Not able to click on Active user checkbox");
-										}
-										} else {
-											appLog.info("Not able to click on pop up OK button");
-										}
+								} else {
+									appLog.info("Not able to click on Active user checkbox");
+								}
+							} else {
+								appLog.info("Not able to click on pop up OK button");
+							}
 
 						} else {
 							appLog.error("Not able to pass user last name in text box: " + userlastname
