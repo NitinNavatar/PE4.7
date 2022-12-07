@@ -19906,4 +19906,49 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
+	public List<String> verifyNotificationOptionsNotContainsInRecordDetailPage(String... eventName) {
+
+		List<WebElement> notificationOptionsList = getNotificationOptions();
+
+		List<String> negativeResults = new ArrayList<String>();
+
+		if (notificationHeaderInRecordDetailsPage(5) != null) {
+			log(LogStatus.PASS,
+					"Notification Header is present there: " + notificationHeaderInRecordDetailsPage(5).getText(),
+					YesNo.No);
+
+		} else {
+			log(LogStatus.FAIL, "Notification Header is not present there", YesNo.No);
+			negativeResults.add("Notification Header is not present there");
+		}
+		List<String> notificationOptionsListInText = notificationOptionsList.stream()
+				.map(x -> CommonLib.getText(driver, x, "Event Name", action.BOOLEAN)).collect(Collectors.toList());
+
+		if (notificationOptionsListInText.size() != 0) {
+			for (int i = 0; i < eventName.length; i++) {
+				if (!notificationOptionsListInText.contains(eventName[i])) {
+
+					log(LogStatus.PASS,
+							"Event: " + eventName[i] + " is not present there in Notification Pane of HomePage",
+							YesNo.No);
+				}
+
+				else {
+
+					log(LogStatus.FAIL, "Event: " + eventName[i] + " is present there in Notification Pane of HomePage",
+							YesNo.No);
+					negativeResults
+							.add("Event: " + eventName[i] + " is present there in Notification Pane of HomePage");
+				}
+			}
+		} else {
+
+			log(LogStatus.FAIL, "Either Notification Pane is not open or might be Locator gets changed", YesNo.No);
+			negativeResults.add("Either Notification Pane is not open or might be Locator gets changed");
+		}
+
+		return negativeResults;
+
+	}
+
 }

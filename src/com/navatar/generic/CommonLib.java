@@ -342,8 +342,7 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 		}
 		return toolTip;
 	}
-	
-	
+
 	public static boolean mouseOverClickOperation(WebDriver driver, WebElement webElement) {
 		Actions actions = new Actions(driver);
 		try {
@@ -1689,8 +1688,7 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 		}
 		return driver.findElements(By.xpath(xpath));
 	}
-	
-	
+
 	public static List<WebElement> FindElements(WebDriver driver, String xpath) {
 		for (int i = 0; i < 41; i++) {
 			if (driver.findElements(By.xpath(xpath)).isEmpty()) {
@@ -3434,8 +3432,8 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 	/**
 	 * 
 	 * @author Ankur Huria
-	 * @description- This method is used to get Future date and past date according to the time
-	 *               zone. pass the Month in the capital letter
+	 * @description- This method is used to get Future date and past date according
+	 *               to the time zone. pass the Month in the capital letter
 	 */
 	public static String getFutureDateAccToTimeZone(String timeZone, String format, int daysToAdd) {
 		try {
@@ -3474,6 +3472,62 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 			e.getMessage();
 			return null;
 		}
+	}
+
+	/**
+	 * @author: Ankur
+	 * @param dateformat
+	 * @param date
+	 * @return boolean value
+	 * @description: This menthod is used to check the required date format
+	 */
+
+	public static boolean checkDateFormat(String dateformat, String date) {
+		DateFormat formatter = new SimpleDateFormat(dateformat);
+		formatter.setLenient(false);
+		try {
+			formatter.parse(date);
+			return true;
+		} catch (ParseException e) {
+			return false;
+		}
+
+	}
+
+	/**
+	 * @author Ankur
+	 * 
+	 * @return localDateTime
+	 */
+	public static String getTodayDate() {
+		Calendar calendar = Calendar.getInstance();
+		Date currentDate = calendar.getTime();
+		DateFormat dateFormat = new SimpleDateFormat("M/d/yyyy");
+		String currentStrDate = dateFormat.format(currentDate);
+		return currentStrDate;
+	}
+
+	/**
+	 * 
+	 * @author Ankur
+	 * @param date
+	 * @return
+	 * @Description- This method is used to get monthandYear name
+	 */
+
+	public static String getMonthYear(String date) {
+		Date d = null;
+		try {
+			d = new SimpleDateFormat("M/d/yyyy", Locale.ENGLISH).parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		String monthName = new SimpleDateFormat("MMMM").format(cal.getTime());
+		String year = new SimpleDateFormat("yyyy").format(cal.getTime());
+		String monthYear = monthName + " " + year;
+		return monthYear;
 	}
 
 }
