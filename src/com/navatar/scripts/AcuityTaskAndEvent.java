@@ -4429,10 +4429,20 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
+	
+	
+	/*
+	 * 
+	 * 
+	 * Upload Task, Task Relation, Event and Event Relation CSV File. Then Exeute further testcase
+	 * 
+	 * 
+	 */
+		
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0031_VerifyIntermediaryAccountAcuityTabAndVerifyCompanyWhichHaveDealThoseCompanyWillBeHighlightedInCompanyTabRefrerenceSection(String projectName) {
+	public void ATETc028_VerifyIntermediaryAccountAcuityTabAndVerifyCompanyWhichHaveDealThoseCompanyWillBeHighlightedInCompanyTabRefrerenceSection(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4644,7 +4654,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0032_VerifyConnectionPopupOnIntermediaryAccountPage(String projectName) {
+	public void ATETc029_VerifyConnectionPopupOnIntermediaryAccountPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -4957,7 +4967,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0033_VerifyIntermediaryContactAcuityTab(String projectName) {
+	public void ATETc030_VerifyIntermediaryContactAcuityTab(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5365,7 +5375,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0034_VerifyCountFunctionalityVerificationOnAccountPage(String projectName) {
+	public void ATETc031_VerifyCountFunctionalityVerificationOnAccountPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -5771,7 +5781,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0035_VerifyCountFunctionalityVerificationOnContactPage(String projectName) {
+	public void ATETc032_VerifyCountFunctionalityVerificationOnContactPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -6075,7 +6085,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc036_CreateATaskWithIntermediaryFirmContactAndVerifyTheAccountAcuityTab(String projectName) {
+	public void ATETc033_CreateATaskWithIntermediaryFirmContactAndVerifyTheAccountAcuityTab(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -6179,7 +6189,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0037_VerifyImpactOnIntermediaryAccountAcuityTab(String projectName) {
+	public void ATETc034_VerifyImpactOnIntermediaryAccountAcuityTab(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -6371,7 +6381,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0038_VerifyConnectionPopupOnIntermediaryAccountPage(String projectName) {
+	public void ATETc035_VerifyConnectionPopupOnIntermediaryAccountPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -6597,7 +6607,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0039_VerifyIntermediaryContactAcuityTab(String projectName) {
+	public void ATETc036_VerifyIntermediaryContactAcuityTab(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -6942,7 +6952,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc040_AssociateIntermediaryAccountWithReferenceAccountsContactInATaskAndEvent(String projectName) {
+	public void ATETc037_AssociateIntermediaryAccountWithReferenceAccountsContactInATaskAndEvent(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7047,7 +7057,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0041_VerifyImpactOnIntermediaryAccountAcuityTab(String projectName) {
+	public void ATETc038_VerifyImpactOnIntermediaryAccountAcuityTab(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7252,7 +7262,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0042_VerifyConnectionPopupOnIntermediaryAccountPage(String projectName) {
+	public void ATETc039_VerifyConnectionPopupOnIntermediaryAccountPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7442,7 +7452,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0043_VerifyIntermediaryContactAcuityTab(String projectName) {
+	public void ATETc040_VerifyIntermediaryContactAcuityTab(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7949,7 +7959,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
 	
 	
 	@Parameters({ "projectName" })
@@ -12018,8 +12027,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 	
-	
-
 
 	
 }

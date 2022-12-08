@@ -1189,6 +1189,28 @@ public class SetupPage extends BasePageBusinessLayer {
 			return FindElement(driver, xpath, "EditButtonOfAcuitySettings", action.SCROLLANDBOOLEAN, timeOut);
 		}
 	}
+	
+	public WebElement settingTypeManageRecordsButton(String SettingType, int timeOut) {
+		String xpath = "//th//a[text()='"+ SettingType +"']/../..//a[text()='Manage Records']";
+
+		try {
+			return isDisplayed(driver, FindElement(driver, xpath, "SettingTypeInCustomMetaData", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "SettingTypeInCustomMetaData");
+
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, FindElement(driver, xpath, "SettingTypeInCustomMetaData", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "SettingTypeInCustomMetaData");
+		}
+	}
+	
+	public String GetDataFromValueFieldInCustomMetaData(int timeOut) {
+		String xpath = "//td[contains(@class,'dataCol last')]//input";
+
+		try {
+			return FindElement(driver, xpath, "Value Field", action.SCROLLANDBOOLEAN, 10).getAttribute("value");
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Value Field", action.SCROLLANDBOOLEAN, 10).getAttribute("value");
+		}
+	}
 
 	@FindBy(xpath = "//input[@id='Title']")
 	private WebElement userTitle;
@@ -1207,34 +1229,8 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getValueTextBoxInAcuitySetting(int timeOut) {
 		return isDisplayed(driver, valueTextBoxInAcuitySetting, "Visibility", timeOut, "ValueTextBoxInAcuitySetting");
 	}
-	public String GetDataFromValueFieldInCustomMetaData(int timeOut) {
-        String xpath = "//td[contains(@class,'dataCol last')]//*";
-
-
-
-       try {
-            return FindElement(driver, xpath, "Value Field", action.SCROLLANDBOOLEAN, 10).getAttribute("value");
-
-
-
-       } catch (StaleElementReferenceException e) {
-            return FindElement(driver, xpath, "Value Field", action.SCROLLANDBOOLEAN, 10).getAttribute("value");
-        }
-    }
 	
-	public WebElement settingTypeManageRecordsButton(String SettingType, int timeOut) {
-        String xpath = "//th//a[text()='"+ SettingType +"']/../..//a[text()='Manage Records']";
-
-
-
-       try {
-            return isDisplayed(driver, FindElement(driver, xpath, "SettingTypeInCustomMetaData", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "SettingTypeInCustomMetaData");
-
-
-
-       } catch (StaleElementReferenceException e) {
-            return isDisplayed(driver, FindElement(driver, xpath, "SettingTypeInCustomMetaData", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "SettingTypeInCustomMetaData");
-        }
-    }
+	
+	
 }
 
