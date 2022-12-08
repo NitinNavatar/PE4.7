@@ -123,6 +123,18 @@ public class CommonVariables {
 	public static String crmUser15FirstName,crmUser15LastName,crmUser15EmailID,crmUser15Profile,crmUser15Lience,crmUser15Title ;
 	public static String crmUser16FirstName,crmUser16LastName,crmUser16EmailID,crmUser16Profile,crmUser16Lience,crmUser16Title ;
 	
+	
+	public static String RGAdminUserFirstName,RGAdminUserLastName,RGAdminUserEmailID,RGOrganizationName,RGAdminUserProfile;
+	public static String RGcrmUser1FirstName,RGcrmUser1LastName,RGcrmUser1EmailID,RGcrmUser1Profile,RGcrmUser1Lience;
+	public static String RGcrmUser2FirstName,RGcrmUser2LastName,RGcrmUser2EmailID,RGcrmUser2Profile,RGcrmUser2Lience;
+	public static String RGcrmUser3FirstName,RGcrmUser3LastName,RGcrmUser3EmailID,RGcrmUser3Profile,RGcrmUser3Lience;
+	public static String RGcrmUser4FirstName,RGcrmUser4LastName,RGcrmUser4EmailID,RGcrmUser4Profile,RGcrmUser4Lience;
+	public static String RGcrmUser5FirstName,RGcrmUser5LastName,RGcrmUser5EmailID,RGcrmUser5Profile,RGcrmUser5Lience;
+	public static String RGcrmUser6FirstName,RGcrmUser6LastName,RGcrmUser6EmailID,RGcrmUser6Profile,RGcrmUser6Lience;
+	
+	
+	
+	
 	public static String glUser1FirstName,glUser1LastName,glUser1EmailID,glUserProfile,glUserLience,glUser3EmailID;
 
 	
@@ -1498,6 +1510,38 @@ public class CommonVariables {
 	 		
 	    
 	    
+	 		
+	 		
+	 		
+	 		/*                    RG Acuity Task and Event           */
+	 		
+	 		//Firm
+	 		public static String RGATE_FirmLegalName1;
+	 		public static String RGATE_FirmRecordType1;
+	 		
+	 		
+	 		//Contact
+	 		public static String RGATE_ContactFirstName1;
+	 		public static String RGATE_ContactLastName1;
+	 		public static String RGATE_ContactLegalName1;
+	 		public static String RGATE_ContactEmail1;
+	 		
+	 		
+	 		//Deal  
+	 		public static String RGATE_DealName1;
+	 		public static String RGATE_DealCompany1;
+	 		public static String RGATE_DealStage1;
+	 		
+	 		//Fund
+	 		public static String RGATE_FundName1;
+	 		public static String RGATE_FundType1;
+	 		public static String RGATE_FundInvestmentCategory1;
+	 		
+	 		
+	 		
+	 		
+	 		
+	 		
 	    
 	    
 	    
@@ -1671,8 +1715,50 @@ public class CommonVariables {
 		crmUser16Title=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User16", excelLabel.User_Title);
 		
 
+		/**************************** RG Admin and CRM User **********************************/
+		RGAdminUserFirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGAdminUser", excelLabel.User_First_Name);
+		RGAdminUserLastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGAdminUser", excelLabel.User_Last_Name);
+		RGAdminUserEmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGAdminUser", excelLabel.User_Email);
+		RGOrganizationName=ExcelUtils.readData(smokeFilePath,"Users",excelLabel.Variable_Name, "RGAdminUser", excelLabel.Organization_Name);
+		RGAdminUserProfile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGAdminUser", excelLabel.User_Profile);
+
+
 		
+		RGcrmUser1FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser1", excelLabel.User_First_Name);
+		RGcrmUser1LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser1", excelLabel.User_Last_Name);
+		RGcrmUser1EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser1", excelLabel.User_Email);
+		RGcrmUser1Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser1", excelLabel.User_Profile);
+		RGcrmUser1Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser1", excelLabel.User_License);
 		
+		RGcrmUser2FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser2", excelLabel.User_First_Name);
+		RGcrmUser2LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser2", excelLabel.User_Last_Name);
+		RGcrmUser2EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser2", excelLabel.User_Email);
+		RGcrmUser2Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser2", excelLabel.User_Profile);
+		RGcrmUser2Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser2", excelLabel.User_License);
+
+		RGcrmUser3FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser3", excelLabel.User_First_Name);
+		RGcrmUser3LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser3", excelLabel.User_Last_Name);
+		RGcrmUser3EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser3", excelLabel.User_Email);
+		RGcrmUser3Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser3", excelLabel.User_Profile);
+		RGcrmUser3Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser3", excelLabel.User_License);
+
+		RGcrmUser4FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser4", excelLabel.User_First_Name);
+		RGcrmUser5LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser4", excelLabel.User_Last_Name);
+		RGcrmUser4EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser4", excelLabel.User_Email);
+		RGcrmUser4Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser4", excelLabel.User_Profile);
+		RGcrmUser4Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser4", excelLabel.User_License);
+
+		RGcrmUser5FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser5", excelLabel.User_First_Name);
+		RGcrmUser5LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser5", excelLabel.User_Last_Name);
+		RGcrmUser5EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser5", excelLabel.User_Email);
+		RGcrmUser5Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser5", excelLabel.User_Profile);
+		RGcrmUser5Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser5", excelLabel.User_License);
+
+		RGcrmUser6FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser6", excelLabel.User_First_Name);
+		RGcrmUser6LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser6", excelLabel.User_Last_Name);
+		RGcrmUser6EmailID=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser6", excelLabel.User_Email);
+		RGcrmUser6Profile=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser6", excelLabel.User_Profile);
+		RGcrmUser6Lience=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "RGUser6", excelLabel.User_License);
 
 		
 		glUser1FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "Usergl", excelLabel.User_First_Name);
@@ -7890,10 +7976,36 @@ public class CommonVariables {
 		 		ATE_dealName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "ATE_Deal3", excelLabel.Deal_Name);
 		 		
 		 		
+		 		/*                  RG Task and Event            */
+		 		
+		 		//Firm record
+		 		 RGATE_FirmLegalName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGATERecord001", excelLabel.Legal_Name);
+			 		
+			 	 RGATE_FirmRecordType1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGATERecord001", excelLabel.Record_Type);
+		 		
+		 		//Contact
+			 	RGATE_ContactFirstName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con1", excelLabel.Contact_FirstName);
+		 		
+		 		RGATE_ContactLastName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con1", excelLabel.Contact_LastName);
+		 		
+		 		RGATE_ContactLegalName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con1", excelLabel.Legal_Name);
+		 				 		
+		 		RGATE_ContactEmail1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGATE_Con1", excelLabel.Contact_EmailId);
 		 		
 		 		
+		 		//Deal 
+		 		RGATE_DealName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal1", excelLabel.Deal_Name);
 		 		
+		 		RGATE_DealCompany1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal1", excelLabel.Company);
 		 		
+		 		RGATE_DealStage1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "RGATE_Deal1", excelLabel.Stage);
+		 		
+		 		//Fund
+		 		RGATE_FundName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "RGATE_Fund01", excelLabel.Fund_Name);
+		 		
+		 		RGATE_FundType1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "RGATE_Fund01", excelLabel.Fund_Type);
+		 		
+		 		RGATE_FundInvestmentCategory1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "RGATE_Fund01", excelLabel.Fund_Investment_Category);
 		 		
 		 		
 		 		
