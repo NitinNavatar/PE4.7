@@ -1322,7 +1322,7 @@ public class CommonVariables {
 	    /***************************** Acuity (Task & Event) ******************************/
 	    
 	    //firm 
-	    public static String ATERecord1,ATERecord2,ATERecord3,ATERecord4,ATERecord5,ATERecord6,ATERecord7,ATERecord8,ATERecord9;
+	    public static String ATERecord1,ATERecord2,ATERecord3,ATERecord4,ATERecord5,ATERecord6,ATERecord7,ATERecord8,ATERecord9,ATERecord10;
 	    
 	    //Acuity sections
 	    public static String ATE_Section1,ATE_Section2;
@@ -1358,19 +1358,19 @@ public class CommonVariables {
 	    /************* Contact Section on Acuity ***********/
 	    
 	    public static String ATE_ContactName1, ATE_ContactName2,ATE_ContactName3,ATE_ContactName4,ATE_ContactName5,ATE_ContactName6,ATE_ContactName7,ATE_ContactName8,ATE_ContactName9,ATE_ContactName10,ATE_ContactName11,ATE_ContactName12,ATE_ContactName13,ATE_ContactName14,ATE_ContactName15,ATE_ContactName16,ATE_ContactName17,ATE_ContactName18,ATE_ContactName19,ATE_ContactName20,
-	    ATE_ContactName21,ATE_ContactName22,ATE_ContactName23;
+	    ATE_ContactName21,ATE_ContactName22,ATE_ContactName23,ATE_ContactName24;
 	    
 	    public static String ATE_ContactTitle1,ATE_ContactTitle2,ATE_ContactTitle3,ATE_ContactTitle4,ATE_ContactTitle5,ATE_ContactTitle6,ATE_ContactTitle7,ATE_ContactTitle8,ATE_ContactTitle9,ATE_ContactTitle10,ATE_ContactTitle11,ATE_ContactTitle12,ATE_ContactTitle13,ATE_ContactTitle14,ATE_ContactTitle15,ATE_ContactTitle16,ATE_ContactTitle17,ATE_ContactTitle18,ATE_ContactTitle19,ATE_ContactTitle20,
-	    ATE_ContactTitle21,ATE_ContactTitle22,ATE_ContactTitle23;
+	    ATE_ContactTitle21,ATE_ContactTitle22,ATE_ContactTitle23,ATE_ContactTitle24;
 	    
 	    public static String ATE_ContactDeal1,ATE_ContactDeal2,ATE_ContactDeal3,ATE_ContactDeal4,ATE_ContactDeal5,ATE_ContactDeal6,ATE_ContactDeal7,ATE_ContactDeal8,ATE_ContactDeal9,ATE_ContactDeal10,ATE_ContactDeal11,ATE_ContactDeal12,ATE_ContactDeal13,ATE_ContactDeal14,ATE_ContactDeal15,ATE_ContactDeal16,ATE_ContactDeal17,ATE_ContactDeal18,ATE_ContactDeal19,ATE_ContactDeal20,
-	    ATE_ContactDeal21,ATE_ContactDeal22,ATE_ContactDeal23;
+	    ATE_ContactDeal21,ATE_ContactDeal22,ATE_ContactDeal23,ATE_ContactDeal24;
 	    
 	    public static String ATE_ContactMeetingAndCall1,ATE_ContactMeetingAndCall2,ATE_ContactMeetingAndCall3,ATE_ContactMeetingAndCall4,ATE_ContactMeetingAndCall5,ATE_ContactMeetingAndCall6,ATE_ContactMeetingAndCall7,ATE_ContactMeetingAndCall8,ATE_ContactMeetingAndCall9,ATE_ContactMeetingAndCall10,ATE_ContactMeetingAndCall11,ATE_ContactMeetingAndCall12,ATE_ContactMeetingAndCall13,ATE_ContactMeetingAndCall14,ATE_ContactMeetingAndCall15,ATE_ContactMeetingAndCall16,ATE_ContactMeetingAndCall17,ATE_ContactMeetingAndCall18,ATE_ContactMeetingAndCall19,ATE_ContactMeetingAndCall20,
-	    ATE_ContactMeetingAndCall21,ATE_ContactMeetingAndCall22,ATE_ContactMeetingAndCall23;
+	    ATE_ContactMeetingAndCall21,ATE_ContactMeetingAndCall22,ATE_ContactMeetingAndCall23,ATE_ContactMeetingAndCall24;
 	    
 	    public static String ATE_ContactEmail1,ATE_ContactEmail2,ATE_ContactEmail3,ATE_ContactEmail4,ATE_ContactEmail5,ATE_ContactEmail6,ATE_ContactEmail7,ATE_ContactEmail8,ATE_ContactEmail9,ATE_ContactEmail10,ATE_ContactEmail11,ATE_ContactEmail12,ATE_ContactEmail13,ATE_ContactEmail14,ATE_ContactEmail15,ATE_ContactEmail16,ATE_ContactEmail17,ATE_ContactEmail18,ATE_ContactEmail19,ATE_ContactEmail20,
-	    ATE_ContactEmail21,ATE_ContactEmail22,ATE_ContactEmail23;
+	    ATE_ContactEmail21,ATE_ContactEmail22,ATE_ContactEmail23,ATE_ContactEmail24;
 		    
 	    
 	    /******** contact ***********/
@@ -1494,7 +1494,7 @@ public class CommonVariables {
 	 		
 	 		
 	 		/************** Deal ****************************/
-	 		public static String ATE_dealName1,ATE_dealName2;
+	 		public static String ATE_dealName1,ATE_dealName2,ATE_dealName3;
 	 		
 	    
 	    
@@ -6834,6 +6834,7 @@ public class CommonVariables {
 			    ATERecord7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ATERecord007", excelLabel.Legal_Name);
 			    ATERecord8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ATERecord008", excelLabel.Legal_Name);
 			    ATERecord9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ATERecord009", excelLabel.Legal_Name);
+			    ATERecord10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "ATERecord010", excelLabel.Legal_Name);
 			    
 			    
 			    //Acuity sections
@@ -6897,6 +6898,7 @@ public class CommonVariables {
 			    ATE_ContactName21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE021", excelLabel.Contact_Name);
 			    ATE_ContactName22=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE022", excelLabel.Contact_Name);
 			    ATE_ContactName23=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE023", excelLabel.Contact_Name);
+			    ATE_ContactName24=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE024", excelLabel.Contact_Name);
 
 			    ATE_ContactTitle1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE001", excelLabel.Contact_Title);
 			    ATE_ContactTitle2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE002", excelLabel.Contact_Title);
@@ -6921,6 +6923,7 @@ public class CommonVariables {
 			    ATE_ContactTitle21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE021", excelLabel.Contact_Title);
 			    ATE_ContactTitle22=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE022", excelLabel.Contact_Title);
 			    ATE_ContactTitle23=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE023", excelLabel.Contact_Title);
+			    ATE_ContactTitle24=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE024", excelLabel.Contact_Title);
 			    
 			    ATE_ContactDeal1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE001", excelLabel.Contact_Deals);
 			    ATE_ContactDeal2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE002", excelLabel.Contact_Deals);
@@ -6945,6 +6948,7 @@ public class CommonVariables {
 			    ATE_ContactDeal21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE021", excelLabel.Contact_Deals);
 			    ATE_ContactDeal22=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE022", excelLabel.Contact_Deals);
 			    ATE_ContactDeal23=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE023", excelLabel.Contact_Deals);
+			    ATE_ContactDeal24=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE024", excelLabel.Contact_Deals);
 				    
 			    ATE_ContactMeetingAndCall1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE001", excelLabel.Contact_Meetings_And_Calls);
 			    ATE_ContactMeetingAndCall2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE002", excelLabel.Contact_Meetings_And_Calls);
@@ -6970,6 +6974,7 @@ public class CommonVariables {
 			    ATE_ContactMeetingAndCall21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE021", excelLabel.Contact_Meetings_And_Calls);
 			    ATE_ContactMeetingAndCall22=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE022", excelLabel.Contact_Meetings_And_Calls);
 			    ATE_ContactMeetingAndCall23=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE023", excelLabel.Contact_Meetings_And_Calls);
+			    ATE_ContactMeetingAndCall24=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE024", excelLabel.Contact_Meetings_And_Calls);
 			    
 			    ATE_ContactEmail1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE001", excelLabel.Contact_Email);
 			    ATE_ContactEmail2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE002", excelLabel.Contact_Email);
@@ -6994,6 +6999,7 @@ public class CommonVariables {
 			    ATE_ContactEmail21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE021", excelLabel.Contact_Email);
 			    ATE_ContactEmail22=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE022", excelLabel.Contact_Email);
 			    ATE_ContactEmail23=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE023", excelLabel.Contact_Email);
+			    ATE_ContactEmail24=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE024", excelLabel.Contact_Email);
 			    
 			    //Contact
 			    ATE_Contact1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "ATE_Con1", excelLabel.ContactName);
@@ -7881,6 +7887,7 @@ public class CommonVariables {
 		 		/************************ Deal ***********************/
 		 		ATE_dealName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "ATE_Deal1", excelLabel.Deal_Name);
 		 		ATE_dealName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "ATE_Deal2", excelLabel.Deal_Name);
+		 		ATE_dealName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "ATE_Deal3", excelLabel.Deal_Name);
 		 		
 		 		
 		 		
