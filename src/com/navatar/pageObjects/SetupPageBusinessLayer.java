@@ -19,6 +19,7 @@ import org.sikuli.script.Screen;
 import com.navatar.generic.AppListeners;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
+import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.EnumConstants.Condition;
 import com.navatar.generic.EnumConstants.ContactPagePhotoActions;
 import com.navatar.generic.EnumConstants.LookUpIcon;
@@ -6561,5 +6562,59 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return flag;
 	}
 
+	public boolean UpdateValueInCustomMetaData(String type, String fieldName, String valueField, int timeOut) {
+		boolean flag = false;
+		String Name =  fieldName.replace(" ", "_");
+		String SettingType = type.replace("_", " ");
+		if (searchStandardOrCustomObject(environment, mode, object.Custom_Metadata_Types)) {
+			log(LogStatus.INFO, "click on Object : " + object.Custom_Metadata_Types, YesNo.No);
+			ThreadSleep(2000);
+			switchToFrame(driver, 60, getSetUpPageIframe(120));
+			if (clickUsingJavaScript(driver, settingTypeManageRecordsButton(SettingType,10), "Manage Records", action.BOOLEAN)) {
+				log(LogStatus.INFO, "able to click on Manage Records link", YesNo.No);
+				ThreadSleep(1000);
+				switchToFrame(driver, 60, getSetUpPageIframe(60));
+				if (click(driver, EditButtonOfAcuitySettings(Name,30), "Edit button", action.SCROLLANDBOOLEAN)) {
+					
+					log(LogStatus.INFO, "click on edit button of " + fieldName, YesNo.No);
+					ThreadSleep(5000);
+					switchToFrame(driver, 60, getSetUpPageIframe(60));
+					ExcelUtils.writeData(AcuityDataSheetFilePath, GetDataFromValueFieldInCustomMetaData(10), "CustomMetaData", excelLabel.FieldName, fieldName,
+							excelLabel.Value);
+					System.out.println(GetDataFromValueFieldInCustomMetaData(10));
+					ThreadSleep(2000);
+					if (sendKeys(driver, getValueTextBoxInAcuitySetting(30), valueField,
+							"Value Text Box", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.PASS, "enter the value in description : " + valueField, YesNo.No);
+						if (click(driver, getViewAccessbilityDropDownSaveButton(20), "save button",
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.PASS, "clicked on save button", YesNo.No);
+							flag = true;
+						} else {
+							log(LogStatus.PASS, "not able to clicked on save button ",
+									YesNo.No);
+							sa.assertTrue(false,
+									"not able to clicked on save button ");
+						}
+					} else {
+						log(LogStatus.PASS, "not able to enter the value in description : " + valueField, YesNo.No);
+						sa.assertTrue(false, "not able to enter the value in description : " + valueField);
+					}
+				} else {
+					log(LogStatus.INFO, "not able to click on edit button of " + fieldName, YesNo.No);
+					sa.assertTrue(false, "not able to click on edit button of " + fieldName);
+				}
+			} else {
+				log(LogStatus.INFO, "not able to click on Manage Records link", YesNo.No);
+				sa.assertTrue(false, "not able to click on Manage Records link");
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not able to search/click on " + object.Custom_Metadata_Types, YesNo.Yes);
+			sa.assertTrue(false, "Not able to search/click on " + object.Custom_Metadata_Types);
+		}
+		return flag;
+	}
+	
 }
 
