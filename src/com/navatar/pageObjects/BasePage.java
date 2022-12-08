@@ -8148,4 +8148,176 @@ public abstract class BasePage extends BaseLib {
 	private WebElement editButtonOnActivityPage;
 	
 
+
+public WebElement contactname(String contactName, int timeOut) {
+
+	String xpath = "//a[text()='" + contactName
+			+ "']";
+	try {
+		return FindElement(driver, xpath, "Contact Header: " + contactName, action.SCROLLANDBOOLEAN, timeOut);
+	} catch (StaleElementReferenceException e) {
+		return FindElement(driver, xpath, "Contact Header: " + contactName, action.SCROLLANDBOOLEAN, timeOut);
+	}
+
+}
+
+public WebElement Username(String UserName, int timeOut) {
+
+	String xpath = "//a[text()='" + UserName
+			+ "']";
+	try {
+		return FindElement(driver, xpath, "Contact Header: " + UserName, action.SCROLLANDBOOLEAN, timeOut);
+	} catch (StaleElementReferenceException e) {
+		return FindElement(driver, xpath, "Contact Header: " + UserName, action.SCROLLANDBOOLEAN, timeOut);
+	}
+
+}
+public WebElement ContactRecordPage(String contactname, int timeOut) {
+
+	try {
+		return FindElement(driver,
+				"//div[text()='Contact']/parent::h1//span[text()='"+contactname+"']",
+				"Contact Header: " + contactname, action.SCROLLANDBOOLEAN, timeOut);
+	} catch (StaleElementReferenceException e) {
+		return FindElement(driver,
+				"//div[text()='Deal']/parent::h1//lightning-formatted-text[text()='\"+dealName+\"']",
+				"Contact Header: " + contactname, action.SCROLLANDBOOLEAN, timeOut);
+	}
+
+}
+public WebElement UserRecordPage(String Username, int timeOut) {
+
+	try {
+		return FindElement(driver,
+				"//span//span[text()='"+Username+"']",
+				"Contact Header: " + Username, action.SCROLLANDBOOLEAN, timeOut);
+	} catch (StaleElementReferenceException e) {
+		return FindElement(driver,
+				"//span//span[text()='"+Username+"']",
+				"Contact Header: " + Username, action.SCROLLANDBOOLEAN, timeOut);
+	}
+
+}
+@FindBy(xpath = "//div[@class='slds-modal__container']//div[text()='No items to display']")
+private WebElement contactEmailCountpopup;
+
+public WebElement getcontactEmailCountpopup(int timeOut) {
+	return isDisplayed(driver, contactEmailCountpopup, "Visibility", timeOut, "contactEmailCountpopup");
+}
+public WebElement contactPopUpTO(String subject, String Toname, int timeOut) {
+
+	String xpath = "//a[text()='"+subject+"']/ancestor::tr//button[@name = 'toEmailNames' and text()='"+Toname+"']";
+	try {
+		return FindElement(driver, xpath, "for to: " + Toname, action.SCROLLANDBOOLEAN, timeOut);
+	} catch (StaleElementReferenceException e) {
+		return FindElement(driver, xpath, "for to: " + Toname, action.SCROLLANDBOOLEAN, timeOut);
+	}
+
+}
+
+public WebElement ToPopup( String Toname, int timeOut) {
+
+	String xpath = "//div[@class='slds-modal__container']//a[text()='"+Toname+"']";
+	try {
+		return FindElement(driver, xpath, "for to: " + Toname, action.SCROLLANDBOOLEAN, timeOut);
+	} catch (StaleElementReferenceException e) {
+		return FindElement(driver, xpath, "for to: " + Toname, action.SCROLLANDBOOLEAN, timeOut);
+	}
+
+}
+
+@FindBy(xpath = "//header/button[@title='Close']")
+private WebElement Contactpopupheader;
+
+public WebElement getContactpopupheader(int timeOut) {
+	return isDisplayed(driver, Contactpopupheader, "Visibility", timeOut, "Contactpopupheader");
+}
+
+@FindBy(xpath = "//div[@class='slds-modal__container']//h2")
+private WebElement Connectionpopupheader;
+
+public WebElement getConnectionpopupheader(int timeOut) {
+	return isDisplayed(driver, Connectionpopupheader, "Visibility", timeOut, "Connectionpopupheader");
+}
+
+
+public WebElement CCPopup( String CCname, int timeOut) {
+
+	String xpath = "//div[@class='slds-modal__container']//a[text()='"+CCname+"']";
+	try {
+		return FindElement(driver, xpath, "for to: " + CCname, action.SCROLLANDBOOLEAN, timeOut);
+	} catch (StaleElementReferenceException e) {
+		return FindElement(driver, xpath, "for to: " + CCname, action.SCROLLANDBOOLEAN, timeOut);
+	}
+
+}
+public WebElement contactPopUpCC(String subject, String CCname, int timeOut) {
+
+	String xpath = "//a[text()='"+subject+"']/ancestor::tr//button[@name = 'ccEmailNames' and text()='"+CCname+"']";
+	try {
+		return FindElement(driver, xpath, "for CC: " + CCname, action.SCROLLANDBOOLEAN, timeOut);
+	} catch (StaleElementReferenceException e) {
+		return FindElement(driver, xpath, "for CC: " + CCname, action.SCROLLANDBOOLEAN, timeOut);
+	}
+
+}
+public WebElement connectionicon(String contactname, int timeOut) {
+
+	String xpath = "//a[text()='"+contactname+"']/ancestor::tr//button[@name='Connections']";
+	try {
+		return FindElement(driver, xpath, "Header: " + contactname, action.SCROLLANDBOOLEAN, timeOut);
+	} catch (StaleElementReferenceException e) {
+		return FindElement(driver, xpath, "Header: " + contactname, action.SCROLLANDBOOLEAN, timeOut);
+	}
+}
+public WebElement DownloadIcon(String contactname, int timeOut) {
+	WebElement ele;
+	String xpath = "//a[text()='"+contactname+"']/ancestor::tr//button[@name='downloadIcon']";
+	 return ele = isDisplayed(driver, FindElement(driver, xpath, "Download Icon Found: " + contactname,
+			action.SCROLLANDBOOLEAN, timeOut), "Visibility", 10, "Download Icon");
+}
+public WebElement contactEmailCount(String contactName, int timeOut) {
+
+	String xpath = "//a[text()='" + contactName
+			+ "']/ancestor::td[@data-label='Name']/..//td[@data-label='Emails']//span//button";
+	try {
+		return FindElement(driver, xpath, "Contact Header: " + contactName, action.SCROLLANDBOOLEAN, timeOut);
+	} catch (StaleElementReferenceException e) {
+		return FindElement(driver, xpath, "Contact Header: " + contactName, action.SCROLLANDBOOLEAN, timeOut);
+	}
+}
+	public WebElement contactPopUpEmailsubject( String subject, int timeOut) {
+
+		String xpath = "//div[@class='slds-modal__container']//a[text()='" + subject
+				+ "']";
+		try {
+			return FindElement(driver, xpath, "Header: " + subject, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Header: " + subject, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+	@FindBy(xpath = "//h2[contains(text(),'Emails with')]/../following-sibling::div//lightning-icon[@title='Filter']")
+	private WebElement filterIconOnEmailPopup;
+
+	public WebElement getfilterIconOnEmailPopup(int timeOut) {
+		return isDisplayed(driver, filterIconOnEmailPopup, "Visibility", timeOut,
+				"filter Icon On Email Popup");
+	}
+
+	@FindBy(xpath = "//h2[contains(text(),'Emails with')]/../following-sibling::div//section//h3")
+	private WebElement headingOnFilterSectionEmailPopup;
+
+	public WebElement getheadingOnFilterSectionEmailPopup(int timeOut) {
+		return isDisplayed(driver, headingOnFilterSectionEmailPopup, "Visibility", timeOut,
+				"heading On Filter Section Email Popup");
+	}
+
+	@FindBy(xpath = "//h2[contains(text(),'Emails with')]/../following-sibling::div//section//lightning-icon[@title='Close']")
+	private WebElement closeIconOnFilterSectiOnEmailPopup;
+
+	public WebElement getcloseIconOnFilterSectiOnEmailPopup(int timeOut) {
+		return isDisplayed(driver, closeIconOnFilterSectiOnEmailPopup, "Visibility", timeOut,
+				"close Icon On Filter SectiOn Email Popup");
+	}
 }

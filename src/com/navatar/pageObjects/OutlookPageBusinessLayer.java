@@ -379,87 +379,93 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		
 	}
 		
-	public boolean sendMailFromRGOutlook(String to,String cc,String bcc,String subject,String message ,action action,int timeout) {
-		boolean flag=false;
+	public boolean sendMailFromRGOutlook(String[] to,String[] cc,String bcc,String subject,String message ,action action,int timeout) {
+		boolean flag = false;
 
 		if (click(driver, getNewEmailButton(timeout), "new email button", action)) {
 			log(LogStatus.INFO, "Clicked on new email button", YesNo.No);
 			ThreadSleep(2000);
-			if (sendKeys(driver, getToInputBox(timeout), to, "to input box", action)) {
-				log(LogStatus.INFO, "enter value in To box :"+to, YesNo.No);
+			for(int i = 0; i <to.length; i++) {
+			if (sendKeysWithoutClearingTextBox(driver, getToInputBox(timeout), to[i]+",", "to input box", action)) {
+				log(LogStatus.INFO, "enter value in To box :" + to[i], YesNo.No);
 				ThreadSleep(2000);
-				if (sendKeys(driver, getCCInputBox(timeout), cc, "cc input box", action)) {
-					log(LogStatus.INFO, "enter value in CC box :"+cc, YesNo.No);
-					ThreadSleep(1000);
-					
-					if(bcc!=null) {
-						
-						if (click(driver, getBCCLink(timeout), "bcc link", action)) {
-							log(LogStatus.INFO, "Clicked on bcc link button", YesNo.No);
-							ThreadSleep(1000);
-							if (sendKeys(driver, getBCCInputBox(timeout), bcc, "bcc input box", action)) {
-								log(LogStatus.INFO, "able to enter value in BCC box :"+bcc, YesNo.No);
-								ThreadSleep(1000);
-							}else {
-								log(LogStatus.ERROR, "Not able to enter value in BCC box :"+bcc, YesNo.Yes);
-								BaseLib.sa.assertTrue(false, "Not able to enter value in BCC box :"+bcc);
-							}
-						}else {
-							log(LogStatus.ERROR, "Not able to click on bcc link button", YesNo.Yes);
-							BaseLib.sa.assertTrue(false, "Not able to click on bcc link button");
-						}		
-					}
-					
-					if (sendKeys(driver, getSubjectInputBox(timeout), subject, "subject input box", action)) {
-						
-						log(LogStatus.INFO, "enter value in subject box :"+subject, YesNo.No);
-						ThreadSleep(1000);
-						if(message!=null) {
-							if (sendKeys(driver, getMailMessageInputBox(timeout),message , "message input box", action)) {
-								log(LogStatus.INFO, "enter value in message box :"+message, YesNo.No);
-								ThreadSleep(1000);
-								
-							} else {
-								log(LogStatus.ERROR, "Not able to enter value in message box :"+message, YesNo.Yes);
-								BaseLib.sa.assertTrue(false, "Not able to enter value in message box :"+message);
-							}
-							
-						}
-						
-						if (click(driver, getSendButton(timeout), "Send button", action)) {
-							log(LogStatus.INFO, "Clicked on Send button", YesNo.No);
-							ThreadSleep(2000);
-							flag=true;
-							
-						} else {
-							log(LogStatus.ERROR, "Not able to clicked on send button", YesNo.Yes);
-							BaseLib.sa.assertTrue(false, "Not able to clicked on send button");
-						}
-						
-						
-					} else {
-						log(LogStatus.ERROR, "Not able to enter value in subject box :"+subject, YesNo.Yes);
-						BaseLib.sa.assertTrue(false, "Not able to enter value in subject box :"+subject);
-					}
-					
-					
-				} else {
-					log(LogStatus.ERROR, "Not able to enter value in CC box :"+cc, YesNo.Yes);
-					BaseLib.sa.assertTrue(false, "Not able to enter value in CC box :"+cc);
-				}
-				
 			} else {
-				log(LogStatus.ERROR, "Not able to enter value in To box :"+to, YesNo.Yes);
-				BaseLib.sa.assertTrue(false, "Not able to enter value in To box :"+to);
+				log(LogStatus.ERROR, "Not able to enter value in To box :" + to[i], YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to enter value in To box :" + to[i]);
 			}
+			}
+
 			
+				if (cc != null) {
+					for(int i = 0; i <cc.length; i++) {
+					if (sendKeysAndPressEnter(driver, getCCInputBox(timeout), cc[i]+",", "cc input box", action)) {
+						log(LogStatus.INFO, "enter value in CC box :" + cc[i], YesNo.No);
+						ThreadSleep(1000);
+					} else {
+						log(LogStatus.ERROR, "Not able to enter value in CC box :" + cc[i], YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to enter value in CC box :" + cc[i]);
+					}
+
+				}
+			}
+				ThreadSleep(2000);
+				if (bcc != null) {
+
+					if (click(driver, getBCCLink(timeout), "bcc link", action)) {
+						log(LogStatus.INFO, "Clicked on bcc link button", YesNo.No);
+						ThreadSleep(1000);
+						if (sendKeys(driver, getBCCInputBox(timeout), bcc+",", "bcc input box", action)) {
+							log(LogStatus.INFO, "able to enter value in BCC box :" + bcc, YesNo.No);
+							ThreadSleep(1000);
+						} else {
+							log(LogStatus.ERROR, "Not able to enter value in BCC box :" + bcc, YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Not able to enter value in BCC box :" + bcc);
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on bcc link button", YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to click on bcc link button");
+					}
+				}
+
+				if (sendKeys(driver, getSubjectInputBox(timeout), subject, "subject input box", action)) {
+
+					log(LogStatus.INFO, "enter value in subject box :" + subject, YesNo.No);
+					ThreadSleep(1000);
+					if (message != null) {
+						if (sendKeys(driver, getMailMessageInputBox(timeout), message, "message input box", action)) {
+							log(LogStatus.INFO, "enter value in message box :" + message, YesNo.No);
+							ThreadSleep(1000);
+
+						} else {
+							log(LogStatus.ERROR, "Not able to enter value in message box :" + message, YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Not able to enter value in message box :" + message);
+						}
+
+					}
+
+					if (click(driver, getSendButton(timeout), "Send button", action)) {
+						log(LogStatus.INFO, "Clicked on Send button", YesNo.No);
+						ThreadSleep(5000);
+						flag = true;
+
+					} else {
+						log(LogStatus.ERROR, "Not able to clicked on send button", YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to clicked on send button");
+					}
+
+				} else {
+					log(LogStatus.ERROR, "Not able to enter value in subject box :" + subject, YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not able to enter value in subject box :" + subject);
+				}
+
+
 		} else {
 			log(LogStatus.ERROR, "Not able to click on new email button", YesNo.Yes);
 			BaseLib.sa.assertTrue(false, "Not able to click on new email button");
 		}
-		
+
 		return flag;
-		
+
 	}
 	public boolean loginAndCreateEventThroughOutLook(String userName, String userPassword, String eventTitle,
 			String eventAttendees, String startDate, String endDate, String startTime, String endTime,

@@ -1223,11 +1223,14 @@ public class SetupPage extends BasePageBusinessLayer {
 		return defaultRecord;
 	}
 	
-	@FindBy(xpath = "//td[contains(@class,'dataCol last')]//input")
+	@FindBy(xpath = "//td[contains(@class,'dataCol last')]//*")
 	private WebElement valueTextBoxInAcuitySetting;
 
 	public WebElement getValueTextBoxInAcuitySetting(int timeOut) {
 		return isDisplayed(driver, valueTextBoxInAcuitySetting, "Visibility", timeOut, "ValueTextBoxInAcuitySetting");
 	}
 	
+	
+	
 }
+
