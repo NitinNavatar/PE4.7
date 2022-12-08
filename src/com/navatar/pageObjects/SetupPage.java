@@ -1179,7 +1179,16 @@ public class SetupPage extends BasePageBusinessLayer {
 	 */
 	
 	
-	
+	public WebElement EditButtonOfAcuitySettings(String SettingName, int timeOut) {
+		String xpath = "//td[text()='"+ SettingName +"']/ancestor::tr//a[text()='Edit']";
+
+		try {
+			return FindElement(driver, xpath, "EditButtonOfAcuitySettings", action.SCROLLANDBOOLEAN, timeOut);
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "EditButtonOfAcuitySettings", action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
 
 	@FindBy(xpath = "//input[@id='Title']")
 	private WebElement userTitle;
@@ -1190,6 +1199,13 @@ public class SetupPage extends BasePageBusinessLayer {
 	
 	public WebElement getdefaultRecord(int timeOut) {
 		return defaultRecord;
+	}
+	
+	@FindBy(xpath = "//td[contains(@class,'dataCol last')]//input")
+	private WebElement valueTextBoxInAcuitySetting;
+
+	public WebElement getValueTextBoxInAcuitySetting(int timeOut) {
+		return isDisplayed(driver, valueTextBoxInAcuitySetting, "Visibility", timeOut, "ValueTextBoxInAcuitySetting");
 	}
 	
 }

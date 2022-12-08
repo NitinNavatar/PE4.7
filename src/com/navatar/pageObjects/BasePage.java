@@ -5513,14 +5513,14 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, calenderIcon, "Visibility", timeOut, "View Calendar");
 	}
 
-	@FindBy(xpath = "//div[contains(@class,'eventList')]")
-	private WebElement calenderCellIcon;
+	@FindBy(xpath = "//button[text()='New Event' and contains(@class,'new-event-button')]")
+	private WebElement newEventBtn;
 
 	/**
 	 * @return the emailProspectFolderDropDownList
 	 */
-	public WebElement getCalenderCellIcon(int timeOut) {
-		return isDisplayed(driver, calenderCellIcon, "Visibility", timeOut, "Calender Cell Icon");
+	public WebElement getNewEventBtn(int timeOut) {
+		return isDisplayed(driver, newEventBtn, "Visibility", timeOut, "Calender Cell Icon");
 	}
 
 	@FindBy(xpath = "//*[contains(text(),' New ')]/../following-sibling::footer/*[@title='Save' or text()='Save']")
@@ -8115,6 +8115,38 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getpopupOKbutton(int timeOut) {
 		return isDisplayed(driver, popupOKbutton, "Visibility", timeOut, "pop up OK button");
 	}
+	
+	
+	public WebElement addButtonOnInteractionCard(String subjectName, int timeOut) {
+		String xpath = "//a[text()='" + subjectName + "']/../preceding-sibling::div//button[@title='Add Note']";
+		WebElement ele = FindElement(driver, xpath, "Header Found: " + subjectName, action.SCROLLANDBOOLEAN, timeOut);
+		try {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "Header Found: " + subjectName);
+
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "] Header Found: " + subjectName);
+		}
+	}
+	
+	
+
+
+	
+	public WebElement getEditButton(int timeOut) {
+		return isDisplayed(driver, editButton, "Visibility", timeOut,
+				"Edit button");
+	}
+	@FindBy(xpath = "//button[@class='slds-button slds-button_neutral' and @name='Edit']")
+	private WebElement editButton;
+	
+
+	public WebElement getEditButtonOnActivityPage(int timeOut) {
+		return isDisplayed(driver, editButtonOnActivityPage, "Visibility", timeOut,
+				"Edit button");
+	}
+	@FindBy(xpath = "//a[@class='forceActionLink']/div[@title='Edit']")
+	private WebElement editButtonOnActivityPage;
+	
 
 
 public WebElement contactname(String contactName, int timeOut) {

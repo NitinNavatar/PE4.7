@@ -196,7 +196,7 @@ Fundraising_ContactPage, Financing, Financial_Performance, Marketing_Initiative,
 	}
 	
 	public static enum IconType{
-		updatePhoto,DeletePhoto,Edit,Locked,Task,Call,Event;
+		updatePhoto,DeletePhoto,Edit,Locked,Task,Call,Meeting,Event;
 	}
 	
 	public static enum NavatarSetupSideMenuTab{
@@ -413,7 +413,7 @@ Fundraising_ContactPage, Financing, Financial_Performance, Marketing_Initiative,
 		public String toString() {
 			return "Rename Tabs and Labels";
 		}
-	}, Event
+	}, Event, Custom_Metadata_Types
 	};
 
 	
