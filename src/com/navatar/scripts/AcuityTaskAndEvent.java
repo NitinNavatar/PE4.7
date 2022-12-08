@@ -4,6 +4,7 @@ import static com.navatar.generic.BaseLib.testCasesFilePath;
 import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
 import static com.navatar.generic.SmokeCommonVariables.adminPassword;
+import static com.navatar.generic.SmokeCommonVariables.superAdminUserName;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +21,7 @@ import com.navatar.generic.EmailLib;
 import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.EnumConstants.Environment;
 import com.navatar.generic.EnumConstants.IconType;
+import com.navatar.generic.EnumConstants.MetaDataSetting;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
 import com.navatar.generic.EnumConstants.TabName;
@@ -12027,6 +12029,62 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 	
-
 	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATETc0072_ReplaceFirstColumnsWithAnotherColumanAndVerifyTheResultsOnAccountAcuityTab(String projectName) {
+
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		String parentWindow = null;
+
+		String[] metaDataName= {ATE_MetaDataName1,ATE_MetaDataName2,ATE_MetaDataName3,ATE_MetaDataName4,ATE_MetaDataName5,ATE_MetaDataName6};
+		String[] metaDataValue= {ATE_MetaDataValue1,ATE_MetaDataValue2,ATE_MetaDataValue3,ATE_MetaDataValue4,ATE_MetaDataValue5,ATE_MetaDataValue6};
+
+		lp.CRMLogin(superAdminUserName, adminPassword, appName);
+		if (home.clickOnSetUpLink()) {
+			parentWindow = switchOnWindow(driver);
+			if (parentWindow == null) {
+				sa.assertTrue(false,
+						"No new window is open after click on setup link in lighting mode so cannot create clone user");
+				log(LogStatus.SKIP,
+						"No new window is open after click on setup link in lighting mode so cannot create clone user",
+						YesNo.Yes);
+				exit("No new window is open after click on setup link in lighting mode so cannot create clone user");
+			}
+			ThreadSleep(3000);
+			if(metaDataName.length==metaDataValue.length)
+			{
+				for(int i = 0 ; i <metaDataName.length; i++) {
+					if(setup.UpdateValueInCustomMetaData(MetaDataSetting.Acuity_Setting.toString(), metaDataName[i], metaDataValue[i], 10))
+					{
+						log(LogStatus.INFO, "Changed the value of " + metaDataName[i] + " for Acuity Setting", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to change the value of " + metaDataName[i] + " for Acuity Setting", YesNo.No);
+						sa.assertTrue(false, "Not able to changed the value of " + metaDataName[i] + " for Acuity Setting");	
+					}
+					ThreadSleep(5000);
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "The size of metadata name and metadata value are not equal", YesNo.No);
+				sa.assertTrue(false, "The size of metadata name and metadata value are not equal");
+			}
+			switchToDefaultContent(driver);
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		} else {
+			log(LogStatus.ERROR, "Not able to click on setup link so cannot change value", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on setup link so cannot change value");
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+
+
 }
