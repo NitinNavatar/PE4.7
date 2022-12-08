@@ -6,6 +6,13 @@ import static com.navatar.generic.CommonLib.*;
 import static com.navatar.generic.CommonVariables.*;
 import static com.navatar.generic.SmokeCommonVariables.adminPassword;
 import static com.navatar.generic.SmokeCommonVariables.crmUser1EmailID;
+import static com.navatar.generic.SmokeCommonVariables.rgUserPassword;
+import static com.navatar.generic.SmokeCommonVariables.rgContact1;
+import static com.navatar.generic.SmokeCommonVariables.rgContact2;
+import static com.navatar.generic.SmokeCommonVariables.rgContact3;
+import static com.navatar.generic.SmokeCommonVariables.rgContact4;
+import static com.navatar.generic.SmokeCommonVariables.rgUser1;
+import static com.navatar.generic.SmokeCommonVariables.rgUser2;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10114,77 +10121,77 @@ public void ADETc087_VerifythatEmailCountUnderEmailColumnClickableatConnectionPo
 
 }
 
-@Parameters({ "projectName"})
-@Test
-public void ADETc088_VerifyFilterFunctionalityEmailRecordPopupforConnectionPopupCardAITab(String projectName) {
-	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
-	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-	String[] filterType= {"All Types","Inbound","Outbound","Indirect"};
-	String[] Categoryname= {"Inbound Email","Outbound Email","Indirect Email"};
-	
-	String contactName = "kbhateja@navatargroup.com";
-	if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
-		log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
-
-		if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns14, 30)) {
-			if (CommonLib.click(driver, BP.connectionicon(contactName, 30), "Connection icon: " + "",
-					action.BOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on Connection icon: " + " " + " of Record: " + contactName, YesNo.No);
-				if (CommonLib.click(driver, BP.contactEmailCount(contactName, 30), "Email Count: " + "",
-						action.BOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on Email Count: " + " " + " of Record: " + contactName, YesNo.No);
-				}
-				ArrayList<String> result=BP.verifyFilterIconAndFilterRecordsOnEmailPopup(filterType,Categoryname);
-				if(result.isEmpty())
-				{
-					log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+contactName+" from people tag. "+result, YesNo.No);
-				}
-				else
-				{
-					log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+contactName+" from people tag. "+result, YesNo.No);
-					sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+contactName+" from people tag. "+result);
-				}
-			}} else {
-				log(LogStatus.ERROR, "Not able to click on " + ADEIns14 + " tab", YesNo.Yes);
-				sa.assertTrue(false, "Not able to click on " + ADEIns14 + " tab");
-			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
-			sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
-		}
-	if (fp.clickOnTab(environment, mode, TabName.Object2Tab)) {
-		log(LogStatus.INFO, "Click on Tab : " + TabName.Object2Tab, YesNo.No);
-
-		if (fp.clickOnAlreadyCreatedItem(projectName, contactName, 30)) {
-				if (CommonLib.click(driver, BP.contactEmailCount(contactName, 30), "Email Count: " + "",
-						action.BOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on Email Count: " + " " + " of Record: " + contactName, YesNo.No);
-				}
-				ArrayList<String> result=BP.verifyFilterIconAndFilterRecordsOnEmailPopup(filterType,Categoryname);
-				if(result.isEmpty())
-				{
-					log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+contactName+" from people tag. "+result, YesNo.No);
-				}
-				else
-				{
-					log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+contactName+" from people tag. "+result, YesNo.No);
-					sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+contactName+" from people tag. "+result);
-				}
-			} else {
-				log(LogStatus.ERROR, "Not able to click on " + ADEIns14 + " tab", YesNo.Yes);
-				sa.assertTrue(false, "Not able to click on " + ADEIns14 + " tab");
-			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
-			sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
-		}
-
-ThreadSleep(5000);
-lp.CRMlogout();
-sa.assertAll();
-		}
+//@Parameters({ "projectName"})
+//@Test
+//public void ADETc088_VerifyFilterFunctionalityEmailRecordPopupforConnectionPopupCardAITab(String projectName) {
+//	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+//	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+//	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+//	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+//	String[] filterType= {"All Types","Inbound","Outbound","Indirect"};
+//	String[] Categoryname= {"Inbound Email","Outbound Email","Indirect Email"};
+//	
+//	String contactName = "kbhateja@navatargroup.com";
+//	if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
+//		log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
+//
+//		if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns14, 30)) {
+//			if (CommonLib.click(driver, BP.connectionicon(contactName, 30), "Connection icon: " + "",
+//					action.BOOLEAN)) {
+//				log(LogStatus.INFO, "Clicked on Connection icon: " + " " + " of Record: " + contactName, YesNo.No);
+//				if (CommonLib.click(driver, BP.contactEmailCount(contactName, 30), "Email Count: " + "",
+//						action.BOOLEAN)) {
+//					log(LogStatus.INFO, "Clicked on Email Count: " + " " + " of Record: " + contactName, YesNo.No);
+//				}
+//				ArrayList<String> result=BP.verifyFilterIconAndFilterRecordsOnEmailPopup(filterType,Categoryname);
+//				if(result.isEmpty())
+//				{
+//					log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+contactName+" from people tag. "+result, YesNo.No);
+//				}
+//				else
+//				{
+//					log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+contactName+" from people tag. "+result, YesNo.No);
+//					sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+contactName+" from people tag. "+result);
+//				}
+//			}} else {
+//				log(LogStatus.ERROR, "Not able to click on " + ADEIns14 + " tab", YesNo.Yes);
+//				sa.assertTrue(false, "Not able to click on " + ADEIns14 + " tab");
+//			}
+//		} else {
+//			log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+//			sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+//		}
+//	if (fp.clickOnTab(environment, mode, TabName.Object2Tab)) {
+//		log(LogStatus.INFO, "Click on Tab : " + TabName.Object2Tab, YesNo.No);
+//
+//		if (fp.clickOnAlreadyCreatedItem(projectName, contactName, 30)) {
+//				if (CommonLib.click(driver, BP.contactEmailCount(contactName, 30), "Email Count: " + "",
+//						action.BOOLEAN)) {
+//					log(LogStatus.INFO, "Clicked on Email Count: " + " " + " of Record: " + contactName, YesNo.No);
+//				}
+//				ArrayList<String> result=BP.verifyFilterIconAndFilterRecordsOnEmailPopup(filterType,Categoryname);
+//				if(result.isEmpty())
+//				{
+//					log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on the count of "+contactName+" from people tag. "+result, YesNo.No);
+//				}
+//				else
+//				{
+//					log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+contactName+" from people tag. "+result, YesNo.No);
+//					sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+contactName+" from people tag. "+result);
+//				}
+//			} else {
+//				log(LogStatus.ERROR, "Not able to click on " + ADEIns14 + " tab", YesNo.Yes);
+//				sa.assertTrue(false, "Not able to click on " + ADEIns14 + " tab");
+//			}
+//		} else {
+//			log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+//			sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+//		}
+//
+//ThreadSleep(5000);
+//lp.CRMlogout();
+//sa.assertAll();
+//		}
 
 	
 @Parameters({ "projectName"})
@@ -11068,5 +11075,199 @@ public void ADETc095_VerifyUserContactsNamesareClickableatCellPopupatEmailRecord
 	lp.CRMlogout();
 	sa.assertAll();
 }
-		}
+		
+	
+@Parameters({ "projectName" })
+@Test
+public void ADETc096_VerifyUserContactsNamesareClickableatCellPopupatEmailRecordsPopupforConnectionCardSectionRespectively(String projectName) {
+	OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);	
+	op.outLookLogin(rgContact1,rgUserPassword);
+	String[] to= {rgContact3};
+	String [] cc =null;
+	String subject = "Testing email outbound for contact";
+			
+	if(op.sendMailFromRGOutlook(to, cc, null, subject, null, action.BOOLEAN, 20)) {
+		log(LogStatus.INFO, "able to send email from "+crmUser1EmailID+" to "+to, YesNo.No);
+	} else {
+		log(LogStatus.ERROR, "Not able to send email from "+crmUser1EmailID+" to "+to, YesNo.No);
+		sa.assertTrue(false, "Not able to send email from "+crmUser1EmailID+" to "+to);
+	}
+}
+
+
+@Parameters({ "projectName" })
+@Test
+public void ADETc097_VerifyUserContactsNamesareClickableatCellPopupatEmailRecordsPopupforConnectionCardSectionRespectively(String projectName) {
+	OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);	
+	op.outLookLogin(rgContact3,rgUserPassword);
+	String[] to= {rgContact1};
+	String[] cc =null;
+	String subject = "Testing email outbound for contact";
+			
+	if(op.sendMailFromRGOutlook(to, cc, null, subject, null, action.BOOLEAN, 20)) {
+		log(LogStatus.INFO, "able to send email from "+"automation-test@railworks-ng.com"+" to "+to, YesNo.No);
+	} else {
+		log(LogStatus.ERROR, "Not able to send email from "+"automation-test@railworks-ng.com"+" to "+to, YesNo.No);
+		sa.assertTrue(false, "Not able to send email from "+"automation-test@railworks-ng.com"+" to "+to);
+	}
+	
+}
+
+@Parameters({ "projectName" })
+@Test
+public void ADETc098_VerifyUserContactsNamesareClickableatCellPopupatEmailRecordsPopupforConnectionCardSectionRespectively(String projectName) {
+	OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);	
+	op.outLookLogin(rgContact3,rgUserPassword);
+	String[] to= {rgUser1};
+	String[] cc = {rgContact1};
+	String subject = "Testing indirect email for contact";
+			
+	if(op.sendMailFromRGOutlook(to, cc, null, subject, null, action.BOOLEAN, 20)) {
+		log(LogStatus.INFO, "able to send email from "+"automation-test@railworks-ng.com"+" to "+to, YesNo.No);
+	} else {
+		log(LogStatus.ERROR, "Not able to send email from "+"automation-test@railworks-ng.com"+" to "+to, YesNo.No);
+		sa.assertTrue(false, "Not able to send email from "+"automation-test@railworks-ng.com"+" to "+to);
+	}
+}
+
+@Parameters({ "projectName" })
+@Test
+public void ADETc099_VerifyUserContactsNamesareClickableatCellPopupatEmailRecordsPopupforConnectionCardSectionRespectively(String projectName) {
+	OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);	
+	op.outLookLogin(rgContact1,rgUserPassword);
+	String[] to= {rgUser2};
+	String[] cc =null;
+	String subject = "Testing indirect email for contact";
+			
+	if(op.sendMailFromRGOutlook(to, cc, null, subject, null, action.BOOLEAN, 20)) {
+		log(LogStatus.INFO, "able to send email from "+"automation-test@railworks-ng.com"+" to "+to, YesNo.No);
+	} else {
+		log(LogStatus.ERROR, "Not able to send email from "+"automation-test@railworks-ng.com"+" to "+to, YesNo.No);
+		sa.assertTrue(false, "Not able to send email from "+"automation-test@railworks-ng.com"+" to "+to);
+	}
+}
+
+@Parameters({ "projectName" })
+@Test
+public void ADETc100_VerifyUserContactsNamesareClickableatCellPopupatEmailRecordsPopupforConnectionCardSectionRespectively(String projectName) {
+	OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);	
+	op.outLookLogin(rgUser2,rgUserPassword);
+	String[] to= {rgContact1};
+	String[] cc =null;
+	String subject = "Testing indirect email for contact";
+			
+	if(op.sendMailFromRGOutlook(to, cc, null, subject, null, action.BOOLEAN, 20)) {
+		log(LogStatus.INFO, "able to send email from "+"automation-test@railworks-ng.com"+" to "+to, YesNo.No);
+	} else {
+		log(LogStatus.ERROR, "Not able to send email from "+"automation-test@railworks-ng.com"+" to "+to, YesNo.No);
+		sa.assertTrue(false, "Not able to send email from "+"automation-test@railworks-ng.com"+" to "+to);
+	}
+}
+
+@Parameters({ "projectName" })
+@Test
+public void ADETc101_VerifyUserContactsNamesareClickableatCellPopupatEmailRecordsPopupforConnectionCardSectionRespectively(String projectName) {
+	OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);	
+	op.outLookLogin(rgContact1,rgUserPassword);
+	String[] to= {rgContact3};
+	String[] cc = {rgUser2};
+	String subject = "Testing indirect email for contact";
+			
+	if(op.sendMailFromRGOutlook(to, cc, null, subject, null, action.BOOLEAN, 20)) {
+		log(LogStatus.INFO, "able to send email from "+"automation-test@railworks-ng.com"+" to "+to, YesNo.No);
+	} else {
+		log(LogStatus.ERROR, "Not able to send email from "+"automation-test@railworks-ng.com"+" to "+to, YesNo.No);
+		sa.assertTrue(false, "Not able to send email from "+"automation-test@railworks-ng.com"+" to "+to);
+	}
+}
+
+@Parameters({ "projectName" })
+@Test
+public void ADETc102_VerifyUserContactsNamesareClickableatCellPopupatEmailRecordsPopupforConnectionCardSectionRespectively(String projectName) {
+	OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);	
+	op.outLookLogin(rgContact3,rgUserPassword);
+	String[] to= {rgContact1,rgUser2};
+	String[] cc =null;
+	String subject = "Testing indirect email for contact";
+			
+	if(op.sendMailFromRGOutlook(to, cc, null, subject, null, action.BOOLEAN, 20)) {
+		log(LogStatus.INFO, "able to send email from "+"automation-test@railworks-ng.com"+" to "+to, YesNo.No);
+	} else {
+		log(LogStatus.ERROR, "Not able to send email from "+"automation-test@railworks-ng.com"+" to "+to, YesNo.No);
+		sa.assertTrue(false, "Not able to send email from "+"automation-test@railworks-ng.com"+" to "+to);
+	}
+}
+
+@Parameters({ "projectName" })
+@Test
+public void ADETc103_VerifyUserContactsNamesareClickableatCellPopupatEmailRecordsPopupforConnectionCardSectionRespectively(String projectName) {
+	OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);	
+	op.outLookLogin(rgContact1,rgUserPassword);
+	String[] to= {rgContact3};
+	String[] cc = {rgUser1,rgUser2};
+	String subject = "Testing indirect email for contact";
+			
+	if(op.sendMailFromRGOutlook(to, cc, null, subject, null, action.BOOLEAN, 20)) {
+		log(LogStatus.INFO, "able to send email from "+"automation-test@railworks-ng.com"+" to "+to, YesNo.No);
+	} else {
+		log(LogStatus.ERROR, "Not able to send email from "+"automation-test@railworks-ng.com"+" to "+to, YesNo.No);
+		sa.assertTrue(false, "Not able to send email from "+"automation-test@railworks-ng.com"+" to "+to);
+	}
+}
+
+@Parameters({ "projectName" })
+@Test
+public void ADETc104_VerifyUserContactsNamesareClickableatCellPopupatEmailRecordsPopupforConnectionCardSectionRespectively(String projectName) {
+	OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);	
+	op.outLookLogin(rgUser1,rgUserPassword);
+	String[] to= {rgUser2,rgUser1};
+	String[] cc =null;
+	String subject = "Testing indirect email for contact";
+			
+	if(op.sendMailFromRGOutlook(to, cc, null, subject, null, action.BOOLEAN, 20)) {
+		log(LogStatus.INFO, "able to send email from "+"automation-test@railworks-ng.com"+" to "+to, YesNo.No);
+	} else {
+		log(LogStatus.ERROR, "Not able to send email from "+"automation-test@railworks-ng.com"+" to "+to, YesNo.No);
+		sa.assertTrue(false, "Not able to send email from "+"automation-test@railworks-ng.com"+" to "+to);
+	}
+}
+
+@Parameters({ "projectName" })
+@Test
+public void ADETc105_VerifyUserContactsNamesareClickableatCellPopupatEmailRecordsPopupforConnectionCardSectionRespectively(String projectName) {
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	String fieldName = ADEFieldname1;
+	String valueField =ADENewValue1;
+	String parentWindow = null;
+	lp.CRMLogin(superAdminUserName, adminPassword, appName);
+	if (home.clickOnSetUpLink()) {
+        parentWindow = switchOnWindow(driver);
+        if (parentWindow == null) {
+            sa.assertTrue(false,
+                    "No new window is open after click on setup link in lighting mode so cannot create clone user");
+            log(LogStatus.SKIP,
+                    "No new window is open after click on setup link in lighting mode so cannot create clone user",
+                    YesNo.Yes);
+            exit("No new window is open after click on setup link in lighting mode so cannot create clone user");
+        }
+        ThreadSleep(3000);
+	if(setup.UpdateValueInCustomMetaData(MetaDataSetting.RG_Setting.toString(), fieldName, valueField, 10)) {
+		 
+             log(LogStatus.INFO, "Changed the value of " + fieldName + " for Acuity Setting", YesNo.No);
+         }
+         else
+         {
+             log(LogStatus.ERROR, "Not able to change the value of " + fieldName + " for Acuity Setting", YesNo.No);
+             sa.assertTrue(false, "Not able to changed the value of " + fieldName + " for Acuity Setting");    
+         }
+         ThreadSleep(5000);
+     }    
+     ThreadSleep(5000);
+     switchToDefaultContent(driver);
+     driver.close();
+     driver.switchTo().window(parentWindow);
+}
+}
 	

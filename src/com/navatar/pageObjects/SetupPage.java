@@ -1201,11 +1201,40 @@ public class SetupPage extends BasePageBusinessLayer {
 		return defaultRecord;
 	}
 	
-	@FindBy(xpath = "//td[contains(@class,'dataCol last')]//input")
+	@FindBy(xpath = "//td[contains(@class,'dataCol last')]//*")
 	private WebElement valueTextBoxInAcuitySetting;
 
 	public WebElement getValueTextBoxInAcuitySetting(int timeOut) {
 		return isDisplayed(driver, valueTextBoxInAcuitySetting, "Visibility", timeOut, "ValueTextBoxInAcuitySetting");
 	}
+	public String GetDataFromValueFieldInCustomMetaData(int timeOut) {
+        String xpath = "//td[contains(@class,'dataCol last')]//*";
+
+
+
+       try {
+            return FindElement(driver, xpath, "Value Field", action.SCROLLANDBOOLEAN, 10).getAttribute("value");
+
+
+
+       } catch (StaleElementReferenceException e) {
+            return FindElement(driver, xpath, "Value Field", action.SCROLLANDBOOLEAN, 10).getAttribute("value");
+        }
+    }
 	
+	public WebElement settingTypeManageRecordsButton(String SettingType, int timeOut) {
+        String xpath = "//th//a[text()='"+ SettingType +"']/../..//a[text()='Manage Records']";
+
+
+
+       try {
+            return isDisplayed(driver, FindElement(driver, xpath, "SettingTypeInCustomMetaData", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "SettingTypeInCustomMetaData");
+
+
+
+       } catch (StaleElementReferenceException e) {
+            return isDisplayed(driver, FindElement(driver, xpath, "SettingTypeInCustomMetaData", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "SettingTypeInCustomMetaData");
+        }
+    }
 }
+
