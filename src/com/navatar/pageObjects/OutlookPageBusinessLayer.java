@@ -191,7 +191,16 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 							log(LogStatus.INFO, "-----Event Created Msg is showing, So Event of Title: " + eventTitle
 									+ " has been created-----", YesNo.No);
 
-							flag = true;
+							if (openRGGridAndDoForceSync(action.SCROLLANDBOOLEAN, 25)) {
+								log(LogStatus.INFO, "-----Force Sync Up successfully updated-----", YesNo.No);
+
+								flag = true;
+							} else {
+								log(LogStatus.ERROR, "-----Force Sync Up not successfully updated-----", YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "-----Force Sync Up not successfully updated-----");
+
+							}
+
 						}
 
 						else {
@@ -382,78 +391,84 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 	}
 
-	public boolean sendMailFromRGOutlook(String to, String cc, String bcc, String subject, String message,
+	public boolean sendMailFromRGOutlook(String[] to, String[] cc, String bcc, String subject, String message,
 			action action, int timeout) {
 		boolean flag = false;
 
 		if (click(driver, getNewEmailButton(timeout), "new email button", action)) {
 			log(LogStatus.INFO, "Clicked on new email button", YesNo.No);
 			ThreadSleep(2000);
-			if (sendKeys(driver, getToInputBox(timeout), to, "to input box", action)) {
-				log(LogStatus.INFO, "enter value in To box :" + to, YesNo.No);
-				ThreadSleep(2000);
-				if (sendKeys(driver, getCCInputBox(timeout), cc, "cc input box", action)) {
-					log(LogStatus.INFO, "enter value in CC box :" + cc, YesNo.No);
-					ThreadSleep(1000);
+			for (int i = 0; i < to.length; i++) {
+				if (sendKeysWithoutClearingTextBox(driver, getToInputBox(timeout), to[i] + ",", "to input box",
+						action)) {
+					log(LogStatus.INFO, "enter value in To box :" + to[i], YesNo.No);
+					ThreadSleep(2000);
+				} else {
+					log(LogStatus.ERROR, "Not able to enter value in To box :" + to[i], YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not able to enter value in To box :" + to[i]);
+				}
+			}
 
-					if (bcc != null) {
-
-						if (click(driver, getBCCLink(timeout), "bcc link", action)) {
-							log(LogStatus.INFO, "Clicked on bcc link button", YesNo.No);
-							ThreadSleep(1000);
-							if (sendKeys(driver, getBCCInputBox(timeout), bcc, "bcc input box", action)) {
-								log(LogStatus.INFO, "able to enter value in BCC box :" + bcc, YesNo.No);
-								ThreadSleep(1000);
-							} else {
-								log(LogStatus.ERROR, "Not able to enter value in BCC box :" + bcc, YesNo.Yes);
-								BaseLib.sa.assertTrue(false, "Not able to enter value in BCC box :" + bcc);
-							}
-						} else {
-							log(LogStatus.ERROR, "Not able to click on bcc link button", YesNo.Yes);
-							BaseLib.sa.assertTrue(false, "Not able to click on bcc link button");
-						}
+			if (cc != null) {
+				for (int i = 0; i < cc.length; i++) {
+					if (sendKeysAndPressEnter(driver, getCCInputBox(timeout), cc[i] + ",", "cc input box", action)) {
+						log(LogStatus.INFO, "enter value in CC box :" + cc[i], YesNo.No);
+						ThreadSleep(1000);
+					} else {
+						log(LogStatus.ERROR, "Not able to enter value in CC box :" + cc[i], YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to enter value in CC box :" + cc[i]);
 					}
 
-					if (sendKeys(driver, getSubjectInputBox(timeout), subject, "subject input box", action)) {
+				}
+			}
+			ThreadSleep(2000);
+			if (bcc != null) {
 
-						log(LogStatus.INFO, "enter value in subject box :" + subject, YesNo.No);
+				if (click(driver, getBCCLink(timeout), "bcc link", action)) {
+					log(LogStatus.INFO, "Clicked on bcc link button", YesNo.No);
+					ThreadSleep(1000);
+					if (sendKeys(driver, getBCCInputBox(timeout), bcc + ",", "bcc input box", action)) {
+						log(LogStatus.INFO, "able to enter value in BCC box :" + bcc, YesNo.No);
 						ThreadSleep(1000);
-						if (message != null) {
-							if (sendKeys(driver, getMailMessageInputBox(timeout), message, "message input box",
-									action)) {
-								log(LogStatus.INFO, "enter value in message box :" + message, YesNo.No);
-								ThreadSleep(1000);
+					} else {
+						log(LogStatus.ERROR, "Not able to enter value in BCC box :" + bcc, YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to enter value in BCC box :" + bcc);
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on bcc link button", YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not able to click on bcc link button");
+				}
+			}
 
-							} else {
-								log(LogStatus.ERROR, "Not able to enter value in message box :" + message, YesNo.Yes);
-								BaseLib.sa.assertTrue(false, "Not able to enter value in message box :" + message);
-							}
+			if (sendKeys(driver, getSubjectInputBox(timeout), subject, "subject input box", action)) {
 
-						}
-
-						if (click(driver, getSendButton(timeout), "Send button", action)) {
-							log(LogStatus.INFO, "Clicked on Send button", YesNo.No);
-							ThreadSleep(2000);
-							flag = true;
-
-						} else {
-							log(LogStatus.ERROR, "Not able to clicked on send button", YesNo.Yes);
-							BaseLib.sa.assertTrue(false, "Not able to clicked on send button");
-						}
+				log(LogStatus.INFO, "enter value in subject box :" + subject, YesNo.No);
+				ThreadSleep(1000);
+				if (message != null) {
+					if (sendKeys(driver, getMailMessageInputBox(timeout), message, "message input box", action)) {
+						log(LogStatus.INFO, "enter value in message box :" + message, YesNo.No);
+						ThreadSleep(1000);
 
 					} else {
-						log(LogStatus.ERROR, "Not able to enter value in subject box :" + subject, YesNo.Yes);
-						BaseLib.sa.assertTrue(false, "Not able to enter value in subject box :" + subject);
+						log(LogStatus.ERROR, "Not able to enter value in message box :" + message, YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to enter value in message box :" + message);
 					}
 
+				}
+
+				if (click(driver, getSendButton(timeout), "Send button", action)) {
+					log(LogStatus.INFO, "Clicked on Send button", YesNo.No);
+					ThreadSleep(5000);
+					flag = true;
+
 				} else {
-					log(LogStatus.ERROR, "Not able to enter value in CC box :" + cc, YesNo.Yes);
-					BaseLib.sa.assertTrue(false, "Not able to enter value in CC box :" + cc);
+					log(LogStatus.ERROR, "Not able to clicked on send button", YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not able to clicked on send button");
 				}
 
 			} else {
-				log(LogStatus.ERROR, "Not able to enter value in To box :" + to, YesNo.Yes);
-				BaseLib.sa.assertTrue(false, "Not able to enter value in To box :" + to);
+				log(LogStatus.ERROR, "Not able to enter value in subject box :" + subject, YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to enter value in subject box :" + subject);
 			}
 
 		} else {
@@ -930,16 +945,22 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 						"-----Event Update Msg is showing, So Event of Title: " + eventTitle + " has been Updated-----",
 						YesNo.No);
 
-				flag = true;
+				if (openRGGridAndDoForceSync(action.SCROLLANDBOOLEAN, 25)) {
+					log(LogStatus.INFO, "-----Force Sync Up successfully updated-----", YesNo.No);
+
+					flag = true;
+				} else {
+					log(LogStatus.ERROR, "-----Force Sync Up not successfully updated-----", YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "-----Force Sync Up not successfully updated-----");
+
+				}
+
 			}
-
 			else {
-
 				log(LogStatus.ERROR, "-----Event Update Msg is not showing, So Event of Title: " + eventTitle
 						+ " has not been Updated-----", YesNo.Yes);
 				BaseLib.sa.assertTrue(false, "-----Event Update Msg is not showing, So Event of Title: " + eventTitle
 						+ " has not been Updated-----");
-
 			}
 
 		} else {

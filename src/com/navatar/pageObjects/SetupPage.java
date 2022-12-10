@@ -696,7 +696,7 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getResearchItem(int timeOut) {
 		return isDisplayed(driver, researchItem, "Visibility", timeOut, "Research Item");
 	}
-	
+
 	@FindBy(xpath = "//div[@class='paletteSearch']//input")
 	private WebElement searchIconOnUtilityItem;
 
@@ -1025,7 +1025,6 @@ public class SetupPage extends BasePageBusinessLayer {
 			return FindElement(driver, xpath, "sectionInPageLayout", action.SCROLLANDBOOLEAN, timeOut);
 		}
 	}
-	
 
 	@FindBy(xpath = "//label[text()='Selected Record Types']/../following-sibling::select//option")
 	private WebElement selectedRecordTypeOption;
@@ -1033,65 +1032,64 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getSelectedRecordTypeOption(int timeOut) {
 		return isDisplayed(driver, selectedRecordTypeOption, "Visibility", timeOut, "Selected Record Type Option");
 	}
-	
+
 	@FindBy(xpath = "//img[@class='leftArrowIcon']")
 	private WebElement leftArrowIcon;
 
 	public WebElement getLeftArrowIcon(int timeOut) {
 		return isDisplayed(driver, leftArrowIcon, "Visibility", timeOut, "left arrow icon");
 	}
-	
+
 	@FindBy(xpath = "//img[@class='rightArrowIcon']")
 	private WebElement rightArrowIcon;
 
 	public WebElement getRightArrowIcon(int timeOut) {
 		return isDisplayed(driver, rightArrowIcon, "Visibility", timeOut, "right arrow icon");
 	}
-	
-	
+
 	@FindBy(xpath = "//label[text()='Available Record Types']/../following-sibling::select//option[text()='--Master--']")
 	private WebElement masterOptionValueFromAvailabelRecord;
 
 	public WebElement getMasterOptionValueFromAvailabelRecord(int timeOut) {
-		return isDisplayed(driver, masterOptionValueFromAvailabelRecord, "Visibility", timeOut, "Master option value from availabel record");
+		return isDisplayed(driver, masterOptionValueFromAvailabelRecord, "Visibility", timeOut,
+				"Master option value from availabel record");
 	}
-	
+
 	@FindBy(xpath = "//label[text()='Selected Record Types']/../following-sibling::select//option[text()='--Master--']")
 	private WebElement masterOptionValueFromSelectedRecord;
 
 	public WebElement getMasterOptionValueFromSelectedRecord(int timeOut) {
-		return isDisplayed(driver, masterOptionValueFromSelectedRecord, "Visibility", timeOut, "Master option value from selected record");
+		return isDisplayed(driver, masterOptionValueFromSelectedRecord, "Visibility", timeOut,
+				"Master option value from selected record");
 	}
-	
+
 	@FindBy(xpath = "//iframe[contains(@title,'Edit Record Type')]")
 	private WebElement IframeEditRecordType;
 
 	public WebElement getIframeEditRecordType(int timeOut) {
 		return isDisplayed(driver, IframeEditRecordType, "Visibility", timeOut, "Edit record type page iframe");
 	}
-	
+
 	@FindBy(xpath = "//iframe[contains(@title,'Record Type')]")
 	private WebElement IframeRecordType;
 
 	public WebElement getIframeRecordType(int timeOut) {
 		return isDisplayed(driver, IframeRecordType, "Visibility", timeOut, "record type page iframe");
 	}
-	
+
 	@FindBy(xpath = "//button[@title='delete']")
 	private WebElement deleteButton;
 
 	public WebElement getdeleteButton(int timeOut) {
 		return isDisplayed(driver, deleteButton, "Visibility", timeOut, "Delete buton");
 	}
-	
-	
+
 	@FindBy(xpath = "//iframe[contains(@title,'Deletion problems')]")
 	private WebElement deleteProblemIframe;
 
 	public WebElement getdeleteProblemIframe(int timeOut) {
 		return isDisplayed(driver, deleteProblemIframe, "Visibility", timeOut, "Delete problem iframe");
 	}
-	
 
 	@FindBy(xpath = "//iframe[contains(@title,'Delete Record Type')]")
 	private WebElement deleteRecordTypeIframe;
@@ -1099,7 +1097,6 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getDeleteRecordTypeIframe(int timeOut) {
 		return isDisplayed(driver, deleteRecordTypeIframe, "Visibility", timeOut, "Delete record type iframe");
 	}
-	
 
 	@FindBy(xpath = "//input[@title='Done']")
 	private WebElement doneDeleteRecordTypeBtn;
@@ -1107,14 +1104,13 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getDoneDeleteRecordTypeBtn(int timeOut) {
 		return isDisplayed(driver, doneDeleteRecordTypeBtn, "Visibility", timeOut, "Done delete record type button");
 	}
-	
+
 	@FindBy(xpath = "//a[@class='forceActionLink']/div[text()='New']")
 	private WebElement newButton;
 
 	public WebElement getNewButton(int timeOut) {
 		return isDisplayed(driver, newButton, "Visibility", timeOut, "New Button");
 	}
-	
 
 	@FindBy(xpath = "//div[@class='errorMsg']")
 	private WebElement errorMsgRecordType;
@@ -1122,14 +1118,12 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement errorMsgRecordType(int timeOut) {
 		return isDisplayed(driver, errorMsgRecordType, "Visibility", timeOut, "errorMsgRecordType");
 	}
-	
-	
+
 	@FindBy(xpath = "//select[@id='p5']")
 	private WebElement defaultRecord;
 
-	
 	public WebElement editButtonInRenameTabAndLabels(String tabName, int timeOut) {
-		String xpath = "//th[text()='"+tabName+"']//preceding-sibling::td[@class='actionColumn']//a[text()='Edit']";
+		String xpath = "//th[text()='" + tabName + "']//preceding-sibling::td[@class='actionColumn']//a[text()='Edit']";
 
 		try {
 			return FindElement(driver, xpath, tabName, action.SCROLLANDBOOLEAN, timeOut);
@@ -1138,18 +1132,17 @@ public class SetupPage extends BasePageBusinessLayer {
 			return FindElement(driver, xpath, tabName, action.SCROLLANDBOOLEAN, timeOut);
 		}
 	}
-	
-	
+
 	@FindBy(xpath = "//input[@name='goNext']")
 	private WebElement nextButton;
 
 	public WebElement nextButton(int timeOut) {
 		return isDisplayed(driver, nextButton, "Visibility", timeOut, "nextButton");
 	}
-	
-	
+
 	public WebElement renameLabelNameSingularTextBox(String labelName, int timeOut) {
-		String xpath = "//th[text()='"+labelName+"']/following-sibling::td/input[@type=\"text\" and contains(@title,\"Singular\")]";
+		String xpath = "//th[text()='" + labelName
+				+ "']/following-sibling::td/input[@type=\"text\" and contains(@title,\"Singular\")]";
 
 		try {
 			return FindElement(driver, xpath, "renameLabelNameSingularTextBox", action.SCROLLANDBOOLEAN, timeOut);
@@ -1158,9 +1151,10 @@ public class SetupPage extends BasePageBusinessLayer {
 			return FindElement(driver, xpath, "renameLabelNameSingularTextBox", action.SCROLLANDBOOLEAN, timeOut);
 		}
 	}
-	
+
 	public WebElement renameLabelNamePluralTextBox(String labelName, int timeOut) {
-		String xpath = "//th[text()='"+labelName+"']/following-sibling::td/input[@type=\"text\" and contains(@title,\"Plural\")]";
+		String xpath = "//th[text()='" + labelName
+				+ "']/following-sibling::td/input[@type=\"text\" and contains(@title,\"Plural\")]";
 
 		try {
 			return FindElement(driver, xpath, "renameLabelNamePluralTextBox", action.SCROLLANDBOOLEAN, timeOut);
@@ -1169,7 +1163,7 @@ public class SetupPage extends BasePageBusinessLayer {
 			return FindElement(driver, xpath, "renameLabelNamePluralTextBox", action.SCROLLANDBOOLEAN, timeOut);
 		}
 	}
-	
+
 	/*
 	 * @FindBy(xpath = "//div[@class='pbBottomButtons']//input[@title='Save']")
 	 * private WebElement footerSaveBtn;
@@ -1177,16 +1171,41 @@ public class SetupPage extends BasePageBusinessLayer {
 	 * public WebElement getfooterSaveBtn(int timeOut) { return isDisplayed(driver,
 	 * footerSaveBtn, "Visibility", timeOut, "footer save button"); }
 	 */
-	
-	
+
 	public WebElement EditButtonOfAcuitySettings(String SettingName, int timeOut) {
-		String xpath = "//td[text()='"+ SettingName +"']/ancestor::tr//a[text()='Edit']";
+		String xpath = "//td[text()='" + SettingName + "']/ancestor::tr//a[text()='Edit']";
 
 		try {
 			return FindElement(driver, xpath, "EditButtonOfAcuitySettings", action.SCROLLANDBOOLEAN, timeOut);
 
 		} catch (StaleElementReferenceException e) {
 			return FindElement(driver, xpath, "EditButtonOfAcuitySettings", action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+
+	public WebElement settingTypeManageRecordsButton(String SettingType, int timeOut) {
+		String xpath = "//th//a[text()='" + SettingType + "']/../..//a[text()='Manage Records']";
+
+		try {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "SettingTypeInCustomMetaData", action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "SettingTypeInCustomMetaData");
+
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "SettingTypeInCustomMetaData", action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "SettingTypeInCustomMetaData");
+		}
+	}
+
+	public String GetDataFromValueFieldInCustomMetaData(int timeOut) {
+		String xpath = "//td[contains(@class,'dataCol last')]//input";
+
+		try {
+			return FindElement(driver, xpath, "Value Field", action.SCROLLANDBOOLEAN, 10).getAttribute("value");
+
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Value Field", action.SCROLLANDBOOLEAN, 10).getAttribute("value");
 		}
 	}
 
@@ -1196,26 +1215,23 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getUserTitle(int timeOut) {
 		return isDisplayed(driver, userTitle, "Visibility", timeOut, "user title");
 	}
-	
+
 	public WebElement getdefaultRecord(int timeOut) {
 		return defaultRecord;
 	}
-	
-	@FindBy(xpath = "//td[contains(@class,'dataCol last')]//input")
+
+	@FindBy(xpath = "//td[contains(@class,'dataCol last')]//*")
 	private WebElement valueTextBoxInAcuitySetting;
 
 	public WebElement getValueTextBoxInAcuitySetting(int timeOut) {
 		return isDisplayed(driver, valueTextBoxInAcuitySetting, "Visibility", timeOut, "ValueTextBoxInAcuitySetting");
 	}
-	
+
 	@FindBy(xpath = "//select[@id=\"fcf\"]")
 	private WebElement viewUsers;
 
 	public WebElement viewUsers(int timeOut) {
 		return isDisplayed(driver, viewUsers, "Visibility", timeOut, "viewUsers");
 	}
-	
-	
-	
-	
+
 }

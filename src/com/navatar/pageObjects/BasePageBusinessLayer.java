@@ -1448,8 +1448,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			break;
 		case Events:
 			viewList = "All";
-			break;	
-			
+			break;
+
 		default:
 			return false;
 		}
@@ -4862,12 +4862,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		boolean flag = false;
 		if (click(driver, getCalenderIcon(30), "View Calender Icon", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Click on View Calender Icon", YesNo.No);
-			if (click(driver, getCalenderCellIcon(30), "View Calender Icon", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Click on Calender Cell Icon", YesNo.No);
+			if (click(driver, getNewEventBtn(30), "View Calender Icon", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Click on Calender new event button", YesNo.No);
 				ThreadSleep(5000);
 				flag = true;
 			} else {
-				log(LogStatus.SKIP, "Not Able to Click on Calender Cell Icon", YesNo.Yes);
+				log(LogStatus.SKIP, "Not Able to Click on Calender new event button", YesNo.Yes);
 			}
 		} else {
 			log(LogStatus.SKIP, "Not Able to Click on View Calender Icon", YesNo.Yes);
@@ -11961,7 +11961,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			xPath = "//a[text()='" + subjectName + "']/../preceding-sibling::div//lightning-icon";
 			ele = FindElement(driver, xPath, "Activity icon", action.SCROLLANDBOOLEAN, 20);
 			String iconval = getAttribute(driver, ele, "Icon", "title");
-			if (icon.toString().equals(iconval)) {
+			if (icon.toString().equalsIgnoreCase(iconval)) {
 				log(LogStatus.INFO, "Actual icon type : " + iconval + " has been matched with expected icon type : "
 						+ icon.toString(), YesNo.No);
 			} else {
@@ -13213,30 +13213,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			log(LogStatus.INFO, "clicked on Save button", YesNo.No);
 
 			if (suggestedTags != null) {
-				/*
-				 * for(int i=0; i<suggestedTags.length; i++) {
-				 * xPath="//lightning-base-formatted-text[text()='"+suggestedTags[i]
-				 * +"']/ancestor::th[@data-label='Reference Found']/..//td//input";
-				 * ele=CommonLib.FindElement(driver, xPath, suggestedTags[i]+" sugested Tag",
-				 * action.SCROLLANDBOOLEAN, 30); if(click(driver, ele,
-				 * suggestedTags[i]+" suggested tag", action.SCROLLANDBOOLEAN)) {
-				 * log(LogStatus.INFO,
-				 * "clicked on "+suggestedTags[i]+" suggested tag checkbox button", YesNo.No);
-				 * 
-				 * } else { log(LogStatus.ERROR,
-				 * "Not able to click on "+suggestedTags[i]+" suggested tag checkbox button",
-				 * YesNo.No); sa.assertTrue(false,
-				 * "Not able to click on "+suggestedTags[i]+" suggested tag checkbox button");
-				 * return false; } } if(click(driver, getfooterTagButton(30), "Tag Button",
-				 * action.SCROLLANDBOOLEAN)) { log(LogStatus.INFO,
-				 * "clicked on footer tag button", YesNo.No); ThreadSleep(2000);
-				 * refresh(driver); } else { log(LogStatus.ERROR,
-				 * "Not able to click on footer tag button", YesNo.No); sa.assertTrue(false,
-				 * "Not able to click on footer tag button"); return false; }
-				 */
 				if (getSuccessMsg(30) != null) {
 					log(LogStatus.INFO, "Activity timeline record has been updated", YesNo.No);
-
+					ThreadSleep(2000);
 					if (suggestedTags.length > 0) {
 
 						if (suggestedTags[0].equalsIgnoreCase("SuggestedPopUpShouldNotThere")) {
@@ -13304,8 +13283,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 					if (click(driver, getfooterTagButton(30), "Tag Button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on footer tag button", YesNo.No);
-						ThreadSleep(2000);
-						refresh(driver);
 						flag = true;
 					} else {
 						log(LogStatus.ERROR, "Not able to click on footer tag button", YesNo.No);
@@ -13313,14 +13290,28 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						return false;
 					}
 				} else {
-					log(LogStatus.ERROR, "Activity timeline record is not created", YesNo.No);
-					sa.assertTrue(false, "Activity timeline record is not created");
+					log(LogStatus.ERROR, "Activity timeline record is not updated", YesNo.No);
+					sa.assertTrue(false, "Activity timeline record is not updated");
 					return false;
 				}
-			} else {
+			}
+
+			else {
+
 				if (getSuccessMsg(30) != null) {
 					log(LogStatus.INFO, "Activity timeline record has been updated", YesNo.No);
-					flag = true;
+					ThreadSleep(1000);
+					refresh(driver);
+					ThreadSleep(3000);
+					if (clickUsingJavaScript(driver, popupCloseButton("Note", 20), "close button")) {
+						log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
+						flag = true;
+					} else {
+						log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
+						sa.assertTrue(false, "Not able to close the Note popup");
+						return false;
+					}
+
 				} else {
 					log(LogStatus.ERROR, "Activity timeline record is not updated", YesNo.No);
 					sa.assertTrue(false, "Activity timeline record is not updated");

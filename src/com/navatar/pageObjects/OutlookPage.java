@@ -34,7 +34,7 @@ public class OutlookPage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "//span[text()='New email']/ancestor::button")
+	@FindBy(xpath = "//span[text()='New mail']/ancestor::button")
 	private WebElement newEmailButton;
 
 	public WebElement getNewEmailButton(int timeOut) {
