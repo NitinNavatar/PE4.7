@@ -1208,4 +1208,14 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, valueTextBoxInAcuitySetting, "Visibility", timeOut, "ValueTextBoxInAcuitySetting");
 	}
 	
+	@FindBy(xpath = "//select[@id=\"fcf\"]")
+	private WebElement viewUsers;
+
+	public WebElement viewUsers(int timeOut) {
+		return isDisplayed(driver, viewUsers, "Visibility", timeOut, "viewUsers");
+	}
+	
+	
+	
+	
 }

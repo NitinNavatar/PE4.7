@@ -2499,4 +2499,71 @@ public class HomePage extends BasePageBusinessLayer {
 			return notificationFooterButtonsText;
 	}
 
+	@FindBy(xpath = "//div/button[@aria-label=\"Search\"]")
+	private WebElement globalSearchButton;
+
+	public WebElement globalSearchButton(int timeOut) {
+		return isDisplayed(driver, globalSearchButton, "Visibility", timeOut, "globalSearchButton");
+	}
+
+	@FindBy(xpath = "//lightning-input//input[@placeholder=\"Search...\"]")
+	private WebElement globalSearchInput;
+
+	public WebElement globalSearchInput(int timeOut) {
+		return isDisplayed(driver, globalSearchInput, "Visibility", timeOut, "globalSearchInput");
+	}
+
+	public WebElement globalSearchRecord(String recordName, int timeOut) {
+
+		String xpath = "//td/span/a[text()=\"" + recordName + "\"]";
+		try {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + recordName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "textToSearch");
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + recordName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "textToSearch");
+		}
+	}
+	
+	
+	public WebElement globalSearchSideNavOptionLink(String globalSearchSideNavOptionName, int timeOut) {
+
+		String xpath = "//li//a[contains(@class,\"slds-nav-vertical__action\")]//span[text()=\""+globalSearchSideNavOptionName+"\"]/ancestor::a";
+		try {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + globalSearchSideNavOptionName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "textToSearch");
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "Text Found: " + globalSearchSideNavOptionName, action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "textToSearch");
+		}
+	}
+
+
+	
+	@FindBy(xpath = "//button[@title=\"Show more searchable objects\"]")
+	private WebElement globalSearchSideNavShowMoreButton;
+
+	public WebElement globalSearchSideNavShowMoreButton(int timeOut) {
+		return isDisplayed(driver, globalSearchSideNavShowMoreButton, "Visibility", timeOut, "globalSearchSideNavShowMoreButton");
+	}
+	
+	@FindBy(xpath = "//div[contains(@class,\"noResultsTitle\")]")
+	private WebElement globalSearchNoResultMsg;
+
+	public WebElement globalSearchNoResultMsg(int timeOut) {
+		return isDisplayed(driver, globalSearchNoResultMsg, "Visibility", timeOut, "globalSearchNoResultMsg");
+	}
+	
+	
+	
+
+	
+	
+	
+	
+
 }
