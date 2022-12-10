@@ -463,8 +463,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[] dealCompany = "Acc 7<Break>Sumo Kind".split("<Break>", -1);
 		String[] dealStage = "Deal Received<Break>NDA Signed".split("<Break>", -1);
 
-		String tabName = "Test Custom Objects";
-		String textBoxRecordLabel = "Test Custom Object Name";
+		String tabName = "Test1 Custom Objects";
+		String textBoxRecordLabel = "Test1 Custom Object Name";
 		String[] textBoxRecordNames = "Golden Ret<Break>Pothoscust<Break>custareca<Break>Custom Object 1.1<Break>Custom Object 1.2<Break>Custom Object 1.3"
 				.split("<Break>", -1);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -572,6 +572,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		String task1ButtonName = "Task";
 
@@ -606,9 +607,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				+ " in Activity Timeline Section---------", YesNo.No);
 
 		CommonLib.refresh(driver);
+		
 		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
-//			home.notificationPopUpClose();
+			home.notificationPopUpClose();
 
 			WebElement ele;
 			if (npbl.createNavPopUpMinimizeButton(5) != null) {
@@ -755,6 +757,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				"---------Now Going to Create Task: " + task1SubjectName + " in Activity Timeline Section---------",
 				YesNo.No);
 		CommonLib.refresh(driver);
+		
 		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
 			home.notificationPopUpClose();
@@ -13491,6 +13494,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+			
 			List<String> notificationHomeNegativeResult = home.verifyNotificationOptions(eventTitleUpdated);
 			if (notificationHomeNegativeResult.isEmpty()) {
 				log(LogStatus.INFO, "Verified Notification for Event(s): " + eventTitleUpdated + " on Home Page",
