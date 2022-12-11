@@ -3530,4 +3530,68 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 		return monthYear;
 	}
 
+	/**
+	 * @author Ankur Huria
+	 * @param driver
+	 * @return String
+	 * @description switch to the very next window open and return the parent
+	 *              session id.
+	 */
+	public static String switchToWindowOpenNextToParentWindow(WebDriver driver) {
+		int limitForWait = 0;
+		String parentWindowId = driver.getWindowHandle();
+		String childWindowID = null;
+		Set<String> s1 = null;
+		CommonLib.ThreadSleep(2000);
+		while (true) {
+
+			s1 = driver.getWindowHandles();
+			if (s1.size() <= 1) {
+				try {
+					Thread.sleep(500);
+					limitForWait++;
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if (limitForWait > 200) {
+					appLog.info("No new window is open for switch.");
+					return null;
+				}
+			} else {
+				break;
+			}
+		}
+		Iterator<String> I1 = s1.iterator();
+		CommonLib.ThreadSleep(2000);
+		while (I1.hasNext()) {
+			childWindowID = I1.next();
+
+			if (parentWindowId.equals(childWindowID)) {
+				if (I1.hasNext()) {
+					childWindowID = I1.next();
+					System.out.println("parent window: " + parentWindowId + ">>>>> child window: " + childWindowID);
+					if (!parentWindowId.equals(childWindowID)) {
+						System.out.println("child window :" + childWindowID);
+						try {
+							driver.switchTo().window(childWindowID);
+						} catch (NoSuchWindowException e) {
+							appLog.info("Cannot switch to new window due to: ");
+							e.printStackTrace();
+							return null;
+						}
+						appLog.info("Successfully switched to new window.");
+						break;
+					}
+				} else {
+
+					return null;
+				}
+
+			}
+
+		}
+		return parentWindowId;
+	}
+
 }
