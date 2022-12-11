@@ -464,8 +464,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[] dealCompany = "Acc 7<Break>Sumo Kind".split("<Break>", -1);
 		String[] dealStage = "Deal Received<Break>NDA Signed".split("<Break>", -1);
 
-		String tabName = "Test1 Custom Objects";
-		String textBoxRecordLabel = "Test1 Custom Object Name";
+		String tabName = "Test Custom Objects";
+		String textBoxRecordLabel = "Test Custom Object Name";
 		String[] textBoxRecordNames = "Golden Ret<Break>Pothoscust<Break>custareca<Break>Custom Object 1.1<Break>Custom Object 1.2<Break>Custom Object 1.3"
 				.split("<Break>", -1);
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
@@ -929,8 +929,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[] relatedToVerify = "con 2<break>con 3<break>+5".split("<break>");
 
 		String[][] task1UpdateBasicSection = { { "Notes", updatedNotesOfTask } };
-		String[] updatedSuggestedTags = "con 14<break>con 34".split("<break>", -1);
-		String[] updatedRelatedToVerify = "con 2<break>con 3<break>+7".split("<break>");
+		String[] updatedSuggestedTags = "areca".split("<break>", -1);
+		String[] updatedRelatedToVerify = "con 2<break>con 3<break>+6".split("<break>");
 
 		String[] updatedRelatedToArray = new String[relatedToArray.length + updatedSuggestedTags.length];
 
