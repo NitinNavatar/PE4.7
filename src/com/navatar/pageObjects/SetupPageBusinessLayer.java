@@ -510,28 +510,29 @@ public class SetupPageBusinessLayer extends SetupPage {
 												"Salesforce CRM Content User check Box", action.SCROLLANDBOOLEAN)) {
 											ThreadSleep(2000);
 
-//											if(title!=null && title!="")
-//											{
+											if(title!=null && title!="")
+											{
 												if(sendKeys(driver, getUserTitle(20), title, "User title", action.SCROLLANDBOOLEAN))
 												{
 													appLog.info(title+" value has been passed in user title");
-													ThreadSleep(2000);
-													if (clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(30),
-															"Save Button", action.SCROLLANDBOOLEAN)) {
-														appLog.info("clicked on save button");
-														appLog.info("CRM User is created successfully: " + userfirstname + " "
-																+ userlastname);
-														return true;
-													} else {
-														appLog.error("Not able to click on save buttton so cannot create user: "
-																+ userfirstname + " " + userlastname);
-													}
 
 												}else
 												{
 													appLog.error(title+" value is not passed in user title");
 												}
-//											}
+											}
+											ThreadSleep(2000);
+											if (clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(30),
+													"Save Button", action.SCROLLANDBOOLEAN)) {
+												appLog.info("clicked on save button");
+												appLog.info("CRM User is created successfully: " + userfirstname + " "
+														+ userlastname);
+												return true;
+											} else {
+												appLog.error("Not able to click on save buttton so cannot create user: "
+														+ userfirstname + " " + userlastname);
+											}
+
 
 										} else {
 											appLog.info("Not able to click on content user checkbox");

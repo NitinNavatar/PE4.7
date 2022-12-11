@@ -4496,13 +4496,13 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String[] date= {ATE_AdvanceDueDate5,ATE_AdvanceDueDate6,ATE_AdvanceDueDate7,ATE_AdvanceDueDate8,ATE_AdvanceDueDate9,ATE_AdvanceDueDate10,ATE_AdvanceDueDate11,ATE_AdvanceDueDate12,ATE_AdvanceDueDate13,ATE_AdvanceDueDate14,ATE_AdvanceDueDate15,ATE_AdvanceDueDate16,ATE_AdvanceDueDate17,ATE_AdvanceDueDate18,ATE_AdvanceDueDate19,ATE_AdvanceDueDate20,
 				ATE_AdvanceDueDate21,ATE_AdvanceDueDate22,ATE_AdvanceDueDate23,ATE_AdvanceDueDate24,ATE_AdvanceDueDate25,ATE_AdvanceDueDate26,ATE_AdvanceDueDate27,ATE_AdvanceDueDate28,ATE_AdvanceDueDate29,ATE_AdvanceDueDate30,ATE_AdvanceDueDate31,ATE_AdvanceDueDate32,ATE_AdvanceDueDate33,ATE_AdvanceDueDate34,ATE_AdvanceDueDate35,ATE_AdvanceDueDate36,ATE_AdvanceDueDate37,ATE_AdvanceDueDate38,ATE_AdvanceDueDate39,ATE_AdvanceDueDate40,
-				ATE_AdvanceDueDate41,ATE_AdvanceDueDate42,ATE_AdvanceDueDate43,ATE_AdvanceDueDate44,ATE_AdvanceDueDate45,ATE_AdvanceStartDate2,ATE_AdvanceStartDate3,ATE_AdvanceStartDate4,ATE_AdvanceStartDate5,ATE_AdvanceStartDate6,ATE_AdvanceStartDate7,ATE_AdvanceStartDate8,ATE_AdvanceStartDate9,ATE_AdvanceStartDate10,ATE_AdvanceStartDate11,ATE_AdvanceStartDate12,ATE_AdvanceStartDate13,ATE_AdvanceStartDate14,ATE_AdvanceStartDate15,ATE_AdvanceStartDate16,ATE_AdvanceStartDate17,ATE_AdvanceStartDate18,ATE_AdvanceStartDate19,ATE_AdvanceStartDate20,
+				ATE_AdvanceDueDate41,ATE_AdvanceDueDate42,ATE_AdvanceDueDate43,ATE_AdvanceDueDate44,ATE_AdvanceStartDate2,ATE_AdvanceStartDate3,ATE_AdvanceStartDate4,ATE_AdvanceStartDate5,ATE_AdvanceStartDate6,ATE_AdvanceStartDate7,ATE_AdvanceStartDate8,ATE_AdvanceStartDate9,ATE_AdvanceStartDate10,ATE_AdvanceStartDate11,ATE_AdvanceStartDate12,ATE_AdvanceStartDate13,ATE_AdvanceStartDate14,ATE_AdvanceStartDate15,ATE_AdvanceStartDate16,ATE_AdvanceStartDate17,ATE_AdvanceStartDate18,ATE_AdvanceStartDate19,ATE_AdvanceStartDate20,
 				ATE_AdvanceStartDate21,ATE_AdvanceStartDate22,ATE_AdvanceStartDate23,ATE_AdvanceStartDate24,ATE_AdvanceStartDate25,ATE_AdvanceStartDate26,ATE_AdvanceStartDate27,ATE_AdvanceStartDate28,ATE_AdvanceStartDate29,ATE_AdvanceStartDate30,ATE_AdvanceStartDate31};
 
-		String[] userData= {ATE_User1,ATE_User2,ATE_User3,ATE_User4,ATE_User5,ATE_User6,ATE_User7,ATE_User8,ATE_User9,ATE_User10,ATE_User11,ATE_User12,ATE_User13,ATE_User14,ATE_User15,ATE_User16,ATE_User17,ATE_User18,ATE_User19,ATE_User20,
+		String[] userData= {ATE_User6,ATE_User7,ATE_User8,ATE_User9,ATE_User10,ATE_User11,ATE_User12,ATE_User13,ATE_User14,ATE_User15,ATE_User16,ATE_User17,ATE_User18,ATE_User19,ATE_User20,
 				ATE_User21,ATE_User22,ATE_User23,ATE_User24,ATE_User25,ATE_User26,ATE_User27,ATE_User28,ATE_User29,ATE_User30,ATE_User31,ATE_User32,ATE_User33,ATE_User34,ATE_User35,ATE_User36,ATE_User37,ATE_User38,ATE_User39,ATE_User40,
 				ATE_User41,ATE_User42,ATE_User43,ATE_User44,ATE_User45,ATE_User46,ATE_User47,ATE_User48,ATE_User49,ATE_User50,ATE_User51,ATE_User52,ATE_User53,ATE_User54,ATE_User55,ATE_User56,ATE_User57,ATE_User58,ATE_User59,ATE_User60,
-				ATE_User61,ATE_User62,ATE_User63,ATE_User64,ATE_User65,ATE_User66,ATE_User67,ATE_User68,ATE_User69,ATE_User70};
+				ATE_User61,ATE_User62,ATE_User63,ATE_User64,ATE_User65,ATE_User66,ATE_User67,ATE_User68,ATE_User69,ATE_User70,ATE_User71,ATE_User72,ATE_User73,ATE_User74,ATE_User75};
 
 		String[] user=new String[userData.length];
 
@@ -5001,7 +5001,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String[] peopleTagName={ATE_TaggedPeopleName9,ATE_TaggedPeopleName10,ATE_TaggedPeopleName11,ATE_TaggedPeopleName12,ATE_TaggedPeopleName13,ATE_TaggedPeopleName14,ATE_TaggedPeopleName15,ATE_TaggedPeopleName16,ATE_TaggedPeopleName3,ATE_TaggedPeopleName4};
 		String[] peopleTaggedTimeReference={ATE_TaggedPeopleTimeReference9,ATE_TaggedPeopleTimeReference10,ATE_TaggedPeopleTimeReference11,ATE_TaggedPeopleTimeReference12,ATE_TaggedPeopleTimeReference13,ATE_TaggedPeopleTimeReference14,ATE_TaggedPeopleTimeReference15,ATE_TaggedPeopleTimeReference16,ATE_TaggedPeopleTimeReference3,ATE_TaggedPeopleTimeReference4};
 
-
+		String[] notVisibleRecord= {ATE_TaggedPeopleName30,ATE_TaggedPeopleName31}; 
 
 
 		String[] connectionEmail= {ATE_ConnectionEmail3,ATE_ConnectionEmail4,ATE_ConnectionEmail5,ATE_ConnectionEmail6,ATE_ConnectionEmail7,ATE_ConnectionEmail8,ATE_ConnectionEmail9,ATE_ConnectionEmail10,ATE_ConnectionEmail11,ATE_ConnectionEmail12};
@@ -5202,21 +5202,72 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String[] interactionDate= {ATE_AdvanceDueDate5,ATE_AdvanceDueDate6,ATE_AdvanceDueDate7,ATE_AdvanceDueDate8,ATE_AdvanceDueDate9,ATE_AdvanceDueDate10,ATE_AdvanceDueDate11,ATE_AdvanceDueDate12,ATE_AdvanceDueDate13,ATE_AdvanceDueDate14,ATE_AdvanceDueDate15,ATE_AdvanceDueDate16,ATE_AdvanceDueDate17,ATE_AdvanceDueDate18,ATE_AdvanceDueDate19,ATE_AdvanceDueDate20,
 				ATE_AdvanceDueDate21,ATE_AdvanceDueDate22,ATE_AdvanceDueDate23,ATE_AdvanceDueDate24,ATE_AdvanceDueDate25,ATE_AdvanceDueDate26,ATE_AdvanceDueDate27,ATE_AdvanceDueDate28,ATE_AdvanceDueDate29,ATE_AdvanceDueDate30,ATE_AdvanceDueDate31,ATE_AdvanceDueDate32,ATE_AdvanceDueDate33,ATE_AdvanceDueDate34,ATE_AdvanceDueDate35,ATE_AdvanceDueDate36,ATE_AdvanceDueDate37,ATE_AdvanceDueDate38,ATE_AdvanceDueDate39,ATE_AdvanceDueDate40,
-				ATE_AdvanceDueDate41,ATE_AdvanceDueDate42,ATE_AdvanceDueDate43,ATE_AdvanceDueDate44,ATE_AdvanceDueDate45,ATE_AdvanceStartDate2,ATE_AdvanceStartDate3,ATE_AdvanceStartDate4,ATE_AdvanceStartDate5,ATE_AdvanceStartDate6,ATE_AdvanceStartDate7,ATE_AdvanceStartDate8,ATE_AdvanceStartDate9,ATE_AdvanceStartDate10,ATE_AdvanceStartDate11,ATE_AdvanceStartDate12,ATE_AdvanceStartDate13,ATE_AdvanceStartDate14,ATE_AdvanceStartDate15,ATE_AdvanceStartDate16,ATE_AdvanceStartDate17,ATE_AdvanceStartDate18,ATE_AdvanceStartDate19,ATE_AdvanceStartDate20,
+				ATE_AdvanceDueDate41,ATE_AdvanceDueDate42,ATE_AdvanceDueDate43,ATE_AdvanceDueDate44,ATE_AdvanceStartDate2,ATE_AdvanceStartDate3,ATE_AdvanceStartDate4,ATE_AdvanceStartDate5,ATE_AdvanceStartDate6,ATE_AdvanceStartDate7,ATE_AdvanceStartDate8,ATE_AdvanceStartDate9,ATE_AdvanceStartDate10,ATE_AdvanceStartDate11,ATE_AdvanceStartDate12,ATE_AdvanceStartDate13,ATE_AdvanceStartDate14,ATE_AdvanceStartDate15,ATE_AdvanceStartDate16,ATE_AdvanceStartDate17,ATE_AdvanceStartDate18,ATE_AdvanceStartDate19,ATE_AdvanceStartDate20,
 				ATE_AdvanceStartDate21,ATE_AdvanceStartDate22,ATE_AdvanceStartDate23,ATE_AdvanceStartDate24,ATE_AdvanceStartDate25,ATE_AdvanceStartDate26,ATE_AdvanceStartDate27,ATE_AdvanceStartDate28,ATE_AdvanceStartDate29,ATE_AdvanceStartDate30,ATE_AdvanceStartDate31};
 
-		String[] interactionUserData= {ATE_User1,ATE_User2,ATE_User3,ATE_User4,ATE_User5,ATE_User6,ATE_User7,ATE_User8,ATE_User9,ATE_User10,ATE_User11,ATE_User12,ATE_User13,ATE_User14,ATE_User15,ATE_User16,ATE_User17,ATE_User18,ATE_User19,ATE_User20,
+		String[] users2= {ATE_User6,ATE_User7,ATE_User8,ATE_User9,ATE_User10,ATE_User11,ATE_User12,ATE_User13,ATE_User14,ATE_User15,ATE_User16,ATE_User17,ATE_User18,ATE_User19,ATE_User20,
 				ATE_User21,ATE_User22,ATE_User23,ATE_User24,ATE_User25,ATE_User26,ATE_User27,ATE_User28,ATE_User29,ATE_User30,ATE_User31,ATE_User32,ATE_User33,ATE_User34,ATE_User35,ATE_User36,ATE_User37,ATE_User38,ATE_User39,ATE_User40,
 				ATE_User41,ATE_User42,ATE_User43,ATE_User44,ATE_User45,ATE_User46,ATE_User47,ATE_User48,ATE_User49,ATE_User50,ATE_User51,ATE_User52,ATE_User53,ATE_User54,ATE_User55,ATE_User56,ATE_User57,ATE_User58,ATE_User59,ATE_User60,
-				ATE_User61,ATE_User62,ATE_User63,ATE_User64,ATE_User65,ATE_User66,ATE_User67,ATE_User68,ATE_User69,ATE_User70};
+				ATE_User61,ATE_User62,ATE_User63,ATE_User64,ATE_User65,ATE_User66,ATE_User67,ATE_User68,ATE_User69,ATE_User70,ATE_User71,ATE_User72,ATE_User73,ATE_User74,ATE_User75};
 
 
+		String[] interactionUserData=new String[users2.length];
+
+		for(int i=0; i<users2.length; i++)
+		{
+			if(users2[i].toLowerCase().trim().equals("pe user 1"))
+			{
+				interactionUserData[i]=userName1;
+			}
+			else if(users2[i].toLowerCase().trim().equals("pe user 2"))
+			{
+				interactionUserData[i]=userName2;
+			}
+			else if(users2[i].toLowerCase().trim().equals("pe user 3"))
+			{
+				interactionUserData[i]=userName3;
+			}else if(users2[i].toLowerCase().trim().equals("pe user 4"))
+			{
+				interactionUserData[i]=userName4;
+			}else if(users2[i].toLowerCase().trim().equals("pe user 5"))
+			{
+				interactionUserData[i]=userName5;
+			}else if(users2[i].toLowerCase().trim().equals("pe user 6"))
+			{
+				interactionUserData[i]=userName6;
+			}else if(users2[i].toLowerCase().trim().equals("pe user 7"))
+			{
+				interactionUserData[i]=userName7;
+			}
+			else if(users2[i].toLowerCase().trim().equals("pe user 8"))
+			{
+				interactionUserData[i]=userName8;
+			}else if(users2[i].toLowerCase().trim().equals("pe user 9"))
+			{
+				interactionUserData[i]=userName9;
+			}else if(users2[i].toLowerCase().trim().equals("pe user 10"))
+			{
+				interactionUserData[i]=userName10;
+			}
+			else if(users2[i].toLowerCase().trim().equals("pe user 11"))
+			{
+				interactionUserData[i]=userName11;
+			}
+			else
+			{
+				Assertion hardAssert = new Assertion();
+				log(LogStatus.ERROR, "user data is not correct on ecxel", YesNo.No);
+				hardAssert.assertTrue(true == false);
+			}
+		}
+
+		
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (lp.clickOnTab(projectName, tabObj1)) {
+		if (lp.clickOnTab(projectName, tabObj2)) {
 
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
 					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
 
@@ -5234,6 +5285,18 @@ public class AcuityTaskAndEvent extends BaseLib {
 					{
 						log(LogStatus.ERROR,  "The record name and Time reference are not verifed "+result, YesNo.No);
 						sa.assertTrue(false,  "The record name and Time reference are not verifed "+result);
+					}
+					
+					ArrayList<String>result3= bp.verifyRecordShouldNotVisibleOnTagged(null, notVisibleRecord, null);
+					if(result3.isEmpty())
+					{
+						log(LogStatus.INFO, "The results are not visible on Tagged section. "+notVisibleRecord, YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The results are visible on Tagged section. "+notVisibleRecord+". "+result3, YesNo.No);
+						sa.assertTrue(false, "The results are visible on Tagged section. "+notVisibleRecord+". "+result3);
+									
 					}
 
 
@@ -5365,8 +5428,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 		}
 		else
 		{
-			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
-			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj2, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
 		}
 
 		lp.CRMlogout();	
@@ -5926,10 +5989,10 @@ public class AcuityTaskAndEvent extends BaseLib {
 		}
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
-		if (lp.clickOnTab(projectName, tabObj1)) {
+		if (lp.clickOnTab(projectName, tabObj2)) {
 
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
 					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
 
@@ -6076,8 +6139,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 		}
 		else
 		{
-			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
-			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj2, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
 		}
 
 		lp.CRMlogout();	
@@ -6165,6 +6228,12 @@ public class AcuityTaskAndEvent extends BaseLib {
 			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
 			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
 		}
+
+		ThreadSleep(2000);
+		lp.CRMlogout();	
+		ThreadSleep(8000);
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+		ThreadSleep(3000);
 
 		if (lp.clickAnyCellonCalender(projectName)) {
 			log(LogStatus.INFO,"Able to click on Calendar/Event Link",YesNo.No);
@@ -7654,7 +7723,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc044_AssociateIntermediaryAccountWithSomeOtherAccountsAlsoAssociateAccountsWithOtherFirmContactAndCreateSomeFollowUpTaskAsWell(String projectName) {
+	public void ATETc041_AssociateIntermediaryAccountWithSomeOtherAccountsAlsoAssociateAccountsWithOtherFirmContactAndCreateSomeFollowUpTaskAsWell(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7757,7 +7826,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0045_VerifyImpactOnIntermediaryAccountAcuityTab(String projectName) {
+	public void ATETc042_VerifyImpactOnIntermediaryAccountAcuityTab(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -7965,7 +8034,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0046_VerifyConnectionPopupOnIntermediaryAccountPage(String projectName) {
+	public void ATETc043_VerifyConnectionPopupOnIntermediaryAccountPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8152,7 +8221,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0047_VerifyIntermediaryContactAcuityTab(String projectName) {
+	public void ATETc044_VerifyIntermediaryContactAcuityTab(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8344,7 +8413,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void ATETc0048_CreateFollowupTasksAndVerifyImpacts(String projectName) {
+	public void ATETc045_CreateFollowupTasksAndVerifyImpacts(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
@@ -8454,7 +8523,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0049_VerifyImpactOnIntermediaryAccountAcuityTab(String projectName) {
+	public void ATETc046_VerifyImpactOnIntermediaryAccountAcuityTab(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8662,7 +8731,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0050_VerifyConnectionPopupOnIntermediaryAccountPage(String projectName) {
+	public void ATETc047_VerifyConnectionPopupOnIntermediaryAccountPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8788,7 +8857,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0051_VerifyIntermediaryContactAcuityTab(String projectName) {
+	public void ATETc048_VerifyIntermediaryContactAcuityTab(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8977,7 +9046,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0052_VerifyUIOfFilterSectionOnAccountAcuityTab(String projectName) {
+	public void ATETc049_VerifyUIOfFilterSectionOnAccountAcuityTab(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -8988,10 +9057,10 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String xPath;
 		WebElement ele;
 		
-		String[] filterType= {"All Types","Emails","Events","Logged Calls","Tasks"};
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
 		String[] recordIconType= {"email","event","call","task"};
 		
-		String[] filterType1= {"All Types","Events","Logged Calls"};
+		String[] filterType1= {"All Types","Meetings","Calls"};
 		String[] recordIconType1= {"event","call"};
 		
 		String userName1=crmUser6FirstName+" "+crmUser6LastName;
@@ -9281,21 +9350,20 @@ public class AcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0053_VerifyUIOfFilterSectionOnContactAcuityTab(String projectName) {
+	public void ATETc050_VerifyUIOfFilterSectionOnContactAcuityTab(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 
 		String recordName=ATE_Contact1;
-		String contactName=ATE_ContactName22;
 
 		String xPath;
 		WebElement ele;
 		
-		String[] filterType= {"All Types","Emails","Events","Logged Calls","Tasks"};
+		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
 		String[] recordIconType= {"email","event","call","task"};
 		
-		String[] filterType1= {"All Types","Events","Logged Calls"};
+		String[] filterType1= {"All Types","Meetings","Calls"};
 		String[] recordIconType1= {"event","call"};
 		
 		String userName1=crmUser6FirstName+" "+crmUser6LastName;
@@ -9539,7 +9607,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0054_VerifyInactiveUsersWillDisplayInTheConnectionPopupForIntermediaryAccountPage(String projectName) {
+	public void ATETc051_VerifyInactiveUsersWillDisplayInTheConnectionPopupForIntermediaryAccountPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -9588,7 +9656,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 			}
 			driver.close();
 			driver.switchTo().window(parentWindow);
-
+			lp.CRMlogout();	
+			ThreadSleep(8000);
 		}
 		if(flag==true)
 		{
@@ -9651,11 +9720,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 	}
 
 	
-	
-	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0055_VerifyInactiveUsersWillDisplayInTheConnectionSectionForIntermediaryAccountContactPage(String projectName) {
+	public void ATETc052_VerifyInactiveUsersWillDisplayInTheConnectionSectionForIntermediaryAccountContactPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -9720,7 +9787,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0056_UpdateTheNameOfAccountsContactDealsAndTasksAndEventsAndAddNewCompanyDealsandContactFromAddNoteAndEditNoteButton(String projectName) {
+	public void ATETc053_UpdateTheNameOfAccountsContactDealsAndTasksAndEventsAndAddNewCompanyDealsandContactFromAddNoteAndEditNoteButton(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -9746,7 +9813,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String updatedfirmRecordName=ATERecord8;
 
 		String updatedContactLastName=ATE_ContactLastName1;
-
 
 		String contactName2=ATE_Contact6;
 		String updatedContactTitle=ATE_ContactNameTitle1;
@@ -9884,9 +9950,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 					contactName2, 30)) {
 				log(LogStatus.INFO, contactName2 + " record has been open", YesNo.No);
 				
-					if(click(driver, BP.getEditButton(20), "Edit button", action.SCROLLANDBOOLEAN))
-					{
-						log(LogStatus.INFO, "Clicked on edit button", YesNo.No);
+				if (cp.clickOnShowMoreActionDownArrow(projectName, PageName.ContactPage, ShowMoreActionDropDownList.Edit, 30)) {
+					log(LogStatus.INFO, "clicked on edit button on contact page", YesNo.No);
 
 						xPath="//h2[contains(text(),'Edit')]/../..//label[text()='Title']/../..//input";
 						ele=FindElement(driver, xPath, "Title", action.SCROLLANDBOOLEAN, 30);
@@ -9922,8 +9987,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on edit button", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on edit button");
+						log(LogStatus.ERROR, "Not able to click on edit button of contact page", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on edit button of contact page");
 					}
 
 			}
@@ -10081,7 +10146,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0057_VerifyRecordUpdateImpactsOnIntermedairyAccountPage(String projectName) {
+	public void ATETc054_VerifyRecordUpdateImpactsOnIntermedairyAccountPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -10290,7 +10355,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0058_VerifyUpdatedNamesOnTaskPopupDetailsPage(String projectName) {
+	public void ATETc055_VerifyUpdatedNamesOnTaskPopupDetailsPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -10476,7 +10541,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0059_VerifyRecordUpdateImpactsOnIntermedairyAccountContactPage(String projectName) {
+	public void ATETc056_VerifyRecordUpdateImpactsOnIntermedairyAccountContactPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -10729,7 +10794,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0060_VerifyUpdatedNamesOnTaskDetailsPage(String projectName) {
+	public void ATETc057_VerifyUpdatedNamesOnTaskDetailsPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -10915,7 +10980,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0061_DeleteTheAccountContactDealFromTheOrg(String projectName) {
+	public void ATETc058_DeleteTheAccountContactDealFromTheOrg(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -11084,12 +11149,11 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 	
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0062_VerifyRecordDeleteImpactsOnIntermedairyAccountPage(String projectName) {
+	public void ATETc059_VerifyRecordDeleteImpactsOnIntermedairyAccountPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -11151,7 +11215,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0063_VerifyRecordDeleteImpactsOnIntermedairyAccountsContactPage(String projectName) {
+	public void ATETc060_VerifyRecordDeleteImpactsOnIntermedairyAccountsContactPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -11214,7 +11278,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0064_RestoreTheDeletedRecordsFromRecycleBinAndVerify(String projectName) {
+	public void ATETc061_RestoreTheDeletedRecordsFromRecycleBinAndVerify(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -11320,7 +11384,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0065_VerifyRecordRestoreImpactsOnIntermedairyAccountPage(String projectName) {
+	public void ATETc062_VerifyRecordRestoreImpactsOnIntermedairyAccountPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -11388,7 +11452,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0066_VerifyRestoreNamesOnTaskDetailsPage(String projectName) {
+	public void ATETc063_VerifyRestoreNamesOnTaskDetailsPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -11574,7 +11638,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0067_VerifyRecordRestoreImpactsOnIntermedairyAccountContactPage(String projectName) {
+	public void ATETc064_VerifyRecordRestoreImpactsOnIntermedairyAccountContactPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -11637,10 +11701,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 	}
 	
 	
-	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0068_VerifyRecordRestoreImpactsOnIntermedairyAccountContactPage(String projectName) {
+	public void ATETc065_VerifyRestoreNamesOnTaskDetailsPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -11824,10 +11887,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 	}
 	
 	
-	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc069_CreateSomeEventsAndVerifyCountsSwitchVerificationOnIntermediaryAccountPage(String projectName) {
+	public void ATETc066_CreateSomeEventsAndVerifyCountsSwitchVerificationOnIntermediaryAccountPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -11877,10 +11939,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 	}
 
 	
-	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0070_VerifyRecordRestoreImpactsOnIntermedairyAccountPage(String projectName) {
+	public void ATETc067_VerifyRecordRestoreImpactsOnIntermedairyAccountPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -11956,7 +12017,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0071_VerifyOnIntermediaryContactPage(String projectName) {
+	public void ATETc068_VerifyOnIntermediaryContactPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -12032,7 +12093,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc0072_ReplaceFirstColumnsWithAnotherColumanAndVerifyTheResultsOnAccountAcuityTab(String projectName) {
+	public void ATETc069_ReplaceFirstColumnsWithAnotherColumanAndVerifyTheResultsOnAccountAcuityTab(String projectName) {
 
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);

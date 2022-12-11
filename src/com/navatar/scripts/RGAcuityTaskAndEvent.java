@@ -66,10 +66,10 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.INFO,
 									"CRM User is created Successfully: " + firstName[k] + " " + UserLastName,
 									YesNo.No);
-							ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User"+(k+6),
+							ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "RGUser"+(k+1),
 									excelLabel.User_Email);
 							ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name,
-									"User"+(k+6), excelLabel.User_Last_Name);
+									"RGUser"+(k+1), excelLabel.User_Last_Name);
 							flag = true;
 							break;
 
@@ -142,7 +142,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void ASTc002_CreateTaskToVerifyDataOnInteractionCard(String projectName) {
+	public void RGASTc002_CreateTaskToVerifyDataOnInteractionCard(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 
@@ -167,7 +167,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 		String fundType = RGATE_FundType1;
 		String fundInvestmentCategory = RGATE_FundInvestmentCategory1;
 		int status = 0;
-		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 		if (accountName.length == recordType.length) {
 			for (int i = 0; i < accountName.length; i++) {
 				if (lp.clickOnTab(projectName, tabObj1)) {

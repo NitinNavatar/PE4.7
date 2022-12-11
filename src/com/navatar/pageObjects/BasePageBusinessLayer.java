@@ -18523,7 +18523,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (correspondenceHeader != null && correspondenceHeader.length != 0) {
 			for (int i = 0; i < correspondenceHeader.length; i++) {
 
-				if(icon[i]!=null && icon.length!=0 && icon[i]!="")
+				if(icon[i]!=null && icon.length!=0 && icon[i]!="" && icon[i]!=null)
 				{
 					xPath="//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"+correspondenceHeader[i]+"']/ancestor::tr//th[@data-label='Type']//lightning-icon";
 					ele=FindElement(driver, xPath, "Icon type of "+correspondenceHeader[i], action.SCROLLANDBOOLEAN, 20);
@@ -18539,7 +18539,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 				}
 
-				if (date != null && date.length != 0 && date[i] != "") {
+				if (date != null && date.length != 0 && date[i] != "" && date[i] != null) {
 					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
 							+ correspondenceHeader[i]
 									+ "']/ancestor::tr//td[@data-label='Date']//lightning-base-formatted-text";
@@ -18596,7 +18596,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						result.add("actual date : " + actualDate + " is not matched with the Expected date : " + expectedDate+" of subject : "+subject[i]);
 					}
 				}
-				if (subject != null && subject.length != 0 && subject[i] != "") {
+				if (subject != null && subject.length != 0 && subject[i] != "" && subject[i] != null) {
 					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
 							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Subject']//a";
 					ele = FindElement(driver, xPath, "subject ", action.SCROLLANDBOOLEAN, 25);
@@ -18611,12 +18611,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								+ subject[i]);
 					}
 				}
-				if (details != null && details.length != 0 && details[i] != "") {
+				if (details != null && details.length != 0 && details[i] != "" && details[i] != null) {
 					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
 							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Details']//button";
 					ele = FindElement(driver, xPath, "details ", action.SCROLLANDBOOLEAN, 25);
 					String actDetails = getText(driver, ele, "details ", action.SCROLLANDBOOLEAN);
-					if (actDetails.trim().equalsIgnoreCase(actDetails.trim().replaceAll(" +", " "))) {
+					if (actDetails.trim().equalsIgnoreCase(details[i].trim().replaceAll(" +", " "))) {
 						log(LogStatus.INFO, "actual details : " + actDetails
 								+ " has been matched with the Expected details : " + details[i]+" of subject : "+subject[i], YesNo.No);
 					} else {
@@ -18626,7 +18626,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								+ details[i]+" of subject : "+subject[i]);
 					}
 				}
-				if (assignedTo != null && assignedTo.length != 0 && assignedTo[i] != "") {
+				if (assignedTo != null && assignedTo.length != 0 && assignedTo[i] != "" && assignedTo[i] != null) {
 					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
 							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Assigned To']//a";
 					ele = FindElement(driver, xPath, "assigned to ", action.SCROLLANDBOOLEAN, 25);
@@ -18887,18 +18887,46 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									+ "']/ancestor::td[@data-label='Subject']/../td[@data-label='Date']//lightning-base-formatted-text";
 							ele = FindElement(driver, xPath, "Date column", action.SCROLLANDBOOLEAN, 30);
 
-							String actualDate = getText(driver, ele, "Date", action.BOOLEAN);
+							String val = getText(driver, ele, "Date", action.BOOLEAN);
 
-							String[] completedate = date[i].split("/");
-							char dayMonth = completedate[0].charAt(0);
+							String actualDate=null;
+							
+							if(val.contains(","))
+							{
+								actualDate=val.split(",")[0];
+							}
+							else
+							{
+								actualDate=val;
+							}
+							
+							String dueDate;	
+							if(date[i].contains(","))
+							{
+								dueDate=date[i].split(",")[0];
+							}
+							else
+							{
+								dueDate=date[i];
+							}
+							
+							String[] splittedDate = dueDate.split("/");
+							char dayMonth = splittedDate[0].charAt(0);
+							char day=splittedDate[1].charAt(0);
 							String month;
 							if (dayMonth == '0') {
-								month = completedate[0].replaceAll("0", "");
+								month = splittedDate[0].replaceAll("0", "");
 							} else {
-								month = completedate[0];
+								month = splittedDate[0];
+							}
+							String finalDay;
+							if (day == '0') {
+								finalDay = splittedDate[1].replaceAll("0", "");
+							} else {
+								finalDay = splittedDate[1];
 							}
 
-							String expectedDate = month + "/" + completedate[1] + "/" + completedate[2];
+							String expectedDate = month + "/" + finalDay + "/" + splittedDate[2];
 
 							if (actualDate.trim().equalsIgnoreCase(expectedDate.trim())) {
 								log(LogStatus.INFO,
