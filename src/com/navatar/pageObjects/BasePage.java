@@ -8024,6 +8024,14 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, editButtonInEventDetailPage, "Visibility", timeOut, "editButtonInEventDetailPage");
 	}
 
+	@FindBy(xpath = "//div[text()='Delete']/parent::a")
+	private WebElement deleteButtonInEventDetailPage;
+
+	public WebElement deleteButtonInEventDetailPage(int timeOut) {
+		return isDisplayed(driver, deleteButtonInEventDetailPage, "Visibility", timeOut,
+				"deleteButtonInEventDetailPage");
+	}
+
 	public WebElement eventNotPopUpAdvanceSectionDateTime(String parentLabelName, String subLabelName, int timeOut) {
 		String xpath = "//legend[text()=\"" + parentLabelName + "\"]/parent::fieldset//label[text()=\"" + subLabelName
 				+ "\"]/following-sibling::div//input";
@@ -8115,8 +8123,7 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getpopupOKbutton(int timeOut) {
 		return isDisplayed(driver, popupOKbutton, "Visibility", timeOut, "pop up OK button");
 	}
-	
-	
+
 	public WebElement addButtonOnInteractionCard(String subjectName, int timeOut) {
 		String xpath = "//a[text()='" + subjectName + "']/../preceding-sibling::div//button[@title='Add Note']";
 		WebElement ele = FindElement(driver, xpath, "Header Found: " + subjectName, action.SCROLLANDBOOLEAN, timeOut);
@@ -8127,26 +8134,74 @@ public abstract class BasePage extends BaseLib {
 			return isDisplayed(driver, ele, "Visibility", timeOut, "] Header Found: " + subjectName);
 		}
 	}
-	
-	
 
-
-	
 	public WebElement getEditButton(int timeOut) {
-		return isDisplayed(driver, editButton, "Visibility", timeOut,
-				"Edit button");
+		return isDisplayed(driver, editButton, "Visibility", timeOut, "Edit button");
 	}
+
 	@FindBy(xpath = "//button[@class='slds-button slds-button_neutral' and @name='Edit']")
 	private WebElement editButton;
-	
 
 	public WebElement getEditButtonOnActivityPage(int timeOut) {
-		return isDisplayed(driver, editButtonOnActivityPage, "Visibility", timeOut,
-				"Edit button");
+		return isDisplayed(driver, editButtonOnActivityPage, "Visibility", timeOut, "Edit button");
 	}
+
 	@FindBy(xpath = "//a[@class='forceActionLink']/div[@title='Edit']")
 	private WebElement editButtonOnActivityPage;
-	
+
+	public WebElement addNoteButtonInNotificationOfRecordDetailPage(String eventName, int timeOut) {
+		String xpath = "//b[text()=\"" + eventName
+				+ "\"]/ancestor::div[contains(@class,\"slds-border_top\")]//div//lightning-button/button[text()=\"Add Note\"]";
+		WebElement ele = FindElement(driver, xpath, "Header Found: " + eventName, action.SCROLLANDBOOLEAN, timeOut);
+		try {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "Header Found: " + eventName);
+
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "] Header Found: " + eventName);
+		}
+	}
+
+	public WebElement linkOfEventInNotificationOfRecordDetailPage(String eventName, int timeOut) {
+		String xpath = "//b[text()=\"" + eventName + "\"]/ancestor::div[contains(@class,\"slds-border_top\")]//div//a";
+		WebElement ele = FindElement(driver, xpath, "Header Found: " + eventName, action.SCROLLANDBOOLEAN, timeOut);
+		try {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "Header Found: " + eventName);
+
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "] Header Found: " + eventName);
+		}
+	}
+
+	@FindBy(xpath = "//lightning-icon[@title=\"Notifications\"]/following-sibling::div[@class=\"countDot\"]/span")
+	private WebElement countOfAcuityNotificationInRecordDetailPage;
+
+	public WebElement countOfAcuityNotificationInRecordDetailPage(int timeOut) {
+		return isDisplayed(driver, countOfAcuityNotificationInRecordDetailPage, "Visibility", timeOut,
+				"countOfAcuityNotificationInRecordDetailPage");
+	}
+
+	public WebElement eventDetailPageHeader(String eventName, int timeOut) {
+		String xpath = "//span[text()=\"" + eventName + "\"]/ancestor::h1/div[text()=\"Event\"]";
+		WebElement ele = FindElement(driver, xpath, "Header Found: " + eventName, action.SCROLLANDBOOLEAN, timeOut);
+		try {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "Header Found: " + eventName);
+
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "] Header Found: " + eventName);
+		}
+	}
+
+	public WebElement recordDetailPageHeader(String recordName, int timeOut) {
+		String xpath = "//*[(contains(@class,\"custom-truncate\") or @slot=\"primaryField\") and text()=\"" + recordName
+				+ "\"]";
+		WebElement ele = FindElement(driver, xpath, "Header Found: " + recordName, action.SCROLLANDBOOLEAN, timeOut);
+		try {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "Header Found: " + recordName);
+
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver, ele, "Visibility", timeOut, "Header Found: " + recordName);
+		}
+	}
 
 
 public WebElement contactname(String contactName, int timeOut) {

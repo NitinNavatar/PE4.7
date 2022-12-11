@@ -140,6 +140,13 @@ public class OutlookPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, eventCreatedMsg, "Visibility", timeOut, "eventCreatedMsg");
 
 	}
+	@FindBy(xpath = "//span[text()='Event canceled']")
+	private WebElement eventCanceledMsg;
+
+	public WebElement eventCanceledMsg(int timeOut) {
+		return isDisplayed(driver, eventCanceledMsg, "Visibility", timeOut, "eventCanceledMsg");
+
+	}
 
 	@FindBy(xpath = "//input[@name='loginfmt']")
 	private WebElement loginEmailInputBox;

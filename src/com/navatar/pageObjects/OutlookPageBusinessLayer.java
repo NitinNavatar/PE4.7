@@ -191,7 +191,16 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 							log(LogStatus.INFO, "-----Event Created Msg is showing, So Event of Title: " + eventTitle
 									+ " has been created-----", YesNo.No);
 
-							flag = true;
+							if (openRGGridAndDoForceSync(action.SCROLLANDBOOLEAN, 25)) {
+								log(LogStatus.INFO, "-----Force Sync Up successfully updated-----", YesNo.No);
+
+								flag = true;
+							} else {
+								log(LogStatus.ERROR, "-----Force Sync Up not successfully updated-----", YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "-----Force Sync Up not successfully updated-----");
+
+							}
+
 						}
 
 						else {
@@ -291,67 +300,70 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 	}
 
-	public boolean openRGGridAndDoForceSync(action action,int timeout) {
-		boolean flag=false;
-		String beforeSyncTime =null;
-		String afterSyncTime =null;
-		WebElement ele =null;
-		int count=0;
-		
+	public boolean openRGGridAndDoForceSync(action action, int timeout) {
+		boolean flag = false;
+		String beforeSyncTime = null;
+		String afterSyncTime = null;
+		WebElement ele = null;
+		int count = 0;
+
 		if (click(driver, getRevenueGridButton(timeout), "Revenue grid button", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Revenue grid button", YesNo.No);
 			ThreadSleep(1000);
 			if (click(driver, getOpenRevenueGridButton(timeout), "open Revenue grid button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on open Revenue grid button", YesNo.No);
 				ThreadSleep(2000);
-				if (click(driver, getRevenueGridMainMenuButton(timeout), "Revenue grid menu button", action.SCROLLANDBOOLEAN)) {
+				if (click(driver, getRevenueGridMainMenuButton(timeout), "Revenue grid menu button",
+						action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on Revenue grid menu button", YesNo.No);
 					ThreadSleep(1000);
-					
+
 					if (click(driver, getSyncSettingButton(timeout), "sync setting button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on sync setting button", YesNo.No);
 						ThreadSleep(1000);
 						String parentWindow = switchOnWindow(driver);
-						if(parentWindow!=null) {
-							
+						if (parentWindow != null) {
+
 							beforeSyncTime = getForceSyncLastSession(timeout).getText();
-							
-							if (click(driver, getForceSyncButton(timeout), "force sync button", action.SCROLLANDBOOLEAN)) {
+
+							if (click(driver, getForceSyncButton(timeout), "force sync button",
+									action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on force sync button", YesNo.No);
 								ThreadSleep(1000);
-								ele=getForceSyncSuccessErrorMessage(timeout);
-								if(ele!=null) {
+								ele = getForceSyncSuccessErrorMessage(timeout);
+								if (ele != null) {
 									ThreadSleep(2000);
 									log(LogStatus.INFO, "sucess message present force sync is done", YesNo.No);
 									afterSyncTime = getForceSyncLastSession(timeout).getText();
-									
-									while(beforeSyncTime.equalsIgnoreCase(afterSyncTime) && count<30) {
+
+									while (beforeSyncTime.equalsIgnoreCase(afterSyncTime) && count < 30) {
 										refresh(driver);
 										ThreadSleep(20000);
 										afterSyncTime = getForceSyncLastSession(timeout).getText();
 										count++;
-										if(beforeSyncTime.equalsIgnoreCase(afterSyncTime)) {
+										if (beforeSyncTime.equalsIgnoreCase(afterSyncTime)) {
 											log(LogStatus.INFO, "Force sync in successfully updated", YesNo.No);
-											flag=true;
+											flag = true;
 											break;
 										}
-										
+
 									}
 									driver.close();
 									driver.switchTo().window(parentWindow);
-								
-								}else {
-									log(LogStatus.ERROR, "sucess message not present force sync not completed", YesNo.Yes);
+
+								} else {
+									log(LogStatus.ERROR, "sucess message not present force sync not completed",
+											YesNo.Yes);
 									BaseLib.sa.assertTrue(false, "sucess message not present force sync not completed");
 								}
 							} else {
 								log(LogStatus.ERROR, "Not able to click on force sync button", YesNo.Yes);
 								BaseLib.sa.assertTrue(false, "Not able to click on force sync button");
 							}
-							
+
 							log(LogStatus.ERROR, "Not able to click on force sync button", YesNo.Yes);
 							BaseLib.sa.assertTrue(false, "Not able to click on force sync button");
-						}else {
+						} else {
 							log(LogStatus.ERROR, "No new window is open after click on sync setting button", YesNo.Yes);
 							BaseLib.sa.assertTrue(false, "No new window is open after click on sync setting button");
 						}
@@ -359,46 +371,47 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 						log(LogStatus.ERROR, "Not able to click on sync setting button", YesNo.Yes);
 						BaseLib.sa.assertTrue(false, "Not able to click on sync setting button");
 					}
-					
+
 				} else {
 					log(LogStatus.ERROR, "Not able to click on Revenue grid menu button", YesNo.Yes);
 					BaseLib.sa.assertTrue(false, "Not able to click on Revenue grid menu button");
 				}
-				
+
 			} else {
 				log(LogStatus.ERROR, "Not able to click on open revenue grid button", YesNo.Yes);
 				BaseLib.sa.assertTrue(false, "Not able to click on open revenue grid button");
 			}
-			
+
 		} else {
 			log(LogStatus.ERROR, "Not able to click on revenue grid button", YesNo.Yes);
 			BaseLib.sa.assertTrue(false, "Not able to click on revenue grid button");
 		}
-		
+
 		return flag;
-		
+
 	}
-		
-	public boolean sendMailFromRGOutlook(String[] to,String[] cc,String bcc,String subject,String message ,action action,int timeout) {
+
+	public boolean sendMailFromRGOutlook(String[] to, String[] cc, String bcc, String subject, String message,
+			action action, int timeout) {
 		boolean flag = false;
 
 		if (click(driver, getNewEmailButton(timeout), "new email button", action)) {
 			log(LogStatus.INFO, "Clicked on new email button", YesNo.No);
 			ThreadSleep(2000);
-			for(int i = 0; i <to.length; i++) {
-			if (sendKeysWithoutClearingTextBox(driver, getToInputBox(timeout), to[i]+",", "to input box", action)) {
-				log(LogStatus.INFO, "enter value in To box :" + to[i], YesNo.No);
-				ThreadSleep(2000);
-			} else {
-				log(LogStatus.ERROR, "Not able to enter value in To box :" + to[i], YesNo.Yes);
-				BaseLib.sa.assertTrue(false, "Not able to enter value in To box :" + to[i]);
-			}
+			for (int i = 0; i < to.length; i++) {
+				if (sendKeysWithoutClearingTextBox(driver, getToInputBox(timeout), to[i] + ",", "to input box",
+						action)) {
+					log(LogStatus.INFO, "enter value in To box :" + to[i], YesNo.No);
+					ThreadSleep(2000);
+				} else {
+					log(LogStatus.ERROR, "Not able to enter value in To box :" + to[i], YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not able to enter value in To box :" + to[i]);
+				}
 			}
 
-			
-				if (cc != null) {
-					for(int i = 0; i <cc.length; i++) {
-					if (sendKeysAndPressEnter(driver, getCCInputBox(timeout), cc[i]+",", "cc input box", action)) {
+			if (cc != null) {
+				for (int i = 0; i < cc.length; i++) {
+					if (sendKeysAndPressEnter(driver, getCCInputBox(timeout), cc[i] + ",", "cc input box", action)) {
 						log(LogStatus.INFO, "enter value in CC box :" + cc[i], YesNo.No);
 						ThreadSleep(1000);
 					} else {
@@ -408,56 +421,55 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 				}
 			}
-				ThreadSleep(2000);
-				if (bcc != null) {
+			ThreadSleep(2000);
+			if (bcc != null) {
 
-					if (click(driver, getBCCLink(timeout), "bcc link", action)) {
-						log(LogStatus.INFO, "Clicked on bcc link button", YesNo.No);
+				if (click(driver, getBCCLink(timeout), "bcc link", action)) {
+					log(LogStatus.INFO, "Clicked on bcc link button", YesNo.No);
+					ThreadSleep(1000);
+					if (sendKeys(driver, getBCCInputBox(timeout), bcc + ",", "bcc input box", action)) {
+						log(LogStatus.INFO, "able to enter value in BCC box :" + bcc, YesNo.No);
 						ThreadSleep(1000);
-						if (sendKeys(driver, getBCCInputBox(timeout), bcc+",", "bcc input box", action)) {
-							log(LogStatus.INFO, "able to enter value in BCC box :" + bcc, YesNo.No);
-							ThreadSleep(1000);
-						} else {
-							log(LogStatus.ERROR, "Not able to enter value in BCC box :" + bcc, YesNo.Yes);
-							BaseLib.sa.assertTrue(false, "Not able to enter value in BCC box :" + bcc);
-						}
 					} else {
-						log(LogStatus.ERROR, "Not able to click on bcc link button", YesNo.Yes);
-						BaseLib.sa.assertTrue(false, "Not able to click on bcc link button");
+						log(LogStatus.ERROR, "Not able to enter value in BCC box :" + bcc, YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to enter value in BCC box :" + bcc);
 					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on bcc link button", YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not able to click on bcc link button");
+				}
+			}
+
+			if (sendKeys(driver, getSubjectInputBox(timeout), subject, "subject input box", action)) {
+
+				log(LogStatus.INFO, "enter value in subject box :" + subject, YesNo.No);
+				ThreadSleep(1000);
+				if (message != null) {
+					if (sendKeys(driver, getMailMessageInputBox(timeout), message, "message input box", action)) {
+						log(LogStatus.INFO, "enter value in message box :" + message, YesNo.No);
+						ThreadSleep(1000);
+
+					} else {
+						log(LogStatus.ERROR, "Not able to enter value in message box :" + message, YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to enter value in message box :" + message);
+					}
+
 				}
 
-				if (sendKeys(driver, getSubjectInputBox(timeout), subject, "subject input box", action)) {
-
-					log(LogStatus.INFO, "enter value in subject box :" + subject, YesNo.No);
-					ThreadSleep(1000);
-					if (message != null) {
-						if (sendKeys(driver, getMailMessageInputBox(timeout), message, "message input box", action)) {
-							log(LogStatus.INFO, "enter value in message box :" + message, YesNo.No);
-							ThreadSleep(1000);
-
-						} else {
-							log(LogStatus.ERROR, "Not able to enter value in message box :" + message, YesNo.Yes);
-							BaseLib.sa.assertTrue(false, "Not able to enter value in message box :" + message);
-						}
-
-					}
-
-					if (click(driver, getSendButton(timeout), "Send button", action)) {
-						log(LogStatus.INFO, "Clicked on Send button", YesNo.No);
-						ThreadSleep(5000);
-						flag = true;
-
-					} else {
-						log(LogStatus.ERROR, "Not able to clicked on send button", YesNo.Yes);
-						BaseLib.sa.assertTrue(false, "Not able to clicked on send button");
-					}
+				if (click(driver, getSendButton(timeout), "Send button", action)) {
+					log(LogStatus.INFO, "Clicked on Send button", YesNo.No);
+					ThreadSleep(5000);
+					flag = true;
 
 				} else {
-					log(LogStatus.ERROR, "Not able to enter value in subject box :" + subject, YesNo.Yes);
-					BaseLib.sa.assertTrue(false, "Not able to enter value in subject box :" + subject);
+					log(LogStatus.ERROR, "Not able to clicked on send button", YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not able to clicked on send button");
 				}
 
+			} else {
+				log(LogStatus.ERROR, "Not able to enter value in subject box :" + subject, YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to enter value in subject box :" + subject);
+			}
 
 		} else {
 			log(LogStatus.ERROR, "Not able to click on new email button", YesNo.Yes);
@@ -467,6 +479,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		return flag;
 
 	}
+
 	public boolean loginAndCreateEventThroughOutLook(String userName, String userPassword, String eventTitle,
 			String eventAttendees, String startDate, String endDate, String startTime, String endTime,
 			String descriptionBox, boolean allDayToggle) {
@@ -516,11 +529,13 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		if (CommonLib.checkDateFormat("m/d/yyyy", eventDate)) {
 			log(LogStatus.INFO, "EventDate format is correct.." + eventDate, YesNo.No);
 
-			if (expMonthYear.equalsIgnoreCase(CommonLib.getMonthYear(eventDate))) {
+			if (expMonthYear.equalsIgnoreCase(getMonthYear(eventDate))) {
 				log(LogStatus.INFO, "Expected Month and Year matched with eventDate:" + eventDate, YesNo.No);
 			} else {
 				log(LogStatus.ERROR, "Expected Month and Year does not match with eventDate: " + eventDate
 						+ " Please pass correct month and Year", YesNo.No);
+				BaseLib.sa.assertTrue(false, "Expected Month and Year does not match with eventDate: " + eventDate
+						+ " Please pass correct month and Year");
 				return flag;
 			}
 
@@ -536,7 +551,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		SimpleDateFormat formatter = new SimpleDateFormat("M/dd/yyyy");
 
 		String eventDate1 = eventDate;
-		String todayDate = CommonLib.getTodayDate();
+		String todayDate = getTodayDate();
 		// Parsing the given String to Date object
 		Date date1 = null;
 		try {
@@ -555,40 +570,36 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		Boolean eventDateSmallerThanTodayDate = date1.before(date2);
 		// Boolean eventDateAndTodayDateEqual = date1.equals(date2);
 
-		if (outLookLogin(userName, password)) {
-			if (click(driver, getOutlookCalenderIcon(30), "outLookCalenderIcon", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on calender Icon", YesNo.No);
+		outLookLogin(userName, password); // navigate to Outlook
 
-				// selectFutureEventDate("December 2022", "6, December, 2022");
+		if (click(driver, getOutlookCalenderIcon(30), "outLookCalenderIcon", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on calender Icon", YesNo.No);
 
-				eventDate = CommonLib.convertDateFromOneFormatToAnother(eventDate1, "M/d/yyyy", "d, MMMM, yyyy");
+			// selectFutureEventDate("December 2022", "6, December, 2022");
 
-				if (eventDateGreaterThanTodayDate) {
-					log(LogStatus.INFO,
-							"Passed date is Greater than today's date..Going to select Future date:" + eventDate,
-							YesNo.No);
-					selectFutureEventDate(expMonthYear, eventDate, eventName, cancelEvent);
+			eventDate = convertDateFromOneFormatToAnother(eventDate1, "M/d/yyyy", "d, MMMM, yyyy");
 
-				} else if (eventDateSmallerThanTodayDate) {
-					log(LogStatus.INFO,
-							"Passed date is smaller than today's date..Going to select Past date:" + eventDate,
-							YesNo.No);
-					selectPastEventDate(expMonthYear, eventDate, eventName, cancelEvent);
+			if (eventDateGreaterThanTodayDate) {
+				log(LogStatus.INFO,
+						"Passed date is Greater than today's date..Going to select Future date:" + eventDate, YesNo.No);
+				flag = selectFutureEventDate(expMonthYear, eventDate, eventName, cancelEvent);
 
-				} else {
-					selectFutureEventDate(expMonthYear, eventDate, eventName, cancelEvent);
-				}
+			} else if (eventDateSmallerThanTodayDate) {
+				log(LogStatus.INFO, "Passed date is smaller than today's date..Going to select Past date:" + eventDate,
+						YesNo.No);
+				flag = selectPastEventDate(expMonthYear, eventDate, eventName, cancelEvent);
 
 			} else {
-				log(LogStatus.ERROR, "Not able to click on calender Icon", YesNo.No);
-				BaseLib.sa.assertTrue(false, "Not able to click on calender Icon");
+				log(LogStatus.INFO, "Passed date is Equal to today's date..Going to select current date:" + eventDate,
+						YesNo.No);
+				flag = selectFutureEventDate(expMonthYear, eventDate, eventName, cancelEvent);
+
 			}
 
 		} else {
-			log(LogStatus.ERROR, "Not able to login to Outlook with Id: " + userName, YesNo.No);
-			BaseLib.sa.assertTrue(false, "Not able to login to Outlook with Id: " + userName);
+			log(LogStatus.ERROR, "Not able to click on calender Icon", YesNo.No);
+			BaseLib.sa.assertTrue(false, "Not able to click on calender Icon");
 		}
-
 		return flag;
 
 	}
@@ -599,17 +610,17 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		String xPath = null;
 		xPath = "//button[contains(@class,'dayButton') and @aria-label='" + dateNum + "']";
 
-		String actMonthYear = CommonLib.getText(driver, getActualMonth(30), "actual month", action.SCROLLANDBOOLEAN);
+		String actMonthYear = getText(driver, getActualMonth(30), "actual month", action.SCROLLANDBOOLEAN);
 		if (actMonthYear != null) {
 			log(LogStatus.INFO, "Actual month and Year is: " + actMonthYear, YesNo.No);
 
 			while (!actMonthYear.equalsIgnoreCase(expMonthYear)) {
 				// click on down:
 				if (click(driver, getdownArrowValue(30), "calender down arrow", action.SCROLLANDBOOLEAN)) {
-					actMonthYear = CommonLib.getText(driver, getActualMonth(30), "actual month",
-							action.SCROLLANDBOOLEAN);
+					actMonthYear = getText(driver, getActualMonth(30), "actual month", action.SCROLLANDBOOLEAN);
 				} else {
 					log(LogStatus.ERROR, "Actual month not fetched, there is some problem ", YesNo.No);
+					BaseLib.sa.assertTrue(false, "Actual month not fetched, there is some problem");
 					return flag;
 				}
 			}
@@ -618,7 +629,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 					"date Number", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "clicked on Actual date successfully.", YesNo.No);
 
-				CommonLib.ThreadSleep(5000);
+				ThreadSleep(5000);
 
 				if (selectEventName(eventName)) {
 					log(LogStatus.INFO, "clicked on expected eventName", YesNo.No);
@@ -626,31 +637,38 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 					if (cancelEvent) {
 						if (click(driver, getEventCancelButton(30), "Event cancel button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Cancel button Successfully.", YesNo.No);
+							flag = true;
 						} else {
 							log(LogStatus.ERROR, "Not able to click on Cancel button", YesNo.No);
+							BaseLib.sa.assertTrue(false, "Not able to click on Cancel button");
 							return flag;
 						}
 					} else {
 
 						if (click(driver, getEventEditButton(30), "Event Edit button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Edit button Successfully.", YesNo.No);
+							flag = true;
 						} else {
 							log(LogStatus.ERROR, "Not able to click on Edit button", YesNo.No);
+							BaseLib.sa.assertTrue(false, "Not able to click on Edit button");
 							return flag;
 						}
 					}
 
 				} else {
 					log(LogStatus.ERROR, "Not able to click on expected eventName, Event not FOUND.", YesNo.No);
+					BaseLib.sa.assertTrue(false, "Not able to click on expected eventName, Event not FOUND.");
 					return flag;
 				}
 
 			} else {
 				log(LogStatus.ERROR, "Not able to click on date.. ", YesNo.No);
+				BaseLib.sa.assertTrue(false, "Not able to click on date..");
 				return flag;
 			}
 		} else {
 			log(LogStatus.ERROR, "Actual month is null, there is some problem with locator " + actMonthYear, YesNo.No);
+			BaseLib.sa.assertTrue(false, "Actual month is null, there is some problem with locator");
 			return flag;
 		}
 		return flag;
@@ -663,7 +681,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		String xPath = null;
 		xPath = "//button[contains(@class,'dayButton') and @aria-label='" + dateNum + "']";
 
-		String actMonthYear = CommonLib.getText(driver, getActualMonth(30), "actual month", action.SCROLLANDBOOLEAN);
+		String actMonthYear = getText(driver, getActualMonth(30), "actual month", action.SCROLLANDBOOLEAN);
 		if (actMonthYear != null) {
 			log(LogStatus.INFO, "Actual month is: " + actMonthYear, YesNo.No);
 
@@ -671,10 +689,10 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 				// click on up:
 				if (click(driver, getUpArrowValue(30), "calender up arrow", action.SCROLLANDBOOLEAN)) {
 
-					actMonthYear = CommonLib.getText(driver, getActualMonth(30), "actual month",
-							action.SCROLLANDBOOLEAN);
+					actMonthYear = getText(driver, getActualMonth(30), "actual month", action.SCROLLANDBOOLEAN);
 				} else {
 					log(LogStatus.ERROR, "Actual month not fetched, there is some problem ", YesNo.No);
+					BaseLib.sa.assertTrue(false, "Actual month not fetched, there is some problem");
 					return flag;
 				}
 			}
@@ -683,7 +701,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 					"date Number", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "clicked on Actual date successfully.", YesNo.No);
 
-				CommonLib.ThreadSleep(5000);
+				ThreadSleep(5000);
 
 				if (selectEventName(eventName)) {
 					log(LogStatus.INFO, "clicked on expected eventName", YesNo.No);
@@ -691,31 +709,38 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 					if (cancelEvent) {
 						if (click(driver, getEventCancelButton(30), "Event cancel button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Cancel button Successfully.", YesNo.No);
+							flag = true;
 						} else {
 							log(LogStatus.ERROR, "Not able to click on Cancel button", YesNo.No);
+							BaseLib.sa.assertTrue(false, "Not able to click on Cancel button");
 							return flag;
 						}
 					} else {
 
 						if (click(driver, getEventEditButton(30), "Event Edit button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Edit button Successfully.", YesNo.No);
+							flag = true;
 						} else {
 							log(LogStatus.ERROR, "Not able to click on Edit button", YesNo.No);
+							BaseLib.sa.assertTrue(false, "Not able to click on Edit button");
 							return flag;
 						}
 					}
 
 				} else {
 					log(LogStatus.ERROR, "Not able to click on expected eventName, Event not FOUND.", YesNo.No);
+					BaseLib.sa.assertTrue(false, "Not able to click on expected eventName, Event not FOUND.");
 					return flag;
 				}
 
 			} else {
 				log(LogStatus.ERROR, "Not able to click on date.. ", YesNo.No);
+				BaseLib.sa.assertTrue(false, "Not able to click on date.. ");
 				return flag;
 			}
 		} else {
 			log(LogStatus.ERROR, "Actual month is null, there is some problem with locator " + actMonthYear, YesNo.No);
+			BaseLib.sa.assertTrue(false, "Actual month is null, there is some problem with locator");
 			return flag;
 		}
 		return flag;
@@ -920,16 +945,22 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 						"-----Event Update Msg is showing, So Event of Title: " + eventTitle + " has been Updated-----",
 						YesNo.No);
 
-				flag = true;
+				if (openRGGridAndDoForceSync(action.SCROLLANDBOOLEAN, 25)) {
+					log(LogStatus.INFO, "-----Force Sync Up successfully updated-----", YesNo.No);
+
+					flag = true;
+				} else {
+					log(LogStatus.ERROR, "-----Force Sync Up not successfully updated-----", YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "-----Force Sync Up not successfully updated-----");
+
+				}
+
 			}
-
 			else {
-
 				log(LogStatus.ERROR, "-----Event Update Msg is not showing, So Event of Title: " + eventTitle
 						+ " has not been Updated-----", YesNo.Yes);
 				BaseLib.sa.assertTrue(false, "-----Event Update Msg is not showing, So Event of Title: " + eventTitle
 						+ " has not been Updated-----");
-
 			}
 
 		} else {
@@ -942,9 +973,9 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 	}
 
 	public boolean loginNavigateAndUpdateTheEvent(String userName, String password, String eventDate,
-			String expMonthYear, String eventName, boolean cancelEvent, String updatedEventName, String eventAttendees, String startDate,
-			String endDate, String startTime, String endTime, String descriptionBox, boolean allDayToggle,
-			String eventAttendeesToRemove) {
+			String expMonthYear, String eventName, boolean cancelEvent, String updatedEventName, String eventAttendees,
+			String startDate, String endDate, String startTime, String endTime, String descriptionBox,
+			boolean allDayToggle, String eventAttendeesToRemove) {
 
 		boolean flag = false;
 		String newWindowCode = "window. open('about:blank','_blank');";
@@ -957,20 +988,48 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 				log(LogStatus.INFO,
 						"Logged In to Outlook for Id: " + userName + " & Successfully Navigated to Event: " + eventName,
 						YesNo.No);
-				if (updateEventThroughOutlook(updatedEventName, eventAttendees, startDate, endDate, startTime, endTime,
-						descriptionBox, allDayToggle, eventAttendeesToRemove)) {
-					log(LogStatus.INFO, "------Event: " + updatedEventName + " Updated through outlook---------", YesNo.No);
-					flag = true;
-					driver.close();
-					driver.switchTo().window(parentId);
+
+				if (!cancelEvent) {
+					if (updateEventThroughOutlook(updatedEventName, eventAttendees, startDate, endDate, startTime,
+							endTime, descriptionBox, allDayToggle, eventAttendeesToRemove)) {
+						log(LogStatus.INFO, "------Event: " + updatedEventName + " Updated through outlook---------",
+								YesNo.No);
+						flag = true;
+						driver.close();
+						driver.switchTo().window(parentId);
+					} else {
+						CommonLib.log(LogStatus.ERROR,
+								"------Not able to Update Event: " + updatedEventName + " through outlook--------",
+								YesNo.Yes);
+						BaseLib.sa.assertTrue(false,
+								"------Not able to Update Event: " + updatedEventName + " through outlook--------");
+						driver.close();
+						driver.switchTo().window(parentId);
+					}
 				} else {
-					CommonLib.log(LogStatus.ERROR,
-							"------Not able to Update Event: " + updatedEventName + " through outlook--------", YesNo.Yes);
-					BaseLib.sa.assertTrue(false,
-							"------Not able to Update Event: " + updatedEventName + " through outlook--------");
-					driver.close();
-					driver.switchTo().window(parentId);
+
+					if (click(driver, eventSendButton(30), "eventSendButton", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on eventSendButton", YesNo.No);
+						if (eventCanceledMsg(30) != null) {
+							log(LogStatus.INFO, "Event has been Cancelled for the Event: " + eventName, YesNo.No);
+
+							flag = true;
+						}
+
+						else {
+
+							log(LogStatus.ERROR, "Event has not been Cancelled for the Event: " + eventName, YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Event has not been Cancelled for the Event: " + eventName);
+
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Not able to Click on eventSendButton", YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to Click on eventSendButton");
+					}
+
 				}
+
 			}
 
 			else {

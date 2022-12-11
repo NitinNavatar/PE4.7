@@ -1575,8 +1575,8 @@ public class CommonVariables {
 
 		SDG = "Sortable Data Grids";
 		outLookAddress = "https://outlook.office365.com/";
-		rgOutLookUser1Email = ExcelUtils.readDataFromPropertyFile("outLookUser1Email");
-		rgOutLookUser1Password = ExcelUtils.readDataFromPropertyFile("outLookUser1Password");
+		rgOutLookUser1Email = ExcelUtils.readDataFromPropertyFile("rgOutLookUser1Email");
+		rgOutLookUser1Password = ExcelUtils.readDataFromPropertyFile("rgOutLookUser1Password");
 
 		AppDeveloperName=ExcelUtils.readDataFromPropertyFile("AppDeveloperName");
 		AppDescription=ExcelUtils.readDataFromPropertyFile("AppDescription");
