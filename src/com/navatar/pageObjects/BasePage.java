@@ -8375,4 +8375,28 @@ public WebElement contactEmailCount(String contactName, int timeOut) {
 		return isDisplayed(driver, closeIconOnFilterSectiOnEmailPopup, "Visibility", timeOut,
 				"close Icon On Filter SectiOn Email Popup");
 	}
+	
+	
+	public WebElement recordsNameOnTaggedSection(String tagNameOnTaggedSection, int timeOut) {
+
+		String xpath = "//span[text()='"+tagNameOnTaggedSection+"']/ancestor::table//lightning-formatted-url//a";
+		try {
+			return FindElement(driver, xpath, "Record name: " + tagNameOnTaggedSection, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Record name: " + tagNameOnTaggedSection, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+	
+	
+	public WebElement getTabName(String tabName, int timeOut) {
+
+		String xpath = "//div[contains(@class,'entityNameTitle') and text()='"+tabName+"']";
+		try {
+			return FindElement(driver, xpath, "Tab name: " + tabName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Tab name: " + tabName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
 }
