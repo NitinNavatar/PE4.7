@@ -1483,7 +1483,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			ThreadSleep(5000);
 
 			if (tabName.toString().contains("Task") || tabName.toString().equalsIgnoreCase("Task")) {
-				xpath = "//span[text()='" + alreadyCreated + "']/ancestor::a";
+				xpath = "//a[text()='" + alreadyCreated + "']";
 			} else {
 				xpath = "//table[@data-aura-class='uiVirtualDataTable']//tbody//tr//th//span//*[text()='"
 						+ alreadyCreated + "']";
@@ -17987,15 +17987,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		}
 
-		if (negativeResult.isEmpty()) {
-			if (click(driver, getfooterSaveOrCancelButton("Save", 20), "Save button", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "clicked on Save button", YesNo.No);
-			} else {
-				log(LogStatus.ERROR, "Not able to click on Save button", YesNo.No);
-				negativeResult.add("Not able to click on Save button");
-
-			}
-		}
 
 		return negativeResult;
 	}
