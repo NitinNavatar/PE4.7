@@ -264,7 +264,7 @@ public class OutlookPage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "//button[@name='Revenue Grid for Salesforce CRM']")
+	@FindBy(xpath = "//button[@aria-label='Revenue Grid for Salesforce CRM']")
 	private WebElement revenueGridButton;
 
 	public WebElement getRevenueGridButton(int timeOut) {
@@ -288,6 +288,17 @@ public class OutlookPage extends BasePageBusinessLayer {
 
 	}
 	
+	
+	@FindBy(xpath = "//iframe[@title=\"Office Add-in Revenue Grid for Salesforce CRM\"]")
+	private WebElement revenueGridFrame;
+
+	public WebElement revenueGridFrame(int timeOut) {
+		return isDisplayed(driver, revenueGridFrame, "Visibility", timeOut, "revenueGridFrame");
+
+	}
+	
+	
+	
 	@FindBy(xpath = "//div[@title='Open sync settings in browser']")
 	private WebElement syncSettingMenu;
 
@@ -304,7 +315,7 @@ public class OutlookPage extends BasePageBusinessLayer {
 
 	}
 	
-	@FindBy(xpath = "//div[@class='ajs-message ajs-error ajs-visible']")
+	@FindBy(xpath = "//div[@class=\"ajs-message ajs-error ajs-visible\" or @class=\"ajs-message ajs-success ajs-visible\"]")
 	private WebElement forceSyncSuccessErrorMessage;
 
 	public WebElement getForceSyncSuccessErrorMessage(int timeOut) {

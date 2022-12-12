@@ -257,7 +257,7 @@ public class AppListeners extends By implements ITestListener, IInvokedMethodLis
 			CommonLib.checkForLoaderImage(driver, "//div[@id='blurred']/div", 120);
 			CommonLib.checkForLoaderImage(driver, "//div[@id='processingImg']/div", 120);
 			CommonLib.checkForLoaderImage(driver, "//div[@class='slds-spinner_container']/parent::div[contains(@style,'block')]", 120);
-			CommonLib.checkForLoaderImage(driver, "//section/lightning-spinner[@class='slds-spinner_container']", 120);
+			CommonLib.checkForLoaderImage(driver, "//section//lightning-spinner[@class='slds-spinner_container']", 120);
 			
 			
 			

@@ -11785,13 +11785,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ThreadSleep(1000);
 					refresh(driver);
 					ThreadSleep(3000);
-					if (clickUsingJavaScript(driver, popupCloseButton("Note", 20), "close button")) {
-						log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
-						flag = true;
+					if (popupCloseButton("Note", 8) != null) {
+						if (clickUsingJavaScript(driver, popupCloseButton("Note", 20), "close button")) {
+							log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
+							flag = true;
+						} else {
+							log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
+							sa.assertTrue(false, "Not able to close the Note popup");
+							return false;
+						}
 					} else {
-						log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
-						sa.assertTrue(false, "Not able to close the Note popup");
-						return false;
+						return true;
 					}
 
 				} else {
@@ -13303,13 +13307,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ThreadSleep(1000);
 					refresh(driver);
 					ThreadSleep(3000);
-					if (clickUsingJavaScript(driver, popupCloseButton("Note", 20), "close button")) {
-						log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
-						flag = true;
+					if (popupCloseButton("Note", 8) != null) {
+						if (clickUsingJavaScript(driver, popupCloseButton("Note", 20), "close button")) {
+							log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
+							flag = true;
+						} else {
+							log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
+							sa.assertTrue(false, "Not able to close the Note popup");
+							return false;
+						}
 					} else {
-						log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
-						sa.assertTrue(false, "Not able to close the Note popup");
-						return false;
+						return true;
 					}
 
 				} else {
@@ -18557,19 +18565,20 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (correspondenceHeader != null && correspondenceHeader.length != 0) {
 			for (int i = 0; i < correspondenceHeader.length; i++) {
 
-				if(icon[i]!=null && icon.length!=0 && icon[i]!="" && icon[i]!=null)
-				{
-					xPath="//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"+correspondenceHeader[i]+"']/ancestor::tr//th[@data-label='Type']//lightning-icon";
-					ele=FindElement(driver, xPath, "Icon type of "+correspondenceHeader[i], action.SCROLLANDBOOLEAN, 20);
-					String iconVal=getAttribute(driver, ele, "Icon type", "class");
-					if(iconVal.contains(icon[i].toLowerCase()))
-					{
-						log(LogStatus.INFO,"The icon :"+icon[i]+" has been verified against "+correspondenceHeader[i]+" record",YesNo.No);
-					}
-					else
-					{
-						log(LogStatus.ERROR,"The icon :"+icon[i]+" is not verified against "+correspondenceHeader[i]+" record",YesNo.No);
-						result.add("The icon :"+icon[i]+" is not verified against "+correspondenceHeader[i]+" record");
+				if (icon[i] != null && icon.length != 0 && icon[i] != "" && icon[i] != null) {
+					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
+							+ correspondenceHeader[i] + "']/ancestor::tr//th[@data-label='Type']//lightning-icon";
+					ele = FindElement(driver, xPath, "Icon type of " + correspondenceHeader[i], action.SCROLLANDBOOLEAN,
+							20);
+					String iconVal = getAttribute(driver, ele, "Icon type", "class");
+					if (iconVal.contains(icon[i].toLowerCase())) {
+						log(LogStatus.INFO, "The icon :" + icon[i] + " has been verified against "
+								+ correspondenceHeader[i] + " record", YesNo.No);
+					} else {
+						log(LogStatus.ERROR, "The icon :" + icon[i] + " is not verified against "
+								+ correspondenceHeader[i] + " record", YesNo.No);
+						result.add("The icon :" + icon[i] + " is not verified against " + correspondenceHeader[i]
+								+ " record");
 
 					}
 				}
@@ -18646,8 +18655,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ele = FindElement(driver, xPath, "details ", action.SCROLLANDBOOLEAN, 25);
 					String actDetails = getText(driver, ele, "details ", action.SCROLLANDBOOLEAN);
 					if (actDetails.trim().equalsIgnoreCase(details[i].trim().replaceAll(" +", " "))) {
-						log(LogStatus.INFO, "actual details : " + actDetails
-								+ " has been matched with the Expected details : " + details[i]+" of subject : "+subject[i], YesNo.No);
+						log(LogStatus.INFO,
+								"actual details : " + actDetails + " has been matched with the Expected details : "
+										+ details[i] + " of subject : " + subject[i],
+								YesNo.No);
 
 					} else {
 						log(LogStatus.ERROR,
@@ -18923,30 +18934,24 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 							String val = getText(driver, ele, "Date", action.BOOLEAN);
 
-							String actualDate=null;
-							
-							if(val.contains(","))
-							{
-								actualDate=val.split(",")[0];
+							String actualDate = null;
+
+							if (val.contains(",")) {
+								actualDate = val.split(",")[0];
+							} else {
+								actualDate = val;
 							}
-							else
-							{
-								actualDate=val;
+
+							String dueDate;
+							if (date[i].contains(",")) {
+								dueDate = date[i].split(",")[0];
+							} else {
+								dueDate = date[i];
 							}
-							
-							String dueDate;	
-							if(date[i].contains(","))
-							{
-								dueDate=date[i].split(",")[0];
-							}
-							else
-							{
-								dueDate=date[i];
-							}
-							
+
 							String[] splittedDate = dueDate.split("/");
 							char dayMonth = splittedDate[0].charAt(0);
-							char day=splittedDate[1].charAt(0);
+							char day = splittedDate[1].charAt(0);
 							String month;
 							if (dayMonth == '0') {
 								month = splittedDate[0].replaceAll("0", "");

@@ -7352,7 +7352,7 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, viewAllBtnOnIntration, "Visibility", timeOut, "view All button");
 	}
 
-	@FindBy(xpath = "//div[contains(@class,'slds-page-header__title')]")
+	@FindBy(xpath = "//div[contains(@class,'slds-page-header__title')]//span")
 	private WebElement pageHeaderTitle;
 
 	public WebElement getPageHeaderTitle(int timeOut) {
