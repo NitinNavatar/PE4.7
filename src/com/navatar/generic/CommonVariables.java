@@ -1352,7 +1352,7 @@ public class CommonVariables {
 	    public static String ATE_Tabs1;
 	    
 	    //Acuity Contact Header
-	    public static String ATE_ContactHeader1;
+	    public static String ATE_ContactHeader1,ATE_ContactHeader2;
 	    
 	  //Acuity Deal Header
 	    public static String ATE_DealHeader1;
@@ -6944,7 +6944,8 @@ public class CommonVariables {
 				
 			    //Acuity Contact Header
 			   ATE_ContactHeader1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE001", excelLabel.ContactHeader);
-				
+			   ATE_ContactHeader2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE002", excelLabel.ContactHeader);
+					
 			    
 			    //Acuity Deal Header
 			    ATE_DealHeader1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE001", excelLabel.dealHeader);  

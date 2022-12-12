@@ -12089,7 +12089,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
+
 	
 	@Parameters({ "projectName" })
 	@Test
@@ -12098,10 +12098,21 @@ public class AcuityTaskAndEvent extends BaseLib {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		String parentWindow = null;
+		String xPath;
+		WebElement ele;
+		String recordName=ATERecord3;
 
 		String[] metaDataName= {ATE_MetaDataName1,ATE_MetaDataName2,ATE_MetaDataName3,ATE_MetaDataName4,ATE_MetaDataName5,ATE_MetaDataName6};
 		String[] metaDataValue= {ATE_MetaDataValue1,ATE_MetaDataValue2,ATE_MetaDataValue3,ATE_MetaDataValue4,ATE_MetaDataValue5,ATE_MetaDataValue6};
+
+		ArrayList<String> blankList=new ArrayList<String>();
+
+		String contactHeader=ATE_ContactHeader2;
+
+		String[] arrContactHeader=contactHeader.split("<break>");
+		List<String> contactHeaders = new ArrayList<String>(Arrays.asList(arrContactHeader));
 
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		if (home.clickOnSetUpLink()) {
@@ -12143,9 +12154,205 @@ public class AcuityTaskAndEvent extends BaseLib {
 			sa.assertTrue(false, "Not able to click on setup link so cannot change value");
 		}
 		lp.CRMlogout();
+
+		ThreadSleep(12000);
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj1)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage("Acuity")) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+
+
+					ArrayList<String> result=bp.verifyRedirectionOnClickEntityTypeOnTaggedSection();
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The redirections are working properly after clickig on records of Company, People and deal tagged record", YesNo.No);
+						sa.assertTrue(true, "The redirections are working properly after clickig on records of Company, People and deal tagged record");
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The redirections are not working properly after clickig on records of Company, People and deal tagged record. "+result, YesNo.No);
+						sa.assertTrue(false, "The redirections are not working properly after clickig on records of Company, People and deal tagged record. "+result);
+					}
+
+					xPath="//span[contains(@class,'slds-page-header__title') and @title='Contacts']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//td[@data-label='Name']//a";
+					ele=FindElement(driver, xPath, "records on Contact section", action.SCROLLANDBOOLEAN, 20);
+					if(clickUsingJavaScript(driver, ele, "Records on contact section"))
+					{
+						log(LogStatus.INFO, "clicked on record of contact section", YesNo.No);	
+
+						String id = switchOnWindow(driver);
+						if(id!=null)
+						{	
+							if (bp.getTabName("Contact",20)!= null) {
+								log(LogStatus.INFO, "The page is redirecting to Contact tab after clicking on record name of contact section", YesNo.No);
+							} else {
+								log(LogStatus.ERROR, "The page is not redirecting to Contact tab after clicking on record name of contact section", YesNo.No);
+								result.add("The page is not redirecting to Contact tab after clicking on record name of contact section");
+							}
+							driver.close();
+							driver.switchTo().window(id);
+						}
+						else
+						{
+							log(LogStatus.ERROR,  "The new tab is not opening after clicking on entity type of People", YesNo.No);
+							result.add("The new tab is not opening after clicking on entity type of people");
+						}
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on record of contact section", YesNo.No);	
+						sa.assertTrue(false, "Not able to click on record of contact section");
+					}
+
+					ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null, contactHeaders, null, blankList, null,blankList,null);
+
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, "The header name and message have been verified on Contacts section", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The header name and message are not verified on Contacts. "+result1, YesNo.No);
+						sa.assertTrue(false, "The header name and message are not verified on Contacts "+result1);
+					}
+
+					xPath="//td[@data-col-key-value='1-button-1']//button[@name='Connections']";
+					ele=FindElement(driver, xPath, "connection icon of contact record", action.SCROLLANDBOOLEAN, 20);
+					if(click(driver, ele, "connection icon of contact record", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "Clicked on connection icon of contact recod", YesNo.No);
+						xPath="//h2[contains(text(),'Connections of')]/../following-sibling::div//th[@data-label='Team Member']//a";
+						ele=FindElement(driver, xPath, "Team Member", action.SCROLLANDBOOLEAN, 20);
+						ThreadSleep(2000);
+						if(CommonLib.clickUsingJavaScript(driver, ele, "Team member user", action.SCROLLANDBOOLEAN))
+						{
+							log(LogStatus.INFO, "Clicked on Team member user's name", YesNo.No);
+							String id=switchOnWindow(driver);
+							if(id!=null)
+							{
+								xPath="//a[@title='User Detail']";
+								ele=FindElement(driver, xPath, "User name on user page", action.SCROLLANDBOOLEAN, 20);
+								if(ele!=null)
+								{
+									log(LogStatus.INFO, "The link is redirecting to user page after clicking on username", YesNo.No);									
+
+									driver.close();
+									driver.switchTo().window(id);										
+								}
+								else
+								{
+									log(LogStatus.ERROR, "The link is not redirecting to correct user page after clicking on username", YesNo.No);
+									sa.assertTrue(false, "The link is not redirecting to correct user page after clicking on username");
+									if(id!=null)
+									{
+										driver.close();
+										driver.switchTo().window(id);
+									}
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "New tab is not opening after clicking on username", YesNo.No);
+								sa.assertTrue(false, "New tab is not opening after clicking on username");
+							}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on team member user name", YesNo.No);
+							sa.assertTrue(false, "Not able to click on team member user name");
+						}
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on connection icon of contact section record", YesNo.No);
+						sa.assertTrue(false, "Not able to click on connection icon of contact section record");
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+		lp.CRMlogout();
 		sa.assertAll();
 	}
 
+		
+	@Parameters({ "projectName" })
+	@Test
+	public void ATETc070_VerifyTheResultsOnContactsAcuityTab(String projectName) {
+
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		
+		String recordName=ATE_Contact1;
+
+
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj2)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage("Acuity")) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+                    ThreadSleep(6000);
+					ArrayList<String> result=bp.verifyRedirectionOnClickEntityTypeOnTaggedSection();
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The redirections are working properly after clickig on records of Company, People and deal tagged record", YesNo.No);
+						sa.assertTrue(true, "The redirections are working properly after clickig on records of Company, People and deal tagged record");
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The redirections are not working properly after clickig on records of Company, People and deal tagged record. "+result, YesNo.No);
+						sa.assertTrue(false, "The redirections are not working properly after clickig on records of Company, People and deal tagged record. "+result);
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj2, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
 
 
 }

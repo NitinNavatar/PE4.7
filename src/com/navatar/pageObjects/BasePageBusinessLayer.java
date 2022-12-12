@@ -20039,5 +20039,125 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 	}
+	
+	
+public ArrayList<String> verifyRedirectionOnClickEntityTypeOnTaggedSection() {
+		
+		ArrayList<String> result = new ArrayList<String>();
+
+		if (click(driver, getTaggedRecordName(TaggedName.Companies.toString(), 30), TaggedName.Companies.toString()+" tab", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
+			ThreadSleep(5000);
+			if (CommonLib.clickUsingJavaScript(driver,
+					recordsNameOnTaggedSection(TaggedName.Companies.toString(), 30),
+					"Records on Company Tagged", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on record on Companies tab",
+						YesNo.No);
+				
+				String id = switchOnWindow(driver);
+				if(id!=null)
+				{	
+				if (getTabName("Firm",20)!= null) {
+					log(LogStatus.INFO, "The page is redirecting to firm tab after click on Entity type of firm", YesNo.No);
+				} else {
+					log(LogStatus.ERROR,  "The page is not redirecting to firm tab after click on Entity type of firm", YesNo.No);
+					result.add( "The page is not redirecting to firm tab after click on Entity type of firm");
+				}
+				driver.close();
+				driver.switchTo().window(id);
+				}
+				else
+				{
+					log(LogStatus.ERROR,  "The new tab is not opening after clicking on entity type of firm", YesNo.No);
+					result.add("The new tab is not opening after clicking on entity type of firm");
+				}
+
+			} else {
+				log(LogStatus.ERROR,
+						"Not able to click on record on Companies tab", YesNo.No);
+				result.add("Not able to click on record on Companies tab");
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
+			result.add("Not able to click on Companies tab name");
+		}
+
+
+		if (click(driver, getTaggedRecordName(TaggedName.People.toString(), 30), TaggedName.People.toString()+" tab", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
+			ThreadSleep(5000);
+			if (CommonLib.clickUsingJavaScript(driver,
+					recordsNameOnTaggedSection(TaggedName.People.toString(), 30),
+					"Records on People Tagged", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on record on People tab",
+						YesNo.No);
+
+				String id = switchOnWindow(driver);
+				if(id!=null)
+				{	
+					if (getTabName("Contact",20)!= null) {
+						log(LogStatus.INFO, "The page is redirecting to Contact tab after click on Entity type of People", YesNo.No);
+					} else {
+						log(LogStatus.ERROR,  "The page is not redirecting to Contact tab after click on Entity type of people", YesNo.No);
+						result.add( "The page is not redirecting to Contact tab after click on Entity type of people");
+					}
+					driver.close();
+					driver.switchTo().window(id);
+				}
+				else
+				{
+					log(LogStatus.ERROR,  "The new tab is not opening after clicking on entity type of People", YesNo.No);
+					result.add("The new tab is not opening after clicking on entity type of people");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to click on record of people tab name", YesNo.No);
+				result.add("Not able to click on record of people tab name");
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
+			result.add("Not able to click on Companies tab name");
+		}
+
+
+		if (click(driver, getTaggedRecordName(TaggedName.Deals.toString(), 30), TaggedName.Deals.toString()+" tab", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on Deal tab name", YesNo.No);
+            ThreadSleep(5000);
+			if (CommonLib.clickUsingJavaScript(driver,
+					recordsNameOnTaggedSection(TaggedName.Deals.toString(), 30),
+					"Records on Deal Tagged", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on record on deal tab",
+						YesNo.No);
+
+				String id = switchOnWindow(driver);
+				if(id!=null)
+				{	
+					if (getTabName("Deal",20)!= null) {
+						log(LogStatus.INFO, "The page is redirecting to deal tab after click on Entity type of deal", YesNo.No);
+					} else {
+						log(LogStatus.ERROR,  "The page is not redirecting to Deal tab after click on Entity type of deal", YesNo.No);
+						result.add( "The page is not redirecting to Deal tab after click on Entity type of deal");
+					}
+					driver.close();
+					driver.switchTo().window(id);
+				}
+				else
+				{
+					log(LogStatus.ERROR,  "The new tab is not opening after clicking on entity type of Deal", YesNo.No);
+					result.add("The new tab is not opening after clicking on entity type of Deal");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to click on record of deal tab name", YesNo.No);
+				result.add("Not able to click on record of deal tab name");
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on Deal tab name", YesNo.No);
+			result.add("Not able to click on Deal tab name");
+		}
+		return result;
+	}
+
 
 }
