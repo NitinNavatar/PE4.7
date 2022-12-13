@@ -2926,7 +2926,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void rgAcuityMNNRTc015_VerifyTheNotificationWhenOnlyRelatedAssociationTagged(String projectName) {
+	public void rgAcuityMNNRTc010_VerifyTheNotificationWhenOnlyRelatedAssociationTagged(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);

@@ -449,25 +449,48 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		FundRaisingPageBusinessLayer fr = new FundRaisingPageBusinessLayer(driver);
 
-		String[] fundNames = "Mutual Fund<Break>Sumo Kind Fund".split("<Break>", -1);
-		String[] fundTypes = "Fund<Break>Fund".split("<Break>", -1);
-		String[] investmentCategories = "Fund<Break>Fund".split("<Break>", -1);
+		String[] fundNames = AMNNR_FundNames1.split("<Break>", -1);
+		String[] fundTypes = AMNNR_FundTypes1.split("<Break>", -1);
+		String[] investmentCategories = AMNNR_FundInvestmentCategories1.split("<Break>", -1);
 		String otherLabelFields = null;
 		String otherLabelValues = null;
 
-		String[] fundraisingNames = "FC Fundraising<Break>Sumo Kind Fundraising".split("<Break>", -1);
-		String[] fundraisingsFundName = "Mutual Fund<Break>Sumo Kind Fund".split("<Break>", -1);
-		String[] fundraisingsInstitutionName = "Acc 4<Break>Acc 12".split("<Break>", -1);
+		String[] fundraisingNames = AMNNR_FundraisingNames1.split("<Break>", -1);
+		String[] fundraisingsFundName = AMNNR_FundraisingFundName1.split("<Break>", -1);
+		String[] fundraisingsInstitutionName = AMNNR_FundraisingInstitutionName1.split("<Break>", -1);
 
 		String dealRecordTypes = null;
-		String[] dealName = "Demo Deal<Break>Sumo Kind".split("<Break>", -1);
-		String[] dealCompany = "Acc 7<Break>Sumo Kind".split("<Break>", -1);
-		String[] dealStage = "Deal Received<Break>NDA Signed".split("<Break>", -1);
+		String[] dealName = AMNNR_DealName1.split("<Break>", -1);
+		String[] dealCompany = AMNNR_DealCompany1.split("<Break>", -1);
+		String[] dealStage = AMNNR_DealStage1.split("<Break>", -1);
 
-		String tabName = "Test Custom Objects";
-		String textBoxRecordLabel = "Test Custom Object Name";
-		String[] textBoxRecordNames = "Golden Ret<Break>Pothoscust<Break>custareca<Break>Custom Object 1.1<Break>Custom Object 1.2<Break>Custom Object 1.3"
-				.split("<Break>", -1);
+		String tabName = AMNNR_CustomObjectTab1;
+		String textBoxRecordLabel = AMNNR_CustomObjectField1;
+		String[] textBoxRecordNames = AMNNR_CustomObjectRecord1.split("<Break>", -1);
+
+		/*
+		 * String[] fundNames = "Mutual Fund<Break>Sumo Kind Fund".split("<Break>", -1);
+		 * String[] fundTypes = "Fund<Break>Fund".split("<Break>", -1); String[]
+		 * investmentCategories = "Fund<Break>Fund".split("<Break>", -1); String
+		 * otherLabelFields = null; String otherLabelValues = null;
+		 * 
+		 * String[] fundraisingNames =
+		 * "FC Fundraising<Break>Sumo Kind Fundraising".split("<Break>", -1); String[]
+		 * fundraisingsFundName = "Mutual Fund<Break>Sumo Kind Fund".split("<Break>",
+		 * -1); String[] fundraisingsInstitutionName =
+		 * "Acc 4<Break>Acc 12".split("<Break>", -1);
+		 * 
+		 * String dealRecordTypes = null; String[] dealName =
+		 * "Demo Deal<Break>Sumo Kind".split("<Break>", -1); String[] dealCompany =
+		 * "Acc 7<Break>Sumo Kind".split("<Break>", -1); String[] dealStage =
+		 * "Deal Received<Break>NDA Signed".split("<Break>", -1);
+		 * 
+		 * String tabName = "Test Custom Objects"; String textBoxRecordLabel =
+		 * "Test Custom Object Name"; String[] textBoxRecordNames =
+		 * "Golden Ret<Break>Pothoscust<Break>custareca<Break>Custom Object 1.1<Break>Custom Object 1.2<Break>Custom Object 1.3"
+		 * .split("<Break>", -1);
+		 */
+
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		int fundStatus = 0;
@@ -575,7 +598,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
-		String task1ButtonName = "Task";
+		String task1ButtonName = AMNNR_ActivityType1;
 
 		String task1SubjectName = "";
 		String task1Notes = "";
@@ -732,11 +755,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String getAdvanceDueDate = AdvanceDueDate;
 
-		String task1SubjectName = "Send Invoice";
-		String task1Notes = "";
-		String relatedTo = "Con 1<break>con 2<break>con 3<break>Sumo Logic<break>Houlihan Lokey<break>Vertica";
-		String priority = "Normal";
-		String status = "Not Started";
+		String task1SubjectName = AMNNR_Subject2;
+		String task1Notes = AMNNR_Notes2;
+		String relatedTo = AMNNR_RelatedTo2;
+		String priority = AMNNR_AdvancePriority2;
+		String status = AMNNR_AdvanceStatus2;
 
 		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
 				{ "Related_To", relatedTo } };
@@ -744,13 +767,33 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1AdvancedSection = { { "Due Date Only", getAdvanceDueDate },
 				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
-		String task1ButtonName = "Task";
-		String recordName = "Sumo Logic";
-		String recordType = "Company";
-		String updatedCommentOfTask = "This is to notify that @ con4, @con5 should be in loop";
-		String[] relatedToVerify = "Con 1<break>con 2<break>+5".split("<break>");
+		String task1ButtonName = AMNNR_ActivityType1;
+		String recordName = AMNNR_FirmLegalName1;
+		String recordType = AMNNR_FirmRecordType1;
+		String updatedCommentOfTask = AMNNR_Notes3;
+		String[] relatedToVerify = AMNNR_ATRelatedTo1.split("<break>");
 		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", updatedCommentOfTask },
 				{ "Related_To", relatedTo } };
+
+		/*
+		 * String task1SubjectName = "Send Invoice"; String task1Notes = ""; String
+		 * relatedTo =
+		 * "Con 1<break>con 2<break>con 3<break>Sumo Logic<break>Houlihan Lokey<break>Vertica"
+		 * ; String priority = "Normal"; String status = "Not Started";
+		 * 
+		 * String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes",
+		 * task1Notes }, { "Related_To", relatedTo } };
+		 * 
+		 * String[][] task1AdvancedSection = { { "Due Date Only", getAdvanceDueDate }, {
+		 * "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status",
+		 * status }, { "Priority", priority } }; String task1ButtonName = "Task"; String
+		 * recordName = "Sumo Logic"; String recordType = "Company"; String
+		 * updatedCommentOfTask =
+		 * "This is to notify that @ con4, @con5 should be in loop"; String[]
+		 * relatedToVerify = "Con 1<break>con 2<break>+5".split("<break>"); String[][]
+		 * task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes",
+		 * updatedCommentOfTask }, { "Related_To", relatedTo } };
+		 */
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -891,13 +934,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("0"));
 		String getAdvanceDueDate = AdvanceDueDate;
-		String task1SubjectName = "Send Letter";
-		String task1Notes = "This is to check Con 2, Con 3, Logic should be the part of the deal kind";
-		String relatedTo = "Vertica";
+		String task1SubjectName = AMNNR_Subject4;
+		String task1Notes = AMNNR_Notes4;
+		String relatedTo = AMNNR_RelatedTo4;
 
-		String priority = "Normal";
-		String status = "In Progress";
-		String task1ButtonName = "Task";
+		String priority = AMNNR_AdvancePriority4;
+		String status = AMNNR_AdvanceStatus4;
+		String task1ButtonName = AMNNR_ActivityType1;
 
 		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
 				{ "Related_To", relatedTo } };
@@ -906,8 +949,27 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
-		String[] SuggestedTags = "con 2==Contact<break>con 3==Contact<break>Sumo Logic==Firm<break>Sumo Kind==Firm<break>Sumo Kind==Deal"
-				.split("<break>", -1);
+		String[] SuggestedTags = AMNNR_SuggestedTag4.split("<break>", -1);
+		/*
+		 * 
+		 * String task1SubjectName = "Send Letter"; String task1Notes =
+		 * "This is to check Con 2, Con 3, Logic should be the part of the deal kind";
+		 * String relatedTo = "Vertica";
+		 * 
+		 * String priority = "Normal"; String status = "In Progress"; String
+		 * task1ButtonName = "Task";
+		 * 
+		 * String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes",
+		 * task1Notes }, { "Related_To", relatedTo } };
+		 * 
+		 * String[][] task1AdvancedSection = { { "Due Date Only", getAdvanceDueDate }, {
+		 * "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status",
+		 * status }, { "Priority", priority } };
+		 * 
+		 * String[] SuggestedTags =
+		 * "con 2==Contact<break>con 3==Contact<break>Sumo Logic==Firm<break>Sumo Kind==Firm<break>Sumo Kind==Deal"
+		 * .split("<break>", -1);
+		 */
 
 		String[] relatedToArray = new String[SuggestedTags.length + relatedTo.split("<break>", -1).length];
 
@@ -923,14 +985,26 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		}
 
-		String recordName = "Vertica";
-		String recordType = "Company";
-		String updatedNotesOfTask = "This is to notify that Areca and Arrow should be in loop of vertica";
-		String[] relatedToVerify = "con 2<break>con 3<break>+5".split("<break>");
+		/*
+		 * String recordName = "Vertica"; String recordType = "Company"; String
+		 * updatedNotesOfTask =
+		 * "This is to notify that Areca and Arrow should be in loop of vertica";
+		 * String[] relatedToVerify = "con 2<break>con 3<break>+5".split("<break>");
+		 * 
+		 * String[][] task1UpdateBasicSection = { { "Notes", updatedNotesOfTask } };
+		 * String[] updatedSuggestedTags = "areca".split("<break>", -1); String[]
+		 * updatedRelatedToVerify = "con 2<break>con 3<break>+6".split("<break>");
+		 * 
+		 */
+
+		String recordName = AMNNR_FirmLegalName2;
+		String recordType = AMNNR_FirmRecordType2;
+		String updatedNotesOfTask = AMNNR_Notes5;
+		String[] relatedToVerify = AMNNR_ATRelatedTo2.split("<break>");
 
 		String[][] task1UpdateBasicSection = { { "Notes", updatedNotesOfTask } };
-		String[] updatedSuggestedTags = "areca".split("<break>", -1);
-		String[] updatedRelatedToVerify = "con 2<break>con 3<break>+6".split("<break>");
+		String[] updatedSuggestedTags = AMNNR_SuggestedTag5.split("<break>", -1);
+		String[] updatedRelatedToVerify = AMNNR_ATRelatedTo3.split("<break>");
 
 		String[] updatedRelatedToArray = new String[relatedToArray.length + updatedSuggestedTags.length];
 
