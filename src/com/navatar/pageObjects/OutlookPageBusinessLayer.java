@@ -1189,7 +1189,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 	}
 
-	public boolean enterDateInCalendar(WebDriver driver, String type,String datemmddyyy,action action,int timeout) {
+	public boolean enterDateThroughOutlookCalendar(WebDriver driver, String type,String datemmddyyy,action action,int timeout) {
 		boolean flag = false;
 
 		String[] dates = datemmddyyy.split("/");
