@@ -1,9 +1,6 @@
 package com.navatar.pageObjects;
 
 import static com.navatar.generic.CommonLib.*;
-import static com.navatar.generic.CommonLib.log;
-import static com.navatar.generic.CommonLib.sendKeys;
-import static com.navatar.generic.CommonLib.switchToDefaultContent;
 import static com.navatar.generic.CommonVariables.*;
 
 import java.util.Date;
@@ -14,10 +11,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
@@ -1188,6 +1187,104 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		}
 		return flag;
 
+	}
+
+	public static void enterDateInCalendar(WebDriver driver, String type,String datemmddyyy) {
+		
+		Actions act= new Actions(driver);
+		 
+		 
+		String[] dates= datemmddyyy.split("/");
+		
+		String year =dates[2];
+		 String month =dates[0];
+		 String day =dates[1];
+		 String fullMonthName=null;
+		 String partialMonthName=null;
+		 
+		 String dateType =null;
+		 if(type.contains("start")) {
+			 dateType="Start date";
+		 }else {
+			 dateType="End date";
+		 }
+		 
+		 WebElement startDateCalendar= driver.findElement(By.xpath("//input[@aria-label='"+dateType+"']/../i"));
+		
+		 startDateCalendar.click();
+		 ThreadSleep(5000);
+		WebElement monthsAndYear= driver.findElement(By.xpath("//div[@aria-label='Calendar']//button[contains(@aria-label,'select to change the month')]/span"));
+			act.click(monthsAndYear).build().perform();
+		 ThreadSleep(3000);
+		 WebElement yearValue= driver.findElement(By.xpath("//button[contains(@aria-label,'select to change the year')]"));
+		 act.click(yearValue).build().perform();
+		
+		 switch (month) {
+		 case "01":
+			 fullMonthName="January";
+			 partialMonthName="Jan";
+			 break;
+		 case "02":
+			 fullMonthName="February";
+			 partialMonthName="Feb";
+			 break;
+		 case "03":
+			 fullMonthName="March";
+			 partialMonthName="Mar";
+			 break;
+		 case "04":
+			 fullMonthName="April";
+			 partialMonthName="Apr";
+			 break;
+		 case "05":
+			 fullMonthName="May";
+			 partialMonthName="May";
+			 break;
+		 case "06":
+			 fullMonthName="June";
+			 partialMonthName="Jun";
+			 break;
+		 case "07":
+			 fullMonthName="July";
+			 partialMonthName="Jul";
+			 break;
+		 case "08":
+			 fullMonthName="August";
+			 partialMonthName="Aug";
+			 break;
+		 case "09":
+			 fullMonthName="September";
+			 partialMonthName="Sep";
+			 break;
+		 case "10":
+			 fullMonthName="October";
+			 partialMonthName="Oct";
+			 break;
+		 case "11":
+			 fullMonthName="November";
+			 partialMonthName="Nov";
+			 break;
+		 case "12":
+			 fullMonthName="December";
+			 partialMonthName="Dec";
+			 break;
+		 default:
+			 
+			 System.out.println("Month name is incorrect please passed correct name");
+				 
+		 }
+		 ThreadSleep(2000);
+		 driver.findElement(By.xpath("//button[text()='"+year+"']")).click();
+		 ThreadSleep(2000);
+		 driver.findElement(By.xpath("//button[text()='"+partialMonthName+"']")).click();
+		 ThreadSleep(2000);
+		 
+				 
+		 
+		 driver.findElement(By.xpath("//button[@aria-label='"+day+", "+fullMonthName+", "+year+"']")).click();
+
+		 
+		 
 	}
 
 }
