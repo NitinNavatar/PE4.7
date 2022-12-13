@@ -548,7 +548,7 @@ public class OutlookPage extends BasePageBusinessLayer {
 	}
 
 	
-	public WebElement getCalendarIcon(String dateType,action action,int timeOut) {
+	public WebElement getOutlookCalendarIcon(String dateType,action action,int timeOut) {
 		String xpath ="//input[@aria-label='"+dateType+"']/../i";
 		return isDisplayed(driver, FindElement(driver, xpath, "Calendar icon", action, timeOut), "Visibility", timeOut, "Calendar icon");
 
@@ -571,19 +571,19 @@ public class OutlookPage extends BasePageBusinessLayer {
 	}
 
 
-	public WebElement getYear(String year,action action,int timeOut) {
+	public WebElement getOutlookCalendarYear(String year,action action,int timeOut) {
 		String xpath ="//button[text()='"+year+"']";
 		return isDisplayed(driver, FindElement(driver, xpath, "year", action, timeOut), "Visibility", timeOut, "year");
 
 	}
 	
-	public WebElement getMonth(String partialMonthName,action action,int timeOut) {
+	public WebElement getOutlookCalendarMonth(String partialMonthName,action action,int timeOut) {
 		String xpath ="//button[text()='"+partialMonthName+"']";
 		return isDisplayed(driver, FindElement(driver, xpath, "month", action, timeOut), "Visibility", timeOut, "month");
 
 	}
 	
-	public WebElement getDay(String day,String fullMonthName,String year,action action,int timeOut) {
+	public WebElement getOutlookCalendarDay(String day,String fullMonthName,String year,action action,int timeOut) {
 		String xpath ="//button[@aria-label='"+day+", "+fullMonthName+", "+year+"']";
 		return isDisplayed(driver, FindElement(driver, xpath, "day", action, timeOut), "Visibility", timeOut, "day date");
 
