@@ -546,4 +546,47 @@ public class OutlookPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, eventUpdateMsg, "Visibility", timeOut, "eventUpdateMsg");
 
 	}
+
+	
+	public WebElement getOutlookCalendarIcon(String dateType,action action,int timeOut) {
+		String xpath ="//input[@aria-label='"+dateType+"']/../i";
+		return isDisplayed(driver, FindElement(driver, xpath, "Calendar icon", action, timeOut), "Visibility", timeOut, "Calendar icon");
+
+	}
+	
+	@FindBy(xpath = "//div[@aria-label='Calendar']//button[contains(@aria-label,'select to change the month')]/span")
+	private WebElement monthsAndYearButton;
+
+	public WebElement getMonthsAndYearButton(int timeOut) {
+		return isDisplayed(driver, monthsAndYearButton, "Visibility", timeOut, "monthsAndYearButton");
+
+	}
+	
+	@FindBy(xpath = "//button[contains(@aria-label,'select to change the year')]")
+	private WebElement allYearButton;
+
+	public WebElement getAllYearLinkButton(int timeOut) {
+		return isDisplayed(driver, allYearButton, "Visibility", timeOut, "allYearButton");
+
+	}
+
+
+	public WebElement getOutlookCalendarYear(String year,action action,int timeOut) {
+		String xpath ="//button[text()='"+year+"']";
+		return isDisplayed(driver, FindElement(driver, xpath, "year", action, timeOut), "Visibility", timeOut, "year");
+
+	}
+	
+	public WebElement getOutlookCalendarMonth(String partialMonthName,action action,int timeOut) {
+		String xpath ="//button[text()='"+partialMonthName+"']";
+		return isDisplayed(driver, FindElement(driver, xpath, "month", action, timeOut), "Visibility", timeOut, "month");
+
+	}
+	
+	public WebElement getOutlookCalendarDay(String day,String fullMonthName,String year,action action,int timeOut) {
+		String xpath ="//button[@aria-label='"+day+", "+fullMonthName+", "+year+"']";
+		return isDisplayed(driver, FindElement(driver, xpath, "day", action, timeOut), "Visibility", timeOut, "day date");
+
+	}
+
 }

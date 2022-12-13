@@ -1,9 +1,6 @@
 package com.navatar.pageObjects;
 
 import static com.navatar.generic.CommonLib.*;
-import static com.navatar.generic.CommonLib.log;
-import static com.navatar.generic.CommonLib.sendKeys;
-import static com.navatar.generic.CommonLib.switchToDefaultContent;
 import static com.navatar.generic.CommonVariables.*;
 
 import java.util.Date;
@@ -14,10 +11,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
@@ -1188,6 +1187,144 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		}
 		return flag;
 
+	}
+
+	public boolean enterDateThroughOutlookCalendar(WebDriver driver, String type,String datemmddyyy,action action,int timeout) {
+		boolean flag = false;
+
+		String[] dates = datemmddyyy.split("/");
+		String year = dates[2];
+		String month = dates[0];
+		String day = dates[1];
+		String fullMonthName = null;
+		String partialMonthName = null;
+
+		String dateType = null;
+		if (type.contains("start")) {
+			dateType = "Start date";
+		} else {
+			dateType = "End date";
+		}
+
+		switch (month) {
+		case "01":
+			fullMonthName = "January";
+			partialMonthName = "Jan";
+			break;
+		case "02":
+			fullMonthName = "February";
+			partialMonthName = "Feb";
+			break;
+		case "03":
+			fullMonthName = "March";
+			partialMonthName = "Mar";
+			break;
+		case "04":
+			fullMonthName = "April";
+			partialMonthName = "Apr";
+			break;
+		case "05":
+			fullMonthName = "May";
+			partialMonthName = "May";
+			break;
+		case "06":
+			fullMonthName = "June";
+			partialMonthName = "Jun";
+			break;
+		case "07":
+			fullMonthName = "July";
+			partialMonthName = "Jul";
+			break;
+		case "08":
+			fullMonthName = "August";
+			partialMonthName = "Aug";
+			break;
+		case "09":
+			fullMonthName = "September";
+			partialMonthName = "Sep";
+			break;
+		case "10":
+			fullMonthName = "October";
+			partialMonthName = "Oct";
+			break;
+		case "11":
+			fullMonthName = "November";
+			partialMonthName = "Nov";
+			break;
+		case "12":
+			fullMonthName = "December";
+			partialMonthName = "Dec";
+			break;
+		default:
+
+			System.out.println("Month name is incorrect please passed correct name");
+
+		}
+
+		 if (click(driver,getOutlookCalendarIcon(dateType, null, timeout) , "Calendar Icon", action)) {
+				log(LogStatus.INFO, "Clicked on calendar button", YesNo.No);
+				ThreadSleep(2000);
+				if (click(driver, getMonthsAndYearButton(timeout), "month & year link in calendar", action)) {
+					log(LogStatus.INFO, "Clicked on month & year in calendar button", YesNo.No);
+					ThreadSleep(2000);
+
+						if (click(driver, getAllYearLinkButton(timeout), "All year link ",
+								action)) {
+							log(LogStatus.INFO, "Clicked on All year button", YesNo.No);
+							ThreadSleep(2000);
+
+							if (click(driver, getOutlookCalendarYear(year, action, timeout), "Year list",
+									action)) {
+								log(LogStatus.INFO, "Clicked on year button", YesNo.No);
+								ThreadSleep(2000);
+								
+								if (click(driver, getOutlookCalendarMonth(partialMonthName, action, timeout), "month name list",
+										action)) {
+									log(LogStatus.INFO, "Clicked on month name button", YesNo.No);
+									ThreadSleep(2000);
+									
+									if (click(driver, getOutlookCalendarDay(day,fullMonthName,year, action, timeout), "day of the calenadr",
+											action)) {
+										log(LogStatus.INFO, "Clicked on day of the calendar", YesNo.No);
+										ThreadSleep(2000);
+										flag=true;
+												
+									} else {
+										log(LogStatus.ERROR, "Not able to Clicked on day of the calendar", YesNo.Yes);
+										BaseLib.sa.assertTrue(false, "Not able to Clicked on day of the calendar");
+									}
+
+								} else {
+									log(LogStatus.ERROR, "Not able to Clicked on month name button", YesNo.Yes);
+									BaseLib.sa.assertTrue(false, "Not able to Clicked on month name button");
+								}
+
+										
+							} else {
+								log(LogStatus.ERROR, "Not able to Clicked on year button", YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "Not able to Clicked on year button");
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to Clicked on All year button", YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Not able to Clicked on All year button");
+						}
+
+					
+
+				} else {
+					log(LogStatus.ERROR, "Not able to Clicked on month & year in calendar button", YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not able to Clicked on month & year in calendar button");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to Clicked on calendar button", YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to Clicked on calendar button");
+			}
+
+			return flag;
+
+		 
 	}
 
 }
