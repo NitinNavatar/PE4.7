@@ -8289,9 +8289,7 @@ public class CommonVariables {
 					
 					
 					
-					
-					
-					
+						
 					
 					
             	case "AcuityMeetingNotesNotificationReminder" :
@@ -8373,6 +8371,51 @@ public class CommonVariables {
     				
  			
 
+    			
+					
+					
+		 		
+				try {
+					dataFile.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					dataWb.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+
+				}
+				
+				
+				break;
+				
+				
+				
+	case "RGAcuityMeetingNotesNotificationReminder" :
+    				
+    				try {
+    					dataFile=new FileInputStream(new File(AcuityDataSheetFilePath));
+    				} catch (FileNotFoundException e1) {
+    					// TODO Auto-generated catch block
+    					e1.printStackTrace();
+    				}
+    				try {
+    					dataWb=WorkbookFactory.create(dataFile);
+    				} catch (EncryptedDocumentException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				} catch (InvalidFormatException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				} catch (IOException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+    				
+    
     			
 					
 					

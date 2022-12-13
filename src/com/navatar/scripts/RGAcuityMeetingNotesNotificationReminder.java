@@ -43,11 +43,10 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String eventTitle = "Seminar1.0";
 
-		String eventAttendees = "Dealroom1.3+Max@gmail.com<Break>Dealroom1.3+Martha@gmail.com" + "<Break>"
-				+ crmUser2EmailID;
+		String eventAttendees = "Dealroom1.3+Max@gmail.com,Dealroom1.3+Martha@gmail.com" + "," + crmUser2EmailID;
 
-		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", 1);
-		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", 1);
+		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 1);
+		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 1);
 
 		String startTime = "06:00 PM";
 		String endTime = "06:30 PM";
@@ -238,12 +237,12 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		String eventTitles[] = "Event 1.0<Section>Event 2.0".split("<Section>", -1);
-		String eventAttendees[] = ("Dealroom1.3+James@gmail.com" + "<Break>" + crmUser2EmailID + "<Section>"
-				+ "Dealroom1.3+Litz@gmail.com" + "<Break>" + crmUser2EmailID).split("<Section>", -1);
-		String startDate[] = (CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -2) + "<Section>"
-				+ CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -2)).split("<Section>", -1);
-		String endDate[] = (CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -1) + "<Section>"
-				+ CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -1)).split("<Section>", -1);
+		String eventAttendees[] = ("Dealroom1.3+James@gmail.com" + "," + crmUser2EmailID + "<Section>"
+				+ "Dealroom1.3+Litz@gmail.com" + "," + crmUser2EmailID).split("<Section>", -1);
+		String startDate[] = (CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -2) + "<Section>"
+				+ CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -2)).split("<Section>", -1);
+		String endDate[] = (CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1) + "<Section>"
+				+ CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1)).split("<Section>", -1);
 
 		String startTime[] = ("02:00 PM" + "<Section>" + "04:00 PM").split("<Section>", -1);
 		String endTime[] = ("03:00 PM" + "<Section>" + "05:00 PM").split("<Section>", -1);
@@ -514,10 +513,9 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		String eventTitle = "Seminar";
-		String eventAttendees = "Dealroom1.3+Max@gmail.com<Break>Dealroom1.3+Martha@gmail.com" + "<Break>"
-				+ crmUser2EmailID;
-		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -1);
-		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -1);
+		String eventAttendees = "Dealroom1.3+Max@gmail.com,Dealroom1.3+Martha@gmail.com" + "," + crmUser2EmailID;
+		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
+		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
 
 		String startTime = "06:00 PM";
 		String endTime = "06:30 PM";
@@ -1432,10 +1430,8 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String accountRecordName = "Sumo Logic";
 		String accountRecordType = "Company";
 
-		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -1);
-		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -1);
-		startDate = CommonLib.convertDateFromOneFormatToAnother(startDate, "dd/MM/yyyy", "M/d/yyyy");
-		endDate = CommonLib.convertDateFromOneFormatToAnother(endDate, "dd/MM/yyyy", "M/d/yyyy");
+		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
+		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
 
 		String startTime = "06:00 PM";
 		String endTime = "06:30 PM";
@@ -2141,11 +2137,10 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		String eventTitle = "Deal Booking Event 1";
-		String eventAttendees = "Dealroom1.3+James@gmail.com<Break>Dealroom1.3+Jhon@gmail.com" + "<Break>" + "<Break>"
-				+ crmUser1EmailID + "<Break>" + crmUser2EmailID + "<Break>" + crmUser3EmailID + "<Break>"
-				+ superAdminUserName;
-		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -1);
-		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -1);
+		String eventAttendees = "Dealroom1.3+James@gmail.com,Dealroom1.3+Jhon@gmail.com" + "," + crmUser1EmailID + ","
+				+ crmUser2EmailID + "," + crmUser3EmailID + "," + superAdminUserName;
+		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
+		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
 
 		String startTime = "06:00 PM";
 		String endTime = "06:30 PM";
@@ -2424,8 +2419,8 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String eventTitle = "Opportunity 1";
 		String eventAttendees = "Dealroom1.3+James@gmail.com";
-		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -2);
-		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -1);
+		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -2);
+		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
 
 		String startTime = "06:00 PM";
 		String endTime = "06:30 PM";
@@ -2756,10 +2751,9 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		String eventTitle = "Deal Closing";
-		String eventAttendees = "Dealroom1.3+Max@gmail.com<Break>Dealroom1.3+Martha@gmail.com" + "<Break>"
-				+ crmUser2EmailID;
-		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -1);
-		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", 1);
+		String eventAttendees = "Dealroom1.3+Max@gmail.com,Dealroom1.3+Martha@gmail.com" + "," + crmUser2EmailID;
+		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
+		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 1);
 
 		String startTime = "06:00 PM";
 		String endTime = "06:30 PM";
@@ -2935,10 +2929,9 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		String eventTitle = "Deal Closing";
-		String eventAttendees = "Dealroom1.3+Max@gmail.com<Break>Dealroom1.3+Martha@gmail.com" + "<Break>"
-				+ crmUser2EmailID;
-		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -1);
-		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", 1);
+		String eventAttendees = "Dealroom1.3+Max@gmail.com,Dealroom1.3+Martha@gmail.com" + "," + crmUser2EmailID;
+		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
+		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 1);
 
 		String startTime = "06:00 PM";
 		String endTime = "06:30 PM";
@@ -3116,8 +3109,8 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String eventTitle = "Announcing RampUp 2022 speakers and more +1";
 		String eventAttendees = crmUser4EmailID;
-		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -2);
-		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -1);
+		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -2);
+		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
 
 		String startTime = "06:00 PM";
 		String endTime = "06:30 PM";
@@ -3264,13 +3257,11 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		String eventTitle = "This event will have your Business circles talking +3";
-		String eventAttendees = "Dealroom1.3+Litz@gmail.com" + "<Break>" + crmUser2EmailID + "<Break>"
-				+ crmUser3EmailID;
-		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -2);
-		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -1);
+		String eventAttendees = "Dealroom1.3+Litz@gmail.com" + "," + crmUser2EmailID + "," + crmUser3EmailID;
+		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -2);
+		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
 
-		String navigateStartDateForEdit = CommonLib.convertDateFromOneFormatToAnother(startDate, "dd/MM/yyyy",
-				"m/d/yyyy");
+		String navigateStartDateForEdit = startDate;
 		String navigateStartDateMonthYearForEdit = CommonLib.convertDateFromOneFormatToAnother(startDate, "m/d/yyyy",
 				"mmmm yyyy");
 
@@ -3630,9 +3621,9 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
 
 		String eventTitle = "Join all major influencers";
-		String eventAttendees = "Dealroom1.3+Lomez@gmail.com<Break>" + crmUser1EmailID;
-		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -2);
-		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -1);
+		String eventAttendees = "Dealroom1.3+Lomez@gmail.com," + crmUser1EmailID;
+		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -2);
+		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
 
 		String startTime = "06:00 PM";
 		String endTime = "06:30 PM";
@@ -4928,10 +4919,10 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
 
 		String eventTitle = "Marketing Webinar 2";
-		String eventAttendees = "Dealroom1.3+James@gmail.com<Break>Dealroom1.3+Jhon@gmail.com" + "<Break>"
-				+ crmUser2EmailID + "<Break>" + crmUser3EmailID;
-		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -2);
-		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -1);
+		String eventAttendees = "Dealroom1.3+James@gmail.com,Dealroom1.3+Jhon@gmail.com" + "," + crmUser2EmailID + ","
+				+ crmUser3EmailID;
+		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -2);
+		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
 
 		String startTime = "06:00 PM";
 		String endTime = "06:30 PM";
@@ -5324,10 +5315,10 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 
 		String eventTitle = "Mulesoft Connect";
-		String eventAttendees = "Dealroom1.3+Lomez@gmail.com<Break>Dealroom1.3+Max@gmail.com<Break>Dealroom1.3+James@gmail.com"
-				+ "<Break>" + crmUser2EmailID + "<Break>" + crmUser3EmailID;
-		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -2);
-		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -1);
+		String eventAttendees = "Dealroom1.3+Lomez@gmail.com,Dealroom1.3+Max@gmail.com,Dealroom1.3+James@gmail.com"
+				+ "," + crmUser2EmailID + "," + crmUser3EmailID;
+		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -2);
+		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
 
 		String startTime = "06:00 PM";
 		String endTime = "06:30 PM";
@@ -5718,10 +5709,9 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String eventTitles[] = "Relive salesforce Live 1<break>Relive salesforce Live 2<break>Relive salesforce Live 3<break>Relive salesforce Live 4"
 				.split("<break>", -1);
-		String eventAttendees = "Dealroom1.3+James@gmail.com<Break>Dealroom1.3+Jhon@gmail.com" + "<Break>"
-				+ crmUser1EmailID;
-		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -2);
-		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -1);
+		String eventAttendees = "Dealroom1.3+James@gmail.com,Dealroom1.3+Jhon@gmail.com" + "," + crmUser1EmailID;
+		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -2);
+		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
 
 		String startTime = "10:00 PM";
 		String endTime = "10:00 PM";
@@ -5926,10 +5916,10 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 
 		String eventTitle = "This event will have your Business circles talking +4";
-		String eventAttendees = "Dealroom1.3+Lomez@gmail.com<Break>Dealroom1.3+Max@gmail.com<Break>Dealroom1.3+James@gmail.com"
-				+ "<Break>" + crmUser2EmailID + "<Break>" + crmUser3EmailID;
-		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -2);
-		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", -1);
+		String eventAttendees = "Dealroom1.3+Lomez@gmail.com,Dealroom1.3+Max@gmail.com,Dealroom1.3+James@gmail.com"
+				+ "," + crmUser2EmailID + "," + crmUser3EmailID;
+		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -2);
+		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
 
 		String startTime = "06:00 PM";
 		String endTime = "06:30 PM";
@@ -6381,10 +6371,9 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		String eventTitle = "Webinar 1 all  day";
-		String eventAttendees = "Dealroom1.3+James@gmail.com<Break>Dealroom1.3+Lenis@gmail.com" + "<Break>"
-				+ crmUser3EmailID;
-		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", 0);
-		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", 0);
+		String eventAttendees = "Dealroom1.3+James@gmail.com,Dealroom1.3+Lenis@gmail.com" + "," + crmUser3EmailID;
+		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
+		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
 
 		String startTime = "";
 		String endTime = "";
@@ -6565,12 +6554,12 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
 
 		String eventTitle = "Salesforce Event";
-		String eventAttendees = "Dealroom1.3+Litz@gmail.com<Break>Dealroom1.3+Jhon@gmail.com" + "<Break>"
-				+ crmUser1EmailID + "<Break>" + crmUser2EmailID;
-		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", 0);
-		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", 1);
-		String endDateInAnotherForm1 = CommonLib.convertDateFromOneFormatToAnother(endDate, "dd/MM/yyyy", "m/d/yyyy");
-		String endDateInAnotherForm2 = CommonLib.convertDateFromOneFormatToAnother(endDate, "dd/MM/yyyy", "MMMM yyyy");
+		String eventAttendees = "Dealroom1.3+Litz@gmail.com,Dealroom1.3+Jhon@gmail.com" + "," + crmUser1EmailID + ","
+				+ crmUser2EmailID;
+		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
+		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 1);
+		String endDateInAnotherForm1 = endDate;
+		String endDateInAnotherForm2 = CommonLib.convertDateFromOneFormatToAnother(endDate, "M/d/yyyy", "MMMM yyyy");
 
 		String startTime = "02:00 PM";
 		String endTime = "09:00 PM";
@@ -6578,8 +6567,8 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String updatedEventName = "Salesforce Event Updated";
 		String updatedEventAttendees = "Dealroom1.3+James@gmail.com";
-		String updatedStartDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", 1);
-		String updatedEndDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", 1);
+		String updatedStartDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 1);
+		String updatedEndDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 1);
 		String updatedStartTime = "08:00 AM";
 		String updatedEndTime = "10:00 AM";
 		String updatedDescriptionBox = "";
@@ -6713,8 +6702,8 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String eventTitle = "Outlook Private Event";
 		String eventAttendees = crmUser1EmailID;
-		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", 0);
-		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", 0);
+		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
+		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
 
 		String startTime = "08:00 AM";
 		String endTime = "09:00 AM";
@@ -6765,10 +6754,9 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 
 		String eventTitle = "Outlook Event Test";
-		String eventAttendees = crmUser1EmailID + "<Break>" + crmUser2EmailID + "<Break>" + "cont1.test@zxc.com"
-				+ "<Break>" + "cont2+test@zxc.com";
-		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", 0);
-		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", 0);
+		String eventAttendees = crmUser1EmailID + "," + crmUser2EmailID + "," + "cont1.test@zxc.com,cont2+test@zxc.com";
+		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
+		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
 
 		String startTime = "08:00 AM";
 		String endTime = "09:00 AM";
@@ -6975,10 +6963,10 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 
 		String eventTitle = "Outlook Event Test Firm";
-		String eventAttendees = crmUser1EmailID + "<Break>" + crmUser2EmailID + "<Break>" + "cont3.test@sumologic.com"
-				+ "<Break>" + "cont4+test@sumologic.com";
-		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", 0);
-		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "dd/MM/yyyy", 0);
+		String eventAttendees = crmUser1EmailID + "," + crmUser2EmailID + ","
+				+ "cont3.test@sumologic.com,cont4+test@sumologic.com";
+		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
+		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
 
 		String startTime = "08:00 AM";
 		String endTime = "09:00 AM";

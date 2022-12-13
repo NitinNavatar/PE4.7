@@ -36,7 +36,6 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 		boolean flag = false;
 
-		String[] attendees = eventAttendees.split("<Break>", -1);
 		if (click(driver, calendarButton(30), "calendarButton", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Calendar Button", YesNo.No);
 
@@ -57,30 +56,19 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 							action.BOOLEAN)) {
 						CommonLib.log(LogStatus.INFO, "Entered Value: " + eventTitle, YesNo.No);
 
-						for (String attendee : attendees) {
-							if (sendKeys(driver, inviteAttendeesInputBox(30), attendee,
-									"Input Attendee Value : " + attendee, action.BOOLEAN)) {
-								CommonLib.log(LogStatus.INFO, "Entered Value: " + attendee, YesNo.No);
+						if (sendKeysAndPressEnter(driver, inviteAttendeesInputBox(30), eventAttendees,
+								"Input Attendee Value : " + eventAttendees, action.BOOLEAN)) {
+							CommonLib.log(LogStatus.INFO, "Entered Value: " + eventAttendees, YesNo.No);
 
-								if (click(driver, inviteAttendeeSuggestionBoxName(attendee, 4),
-										"Suggested Invitee: " + attendee, action.SCROLLANDBOOLEAN)) {
-									log(LogStatus.INFO, "Clicked on Suggested Invitee: " + attendee, YesNo.No);
-								} else {
-									log(LogStatus.ERROR, "Not able to Click on Suggested Invitee: " + attendee,
-											YesNo.Yes);
-									BaseLib.sa.assertTrue(false, "Not able to Click on Suggested Invitee: " + attendee);
-									return false;
-								}
-							} else {
+						} else {
 
-								CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + attendee, YesNo.Yes);
-								BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + attendee);
+							CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + eventAttendees, YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + eventAttendees);
 
-								return false;
-							}
-
-							CommonLib.ThreadSleep(1000);
+							return false;
 						}
+
+						CommonLib.ThreadSleep(1000);
 
 						if (allDayToggle) {
 							String toggleFlag = CommonLib.getAttribute(driver, allDayToggleButton(20),
@@ -111,11 +99,10 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 						}
 
-						if (startDate != null || !"".equalsIgnoreCase(startDate)) {
+						if (startDate != null && !"".equalsIgnoreCase(startDate)) {
 
-							startDateInputBox(30).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
-							if (sendKeys(driver, startDateInputBox(30), startDate, "Input Value : " + startDate,
-									action.BOOLEAN)) {
+							if (enterDateThroughOutlookCalendar(driver, "start", startDate, action.SCROLLANDBOOLEAN,
+									25)) {
 								CommonLib.log(LogStatus.INFO, "Entered Value: " + startDate, YesNo.No);
 
 							} else {
@@ -128,7 +115,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 						}
 
 						if (!allDayToggle) {
-							if (startTime != null || !"".equalsIgnoreCase(startTime)) {
+							if (startTime != null && !"".equalsIgnoreCase(startTime)) {
 
 								startTimeInputBox(30).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 								if (sendKeys(driver, startTimeInputBox(30), startTime, "Input Value : " + startTime,
@@ -146,11 +133,9 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 							}
 						}
 
-						if (endDate != null || !"".equalsIgnoreCase(endDate)) {
+						if (endDate != null && !"".equalsIgnoreCase(endDate)) {
 
-							endDateInputBox(30).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
-							if (sendKeys(driver, endDateInputBox(30), endDate, "Input Value : " + endDate,
-									action.BOOLEAN)) {
+							if (enterDateThroughOutlookCalendar(driver, "end", endDate, action.SCROLLANDBOOLEAN, 25)) {
 								CommonLib.log(LogStatus.INFO, "Entered Value: " + endDate, YesNo.No);
 
 							} else {
@@ -162,7 +147,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 						}
 
 						if (!allDayToggle) {
-							if (endTime != null || !"".equalsIgnoreCase(endTime)) {
+							if (endTime != null && !"".equalsIgnoreCase(endTime)) {
 
 								endTimeInputBox(30).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 								if (sendKeys(driver, endTimeInputBox(30), endTime, "Input Value : " + endTime,
@@ -179,7 +164,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 							}
 						}
 
-						if (descriptionBox != null || !"".equalsIgnoreCase(descriptionBox)) {
+						if (descriptionBox != null && !"".equalsIgnoreCase(descriptionBox)) {
 
 							newEventDescriptionBox(30).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 							if (sendKeys(driver, newEventDescriptionBox(30), descriptionBox,
@@ -202,8 +187,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 								log(LogStatus.INFO, "-----Event Created Msg is showing, So Event of Title: "
 										+ eventTitle + " has been created-----", YesNo.No);
 
-								String navigateStartDateForEdit = CommonLib.convertDateFromOneFormatToAnother(startDate,
-										"dd/MM/yyyy", "M/d/yyyy");
+								String navigateStartDateForEdit = startDate;
 								String navigateStartDateMonthYearForEdit = CommonLib.convertDateFromOneFormatToAnother(
 										navigateStartDateForEdit, "M/d/yyyy", "MMMM yyyy");
 								if (navigateToOutlookEventAndClickOnEditOrCancelButton(navigateStartDateForEdit,
@@ -832,8 +816,8 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 		boolean flag = false;
 
-		if (eventAttendeesToRemove != null || !"".equals(eventAttendeesToRemove)) {
-			String[] reMoveAttendees = eventAttendees.split("<Break>", -1);
+		if (eventAttendeesToRemove != null && !"".equals(eventAttendeesToRemove)) {
+			String[] reMoveAttendees = eventAttendeesToRemove.split("<Break>", -1);
 			WebElement ele;
 			for (int i = 0; i < reMoveAttendees.length; i++) {
 				ele = crossButtonOfAttendeeInEditOutLook(reMoveAttendees[i], 10);
@@ -867,30 +851,19 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		}
 
 		if (eventAttendees != null) {
-			String[] attendees = eventAttendees.split("<Break>", -1);
-			for (String attendee : attendees) {
-				if (sendKeys(driver, inviteAttendeesInputBox(30), attendee, "Input Attendee Value : " + attendee,
-						action.BOOLEAN)) {
-					CommonLib.log(LogStatus.INFO, "Entered Value: " + attendee, YesNo.No);
+			if (sendKeysAndPressEnter(driver, inviteAttendeesInputBox(30), eventAttendees,
+					"Input Attendee Value : " + eventAttendees, action.BOOLEAN)) {
+				CommonLib.log(LogStatus.INFO, "Entered Value: " + eventAttendees, YesNo.No);
 
-					if (click(driver, inviteAttendeeSuggestionBoxName(attendee, 4), "Suggested Invitee: " + attendee,
-							action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Suggested Invitee: " + attendee, YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "Not able to Click on Suggested Invitee: " + attendee, YesNo.Yes);
-						BaseLib.sa.assertTrue(false, "Not able to Click on Suggested Invitee: " + attendee);
-						return false;
-					}
-				} else {
+			} else {
 
-					CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + attendee, YesNo.Yes);
-					BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + attendee);
+				CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + eventAttendees, YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + eventAttendees);
 
-					return false;
-				}
-
-				CommonLib.ThreadSleep(1000);
+				return false;
 			}
+
+			CommonLib.ThreadSleep(1000);
 
 		}
 
@@ -919,10 +892,9 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 		}
 
-		if (startDate != null || !"".equalsIgnoreCase(startDate)) {
+		if (startDate != null && !"".equalsIgnoreCase(startDate)) {
 
-			startDateInputBox(30).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
-			if (sendKeys(driver, startDateInputBox(30), startDate, "Input Value : " + startDate, action.BOOLEAN)) {
+			if (enterDateThroughOutlookCalendar(driver, "start", startDate, action.SCROLLANDBOOLEAN, 25)) {
 				CommonLib.log(LogStatus.INFO, "Entered Value: " + startDate, YesNo.No);
 
 			} else {
@@ -935,7 +907,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		}
 
 		if (!allDayToggle) {
-			if (startTime != null || !"".equalsIgnoreCase(startTime)) {
+			if (startTime != null && !"".equalsIgnoreCase(startTime)) {
 
 				startTimeInputBox(30).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 				if (sendKeys(driver, startTimeInputBox(30), startTime, "Input Value : " + startTime, action.BOOLEAN)) {
@@ -951,10 +923,9 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 			}
 		}
 
-		if (endDate != null || !"".equalsIgnoreCase(endDate)) {
+		if (endDate != null && !"".equalsIgnoreCase(endDate)) {
 
-			endDateInputBox(30).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
-			if (sendKeys(driver, endDateInputBox(30), endDate, "Input Value : " + endDate, action.BOOLEAN)) {
+			if (enterDateThroughOutlookCalendar(driver, "end", endDate, action.SCROLLANDBOOLEAN, 25)) {
 				CommonLib.log(LogStatus.INFO, "Entered Value: " + endDate, YesNo.No);
 
 			} else {
@@ -966,7 +937,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		}
 
 		if (!allDayToggle) {
-			if (endTime != null || !"".equalsIgnoreCase(endTime)) {
+			if (endTime != null && !"".equalsIgnoreCase(endTime)) {
 
 				endTimeInputBox(30).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 				if (sendKeys(driver, endTimeInputBox(30), endTime, "Input Value : " + endTime, action.BOOLEAN)) {
@@ -1189,7 +1160,8 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 	}
 
-	public boolean enterDateThroughOutlookCalendar(WebDriver driver, String type,String datemmddyyy,action action,int timeout) {
+	public boolean enterDateThroughOutlookCalendar(WebDriver driver, String type, String datemmddyyy, action action,
+			int timeout) {
 		boolean flag = false;
 
 		String[] dates = datemmddyyy.split("/");
@@ -1207,39 +1179,39 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		}
 
 		switch (month) {
-		case "01":
+		case "1":
 			fullMonthName = "January";
 			partialMonthName = "Jan";
 			break;
-		case "02":
+		case "2":
 			fullMonthName = "February";
 			partialMonthName = "Feb";
 			break;
-		case "03":
+		case "3":
 			fullMonthName = "March";
 			partialMonthName = "Mar";
 			break;
-		case "04":
+		case "4":
 			fullMonthName = "April";
 			partialMonthName = "Apr";
 			break;
-		case "05":
+		case "5":
 			fullMonthName = "May";
 			partialMonthName = "May";
 			break;
-		case "06":
+		case "6":
 			fullMonthName = "June";
 			partialMonthName = "Jun";
 			break;
-		case "07":
+		case "7":
 			fullMonthName = "July";
 			partialMonthName = "Jul";
 			break;
-		case "08":
+		case "8":
 			fullMonthName = "August";
 			partialMonthName = "Aug";
 			break;
-		case "09":
+		case "9":
 			fullMonthName = "September";
 			partialMonthName = "Sep";
 			break;
@@ -1260,71 +1232,67 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 			System.out.println("Month name is incorrect please passed correct name");
 
 		}
+		ThreadSleep(2000);
 
-		 if (click(driver,getOutlookCalendarIcon(dateType, null, timeout) , "Calendar Icon", action)) {
-				log(LogStatus.INFO, "Clicked on calendar button", YesNo.No);
+		
+		if (click(driver, getOutlookCalendarIcon(dateType, null, timeout), "Calendar Icon", action)) {
+			log(LogStatus.INFO, "Clicked on calendar button", YesNo.No);
+			ThreadSleep(2000);
+			if (click(driver, getMonthsAndYearButton(timeout), "month & year link in calendar", action)) {
+				log(LogStatus.INFO, "Clicked on month & year in calendar button", YesNo.No);
 				ThreadSleep(2000);
-				if (click(driver, getMonthsAndYearButton(timeout), "month & year link in calendar", action)) {
-					log(LogStatus.INFO, "Clicked on month & year in calendar button", YesNo.No);
+
+				if (click(driver, getAllYearLinkButton(timeout), "All year link ", action)) {
+					log(LogStatus.INFO, "Clicked on All year button", YesNo.No);
 					ThreadSleep(2000);
 
-						if (click(driver, getAllYearLinkButton(timeout), "All year link ",
+					if (click(driver, getOutlookCalendarYear(year, action, timeout), "Year list", action)) {
+						log(LogStatus.INFO, "Clicked on year button", YesNo.No);
+						ThreadSleep(2000);
+
+						if (click(driver, getOutlookCalendarMonth(partialMonthName, action, timeout), "month name list",
 								action)) {
-							log(LogStatus.INFO, "Clicked on All year button", YesNo.No);
+							log(LogStatus.INFO, "Clicked on month name button", YesNo.No);
 							ThreadSleep(2000);
 
-							if (click(driver, getOutlookCalendarYear(year, action, timeout), "Year list",
-									action)) {
-								log(LogStatus.INFO, "Clicked on year button", YesNo.No);
+							if (click(driver, getOutlookCalendarDay(day, fullMonthName, year, action, timeout),
+									"day of the calenadr", action)) {
+								log(LogStatus.INFO, "Clicked on day of the calendar", YesNo.No);
 								ThreadSleep(2000);
-								
-								if (click(driver, getOutlookCalendarMonth(partialMonthName, action, timeout), "month name list",
-										action)) {
-									log(LogStatus.INFO, "Clicked on month name button", YesNo.No);
-									ThreadSleep(2000);
-									
-									if (click(driver, getOutlookCalendarDay(day,fullMonthName,year, action, timeout), "day of the calenadr",
-											action)) {
-										log(LogStatus.INFO, "Clicked on day of the calendar", YesNo.No);
-										ThreadSleep(2000);
-										flag=true;
-												
-									} else {
-										log(LogStatus.ERROR, "Not able to Clicked on day of the calendar", YesNo.Yes);
-										BaseLib.sa.assertTrue(false, "Not able to Clicked on day of the calendar");
-									}
+								flag = true;
 
-								} else {
-									log(LogStatus.ERROR, "Not able to Clicked on month name button", YesNo.Yes);
-									BaseLib.sa.assertTrue(false, "Not able to Clicked on month name button");
-								}
-
-										
 							} else {
-								log(LogStatus.ERROR, "Not able to Clicked on year button", YesNo.Yes);
-								BaseLib.sa.assertTrue(false, "Not able to Clicked on year button");
+								log(LogStatus.ERROR, "Not able to Clicked on day of the calendar", YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "Not able to Clicked on day of the calendar");
 							}
 
 						} else {
-							log(LogStatus.ERROR, "Not able to Clicked on All year button", YesNo.Yes);
-							BaseLib.sa.assertTrue(false, "Not able to Clicked on All year button");
+							log(LogStatus.ERROR, "Not able to Clicked on month name button", YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Not able to Clicked on month name button");
 						}
 
-					
+					} else {
+						log(LogStatus.ERROR, "Not able to Clicked on year button", YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to Clicked on year button");
+					}
 
 				} else {
-					log(LogStatus.ERROR, "Not able to Clicked on month & year in calendar button", YesNo.Yes);
-					BaseLib.sa.assertTrue(false, "Not able to Clicked on month & year in calendar button");
+					log(LogStatus.ERROR, "Not able to Clicked on All year button", YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not able to Clicked on All year button");
 				}
 
 			} else {
-				log(LogStatus.ERROR, "Not able to Clicked on calendar button", YesNo.Yes);
-				BaseLib.sa.assertTrue(false, "Not able to Clicked on calendar button");
+				log(LogStatus.ERROR, "Not able to Clicked on month & year in calendar button", YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to Clicked on month & year in calendar button");
 			}
 
-			return flag;
+		} else {
+			log(LogStatus.ERROR, "Not able to Clicked on calendar button", YesNo.Yes);
+			BaseLib.sa.assertTrue(false, "Not able to Clicked on calendar button");
+		}
 
-		 
+		return flag;
+
 	}
 
 }

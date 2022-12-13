@@ -549,7 +549,7 @@ public class OutlookPage extends BasePageBusinessLayer {
 
 	
 	public WebElement getOutlookCalendarIcon(String dateType,action action,int timeOut) {
-		String xpath ="//input[@aria-label='"+dateType+"']/../i";
+		String xpath ="//input[@aria-label='"+dateType+"']";
 		return isDisplayed(driver, FindElement(driver, xpath, "Calendar icon", action, timeOut), "Visibility", timeOut, "Calendar icon");
 
 	}
@@ -584,7 +584,7 @@ public class OutlookPage extends BasePageBusinessLayer {
 	}
 	
 	public WebElement getOutlookCalendarDay(String day,String fullMonthName,String year,action action,int timeOut) {
-		String xpath ="//button[@aria-label='"+day+", "+fullMonthName+", "+year+"']";
+		String xpath ="//div[@aria-label='Calendar']//button[@aria-label='"+day+", "+fullMonthName+", "+year+"']";
 		return isDisplayed(driver, FindElement(driver, xpath, "day", action, timeOut), "Visibility", timeOut, "day date");
 
 	}
