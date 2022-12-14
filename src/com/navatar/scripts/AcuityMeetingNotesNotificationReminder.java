@@ -3874,6 +3874,58 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("3"));
 		String getAdvanceDueDate = AdvanceDueDate;
 
+		String task1SubjectName = AMNNR_Subject30;
+		String task1Notes = AMNNR_Notes30;
+		String relatedTo = AMNNR_RelatedTo30;
+
+		String priority = AMNNR_AdvancePriority30;
+		String status = AMNNR_AdvanceStatus30;
+		String task1ButtonName = AMNNR_ActivityType1;
+		String[] suggestedTags = null;
+		String verificationRelatedTo = relatedTo;
+
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", relatedTo } };
+
+		String[][] task1AdvancedSection = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", verificationRelatedTo } };
+
+		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		
+		String recordName = AMNNR_FirmLegalName3;
+		String recordType = AMNNR_FirmRecordType3;
+		
+
+		String[] RelatedToVerifyInInteraction = AMNNR_ATRelatedTo19.split("<break>");
+
+		String updatedNotesOfTask = AMNNR_Notes31;
+
+		String[][] task1UpdateBasicSection = { { "Notes", updatedNotesOfTask } };
+		String[] updatedSuggestedTags = AMNNR_SuggestedTag31
+				.split("<break>", -1);
+
+		String[] updatedRelatedToVerifyInInteraction = AMNNR_ATRelatedTo20.split("<break>", -1);
+		String[] updatedRelatedAssociationVerifyInInteraction = updatedSuggestedTags;
+
+		String updatedRelatedToVerifyInNotes = (relatedTo + AMNNR_RelatedTo31);
+
+		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName },
+				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
+
+		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+		
+		/*
+		
+		
 		String task1SubjectName = "Task bulk contact";
 		String task1Notes = "";
 		String relatedTo = "Max<break>Martha<break>Acc 3<break>Maxtra";
@@ -3912,8 +3964,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[] updatedRelatedToVerifyInInteraction = "Max<break>Martha<break>+51".split("<break>", -1);
 		String[] updatedRelatedAssociationVerifyInInteraction = updatedSuggestedTags;
 
-		String updatedRelatedToVerifyInNotes = (relatedTo + "<break>"
-				+ "Con 1<break>con 2<break>con 3<break>con 4<break>con 5<break>con 6<break>con 7<break>con 8<break>con 9<break>con 10<break>con 11<break>con 12<break>con 13<break>con 14<break>con 15<break>con 16<break>con 17<break>con 18<break>con 19<break>con 20<break>con 21<break>con 22<break>con 23<break>con 24<break>con 25<break>con 26<break>con 27<break>con 28<break>con 29<break>con 30<break>con 31<break>con 32<break>con 33<break>con 34<break>con 35<break>con 36<break>con 37<break>con 38<break>con 39<break>con 40<break>con 41<break>con 42<break>con 43<break>con 44<break>con 45<break>con 46<break>con 47<break>con 48");
+		String updatedRelatedToVerifyInNotes = (relatedTo + "<break>Con 1<break>con 2<break>con 3<break>con 4<break>con 5<break>con 6<break>con 7<break>con 8<break>con 9<break>con 10<break>con 11<break>con 12<break>con 13<break>con 14<break>con 15<break>con 16<break>con 17<break>con 18<break>con 19<break>con 20<break>con 21<break>con 22<break>con 23<break>con 24<break>con 25<break>con 26<break>con 27<break>con 28<break>con 29<break>con 30<break>con 31<break>con 32<break>con 33<break>con 34<break>con 35<break>con 36<break>con 37<break>con 38<break>con 39<break>con 40<break>con 41<break>con 42<break>con 43<break>con 44<break>con 45<break>con 46<break>con 47<break>con 48");
 
 		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName },
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
@@ -3921,6 +3972,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
 				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
+				
+				*/
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -4119,6 +4172,56 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("3"));
 		String getAdvanceDueDate = AdvanceDueDate;
 
+		String task1SubjectName = AMNNR_Subject32;
+		String task1Notes = AMNNR_Notes32;
+		String relatedTo = AMNNR_RelatedTo32;
+
+		String priority = AMNNR_AdvancePriority32;
+		String status = AMNNR_AdvanceStatus32;
+		String task1ButtonName = AMNNR_ActivityType1;
+		String[] suggestedTags = null;
+		String verificationRelatedTo = relatedTo;
+
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", relatedTo } };
+
+		String[][] task1AdvancedSection = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", verificationRelatedTo } };
+
+		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String recordName = AMNNR_FirmLegalName2;
+		String recordType = AMNNR_FirmRecordType2;
+
+		String[] RelatedToVerifyInInteraction = AMNNR_ATRelatedTo21.split("<break>");
+
+		String updatedNotesOfTask = AMNNR_Notes33;
+
+		String[][] task1UpdateBasicSection = { { "Notes", updatedNotesOfTask } };
+		String[] updatedSuggestedTags = AMNNR_SuggestedTag33
+				.split("<break>", -1);
+
+		String[] updatedRelatedToVerifyInInteraction = AMNNR_ATRelatedTo22.split("<break>", -1);
+		String[] updatedRelatedAssociationVerifyInInteraction = updatedSuggestedTags;
+
+		String updatedRelatedToVerifyInNotes = (relatedTo + AMNNR_RelatedTo33);
+
+		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName },
+				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
+
+		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+		
+		
+		
+		/*
 		String task1SubjectName = "Task bulk Firm contact";
 		String task1Notes = "";
 		String relatedTo = "Max<break>Martha<break>Vertica<break>Maxtra";
@@ -4157,8 +4260,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[] updatedRelatedToVerifyInInteraction = "Max<break>Martha<break>+64".split("<break>", -1);
 		String[] updatedRelatedAssociationVerifyInInteraction = updatedSuggestedTags;
 
-		String updatedRelatedToVerifyInNotes = (relatedTo + "<break>"
-				+ "Con 1<break>con 2<break>con 3<break>con 4<break>con 5<break>con 6<break>con 7<break>con 8<break>con 9<break>con 10<break>con 11<break>con 12<break>con 13<break>con 14<break>con 15<break>con 16<break>con 17<break>con 18<break>con 19<break>con 20<break>con 21<break>con 22<break>con 23<break>con 24<break>con 25<break>con 26<break>con 27<break>con 28<break>con 29<break>con 30<break>con 31<break>con 32<break>con 33<break>con 34<break>con 35<break>con 36<break>con 37<break>con 38<break>con 39<break>con 40<break>con 41<break>con 42<break>con 43<break>con 44<break>con 45<break>con 46<break>con 47<break>con 48<break>Acc 1<break>Acc 2<break>Acc 3<break>Acc 4<break>Acc 5<break>Acc 6<break>Acc 7<break>Acc 8<break>Acc 9<break>Acc 10<break>Acc 11<break>Acc 12<break>Acc 13");
+		String updatedRelatedToVerifyInNotes = (relatedTo + "<break>Con 1<break>con 2<break>con 3<break>con 4<break>con 5<break>con 6<break>con 7<break>con 8<break>con 9<break>con 10<break>con 11<break>con 12<break>con 13<break>con 14<break>con 15<break>con 16<break>con 17<break>con 18<break>con 19<break>con 20<break>con 21<break>con 22<break>con 23<break>con 24<break>con 25<break>con 26<break>con 27<break>con 28<break>con 29<break>con 30<break>con 31<break>con 32<break>con 33<break>con 34<break>con 35<break>con 36<break>con 37<break>con 38<break>con 39<break>con 40<break>con 41<break>con 42<break>con 43<break>con 44<break>con 45<break>con 46<break>con 47<break>con 48<break>Acc 1<break>Acc 2<break>Acc 3<break>Acc 4<break>Acc 5<break>Acc 6<break>Acc 7<break>Acc 8<break>Acc 9<break>Acc 10<break>Acc 11<break>Acc 12<break>Acc 13");
 
 		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName },
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
@@ -4167,6 +4269,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
+
+*/
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
 		/*
@@ -4364,6 +4468,57 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("3"));
 		String getAdvanceDueDate = AdvanceDueDate;
 
+		String task1SubjectName = AMNNR_Subject34;
+		String task1Notes = AMNNR_Notes34;
+		String relatedTo = AMNNR_RelatedTo34;
+
+		String priority = AMNNR_AdvancePriority34;
+		String status = AMNNR_AdvanceStatus34;
+		String task1ButtonName = AMNNR_ActivityType1;
+		String[] suggestedTags = AMNNR_SuggestedTag34.split("<break>",
+				-1);
+		String verificationRelatedTo = relatedTo + AMNNR_RelatedTo35;
+
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", relatedTo } };
+
+		String[][] task1AdvancedSection = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", verificationRelatedTo } };
+
+		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String recordName = AMNNR_Contact4;
+
+		String[] RelatedToVerifyInInteraction = AMNNR_ATRelatedTo23.split("<break>", -1);
+		String[] RelatedAssociationVerifyInInteraction = (AMNNR_RelatedTo36).split("<break>", -1);
+
+		String updatedNotesOfTask = AMNNR_Notes35;
+
+		String[][] task1UpdateBasicSection = { { "Notes", updatedNotesOfTask } };
+		String[] updatedSuggestedTags = AMNNR_SuggestedTag35.split("<break>", -1);
+
+		String[] updatedRelatedToVerifyInInteraction = AMNNR_ATRelatedTo24.split("<break>", -1);
+		String[] updatedRelatedAssociationVerifyInInteraction = (AMNNR_RelatedTo37).split("<break>", -1);
+
+		String updatedRelatedToVerifyInNotes = (verificationRelatedTo + AMNNR_RelatedTo38);
+
+		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName },
+				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
+
+		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+		
+		
+		
+		
+		/*
 		String task1SubjectName = "Task Custom Object";
 		String task1Notes = "Send the quotation to Martha, jhon, con 11 and Custom Object 1.1 belonging to the Firm Nexus, Custom Object 1.2";
 		String relatedTo = "Martha<break>Jhon<break>con 11<break>Sumo Logic<break>Vertica";
@@ -4373,8 +4528,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String task1ButtonName = "Task";
 		String[] suggestedTags = "Custom Object 1.1<break>Custom Object 1.2<break>Custom Object 1.3".split("<break>",
 				-1);
-		String verificationRelatedTo = relatedTo + "<break>"
-				+ "Custom Object 1.1<break>Custom Object 1.2<break>Custom Object 1.3";
+		String verificationRelatedTo = relatedTo + "<break>Custom Object 1.1<break>Custom Object 1.2<break>Custom Object 1.3";
 
 		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
 				{ "Related_To", relatedTo } };
@@ -4393,8 +4547,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String recordName = "Martha";
 
 		String[] RelatedToVerifyInInteraction = "Martha<break>Jhon<break>+7".split("<break>", -1);
-		String[] RelatedAssociationVerifyInInteraction = ("con 11<break>Sumo Logic<break>Vertica" + "<break>"
-				+ "Custom Object 1.1<break>Custom Object 1.2<break>Custom Object 1.3").split("<break>", -1);
+		String[] RelatedAssociationVerifyInInteraction = ("con 11<break>Sumo Logic<break>Vertica<break>Custom Object 1.1<break>Custom Object 1.2<break>Custom Object 1.3").split("<break>", -1);
 
 		String updatedNotesOfTask = "keep in loop  con 4, con 5 Acc 5, Custom Object 1.2, Custom object 1.3";
 
@@ -4402,11 +4555,9 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[] updatedSuggestedTags = "con 4<break>con 5<break>Acc 5".split("<break>", -1);
 
 		String[] updatedRelatedToVerifyInInteraction = "Martha<break>Jhon<break>+10".split("<break>", -1);
-		String[] updatedRelatedAssociationVerifyInInteraction = ("con 11<break>Sumo Logic<break>Vertica" + "<break>"
-				+ "Custom Object 1.1<break>Custom Object 1.2<break>Custom Object 1.3" + "<break>"
-				+ "con 4<break>con 5<break>Acc 5").split("<break>", -1);
+		String[] updatedRelatedAssociationVerifyInInteraction = ("con 11<break>Sumo Logic<break>Vertica<break>Custom Object 1.1<break>Custom Object 1.2<break>Custom Object 1.3<break>con 4<break>con 5<break>Acc 5").split("<break>", -1);
 
-		String updatedRelatedToVerifyInNotes = (verificationRelatedTo + "<break>" + "con 4<break>con 5<break>Acc 5");
+		String updatedRelatedToVerifyInNotes = (verificationRelatedTo + "<break>con 4<break>con 5<break>Acc 5");
 
 		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName },
 				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
@@ -4414,6 +4565,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
 				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
+		
+		/*
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -4612,6 +4765,56 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("3"));
 		String getAdvanceDueDate = AdvanceDueDate;
 
+		String task1SubjectName = AMNNR_Subject39;
+		String task1Notes = AMNNR_Notes39;
+		String relatedTo = AMNNR_RelatedTo39;
+
+		String priority = AMNNR_AdvancePriority39;
+		String status = AMNNR_AdvanceStatus39;
+		String task1ButtonName = AMNNR_ActivityType1;
+		String[] suggestedTags = AMNNR_SuggestedTag39.split("<break>", -1);
+		String verificationRelatedTo = relatedTo + AMNNR_RelatedTo40;
+
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", relatedTo } };
+
+		String[][] task1AdvancedSection = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", verificationRelatedTo } };
+
+		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String recordName = AMNNR_FirmLegalName3;
+		String recordType = AMNNR_FirmRecordType3;
+
+		String[] RelatedToVerifyInInteraction = AMNNR_ATRelatedTo25.split("<break>", -1);
+
+		String updatedNotesOfTask = null;
+
+		String[][] task1UpdateBasicSection = null;
+		String[] updatedSuggestedTags = "".split("<break>", -1);
+		String[] updatedRemoveRelatedAssociation = AMNNR_ARelatedAsso25.split("<break>", -1);
+		String[] updatedRelatedToVerifyInInteraction = AMNNR_ATRelatedTo26.split("<break>", -1);
+		String[] updatedRelatedAssociationVerifyInInteraction = AMNNR_ARelatedAsso26.split("<break>", -1);
+
+		String updatedRelatedToVerifyInNotes = AMNNR_RelatedTo41;
+
+		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", updatedRelatedToVerifyInNotes } };
+
+		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		
+		
+		/*
+		
 		String task1SubjectName = "Task Demo";
 		String task1Notes = "Follow up with Contacts con 4, con 5 about Demo Deal";
 		String relatedTo = "Con 1<break>con 2<break>Acc 3<break>Maxtra";
@@ -4620,7 +4823,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String status = "In Progress";
 		String task1ButtonName = "Task";
 		String[] suggestedTags = "con 4<break>con 5<break>Demo Deal".split("<break>", -1);
-		String verificationRelatedTo = relatedTo + "<break>" + "con 4<break>con 5<break>Demo Deal";
+		String verificationRelatedTo = relatedTo + "<break>con 4<break>con 5<break>Demo Deal";
 
 		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
 				{ "Related_To", relatedTo } };
@@ -4657,6 +4860,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
 				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
+				
+				*/
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -4859,6 +5064,58 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String getAdvanceDueDate = AdvanceDueDate;
 
+		String task1SubjectName = AMNNR_Subject42;
+		String task1Notes = AMNNR_Notes42;
+		String relatedTo = AMNNR_RelatedTo42;
+
+		String priority = AMNNR_AdvancePriority42;
+		String status = AMNNR_AdvanceStatus42;
+		String task1ButtonName = AMNNR_ActivityType1;
+		String[] suggestedTags = AMNNR_SuggestedTag42.split("<break>", -1);
+		String verificationRelatedTo = relatedTo +AMNNR_RelatedTo43;
+
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", relatedTo } };
+
+		String[][] task1AdvancedSection = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", verificationRelatedTo } };
+
+		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String recordName = AMNNR_FirmLegalName4;
+		String recordType = AMNNR_FirmRecordType4;
+
+		String[] RelatedToVerifyInInteraction =AMNNR_ATRelatedTo27.split("<break>", -1);
+
+		String updatedNotesOfTask = task1Notes;
+		String updatedStatus = AMNNR_AdvanceStatus43;
+		String[][] task1UpdateBasicSection = null;
+		String[][] task1UpdateAdvancedSection = { { "Status", updatedStatus } };
+
+		String[] updatedSuggestedTags = "".split("<break>", -1);
+
+		String[] updatedRelatedToVerifyInInteraction = RelatedToVerifyInInteraction;
+		String[] updatedRelatedAssociationVerifyInInteraction = AMNNR_ARelatedAsso27
+				.split("<break>", -1);
+
+		String updatedRelatedToVerifyInNotes = verificationRelatedTo;
+
+		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName },
+				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
+
+		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", updatedStatus },
+				{ "Priority", priority } };
+		
+		
+	/*	
+		
 		String task1SubjectName = "Task Advance";
 		String task1Notes = "Follow up with Contacts Con 4, Con 5 about demo deal";
 		String relatedTo = "Maxjonic<break>Maxtra<break>Con 1<break>con 2";
@@ -4867,7 +5124,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String status = "Not Started";
 		String task1ButtonName = "Task";
 		String[] suggestedTags = "con 4<break>con 5<break>Demo Deal".split("<break>", -1);
-		String verificationRelatedTo = relatedTo + "<break>" + "con 4<break>con 5<break>Demo Deal";
+		String verificationRelatedTo = relatedTo + "<break>con 4<break>con 5<break>Demo Deal";
 
 		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
 				{ "Related_To", relatedTo } };
@@ -4907,6 +5164,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
 				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", updatedStatus },
 				{ "Priority", priority } };
+				
+				*/
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -5111,6 +5370,50 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				excelLabel.Variable_Name, "AMNNR_004", excelLabel.Advance_Due_Date);
 		String getAdvanceDueDate = AdvanceDueDate;
 
+		String task1SubjectName = AMNNR_Subject42;
+		String task1Notes = AMNNR_Notes42;
+		String relatedTo = AMNNR_ARelatedAsso27;
+
+		String priority = AMNNR_AdvancePriority42;
+		String status = AMNNR_AdvanceStatus43;
+
+		String verificationRelatedTo = relatedTo;
+
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", verificationRelatedTo } };
+
+		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String recordName = AMNNR_FirmLegalName4;
+		String recordType = AMNNR_FirmRecordType4;
+
+		String[] RelatedToVerifyInInteraction = AMNNR_ATRelatedTo27.split("<break>", -1);
+
+		String updatedNotesOfTask = task1Notes;
+
+		String[][] task1UpdateBasicSection = null;
+		String[][] task1UpdateAdvancedSection = { { "Due Date Only", getUpdatedAdvanceDueDate } };
+
+		String[] updatedSuggestedTags = "".split("<break>", -1);
+
+		String[] updatedRelatedToVerifyInInteraction = RelatedToVerifyInInteraction;
+		String[] updatedRelatedAssociationVerifyInInteraction = "Maxjonic<break>Maxtra<break>con 4<break>con 5<break>Demo Deal"
+				.split("<break>", -1);
+
+		String updatedRelatedToVerifyInNotes = verificationRelatedTo;
+
+		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName },
+				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
+
+		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getUpdatedAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+		
+		
+		
+		/*
 		String task1SubjectName = "Task Advance";
 		String task1Notes = "Follow up with Contacts Con 4, Con 5 about demo deal";
 		String relatedTo = "Maxjonic<break>Maxtra<break>con 4<break>con 5<break>Demo Deal";
@@ -5151,6 +5454,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getUpdatedAdvanceDueDate },
 				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
+				
+				*/
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -5334,6 +5639,51 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String getAdvanceDueDate = AdvanceDueDate;
 
+		
+		String task1SubjectName = AMNNR_Subject42;
+		String task1Notes = AMNNR_Notes42;
+		String relatedTo = AMNNR_ARelatedAsso27;
+
+		String priority = AMNNR_AdvancePriority42;
+		String status = AMNNR_AdvanceStatus43;
+
+		String verificationRelatedTo = relatedTo;
+
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", verificationRelatedTo } };
+
+		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String recordName = AMNNR_FirmLegalName4;
+		String recordType = AMNNR_FirmRecordType4;
+
+		String[] RelatedToVerifyInInteraction = AMNNR_ATRelatedTo27.split("<break>", -1);
+
+		String updatedNotesOfTask = task1Notes;
+
+		String[][] task1UpdateBasicSection = null;
+		String[][] task1UpdateAdvancedSection = { { "Assigned To ID", crmUser2FirstName + " " + crmUser2LastName } };
+
+		String[] updatedSuggestedTags = "".split("<break>", -1);
+
+		String[] updatedRelatedToVerifyInInteraction = RelatedToVerifyInInteraction;
+		String[] updatedRelatedAssociationVerifyInInteraction = AMNNR_ARelatedAsso27
+				.split("<break>", -1);
+
+		String updatedRelatedToVerifyInNotes = verificationRelatedTo;
+
+		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName },
+				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
+
+		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser2FirstName + " " + crmUser2LastName }, { "Status", status },
+				{ "Priority", priority } };
+		
+		
+	/*	
+		
 		String task1SubjectName = "Task Advance";
 		String task1Notes = "Follow up with Contacts Con 4, Con 5 about demo deal";
 		String relatedTo = "Maxjonic<break>Maxtra<break>con 4<break>con 5<break>Demo Deal";
@@ -5374,6 +5724,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
 				{ "Assigned To ID", crmUser2FirstName + " " + crmUser2LastName }, { "Status", status },
 				{ "Priority", priority } };
+				
+				*/
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -5556,6 +5908,55 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String getAdvanceDueDate = AdvanceDueDate;
 
+		String task1SubjectName = AMNNR_Subject42;
+		String task1Notes = AMNNR_Notes42;
+		String relatedTo = AMNNR_ARelatedAsso27;
+
+		String priority = AMNNR_AdvancePriority42;
+		String status = AMNNR_AdvanceStatus43;
+
+		String verificationRelatedTo = relatedTo;
+
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", verificationRelatedTo } };
+
+		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser2FirstName + " " + crmUser2LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String recordName = AMNNR_FirmLegalName4;
+		String recordType = AMNNR_FirmRecordType4;
+
+		String[] RelatedToVerifyInInteraction = AMNNR_ATRelatedTo27.split("<break>", -1);
+
+		String updatedNotesOfTask = task1Notes;
+
+		String task1UpdatedSubjectName = AMNNR_Subject44;
+		String[][] task1UpdateBasicSection = { { "Subject", task1UpdatedSubjectName } };
+		;
+		String[][] task1UpdateAdvancedSection = null;
+
+		String[] updatedSuggestedTags = "".split("<break>", -1);
+
+		String[] updatedRelatedToVerifyInInteraction = RelatedToVerifyInInteraction;
+		String[] updatedRelatedAssociationVerifyInInteraction = AMNNR_ARelatedAsso27
+				.split("<break>", -1);
+
+		String updatedRelatedToVerifyInNotes = verificationRelatedTo;
+
+		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1UpdatedSubjectName },
+				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
+
+		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser2FirstName + " " + crmUser2LastName }, { "Status", status },
+				{ "Priority", priority } };
+		
+		
+		
+		
+		
+		
+	/*	
 		String task1SubjectName = "Task Advance";
 		String task1Notes = "Follow up with Contacts Con 4, Con 5 about demo deal";
 		String relatedTo = "Maxjonic<break>Maxtra<break>con 4<break>con 5<break>Demo Deal";
@@ -5598,6 +5999,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
 				{ "Assigned To ID", crmUser2FirstName + " " + crmUser2LastName }, { "Status", status },
 				{ "Priority", priority } };
+				
+				*/
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -5804,6 +6207,61 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("0"));
 		String getAdvanceDueDate = AdvanceDueDate;
+		String task1SubjectName = AMNNR_Subject45;
+		String task1Notes = AMNNR_Notes45;
+		String relatedTo = AMNNR_RelatedTo45;
+
+		String priority = AMNNR_AdvancePriority45;
+		String status = AMNNR_AdvanceStatus45;
+		String task1ButtonName = AMNNR_ActivityType1;
+
+		String[] SuggestedTags = AMNNR_SuggestedTag45.split("<break>", -1);
+
+		String verificationRelatedTo = relatedTo + AMNNR_RelatedTo46;
+
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", relatedTo } };
+
+		String[][] task1AdvancedSection = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", verificationRelatedTo } };
+
+		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String recordName = AMNNR_FirmLegalName5;
+		String recordType = AMNNR_FirmRecordType5;
+
+		String[] RelatedToVerifyInInteraction = ( crmUser1FirstName + " " + crmUser1LastName +AMNNR_ATRelatedTo28).split("<break>", -1);
+
+		String updatedNotesOfTask = AMNNR_Notes46;
+
+		String[][] task1UpdateBasicSection = { { "Notes", updatedNotesOfTask } };
+
+		String[] updatedSuggestedTags = AMNNR_SuggestedTag46
+				.split("<break>", -1);
+
+		String[] updatedRelatedToVerifyInInteraction = AMNNR_ATRelatedTo29.split("<break>", -1);
+		String[] updatedRelatedAssociationVerifyInInteraction = null;
+
+		String updatedRelatedToVerifyInNotes = (AMNNR_RelatedTo47 + "<break>"
+				+ AMNNR_SuggestedTag46);
+
+		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName },
+				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
+
+		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+		
+		
+		
+		/*
+		
 		String task1SubjectName = "Task TQW";
 		String task1Notes = "Areca";
 		String relatedTo = "Acc 12";
@@ -5814,7 +6272,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[] SuggestedTags = "areca".split("<break>", -1);
 
-		String verificationRelatedTo = relatedTo + "<break>" + "areca";
+		String verificationRelatedTo = relatedTo + "<break>areca";
 
 		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
 				{ "Related_To", relatedTo } };
@@ -5855,6 +6313,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
 				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
+		
+		*/
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
@@ -6057,13 +6517,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("4"));
 		String getAdvanceDueDate = AdvanceDueDate;
 
-		String task1SubjectName = "Task Demo 3";
-		String task1Notes = "";
-		String relatedTo = "Acc 3<break>Maxtra<break>Con 1<break>con 2<break>Demo Deal";
+		String task1SubjectName = AMNNR_Subject48;
+		String task1Notes = AMNNR_Notes48;
+		String relatedTo = AMNNR_RelatedTo48;
 
-		String priority = "Normal";
-		String status = "In Progress";
-		String task1ButtonName = "Task";
+		String priority = AMNNR_AdvancePriority48;
+		String status = AMNNR_AdvanceStatus48;
+		String task1ButtonName = AMNNR_ActivityType1;
 		String[] suggestedTags = null;
 		String verificationRelatedTo = relatedTo;
 
@@ -6081,8 +6541,61 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
 
-		String recordName = "Acc 3";
-		String recordType = "Company";
+		String recordName = AMNNR_FirmLegalName3;
+		String recordType = AMNNR_FirmRecordType3;
+		;
+
+		String[] RelatedToVerifyInInteraction = AMNNR_ATRelatedTo30.split("<break>", -1);
+
+		String updatedNotesOfTask = task1Notes;
+
+		String updatedRelatedToInNotes = AMNNR_RelatedTo49;
+		String[][] task1UpdateBasicSection = { { "Related_To", updatedRelatedToInNotes } };
+
+		String[] updatedSuggestedTags = null;
+
+		String[] updatedRelatedToVerifyInInteraction = RelatedToVerifyInInteraction;
+		String[] updatedRelatedAssociationVerifyInInteraction = AMNNR_ARelatedAsso30.split("<break>",
+				-1);
+
+		String updatedRelatedToVerifyInNotes = verificationRelatedTo;
+
+		String[][] updatedTask1BasicSectionVerification = { { "Subject", task1SubjectName },
+				{ "Notes", updatedNotesOfTask }, { "Related_To", updatedRelatedToVerifyInNotes } };
+
+		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+		
+		
+		/*
+		String task1SubjectName = "Task Demo 3";
+		String task1Notes = "";
+		String relatedTo = "Acc 3<break>Maxtra<break>Con 1<break>con 2<break>Demo Deal";
+
+		String priority = "Normal";
+		String status = "In Progress";
+		String task1ButtonName = AMNNR_ActivityType1;
+		String[] suggestedTags = null;
+		String verificationRelatedTo = relatedTo;
+
+		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", relatedTo } };
+
+		String[][] task1AdvancedSection = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String[][] task1BasicSectionVerification = { { "Subject", task1SubjectName }, { "Notes", task1Notes },
+				{ "Related_To", verificationRelatedTo } };
+
+		String[][] task1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
+				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
+				{ "Priority", priority } };
+
+		String recordName = AMNNR_FirmLegalName3;
+		String recordType = AMNNR_FirmRecordType3;
+		;
 
 		String[] RelatedToVerifyInInteraction = "Con 1<break>con 2<break>+4".split("<break>", -1);
 
@@ -6105,6 +6618,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] updatedTask1AdvancedSectionVerification = { { "Due Date Only", getAdvanceDueDate },
 				{ "Assigned To ID", crmUser1FirstName + " " + crmUser1LastName }, { "Status", status },
 				{ "Priority", priority } };
+		/*
 
 		lp.CRMLogin(crmUser1EmailID, adminPassword);
 
