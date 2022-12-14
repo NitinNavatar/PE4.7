@@ -15586,7 +15586,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					else if (labelName.contains(excelLabel.Notes.toString())) {
 						String actualNotes = getText(driver, getNotesText(20), "Notes", action.SCROLLANDBOOLEAN);
-						if (actualNotes.contains(value.trim().replaceAll(" +", " "))) {
+						if (actualNotes.equals(value.trim().replaceAll(" +", " "))) {
 							log(LogStatus.INFO, "Notes value has been verified and i.e. :" + value, YesNo.No);
 						} else {
 							log(LogStatus.ERROR,
@@ -15729,13 +15729,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								String actualDataOnly = getAttribute(driver,
 										eventNotPopUpAdvanceSectionDateTime(labels[0], labels[1], 10),
 										labels.toString(), "value");
-								String tempvalue = CommonLib.convertDateFromOneFormatToAnother(value, "dd/MM/yyyy",
+								String tempvalue = CommonLib.convertDateFromOneFormatToAnother(value, "M/d/yyyy",
 										"MMM d, yyyy");
 								if (tempvalue != null) {
 									value = tempvalue;
 								}
 
-								if (value.equals(actualDataOnly)) {
+								if (actualDataOnly.contains(value)) {
 									log(LogStatus.INFO,
 											labels.toString() + " value has been verified  and i.e. :" + value,
 											YesNo.No);
@@ -19925,7 +19925,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		} else {
 			log(LogStatus.FAIL, "Notification Header is not present there", YesNo.No);
-			negativeResults.add("Notification Header is not present there");
+			
 		}
 		List<String> notificationOptionsListInText = notificationOptionsList.stream()
 				.map(x -> CommonLib.getText(driver, x, "Event Name", action.BOOLEAN)).collect(Collectors.toList());

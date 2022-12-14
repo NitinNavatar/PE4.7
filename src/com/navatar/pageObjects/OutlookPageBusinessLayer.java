@@ -17,6 +17,8 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
@@ -258,11 +260,42 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		driver.get(outLookAddress);
 		boolean flag = false;
 
-		if (sendKeys(driver, loginEmailInputBox(30), userName, "Input Value : " + userName, action.BOOLEAN)) {
-			CommonLib.log(LogStatus.INFO, "Entered Value: " + userName, YesNo.No);
+		
+		if(alreadyLoggedInLink(userName, 6) != null)
+		{
+			if (click(driver, alreadyLoggedInLink(userName, 6), "loginNextButton", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on "+userName, YesNo.No);
+			} else {
+				log(LogStatus.ERROR, "Not able to Click on "+userName, YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to Click on "+userName);
+			}
+		}
+		else
+		{
+			
+			if (sendKeys(driver, loginEmailInputBox(30), userName, "Input Value : " + userName, action.BOOLEAN)) {
+				CommonLib.log(LogStatus.INFO, "Entered Value: " + userName, YesNo.No);
 
-			if (click(driver, loginNextButton(30), "loginNextButton", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on loginNextButton", YesNo.No);
+				if (click(driver, loginNextButton(30), "loginNextButton", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on loginNextButton", YesNo.No);
+			
+			
+
+		} else {
+			log(LogStatus.ERROR, "Not able to Click on loginNextButton", YesNo.Yes);
+			BaseLib.sa.assertTrue(false, "Not able to Click on loginNextButton");
+		}
+	} else {
+
+		CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + userName, YesNo.Yes);
+		BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + userName);
+
+	}
+			
+		}
+		
+		
+		
 
 				if (sendKeys(driver, loginPasswordInputBox(30), userPassword, "Input Value : " + userPassword,
 						action.BOOLEAN)) {
@@ -304,16 +337,6 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 				}
 
-			} else {
-				log(LogStatus.ERROR, "Not able to Click on loginNextButton", YesNo.Yes);
-				BaseLib.sa.assertTrue(false, "Not able to Click on loginNextButton");
-			}
-		} else {
-
-			CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + userName, YesNo.Yes);
-			BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + userName);
-
-		}
 		return flag;
 
 	}
@@ -538,7 +561,13 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 				if (createEventThroughOutlook(eventTitle, eventAttendees, startDate, endDate, startTime, endTime,
 						descriptionBox, allDayToggle)) {
 					log(LogStatus.INFO, "Event: " + eventTitle + " Created through outlook", YesNo.No);
-					flag = true;
+					if(outLookSignOut())
+					{
+						
+						flag = true;
+					}
+					
+					
 					driver.close();
 					driver.switchTo().window(parentId);
 				} else {
@@ -1234,7 +1263,6 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		}
 		ThreadSleep(2000);
 
-		
 		if (click(driver, getOutlookCalendarIcon(dateType, null, timeout), "Calendar Icon", action)) {
 			log(LogStatus.INFO, "Clicked on calendar button", YesNo.No);
 			ThreadSleep(2000);
@@ -1293,6 +1321,39 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 		return flag;
 
+	}
+
+	public boolean outLookSignOut() {
+		boolean flag = false;
+
+		CommonLib.refresh(driver);
+		if (click(driver, topCornerAccountButton(20), "topCornerAccountButton", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on topCornerAccountButton", YesNo.No);
+
+			if (click(driver, signOutLink(20), "signOutLink", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on signOutLink", YesNo.No);
+				CommonLib.ThreadSleep(7000);
+				WebDriverWait wait = new WebDriverWait(driver, 40);
+
+				if (wait.until(ExpectedConditions.titleContains("Sign out"))) {
+					log(LogStatus.INFO, "Outlook has been Signed Out", YesNo.No);
+					flag = true;
+				} else {
+					log(LogStatus.ERROR, "Outlook is not able to Signed out", YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Outlook is not able to Signed out");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to Click on signOutLink", YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to Click on signOutLink");
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not able to Click on topCornerAccountButton", YesNo.Yes);
+			BaseLib.sa.assertTrue(false, "Not able to Click on topCornerAccountButton");
+		}
+
+		return flag;
 	}
 
 }

@@ -588,5 +588,30 @@ public class OutlookPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, FindElement(driver, xpath, "day", action, timeOut), "Visibility", timeOut, "day date");
 
 	}
+	
+	@FindBy(xpath = "//button[contains(@title,\"Account manager for\")]")
+	private WebElement topCornerAccountButton;
+
+	public WebElement topCornerAccountButton(int timeOut) {
+		return isDisplayed(driver, topCornerAccountButton, "Visibility", timeOut, "topCornerAccountButton");
+
+	}
+	
+	@FindBy(xpath = "//a[contains(@aria-label,\"Sign out of this account\")]")
+	private WebElement signOutLink;
+
+	public WebElement signOutLink(int timeOut) {
+		return isDisplayed(driver, signOutLink, "Visibility", timeOut, "signOutLink");
+
+	}
+	
+	public WebElement alreadyLoggedInLink(String emailId,int timeOut) {
+		String xpath ="//div[text()=\""+emailId+"\"]/ancestor::div[@class=\"table\"]";
+		return isDisplayed(driver, FindElement(driver, xpath, "day", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "alreadyLoggedInLink");
+
+	}
+	
+	
+	
 
 }
