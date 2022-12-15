@@ -559,8 +559,8 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] event1BasicSectionVerificationInNotesPopup = { { "Subject", eventTitle }, { "Notes", "" },
 				{ "Related_To", RelatedToVerifyInNotes } };
 		String[][] event1AdvancedSectionVerificationInNotesPopup = { { "Location", "" },
-				{ "Assigned To ID", (crmUser1FirstName + " " + crmUser1LastName).replaceAll(" +", " ") },
-				{ "Start Date Time<break>Date", startDate }, { "End Date Time<break>Date", endDate } };
+				{ "Assigned To ID", user1FullName }, { "Start Date Time<break>Date", startDate },
+				{ "End Date Time<break>Date", endDate } };
 
 		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
@@ -1451,7 +1451,6 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
 		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
 
-		
 		String user1FullName;
 		if (!crmUser1FirstName.equals("") && !crmUser1LastName.equals("")) {
 			user1FullName = crmUser1FirstName + " " + crmUser1LastName;
@@ -1484,7 +1483,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 				{ "End Date Time<break>Date", updateEndDateOnHomepageNotePopup } };
 		String[][] event1UpdateAdvancedSectionOnHomepageNotePopup = null;
 		String[] eventupdatedSuggestedTagsOnHomepageNotePopup = null;
-		String getAdvanceDueDate2 = updateStartDateOnHomepageNotePopup ;
+		String getAdvanceDueDate2 = updateStartDateOnHomepageNotePopup;
 		String[][] event1UpdateBasicSectionOnHomepageNotePopup2 = { { "Location", "NY" } };
 		String[][] event1UpdateAdvancedSectionOnHomepageNotePopup2 = null;
 		String[] eventupdatedSuggestedTagsOnHomepageNotePopup2 = null;
@@ -1550,203 +1549,192 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 										"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
 										YesNo.No);
 
-								if (BP.updateActivityTimelineRecord(projectName, event1UpdateBasicSection,
-										event1UpdateAdvancedSection, null, updatedSuggestedTags, null)) {
-									log(LogStatus.PASS,
-											"Activity timeline record has been Updated for: " + eventTitleUpdated,
+							} else {
+								log(LogStatus.ERROR,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResultUpdated,
+										YesNo.No);
+								sa.assertTrue(false,
+										"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+												+ NotesPopUpPrefilledNegativeResultUpdated);
+							}
+
+							if (BP.updateActivityTimelineRecord(projectName, event1UpdateBasicSection,
+									event1UpdateAdvancedSection, null, updatedSuggestedTags, null)) {
+								log(LogStatus.PASS,
+										"Activity timeline record has been Updated for: " + eventTitleUpdated,
+										YesNo.No);
+
+								CommonLib.refresh(driver);
+								CommonLib.ThreadSleep(5000);
+
+								ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(getAdvanceDueDate,
+										null, eventTitleUpdated, "", false, true, updatedRelatedToVerify, null);
+								if (updatedresult.isEmpty()) {
+									log(LogStatus.PASS, "------" + eventTitleUpdated
+											+ " record has been verified on intraction------", YesNo.No);
+
+								} else {
+									log(LogStatus.ERROR,
+											"------" + eventTitleUpdated
+													+ " record is not verified on intraction, Reason: " + updatedresult
+													+ "------",
 											YesNo.No);
+									sa.assertTrue(false,
+											"------" + eventTitleUpdated
+													+ " record is not verified on intraction, Reason: " + updatedresult
+													+ "------");
+								}
 
-									CommonLib.refresh(driver);
-									CommonLib.ThreadSleep(5000);
+								if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+									log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
 
-									ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(
-											getAdvanceDueDate, null, eventTitleUpdated, "", false, true,
-											updatedRelatedToVerify, null);
-									if (updatedresult.isEmpty()) {
-										log(LogStatus.PASS, "------" + eventTitleUpdated
-												+ " record has been verified on intraction------", YesNo.No);
+									if (CommonLib.click(driver,
+											home.eventLinkInHomePageNotification(eventTitleUpdated, 20),
+											"Link of Event: " + eventTitleUpdated, action.BOOLEAN)) {
+										log(LogStatus.INFO, "Clicked on Link of Event: " + eventTitleUpdated, YesNo.No);
 
-									} else {
-										log(LogStatus.ERROR,
-												"------" + eventTitleUpdated
-														+ " record is not verified on intraction, Reason: "
-														+ updatedresult + "------",
-												YesNo.No);
-										sa.assertTrue(false,
-												"------" + eventTitleUpdated
-														+ " record is not verified on intraction, Reason: "
-														+ updatedresult + "------");
-									}
-
-									if (lp.clickOnTab(projectName, TabName.HomeTab)) {
-										log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
-
-										if (CommonLib.click(driver,
-												home.eventLinkInHomePageNotification(eventTitleUpdated, 20),
-												"Link of Event: " + eventTitleUpdated, action.BOOLEAN)) {
-											log(LogStatus.INFO, "Clicked on Link of Event: " + eventTitleUpdated,
+										if (click(driver, taskBP.editButtonInEventDetailPage(20), "Edit Button",
+												action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "Clicked on Edit Button of Event: " + eventTitleUpdated,
 													YesNo.No);
 
-											if (click(driver, taskBP.editButtonInEventDetailPage(20), "Edit Button",
-													action.SCROLLANDBOOLEAN)) {
-												log(LogStatus.INFO,
-														"Clicked on Edit Button of Event: " + eventTitleUpdated,
-														YesNo.No);
+											if (BP.updateActivityTimelineRecord(projectName,
+													event1UpdateBasicSectionOnHomepageNotePopup,
+													event1UpdateAdvancedSectionOnHomepageNotePopup, null,
+													eventupdatedSuggestedTagsOnHomepageNotePopup, null)) {
+												log(LogStatus.PASS, "Activity timeline record has been Updated for: "
+														+ eventTitleUpdated, YesNo.No);
+												if (lp.clickOnTab(projectName, tabObj1)) {
 
-												if (BP.updateActivityTimelineRecord(projectName,
-														event1UpdateBasicSectionOnHomepageNotePopup,
-														event1UpdateAdvancedSectionOnHomepageNotePopup, null,
-														eventupdatedSuggestedTagsOnHomepageNotePopup, null)) {
-													log(LogStatus.PASS,
-															"Activity timeline record has been Updated for: "
-																	+ eventTitleUpdated,
-															YesNo.No);
-													if (lp.clickOnTab(projectName, tabObj1)) {
+													log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-														log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+													if (BP.clickOnAlreadyCreated_Lighting(environment, mode,
+															TabName.InstituitonsTab, accountRecordType,
+															accountRecordName, 30)) {
+														log(LogStatus.INFO,
+																accountRecordName + " record of record type "
+																		+ accountRecordType + " has been open",
+																YesNo.No);
+														ThreadSleep(4000);
+														if (BP.clicktabOnPage("Acuity")) {
+															log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-														if (BP.clickOnAlreadyCreated_Lighting(environment, mode,
-																TabName.InstituitonsTab, accountRecordType,
-																accountRecordName, 30)) {
-															log(LogStatus.INFO,
-																	accountRecordName + " record of record type "
-																			+ accountRecordType + " has been open",
-																	YesNo.No);
-															ThreadSleep(4000);
-															if (BP.clicktabOnPage("Acuity")) {
-																log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-
-																ArrayList<String> updatedresult2 = BP
-																		.verifyRecordOnInteractionCard(
-																				getAdvanceDueDate2, null,
-																				eventTitleUpdated, "", false, true,
-																				updatedRelatedToVerify, null);
-																if (updatedresult2.isEmpty()) {
-																	log(LogStatus.PASS, "------" + eventTitleUpdated
-																			+ " record has been verified on intraction------",
-																			YesNo.No);
-
-																} else {
-																	log(LogStatus.ERROR, "------" + eventTitleUpdated
-																			+ " record is not verified on intraction, Reason: "
-																			+ updatedresult2 + "------", YesNo.No);
-																	sa.assertTrue(false, "------" + eventTitleUpdated
-																			+ " record is not verified on intraction, Reason: "
-																			+ updatedresult2 + "------");
-																}
-
-																if (lp.clickOnTab(projectName, TabName.HomeTab)) {
-																	log(LogStatus.INFO,
-																			"Click on Tab : " + TabName.HomeTab,
-																			YesNo.No);
-																	List<String> notificationHomeNegativeResult = home
-																			.verifyNotificationOptions(
-																					eventTitleUpdated);
-																	if (notificationHomeNegativeResult.isEmpty()) {
-																		log(LogStatus.INFO,
-																				"Verified Notification for Event(s): "
-																						+ eventTitleUpdated
-																						+ " on Home Page",
-																				YesNo.No);
-
-																	} else {
-																		log(LogStatus.ERROR,
-																				"Not Verified the Event(s) "
-																						+ eventTitleUpdated
-																						+ "+ on Home Page, Reason: "
-																						+ notificationHomeNegativeResult,
-																				YesNo.No);
-																		sa.assertTrue(false,
-																				"Not Verified the Event(s) "
-																						+ eventTitleUpdated
-																						+ "+ on Home Page, Reason: "
-																						+ notificationHomeNegativeResult);
-																	}
-																} else {
-																	sa.assertTrue(false, "Not Able to Click on Tab : "
-																			+ TabName.HomeTab);
-																	log(LogStatus.SKIP, "Not Able to Click on Tab : "
-																			+ TabName.HomeTab, YesNo.Yes);
-																}
+															ArrayList<String> updatedresult2 = BP
+																	.verifyRecordOnInteractionCard(getAdvanceDueDate2,
+																			null, eventTitleUpdated, "", false, true,
+																			updatedRelatedToVerify, null);
+															if (updatedresult2.isEmpty()) {
+																log(LogStatus.PASS, "------" + eventTitleUpdated
+																		+ " record has been verified on intraction------",
+																		YesNo.No);
 
 															} else {
-																log(LogStatus.ERROR, "Not able to click on Acuity Tab",
+																log(LogStatus.ERROR, "------" + eventTitleUpdated
+																		+ " record is not verified on intraction, Reason: "
+																		+ updatedresult2 + "------", YesNo.No);
+																sa.assertTrue(false, "------" + eventTitleUpdated
+																		+ " record is not verified on intraction, Reason: "
+																		+ updatedresult2 + "------");
+															}
+
+															if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+																log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab,
 																		YesNo.No);
-																sa.assertTrue(false, "Not able to click on Acuity Tab");
+																List<String> notificationHomeNegativeResult = home
+																		.verifyNotificationOptions(eventTitleUpdated);
+																if (notificationHomeNegativeResult.isEmpty()) {
+																	log(LogStatus.INFO,
+																			"Verified Notification for Event(s): "
+																					+ eventTitleUpdated
+																					+ " on Home Page",
+																			YesNo.No);
+
+																} else {
+																	log(LogStatus.ERROR,
+																			"Not Verified the Event(s) "
+																					+ eventTitleUpdated
+																					+ "+ on Home Page, Reason: "
+																					+ notificationHomeNegativeResult,
+																			YesNo.No);
+																	sa.assertTrue(false,
+																			"Not Verified the Event(s) "
+																					+ eventTitleUpdated
+																					+ "+ on Home Page, Reason: "
+																					+ notificationHomeNegativeResult);
+																}
+															} else {
+																sa.assertTrue(false, "Not Able to Click on Tab : "
+																		+ TabName.HomeTab);
+																log(LogStatus.SKIP,
+																		"Not Able to Click on Tab : " + TabName.HomeTab,
+																		YesNo.Yes);
 															}
 
 														} else {
-															log(LogStatus.ERROR,
-																	"Not able to open " + recordName
-																			+ " record of record type " + recordType,
+															log(LogStatus.ERROR, "Not able to click on Acuity Tab",
 																	YesNo.No);
-															sa.assertTrue(false, "Not able to open " + recordName
-																	+ " record of record type " + recordType);
+															sa.assertTrue(false, "Not able to click on Acuity Tab");
 														}
-													} else {
-														log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj1,
-																YesNo.No);
-														sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
-													}
 
+													} else {
+														log(LogStatus.ERROR,
+																"Not able to open " + recordName
+																		+ " record of record type " + recordType,
+																YesNo.No);
+														sa.assertTrue(false, "Not able to open " + recordName
+																+ " record of record type " + recordType);
+													}
 												} else {
-													log(LogStatus.FAIL, "Activity timeline record has not Updated for: "
-															+ eventTitleUpdated, YesNo.No);
-													sa.assertTrue(false,
-															"Activity timeline record has not Updated for: "
-																	+ eventTitleUpdated);
+													log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj1,
+															YesNo.No);
+													sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 												}
 
 											} else {
-												log(LogStatus.ERROR,
-														"Not Able Click on Edit button for Record Page of Event: "
-																+ eventTitleUpdated,
-														YesNo.Yes);
-												sa.assertTrue(false,
-														"Not Able Click on Edit button for Record Page of Event: "
-																+ eventTitleUpdated);
-												driver.close();
-												driver.switchTo()
-														.window(driver.getWindowHandles().stream().findFirst().get());
+												log(LogStatus.FAIL, "Activity timeline record has not Updated for: "
+														+ eventTitleUpdated, YesNo.No);
+												sa.assertTrue(false, "Activity timeline record has not Updated for: "
+														+ eventTitleUpdated);
 											}
 
 										} else {
 											log(LogStatus.ERROR,
-													"Not Able to Click on Link of Event: " + eventTitleUpdated,
-													YesNo.No);
+													"Not Able Click on Edit button for Record Page of Event: "
+															+ eventTitleUpdated,
+													YesNo.Yes);
 											sa.assertTrue(false,
-													"Not Able to Click on Link of Event: " + eventTitleUpdated);
+													"Not Able Click on Edit button for Record Page of Event: "
+															+ eventTitleUpdated);
+											driver.close();
+											driver.switchTo()
+													.window(driver.getWindowHandles().stream().findFirst().get());
 										}
 
 									} else {
-										sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
-										log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
+										log(LogStatus.ERROR, "Not Able to Click on Link of Event: " + eventTitleUpdated,
+												YesNo.No);
+										sa.assertTrue(false,
+												"Not Able to Click on Link of Event: " + eventTitleUpdated);
 									}
 
-									if (lp.clickOnTab(projectName, TabName.HomeTab)) {
-										log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+								} else {
+									sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
+									log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
+								}
 
-										if (CommonLib.click(driver,
-												home.eventLinkInHomePageNotification(eventTitleUpdated, 20),
-												"Link of Event: " + eventTitleUpdated, action.BOOLEAN)) {
-											log(LogStatus.INFO, "Clicked on Link of Event: " + eventTitleUpdated,
+								if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+									log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+
+									if (CommonLib.click(driver,
+											home.eventLinkInHomePageNotification(eventTitleUpdated, 20),
+											"Link of Event: " + eventTitleUpdated, action.BOOLEAN)) {
+										log(LogStatus.INFO, "Clicked on Link of Event: " + eventTitleUpdated, YesNo.No);
+
+										if (click(driver, taskBP.editButtonInEventDetailPage(20), "Edit Button",
+												action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "Clicked on Edit Button of Event: " + eventTitleUpdated,
 													YesNo.No);
-
-											if (click(driver, taskBP.editButtonInEventDetailPage(20), "Edit Button",
-													action.SCROLLANDBOOLEAN)) {
-												log(LogStatus.INFO,
-														"Clicked on Edit Button of Event: " + eventTitleUpdated,
-														YesNo.No);
-
-											} else {
-												log(LogStatus.ERROR,
-														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
-																+ NotesPopUpPrefilledNegativeResultUpdated,
-														YesNo.No);
-												sa.assertTrue(false,
-														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
-																+ NotesPopUpPrefilledNegativeResultUpdated);
-											}
 
 											if (BP.updateActivityTimelineRecord(projectName,
 													event1UpdateBasicSectionOnHomepageNotePopup2,
@@ -1939,7 +1927,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] event1UpdateAdvancedSection = null;
 		String[] event1UpdatedSuggestedTags = "Vertica<break>Houlihan Lokey<break>Lomez".split("<break>", -1);
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		log(LogStatus.INFO, "---------Now Going to Verify Event: " + eventTitleUpdated
 				+ " on Home Page as well as on Detail Page ---------", YesNo.No);
@@ -2171,7 +2159,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String accountRecordName = "Houlihan Lokey";
 		String accountRecordType = "Institution";
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		log(LogStatus.INFO, "---------Now Going to Create Event: " + eventTitle + " through Outlook---------",
 				YesNo.No);
@@ -2214,7 +2202,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 							lp.CRMlogout();
 							ThreadSleep(5000);
-							lp.CRMLogin(crmUser1EmailID, adminPassword);
+							lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 							log(LogStatus.INFO, "---------Now Going to Verify Event: " + eventTitle + " in "
 									+ contactRecordName + " Record---------", YesNo.No);
@@ -2230,7 +2218,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 										log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
 										ArrayList<String> interactionResult = BP.verifyRecordOnInteractionCard(null,
-												null, eventTitle, "", true, false, null, null);
+												null, eventTitle, task1NotesUpdated, true, false, null, null);
 										if (interactionResult.isEmpty()) {
 											log(LogStatus.PASS,
 													"------" + eventTitle
@@ -2254,37 +2242,22 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 										if (notificationNegativeResult.isEmpty()) {
 											log(LogStatus.INFO,
 													"Verified Notification not contains for Event(s): " + eventTitle
-															+ " in case of Admin in Detail Page" + contactRecordName,
-													YesNo.No);
-
-										} else {
-											log(LogStatus.ERROR, "The Event(s) " + eventTitle
-													+ " should not contain i case of Admin in Detail Page: "
-													+ contactRecordName + " , Reason: " + notificationNegativeResult,
-													YesNo.No);
-											sa.assertTrue(false, "The Event(s) " + eventTitle
-													+ " should not contain i case of Admin in Detail Page: "
-													+ contactRecordName + " , Reason: " + notificationNegativeResult);
-										}
-
-										if (!BP.clickOnSubjectOfInteractionEitherOnCardOrInViewAllPopUp(eventTitle)) {
-											log(LogStatus.INFO,
-													"Event Detail Page has not been open for Record: " + eventTitle
-															+ " in case of Admin in Detail Page: " + contactRecordName,
+															+ " in case of User 1 i.e.: " + crmUser1EmailID
+															+ " in Detail Page" + contactRecordName,
 													YesNo.No);
 
 										} else {
 											log(LogStatus.ERROR,
-													"Event Record Detail Page  has opened for Record: " + eventTitle
-															+ " in case of Admin in Detail Page: " + contactRecordName,
-													YesNo.Yes);
+													"The Event(s) " + eventTitle
+															+ " should not contain in case of User 1 i.e.: "
+															+ crmUser1EmailID + " in Detail Page: " + contactRecordName
+															+ " , Reason: " + notificationNegativeResult,
+													YesNo.No);
 											sa.assertTrue(false,
-													"Event Record Detail Page  has opened for Record: " + eventTitle
-															+ " in case of Admin in Detail Page: " + contactRecordName);
-											driver.close();
-											CommonLib.ThreadSleep(3000);
-											driver.switchTo()
-													.window(driver.getWindowHandles().stream().findFirst().get());
+													"The Event(s) " + eventTitle
+															+ " should not contain in case of User 1 i.e.: "
+															+ crmUser1EmailID + " in Detail Page: " + contactRecordName
+															+ " , Reason: " + notificationNegativeResult);
 										}
 
 									} else {
@@ -2315,63 +2288,24 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 									if (BP.clicktabOnPage("Acuity")) {
 										log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-										ArrayList<String> interactionResult = BP.verifyRecordOnInteractionCard(null,
-												null, eventTitle, "", true, false, null, null);
-										if (interactionResult.isEmpty()) {
-											log(LogStatus.PASS,
-													"------" + eventTitle
-															+ " record has been verified on intraction------",
-													YesNo.No);
-
-										} else {
-											log(LogStatus.ERROR,
-													"------" + eventTitle
-															+ " record is not verified on intraction, Reason: "
-															+ interactionResult + "------",
-													YesNo.No);
-											sa.assertTrue(false,
-													"------" + eventTitle
-															+ " record is not verified on intraction, Reason: "
-															+ interactionResult + "------");
-										}
-
 										List<String> notificationNegativeResult = BP
 												.verifyNotificationOptionsNotContainsInRecordDetailPage(eventTitle);
 										if (notificationNegativeResult.isEmpty()) {
 											log(LogStatus.INFO,
 													"Verified Notification not contains for Event(s): " + eventTitle
-															+ " in case of Admin in Detail Page" + accountRecordName,
+															+ " in case of User 1 in Detail Page" + accountRecordName,
 													YesNo.No);
 
 										} else {
 											log(LogStatus.ERROR, "The Event(s) " + eventTitle
-													+ " should not contain in case of Admin in Detail Page: "
+													+ " should not contain in case of User 1 in Detail Page: "
 													+ accountRecordName + " , Reason: " + notificationNegativeResult,
 													YesNo.No);
 											sa.assertTrue(false, "The Event(s) " + eventTitle
-													+ " should not contain in case of Admin in Detail Page: "
+													+ " should not contain in case of User 1 in Detail Page: "
 													+ accountRecordName + " , Reason: " + notificationNegativeResult);
 										}
 
-										if (!BP.clickOnSubjectOfInteractionEitherOnCardOrInViewAllPopUp(eventTitle)) {
-											log(LogStatus.INFO,
-													"Event Detail Page has not been open for Record: " + eventTitle
-															+ " in case of Admin in Detail Page: " + accountRecordName,
-													YesNo.No);
-
-										} else {
-											log(LogStatus.ERROR,
-													"Event Record Detail Page  has opened for Record: " + eventTitle
-															+ " in case of Admin in Detail Page: " + accountRecordName,
-													YesNo.Yes);
-											sa.assertTrue(false,
-													"Event Record Detail Page  has opened for Record: " + eventTitle
-															+ " in case of Admin in Detail Page: " + accountRecordName);
-											driver.close();
-											CommonLib.ThreadSleep(3000);
-											driver.switchTo()
-													.window(driver.getWindowHandles().stream().findFirst().get());
-										}
 									} else {
 										log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
 										sa.assertTrue(false, "Not able to click on Acuity Tab");
@@ -2430,7 +2364,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-
+		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
 		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
@@ -2451,7 +2385,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] task1UpdateAdvancedSection = { { "Assigned To ID", crmUser2FirstName + " " + crmUser2LastName } };
 		String[] updatedSuggestedTags = null;
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		log(LogStatus.INFO, "---------Now Going to Create Event: " + eventTitle + " through Outlook---------",
 				YesNo.No);
@@ -2494,223 +2428,252 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 								if (BP.clickOnSubjectOfInteractionEitherOnCardOrInViewAllPopUp(eventTitle)) {
 									log(LogStatus.INFO, "Event Detail Page has been open for Record: " + eventTitle,
 											YesNo.No);
+									if (click(driver, taskBP.editButtonInEventDetailPage(20), "Edit Button",
+											action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.INFO, "Clicked on Edit Button of Event: " + eventTitle, YesNo.No);
 
-									if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection,
-											task1UpdateAdvancedSection, null, updatedSuggestedTags, null)) {
-										log(LogStatus.PASS,
-												"Activity timeline record has been Updated for: " + eventTitle,
-												YesNo.No);
+										if (BP.updateActivityTimelineRecord(projectName, task1UpdateBasicSection,
+												task1UpdateAdvancedSection, null, updatedSuggestedTags, null)) {
+											log(LogStatus.PASS,
+													"Activity timeline record has been Updated for: " + eventTitle,
+													YesNo.No);
 
-										log(LogStatus.INFO, "---------Now Going to Verify Event: " + eventTitle + " in "
-												+ accountRecordName + " Record---------", YesNo.No);
-										if (lp.clickOnTab(projectName, tabObj1)) {
+											driver.close();
+											driver.switchTo()
+													.window(driver.getWindowHandles().stream().findFirst().get());
 
-											log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+											log(LogStatus.INFO, "---------Now Going to Verify Event: " + eventTitle
+													+ " in " + accountRecordName + " Record---------", YesNo.No);
+											CommonLib.refresh(driver);
+											if (lp.clickOnTab(projectName, tabObj1)) {
 
-											if (BP.clickOnAlreadyCreated_Lighting(environment, mode,
-													TabName.InstituitonsTab, accountRecordType, accountRecordName,
-													30)) {
-												log(LogStatus.INFO, accountRecordName + " record of record type "
-														+ accountRecordType + " has been open", YesNo.No);
-												ThreadSleep(4000);
-												if (BP.clicktabOnPage("Acuity")) {
-													log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+												log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-													List<String> notificationNegativeResult = BP
-															.verifyNotificationOptionsNotContainsInRecordDetailPage(
-																	eventTitle);
-													if (notificationNegativeResult.isEmpty()) {
-														log(LogStatus.INFO,
-																"Verified Notification not contains for Event(s): "
-																		+ eventTitle
-																		+ " in case of Admin in Detail Page"
-																		+ contactRecordName,
-																YesNo.No);
+												if (BP.clickOnAlreadyCreated_Lighting(environment, mode,
+														TabName.InstituitonsTab, accountRecordType, accountRecordName,
+														30)) {
+													log(LogStatus.INFO, accountRecordName + " record of record type "
+															+ accountRecordType + " has been open", YesNo.No);
+													ThreadSleep(4000);
+													if (BP.clicktabOnPage("Acuity")) {
+														log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
+														List<String> notificationNegativeResult = BP
+																.verifyNotificationOptionsNotContainsInRecordDetailPage(
+																		eventTitle);
+														if (notificationNegativeResult.isEmpty()) {
+															log(LogStatus.INFO,
+																	"Verified Notification not contains for Event(s): "
+																			+ eventTitle
+																			+ " in case of User 1 in Detail Page"
+																			+ contactRecordName,
+																	YesNo.No);
+
+														} else {
+															log(LogStatus.ERROR, "The Event(s) " + eventTitle
+																	+ " should not contain in case of User 1 in Detail Page: "
+																	+ contactRecordName + " , Reason: "
+																	+ notificationNegativeResult, YesNo.No);
+															sa.assertTrue(false, "The Event(s) " + eventTitle
+																	+ " should not contain in case of User 1 in Detail Page: "
+																	+ contactRecordName + " , Reason: "
+																	+ notificationNegativeResult);
+														}
+
+														if (BP.clickOnSubjectOfInteractionEitherOnCardOrInViewAllPopUp(
+																eventTitle)) {
+															log(LogStatus.INFO,
+																	"Event Detail Page has been open for Record: "
+																			+ eventTitle,
+																	YesNo.No);
+
+															driver.close();
+															driver.switchTo().window(driver.getWindowHandles().stream()
+																	.findFirst().get());
+
+														} else {
+															log(LogStatus.ERROR,
+																	"Event Detail Page has not been open for Record: "
+																			+ eventTitle + " in case of User 1 i.e.: "
+																			+ crmUser1EmailID + " in Detail Page: "
+																			+ contactRecordName,
+																	YesNo.Yes);
+															sa.assertTrue(false,
+																	"Event Detail Page has not been open for Record: "
+																			+ eventTitle + " in case of User 1 i.e.: "
+																			+ crmUser1EmailID + " in Detail Page: "
+																			+ contactRecordName);
+
+														}
 													} else {
-														log(LogStatus.ERROR, "The Event(s) " + eventTitle
-																+ " should not contain i case of Admin in Detail Page: "
-																+ contactRecordName + " , Reason: "
-																+ notificationNegativeResult, YesNo.No);
-														sa.assertTrue(false, "The Event(s) " + eventTitle
-																+ " should not contain i case of Admin in Detail Page: "
-																+ contactRecordName + " , Reason: "
-																+ notificationNegativeResult);
-													}
-
-													if (BP.clickOnSubjectOfInteractionEitherOnCardOrInViewAllPopUp(
-															eventTitle)) {
-														log(LogStatus.INFO,
-																"Event Detail Page has been open for Record: "
-																		+ eventTitle,
+														log(LogStatus.ERROR, "Not able to click on Acuity Tab",
 																YesNo.No);
-
-													} else {
-														log(LogStatus.ERROR,
-																"Event Detail Page has not been open for Record: "
-																		+ eventTitle + " in case of User 1 i.e.: "
-																		+ crmUser1EmailID + " in Detail Page: "
-																		+ contactRecordName,
-																YesNo.Yes);
-														sa.assertTrue(false,
-																"Event Detail Page has not been open for Record: "
-																		+ eventTitle + " in case of User 1 i.e.: "
-																		+ crmUser1EmailID + " in Detail Page: "
-																		+ contactRecordName);
-
-													}
-												} else {
-													log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
-													sa.assertTrue(false, "Not able to click on Acuity Tab");
-												}
-
-											} else {
-												log(LogStatus.ERROR,
-														"Not able to open " + accountRecordName
-																+ " record of record type " + accountRecordType,
-														YesNo.No);
-												sa.assertTrue(false, "Not able to open " + accountRecordName
-														+ " record of record type " + accountRecordType);
-											}
-										} else {
-											log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj1, YesNo.No);
-											sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
-										}
-
-										log(LogStatus.INFO, "---------Now Going to Verify Event: " + eventTitle + " in "
-												+ contactRecordName + " Record---------", YesNo.No);
-										if (lp.clickOnTab(projectName, tabObj2)) {
-
-											log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
-
-											if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
-													contactRecordName, 30)) {
-												log(LogStatus.INFO, contactRecordName + " record has been open",
-														YesNo.No);
-												ThreadSleep(4000);
-												if (BP.clicktabOnPage("Acuity")) {
-													log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-
-													List<String> notificationNegativeResult = BP
-															.verifyNotificationOptionsNotContainsInRecordDetailPage(
-																	eventTitle);
-													if (notificationNegativeResult.isEmpty()) {
-														log(LogStatus.INFO,
-																"Verified Notification not contains for Event(s): "
-																		+ eventTitle + " in case of User 1 i.e.: "
-																		+ crmUser1EmailID + " in Detail Page"
-																		+ contactRecordName,
-																YesNo.No);
-
-													} else {
-														log(LogStatus.ERROR,
-																"The Event(s) " + eventTitle
-																		+ " should not contain i case of User 1 i.e.: "
-																		+ crmUser1EmailID + " in Detail Page: "
-																		+ contactRecordName + " , Reason: "
-																		+ notificationNegativeResult,
-																YesNo.No);
-														sa.assertTrue(false,
-																"The Event(s) " + eventTitle
-																		+ " should not contain i case of User 1 i.e.: "
-																		+ crmUser1EmailID + " in Detail Page: "
-																		+ contactRecordName + " , Reason: "
-																		+ notificationNegativeResult);
-													}
-
-													if (BP.clickOnSubjectOfInteractionEitherOnCardOrInViewAllPopUp(
-															eventTitle)) {
-														log(LogStatus.INFO,
-																"Event Detail Page has been open for Record: "
-																		+ eventTitle,
-																YesNo.No);
-
-													} else {
-														log(LogStatus.ERROR,
-																"Event Detail Page has not been open for Record: "
-																		+ eventTitle + " in case of User 1 i.e.: "
-																		+ crmUser1EmailID + " in Detail Page: "
-																		+ contactRecordName,
-																YesNo.Yes);
-														sa.assertTrue(false,
-																"Event Detail Page has not been open for Record: "
-																		+ eventTitle + " in case of User 1 i.e.: "
-																		+ crmUser1EmailID + " in Detail Page: "
-																		+ contactRecordName);
-
+														sa.assertTrue(false, "Not able to click on Acuity Tab");
 													}
 
 												} else {
-													log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
-													sa.assertTrue(false, "Not able to click on Acuity Tab");
+													log(LogStatus.ERROR,
+															"Not able to open " + accountRecordName
+																	+ " record of record type " + accountRecordType,
+															YesNo.No);
+													sa.assertTrue(false, "Not able to open " + accountRecordName
+															+ " record of record type " + accountRecordType);
 												}
-
 											} else {
-												log(LogStatus.ERROR,
-														"Not able to open " + contactRecordName + " record", YesNo.No);
-												sa.assertTrue(false,
-														"Not able to open " + contactRecordName + " record");
+												log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj1, YesNo.No);
+												sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 											}
-										} else {
-											log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj2, YesNo.No);
-											sa.assertTrue(false, "Not able to click on Tab : " + tabObj2);
-										}
 
-										if (lp.clickOnTab(projectName, TabName.HomeTab)) {
-											log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+											log(LogStatus.INFO, "---------Now Going to Verify Event: " + eventTitle
+													+ " in " + contactRecordName + " Record---------", YesNo.No);
+											CommonLib.refresh(driver);
+											if (lp.clickOnTab(projectName, tabObj2)) {
+
+												log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+
+												if (BP.clickOnAlreadyCreated_Lighting(environment, mode,
+														TabName.ContactTab, contactRecordName, 30)) {
+													log(LogStatus.INFO, contactRecordName + " record has been open",
+															YesNo.No);
+													ThreadSleep(4000);
+													if (BP.clicktabOnPage("Acuity")) {
+														log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+														List<String> notificationNegativeResult = BP
+																.verifyNotificationOptionsNotContainsInRecordDetailPage(
+																		eventTitle);
+														if (notificationNegativeResult.isEmpty()) {
+															log(LogStatus.INFO,
+																	"Verified Notification not contains for Event(s): "
+																			+ eventTitle + " in case of User 1 i.e.: "
+																			+ crmUser1EmailID + " in Detail Page"
+																			+ contactRecordName,
+																	YesNo.No);
+
+														} else {
+															log(LogStatus.ERROR, "The Event(s) " + eventTitle
+																	+ " should not contain i case of User 1 i.e.: "
+																	+ crmUser1EmailID + " in Detail Page: "
+																	+ contactRecordName + " , Reason: "
+																	+ notificationNegativeResult, YesNo.No);
+															sa.assertTrue(false, "The Event(s) " + eventTitle
+																	+ " should not contain i case of User 1 i.e.: "
+																	+ crmUser1EmailID + " in Detail Page: "
+																	+ contactRecordName + " , Reason: "
+																	+ notificationNegativeResult);
+														}
+
+														if (BP.clickOnSubjectOfInteractionEitherOnCardOrInViewAllPopUp(
+																eventTitle)) {
+															log(LogStatus.INFO,
+																	"Event Detail Page has been open for Record: "
+																			+ eventTitle,
+																	YesNo.No);
+															driver.close();
+															driver.switchTo().window(driver.getWindowHandles().stream()
+																	.findFirst().get());
+
+														} else {
+															log(LogStatus.ERROR,
+																	"Event Detail Page has not been open for Record: "
+																			+ eventTitle + " in case of User 1 i.e.: "
+																			+ crmUser1EmailID + " in Detail Page: "
+																			+ contactRecordName,
+																	YesNo.Yes);
+															sa.assertTrue(false,
+																	"Event Detail Page has not been open for Record: "
+																			+ eventTitle + " in case of User 1 i.e.: "
+																			+ crmUser1EmailID + " in Detail Page: "
+																			+ contactRecordName);
+
+														}
+
+													} else {
+														log(LogStatus.ERROR, "Not able to click on Acuity Tab",
+																YesNo.No);
+														sa.assertTrue(false, "Not able to click on Acuity Tab");
+													}
+
+												} else {
+													log(LogStatus.ERROR,
+															"Not able to open " + contactRecordName + " record",
+															YesNo.No);
+													sa.assertTrue(false,
+															"Not able to open " + contactRecordName + " record");
+												}
+											} else {
+												log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj2, YesNo.No);
+												sa.assertTrue(false, "Not able to click on Tab : " + tabObj2);
+											}
+
+											if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+												log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+												List<String> notificationHomeNegativeResult = home
+														.verifyNotificationOptionsNotContains(eventTitle);
+												if (notificationHomeNegativeResult.isEmpty()) {
+													log(LogStatus.INFO, "Verified Notification for Event(s): "
+															+ eventTitle
+															+ " on Home Page not contains in case of user 1 i.e.: "
+															+ crmUser1EmailID, YesNo.No);
+
+												} else {
+													log(LogStatus.ERROR, "The Event(s) " + eventTitle
+															+ "+ on Home Page should not contain in case of User 1 i.e.: "
+															+ crmUser1EmailID + ", Reason: "
+															+ notificationHomeNegativeResult, YesNo.No);
+													sa.assertTrue(false, "The Event(s) " + eventTitle
+															+ "+ on Home Page should not contain in case of User 1 i.e.: "
+															+ crmUser1EmailID + ", Reason: "
+															+ notificationHomeNegativeResult);
+												}
+											} else {
+												sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
+												log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab,
+														YesNo.Yes);
+											}
+
+											lp.CRMlogout();
+											ThreadSleep(5000);
+											lp.CRMLogin(superAdminUserName, adminPassword, appName);
+
 											List<String> notificationHomeNegativeResult = home
 													.verifyNotificationOptionsNotContains(eventTitle);
 											if (notificationHomeNegativeResult.isEmpty()) {
 												log(LogStatus.INFO,
-														"Verified Notification for Event(s): " + eventTitle
-																+ " on Home Page not contains in case of user 1 i.e.: "
-																+ crmUser1EmailID,
+														"Verified Event(s): " + eventTitle
+																+ " not contains in Notification pane in Home Page",
 														YesNo.No);
 
 											} else {
-												log(LogStatus.ERROR, "The Event(s) " + eventTitle
-														+ "+ on Home Page should not contain in case of User 1 i.e.: "
-														+ crmUser1EmailID + ", Reason: "
+												log(LogStatus.ERROR, "Not Verified Event(s): " + eventTitle
+														+ " not contains in Notification pane in Home Page, Reason: "
 														+ notificationHomeNegativeResult, YesNo.No);
-												sa.assertTrue(false, "The Event(s) " + eventTitle
-														+ "+ on Home Page should not contain in case of User 1 i.e.: "
-														+ crmUser1EmailID + ", Reason: "
+												sa.assertTrue(false, "Not Verified Event(s): " + eventTitle
+														+ " not contains in Notification pane in Home Page, Reason: "
 														+ notificationHomeNegativeResult);
 											}
+
 										} else {
-											sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
-											log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab,
-													YesNo.Yes);
-										}
-
-										lp.CRMlogout();
-										ThreadSleep(5000);
-										lp.CRMLogin(superAdminUserName, adminPassword, appName);
-
-										List<String> notificationHomeNegativeResult = home
-												.verifyNotificationOptionsNotContains(eventTitle);
-										if (notificationHomeNegativeResult.isEmpty()) {
-											log(LogStatus.INFO,
-													"Verified Event(s): " + eventTitle
-															+ " not contains in Notification pane in Home Page",
+											log(LogStatus.FAIL,
+													"Activity timeline record has not Updated for: " + eventTitle,
 													YesNo.No);
-
-										} else {
-											log(LogStatus.ERROR, "Not Verified Event(s): " + eventTitle
-													+ " not contains in Notification pane in Home Page, Reason: "
-													+ notificationHomeNegativeResult, YesNo.No);
-											sa.assertTrue(false, "Not Verified Event(s): " + eventTitle
-													+ " not contains in Notification pane in Home Page, Reason: "
-													+ notificationHomeNegativeResult);
+											sa.assertTrue(false,
+													"Activity timeline record has not Updated for: " + eventTitle);
+											driver.close();
+											driver.switchTo()
+													.window(driver.getWindowHandles().stream().findFirst().get());
 										}
 
 									} else {
-										log(LogStatus.FAIL,
-												"Activity timeline record has not Updated for: " + eventTitle,
-												YesNo.No);
-										sa.assertTrue(false,
-												"Activity timeline record has not Updated for: " + eventTitle);
+										log(LogStatus.ERROR,
+												"Not Able Click on Edit button for Record Page of Event: " + eventTitle,
+												YesNo.Yes);
+										sa.assertTrue(false, "Not Able Click on Edit button for Record Page of Event: "
+												+ eventTitle);
+										driver.close();
+										driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 									}
+
 								} else {
 									log(LogStatus.ERROR, "Record Detail Page has not open for Record: " + eventTitle,
 											YesNo.Yes);
@@ -2778,7 +2741,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String contactRecordName = "Martha";
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		log(LogStatus.INFO, "---------Now Going to Create Event: " + eventTitle + " through Outlook---------",
 				YesNo.No);
@@ -2800,123 +2763,132 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 				log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
 
 				CommonLib.ThreadSleep(5000);
-				List<String> notificationHomeNegativeResult2 = home.verifyNotificationOptions(eventTitle);
-				if (notificationHomeNegativeResult2.isEmpty()) {
-					log(LogStatus.INFO, "Verified Notification for Event(s): " + eventTitle + " on Home Page",
+
+				List<String> notificationHomeNegativeResultUser1 = home
+						.verifyNotificationOptionsNotContains(eventTitle);
+				if (notificationHomeNegativeResultUser1.isEmpty()) {
+					log(LogStatus.INFO,
+							"Verified Event(s): " + eventTitle + " not contains in Notification pane in Home Page",
 							YesNo.No);
 
-					log(LogStatus.INFO, "---------Now Going to Verify Event: " + eventTitle + " in " + contactRecordName
-							+ " Record---------", YesNo.No);
-					if (lp.clickOnTab(projectName, tabObj2)) {
+				} else {
+					log(LogStatus.ERROR,
+							"Not Verified Event(s): " + eventTitle
+									+ " not contains in Notification pane in Home Page, Reason: "
+									+ notificationHomeNegativeResultUser1,
+							YesNo.No);
+					sa.assertTrue(false,
+							"Not Verified Event(s): " + eventTitle
+									+ " not contains in Notification pane in Home Page, Reason: "
+									+ notificationHomeNegativeResultUser1);
+				}
 
-						log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+				log(LogStatus.INFO, "---------Now Going to Verify Event: " + eventTitle + " in " + contactRecordName
+						+ " Record---------", YesNo.No);
+				if (lp.clickOnTab(projectName, tabObj2)) {
 
-						if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, contactRecordName,
-								30)) {
-							log(LogStatus.INFO, contactRecordName + " record has been open", YesNo.No);
-							ThreadSleep(4000);
-							if (BP.clicktabOnPage("Acuity")) {
-								log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
 
-								List<String> notificationNegativeResult = BP
-										.verifyNotificationOptionsNotContainsInRecordDetailPage(eventTitle);
-								if (notificationNegativeResult.isEmpty()) {
-									log(LogStatus.INFO, "Verified Notification not contains for Event(s): " + eventTitle
-											+ " in case of Admin in Detail Page" + contactRecordName, YesNo.No);
+					if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, contactRecordName,
+							30)) {
+						log(LogStatus.INFO, contactRecordName + " record has been open", YesNo.No);
+						ThreadSleep(4000);
+						if (BP.clicktabOnPage("Acuity")) {
+							log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-								} else {
-									log(LogStatus.ERROR,
-											"The Event(s) " + eventTitle
-													+ " should not contain i case of Admin in Detail Page: "
-													+ contactRecordName + " , Reason: " + notificationNegativeResult,
-											YesNo.No);
-									sa.assertTrue(false,
-											"The Event(s) " + eventTitle
-													+ " should not contain i case of Admin in Detail Page: "
-													+ contactRecordName + " , Reason: " + notificationNegativeResult);
-								}
-
-								if (BP.clickOnSubjectOfInteractionEitherOnCardOrInViewAllPopUp(eventTitle)) {
-									log(LogStatus.INFO,
-											"Event Detail Page has been open for Record: " + eventTitle
-													+ " in case of User 1 i.e.: " + crmUser1EmailID
-													+ " in Detail Page: " + contactRecordName,
-											YesNo.No);
-									driver.close();
-									CommonLib.ThreadSleep(3000);
-									driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-
-								} else {
-									log(LogStatus.ERROR,
-											"Event Detail Page has not been open for Record: " + eventTitle
-													+ " in case of User 1 i.e.: " + crmUser1EmailID
-													+ " in Detail Page: " + contactRecordName,
-											YesNo.Yes);
-									sa.assertTrue(false,
-											"Event Detail Page has not been open for Record: " + eventTitle
-													+ " in case of User 1 i.e.: " + crmUser1EmailID
-													+ " in Detail Page: " + contactRecordName);
-
-								}
-
-								CommonLib.refresh(driver);
-								ArrayList<String> result = BP.verifyRecordOnInteractionCard(null, null, eventTitle,
-										null, false, true, null, null);
-								if (result.isEmpty()) {
-									log(LogStatus.PASS,
-											"------" + eventTitle + " record has been verified on intraction------",
-											YesNo.No);
-
-								} else {
-									log(LogStatus.ERROR, "------" + eventTitle
-											+ " record is not verified on intraction, Reason: " + result + "------",
-											YesNo.No);
-									sa.assertTrue(false, "------" + eventTitle
-											+ " record is not verified on intraction, Reason: " + result + "------");
-								}
-
-								lp.CRMlogout();
-								ThreadSleep(5000);
-								lp.CRMLogin(crmUser2EmailID, adminPassword);
-
-								List<String> notificationHomeNegativeResult = home
-										.verifyNotificationOptionsNotContains(eventTitle);
-								if (notificationHomeNegativeResult.isEmpty()) {
-									log(LogStatus.INFO, "Verified Event(s): " + eventTitle
-											+ " not contains in Notification pane in Home Page", YesNo.No);
-
-								} else {
-									log(LogStatus.ERROR,
-											"Not Verified Event(s): " + eventTitle
-													+ " not contains in Notification pane in Home Page, Reason: "
-													+ notificationHomeNegativeResult,
-											YesNo.No);
-									sa.assertTrue(false,
-											"Not Verified Event(s): " + eventTitle
-													+ " not contains in Notification pane in Home Page, Reason: "
-													+ notificationHomeNegativeResult);
-								}
+							List<String> notificationNegativeResult = BP
+									.verifyNotificationOptionsNotContainsInRecordDetailPage(eventTitle);
+							if (notificationNegativeResult.isEmpty()) {
+								log(LogStatus.INFO, "Verified Notification not contains for Event(s): " + eventTitle
+										+ " in case of Admin in Detail Page" + contactRecordName, YesNo.No);
 
 							} else {
-								log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
-								sa.assertTrue(false, "Not able to click on Acuity Tab");
+								log(LogStatus.ERROR,
+										"The Event(s) " + eventTitle
+												+ " should not contain i case of Admin in Detail Page: "
+												+ contactRecordName + " , Reason: " + notificationNegativeResult,
+										YesNo.No);
+								sa.assertTrue(false,
+										"The Event(s) " + eventTitle
+												+ " should not contain i case of Admin in Detail Page: "
+												+ contactRecordName + " , Reason: " + notificationNegativeResult);
+							}
+
+							if (BP.clickOnSubjectOfInteractionEitherOnCardOrInViewAllPopUp(eventTitle)) {
+								log(LogStatus.INFO,
+										"Event Detail Page has been open for Record: " + eventTitle
+												+ " in case of User 1 i.e.: " + crmUser1EmailID + " in Detail Page: "
+												+ contactRecordName,
+										YesNo.No);
+								driver.close();
+								CommonLib.ThreadSleep(3000);
+								driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+
+							} else {
+								log(LogStatus.ERROR,
+										"Event Detail Page has not been open for Record: " + eventTitle
+												+ " in case of User 1 i.e.: " + crmUser1EmailID + " in Detail Page: "
+												+ contactRecordName,
+										YesNo.Yes);
+								sa.assertTrue(false,
+										"Event Detail Page has not been open for Record: " + eventTitle
+												+ " in case of User 1 i.e.: " + crmUser1EmailID + " in Detail Page: "
+												+ contactRecordName);
+
+							}
+
+							CommonLib.refresh(driver);
+							ArrayList<String> result = BP.verifyRecordOnInteractionCard(null, null, eventTitle, null,
+									false, true, null, null);
+							if (result.isEmpty()) {
+								log(LogStatus.PASS,
+										"------" + eventTitle + " record has been verified on intraction------",
+										YesNo.No);
+
+							} else {
+								log(LogStatus.ERROR, "------" + eventTitle
+										+ " record is not verified on intraction, Reason: " + result + "------",
+										YesNo.No);
+								sa.assertTrue(false, "------" + eventTitle
+										+ " record is not verified on intraction, Reason: " + result + "------");
+							}
+
+							lp.CRMlogout();
+							ThreadSleep(5000);
+							lp.CRMLogin(crmUser2EmailID, adminPassword);
+
+							List<String> notificationHomeNegativeResult = home
+									.verifyNotificationOptionsNotContains(eventTitle);
+							if (notificationHomeNegativeResult.isEmpty()) {
+								log(LogStatus.INFO, "Verified Event(s): " + eventTitle
+										+ " not contains in Notification pane in Home Page", YesNo.No);
+
+							} else {
+								log(LogStatus.ERROR,
+										"Not Verified Event(s): " + eventTitle
+												+ " not contains in Notification pane in Home Page, Reason: "
+												+ notificationHomeNegativeResult,
+										YesNo.No);
+								sa.assertTrue(false,
+										"Not Verified Event(s): " + eventTitle
+												+ " not contains in Notification pane in Home Page, Reason: "
+												+ notificationHomeNegativeResult);
 							}
 
 						} else {
-							log(LogStatus.ERROR, "Not able to open " + contactRecordName + " record", YesNo.No);
-							sa.assertTrue(false, "Not able to open " + contactRecordName + " record");
+							log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
+							sa.assertTrue(false, "Not able to click on Acuity Tab");
 						}
-					} else {
-						log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj2, YesNo.No);
-						sa.assertTrue(false, "Not able to click on Tab : " + tabObj2);
-					}
 
+					} else {
+						log(LogStatus.ERROR, "Not able to open " + contactRecordName + " record", YesNo.No);
+						sa.assertTrue(false, "Not able to open " + contactRecordName + " record");
+					}
 				} else {
-					log(LogStatus.ERROR, "Not Verified the Event(s) " + eventTitle + "+ on Home Page, Reason: "
-							+ notificationHomeNegativeResult2, YesNo.No);
-					sa.assertTrue(false, "Not Verified the Event(s) " + eventTitle + "+ on Home Page, Reason: "
-							+ notificationHomeNegativeResult2);
+					log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj2, YesNo.No);
+					sa.assertTrue(false, "Not able to click on Tab : " + tabObj2);
 				}
+
 			} else {
 				sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
 				log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
@@ -2956,7 +2928,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String contactRecordName = "Martha";
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		log(LogStatus.INFO, "---------Now Going to Create Event: " + eventTitle + " through Outlook---------",
 				YesNo.No);
@@ -3135,7 +3107,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String contactRecordName = "Litz";
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		log(LogStatus.INFO, "---------Now Going to Create Event: " + eventTitle + " through Outlook---------",
 				YesNo.No);
@@ -3297,7 +3269,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String descriptionBoxUpdated = null;
 		String eventAttendeesToRemove = crmUser2FirstName + " " + crmUser2LastName;
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		log(LogStatus.INFO, "---------Now Going to Create Event: " + eventTitle + " through Outlook---------",
 				YesNo.No);
@@ -3587,7 +3559,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 							+ " not contans in Home Page Notification Section in case of user 1 i.e.: "
 							+ crmUser1EmailID + "---------",
 					YesNo.No);
-			lp.CRMLogin(crmUser1EmailID, adminPassword);
+			lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 			if (lp.clickOnTab(projectName, TabName.HomeTab)) {
 				log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
@@ -3655,7 +3627,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String accountRecordName = "Sumo Logic";
 		String accountRecordType = "Company";
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		log(LogStatus.INFO, "---------Now Going to Create Event: " + eventTitle + " through Outlook---------",
 				YesNo.No);
@@ -4030,7 +4002,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String accountRecordName = "Sumo Logic";
 		String accountRecordType = "Company";
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		WebElement ele;
 		String recycleTab = lp.getTabName(projectName, TabName.RecycleBinTab);
@@ -4224,7 +4196,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[][] event1UpdateAdvancedSectionOnHomepageNotePopup = null;
 		String[] eventupdatedSuggestedTagsOnHomepageNotePopup = null;
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		log(LogStatus.INFO,
 				"---------Now Going to Verify Event: " + eventTitle + " in " + contactRecordName + " Record---------",
@@ -4393,7 +4365,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String recordName = "Acc 3";
 		String recordType = "Company";
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		log(LogStatus.INFO, "---------Now Going to Verify Notification of Task: " + task1SubjectName + " in "
 				+ contactRecordName + " Record---------", YesNo.No);
@@ -4530,7 +4502,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String recordName = "Acc 3";
 		String recordType = "Company";
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		log(LogStatus.INFO, "---------Now Going to Verify Notification of Call: " + task1SubjectName + " in "
 				+ contactRecordName + " Record---------", YesNo.No);
@@ -4679,7 +4651,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String accountRecordName = "Houlihan Lokey";
 		String accountRecordType = "Institution";
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		log(LogStatus.INFO, "---------Now Going to Verify Event: " + eventTitle + " in Interaction Section---------",
 				YesNo.No);
@@ -4960,7 +4932,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		Integer countIconBeforeUpdate = 0;
 		Integer countIconAfterUpdate = 0;
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		if (op.loginAndCreateEventThroughOutLook(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle,
 				eventAttendees, startDate, endDate, startTime, endTime, descriptionBox, false)) {
@@ -5347,7 +5319,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String user3EmailId = crmUser3EmailID;
 		String[] labelAndValueSeprateByBreak = { "Attendees" + "<break>" + crmUser3FirstName + " " + crmUser3LastName };
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		if (op.loginAndCreateEventThroughOutLook(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle,
 				eventAttendees, startDate, endDate, startTime, endTime, descriptionBox, false)) {
@@ -5742,7 +5714,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String accountRecordName = "Sumo Logic";
 		String accountRecordType = "Company";
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		log(LogStatus.INFO, "---------Now Going to Create Event(s): " + eventTitles + " through Outlook---------",
 				YesNo.No);
@@ -5948,7 +5920,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String user2EmailId = crmUser2EmailID;
 		String[] labelAndValueSeprateByBreak = { "Attendees" + "<break>" + user2firstName + " " + User2LastName };
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		if (op.loginAndCreateEventThroughOutLook(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle,
 				eventAttendees, startDate, endDate, startTime, endTime, descriptionBox, false)) {
@@ -6060,7 +6032,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				lp.CRMlogout();
 				ThreadSleep(5000);
-				lp.CRMLogin(crmUser1EmailID, adminPassword);
+				lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 				if (lp.clickOnTab(projectName, TabName.HomeTab)) {
 					log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
@@ -6211,7 +6183,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String accountRecordName = "Sumo Logic";
 		String accountRecordType = "Company";
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		if (lp.clickOnTab(projectName, tabObj1)) {
 
@@ -6401,7 +6373,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 				"Related Associations" + "<break>" + "", "Related Contacts" + "<break>" + "James, Lenis",
 				"Name" + "<break>" + "  " };
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		if (op.loginAndCreateEventThroughOutLook(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle,
 				eventAttendees, startDate, endDate, startTime, endTime, descriptionBox, true)) {
@@ -6599,7 +6571,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 				"Related Associations" + "<break>" + "Sumo Logic, Vertica, Demo Deal",
 				"Related Contacts" + "<break>" + "James, Jhon, Litz" };
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		log(LogStatus.INFO, "---------Now Going to Create Event: " + eventTitle + " through Outlook---------",
 				YesNo.No);
@@ -6725,7 +6697,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String endTime = "9:00 AM";
 		String descriptionBox = "Revenue Grid Event";
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		if (op.loginAndCreateEventThroughOutLook(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle,
 				eventAttendees, startDate, endDate, startTime, endTime, descriptionBox, false)) {
@@ -6792,7 +6764,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 				"Subject" + "<break>" + eventTitle, "Name" + "<break>" + contact1,
 				"Related Associations" + "<break>" + "Assign Multiple Associations" };
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		if (op.loginAndCreateEventThroughOutLook(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle,
 				eventAttendees, startDate, endDate, startTime, endTime, descriptionBox, false)) {
@@ -7002,7 +6974,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 				"Subject" + "<break>" + eventTitle, "Name" + "<break>" + contact1,
 				"Related Associations" + "<break>" + "Assign Multiple Associations" };
 
-		lp.CRMLogin(crmUser1EmailID, adminPassword);
+		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		if (op.loginAndCreateEventThroughOutLook(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle,
 				eventAttendees, startDate, endDate, startTime, endTime, descriptionBox, false)) {
