@@ -4934,8 +4934,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on count of "+contactName,YesNo.No);
 							sa.assertTrue(false,  "Not able to click on count of "+contactName);
 						}		
-
-
 					}
 					else
 					{

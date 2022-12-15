@@ -8399,4 +8399,17 @@ public WebElement contactEmailCount(String contactName, int timeOut) {
 		}
 
 	}
+	
+	public WebElement getDetailsOnInteractionPage(String subjectName, int timeOut) {
+
+		String xpath = "//h2[contains(text(),'All Interactions with')]/../..//a[text()='"+subjectName+"']/ancestor::tr/td[@data-label='Details']//button";
+		try {
+			return FindElement(driver, xpath, "Tab name: " + subjectName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Tab name: " + subjectName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+	
+	
 }
