@@ -12193,7 +12193,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		int loopCount = 0;
 		try {
 
-			
 			if (npbl.createNavPopUpMinimizeButton(5) != null) {
 				CommonLib.click(driver, npbl.createNavPopUpMinimizeButton(5), "Minimize", action.BOOLEAN);
 			}
@@ -20150,6 +20149,30 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			result.add("Not able to click on Deal tab name");
 		}
 		return result;
+	}
+
+	public ArrayList<String> verifyDescriptionShouldNotVisibleUnderDetailsOnInteractionSection(String[] subjectName,
+			String[] detailsMessage) {
+		ArrayList<String> result = new ArrayList<String>();
+		if (subjectName.length == detailsMessage.length) {
+			for (int i = 0; i < subjectName.length; i++) {
+				String actualDetails = getText(driver, getDetailsOnInteractionPage(subjectName[i], 30),
+						" details of subject : " + subjectName[i], action.SCROLLANDBOOLEAN);
+				if (!actualDetails.contains(detailsMessage[i])) {
+					log(LogStatus.INFO, "Details : " + detailsMessage[i]
+							+ " is not available on Interaction popup for subject " + subjectName[i], YesNo.No);
+				} else {
+					log(LogStatus.ERROR, "Details : " + detailsMessage[i]
+							+ " is available on Interaction popup for subject " + subjectName[i], YesNo.No);
+					result.add("Details : " + detailsMessage[i] + " is available on Interaction popup for subject "
+							+ subjectName[i]);
+				}
+
+			}
+
+		}
+		return result;
+
 	}
 
 }

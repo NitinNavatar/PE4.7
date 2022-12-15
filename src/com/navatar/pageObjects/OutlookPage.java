@@ -545,7 +545,105 @@ public class OutlookPage extends BasePageBusinessLayer {
 	public WebElement eventUpdateMsg(int timeOut) {
 		return isDisplayed(driver, eventUpdateMsg, "Visibility", timeOut, "eventUpdateMsg");
 
+	}	
+
+	@FindBy(xpath = "//span[contains(@class,'ms-Dropdown-title')]/span[contains(text(),'repeat')]")
+	private WebElement recurringBtn;
+
+	public WebElement getRecurringBtn(int timeOut) {
+		return isDisplayed(driver, recurringBtn, "Visibility", timeOut, "recurring button");
 	}
+	
+	
+	public WebElement getRecurringOption(String recurringOptionName, int timeOut) {
+		String xpath = "//div[@aria-label='Repeat:']/button//span[text()='"+recurringOptionName+"']";
+		try {
+			return FindElement(driver, xpath, "Button Name: " + recurringOptionName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Button Name: " + recurringOptionName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+	
+	
+	@FindBy(xpath = "//span[text()='Repeat']/../..//span[text()='Save']")
+	private WebElement saveButtonOnRepeatPopup;
+
+	public WebElement getSaveButtonOnRepeatPopup(int timeOut) {
+		return isDisplayed(driver, saveButtonOnRepeatPopup, "Visibility", timeOut, "save button on Repeate popup");
+	}
+	
+	
+	@FindBy(xpath = "//div[@title='Sent Items']//span[text()='Sent Items']")
+	private WebElement sendItemButton;
+
+	public WebElement getSendItemButton(int timeOut) {
+		return isDisplayed(driver, sendItemButton, "Visibility", timeOut, "send item button");
+	}
+	
+	public WebElement getSendItmSubject(String subjectName, int timeOut) {
+		String xpath = "//div[@class='S2NDX']//span[text()='"+subjectName+"']";
+		try {
+			return FindElement(driver, xpath, "Button Name: " + subjectName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Button Name: " + subjectName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+	
+	public WebElement getMoreIcon(int timeOut) {
+		String xpath = "//button[@aria-label='More mail actions']";
+		try {
+			return FindElement(driver, xpath, "More icon", action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "More icon", action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+	
+	@FindBy(xpath = "//button[@data-name='button-save' and text()='Save email']")
+	private WebElement saveEmailButtonOnRG;
+
+	public WebElement getSaveEmailButtonOnRG(int timeOut) {
+		return isDisplayed(driver, saveEmailButtonOnRG, "Visibility", timeOut, "Save email button on RG");
+	}
+	
+	@FindBy(xpath = "//div[text()='Click to link more records']")
+	private WebElement linkedRecordPlaceholder;
+
+	public WebElement getLinkedRecordPlaceholder(int timeOut) {
+		return isDisplayed(driver, linkedRecordPlaceholder, "Visibility", timeOut, "linked record placeholder");
+	}
+	
+	
+	@FindBy(xpath = "//span[text()='Linked records']/ancestor::div[@data-name='group-title-container']/following-sibling::div//input[@role='combobox']")
+	private WebElement linkedRecordInput;
+
+	public WebElement getLinkedRecordInput(int timeOut) {
+		return isDisplayed(driver, linkedRecordInput, "Visibility", timeOut, "linked record input type");
+	}
+	
+	
+	public WebElement getLinkedRecordSuggestion(String recordName, int timeOut) {
+		String xpath = "//span[text()='Linked records']/ancestor::div[@data-name='group-title-container']/following-sibling::div//span[text()='"+recordName+"']";
+		try {
+			return FindElement(driver,xpath, "record name "+recordName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver,xpath, "record name "+recordName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+	
+	@FindBy(xpath = "//button[@class='a-head__navigation-button' and text()='Save']")
+	private WebElement saveButtonOnRG;
+
+	public WebElement getSaveButtonOnRG(int timeOut) {
+		return isDisplayed(driver, saveButtonOnRG, "Visibility", timeOut, "save button");
+	}
+	
+	@FindBy(xpath = "//button[@data-name='button-save' and text()='Email is saved']")
+	private WebElement emailSaveConfirmationOnRG;
+
+	public WebElement getEmailSaveConfirmationOnRG(int timeOut) {
+		return isDisplayed(driver, emailSaveConfirmationOnRG, "Visibility", timeOut, "email save confirmation");
+	}
+	
 
 	
 	public WebElement getOutlookCalendarIcon(String dateType,action action,int timeOut) {
@@ -611,7 +709,4 @@ public class OutlookPage extends BasePageBusinessLayer {
 
 	}
 	
-	
-	
-
 }
