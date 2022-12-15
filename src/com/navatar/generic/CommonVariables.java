@@ -1573,6 +1573,38 @@ public class CommonVariables {
 	 		public static String RGATE_UEndDay1;
 	 		public static String RGATE_UStartDate1;
 	 		public static String RGATE_UEndDate1;
+	 		
+	 		
+	 		
+            //Tagged section
+	 		
+	 		public static String RGATE_TaggedCompany1,RGATE_TaggedCompany2;
+	 		public static String RGATE_TaggedCompanyReferenceCount1,RGATE_TaggedCompanyReferenceCount2;
+	 		
+	 		public static String RGATE_TaggedPeople1,RGATE_TaggedPeople2;
+	 		public static String RGATE_TaggedPeopleReferenceCount1,RGATE_TaggedPeopleReferenceCount2;
+	 		
+	 		
+	 		//Contact section
+	 		public static String RGATE_ContactSectionName1,RGATE_ContactSectionName2,RGATE_ContactSectionName3;
+	 		public static String RGATE_ContactSectionTitle1,RGATE_ContactSectionTitle2,RGATE_ContactSectionTitle3;
+	 		public static String RGATE_ContactSectionNameDeals1,RGATE_ContactSectionNameDeals2,RGATE_ContactSectionNameDeals3;
+	 		public static String RGATE_ContactSectionNameMeetingAndCall1,RGATE_ContactSectionNameMeetingAndCall2,RGATE_ContactSectionNameMeetingAndCall3;
+	 		public static String RGATE_ContactSectionEmail1,RGATE_ContactSectionEmail2,RGATE_ContactSectionEmail3;
+	 		
+	 		//interaction section
+	 		public static String RGATE_InteractionRelatedT01,RGATE_InteractionRelatedT02;
+	 		public static String RGATE_InteractionRelatedAssoc01,RGATE_InteractionRelatedAssoc02;
+	 		
+	 		
+	 		
+	 		//RG Email
+	 		public static String RGATE_EmailTo1,RGATE_EmailTo2,RGATE_EmailTo3;
+	 		public static String RGATE_EmailCC1,RGATE_EmailCC2,RGATE_EmailCC3;
+	 		public static String RGATE_EmailSubject1,RGATE_EmailSubject2,RGATE_EmailSubject3;
+	 		public static String RGATE_EmailDescription1,RGATE_EmailDescription2,RGATE_EmailDescription3;
+	 		
+	 		public static String RGATE_EmailLinkedRecord1;
 
 	 		//--------AcuityMeetingNotesNotificationReminder-------------
 	 		
@@ -1654,35 +1686,7 @@ public class CommonVariables {
 	 		
 	 		
 	 		
-	 		//Tagged section
 	 		
-	 		public static String RGATE_TaggedCompany1,RGATE_TaggedCompany2;
-	 		public static String RGATE_TaggedCompanyReferenceCount1,RGATE_TaggedCompanyReferenceCount2;
-	 		
-	 		public static String RGATE_TaggedPeople1,RGATE_TaggedPeople2;
-	 		public static String RGATE_TaggedPeopleReferenceCount1,RGATE_TaggedPeopleReferenceCount2;
-	 		
-	 		
-	 		//Contact section
-	 		public static String RGATE_ContactSectionName1,RGATE_ContactSectionName2,RGATE_ContactSectionName3;
-	 		public static String RGATE_ContactSectionTitle1,RGATE_ContactSectionTitle2,RGATE_ContactSectionTitle3;
-	 		public static String RGATE_ContactSectionNameDeals1,RGATE_ContactSectionNameDeals2,RGATE_ContactSectionNameDeals3;
-	 		public static String RGATE_ContactSectionNameMeetingAndCall1,RGATE_ContactSectionNameMeetingAndCall2,RGATE_ContactSectionNameMeetingAndCall3;
-	 		public static String RGATE_ContactSectionEmail1,RGATE_ContactSectionEmail2,RGATE_ContactSectionEmail3;
-	 		
-	 		//interaction section
-	 		public static String RGATE_InteractionRelatedT01,RGATE_InteractionRelatedT02;
-	 		public static String RGATE_InteractionRelatedAssoc01,RGATE_InteractionRelatedAssoc02;
-	 		
-	 		
-	 		
-	 		//RG Email
-	 		public static String RGATE_EmailTo1,RGATE_EmailTo2,RGATE_EmailTo3;
-	 		public static String RGATE_EmailCC1,RGATE_EmailCC2,RGATE_EmailCC3;
-	 		public static String RGATE_EmailSubject1,RGATE_EmailSubject2,RGATE_EmailSubject3;
-	 		public static String RGATE_EmailDescription1,RGATE_EmailDescription2,RGATE_EmailDescription3;
-	 		
-	 		public static String RGATE_EmailLinkedRecord1;
 		    
 	    
 	public CommonVariables(Object obj) {

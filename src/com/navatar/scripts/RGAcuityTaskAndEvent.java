@@ -150,7 +150,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 	
 	@Parameters({ "projectName" })
 	@Test
-	public void RGASTc002_CreateTaskToVerifyDataOnInteractionCard(String projectName) {
+	public void RGATETc002_CreateTaskToVerifyDataOnInteractionCard(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 
@@ -307,7 +307,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void RGASTc003_CreateSomeRevenueInboxEvents(String projectName) {
+	public void RGATETc003_CreateSomeRevenueInboxEvents(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
@@ -703,7 +703,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 	}
 
 	
-	public void ATETc004_GoToAccountAcuityTabAndVerifyRevenueEventOnInteractionsAndContactAccountInCompanyReferenceAndContactInPeopleTaggedSection(String projectName) {
+	public void RGATETc004_GoToAccountAcuityTabAndVerifyRevenueEventOnInteractionsAndContactAccountInCompanyReferenceAndContactInPeopleTaggedSection(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1014,7 +1014,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 	}
 		
 	
-	public void ATETc005_VerifyRevenueEventsInSalesforceAndAddTheDescriptionInEvent(String projectName) {
+	public void RGATETc005_VerifyRevenueEventsInSalesforceAndAddTheDescriptionInEvent(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -1198,7 +1198,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void ATETc006_VerifyEventsOnContactSectionOfAccountPageAlsoVerifyEventsOnConnectionPopup(String projectName) {
+	public void RGATETc006_VerifyEventsOnContactSectionOfAccountPageAlsoVerifyEventsOnConnectionPopup(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
