@@ -545,8 +545,7 @@ public class OutlookPage extends BasePageBusinessLayer {
 	public WebElement eventUpdateMsg(int timeOut) {
 		return isDisplayed(driver, eventUpdateMsg, "Visibility", timeOut, "eventUpdateMsg");
 
-	}
-	
+	}	
 
 	@FindBy(xpath = "//span[contains(@class,'ms-Dropdown-title')]/span[contains(text(),'repeat')]")
 	private WebElement recurringBtn;
@@ -645,5 +644,69 @@ public class OutlookPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, emailSaveConfirmationOnRG, "Visibility", timeOut, "email save confirmation");
 	}
 	
+
+	
+	public WebElement getOutlookCalendarIcon(String dateType,action action,int timeOut) {
+		String xpath ="//input[@aria-label='"+dateType+"']";
+		return isDisplayed(driver, FindElement(driver, xpath, "Calendar icon", action, timeOut), "Visibility", timeOut, "Calendar icon");
+
+	}
+	
+	@FindBy(xpath = "//div[@aria-label='Calendar']//button[contains(@aria-label,'select to change the month')]/span")
+	private WebElement monthsAndYearButton;
+
+	public WebElement getMonthsAndYearButton(int timeOut) {
+		return isDisplayed(driver, monthsAndYearButton, "Visibility", timeOut, "monthsAndYearButton");
+
+	}
+	
+	@FindBy(xpath = "//button[contains(@aria-label,'select to change the year')]")
+	private WebElement allYearButton;
+
+	public WebElement getAllYearLinkButton(int timeOut) {
+		return isDisplayed(driver, allYearButton, "Visibility", timeOut, "allYearButton");
+
+	}
+
+
+	public WebElement getOutlookCalendarYear(String year,action action,int timeOut) {
+		String xpath ="//button[text()='"+year+"']";
+		return isDisplayed(driver, FindElement(driver, xpath, "year", action, timeOut), "Visibility", timeOut, "year");
+
+	}
+	
+	public WebElement getOutlookCalendarMonth(String partialMonthName,action action,int timeOut) {
+		String xpath ="//button[text()='"+partialMonthName+"']";
+		return isDisplayed(driver, FindElement(driver, xpath, "month", action, timeOut), "Visibility", timeOut, "month");
+
+	}
+	
+	public WebElement getOutlookCalendarDay(String day,String fullMonthName,String year,action action,int timeOut) {
+		String xpath ="//div[@aria-label='Calendar']//button[@aria-label='"+day+", "+fullMonthName+", "+year+"']";
+		return isDisplayed(driver, FindElement(driver, xpath, "day", action, timeOut), "Visibility", timeOut, "day date");
+
+	}
+	
+	@FindBy(xpath = "//button[contains(@title,\"Account manager for\")]")
+	private WebElement topCornerAccountButton;
+
+	public WebElement topCornerAccountButton(int timeOut) {
+		return isDisplayed(driver, topCornerAccountButton, "Visibility", timeOut, "topCornerAccountButton");
+
+	}
+	
+	@FindBy(xpath = "//a[contains(@aria-label,\"Sign out of this account\")]")
+	private WebElement signOutLink;
+
+	public WebElement signOutLink(int timeOut) {
+		return isDisplayed(driver, signOutLink, "Visibility", timeOut, "signOutLink");
+
+	}
+	
+	public WebElement alreadyLoggedInLink(String emailId,int timeOut) {
+		String xpath ="//div[text()=\""+emailId+"\"]/ancestor::div[@class=\"table\"]";
+		return isDisplayed(driver, FindElement(driver, xpath, "day", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "alreadyLoggedInLink");
+
+	}
 	
 }

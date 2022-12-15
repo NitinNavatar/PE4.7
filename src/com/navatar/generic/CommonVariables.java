@@ -1550,8 +1550,10 @@ public class CommonVariables {
 	 		public static String RGATE_FundName1;
 	 		public static String RGATE_FundType1;
 	 		public static String RGATE_FundInvestmentCategory1;
+	 
 	 		
 	 		
+
 	 		//Outlook
 	 		public static String RGATE_ActivityType1,RGATE_ActivityType2,RGATE_ActivityType3,RGATE_ActivityType4,RGATE_ActivityType5,RGATE_ActivityType6,RGATE_ActivityType7;
 	 		public static String RGATE_Subject1,RGATE_Subject2,RGATE_Subject3,RGATE_Subject4,RGATE_Subject5,RGATE_Subject6,RGATE_Subject7;
@@ -1571,6 +1573,84 @@ public class CommonVariables {
 	 		public static String RGATE_UEndDay1;
 	 		public static String RGATE_UStartDate1;
 	 		public static String RGATE_UEndDate1;
+
+	 		//--------AcuityMeetingNotesNotificationReminder-------------
+	 		
+	 		
+	 		public static String AMNNR_FundraisingNames1 , AMNNR_FundraisingFundName1, AMNNR_FundraisingInstitutionName1;
+	 		public static String AMNNR_DealName1, AMNNR_DealCompany1, AMNNR_DealStage1;
+	 		public static String AMNNR_CustomObjectTab1,  AMNNR_CustomObjectField1, AMNNR_CustomObjectRecord1;  
+	 		public static String AMNNR_FundNames1, AMNNR_FundTypes1, AMNNR_FundInvestmentCategories1;
+	 		
+	 		
+	 		public static String AMNNR_ActivityType1;
+		 		
+	 		public static String AMNNR_Subject2;
+	 		public static String AMNNR_Notes2;
+	 		public static String AMNNR_RelatedTo2;
+	 		public static String AMNNR_AdvanceStatus2;
+	 		public static String AMNNR_AdvancePriority2;
+		 		
+	 		public static String AMNNR_Notes3;
+	            
+	 		public static String AMNNR_FirmLegalName1;
+			 		
+	 		public static String AMNNR_FirmRecordType1;
+	 		public static String AMNNR_ATRelatedTo1;
+			
+	 		public static String AMNNR_Subject4, AMNNR_Notes4, AMNNR_RelatedTo4, AMNNR_AdvanceStatus4, AMNNR_AdvancePriority4, AMNNR_SuggestedTag4, AMNNR_ATRelatedTo2
+		 	,AMNNR_ATRelatedTo3, AMNNR_SuggestedTag5, AMNNR_Notes5, AMNNR_FirmLegalName2, AMNNR_FirmRecordType2;
+	 		
+	 		public static String AMNNR_Subject6,AMNNR_Notes6, AMNNR_RelatedTo6, AMNNR_AdvanceStatus6, AMNNR_AdvancePriority6, AMNNR_ATRelatedTo4, AMNNR_ATRelatedTo5
+		 	,AMNNR_SuggestedTag7, AMNNR_Notes7, AMNNR_Contact1;
+	 		
+	 		public static String AMNNR_Subject8, AMNNR_Notes8, AMNNR_RelatedTo8, AMNNR_AdvanceStatus8, AMNNR_AdvancePriority8, AMNNR_ATRelatedTo6, AMNNR_ATRelatedTo7,
+			AMNNR_SuggestedTag9, AMNNR_Notes9, AMNNR_Contact2;
+	 		
+	 		public static String AMNNR_Subject10, AMNNR_Notes10, AMNNR_RelatedTo10, AMNNR_AdvanceStatus10, AMNNR_AdvancePriority10, AMNNR_SuggestedTag10, AMNNR_SuggestedTag11,
+ 			AMNNR_Notes11, AMNNR_RelatedTo11, AMNNR_RelatedTo12, AMNNR_ATRelatedTo8, AMNNR_ATRelatedTo9, AMNNR_Contact3;
+	 		
+	 		public static String AMNNR_Subject13, AMNNR_Notes13, AMNNR_RelatedTo13, AMNNR_AdvanceStatus13, AMNNR_AdvancePriority13, AMNNR_SuggestedTag14,
+			AMNNR_Notes14, AMNNR_RelatedTo14, AMNNR_ATRelatedTo10, AMNNR_ATRelatedTo11, AMNNR_Contact4;
+	 		
+	 		public static String AMNNR_Subject15, AMNNR_Notes15, AMNNR_RelatedTo15, AMNNR_AdvanceStatus15, AMNNR_AdvancePriority15, AMNNR_Subject16, AMNNR_ATRelatedTo12,
+			AMNNR_FirmLegalName3, AMNNR_FirmRecordType3;
+	 		
+	 		public static String AMNNR_Subject17, AMNNR_Subject18, AMNNR_Subject19, AMNNR_Subject20,AMNNR_Notes17, AMNNR_RelatedTo17, AMNNR_AdvanceStatus17,AMNNR_AdvancePriority17,
+		 	AMNNR_RelatedTo21, AMNNR_SuggestedTag21, AMNNR_Notes21, AMNNR_ATRelatedTo13, AMNNR_ATRelatedTo14;
+	 		
+	 		public static String AMNNR_RelatedTo22,AMNNR_ATRelatedTo15;
+	 		
+	 		public static String AMNNR_Subject23, AMNNR_Notes23, AMNNR_RelatedTo23, AMNNR_RelatedTo24, AMNNR_RelatedTo25, AMNNR_RelatedTo26, AMNNR_AdvanceStatus23
+		 	,AMNNR_AdvancePriority23, AMNNR_ATRelatedTo16, AMNNR_ATRelatedTo17, AMNNR_SuggestedTag23;
+	 		
+	 		public static String AMNNR_Subject27, AMNNR_Notes27, AMNNR_RelatedTo27, AMNNR_RelatedTo28, AMNNR_RelatedTo29, AMNNR_SuggestedTag27, AMNNR_AdvanceStatus27, AMNNR_AdvancePriority27
+		 	, AMNNR_ATRelatedTo18;
+	 		
+	 		public static String AMNNR_Subject30, AMNNR_Notes30, AMNNR_RelatedTo30, AMNNR_RelatedTo31, AMNNR_Notes31, AMNNR_SuggestedTag31, AMNNR_AdvanceStatus30
+		 	,AMNNR_AdvancePriority30, AMNNR_ATRelatedTo19, AMNNR_ATRelatedTo20;
+	 		
+	 		public static String AMNNR_Subject32, AMNNR_Notes32, AMNNR_RelatedTo32, AMNNR_RelatedTo33, AMNNR_Notes33, AMNNR_SuggestedTag33, AMNNR_AdvanceStatus32,
+		 	AMNNR_AdvancePriority32, AMNNR_ATRelatedTo21, AMNNR_ATRelatedTo22;
+	 		
+	 		public static String AMNNR_Subject34, AMNNR_Notes34, AMNNR_Notes35, AMNNR_RelatedTo34, AMNNR_RelatedTo35,AMNNR_RelatedTo36,AMNNR_RelatedTo37,AMNNR_RelatedTo38,
+		 	AMNNR_SuggestedTag34,AMNNR_SuggestedTag35, AMNNR_AdvanceStatus34, AMNNR_AdvancePriority34, AMNNR_ATRelatedTo23, AMNNR_ATRelatedTo24;
+	 		
+	 		public static String AMNNR_Subject39, AMNNR_Notes39, AMNNR_RelatedTo39, AMNNR_RelatedTo40, AMNNR_RelatedTo41, AMNNR_SuggestedTag39, AMNNR_AdvanceStatus39,
+		 	AMNNR_AdvancePriority39, AMNNR_ATRelatedTo25, AMNNR_ATRelatedTo26,AMNNR_ARelatedAsso25, AMNNR_ARelatedAsso26;
+	 		
+	 		public static String AMNNR_Subject42, AMNNR_Notes42, AMNNR_RelatedTo42, AMNNR_RelatedTo43, AMNNR_SuggestedTag42, AMNNR_AdvanceStatus42, AMNNR_AdvanceStatus43,
+		 	AMNNR_AdvancePriority42, AMNNR_ATRelatedTo27, AMNNR_ARelatedAsso27, AMNNR_FirmLegalName4, AMNNR_FirmRecordType4;
+	 		
+	 		public static String AMNNR_Subject44;
+	 		
+	 		public static String AMNNR_Subject45, AMNNR_Notes45, AMNNR_Notes46, AMNNR_RelatedTo45, AMNNR_RelatedTo46, AMNNR_RelatedTo47, AMNNR_SuggestedTag45, AMNNR_SuggestedTag46,
+		 	AMNNR_AdvanceStatus45, AMNNR_AdvancePriority45, AMNNR_ATRelatedTo28, AMNNR_ATRelatedTo29, AMNNR_FirmLegalName5, AMNNR_FirmRecordType5;
+	 		
+	 		public static String AMNNR_Subject48, AMNNR_Notes48, AMNNR_RelatedTo48, AMNNR_RelatedTo49, AMNNR_AdvanceStatus48, AMNNR_AdvancePriority48,
+		 	AMNNR_ATRelatedTo30, AMNNR_ARelatedAsso30;
+
+            
 	 		
 	 		
 	 		
@@ -6898,52 +6978,26 @@ public class CommonVariables {
 					ADERFundName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR2", excelLabel.Fund_Name);
 					ADEStage1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "ADEFR2", excelLabel.Stage);
 					
+					try {
+						dataFile.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+						dataWb.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+
+					}
+					
+					
 					break;
 					
 				
 				
-			case "AcuityMeetingNotesNotificationReminder" :
-				
-				try {
-					dataFile=new FileInputStream(new File(AcuityDataSheetFilePath));
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				try {
-					dataWb=WorkbookFactory.create(dataFile);
-				} catch (EncryptedDocumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InvalidFormatException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				
-				//Advance Due Date
-				AMNNR_AdvanceDueDate17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_017", excelLabel.Advance_Due_Date);
-				
 		
-				
-				try {
-					dataFile.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				try {
-					dataWb.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			
-
-				break;
 			default:
 				break;
 			}
@@ -8484,7 +8538,358 @@ public class CommonVariables {
 					ARNewFirm2Name=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"Others",excelLabel.Variable_Name, "AR_NewFirm2", excelLabel.Legal_Name);
 					ARNewFirm2RecordType=ExcelUtils.readData(dataWb2,ResearchDataSheetFilePath,"Others",excelLabel.Variable_Name, "AR_NewFirm2", excelLabel.Record_Type);
 					
+					
+            	case "AcuityMeetingNotesNotificationReminder" :
+    				
+    				try {
+    					dataFile=new FileInputStream(new File(AcuityDataSheetFilePath));
+    				} catch (FileNotFoundException e1) {
+    					// TODO Auto-generated catch block
+    					e1.printStackTrace();
+    				}
+    				try {
+    					dataWb=WorkbookFactory.create(dataFile);
+    				} catch (EncryptedDocumentException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				} catch (InvalidFormatException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				} catch (IOException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+    				
+    				
+    				AMNNR_FundNames1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "AMNNR_Fund1", excelLabel.Fund_Name);
+    				AMNNR_FundTypes1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "AMNNR_Fund1", excelLabel.Fund_Type);
+    				AMNNR_FundInvestmentCategories1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fund",excelLabel.Variable_Name, "AMNNR_Fund1", excelLabel.Fund_Investment_Category);
+    				
+    				AMNNR_FundraisingNames1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "AMNNR_Fundraising1", excelLabel.FundRaising_Name);
+    				AMNNR_FundraisingFundName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "AMNNR_Fundraising1", excelLabel.Fund_Name);
+    				AMNNR_FundraisingInstitutionName1 = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Fundraisings",excelLabel.Variable_Name, "AMNNR_Fundraising1", excelLabel.Institutions_Name);
+    				
+    				AMNNR_DealName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "AMNNR_Deal1", excelLabel.Deal_Name);        
+    				    //deal Company
+    	            AMNNR_DealCompany1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "AMNNR_Deal1", excelLabel.Company);
+    				    //deal stage
+    	            AMNNR_DealStage1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Deal",excelLabel.Variable_Name, "AMNNR_Deal1", excelLabel.Stage);
+    	            
+    	            AMNNR_CustomObjectTab1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Test Custom Object",excelLabel.Variable_Name, "AMNNR_CustomObjectRecord1", excelLabel.TabName);        
+    			    //deal Company
+    	            AMNNR_CustomObjectField1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Test Custom Object",excelLabel.Variable_Name, "AMNNR_CustomObjectRecord1", excelLabel.Field);
+    			    //deal stage
+    	            AMNNR_CustomObjectRecord1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Test Custom Object",excelLabel.Variable_Name, "AMNNR_CustomObjectRecord1", excelLabel.Test_Custom_Object_Name);
+    				
+    				
+    	                	
+    	            AMNNR_ActivityType1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity001", excelLabel.Action_Type);
+    		 		
+    	            AMNNR_Subject2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity002", excelLabel.Subject);
+    		 		AMNNR_Notes2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity002", excelLabel.Notes);
+    		 		AMNNR_RelatedTo2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity002", excelLabel.Related_To);
+    		 		AMNNR_AdvanceStatus2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity002", excelLabel.Advance_Status);
+    		 		AMNNR_AdvancePriority2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity002", excelLabel.Advance_Priority);
+    		 		
+    		 		AMNNR_Notes3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity003", excelLabel.Notes);
+    	            
+    		 		AMNNR_FirmLegalName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AMNNR_Record001", excelLabel.Legal_Name);
+    			 		
+    			 	AMNNR_FirmRecordType1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AMNNR_Record001", excelLabel.Record_Type);
+    			 	AMNNR_ATRelatedTo1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity001", excelLabel.Related_To);
+    			 	
+    	 	
+    			 	AMNNR_Subject4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity004", excelLabel.Subject);
+    			 	AMNNR_Notes4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity004", excelLabel.Notes);
+    			 	AMNNR_RelatedTo4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity004", excelLabel.Related_To);
+    				AMNNR_AdvanceStatus4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity004", excelLabel.Advance_Status);
+    			 	AMNNR_AdvancePriority4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity004", excelLabel.Advance_Priority);
+    			 	AMNNR_SuggestedTag4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity004", excelLabel.Suggested_Tag);
+    			 	AMNNR_ATRelatedTo2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity002", excelLabel.Related_To);
+    			 	AMNNR_ATRelatedTo3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity003", excelLabel.Related_To);
+    			 	AMNNR_SuggestedTag5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity005", excelLabel.Suggested_Tag);
+    			 	
+    				AMNNR_Notes5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity005", excelLabel.Notes);
+    		            
+    		 		AMNNR_FirmLegalName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AMNNR_Record002", excelLabel.Legal_Name);
+    				 		
+    			 	AMNNR_FirmRecordType2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AMNNR_Record002", excelLabel.Record_Type);				 	
+    	            
+    				
+    			 		
+    				AMNNR_Subject6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity006", excelLabel.Subject);
+    			 	AMNNR_Notes6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity006", excelLabel.Notes);
+    			 	AMNNR_RelatedTo6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity006", excelLabel.Related_To);
+    				AMNNR_AdvanceStatus6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity006", excelLabel.Advance_Status);
+    			 	AMNNR_AdvancePriority6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity006", excelLabel.Advance_Priority);
+    			 	
+    			 	AMNNR_ATRelatedTo4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity004", excelLabel.Related_To);
+    			 	AMNNR_ATRelatedTo5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity005", excelLabel.Related_To);
+    			 	AMNNR_SuggestedTag7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity007", excelLabel.Suggested_Tag);
+    			 	
+    				AMNNR_Notes7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity007", excelLabel.Notes);
+    				AMNNR_Contact1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AMNNR_Con1", excelLabel.ContactName);
+    				
+    				
+    				
+    				
+    				
+    				AMNNR_Subject8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity008", excelLabel.Subject);
+    			 	AMNNR_Notes8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity008", excelLabel.Notes);
+    			 	AMNNR_RelatedTo8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity008", excelLabel.Related_To);
+    				AMNNR_AdvanceStatus8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity008", excelLabel.Advance_Status);
+    			 	AMNNR_AdvancePriority8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity008", excelLabel.Advance_Priority);		 	
+    			 	AMNNR_ATRelatedTo6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity006", excelLabel.Related_To);
+    			 	AMNNR_ATRelatedTo7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity007", excelLabel.Related_To);
+    			 	AMNNR_SuggestedTag9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity009", excelLabel.Suggested_Tag);
+    				AMNNR_Notes9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity009", excelLabel.Notes);
+    				AMNNR_Contact2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AMNNR_Con2", excelLabel.ContactName);
+    				
+    				
+ 			
+    				AMNNR_Subject10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity010", excelLabel.Subject);
+    			 	AMNNR_Notes10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity010", excelLabel.Notes);
+    			 	AMNNR_RelatedTo10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity010", excelLabel.Related_To);
+    				AMNNR_AdvanceStatus10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity010", excelLabel.Advance_Status);
+    			 	AMNNR_AdvancePriority10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity010", excelLabel.Advance_Priority);
+    			 	AMNNR_SuggestedTag10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity010", excelLabel.Suggested_Tag);
+    			 	AMNNR_SuggestedTag11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity011", excelLabel.Suggested_Tag);
+    				AMNNR_Notes11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity011", excelLabel.Notes);
+    				AMNNR_RelatedTo11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity011", excelLabel.Related_To);
+    				AMNNR_RelatedTo12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity012", excelLabel.Related_To);	
+    			 	AMNNR_ATRelatedTo8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity008", excelLabel.Related_To);
+    			 	AMNNR_ATRelatedTo9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity009", excelLabel.Related_To);	
+    				AMNNR_Contact3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AMNNR_Con3", excelLabel.ContactName);
+    				
+    				
+    				
+    				
+    				AMNNR_Subject13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity013", excelLabel.Subject);
+    			 	AMNNR_Notes13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity013", excelLabel.Notes);
+    			 	AMNNR_RelatedTo13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity013", excelLabel.Related_To);
+    				AMNNR_AdvanceStatus13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity013", excelLabel.Advance_Status);
+    			 	AMNNR_AdvancePriority13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity013", excelLabel.Advance_Priority);
+    			 	AMNNR_SuggestedTag14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity014", excelLabel.Suggested_Tag);
+    				AMNNR_Notes14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity014", excelLabel.Notes);
+    				AMNNR_RelatedTo14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity014", excelLabel.Related_To);
+    			 	AMNNR_ATRelatedTo10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity010", excelLabel.Related_To);
+    			 	AMNNR_ATRelatedTo11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity011", excelLabel.Related_To);	
+    				AMNNR_Contact4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AMNNR_Con4", excelLabel.ContactName);
+    				
+    				
+    				
+    				AMNNR_Subject15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity015", excelLabel.Subject);	
+    			 	AMNNR_Notes15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity015", excelLabel.Notes);
+    			 	AMNNR_RelatedTo15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity015", excelLabel.Related_To);
+    				AMNNR_AdvanceStatus15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity015", excelLabel.Advance_Status);
+    			 	AMNNR_AdvancePriority15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity015", excelLabel.Advance_Priority);
+    			 	AMNNR_Subject16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity016", excelLabel.Subject);
+    			 	
+    			 	AMNNR_ATRelatedTo12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity012", excelLabel.Related_To);
+    			 	AMNNR_FirmLegalName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AMNNR_Record003", excelLabel.Legal_Name);
+			 		
+    			 	AMNNR_FirmRecordType3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AMNNR_Record003", excelLabel.Record_Type);
+    			 	
+    			 	
+    			 	
+    			 	
+    			 	AMNNR_Subject17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity017", excelLabel.Subject);	
+    			 	AMNNR_Subject18=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity018", excelLabel.Subject);	
+    			 	AMNNR_Subject19=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity019", excelLabel.Subject);	
+    			 	AMNNR_Subject20=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity020", excelLabel.Subject);	
+    			 	AMNNR_Notes17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity017", excelLabel.Notes);
+    			 	AMNNR_RelatedTo17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity017", excelLabel.Related_To);
+    				AMNNR_AdvanceStatus17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity017", excelLabel.Advance_Status);
+    			 	AMNNR_AdvancePriority17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity017", excelLabel.Advance_Priority);
+    			 	AMNNR_RelatedTo21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity021", excelLabel.Related_To);
+    			 	AMNNR_SuggestedTag21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity021", excelLabel.Suggested_Tag);
+    			 	AMNNR_Notes21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity021", excelLabel.Notes);
+    			 	AMNNR_ATRelatedTo13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity013", excelLabel.Related_To);
+    			 	AMNNR_ATRelatedTo14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity014", excelLabel.Related_To);
+    			 	
+    			 	
+    			 	
+    			 	AMNNR_RelatedTo22=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity022", excelLabel.Related_To);
+    			 	AMNNR_ATRelatedTo15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity015", excelLabel.Related_To);
+    			 	
+
+    			 	
+    			 	
+    			 	AMNNR_Subject23=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity023", excelLabel.Subject);	 	
+    			 	AMNNR_Notes23=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity023", excelLabel.Notes);
+    			 	AMNNR_RelatedTo23=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity023", excelLabel.Related_To);
+    			 	AMNNR_RelatedTo24=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity024", excelLabel.Related_To);
+    			 	AMNNR_RelatedTo25=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity025", excelLabel.Related_To);
+    			 	AMNNR_RelatedTo26=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity026", excelLabel.Related_To);
+    				AMNNR_AdvanceStatus23=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity023", excelLabel.Advance_Status);
+    			 	AMNNR_AdvancePriority23=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity023", excelLabel.Advance_Priority);
+    			 	AMNNR_ATRelatedTo16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity016", excelLabel.Related_To);
+    			 	AMNNR_ATRelatedTo17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity017", excelLabel.Related_To);
+    			 	AMNNR_SuggestedTag23=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity023", excelLabel.Suggested_Tag);
+    			 	
+    			 	
+    			 	
+    			 	
+    			 	
+    			 	AMNNR_Subject27=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity027", excelLabel.Subject);	 	
+    			 	AMNNR_Notes27=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity027", excelLabel.Notes);
+    			 	AMNNR_RelatedTo27=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity027", excelLabel.Related_To);
+    			 	AMNNR_RelatedTo28=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity028", excelLabel.Related_To);
+    			 	AMNNR_RelatedTo29=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity029", excelLabel.Related_To);
+    			 	AMNNR_SuggestedTag27=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity027", excelLabel.Suggested_Tag);
+    			 	AMNNR_AdvanceStatus27=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity027", excelLabel.Advance_Status);
+    			 	AMNNR_AdvancePriority27=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity027", excelLabel.Advance_Priority);
+    			 	AMNNR_ATRelatedTo18=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity018", excelLabel.Related_To);
+    			 	
+    			 	
+    			 	
+    			 	
+    			 	AMNNR_Subject30=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity030", excelLabel.Subject);	 	
+    			 	AMNNR_Notes30=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity030", excelLabel.Notes);
+    			 	AMNNR_RelatedTo30=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity030", excelLabel.Related_To);
+    			 	AMNNR_RelatedTo31=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity031", excelLabel.Related_To);
+    			 	AMNNR_Notes31=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity031", excelLabel.Notes);
+    			 	AMNNR_SuggestedTag31=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity031", excelLabel.Suggested_Tag);
+    			 	AMNNR_AdvanceStatus30=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity030", excelLabel.Advance_Status);
+    			 	AMNNR_AdvancePriority30=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity030", excelLabel.Advance_Priority);
+    			 	AMNNR_ATRelatedTo19=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity019", excelLabel.Related_To);
+    			 	AMNNR_ATRelatedTo20=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity020", excelLabel.Related_To);
+    			 	
+    			 	
+    			 	
+    				AMNNR_Subject32=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity032", excelLabel.Subject);	 	
+    			 	AMNNR_Notes32=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity032", excelLabel.Notes);
+    			 	AMNNR_RelatedTo32=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity032", excelLabel.Related_To);
+    			 	AMNNR_RelatedTo33=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity033", excelLabel.Related_To);
+    			 	AMNNR_Notes33=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity033", excelLabel.Notes);
+    			 	AMNNR_SuggestedTag33=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity033", excelLabel.Suggested_Tag);
+    			 	AMNNR_AdvanceStatus32=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity032", excelLabel.Advance_Status);
+    			 	AMNNR_AdvancePriority32=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity032", excelLabel.Advance_Priority);
+    			 	AMNNR_ATRelatedTo21=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity021", excelLabel.Related_To);
+    			 	AMNNR_ATRelatedTo22=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity022", excelLabel.Related_To);
+    			 	
+    			 	
+    			 	
+    			 	AMNNR_Subject34=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity034", excelLabel.Subject);	 	
+    			 	AMNNR_Notes34=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity034", excelLabel.Notes);
+    			 	AMNNR_Notes35=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity035", excelLabel.Notes);
+    			 	AMNNR_RelatedTo34=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity034", excelLabel.Related_To);
+    			 	AMNNR_RelatedTo35=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity035", excelLabel.Related_To);
+    			 	AMNNR_RelatedTo36=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity036", excelLabel.Related_To);
+    			 	AMNNR_RelatedTo37=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity037", excelLabel.Related_To);
+    			 	AMNNR_RelatedTo38=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity038", excelLabel.Related_To);   			 	
+    			 	AMNNR_SuggestedTag34=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity034", excelLabel.Suggested_Tag);
+    			 	AMNNR_SuggestedTag35=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity035", excelLabel.Suggested_Tag);
+    			 	AMNNR_AdvanceStatus34=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity034", excelLabel.Advance_Status);
+    			 	AMNNR_AdvancePriority34=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity034", excelLabel.Advance_Priority);
+    			 	AMNNR_ATRelatedTo23=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity023", excelLabel.Related_To);
+    			 	AMNNR_ATRelatedTo24=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity024", excelLabel.Related_To);
+    			 	
+    			 	
+    			 
+    			 	
+    				AMNNR_Subject39=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity039", excelLabel.Subject);	 	
+    			 	AMNNR_Notes39=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity039", excelLabel.Notes);
+    			 	AMNNR_RelatedTo39=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity039", excelLabel.Related_To);
+    			 	AMNNR_RelatedTo40=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity040", excelLabel.Related_To);
+    			 	AMNNR_RelatedTo41=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity041", excelLabel.Related_To);
+    			 	AMNNR_SuggestedTag39=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity039", excelLabel.Suggested_Tag); 
+    			 	AMNNR_AdvanceStatus39=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity039", excelLabel.Advance_Status);
+    			 	AMNNR_AdvancePriority39=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity039", excelLabel.Advance_Priority);
+    			 	AMNNR_ATRelatedTo25=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity025", excelLabel.Related_To);
+    			 	AMNNR_ATRelatedTo26=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity026", excelLabel.Related_To);
+    			 	AMNNR_ARelatedAsso25=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity025", excelLabel.Related_Association);
+    			 	AMNNR_ARelatedAsso26=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity026", excelLabel.Related_Association);
+    			 	
+    			 	
+    			 	
+    			 	AMNNR_Subject42=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity042", excelLabel.Subject);	 	
+    			 	AMNNR_Notes42=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity042", excelLabel.Notes);
+    			 	AMNNR_RelatedTo42=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity042", excelLabel.Related_To);
+    			 	AMNNR_RelatedTo43=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity043", excelLabel.Related_To); 	
+    			 	AMNNR_SuggestedTag42=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity042", excelLabel.Suggested_Tag);
+    			 	AMNNR_AdvanceStatus42=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity042", excelLabel.Advance_Status);
+    			 	AMNNR_AdvanceStatus43=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity043", excelLabel.Advance_Status);
+    			 	AMNNR_AdvancePriority42=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity042", excelLabel.Advance_Priority);
+    			 	AMNNR_ATRelatedTo27=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity027", excelLabel.Related_To);
+    			 	AMNNR_ARelatedAsso27=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity027", excelLabel.Related_Association);
+    			 	AMNNR_FirmLegalName4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AMNNR_Record004", excelLabel.Legal_Name);
+    			 	AMNNR_FirmRecordType4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AMNNR_Record004", excelLabel.Record_Type);
+    			 	
+    			 	
+    			 	AMNNR_Subject44=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity044", excelLabel.Subject);	
+    			 	
+    			 	
+    			 	
+    			 	AMNNR_Subject45=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity045", excelLabel.Subject);	 	
+    			 	AMNNR_Notes45=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity045", excelLabel.Notes);
+    			 	AMNNR_Notes46=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity046", excelLabel.Notes);
+    			 	AMNNR_RelatedTo45=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity045", excelLabel.Related_To);
+    			 	AMNNR_RelatedTo46=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity046", excelLabel.Related_To); 	
+    			 	AMNNR_RelatedTo47=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity047", excelLabel.Related_To); 	
+    			 	AMNNR_SuggestedTag45=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity045", excelLabel.Suggested_Tag);
+    			 	AMNNR_SuggestedTag46=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity046", excelLabel.Suggested_Tag);
+    			 	AMNNR_AdvanceStatus45=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity045", excelLabel.Advance_Status);
+    			 	AMNNR_AdvancePriority45=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity045", excelLabel.Advance_Priority);
+    			 	AMNNR_ATRelatedTo28=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity028", excelLabel.Related_To);
+    			 	AMNNR_ATRelatedTo29=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity029", excelLabel.Related_To);
+    			 	AMNNR_FirmLegalName5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AMNNR_Record005", excelLabel.Legal_Name);
+    			 	AMNNR_FirmRecordType5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AMNNR_Record005", excelLabel.Record_Type);
+    			 	
+    			 	
+    			 	
+    			 	
+    			 	AMNNR_Subject48=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity048", excelLabel.Subject);	 	
+    			 	AMNNR_Notes48=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity048", excelLabel.Notes);			 
+    			 	AMNNR_RelatedTo48=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity048", excelLabel.Related_To);
+    			 	AMNNR_RelatedTo49=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity049", excelLabel.Related_To); 	    			
+    			 	AMNNR_AdvanceStatus48=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity048", excelLabel.Advance_Status);
+    			 	AMNNR_AdvancePriority48=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity048", excelLabel.Advance_Priority);
+    			 	AMNNR_ATRelatedTo30=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity030", excelLabel.Related_To);
+    			 	AMNNR_ARelatedAsso30=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "AMNNR_Acuity030", excelLabel.Related_Association);
+    			 
+					
+		 		
+				try {
+					dataFile.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					dataWb.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+
+				}
 				
+				
+				break;
+				
+				
+				
+	case "RGAcuityMeetingNotesNotificationReminder" :
+    				
+    				try {
+    					dataFile=new FileInputStream(new File(AcuityDataSheetFilePath));
+    				} catch (FileNotFoundException e1) {
+    					// TODO Auto-generated catch block
+    					e1.printStackTrace();
+    				}
+    				try {
+    					dataWb=WorkbookFactory.create(dataFile);
+    				} catch (EncryptedDocumentException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				} catch (InvalidFormatException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				} catch (IOException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+    				
 				try {
 					dataFile.close();
 				} catch (IOException e) {

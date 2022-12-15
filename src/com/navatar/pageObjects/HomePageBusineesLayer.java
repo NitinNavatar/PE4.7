@@ -5703,7 +5703,7 @@ public class HomePageBusineesLayer extends HomePage {
 
 		} else {
 			log(LogStatus.FAIL, "Notification Header is not present there in Home Page", YesNo.No);
-			negativeResults.add("Notification Header is not present there in Home Page");
+			
 		}
 		List<String> notificationOptionsListInText = notificationOptionsList.stream()
 				.map(x -> CommonLib.getText(driver, x, "Event Name", action.BOOLEAN)).collect(Collectors.toList());

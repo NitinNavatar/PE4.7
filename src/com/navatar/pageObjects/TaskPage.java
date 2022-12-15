@@ -178,5 +178,24 @@ public class TaskPage extends BasePageBusinessLayer {
 
 		return isDisplayed(driver, taskDeletedMsg, "Visibility", timeOut, "taskDeletedMsg");
 	}
+	@FindBy(xpath = "//button[@title=\"Display as Split View\"]")
+	private WebElement buttonDisplayAsSplitView;
+
+	public WebElement buttonDisplayAsSplitView(int timeOut) {
+
+		return isDisplayed(driver, buttonDisplayAsSplitView, "Visibility", timeOut, "buttonDisplayAsSplitView");
+	}
+	
+	
+	@FindBy(xpath = "//li[@title=\"Table\"]//a")
+	private WebElement tableViewDropDownButton;
+
+	public WebElement tableViewDropDownButton(int timeOut) {
+
+		return isDisplayed(driver, tableViewDropDownButton, "Visibility", timeOut, "tableViewDropDownButton");
+	}
+	
+	
+	
 
 }
