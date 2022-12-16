@@ -2906,188 +2906,11 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		sa.assertAll();
 	}
 
+	
 	@Parameters({ "projectName" })
 
 	@Test
-	public void rgAcuityMNNRTc010_VerifyTheNotificationWhenOnlyRelatedAssociationTagged(String projectName) {
-
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-
-		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-
-		String eventTitle = "Deal Closing";
-		String eventAttendees = "Dealroom1.3+Max@gmail.com,Dealroom1.3+Martha@gmail.com" + "," + crmUser2EmailID;
-		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
-		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 1);
-
-		String startTime = "6:00 PM";
-		String endTime = "6:30 PM";
-		String descriptionBox = "Revenue Grid Event";
-
-		String contactRecordName = "Martha";
-
-		lp.CRMLogin(crmUser1EmailID, "navatar123");
-
-		log(LogStatus.INFO, "---------Now Going to Create Event: " + eventTitle + " through Outlook---------",
-				YesNo.No);
-
-		if (op.loginAndCreateEventThroughOutLook(rgOutLookUser1Email, rgOutLookUser1Password, eventTitle,
-				eventAttendees, startDate, endDate, startTime, endTime, descriptionBox, false)) {
-			log(LogStatus.INFO,
-					"-----Event Created Msg is showing, So Event of Title: " + eventTitle + " has been created-----",
-					YesNo.No);
-
-			CommonLib.refresh(driver);
-
-			CommonLib.ThreadSleep(5000);
-
-			log(LogStatus.INFO,
-					"---------Now Going to Verify Event: " + eventTitle + " in Interaction Section---------", YesNo.No);
-
-			if (lp.clickOnTab(projectName, TabName.HomeTab)) {
-				log(LogStatus.INFO, "Click on Tab : " + TabName.HomeTab, YesNo.No);
-
-				CommonLib.ThreadSleep(5000);
-				List<String> notificationHomeNegativeResult2 = home.verifyNotificationOptions(eventTitle);
-				if (notificationHomeNegativeResult2.isEmpty()) {
-					log(LogStatus.INFO, "Verified Notification for Event(s): " + eventTitle + " on Home Page",
-							YesNo.No);
-
-					log(LogStatus.INFO, "---------Now Going to Verify Event: " + eventTitle + " in " + contactRecordName
-							+ " Record---------", YesNo.No);
-					if (lp.clickOnTab(projectName, tabObj2)) {
-
-						log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
-
-						if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, contactRecordName,
-								30)) {
-							log(LogStatus.INFO, contactRecordName + " record has been open", YesNo.No);
-							ThreadSleep(4000);
-							if (BP.clicktabOnPage("Acuity")) {
-								log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-
-								List<String> notificationNegativeResult = BP
-										.verifyNotificationOptionsNotContainsInRecordDetailPage(eventTitle);
-								if (notificationNegativeResult.isEmpty()) {
-									log(LogStatus.INFO, "Verified Notification not contains for Event(s): " + eventTitle
-											+ " in case of Admin in Detail Page" + contactRecordName, YesNo.No);
-
-								} else {
-									log(LogStatus.ERROR,
-											"The Event(s) " + eventTitle
-													+ " should not contain i case of Admin in Detail Page: "
-													+ contactRecordName + " , Reason: " + notificationNegativeResult,
-											YesNo.No);
-									sa.assertTrue(false,
-											"The Event(s) " + eventTitle
-													+ " should not contain i case of Admin in Detail Page: "
-													+ contactRecordName + " , Reason: " + notificationNegativeResult);
-								}
-
-								if (BP.clickOnSubjectOfInteractionEitherOnCardOrInViewAllPopUp(eventTitle)) {
-									log(LogStatus.INFO,
-											"Event Detail Page has been open for Record: " + eventTitle
-													+ " in case of User 1 i.e.: " + crmUser1EmailID
-													+ " in Detail Page: " + contactRecordName,
-											YesNo.No);
-									driver.close();
-									CommonLib.ThreadSleep(3000);
-									driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-
-								} else {
-									log(LogStatus.ERROR,
-											"Event Detail Page has not been open for Record: " + eventTitle
-													+ " in case of User 1 i.e.: " + crmUser1EmailID
-													+ " in Detail Page: " + contactRecordName,
-											YesNo.Yes);
-									sa.assertTrue(false,
-											"Event Detail Page has not been open for Record: " + eventTitle
-													+ " in case of User 1 i.e.: " + crmUser1EmailID
-													+ " in Detail Page: " + contactRecordName);
-
-								}
-
-								CommonLib.refresh(driver);
-								ArrayList<String> result = BP.verifyRecordOnInteractionCard(null, null, eventTitle,
-										null, false, true, null, null);
-								if (result.isEmpty()) {
-									log(LogStatus.PASS,
-											"------" + eventTitle + " record has been verified on intraction------",
-											YesNo.No);
-
-								} else {
-									log(LogStatus.ERROR, "------" + eventTitle
-											+ " record is not verified on intraction, Reason: " + result + "------",
-											YesNo.No);
-									sa.assertTrue(false, "------" + eventTitle
-											+ " record is not verified on intraction, Reason: " + result + "------");
-								}
-
-								lp.CRMlogout();
-								ThreadSleep(5000);
-								lp.CRMLogin(crmUser2EmailID, adminPassword);
-
-								List<String> notificationHomeNegativeResult = home
-										.verifyNotificationOptionsNotContains(eventTitle);
-								if (notificationHomeNegativeResult.isEmpty()) {
-									log(LogStatus.INFO, "Verified Event(s): " + eventTitle
-											+ " not contains in Notification pane in Home Page", YesNo.No);
-
-								} else {
-									log(LogStatus.ERROR,
-											"Not Verified Event(s): " + eventTitle
-													+ " not contains in Notification pane in Home Page, Reason: "
-													+ notificationHomeNegativeResult,
-											YesNo.No);
-									sa.assertTrue(false,
-											"Not Verified Event(s): " + eventTitle
-													+ " not contains in Notification pane in Home Page, Reason: "
-													+ notificationHomeNegativeResult);
-								}
-
-							} else {
-								log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
-								sa.assertTrue(false, "Not able to click on Acuity Tab");
-							}
-
-						} else {
-							log(LogStatus.ERROR, "Not able to open " + contactRecordName + " record", YesNo.No);
-							sa.assertTrue(false, "Not able to open " + contactRecordName + " record");
-						}
-					} else {
-						log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj2, YesNo.No);
-						sa.assertTrue(false, "Not able to click on Tab : " + tabObj2);
-					}
-
-				} else {
-					log(LogStatus.ERROR, "Not Verified the Event(s) " + eventTitle + "+ on Home Page, Reason: "
-							+ notificationHomeNegativeResult2, YesNo.No);
-					sa.assertTrue(false, "Not Verified the Event(s) " + eventTitle + "+ on Home Page, Reason: "
-							+ notificationHomeNegativeResult2);
-				}
-			} else {
-				sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
-				log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
-			}
-
-		} else {
-			log(LogStatus.ERROR, "-----Event Created Msg is not showing, So Event of Title: " + eventTitle
-					+ " has not been created-----", YesNo.Yes);
-			BaseLib.sa.assertTrue(false, "-----Event Created Msg is not showing, So Event of Title: " + eventTitle
-					+ " has not been created-----");
-		}
-
-		ThreadSleep(5000);
-		lp.CRMlogout();
-		sa.assertAll();
-	}
-
-	@Parameters({ "projectName" })
-
-	@Test
-	public void rgAcuityMNNRTc011_VerifyTheNotificationWhenEventIsCreatedWithNeitherContactNorRelatedAssociationTagged(
+	public void rgAcuityMNNRTc010_VerifyTheNotificationWhenEventIsCreatedWithNeitherContactNorRelatedAssociationTagged(
 			String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -3236,7 +3059,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void rgAcuityMNNRTc012_CreateTheEventWithAttendeesTaggedRemoveOneOfTheAttendeeAndVerifyTheNotificationBeforeAndAfterRemovingTheUserAsAttendee(
+	public void rgAcuityMNNRTc011_CreateTheEventWithAttendeesTaggedRemoveOneOfTheAttendeeAndVerifyTheNotificationBeforeAndAfterRemovingTheUserAsAttendee(
 			String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -3599,7 +3422,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void rgAcuityMNNRTc013_CreateThePastDatedEventVerifyTheNotificationDeleteTheEventAndVerify(
+	public void rgAcuityMNNRTc012_CreateThePastDatedEventVerifyTheNotificationDeleteTheEventAndVerify(
 			String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -3987,7 +3810,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void rgAcuityMNNRTc014_RestoreTheDeletedEventAndVerifyTheNotificationForUser1(String projectName) {
+	public void rgAcuityMNNRTc013_RestoreTheDeletedEventAndVerifyTheNotificationForUser1(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
@@ -4179,7 +4002,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void rgAcuityMNNRTc015_UpdateTheSubjectOfTheEventAndVerifyTheSameAtNotificationPopUpAsWellAsInteractionSection(
+	public void rgAcuityMNNRTc014_UpdateTheSubjectOfTheEventAndVerifyTheSameAtNotificationPopUpAsWellAsInteractionSection(
 			String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -4352,7 +4175,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void rgAcuityMNNRTc016_VerifyTheCustomNotificationOnHomePageAsWellAsByClickingOnBellIconForExistingTask(
+	public void rgAcuityMNNRTc015_VerifyTheCustomNotificationOnHomePageAsWellAsByClickingOnBellIconForExistingTask(
 			String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -4489,7 +4312,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void rgAcuityMNNRTc017_VerifyTheCustomNotificationOnHomePageAsWellAsByClickingOnBellIconForExistingCall(
+	public void rgAcuityMNNRTc016_VerifyTheCustomNotificationOnHomePageAsWellAsByClickingOnBellIconForExistingCall(
 			String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -4627,7 +4450,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void rgAcuityMNNRTc018_AddTheNotesFromTheCustomBellIconAndVerifyTheNotificationBeforeAndAfterUpdatingThenotes(
+	public void rgAcuityMNNRTc017_AddTheNotesFromTheCustomBellIconAndVerifyTheNotificationBeforeAndAfterUpdatingThenotes(
 			String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -4897,7 +4720,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void rgAcuityMNNRTc019_CreateTheEventClickOnTheEventHeaderFromHomePageNotificationAndAddTheNotesAndVerifyTheNotificationPopUp(
+	public void rgAcuityMNNRTc018_CreateTheEventClickOnTheEventHeaderFromHomePageNotificationAndAddTheNotesAndVerifyTheNotificationPopUp(
 			String projectName) {
 
 		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
@@ -5293,7 +5116,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void rgAcuityMNNRTc020_CreateTheEventByTaggingAttendeesMakeOneOfTheAttendeeInactiveAndVerifyTheNotificationPopUpOnceTheUserIsActive(
+	public void rgAcuityMNNRTc019_CreateTheEventByTaggingAttendeesMakeOneOfTheAttendeeInactiveAndVerifyTheNotificationPopUpOnceTheUserIsActive(
 			String projectName) {
 
 		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
@@ -5686,7 +5509,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void rgAcuityMNNRTc021_Create4EventsWithSameStartAndEndDateAndTimeAndVerifyTheNotificationPopUp(
+	public void rgAcuityMNNRTc020_Create4EventsWithSameStartAndEndDateAndTimeAndVerifyTheNotificationPopUp(
 			String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -5894,7 +5717,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void rgAcuityMNNRTc022_VerifyTheNotificationPopUpWhenAttendeeNameIsModifiedAfterCreatingTheEvent(
+	public void rgAcuityMNNRTc021_VerifyTheNotificationPopUpWhenAttendeeNameIsModifiedAfterCreatingTheEvent(
 			String projectName) {
 
 		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
@@ -6165,7 +5988,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void rgAcuityMNNRTc023_EditEventAndAddNotesWithAlreadyTaggedContactFirmThenSuggestedPopUpNotCome(
+	public void rgAcuityMNNRTc022_EditEventAndAddNotesWithAlreadyTaggedContactFirmThenSuggestedPopUpNotCome(
 			String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -6351,7 +6174,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void rgAcuityMNNRTc024_CreateAllDayEventAndVerifyTheNotification(String projectName) {
+	public void rgAcuityMNNRTc023_CreateAllDayEventAndVerifyTheNotification(String projectName) {
 
 		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -6534,7 +6357,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 	@Parameters({ "projectName" })
 
 	@Test
-	public void rgAcuityMNNRTc025_CreateEventAndVerifyTheImpactOnSalesforceWhenSubjectEventStartAndEndDateTimeLocationAndDescriptionOfTheEventIsUpdatedInOutlook(
+	public void rgAcuityMNNRTc024_CreateEventAndVerifyTheImpactOnSalesforceWhenSubjectEventStartAndEndDateTimeLocationAndDescriptionOfTheEventIsUpdatedInOutlook(
 			String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -6681,7 +6504,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void rgAcuityMNNRTc026_VerifyWhenPrivateEventIsCreatedInOutllookHavingOrganizerAsInvitee(
+	public void rgAcuityMNNRTc025_VerifyWhenPrivateEventIsCreatedInOutllookHavingOrganizerAsInvitee(
 			String projectName) {
 
 		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
@@ -6733,7 +6556,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void rgAcuityMNNRTc027_VerifyWhenEventIsCreatedInOutlookByTaggingTheContactsAndAccountNotCreatedInSalesforce(
+	public void rgAcuityMNNRTc026_VerifyWhenEventIsCreatedInOutlookByTaggingTheContactsAndAccountNotCreatedInSalesforce(
 			String projectName) {
 
 		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
@@ -6942,7 +6765,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 	@Parameters({ "projectName" })
 	@Test
-	public void rgAcuityMNNRTc028_VerifyWhenEventIsCreatedInOutlookByTaggingTheContactsAndAccountWhereInOnlyAccountIsCreatedInSalesforceContact(
+	public void rgAcuityMNNRTc027_VerifyWhenEventIsCreatedInOutlookByTaggingTheContactsAndAccountWhereInOnlyAccountIsCreatedInSalesforceContact(
 			String projectName) {
 
 		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
