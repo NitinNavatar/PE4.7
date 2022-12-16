@@ -260,18 +260,14 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		driver.get(outLookAddress);
 		boolean flag = false;
 
-
-		if(alreadyLoggedInLink(userName, 6) != null)
-		{
+		if (alreadyLoggedInLink(userName, 6) != null) {
 			if (click(driver, alreadyLoggedInLink(userName, 6), "loginNextButton", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on "+userName, YesNo.No);
+				log(LogStatus.INFO, "Clicked on " + userName, YesNo.No);
 			} else {
-				log(LogStatus.ERROR, "Not able to Click on "+userName, YesNo.Yes);
-				BaseLib.sa.assertTrue(false, "Not able to Click on "+userName);
+				log(LogStatus.ERROR, "Not able to Click on " + userName, YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to Click on " + userName);
 			}
-		}
-		else
-		{
+		} else {
 
 			if (sendKeys(driver, loginEmailInputBox(30), userName, "Input Value : " + userName, action.BOOLEAN)) {
 				CommonLib.log(LogStatus.INFO, "Entered Value: " + userName, YesNo.No);
@@ -279,7 +275,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 				if (click(driver, loginNextButton(30), "loginNextButton", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on loginNextButton", YesNo.No);
 
-                 ThreadSleep(5000);
+					ThreadSleep(5000);
 
 				} else {
 					log(LogStatus.ERROR, "Not able to Click on loginNextButton", YesNo.Yes);
@@ -310,13 +306,11 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 					}
 				}
 				if (CommonLib.getTitle(driver).contains("Mail")) {
-					log(LogStatus.INFO,
-							"-----Successfully Logged in to Outlook for Email: " + userName + "------",
+					log(LogStatus.INFO, "-----Successfully Logged in to Outlook for Email: " + userName + "------",
 							YesNo.No);
 					flag = true;
 				} else {
-					log(LogStatus.ERROR,
-							"-----Not Successfully Logged in to Outlook for Email: " + userName + "------",
+					log(LogStatus.ERROR, "-----Not Successfully Logged in to Outlook for Email: " + userName + "------",
 							YesNo.Yes);
 					BaseLib.sa.assertTrue(false,
 							"-----Not Successfully Logged in to Outlook for Email: " + userName + "------");
@@ -557,13 +551,11 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 				if (createEventThroughOutlook(eventTitle, eventAttendees, startDate, endDate, startTime, endTime,
 						descriptionBox, allDayToggle)) {
 					log(LogStatus.INFO, "Event: " + eventTitle + " Created through outlook", YesNo.No);
-					if(outLookSignOut())
-					{
-						
+					if (outLookSignOut()) {
+
 						flag = true;
 					}
-					
-					
+
 					driver.close();
 					driver.switchTo().window(parentId);
 				} else {
@@ -594,7 +586,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 			String eventDate, String expMonthYear, String eventName, boolean cancelEvent) {
 		boolean flag = false;
 
-		if (CommonLib.checkDateFormat("m/d/yyyy", eventDate)) {
+		if (CommonLib.checkDateFormat("M/d/yyyy", eventDate)) {
 			log(LogStatus.INFO, "EventDate format is correct.." + eventDate, YesNo.No);
 
 			if (expMonthYear.equalsIgnoreCase(getMonthYear(eventDate))) {
@@ -713,6 +705,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 						}
 					} else {
 
+						CommonLib.ThreadSleep(4000);
 						if (click(driver, getEventEditButton(30), "Event Edit button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Edit button Successfully.", YesNo.No);
 							flag = true;
@@ -785,6 +778,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 						}
 					} else {
 
+						CommonLib.ThreadSleep(4000);
 						if (click(driver, getEventEditButton(30), "Event Edit button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Edit button Successfully.", YesNo.No);
 							flag = true;
@@ -1001,15 +995,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 						"-----Event Update Msg is showing, So Event of Title: " + eventTitle + " has been Updated-----",
 						YesNo.No);
 
-				if (openRGGridAndDoForceSync(action.SCROLLANDBOOLEAN, 25)) {
-					log(LogStatus.INFO, "-----Force Sync Up successfully updated-----", YesNo.No);
-
-					flag = true;
-				} else {
-					log(LogStatus.ERROR, "-----Force Sync Up not successfully updated-----", YesNo.Yes);
-					BaseLib.sa.assertTrue(false, "-----Force Sync Up not successfully updated-----");
-
-				}
+				flag = true;
 
 			} else {
 				log(LogStatus.ERROR, "-----Event Update Msg is not showing, So Event of Title: " + eventTitle
@@ -1047,17 +1033,87 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 				if (!cancelEvent) {
 					if (updateEventThroughOutlook(updatedEventName, eventAttendees, startDate, endDate, startTime,
 							endTime, descriptionBox, allDayToggle, eventAttendeesToRemove)) {
-						log(LogStatus.INFO, "------Event: " + updatedEventName + " Updated through outlook---------",
+						log(LogStatus.INFO, "------Event: " + eventName + " Updated through outlook---------",
 								YesNo.No);
-						flag = true;
-						driver.close();
-						driver.switchTo().window(parentId);
+
+						if (updatedEventName == null) {
+
+							if (startDate != null && !"".equals(startDate))
+
+							{
+								eventDate = startDate;
+							}
+
+							CommonLib.refresh(driver);
+							String navigateStartDateForEdit = eventDate;
+							String navigateStartDateMonthYearForEdit = CommonLib.convertDateFromOneFormatToAnother(
+									navigateStartDateForEdit, "M/d/yyyy", "MMMM yyyy");
+							if (navigateToOutlookEventAndClickOnEditOrCancelButton(navigateStartDateForEdit,
+									navigateStartDateMonthYearForEdit, eventName, false)) {
+
+								log(LogStatus.INFO, "Successfully navigate to event: " + eventName, YesNo.No);
+
+								if (openRGGridAndDoForceSync(action.SCROLLANDBOOLEAN, 25)) {
+									log(LogStatus.INFO, "-----Force Sync Up successfully updated-----", YesNo.No);
+
+									flag = true;
+								} else {
+									log(LogStatus.ERROR, "-----Force Sync Up not successfully updated-----", YesNo.Yes);
+									BaseLib.sa.assertTrue(false, "-----Force Sync Up not successfully updated-----");
+
+								}
+							} else {
+
+								log(LogStatus.ERROR, "Not able to navigate to event: " + eventName, YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "Not able to navigate to event: " + eventName);
+
+							}
+							driver.close();
+							driver.switchTo().window(parentId);
+
+						} else {
+
+							if (startDate != null && !"".equals(startDate))
+
+							{
+								eventDate = startDate;
+							}
+							CommonLib.refresh(driver);
+							String navigateStartDateForEdit = eventDate;
+							String navigateStartDateMonthYearForEdit = CommonLib.convertDateFromOneFormatToAnother(
+									navigateStartDateForEdit, "M/d/yyyy", "MMMM yyyy");
+							if (navigateToOutlookEventAndClickOnEditOrCancelButton(navigateStartDateForEdit,
+									navigateStartDateMonthYearForEdit, updatedEventName, false)) {
+
+								log(LogStatus.INFO, "Successfully navigate to event: " + updatedEventName, YesNo.No);
+
+								if (openRGGridAndDoForceSync(action.SCROLLANDBOOLEAN, 25)) {
+									log(LogStatus.INFO, "-----Force Sync Up successfully updated-----", YesNo.No);
+
+									flag = true;
+
+								} else {
+									log(LogStatus.ERROR, "-----Force Sync Up not successfully updated-----", YesNo.Yes);
+									BaseLib.sa.assertTrue(false, "-----Force Sync Up not successfully updated-----");
+
+								}
+							} else {
+
+								log(LogStatus.ERROR, "Not able to navigate to event: " + updatedEventName, YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "Not able to navigate to event: " + updatedEventName);
+
+							}
+
+							driver.close();
+							driver.switchTo().window(parentId);
+
+						}
+
 					} else {
 						CommonLib.log(LogStatus.ERROR,
-								"------Not able to Update Event: " + updatedEventName + " through outlook--------",
-								YesNo.Yes);
+								"------Not able to Update Event: " + eventName + " through outlook--------", YesNo.Yes);
 						BaseLib.sa.assertTrue(false,
-								"------Not able to Update Event: " + updatedEventName + " through outlook--------");
+								"------Not able to Update Event: " + eventName + " through outlook--------");
 						driver.close();
 						driver.switchTo().window(parentId);
 					}
@@ -1109,7 +1165,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 			String eventName, boolean cancelEvent) {
 		boolean flag = false;
 
-		if (CommonLib.checkDateFormat("m/d/yyyy", eventDate)) {
+		if (CommonLib.checkDateFormat("M/d/yyyy", eventDate)) {
 			log(LogStatus.INFO, "EventDate format is correct.." + eventDate, YesNo.No);
 
 			if (expMonthYear.equalsIgnoreCase(getMonthYear(eventDate))) {
@@ -1131,7 +1187,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 		// Compare two dates:
 
-		SimpleDateFormat formatter = new SimpleDateFormat("M/dd/yyyy");
+		SimpleDateFormat formatter = new SimpleDateFormat("M/d/yyyy");
 
 		String eventDate1 = eventDate;
 		String todayDate = getTodayDate();
@@ -1184,8 +1240,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		return flag;
 
 	}
-	
-	
+
 	public boolean loginAndCreateEventThroughOutLook(String userName, String userPassword, String eventTitle,
 			String eventAttendees, String startDate, String endDate, String startTime, String endTime,
 			String descriptionBox, boolean allDayToggle, String recurring) {
@@ -1201,13 +1256,11 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 				if (createEventThroughOutlook(eventTitle, eventAttendees, startDate, endDate, startTime, endTime,
 						descriptionBox, allDayToggle)) {
 					log(LogStatus.INFO, "Event: " + eventTitle + " Created through outlook", YesNo.No);
-					if(outLookSignOut())
-					{
-						
+					if (outLookSignOut()) {
+
 						flag = true;
 					}
-					
-					
+
 					driver.close();
 					driver.switchTo().window(parentId);
 				} else {
@@ -1233,7 +1286,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 		return flag;
 	}
-	
+
 	public boolean createEventThroughOutlook(String eventTitle, String eventAttendees, String startDate, String endDate,
 			String startTime, String endTime, String descriptionBox, boolean allDayToggle, String recurringValue) {
 
@@ -1366,43 +1419,35 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 							}
 						}
-						
-						
-						if(recurringValue!= null && !"".equalsIgnoreCase(recurringValue))
-						{
-							if(clickUsingJavaScript(driver, getRecurringBtn(30), "recurring btn"))
-							{
+
+						if (recurringValue != null && !"".equalsIgnoreCase(recurringValue)) {
+							if (clickUsingJavaScript(driver, getRecurringBtn(30), "recurring btn")) {
 								CommonLib.log(LogStatus.INFO, "Clicked on recurring button", YesNo.No);
 								ThreadSleep(3000);
-								if(clickUsingJavaScript(driver, getRecurringOption(recurringValue,20), recurringValue+" option", action.SCROLLANDBOOLEAN))
-								{
-									CommonLib.log(LogStatus.INFO, "Clicked on option : "+recurringValue, YesNo.No);
+								if (clickUsingJavaScript(driver, getRecurringOption(recurringValue, 20),
+										recurringValue + " option", action.SCROLLANDBOOLEAN)) {
+									CommonLib.log(LogStatus.INFO, "Clicked on option : " + recurringValue, YesNo.No);
 									ThreadSleep(1000);
-									if(clickUsingJavaScript(driver, getSaveButtonOnRepeatPopup(20), "save button"))
-									{
-										CommonLib.log(LogStatus.INFO, "Clicked on save button on Repeate popup", YesNo.No);	
-									}
-									else
-									{
-										CommonLib.log(LogStatus.ERROR, "Not able to click on save button on Repeate popup", YesNo.No);
-										BaseLib.sa.assertTrue(false,"Not able to click on save button on Repeate popup");
+									if (clickUsingJavaScript(driver, getSaveButtonOnRepeatPopup(20), "save button")) {
+										CommonLib.log(LogStatus.INFO, "Clicked on save button on Repeate popup",
+												YesNo.No);
+									} else {
+										CommonLib.log(LogStatus.ERROR,
+												"Not able to click on save button on Repeate popup", YesNo.No);
+										BaseLib.sa.assertTrue(false,
+												"Not able to click on save button on Repeate popup");
 										ThreadSleep(2500);
 									}
+								} else {
+									CommonLib.log(LogStatus.ERROR, "Not able to clicked on option : " + recurringValue,
+											YesNo.No);
+									BaseLib.sa.assertTrue(false, "Not able to clicked on option : " + recurringValue);
 								}
-								else
-								{
-									CommonLib.log(LogStatus.ERROR, "Not able to clicked on option : "+recurringValue, YesNo.No);
-									BaseLib.sa.assertTrue(false,"Not able to clicked on option : "+recurringValue);
-								}
-							}
-							else
-							{
+							} else {
 								CommonLib.log(LogStatus.ERROR, "Not able to click on recurring button", YesNo.No);
-								BaseLib.sa.assertTrue(false,"Not able to click on recurring button");
+								BaseLib.sa.assertTrue(false, "Not able to click on recurring button");
 							}
 						}
-
-						
 
 						if (descriptionBox != null && !"".equalsIgnoreCase(descriptionBox)) {
 
@@ -1493,8 +1538,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		return flag;
 
 	}
-	
-	
+
 	public boolean enterDateThroughOutlookCalendar(WebDriver driver, String type, String datemmddyyy, action action,
 			int timeout) {
 		boolean flag = false;
@@ -1628,106 +1672,99 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		return flag;
 
 	}
-	
-	public boolean saveEmailFromOutlook(String subjectName, String[] linkedRecord)
-	{
-		boolean flag=false;
-		if(clickUsingJavaScript(driver, getSendItemButton(30), "send item button"))
-		{
-			CommonLib.log(LogStatus.INFO, "clicked on send item button", YesNo.No);
-			if(clickUsingJavaScript(driver, getSendItmSubject(subjectName,30), "subject Name: "+subjectName, action.SCROLLANDBOOLEAN))
-			{
-				CommonLib.log(LogStatus.INFO, "clicked on subject name: "+subjectName+" under send item", YesNo.No);
 
-				if(clickUsingJavaScript(driver, getMoreIcon(30), "More icon"))
-				{
-					CommonLib.log(LogStatus.INFO, "clicked on more icon of subject name :"+subjectName, YesNo.No);
+	public boolean saveEmailFromOutlook(String subjectName, String[] linkedRecord) {
+		boolean flag = false;
+		if (clickUsingJavaScript(driver, getSendItemButton(30), "send item button")) {
+			CommonLib.log(LogStatus.INFO, "clicked on send item button", YesNo.No);
+			if (clickUsingJavaScript(driver, getSendItmSubject(subjectName, 30), "subject Name: " + subjectName,
+					action.SCROLLANDBOOLEAN)) {
+				CommonLib.log(LogStatus.INFO, "clicked on subject name: " + subjectName + " under send item", YesNo.No);
+
+				if (clickUsingJavaScript(driver, getMoreIcon(30), "More icon")) {
+					CommonLib.log(LogStatus.INFO, "clicked on more icon of subject name :" + subjectName, YesNo.No);
 					ThreadSleep(1000);
 					if (click(driver, getRevenueGridButton(30), "Revenue grid button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Revenue grid button", YesNo.No);
 						ThreadSleep(1000);
-						if (click(driver, getOpenRevenueGridButton(30), "open Revenue grid button", action.SCROLLANDBOOLEAN)) {
+						if (click(driver, getOpenRevenueGridButton(30), "open Revenue grid button",
+								action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on open Revenue grid button", YesNo.No);
 							ThreadSleep(2000);
 
 							if (CommonLib.switchToFrame(driver, 30, revenueGridFrame(35))) {
 								log(LogStatus.INFO, "Successfully switched to frame", YesNo.No);
-								if(clickUsingJavaScript(driver, getSaveEmailButtonOnRG(40), "Save email button"))
-								{
+								if (clickUsingJavaScript(driver, getSaveEmailButtonOnRG(40), "Save email button")) {
 									log(LogStatus.INFO, "Clicked on save email button", YesNo.No);
-									int k=0;
-									for(int i=0; i<linkedRecord.length; i++)
-									{
-										clickUsingActionClass(driver,getLinkedRecordPlaceholder(30));
+									int k = 0;
+									for (int i = 0; i < linkedRecord.length; i++) {
+										clickUsingActionClass(driver, getLinkedRecordPlaceholder(30));
 										ThreadSleep(2000);
-										if(click(driver,getLinkedRecordPlaceholder(30) , "Linked record textbox", action.SCROLLANDBOOLEAN))
-										{
+										if (click(driver, getLinkedRecordPlaceholder(30), "Linked record textbox",
+												action.SCROLLANDBOOLEAN)) {
 											ThreadSleep(1000);
-											log(LogStatus.INFO, "Clicked on placeholder of Linked record", YesNo.No); 
-											if(sendKeys(driver, getLinkedRecordInput(30), linkedRecord[i], "Linked record name", action.SCROLLANDBOOLEAN))
-											{
-												log(LogStatus.INFO, "Value : "+linkedRecord[i]+" has been passed in linked record name", YesNo.No);
+											log(LogStatus.INFO, "Clicked on placeholder of Linked record", YesNo.No);
+											if (sendKeys(driver, getLinkedRecordInput(30), linkedRecord[i],
+													"Linked record name", action.SCROLLANDBOOLEAN)) {
+												log(LogStatus.INFO, "Value : " + linkedRecord[i]
+														+ " has been passed in linked record name", YesNo.No);
 												ThreadSleep(1500);
-												if(clickUsingJavaScript(driver, getLinkedRecordSuggestion(linkedRecord[i],20),linkedRecord[i]+" record" ,action.SCROLLANDBOOLEAN))
-												{
-													log(LogStatus.INFO, "Clicked on "+linkedRecord[i]+" record", YesNo.No);
+												if (clickUsingJavaScript(driver,
+														getLinkedRecordSuggestion(linkedRecord[i], 20),
+														linkedRecord[i] + " record", action.SCROLLANDBOOLEAN)) {
+													log(LogStatus.INFO, "Clicked on " + linkedRecord[i] + " record",
+															YesNo.No);
 													k++;
-												}
-												else
-												{
-													log(LogStatus.ERROR, "Not able to click on "+linkedRecord[i]+" record", YesNo.No);  
-													BaseLib.sa.assertTrue(false, "Not able to click on "+linkedRecord[i]+" record");
+												} else {
+													log(LogStatus.ERROR,
+															"Not able to click on " + linkedRecord[i] + " record",
+															YesNo.No);
+													BaseLib.sa.assertTrue(false,
+															"Not able to click on " + linkedRecord[i] + " record");
 												}
 
+											} else {
+												log(LogStatus.ERROR, "Value : " + linkedRecord[i]
+														+ " is not passed in linked record name", YesNo.No);
+												BaseLib.sa.assertTrue(false, "Value : " + linkedRecord[i]
+														+ " is not passed in linked record name");
 											}
-											else
-											{
-												log(LogStatus.ERROR, "Value : "+linkedRecord[i]+" is not passed in linked record name", YesNo.No);
-												BaseLib.sa.assertTrue(false, "Value : "+linkedRecord[i]+" is not passed in linked record name");
-											}
-										}
-										else
-										{
-											log(LogStatus.ERROR, "Not able to click on Linked record checkbox", YesNo.No);
-											BaseLib.sa.assertTrue(false,  "Not able to click on Linked record checkbox");
+										} else {
+											log(LogStatus.ERROR, "Not able to click on Linked record checkbox",
+													YesNo.No);
+											BaseLib.sa.assertTrue(false, "Not able to click on Linked record checkbox");
 										}
 										ThreadSleep(3000);
 
 									}
-									if(k==linkedRecord.length)
-									{
-										if(clickUsingJavaScript(driver, getSaveButtonOnRG(20), "save button", action.SCROLLANDBOOLEAN))
-										{
+									if (k == linkedRecord.length) {
+										if (clickUsingJavaScript(driver, getSaveButtonOnRG(20), "save button",
+												action.SCROLLANDBOOLEAN)) {
 											log(LogStatus.INFO, "Clicked on save button", YesNo.No);
-											if(getEmailSaveConfirmationOnRG(120)!=null)
-											{
-												log(LogStatus.INFO, "Email : "+subjectName+" has been saved on RG", YesNo.No);	
-												flag=true;
+											if (getEmailSaveConfirmationOnRG(120) != null) {
+												log(LogStatus.INFO, "Email : " + subjectName + " has been saved on RG",
+														YesNo.No);
+												flag = true;
+											} else {
+												log(LogStatus.ERROR, "Email : " + subjectName + " is not saved on RG",
+														YesNo.No);
+												BaseLib.sa.assertTrue(false,
+														"Email : " + subjectName + " is not saved on RG");
 											}
-											else
-											{
-												log(LogStatus.ERROR, "Email : "+subjectName+" is not saved on RG", YesNo.No);	
-												BaseLib.sa.assertTrue(false,  "Email : "+subjectName+" is not saved on RG");
-											}
-										}
-										else
-										{
+										} else {
 											log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
-											BaseLib.sa.assertTrue(false,  "Not able to click on save button");
+											BaseLib.sa.assertTrue(false, "Not able to click on save button");
 										}
+									} else {
+										log(LogStatus.ERROR, "The value is not passed properly on Linked Record",
+												YesNo.No);
+										BaseLib.sa.assertTrue(false,
+												"The value is not passed properly on Linked Record");
 									}
-									else
-									{
-										log(LogStatus.ERROR, "The value is not passed properly on Linked Record", YesNo.No);
-										BaseLib.sa.assertTrue(false,   "The value is not passed properly on Linked Record");
-									}
-								}
-								else
-								{
+								} else {
 									log(LogStatus.ERROR, "Not able to click on save email button", YesNo.No);
 									BaseLib.sa.assertTrue(false, "Not able to click on save email button");
 								}
-
 
 							} else {
 								log(LogStatus.ERROR, "Not Successfully switched to frame", YesNo.Yes);
@@ -1744,23 +1781,19 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 						BaseLib.sa.assertTrue(false, "Not able to click on revenue grid button");
 
 					}
-				}
-				else
-				{
-					CommonLib.log(LogStatus.ERROR, "Not able to click on more icon of subject name :"+subjectName, YesNo.No);
-					BaseLib.sa.assertTrue(false, "Not able to click on more icon of subject name :"+subjectName);
+				} else {
+					CommonLib.log(LogStatus.ERROR, "Not able to click on more icon of subject name :" + subjectName,
+							YesNo.No);
+					BaseLib.sa.assertTrue(false, "Not able to click on more icon of subject name :" + subjectName);
 
 				}
-			}
-			else
-			{
-				CommonLib.log(LogStatus.ERROR, "Not able to click on subject name: "+subjectName+" under send item", YesNo.No);
-				BaseLib.sa.assertTrue(false, "Not able to click on subject name: "+subjectName+" under send item");
+			} else {
+				CommonLib.log(LogStatus.ERROR, "Not able to click on subject name: " + subjectName + " under send item",
+						YesNo.No);
+				BaseLib.sa.assertTrue(false, "Not able to click on subject name: " + subjectName + " under send item");
 
 			}
-		}
-		else
-		{
+		} else {
 			CommonLib.log(LogStatus.ERROR, "Not able to click on send item button", YesNo.No);
 			BaseLib.sa.assertTrue(false, "Not Able to switch to new tab");
 
@@ -1769,7 +1802,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		return flag;
 
 	}
-	
+
 	public boolean outLookSignOut() {
 		boolean flag = false;
 

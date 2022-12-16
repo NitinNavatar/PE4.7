@@ -14688,7 +14688,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					if (notificationButtonsList != null) {
 						for (WebElement actualEventButton : notificationButtonsList) {
 
-							if (notificationButtonsList.indexOf(actualEventButton) == notificationOptionsListInText
+							if (notificationButtonsList.indexOf(actualEventButton) ==  notificationOptionsListInText
 									.indexOf(eventName[i])) {
 								if (actualEventButton.isDisplayed())
 									flag = true;
@@ -14714,8 +14714,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 			else {
 
-				log(LogStatus.FAIL, "Event: " + eventName[i] + " is not present there in Notification Pane", YesNo.No);
-				negativeResults.add("Event: " + eventName[i] + " is not present there in Notification Pane");
+				log(LogStatus.FAIL, "Event: " + eventName[i] + " is not present there in Notification Pane in record detail page", YesNo.No);
+				negativeResults.add("Event: " + eventName[i] + " is not present there in Notification Pane in record detail page");
 			}
 		}
 
@@ -19969,8 +19969,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (CommonLib.clickUsingJavaScript(driver, getNotificationIcon(), "NotificationIcon")) {
 
 			log(LogStatus.INFO, "Clicked on Notification Icon", YesNo.No);
+			CommonLib.ThreadSleep(4000);
 			List<WebElement> notificationOptionsList = getNotificationOptions();
-			int actualCount = notificationOptionsList.size();
+			Integer actualCount = notificationOptionsList.size();
 			if (countIcon.equals(actualCount)) {
 
 				log(LogStatus.INFO, "--------Icon Count and Actual Count in Notification Matched, i.e.:  " + countIcon
@@ -20004,31 +20005,43 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 			log(LogStatus.INFO, "Clicked on Notification Icon", YesNo.No);
 
-			if (linkOfEventInNotificationOfRecordDetailPage(eventName, 8) != null) {
+			if (linkOfEventInNotificationOfRecordDetailPage(eventName, 12) != null) {
 				log(LogStatus.INFO, "Clicked on Event: " + eventName + " from Record Page Notification", YesNo.No);
-				String parentId = CommonLib.switchOnWindow(driver);
-				if (parentId != null) {
-					log(LogStatus.INFO, "Switched to New Window", YesNo.No);
-					if (eventDetailPageHeader(eventName, 15) != null) {
-						log(LogStatus.INFO, "Header Found: " + eventName + " ,So Event Detail Page Open", YesNo.No);
-						return parentId;
+
+				if (click(driver, linkOfEventInNotificationOfRecordDetailPage(eventName, 8), "Event: " + eventName,
+						action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Event: " + eventName + " from Record page Notification", YesNo.No);
+					String parentId = CommonLib.switchOnWindow(driver);
+					if (parentId != null) {
+						log(LogStatus.INFO, "Switched to New Window", YesNo.No);
+						if (eventDetailPageHeader(eventName, 15) != null) {
+							log(LogStatus.INFO, "Header Found: " + eventName + " ,So Event Detail Page Open", YesNo.No);
+							return parentId;
+						} else {
+							log(LogStatus.FAIL,
+									"Header not Found: " + eventName + " ,So Event Detail Page has not Open", YesNo.No);
+							sa.assertTrue(false,
+									"Header not Found: " + eventName + " ,So Event Detail Page has not Open");
+							return null;
+						}
 					} else {
-						log(LogStatus.FAIL, "Header not Found: " + eventName + " ,So Event Detail Page has not Open",
-								YesNo.No);
-						sa.assertTrue(false, "Header not Found: " + eventName + " ,So Event Detail Page has not Open");
+						log(LogStatus.FAIL, "No New window open after click on Event name: " + eventName, YesNo.No);
+						sa.assertTrue(false, "No New window open after click on Event name: " + eventName);
 						return null;
 					}
+
 				} else {
-					log(LogStatus.FAIL, "No New window open after click on Event name: " + eventName, YesNo.No);
-					sa.assertTrue(false, "No New window open after click on Event name: " + eventName);
+
+					log(LogStatus.FAIL, "Not able to Click on Event: " + eventName + " from Record Page Notification",
+							YesNo.No);
+					sa.assertTrue(false, "Not able to Click on Event: " + eventName + " from Record Page Notification");
 					return null;
 				}
 
 			} else {
 
-				log(LogStatus.FAIL, "Not able to Click on Event: " + eventName + " from Record Page Notification",
-						YesNo.No);
-				sa.assertTrue(false, "Not able to Click on Event: " + eventName + " from Record Page Notification");
+				log(LogStatus.FAIL, "No Link found of Evenet named: " + eventName + " in Notification Pane", YesNo.No);
+				sa.assertTrue(false, "No Link found of Evenet named: " + eventName + " in Notification Pane");
 				return null;
 			}
 		} else {
