@@ -12897,12 +12897,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
 						log(LogStatus.INFO, "Clicked on " + labelName + " paragraph", YesNo.No);
 						ThreadSleep(2000);
-						xPath = "//div[span[span[text()='" + labelName + "']]]//div[@role='textbox']//p";
+						xPath = "//div[span[span[text()='" + labelName + "']]]//div[@role='textbox']";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
 						ele.sendKeys(Keys.CONTROL + "A");
 						ThreadSleep(1000);
 						ele.sendKeys(Keys.BACK_SPACE);
-
+						CommonLib.ThreadSleep(3000);
 						if (sendKeys(driver, ele, value, labelName + " paragraph", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, value + " has been passed on " + labelName + " paragraph", YesNo.No);
 
@@ -17987,7 +17987,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		}
 
-
 		return negativeResult;
 	}
 
@@ -19925,7 +19924,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		} else {
 			log(LogStatus.FAIL, "Notification Header is not present there", YesNo.No);
-			
+
 		}
 		List<String> notificationOptionsListInText = notificationOptionsList.stream()
 				.map(x -> CommonLib.getText(driver, x, "Event Name", action.BOOLEAN)).collect(Collectors.toList());
@@ -19950,7 +19949,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		} else {
 
 			log(LogStatus.FAIL, "Either Notification Pane is not open or might be Locator gets changed", YesNo.No);
-			negativeResults.add("Either Notification Pane is not open or might be Locator gets changed");
+
 		}
 
 		return negativeResults;
@@ -20039,42 +20038,38 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 	}
-	
-	
-public ArrayList<String> verifyRedirectionOnClickEntityTypeOnTaggedSection() {
-		
+
+	public ArrayList<String> verifyRedirectionOnClickEntityTypeOnTaggedSection() {
+
 		ArrayList<String> result = new ArrayList<String>();
 
-		if (click(driver, getTaggedRecordName(TaggedName.Companies.toString(), 30), TaggedName.Companies.toString()+" tab", action.SCROLLANDBOOLEAN)) {
+		if (click(driver, getTaggedRecordName(TaggedName.Companies.toString(), 30),
+				TaggedName.Companies.toString() + " tab", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
 			ThreadSleep(5000);
-			if (CommonLib.clickUsingJavaScript(driver,
-					recordsNameOnTaggedSection(TaggedName.Companies.toString(), 30),
+			if (CommonLib.clickUsingJavaScript(driver, recordsNameOnTaggedSection(TaggedName.Companies.toString(), 30),
 					"Records on Company Tagged", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on record on Companies tab",
-						YesNo.No);
-				
+				log(LogStatus.INFO, "Clicked on record on Companies tab", YesNo.No);
+
 				String id = switchOnWindow(driver);
-				if(id!=null)
-				{	
-				if (getTabName("Firm",20)!= null) {
-					log(LogStatus.INFO, "The page is redirecting to firm tab after click on Entity type of firm", YesNo.No);
+				if (id != null) {
+					if (getTabName("Firm", 20) != null) {
+						log(LogStatus.INFO, "The page is redirecting to firm tab after click on Entity type of firm",
+								YesNo.No);
+					} else {
+						log(LogStatus.ERROR,
+								"The page is not redirecting to firm tab after click on Entity type of firm", YesNo.No);
+						result.add("The page is not redirecting to firm tab after click on Entity type of firm");
+					}
+					driver.close();
+					driver.switchTo().window(id);
 				} else {
-					log(LogStatus.ERROR,  "The page is not redirecting to firm tab after click on Entity type of firm", YesNo.No);
-					result.add( "The page is not redirecting to firm tab after click on Entity type of firm");
-				}
-				driver.close();
-				driver.switchTo().window(id);
-				}
-				else
-				{
-					log(LogStatus.ERROR,  "The new tab is not opening after clicking on entity type of firm", YesNo.No);
+					log(LogStatus.ERROR, "The new tab is not opening after clicking on entity type of firm", YesNo.No);
 					result.add("The new tab is not opening after clicking on entity type of firm");
 				}
 
 			} else {
-				log(LogStatus.ERROR,
-						"Not able to click on record on Companies tab", YesNo.No);
+				log(LogStatus.ERROR, "Not able to click on record on Companies tab", YesNo.No);
 				result.add("Not able to click on record on Companies tab");
 			}
 
@@ -20083,31 +20078,31 @@ public ArrayList<String> verifyRedirectionOnClickEntityTypeOnTaggedSection() {
 			result.add("Not able to click on Companies tab name");
 		}
 
-
-		if (click(driver, getTaggedRecordName(TaggedName.People.toString(), 30), TaggedName.People.toString()+" tab", action.SCROLLANDBOOLEAN)) {
+		if (click(driver, getTaggedRecordName(TaggedName.People.toString(), 30), TaggedName.People.toString() + " tab",
+				action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 			ThreadSleep(5000);
-			if (CommonLib.clickUsingJavaScript(driver,
-					recordsNameOnTaggedSection(TaggedName.People.toString(), 30),
+			if (CommonLib.clickUsingJavaScript(driver, recordsNameOnTaggedSection(TaggedName.People.toString(), 30),
 					"Records on People Tagged", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on record on People tab",
-						YesNo.No);
+				log(LogStatus.INFO, "Clicked on record on People tab", YesNo.No);
 
 				String id = switchOnWindow(driver);
-				if(id!=null)
-				{	
-					if (getTabName("Contact",20)!= null) {
-						log(LogStatus.INFO, "The page is redirecting to Contact tab after click on Entity type of People", YesNo.No);
+				if (id != null) {
+					if (getTabName("Contact", 20) != null) {
+						log(LogStatus.INFO,
+								"The page is redirecting to Contact tab after click on Entity type of People",
+								YesNo.No);
 					} else {
-						log(LogStatus.ERROR,  "The page is not redirecting to Contact tab after click on Entity type of people", YesNo.No);
-						result.add( "The page is not redirecting to Contact tab after click on Entity type of people");
+						log(LogStatus.ERROR,
+								"The page is not redirecting to Contact tab after click on Entity type of people",
+								YesNo.No);
+						result.add("The page is not redirecting to Contact tab after click on Entity type of people");
 					}
 					driver.close();
 					driver.switchTo().window(id);
-				}
-				else
-				{
-					log(LogStatus.ERROR,  "The new tab is not opening after clicking on entity type of People", YesNo.No);
+				} else {
+					log(LogStatus.ERROR, "The new tab is not opening after clicking on entity type of People",
+							YesNo.No);
 					result.add("The new tab is not opening after clicking on entity type of people");
 				}
 
@@ -20120,31 +20115,28 @@ public ArrayList<String> verifyRedirectionOnClickEntityTypeOnTaggedSection() {
 			result.add("Not able to click on Companies tab name");
 		}
 
-
-		if (click(driver, getTaggedRecordName(TaggedName.Deals.toString(), 30), TaggedName.Deals.toString()+" tab", action.SCROLLANDBOOLEAN)) {
+		if (click(driver, getTaggedRecordName(TaggedName.Deals.toString(), 30), TaggedName.Deals.toString() + " tab",
+				action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Deal tab name", YesNo.No);
-            ThreadSleep(5000);
-			if (CommonLib.clickUsingJavaScript(driver,
-					recordsNameOnTaggedSection(TaggedName.Deals.toString(), 30),
+			ThreadSleep(5000);
+			if (CommonLib.clickUsingJavaScript(driver, recordsNameOnTaggedSection(TaggedName.Deals.toString(), 30),
 					"Records on Deal Tagged", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on record on deal tab",
-						YesNo.No);
+				log(LogStatus.INFO, "Clicked on record on deal tab", YesNo.No);
 
 				String id = switchOnWindow(driver);
-				if(id!=null)
-				{	
-					if (getTabName("Deal",20)!= null) {
-						log(LogStatus.INFO, "The page is redirecting to deal tab after click on Entity type of deal", YesNo.No);
+				if (id != null) {
+					if (getTabName("Deal", 20) != null) {
+						log(LogStatus.INFO, "The page is redirecting to deal tab after click on Entity type of deal",
+								YesNo.No);
 					} else {
-						log(LogStatus.ERROR,  "The page is not redirecting to Deal tab after click on Entity type of deal", YesNo.No);
-						result.add( "The page is not redirecting to Deal tab after click on Entity type of deal");
+						log(LogStatus.ERROR,
+								"The page is not redirecting to Deal tab after click on Entity type of deal", YesNo.No);
+						result.add("The page is not redirecting to Deal tab after click on Entity type of deal");
 					}
 					driver.close();
 					driver.switchTo().window(id);
-				}
-				else
-				{
-					log(LogStatus.ERROR,  "The new tab is not opening after clicking on entity type of Deal", YesNo.No);
+				} else {
+					log(LogStatus.ERROR, "The new tab is not opening after clicking on entity type of Deal", YesNo.No);
 					result.add("The new tab is not opening after clicking on entity type of Deal");
 				}
 
@@ -20159,5 +20151,28 @@ public ArrayList<String> verifyRedirectionOnClickEntityTypeOnTaggedSection() {
 		return result;
 	}
 
+	public ArrayList<String> verifyDescriptionShouldNotVisibleUnderDetailsOnInteractionSection(String[] subjectName,
+			String[] detailsMessage) {
+		ArrayList<String> result = new ArrayList<String>();
+		if (subjectName.length == detailsMessage.length) {
+			for (int i = 0; i < subjectName.length; i++) {
+				String actualDetails = getText(driver, getDetailsOnInteractionPage(subjectName[i], 30),
+						" details of subject : " + subjectName[i], action.SCROLLANDBOOLEAN);
+				if (!actualDetails.contains(detailsMessage[i])) {
+					log(LogStatus.INFO, "Details : " + detailsMessage[i]
+							+ " is not available on Interaction popup for subject " + subjectName[i], YesNo.No);
+				} else {
+					log(LogStatus.ERROR, "Details : " + detailsMessage[i]
+							+ " is available on Interaction popup for subject " + subjectName[i], YesNo.No);
+					result.add("Details : " + detailsMessage[i] + " is available on Interaction popup for subject "
+							+ subjectName[i]);
+				}
+
+			}
+
+		}
+		return result;
+
+	}
 
 }

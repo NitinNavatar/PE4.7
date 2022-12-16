@@ -5728,7 +5728,7 @@ public class HomePageBusineesLayer extends HomePage {
 		} else {
 
 			log(LogStatus.FAIL, "Either Notification Pane is not open or might be Locator gets changed", YesNo.No);
-			negativeResults.add("Either Notification Pane is not open or might be Locator gets changed");
+			
 		}
 
 		return negativeResults;
