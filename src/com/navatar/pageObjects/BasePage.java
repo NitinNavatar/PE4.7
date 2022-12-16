@@ -7942,10 +7942,10 @@ public abstract class BasePage extends BaseLib {
 		String xpath = "//span[normalize-space(text()) ='" + labelName + "']/parent::div/following-sibling::div";
 
 		try {
-			return FindElement(driver, xpath, "User Header Found: " + labelName, action.SCROLLANDBOOLEAN, timeOut);
+			return FindElement(driver, xpath, "User Header Found: " + labelName, action.BOOLEAN, timeOut);
 
 		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, xpath, "User Header Found: " + labelName, action.SCROLLANDBOOLEAN, timeOut);
+			return FindElement(driver, xpath, "User Header Found: " + labelName, action.BOOLEAN, timeOut);
 		}
 	}
 

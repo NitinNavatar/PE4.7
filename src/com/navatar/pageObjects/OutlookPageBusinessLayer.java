@@ -364,11 +364,13 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 								beforeSyncTime = getForceSyncLastSession(timeout).getText();
 
 								log(LogStatus.INFO, "Before Force Sync Click time was: " + beforeSyncTime, YesNo.No);
+
 								if (click(driver, getForceSyncButton(timeout), "force sync button",
 										action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "Clicked on force sync button", YesNo.No);
 									ThreadSleep(1000);
-									ele = getForceSyncSuccessErrorMessage(timeout);
+									ele = forceSyncSuccessMessage(timeout);
+
 									if (ele != null) {
 										ThreadSleep(2000);
 										log(LogStatus.INFO, "sucess message present force sync is done", YesNo.No);
@@ -402,10 +404,71 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 										CommonLib.switchToDefaultContent(driver);
 
 									} else {
-										log(LogStatus.ERROR, "sucess message not present force sync not completed",
-												YesNo.Yes);
-										BaseLib.sa.assertTrue(false,
-												"sucess message not present force sync not completed");
+										boolean flag2 = false;
+										while (count < 17) {
+											CommonLib.ThreadSleep(20000);
+
+											if (click(driver, getForceSyncButton(timeout), "force sync button",
+													action.SCROLLANDBOOLEAN)) {
+												log(LogStatus.INFO, "Clicked on force sync button", YesNo.No);
+												ThreadSleep(1000);
+												WebElement ele1 = forceSyncSuccessMessage(timeout);
+
+												if (ele1 != null) {
+													log(LogStatus.INFO, "sucess message present force sync is done",
+															YesNo.No);
+													flag2 = true;
+													break;
+												}
+
+											} else {
+												log(LogStatus.ERROR, "Not able to click on force sync button",
+														YesNo.Yes);
+												BaseLib.sa.assertTrue(false, "Not able to click on force sync button");
+											}
+
+										}
+
+										if (flag2) {
+
+											log(LogStatus.INFO, "sucess message present force sync is done", YesNo.No);
+
+											afterSyncTime = getForceSyncLastSession(timeout).getText();
+											log(LogStatus.INFO, "After Force Sync Click time is: " + afterSyncTime,
+													YesNo.No);
+											while (beforeSyncTime.equals(afterSyncTime) && count < 30) {
+												refresh(driver);
+												ThreadSleep(20000);
+												afterSyncTime = getForceSyncLastSession(timeout).getText();
+												log(LogStatus.INFO, "After Force Sync Click time is: " + afterSyncTime,
+														YesNo.No);
+												count++;
+												if (!beforeSyncTime.equals(afterSyncTime)) {
+
+													log(LogStatus.INFO, "Force sync in successfully updated", YesNo.No);
+													flag = true;
+													break;
+												}
+
+											}
+											if (!beforeSyncTime.equals(afterSyncTime)) {
+
+												log(LogStatus.INFO, "Force sync in successfully updated", YesNo.No);
+												flag = true;
+
+											}
+											driver.close();
+											driver.switchTo().window(parentWindow);
+											CommonLib.switchToDefaultContent(driver);
+
+										} else {
+											log(LogStatus.ERROR,
+													"Force Sync Success Msg not showing after waiting for more than 5 mins, So Force Synce not Updated Successfully",
+													YesNo.Yes);
+											BaseLib.sa.assertTrue(false,
+													"Force Sync Success Msg not showing after waiting for more than 5 mins, So Force Synce not Updated Successfully");
+										}
+
 									}
 								} else {
 									log(LogStatus.ERROR, "Not able to click on force sync button", YesNo.Yes);
@@ -708,7 +771,19 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 						CommonLib.ThreadSleep(4000);
 						if (click(driver, getEventEditButton(30), "Event Edit button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Edit button Successfully.", YesNo.No);
-							flag = true;
+							if (moreOptionsLink(8) != null) {
+								if (click(driver, moreOptionsLink(15), "More Options Link",
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "Clicked on More options Link Successfully.", YesNo.No);
+									flag = true;
+								} else {
+									log(LogStatus.ERROR, "Not able to click on More options Link", YesNo.No);
+									BaseLib.sa.assertTrue(false, "Not able to click on More options Link");
+									return flag;
+								}
+							} else {
+								flag = true;
+							}
 						} else {
 							log(LogStatus.ERROR, "Not able to click on Edit button", YesNo.No);
 							BaseLib.sa.assertTrue(false, "Not able to click on Edit button");
@@ -781,7 +856,20 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 						CommonLib.ThreadSleep(4000);
 						if (click(driver, getEventEditButton(30), "Event Edit button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Edit button Successfully.", YesNo.No);
-							flag = true;
+							if (moreOptionsLink(8) != null) {
+								if (click(driver, moreOptionsLink(15), "More Options Link",
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "Clicked on More options Link Successfully.", YesNo.No);
+									flag = true;
+								} else {
+									log(LogStatus.ERROR, "Not able to click on More options Link", YesNo.No);
+									BaseLib.sa.assertTrue(false, "Not able to click on More options Link");
+									return flag;
+								}
+							} else {
+								flag = true;
+							}
+
 						} else {
 							log(LogStatus.ERROR, "Not able to click on Edit button", YesNo.No);
 							BaseLib.sa.assertTrue(false, "Not able to click on Edit button");
@@ -818,7 +906,8 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		for (WebElement e : eventNameList) {
 			String text = e.getText();
 			if (eventName.equals(text)) {
-				if (CommonLib.click(driver, e, eventName, action.BOOLEAN)) {
+				log(LogStatus.INFO, "Event Found: " + eventName, YesNo.No);
+				if (CommonLib.clickUsingJavaScript(driver, e, eventName, action.BOOLEAN)) {
 					flag = true;
 				}
 				break;
@@ -1807,13 +1896,16 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		boolean flag = false;
 
 		CommonLib.refresh(driver);
+		
+		WebDriverWait wait = new WebDriverWait(driver, 40);
+		wait.until(ExpectedConditions.elementToBeClickable(topCornerAccountButton(20)));
 		if (click(driver, topCornerAccountButton(20), "topCornerAccountButton", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on topCornerAccountButton", YesNo.No);
 
 			if (click(driver, signOutLink(20), "signOutLink", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on signOutLink", YesNo.No);
 				CommonLib.ThreadSleep(7000);
-				WebDriverWait wait = new WebDriverWait(driver, 40);
+				
 
 				if (wait.until(ExpectedConditions.titleContains("Sign out"))) {
 					log(LogStatus.INFO, "Outlook has been Signed Out", YesNo.No);

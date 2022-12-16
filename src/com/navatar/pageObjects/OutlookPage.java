@@ -315,11 +315,19 @@ public class OutlookPage extends BasePageBusinessLayer {
 
 	}
 	
-	@FindBy(xpath = "//div[@class=\"ajs-message ajs-error ajs-visible\" or @class=\"ajs-message ajs-success ajs-visible\"]")
-	private WebElement forceSyncSuccessErrorMessage;
+	@FindBy(xpath = "//div[@class=\"ajs-message ajs-success ajs-visible\"]")
+	private WebElement forceSyncSuccessMessage;
 
-	public WebElement getForceSyncSuccessErrorMessage(int timeOut) {
-		return isDisplayed(driver, forceSyncSuccessErrorMessage, "Visibility", timeOut, "force Sync success/error message");
+	public WebElement forceSyncSuccessMessage(int timeOut) {
+		return isDisplayed(driver, forceSyncSuccessMessage, "Visibility", timeOut, "force Sync success message");
+
+	}
+	
+	@FindBy(xpath = "//div[@class=\"ajs-message ajs-error ajs-visible\"]")
+	private WebElement forceSyncErrorMessage;
+
+	public WebElement getForceSyncErrorMessage(int timeOut) {
+		return isDisplayed(driver, forceSyncErrorMessage, "Visibility", timeOut, "force Sync error message");
 
 	}
 	
@@ -507,7 +515,7 @@ public class OutlookPage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "//div[@class='pQPSJ']//div[contains(@class,'CT1Ra')]")
+	@FindBy(xpath = "//div[@class=\"pQPSJ\"]//div[contains(@class,\"CT1Ra\") or contains(@class,\"zXpJ_\")]")
 	private List<WebElement> listOfEventNames;
 
 	public List<WebElement> getlistOfEventNames() {
@@ -708,5 +716,16 @@ public class OutlookPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, FindElement(driver, xpath, "day", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "alreadyLoggedInLink");
 
 	}
+	
+	@FindBy(xpath = "//button[text()=\"More options\"]")
+	private WebElement moreOptionsLink;
+
+	public WebElement moreOptionsLink(int timeOut) {
+		return isDisplayed(driver, moreOptionsLink, "Visibility", timeOut, "moreOptionsLink");
+
+	}
+	
+	
+	
 	
 }

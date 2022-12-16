@@ -5737,7 +5737,7 @@ public class HomePageBusineesLayer extends HomePage {
 
 	public boolean globalSearchAndNavigate(String recordName, String sideNavOption, boolean noResultMsg) {
 		boolean flag = false;
-		if (click(driver, globalSearchButton(20), "globalSearchButton", action.SCROLLANDBOOLEAN)) {
+		if (clickUsingJavaScript(driver, globalSearchButton(20), "globalSearchButton", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on globalSearchButton", YesNo.No);
 			if (sendKeysAndPressEnter(driver, globalSearchInput(20), recordName, "globalSearchInput",
 					action.SCROLLANDBOOLEAN)) {
@@ -5822,10 +5822,10 @@ public class HomePageBusineesLayer extends HomePage {
 										}
 
 									} else {
-										log(LogStatus.ERROR, "No Record found in Top Results for record: " + recordName,
+										log(LogStatus.ERROR, "No Record found in side nav: "+sideNavOption+" for record: " + recordName,
 												YesNo.Yes);
 										sa.assertTrue(false,
-												"No Record found in Top Results for record: " + recordName);
+												"No Record found in side nav: "+sideNavOption+" for record: " + recordName);
 									}
 
 								}

@@ -49,18 +49,33 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 1);
 		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 1);
 
+		String user2FullName;
+		if (!crmUser2FirstName.equals("") && !crmUser2LastName.equals("")) {
+			user2FullName = crmUser2FirstName + " " + crmUser2LastName;
+		} else {
+			user2FullName = crmUser2LastName;
+
+		}
+
+		String user1FullName;
+		if (!crmUser1FirstName.equals("") && !crmUser1LastName.equals("")) {
+			user1FullName = crmUser1FirstName + " " + crmUser1LastName;
+		} else {
+			user1FullName = crmUser1LastName;
+
+		}
+
 		String startTime = "6:00 PM";
 		String endTime = "6:30 PM";
 		String descriptionBox = "Revenue Grid Event";
 		String recordName = "con 9";
-		String relatedToNotContains = crmUser2FirstName + " " + crmUser2LastName;
+		String relatedToNotContains = user2FullName;
 		String[][] relatedAssociationNotContains = { { "Related_To", relatedToNotContains } };
 		String descriptionBoxOnInteractonCard = "";
 		String dateToVerifyOnInteractionCard = startDate + ", " + startTime;
 		String[] RelatedToVerifyInInteraction = "Martha<break>Max<break>+3".split("<break>");
-		String[] RelatedAssociationVerifyInInteraction = ("con 9" + "<break>" + crmUser2FirstName + " "
-				+ crmUser2LastName + "<break>" + (crmUser1FirstName + " " + crmUser2LastName).trim()).split("<break>",
-						-1);
+		String[] RelatedAssociationVerifyInInteraction = ("con 9" + "<break>" + user2FullName + "<break>"
+				+ (user1FullName).trim()).split("<break>", -1);
 		/*
 		 * String[] updatedRelatedAssociationVerifyInInteraction
 		 * ="Con 1<break>con 2<break>con 3<break>con 4<break>con 5<break>con 6<break>con 7<break>con 8<break>con 9<break>con 10<break>con 11<break>con 12<break>con 13<break>con 14<break>con 15<break>con 16<break>con 17<break>con 18<break>con 19<break>con 20<break>con 21<break>con 22<break>con 23<break>con 24<break>con 25<break>con 26<break>con 27<break>con 28<break>con 29<break>con 30<break>con 31<break>con 32<break>con 33<break>con 34<break>con 35<break>con 36<break>con 37<break>con 38<break>con 39<break>con 40<break>con 41<break>con 42<break>con 43<break>con 44<break>con 45<break>con 46<break>con 47<break>con 48"
@@ -539,10 +554,18 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		}
 
+		String user2FullName;
+		if (!crmUser2FirstName.equals("") && !crmUser2LastName.equals("")) {
+			user2FullName = crmUser2FirstName + " " + crmUser2LastName;
+		} else {
+			user2FullName = crmUser2LastName;
+
+		}
+
 		String dateToVerifyOnInteractionCard = startDate;
 		String[] RelatedToVerifyInInteraction = "Max<break>Martha<break>+3".split("<break>", -1);
 		String RelatedToVerifyInNotes = ("Max<break>Martha<break>con 9<break>" + user1FullName + "<break>"
-				+ crmUser2FirstName + " " + crmUser2LastName).replaceAll(" +", " ");
+				+ user2FullName).replaceAll(" +", " ");
 
 		String[] RelatedAssociationVerifyInInteraction = null;
 
@@ -1459,8 +1482,15 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		}
 
+		String user2FullName;
+		if (!crmUser2FirstName.equals("") && !crmUser2LastName.equals("")) {
+			user2FullName = crmUser2FirstName + " " + crmUser2LastName;
+		} else {
+			user2FullName = crmUser2LastName;
+
+		}
 		String RelatedToVerifyInNotes = ("Max<break>Martha<break>con 9<break>" + user1FullName + "<break>"
-				+ crmUser2FirstName + " " + crmUser2LastName).replaceAll(" +", " ");
+				+ user2FullName).replaceAll(" +", " ");
 		String[] labelAndValueSeprateByBreak = { "Assigned To" + "<break>" + user1FullName,
 				"Subject" + "<break>" + eventTitleUpdated, "Name" + "<break>" + "" };
 
@@ -2381,8 +2411,16 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String accountRecordName = "Vertica";
 		String accountRecordType = "Company";
 		String updatedRelatedToInNotes = "Maxjonic<break>Sumo Logic<break>Vertica<break>Demo Deal";
+
+		String user2FullName;
+		if (!crmUser2FirstName.equals("") && !crmUser2LastName.equals("")) {
+			user2FullName = crmUser2FirstName + " " + crmUser2LastName;
+		} else {
+			user2FullName = crmUser2LastName;
+
+		}
 		String[][] task1UpdateBasicSection = { { "Related_To", updatedRelatedToInNotes } };
-		String[][] task1UpdateAdvancedSection = { { "Assigned To ID", crmUser2FirstName + " " + crmUser2LastName } };
+		String[][] task1UpdateAdvancedSection = { { "Assigned To ID", user2FullName } };
 		String[] updatedSuggestedTags = null;
 
 		lp.CRMLogin(crmUser1EmailID, "navatar123");
@@ -5850,6 +5888,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
 
 		String eventTitle = "This event will have your Business circles talking +4";
 		String eventAttendees = "Dealroom1.3+Lomez@gmail.com,Dealroom1.3+Max@gmail.com,Dealroom1.3+James@gmail.com"
@@ -5865,8 +5904,20 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String user2firstName = crmUser2FirstName;
 		String User2LastName = crmUser2LastName + "updated";
 
+		String user2FullName;
+		if (!crmUser2FirstName.equals("") && !crmUser2LastName.equals("")) {
+			user2FullName = crmUser2FirstName + " " + crmUser2LastName;
+		} else {
+			user2FullName = crmUser2LastName;
+
+		}
+
+		user2FullName = user2FullName + "updated";
 		String user2EmailId = crmUser2EmailID;
-		String[] labelAndValueSeprateByBreak = { "Attendees" + "<break>" + user2firstName + " " + User2LastName };
+
+		String RelatedToVerifyInNotes = user2FullName;
+		String[][] event1BasicSectionVerificationInNotesPopup = { { "Related_To", RelatedToVerifyInNotes } };
+		String[][] event1AdvancedSectionVerificationInNotesPopup = null;
 
 		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
@@ -6038,39 +6089,50 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 								log(LogStatus.INFO, "Event Detail Page has been open for Record: " + eventTitle,
 										YesNo.No);
 								CommonLib.ThreadSleep(8000);
-								List<String> eventDetailPageNegativeResult = BP
-										.fieldValueVerification(labelAndValueSeprateByBreak);
 
-								if (eventDetailPageNegativeResult.isEmpty()) {
-									log(LogStatus.PASS,
-											"------" + eventTitle
-													+ " labels and their values in Detail page has been verified------",
-											YesNo.No);
+								if (click(driver, taskBP.editButtonInEventDetailPage(20), "Edit Button",
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "Clicked on Edit Button", YesNo.No);
 
-									driver.close();
-									CommonLib.ThreadSleep(3000);
+									String url2 = getURL(driver, 10);
+									ThreadSleep(2000);
+									ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
+											.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
+													event1BasicSectionVerificationInNotesPopup,
+													event1AdvancedSectionVerificationInNotesPopup, null);
+									if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
+										log(LogStatus.INFO,
+												"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+												YesNo.No);
 
-									driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-
+									} else {
+										log(LogStatus.ERROR,
+												"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+														+ NotesPopUpPrefilledNegativeResultUpdated,
+												YesNo.No);
+										sa.assertTrue(false,
+												"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+														+ NotesPopUpPrefilledNegativeResultUpdated);
+									}
 								} else {
-									log(LogStatus.ERROR, "------" + eventTitle
-											+ " labels and their values in Detail page has not been verified, Reason: "
-											+ eventDetailPageNegativeResult + "------", YesNo.No);
-									sa.assertTrue(false, "------" + eventTitle
-											+ " labels and their values in Detail page has not been verified, Reason: "
-											+ eventDetailPageNegativeResult + "------");
-
-									driver.close();
-									CommonLib.ThreadSleep(3000);
-
-									driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+									log(LogStatus.ERROR,
+											"Not Able Click on Edit button for Record Page of Event: " + eventTitle,
+											YesNo.Yes);
+									sa.assertTrue(false,
+											"Not Able Click on Edit button for Record Page of Event: " + eventTitle);
 
 								}
+
+								driver.close();
+								CommonLib.ThreadSleep(3000);
+
+								driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+
 							} else {
-								log(LogStatus.ERROR, "Event Record Detail Page  has opened for Record: " + eventTitle
-										+ " in Detail Page: " + contactRecordName, YesNo.Yes);
-								sa.assertTrue(false, "Event Record Detail Page  has opened for Record: " + eventTitle
-										+ " in Detail Page: " + contactRecordName);
+								log(LogStatus.ERROR, "Event Record Detail Page  has not opened for Record: "
+										+ eventTitle + " in Detail Page: " + contactRecordName, YesNo.Yes);
+								sa.assertTrue(false, "Event Record Detail Page  has not opened for Record: "
+										+ eventTitle + " in Detail Page: " + contactRecordName);
 
 							}
 
@@ -6306,7 +6368,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
-		String eventTitle = "Webinar 1 all  day";
+		String eventTitle = "Webinar 1 all day";
 		String eventAttendees = "Dealroom1.3+James@gmail.com,Dealroom1.3+Lenis@gmail.com" + "," + crmUser3EmailID;
 		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
 		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
@@ -6315,11 +6377,18 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String endTime = "";
 		String descriptionBox = "Revenue Grid Event";
 		String contactRecordName = "Lenis";
+
+		String user3FullName;
+		if (!crmUser3FirstName.equals("") && !crmUser3LastName.equals("")) {
+			user3FullName = crmUser3FirstName + " " + crmUser3LastName;
+		} else {
+			user3FullName = crmUser3LastName;
+
+		}
 		String[] labelAndValueSeprateByBreak = { "Subject" + "<break>" + eventTitle, "Start" + "<break>" + startDate,
 				"End" + "<break>" + endDate, "Description" + "<break>" + "",
-				"Attendees" + "<break>" + crmUser3FirstName + " " + crmUser3LastName,
-				"Related Associations" + "<break>" + "", "Related Contacts" + "<break>" + "James, Lenis",
-				"Name" + "<break>" + "  " };
+
+				"Name" + "<break>" + "James" };
 
 		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
@@ -6383,8 +6452,8 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 						}
 
 						CommonLib.refresh(driver);
-						ArrayList<String> result = BP.verifyRecordOnInteractionCard(null, null, eventTitle, null, false,
-								true, null, null);
+						ArrayList<String> result = BP.verifyRecordOnInteractionCard(null, null, eventTitle, null, true,
+								false, null, null);
 						if (result.isEmpty()) {
 							log(LogStatus.PASS, "------" + eventTitle + " record has been verified on intraction------",
 									YesNo.No);
@@ -6513,10 +6582,16 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String recordName = "Litz";
 
+		String user3FullName;
+		if (!crmUser3FirstName.equals("") && !crmUser3LastName.equals("")) {
+			user3FullName = crmUser3FirstName + " " + crmUser3LastName;
+		} else {
+			user3FullName = crmUser3LastName;
+
+		}
 		String[] labelAndValueSeprateByBreak = { "Subject" + "<break>" + updatedEventName,
 				"Start" + "<break>" + updatedStartDate, "End" + "<break>" + updatedEndDate,
-				"Description" + "<break>" + "", "Attendees" + "<break>" + crmUser3FirstName + " " + crmUser3LastName,
-				"Related Associations" + "<break>" + "Sumo Logic, Vertica, Demo Deal",
+				"Description" + "<break>" + "", "Related Associations" + "<break>" + "Sumo Logic, Vertica, Demo Deal",
 				"Related Contacts" + "<break>" + "James, Jhon, Litz" };
 
 		lp.CRMLogin(crmUser1EmailID, "navatar123");
@@ -6588,6 +6663,10 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 								}
 
+								driver.close();
+								CommonLib.ThreadSleep(3000);
+								driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+
 							} else {
 								log(LogStatus.ERROR, "Record Detail Page has not open for Record: " + updatedEventName,
 										YesNo.Yes);
@@ -6654,6 +6733,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 					YesNo.No);
 
 			CommonLib.refresh(driver);
+			home.notificationPopUpClose();
 			if (home.globalSearchAndNavigate(eventTitle, "Events", true)) {
 
 				log(LogStatus.INFO, "-----Verified No Event named: " + eventTitle + " found in Events Object-----",
@@ -6698,17 +6778,24 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String endTime = "9:00 AM";
 		String descriptionBox = "Added the event in outlook to tag users and Contacts Con1";
 		String contact1 = "cont1 test";
-		String account1 = "zxc";
+		String account1 = "zxc.com";
 		String[] labelAndValueSeprateByBreak1 = { "Name" + "<break>" + contact1, "Legal Name" + "<break>" + account1,
 				"Email" + "<break>" + "cont1.test@zxc.com" };
 
-		String contact2 = "cont2 test";
-		String account2 = "zxc";
+		String contact2 = "cont2+test";
+		String account2 = "zxc.com";
 		String[] labelAndValueSeprateByBreak2 = { "Name" + "<break>" + contact2, "Legal Name" + "<break>" + account2,
 				"Email" + "<break>" + "cont2+test@zxc.com" };
 
-		String[] labelAndValueSeprateByBreakInCaseOfEvent = {
-				"Assigned To" + "<break>" + crmUser1FirstName + " " + crmUser1LastName,
+		String user1FullName;
+		if (!crmUser1FirstName.equals("") && !crmUser1LastName.equals("")) {
+			user1FullName = crmUser1FirstName + " " + crmUser1LastName;
+		} else {
+			user1FullName = crmUser1LastName;
+
+		}
+
+		String[] labelAndValueSeprateByBreakInCaseOfEvent = { "Assigned To" + "<break>" + user1FullName,
 				"Subject" + "<break>" + eventTitle, "Name" + "<break>" + contact1,
 				"Related Associations" + "<break>" + "Assign Multiple Associations" };
 
@@ -6721,6 +6808,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 					YesNo.No);
 
 			CommonLib.refresh(driver);
+			home.notificationPopUpClose();
 			if (home.globalSearchAndNavigate(contact1, "Contacts", false)) {
 
 				log(LogStatus.INFO, "-----Verified Contact named: " + contact1 + " found in Contacts Object-----",
@@ -6728,27 +6816,36 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				if (BP.recordDetailPageHeader(contact1, 15) != null) {
 					log(LogStatus.INFO, "Record Detail Page has Opened for Record: " + contact1, YesNo.No);
-					CommonLib.ThreadSleep(8000);
-					List<String> contactDetailPageNegativeResult = BP
-							.fieldValueVerification(labelAndValueSeprateByBreak1);
 
-					if (contactDetailPageNegativeResult.isEmpty()) {
-						log(LogStatus.PASS,
-								"------" + contact1 + " labels and their values in Detail page has been verified------",
-								YesNo.No);
+					if (BP.clicktabOnPage("Details")) {
+						log(LogStatus.INFO, "clicked on Details tab", YesNo.No);
+						CommonLib.ThreadSleep(8000);
+						List<String> contactDetailPageNegativeResult = BP
+								.fieldValueVerification(labelAndValueSeprateByBreak1);
 
+						if (contactDetailPageNegativeResult.isEmpty()) {
+							log(LogStatus.PASS,
+									"------" + contact1
+											+ " labels and their values in Detail page has been verified------",
+									YesNo.No);
+
+						} else {
+							log(LogStatus.ERROR,
+									"------" + contact1
+											+ " labels and their values in Detail page has not been verified, Reason: "
+											+ contactDetailPageNegativeResult + "------",
+									YesNo.No);
+							sa.assertTrue(false,
+									"------" + contact1
+											+ " labels and their values in Detail page has not been verified, Reason: "
+											+ contactDetailPageNegativeResult + "------");
+
+						}
 					} else {
-						log(LogStatus.ERROR,
-								"------" + contact1
-										+ " labels and their values in Detail page has not been verified, Reason: "
-										+ contactDetailPageNegativeResult + "------",
-								YesNo.No);
-						sa.assertTrue(false,
-								"------" + contact1
-										+ " labels and their values in Detail page has not been verified, Reason: "
-										+ contactDetailPageNegativeResult + "------");
-
+						log(LogStatus.ERROR, "Not able to click on Details Tab", YesNo.No);
+						sa.assertTrue(false, "Not able to click on Details Tab");
 					}
+
 				} else {
 
 					log(LogStatus.ERROR, "Record Detail Page has not Opened for Record: " + contact1, YesNo.Yes);
@@ -6765,6 +6862,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 			}
 
 			CommonLib.refresh(driver);
+			home.notificationPopUpClose();
 			if (home.globalSearchAndNavigate(contact2, "Contacts", false)) {
 
 				log(LogStatus.INFO, "-----Verified Contact named: " + contact2 + " found in Contacts Object-----",
@@ -6772,27 +6870,38 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				if (BP.recordDetailPageHeader(contact2, 15) != null) {
 					log(LogStatus.INFO, "Record Detail Page has Opened for Record: " + contact2, YesNo.No);
-					CommonLib.ThreadSleep(8000);
-					List<String> contactDetailPageNegativeResult = BP
-							.fieldValueVerification(labelAndValueSeprateByBreak2);
+					CommonLib.refresh(driver);
+					if (BP.clicktabOnPage("Details")) {
+						log(LogStatus.INFO, "clicked on Details tab", YesNo.No);
+						CommonLib.ThreadSleep(8000);
+						List<String> contactDetailPageNegativeResult = BP
+								.fieldValueVerification(labelAndValueSeprateByBreak2);
 
-					if (contactDetailPageNegativeResult.isEmpty()) {
-						log(LogStatus.PASS,
-								"------" + contact2 + " labels and their values in Detail page has been verified------",
-								YesNo.No);
+						if (contactDetailPageNegativeResult.isEmpty()) {
+							log(LogStatus.PASS,
+									"------" + contact2
+											+ " labels and their values in Detail page has been verified------",
+									YesNo.No);
 
+						} else {
+							log(LogStatus.ERROR,
+									"------" + contact2
+											+ " labels and their values in Detail page has not been verified, Reason: "
+											+ contactDetailPageNegativeResult + "------",
+									YesNo.No);
+							sa.assertTrue(false,
+									"------" + contact2
+											+ " labels and their values in Detail page has not been verified, Reason: "
+											+ contactDetailPageNegativeResult + "------");
+
+						}
 					} else {
-						log(LogStatus.ERROR,
-								"------" + contact2
-										+ " labels and their values in Detail page has not been verified, Reason: "
-										+ contactDetailPageNegativeResult + "------",
-								YesNo.No);
-						sa.assertTrue(false,
-								"------" + contact2
-										+ " labels and their values in Detail page has not been verified, Reason: "
-										+ contactDetailPageNegativeResult + "------");
+
+						log(LogStatus.ERROR, "Record Detail Page has not Opened for Record: " + contact1, YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Record Detail Page has not Opened for Record: " + contact1);
 
 					}
+
 				} else {
 
 					log(LogStatus.ERROR, "Record Detail Page has not Opened for Record: " + contact2, YesNo.Yes);
@@ -6818,6 +6927,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 				if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab, contact1, 30)) {
 					log(LogStatus.INFO, contact1 + " record has been open", YesNo.No);
 					ThreadSleep(4000);
+					CommonLib.refresh(driver);
 					if (BP.clicktabOnPage("Acuity")) {
 						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
@@ -6853,9 +6963,9 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 							}
 						} else {
-							log(LogStatus.ERROR, "Event Record Detail Page  has opened for Record: " + eventTitle
+							log(LogStatus.ERROR, "Event Record Detail Page  has not opened for Record: " + eventTitle
 									+ " in Detail Page: " + contact1, YesNo.Yes);
-							sa.assertTrue(false, "Event Record Detail Page  has opened for Record: " + eventTitle
+							sa.assertTrue(false, "Event Record Detail Page  has not opened for Record: " + eventTitle
 									+ " in Detail Page: " + contact1);
 
 						}
@@ -6916,9 +7026,15 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String account2 = "Sumo Logic";
 		String[] labelAndValueSeprateByBreak2 = { "Name" + "<break>" + contact2, "Legal Name" + "<break>" + account2,
 				"Email" + "<break>" + "cont4+test@sumologic.com" };
+		String user1FullName;
+		if (!crmUser1FirstName.equals("") && !crmUser1LastName.equals("")) {
+			user1FullName = crmUser1FirstName + " " + crmUser1LastName;
+		} else {
+			user1FullName = crmUser1LastName;
 
-		String[] labelAndValueSeprateByBreakInCaseOfEvent = {
-				"Assigned To" + "<break>" + crmUser1FirstName + " " + crmUser1LastName,
+		}
+
+		String[] labelAndValueSeprateByBreakInCaseOfEvent = { "Assigned To" + "<break>" + user1FullName,
 				"Subject" + "<break>" + eventTitle, "Name" + "<break>" + contact1,
 				"Related Associations" + "<break>" + "Assign Multiple Associations" };
 
@@ -6931,6 +7047,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 					YesNo.No);
 
 			CommonLib.refresh(driver);
+			home.notificationPopUpClose();
 			if (home.globalSearchAndNavigate(contact1, "Contacts", false)) {
 
 				log(LogStatus.INFO, "-----Verified Contact named: " + contact1 + " found in Contacts Object-----",
@@ -6975,6 +7092,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 			}
 
 			CommonLib.refresh(driver);
+			home.notificationPopUpClose();
 			if (home.globalSearchAndNavigate(contact2, "Contacts", false)) {
 
 				log(LogStatus.INFO, "-----Verified Contact named: " + contact2 + " found in Contacts Object-----",

@@ -14688,7 +14688,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					if (notificationButtonsList != null) {
 						for (WebElement actualEventButton : notificationButtonsList) {
 
-							if (notificationButtonsList.indexOf(actualEventButton) ==  notificationOptionsListInText
+							if (notificationButtonsList.indexOf(actualEventButton) == notificationOptionsListInText
 									.indexOf(eventName[i])) {
 								if (actualEventButton.isDisplayed())
 									flag = true;
@@ -14714,8 +14714,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 			else {
 
-				log(LogStatus.FAIL, "Event: " + eventName[i] + " is not present there in Notification Pane in record detail page", YesNo.No);
-				negativeResults.add("Event: " + eventName[i] + " is not present there in Notification Pane in record detail page");
+				log(LogStatus.FAIL,
+						"Event: " + eventName[i] + " is not present there in Notification Pane in record detail page",
+						YesNo.No);
+				negativeResults.add(
+						"Event: " + eventName[i] + " is not present there in Notification Pane in record detail page");
 			}
 		}
 
@@ -19372,14 +19375,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		List<String> result = new ArrayList<String>();
 		String label = "";
 		String value = "";
-
+		CommonLib.ThreadSleep(14000);
 		try {
 			for (String labelValue : labelAndValueSeprateByBreak) {
 
 				label = labelValue.split("<break>", -1)[0];
 				value = labelValue.split("<break>", -1)[1];
 
-				if (valueOfLabelInDetailPage(label, 5) != null) {
+				if (valueOfLabelInDetailPage(label, 8) != null) {
 					log(LogStatus.INFO, "Label found: " + label, YesNo.No);
 					String actualValue = CommonLib
 							.getText(driver, valueOfLabelInDetailPage(label, 5), "value of: " + label, action.BOOLEAN)
