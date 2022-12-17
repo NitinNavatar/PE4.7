@@ -5683,7 +5683,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String eventTitles[] = "Relive salesforce Live 1<break>Relive salesforce Live 2<break>Relive salesforce Live 3<break>Relive salesforce Live 4"
 				.split("<break>", -1);
-		String eventAttendees = "Dealroom1.3+James@gmail.com,Dealroom1.3+Jhon@gmail.com" + "," + crmUser1EmailID;
+		String eventAttendees = "dealroom1.3+con1@gmail.com,dealroom1.3+con2@gmail.com" + "," + crmUser1EmailID;
 		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -2);
 		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
 
@@ -5691,13 +5691,13 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String endTime = "10:00 PM";
 		String descriptionBox = "";
 
-		String updatedRelatedTo = "Sumo Logic";
+		String updatedRelatedTo = "Acc 11";
 		String[][] task1UpdateBasicSection = { { "Related_To", updatedRelatedTo } };
 		String[][] task1UpdateAdvancedSection = null;
 		String[] updatedSuggestedTags = null;
-		String contactRecordName = "James";
+		String contactRecordName = "Con 1";
 
-		String accountRecordName = "Sumo Logic";
+		String accountRecordName = "Acc 11";
 		String accountRecordType = "Company";
 
 		lp.CRMLogin(crmUser1EmailID, "navatar123");
@@ -6185,12 +6185,12 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String eventTitleExisting = "Relive salesforce Live 1";
 
-		String updatedNotes = "Sumo Logic, James, Jhon";
+		String updatedNotes = "Acc 11, Con 1, con 2";
 		String[][] event1UpdateBasicSection = { { "Notes", updatedNotes } };
 		String[][] event1UpdateAdvancedSection = null;
 		String[] updatedSuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
 
-		String accountRecordName = "Sumo Logic";
+		String accountRecordName = "Acc 11";
 		String accountRecordType = "Company";
 
 		lp.CRMLogin(crmUser1EmailID, "navatar123");
@@ -7022,7 +7022,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[] labelAndValueSeprateByBreak1 = { "Name" + "<break>" + contact1, "Legal Name" + "<break>" + account1,
 				"Email" + "<break>" + "cont3.test@sumologic.com" };
 
-		String contact2 = "cont4 test";
+		String contact2 = "cont4+test";
 		String account2 = "Sumo Logic";
 		String[] labelAndValueSeprateByBreak2 = { "Name" + "<break>" + contact2, "Legal Name" + "<break>" + account2,
 				"Email" + "<break>" + "cont4+test@sumologic.com" };
@@ -7055,7 +7055,9 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				if (BP.recordDetailPageHeader(contact1, 15) != null) {
 					log(LogStatus.INFO, "Record Detail Page has Opened for Record: " + contact1, YesNo.No);
-					CommonLib.ThreadSleep(8000);
+					if (BP.clicktabOnPage("Details")) {
+						log(LogStatus.INFO, "clicked on Details tab", YesNo.No);
+						CommonLib.ThreadSleep(8000);
 					List<String> contactDetailPageNegativeResult = BP
 							.fieldValueVerification(labelAndValueSeprateByBreak1);
 
@@ -7075,6 +7077,10 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 										+ " labels and their values in Detail page has not been verified, Reason: "
 										+ contactDetailPageNegativeResult + "------");
 
+					}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on Details Tab", YesNo.No);
+						sa.assertTrue(false, "Not able to click on Details Tab");
 					}
 				} else {
 
@@ -7100,7 +7106,9 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				if (BP.recordDetailPageHeader(contact2, 15) != null) {
 					log(LogStatus.INFO, "Record Detail Page has Opened for Record: " + contact2, YesNo.No);
-					CommonLib.ThreadSleep(8000);
+					if (BP.clicktabOnPage("Details")) {
+						log(LogStatus.INFO, "clicked on Details tab", YesNo.No);
+						CommonLib.ThreadSleep(8000);
 					List<String> contactDetailPageNegativeResult = BP
 							.fieldValueVerification(labelAndValueSeprateByBreak2);
 
@@ -7121,6 +7129,11 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 										+ contactDetailPageNegativeResult + "------");
 
 					}
+					
+				} else {
+					log(LogStatus.ERROR, "Not able to click on Details Tab", YesNo.No);
+					sa.assertTrue(false, "Not able to click on Details Tab");
+				}
 				} else {
 
 					log(LogStatus.ERROR, "Record Detail Page has not Opened for Record: " + contact2, YesNo.Yes);
