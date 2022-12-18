@@ -12896,15 +12896,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
 						log(LogStatus.INFO, "Clicked on " + labelName + " paragraph", YesNo.No);
 						ThreadSleep(2000);
-						xPath = "//div[span[span[text()='" + labelName + "']]]//div[@role='textbox']//p";
-						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.BOOLEAN, 30);
+
+						xPath = "//div[span[span[text()='" + labelName + "']]]//div[@role='textbox']";
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
 						ele.sendKeys(Keys.CONTROL + "A");
 						ThreadSleep(1000);
 						ele.sendKeys(Keys.BACK_SPACE);
-						ThreadSleep(1000);
-						xPath = "//div[span[span[text()='" + labelName + "']]]//div[@role='textbox']//p";
-						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.BOOLEAN, 30);
-						if (CommonLib.sendKeysWithoutClearingTextBox(driver, ele, value, labelName + " paragraph", action.BOOLEAN)) {
+						CommonLib.ThreadSleep(3000);
+						if (sendKeys(driver, ele, value, labelName + " paragraph", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, value + " has been passed on " + labelName + " paragraph", YesNo.No);
 							CommonLib.ThreadSleep(2000);
 						} else {
@@ -14713,8 +14712,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 			else {
 
-				log(LogStatus.FAIL, "Event: " + eventName[i] + " is not present there in Notification Pane", YesNo.No);
-				negativeResults.add("Event: " + eventName[i] + " is not present there in Notification Pane");
+				log(LogStatus.FAIL,
+						"Event: " + eventName[i] + " is not present there in Notification Pane in record detail page",
+						YesNo.No);
+				negativeResults.add(
+						"Event: " + eventName[i] + " is not present there in Notification Pane in record detail page");
 			}
 		}
 
@@ -17986,7 +17988,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		}
 
-
 		return negativeResult;
 	}
 
@@ -19373,14 +19374,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		List<String> result = new ArrayList<String>();
 		String label = "";
 		String value = "";
-
+		CommonLib.ThreadSleep(14000);
 		try {
 			for (String labelValue : labelAndValueSeprateByBreak) {
 
 				label = labelValue.split("<break>", -1)[0];
 				value = labelValue.split("<break>", -1)[1];
 
-				if (valueOfLabelInDetailPage(label, 5) != null) {
+				if (valueOfLabelInDetailPage(label, 8) != null) {
 					log(LogStatus.INFO, "Label found: " + label, YesNo.No);
 					String actualValue = CommonLib
 							.getText(driver, valueOfLabelInDetailPage(label, 5), "value of: " + label, action.BOOLEAN)
@@ -19925,7 +19926,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		} else {
 			log(LogStatus.FAIL, "Notification Header is not present there", YesNo.No);
-			
+
 		}
 		List<String> notificationOptionsListInText = notificationOptionsList.stream()
 				.map(x -> CommonLib.getText(driver, x, "Event Name", action.BOOLEAN)).collect(Collectors.toList());
@@ -19950,7 +19951,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		} else {
 
 			log(LogStatus.FAIL, "Either Notification Pane is not open or might be Locator gets changed", YesNo.No);
-			negativeResults.add("Either Notification Pane is not open or might be Locator gets changed");
+
 		}
 
 		return negativeResults;
@@ -19970,8 +19971,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		if (CommonLib.clickUsingJavaScript(driver, getNotificationIcon(), "NotificationIcon")) {
 
 			log(LogStatus.INFO, "Clicked on Notification Icon", YesNo.No);
+			CommonLib.ThreadSleep(4000);
 			List<WebElement> notificationOptionsList = getNotificationOptions();
-			int actualCount = notificationOptionsList.size();
+			Integer actualCount = notificationOptionsList.size();
 			if (countIcon.equals(actualCount)) {
 
 				log(LogStatus.INFO, "--------Icon Count and Actual Count in Notification Matched, i.e.:  " + countIcon
@@ -20005,31 +20007,43 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 			log(LogStatus.INFO, "Clicked on Notification Icon", YesNo.No);
 
-			if (linkOfEventInNotificationOfRecordDetailPage(eventName, 8) != null) {
+			if (linkOfEventInNotificationOfRecordDetailPage(eventName, 12) != null) {
 				log(LogStatus.INFO, "Clicked on Event: " + eventName + " from Record Page Notification", YesNo.No);
-				String parentId = CommonLib.switchOnWindow(driver);
-				if (parentId != null) {
-					log(LogStatus.INFO, "Switched to New Window", YesNo.No);
-					if (eventDetailPageHeader(eventName, 15) != null) {
-						log(LogStatus.INFO, "Header Found: " + eventName + " ,So Event Detail Page Open", YesNo.No);
-						return parentId;
+
+				if (click(driver, linkOfEventInNotificationOfRecordDetailPage(eventName, 8), "Event: " + eventName,
+						action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Event: " + eventName + " from Record page Notification", YesNo.No);
+					String parentId = CommonLib.switchOnWindow(driver);
+					if (parentId != null) {
+						log(LogStatus.INFO, "Switched to New Window", YesNo.No);
+						if (eventDetailPageHeader(eventName, 15) != null) {
+							log(LogStatus.INFO, "Header Found: " + eventName + " ,So Event Detail Page Open", YesNo.No);
+							return parentId;
+						} else {
+							log(LogStatus.FAIL,
+									"Header not Found: " + eventName + " ,So Event Detail Page has not Open", YesNo.No);
+							sa.assertTrue(false,
+									"Header not Found: " + eventName + " ,So Event Detail Page has not Open");
+							return null;
+						}
 					} else {
-						log(LogStatus.FAIL, "Header not Found: " + eventName + " ,So Event Detail Page has not Open",
-								YesNo.No);
-						sa.assertTrue(false, "Header not Found: " + eventName + " ,So Event Detail Page has not Open");
+						log(LogStatus.FAIL, "No New window open after click on Event name: " + eventName, YesNo.No);
+						sa.assertTrue(false, "No New window open after click on Event name: " + eventName);
 						return null;
 					}
+
 				} else {
-					log(LogStatus.FAIL, "No New window open after click on Event name: " + eventName, YesNo.No);
-					sa.assertTrue(false, "No New window open after click on Event name: " + eventName);
+
+					log(LogStatus.FAIL, "Not able to Click on Event: " + eventName + " from Record Page Notification",
+							YesNo.No);
+					sa.assertTrue(false, "Not able to Click on Event: " + eventName + " from Record Page Notification");
 					return null;
 				}
 
 			} else {
 
-				log(LogStatus.FAIL, "Not able to Click on Event: " + eventName + " from Record Page Notification",
-						YesNo.No);
-				sa.assertTrue(false, "Not able to Click on Event: " + eventName + " from Record Page Notification");
+				log(LogStatus.FAIL, "No Link found of Evenet named: " + eventName + " in Notification Pane", YesNo.No);
+				sa.assertTrue(false, "No Link found of Evenet named: " + eventName + " in Notification Pane");
 				return null;
 			}
 		} else {
@@ -20039,42 +20053,38 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 	}
-	
-	
-public ArrayList<String> verifyRedirectionOnClickEntityTypeOnTaggedSection() {
-		
+
+	public ArrayList<String> verifyRedirectionOnClickEntityTypeOnTaggedSection() {
+
 		ArrayList<String> result = new ArrayList<String>();
 
-		if (click(driver, getTaggedRecordName(TaggedName.Companies.toString(), 30), TaggedName.Companies.toString()+" tab", action.SCROLLANDBOOLEAN)) {
+		if (click(driver, getTaggedRecordName(TaggedName.Companies.toString(), 30),
+				TaggedName.Companies.toString() + " tab", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
 			ThreadSleep(5000);
-			if (CommonLib.clickUsingJavaScript(driver,
-					recordsNameOnTaggedSection(TaggedName.Companies.toString(), 30),
+			if (CommonLib.clickUsingJavaScript(driver, recordsNameOnTaggedSection(TaggedName.Companies.toString(), 30),
 					"Records on Company Tagged", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on record on Companies tab",
-						YesNo.No);
-				
+				log(LogStatus.INFO, "Clicked on record on Companies tab", YesNo.No);
+
 				String id = switchOnWindow(driver);
-				if(id!=null)
-				{	
-				if (getTabName("Firm",20)!= null) {
-					log(LogStatus.INFO, "The page is redirecting to firm tab after click on Entity type of firm", YesNo.No);
+				if (id != null) {
+					if (getTabName("Firm", 20) != null) {
+						log(LogStatus.INFO, "The page is redirecting to firm tab after click on Entity type of firm",
+								YesNo.No);
+					} else {
+						log(LogStatus.ERROR,
+								"The page is not redirecting to firm tab after click on Entity type of firm", YesNo.No);
+						result.add("The page is not redirecting to firm tab after click on Entity type of firm");
+					}
+					driver.close();
+					driver.switchTo().window(id);
 				} else {
-					log(LogStatus.ERROR,  "The page is not redirecting to firm tab after click on Entity type of firm", YesNo.No);
-					result.add( "The page is not redirecting to firm tab after click on Entity type of firm");
-				}
-				driver.close();
-				driver.switchTo().window(id);
-				}
-				else
-				{
-					log(LogStatus.ERROR,  "The new tab is not opening after clicking on entity type of firm", YesNo.No);
+					log(LogStatus.ERROR, "The new tab is not opening after clicking on entity type of firm", YesNo.No);
 					result.add("The new tab is not opening after clicking on entity type of firm");
 				}
 
 			} else {
-				log(LogStatus.ERROR,
-						"Not able to click on record on Companies tab", YesNo.No);
+				log(LogStatus.ERROR, "Not able to click on record on Companies tab", YesNo.No);
 				result.add("Not able to click on record on Companies tab");
 			}
 
@@ -20083,31 +20093,31 @@ public ArrayList<String> verifyRedirectionOnClickEntityTypeOnTaggedSection() {
 			result.add("Not able to click on Companies tab name");
 		}
 
-
-		if (click(driver, getTaggedRecordName(TaggedName.People.toString(), 30), TaggedName.People.toString()+" tab", action.SCROLLANDBOOLEAN)) {
+		if (click(driver, getTaggedRecordName(TaggedName.People.toString(), 30), TaggedName.People.toString() + " tab",
+				action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 			ThreadSleep(5000);
-			if (CommonLib.clickUsingJavaScript(driver,
-					recordsNameOnTaggedSection(TaggedName.People.toString(), 30),
+			if (CommonLib.clickUsingJavaScript(driver, recordsNameOnTaggedSection(TaggedName.People.toString(), 30),
 					"Records on People Tagged", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on record on People tab",
-						YesNo.No);
+				log(LogStatus.INFO, "Clicked on record on People tab", YesNo.No);
 
 				String id = switchOnWindow(driver);
-				if(id!=null)
-				{	
-					if (getTabName("Contact",20)!= null) {
-						log(LogStatus.INFO, "The page is redirecting to Contact tab after click on Entity type of People", YesNo.No);
+				if (id != null) {
+					if (getTabName("Contact", 20) != null) {
+						log(LogStatus.INFO,
+								"The page is redirecting to Contact tab after click on Entity type of People",
+								YesNo.No);
 					} else {
-						log(LogStatus.ERROR,  "The page is not redirecting to Contact tab after click on Entity type of people", YesNo.No);
-						result.add( "The page is not redirecting to Contact tab after click on Entity type of people");
+						log(LogStatus.ERROR,
+								"The page is not redirecting to Contact tab after click on Entity type of people",
+								YesNo.No);
+						result.add("The page is not redirecting to Contact tab after click on Entity type of people");
 					}
 					driver.close();
 					driver.switchTo().window(id);
-				}
-				else
-				{
-					log(LogStatus.ERROR,  "The new tab is not opening after clicking on entity type of People", YesNo.No);
+				} else {
+					log(LogStatus.ERROR, "The new tab is not opening after clicking on entity type of People",
+							YesNo.No);
 					result.add("The new tab is not opening after clicking on entity type of people");
 				}
 
@@ -20120,31 +20130,28 @@ public ArrayList<String> verifyRedirectionOnClickEntityTypeOnTaggedSection() {
 			result.add("Not able to click on Companies tab name");
 		}
 
-
-		if (click(driver, getTaggedRecordName(TaggedName.Deals.toString(), 30), TaggedName.Deals.toString()+" tab", action.SCROLLANDBOOLEAN)) {
+		if (click(driver, getTaggedRecordName(TaggedName.Deals.toString(), 30), TaggedName.Deals.toString() + " tab",
+				action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Deal tab name", YesNo.No);
-            ThreadSleep(5000);
-			if (CommonLib.clickUsingJavaScript(driver,
-					recordsNameOnTaggedSection(TaggedName.Deals.toString(), 30),
+			ThreadSleep(5000);
+			if (CommonLib.clickUsingJavaScript(driver, recordsNameOnTaggedSection(TaggedName.Deals.toString(), 30),
 					"Records on Deal Tagged", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on record on deal tab",
-						YesNo.No);
+				log(LogStatus.INFO, "Clicked on record on deal tab", YesNo.No);
 
 				String id = switchOnWindow(driver);
-				if(id!=null)
-				{	
-					if (getTabName("Deal",20)!= null) {
-						log(LogStatus.INFO, "The page is redirecting to deal tab after click on Entity type of deal", YesNo.No);
+				if (id != null) {
+					if (getTabName("Deal", 20) != null) {
+						log(LogStatus.INFO, "The page is redirecting to deal tab after click on Entity type of deal",
+								YesNo.No);
 					} else {
-						log(LogStatus.ERROR,  "The page is not redirecting to Deal tab after click on Entity type of deal", YesNo.No);
-						result.add( "The page is not redirecting to Deal tab after click on Entity type of deal");
+						log(LogStatus.ERROR,
+								"The page is not redirecting to Deal tab after click on Entity type of deal", YesNo.No);
+						result.add("The page is not redirecting to Deal tab after click on Entity type of deal");
 					}
 					driver.close();
 					driver.switchTo().window(id);
-				}
-				else
-				{
-					log(LogStatus.ERROR,  "The new tab is not opening after clicking on entity type of Deal", YesNo.No);
+				} else {
+					log(LogStatus.ERROR, "The new tab is not opening after clicking on entity type of Deal", YesNo.No);
 					result.add("The new tab is not opening after clicking on entity type of Deal");
 				}
 
@@ -20159,32 +20166,28 @@ public ArrayList<String> verifyRedirectionOnClickEntityTypeOnTaggedSection() {
 		return result;
 	}
 
+	public ArrayList<String> verifyDescriptionShouldNotVisibleUnderDetailsOnInteractionSection(String[] subjectName,
+			String[] detailsMessage) {
+		ArrayList<String> result = new ArrayList<String>();
+		if (subjectName.length == detailsMessage.length) {
+			for (int i = 0; i < subjectName.length; i++) {
+				String actualDetails = getText(driver, getDetailsOnInteractionPage(subjectName[i], 30),
+						" details of subject : " + subjectName[i], action.SCROLLANDBOOLEAN);
+				if (!actualDetails.contains(detailsMessage[i])) {
+					log(LogStatus.INFO, "Details : " + detailsMessage[i]
+							+ " is not available on Interaction popup for subject " + subjectName[i], YesNo.No);
+				} else {
+					log(LogStatus.ERROR, "Details : " + detailsMessage[i]
+							+ " is available on Interaction popup for subject " + subjectName[i], YesNo.No);
+					result.add("Details : " + detailsMessage[i] + " is available on Interaction popup for subject "
+							+ subjectName[i]);
+				}
 
-    public ArrayList<String> verifyDescriptionShouldNotVisibleUnderDetailsOnInteractionSection(String[] subjectName, String[] detailsMessage)
-    {
-    	ArrayList<String> result=new ArrayList<String>();
-    	if(subjectName.length==detailsMessage.length)
-    	{
-    		for(int i=0; i<subjectName.length; i++)
-    		{
-    			String actualDetails=getText(driver, getDetailsOnInteractionPage(subjectName[i],30), " details of subject : "+subjectName[i], action.SCROLLANDBOOLEAN);
-    			if(!actualDetails.contains(detailsMessage[i]))
-    			{
-    				log(LogStatus.INFO, "Details : "+detailsMessage[i]+" is not available on Interaction popup for subject "+subjectName[i], YesNo.No);	
-    			}
-    			else
-    			{
-    				log(LogStatus.ERROR, "Details : "+detailsMessage[i]+" is available on Interaction popup for subject "+subjectName[i], YesNo.No);
-    				result.add("Details : "+detailsMessage[i]+" is available on Interaction popup for subject "+subjectName[i]);
-    			}
-    			
-    		}
-    		
-    		
-    	}
+			}
+
+		}
 		return result;
-    	
-    }
 
+	}
 
 }

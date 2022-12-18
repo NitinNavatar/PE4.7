@@ -2478,10 +2478,10 @@ public class HomePage extends BasePageBusinessLayer {
 
 		String xpath = "//lightning-layout//lightning-layout-item//a/b[text()=\"" + eventName + "\"]/parent::a";
 		try {
-			return FindElement(driver, xpath, "Add Note Button of event in HomePage: " + eventName,
+			return FindElement(driver, xpath, "Event Link in HomePage: " + eventName,
 					action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, xpath, "Add Note Button of event in HomePage: " + eventName,
+			return FindElement(driver, xpath, "Event Link in HomePage: " + eventName,
 					action.SCROLLANDBOOLEAN, timeOut);
 		}
 
@@ -2515,7 +2515,7 @@ public class HomePage extends BasePageBusinessLayer {
 
 	public WebElement globalSearchRecord(String recordName, int timeOut) {
 
-		String xpath = "//td/span/a[text()=\"" + recordName + "\"]";
+		String xpath = "//*/span/a[text()=\"" + recordName + "\"]";
 		try {
 			return isDisplayed(driver,
 					FindElement(driver, xpath, "Text Found: " + recordName, action.SCROLLANDBOOLEAN, timeOut),
