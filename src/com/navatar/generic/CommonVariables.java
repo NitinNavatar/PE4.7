@@ -1692,6 +1692,8 @@ public class CommonVariables {
 	 		
 	 		public static String AMNNR_Subject54, AMNNR_Notes54, AMNNR_AdvancePriority54, AMNNR_AdvanceStatus54, AMNNR_TaskSubject54, AMNNR_TaskStatus54;
 		 	public static String AMNNR_ActivityType54;
+		 	
+		 	public static String AMNNR_Subject55, AMNNR_Notes55, AMNNR_RelatedTo55, AMNNR_Contact5;
 
             
 
@@ -8924,7 +8926,18 @@ public class CommonVariables {
     			 	AMNNR_TaskStatus54=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity054", excelLabel.Task_Status);
     			 	
     			 	AMNNR_ActivityType54=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity054", excelLabel.Action_Type);
-					
+    			 	
+    				
+    			 	AMNNR_Subject55=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity055", excelLabel.Subject);	 	
+    			 	AMNNR_Notes55=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity055", excelLabel.Notes);	
+    			 	AMNNR_RelatedTo55=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity055", excelLabel.Related_To);
+    			 	AMNNR_Contact5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AMNNR_Con5", excelLabel.ContactName);
+    			 	
+    			 	
+    			 	
+    			 	
+    			 	
+    			 	
 		 		
 				try {
 					dataFile.close();

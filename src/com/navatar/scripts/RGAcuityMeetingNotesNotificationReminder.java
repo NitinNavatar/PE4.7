@@ -7058,26 +7058,27 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 					if (BP.clicktabOnPage("Details")) {
 						log(LogStatus.INFO, "clicked on Details tab", YesNo.No);
 						CommonLib.ThreadSleep(8000);
-					List<String> contactDetailPageNegativeResult = BP
-							.fieldValueVerification(labelAndValueSeprateByBreak1);
+						List<String> contactDetailPageNegativeResult = BP
+								.fieldValueVerification(labelAndValueSeprateByBreak1);
 
-					if (contactDetailPageNegativeResult.isEmpty()) {
-						log(LogStatus.PASS,
-								"------" + contact1 + " labels and their values in Detail page has been verified------",
-								YesNo.No);
+						if (contactDetailPageNegativeResult.isEmpty()) {
+							log(LogStatus.PASS,
+									"------" + contact1
+											+ " labels and their values in Detail page has been verified------",
+									YesNo.No);
 
-					} else {
-						log(LogStatus.ERROR,
-								"------" + contact1
-										+ " labels and their values in Detail page has not been verified, Reason: "
-										+ contactDetailPageNegativeResult + "------",
-								YesNo.No);
-						sa.assertTrue(false,
-								"------" + contact1
-										+ " labels and their values in Detail page has not been verified, Reason: "
-										+ contactDetailPageNegativeResult + "------");
+						} else {
+							log(LogStatus.ERROR,
+									"------" + contact1
+											+ " labels and their values in Detail page has not been verified, Reason: "
+											+ contactDetailPageNegativeResult + "------",
+									YesNo.No);
+							sa.assertTrue(false,
+									"------" + contact1
+											+ " labels and their values in Detail page has not been verified, Reason: "
+											+ contactDetailPageNegativeResult + "------");
 
-					}
+						}
 					} else {
 						log(LogStatus.ERROR, "Not able to click on Details Tab", YesNo.No);
 						sa.assertTrue(false, "Not able to click on Details Tab");
@@ -7109,31 +7110,32 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 					if (BP.clicktabOnPage("Details")) {
 						log(LogStatus.INFO, "clicked on Details tab", YesNo.No);
 						CommonLib.ThreadSleep(8000);
-					List<String> contactDetailPageNegativeResult = BP
-							.fieldValueVerification(labelAndValueSeprateByBreak2);
+						List<String> contactDetailPageNegativeResult = BP
+								.fieldValueVerification(labelAndValueSeprateByBreak2);
 
-					if (contactDetailPageNegativeResult.isEmpty()) {
-						log(LogStatus.PASS,
-								"------" + contact2 + " labels and their values in Detail page has been verified------",
-								YesNo.No);
+						if (contactDetailPageNegativeResult.isEmpty()) {
+							log(LogStatus.PASS,
+									"------" + contact2
+											+ " labels and their values in Detail page has been verified------",
+									YesNo.No);
+
+						} else {
+							log(LogStatus.ERROR,
+									"------" + contact2
+											+ " labels and their values in Detail page has not been verified, Reason: "
+											+ contactDetailPageNegativeResult + "------",
+									YesNo.No);
+							sa.assertTrue(false,
+									"------" + contact2
+											+ " labels and their values in Detail page has not been verified, Reason: "
+											+ contactDetailPageNegativeResult + "------");
+
+						}
 
 					} else {
-						log(LogStatus.ERROR,
-								"------" + contact2
-										+ " labels and their values in Detail page has not been verified, Reason: "
-										+ contactDetailPageNegativeResult + "------",
-								YesNo.No);
-						sa.assertTrue(false,
-								"------" + contact2
-										+ " labels and their values in Detail page has not been verified, Reason: "
-										+ contactDetailPageNegativeResult + "------");
-
+						log(LogStatus.ERROR, "Not able to click on Details Tab", YesNo.No);
+						sa.assertTrue(false, "Not able to click on Details Tab");
 					}
-					
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Details Tab", YesNo.No);
-					sa.assertTrue(false, "Not able to click on Details Tab");
-				}
 				} else {
 
 					log(LogStatus.ERROR, "Record Detail Page has not Opened for Record: " + contact2, YesNo.Yes);
