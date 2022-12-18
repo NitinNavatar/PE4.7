@@ -12848,7 +12848,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	public boolean updateActivityTimelineRecord(String projectName, String[][] basicSection, String[][] advanceSection,
 			String[][] taskSection, String[] suggestedTags, String[] removeTagName) {
-		NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 		String xPath = "";
 		WebElement ele;
 		boolean flag = false;
@@ -12893,19 +12892,20 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				} else if (labelName.contains(excelLabel.Notes.toString())) {
 					xPath = "//div[span[span[text()='" + labelName
 							+ "']]]//div[@class='slds-rich-text-editor__textarea slds-grid']";
-					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.BOOLEAN, 30);
 					if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
 						log(LogStatus.INFO, "Clicked on " + labelName + " paragraph", YesNo.No);
 						ThreadSleep(2000);
 						xPath = "//div[span[span[text()='" + labelName + "']]]//div[@role='textbox']//p";
-						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.BOOLEAN, 30);
 						ele.sendKeys(Keys.CONTROL + "A");
 						ThreadSleep(1000);
 						ele.sendKeys(Keys.BACK_SPACE);
-
-						if (sendKeys(driver, ele, value, labelName + " paragraph", action.SCROLLANDBOOLEAN)) {
+						ThreadSleep(1000);
+						xPath = "//div[span[span[text()='" + labelName + "']]]//div[@role='textbox']//p";
+						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.BOOLEAN, 30);
+						if (CommonLib.sendKeysWithoutClearingTextBox(driver, ele, value, labelName + " paragraph", action.BOOLEAN)) {
 							log(LogStatus.INFO, value + " has been passed on " + labelName + " paragraph", YesNo.No);
-
 							CommonLib.ThreadSleep(2000);
 						} else {
 							log(LogStatus.ERROR, value + " is not passed on " + labelName + " paragraph", YesNo.No);
@@ -12978,7 +12978,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					return false;
 				}
 			}
-
 		}
 		if (advanceSection != null) {
 			if (clickUsingJavaScript(driver, getSectionBtn("Advanced", 30), "Advanced section",
@@ -19008,11 +19007,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								log(LogStatus.INFO,
 										"Expected details: " + details[i]
 												+ " has been matched with the actual details: " + actualDetails
-												+ " for subject: " + subjectName[i] + " on meeting and call popup",
+												+ " for subject: " + subjectName[i] + " on meeting and call popup. Subject: "+subjectName,
 										YesNo.No);
 							} else {
 								log(LogStatus.ERROR, "Expected details: " + details[i]
-										+ " is not matched with the actual details: " + actualDetails, YesNo.No);
+										+ " is not matched with the actual details: " + actualDetails + " for subject: "
+										+ subjectName[i] + " on meeting and call popup", YesNo.No);
 								result.add("Expected details: " + details[i]
 										+ " is not matched with the actual details: " + actualDetails + " for subject: "
 										+ subjectName[i] + " on meeting and call popup");

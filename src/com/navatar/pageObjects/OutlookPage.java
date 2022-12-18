@@ -647,12 +647,12 @@ public class OutlookPage extends BasePageBusinessLayer {
 
 	
 	public WebElement getOutlookCalendarIcon(String dateType,action action,int timeOut) {
-		String xpath ="//input[@aria-label='"+dateType+"']";
+		String xpath ="//input[@aria-label='"+dateType+"']/following-sibling::i";
 		return isDisplayed(driver, FindElement(driver, xpath, "Calendar icon", action, timeOut), "Visibility", timeOut, "Calendar icon");
 
 	}
 	
-	@FindBy(xpath = "//div[@aria-label='Calendar']//button[contains(@aria-label,'select to change the month')]/span")
+	@FindBy(xpath = "//div[@aria-label='Calendar']//button[contains(@aria-label,'select to change the month')]")
 	private WebElement monthsAndYearButton;
 
 	public WebElement getMonthsAndYearButton(int timeOut) {
@@ -708,5 +708,22 @@ public class OutlookPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, FindElement(driver, xpath, "day", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "alreadyLoggedInLink");
 
 	}
+	
+	@FindBy(xpath = "//input[@placeholder='Search for a room or location']")
+	private WebElement searchInputLocation;
+
+	public WebElement getSearchInputLocation(int timeOut) {
+		return isDisplayed(driver, searchInputLocation, "Visibility", timeOut, "Seacrh locations");
+
+	}
+	@FindBy(xpath = "//div[text()='Reminders']/..//button[@aria-label='Close']")
+	private WebElement closeBtnOnReminderPopup;
+
+	public WebElement getCloseBtnOnReminderPopup(int timeOut) {
+		return isDisplayed(driver, closeBtnOnReminderPopup, "Visibility", timeOut, "Close button Reminder popup");
+
+	}
+	
+	
 	
 }

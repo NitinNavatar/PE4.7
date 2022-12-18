@@ -37,6 +37,11 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 			String startTime, String endTime, String descriptionBox, boolean allDayToggle) {
 
 		boolean flag = false;
+		
+		if(getCloseBtnOnReminderPopup(20)!=null)
+		{
+			click(driver, getCloseBtnOnReminderPopup(20), "reminder close", action.BOOLEAN);	
+		}
 
 		if (click(driver, calendarButton(30), "calendarButton", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Calendar Button", YesNo.No);
@@ -47,8 +52,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 				if (eventTitleInputBox(7) == null) {
 					CommonLib.ThreadSleep(3000);
-					if (CommonLib.click(driver, newEventButton(30), "newEventButton", action.SCROLLANDBOOLEAN))
-						;
+					if (CommonLib.click(driver, newEventButton(30), "newEventButton", action.SCROLLANDBOOLEAN));
 
 				}
 
@@ -103,7 +107,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 						if (startDate != null && !"".equalsIgnoreCase(startDate)) {
 
-							if (enterDateThroughOutlookCalendar(driver, "start", startDate, action.SCROLLANDBOOLEAN,
+							if (enterDateThroughOutlookCalendar(driver, "start", startDate, action.BOOLEAN,
 									25)) {
 								CommonLib.log(LogStatus.INFO, "Entered Value: " + startDate, YesNo.No);
 
@@ -137,7 +141,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 						if (endDate != null && !"".equalsIgnoreCase(endDate)) {
 
-							if (enterDateThroughOutlookCalendar(driver, "end", endDate, action.SCROLLANDBOOLEAN, 25)) {
+							if (enterDateThroughOutlookCalendar(driver, "end", endDate, action.BOOLEAN, 25)) {
 								CommonLib.log(LogStatus.INFO, "Entered Value: " + endDate, YesNo.No);
 
 							} else {
@@ -1567,8 +1571,9 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 			System.out.println("Month name is incorrect please passed correct name");
 
 		}
-		ThreadSleep(2000);
-
+		ThreadSleep(5000);
+		click(driver, getSearchInputLocation(15), "Scroll to start date",action.BOOLEAN);
+		ThreadSleep(3000);
 		if (click(driver, getOutlookCalendarIcon(dateType, null, timeout), "Calendar Icon", action)) {
 			log(LogStatus.INFO, "Clicked on calendar button", YesNo.No);
 			ThreadSleep(2000);
@@ -1586,7 +1591,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 						if (click(driver, getOutlookCalendarMonth(partialMonthName, action, timeout), "month name list",
 								action)) {
-							log(LogStatus.INFO, "Clicked on month name button", YesNo.No);
+							log(LogStatus.INFO, "Clicked on month  name button", YesNo.No);
 							ThreadSleep(2000);
 
 							if (click(driver, getOutlookCalendarDay(day, fullMonthName, year, action, timeout),
@@ -1802,4 +1807,290 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 		return flag;
 	}
+	
+	
+	public boolean createEventThroughOutlookWithoutSync(String eventTitle, String eventAttendees, String startDate, String endDate,
+			String startTime, String endTime, String descriptionBox, boolean allDayToggle, String recurringValue) {
+
+		boolean flag = false;
+
+		if (click(driver, calendarButton(30), "calendarButton", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on Calendar Button", YesNo.No);
+
+			CommonLib.ThreadSleep(4000);
+			if (CommonLib.click(driver, newEventButton(30), "newEventButton", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on newEventButton", YesNo.No);
+
+				if (eventTitleInputBox(7) == null) {
+					CommonLib.ThreadSleep(3000);
+					if (CommonLib.click(driver, newEventButton(30), "newEventButton", action.SCROLLANDBOOLEAN))
+						;
+
+				}
+
+				if (eventTitleInputBox(15) != null) {
+					eventTitleInputBox(30).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+					if (sendKeys(driver, eventTitleInputBox(30), eventTitle, "Input Value : " + eventTitle,
+							action.BOOLEAN)) {
+						CommonLib.log(LogStatus.INFO, "Entered Value: " + eventTitle, YesNo.No);
+
+						if (sendKeysAndPressEnter(driver, inviteAttendeesInputBox(30), eventAttendees,
+								"Input Attendee Value : " + eventAttendees, action.BOOLEAN)) {
+							CommonLib.log(LogStatus.INFO, "Entered Value: " + eventAttendees, YesNo.No);
+
+						} else {
+
+							CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + eventAttendees, YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + eventAttendees);
+
+							return false;
+						}
+
+						CommonLib.ThreadSleep(1000);
+
+						if (allDayToggle) {
+							String toggleFlag = CommonLib.getAttribute(driver, allDayToggleButton(20),
+									"All Day Toggle Button", "aria-checked");
+							if (toggleFlag.contains("false")) {
+
+								if (click(driver, allDayToggleButton(20), "All Day Toggle Button",
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "Clicked on All Day Toggle Button", YesNo.No);
+
+									toggleFlag = CommonLib.getAttribute(driver, allDayToggleButton(20),
+											"All Day Toggle Button", "aria-checked");
+
+									if (toggleFlag.contains("true")) {
+										log(LogStatus.INFO, "All Day toggle Button has been Enabled", YesNo.No);
+									} else {
+										log(LogStatus.ERROR,
+												"All Day toggle Button has not been Enable after Click on it",
+												YesNo.Yes);
+										BaseLib.sa.assertTrue(false,
+												"All Day toggle Button has not been Enable after Click on it");
+									}
+								} else {
+									log(LogStatus.ERROR, "Not able to Click on All Day Toggle Button", YesNo.Yes);
+									BaseLib.sa.assertTrue(false, "Not able to Click on All Day Toggle Button");
+								}
+							}
+
+						}
+
+						if (startDate != null && !"".equalsIgnoreCase(startDate)) {
+
+							if (enterDateThroughOutlookCalendar(driver, "start", startDate, action.SCROLLANDBOOLEAN,
+									25)) {
+								CommonLib.log(LogStatus.INFO, "Entered Value: " + startDate, YesNo.No);
+
+							} else {
+
+								CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + startDate, YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + startDate);
+
+							}
+
+						}
+
+						if (!allDayToggle) {
+							if (startTime != null && !"".equalsIgnoreCase(startTime)) {
+
+								startTimeInputBox(30).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+								if (sendKeys(driver, startTimeInputBox(30), startTime, "Input Value : " + startTime,
+										action.BOOLEAN)) {
+									CommonLib.log(LogStatus.INFO, "Entered Value: " + startTime, YesNo.No);
+
+								} else {
+
+									CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + startTime,
+											YesNo.Yes);
+									BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + startTime);
+
+								}
+
+							}
+						}
+
+						if (endDate != null && !"".equalsIgnoreCase(endDate)) {
+
+							if (enterDateThroughOutlookCalendar(driver, "end", endDate, action.SCROLLANDBOOLEAN, 25)) {
+								CommonLib.log(LogStatus.INFO, "Entered Value: " + endDate, YesNo.No);
+
+							} else {
+
+								CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + endDate, YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + endDate);
+
+							}
+						}
+
+						if (!allDayToggle) {
+							if (endTime != null && !"".equalsIgnoreCase(endTime)) {
+
+								endTimeInputBox(30).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+								if (sendKeys(driver, endTimeInputBox(30), endTime, "Input Value : " + endTime,
+										action.BOOLEAN)) {
+									CommonLib.log(LogStatus.INFO, "Entered Value: " + endTime, YesNo.No);
+
+								} else {
+
+									CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + endTime, YesNo.Yes);
+									BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + endTime);
+
+								}
+
+							}
+						}
+						
+						
+						if(recurringValue!= null && !"".equalsIgnoreCase(recurringValue))
+						{
+							if(clickUsingJavaScript(driver, getRecurringBtn(30), "recurring btn"))
+							{
+								CommonLib.log(LogStatus.INFO, "Clicked on recurring button", YesNo.No);
+								ThreadSleep(3000);
+								if(clickUsingJavaScript(driver, getRecurringOption(recurringValue,20), recurringValue+" option", action.SCROLLANDBOOLEAN))
+								{
+									CommonLib.log(LogStatus.INFO, "Clicked on option : "+recurringValue, YesNo.No);
+									ThreadSleep(1000);
+									if(clickUsingJavaScript(driver, getSaveButtonOnRepeatPopup(20), "save button"))
+									{
+										CommonLib.log(LogStatus.INFO, "Clicked on save button on Repeate popup", YesNo.No);	
+									}
+									else
+									{
+										CommonLib.log(LogStatus.ERROR, "Not able to click on save button on Repeate popup", YesNo.No);
+										BaseLib.sa.assertTrue(false,"Not able to click on save button on Repeate popup");
+										ThreadSleep(2500);
+									}
+								}
+								else
+								{
+									CommonLib.log(LogStatus.ERROR, "Not able to clicked on option : "+recurringValue, YesNo.No);
+									BaseLib.sa.assertTrue(false,"Not able to clicked on option : "+recurringValue);
+								}
+							}
+							else
+							{
+								CommonLib.log(LogStatus.ERROR, "Not able to click on recurring button", YesNo.No);
+								BaseLib.sa.assertTrue(false,"Not able to click on recurring button");
+							}
+						}
+
+						
+
+						if (descriptionBox != null && !"".equalsIgnoreCase(descriptionBox)) {
+
+							newEventDescriptionBox(30).sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+							if (sendKeys(driver, newEventDescriptionBox(30), descriptionBox,
+									"Input Value : " + descriptionBox, action.BOOLEAN)) {
+								CommonLib.log(LogStatus.INFO, "Entered Value: " + descriptionBox, YesNo.No);
+
+							} else {
+
+								CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + descriptionBox,
+										YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + descriptionBox);
+
+							}
+
+						}
+
+						if (click(driver, eventSendButton(30), "eventSendButton", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on eventSendButton", YesNo.No);
+							if (eventCreatedMsg(30) != null) {
+								log(LogStatus.INFO, "-----Event Created Msg is showing, So Event of Title: "
+										+ eventTitle + " has been created-----", YesNo.No);
+								flag = true;
+							}
+
+							else {
+
+								log(LogStatus.ERROR, "-----Event Created Msg is not showing, So Event of Title: "
+										+ eventTitle + " has not been created-----", YesNo.Yes);
+								BaseLib.sa.assertTrue(false,
+										"-----Event Created Msg is not showing, So Event of Title: " + eventTitle
+												+ " has not been created-----");
+
+							}
+
+						} else {
+							log(LogStatus.ERROR, "Not able to Click on eventSendButton", YesNo.Yes);
+							BaseLib.sa.assertTrue(false, "Not able to Click on eventSendButton");
+						}
+
+					} else {
+
+						CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + eventTitle, YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + eventTitle);
+					}
+
+				} else {
+					log(LogStatus.ERROR, "New Event Popup not Open", YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "New Event Popup not Open");
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to Click on newEventButton", YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to Click on newEventButton");
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to Click on Calendar Button", YesNo.Yes);
+			BaseLib.sa.assertTrue(false, "Not able to Click on Calendar Button");
+		}
+
+		return flag;
+
+	}
+	
+	
+	public boolean loginAndCreateEventThroughOutLookWithoutForceSyncUp(String userName, String userPassword, String eventTitle,
+			String eventAttendees, String startDate, String endDate, String startTime, String endTime,
+			String descriptionBox, boolean allDayToggle, String recurring) {
+		// ((JavascriptExecutor) driver).executeScript("window.open()");
+		boolean flag = false;
+		String newWindowCode = "window. open('about:blank','_blank');";
+		((JavascriptExecutor) driver).executeScript(newWindowCode);
+		String parentId = CommonLib.switchOnWindow(driver);
+		if (parentId != null) {
+			log(LogStatus.INFO, "Switched to New Tab", YesNo.No);
+			if (outLookLogin(userName, userPassword)) {
+				log(LogStatus.INFO, "Logged In to Outlook for Id: " + userName, YesNo.No);
+				if (createEventThroughOutlookWithoutSync(eventTitle, eventAttendees, startDate, endDate, startTime, endTime,
+						descriptionBox, allDayToggle,recurring)) {
+					log(LogStatus.INFO, "Event: " + eventTitle + " Created through outlook", YesNo.No);
+					if(outLookSignOut())
+					{
+						
+						flag = true;
+					}
+					
+					
+					driver.close();
+					driver.switchTo().window(parentId);
+				} else {
+					CommonLib.log(LogStatus.ERROR, "Not able to Create Event: " + eventTitle + " through outlook",
+							YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not able to Create Event: " + eventTitle + " through outlook");
+					driver.close();
+					driver.switchTo().window(parentId);
+				}
+			}
+
+			else {
+				CommonLib.log(LogStatus.ERROR, "Not able to Login to Oulook for id: " + userName, YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to Login to Oulook for id: " + userName);
+				driver.close();
+				driver.switchTo().window(parentId);
+			}
+
+		} else {
+			CommonLib.log(LogStatus.ERROR, "Not Able to switch to new tab", YesNo.Yes);
+			BaseLib.sa.assertTrue(false, "Not Able to switch to new tab");
+		}
+
+		return flag;
+	}
+
+	
 }
