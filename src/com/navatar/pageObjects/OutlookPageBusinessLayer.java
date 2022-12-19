@@ -309,6 +309,8 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 						BaseLib.sa.assertTrue(false, "Not able to Click on loginYesButton");
 					}
 				}
+				
+				
 				if (CommonLib.getTitle(driver).contains("Mail")) {
 					log(LogStatus.INFO, "-----Successfully Logged in to Outlook for Email: " + userName + "------",
 							YesNo.No);
