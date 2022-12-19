@@ -37,10 +37,9 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 			String startTime, String endTime, String descriptionBox, boolean allDayToggle) {
 
 		boolean flag = false;
-		
-		if(getCloseBtnOnReminderPopup(20)!=null)
-		{
-			click(driver, getCloseBtnOnReminderPopup(20), "reminder close", action.BOOLEAN);	
+
+		if (getCloseBtnOnReminderPopup(20) != null) {
+			click(driver, getCloseBtnOnReminderPopup(20), "reminder close", action.BOOLEAN);
 		}
 
 		if (click(driver, calendarButton(30), "calendarButton", action.SCROLLANDBOOLEAN)) {
@@ -52,7 +51,8 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 				if (eventTitleInputBox(7) == null) {
 					CommonLib.ThreadSleep(3000);
-					if (CommonLib.click(driver, newEventButton(30), "newEventButton", action.SCROLLANDBOOLEAN));
+					if (CommonLib.click(driver, newEventButton(30), "newEventButton", action.SCROLLANDBOOLEAN))
+						;
 
 				}
 
@@ -107,8 +107,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 						if (startDate != null && !"".equalsIgnoreCase(startDate)) {
 
-							if (enterDateThroughOutlookCalendar(driver, "start", startDate, action.BOOLEAN,
-									25)) {
+							if (enterDateThroughOutlookCalendar(driver, "start", startDate, action.BOOLEAN, 25)) {
 								CommonLib.log(LogStatus.INFO, "Entered Value: " + startDate, YesNo.No);
 
 							} else {
@@ -309,7 +308,8 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 						BaseLib.sa.assertTrue(false, "Not able to Click on loginYesButton");
 					}
 				}
-				if (CommonLib.getTitle(driver).contains("Mail")) {
+				WebDriverWait wait = new WebDriverWait(driver, 40);
+				if (wait.until(ExpectedConditions.titleContains("Mail"))) {
 					log(LogStatus.INFO, "-----Successfully Logged in to Outlook for Email: " + userName + "------",
 							YesNo.No);
 					flag = true;
@@ -776,8 +776,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 						if (click(driver, getEventEditButton(30), "Event Edit button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Edit button Successfully.", YesNo.No);
 							if (moreOptionsLink(8) != null) {
-								if (click(driver, moreOptionsLink(15), "More Options Link",
-										action.SCROLLANDBOOLEAN)) {
+								if (click(driver, moreOptionsLink(15), "More Options Link", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "Clicked on More options Link Successfully.", YesNo.No);
 									flag = true;
 								} else {
@@ -861,8 +860,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 						if (click(driver, getEventEditButton(30), "Event Edit button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Edit button Successfully.", YesNo.No);
 							if (moreOptionsLink(8) != null) {
-								if (click(driver, moreOptionsLink(15), "More Options Link",
-										action.SCROLLANDBOOLEAN)) {
+								if (click(driver, moreOptionsLink(15), "More Options Link", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "Clicked on More options Link Successfully.", YesNo.No);
 									flag = true;
 								} else {
@@ -1705,7 +1703,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 		}
 		ThreadSleep(5000);
-		click(driver, getSearchInputLocation(15), "Scroll to start date",action.BOOLEAN);
+		click(driver, getSearchInputLocation(15), "Scroll to start date", action.BOOLEAN);
 		ThreadSleep(3000);
 		if (click(driver, getOutlookCalendarIcon(dateType, null, timeout), "Calendar Icon", action)) {
 			log(LogStatus.INFO, "Clicked on calendar button", YesNo.No);
@@ -1901,16 +1899,15 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		boolean flag = false;
 
 		CommonLib.refresh(driver);
-		
+
 		WebDriverWait wait = new WebDriverWait(driver, 40);
-		wait.until(ExpectedConditions.elementToBeClickable(topCornerAccountButton(20)));
-		if (click(driver, topCornerAccountButton(20), "topCornerAccountButton", action.SCROLLANDBOOLEAN)) {
+		wait.until(ExpectedConditions.elementToBeClickable(topCornerAccountButton(30)));
+		if (clickUsingJavaScript(driver, topCornerAccountButton(30), "topCornerAccountButton", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on topCornerAccountButton", YesNo.No);
 
-			if (click(driver, signOutLink(20), "signOutLink", action.SCROLLANDBOOLEAN)) {
+			if (clickUsingJavaScript(driver, signOutLink(30), "signOutLink", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on signOutLink", YesNo.No);
 				CommonLib.ThreadSleep(7000);
-				
 
 				if (wait.until(ExpectedConditions.titleContains("Sign out"))) {
 					log(LogStatus.INFO, "Outlook has been Signed Out", YesNo.No);
@@ -1932,10 +1929,10 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 		return flag;
 	}
-	
-	
-	public boolean createEventThroughOutlookWithoutSync(String eventTitle, String eventAttendees, String startDate, String endDate,
-			String startTime, String endTime, String descriptionBox, boolean allDayToggle, String recurringValue) {
+
+	public boolean createEventThroughOutlookWithoutSync(String eventTitle, String eventAttendees, String startDate,
+			String endDate, String startTime, String endTime, String descriptionBox, boolean allDayToggle,
+			String recurringValue) {
 
 		boolean flag = false;
 
@@ -2066,43 +2063,35 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 
 							}
 						}
-						
-						
-						if(recurringValue!= null && !"".equalsIgnoreCase(recurringValue))
-						{
-							if(clickUsingJavaScript(driver, getRecurringBtn(30), "recurring btn"))
-							{
+
+						if (recurringValue != null && !"".equalsIgnoreCase(recurringValue)) {
+							if (clickUsingJavaScript(driver, getRecurringBtn(30), "recurring btn")) {
 								CommonLib.log(LogStatus.INFO, "Clicked on recurring button", YesNo.No);
 								ThreadSleep(3000);
-								if(clickUsingJavaScript(driver, getRecurringOption(recurringValue,20), recurringValue+" option", action.SCROLLANDBOOLEAN))
-								{
-									CommonLib.log(LogStatus.INFO, "Clicked on option : "+recurringValue, YesNo.No);
+								if (clickUsingJavaScript(driver, getRecurringOption(recurringValue, 20),
+										recurringValue + " option", action.SCROLLANDBOOLEAN)) {
+									CommonLib.log(LogStatus.INFO, "Clicked on option : " + recurringValue, YesNo.No);
 									ThreadSleep(1000);
-									if(clickUsingJavaScript(driver, getSaveButtonOnRepeatPopup(20), "save button"))
-									{
-										CommonLib.log(LogStatus.INFO, "Clicked on save button on Repeate popup", YesNo.No);	
-									}
-									else
-									{
-										CommonLib.log(LogStatus.ERROR, "Not able to click on save button on Repeate popup", YesNo.No);
-										BaseLib.sa.assertTrue(false,"Not able to click on save button on Repeate popup");
+									if (clickUsingJavaScript(driver, getSaveButtonOnRepeatPopup(20), "save button")) {
+										CommonLib.log(LogStatus.INFO, "Clicked on save button on Repeate popup",
+												YesNo.No);
+									} else {
+										CommonLib.log(LogStatus.ERROR,
+												"Not able to click on save button on Repeate popup", YesNo.No);
+										BaseLib.sa.assertTrue(false,
+												"Not able to click on save button on Repeate popup");
 										ThreadSleep(2500);
 									}
+								} else {
+									CommonLib.log(LogStatus.ERROR, "Not able to clicked on option : " + recurringValue,
+											YesNo.No);
+									BaseLib.sa.assertTrue(false, "Not able to clicked on option : " + recurringValue);
 								}
-								else
-								{
-									CommonLib.log(LogStatus.ERROR, "Not able to clicked on option : "+recurringValue, YesNo.No);
-									BaseLib.sa.assertTrue(false,"Not able to clicked on option : "+recurringValue);
-								}
-							}
-							else
-							{
+							} else {
 								CommonLib.log(LogStatus.ERROR, "Not able to click on recurring button", YesNo.No);
-								BaseLib.sa.assertTrue(false,"Not able to click on recurring button");
+								BaseLib.sa.assertTrue(false, "Not able to click on recurring button");
 							}
 						}
-
-						
 
 						if (descriptionBox != null && !"".equalsIgnoreCase(descriptionBox)) {
 
@@ -2167,11 +2156,10 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		return flag;
 
 	}
-	
-	
-	public boolean loginAndCreateEventThroughOutLookWithoutForceSyncUp(String userName, String userPassword, String eventTitle,
-			String eventAttendees, String startDate, String endDate, String startTime, String endTime,
-			String descriptionBox, boolean allDayToggle, String recurring) {
+
+	public boolean loginAndCreateEventThroughOutLookWithoutForceSyncUp(String userName, String userPassword,
+			String eventTitle, String eventAttendees, String startDate, String endDate, String startTime,
+			String endTime, String descriptionBox, boolean allDayToggle, String recurring) {
 		// ((JavascriptExecutor) driver).executeScript("window.open()");
 		boolean flag = false;
 		String newWindowCode = "window. open('about:blank','_blank');";
@@ -2181,16 +2169,14 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 			log(LogStatus.INFO, "Switched to New Tab", YesNo.No);
 			if (outLookLogin(userName, userPassword)) {
 				log(LogStatus.INFO, "Logged In to Outlook for Id: " + userName, YesNo.No);
-				if (createEventThroughOutlookWithoutSync(eventTitle, eventAttendees, startDate, endDate, startTime, endTime,
-						descriptionBox, allDayToggle,recurring)) {
+				if (createEventThroughOutlookWithoutSync(eventTitle, eventAttendees, startDate, endDate, startTime,
+						endTime, descriptionBox, allDayToggle, recurring)) {
 					log(LogStatus.INFO, "Event: " + eventTitle + " Created through outlook", YesNo.No);
-					if(outLookSignOut())
-					{
-						
+					if (outLookSignOut()) {
+
 						flag = true;
 					}
-					
-					
+
 					driver.close();
 					driver.switchTo().window(parentId);
 				} else {
@@ -2217,5 +2203,4 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		return flag;
 	}
 
-	
 }

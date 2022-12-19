@@ -12,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.server.handler.SwitchToWindow;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sikuli.script.App;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Screen;
@@ -10678,7 +10679,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	}
 
 	public boolean clicktabOnPage(String tabName) {
-		if (CommonLib.click(driver, getTabNameOnPage(tabName, 30), tabName, action.SCROLLANDBOOLEAN)) {
+		if (CommonLib.clickUsingJavaScript(driver, getTabNameOnPage(tabName, 30), tabName, action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "clicked on " + tabName + " tab name", YesNo.No);
 
 			String text = CommonLib.getAttribute(driver, getVerificationPartTabNameOnPage(tabName, 20),
@@ -19008,12 +19009,15 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								log(LogStatus.INFO,
 										"Expected details: " + details[i]
 												+ " has been matched with the actual details: " + actualDetails
-												+ " for subject: " + subjectName[i] + " on meeting and call popup. Subject: "+subjectName,
+												+ " for subject: " + subjectName[i]
+												+ " on meeting and call popup. Subject: " + subjectName,
 										YesNo.No);
 							} else {
-								log(LogStatus.ERROR, "Expected details: " + details[i]
-										+ " is not matched with the actual details: " + actualDetails + " for subject: "
-										+ subjectName[i] + " on meeting and call popup", YesNo.No);
+								log(LogStatus.ERROR,
+										"Expected details: " + details[i] + " is not matched with the actual details: "
+												+ actualDetails + " for subject: " + subjectName[i]
+												+ " on meeting and call popup",
+										YesNo.No);
 								result.add("Expected details: " + details[i]
 										+ " is not matched with the actual details: " + actualDetails + " for subject: "
 										+ subjectName[i] + " on meeting and call popup");
@@ -19374,6 +19378,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		List<String> result = new ArrayList<String>();
 		String label = "";
 		String value = "";
+	
 		CommonLib.ThreadSleep(14000);
 		try {
 			for (String labelValue : labelAndValueSeprateByBreak) {
@@ -19381,10 +19386,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				label = labelValue.split("<break>", -1)[0];
 				value = labelValue.split("<break>", -1)[1];
 
-				if (valueOfLabelInDetailPage(label, 8) != null) {
+				if (valueOfLabelInDetailPage(label, 45) != null) {
 					log(LogStatus.INFO, "Label found: " + label, YesNo.No);
 					String actualValue = CommonLib
-							.getText(driver, valueOfLabelInDetailPage(label, 5), "value of: " + label, action.BOOLEAN)
+							.getText(driver, valueOfLabelInDetailPage(label, 30), "value of: " + label, action.BOOLEAN)
 							.replaceAll("[\\t\\n\\r]+", " ");
 					if (actualValue.contains(value)) {
 						log(LogStatus.INFO, "Value contains for label: " + label + " ,Expected: " + value
