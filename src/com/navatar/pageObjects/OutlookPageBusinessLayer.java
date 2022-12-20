@@ -698,7 +698,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		// Boolean eventDateAndTodayDateEqual = date1.equals(date2);
 
 		outLookLogin(userName, password); // navigate to Outlook
-
+		ThreadSleep(12000);
 		if (click(driver, getOutlookCalenderIcon(30), "outLookCalenderIcon", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on calender Icon", YesNo.No);
 
@@ -709,6 +709,7 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 			if (eventDateGreaterThanTodayDate) {
 				log(LogStatus.INFO,
 						"Passed date is Greater than today's date..Going to select Future date:" + eventDate, YesNo.No);
+				ThreadSleep(9000);
 				flag = selectFutureEventDate(expMonthYear, eventDate, eventName, cancelEvent);
 
 			} else if (eventDateSmallerThanTodayDate) {
