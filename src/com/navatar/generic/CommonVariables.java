@@ -1706,7 +1706,43 @@ public class CommonVariables {
 	 		
 	 		public static String AMNNR_Subject54, AMNNR_Notes54, AMNNR_AdvancePriority54, AMNNR_AdvanceStatus54, AMNNR_TaskSubject54, AMNNR_TaskStatus54;
 		 	public static String AMNNR_ActivityType54;
+		 	
+		 	public static String AMNNR_Subject55, AMNNR_Notes55, AMNNR_RelatedTo55, AMNNR_Contact5;
+		 	
+	 	
+		 	
+		 	//--------RGAcuityMeetingNotesNotificationReminder-------------
+		 	public static String RGAMNNR_Subject1, RGAMNNR_Notes1, RGAMNNR_RelatedTo1, RGAMNNR_EventStartTime1, RGAMNNR_EventEndTime1, RGAMNNR_EventDescription1, RGAMNNR_ATRelatedTo1, RGAMNNR_Contact1;
+		 	
+		 	public static String RGAMNNR_Subject2, RGAMNNR_Notes2, RGAMNNR_RelatedTo2, RGAMNNR_RelatedTo3, RGAMNNR_RelatedTo4, RGAMNNR_EventStartTime2, RGAMNNR_EventEndTime2,
+		 	RGAMNNR_Contact2, RGAMNNR_FirmLegalName1, RGAMNNR_FirmRecordType1, RGAMNNR_FirmLegalName2, RGAMNNR_FirmRecordType2;
+		 	
+		 	public static String RGAMNNR_Subject5, RGAMNNR_Subject7, RGAMNNR_Notes5, RGAMNNR_RelatedTo5, RGAMNNR_RelatedTo6, RGAMNNR_RelatedTo7, RGAMNNR_EventStartTime5,
+		 	RGAMNNR_EventEndTime5, RGAMNNR_EventDescription5, RGAMNNR_FirmLegalName3, RGAMNNR_FirmRecordType3, RGAMNNR_Location7;
+		 	
+		 	public static String RGAMNNR_FirmLegalName4, RGAMNNR_FirmRecordType4, RGAMNNR_FirmLegalName5, RGAMNNR_FirmRecordType5, RGAMNNR_Contact3;
+		 	
+		 	public static String RGAMNNR_RelatedTo8, RGAMNNR_FirmLegalName6, RGAMNNR_FirmRecordType6;
+		 	
+		 	public static String RGAMNNR_Contact4, RGAMNNR_Notes9, RGAMNNR_RelatedTo9;
+		 	
+		 	public static String RGAMNNR_Subject10, RGAMNNR_RelatedTo10, RGAMNNR_EventStartTime10, RGAMNNR_EventEndTime10, RGAMNNR_EventDescription10, RGAMNNR_Notes11, RGAMNNR_SuggestedTag11, RGAMNNR_Contact5;
 
+		 	public static String RGAMNNR_Subject12, RGAMNNR_RelatedTo12, RGAMNNR_RelatedTo13, RGAMNNR_EventStartTime12, RGAMNNR_EventEndTime12,
+		 	RGAMNNR_EventDescription12;
+		 	
+		 	public static String RGAMNNR_Subject14, RGAMNNR_RelatedTo14, RGAMNNR_EventStartTime14, RGAMNNR_EventEndTime14, RGAMNNR_EventDescription14, RGAMNNR_Contact6;
+		 	
+		 	public static String RGAMNNR_Subject15, RGAMNNR_EventStartTime15, RGAMNNR_EventEndTime15, RGAMNNR_EventDescription15;
+		 	
+			public static String RGAMNNR_Subject16,RGAMNNR_RelatedTo16, RGAMNNR_EventStartTime16, RGAMNNR_EventEndTime16, RGAMNNR_EventDescription16;
+			
+			public static String RGAMNNR_Subject17, RGAMNNR_RelatedTo17, RGAMNNR_RelatedTo18, RGAMNNR_EventStartTime17, RGAMNNR_EventEndTime17, RGAMNNR_EventDescription17, RGAMNNR_Contact7;
+			
+			public static String RGAMNNR_ListViewMember1, RGAMNNR_ListViewTabName1, RGAMNNR_ListViewAccessibility1, RGAMNNR_ListViewFilter1, RGAMNNR_ListViewField1, RGAMNNR_ListViewOperators1,
+		 	RGAMNNR_ListViewTextBoxType1;
+			
+			public static String RGAMNNR_Subject19;
             
 
 	    
@@ -8990,7 +9026,18 @@ public class CommonVariables {
     			 	AMNNR_TaskStatus54=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity054", excelLabel.Task_Status);
     			 	
     			 	AMNNR_ActivityType54=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity054", excelLabel.Action_Type);
-					
+    			 	
+    				
+    			 	AMNNR_Subject55=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity055", excelLabel.Subject);	 	
+    			 	AMNNR_Notes55=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity055", excelLabel.Notes);	
+    			 	AMNNR_RelatedTo55=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "AMNNR_Activity055", excelLabel.Related_To);
+    			 	AMNNR_Contact5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AMNNR_Con5", excelLabel.ContactName);
+    			 	
+    			 	
+    			 	
+    			 	
+    			 	
+    			 	
 		 		
 				try {
 					dataFile.close();
@@ -9031,6 +9078,147 @@ public class CommonVariables {
     					// TODO Auto-generated catch block
     					e.printStackTrace();
     				}
+    				
+    				
+    				
+    				
+    				
+    				RGAMNNR_Subject1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity001", excelLabel.Subject);	 	
+    			 	RGAMNNR_Notes1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity001", excelLabel.Notes);			 
+    			 	RGAMNNR_RelatedTo1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity001", excelLabel.Related_To);
+    			 	RGAMNNR_EventStartTime1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity001", excelLabel.Advance_Start_Time);
+    			 	RGAMNNR_EventEndTime1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity001", excelLabel.Advance_End_Time);
+    			 	RGAMNNR_EventDescription1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity001", excelLabel.Description);
+    			 	RGAMNNR_ATRelatedTo1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "RGAMNNR_Acuity001", excelLabel.Related_To);
+    			 	RGAMNNR_Contact1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGAMNNR_Con1", excelLabel.ContactName);
+    			 	
+    			 	
+    			 	RGAMNNR_Subject2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity002", excelLabel.Subject);	 	
+    			 	RGAMNNR_Notes2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity002", excelLabel.Notes);			 
+    			 	RGAMNNR_RelatedTo2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity002", excelLabel.Related_To);
+    			 	RGAMNNR_RelatedTo3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity003", excelLabel.Related_To);
+    			 	RGAMNNR_RelatedTo4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity004", excelLabel.Related_To);
+    			 	RGAMNNR_EventStartTime2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity002", excelLabel.Advance_Start_Time);
+    			 	RGAMNNR_EventEndTime2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity002", excelLabel.Advance_End_Time);
+    			 	RGAMNNR_Contact2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGAMNNR_Con2", excelLabel.ContactName);
+    			 	RGAMNNR_FirmLegalName1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGAMNNR_Record001", excelLabel.Legal_Name);
+    			 	RGAMNNR_FirmRecordType1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGAMNNR_Record001", excelLabel.Record_Type);
+    			 	RGAMNNR_FirmLegalName2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGAMNNR_Record002", excelLabel.Legal_Name);
+    			 	RGAMNNR_FirmRecordType2=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGAMNNR_Record002", excelLabel.Record_Type);
+    			 	
+    			 	
+    			 	
+    			 	RGAMNNR_Subject5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity005", excelLabel.Subject);	 	
+    			 	RGAMNNR_Subject7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity007", excelLabel.Subject);	 	
+    			 	RGAMNNR_Notes5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity005", excelLabel.Notes);			 
+    			 	RGAMNNR_RelatedTo5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity005", excelLabel.Related_To);
+    			 	RGAMNNR_RelatedTo6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity006", excelLabel.Related_To);
+    			 	RGAMNNR_RelatedTo7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity007", excelLabel.Related_To);
+    			 	RGAMNNR_EventStartTime5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity005", excelLabel.Advance_Start_Time);
+    			 	RGAMNNR_EventEndTime5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity005", excelLabel.Advance_End_Time); 	
+    			 	RGAMNNR_EventDescription5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity005", excelLabel.Description);
+    			 	RGAMNNR_FirmLegalName3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGAMNNR_Record003", excelLabel.Legal_Name);
+    			 	RGAMNNR_FirmRecordType3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGAMNNR_Record003", excelLabel.Record_Type);
+    			 	RGAMNNR_Location7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity007", excelLabel.Location);	 	
+    			 	
+    			 	
+    			 	
+    			 	RGAMNNR_FirmLegalName4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGAMNNR_Record004", excelLabel.Legal_Name);
+    			 	RGAMNNR_FirmRecordType4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGAMNNR_Record004", excelLabel.Record_Type);
+    			 	RGAMNNR_FirmLegalName5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGAMNNR_Record005", excelLabel.Legal_Name);
+    			 	RGAMNNR_FirmRecordType5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGAMNNR_Record005", excelLabel.Record_Type);
+    			 	RGAMNNR_Contact3=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGAMNNR_Con3", excelLabel.ContactName);
+    			 	
+    			 	
+    				RGAMNNR_RelatedTo8=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity008", excelLabel.Related_To);
+    				RGAMNNR_FirmLegalName6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGAMNNR_Record006", excelLabel.Legal_Name);
+    			 	RGAMNNR_FirmRecordType6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "RGAMNNR_Record006", excelLabel.Record_Type);
+    			 	
+    			 	
+    			 	RGAMNNR_Contact4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGAMNNR_Con4", excelLabel.ContactName);
+    			 	RGAMNNR_Notes9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity009", excelLabel.Notes);			 
+    			 	RGAMNNR_RelatedTo9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity009", excelLabel.Related_To);
+    			 	
+    			 	
+    			 	
+    			 	RGAMNNR_Subject10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity010", excelLabel.Subject);	 	
+    			 	RGAMNNR_RelatedTo10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity010", excelLabel.Related_To);
+    			 	RGAMNNR_EventStartTime10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity010", excelLabel.Advance_Start_Time);
+    			 	RGAMNNR_EventEndTime10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity010", excelLabel.Advance_End_Time); 	
+    			 	RGAMNNR_EventDescription10=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity010", excelLabel.Description);
+    			 	RGAMNNR_Notes11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity011", excelLabel.Notes);			 
+    			 	RGAMNNR_SuggestedTag11=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity011", excelLabel.Suggested_Tag);
+    			 	RGAMNNR_Contact5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGAMNNR_Con5", excelLabel.ContactName);
+    			 	
+    			 	
+    			 	
+    			 	RGAMNNR_Subject12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity012", excelLabel.Subject);	 	
+    			 	RGAMNNR_RelatedTo12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity012", excelLabel.Related_To);
+    			 	RGAMNNR_RelatedTo13=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity013", excelLabel.Related_To);
+    			 	RGAMNNR_EventStartTime12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity012", excelLabel.Advance_Start_Time);
+    			 	RGAMNNR_EventEndTime12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity012", excelLabel.Advance_End_Time); 	
+    			 	RGAMNNR_EventDescription12=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity012", excelLabel.Description);
+    			 	
+    			 	
+    			 	RGAMNNR_Subject14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity014", excelLabel.Subject);	 	
+    			 	RGAMNNR_RelatedTo14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity014", excelLabel.Related_To);
+    			 	RGAMNNR_EventStartTime14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity014", excelLabel.Advance_Start_Time);
+    			 	RGAMNNR_EventEndTime14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity014", excelLabel.Advance_End_Time); 	
+    			 	RGAMNNR_EventDescription14=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity014", excelLabel.Description);
+    			 	RGAMNNR_Contact6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGAMNNR_Con6", excelLabel.ContactName);
+    			 	
+    			 	
+    			 	
+    			 	
+    			 	RGAMNNR_Subject15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity015", excelLabel.Subject);	 	
+    			 	RGAMNNR_EventStartTime15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity015", excelLabel.Advance_Start_Time);
+    			 	RGAMNNR_EventEndTime15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity015", excelLabel.Advance_End_Time); 	
+    			 	RGAMNNR_EventDescription15=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity015", excelLabel.Description);
+    			 	
+    			 
+    			 	
+    			 	RGAMNNR_Subject16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity016", excelLabel.Subject);	 
+    			 	RGAMNNR_RelatedTo16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity016", excelLabel.Related_To);
+    			 	RGAMNNR_EventStartTime16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity016", excelLabel.Advance_Start_Time);
+    			 	RGAMNNR_EventEndTime16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity016", excelLabel.Advance_End_Time); 	
+    			 	RGAMNNR_EventDescription16=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity016", excelLabel.Description);
+    			 	
+    			 	
+    			 	
+    			 	
+    			 	RGAMNNR_Subject17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity017", excelLabel.Subject);	 
+    			 	RGAMNNR_RelatedTo17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity017", excelLabel.Related_To);
+    			 	RGAMNNR_RelatedTo18=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity018", excelLabel.Related_To);
+    			 	RGAMNNR_EventStartTime17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity017", excelLabel.Advance_Start_Time);
+    			 	RGAMNNR_EventEndTime17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity017", excelLabel.Advance_End_Time); 	
+    			 	RGAMNNR_EventDescription17=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity017", excelLabel.Description);
+    			 	RGAMNNR_Contact7=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "RGAMNNR_Con7", excelLabel.ContactName);
+    				
+    			 	
+    			 	
+    			 	
+    			 	RGAMNNR_ListViewMember1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "ListView",
+							excelLabel.Variable_Name, "RGAMNNR_LV1", excelLabel.Member);
+					RGAMNNR_ListViewTabName1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "ListView",
+							excelLabel.Variable_Name, "RGAMNNR_LV1", excelLabel.TabName);
+					
+					RGAMNNR_ListViewAccessibility1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "ListView",
+							excelLabel.Variable_Name, "RGAMNNR_LV1", excelLabel.List_Accessibility);
+					RGAMNNR_ListViewFilter1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "ListView",
+							excelLabel.Variable_Name, "RGAMNNR_LV1", excelLabel.Filter);
+					RGAMNNR_ListViewField1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "ListView",
+							excelLabel.Variable_Name, "RGAMNNR_LV1", excelLabel.Field);
+					RGAMNNR_ListViewOperators1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "ListView",
+							excelLabel.Variable_Name, "RGAMNNR_LV1", excelLabel.Operators);
+					RGAMNNR_ListViewTextBoxType1 = ExcelUtils.readData(dataWb, AcuityDataSheetFilePath, "ListView",
+							excelLabel.Variable_Name, "RGAMNNR_LV1", excelLabel.TextBox_Type);
+					
+					
+					
+					RGAMNNR_Subject19=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Activity Timeline",excelLabel.Variable_Name, "RGAMNNR_Activity019", excelLabel.Subject);
+    				
+    				
+    				
     				
 				try {
 					dataFile.close();
