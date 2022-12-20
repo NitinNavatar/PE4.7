@@ -4579,15 +4579,29 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String getAdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
 
-		String task1ButtonName = "Task";
-		String task1SubjectName = "Task For Notification Check";
-		String relatedTo = "con 3<break>Acc 12";
+		String task1ButtonName = RGAMNNR_ActivityType20;
+		String task1SubjectName = RGAMNNR_Subject20;
+		String relatedTo = RGAMNNR_RelatedTo20;
 		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Related_To", relatedTo } };
 		String[][] task1AdvancedSection = { { "Due Date Only", getAdvanceDueDate } };
 
-		String contactRecordName = "con 3";
-		String recordName = "Acc 12";
-		String recordType = "Institution";
+		String contactRecordName = RGAMNNR_Contact8;
+		String recordName = RGAMNNR_FirmLegalName7;
+		String recordType = RGAMNNR_FirmRecordType7;
+
+		/*
+		 * 
+		 * 
+		 * String task1ButtonName = "Task"; String task1SubjectName =
+		 * "Task For Notification Check"; String relatedTo = "con 3<break>Acc 12";
+		 * String[][] task1BasicSection = { { "Subject", task1SubjectName }, {
+		 * "Related_To", relatedTo } }; String[][] task1AdvancedSection = { {
+		 * "Due Date Only", getAdvanceDueDate } };
+		 * 
+		 * String contactRecordName = "con 3"; String recordName = "Acc 12"; String
+		 * recordType = "Institution";
+		 * 
+		 */
 
 		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
@@ -4739,15 +4753,27 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String getAdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
 
-		String task1ButtonName = "Call";
-		String task1SubjectName = "Call For Notification Check";
-		String relatedTo = "con 3<break>Acc 12";
+		String task1ButtonName = RGAMNNR_ActivityType21;
+		String task1SubjectName = RGAMNNR_Subject21;
+		String relatedTo = RGAMNNR_RelatedTo21;
 		String[][] task1BasicSection = { { "Subject", task1SubjectName }, { "Related_To", relatedTo } };
 		String[][] task1AdvancedSection = { { "Due Date Only", getAdvanceDueDate } };
 
-		String contactRecordName = "con 3";
-		String recordName = "Acc 12";
-		String recordType = "Institution";
+		String contactRecordName = RGAMNNR_Contact8;
+		String recordName = RGAMNNR_FirmLegalName7;
+		String recordType = RGAMNNR_FirmRecordType7;
+
+		/*
+		 * 
+		 * String task1ButtonName = "Call"; String task1SubjectName =
+		 * "Call For Notification Check"; String relatedTo = "con 3<break>Acc 12";
+		 * String[][] task1BasicSection = { { "Subject", task1SubjectName }, {
+		 * "Related_To", relatedTo } }; String[][] task1AdvancedSection = { {
+		 * "Due Date Only", getAdvanceDueDate } };
+		 * 
+		 * String contactRecordName = "con 3"; String recordName = "Acc 12"; String
+		 * recordType = "Institution";
+		 */
 
 		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
@@ -4898,22 +4924,42 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
-		String eventTitle = "Event 2.0";
+		String eventTitle = RGAMNNR_Subject22;
 
-		String contactRecordName = "Litz";
+		String contactRecordName = RGAMNNR_Contact2;
 
 		String[][] event1BasicSectionVerificationInNotesPopup = { { "Subject", eventTitle }, { "Notes", "" } };
 		String[][] event1AdvancedSectionVerificationInNotesPopup = null;
 
 		String notesVerifyOnInteraction = "";
 		String[] relatedToVerifyOnInteraction = null;
-		String updatedNotesOfEvent = "Adding @Glomez @Jack in the loop";
+		String updatedNotesOfEvent = RGAMNNR_Notes22;
 		String[][] event1UpdateBasicSection = { { "Notes", updatedNotesOfEvent } };
 		String[][] event1UpdateAdvancedSection = null;
 		String[] updatedSuggestedTags = null;
 
-		String accountRecordName = "Nexus";
-		String accountRecordType = "Institution";
+		String accountRecordName = RGAMNNR_FirmLegalName2;
+		String accountRecordType = RGAMNNR_FirmRecordType2;
+
+		/*
+		 * 
+		 * String eventTitle = "Event 2.0";
+		 * 
+		 * String contactRecordName = "Litz";
+		 * 
+		 * String[][] event1BasicSectionVerificationInNotesPopup = { { "Subject",
+		 * eventTitle }, { "Notes", "" } }; String[][]
+		 * event1AdvancedSectionVerificationInNotesPopup = null;
+		 * 
+		 * String notesVerifyOnInteraction = ""; String[] relatedToVerifyOnInteraction =
+		 * null; String updatedNotesOfEvent = "Adding @Glomez @Jack in the loop";
+		 * String[][] event1UpdateBasicSection = { { "Notes", updatedNotesOfEvent } };
+		 * String[][] event1UpdateAdvancedSection = null; String[] updatedSuggestedTags
+		 * = null;
+		 * 
+		 * String accountRecordName = "Nexus"; String accountRecordType = "Institution";
+		 * 
+		 */
 
 		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
@@ -5178,29 +5224,57 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 			user1FullName = crmUser1LastName;
 
 		}
-		String eventTitle = "Marketing Webinar 2";
-		String eventAttendees = "Dealroom1.3+James@gmail.com,Dealroom1.3+Jhon@gmail.com" + "," + crmUser2EmailID + ","
-				+ crmUser3EmailID + ";";
+		String eventTitle = RGAMNNR_Subject23;
+		String eventAttendees = RGAMNNR_RelatedTo23 + "," + crmUser2EmailID + "," + crmUser3EmailID + ";";
 		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -2);
 		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
 
-		String startTime = "6:00 PM";
-		String endTime = "6:30 PM";
-		String descriptionBox = "Revenue Grid Event";
+		String startTime = RGAMNNR_EventStartTime23;
+		String endTime = RGAMNNR_EventEndTime23;
+		String descriptionBox = RGAMNNR_EventDescription23;
 
-		String contactRecordName = "James";
+		String contactRecordName = RGAMNNR_Contact5;
 		String relateToVerifyOnNotesPopUp = null;
-		String[][] event1BasicSectionVerificationInNotesPopup = { { "Subject", eventTitle }, { "Notes", "" } };
-		String[][] event1AdvancedSectionVerificationInNotesPopup = { { "Location", "" },
+		String[][] event1BasicSectionVerificationInNotesPopup = { { "Subject", eventTitle },
+				{ "Notes", RGAMNNR_Notes23 } };
+		String[][] event1AdvancedSectionVerificationInNotesPopup = { { "Location", RGAMNNR_Location23 },
 				{ "Assigned To ID", user1FullName }, { "Start Date Time<break>Date", startDate },
 				{ "End Date Time<break>Date", endDate } };
 
-		String updatedNotesOfEvent = "Deal @sumo logic and @Max fund should be in loop";
+		String updatedNotesOfEvent = RGAMNNR_Notes24;
 		String[][] event1UpdateBasicSectionOnHomepageNotePopup = { { "Notes", updatedNotesOfEvent } };
 		String[][] event1UpdateAdvancedSectionOnHomepageNotePopup = null;
 		String[] eventupdatedSuggestedTagsOnHomepageNotePopup = null;
 		Integer countIconBeforeUpdate = 0;
 		Integer countIconAfterUpdate = 0;
+
+		/*
+		 * String eventTitle = "Marketing Webinar 2"; String eventAttendees =
+		 * "Dealroom1.3+James@gmail.com,Dealroom1.3+Jhon@gmail.com" + "," +
+		 * crmUser2EmailID + "," + crmUser3EmailID + ";"; String startDate =
+		 * CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -2); String
+		 * endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
+		 * 
+		 * String startTime = "6:00 PM"; String endTime = "6:30 PM"; String
+		 * descriptionBox = "Revenue Grid Event";
+		 * 
+		 * String contactRecordName = "James"; String relateToVerifyOnNotesPopUp = null;
+		 * String[][] event1BasicSectionVerificationInNotesPopup = { { "Subject",
+		 * eventTitle }, { "Notes", "" } }; String[][]
+		 * event1AdvancedSectionVerificationInNotesPopup = { { "Location", "" }, {
+		 * "Assigned To ID", user1FullName }, { "Start Date Time<break>Date", startDate
+		 * }, { "End Date Time<break>Date", endDate } };
+		 * 
+		 * String updatedNotesOfEvent =
+		 * "Deal @sumo logic and @Max fund should be in loop"; String[][]
+		 * event1UpdateBasicSectionOnHomepageNotePopup = { { "Notes",
+		 * updatedNotesOfEvent } }; String[][]
+		 * event1UpdateAdvancedSectionOnHomepageNotePopup = null; String[]
+		 * eventupdatedSuggestedTagsOnHomepageNotePopup = null; Integer
+		 * countIconBeforeUpdate = 0; Integer countIconAfterUpdate = 0;
+		 * 
+		 * 
+		 */
 
 		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
@@ -5616,21 +5690,39 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 
-		String eventTitle = "Mulesoft Connect";
-		String eventAttendees = "dealroom1.3+lomez@gmail.com,Dealroom1.3+James@gmail.com" + "," + crmUser2EmailID + ","
-				+ crmUser3EmailID + ";";
+		String eventTitle = RGAMNNR_Subject25;
+		String eventAttendees = RGAMNNR_RelatedTo25 + "," + crmUser2EmailID + "," + crmUser3EmailID + ";";
 		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -2);
 		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
 
-		String startTime = "6:00 PM";
-		String endTime = "6:30 PM";
-		String descriptionBox = "Revenue Grid Event";
-		String recordName = "Lomez";
+		String startTime = RGAMNNR_EventStartTime25;
+		String endTime = RGAMNNR_EventEndTime25;
+		String descriptionBox = RGAMNNR_EventDescription25;
+		String recordName = RGAMNNR_Contact7;
 
 		String user3firstName = crmUser3FirstName;
 		String User3LastName = crmUser3LastName;
 
 		String user3EmailId = crmUser3EmailID;
+
+		/*
+		 * 
+		 * String eventTitle = "Mulesoft Connect"; String eventAttendees =
+		 * "dealroom1.3+lomez@gmail.com,Dealroom1.3+James@gmail.com" + "," +
+		 * crmUser2EmailID + "," + crmUser3EmailID + ";"; String startDate =
+		 * CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -2); String
+		 * endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
+		 * 
+		 * String startTime = "6:00 PM"; String endTime = "6:30 PM"; String
+		 * descriptionBox = "Revenue Grid Event"; String recordName = "Lomez";
+		 * 
+		 * String user3firstName = crmUser3FirstName; String User3LastName =
+		 * crmUser3LastName;
+		 * 
+		 * String user3EmailId = crmUser3EmailID;
+		 * 
+		 */
+
 		// String[] labelAndValueSeprateByBreak = { "Attendees" + "<break>" +
 		// crmUser3FirstName + " " + crmUser3LastName };
 
@@ -6016,25 +6108,44 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
-		String eventTitles[] = "Relive salesforce Live 1<break>Relive salesforce Live 2<break>Relive salesforce Live 3<break>Relive salesforce Live 4"
-				.split("<break>", -1);
-		String eventAttendees = "dealroom1.3+con1@gmail.com,dealroom1.3+con2@gmail.com" + "," + crmUser1EmailID + ";";
+		String eventTitles[] = RGAMNNR_Subject26.split("<break>", -1);
+		String eventAttendees = RGAMNNR_RelatedTo26 + "," + crmUser1EmailID + ";";
 		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -2);
 		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
 
-		String startTime = "10:00 PM";
-		String endTime = "10:00 PM";
-		String descriptionBox = "";
+		String startTime = RGAMNNR_EventStartTime26;
+		String endTime = RGAMNNR_EventEndTime26;
+		String descriptionBox = RGAMNNR_EventDescription26;
 
-		String updatedRelatedTo = "Acc 11";
+		String updatedRelatedTo = RGAMNNR_RelatedTo27;
 		String[][] task1UpdateBasicSection = { { "Related_To", updatedRelatedTo } };
 		String[][] task1UpdateAdvancedSection = null;
 		String[] updatedSuggestedTags = null;
-		String contactRecordName = "Con 1";
+		String contactRecordName = RGAMNNR_Contact3;
 
-		String accountRecordName = "Acc 11";
-		String accountRecordType = "Company";
+		String accountRecordName = RGAMNNR_FirmLegalName8;
+		String accountRecordType = RGAMNNR_FirmRecordType8;
 
+		/*
+		 * String eventTitles[] =
+		 * "Relive salesforce Live 1<break>Relive salesforce Live 2<break>Relive salesforce Live 3<break>Relive salesforce Live 4"
+		 * .split("<break>", -1); String eventAttendees =
+		 * "dealroom1.3+con1@gmail.com,dealroom1.3+con2@gmail.com" + "," +
+		 * crmUser1EmailID + ";"; String startDate =
+		 * CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -2); String
+		 * endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
+		 * 
+		 * String startTime = "10:00 PM"; String endTime = "10:00 PM"; String
+		 * descriptionBox = "";
+		 * 
+		 * String updatedRelatedTo = "Acc 11"; String[][] task1UpdateBasicSection = { {
+		 * "Related_To", updatedRelatedTo } }; String[][] task1UpdateAdvancedSection =
+		 * null; String[] updatedSuggestedTags = null; String contactRecordName =
+		 * "Con 1";
+		 * 
+		 * String accountRecordName = "Acc 11"; String accountRecordType = "Company";
+		 * 
+		 */
 		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
 		log(LogStatus.INFO, "---------Now Going to Create Event(s): " + eventTitles + " through Outlook---------",
@@ -6225,19 +6336,18 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
 
-		String eventTitle = "This event will have your Business circles talking +4";
-		String eventAttendees = "Dealroom1.3+Lomez@gmail.com,Dealroom1.3+Max@gmail.com,Dealroom1.3+James@gmail.com"
-				+ "," + crmUser2EmailID + "," + crmUser3EmailID + ";";
+		String eventTitle = RGAMNNR_Subject28;
+		String eventAttendees = RGAMNNR_RelatedTo28 + "," + crmUser2EmailID + "," + crmUser3EmailID + ";";
 		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -2);
 		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
 
-		String startTime = "6:00 PM";
-		String endTime = "6:30 PM";
-		String descriptionBox = "Revenue Grid Event";
-		String contactRecordName = "Max";
+		String startTime = RGAMNNR_EventStartTime28;
+		String endTime = RGAMNNR_EventEndTime28;
+		String descriptionBox = RGAMNNR_EventDescription28;
+		String contactRecordName = RGAMNNR_Contact4;
 
 		String user2firstName = crmUser2FirstName;
-		String User2LastName = crmUser2LastName + "updated";
+		String User2LastName = crmUser2LastName + RGAMNNR_ActivityType28;
 
 		String user2FullName;
 		if (!crmUser2FirstName.equals("") && !crmUser2LastName.equals("")) {
@@ -6247,12 +6357,41 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		}
 
-		user2FullName = user2FullName + "updated";
+		user2FullName = user2FullName + RGAMNNR_ActivityType28;
 		String user2EmailId = crmUser2EmailID;
 
 		String RelatedToVerifyInNotes = user2FullName;
 		String[][] event1BasicSectionVerificationInNotesPopup = { { "Related_To", RelatedToVerifyInNotes } };
 		String[][] event1AdvancedSectionVerificationInNotesPopup = null;
+
+		/*
+		 * String eventTitle = "This event will have your Business circles talking +4";
+		 * String eventAttendees =
+		 * "Dealroom1.3+Lomez@gmail.com,Dealroom1.3+Max@gmail.com,Dealroom1.3+James@gmail.com"
+		 * + "," + crmUser2EmailID + "," + crmUser3EmailID + ";"; String startDate =
+		 * CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -2); String
+		 * endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
+		 * 
+		 * String startTime = "6:00 PM"; String endTime = "6:30 PM"; String
+		 * descriptionBox = "Revenue Grid Event"; String contactRecordName = "Max";
+		 * 
+		 * String user2firstName = crmUser2FirstName; String User2LastName =
+		 * crmUser2LastName + "updated";
+		 * 
+		 * String user2FullName; if (!crmUser2FirstName.equals("") &&
+		 * !crmUser2LastName.equals("")) { user2FullName = crmUser2FirstName + " " +
+		 * crmUser2LastName; } else { user2FullName = crmUser2LastName;
+		 * 
+		 * }
+		 * 
+		 * user2FullName = user2FullName + "updated"; String user2EmailId =
+		 * crmUser2EmailID;
+		 * 
+		 * String RelatedToVerifyInNotes = user2FullName; String[][]
+		 * event1BasicSectionVerificationInNotesPopup = { { "Related_To",
+		 * RelatedToVerifyInNotes } }; String[][]
+		 * event1AdvancedSectionVerificationInNotesPopup = null;
+		 */
 
 		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
@@ -6518,15 +6657,27 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
-		String eventTitleExisting = "Relive salesforce Live 1";
+		String eventTitleExisting = RGAMNNR_Subject29;
 
-		String updatedNotes = "Acc 11, Con 1, con 2";
+		String updatedNotes = RGAMNNR_Notes30;
 		String[][] event1UpdateBasicSection = { { "Notes", updatedNotes } };
 		String[][] event1UpdateAdvancedSection = null;
-		String[] updatedSuggestedTags = "SuggestedPopUpShouldNotThere".split("<break>", -1);
+		String[] updatedSuggestedTags = RGAMNNR_SuggestedTag30.split("<break>", -1);
 
-		String accountRecordName = "Acc 11";
-		String accountRecordType = "Company";
+		String accountRecordName = RGAMNNR_FirmLegalName8;
+		String accountRecordType = RGAMNNR_FirmRecordType8;
+
+		/*
+		 * String eventTitleExisting = "Relive salesforce Live 1";
+		 * 
+		 * String updatedNotes = "Acc 11, Con 1, con 2"; String[][]
+		 * event1UpdateBasicSection = { { "Notes", updatedNotes } }; String[][]
+		 * event1UpdateAdvancedSection = null; String[] updatedSuggestedTags =
+		 * "SuggestedPopUpShouldNotThere".split("<break>", -1);
+		 * 
+		 * String accountRecordName = "Acc 11"; String accountRecordType = "Company";
+		 * 
+		 */
 
 		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
@@ -6708,15 +6859,15 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
-		String eventTitle = "Webinar 1 all day";
-		String eventAttendees = "Dealroom1.3+James@gmail.com,Dealroom1.3+Lenis@gmail.com" + "," + crmUser3EmailID + ";";
+		String eventTitle = RGAMNNR_Subject31;
+		String eventAttendees = RGAMNNR_RelatedTo31 + "," + crmUser3EmailID + ";";
 		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
 		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
 
 		String startTime = "";
 		String endTime = "";
-		String descriptionBox = "Revenue Grid Event";
-		String contactRecordName = "Lenis";
+		String descriptionBox = RGAMNNR_EventDescription31;
+		String contactRecordName = RGAMNNR_Contact9;
 
 		String user3FullName;
 		if (!crmUser3FirstName.equals("") && !crmUser3LastName.equals("")) {
@@ -6728,7 +6879,28 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		String[] labelAndValueSeprateByBreak = { "Subject" + "<break>" + eventTitle, "Start" + "<break>" + startDate,
 				"End" + "<break>" + endDate, "Description" + "<break>" + "",
 
-				"Name" + "<break>" + "James" };
+				"Name" + "<break>" + RGAMNNR_DetailPageRecord1 };
+
+		/*
+		 * String eventTitle = "Webinar 1 all day"; String eventAttendees =
+		 * "Dealroom1.3+James@gmail.com,Dealroom1.3+Lenis@gmail.com" + "," +
+		 * crmUser3EmailID + ";"; String startDate =
+		 * CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0); String
+		 * endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
+		 * 
+		 * String startTime = ""; String endTime = ""; String descriptionBox =
+		 * "Revenue Grid Event"; String contactRecordName = "Lenis";
+		 * 
+		 * String user3FullName; if (!crmUser3FirstName.equals("") &&
+		 * !crmUser3LastName.equals("")) { user3FullName = crmUser3FirstName + " " +
+		 * crmUser3LastName; } else { user3FullName = crmUser3LastName;
+		 * 
+		 * } String[] labelAndValueSeprateByBreak = { "Subject" + "<break>" +
+		 * eventTitle, "Start" + "<break>" + startDate, "End" + "<break>" + endDate,
+		 * "Description" + "<break>" + "",
+		 * 
+		 * "Name" + "<break>" + "James" };
+		 */
 
 		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
@@ -6898,29 +7070,28 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
 
-		String eventTitle = "Salesforce Event";
-		String eventAttendees = "Dealroom1.3+Litz@gmail.com,Dealroom1.3+Jhon@gmail.com" + "," + crmUser1EmailID + ","
-				+ crmUser2EmailID + ";";
+		String eventTitle = RGAMNNR_Subject32;
+		String eventAttendees = RGAMNNR_RelatedTo32 + "," + crmUser1EmailID + "," + crmUser2EmailID + ";";
 		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
 		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 1);
 		String endDateInAnotherForm1 = endDate;
 		String endDateInAnotherForm2 = CommonLib.convertDateFromOneFormatToAnother(endDate, "M/d/yyyy", "MMMM yyyy");
 
-		String startTime = "2:00 PM";
-		String endTime = "9:00 PM";
-		String descriptionBox = "Revenue Grid Event";
+		String startTime = RGAMNNR_EventStartTime32;
+		String endTime = RGAMNNR_EventEndTime32;
+		String descriptionBox = RGAMNNR_EventDescription32;
 
-		String updatedEventName = "Salesforce Event Updated";
-		String updatedEventAttendees = "Dealroom1.3+James@gmail.com;";
+		String updatedEventName = RGAMNNR_Subject33;
+		String updatedEventAttendees = RGAMNNR_RelatedTo33;
 		String updatedStartDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 1);
 		String updatedEndDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 1);
-		String updatedStartTime = "8:00 AM";
-		String updatedEndTime = "10:00 AM";
-		String updatedDescriptionBox = "";
+		String updatedStartTime = RGAMNNR_EventStartTime33;
+		String updatedEndTime = RGAMNNR_EventEndTime33;
+		String updatedDescriptionBox = RGAMNNR_EventDescription33;
 		boolean updatedAllDayToggle = false;
 		String updatedEventAttendeesToRemove = null;
 
-		String recordName = "Litz";
+		String recordName = RGAMNNR_Contact2;
 
 		String user3FullName;
 		if (!crmUser3FirstName.equals("") && !crmUser3LastName.equals("")) {
@@ -6931,8 +7102,45 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		}
 		String[] labelAndValueSeprateByBreak = { "Subject" + "<break>" + updatedEventName,
 				"Start" + "<break>" + updatedStartDate, "End" + "<break>" + updatedEndDate,
-				"Description" + "<break>" + "", "Related Associations" + "<break>" + "Sumo Logic, Vertica, Demo Deal",
-				"Related Contacts" + "<break>" + "James, Jhon, Litz" };
+				"Description" + "<break>" + "", "Related Associations" + "<break>" + RGAMNNR_DetailPageRecord2,
+				"Related Contacts" + "<break>" + RGAMNNR_DetailPageRecord3 };
+
+		/*
+		 * String eventTitle = "Salesforce Event"; String eventAttendees =
+		 * "Dealroom1.3+Litz@gmail.com,Dealroom1.3+Jhon@gmail.com" + "," +
+		 * crmUser1EmailID + "," + crmUser2EmailID + ";"; String startDate =
+		 * CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0); String
+		 * endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 1);
+		 * String endDateInAnotherForm1 = endDate; String endDateInAnotherForm2 =
+		 * CommonLib.convertDateFromOneFormatToAnother(endDate, "M/d/yyyy",
+		 * "MMMM yyyy");
+		 * 
+		 * String startTime = "2:00 PM"; String endTime = "9:00 PM"; String
+		 * descriptionBox = "Revenue Grid Event";
+		 * 
+		 * String updatedEventName = "Salesforce Event Updated"; String
+		 * updatedEventAttendees = "Dealroom1.3+James@gmail.com;"; String
+		 * updatedStartDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30",
+		 * "M/d/yyyy", 1); String updatedEndDate =
+		 * CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 1); String
+		 * updatedStartTime = "8:00 AM"; String updatedEndTime = "10:00 AM"; String
+		 * updatedDescriptionBox = ""; boolean updatedAllDayToggle = false; String
+		 * updatedEventAttendeesToRemove = null;
+		 * 
+		 * String recordName = "Litz";
+		 * 
+		 * String user3FullName; if (!crmUser3FirstName.equals("") &&
+		 * !crmUser3LastName.equals("")) { user3FullName = crmUser3FirstName + " " +
+		 * crmUser3LastName; } else { user3FullName = crmUser3LastName;
+		 * 
+		 * } String[] labelAndValueSeprateByBreak = { "Subject" + "<break>" +
+		 * updatedEventName, "Start" + "<break>" + updatedStartDate, "End" + "<break>" +
+		 * updatedEndDate, "Description" + "<break>" + "", "Related Associations" +
+		 * "<break>" + "Sumo Logic, Vertica, Demo Deal", "Related Contacts" + "<break>"
+		 * + "James, Jhon, Litz" };
+		 * 
+		 * 
+		 */
 
 		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
@@ -7055,14 +7263,25 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
-		String eventTitle = "Outlook Private Event";
+		String eventTitle = RGAMNNR_Subject34;
 		String eventAttendees = crmUser1EmailID + ";";
 		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
 		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
 
-		String startTime = "8:00 AM";
-		String endTime = "9:00 AM";
-		String descriptionBox = "Revenue Grid Event";
+		String startTime = RGAMNNR_EventStartTime34;
+		String endTime = RGAMNNR_EventEndTime34;
+		String descriptionBox = RGAMNNR_EventDescription34;
+
+		/*
+		 * String eventTitle = "Outlook Private Event"; String eventAttendees =
+		 * crmUser1EmailID + ";"; String startDate =
+		 * CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0); String
+		 * endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
+		 * 
+		 * String startTime = "8:00 AM"; String endTime = "9:00 AM"; String
+		 * descriptionBox = "Revenue Grid Event";
+		 * 
+		 */
 
 		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
@@ -7109,24 +7328,23 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 
-		String eventTitle = "Outlook Event Test";
-		String eventAttendees = crmUser1EmailID + "," + crmUser2EmailID + ","
-				+ "cont1.test@zxc.com,cont2+test@zxc.com;";
+		String eventTitle = RGAMNNR_Subject35;
+		String eventAttendees = crmUser1EmailID + "," + crmUser2EmailID + "," + RGAMNNR_RelatedTo35;
 		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
 		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
 
-		String startTime = "8:00 AM";
-		String endTime = "9:00 AM";
-		String descriptionBox = "Added the event in outlook to tag users and Contacts Con1";
-		String contact1 = "cont1 test";
-		String account1 = "zxc.com";
+		String startTime = RGAMNNR_EventStartTime35;
+		String endTime = RGAMNNR_EventEndTime35;
+		String descriptionBox = RGAMNNR_EventDescription35;
+		String contact1 = RGAMNNR_Contact10;
+		String account1 = RGAMNNR_FirmLegalName9;
 		String[] labelAndValueSeprateByBreak1 = { "Name" + "<break>" + contact1, "Legal Name" + "<break>" + account1,
-				"Email" + "<break>" + "cont1.test@zxc.com" };
+				"Email" + "<break>" + RGAMNNR_DetailPageRecord4 };
 
-		String contact2 = "cont2+test";
-		String account2 = "zxc.com";
+		String contact2 = RGAMNNR_Contact11;
+		String account2 = RGAMNNR_FirmLegalName10;
 		String[] labelAndValueSeprateByBreak2 = { "Name" + "<break>" + contact2, "Legal Name" + "<break>" + account2,
-				"Email" + "<break>" + "cont2+test@zxc.com" };
+				"Email" + "<break>" + RGAMNNR_DetailPageRecord5 };
 
 		String user1FullName;
 		if (!crmUser1FirstName.equals("") && !crmUser1LastName.equals("")) {
@@ -7138,6 +7356,36 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[] labelAndValueSeprateByBreakInCaseOfEvent = { "Assigned To" + "<break>" + user1FullName,
 				"Subject" + "<break>" + eventTitle, "Name" + "<break>" + contact1 };
+
+		/*
+		 * String eventTitle = "Outlook Event Test"; String eventAttendees =
+		 * crmUser1EmailID + "," + crmUser2EmailID + "," +
+		 * "cont1.test@zxc.com,cont2+test@zxc.com;"; String startDate =
+		 * CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0); String
+		 * endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
+		 * 
+		 * String startTime = "8:00 AM"; String endTime = "9:00 AM"; String
+		 * descriptionBox = "Added the event in outlook to tag users and Contacts Con1";
+		 * String contact1 = "cont1 test"; String account1 = "zxc.com"; String[]
+		 * labelAndValueSeprateByBreak1 = { "Name" + "<break>" + contact1, "Legal Name"
+		 * + "<break>" + account1, "Email" + "<break>" + "cont1.test@zxc.com" };
+		 * 
+		 * String contact2 = "cont2+test"; String account2 = "zxc.com"; String[]
+		 * labelAndValueSeprateByBreak2 = { "Name" + "<break>" + contact2, "Legal Name"
+		 * + "<break>" + account2, "Email" + "<break>" + "cont2+test@zxc.com" };
+		 * 
+		 * String user1FullName; if (!crmUser1FirstName.equals("") &&
+		 * !crmUser1LastName.equals("")) { user1FullName = crmUser1FirstName + " " +
+		 * crmUser1LastName; } else { user1FullName = crmUser1LastName;
+		 * 
+		 * }
+		 * 
+		 * String[] labelAndValueSeprateByBreakInCaseOfEvent = { "Assigned To" +
+		 * "<break>" + user1FullName, "Subject" + "<break>" + eventTitle, "Name" +
+		 * "<break>" + contact1 };
+		 * 
+		 * 
+		 */
 
 		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
@@ -7349,24 +7597,23 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 
-		String eventTitle = "Outlook Event Test Firm";
-		String eventAttendees = crmUser1EmailID + "," + crmUser2EmailID + ","
-				+ "cont3.test@sumologic.com,cont4+test@sumologic.com;";
+		String eventTitle = RGAMNNR_Subject36;
+		String eventAttendees = crmUser1EmailID + "," + crmUser2EmailID + "," + RGAMNNR_RelatedTo36;
 		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
 		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
 
-		String startTime = "8:00 AM";
-		String endTime = "9:00 AM";
-		String descriptionBox = "Added the event in outlook to tag users and Contacts Con1";
-		String contact1 = "cont3 test";
-		String account1 = "Sumo Logic";
+		String startTime = RGAMNNR_EventStartTime36;
+		String endTime = RGAMNNR_EventEndTime36;
+		String descriptionBox = RGAMNNR_EventDescription36;
+		String contact1 = RGAMNNR_Contact12;
+		String account1 = RGAMNNR_FirmLegalName11;
 		String[] labelAndValueSeprateByBreak1 = { "Name" + "<break>" + contact1, "Legal Name" + "<break>" + account1,
-				"Email" + "<break>" + "cont3.test@sumologic.com" };
+				"Email" + "<break>" + RGAMNNR_DetailPageRecord6 };
 
-		String contact2 = "cont4+test";
-		String account2 = "Sumo Logic";
+		String contact2 = RGAMNNR_Contact13;
+		String account2 = RGAMNNR_FirmLegalName12;
 		String[] labelAndValueSeprateByBreak2 = { "Name" + "<break>" + contact2, "Legal Name" + "<break>" + account2,
-				"Email" + "<break>" + "cont4+test@sumologic.com" };
+				"Email" + "<break>" + RGAMNNR_DetailPageRecord7 };
 		String user1FullName;
 		if (!crmUser1FirstName.equals("") && !crmUser1LastName.equals("")) {
 			user1FullName = crmUser1FirstName + " " + crmUser1LastName;
@@ -7377,7 +7624,39 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String[] labelAndValueSeprateByBreakInCaseOfEvent = { "Assigned To" + "<break>" + user1FullName,
 				"Subject" + "<break>" + eventTitle, "Name" + "<break>" + contact1,
-				"Related Associations" + "<break>" + "Assign Multiple Associations" };
+				"Related Associations" + "<break>" + RGAMNNR_DetailPageRecord8 };
+
+		/*
+		 * String eventTitle = "Outlook Event Test Firm"; String eventAttendees =
+		 * crmUser1EmailID + "," + crmUser2EmailID + "," +
+		 * "cont3.test@carlylegroup-ng.com,cont4+test@carlylegroup-ng.com;"; String
+		 * startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", 0);
+		 * String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy",
+		 * 0);
+		 * 
+		 * String startTime = "8:00 AM"; String endTime = "9:00 AM"; String
+		 * descriptionBox = "Added the event in outlook to tag users and Contacts Con1";
+		 * String contact1 = "cont3 test"; String account1 = "carlylegroup-ng.com";
+		 * String[] labelAndValueSeprateByBreak1 = { "Name" + "<break>" + contact1,
+		 * "Legal Name" + "<break>" + account1, "Email" + "<break>" +
+		 * "cont3.test@carlylegroup-ng.com" };
+		 * 
+		 * String contact2 = "cont4+test"; String account2 = "carlylegroup-ng.com";
+		 * String[] labelAndValueSeprateByBreak2 = { "Name" + "<break>" + contact2,
+		 * "Legal Name" + "<break>" + account2, "Email" + "<break>" +
+		 * "cont4+test@carlylegroup-ng.com" }; String user1FullName; if
+		 * (!crmUser1FirstName.equals("") && !crmUser1LastName.equals("")) {
+		 * user1FullName = crmUser1FirstName + " " + crmUser1LastName; } else {
+		 * user1FullName = crmUser1LastName;
+		 * 
+		 * }
+		 * 
+		 * String[] labelAndValueSeprateByBreakInCaseOfEvent = { "Assigned To" +
+		 * "<break>" + user1FullName, "Subject" + "<break>" + eventTitle, "Name" +
+		 * "<break>" + contact1, "Related Associations" + "<break>" +
+		 * "Assign Multiple Associations" };
+		 * 
+		 */
 
 		lp.CRMLogin(crmUser1EmailID, "navatar123");
 
