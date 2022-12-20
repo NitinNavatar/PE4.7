@@ -851,7 +851,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-				if (bp.clicktabOnPage("Acuity")) {
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
 
@@ -1034,7 +1034,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 								recordName1, 30)) {
 							log(LogStatus.INFO, recordName1 + " reocrd has been open", YesNo.No);
 
-							if (bp.clicktabOnPage("Acuity")) {
+							if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 								log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 								
 								ArrayList<String> result2=bp.verifyRecordOnContactSectionAcuity(contactSectionName1, contactSectionTitle1, contactSectionDeal1, contactSectionMeetingAndCall1, contactSectionEmail1);
@@ -1191,7 +1191,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-				if (bp.clicktabOnPage("Acuity")) {
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 	    								
 					ArrayList<String> result=bp.verifyRecordOnInteractionCard(eventDueDate, IconType.Meeting, eventSubjectName, eventNotes, false,true, eventRelatedTo, eventRelatedAssociation);
@@ -1225,7 +1225,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 										recordName, 30)) {
 									log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-									if (bp.clicktabOnPage("Acuity")) {
+									if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 										log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 												
 										ArrayList<String> result1=bp.verifyRecordOnInteractionCard(updateEventStartDate, IconType.Meeting, eventSubjectName, updateEventNotes, true,false, eventRelatedTo, eventRelatedAssociation);
@@ -1353,7 +1353,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " record has been open", YesNo.No);
 
-				if (bp.clicktabOnPage("Acuity")) {
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
 					ThreadSleep(5000);					
@@ -1515,7 +1515,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-				if (bp.clicktabOnPage("Acuity")) {
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
 
@@ -1688,7 +1688,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 								recordName1, 30)) {
 							log(LogStatus.INFO, recordName1 + " reocrd has been open", YesNo.No);
 
-							if (bp.clicktabOnPage("Acuity")) {
+							if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 								log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 								
 								ArrayList<String> result2=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCall, contactSectionEmail);
@@ -1832,7 +1832,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-				if (bp.clicktabOnPage("Acuity")) {
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 					
 					ArrayList<String> result1=bp.verifyRecordOnInteractionCard(eventDueDate, IconType.Meeting, eventSubject, eventNotes, true,false, eventRelatedTo, eventRelatedAssociation);
@@ -2035,7 +2035,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-				if (bp.clicktabOnPage("Acuity")) {
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 					
 					ArrayList<String> result1=bp.verifyRecordOnInteractionCard(eventDueDate, IconType.Meeting, eventSubject, eventNotes, true,false, eventRelatedTo, eventRelatedAssociation);
@@ -2137,7 +2137,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-				if (bp.clicktabOnPage("Acuity")) {
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 					
 					ArrayList<String> result1=bp.verifyRecordOnInteractionCard(eventDueDate, IconType.Meeting, eventSubject, eventNotes, true,false, eventRelatedTo, eventRelatedAssociation);
@@ -2230,7 +2230,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-				if (bp.clicktabOnPage("Acuity")) {
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 					
 					for(int i=0; i<teamMember.length; i++)
@@ -2300,7 +2300,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-				if (bp.clicktabOnPage("Acuity")) {
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
@@ -2399,7 +2399,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-				if (bp.clicktabOnPage("Acuity")) {
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
@@ -2726,7 +2726,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-				if (bp.clicktabOnPage("Acuity")) {
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
 
@@ -2835,7 +2835,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					recordName, 30)) {
 				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-				if (bp.clicktabOnPage("Acuity")) {
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
 
