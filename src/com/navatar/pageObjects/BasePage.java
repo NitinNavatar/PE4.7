@@ -8411,5 +8411,14 @@ public WebElement contactEmailCount(String contactName, int timeOut) {
 
 	}
 	
-	
+	public WebElement getHighlightedCompanyName(String companyName, int timeOut) {
+
+		String xpath = "//a[text()='"+companyName+"']//ancestor::th[contains(@class,'refCellHighlightCls')]";
+		try {
+			return FindElement(driver, xpath, "Tab name: " + companyName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Tab name: " + companyName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
 }

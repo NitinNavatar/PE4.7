@@ -20194,5 +20194,34 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 
 	}
+	
+	public ArrayList<String> verifyHighlightedCompanyNameOnCompanyTaggedSection(String[] companyName)
+	{
+		ArrayList<String> result=new ArrayList<String>();
+		if (click(driver, getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
+			
+			for(int i=0; i<companyName.length; i++)
+			{
+				if(getHighlightedCompanyName(companyName[i],15)!=null)
+				{
+					log(LogStatus.INFO, companyName[i]+" is highlighted in Company list", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR, companyName[i]+" is not highlighted in Company list", YesNo.No);
+					result.add(companyName[i]+" is not highlighted in Company list");
+				}
+			}
+			
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
+			result.add("Not able to click on Companies tab name");
+		}
+		
+		return null;
+	}
 
 }
