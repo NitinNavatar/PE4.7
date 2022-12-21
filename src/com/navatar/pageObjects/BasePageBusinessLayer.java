@@ -11399,13 +11399,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					}
 				} else if (labelName.contains(excelLabel.Notes.toString())) {
-					xPath = "//div[span[span[text()='" + labelName
-							+ "']]]//div[@class='slds-rich-text-editor__textarea slds-grid']";
+					xPath = "//div[label[text()='Notes']]//textarea";
 					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
 					if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
 						log(LogStatus.INFO, "Clicked on " + labelName + " paragraph", YesNo.No);
 						ThreadSleep(2000);
-						xPath = "//div[span[span[text()='" + labelName + "']]]//div[@role='textbox']//p";
+						xPath = "//div[label[text()='Notes']]//textarea";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
 						if (sendKeys(driver, ele, value, labelName + " paragraph", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, value + " has been passed on " + labelName + " paragraph", YesNo.No);
@@ -11451,11 +11450,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 
 						} else {
-							xPath = "//input[@placeholder='Search']";
+							xPath = "//input[@placeholder='Search Firm, People or Deals']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									2);
 							if (ele == null) {
-								xPath = "//*[@title='Tag']";
+								xPath = "//h2[text()='Task']/../..//h2[text()='Task']/../..//*[@title='Tag']";
 								ele = CommonLib.FindElement(driver, xPath, labelName + " label",
 										action.SCROLLANDBOOLEAN, 30);
 								if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
@@ -11468,7 +11467,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 							}
 
-							xPath = "//input[@placeholder='Search']";
+							xPath = "//input[@placeholder='Search Firm, People or Deals']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									2);
 							if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
@@ -11786,8 +11785,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ThreadSleep(1000);
 					refresh(driver);
 					ThreadSleep(3000);
-					if (popupCloseButton("Note", 8) != null) {
-						if (clickUsingJavaScript(driver, popupCloseButton("Note", 20), "close button")) {
+					if (popupCloseButton(buttonName, 8) != null) {
+						if (clickUsingJavaScript(driver, popupCloseButton(buttonName, 20), "close button")) {
 							log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
 							flag = true;
 						} else {
@@ -12932,10 +12931,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					for (int i = 0; i < tagList.size(); i++) {
 
-						xPath = "//input[@placeholder='Search']";
+						xPath = "//input[@placeholder='Search Firm, People or Deals']";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 2);
 						if (ele == null) {
-							xPath = "//*[@title='Tag']";
+							xPath = "//h2[text()='Task']/../..//*[@title='Tag']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									30);
 							if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
@@ -12948,7 +12947,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 						}
 
-						xPath = "//input[@placeholder='Search']";
+						xPath = "//input[@placeholder='Search Firm, People or Deals']";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 2);
 						if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, tagList.get(i) + " value has been passed in " + labelName + " field",
@@ -15157,11 +15156,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 
 						} else {
-							xPath = "//input[@placeholder='Search']";
+							xPath = "//input[@placeholder='Search Firm, People or Deals']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									2);
 							if (ele == null) {
-								xPath = "//*[@title='Tag']";
+								xPath = "//h2[text()='Task']/../..//*[@title='Tag']";
 								ele = CommonLib.FindElement(driver, xPath, labelName + " label",
 										action.SCROLLANDBOOLEAN, 30);
 								if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
@@ -15174,7 +15173,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 							}
 
-							xPath = "//input[@placeholder='Search']";
+							xPath = "//input[@placeholder='Search Firm, People or Deals']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									2);
 							if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
@@ -16448,11 +16447,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 
 						} else {
-							xPath = "//input[@placeholder='Search']";
+							xPath = "//input[@placeholder='Search Firm, People or Deals']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									2);
 							if (ele == null) {
-								xPath = "//*[@title='Tag']";
+								xPath = "//h2[text()='Task']/../..//*[@title='Tag']";
 								ele = CommonLib.FindElement(driver, xPath, labelName + " label",
 										action.SCROLLANDBOOLEAN, 30);
 								if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
@@ -16465,7 +16464,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 							}
 
-							xPath = "//input[@placeholder='Search']";
+							xPath = "//input[@placeholder='Search Firm, People or Deals']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									2);
 							if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
@@ -17045,11 +17044,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 
 						} else {
-							xPath = "//input[@placeholder='Search']";
+							xPath = "//input[@placeholder='Search Firm, People or Deals']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									2);
 							if (ele == null) {
-								xPath = "//*[@title='Tag']";
+								xPath = "//h2[text()='Task']/../..//*[@title='Tag']";
 								ele = CommonLib.FindElement(driver, xPath, labelName + " label",
 										action.SCROLLANDBOOLEAN, 30);
 								if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
@@ -17062,7 +17061,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 							}
 
-							xPath = "//input[@placeholder='Search']";
+							xPath = "//input[@placeholder='Search Firm, People or Deals']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									2);
 							if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
@@ -17506,10 +17505,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					for (int i = 0; i < tagList.size(); i++) {
 
-						xPath = "//input[@placeholder='Search']";
+						xPath = "//input[@placeholder='Search Firm, People or Deals']";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 2);
 						if (ele == null) {
-							xPath = "//*[@title='Tag']";
+							xPath = "//h2[text()='Task']/../..//*[@title='Tag']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									30);
 							if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
@@ -17522,7 +17521,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 						}
 
-						xPath = "//input[@placeholder='Search']";
+						xPath = "//input[@placeholder='Search Firm, People or Deals']";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 2);
 						if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, tagList.get(i) + " value has been passed in " + labelName + " field",
@@ -17930,14 +17929,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 			for (int i = 0; i < tagList.size(); i++) {
 				WebElement ele;
-				String xPath = "//input[@placeholder='Search']";
+				String xPath = "//input[@placeholder='Search Firm, People or Deals']";
 				if (i == 0) {
 
 					ele = isDisplayed(driver,
 							CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 10),
 							"Visibility", 8, "RelatedTo Search Box");
 					if (ele == null) {
-						xPath = "//*[@title='Tag']";
+						xPath = "//h2[text()='Task']/../..//*[@title='Tag']";
 
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
 						CommonLib.ThreadSleep(4000);
@@ -17952,7 +17951,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 				}
 
-				xPath = "//input[@placeholder='Search']";
+				xPath = "//input[@placeholder='Search Firm, People or Deals']";
 				ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 10);
 				if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, tagList.get(i) + " value has been passed in " + labelName + " field", YesNo.No);
@@ -18071,10 +18070,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					for (int i = 0; i < tagList.size(); i++) {
 
-						xPath = "//input[@placeholder='Search']";
+						xPath = "//input[@placeholder='Search Firm, People or Deals']";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 2);
 						if (ele == null) {
-							xPath = "//*[@title='Tag']";
+							xPath = "//h2[text()='Task']/../..//*[@title='Tag']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									30);
 							if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
@@ -18087,7 +18086,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 						}
 
-						xPath = "//input[@placeholder='Search']";
+						xPath = "//input[@placeholder='Search Firm, People or Deals']";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 2);
 						if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, tagList.get(i) + " value has been passed in " + labelName + " field",

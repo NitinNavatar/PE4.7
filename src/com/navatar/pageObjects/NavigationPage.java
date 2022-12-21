@@ -23,7 +23,7 @@ public class NavigationPage extends BasePageBusinessLayer {
 		// TODO Auto-generated constructor stub
 	}
 
-	@FindBy(xpath = "//div[@class='flexipagePage']//span[text()='Minimize']")
+	@FindBy(xpath = "(//div[@class='flexipagePage']//span[text()='Minimize'])[2]")
 	private WebElement navatarQuickLinkMinimize_Lighting;
 
 	/**
