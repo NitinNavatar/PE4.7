@@ -7207,7 +7207,7 @@ public abstract class BasePage extends BaseLib {
 	}
 
 	public WebElement getfooterSaveOrCancelButton(String btnName, int timeOut) {
-		String xPath = "//footer/button[text()='" + btnName + "']";
+		String xPath = "//footer//button[text()='" + btnName + "']";
 
 		return isDisplayed(driver, FindElement(driver, xPath, btnName + " button", action.SCROLLANDBOOLEAN, timeOut),
 				"Visibility", timeOut, btnName + " button");
@@ -7889,7 +7889,7 @@ public abstract class BasePage extends BaseLib {
 	}
 
 	public WebElement popupCloseButton(String popupName, int timeOut) {
-		String xpath = "//h2[text()='" + popupName + "']/..//lightning-icon[@title='Close']";
+		String xpath = "//h2[contains(text(),'"+popupName+"')]/..//lightning-icon[@title='Close']";
 		WebElement ele = FindElement(driver, xpath, popupName + " close button", action.SCROLLANDBOOLEAN, timeOut);
 		try {
 			return isDisplayed(driver, ele, "Visibility", timeOut, popupName + " close button");

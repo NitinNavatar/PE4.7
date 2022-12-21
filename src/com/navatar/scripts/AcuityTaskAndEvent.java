@@ -164,7 +164,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
 
-
 		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
 
