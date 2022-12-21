@@ -437,7 +437,7 @@ public class TaskPageBusinessLayer extends TaskPage {
 	public boolean editCommentsIntask(String task, String updatedValue) {
 		boolean flag = false;
 
-		CommonLib.refresh(driver);
+		
 		if (click(driver, editCommentsButton(30), "", action.BOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Edit Comments Button", YesNo.No);
 			if (CommonLib.clearTextBox(commentTextArea(20))) {
@@ -448,8 +448,18 @@ public class TaskPageBusinessLayer extends TaskPage {
 					if (click(driver, commentTextAreaSaveButton(30), "", action.BOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Save Button", YesNo.No);
 						CommonLib.refresh(driver);
+						CommonLib.ThreadSleep(3000);
 						String actualCommentValue = CommonLib.getText(driver, commentsLabelValueInTaskDetailPage(20),
 								"commentsLabelValueInTaskDetailPage", action.BOOLEAN);
+						for (int i = 0; i <= 5; i++) {
+							if (actualCommentValue.equals("")) {
+
+								actualCommentValue = CommonLib.getText(driver, commentsLabelValueInTaskDetailPage(20),
+										"commentsLabelValueInTaskDetailPage", action.BOOLEAN);
+							} else {
+								break;
+							}
+						}
 						if (actualCommentValue.equals(updatedValue)) {
 							log(LogStatus.INFO, "Value of Comments in Task Detail Matched and i.e. " + updatedValue,
 									YesNo.No);

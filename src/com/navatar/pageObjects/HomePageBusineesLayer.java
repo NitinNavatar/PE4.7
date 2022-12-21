@@ -5697,11 +5697,13 @@ public class HomePageBusineesLayer extends HomePage {
 		List<String> negativeResults = new ArrayList<String>();
 
 		if (notificationHeader(5) != null) {
-			log(LogStatus.PASS, "Notification Header is present there: " + notificationHeader(5).getText()+" in Home Page", YesNo.No);
+			log(LogStatus.PASS,
+					"Notification Header is present there: " + notificationHeader(5).getText() + " in Home Page",
+					YesNo.No);
 
 		} else {
 			log(LogStatus.FAIL, "Notification Header is not present there in Home Page", YesNo.No);
-			negativeResults.add("Notification Header is not present there in Home Page");
+			
 		}
 		List<String> notificationOptionsListInText = notificationOptionsList.stream()
 				.map(x -> CommonLib.getText(driver, x, "Event Name", action.BOOLEAN)).collect(Collectors.toList());
@@ -5710,24 +5712,153 @@ public class HomePageBusineesLayer extends HomePage {
 			for (int i = 0; i < eventName.length; i++) {
 				if (!notificationOptionsListInText.contains(eventName[i])) {
 
-					log(LogStatus.PASS, "Event: " + eventName[i] + " is not present there in Notification Pane of HomePage",
+					log(LogStatus.PASS,
+							"Event: " + eventName[i] + " is not present there in Notification Pane of HomePage",
 							YesNo.No);
 				}
 
 				else {
 
-					log(LogStatus.FAIL, "Event: " + eventName[i] + " is present there in Notification Pane of HomePage", YesNo.No);
-					negativeResults.add("Event: " + eventName[i] + " is present there in Notification Pane of HomePage");
+					log(LogStatus.FAIL, "Event: " + eventName[i] + " is present there in Notification Pane of HomePage",
+							YesNo.No);
+					negativeResults
+							.add("Event: " + eventName[i] + " is present there in Notification Pane of HomePage");
 				}
 			}
 		} else {
 
 			log(LogStatus.FAIL, "Either Notification Pane is not open or might be Locator gets changed", YesNo.No);
-			negativeResults.add("Either Notification Pane is not open or might be Locator gets changed");
+			
 		}
 
 		return negativeResults;
 
+	}
+
+	public boolean globalSearchAndNavigate(String recordName, String sideNavOption, boolean noResultMsg) {
+		boolean flag = false;
+		if (clickUsingJavaScript(driver, globalSearchButton(20), "globalSearchButton", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on globalSearchButton", YesNo.No);
+			if (sendKeysAndPressEnter(driver, globalSearchInput(20), recordName, "globalSearchInput",
+					action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Pass the Value to Input Box: " + recordName, YesNo.No);
+
+				if ("".equals(sideNavOption) || sideNavOption == null) {
+					if (noResultMsg) {
+						if (globalSearchNoResultMsg(7) != null) {
+
+							log(LogStatus.INFO, "No Result Msg showing for record: " + recordName, YesNo.No);
+
+							flag = true;
+
+						}
+
+						else {
+							log(LogStatus.ERROR, "No Result Msg nt showing for record: " + recordName, YesNo.Yes);
+							sa.assertTrue(false, "No Result Msg nt showing for record: " + recordName);
+
+						}
+					} else {
+
+						if (globalSearchRecord(recordName, 7) != null) {
+							log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
+							if (click(driver, globalSearchRecord(recordName, 7), "globalSearchRecord: " + recordName,
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Record: " + recordName, YesNo.No);
+								flag = true;
+							} else {
+								log(LogStatus.ERROR, "Not able to Click on Record: " + recordName, YesNo.Yes);
+								sa.assertTrue(false, "Not able to Click on Record: " + recordName);
+
+							}
+
+						} else {
+							log(LogStatus.ERROR, "No Record found in Top Results for record: " + recordName, YesNo.Yes);
+							sa.assertTrue(false, "No Record found in Top Results for record: " + recordName);
+						}
+
+					}
+				} else {
+					if (click(driver, globalSearchSideNavShowMoreButton(15), "globalSearchSideNavShowMoreButton",
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on globalSearchSideNavShowMoreButton", YesNo.No);
+
+						if (globalSearchSideNavOptionLink(sideNavOption, 7) != null) {
+							log(LogStatus.INFO, "Option found named: " + sideNavOption, YesNo.No);
+
+							if (click(driver, globalSearchSideNavOptionLink(sideNavOption, 7),
+									"globalSearchSideNavOptionLink", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on globalSearchSideNavOptionLink", YesNo.No);
+
+								if (noResultMsg) {
+									if (globalSearchNoResultMsg(7) != null) {
+
+										log(LogStatus.INFO, "No Result Msg showing for record: " + recordName,
+												YesNo.No);
+
+										flag = true;
+
+									}
+
+									else {
+										log(LogStatus.ERROR, "No Result Msg nt showing for record: " + recordName,
+												YesNo.Yes);
+										sa.assertTrue(false, "No Result Msg nt showing for record: " + recordName);
+
+									}
+								} else {
+
+									if (globalSearchRecord(recordName, 7) != null) {
+										log(LogStatus.INFO, "Record found named: " + recordName, YesNo.No);
+										if (click(driver, globalSearchRecord(recordName, 7),
+												"globalSearchRecord: " + recordName, action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "Clicked on Record: " + recordName, YesNo.No);
+											flag = true;
+										} else {
+											log(LogStatus.ERROR, "Not able to Click on Record: " + recordName,
+													YesNo.Yes);
+											sa.assertTrue(false, "Not able to Click on Record: " + recordName);
+
+										}
+
+									} else {
+										log(LogStatus.ERROR, "No Record found in side nav: "+sideNavOption+" for record: " + recordName,
+												YesNo.Yes);
+										sa.assertTrue(false,
+												"No Record found in side nav: "+sideNavOption+" for record: " + recordName);
+									}
+
+								}
+
+							} else {
+								log(LogStatus.ERROR, "Not able to click on globalSearchSideNavOptionLink", YesNo.Yes);
+								sa.assertTrue(false, "Not able to click on globalSearchSideNavOptionLink");
+							}
+
+						} else {
+							log(LogStatus.ERROR, "No Option found named: " + sideNavOption, YesNo.Yes);
+							sa.assertTrue(false, "No Option found named: " + sideNavOption);
+
+						}
+
+					} else {
+						log(LogStatus.ERROR, "Not able to click on globalSearchSideNavShowMoreButton", YesNo.Yes);
+						sa.assertTrue(false, "Not able to click on globalSearchSideNavShowMoreButton");
+					}
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to Pass the Value to Input Box: " + recordName, YesNo.Yes);
+				sa.assertTrue(false, "Not able to Pass the Value to Input Box: " + recordName);
+			}
+
+		} else {
+			log(LogStatus.ERROR, "Not able to click on globalSearchButton", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on globalSearchButton");
+
+		}
+		return flag;
 	}
 
 }

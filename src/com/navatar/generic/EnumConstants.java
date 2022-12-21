@@ -21,7 +21,7 @@ public class EnumConstants {
 		Folder_Description,Fund_Size,Fund_VintageYear,Fund_Description,Disclaimer_Name,Disclaimer_Description,StandardPath,CommonPath,SharedPath,InternalPath,MyProfile_FName,MyProfile_LName,Updated_FirmName,Updated_FirstName,Updated_LastName,Title,Business_Phone,Mailing_City,Mailing_State,Mailing_Zip,Mailing_Country,Firm_Contact,KeyWord_For_Search,AllFirms_Count,OnlineImportPath,AdvisorInvolvementID,FOLDER_NAME,INVALID_FOLDER_NAME,
 		TargetRegistrationURL,TargetLoginURL,Watermarking,UpdateInstitution_NameFormManageInvestor,UpdatedLimitedPartner_NameFormManageInvestor,HomePageAlertCount,FundsPageALertCount,ContactPageALertCount,BillingZip,UpdateFund_NameFromUpdateInfoIWR,UpdateFund_NameFromUpdateInfoFR,ContactName,FundName,Module_Name,Execute,Statistics,FRW_Value,INV_Value,FRW_DocumentsName,
 		INV_DocumentsName,Updated_InstitutionName_From_InvestorSide,Activity_Count,Viewed_Or_DownloadedAnyFile,Account_Name,Logo_Name,Contact_Access,ContactUpdatedEmailID, Path, DrawdownID, CapitalCalllID, CapitalAmount,ManagementFee, OtherFee, InvestmentAmount,CallAmount, CallDate, DueDate, CallAmountReceived,ReceivedDate, AmountDue,CapitalReturn,Dividends,RealizedGain,OtherProceeds,TotalDistributions,FundDistributionID,InvestorDistributionID,Capital_Returned_Recallable,
-		Capital_Returned_NonRecallable,Start_Time,End_Time,Test_Custom_Object_Name,Average_Deal_Quality_Score,Total_Deals_Shown,Deal_Quality_Score,Meeting_Type,User_Title,Item_ID {
+		Capital_Returned_NonRecallable,Start_Time,End_Time,Test_Custom_Object_Name,Average_Deal_Quality_Score,Total_Deals_Shown,Deal_Quality_Score,Meeting_Type,User_Title,To,CC,BCC,linkedRecord,Repeat,Item_ID {
 				@Override
 			    public String toString() {
 			      return "Item Id";
@@ -75,11 +75,13 @@ public class EnumConstants {
 		Parent_Field_Name,Override_Label,APIName,FieldOrder,URL,Region,Industry,Attendee_Staff,Marketing_Event,Notes,DTID,Member,File,EffectiveDate,ReceiptDate,
 		SDG_Row_Number, My_Records,Global_Filter_Query,Field_Data_SDG,Filter_Search, Filter_PickList, Filter_Label,SDG_Misc,Highlighted_Colors,Highlighted_Colors_RGB, Referenced_Component_Heading, Introduction_Date,TotalCommitment, Priority, Project_Type, Project_Name, Task_Name, Status, Fund_InvestmentCategory,FundInvestmentID,Comment, Updated_Priority, Updated_Subject, Updated_Comment,Updated_Stage, Start_Date, End_Date, Data_Type, Field_Label, Length, Decimal_Places, Options, Deal_Name,DealTeamID, SDG_Name, sObjectName, SDG_Tag, Object_Name, Field_Set_Label, NameSpace_PreFix, Page_Layout,Fields_Name, Toggle_Button, Request, Date_Requested, Request_Tracker_ID, Marketing_Event_Name, Date, TabName, Item,Filter_Value,Select_List_Item, RelatedTab, ToggleButton, Column_Name1, Column_Name2,Field_Type, FieldLabel_SubString, ExtraFieldsName, Column_Name, Navigation_Label_Name, Redirection_Label_Name, Update_Navigation_Label_Name, Updated_Order,Parent_Institution,Entity_Type, Parent, Navigation_Label_With_Parent, List_View_Object, List_View_Name, Action_Object, Coverage_Name,Action_Order,Event,Event_Payload,Action_Type, Sector, Assigned_To, Location, Event_PayLoad, Institution,Firm, Contact, Type_Of_Debt, Amount, Frequency, Fiscal_Year_end, Marketing_Initiative, Client, Advisor,List_Accessibility,Field,Operators,Filter,Fundraising_Stage,Count_as_per_fundraising_stage,Fundraising_Count, Partnership,SDG_Data_Count,AppPage_Name,SDG_TableName,SDG_DataProviderName
 
-		,Default_Sort,Date_Field,Field_Name,Field_Value,Filter_Condition,TextBox_Type,Page_Layout_Name,Button_Name,Tag,Advance_Due_Date,Advance_Start_Date,Advance_End_Date,Suggested_Tag,People,Deals,Meetings_And_Calls,Day,End_Day,Contact_Type, Other_LabelNames, Other_LabelValues,Search_String, Output, ResearchFindings, All_Categories, Firms, Intermediary, Lender, Portfolio_Company, Contacts, Fund, Interactions, Referenced_Accounts, Referenced_Contacts,Section,ContactHeader,dealHeader,ConnectionHeader,Deal_Company,Deal_Stage,Deal_DateRecieved,Advance_Status,Advance_Priority,Companies_Count,People_Count,Deals_Count,Contact_Name,Contact_Deals,Contact_Meetings_And_Calls,Contact_Email,Related_Association,Connection_TeamMember,Connection_Title,Connection_Deal,Connection_MeetingsAndCall,Connection_Email, FieldName, Value, New_Value, OrgPassword;
+
+		,Default_Sort,Date_Field,Field_Name,Field_Value,Filter_Condition,TextBox_Type,Page_Layout_Name,Button_Name,Tag,Advance_Due_Date,Advance_Start_Date,Advance_End_Date,Suggested_Tag,People,Deals,Meetings_And_Calls,Day,End_Day,Contact_Type, Other_LabelNames, Other_LabelValues,Search_String, Output, ResearchFindings, All_Categories, Firms, Intermediary, Lender, Portfolio_Company, Contacts, Fund, Interactions, Referenced_Accounts, Referenced_Contacts,Section,ContactHeader,dealHeader,ConnectionHeader,Deal_Company,Deal_Stage,Deal_DateRecieved,Advance_Status,Advance_Priority,Companies_Count,People_Count,Deals_Count,Contact_Name,Contact_Deals,Contact_Meetings_And_Calls,Contact_Email,Related_Association,Connection_TeamMember,Connection_Title,Connection_Deal,Connection_MeetingsAndCall,Connection_Email, FieldName, Value, New_Value, Task_Subject,OrgPassword, Task_Status, Task_Due_Date, Advance_Start_Time, Advance_End_Time;
 
 
 
-};
+
+ };
 
 	public static enum fileDistributor {
 		BulkUpload,FileSplitter;
@@ -171,7 +173,7 @@ public class EnumConstants {
 		, 
 		NavatarSetup, Pipelines, FundDrawdowns,FundInvestments,CapitalCalls, FundraisingContacts, LimitedPartne, ReportsTab, 
 		Correspondence_Lists,LimitedPartner,CompaniesTab, TaskRayTab,TaskRay,TestCustomObjectTab, TaskTab,
-		Other,Object1Tab,Object2Tab,Object3Tab,Object4Tab,RecycleBinTab,SDGTab,DealTab, Object5Tab,Object6Tab,AttendeeTab,Object7Tab,Entities,Deals,Marketing_Events,Events,Deal_Team, Object8Tab, ContactTab, Deal;
+		Other,Object1Tab,Object2Tab,Object3Tab,Object4Tab,RecycleBinTab,SDGTab,DealTab, Object5Tab,Object6Tab,AttendeeTab,Object7Tab,Entities,Deals,Marketing_Events,Events,Deal_Team, Object8Tab, ContactTab, Deal,Acuity;
 	}
 	
 	public static enum Mode{

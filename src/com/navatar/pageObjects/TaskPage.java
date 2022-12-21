@@ -145,13 +145,10 @@ public class TaskPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, downArrowButton, "Visibility", timeOut, "downArrowButton");
 	}
 
-	@FindBy(xpath = "//span[text()='Comments']/parent::div/following-sibling::div/span/span")
-	private WebElement commentsLabelValueInTaskDetailPage;
-
 	public WebElement commentsLabelValueInTaskDetailPage(int timeOut) {
 
-		return isDisplayed(driver, commentsLabelValueInTaskDetailPage, "Visibility", timeOut,
-				"commentsLabelValueInTaskDetailPage");
+		String xpath = "//span[text()='Comments']/parent::div/following-sibling::div/span/span";
+		return FindElement(driver, xpath, "commentsLabelValueInTaskDetailPage: ", action.SCROLLANDBOOLEAN, timeOut);
 	}
 
 	public WebElement buttonInTheDownArrowList(String buttonName, int timeOut) {
@@ -171,19 +168,34 @@ public class TaskPage extends BasePageBusinessLayer {
 
 	public WebElement taskDeleteConfirmButton(int timeOut) {
 
-		return isDisplayed(driver, taskDeleteConfirmButton, "Visibility", timeOut,
-				"taskDeleteConfirmButton");
+		return isDisplayed(driver, taskDeleteConfirmButton, "Visibility", timeOut, "taskDeleteConfirmButton");
 	}
-	
+
 	@FindBy(xpath = "//div[contains(@class,'toastContent')]")
 	private WebElement taskDeletedMsg;
 
 	public WebElement taskDeletedMsg(int timeOut) {
 
-		return isDisplayed(driver, taskDeletedMsg, "Visibility", timeOut,
-				"taskDeletedMsg");
+		return isDisplayed(driver, taskDeletedMsg, "Visibility", timeOut, "taskDeletedMsg");
+	}
+	@FindBy(xpath = "//button[@title=\"Display as Split View\"]")
+	private WebElement buttonDisplayAsSplitView;
+
+	public WebElement buttonDisplayAsSplitView(int timeOut) {
+
+		return isDisplayed(driver, buttonDisplayAsSplitView, "Visibility", timeOut, "buttonDisplayAsSplitView");
+	}
+	
+	
+	@FindBy(xpath = "//li[@title=\"Table\"]//a")
+	private WebElement tableViewDropDownButton;
+
+	public WebElement tableViewDropDownButton(int timeOut) {
+
+		return isDisplayed(driver, tableViewDropDownButton, "Visibility", timeOut, "tableViewDropDownButton");
 	}
 	
 	
 	
+
 }

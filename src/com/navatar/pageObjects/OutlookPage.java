@@ -140,6 +140,13 @@ public class OutlookPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, eventCreatedMsg, "Visibility", timeOut, "eventCreatedMsg");
 
 	}
+	@FindBy(xpath = "//span[text()='Event canceled']")
+	private WebElement eventCanceledMsg;
+
+	public WebElement eventCanceledMsg(int timeOut) {
+		return isDisplayed(driver, eventCanceledMsg, "Visibility", timeOut, "eventCanceledMsg");
+
+	}
 
 	@FindBy(xpath = "//input[@name='loginfmt']")
 	private WebElement loginEmailInputBox;
@@ -264,7 +271,7 @@ public class OutlookPage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "//button[@name='Revenue Grid for Salesforce CRM']")
+	@FindBy(xpath = "//button[@aria-label='Revenue Grid for Salesforce CRM']")
 	private WebElement revenueGridButton;
 
 	public WebElement getRevenueGridButton(int timeOut) {
@@ -288,6 +295,17 @@ public class OutlookPage extends BasePageBusinessLayer {
 
 	}
 	
+	
+	@FindBy(xpath = "//iframe[@title=\"Office Add-in Revenue Grid for Salesforce CRM\"]")
+	private WebElement revenueGridFrame;
+
+	public WebElement revenueGridFrame(int timeOut) {
+		return isDisplayed(driver, revenueGridFrame, "Visibility", timeOut, "revenueGridFrame");
+
+	}
+	
+	
+	
 	@FindBy(xpath = "//div[@title='Open sync settings in browser']")
 	private WebElement syncSettingMenu;
 
@@ -304,11 +322,19 @@ public class OutlookPage extends BasePageBusinessLayer {
 
 	}
 	
-	@FindBy(xpath = "//div[@class='ajs-message ajs-error ajs-visible']")
-	private WebElement forceSyncSuccessErrorMessage;
+	@FindBy(xpath = "//div[@class=\"ajs-message ajs-success ajs-visible\"]")
+	private WebElement forceSyncSuccessMessage;
 
-	public WebElement getForceSyncSuccessErrorMessage(int timeOut) {
-		return isDisplayed(driver, forceSyncSuccessErrorMessage, "Visibility", timeOut, "force Sync success/error message");
+	public WebElement forceSyncSuccessMessage(int timeOut) {
+		return isDisplayed(driver, forceSyncSuccessMessage, "Visibility", timeOut, "force Sync success message");
+
+	}
+	
+	@FindBy(xpath = "//div[@class=\"ajs-message ajs-error ajs-visible\"]")
+	private WebElement forceSyncErrorMessage;
+
+	public WebElement getForceSyncErrorMessage(int timeOut) {
+		return isDisplayed(driver, forceSyncErrorMessage, "Visibility", timeOut, "force Sync error message");
 
 	}
 	
@@ -496,7 +522,7 @@ public class OutlookPage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "//div[@class='pQPSJ']//div[contains(@class,'CT1Ra')]")
+	@FindBy(xpath = "//div[@class=\"pQPSJ\"]//div[contains(@class,\"CT1Ra\") or contains(@class,\"zXpJ_\")]")
 	private List<WebElement> listOfEventNames;
 
 	public List<WebElement> getlistOfEventNames() {
@@ -534,5 +560,190 @@ public class OutlookPage extends BasePageBusinessLayer {
 	public WebElement eventUpdateMsg(int timeOut) {
 		return isDisplayed(driver, eventUpdateMsg, "Visibility", timeOut, "eventUpdateMsg");
 
+	}	
+
+	@FindBy(xpath = "//span[contains(@class,'ms-Dropdown-title')]/span[contains(text(),'repeat')]")
+	private WebElement recurringBtn;
+
+	public WebElement getRecurringBtn(int timeOut) {
+		return isDisplayed(driver, recurringBtn, "Visibility", timeOut, "recurring button");
 	}
+	
+	
+	public WebElement getRecurringOption(String recurringOptionName, int timeOut) {
+		String xpath = "//div[@aria-label='Repeat:']/button//span[text()='"+recurringOptionName+"']";
+		try {
+			return FindElement(driver, xpath, "Button Name: " + recurringOptionName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Button Name: " + recurringOptionName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+	
+	
+	@FindBy(xpath = "//span[text()='Repeat']/../..//span[text()='Save']")
+	private WebElement saveButtonOnRepeatPopup;
+
+	public WebElement getSaveButtonOnRepeatPopup(int timeOut) {
+		return isDisplayed(driver, saveButtonOnRepeatPopup, "Visibility", timeOut, "save button on Repeate popup");
+	}
+	
+	
+	@FindBy(xpath = "//div[@title='Sent Items']//span[text()='Sent Items']")
+	private WebElement sendItemButton;
+
+	public WebElement getSendItemButton(int timeOut) {
+		return isDisplayed(driver, sendItemButton, "Visibility", timeOut, "send item button");
+	}
+	
+	public WebElement getSendItmSubject(String subjectName, int timeOut) {
+		String xpath = "//div[@class='S2NDX']//span[text()='"+subjectName+"']";
+		try {
+			return FindElement(driver, xpath, "Button Name: " + subjectName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Button Name: " + subjectName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+	
+	public WebElement getMoreIcon(int timeOut) {
+		String xpath = "//button[@aria-label='More mail actions']";
+		try {
+			return FindElement(driver, xpath, "More icon", action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "More icon", action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+	
+	@FindBy(xpath = "//button[@data-name='button-save' and text()='Save email']")
+	private WebElement saveEmailButtonOnRG;
+
+	public WebElement getSaveEmailButtonOnRG(int timeOut) {
+		return isDisplayed(driver, saveEmailButtonOnRG, "Visibility", timeOut, "Save email button on RG");
+	}
+	
+	@FindBy(xpath = "//div[text()='Click to link more records']")
+	private WebElement linkedRecordPlaceholder;
+
+	public WebElement getLinkedRecordPlaceholder(int timeOut) {
+		return isDisplayed(driver, linkedRecordPlaceholder, "Visibility", timeOut, "linked record placeholder");
+	}
+	
+	
+	@FindBy(xpath = "//span[text()='Linked records']/ancestor::div[@data-name='group-title-container']/following-sibling::div//input[@role='combobox']")
+	private WebElement linkedRecordInput;
+
+	public WebElement getLinkedRecordInput(int timeOut) {
+		return isDisplayed(driver, linkedRecordInput, "Visibility", timeOut, "linked record input type");
+	}
+	
+	
+	public WebElement getLinkedRecordSuggestion(String recordName, int timeOut) {
+		String xpath = "//span[text()='Linked records']/ancestor::div[@data-name='group-title-container']/following-sibling::div//span[text()='"+recordName+"']";
+		try {
+			return FindElement(driver,xpath, "record name "+recordName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver,xpath, "record name "+recordName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+	
+	@FindBy(xpath = "//button[@class='a-head__navigation-button' and text()='Save']")
+	private WebElement saveButtonOnRG;
+
+	public WebElement getSaveButtonOnRG(int timeOut) {
+		return isDisplayed(driver, saveButtonOnRG, "Visibility", timeOut, "save button");
+	}
+	
+	@FindBy(xpath = "//button[@data-name='button-save' and text()='Email is saved']")
+	private WebElement emailSaveConfirmationOnRG;
+
+	public WebElement getEmailSaveConfirmationOnRG(int timeOut) {
+		return isDisplayed(driver, emailSaveConfirmationOnRG, "Visibility", timeOut, "email save confirmation");
+	}
+	
+
+	
+	public WebElement getOutlookCalendarIcon(String dateType,action action,int timeOut) {
+		String xpath ="//input[@aria-label='"+dateType+"']/following-sibling::i";
+		return isDisplayed(driver, FindElement(driver, xpath, "Calendar icon", action, timeOut), "Visibility", timeOut, "Calendar icon");
+
+	}
+	
+	@FindBy(xpath = "//div[@aria-label='Calendar']//button[contains(@aria-label,'select to change the month')]")
+	private WebElement monthsAndYearButton;
+
+	public WebElement getMonthsAndYearButton(int timeOut) {
+		return isDisplayed(driver, monthsAndYearButton, "Visibility", timeOut, "monthsAndYearButton");
+
+	}
+	
+	@FindBy(xpath = "//button[contains(@aria-label,'select to change the year')]")
+	private WebElement allYearButton;
+
+	public WebElement getAllYearLinkButton(int timeOut) {
+		return isDisplayed(driver, allYearButton, "Visibility", timeOut, "allYearButton");
+
+	}
+
+
+	public WebElement getOutlookCalendarYear(String year,action action,int timeOut) {
+		String xpath ="//button[text()='"+year+"']";
+		return isDisplayed(driver, FindElement(driver, xpath, "year", action, timeOut), "Visibility", timeOut, "year");
+
+	}
+	
+	public WebElement getOutlookCalendarMonth(String partialMonthName,action action,int timeOut) {
+		String xpath ="//button[text()='"+partialMonthName+"']";
+		return isDisplayed(driver, FindElement(driver, xpath, "month", action, timeOut), "Visibility", timeOut, "month");
+
+	}
+	
+	public WebElement getOutlookCalendarDay(String day,String fullMonthName,String year,action action,int timeOut) {
+		String xpath ="//div[@aria-label='Calendar']//button[@aria-label='"+day+", "+fullMonthName+", "+year+"']";
+		return isDisplayed(driver, FindElement(driver, xpath, "day", action, timeOut), "Visibility", timeOut, "day date");
+
+	}
+	
+	@FindBy(xpath = "//button[contains(@title,\"Account manager for\")]")
+	private WebElement topCornerAccountButton;
+
+	public WebElement topCornerAccountButton(int timeOut) {
+		return isDisplayed(driver, topCornerAccountButton, "Visibility", timeOut, "topCornerAccountButton");
+
+	}
+	
+	@FindBy(xpath = "//a[contains(@aria-label,\"Sign out of this account\")]")
+	private WebElement signOutLink;
+
+	public WebElement signOutLink(int timeOut) {
+		return isDisplayed(driver, signOutLink, "Visibility", timeOut, "signOutLink");
+
+	}
+	
+	public WebElement alreadyLoggedInLink(String emailId,int timeOut) {
+		String xpath ="//div[text()=\""+emailId+"\"]/ancestor::div[@class=\"table\"]";
+		return isDisplayed(driver, FindElement(driver, xpath, "day", action.SCROLLANDBOOLEAN, timeOut), "Visibility", timeOut, "alreadyLoggedInLink");
+
+	}
+	
+
+	@FindBy(xpath = "//input[@placeholder='Search for a room or location']")
+	private WebElement searchInputLocation;
+
+	public WebElement getSearchInputLocation(int timeOut) {
+		return isDisplayed(driver, searchInputLocation, "Visibility", timeOut, "Seacrh locations");
+
+	}
+	@FindBy(xpath = "//div[text()='Reminders']/..//button[@aria-label='Close']")
+	private WebElement closeBtnOnReminderPopup;
+
+	public WebElement getCloseBtnOnReminderPopup(int timeOut) {
+		return isDisplayed(driver, closeBtnOnReminderPopup, "Visibility", timeOut, "Close button Reminder popup");
+	}
+	@FindBy(xpath = "//button[text()=\"More options\"]")
+	private WebElement moreOptionsLink;
+
+	public WebElement moreOptionsLink(int timeOut) {
+		return isDisplayed(driver, moreOptionsLink, "Visibility", timeOut, "moreOptionsLink");
+
+	}
+	
 }
