@@ -3320,8 +3320,8 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		OutlookPageBusinessLayer op = new OutlookPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
-		String eventTitle = "This event will have your Business circles talking +3";
-		String eventAttendees = "Dealroom1.3+Litz@gmail.com" + "," + crmUser2EmailID + "," + crmUser3EmailID + ";";
+		String eventTitle = RGAMNNR_Subject16;
+		String eventAttendees = RGAMNNR_RelatedTo16 + "," + crmUser2EmailID + "," + crmUser3EmailID + ";";
 
 		String startDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -2);
 		String endDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", -1);
