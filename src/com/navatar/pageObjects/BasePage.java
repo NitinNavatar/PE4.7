@@ -8421,4 +8421,51 @@ public WebElement contactEmailCount(String contactName, int timeOut) {
 		}
 
 	}
+	
+	
+	public WebElement getHeadingNameOfTabOnTaggedSection(String headingName, int timeOut) {
+
+		String xpath ="//span[@class=\"slds-truncate\" and @title='" + headingName + "']";
+		try {
+			return FindElement(driver, xpath, "Tab name: " + headingName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Tab name: " + headingName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+	
+	
+	@FindBy(xpath = "//span[@class='slds-th__action']//lightning-icon[@title='Times Referenced']")
+	private WebElement timeReferenceIconOnTaggedSection;
+
+	public WebElement getTimeReferenceIconOnTaggedSection(int timeOut) {
+		return isDisplayed(driver, timeReferenceIconOnTaggedSection, "Visibility", timeOut,
+				"time reference icon on tagged section");
+	}
+	
+	
+	public WebElement getMessageOnTaggedSection(String tabName,String message, int timeOut) {
+
+		String xpath ="//span[@class=\"slds-truncate\" and text()='" + tabName
+				+ "']/ancestor::div[@class=\"iconC heightC\"]//div[text()='" + message + "']";
+		try {
+			return FindElement(driver, xpath, "message on tab : " + tabName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "message on tab: " + tabName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+	
+	
+	@FindBy(xpath = "//span[@title='Interactions']/ancestor::div/following-sibling::div[@class='slds-grid less_cards']/div")
+	private WebElement messageOnInteractionSection;
+
+	public WebElement getMessageOnInteractionSection(int timeOut) {
+		return isDisplayed(driver, messageOnInteractionSection, "Visibility", timeOut,
+				"message on Interaction section");
+	}
+	
+	
+	
+	
 }

@@ -150,7 +150,6 @@ public interface BasePageErrorMessage {
 	public static String currentPhotoTextMsg="Current Photo:";
 	
 	public static String acuityDefaultMessage="No items to display";
-	public static String acuityDefaultMessage1="No item display";
 	
 	
 }

@@ -14014,7 +14014,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		WebElement ele;
 		List<String> expectedTabName = new ArrayList<String>();
 
-		xPath = "//slot//span[@title='Tagged']/ancestor::div[contains(@class,'slds-p-vertical_small')]//span[@class='slds-radio_faux']";
+		xPath = "//slot//span[@title='Tagged']/ancestor::div//span[@class='slds-radio_faux']";
 		elements = FindElements(driver, xPath, "Tabs name");
 		for (WebElement el : elements) {
 			expectedTabName.add(getText(driver, el, "TabsName", action.SCROLLANDBOOLEAN));
@@ -14041,17 +14041,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	}
 
 	public ArrayList<String> verifyColumnsAndMessageOnTabsOfTagged(List<String> tabName, String message) {
-		String xPath;
-		WebElement ele;
 		ArrayList<String> result = new ArrayList<String>();
 
 		for (String val : tabName) {
 
 			if (click(driver, getTaggedRecordName(val, 25), val + " tab", action.BOOLEAN)) {
 				log(LogStatus.INFO, "clicked on " + val + " tab", YesNo.No);
-				xPath = "//span[@class=\"slds-truncate\" and @title='" + val + "']";
-				ele = FindElement(driver, xPath, val + " column", action.SCROLLANDBOOLEAN, 15);
-				if (ele != null) {
+				
+				if (getHeadingNameOfTabOnTaggedSection(val,15) != null) {
 					log(LogStatus.INFO,
 							"First column " + val + " has been verified on " + val + " tab of Tagged section",
 							YesNo.No);
@@ -14063,9 +14060,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							"First column " + val + " is not verified verified on " + val + " tab of Tagged section");
 				}
 
-				xPath = "//span[@class='slds-th__action']//lightning-icon[@title='Times Referenced']";
-				ele = FindElement(driver, xPath, "Times Referenced column", action.SCROLLANDBOOLEAN, 15);
-				if (ele != null) {
+				if (getTimeReferenceIconOnTaggedSection(15) != null) {
 					log(LogStatus.INFO,
 							"Second column Times Referenced has been verified on " + val + " tab of Tagged section",
 							YesNo.No);
@@ -14076,10 +14071,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							+ " tab of Tagged section");
 				}
 
-				xPath = "//span[@class=\"slds-truncate\" and text()='" + val
-						+ "']/ancestor::div[@class=\"iconC heightC\"]//div[text()='" + message + "']";
-				ele = FindElement(driver, xPath, "Message on Tagged", action.SCROLLANDBOOLEAN, 15);
-				if (ele != null) {
+				if (getMessageOnTaggedSection(val,message,15) != null) {
 					log(LogStatus.INFO, message + " message is visible on Tagged section", YesNo.No);
 				} else {
 					log(LogStatus.ERROR, message + " message is not visible on Tagged section", YesNo.No);
@@ -14106,9 +14098,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ArrayList<String> result = new ArrayList<String>();
 
 		if (InteractionSectionmessage != null && !"".equals(InteractionSectionmessage)) {
-			xPath = "//span[@title='Interactions']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div/div";
-			ele = FindElement(driver, xPath, "Interaction section message", action.SCROLLANDBOOLEAN, 20);
-			String text = getText(driver, ele, "Interaction section message", action.SCROLLANDBOOLEAN);
+			
+			String text = getText(driver, getMessageOnInteractionSection(15), "Interaction section message", action.SCROLLANDBOOLEAN);
 			if (text.equals(InteractionSectionmessage)) {
 				log(LogStatus.INFO, InteractionSectionmessage + " message has been verified on Interaction section",
 						YesNo.No);
@@ -14221,7 +14212,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 		if (connectionsSectionHeaderMessage != null && !"".equals(connectionsSectionHeaderMessage)) {
-			xPath = "//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//div[text()='"
+			xPath = "//span[@title='Connections']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//p[text()='"
 					+ connectionsSectionHeaderMessage + "']";
 			ele = FindElement(driver, xPath, "Message on Connections section", action.SCROLLANDBOOLEAN, 15);
 			if (ele != null) {
@@ -20212,16 +20203,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.ERROR, companyName[i]+" is not highlighted in Company list", YesNo.No);
 					result.add(companyName[i]+" is not highlighted in Company list");
 				}
-			}
-			
+			}			
 		}
 		else
 		{
 			log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
 			result.add("Not able to click on Companies tab name");
 		}
-		
-		return null;
+		return result;
 	}
 
 }

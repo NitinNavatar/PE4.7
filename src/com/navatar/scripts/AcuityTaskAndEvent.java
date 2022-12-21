@@ -156,7 +156,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String recordName=ATERecord1;		
 		String sectionHeader=ATE_Section1;
 		String tabsOnTagged=ATE_Tabs1;
-		String defaultTabOntagged="Companies";
+		String defaultTabOntagged="Firms";
 		String message=bp.acuityDefaultMessage;
 
 		String contactHeader=ATE_ContactHeader1;
@@ -174,7 +174,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		List<String> connectionHeaders=new ArrayList<String>();
 		List<String> connectionTooltips=new ArrayList<String>();
 		List<String> blankList=new ArrayList<String>();
-
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -286,7 +285,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String recordName=ATE_Contact1;
 		String sectionHeader=ATE_Section2;
 		String tabsOnTagged=ATE_Tabs1;
-		String defaultTabOntagged="Companies";
+		String defaultTabOntagged="Firms";
 		String message=bp.acuityDefaultMessage;
 
 		String connectionHeader=ATE_ConnectionHeader1;
@@ -351,7 +350,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						else
 						{
 							log(LogStatus.ERROR, "The header name and message are not verified on Interaction and Connection Section. "+result1, YesNo.No);
-							sa.assertTrue(false, "The header name and message are not verified on Interaction and Connection Deals Section. "+result1);
+							sa.assertTrue(false, "The header name and message are not verified on Interaction and Connection Section. "+result1);
 						}
 
 						ArrayList<String> result2=bp.verifyToolTipOnDealsConnctionsAndContactsHeader(blankList, blankList, connnectionHeaders);
@@ -558,7 +557,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			headerName.add(txt);
 		}
 
-		String message=bp.acuityDefaultMessage1;
+		String message=bp.acuityDefaultMessage;
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 		if (lp.clickOnTab(projectName, tabObj1)) {
@@ -12306,7 +12305,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		
 		String recordName=ATE_Contact1;
 
-
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
 		if (lp.clickOnTab(projectName, tabObj2)) {
@@ -12351,6 +12349,64 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
+	
+	
+/*	
+	@Parameters({ "projectName" })
+	@Test
+	public void ATETc071_VerifyTheResultsOnContactsAcuityTab(String projectName) {
 
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		
+		String recordName="Test Contact 1_ins";
+		
+		String[] companyListName= {"CTest Account 12_ins","CTest Account 13_ins","ATest Account 17_ins","InsTest Account 18_ins"};
 
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+
+		if (lp.clickOnTab(projectName, tabObj2)) {
+
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
+                    ThreadSleep(6000);
+					ArrayList<String> result=bp.verifyHighlightedCompanyNameOnCompanyTaggedSection(companyListName);
+					if(result.isEmpty())
+					{
+						log(LogStatus.INFO, "The highlighted record have been verified on tagged section", YesNo.No);
+						sa.assertTrue(true, "The highlighted record have been verified on tagged section");
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The highlighted record are not verified on tagged section. "+result, YesNo.No);
+						sa.assertTrue(false,"The highlighted record are not verified on tagged section. "+result);
+					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
+				}
+			}
+			else
+			{
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
+			}
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab"+tabObj2, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
+		}
+		lp.CRMlogout();
+		sa.assertAll();
+	}
+
+*/
 }
