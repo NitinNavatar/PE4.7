@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -336,6 +337,71 @@ public class OutlookPageBusinessLayer extends OutlookPage {
 		return flag;
 
 	}
+	
+	public boolean outLookLoginRevenueGrid(String userName, String userPassword) {
+		boolean flag = false;
+		if (click(driver, getsignInWithGoogle(30), "signinwithgoogle", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on signinwithgoogle", YesNo.No);
+			String parentWindowId = CommonLib.switchOnWindow(driver);
+			ThreadSleep(2000);
+			Set<String> wind = driver.getWindowHandles();
+			System.out.println(wind);
+			for(String window : wind) {
+			driver.switchTo().window(window);
+		}
+			if (!parentWindowId.isEmpty()) { 
+				log(LogStatus.PASS, "New Window Open after click on Email subject Link: " + userName, YesNo.No);
+		if (sendKeys(driver, loginEmailInputBox(30), userName, "Input Value : " + userName, action.BOOLEAN)) {
+			CommonLib.log(LogStatus.INFO, "Entered Value: " + userName, YesNo.No);
+
+			if (click(driver, loginNextButton(30), "loginNextButton", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on loginNextButton", YesNo.No);
+
+				if (sendKeys(driver, loginPasswordInputBox(30), userPassword, "Input Value : " + userPassword,
+						action.BOOLEAN)) {
+					CommonLib.log(LogStatus.INFO, "Entered Value: " + userPassword, YesNo.No);
+
+					if (click(driver, loginSignInButton(30), "loginSignInButton", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on loginSignInButton", YesNo.No);
+
+						if (loginYesButton(10) != null) {
+							if (click(driver, loginYesButton(30), "loginYesButton", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on loginYesButton", YesNo.No);
+
+							} else {
+								log(LogStatus.ERROR, "Not able to Click on loginYesButton", YesNo.Yes);
+								BaseLib.sa.assertTrue(false, "Not able to Click on loginYesButton");
+							}
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to Click on loginSignInButton", YesNo.Yes);
+						BaseLib.sa.assertTrue(false, "Not able to Click on loginSignInButton");
+					}
+				} else {
+
+					CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + userPassword, YesNo.Yes);
+					BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + userPassword);
+
+				}
+
+			} else {
+				log(LogStatus.ERROR, "Not able to Click on loginNextButton", YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to Click on loginNextButton");
+			}
+		} else {
+
+			CommonLib.log(LogStatus.ERROR, "Not Able to Entered Value: " + userName, YesNo.Yes);
+			BaseLib.sa.assertTrue(false, "Not Able to Entered Value: " + userName);
+
+		}
+
+	}
+		}
+
+		return flag;
+	}
+	
+		
 
 	public boolean openRGGridAndDoForceSync(action action, int timeout) {
 		boolean flag = false;

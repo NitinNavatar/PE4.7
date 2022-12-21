@@ -1199,7 +1199,7 @@ public class SetupPage extends BasePageBusinessLayer {
 	}
 
 	public String GetDataFromValueFieldInCustomMetaData(int timeOut) {
-		String xpath = "//td[contains(@class,'dataCol last')]//input";
+		String xpath = "//td[contains(@class,'dataCol last')]//*";
 
 		try {
 			return FindElement(driver, xpath, "Value Field", action.SCROLLANDBOOLEAN, 10).getAttribute("value");
