@@ -33,7 +33,7 @@ public class SmokeCommonVariables {
 	public static String crmUser1FirstName,crmUser1LastName,crmUser1EmailID,crmUserProfile,crmUserLience;
 	public static String crmUser3FirstName,crmUser3LastName,crmUser3EmailID,crmUser3Profile,crmUser3Lience;
 	public static String gmailUserName,gmailUserName2,gmailPassword;
-	public static String rgUser1,rgUser2,rgUserPassword;
+	public static String rgUser1,rgUser2,rgUserPassword,rgOrgPassword;
 	public static String rgContact1,rgContact2,rgContact3,rgContact4;
 
 	public static String SmokeINS1, SmokeINS1_RecordType;
@@ -383,6 +383,7 @@ public class SmokeCommonVariables {
 			rgUser1=ExcelUtils.readData(testCasesFilePath,"RG User",excelLabel.Variable_Name, "RGUser1", excelLabel.User_Name);
 			rgUser2=ExcelUtils.readData(testCasesFilePath,"RG User",excelLabel.Variable_Name, "RGUser2", excelLabel.User_Name);
 			rgUserPassword=ExcelUtils.readData(testCasesFilePath,"RG User",excelLabel.Variable_Name, "RGUser1", excelLabel.Password);
+			rgOrgPassword=ExcelUtils.readData(testCasesFilePath,"RG User",excelLabel.Variable_Name, "RGUser1", excelLabel.OrgPassword);
 			
 			rgContact1=ExcelUtils.readData(testCasesFilePath,"RG User",excelLabel.Variable_Name, "RGContact1", excelLabel.User_Name);
 			rgContact2=ExcelUtils.readData(testCasesFilePath,"RG User",excelLabel.Variable_Name, "RGContact2", excelLabel.User_Name);

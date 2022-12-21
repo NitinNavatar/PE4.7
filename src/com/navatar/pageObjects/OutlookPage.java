@@ -155,6 +155,13 @@ public class OutlookPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, loginEmailInputBox, "Visibility", timeOut, "loginEmailInputBox");
 
 	}
+	@FindBy(xpath = "//button[text()='Sign in with Office 365']")
+	private WebElement signInWithGoogle;
+
+	public WebElement getsignInWithGoogle(int timeOut) {
+		return isDisplayed(driver, signInWithGoogle, "Visibility", timeOut, "sign In With Google");
+
+	}
 
 	@FindBy(xpath = "//input[@value='Next']")
 	private WebElement loginNextButton;
