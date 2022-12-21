@@ -7623,8 +7623,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 		}
 
 		String[] labelAndValueSeprateByBreakInCaseOfEvent = { "Assigned To" + "<break>" + user1FullName,
-				"Subject" + "<break>" + eventTitle, "Name" + "<break>" + contact1,
-				"Related Associations" + "<break>" + RGAMNNR_DetailPageRecord8 };
+				"Subject" + "<break>" + eventTitle, "Name" + "<break>" + contact1 };
 
 		/*
 		 * String eventTitle = "Outlook Event Test Firm"; String eventAttendees =
@@ -7728,9 +7727,11 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 
 				if (BP.recordDetailPageHeader(contact2, 15) != null) {
 					log(LogStatus.INFO, "Record Detail Page has Opened for Record: " + contact2, YesNo.No);
+					CommonLib.refresh(driver);
+					CommonLib.ThreadSleep(10000);
 					if (BP.clicktabOnPage("Details")) {
 						log(LogStatus.INFO, "clicked on Details tab", YesNo.No);
-						CommonLib.ThreadSleep(8000);
+						
 						List<String> contactDetailPageNegativeResult = BP
 								.fieldValueVerification(labelAndValueSeprateByBreak2);
 
