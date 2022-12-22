@@ -31,11 +31,11 @@ public class ResearchPage extends BasePageBusinessLayer {
 	public WebElement clickOnRecordUsingGridName(String gridName, int timeOut) {
 
 		try {
-			return FindElement(driver, "(//span[contains(text(),'"+ gridName+"')]/ancestor::div/following-sibling::div//th//a)[1]",
+			return FindElement(driver, "(//span[contains(text(),'"+ gridName+"')]/ancestor::div/following-sibling::div//a)[1]",
 					"Grid Name: " + gridName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
 			return FindElement(driver,
-					"(//span[contains(text(),'"+ gridName+"')]/ancestor::div/following-sibling::div//th//a)[1]",
+					"(//span[contains(text(),'"+ gridName+"')]/ancestor::div/following-sibling::div//a)[1]",
 					"Grid Name: " + gridName, action.SCROLLANDBOOLEAN, timeOut);
 		}
 
@@ -146,7 +146,7 @@ public class ResearchPage extends BasePageBusinessLayer {
 
 		}
 
-		@FindBy(xpath = "(//h2[contains(@class,'vertical__title')]")
+		@FindBy(xpath = "//div[contains(@class,'active')]//h2[contains(@class,'vertical__title')]")
 		private WebElement researchFindings;
 
 		public WebElement getResearchFindings(int timeOut) {
@@ -186,4 +186,11 @@ public class ResearchPage extends BasePageBusinessLayer {
 //		return isDisplayed(driver, NavigationSideBar, "Visibility", timeOut,
 //				"Text From Navigation Side Bar");
 //	}
+		@FindBy(xpath = "//div[contains(@class,'noResultsTitle')]")
+		public WebElement noResult;
+
+		public WebElement getNoResult(int timeOut) {
+			return isDisplayed(driver, noResult, "Visibility", timeOut, "No Result");
+
+		}
 }

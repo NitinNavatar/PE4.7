@@ -59,6 +59,7 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 					log(LogStatus.PASS, "New Window Open after click on Grid Link: " + headerName,
 							YesNo.No);
 					flag = true;
+					refresh(driver);
 					if (RecordPagesHeader(recordName, 20) != null) {//need to update according to Research
 						log(LogStatus.PASS, "----Detail Page is redirecting for Record: "
 								+ recordName + "-----", YesNo.No);
@@ -133,13 +134,19 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 			//log(LogStatus.INFO,"Count is greater than 5, so we can see view more option for " + newCountFromSideNav,YesNo.No);
 			if(count > 5) {
 				log(LogStatus.INFO,"Count is greater than 5, so we can see view more option for " + headerName ,YesNo.No);
+				ThreadSleep(2000);
 				if(clickUsingJavaScript(driver, getViewMoreOptionUsingHeaderName(headerName, 20), "View More"))
 				{
 					log(LogStatus.INFO,"Count is greater than 5 " + headerName ,YesNo.No);
+					ThreadSleep(2000);
 					int TotalNumberOfRecords = getAllRecordsUsingHeaderName(headerName,20).size();
 					log(LogStatus.INFO,"Total Number Of Records are : " + TotalNumberOfRecords,YesNo.No);
+					ThreadSleep(2000);
 					if(TotalNumberOfRecords == count) {
 						log(LogStatus.INFO,"Total number of records are matched with given count",YesNo.No);
+						refresh(driver);
+						ThreadSleep(2000);
+						refresh(driver);
 						clickUsingJavaScript(driver, getAllCategoriesLink(10), "All Categories");
 						flag = true;
 					}
@@ -187,6 +194,9 @@ public class ResearchPageBusinessLayer extends ResearchPage {
 		
 		if(variableName.contains("ACR_")) {
 			headersAndValues = ExcelUtils.dataRead(ResearchDataSheetFilePath,"SearchData",excelLabel.Variable_Name, variableName);
+		}
+		else if(variableName.contains("ARURT_")) {
+			headersAndValues = ExcelUtils.dataRead(ResearchDataSheetFilePath,"UpdatedRecordType",excelLabel.Variable_Name, variableName);
 		}
 		else {
 			headersAndValues = ExcelUtils.dataRead(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Variable_Name, variableName);

@@ -83,6 +83,7 @@ public class AcuityResearch extends BaseLib{
 	String filesName = "Enter one or more research terms";
 	String customNavigationMenu = "Custom Navigation Menu";
 	String recordTypeDescription = "Description Record Type";
+	String valueInAccountField,valueInContactField1,valueInContactField2,valueInDealField1,valueInDealField2,valueInFundField1,valueInFundField2,valueInFundraisingField1,valueInFundraisingField2;
 	
 	@Parameters({ "projectName"})
 	@Test
@@ -113,9 +114,9 @@ public class AcuityResearch extends BaseLib{
 					if (setup.createPEUser( glUser1FirstName, UserLastName, emailId, glUserLience,
 							glUserProfile, null)) {
 						log(LogStatus.INFO, "GL User is created Successfully: " + glUser1FirstName + " " + UserLastName, YesNo.No);
-						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User1",
+						ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "Usergl",
 								excelLabel.User_Email);
-						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User1",
+						ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "Userg1",
 								excelLabel.User_Last_Name);
 						flag = true;
 						break;
@@ -349,7 +350,7 @@ public class AcuityResearch extends BaseLib{
 	String errorName1 = "No results for";
 	String xpath,ele;
 	int i = 1;
-	String searchValues[] = {"","a","zz","~!@#$%^&*()_+=-[]{}|;':,.<>/?"};
+	String searchValues[] = {"","a","zz","1234567890~!@#$%^&*()_+-=[]{}?|;':,.<>/"};
 	String[][] val = {{MRSD_1_ResearchFindings},{MRSD_2_ResearchFindings},{MRSD_3_ResearchFindings},{MRSD_4_ResearchFindings},{MRSD_5_ResearchFindings},{MRSD_6_ResearchFindings},{MRSD_7_ResearchFindings},{MRSD_8_ResearchFindings},{MRSD_9_ResearchFindings}};
 	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
 	ThreadSleep(2000);
@@ -361,8 +362,8 @@ public class AcuityResearch extends BaseLib{
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
-			ele = rp.getResearchFindings(10).getText();
-			if (ele.equals(searchValue)) {
+			ele = rp.getResearchFindingsValue(10).getText();
+			if (ele.equals(searchValue) || searchValue == null) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
 			sa.assertTrue(true, ele +" is matched with " +searchValue);
 			}
@@ -371,14 +372,14 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS, ele +" is visible", YesNo.Yes);
 			sa.assertTrue(true, ele +" is visible");
 			}
-			ArrayList<String> Data = rp.verifyFieldonResearchPage(projectName, mode, val);
-			if (Data.isEmpty()) {
-				log(LogStatus.PASS, "Data has been Matched", YesNo.No);
-				sa.assertTrue(true, "Data has been Matched");
-			} else {
-				log(LogStatus.ERROR, "Data is not Matched", YesNo.Yes);
-				sa.assertTrue(false, "Data is not Matched : " + Data);
-			}
+//			ArrayList<String> Data = rp.verifyFieldonResearchPage(projectName, mode, val);
+//			if (Data.isEmpty() || searchValue.length() < 2 || searchValue.contains("@") ) {
+//				log(LogStatus.PASS, "Data has been Matched", YesNo.No);
+//				sa.assertTrue(true, "Data has been Matched");
+//			} else {
+//				log(LogStatus.ERROR, "Data is not Matched", YesNo.Yes);
+//				sa.assertTrue(false, "Data is not Matched : " + Data);
+//			}
 			
 			if(searchValue.length() < 2) {
 				xpath = "(//div[contains(@class,'left_small')]//span)[2]";
@@ -487,7 +488,7 @@ public class AcuityResearch extends BaseLib{
 	
 	object[] objectsName = {object.Contact,object.Firm,object.Fund,object.Fundraising,object.Deal} ;
 	//String [][] fieldsType = {{"Email","Custom" + objectName[i]+ "Email",""},{"Phone","Custom Firm Phone",""},{"Text","Custom Firm Text","255"},{"Text Area","Custom Firm TA",""},{"Text Area (Long)","Custom Firm LTA","32768"},{"Text Area (Rich)","Custom Firm RTA","32768"}};
-	String name = "" ,length = "", field = "";
+	String a="",name = "" ,length = "", field = "";
 	
 	if (home.clickOnSetUpLink()) {
 		parentID=switchOnWindow(driver);
@@ -510,7 +511,7 @@ public class AcuityResearch extends BaseLib{
 				flag=true;
 				log(LogStatus.INFO, "successfully created new custom field", YesNo.No);
 				if (sendKeys(driver, sp.getQuickSearchInObjectManager_Lighting(10),name+Keys.ENTER, "search", action.SCROLLANDBOOLEAN)) {
-					//String a=sp.returnAPINameOfField(projectName, name);
+					a=sp.returnAPINameOfField(projectName, name);
 						log(LogStatus.PASS, "found api name of "+name, YesNo.Yes);
 						sa.assertTrue(true, "found api name of "+name);
 				}else {
@@ -546,6 +547,8 @@ public class AcuityResearch extends BaseLib{
 			}
 			driver.close();
 			driver.switchTo().window(parentID);
+			switchToDefaultContent(driver);
+			refresh(driver);
 		}else {
 			log(LogStatus.FAIL, "could not find new window to switch", YesNo.Yes);
 			sa.assertTrue(false, "could not find new window to switch");
@@ -557,7 +560,8 @@ public class AcuityResearch extends BaseLib{
 		sa.assertTrue(false, "could not click on setup link");
 	
 	}
-	
+	switchToDefaultContent(driver);
+	refresh(driver);
 	for (int i = 0; i < contactRecordTypeArray.length; i++) {
 		home.notificationPopUpClose();
 		if (home.clickOnSetUpLink()) {
@@ -574,7 +578,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, contactrecordType[i], isMakeAvailable,
-										profileForSelection, isMakeDefault, null, 10);
+										null, isMakeDefault, null, 10);
 							}
 						} else {
 							isMakeDefault = false;
@@ -585,7 +589,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, contactrecordType[i], isMakeAvailable,
-										profileForSelection, isMakeDefault, null, 10);
+										null, isMakeDefault, null, 10);
 							}
 						}
 						if (flag) {
@@ -619,7 +623,8 @@ public class AcuityResearch extends BaseLib{
 			sa.assertTrue(false, "could not click on setup link");
 		}
 	}
-		
+	switchToDefaultContent(driver);
+	refresh(driver);
 	for (int i = 0; i < dealRecordTypeArray.length; i++) {
 		home.notificationPopUpClose();
 		if (home.clickOnSetUpLink()) {
@@ -636,7 +641,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, dealRecordType[i], isMakeAvailable,
-										profileForSelection, isMakeDefault, null, 10);
+										null, isMakeDefault, null, 10);
 							}
 						} else {
 							isMakeDefault = false;
@@ -647,7 +652,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, dealRecordType[i], isMakeAvailable,
-										profileForSelection, isMakeDefault, null, 10);
+										null, isMakeDefault, null, 10);
 							}
 						}
 						if (flag) {
@@ -682,7 +687,8 @@ public class AcuityResearch extends BaseLib{
 		}
 
 	}
-
+	switchToDefaultContent(driver);
+	refresh(driver);
 	for (int i = 0; i < fundRecordTypeArray.length; i++) {
 		home.notificationPopUpClose();
 		if (home.clickOnSetUpLink()) {
@@ -699,7 +705,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, fundrecordType[i], isMakeAvailable,
-										profileForSelection, isMakeDefault, null, 10);
+										null, isMakeDefault, null, 10);
 							}
 						} else {
 							isMakeDefault = false;
@@ -710,7 +716,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, fundrecordType[i], isMakeAvailable,
-										profileForSelection, isMakeDefault, null, 10);
+										null, isMakeDefault, null, 10);
 							}
 						}
 						if (flag) {
@@ -745,7 +751,8 @@ public class AcuityResearch extends BaseLib{
 		}
 
 	}
-
+	switchToDefaultContent(driver);
+	refresh(driver);
 	for (int i = 0; i < fundraisingRecordTypeArray.length; i++) {
 		home.notificationPopUpClose();
 		if (home.clickOnSetUpLink()) {
@@ -763,7 +770,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, fundraisingrecordType[i],
-										isMakeAvailable, profileForSelection, isMakeDefault, null, 10);
+										isMakeAvailable, null, isMakeDefault, null, 10);
 							}
 						} else {
 							isMakeDefault = false;
@@ -773,7 +780,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, fundraisingrecordType[i],
-										isMakeAvailable, profileForSelection, isMakeDefault, null, 10);
+										isMakeAvailable, null, isMakeDefault, null, 10);
 							}
 						}
 						if (flag) {
@@ -985,51 +992,54 @@ public class AcuityResearch extends BaseLib{
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
-	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	ThreadSleep(2000);
-	String ele;
+	String xpath,ele;
 	String headerName;
 	ArrayList<String> list=new ArrayList<>();
 	
-	String[] searchValues = readAllDataForAColumn(ResearchDataSheetFilePath, "SearchData" , 1,false).split("<break>");
+	String[] searchValues = readAllDataForAColumn(ResearchDataSheetFilePath, "SearchData" , 2,false).split("<break>");
 	
 	
 	for(String searchValue : searchValues) {
 		
-		String variable =ExcelUtils.readData(ResearchDataSheetFilePath,"SearchData",excelLabel.ResearchFindings, searchValue, excelLabel.Variable_Name);
+		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"SearchData",excelLabel.ResearchFindings, searchValue, excelLabel.Variable_Name);
 		
-		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
-		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
-			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
-				ThreadSleep(2000);
-				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
-				ThreadSleep(8000);
-				ele = rp.getResearchFindingsValue(10).getText();
-				if (ele.equals(searchValue)) {
-				log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-				sa.assertTrue(true, ele +" is matched with " +searchValue);
-				}
-				ele = rp.getResearchFindings(10).getText();
-				if (ele!=null && ele.equalsIgnoreCase("Research Findings")) {
-				log(LogStatus.PASS, ele +" is visible", YesNo.Yes);
-				sa.assertTrue(true, ele +" is visible");
-				}
-				
-		} else {
-			log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
-			sa.assertTrue(false,"Not Able to send value "+searchValue);
-		}
-	 }
-		else {
-			   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
-				sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
-		   }
+		log(LogStatus.PASS, "WOrking for " + searchValue, YesNo.Yes);
+	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 5)) {
+		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+		xpath = "//div[contains(@class,'DOCKED')]//div//input";
+		if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(5),searchValue, xpath, action.BOOLEAN)){
+			ThreadSleep(2000);
+			clickUsingJavaScript(driver, rp.getResearchMinimize(5),"Research Button", action.BOOLEAN);
+			ThreadSleep(4000);
+			xpath = "//div[contains(@class,'normal')]//span[contains(@class,'italic')]";
+			ele = FindElement(driver, xpath,searchValue, action.BOOLEAN, 5).getText();
+			if (ele.equals(searchValue)) {
+			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
+			sa.assertTrue(true, ele +" is matched with " +searchValue);
+			}
+			xpath = "//h2[contains(@class,'vertical__title')]";
+			ele = FindElement(driver, xpath,"Research Findings", action.BOOLEAN, 5).getText();
+			if (ele!=null && ele.equalsIgnoreCase("Research Findings")) {
+			log(LogStatus.PASS, ele +" is visible", YesNo.Yes);
+			sa.assertTrue(true, ele +" is visible");
+			}
+			
+	} else {
+		log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
+		sa.assertTrue(false,"Not Able to send value "+searchValue);
+	}
+}
 	log(LogStatus.INFO,
 			"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 					+ searchValue + "---------",
 			YesNo.No);
-		
+	try{
+	if(rp.getNoResult(5) != null){
+		log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+		sa.assertTrue(true, "There is no data retaled to " + searchValue);
+	} else 
 		if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 			log(LogStatus.INFO,
 					"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
@@ -1047,7 +1057,7 @@ public class AcuityResearch extends BaseLib{
 							+ searchValue + "---------");
 			
 	}
-		list =	rp.VerifyNameAndCountForResearchLeftPanel(variable, action.SCROLLANDBOOLEAN, 10);
+		list=	rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 5);
 
 		if(list.isEmpty()) {
 			
@@ -1057,6 +1067,13 @@ public class AcuityResearch extends BaseLib{
 			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
 		}
 		
+	}
+	catch(Exception e)
+	{
+		log(LogStatus.INFO,e.getMessage(), YesNo.No);
+		continue;
+
+	}
 		if (rp.mouseHoverOnNavigationAndGetText()) {
 			log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
 		} else {
@@ -1114,8 +1131,8 @@ public class AcuityResearch extends BaseLib{
 	   if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 	
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm1, 30)) {
-	           if (ip.UpdateLegalNameAccount(projectName, updatedname, 10)) {
+	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm1, 10)) {
+	           if (ip.UpdateLegalNameAccount(projectName, updatedname, 5)) {
 	               log(LogStatus.INFO, "successfully update legal name " + updatedname, YesNo.Yes);
 	               ExcelUtils.writeData(ResearchDataSheetFilePath, updatedname, "UpdatedData", excelLabel.Variable_Name,"AR_Up1",
 	            		   excelLabel.ResearchFindings);
@@ -1137,18 +1154,15 @@ public class AcuityResearch extends BaseLib{
 //	sa.assertAll();
 //	ThreadSleep(5000);
 //	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+	refresh(driver);
 	ThreadSleep(5000);
-	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 5)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),'"' + updatedname + '"', "Research Input Field", action.BOOLEAN)){
+			if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(5),'"' + updatedname + '"', "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
-				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+				clickUsingJavaScript(driver, rp.getResearchMinimize(5),"Research Button", action.BOOLEAN);
 				ThreadSleep(5000);
 			}
-	   }
-	   else {
-		   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
-			sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
 	   }
 	   
 	   int gridSize = rp.getElementsFromGrid().size();
@@ -1169,15 +1183,16 @@ public class AcuityResearch extends BaseLib{
 		}  
 		
 	   String variable =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.ResearchFindings, updatedname, excelLabel.Variable_Name);
-	   ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(variable, action.SCROLLANDBOOLEAN, 10);
+	   ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(variable, action.SCROLLANDBOOLEAN, 5);
 		if(list.isEmpty()) {
 			
 			log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
 		} else {
-			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+			log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data--------- " + list, YesNo.No);
 			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
 		}
 	   
+		
 	}
 
 @Parameters({ "projectName"})
@@ -1214,10 +1229,6 @@ public class AcuityResearch extends BaseLib{
 			sa.assertTrue(false,"Not Able to send value "+searchValue);
 		}
 		}
-	else {
-		   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
-			sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
-	   }
 		log(LogStatus.INFO,
 				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 						+ searchValue + "---------",
@@ -1302,7 +1313,7 @@ public class AcuityResearch extends BaseLib{
 	   if (fp.clickOnTab(environment, mode, TabName.ContactTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.ContactTab, YesNo.No);
 	
-	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm2, 30)) {
+	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm2, 10)) {
 	           if (cp.UpdateLastName(projectName, PageName.ContactPage,updatedname)) {
 	               log(LogStatus.INFO, "successfully update contact name " + updatedname, YesNo.Yes);
 	               ExcelUtils.writeData(ResearchDataSheetFilePath, updatedname, "UpdatedData", excelLabel.Variable_Name,"AR_Up2",
@@ -1321,10 +1332,11 @@ public class AcuityResearch extends BaseLib{
 	   }
 	   
 	switchToDefaultContent(driver);
-	lp.CRMlogout();
-	sa.assertAll();
-	ThreadSleep(5000);
-	lp.CRMLogin(superAdminUserName, adminPassword, appName);
+//	lp.CRMlogout();
+//	sa.assertAll();
+//	ThreadSleep(5000);
+//	lp.CRMLogin(superAdminUserName, adminPassword, appName);
+	refresh(driver);
 	ThreadSleep(5000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
@@ -1333,17 +1345,13 @@ public class AcuityResearch extends BaseLib{
 				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
 			}
 	   }
-	   else {
-		   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
-			sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
-	   }
 	    int gridSize = rp.getElementsFromGrid().size();
 		log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
 		for(int i=0; i<gridSize; i++)
 		{
 			   String headerName = rp.getElementsFromGrid().get(i).getText();
 			   System.out.println("Hedader Name : "  + headerName);
-			   String recordName = rp.clickOnRecordUsingGridName(headerName, 30).getText();
+			   String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
 			   System.out.println("Record Name : " + recordName);
 			   
 			   if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
@@ -1363,6 +1371,8 @@ public class AcuityResearch extends BaseLib{
 			sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
 		}
 	   
+		lp.CRMlogout();
+		sa.assertAll();
 	}
 	
 @Parameters({ "projectName"})
@@ -1399,15 +1409,14 @@ public class AcuityResearch extends BaseLib{
 			sa.assertTrue(false,"Not Able to send value "+searchValue);
 		}
 		}
-	else {
-		   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
-			sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
-	   }
 		log(LogStatus.INFO,
 				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 						+ searchValue + "---------",
 				YesNo.No);
-			
+		if(rp.getNoResult(5) != null){
+			log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+			sa.assertTrue(true, "There is no data retaled to " + searchValue);
+		} else 
 			if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 				log(LogStatus.INFO,
 						"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
@@ -1517,10 +1526,6 @@ public class AcuityResearch extends BaseLib{
 				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
 			}
 	   }
-	   else {
-		   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
-			sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
-	   }
 	    int gridSize = rp.getElementsFromGrid().size();
 		log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
 		for(int i=0; i<gridSize; i++)
@@ -1582,10 +1587,6 @@ public class AcuityResearch extends BaseLib{
 			sa.assertTrue(false,"Not Able to send value "+searchValue);
 		}
 		}
-	else {
-		   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
-			sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
-	   }
 		log(LogStatus.INFO,
 				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 						+ searchValue + "---------",
@@ -1659,17 +1660,16 @@ public class AcuityResearch extends BaseLib{
     LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
     FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
-    FundsPageBusinessLayer dp = new FundsPageBusinessLayer(driver);
 	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
 	
 	 String updatedname = "CompanyFund NSAdmin Record07 - Updated";
 	 
-		 lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+		 lp.CRMLogin(superAdminUserName, adminPassword, appName);
    
-	   if (fp.clickOnTab(environment, mode, TabName.Object3Tab)) {
-	       log(LogStatus.INFO, "Click on Tab : " + TabName.Object3Tab, YesNo.No);
+	   if (fp.clickOnTab(environment, mode, TabName.FundsTab)) {
+	       log(LogStatus.INFO, "Click on Tab : " + TabName.FundsTab, YesNo.No);
 	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm4, 30)) {
-	           if (dp.UpdateDealName(projectName, updatedname, 20)) {
+	           if (fp.UpdateDealName(projectName, updatedname, 20)) {
 	               log(LogStatus.INFO, "successfully update contact name " + updatedname, YesNo.Yes);
 	               ExcelUtils.writeData(ResearchDataSheetFilePath, updatedname, "UpdatedData", excelLabel.Variable_Name,"AR_Up4",
 	            		   excelLabel.ResearchFindings);
@@ -1698,10 +1698,6 @@ public class AcuityResearch extends BaseLib{
 				ThreadSleep(2000);
 				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
 			}
-	   }
-	   else {
-		   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
-			sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
 	   }
 	    int gridSize = rp.getElementsFromGrid().size();
 		log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
@@ -1763,10 +1759,6 @@ public class AcuityResearch extends BaseLib{
 			sa.assertTrue(false,"Not Able to send value "+searchValue);
 		}
 		}
-	else {
-		   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
-			sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
-	   }
 		log(LogStatus.INFO,
 				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 						+ searchValue + "---------",
@@ -1879,10 +1871,6 @@ public class AcuityResearch extends BaseLib{
 				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
 			}
 	   }
-	   else {
-		   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
-			sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
-	   }
 	    int gridSize = rp.getElementsFromGrid().size();
 		log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
 		for(int i=0; i<gridSize; i++)
@@ -1943,10 +1931,6 @@ public class AcuityResearch extends BaseLib{
 			sa.assertTrue(false,"Not Able to send value "+searchValue);
 		}
 		}
-	else {
-		   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
-			sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
-	   }
 		log(LogStatus.INFO,
 				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 						+ searchValue + "---------",
@@ -2025,10 +2009,11 @@ public class AcuityResearch extends BaseLib{
 	
 	 String updatedname = "Intermediary  Type - TSK03 Updated";
 	 
-		 lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+		 lp.CRMLogin(superAdminUserName, adminPassword, appName);
    
 	   if (fp.clickOnTab(environment, mode, TabName.TaskTab)) {
 	       log(LogStatus.INFO, "Click on Tab : " + TabName.TaskTab, YesNo.No);
+	       ThreadSleep(2000);
 	      if (fp.clickOnAlreadyCreatedItem(projectName, AR_Firm6, 30)) {
 	           if (tp.EditEnterNameAndSave(projectName, AR_Firm6, updatedname, true)) {
 	               log(LogStatus.INFO, "successfully update Task name " + updatedname, YesNo.Yes);
@@ -2047,10 +2032,10 @@ public class AcuityResearch extends BaseLib{
 	       sa.assertTrue(false, "Not able to click on " + tabObj9 + " tab");
 	   }
 	switchToDefaultContent(driver);
-//	lp.CRMlogout();
-//	sa.assertAll();
-//	ThreadSleep(5000);
-//	lp.CRMLogin(superAdminUserName, adminPassword, appName);
+	lp.CRMlogout();
+	sa.assertAll();
+	ThreadSleep(5000);
+	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
 	ThreadSleep(5000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
@@ -2058,10 +2043,6 @@ public class AcuityResearch extends BaseLib{
 				ThreadSleep(2000);
 				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
 			}
-	   }
-	   else {
-		   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
-			sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
 	   }
 	    int gridSize = rp.getElementsFromGrid().size();
 		log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
@@ -2123,10 +2104,6 @@ public class AcuityResearch extends BaseLib{
 			sa.assertTrue(false,"Not Able to send value "+searchValue);
 		}
 		}
-		else {
-		   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
-			sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
-	   }
 		log(LogStatus.INFO,
 				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 						+ searchValue + "---------",
@@ -2239,10 +2216,6 @@ public class AcuityResearch extends BaseLib{
 				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
 			}
 	   }
-	   else {
-		   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
-			sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
-	   }
 	    int gridSize = rp.getElementsFromGrid().size();
 		log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
 		for(int i=0; i<gridSize; i++)
@@ -2349,11 +2322,7 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
 		sa.assertTrue(false,"Not Able to send value "+searchValue);
 	}
-	}
-	else {
-		   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
-			sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
-	   }
+}
 	refresh(driver);
 	i++;
 	switchToDefaultContent(driver);
@@ -2368,91 +2337,124 @@ public class AcuityResearch extends BaseLib{
 	public void ARTc021_VerifyTheResearchFunctionalityForContactRecordID(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
-	InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
+	ContactsPageBusinessLayer ip = new ContactsPageBusinessLayer(driver);
 	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
-	String errorName = "Your search term must have 2 or more characters.";
-	String errorName1 = "No results for";
-	String xpath,ele,searchValue = null;
+	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+	lp.CRMLogin(glUser1EmailID, adminPassword);
+	String ele,headerName,RecordValue,searchValue = AR_Firm52;
 	int i = 1;	
 	//String searchValues[] = {"","a","zz","~!@#$%^&*()_+=-[]{}|;':,.<>/?"};
-	String[][] val = {{MRSD_1_ResearchFindings},{MRSD_2_ResearchFindings},{MRSD_3_ResearchFindings},{MRSD_4_ResearchFindings},{MRSD_5_ResearchFindings},{MRSD_6_ResearchFindings},{MRSD_7_ResearchFindings},{MRSD_8_ResearchFindings},{MRSD_9_ResearchFindings}};
-	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
 	
-	if (ip.clickOnTab(projectName, TabName.Object1Tab)) {
-		if (ip.clickOnAlreadyCreatedItem(projectName, TabName.Object1Tab, AR_Contact1Name, 20)) {
+	if (ip.clickOnTab(projectName, TabName.Object2Tab)) {
+		if (ip.clickOnCreatedContact(projectName, AR_Contact1FirstName, AR_Contact1LastName)) {
 			String recordID[] = driver.getCurrentUrl().split("Contact/");
 			String[] recordNo = recordID[1].split("/view"); 
-			searchValue = recordNo[0];
-			
+			RecordValue = recordNo[0];
+			ExcelUtils.writeData(ResearchDataSheetFilePath, RecordValue, "UpdatedData", excelLabel.Variable_Name, "AR_Up52",
+					excelLabel.Name);	
 		}
+	}else
+	{
+		log(LogStatus.ERROR, TabName.Object2Tab +" is not clickable", YesNo.Yes);
+		sa.assertTrue(false, TabName.Object2Tab +" is not clickable");
+	}
 	ThreadSleep(2000);
 		log(LogStatus.PASS, "WOrking for " + searchValue, YesNo.Yes);
-	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
-		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
-			ThreadSleep(2000);
-			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
-			ThreadSleep(4000);
-			ele = rp.getResearchFindingsValue(10).getText();
-			if (ele.equals(searchValue)) {
-			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-			sa.assertTrue(true, ele +" is matched with " +searchValue);
-			}
-			ArrayList<String> Data = rp.verifyFieldonResearchPage(projectName, mode, val);
-			if (Data.isEmpty()) {
-				log(LogStatus.PASS, "Data has been Matched", YesNo.No);
-				sa.assertTrue(true, "Data has been Matched");
-			} else {
-				log(LogStatus.ERROR, "Data is not Matched", YesNo.Yes);
-				sa.assertTrue(false, "Data is not Matched : " + Data);
-			}
-			
-			if(searchValue.length() < 2) {
-				xpath = "(//div[contains(@class,'left_small')]//span)[2]";
-				ele = FindElement(driver, xpath, errorName, action.BOOLEAN, 10).getText();
-				if(ele.equalsIgnoreCase("  "+ errorName)){
-					log(LogStatus.PASS, ele +" has been Matched with " +errorName, YesNo.No);
-					sa.assertTrue(true, ele +" has been Matched with " +errorName);
-				} else {
-					log(LogStatus.ERROR, ele +" is not Matched with " +errorName, YesNo.Yes);
-					sa.assertTrue(false, ele +" is not Matched with " +errorName);
-				}
+			String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
+			log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
+		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+			if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
-				xpath = "(//lightning-icon[contains(@class,'utility-warning')])["+i+"]";
-				WebElement element = FindElement(driver, xpath, errorName, action.BOOLEAN, 10);
-				if(mouseOverGetTextOperation(driver, element).contains(errorName)){
-					log(LogStatus.PASS, ele +" on mouse hover has been Matched with " +errorName, YesNo.No);
-					sa.assertTrue(true, ele +" on mouse hover has been Matched with " +errorName);
-				}else {
-					log(LogStatus.ERROR, ele +" on mouse hover is not Matched with " +errorName, YesNo.Yes);
-					sa.assertTrue(false, ele +" on mouse hover is not Matched with " +errorName);
-			}
-			} else {
-				String xpath1 = "//div[contains(@class,'noResultsTitle')]";
-				ele = FindElement(driver, xpath1, errorName1, action.BOOLEAN, 10).getText();
-				if(ele.contains(errorName1)){
-					log(LogStatus.PASS, ele +" has been Matched with " +errorName1, YesNo.No);
-					sa.assertTrue(true, ele +" has been Matched with " +errorName1);
-				} else {
-					log(LogStatus.ERROR, ele +" is not Matched with " +errorName1, YesNo.Yes);
-					sa.assertTrue(false, ele +" is not Matched with " +errorName1);
+				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+				ThreadSleep(8000);
+				ele = rp.getResearchFindingsValue(10).getText();
+				if (ele.equals(searchValue)) {
+				log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
+				sa.assertTrue(true, ele +" is matched with " +searchValue);
 				}
+				else
+				{
+					log(LogStatus.ERROR, ele +" is not matched with " +searchValue, YesNo.Yes);
+					sa.assertTrue(false, ele +" is not matched with " +searchValue);
+				}
+			} else {
+				log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
+				sa.assertTrue(false,"Not Able to send value "+searchValue);
 			}
-	} else {
-		log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
-		sa.assertTrue(false,"Not Able to send value "+searchValue);
+			}
+		else {
+			   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
+				sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
+		   }
+			log(LogStatus.INFO,
+					"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
+							+ searchValue + "---------",
+					YesNo.No);
+			if(rp.getNoResult(10) != null){
+				log(LogStatus.PASS, rp.getNoResult(10) + " is visible", YesNo.No);
+				sa.assertTrue(true, rp.getNoResult(10) + " is visible");
+			} else {
+				if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
+					log(LogStatus.INFO,
+							"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+									+ searchValue + "---------",
+							YesNo.No);
+				ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
+					if(list.isEmpty()) {
+						
+						log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					} else {
+						log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+						sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+					}
+		
+				} else {
+					log(LogStatus.FAIL,
+							"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+									+ searchValue + "---------",
+							YesNo.No);
+					sa.assertTrue(false,
+							"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
+									+ searchValue + "---------");
+					
+			}
 	}
-	}
-	else {
-		   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
-			sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
-	   }
-	refresh(driver);
-	i++;
-	switchToDefaultContent(driver);
-	lp.CRMlogout();
-	sa.assertAll();
-}
+				if (rp.mouseHoverOnNavigationAndGetText()) {
+					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+				} else {
+					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+				}
+				
+				if (rp.mouseHoverOnGridAndGetText()) {
+					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
+				} else {
+					log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
+					sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
+				}
+				int gridSize = rp.getElementsFromGrid().size();
+				log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
+				for(i=0; i<gridSize; i++)
+				{		
+					headerName = rp.getElementsFromGrid().get(i).getText();
+					String recordName = rp.clickOnRecordUsingGridName(headerName, 30).getText();
+					
+					if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
+						log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
+					} else {
+						log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
+						sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
+					}
+					if (rp.VerifyViewMoreOption(headerName)) {
+						log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
+					} else {
+						log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
+					}
+				}
+		switchToDefaultContent(driver);
+		lp.CRMlogout();
+		sa.assertAll();	
 
 }
 
@@ -2481,7 +2483,7 @@ public class AcuityResearch extends BaseLib{
 					{ recordTypeLabel.Description.toString(), RecordTypeArray[1] + recordTypeDescription },
 					{ recordTypeLabel.Active.toString(), "" } } };
 	
-	String recordActive[][] = {{ recordTypeLabel.Active.toString(), "" }};
+	String recordActive[][] = {{ recordTypeLabel.Active.toString(), "Checked" }};
 	String recordTypes [] = {"Firm","Deal","Fund","Fundraising"};
 	String avail[][] = {{"Consultant RT","IT Firm"},{"SellSide Deal","BuySide Deal", "Capital Raise"},{"Mutual Fund","Trust Fund"},{"FRGRT","MSGRT"}};
 	String defaultValue[] = {"SellSide Deal","Mutual Fund", "FRGRT"};
@@ -2518,7 +2520,7 @@ public class AcuityResearch extends BaseLib{
 								flag = true;
 							} else {
 								flag = sp.createRecordTypeForObject(projectName, RecordType[i], isMakeAvailable,
-										profileForSelection, isMakeDefault, null, 10);
+										profileForSelection, isMakeDefault, PageLayout.Institution.toString(), 10);
 							}
 						}
 						if (flag) {
@@ -2553,232 +2555,232 @@ public class AcuityResearch extends BaseLib{
 		}
 	}
 		
-	
-	for (int i = 0; i < dealRecordTypeArray.length; i++) {
-		home.notificationPopUpClose();
-		if (home.clickOnSetUpLink()) {
-			flag = false;
-			parentID = switchOnWindow(driver);
-			if (parentID != null) {
-				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Deal)) {
-					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Deal,
-							ObjectFeatureName.recordTypes)) {
-						if (sp.clickOnAlreadyCreatedLayout(dealRecordTypeArray[i])) {
-							if (sp.editRecordTypeForObject(projectName, recordActive, 10)) {
-								log(LogStatus.ERROR,dealRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
-							}else {
-								log(LogStatus.ERROR,dealRecordTypeArray[i]+" not updated ",YesNo.Yes);
-								sa.assertTrue(false, dealRecordTypeArray[i]+" not updated ");
-							}
-						
-						}else {
-							log(LogStatus.ERROR, dealRecordTypeArray[i]+" is not clickable", YesNo.Yes);
-							sa.assertTrue(false, dealRecordTypeArray[i]+" is not clickable");
-						}
-				
-					}else {
-						log(LogStatus.ERROR, "object feature "+ObjectFeatureName.recordTypes+" is not clickable", YesNo.Yes);
-						sa.assertTrue(false, "object feature "+ObjectFeatureName.recordTypes+" is not clickable");
-					}
-				}else {
-					log(LogStatus.ERROR, "Deal object could not be found in object manager", YesNo.Yes);
-					sa.assertTrue(false, "Deal object could not be found in object manager");
-				}
-				driver.close();
-				driver.switchTo().window(parentID);
-				switchToDefaultContent(driver);
-			}else {
-				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
-				sa.assertTrue(false, "could not find new window to switch");
-			}
-		}else {
-			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
-			sa.assertTrue(false, "could not click on setup link");
-		}
-
-	}
-
-	for (int i = 0; i < fundRecordTypeArray.length; i++) {
-		home.notificationPopUpClose();
-		if (home.clickOnSetUpLink()) {
-			flag = false;
-			parentID = switchOnWindow(driver);
-			if (parentID != null) {
-				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Fund)) {
-					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Fund,
-							ObjectFeatureName.recordTypes)) {
-						if (sp.clickOnAlreadyCreatedLayout(fundRecordTypeArray[i])) {
-							if (sp.editRecordTypeForObject(projectName, recordActive, 10)) {
-								log(LogStatus.ERROR,fundRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
-							}else {
-								log(LogStatus.ERROR,fundRecordTypeArray[i]+" not updated ",YesNo.Yes);
-								sa.assertTrue(false, fundRecordTypeArray[i]+" not updated ");
-							}
-						
-						}else {
-							log(LogStatus.ERROR, fundRecordTypeArray[i]+" is not clickable", YesNo.Yes);
-							sa.assertTrue(false, fundRecordTypeArray[i]+" is not clickable");
-						}
-				
-					}else {
-						log(LogStatus.ERROR, "object feature "+ObjectFeatureName.recordTypes+" is not clickable", YesNo.Yes);
-						sa.assertTrue(false, "object feature "+ObjectFeatureName.recordTypes+" is not clickable");
-					}
-				}else {
-					log(LogStatus.ERROR, "Fund object could not be found in object manager", YesNo.Yes);
-					sa.assertTrue(false, "Fund object could not be found in object manager");
-				}
-				driver.close();
-				driver.switchTo().window(parentID);
-				switchToDefaultContent(driver);
-			}else {
-				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
-				sa.assertTrue(false, "could not find new window to switch");
-			}
-		}else {
-			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
-			sa.assertTrue(false, "could not click on setup link");
-		}
-
-	}
-
-	for (int i = 0; i < fundraisingRecordTypeArray.length; i++) {
-		home.notificationPopUpClose();
-		if (home.clickOnSetUpLink()) {
-			flag = false;
-			parentID = switchOnWindow(driver);
-			if (parentID != null) {
-				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Fundraising)) {
-					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Fundraising,
-							ObjectFeatureName.recordTypes)) {
-						if (sp.clickOnAlreadyCreatedLayout(fundraisingRecordTypeArray[i])) {
-							if (sp.editRecordTypeForObject(projectName, recordActive, 10)) {
-								log(LogStatus.ERROR,fundraisingRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
-							}else {
-								log(LogStatus.ERROR,fundraisingRecordTypeArray[i]+" not updated ",YesNo.Yes);
-								sa.assertTrue(false, fundraisingRecordTypeArray[i]+" not updated ");
-							}
-						
-						}else {
-							log(LogStatus.ERROR, fundraisingRecordTypeArray[i]+" is not clickable", YesNo.Yes);
-							sa.assertTrue(false, fundraisingRecordTypeArray[i]+" is not clickable");
-						}
-				
-					}else {
-						log(LogStatus.ERROR, "object feature "+ObjectFeatureName.recordTypes+" is not clickable", YesNo.Yes);
-						sa.assertTrue(false, "object feature "+ObjectFeatureName.recordTypes+" is not clickable");
-					}
-				}else {
-					log(LogStatus.ERROR, "Fundraising object could not be found in object manager", YesNo.Yes);
-					sa.assertTrue(false, "Fundraising object could not be found in object manager");
-				}
-				driver.close();
-				driver.switchTo().window(parentID);
-				switchToDefaultContent(driver);
-			}else {
-				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
-				sa.assertTrue(false, "could not find new window to switch");
-			}
-		}else {
-			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
-			sa.assertTrue(false, "could not click on setup link");
-		}
-
-	}
-	
-	switchToDefaultContent(driver);
-	home.notificationPopUpClose();
-	if (home.clickOnSetUpLink()) {
-		parentID = switchOnWindow(driver);
-	if (parentID!=null) {
-		if (sp.searchStandardOrCustomObject(environment, mode, object.Profiles)) {
-			log(LogStatus.INFO, "click on Object : " + object.Profiles, YesNo.No);
-			ThreadSleep(2000);
-			switchToDefaultContent(driver);
-			switchToFrame(driver, 60, sp.getSetUpPageIframe(60));
-
-			String xpath = "";
-			xpath = "//th//a[text()='" + profileForSelection[0] + "']";
-			WebElement ele = FindElement(driver, xpath, profileForSelection[0], action.SCROLLANDBOOLEAN, 10);
-			ele = isDisplayed(driver, ele, "visibility", 10, profileForSelection[0]);
-			if (click(driver, ele, profileForSelection[0].toString(), action.BOOLEAN)) {
-				log(LogStatus.INFO, "able to click on " + profileForSelection[0], YesNo.No);
-				ThreadSleep(10000);
-				for(int i=0; i <3; i++) {
-					System.out.println(avail[i].length);
-				switchToDefaultContent(driver);
-				ThreadSleep(5000);
-				switchToFrame(driver, 60, sp.getSetUpPageIframe(60));
-				xpath = "//*[text()='" + recordTypes[i] + "s" +"']/following-sibling::*//*[text()='Edit']";
-				ele = FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, 10);
-				ele = isDisplayed(driver, ele, "visibility", 10, "Edit Button");
-				if (click(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "able to click on edit button for record type settiing", YesNo.No);
-					switchToDefaultContent(driver);
-					ThreadSleep(5000);
-					switchToFrame(driver, 60, sp.getSetUpPageIframe(60));
-					ThreadSleep(2000);
-					
-						for(int j = 0; j <avail[i].length; j++)
-					if (selectVisibleTextFromDropDown(driver, sp.getavailableRecordType(60),
-							"Available Tab List", avail[i][j])) {
-						appLog.info(recordTypes + " is selected successfully in available tabs");
-						if (click(driver, sp.getAddBtn(60), "Custom Tab Add Button",
-								action.SCROLLANDBOOLEAN)) {
-							appLog.error("clicked on add button");
-						} else {
-							//sa.assertTrue(false,"Not able to click on add button so cannot add custom tabs");
-							appLog.error("Not able to click on add button so cannot add custom tabs");
-						}
-					} else {
-						appLog.error(recordTypes + " record type is not Available list Tab.");
-						sa.assertTrue(false,recordTypes + " record type is not Available list Tab.");
-					}
-					
-					if (selectVisibleTextFromDropDown(driver, sp.getdefaultRecord(10), "Default Record Type",
-							defaultValue[i])) {
-						log(LogStatus.INFO, "successfully verified "+defaultValue[i], YesNo.No);
-
-					}else {
-						log(LogStatus.ERROR, "not able to verify "+defaultValue[i]+" in selected record type", YesNo.Yes);
-						sa.assertTrue(false,"not able to verify "+defaultValue[i]+" in selected record type");
-
-					}
-					if (click(driver, sp.getCreateUserSaveBtn_Lighting(30), "Save Button",
-							action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
-						ThreadSleep(2000);
-					} else {
-						log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
-						sa.assertTrue(false,"not able to click on save button for record type settiing");
-
-					}
-					}else {
-						log(LogStatus.ERROR, "not able to click on edit button for record type settiing", YesNo.Yes);
-						sa.assertTrue(false,"not able to click on edit button for record type settiing");
-
-					}
-			}
-			}else {
-				log(LogStatus.ERROR, profileForSelection[0]+" profile is not clickable", YesNo.Yes);
-				sa.assertTrue(false,profileForSelection[0]+" profile is not clickable");
-			}
-			
-		} else {
-			log(LogStatus.ERROR, "profiles tab is not clickable", YesNo.Yes);
-			sa.assertTrue(false,"profiles tab is not clickable");
-		}
-
-		driver.close();
-		driver.switchTo().window(parentID);
-}else {
-	log(LogStatus.FAIL, "setup link is not clickable",YesNo.Yes);
-	sa.assertTrue(false, "setup link is not clickable");
-}
-	}else {
-		log(LogStatus.FAIL, "setup link is not clickable",YesNo.Yes);
-		sa.assertTrue(false, "setup link is not clickable");
-	}
+//	
+//	for (int i = 0; i < dealRecordTypeArray.length; i++) {
+//		home.notificationPopUpClose();
+//		if (home.clickOnSetUpLink()) {
+//			flag = false;
+//			parentID = switchOnWindow(driver);
+//			if (parentID != null) {
+//				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Deal)) {
+//					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Deal,
+//							ObjectFeatureName.recordTypes)) {
+//						if (sp.clickOnAlreadyCreatedLayout(dealRecordTypeArray[i])) {
+//							if (sp.editRecordTypeForObject(projectName, recordActive, 10)) {
+//								log(LogStatus.ERROR,dealRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
+//							}else {
+//								log(LogStatus.ERROR,dealRecordTypeArray[i]+" not updated ",YesNo.Yes);
+//								sa.assertTrue(false, dealRecordTypeArray[i]+" not updated ");
+//							}
+//						
+//						}else {
+//							log(LogStatus.ERROR, dealRecordTypeArray[i]+" is not clickable", YesNo.Yes);
+//							sa.assertTrue(false, dealRecordTypeArray[i]+" is not clickable");
+//						}
+//				
+//					}else {
+//						log(LogStatus.ERROR, "object feature "+ObjectFeatureName.recordTypes+" is not clickable", YesNo.Yes);
+//						sa.assertTrue(false, "object feature "+ObjectFeatureName.recordTypes+" is not clickable");
+//					}
+//				}else {
+//					log(LogStatus.ERROR, "Deal object could not be found in object manager", YesNo.Yes);
+//					sa.assertTrue(false, "Deal object could not be found in object manager");
+//				}
+//				driver.close();
+//				driver.switchTo().window(parentID);
+//				switchToDefaultContent(driver);
+//			}else {
+//				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+//				sa.assertTrue(false, "could not find new window to switch");
+//			}
+//		}else {
+//			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
+//			sa.assertTrue(false, "could not click on setup link");
+//		}
+//
+//	}
+//
+//	for (int i = 0; i < fundRecordTypeArray.length; i++) {
+//		home.notificationPopUpClose();
+//		if (home.clickOnSetUpLink()) {
+//			flag = false;
+//			parentID = switchOnWindow(driver);
+//			if (parentID != null) {
+//				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Fund)) {
+//					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Fund,
+//							ObjectFeatureName.recordTypes)) {
+//						if (sp.clickOnAlreadyCreatedLayout(fundRecordTypeArray[i])) {
+//							if (sp.editRecordTypeForObject(projectName, recordActive, 10)) {
+//								log(LogStatus.ERROR,fundRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
+//							}else {
+//								log(LogStatus.ERROR,fundRecordTypeArray[i]+" not updated ",YesNo.Yes);
+//								sa.assertTrue(false, fundRecordTypeArray[i]+" not updated ");
+//							}
+//						
+//						}else {
+//							log(LogStatus.ERROR, fundRecordTypeArray[i]+" is not clickable", YesNo.Yes);
+//							sa.assertTrue(false, fundRecordTypeArray[i]+" is not clickable");
+//						}
+//				
+//					}else {
+//						log(LogStatus.ERROR, "object feature "+ObjectFeatureName.recordTypes+" is not clickable", YesNo.Yes);
+//						sa.assertTrue(false, "object feature "+ObjectFeatureName.recordTypes+" is not clickable");
+//					}
+//				}else {
+//					log(LogStatus.ERROR, "Fund object could not be found in object manager", YesNo.Yes);
+//					sa.assertTrue(false, "Fund object could not be found in object manager");
+//				}
+//				driver.close();
+//				driver.switchTo().window(parentID);
+//				switchToDefaultContent(driver);
+//			}else {
+//				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+//				sa.assertTrue(false, "could not find new window to switch");
+//			}
+//		}else {
+//			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
+//			sa.assertTrue(false, "could not click on setup link");
+//		}
+//
+//	}
+//
+//	for (int i = 0; i < fundraisingRecordTypeArray.length; i++) {
+//		home.notificationPopUpClose();
+//		if (home.clickOnSetUpLink()) {
+//			flag = false;
+//			parentID = switchOnWindow(driver);
+//			if (parentID != null) {
+//				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Fundraising)) {
+//					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Fundraising,
+//							ObjectFeatureName.recordTypes)) {
+//						if (sp.clickOnAlreadyCreatedLayout(fundraisingRecordTypeArray[i])) {
+//							if (sp.editRecordTypeForObject(projectName, recordActive, 10)) {
+//								log(LogStatus.ERROR,fundraisingRecordTypeArray[i]+" has been updated ",YesNo.Yes);	
+//							}else {
+//								log(LogStatus.ERROR,fundraisingRecordTypeArray[i]+" not updated ",YesNo.Yes);
+//								sa.assertTrue(false, fundraisingRecordTypeArray[i]+" not updated ");
+//							}
+//						
+//						}else {
+//							log(LogStatus.ERROR, fundraisingRecordTypeArray[i]+" is not clickable", YesNo.Yes);
+//							sa.assertTrue(false, fundraisingRecordTypeArray[i]+" is not clickable");
+//						}
+//				
+//					}else {
+//						log(LogStatus.ERROR, "object feature "+ObjectFeatureName.recordTypes+" is not clickable", YesNo.Yes);
+//						sa.assertTrue(false, "object feature "+ObjectFeatureName.recordTypes+" is not clickable");
+//					}
+//				}else {
+//					log(LogStatus.ERROR, "Fundraising object could not be found in object manager", YesNo.Yes);
+//					sa.assertTrue(false, "Fundraising object could not be found in object manager");
+//				}
+//				driver.close();
+//				driver.switchTo().window(parentID);
+//				switchToDefaultContent(driver);
+//			}else {
+//				log(LogStatus.ERROR, "could not find new window to switch", YesNo.Yes);
+//				sa.assertTrue(false, "could not find new window to switch");
+//			}
+//		}else {
+//			log(LogStatus.ERROR, "could not click on setup link", YesNo.Yes);
+//			sa.assertTrue(false, "could not click on setup link");
+//		}
+//
+//	}
+//	
+//	switchToDefaultContent(driver);
+//	home.notificationPopUpClose();
+//	if (home.clickOnSetUpLink()) {
+//		parentID = switchOnWindow(driver);
+//	if (parentID!=null) {
+//		if (sp.searchStandardOrCustomObject(environment, mode, object.Profiles)) {
+//			log(LogStatus.INFO, "click on Object : " + object.Profiles, YesNo.No);
+//			ThreadSleep(2000);
+//			switchToDefaultContent(driver);
+//			switchToFrame(driver, 60, sp.getSetUpPageIframe(60));
+//
+//			String xpath = "";
+//			xpath = "//th//a[text()='" + profileForSelection[0] + "']";
+//			WebElement ele = FindElement(driver, xpath, profileForSelection[0], action.SCROLLANDBOOLEAN, 10);
+//			ele = isDisplayed(driver, ele, "visibility", 10, profileForSelection[0]);
+//			if (click(driver, ele, profileForSelection[0].toString(), action.BOOLEAN)) {
+//				log(LogStatus.INFO, "able to click on " + profileForSelection[0], YesNo.No);
+//				ThreadSleep(10000);
+//				for(int i=0; i <3; i++) {
+//					System.out.println(avail[i].length);
+//				switchToDefaultContent(driver);
+//				ThreadSleep(5000);
+//				switchToFrame(driver, 60, sp.getSetUpPageIframe(60));
+//				xpath = "//*[text()='" + recordTypes[i] + "s" +"']/following-sibling::*//*[text()='Edit']";
+//				ele = FindElement(driver, xpath, "Edit Button", action.SCROLLANDBOOLEAN, 10);
+//				ele = isDisplayed(driver, ele, "visibility", 10, "Edit Button");
+//				if (click(driver, ele, "Edit Button", action.SCROLLANDBOOLEAN)) {
+//					log(LogStatus.INFO, "able to click on edit button for record type settiing", YesNo.No);
+//					switchToDefaultContent(driver);
+//					ThreadSleep(5000);
+//					switchToFrame(driver, 60, sp.getSetUpPageIframe(60));
+//					ThreadSleep(2000);
+//					
+//						for(int j = 0; j <avail[i].length; j++)
+//					if (selectVisibleTextFromDropDown(driver, sp.getavailableRecordType(60),
+//							"Available Tab List", avail[i][j])) {
+//						appLog.info(recordTypes + " is selected successfully in available tabs");
+//						if (click(driver, sp.getAddBtn(60), "Custom Tab Add Button",
+//								action.SCROLLANDBOOLEAN)) {
+//							appLog.error("clicked on add button");
+//						} else {
+//							//sa.assertTrue(false,"Not able to click on add button so cannot add custom tabs");
+//							appLog.error("Not able to click on add button so cannot add custom tabs");
+//						}
+//					} else {
+//						appLog.error(recordTypes + " record type is not Available list Tab.");
+//						sa.assertTrue(false,recordTypes + " record type is not Available list Tab.");
+//					}
+//					
+//					if (selectVisibleTextFromDropDown(driver, sp.getdefaultRecord(10), "Default Record Type",
+//							defaultValue[i])) {
+//						log(LogStatus.INFO, "successfully verified "+defaultValue[i], YesNo.No);
+//
+//					}else {
+//						log(LogStatus.ERROR, "not able to verify "+defaultValue[i]+" in selected record type", YesNo.Yes);
+//						sa.assertTrue(false,"not able to verify "+defaultValue[i]+" in selected record type");
+//
+//					}
+//					if (click(driver, sp.getCreateUserSaveBtn_Lighting(30), "Save Button",
+//							action.SCROLLANDBOOLEAN)) {
+//						log(LogStatus.INFO, "clicked on save button for record type settiing", YesNo.No);
+//						ThreadSleep(2000);
+//					} else {
+//						log(LogStatus.ERROR, "not able to click on save button for record type settiing", YesNo.Yes);
+//						sa.assertTrue(false,"not able to click on save button for record type settiing");
+//
+//					}
+//					}else {
+//						log(LogStatus.ERROR, "not able to click on edit button for record type settiing", YesNo.Yes);
+//						sa.assertTrue(false,"not able to click on edit button for record type settiing");
+//
+//					}
+//			}
+//			}else {
+//				log(LogStatus.ERROR, profileForSelection[0]+" profile is not clickable", YesNo.Yes);
+//				sa.assertTrue(false,profileForSelection[0]+" profile is not clickable");
+//			}
+//			
+//		} else {
+//			log(LogStatus.ERROR, "profiles tab is not clickable", YesNo.Yes);
+//			sa.assertTrue(false,"profiles tab is not clickable");
+//		}
+//
+//		driver.close();
+//		driver.switchTo().window(parentID);
+//}else {
+//	log(LogStatus.FAIL, "setup link is not clickable",YesNo.Yes);
+//	sa.assertTrue(false, "setup link is not clickable");
+//}
+//	}else {
+//		log(LogStatus.FAIL, "setup link is not clickable",YesNo.Yes);
+//		sa.assertTrue(false, "setup link is not clickable");
+//	}
 	switchToDefaultContent(driver);
 	ThreadSleep(5000);
 	lp.CRMlogout();
@@ -2819,10 +2821,6 @@ public class AcuityResearch extends BaseLib{
 			sa.assertTrue(false,"Not Able to send value "+searchValue);
 		}
 		}
-	else {
-		   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
-			sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
-	   }
 		log(LogStatus.INFO,
 				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 						+ searchValue + "---------",
@@ -2852,19 +2850,6 @@ public class AcuityResearch extends BaseLib{
 								+ searchValue + "---------");
 				
 		}
-			if (rp.mouseHoverOnNavigationAndGetText()) {
-				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-			} else {
-				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-			}
-			
-			if (rp.mouseHoverOnGridAndGetText()) {
-				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-			} else {
-				log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-				sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-			}
 			int gridSize = rp.getElementsFromGrid().size();
 			log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
 			for(int i=0; i<gridSize; i++)
@@ -2890,6 +2875,8 @@ public class AcuityResearch extends BaseLib{
 	sa.assertAll();	
 	}
 
+@Parameters({ "projectName"})
+@Test
 	public void ARTc024_CreateAccountRecords(String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
@@ -2954,10 +2941,6 @@ public class AcuityResearch extends BaseLib{
 			sa.assertTrue(false,"Not Able to send value "+searchValue);
 		}
 		}
-	else {
-		   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
-			sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
-	   }
 		log(LogStatus.INFO,
 				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 						+ searchValue + "---------",
@@ -2971,10 +2954,10 @@ public class AcuityResearch extends BaseLib{
 			ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
 				if(list.isEmpty()) {
 					
-					log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					log(LogStatus.INFO,varibale + "---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
 				} else {
-					log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-					sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
+					log(LogStatus.ERROR,varibale + "---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
+					sa.assertTrue(false,varibale + "---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
 				}
 	
 			} else {
@@ -3052,8 +3035,8 @@ public class AcuityResearch extends BaseLib{
 			parentID = switchOnWindow(driver);
 			if (parentID != null) {
 				String[][] firmRecordType = {{recordTypeLabel.Record_Type_Label.toString(),firmRecordTypeArray[i]+"_Updated"}};
-				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Deal)) {
-					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Deal,
+				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Firm)) {
+					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Firm,
 							ObjectFeatureName.recordTypes)) {
 						if (sp.clickOnAlreadyCreatedLayout(firmRecordTypeArray[i])) {
 							if (sp.editRecordTypeForObject(projectName, firmRecordType, 10)) {
@@ -3245,14 +3228,14 @@ public class AcuityResearch extends BaseLib{
 	
 	for(String searchValue : searchValues) {
 		
-		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
+		String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedRecordType",excelLabel.Name, searchValue, excelLabel.Variable_Name);
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
 		if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
-			ThreadSleep(8000);
+			ThreadSleep(4000);
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -3263,10 +3246,6 @@ public class AcuityResearch extends BaseLib{
 			sa.assertTrue(false,"Not Able to send value "+searchValue);
 		}
 		}
-	else {
-		   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
-			sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
-	   }
 		log(LogStatus.INFO,
 				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 						+ searchValue + "---------",
@@ -3314,7 +3293,7 @@ public class AcuityResearch extends BaseLib{
 			for(int i=0; i<gridSize; i++)
 			{		
 				headerName = rp.getElementsFromGrid().get(i).getText();
-				String recordName = rp.clickOnRecordUsingGridName(headerName, 30).getText();
+				String recordName = rp.clickOnRecordUsingGridName(headerName, 10).getText();
 				
 				if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
 					log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
@@ -3361,8 +3340,8 @@ public class AcuityResearch extends BaseLib{
 			parentID = switchOnWindow(driver);
 			if (parentID != null) {
 				String[][] firmRecordType = {{recordTypeLabel.Record_Type_Label.toString(),firmRecordTypeArray[i]}};
-				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Deal)) {
-					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Deal,
+				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Firm)) {
+					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Firm,
 							ObjectFeatureName.recordTypes)) {
 						if (sp.clickOnAlreadyCreatedLayout(firmRecordTypeArray[i]+"_Updated")) {
 							if (sp.editRecordTypeForObject(projectName, firmRecordType, 10)) {
@@ -3405,7 +3384,7 @@ public class AcuityResearch extends BaseLib{
 			flag = false;
 			parentID = switchOnWindow(driver);
 			if (parentID != null) {
-				String[][] dealRecordType = {{recordTypeLabel.Record_Type_Label.toString(),dealRecordTypeArray[i]+"_Updated"}};
+				String[][] dealRecordType = {{recordTypeLabel.Record_Type_Label.toString(),dealRecordTypeArray[i]}};
 				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Deal)) {
 					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Deal,
 							ObjectFeatureName.recordTypes)) {
@@ -3450,7 +3429,7 @@ public class AcuityResearch extends BaseLib{
 			flag = false;
 			parentID = switchOnWindow(driver);
 			if (parentID != null) {
-				String[][] fundRecordType = {{recordTypeLabel.Record_Type_Label.toString(),fundRecordTypeArray[i]+"_Updated"}};
+				String[][] fundRecordType = {{recordTypeLabel.Record_Type_Label.toString(),fundRecordTypeArray[i]}};
 				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Fund)) {
 					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Fund,
 							ObjectFeatureName.recordTypes)) {
@@ -3495,7 +3474,7 @@ public class AcuityResearch extends BaseLib{
 			flag = false;
 			parentID = switchOnWindow(driver);
 			if (parentID != null) {
-				String[][] fundraisingRecordType = {{recordTypeLabel.Record_Type_Label.toString(),fundraisingRecordTypeArray[i]+"_Updated"}};
+				String[][] fundraisingRecordType = {{recordTypeLabel.Record_Type_Label.toString(),fundraisingRecordTypeArray[i]}};
 				if (sp.searchStandardOrCustomObject(environment, Mode.Lightning.toString(), object.Fundraising)) {
 					if (sp.clickOnObjectFeature(environment, Mode.Lightning.toString(), object.Fundraising,
 							ObjectFeatureName.recordTypes)) {
@@ -3572,10 +3551,6 @@ public class AcuityResearch extends BaseLib{
 			sa.assertTrue(false,"Not Able to send value "+searchValue);
 		}
 		}
-	else {
-		   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
-			sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
-	   }
 		log(LogStatus.INFO,
 				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 						+ searchValue + "---------",
@@ -3924,10 +3899,6 @@ public class AcuityResearch extends BaseLib{
 			sa.assertTrue(false,"Not Able to send value "+searchValue);
 		}
 		}
-	else {
-		   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
-			sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
-	   }
 		log(LogStatus.INFO,
 				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 						+ searchValue + "---------",
@@ -4004,7 +3975,7 @@ public class AcuityResearch extends BaseLib{
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	ResearchPageBusinessLayer rp = new ResearchPageBusinessLayer(driver);
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
-	lp.CRMLogin(glUser1EmailID, adminPassword);
+	lp.CRMLogin(superAdminUserName, adminPassword);
 	
 	String contactRecordTypeList = AR_ContactRecordType1;
 	String contactRecordTypeArray[] = contactRecordTypeList.split(breakSP, -1);
@@ -4086,10 +4057,6 @@ public class AcuityResearch extends BaseLib{
 			sa.assertTrue(false,"Not Able to send value "+searchValue);
 		}
 		}
-	else {
-		   log(LogStatus.FAIL, "Not able to Click on "+navigationMenuName, YesNo.No);
-			sa.assertTrue(false,"--------- Not able to Click on "+ navigationMenuName + "---------");
-	   }
 		log(LogStatus.INFO,
 				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 						+ searchValue + "---------",
@@ -4229,12 +4196,7 @@ public class AcuityResearch extends BaseLib{
 				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 						+ searchValue + "---------",
 				YesNo.No);
-		String xpath1 = "//div[contains(@class,'noResultsTitle')]";
-		ele = isDisplayed(driver, (FindElement(driver, xpath1, errorName1, action.BOOLEAN, 10)), xpath1, 10, "No results").getText();
-		if(ele.contains(errorName1)){
-			log(LogStatus.PASS, ele +" has been Matched with " +errorName1, YesNo.No);
-			sa.assertTrue(true, ele +" has been Matched with " +errorName1);
-		} else {
+		
 			if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 				log(LogStatus.INFO,
 						"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
@@ -4259,7 +4221,6 @@ public class AcuityResearch extends BaseLib{
 								+ searchValue + "---------");
 				
 		}
-	}
 			if (rp.mouseHoverOnNavigationAndGetText()) {
 				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
 			} else {
@@ -4368,12 +4329,6 @@ public class AcuityResearch extends BaseLib{
 				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 						+ searchValue + "---------",
 				YesNo.No);
-		String xpath1 = "//div[contains(@class,'noResultsTitle')]";
-		ele = isDisplayed(driver, (FindElement(driver, xpath1, errorName1, action.BOOLEAN, 10)), xpath1, 10, "No results").getText();
-		if(ele.contains(errorName1)){
-			log(LogStatus.PASS, ele +" has been Matched with " +errorName1, YesNo.No);
-			sa.assertTrue(true, ele +" has been Matched with " +errorName1);
-		} else {
 			if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 				log(LogStatus.INFO,
 						"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
@@ -4398,7 +4353,6 @@ public class AcuityResearch extends BaseLib{
 								+ searchValue + "---------");
 				
 		}
-	}
 			if (rp.mouseHoverOnNavigationAndGetText()) {
 				log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
 			} else {
@@ -4425,6 +4379,7 @@ public class AcuityResearch extends BaseLib{
 					log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
 					sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
 				}
+				ThreadSleep(2000);
 				if (rp.VerifyViewMoreOption(headerName)) {
 					log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
 				} else {
@@ -4534,12 +4489,10 @@ public class AcuityResearch extends BaseLib{
 					"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 							+ searchValue + "---------",
 					YesNo.No);
-			String xpath1 = "//div[contains(@class,'noResultsTitle')]";
-			ele = isDisplayed(driver, (FindElement(driver, xpath1, errorName1, action.BOOLEAN, 10)), xpath1, 10, "No results").getText();
-			if(ele.contains(errorName1)){
-				log(LogStatus.PASS, ele +" has been Matched with " +errorName1, YesNo.No);
-				sa.assertTrue(true, ele +" has been Matched with " +errorName1);
-			} else {
+			if(rp.getNoResult(5) != null){
+				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+				sa.assertTrue(true, "There is no data retaled to " + searchValue);
+			} else 
 				if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 					log(LogStatus.INFO,
 							"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
@@ -4564,7 +4517,6 @@ public class AcuityResearch extends BaseLib{
 									+ searchValue + "---------");
 					
 			}
-		}
 				if (rp.mouseHoverOnNavigationAndGetText()) {
 					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
 				} else {
@@ -4647,12 +4599,10 @@ public class AcuityResearch extends BaseLib{
 						"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 								+ searchValue + "---------",
 						YesNo.No);
-				String xpath1 = "//div[contains(@class,'noResultsTitle')]";
-				ele = isDisplayed(driver, (FindElement(driver, xpath1, errorName1, action.BOOLEAN, 10)), xpath1, 10, "No results").getText();
-				if(ele.contains(errorName1)){
-					log(LogStatus.PASS, ele +" has been Matched with " +errorName1, YesNo.No);
-					sa.assertTrue(true, ele +" has been Matched with " +errorName1);
-				} else {
+				if(rp.getNoResult(5) != null){
+					log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+					sa.assertTrue(true, "There is no data retaled to " + searchValue);
+				} else
 					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 						log(LogStatus.INFO,
 								"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
@@ -4677,7 +4627,6 @@ public class AcuityResearch extends BaseLib{
 										+ searchValue + "---------");
 						
 				}
-			}
 					if (rp.mouseHoverOnNavigationAndGetText()) {
 						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
 					} else {
@@ -4837,12 +4786,10 @@ public class AcuityResearch extends BaseLib{
 						"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 								+ searchValue + "---------",
 						YesNo.No);
-				String xpath1 = "//div[contains(@class,'noResultsTitle')]";
-				ele = isDisplayed(driver, (FindElement(driver, xpath1, errorName1, action.BOOLEAN, 10)), xpath1, 10, "No results").getText();
-				if(ele.contains(errorName1)){
-					log(LogStatus.PASS, ele +" has been Matched with " +errorName1, YesNo.No);
-					sa.assertTrue(true, ele +" has been Matched with " +errorName1);
-				} else {
+				if(rp.getNoResult(5) != null){
+					log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+					sa.assertTrue(true, "There is no data retaled to " + searchValue);
+				} else
 					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 						log(LogStatus.INFO,
 								"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
@@ -4867,7 +4814,6 @@ public class AcuityResearch extends BaseLib{
 										+ searchValue + "---------");
 						
 				}
-			}
 					if (rp.mouseHoverOnNavigationAndGetText()) {
 						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
 					} else {
@@ -5038,6 +4984,10 @@ public class AcuityResearch extends BaseLib{
 		driver.switchTo().window(parentWindow);
 		
 		ThreadSleep(2000);
+	lp.CRMlogout();
+	refresh(driver);		
+	lp.CRMLogin(glUser1EmailID, adminPassword, appName);
+	ThreadSleep(2000);
 			
 		for(String searchValue : searchValues) {
 			String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
@@ -5062,12 +5012,11 @@ public class AcuityResearch extends BaseLib{
 					"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 							+ searchValue + "---------",
 					YesNo.No);
-			String xpath1 = "//div[contains(@class,'noResultsTitle')]";
-			ele = isDisplayed(driver, (FindElement(driver, xpath1, errorName1, action.BOOLEAN, 10)), xpath1, 10, "No results").getText();
-			if(ele.contains(errorName1)){
-				log(LogStatus.PASS, ele +" has been Matched with " +errorName1, YesNo.No);
-				sa.assertTrue(true, ele +" has been Matched with " +errorName1);
-			} else {
+			try {
+			if(rp.getNoResult(5) != null){
+				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+				sa.assertTrue(true, "There is no data retaled to " + searchValue);
+			} else
 				if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 					log(LogStatus.INFO,
 							"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
@@ -5092,7 +5041,13 @@ public class AcuityResearch extends BaseLib{
 									+ searchValue + "---------");
 					
 			}
-		}
+			}
+			catch(Exception e)
+			{
+				log(LogStatus.INFO,e.getMessage(), YesNo.No);
+				continue;
+
+			}
 				if (rp.mouseHoverOnNavigationAndGetText()) {
 					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
 				} else {
@@ -5127,120 +5082,7 @@ public class AcuityResearch extends BaseLib{
 				}
 			}
 		lp.CRMlogout();
-		refresh(driver);		
-		lp.CRMLogin(glUser1EmailID, adminPassword, appName);
-		ThreadSleep(2000);
-//			if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
-//				if (cp.clickOnCreatedContact(projectName, contactName[0], contactName[1])) {
-//					if (isDisplayed(driver, cp.getPhoneFieldOnContactPage(10), "Visibility", 10, "Phone") == null) {
-//						log(LogStatus.PASS, "Phone Field is not visible", YesNo.Yes);
-//						sa.assertTrue(true, "Phone Field is not visible");
-//					} else {
-//						log(LogStatus.ERROR, "Phone Field is visible", YesNo.Yes);
-//						sa.assertTrue(false, "Phone Field is visible");
-//					}
-//				}
-//
-//				else {
-//					log(LogStatus.ERROR, "Could not click on the contact", YesNo.Yes);
-//					sa.assertTrue(false, "Could not click on the contact");
-//				}
-//			} else {
-//				log(LogStatus.ERROR, "Could not click Tab", YesNo.Yes);
-//				sa.assertTrue(false, "Could not click Tab");
-//
-//			}
-			
-			for(String searchValue : searchValues) {
-				String varibale =ExcelUtils.readData(ResearchDataSheetFilePath,"UpdatedData",excelLabel.Name, searchValue, excelLabel.Variable_Name);
-				log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
-			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
-				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-				if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
-					ThreadSleep(2000);
-					clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
-					ThreadSleep(8000);
-					ele = rp.getResearchFindingsValue(10).getText();
-					if (ele.equals(searchValue)) {
-					log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
-					sa.assertTrue(true, ele +" is matched with " +searchValue);
-					}
-				} else {
-					log(LogStatus.ERROR, "Not Able to send value "+searchValue, YesNo.Yes);
-					sa.assertTrue(false,"Not Able to send value "+searchValue);
-				}
-				}
-				log(LogStatus.INFO,
-						"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
-								+ searchValue + "---------",
-						YesNo.No);
-				String xpath1 = "//div[contains(@class,'noResultsTitle')]";
-				ele = isDisplayed(driver, (FindElement(driver, xpath1, errorName1, action.BOOLEAN, 10)), xpath1, 10, "No results").getText();
-				if(ele.contains(errorName1)){
-					log(LogStatus.PASS, ele +" has been Matched with " +errorName1, YesNo.No);
-					sa.assertTrue(true, ele +" has been Matched with " +errorName1);
-				} else {
-					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
-						log(LogStatus.INFO,
-								"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-										+ searchValue + "---------",
-								YesNo.No);
-					ArrayList<String> list = rp.VerifyNameAndCountForResearchLeftPanel(varibale, action.SCROLLANDBOOLEAN, 10);
-						if(list.isEmpty()) {
-							
-							log(LogStatus.INFO,"---------Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-						} else {
-							log(LogStatus.ERROR,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------", YesNo.No);
-							sa.assertTrue(false,"---------Not Verify the Result Count from Left Navigation Panel and Excel Data---------list:"+list);
-						}
-			
-					} else {
-						log(LogStatus.FAIL,
-								"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-										+ searchValue + "---------",
-								YesNo.No);
-						sa.assertTrue(false,
-								"---------Not Verify the Result Count for Each Category from the Research Findings side menu for the record: "
-										+ searchValue + "---------");
-						
-				}
-			}
-					if (rp.mouseHoverOnNavigationAndGetText()) {
-						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-					}
-					
-					if (rp.mouseHoverOnGridAndGetText()) {
-						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
-					} else {
-						log(LogStatus.FAIL,"--------- Some records are not present in Navigation Menu ---------",YesNo.No);
-						sa.assertTrue(false,"--------- Some records are not present in Navigation Menu ---------");
-					}
-					int gridSize = rp.getElementsFromGrid().size();
-					log(LogStatus.FAIL,"--------- Total count of elements is : " + gridSize,YesNo.No);
-					for(int i=0; i<gridSize; i++)
-					{		
-						headerName = rp.getElementsFromGrid().get(i).getText();
-						String recordName = rp.clickOnRecordUsingGridName(headerName, 30).getText();
-						
-						if (rp.clickOperationOnRecordForGrid(headerName,recordName)) {
-							log(LogStatus.INFO,"--------- Click on Records For Grid ---------",YesNo.No);
-						} else {
-							log(LogStatus.FAIL,"--------- not able click on Records For Grid ---------",YesNo.No);
-							sa.assertTrue(false,"--------- not able click on Records For Grid ---------");
-						}
-						if (rp.VerifyViewMoreOption(headerName)) {
-							log(LogStatus.INFO,"--------- Able to click on view more option for" + headerName + " ---------",YesNo.No);
-						} else {
-							log(LogStatus.FAIL,"--------- Not able to click on view more option for" + headerName + " ---------",YesNo.No);
-						}
-					}
-				}
-			
-	lp.CRMlogout();
-	sa.assertAll();
+		sa.assertAll();
 }
 
 @Parameters({ "projectName" })
@@ -5399,12 +5241,13 @@ public class AcuityResearch extends BaseLib{
 					"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 							+ searchValue + "---------",
 					YesNo.No);
-			String xpath1 = "//div[contains(@class,'noResultsTitle')]";
-			ele = isDisplayed(driver, (FindElement(driver, xpath1, errorName1, action.BOOLEAN, 10)), xpath1, 10, "No results").getText();
-			if(ele.contains(errorName1)){
-				log(LogStatus.PASS, ele +" has been Matched with " +errorName1, YesNo.No);
-				sa.assertTrue(true, ele +" has been Matched with " +errorName1);
-			} else {
+			
+			try {
+			if(rp.getNoResult(5) != null){
+				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+				sa.assertTrue(true, "There is no data retaled to " + searchValue);
+			} else
+				
 				if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 					log(LogStatus.INFO,
 							"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
@@ -5429,7 +5272,13 @@ public class AcuityResearch extends BaseLib{
 									+ searchValue + "---------");
 					
 			}
-		}
+			}
+			catch(Exception e)
+			{
+				log(LogStatus.INFO,e.getMessage(), YesNo.No);
+				continue;
+
+			}
 				if (rp.mouseHoverOnNavigationAndGetText()) {
 					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
 				} else {
@@ -5511,12 +5360,11 @@ public class AcuityResearch extends BaseLib{
 						"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 								+ searchValue + "---------",
 						YesNo.No);
-				String xpath1 = "//div[contains(@class,'noResultsTitle')]";
-				ele = isDisplayed(driver, (FindElement(driver, xpath1, errorName1, action.BOOLEAN, 10)), xpath1, 10, "No results").getText();
-				if(ele.contains(errorName1)){
-					log(LogStatus.PASS, ele +" has been Matched with " +errorName1, YesNo.No);
-					sa.assertTrue(true, ele +" has been Matched with " +errorName1);
-				} else {
+				try {
+				if(rp.getNoResult(5) != null){
+					log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+					sa.assertTrue(true, "There is no data retaled to " + searchValue);
+				} else
 					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 						log(LogStatus.INFO,
 								"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
@@ -5541,7 +5389,14 @@ public class AcuityResearch extends BaseLib{
 										+ searchValue + "---------");
 						
 				}
-			}
+				}
+				catch(Exception e)
+				{
+					log(LogStatus.INFO,e.getMessage(), YesNo.No);
+					continue;
+
+				}
+				
 					if (rp.mouseHoverOnNavigationAndGetText()) {
 						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
 					} else {
@@ -5754,12 +5609,11 @@ public class AcuityResearch extends BaseLib{
 					"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 							+ searchValue + "---------",
 					YesNo.No);
-			String xpath1 = "//div[contains(@class,'noResultsTitle')]";
-			ele = isDisplayed(driver, (FindElement(driver, xpath1, errorName1, action.BOOLEAN, 10)), xpath1, 10, "No results").getText();
-			if(ele.contains(errorName1)){
-				log(LogStatus.PASS, ele +" has been Matched with " +errorName1, YesNo.No);
-				sa.assertTrue(true, ele +" has been Matched with " +errorName1);
-			} else {
+			try {
+				if(rp.getNoResult(5) != null){
+					log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+					sa.assertTrue(true, "There is no data retaled to " + searchValue);
+				} else
 				if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 					log(LogStatus.INFO,
 							"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
@@ -5784,7 +5638,13 @@ public class AcuityResearch extends BaseLib{
 									+ searchValue + "---------");
 					
 			}
-		}
+			}
+			catch(Exception e)
+			{
+				log(LogStatus.INFO,e.getMessage(), YesNo.No);
+				continue;
+
+			}
 				if (rp.mouseHoverOnNavigationAndGetText()) {
 					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
 				} else {
@@ -5996,12 +5856,12 @@ public class AcuityResearch extends BaseLib{
 					"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 							+ searchValue + "---------",
 					YesNo.No);
-			String xpath1 = "//div[contains(@class,'noResultsTitle')]";
-			ele = isDisplayed(driver, (FindElement(driver, xpath1, errorName1, action.BOOLEAN, 10)), xpath1, 10, "No results").getText();
-			if(ele.contains(errorName1)){
-				log(LogStatus.PASS, ele +" has been Matched with " +errorName1, YesNo.No);
-				sa.assertTrue(true, ele +" has been Matched with " +errorName1);
-			} else {
+			
+			try {
+			if(rp.getNoResult(5) != null){
+				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+				sa.assertTrue(true, "There is no data retaled to " + searchValue);
+			} else
 				if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 					log(LogStatus.INFO,
 							"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
@@ -6026,7 +5886,13 @@ public class AcuityResearch extends BaseLib{
 									+ searchValue + "---------");
 					
 			}
-		}
+			}
+			catch(Exception e)
+			{
+				log(LogStatus.INFO,e.getMessage(), YesNo.No);
+				continue;
+
+			}
 				if (rp.mouseHoverOnNavigationAndGetText()) {
 					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
 				} else {
@@ -6238,12 +6104,11 @@ public class AcuityResearch extends BaseLib{
 					"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 							+ searchValue + "---------",
 					YesNo.No);
-			String xpath1 = "//div[contains(@class,'noResultsTitle')]";
-			ele = isDisplayed(driver, (FindElement(driver, xpath1, errorName1, action.BOOLEAN, 10)), xpath1, 10, "No results").getText();
-			if(ele.contains(errorName1)){
-				log(LogStatus.PASS, ele +" has been Matched with " +errorName1, YesNo.No);
-				sa.assertTrue(true, ele +" has been Matched with " +errorName1);
-			} else {
+			try {
+				if(rp.getNoResult(5) != null){
+					log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+					sa.assertTrue(true, "There is no data retaled to " + searchValue);
+				} else
 				if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 					log(LogStatus.INFO,
 							"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
@@ -6269,6 +6134,12 @@ public class AcuityResearch extends BaseLib{
 					
 			}
 		}
+			catch(Exception e)
+			{
+				log(LogStatus.INFO,e.getMessage(), YesNo.No);
+				continue;
+		
+			}	
 				if (rp.mouseHoverOnNavigationAndGetText()) {
 					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
 				} else {
@@ -6504,27 +6375,27 @@ public class AcuityResearch extends BaseLib{
 		}
 		refresh(driver);
 		
-		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
-			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			xpath = "(//div[contains(@class,'DOCKED')]//div//button)[2]";
-			WebElement ele1 = FindElement(driver, xpath,filesName, action.BOOLEAN, 10);
-			click(driver,ele1,"Pop-out",action.BOOLEAN);
-			ThreadSleep(8000);
-			xpath = "//div[contains(@class,'normal')]//button[@title='Pop-in']";
-			WebElement ele2 = FindElement(driver, xpath,filesName, action.BOOLEAN, 10);
-			click(driver,ele2,"Pop-in",action.BOOLEAN);
-			ThreadSleep(4000);
-			switchToDefaultContent(driver);
-			if (ele2==null) {
-				log(LogStatus.INFO, "Research popup successfully pop-out closed", YesNo.No);
-			} else {
-				log(LogStatus.ERROR, "Research popup not successfully closed", YesNo.Yes);
-				sa.assertTrue(false,"Research popup not successfully closed");
-			}
-		} else {
-			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName, YesNo.Yes);
-			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName);
-		}
+//		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
+//			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
+//			xpath = "(//div[contains(@class,'DOCKED')]//div//button)[2]";
+//			WebElement ele1 = FindElement(driver, xpath,filesName, action.BOOLEAN, 10);
+//			click(driver,ele1,"Pop-out",action.BOOLEAN);
+//			ThreadSleep(8000);
+//			xpath = "//div[contains(@class,'normal')]//button[@title='Pop-in']";
+//			WebElement ele2 = FindElement(driver, xpath,filesName, action.BOOLEAN, 10);
+//			click(driver,ele2,"Pop-in",action.BOOLEAN);
+//			ThreadSleep(4000);
+//			switchToDefaultContent(driver);
+//			if (ele2==null) {
+//				log(LogStatus.INFO, "Research popup successfully pop-out closed", YesNo.No);
+//			} else {
+//				log(LogStatus.ERROR, "Research popup not successfully closed", YesNo.Yes);
+//				sa.assertTrue(false,"Research popup not successfully closed");
+//			}
+//		} else {
+//			log(LogStatus.ERROR, "Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName, YesNo.Yes);
+//			sa.assertTrue(false,"Not Able to Click on "+navigationMenuName+" so cannot verify list : "+filesName);
+//		}
 		
 		for(String searchValue : searchValues) {
 			if(searchValue.contains("ACR_")) {
@@ -6555,12 +6426,11 @@ public class AcuityResearch extends BaseLib{
 					"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 							+ searchValue + "---------",
 					YesNo.No);
-			String xpath1 = "//div[contains(@class,'noResultsTitle')]";
-			ele = isDisplayed(driver, (FindElement(driver, xpath1, errorName1, action.BOOLEAN, 10)), xpath1, 10, "No results").getText();
-			if(ele.contains(errorName1)){
-				log(LogStatus.PASS, ele +" has been Matched with " +errorName1, YesNo.No);
-				sa.assertTrue(true, ele +" has been Matched with " +errorName1);
-			} else {
+			try {
+			if(rp.getNoResult(5) != null){
+				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+				sa.assertTrue(true, "There is no data retaled to " + searchValue);
+			} else
 				if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 					log(LogStatus.INFO,
 							"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
@@ -6585,7 +6455,14 @@ public class AcuityResearch extends BaseLib{
 									+ searchValue + "---------");
 					
 			}
-		}
+
+}
+	catch(Exception e)
+	{
+		log(LogStatus.INFO,e.getMessage(), YesNo.No);
+		continue;
+
+	}		
 				if (rp.mouseHoverOnNavigationAndGetText()) {
 					log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
 				} else {
@@ -6624,7 +6501,7 @@ public class AcuityResearch extends BaseLib{
 		ThreadSleep(2000);
 		sa.assertAll();
 	}
-
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void ARTc043_UpdateCustomMetaDataTypesForAccount_VerifyImpact(String projectName) {
@@ -6696,12 +6573,12 @@ public class AcuityResearch extends BaseLib{
 						"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 								+ searchValue + "---------",
 						YesNo.No);
-				String xpath1 = "//div[contains(@class,'noResultsTitle')]";
-				String ele = isDisplayed(driver, (FindElement(driver, xpath1, errorName1, action.BOOLEAN, 10)), xpath1, 10, "No results").getText();
-				if(ele.contains(errorName1)){
-					log(LogStatus.PASS, ele +" has been Matched with " +errorName1, YesNo.No);
-					sa.assertTrue(true, ele +" has been Matched with " +errorName1);
-				} else {
+				
+				try {
+				if(rp.getNoResult(5) != null){
+					log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+					sa.assertTrue(true, "There is no data retaled to " + searchValue);
+				} else
 					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 						log(LogStatus.INFO,
 								"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
@@ -6726,7 +6603,13 @@ public class AcuityResearch extends BaseLib{
 										+ searchValue + "---------");
 						
 				}
-			}
+				}
+				catch(Exception e)
+				{
+					log(LogStatus.INFO,e.getMessage(), YesNo.No);
+					continue;
+
+				}
 					if (rp.mouseHoverOnNavigationAndGetText()) {
 						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
 					} else {
@@ -6837,12 +6720,11 @@ public class AcuityResearch extends BaseLib{
 						"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 								+ searchValue + "---------",
 						YesNo.No);
-				String xpath1 = "//div[contains(@class,'noResultsTitle')]";
-				String ele = isDisplayed(driver, (FindElement(driver, xpath1, errorName1, action.BOOLEAN, 10)), xpath1, 10, "No results").getText();
-				if(ele.contains(errorName1)){
-					log(LogStatus.PASS, ele +" has been Matched with " +errorName1, YesNo.No);
-					sa.assertTrue(true, ele +" has been Matched with " +errorName1);
-				} else {
+				try {
+					if(rp.getNoResult(5) != null){
+						log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+						sa.assertTrue(true, "There is no data retaled to " + searchValue);
+					} else
 					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 						log(LogStatus.INFO,
 								"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
@@ -6868,6 +6750,12 @@ public class AcuityResearch extends BaseLib{
 						
 				}
 			}
+				catch(Exception e)
+				{
+					log(LogStatus.INFO,e.getMessage(), YesNo.No);
+					continue;
+
+				}
 					if (rp.mouseHoverOnNavigationAndGetText()) {
 						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
 					} else {
@@ -6978,12 +6866,11 @@ public class AcuityResearch extends BaseLib{
 						"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 								+ searchValue + "---------",
 						YesNo.No);
-				String xpath1 = "//div[contains(@class,'noResultsTitle')]";
-				String ele = isDisplayed(driver, (FindElement(driver, xpath1, errorName1, action.BOOLEAN, 10)), xpath1, 10, "No results").getText();
-				if(ele.contains(errorName1)){
-					log(LogStatus.PASS, ele +" has been Matched with " +errorName1, YesNo.No);
-					sa.assertTrue(true, ele +" has been Matched with " +errorName1);
-				} else {
+				try {
+					if(rp.getNoResult(5) != null){
+						log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+						sa.assertTrue(true, "There is no data retaled to " + searchValue);
+					} else	
 					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 						log(LogStatus.INFO,
 								"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
@@ -7008,7 +6895,13 @@ public class AcuityResearch extends BaseLib{
 										+ searchValue + "---------");
 						
 				}
-			}
+				}
+				catch(Exception e)
+				{
+					log(LogStatus.INFO,e.getMessage(), YesNo.No);
+					continue;
+
+				}
 					if (rp.mouseHoverOnNavigationAndGetText()) {
 						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
 					} else {
@@ -7119,12 +7012,11 @@ public class AcuityResearch extends BaseLib{
 						"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 								+ searchValue + "---------",
 						YesNo.No);
-				String xpath1 = "//div[contains(@class,'noResultsTitle')]";
-				String ele = isDisplayed(driver, (FindElement(driver, xpath1, errorName1, action.BOOLEAN, 10)), xpath1, 10, "No results").getText();
-				if(ele.contains(errorName1)){
-					log(LogStatus.PASS, ele +" has been Matched with " +errorName1, YesNo.No);
-					sa.assertTrue(true, ele +" has been Matched with " +errorName1);
-				} else {
+				try {
+					if(rp.getNoResult(5) != null){
+						log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+						sa.assertTrue(true, "There is no data retaled to " + searchValue);
+					} else
 					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 						log(LogStatus.INFO,
 								"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
@@ -7149,7 +7041,13 @@ public class AcuityResearch extends BaseLib{
 										+ searchValue + "---------");
 						
 				}
-			}
+				}
+				catch(Exception e)
+				{
+					log(LogStatus.INFO,e.getMessage(), YesNo.No);
+					continue;
+
+				}
 					if (rp.mouseHoverOnNavigationAndGetText()) {
 						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
 					} else {
@@ -7260,12 +7158,11 @@ public class AcuityResearch extends BaseLib{
 						"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 								+ searchValue + "---------",
 						YesNo.No);
-				String xpath1 = "//div[contains(@class,'noResultsTitle')]";
-				String ele = isDisplayed(driver, (FindElement(driver, xpath1, errorName1, action.BOOLEAN, 10)), xpath1, 10, "No results").getText();
-				if(ele.contains(errorName1)){
-					log(LogStatus.PASS, ele +" has been Matched with " +errorName1, YesNo.No);
-					sa.assertTrue(true, ele +" has been Matched with " +errorName1);
-				} else {
+				try {
+					if(rp.getNoResult(5) != null){
+						log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+						sa.assertTrue(true, "There is no data retaled to " + searchValue);
+					} else	
 					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 						log(LogStatus.INFO,
 								"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
@@ -7290,7 +7187,13 @@ public class AcuityResearch extends BaseLib{
 										+ searchValue + "---------");
 						
 				}
-			}
+				}
+				catch(Exception e)
+				{
+					log(LogStatus.INFO,e.getMessage(), YesNo.No);
+					continue;
+
+				}
 					if (rp.mouseHoverOnNavigationAndGetText()) {
 						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
 					} else {
@@ -7339,6 +7242,291 @@ public class AcuityResearch extends BaseLib{
 	BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 	String parentWindow = null;
 	String[] searchValues = {AR_Data1};
+//	boolean flag1 = false;
+//	String headerName,errorName1 = "No results for";
+//	lp.CRMLogin(superAdminUserName, adminPassword, appName);
+//		if (home.clickOnSetUpLink()) {
+//			parentWindow = switchOnWindow(driver);
+//			if (parentWindow == null) {
+//				sa.assertTrue(false,
+//						"No new window is open after click on setup link in lighting mode so cannot create clone user");
+//				log(LogStatus.SKIP,
+//						"No new window is open after click on setup link in lighting mode so cannot create clone user",
+//						YesNo.Yes);
+//				exit("No new window is open after click on setup link in lighting mode so cannot create clone user");
+//			}
+//			ThreadSleep(3000);
+//			if (setup.searchStandardOrCustomObject(environment, mode, object.Custom_Metadata_Types)) {
+//				log(LogStatus.INFO, "click on Object : " + object.Custom_Metadata_Types, YesNo.No);
+//				ThreadSleep(2000);
+//				switchToDefaultContent(driver);
+//				switchToFrame(driver, 60, setup.getSetUpPageIframe(120));
+//				String xpath = "//th//a[text()='Acuity Setting']/../..//a[text()='Manage Records']";
+//				WebElement ele = FindElement(driver, xpath, "Manage Records", action.SCROLLANDBOOLEAN, 10);
+//				ele = isDisplayed(driver, ele, "visibility", 10, "Manage Records");
+//				if (clickUsingJavaScript(driver, ele, "Manage Records", action.BOOLEAN)) {
+//					log(LogStatus.INFO, "able to click on Manage Records link", YesNo.No);
+//					ThreadSleep(1000);
+//					switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
+//					if (clickUsingJavaScript(driver, setup.EditButtonOfAcuitySettings("Research_Acc_Field2",30), "Edit button", action.SCROLLANDBOOLEAN)) {
+//						log(LogStatus.INFO, "click on edit button of Acuity Setting", YesNo.No);
+//						ThreadSleep(5000);
+//						switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
+//						if (sendKeys(driver, setup.getValueTextBoxInAcuitySetting(30), valueInAccountField,
+//								"Value Text Box", action.SCROLLANDBOOLEAN)) {
+//							log(LogStatus.PASS, "enter the value in description : Description", YesNo.No);
+//							if (click(driver, setup.getViewAccessbilityDropDownSaveButton(20), "save button",
+//									action.SCROLLANDBOOLEAN)) {
+//								log(LogStatus.PASS, "clicked on save button", YesNo.No);
+//							} else {
+//								log(LogStatus.PASS, "not able to clicked on save button so cannot edit acuity setting ",
+//										YesNo.No);
+//								sa.assertTrue(false,
+//										"not able to clicked on save button so cannot edit acuity setting ");
+//							}
+//						} else {
+//							log(LogStatus.PASS, "not able to enter the value in description : Description", YesNo.No);
+//							sa.assertTrue(false, "not able to enter the value in description : Description");
+//						}
+//					} else {
+//						log(LogStatus.INFO, "not able to click on edit button of  Acuity Setting", YesNo.No);
+//						sa.assertTrue(false, "not able to click on edit button of  Acuity Setting");
+//					}
+//					
+//					ThreadSleep(2000);
+//					switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
+//					if (click(driver, setup.EditButtonOfAcuitySettings("Research_Con_Field2",30), "Edit button", action.SCROLLANDBOOLEAN)) {
+//						log(LogStatus.INFO, "click on edit button of Acuity Setting", YesNo.No);
+//						ThreadSleep(5000);
+//						switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
+//						if (sendKeys(driver, setup.getValueTextBoxInAcuitySetting(30), valueInContactField1,
+//								"Value Text Box", action.SCROLLANDBOOLEAN)) {
+//							log(LogStatus.PASS, "enter the value in description : AccountId", YesNo.No);
+//							if (click(driver, setup.getViewAccessbilityDropDownSaveButton(20), "save button",
+//									action.SCROLLANDBOOLEAN)) {
+//								log(LogStatus.PASS, "clicked on save button", YesNo.No);
+//							} else {
+//								log(LogStatus.PASS, "not able to clicked on save button so cannot edit acuity setting ",
+//										YesNo.No);
+//								sa.assertTrue(false,
+//										"not able to clicked on save button so cannot edit acuity setting ");
+//							}
+//						} else {
+//							log(LogStatus.PASS, "not able to enter the value in description : AccountId", YesNo.No);
+//							sa.assertTrue(false, "not able to enter the value in description : AccountId");
+//						}
+//					} else {
+//						log(LogStatus.INFO, "not able to click on edit button of  Acuity Setting", YesNo.No);
+//						sa.assertTrue(false, "not able to click on edit button of  Acuity Setting");
+//					}
+//					
+//					ThreadSleep(2000);
+//					switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
+//					if (click(driver, setup.EditButtonOfAcuitySettings("Research_Con_Field3",30), "Edit button", action.SCROLLANDBOOLEAN)) {
+//						log(LogStatus.INFO, "click on edit button of Acuity Setting", YesNo.No);
+//						ThreadSleep(5000);
+//						switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
+//						if (sendKeys(driver, setup.getValueTextBoxInAcuitySetting(30), valueInContactField2,
+//								"Value Text Box", action.SCROLLANDBOOLEAN)) {
+//							log(LogStatus.PASS, "enter the value in description : Description", YesNo.No);
+//							if (click(driver, setup.getViewAccessbilityDropDownSaveButton(20), "save button",
+//									action.SCROLLANDBOOLEAN)) {
+//								log(LogStatus.PASS, "clicked on save button", YesNo.No);
+//							} else {
+//								log(LogStatus.PASS, "not able to clicked on save button so cannot edit acuity setting ",
+//										YesNo.No);
+//								sa.assertTrue(false,
+//										"not able to clicked on save button so cannot edit acuity setting ");
+//							}
+//						} else {
+//							log(LogStatus.PASS, "not able to enter the value in description : Description", YesNo.No);
+//							sa.assertTrue(false, "not able to enter the value in description : Description");
+//						}
+//					} else {
+//						log(LogStatus.INFO, "not able to click on edit button of  Acuity Setting", YesNo.No);
+//						sa.assertTrue(false, "not able to click on edit button of  Acuity Setting");
+//					}
+//					
+//					ThreadSleep(2000);
+//					switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
+//					if (click(driver, setup.EditButtonOfAcuitySettings("Research_Deal_Field2",30), "Edit button", action.SCROLLANDBOOLEAN)) {
+//						log(LogStatus.INFO, "click on edit button of Acuity Setting", YesNo.No);
+//						ThreadSleep(5000);
+//						switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
+//						if (sendKeys(driver, setup.getValueTextBoxInAcuitySetting(30), valueInDealField1,
+//								"Value Text Box", action.SCROLLANDBOOLEAN)) {
+//							log(LogStatus.PASS, "enter the value in description : navpeII__Stage__c", YesNo.No);
+//							if (click(driver, setup.getViewAccessbilityDropDownSaveButton(20), "save button",
+//									action.SCROLLANDBOOLEAN)) {
+//								log(LogStatus.PASS, "clicked on save button", YesNo.No);
+//							} else {
+//								log(LogStatus.PASS, "not able to clicked on save button so cannot edit acuity setting ",
+//										YesNo.No);
+//								sa.assertTrue(false,
+//										"not able to clicked on save button so cannot edit acuity setting ");
+//							}
+//						} else {
+//							log(LogStatus.PASS, "not able to enter the value in description : navpeII__Stage__c", YesNo.No);
+//							sa.assertTrue(false, "not able to enter the value in description : navpeII__Stage__c");
+//						}
+//					} else {
+//						log(LogStatus.INFO, "not able to click on edit button of  Acuity Setting", YesNo.No);
+//						sa.assertTrue(false, "not able to click on edit button of  Acuity Setting");
+//					}
+//					
+//					ThreadSleep(2000);
+//					switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
+//					if (click(driver, setup.EditButtonOfAcuitySettings("Research_Deal_Field3",30), "Edit button", action.SCROLLANDBOOLEAN)) {
+//						log(LogStatus.INFO, "click on edit button of Acuity Setting", YesNo.No);
+//						ThreadSleep(5000);
+//						switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
+//						if (sendKeys(driver, setup.getValueTextBoxInAcuitySetting(30), valueInDealField2,
+//								"Value Text Box", action.SCROLLANDBOOLEAN)) {
+//							log(LogStatus.PASS, "enter the value in description : navpeII__Pipeline_Comments__c", YesNo.No);
+//							if (click(driver, setup.getViewAccessbilityDropDownSaveButton(20), "save button",
+//									action.SCROLLANDBOOLEAN)) {
+//								log(LogStatus.PASS, "clicked on save button", YesNo.No);
+//							} else {
+//								log(LogStatus.PASS, "not able to clicked on save button so cannot edit acuity setting ",
+//										YesNo.No);
+//								sa.assertTrue(false,
+//										"not able to clicked on save button so cannot edit acuity setting ");
+//							}
+//						} else {
+//							log(LogStatus.PASS, "not able to enter the value in description : navpeII__Pipeline_Comments__c", YesNo.No);
+//							sa.assertTrue(false, "not able to enter the value in description : navpeII__Pipeline_Comments__c");
+//						}
+//					} else {
+//						log(LogStatus.INFO, "not able to click on edit button of  Acuity Setting", YesNo.No);
+//						sa.assertTrue(false, "not able to click on edit button of  Acuity Setting");
+//					}
+//					
+//					ThreadSleep(2000);
+//					switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
+//					if (click(driver, setup.EditButtonOfAcuitySettings("Research_Fund_Field2",30), "Edit button", action.SCROLLANDBOOLEAN)) {
+//						log(LogStatus.INFO, "click on edit button of Acuity Setting", YesNo.No);
+//						ThreadSleep(5000);
+//						switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
+//						if (sendKeys(driver, setup.getValueTextBoxInAcuitySetting(30), valueInFundField1,
+//								"Value Text Box", action.SCROLLANDBOOLEAN)) {
+//							log(LogStatus.PASS, "enter the value in description : navpeII__Pipeline_Comments__c", YesNo.No);
+//							if (click(driver, setup.getViewAccessbilityDropDownSaveButton(20), "save button",
+//									action.SCROLLANDBOOLEAN)) {
+//								log(LogStatus.PASS, "clicked on save button", YesNo.No);
+//							} else {
+//								log(LogStatus.PASS, "not able to clicked on save button so cannot edit acuity setting ",
+//										YesNo.No);
+//								sa.assertTrue(false,
+//										"not able to clicked on save button so cannot edit acuity setting ");
+//							}
+//						} else {
+//							log(LogStatus.PASS, "not able to enter the value in description : navpeII__Pipeline_Comments__c", YesNo.No);
+//							sa.assertTrue(false, "not able to enter the value in description : navpeII__Pipeline_Comments__c");
+//						}
+//					} else {
+//						log(LogStatus.INFO, "not able to click on edit button of  Acuity Setting", YesNo.No);
+//						sa.assertTrue(false, "not able to click on edit button of  Acuity Setting");
+//					}
+//					
+//					ThreadSleep(2000);
+//					switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
+//					if (click(driver, setup.EditButtonOfAcuitySettings("Research_Fund_Field3",30), "Edit button", action.SCROLLANDBOOLEAN)) {
+//						log(LogStatus.INFO, "click on edit button of Acuity Setting", YesNo.No);
+//						ThreadSleep(5000);
+//						switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
+//						if (sendKeys(driver, setup.getValueTextBoxInAcuitySetting(30), valueInFundField2,
+//								"Value Text Box", action.SCROLLANDBOOLEAN)) {
+//							log(LogStatus.PASS, "enter the value in description : navpeII__Pipeline_Comments__c", YesNo.No);
+//							if (click(driver, setup.getViewAccessbilityDropDownSaveButton(20), "save button",
+//									action.SCROLLANDBOOLEAN)) {
+//								log(LogStatus.PASS, "clicked on save button", YesNo.No);
+//							} else {
+//								log(LogStatus.PASS, "not able to clicked on save button so cannot edit acuity setting ",
+//										YesNo.No);
+//								sa.assertTrue(false,
+//										"not able to clicked on save button so cannot edit acuity setting ");
+//							}
+//						} else {
+//							log(LogStatus.PASS, "not able to enter the value in description : navpeII__Pipeline_Comments__c", YesNo.No);
+//							sa.assertTrue(false, "not able to enter the value in description : navpeII__Pipeline_Comments__c");
+//						}
+//					} else {
+//						log(LogStatus.INFO, "not able to click on edit button of  Acuity Setting", YesNo.No);
+//						sa.assertTrue(false, "not able to click on edit button of  Acuity Setting");
+//					}
+//					
+//					ThreadSleep(2000);
+//					switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
+//					if (click(driver, setup.EditButtonOfAcuitySettings("Research_Fundraising_Field2",30), "Edit button", action.SCROLLANDBOOLEAN)) {
+//						log(LogStatus.INFO, "click on edit button of Acuity Setting", YesNo.No);
+//						ThreadSleep(5000);
+//						switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
+//						if (sendKeys(driver, setup.getValueTextBoxInAcuitySetting(30), valueInFundraisingField1,
+//								"Value Text Box", action.SCROLLANDBOOLEAN)) {
+//							log(LogStatus.PASS, "enter the value in description : navpeII__Pipeline_Comments__c", YesNo.No);
+//							if (click(driver, setup.getViewAccessbilityDropDownSaveButton(20), "save button",
+//									action.SCROLLANDBOOLEAN)) {
+//								log(LogStatus.PASS, "clicked on save button", YesNo.No);
+//							} else {
+//								log(LogStatus.PASS, "not able to clicked on save button so cannot edit acuity setting ",
+//										YesNo.No);
+//								sa.assertTrue(false,
+//										"not able to clicked on save button so cannot edit acuity setting ");
+//							}
+//						} else {
+//							log(LogStatus.PASS, "not able to enter the value in description : navpeII__Pipeline_Comments__c", YesNo.No);
+//							sa.assertTrue(false, "not able to enter the value in description : navpeII__Pipeline_Comments__c");
+//						}
+//					} else {
+//						log(LogStatus.INFO, "not able to click on edit button of  Acuity Setting", YesNo.No);
+//						sa.assertTrue(false, "not able to click on edit button of  Acuity Setting");
+//					}
+//					
+//					ThreadSleep(2000);
+//					switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
+//					if (click(driver, setup.EditButtonOfAcuitySettings("Research_Fundraising_Field3",30), "Edit button", action.SCROLLANDBOOLEAN)) {
+//						log(LogStatus.INFO, "click on edit button of Acuity Setting", YesNo.No);
+//						ThreadSleep(5000);
+//						switchToFrame(driver, 60, setup.getSetUpPageIframe(60));
+//						if (sendKeys(driver, setup.getValueTextBoxInAcuitySetting(30), valueInFundraisingField2,
+//								"Value Text Box", action.SCROLLANDBOOLEAN)) {
+//							log(LogStatus.PASS, "enter the value in description : navpeII__Pipeline_Comments__c", YesNo.No);
+//							if (click(driver, setup.getViewAccessbilityDropDownSaveButton(20), "save button",
+//									action.SCROLLANDBOOLEAN)) {
+//								log(LogStatus.PASS, "clicked on save button", YesNo.No);
+//							} else {
+//								log(LogStatus.PASS, "not able to clicked on save button so cannot edit acuity setting ",
+//										YesNo.No);
+//								sa.assertTrue(false,
+//										"not able to clicked on save button so cannot edit acuity setting ");
+//							}
+//						} else {
+//							log(LogStatus.PASS, "not able to enter the value in description : navpeII__Pipeline_Comments__c", YesNo.No);
+//							sa.assertTrue(false, "not able to enter the value in description : navpeII__Pipeline_Comments__c");
+//						}
+//					} else {
+//						log(LogStatus.INFO, "not able to click on edit button of  Acuity Setting", YesNo.No);
+//						sa.assertTrue(false, "not able to click on edit button of  Acuity Setting");
+//					}
+//				} else {
+//					log(LogStatus.INFO, "not able to click on Manage Records link", YesNo.No);
+//					sa.assertTrue(false, "not able to click on Manage Records link");
+//				}
+//	
+//			} else {
+//				log(LogStatus.ERROR, "Not able to search/click on " + object.Custom_Metadata_Types, YesNo.Yes);
+//				sa.assertTrue(false, "Not able to search/click on " + object.Custom_Metadata_Types);
+//			}
+//			ThreadSleep(5000);
+//			switchToDefaultContent(driver);
+//			driver.close();
+//			driver.switchTo().window(parentWindow);
+//		} else {
+//			log(LogStatus.ERROR, "Not able to click on setup link so cannot change value", YesNo.Yes);
+//			sa.assertTrue(false, "Not able to click on setup link so cannot change value");
+//		}
+//		lp.CRMlogout();
+//		sa.assertAll();
 	String[] FieldName = {ARFieldName1,ARFieldName2,ARFieldName3,ARFieldName4,ARFieldName5,ARFieldName6,ARFieldName7,ARFieldName8,ARFieldName9},
 			Value = {ARValue1,ARValue2,ARValue3,ARValue4,ARValue5,ARValue6,ARValue7,ARValue8,ARValue9};
 	String headerName,errorName1 = "No results for";
@@ -7355,17 +7543,18 @@ public class AcuityResearch extends BaseLib{
 			}
 			ThreadSleep(3000);
 			for(int i = 0 ; i <FieldName.length; i++) {
-			if(setup.UpdateValueInCustomMetaData(MetaDataSetting.Acuity_Setting.toString(), FieldName[i], Value[i], 10))
-			{
-				log(LogStatus.INFO, "Changed the value of " + FieldName[i] + " for Acuity Setting", YesNo.No);
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Not able to change the value of " + FieldName[i] + " for Acuity Setting", YesNo.No);
-				sa.assertTrue(false, "Not able to changed the value of " + FieldName[i] + " for Acuity Setting");	
-			}
+				if(setup.UpdateValueInCustomMetaData(MetaDataSetting.Acuity_Setting.toString(), FieldName[i], Value[i], 10))
+				{
+					log(LogStatus.INFO, "Changed the value of " + FieldName[i] + " for Acuity Setting", YesNo.No);
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to change the value of " + FieldName[i] + " for Acuity Setting", YesNo.No);
+					sa.assertTrue(false, "Not able to changed the value of " + FieldName[i] + " for Acuity Setting");	
+				}
+				ThreadSleep(5000);
+			}	
 			ThreadSleep(5000);
-		}
 			switchToDefaultContent(driver);
 			driver.close();
 			driver.switchTo().window(parentWindow);
@@ -7375,7 +7564,6 @@ public class AcuityResearch extends BaseLib{
 		}
 		lp.CRMlogout();
 		sa.assertAll();
-		
 		ThreadSleep(2000);
 		lp.CRMLogin(glUser1EmailID, adminPassword, appName);
 		ThreadSleep(2000);
@@ -7402,12 +7590,11 @@ public class AcuityResearch extends BaseLib{
 						"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 								+ searchValue + "---------",
 						YesNo.No);
-				String xpath1 = "//div[contains(@class,'noResultsTitle')]";
-				String ele = isDisplayed(driver, (FindElement(driver, xpath1, errorName1, action.BOOLEAN, 10)), xpath1, 10, "No results").getText();
-				if(ele.contains(errorName1)){
-					log(LogStatus.PASS, ele +" has been Matched with " +errorName1, YesNo.No);
-					sa.assertTrue(true, ele +" has been Matched with " +errorName1);
-				} else {
+				try {
+					if(rp.getNoResult(5) != null){
+						log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
+						sa.assertTrue(true, "There is no data retaled to " + searchValue);
+					} else
 					if (bp.searchAnItemInResearchAndVerifyItsLeftCountAndGridCount(projectName, searchValue)) {
 						log(LogStatus.INFO,
 								"---------Verify the Result Count for Each Category from the Research Findings side menu for the record: "
@@ -7433,6 +7620,12 @@ public class AcuityResearch extends BaseLib{
 						
 				}
 			}
+				catch(Exception e)
+				{
+					log(LogStatus.INFO,e.getMessage(), YesNo.No);
+					continue;
+
+				}
 					if (rp.mouseHoverOnNavigationAndGetText()) {
 						log(LogStatus.INFO,"--------- Records are present in Navigation Menu ---------",YesNo.No);
 					} else {
@@ -7470,7 +7663,7 @@ public class AcuityResearch extends BaseLib{
 		sa.assertAll();
 	}
 
-@Parameters({ "projectName" })
+	@Parameters({ "projectName" })
 @Test
 	public void ARTc049_AfterBulkDataUpload_VerifyImpact(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);

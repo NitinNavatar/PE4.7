@@ -1174,14 +1174,13 @@ public class CommonVariables {
 	    
 
 	    public static String MRSD_1_ResearchFindings,MRSD_2_ResearchFindings,MRSD_3_ResearchFindings,MRSD_4_ResearchFindings,MRSD_5_ResearchFindings,MRSD_6_ResearchFindings,MRSD_7_ResearchFindings,MRSD_8_ResearchFindings,MRSD_9_ResearchFindings;
-	    public static String AR_Firm1Name,AR_Contact1Name;
+	    public static String AR_Firm1Name,AR_Contact1FirstName,AR_Contact1LastName;
 	    public static String AR_Firm1,AR_Firm2,AR_Firm3,AR_Firm4,AR_Firm5,AR_Firm6,AR_Firm7,AR_Firm8,AR_Firm9,AR_Firm10,AR_Firm11,AR_Firm12,AR_Firm13,AR_Firm14,AR_Firm15,AR_Firm16,AR_Firm17,AR_Firm18,AR_Firm19,AR_Firm20,AR_Firm21,AR_Firm22,
 	    AR_Firm23,AR_Firm24,AR_Firm25,AR_Firm26,AR_Firm27,AR_Firm28,AR_Firm29,AR_Firm30,AR_Firm31,AR_Firm32,AR_Firm33,AR_Firm34,AR_Firm35,AR_Firm36,AR_Firm37,AR_Firm38,AR_Firm39,AR_Firm40,AR_Firm41,AR_Firm42,AR_Firm43,AR_Firm44,AR_Firm45,AR_Firm46,
-	    AR_Firm47,AR_Firm48,AR_Firm49,AR_Firm50,AR_Firm51,AR_Data1,AR_Data2,AR_Data3,
+	    AR_Firm47,AR_Firm48,AR_Firm49,AR_Firm50,AR_Firm51,AR_Firm52,AR_Data1,AR_Data2,AR_Data3,
 	    ARNewFirm1Name,ARNewFirm2Name,ARNewFirm1RecordType,ARNewFirm2RecordType;
-	    
-	    
 	    public static String ARUpdated1Name,ARUpdated2Name,ARUpdated3Name,ARUpdated4Name;
+	   
 	    public static String ARFieldName1,ARValue1,ARNewValue1,ARFieldName2,ARValue2,ARNewValue2,ARFieldName3,ARValue3,ARNewValue3,ARFieldName4,ARValue4,ARNewValue4,ARFieldName5,ARValue5,ARNewValue5,
 	    ARFieldName6,ARValue6,ARNewValue6,ARFieldName7,ARValue7,ARNewValue7,ARFieldName8,ARValue8,ARNewValue8,ARFieldName9,ARValue9,ARNewValue9;
 	    
@@ -8645,7 +8644,8 @@ public class CommonVariables {
 					ARNewValue9=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "Cust_9", excelLabel.New_Value);
 					
 					AR_Firm1Name = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Firm",excelLabel.Variable_Name, "AR_Firm1", excelLabel.Legal_Name);
-					AR_Contact1Name = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AR_Contact1", excelLabel.ContactName);
+					AR_Contact1FirstName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AR_Contact1", excelLabel.Contact_FirstName);
+					AR_Contact1LastName = ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Contact",excelLabel.Variable_Name, "AR_Contact1", excelLabel.Contact_LastName);
 					try {
 						dataFile=new FileInputStream(new File(ResearchDataSheetFilePath));
 					} catch (FileNotFoundException e1) {
