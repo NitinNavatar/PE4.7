@@ -8550,6 +8550,19 @@ public WebElement contactEmailCountAcuity(String contactName, int timeOut) {
 	}
 	
 	
+
+	public WebElement getConnectionIconOfContact(String contactName, int timeOut) {
+
+		String xpath ="//a[text()='"+contactName+"']/ancestor::tr//button[@title='Connections']";
+		try {
+			return FindElement(driver, xpath, "Connection icon of : " + contactName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath,  "Connection icon of : " + contactName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
+	
+	
 	
 	
 
