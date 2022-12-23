@@ -11454,7 +11454,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									2);
 							if (ele == null) {
-								xPath = "//h2[text()='Task']/../..//h2[text()='Task']/../..//*[@title='Tag']";
+								xPath = "//h2[contains(text(),'"+buttonName+"')]/../..//*[@title='Tag']";
 								ele = CommonLib.FindElement(driver, xPath, labelName + " label",
 										action.SCROLLANDBOOLEAN, 30);
 								if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
@@ -11500,7 +11500,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					return false;
 				}
 			}
-
 		}
 		if (advanceSection != null) {
 			if (clickUsingJavaScript(driver, getSectionBtn("Advanced", 30), "Advanced section",
@@ -14343,39 +14342,39 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
-	public ArrayList<String> verifyRecordAndReferencedTypeOnTagged(String[] companyTagName,
-			String[] companyTimesReferenced, String[] peopleTagName, String[] peopleTimesReferenced,
+	public ArrayList<String> verifyRecordAndReferencedTypeOnTagged(String[] firmsTagName,
+			String[] firmTimesReferenced, String[] peopleTagName, String[] peopleTimesReferenced,
 			String[] dealTagName, String[] dealTimesReferenced) {
 		ArrayList<String> result = new ArrayList<String>();
-		if (companyTagName != null && companyTimesReferenced != null) {
-			if (companyTagName.length == companyTimesReferenced.length) {
-				if (click(driver, getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
+		if (firmsTagName != null && firmTimesReferenced != null) {
+			if (firmsTagName.length == firmTimesReferenced.length) {
+				if (click(driver, getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 
-					for (int i = 0; i < companyTagName.length; i++) {
+					for (int i = 0; i < firmsTagName.length; i++) {
 
-						if (getTaggedRecordName("Companies", companyTagName[i], 30) != null) {
-							log(LogStatus.INFO, companyTagName[i] + " record is available on company tab of Tagged",
+						if (getTaggedRecordName("Firms", firmsTagName[i], 30) != null) {
+							log(LogStatus.INFO, firmsTagName[i] + " record is available on firm tab of Tagged",
 									YesNo.No);
-							if (getTaggedRecordTimeReference("Companies", companyTagName[i], companyTimesReferenced[i],
+							if (getTaggedRecordTimeReference("Firms", firmsTagName[i], firmTimesReferenced[i],
 									30) != null) {
 								log(LogStatus.INFO,
-										"Time Reference : " + companyTimesReferenced[i] + " is verified against "
-												+ companyTagName[i] + " record on company tab of Tagged",
+										"Time Reference : " + firmTimesReferenced[i] + " is verified against "
+												+ firmsTagName[i] + " record on firm tab of Tagged",
 										YesNo.No);
 							} else {
 								log(LogStatus.ERROR,
-										"Time Reference : " + companyTimesReferenced[i] + " is not verified against "
-												+ companyTagName[i] + " record on company tab of Tagged",
+										"Time Reference : " + firmTimesReferenced[i] + " is not verified against "
+												+ firmsTagName[i] + " record on firm tab of Tagged",
 										YesNo.No);
-								result.add("Time Reference : " + companyTimesReferenced[i] + " is not verified against "
-										+ companyTagName[i] + " record on company tab of Tagged");
+								result.add("Time Reference : " + firmTimesReferenced[i] + " is not verified against "
+										+ firmsTagName[i] + " record on firm tab of Tagged");
 							}
 
 						} else {
 							log(LogStatus.ERROR,
-									companyTagName[i] + " record is not available on company tab of Tagged", YesNo.No);
-							result.add(companyTagName[i] + " record is not available on company tab of Tagged");
+									firmsTagName[i] + " record is not available on firm tab of Tagged", YesNo.No);
+							result.add(firmsTagName[i] + " record is not available on firm tab of Tagged");
 						}
 
 					}
@@ -14384,9 +14383,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					result.add("Not able to click on Companies tab name");
 				}
 			} else {
-				log(LogStatus.ERROR, "The size of tagged company name and size of tagged time reference is not equal",
+				log(LogStatus.ERROR, "The size of tagged firm name and size of tagged time reference is not equal",
 						YesNo.No);
-				result.add("The size of tagged company name and size of tagged time reference is not equal");
+				result.add("The size of tagged firm name and size of tagged time reference is not equal");
 			}
 		}
 

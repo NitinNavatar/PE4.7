@@ -416,9 +416,16 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String taskStatus=ATE_AdvanceStatus1;
 		String taskPriority=ATE_AdvancePriority1;
 
-		String[] relatedToData=ATE_ARelatedTo1.split("<break>");
-		String[] verifyRelatedToField= {relatedToData[0],crmUser6FirstName+" "+crmUser6LastName,relatedToData[1]};
-		String[] relatedAssociation=ATE_ARelatedAsso1.split("<break>");
+		/*
+		 * String[] relatedToData=ATE_ARelatedTo1.split("<break>"); String[]
+		 * verifyRelatedToField=
+		 * {relatedToData[0],crmUser6FirstName+" "+crmUser6LastName,relatedToData[1]};
+		 * String[] relatedAssociation=ATE_ARelatedAsso1.split("<break>");
+		 */	
+		String[] verifyRelatedToField=null;
+		
+		String[] relatedAssociation=null;
+		
 		
 		String contactSectionName=ATE_ContactName2;
 		String contactSectionTitle=ATE_ContactTitle2;
@@ -441,7 +448,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
 		String[][] advanceSection = { { "Due Date Only", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
-
+        String userName=crmUser6EmailID;
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
 		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null)) {
@@ -534,7 +541,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 		{
 			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
-		}		
+		}	 
+			
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
@@ -569,9 +577,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-					String xPath="//a[text()='"+contactName+"']/ancestor::tr//button[@title='Connections']";
-					WebElement ele=FindElement(driver, xPath, "Connection icon of "+contactName, action.SCROLLANDBOOLEAN, 20);
-					if(click(driver, ele, "Connection icon of "+contactName, action.SCROLLANDBOOLEAN))
+					if(click(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName, action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on Connection icon of "+contactName, YesNo.No);
 
@@ -652,10 +658,12 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String subject=ATE_ATSubject1;
 		String notes=ATE_ATNotes1;
 
-		String[] relatedToData=ATE_ARelatedTo1.split("<break>");
-		String[] relatedTo= {relatedToData[0],crmUser6FirstName+" "+crmUser6LastName,relatedToData[1]};
+		String[] relatedTo=null;
+		String[] relatedAssociation=null;
+	//	String[] relatedToData=ATE_ARelatedTo1.split("<break>");
+	//	String[] relatedTo= {relatedToData[0],crmUser6FirstName+" "+crmUser6LastName,relatedToData[1]};
 
-		String[] relatedAssociation=ATE_ARelatedAsso1.split("<break>");
+	//	String[] relatedAssociation=ATE_ARelatedAsso1.split("<break>");
 
 		ArrayList<String> tabName=new ArrayList<String>();
 		tabName.add("People");
@@ -756,7 +764,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String taskNotes=ATE_ATNotes2;
 		String taskDueDate=ATE_AdvanceDueDate2;
 		String taskPriority=ATE_AdvancePriority2;
-
+		String[] relatedToData=null;
+		String[] relatedAssociation=null;
+/*
 		String[] relatedToData=ATE_ARelatedTo2.split("<break>");
 		String[] relatedAssocVal=ATE_ARelatedAsso2.split("<break>");
 
@@ -768,7 +778,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		{
 			relatedAssociation[i]=relatedAssocVal[i-1];
 		}
-
+*/
 
 		String contactSectionName=ATE_ContactName4;
 		String contactSectionTitle=ATE_ContactTitle4;

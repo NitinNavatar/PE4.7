@@ -7577,7 +7577,8 @@ public abstract class BasePage extends BaseLib {
 	}
 
 	public List<WebElement> listOfColumnsOfSuggestedTags() {
-		return FindElements(driver, "//h2[text()=\"Suggested Tags\"]/ancestor::section//lightning-datatable[@class=\"seletedtag-datatable\"]//table//thead//th[@aria-label]",
+		return FindElements(driver,
+				"//h2[text()=\"Suggested Tags\"]/ancestor::section//lightning-datatable[@class=\"seletedtag-datatable\"]//table//thead//th[@aria-label]",
 				"listOfColumnsOfSuggestedTags");
 	}
 
@@ -8556,6 +8557,17 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getMessageOnInteractionSection(int timeOut) {
 		return isDisplayed(driver, messageOnInteractionSection, "Visibility", timeOut,
 				"message on Interaction section");
+	}
+
+	public WebElement getConnectionIconOfContact(String contactName, int timeOut) {
+
+		String xpath = "//a[text()='" + contactName + "']/ancestor::tr//button[@title='Connections']";
+		try {
+			return FindElement(driver, xpath, "Connection icon of : " + contactName, action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Connection icon of : " + contactName, action.SCROLLANDBOOLEAN, timeOut);
+		}
+
 	}
 
 }
