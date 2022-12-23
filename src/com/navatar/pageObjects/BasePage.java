@@ -3265,7 +3265,7 @@ public abstract class BasePage extends BaseLib {
 	@FindBy(xpath = "//input[@name='save']")
 	private WebElement saveButtonClassic;
 
-	@FindBy(xpath = "//button[@title=\"Save\" or text()=\"Save\"][@name=\"SaveEdit\"]")
+	@FindBy(xpath = "//button[@title='Save' or text()='Save']")
 
 	private WebElement saveButtonLighting;
 
@@ -7759,7 +7759,7 @@ public abstract class BasePage extends BaseLib {
 		}
 	}
 
-	@FindBy(xpath = "//section[contains(@class,\"slds-fade-in-open\")]//div[@class=\"slds-modal__container\"]//h2[contains(text(),\"Task\")]")
+	@FindBy(xpath = "//section[contains(@class,'slds-fade-in-open')]//div[@class='slds-modal__container']//h2")
 	private WebElement notePopUpHeading;
 
 	public WebElement notePopUpHeading() {
@@ -7780,7 +7780,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement notePopUpAddMoreButton(int timeOut) {
 
-		String xpath = "//section[contains(@class,'slds-fade-in-open')]//div[@class='slds-modal__container']//button[text()='Add More']";
+		String xpath = "//section[contains(@class,'slds-fade-in-open')]//div[@class='slds-modal__container']//button[text()='Add more']";
 		try {
 			return FindElement(driver, xpath, "Add More Button", action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
