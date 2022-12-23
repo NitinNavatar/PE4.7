@@ -356,7 +356,7 @@ public class AcuityResearch extends BaseLib{
 			ThreadSleep(2000);
 			clickUsingJavaScript(driver, rp.getResearchButton(10), "Research Button");
 			ThreadSleep(2000);
-			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
 			ThreadSleep(8000);
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue) || searchValue == null) {
@@ -980,7 +980,7 @@ public class AcuityResearch extends BaseLib{
 	NavigationPageBusineesLayer npbl = new NavigationPageBusineesLayer(driver);
 	lp.CRMLogin(superAdminUserName, adminPassword, appName);
 	ThreadSleep(2000);
-	String xpath,ele;
+	String ele;
 	String headerName;
 	ArrayList<String> list=new ArrayList<>();
 	
@@ -994,12 +994,15 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.PASS, "WOrking for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 5)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(5),searchValue, "Input", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(5),searchValue, "Input", action.BOOLEAN)){
 			ThreadSleep(2000);
-			clickUsingJavaScript(driver, rp.getResearchMinimize(5),"Research Button", action.BOOLEAN);
-			ThreadSleep(4000);
+			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
+			ThreadSleep(8000);
+			clickUsingJavaScript(driver, rp.getResearchMinimize(5),"Research Minimize Button", action.BOOLEAN);
+			ThreadSleep(2000);
 			ele = rp.getResearchFindingsValue(10).getText();
-			if (ele.equals(searchValue)) {
+			System.out.println(ele);
+			if (ele.contains(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
 			sa.assertTrue(true, ele +" is matched with " +searchValue);
 			}
@@ -1019,6 +1022,7 @@ public class AcuityResearch extends BaseLib{
 					+ searchValue + "---------",
 			YesNo.No);
 	try{
+		refresh(driver);
 	if(rp.getNoResult(5).getText() != null){
 		log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
 		sa.assertTrue(true, "There is no data retaled to " + searchValue);
@@ -1141,10 +1145,12 @@ public class AcuityResearch extends BaseLib{
 	ThreadSleep(5000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 5)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(5),'"' + updatedname + '"', "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(5),'"' + updatedname + '"', "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
-				clickUsingJavaScript(driver, rp.getResearchMinimize(5),"Research Button", action.BOOLEAN);
-				ThreadSleep(5000);
+				click(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
+				ThreadSleep(8000);
+				clickUsingJavaScript(driver, rp.getResearchMinimize(5),"Research Minimize Button", action.BOOLEAN);
+				ThreadSleep(2000);
 			}
 	   }
 	   
@@ -1198,10 +1204,12 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
-			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
+			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+			ThreadSleep(2000);
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -1323,9 +1331,12 @@ public class AcuityResearch extends BaseLib{
 	ThreadSleep(5000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),'"' + updatedname + '"', "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(10),'"' + updatedname + '"', "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
-				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+				clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
+				ThreadSleep(8000);
+				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+				ThreadSleep(2000);
 			}
 	   }
 	    int gridSize = rp.getElementsFromGrid().size();
@@ -1378,10 +1389,12 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
-			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
+			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+			ThreadSleep(2000);
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -1504,9 +1517,12 @@ public class AcuityResearch extends BaseLib{
 	ThreadSleep(5000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),'"' + updatedname + '"', "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(10),'"' + updatedname + '"', "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
-				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+				clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
+				ThreadSleep(8000);
+				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+				ThreadSleep(2000);
 			}
 	   }
 	    int gridSize = rp.getElementsFromGrid().size();
@@ -1556,10 +1572,12 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
-			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
+			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+			ThreadSleep(2000);
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -1677,9 +1695,12 @@ public class AcuityResearch extends BaseLib{
 	ThreadSleep(5000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),'"' + updatedname +'"', "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(10),'"' + updatedname +'"', "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
-				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+				clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
+				ThreadSleep(8000);
+				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+				ThreadSleep(2000);
 			}
 	   }
 	    int gridSize = rp.getElementsFromGrid().size();
@@ -1728,10 +1749,12 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
-			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
+			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+			ThreadSleep(2000);
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -1849,9 +1872,12 @@ public class AcuityResearch extends BaseLib{
 	ThreadSleep(5000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),'"' + updatedname + '"', "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(10),'"' + updatedname + '"', "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
-				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+				clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
+				ThreadSleep(8000);
+				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+				ThreadSleep(2000);
 			}
 	   }
 	    int gridSize = rp.getElementsFromGrid().size();
@@ -1900,10 +1926,12 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
-			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
+			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+			ThreadSleep(2000);
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -2022,9 +2050,12 @@ public class AcuityResearch extends BaseLib{
 	ThreadSleep(5000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),'"' + updatedname + '"', "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(10),'"' + updatedname + '"', "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
-				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+				clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
+				ThreadSleep(8000);
+				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+				ThreadSleep(2000);
 			}
 	   }
 	    int gridSize = rp.getElementsFromGrid().size();
@@ -2073,10 +2104,12 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
-			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
+			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+			ThreadSleep(2000);
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -2194,9 +2227,12 @@ public class AcuityResearch extends BaseLib{
 	ThreadSleep(5000);
 	   if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),'"' + updatedname + '"', "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(10),'"' + updatedname + '"', "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
-				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+				clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
+				ThreadSleep(8000);
+				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+				ThreadSleep(2000);
 			}
 	   }
 	    int gridSize = rp.getElementsFromGrid().size();
@@ -2252,10 +2288,12 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.PASS, "WOrking for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
-			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
-			ThreadSleep(4000);
+			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
+			ThreadSleep(8000);
+			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+			ThreadSleep(2000);
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -2345,10 +2383,12 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
-				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+				clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 				ThreadSleep(8000);
+				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+				ThreadSleep(2000);
 				ele = rp.getResearchFindingsValue(10).getText();
 				if (ele.equals(searchValue)) {
 				log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -2782,10 +2822,12 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
-			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
+			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+			ThreadSleep(2000);
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -2902,10 +2944,12 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
-			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
+			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+			ThreadSleep(2000);
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -3207,10 +3251,12 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
-			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
-			ThreadSleep(4000);
+			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
+			ThreadSleep(8000);
+			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+			ThreadSleep(2000);
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -3512,10 +3558,12 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
-			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
+			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+			ThreadSleep(2000);
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -3860,10 +3908,12 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
-			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
+			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+			ThreadSleep(2000);
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -4018,10 +4068,12 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
-			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
+			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+			ThreadSleep(2000);
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -4152,10 +4204,12 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
-			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
+			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+			ThreadSleep(2000);
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -4285,10 +4339,12 @@ public class AcuityResearch extends BaseLib{
 		log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 	if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 		log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-		if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+		if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 			ThreadSleep(2000);
-			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+			clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 			ThreadSleep(8000);
+			clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+			ThreadSleep(2000);
 			ele = rp.getResearchFindingsValue(10).getText();
 			if (ele.equals(searchValue)) {
 			log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -4445,10 +4501,12 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
-				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+				clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 				ThreadSleep(8000);
+				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+				ThreadSleep(2000);
 				ele = rp.getResearchFindingsValue(10).getText();
 				if (ele.equals(searchValue)) {
 				log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -4555,10 +4613,12 @@ public class AcuityResearch extends BaseLib{
 				log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-				if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+				if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 					ThreadSleep(2000);
-					clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+					clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 					ThreadSleep(8000);
+					clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+					ThreadSleep(2000);
 					ele = rp.getResearchFindingsValue(10).getText();
 					if (ele.equals(searchValue)) {
 					log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -4742,10 +4802,12 @@ public class AcuityResearch extends BaseLib{
 				log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-				if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+				if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 					ThreadSleep(2000);
-					clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+					clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 					ThreadSleep(8000);
+					clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+					ThreadSleep(2000);
 					ele = rp.getResearchFindingsValue(10).getText();
 					if (ele.equals(searchValue)) {
 					log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -4967,10 +5029,12 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
-				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+				clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 				ThreadSleep(8000);
+				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+				ThreadSleep(2000);
 				ele = rp.getResearchFindingsValue(10).getText();
 				if (ele.equals(searchValue)) {
 				log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -5195,10 +5259,12 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
-				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+				clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 				ThreadSleep(8000);
+				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+				ThreadSleep(2000);
 				ele = rp.getResearchFindingsValue(10).getText();
 				if (ele.equals(searchValue)) {
 				log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -5314,10 +5380,12 @@ public class AcuityResearch extends BaseLib{
 				log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-				if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+				if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 					ThreadSleep(2000);
-					clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+					clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 					ThreadSleep(8000);
+					clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+					ThreadSleep(2000);
 					ele = rp.getResearchFindingsValue(10).getText();
 					if (ele.equals(searchValue)) {
 					log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -5563,10 +5631,12 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
-				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+				clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 				ThreadSleep(8000);
+				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+				ThreadSleep(2000);
 				ele = rp.getResearchFindingsValue(10).getText();
 				if (ele.equals(searchValue)) {
 				log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -5810,10 +5880,12 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
-				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+				clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 				ThreadSleep(8000);
+				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+				ThreadSleep(2000);
 				ele = rp.getResearchFindingsValue(10).getText();
 				if (ele.equals(searchValue)) {
 				log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -6058,10 +6130,12 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
-				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+				clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 				ThreadSleep(8000);
+				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+				ThreadSleep(2000);
 				ele = rp.getResearchFindingsValue(10).getText();
 				if (ele.equals(searchValue)) {
 				log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -6380,10 +6454,12 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
-				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+				clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 				ThreadSleep(8000);
+				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+				ThreadSleep(2000);
 				ele = rp.getResearchFindingsValue(10).getText();
 				if (ele.equals(searchValue)) {
 				log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -6527,10 +6603,12 @@ public class AcuityResearch extends BaseLib{
 				log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-				if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+				if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 					ThreadSleep(2000);
-					clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+					clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 					ThreadSleep(8000);
+					clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+					ThreadSleep(2000);
 				String ele = rp.getResearchFindingsValue(10).getText();
 					if (ele.equals(searchValue)) {
 					log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -6674,10 +6752,12 @@ public class AcuityResearch extends BaseLib{
 				log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-				if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+				if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 					ThreadSleep(2000);
-					clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+					clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 					ThreadSleep(8000);
+					clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+					ThreadSleep(2000);
 				String ele = rp.getResearchFindingsValue(10).getText();
 					if (ele.equals(searchValue)) {
 					log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -6820,10 +6900,12 @@ public class AcuityResearch extends BaseLib{
 				log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-				if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+				if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 					ThreadSleep(2000);
-					clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+					clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 					ThreadSleep(8000);
+					clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+					ThreadSleep(2000);
 				String ele = rp.getResearchFindingsValue(10).getText();
 					if (ele.equals(searchValue)) {
 					log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -6966,10 +7048,12 @@ public class AcuityResearch extends BaseLib{
 				log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-				if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+				if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 					ThreadSleep(2000);
-					clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+					clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 					ThreadSleep(8000);
+					clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+					ThreadSleep(2000);
 				String ele = rp.getResearchFindingsValue(10).getText();
 					if (ele.equals(searchValue)) {
 					log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -7112,10 +7196,12 @@ public class AcuityResearch extends BaseLib{
 				log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-				if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+				if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 					ThreadSleep(2000);
-					clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+					clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 					ThreadSleep(8000);
+					clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+					ThreadSleep(2000);
 				String ele = rp.getResearchFindingsValue(10).getText();
 					if (ele.equals(searchValue)) {
 					log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -7259,10 +7345,12 @@ public class AcuityResearch extends BaseLib{
 				log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 				log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-				if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+				if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 					ThreadSleep(2000);
-					clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+					clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 					ThreadSleep(8000);
+					clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+					ThreadSleep(2000);
 				String ele = rp.getResearchFindingsValue(10).getText();
 					if (ele.equals(searchValue)) {
 					log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
@@ -7368,10 +7456,12 @@ public class AcuityResearch extends BaseLib{
 			log(LogStatus.PASS, "Working for " + searchValue, YesNo.Yes);
 		if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, navigationMenuName, action.BOOLEAN, 10)) {
 			log(LogStatus.INFO, "Able to Click on "+navigationMenuName, YesNo.No);
-			if(sendKeysAndPressEnter(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
+			if(sendKeys(driver, rp.getTextAreaResearch(10),searchValue, "Research Input Field", action.BOOLEAN)){
 				ThreadSleep(2000);
-				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Button", action.BOOLEAN);
+				clickUsingJavaScript(driver, rp.getResearchButton(10),"Research Button", action.BOOLEAN);
 				ThreadSleep(8000);
+				clickUsingJavaScript(driver, rp.getResearchMinimize(10),"Research Minimum Button", action.BOOLEAN);
+				ThreadSleep(2000);
 				ele = rp.getResearchFindingsValue(10).getText();
 				if (ele.equals(searchValue)) {
 				log(LogStatus.PASS, ele +" is matched with " +searchValue, YesNo.Yes);
