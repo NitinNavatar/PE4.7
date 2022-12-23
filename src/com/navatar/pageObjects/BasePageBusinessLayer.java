@@ -3669,7 +3669,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 */
 	public WebElement commonInputElement(String projectName, String labelName, action action, int timeOut) {
 		labelName = labelName.replace("_", " ");
-		String xpath = "(//*[text()='" + labelName + "']//following-sibling::div//input)[2]";
+		String xpath = "//section[contains(@class,'active')]//label[text()='" + labelName + "']//following-sibling::div//input";
 		WebElement ele = FindElement(driver, xpath, labelName + " TextBox", action, timeOut);
 		ele = isDisplayed(driver, ele, "Visibility", timeOut, labelName + " TextBox");
 		return ele;

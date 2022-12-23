@@ -1648,7 +1648,7 @@ public static enum PermissionType{
 				return "Research";	
 			
 			}
-    	}
+    	}, Navatar_Research
 
     };
     
