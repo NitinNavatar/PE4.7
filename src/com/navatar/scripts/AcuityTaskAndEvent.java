@@ -820,11 +820,11 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String[][] advanceSection = { { "Due Date Only", taskDueDate }, {"Priority", taskPriority} };
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
-
+/*
 		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
-
+*/
 			if (lp.clickOnTab(projectName, tabObj1)) {
 
 				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
@@ -899,18 +899,18 @@ public class AcuityTaskAndEvent extends BaseLib {
 							sa.assertTrue(false,  "page is not redirecting to the "+ taskSubject+ " page on new tab");
 						}
 						refresh(driver);
+						ThreadSleep(4000);
 
-						String xPath="//a[text()='"+contactSectionName1+"']/ancestor::tr/td[@data-label='Meetings and Calls']//button";
-						WebElement ele=FindElement(driver, xPath, "Meeting and call", action.SCROLLANDBOOLEAN, 30);
-						if(click(driver, ele, "Meeting and call", action.SCROLLANDBOOLEAN))
+						if(click(driver, bp.getMeetingAndCallCount(contactSectionName1, 20), "Meeting and call", action.SCROLLANDBOOLEAN))
 						{
-							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName1+" record on contact section",	YesNo.No);		
-							xPath="//h2[contains(text(),'Meetings and Calls')]/../following-sibling::div//p[text()='No item display']";
-							ele=FindElement(driver, xPath, "Message on Meeting and notes popup", action.SCROLLANDBOOLEAN, 20);
+							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName1+" record on contact section",YesNo.No);
+							String parentID=switchOnWindow(driver);
+						   String xPath="//p[contains(@class,'nodata-popup') and text()='No items to display']";
+						   WebElement ele=FindElement(driver, xPath, "Message on Meeting and notes popup", action.SCROLLANDBOOLEAN, 20);
 							if(ele!=null)
 							{
-								log(LogStatus.INFO, "Message : \"No items to display\" have been verified on meetings and notes popup",	YesNo.No);		
-								sa.assertTrue(true,  "Message : \"No items to display\" have been verified on meetings and notes popup");
+								log(LogStatus.INFO, "Message : \"No items to display\" have been verified.",	YesNo.No);		
+								sa.assertTrue(true,  "Message : \"No items to display\" have been verified.");
 
 							}
 							else
@@ -918,6 +918,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Message : \"No items to display\" is not verified on meetings and notes popup",	YesNo.No);		
 								sa.assertTrue(false,  "Message : \"No items to display\" is not verified on meetings and notes popup");
 							}
+							driver.close();
+							driver.switchTo().window(parentID);
 						}
 						else
 						{
@@ -944,17 +946,15 @@ public class AcuityTaskAndEvent extends BaseLib {
 				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
 			}
 
-		}
+/*		}
 		else
 		{
 			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
-		}	
+		}	 */
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -980,9 +980,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String contactSectionMeetingAndCalls=ATE_ContactMeetingAndCall4;
 		String contactSectionEmail=ATE_ContactEmail4;
 
-
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
-
+		
 		if (lp.clickOnTab(projectName, tabObj1)) {
 
 			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
@@ -997,21 +996,15 @@ public class AcuityTaskAndEvent extends BaseLib {
 					if(!bp.verifyViewAllButtonOnIntractionCard(20))
 					{
 						log(LogStatus.INFO, "View all button is not visible on interaction section", YesNo.No);
-
-
 						ArrayList<String> result=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, userName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
 						if(result.isEmpty())
 						{
 							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
 
-							xPath="//a[text()='"+contactSectionName+"']/ancestor::tr/td[@data-col-key-value='1-button-1']//button";
-							ele=FindElement(driver, xPath, contactSectionName+" connection icon", action.SCROLLANDBOOLEAN, 20);
-							if(click(driver, ele, contactSectionName+" Connection icon", action.SCROLLANDBOOLEAN))
+							if(click(driver, bp.getConnectionIconOfContact(contactSectionName, 20), contactSectionName+" Connection icon", action.SCROLLANDBOOLEAN))
 							{
 								log(LogStatus.INFO, "Clicked on connection icon of "+contactSectionName, YesNo.No);
-
-
-								xPath="//h2[contains(text(),'Connections of')]/../following-sibling::div//th[@data-label='Team Member']//a[text()='"+userName+"']";
+/*								xPath="//h2[contains(text(),'Connections of')]/../following-sibling::div//th[@data-label='Team Member']//a[text()='"+userName+"']";
 								ele=FindElement(driver, xPath, userName+" user", action.SCROLLANDBOOLEAN, 20);
 								ThreadSleep(2000);
 								if(CommonLib.clickUsingJavaScript(driver, ele, userName+" user", action.SCROLLANDBOOLEAN))
@@ -1038,10 +1031,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 												driver.switchTo().window(id);
 										  }
 									}
-									
-									xPath="//a[text()='"+userName+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-									ele=FindElement(driver, xPath, "meeting and call count of "+userName, action.SCROLLANDBOOLEAN, 20);
-									if(click(driver, ele, contactSectionEmail, action.SCROLLANDBOOLEAN))
+*/									String parntID=switchOnWindow(driver);
+									if(click(driver, bp.getMeetingAndCallCount(userName, 20), contactSectionEmail, action.SCROLLANDBOOLEAN))
 									{
 										log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName, YesNo.No);
 
@@ -1062,14 +1053,16 @@ public class AcuityTaskAndEvent extends BaseLib {
 										log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName, YesNo.No);
 										sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName);
 									}
+									driver.close();
+									driver.switchTo().window(parntID);
 									
-								}
+/*								}
 								else
 								{
 									log(LogStatus.ERROR, "Not able to click on user's name", YesNo.No);
 									sa.assertTrue(false, "Not able to click on user's name");
 								}
-
+*/
 							}
 							else
 							{
@@ -1089,7 +1082,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "View all button is visible on interaction section", YesNo.No);
 						sa.assertTrue(false,  "View all button is visible on interaction section");
 					}
-
 				}
 				else
 				{
@@ -1112,8 +1104,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -1196,7 +1186,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,taskSubject + " record is not verified on intraction. "+result);
 					}
 
-					if(!bp.verifyViewAllButtonOnIntractionCard(20))
+					if(!bp.verifyViewAllButtonOnIntractionCard(10))
 					{
 						log(LogStatus.INFO, "View all button is not visible on interaction section", YesNo.No);
 					}
@@ -1250,9 +1240,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "page is not redirecting to the "+ taskSubject+ " page on new tab");
 					}						
 
-					xPath="//a[text()='"+userName+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-					ele=FindElement(driver, xPath, "meeting and call count of "+userName, action.SCROLLANDBOOLEAN, 20);
-					if(click(driver, ele, recordName, action.SCROLLANDBOOLEAN))
+					if(click(driver, bp.getMeetingAndCallCount(userName, 20), recordName, action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName, YesNo.No);
 
