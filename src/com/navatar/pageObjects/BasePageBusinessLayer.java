@@ -12948,7 +12948,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						xPath = "//input[@placeholder='Search Firm, People or Deals']";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 2);
 						if (ele == null) {
-							xPath = "//h2[text()='Task']/../..//*[@title='Tag']";
+							xPath = "//lightning-icon[@title=\"Tag\" and contains(@class,'mt15')]//lightning-primitive-icon";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									30);
 							if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
@@ -13002,8 +13002,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					// String fieldType=val[2];
 
 					if (labelName.contains("Start Date")) {
-						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='Start Date Time']/..//label[text()='Date']/..//input";
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='Start']/..//label[text()='Date']/..//input";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						ele.sendKeys(Keys.CONTROL+"A");
+						ele.sendKeys(Keys.BACK_SPACE);
 						if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
 						} else {
@@ -13012,8 +13014,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							return false;
 						}
 					} else if (labelName.contains("Start Time")) {
-						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='Start Date Time']/..//label[text()='Time']/..//input";
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='Start']/..//label[text()='Time']/..//input";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						ele.sendKeys(Keys.CONTROL+"A");
+						ele.sendKeys(Keys.BACK_SPACE);
 						if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
 						} else {
@@ -13023,8 +13027,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 
 					} else if (labelName.contains("End Date")) {
-						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='End Date Time']/..//label[text()='Date']/..//input";
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='End']/..//label[text()='Date']/..//input";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						ele.sendKeys(Keys.CONTROL+"A");
+						ele.sendKeys(Keys.BACK_SPACE);
 						if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
 						} else {
@@ -13034,8 +13040,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 
 					} else if (labelName.contains("End Time")) {
-						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='End Date Time']/..//label[text()='Time']/..//input";
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='End']/..//label[text()='Time']/..//input";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						ele.sendKeys(Keys.CONTROL+"A");
+						ele.sendKeys(Keys.BACK_SPACE);
 						if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
 						} else {
@@ -13573,7 +13581,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					xPath = "//button[text()='"+subjectName+"']/ancestor::td[@data-label='Subject']/../th[@data-label='Type']//lightning-icon";
 					ele = FindElement(driver, xPath, "Icon type", action.SCROLLANDBOOLEAN, 20);
 					String iconName = getAttribute(driver, ele, "Icon type", "class");
-					if (iconName.toString().contains(icon)) {
+					if (iconName.toString().toLowerCase().contains(icon.toLowerCase())) {
 						log(LogStatus.INFO, icon + " icon has been verified against " + subjectName
 								+ " on Meetings and Calls popup", YesNo.No);
 
@@ -14539,12 +14547,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String xPath;
 		WebElement ele;
 		ArrayList<String> result = new ArrayList<String>();
+		String parentId=switchOnWindow(driver);
+		if(parentId!=null)
+		{
 		if (correspondenceHeader != null && correspondenceHeader.length != 0) {
 			for (int i = 0; i < correspondenceHeader.length; i++) {
 
 				if (icon[i] != null && icon.length != 0 && icon[i].toString() != "") {
-					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
-							+ correspondenceHeader[i] + "']/ancestor::tr//th[@data-label='Type']//lightning-icon";
+					xPath = "//button[text()='"+correspondenceHeader[i]+"']/ancestor::tr//th[@data-label='Type']//lightning-icon";
 					ele = FindElement(driver, xPath, "Icon type of " + correspondenceHeader[i], action.SCROLLANDBOOLEAN,
 							20);
 					String iconVal = getAttribute(driver, ele, "Icon type", "class");
@@ -14560,9 +14570,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				}
 
 				if (date != null && date.length != 0 && date[i] != "" && date[i] != null) {
-					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
-							+ correspondenceHeader[i]
-							+ "']/ancestor::tr//td[@data-label='Date']//lightning-base-formatted-text";
+					xPath = "//button[text()='"+correspondenceHeader[i]+"']/ancestor::tr//td[@data-label='Date']//lightning-base-formatted-text";
 					ele = FindElement(driver, xPath, "date ", action.BOOLEAN, 25);
 					String actDate = getText(driver, ele, "date ", action.BOOLEAN);
 
@@ -14610,8 +14618,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 				}
 				if (subject != null && subject.length != 0 && subject[i] != "" && subject[i] != null) {
-					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
-							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Subject']//a";
+					xPath = "//tr//td[@data-label='Subject']//button[text()='"+correspondenceHeader[i]+"']";
 					ele = FindElement(driver, xPath, "subject ", action.BOOLEAN, 25);
 					String actSubject = getText(driver, ele, "subject ", action.BOOLEAN);
 					if (subject[i].equalsIgnoreCase(actSubject)) {
@@ -14625,8 +14632,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 				}
 				if (details != null && details.length != 0 && details[i] != "" && details[i] != null) {
-					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
-							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Details']//button";
+					xPath = "//button[text()='"+correspondenceHeader[i]+"']/ancestor::tr//td[@data-label='Details']//button";
 					ele = FindElement(driver, xPath, "details ", action.BOOLEAN, 25);
 					String actDetails = getText(driver, ele, "details ", action.BOOLEAN);
 					if (actDetails.equalsIgnoreCase(details[i])) {
@@ -14639,7 +14645,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								+ details[i]);
 					}
 				}
-				if (assignedTo != null && assignedTo.length != 0 && assignedTo[i] != "" && assignedTo[i] != null) {
+	/*			if (assignedTo != null && assignedTo.length != 0 && assignedTo[i] != "" && assignedTo[i] != null) {
 					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
 							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Assigned To']//a";
 					ele = FindElement(driver, xPath, "assigned to ", action.BOOLEAN, 25);
@@ -14657,7 +14663,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						result.add("actual AssignedTo value : " + actAssigned
 								+ " is not matched with the Expected AssignedTo value : " + assignedTo[i]);
 					}
-				}
+				} */
 			}
 		} else {
 			log(LogStatus.ERROR,
@@ -14666,6 +14672,18 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			result.add(
 					"Either correspondence is null or Empty. Please provide data to verify data on interaction popup");
 		}
+		driver.close();
+		driver.switchTo().window(parentId);
+		}
+		else
+		{
+			log(LogStatus.ERROR,
+					"New tab did not open after click",
+					YesNo.No);
+			result.add(
+					"New tab did not open after click");
+		}
+		
 		return result;
 	}
 
