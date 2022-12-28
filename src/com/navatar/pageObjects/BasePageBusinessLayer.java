@@ -12185,8 +12185,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			if (npbl.createNavPopUpMinimizeButton(5) != null) {
 				CommonLib.click(driver, npbl.createNavPopUpMinimizeButton(5), "Minimize", action.BOOLEAN);
 			}
-			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, NavigationMenuItems.Research.toString(),
-					action.BOOLEAN, 30)) {
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, NavigationMenuItems.Navatar_Research.toString().replace("_", " "),action.BOOLEAN, 30)) {
 				log(LogStatus.INFO, "Able to Click on Research Going to click on : "
 						+ NavigationMenuItems.Research.toString() + " for Research an Item", YesNo.No);
 
