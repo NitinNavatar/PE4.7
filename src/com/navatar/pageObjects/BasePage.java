@@ -6883,7 +6883,7 @@ public abstract class BasePage extends BaseLib {
 
 	}
 
-	@FindBy(xpath = "//span[text()='Notes']/ancestor::div[@aria-label='Notes']//lightning-formatted-rich-text/span")
+	@FindBy(xpath = "//div[label[text()='Notes']]//textarea")
 	private WebElement notesText;
 
 	public WebElement getNotesText(int timeOut) {
@@ -7588,7 +7588,7 @@ public abstract class BasePage extends BaseLib {
 		return FindElements(driver, "//section//footer//button", "suggestedTagFooterButtons");
 	}
 
-	@FindBy(xpath = "//div[contains(@id,'modal-content')]//div//thead//th//input")
+	@FindBy(xpath = "//h2[text()=\"Suggested Tags\"]/parent::header/following-sibling::div//tr/th//input[@class=\"datatable-select-all\"]")
 	private WebElement suggestedTagsCheckBoxAllInput;
 
 	public WebElement suggestedTagsCheckBoxAllInput() {
@@ -7945,6 +7945,8 @@ public abstract class BasePage extends BaseLib {
 			return isDisplayed(driver, ele, "Visibility", timeOut, popupName + " close button");
 		}
 	}
+	
+	
 
 	public List<String> acuityViewAllPopUpIcons() {
 		return FindElements(driver,
