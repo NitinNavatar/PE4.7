@@ -14323,7 +14323,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 		if (FundraisngSectionHeaderMessage != null && !"".equals(FundraisngSectionHeaderMessage)) {
-			xPath = "//span[@title='Fundraisings']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//div[text()='"
+			xPath = "//span[@title='Fundraisings']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//p[text()='"
 					+ FundraisngSectionHeaderMessage + "']";
 			ele = FindElement(driver, xPath, "Message on Fundraisisng section", action.SCROLLANDBOOLEAN, 15);
 			if (ele != null) {
@@ -20153,13 +20153,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		ArrayList<String> result = new ArrayList<String>();
 
-		if (click(driver, getTaggedRecordName(TaggedName.Companies.toString(), 30),
-				TaggedName.Companies.toString() + " tab", action.SCROLLANDBOOLEAN)) {
-			log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
+		if (click(driver, getTaggedRecordName(TaggedName.Firms.toString(), 30),
+				TaggedName.Firms.toString() + " tab", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 			ThreadSleep(5000);
-			if (CommonLib.clickUsingJavaScript(driver, recordsNameOnTaggedSection(TaggedName.Companies.toString(), 30),
-					"Records on Company Tagged", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on record on Companies tab", YesNo.No);
+			if (CommonLib.clickUsingJavaScript(driver, recordsNameOnTaggedSection(TaggedName.Firms.toString(), 30),
+					"Records on firm Tagged", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on record on firm tab", YesNo.No);
 
 				String id = switchOnWindow(driver);
 				if (id != null) {
@@ -20179,13 +20179,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				}
 
 			} else {
-				log(LogStatus.ERROR, "Not able to click on record on Companies tab", YesNo.No);
-				result.add("Not able to click on record on Companies tab");
+				log(LogStatus.ERROR, "Not able to click on record on firm tab", YesNo.No);
+				result.add("Not able to click on record on firm tab");
 			}
 
 		} else {
-			log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-			result.add("Not able to click on Companies tab name");
+			log(LogStatus.ERROR, "Not able to click on firm tab name", YesNo.No);
+			result.add("Not able to click on firm tab name");
 		}
 
 		if (click(driver, getTaggedRecordName(TaggedName.People.toString(), 30), TaggedName.People.toString() + " tab",

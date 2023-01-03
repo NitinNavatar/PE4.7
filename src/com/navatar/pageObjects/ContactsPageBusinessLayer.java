@@ -787,50 +787,50 @@ public class ContactsPageBusinessLayer extends ContactsPage implements ContactPa
 							}
 
 						} else {
-//							if (projectName.equalsIgnoreCase(Mode.Lightning.toString())) {
-//								ThreadSleep(2000);
-//								refresh(driver);
-//								ThreadSleep(5000);
-//							}
+							if (projectName.equalsIgnoreCase(Mode.Lightning.toString())) {
+								ThreadSleep(2000);
+								refresh(driver);
+								ThreadSleep(5000);
+							}
 //							ele = getRelatedTab(projectName, RelatedTab.Details.toString(), 10);
 //							click(driver, ele, RelatedTab.Details.toString(), action.SCROLLANDBOOLEAN);
-//
-//							ele = isDisplayed(driver, FindElement(driver,
-//									"//*[text()='Contact']/following-sibling::*//*[text()='" + contactFirstName + " "
-//											+ contactLastName + "']",
-//									"Contact Name Text", action.SCROLLANDBOOLEAN, 30), "visibility", 20, "");
-//
-//							if (ele != null) {
-//
-//								String contactFullName = getText(driver, ele, "Contact Name", action.SCROLLANDBOOLEAN);
-//								System.err.println("Contact Name : " + contactFullName);
-//								if (contactFullName.contains(contactFirstName + " " + contactLastName)) {
-//									appLog.info("Contact Created Successfully :" + contactFirstName + " "
-//											+ contactLastName);
-//									ThreadSleep(5000);
-//									if (labelNames != null && labelValue != null) {
-//										for (int i = 0; i < labelNames.length; i++) {
-//											if (fieldValueVerificationOnContactPage(projectName, null,
-//													labelNames[i].replace("_", " ").trim(), labelValue[i])) {
-//												appLog.info(labelNames[i] + " label value " + labelValue[i]
-//														+ " is matched successfully.");
-//											} else {
-//												appLog.info(labelNames[i] + " label value " + labelValue[i]
-//														+ " is not matched successfully.");
-//												BaseLib.sa.assertTrue(false, labelNames[i] + " label value "
-//														+ labelValue[i] + " is not matched.");
-//											}
-//										}
-//									}
-//									return true;
-//								} else {
-//									appLog.error("Contact did not get created successfully :" + contactFirstName + " "
-//											+ contactLastName);
-//								}
-//							} else {
-//								appLog.error("Not able to find contact name label");
-//							}
-//
+
+							ele = isDisplayed(driver, FindElement(driver,
+									"//*[text()='Contact']/following-sibling::*//*[text()='" + contactFirstName + " "
+											+ contactLastName + "']",
+									"Contact Name Text", action.SCROLLANDBOOLEAN, 30), "visibility", 20, "");
+
+							if (ele != null) {
+
+								String contactFullName = getText(driver, ele, "Contact Name", action.SCROLLANDBOOLEAN);
+								System.err.println("Contact Name : " + contactFullName);
+								if (contactFullName.contains(contactFirstName + " " + contactLastName)) {
+									appLog.info("Contact Created Successfully :" + contactFirstName + " "
+											+ contactLastName);
+									ThreadSleep(5000);
+									if (labelNames != null && labelValue != null) {
+										for (int i = 0; i < labelNames.length; i++) {
+											if (fieldValueVerificationOnContactPage(projectName, null,
+													labelNames[i].replace("_", " ").trim(), labelValue[i])) {
+												appLog.info(labelNames[i] + " label value " + labelValue[i]
+														+ " is matched successfully.");
+											} else {
+												appLog.info(labelNames[i] + " label value " + labelValue[i]
+														+ " is not matched successfully.");
+												BaseLib.sa.assertTrue(false, labelNames[i] + " label value "
+														+ labelValue[i] + " is not matched.");
+											}
+										}
+									}
+									return true;
+								} else {
+									appLog.error("Contact did not get created successfully :" + contactFirstName + " "
+											+ contactLastName);
+								}
+							} else {
+								appLog.error("Not able to find contact name label");
+							}
+
 					}
 
 					} else {

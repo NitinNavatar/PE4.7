@@ -1871,6 +1871,6 @@ public static enum PermissionType{
     }
     
     public static enum TaggedName{
-    	Companies,People,Deals;  		
+    	Companies,People,Deals,Firms;  		
     }
 }
