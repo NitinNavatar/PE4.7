@@ -803,53 +803,87 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								log(LogStatus.INFO, "Updated Comment of Task: " + task1SubjectName + " verified: "
 										+ updatedCommentOfTask, YesNo.No);
 
-								CommonLib.refresh(driver);
-								ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(getAdvanceDueDate,
-										null, task1SubjectName, updatedCommentOfTask, true, false, relatedToVerify,
-										null);
-								if (updatedresult.isEmpty()) {
-									log(LogStatus.PASS, "------" + task1SubjectName
-											+ " record has been verified on intraction------", YesNo.No);
+								if (lp.clickOnTab(projectName, tabObj1)) {
 
-									String url2 = getURL(driver, 10);
+									log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-									if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
-											"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
-										log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+									if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+											recordType, recordName, 30)) {
+										log(LogStatus.INFO,
+												recordName + " record of record type " + recordType + " has been open",
+												YesNo.No);
+										ThreadSleep(4000);
+										if (BP.clicktabOnPage("Acuity")) {
+											log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-										ThreadSleep(10000);
-										ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
-												.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
-														task1BasicSectionVerification, task1AdvancedSection, null);
-										if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
-											log(LogStatus.INFO,
-													"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
-													YesNo.No);
+											CommonLib.refresh(driver);
+											ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(
+													getAdvanceDueDate, null, task1SubjectName, updatedCommentOfTask,
+													true, false, relatedToVerify, null);
+											if (updatedresult.isEmpty()) {
+												log(LogStatus.PASS,
+														"------" + task1SubjectName
+																+ " record has been verified on intraction------",
+														YesNo.No);
+
+												String url2 = getURL(driver, 10);
+
+												if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+														"Edit Note Button of: " + task1SubjectName,
+														action.SCROLLANDBOOLEAN)) {
+													log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
+
+													ThreadSleep(10000);
+													ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
+															.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
+																	task1BasicSectionVerification, task1AdvancedSection,
+																	null);
+													if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
+														log(LogStatus.INFO,
+																"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+																YesNo.No);
+
+													} else {
+														log(LogStatus.ERROR,
+																"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																		+ NotesPopUpPrefilledNegativeResultUpdated,
+																YesNo.No);
+														sa.assertTrue(false,
+																"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																		+ NotesPopUpPrefilledNegativeResultUpdated);
+													}
+												} else {
+													log(LogStatus.ERROR, "Not able to click on Edit Note button",
+															YesNo.No);
+													sa.assertTrue(false, "Not able to click on Edit Note button");
+												}
+
+											} else {
+												log(LogStatus.ERROR,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------",
+														YesNo.No);
+												sa.assertTrue(false,
+														"------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------");
+											}
 
 										} else {
-											log(LogStatus.ERROR,
-													"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
-															+ NotesPopUpPrefilledNegativeResultUpdated,
-													YesNo.No);
-											sa.assertTrue(false,
-													"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
-															+ NotesPopUpPrefilledNegativeResultUpdated);
+											log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
+											sa.assertTrue(false, "Not able to click on Acuity Tab");
 										}
-									} else {
-										log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
-										sa.assertTrue(false, "Not able to click on Edit Note button");
-									}
 
+									} else {
+										log(LogStatus.ERROR, "Not able to open " + recordName
+												+ " record of record type " + recordType, YesNo.No);
+										sa.assertTrue(false, "Not able to open " + recordName
+												+ " record of record type " + recordType);
+									}
 								} else {
-									log(LogStatus.ERROR,
-											"------" + task1SubjectName
-													+ " record is not verified on intraction, Reason: " + updatedresult
-													+ "------",
-											YesNo.No);
-									sa.assertTrue(false,
-											"------" + task1SubjectName
-													+ " record is not verified on intraction, Reason: " + updatedresult
-													+ "------");
+									log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj1, YesNo.No);
+									sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 								}
 
 							} else {
@@ -1685,7 +1719,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 									String url = getURL(driver, 10);
 
-									ThreadSleep(10000);
 									ArrayList<String> NotesPopUpPrefilledNegativeResult = BP
 											.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url,
 													task1BasicSectionVerification, task1AdvancedSection, null);
@@ -1703,51 +1736,25 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 											CommonLib.refresh(driver);
 
-											if (click(driver, taskBP.downArrowButton(20), "downArrowButton",
-													action.SCROLLANDBOOLEAN)) {
-												log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
+											String url2 = getURL(driver, 10);
 
-												if (click(driver, taskBP.buttonInTheDownArrowList("Edit", 20),
-														"Edit Button in downArrowButton", action.SCROLLANDBOOLEAN)) {
-													log(LogStatus.INFO, "Clicked on Edit Button in  Down Arrow Button",
-															YesNo.No);
-
-													String url2 = getURL(driver, 10);
-
-													ThreadSleep(10000);
-													ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
-															.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
-																	task1UpdatedBasicSectionVerification,
-																	task1AdvancedSection, null);
-													if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
-														log(LogStatus.INFO,
-																"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
-																YesNo.No);
-
-													} else {
-														log(LogStatus.ERROR,
-																"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
-																		+ NotesPopUpPrefilledNegativeResultUpdated,
-																YesNo.No);
-														sa.assertTrue(false,
-																"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
-																		+ NotesPopUpPrefilledNegativeResultUpdated);
-
-													}
-
-												} else {
-													log(LogStatus.ERROR,
-															"Not Able Click on Edit button in Down Arrow Button",
-															YesNo.Yes);
-													sa.assertTrue(false,
-															"Not Able Click on Edit button in Down Arrow Button");
-
-												}
+											ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
+													.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
+															task1UpdatedBasicSectionVerification, task1AdvancedSection,
+															null);
+											if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
+												log(LogStatus.INFO,
+														"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+														YesNo.No);
 
 											} else {
-												log(LogStatus.ERROR, "Not Able Click on Down Arrow Button", YesNo.Yes);
+												log(LogStatus.ERROR,
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated,
+														YesNo.No);
 												sa.assertTrue(false,
-														"Not Able Click on Edit button in Down Arrow Button");
+														"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+																+ NotesPopUpPrefilledNegativeResultUpdated);
 
 											}
 
@@ -2996,7 +3003,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
 
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("3"));
 
@@ -3113,47 +3119,26 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										CommonLib.refresh(driver);
 
-										if (click(driver, taskBP.downArrowButton(20), "downArrowButton",
-												action.SCROLLANDBOOLEAN)) {
-											log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
+										String url2 = getURL(driver, 10);
 
-											if (click(driver, taskBP.buttonInTheDownArrowList("Edit", 20),
-													"Edit Button in downArrowButton", action.SCROLLANDBOOLEAN)) {
-												log(LogStatus.INFO, "Clicked on Edit Button in  Down Arrow Button",
-														YesNo.No);
-
-												String url2 = getURL(driver, 10);
-
-												ThreadSleep(10000);
-												ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
-														.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
-																task1UpdatedBasicSectionVerification,
-																task1AdvancedSectionVerification, null);
-												if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
-													log(LogStatus.INFO,
-															"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
-															YesNo.No);
-
-												} else {
-													log(LogStatus.ERROR,
-															"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
-																	+ NotesPopUpPrefilledNegativeResultUpdated,
-															YesNo.No);
-													sa.assertTrue(false,
-															"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
-																	+ NotesPopUpPrefilledNegativeResultUpdated);
-
-												}
-
-											} else {
-												log(LogStatus.ERROR,
-														"Not Able Click on Edit button in Down Arrow Button",
-														YesNo.Yes);
-
-											}
+										ThreadSleep(10000);
+										ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
+												.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
+														task1UpdatedBasicSectionVerification,
+														task1AdvancedSectionVerification, null);
+										if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
+											log(LogStatus.INFO,
+													"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+													YesNo.No);
 
 										} else {
-											log(LogStatus.ERROR, "Not Able Click on Down Arrow Button", YesNo.Yes);
+											log(LogStatus.ERROR,
+													"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+															+ NotesPopUpPrefilledNegativeResultUpdated,
+													YesNo.No);
+											sa.assertTrue(false,
+													"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+															+ NotesPopUpPrefilledNegativeResultUpdated);
 
 										}
 
@@ -3943,13 +3928,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("3"));
 		String getAdvanceDueDate = AdvanceDueDate;
 
-		String task1SubjectName = AMNNR_Subject34 + " " + AMNNR_ActivityType54;
+		String task1SubjectName = AMNNR_Subject34;
 		String task1Notes = AMNNR_Notes34;
 		String relatedTo = AMNNR_RelatedTo34;
 
 		String priority = AMNNR_AdvancePriority34;
 		String status = AMNNR_AdvanceStatus34;
-		String task1ButtonName = AMNNR_ActivityType54;
+		String task1ButtonName = AMNNR_ActivityType1;
 		String[] suggestedTags = AMNNR_SuggestedTag34.split("<break>", -1);
 		String verificationRelatedTo = relatedTo + AMNNR_RelatedTo35;
 
@@ -5119,7 +5104,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 		String task1UpdatedSubjectName = AMNNR_Subject44;
 		String[][] task1UpdateBasicSection = { { "Subject", task1UpdatedSubjectName } };
-		;
+
 		String[][] task1UpdateAdvancedSection = null;
 
 		String[] updatedSuggestedTags = "".split("<break>", -1);
@@ -5218,14 +5203,8 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 											}
 
 											CommonLib.refresh(driver);
-											CommonLib.ThreadSleep(5000);
 
-											String xPath = "//a[@class=\"interaction_sub subject_text\" and text()='"
-													+ task1SubjectName + "']";
-											WebElement ele = CommonLib.FindElement(driver, xPath, "Subject",
-													action.SCROLLANDBOOLEAN, 15);
-											String subName = getText(driver, ele, "Subject", action.SCROLLANDBOOLEAN);
-											if (task1SubjectName.equals(subName)) {
+											if (BP.subjectOfInteractionCard(task1SubjectName, 7) == null) {
 												log(LogStatus.INFO, "Verified: After Update the Name of Subject to "
 														+ task1UpdatedSubjectName + ", Previous Named: "
 														+ task1SubjectName + " Interaction card should not be there",
@@ -5236,7 +5215,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 														+ task1SubjectName
 														+ " Interaction card is showing, which should not be there",
 														YesNo.No);
-												result.add("After Update the Name of Subject to "
+												sa.assertTrue(false, "After Update the Name of Subject to "
 														+ task1UpdatedSubjectName + ", Previous Named: "
 														+ task1SubjectName
 														+ " Interaction card is showing, which should not be there");
@@ -5897,6 +5876,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		String task1SubjectName = AMNNR_Subject17;
 
@@ -5918,8 +5898,11 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 				if (BP.clicktabOnPage("Acuity")) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-					if (BP.clickOnSubjectOfInteractionEitherOnCardOrInViewAllPopUp(task1SubjectName)) {
-						log(LogStatus.INFO, "Task Detail Page has been open for Record: " + task1SubjectName, YesNo.No);
+					if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+
+						log(LogStatus.INFO,
+								"-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
+								YesNo.No);
 
 						if (click(driver, taskBP.downArrowButton(20), "downArrowButton", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
@@ -5935,8 +5918,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 									if (taskBP.taskDeletedMsg(15) != null) {
 										log(LogStatus.INFO, "Task Delete Msg displayed, So Task has been deleted",
 												YesNo.No);
-										driver.close();
-										driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 
 										log(LogStatus.INFO,
 												"---------Now Going to Verify Task: " + task1SubjectName
@@ -5954,7 +5935,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 												if (BP.clicktabOnPage("Acuity")) {
 													log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-													if (!BP.clickOnSubjectOfInteractionEitherOnCardOrInViewAllPopUp(
+													if (!BP.verifySubjectOfInteractionEitherOnCardOrInViewAllPopUp(
 															task1SubjectName)) {
 														log(LogStatus.INFO,
 																"Verified: Task: " + task1SubjectName
@@ -5966,9 +5947,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 																+ " is present there after delete", YesNo.Yes);
 														sa.assertTrue(false, "Task: " + task1SubjectName
 																+ " is present there after delete");
-														driver.close();
-														driver.switchTo().window(
-																driver.getWindowHandles().stream().findFirst().get());
 
 													}
 
@@ -5992,36 +5970,34 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 										log(LogStatus.ERROR, "Task Delete Msg not display, So Task not gets deleted",
 												YesNo.Yes);
 										sa.assertTrue(false, "Task Delete Msg not display, So Task not gets deleted");
-										driver.close();
-										driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+
 									}
 
 								} else {
 									log(LogStatus.ERROR, "Not ABle to Click on Delete Confirm Button", YesNo.Yes);
 									sa.assertTrue(false, "Not ABle to Click on Delete Confirm Button");
-									driver.close();
-									driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 
 								}
 
 							} else {
 								log(LogStatus.ERROR, "Not Able Click on Delete button in Down Arrow Button", YesNo.Yes);
 								sa.assertTrue(false, "Not Able Click on Delete button in Down Arrow Button");
-								driver.close();
-								driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+
 							}
 
 						} else {
 							log(LogStatus.ERROR, "Not Able Click on Down Arrow Button", YesNo.Yes);
 							sa.assertTrue(false, "Not Able Click on Down Arrow Button");
-							driver.close();
-							driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+
 						}
 
 					} else {
-						log(LogStatus.ERROR, "Task Detail Page has not open for Record: " + task1SubjectName,
+
+						log(LogStatus.ERROR, "-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
 								YesNo.Yes);
-						sa.assertTrue(false, "Task Detail Page has not open for Record: " + task1SubjectName);
+						BaseLib.sa.assertTrue(false,
+								"-----Task named: " + task1SubjectName + " not found in Tasks Object-----");
+
 					}
 
 				} else {
@@ -6054,6 +6030,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		String recordName = AMNNR_FirmLegalName3;
 		String recordType = AMNNR_FirmRecordType3;
@@ -6098,7 +6075,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					ele = lp.getCheckboxOfRestoreItemOnRecycleBin(projectName, task1SubjectName, 30);
 					if (clickUsingJavaScript(driver, ele, "Check box against : " + task1SubjectName, action.BOOLEAN)) {
 						log(LogStatus.INFO, "Click on checkbox for " + task1SubjectName, YesNo.No);
-						;
+						
 						ele = lp.getRestoreButtonOnRecycleBin(projectName, 30);
 						if (clickUsingJavaScript(driver, ele, "Restore Button : " + task1SubjectName, action.BOOLEAN)) {
 							ThreadSleep(10000);
@@ -6123,10 +6100,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 									if (BP.clicktabOnPage("Acuity")) {
 										log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-										if (BP.clickOnSubjectOfInteractionEitherOnCardOrInViewAllPopUp(
-												task1SubjectName)) {
+										if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+
 											log(LogStatus.INFO,
-													"Task Detail Page has been open for Record: " + task1SubjectName,
+													"-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 													YesNo.No);
 
 											if (click(driver, taskBP.downArrowButton(20), "downArrowButton",
@@ -6149,12 +6126,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 														log(LogStatus.INFO,
 																"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
 																YesNo.No);
-														CommonLib.ThreadSleep(3000);
-														driver.close();
-														CommonLib.ThreadSleep(3000);
-
-														driver.switchTo().window(
-																driver.getWindowHandles().stream().findFirst().get());
+														
 
 													} else {
 														log(LogStatus.ERROR,
@@ -6165,10 +6137,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 																"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
 																		+ NotesPopUpPrefilledNegativeResultUpdated);
 
-														driver.close();
-														CommonLib.ThreadSleep(3000);
-														driver.switchTo().window(
-																driver.getWindowHandles().stream().findFirst().get());
+														
 
 													}
 
@@ -6176,27 +6145,23 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 													log(LogStatus.ERROR,
 															"Not Able Click on Edit button in Down Arrow Button",
 															YesNo.Yes);
-													sa.assertTrue(false,
-															"Not Able Click on Edit button in Down Arrow Button");
-													driver.close();
-													driver.switchTo().window(
-															driver.getWindowHandles().stream().findFirst().get());
+													
 												}
 
 											} else {
 												log(LogStatus.ERROR, "Not Able Click on Down Arrow Button", YesNo.Yes);
 												sa.assertTrue(false, "Not Able Click on Down Arrow Button");
-												driver.close();
-												driver.switchTo()
-														.window(driver.getWindowHandles().stream().findFirst().get());
+												
 											}
 
 										} else {
+
 											log(LogStatus.ERROR,
-													"Task Detail Page has not open for Record: " + task1SubjectName,
+													"-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
 													YesNo.Yes);
-											sa.assertTrue(false,
-													"Task Detail Page has not open for Record: " + task1SubjectName);
+											BaseLib.sa.assertTrue(false,
+													"-----Task named: " + task1SubjectName + " not found in Tasks Object-----");
+
 										}
 
 									} else {
@@ -9442,7 +9407,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
 
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("7"));
 		String getAdvanceDueDate = AdvanceDueDate;
@@ -9556,47 +9520,26 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										CommonLib.refresh(driver);
 
-										if (click(driver, taskBP.downArrowButton(20), "downArrowButton",
-												action.SCROLLANDBOOLEAN)) {
-											log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
+										String url2 = getURL(driver, 10);
 
-											if (click(driver, taskBP.buttonInTheDownArrowList("Edit", 20),
-													"Edit Button in downArrowButton", action.SCROLLANDBOOLEAN)) {
-												log(LogStatus.INFO, "Clicked on Edit Button in  Down Arrow Button",
-														YesNo.No);
-
-												String url2 = getURL(driver, 10);
-
-												ThreadSleep(10000);
-												ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
-														.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
-																task1UpdatedBasicSectionVerification,
-																task1AdvancedSectionVerification, null);
-												if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
-													log(LogStatus.INFO,
-															"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
-															YesNo.No);
-
-												} else {
-													log(LogStatus.ERROR,
-															"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
-																	+ NotesPopUpPrefilledNegativeResultUpdated,
-															YesNo.No);
-													sa.assertTrue(false,
-															"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
-																	+ NotesPopUpPrefilledNegativeResultUpdated);
-
-												}
-
-											} else {
-												log(LogStatus.ERROR,
-														"Not Able Click on Edit button in Down Arrow Button",
-														YesNo.Yes);
-
-											}
+										ThreadSleep(10000);
+										ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
+												.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
+														task1UpdatedBasicSectionVerification,
+														task1AdvancedSectionVerification, null);
+										if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
+											log(LogStatus.INFO,
+													"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+													YesNo.No);
 
 										} else {
-											log(LogStatus.ERROR, "Not Able Click on Down Arrow Button", YesNo.Yes);
+											log(LogStatus.ERROR,
+													"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+															+ NotesPopUpPrefilledNegativeResultUpdated,
+													YesNo.No);
+											sa.assertTrue(false,
+													"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+															+ NotesPopUpPrefilledNegativeResultUpdated);
 
 										}
 
@@ -10386,13 +10329,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		String AdvanceDueDate = CommonLib.getFutureDateAccToTimeZone("GMT+5:30", "M/d/yyyy", Integer.parseInt("8"));
 		String getAdvanceDueDate = AdvanceDueDate;
 
-		String task1SubjectName = AMNNR_Subject34;
+		String task1SubjectName = AMNNR_Subject34 + " " + AMNNR_ActivityType54;
 		String task1Notes = AMNNR_Notes34;
 		String relatedTo = AMNNR_RelatedTo34;
 
 		String priority = AMNNR_AdvancePriority34;
 		String status = AMNNR_AdvanceStatus34;
-		String task1ButtonName = AMNNR_ActivityType1;
+		String task1ButtonName = AMNNR_ActivityType54;
 		String[] suggestedTags = AMNNR_SuggestedTag34.split("<break>", -1);
 		String verificationRelatedTo = relatedTo + AMNNR_RelatedTo35;
 
@@ -11671,12 +11614,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 										CommonLib.refresh(driver);
 										CommonLib.ThreadSleep(5000);
 
-										String xPath = "//a[@class=\"interaction_sub subject_text\" and text()='"
-												+ task1SubjectName + "']";
-										WebElement ele = CommonLib.FindElement(driver, xPath, "Subject",
-												action.SCROLLANDBOOLEAN, 15);
-										String subName = getText(driver, ele, "Subject", action.SCROLLANDBOOLEAN);
-										if (task1SubjectName.equals(subName)) {
+										if (BP.subjectOfInteractionCard(task1SubjectName, 7) == null) {
 											log(LogStatus.INFO, "Verified: After Update the Name of Subject to "
 													+ task1UpdatedSubjectName + ", Previous Named: " + task1SubjectName
 													+ " Interaction card should not be there", YesNo.No);
@@ -12397,7 +12335,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 												if (BP.clicktabOnPage("Acuity")) {
 													log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-													if (!BP.clickOnSubjectOfInteractionEitherOnCardOrInViewAllPopUp(
+													if (!BP.verifySubjectOfInteractionEitherOnCardOrInViewAllPopUp(
 															task1SubjectName)) {
 														log(LogStatus.INFO,
 																"Verified: Task: " + task1SubjectName
@@ -12409,9 +12347,6 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 																+ " is present there after delete", YesNo.Yes);
 														sa.assertTrue(false, "Task: " + task1SubjectName
 																+ " is present there after delete");
-														driver.close();
-														driver.switchTo().window(
-																driver.getWindowHandles().stream().findFirst().get());
 
 													}
 
@@ -12435,30 +12370,25 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 										log(LogStatus.ERROR, "Task Delete Msg not display, So Task not gets deleted",
 												YesNo.Yes);
 										sa.assertTrue(false, "Task Delete Msg not display, So Task not gets deleted");
-										driver.close();
-										driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+
 									}
 
 								} else {
 									log(LogStatus.ERROR, "Not ABle to Click on Delete Confirm Button", YesNo.Yes);
 									sa.assertTrue(false, "Not ABle to Click on Delete Confirm Button");
-									driver.close();
-									driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 
 								}
 
 							} else {
 								log(LogStatus.ERROR, "Not Able Click on Delete button in Down Arrow Button", YesNo.Yes);
 								sa.assertTrue(false, "Not Able Click on Delete button in Down Arrow Button");
-								driver.close();
-								driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+
 							}
 
 						} else {
 							log(LogStatus.ERROR, "Not Able Click on Down Arrow Button", YesNo.Yes);
 							sa.assertTrue(false, "Not Able Click on Down Arrow Button");
-							driver.close();
-							driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+
 						}
 
 					} else {
@@ -12497,6 +12427,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 
 		String recordName = AMNNR_FirmLegalName3;
 		String recordType = AMNNR_FirmRecordType3;
@@ -12542,7 +12473,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 					ele = lp.getCheckboxOfRestoreItemOnRecycleBin(projectName, task1SubjectName, 30);
 					if (clickUsingJavaScript(driver, ele, "Check box against : " + task1SubjectName, action.BOOLEAN)) {
 						log(LogStatus.INFO, "Click on checkbox for " + task1SubjectName, YesNo.No);
-						;
+						
 						ele = lp.getRestoreButtonOnRecycleBin(projectName, 30);
 						if (clickUsingJavaScript(driver, ele, "Restore Button : " + task1SubjectName, action.BOOLEAN)) {
 							ThreadSleep(10000);
@@ -12567,10 +12498,10 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 									if (BP.clicktabOnPage("Acuity")) {
 										log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-										if (BP.clickOnSubjectOfInteractionEitherOnCardOrInViewAllPopUp(
-												task1SubjectName)) {
+										if (home.globalSearchAndNavigate(task1SubjectName, "Tasks", false)) {
+
 											log(LogStatus.INFO,
-													"Task Detail Page has been open for Record: " + task1SubjectName,
+													"-----Verified Task named: " + task1SubjectName + " found in Tasks Object-----",
 													YesNo.No);
 
 											if (click(driver, taskBP.downArrowButton(20), "downArrowButton",
@@ -12593,12 +12524,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 														log(LogStatus.INFO,
 																"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
 																YesNo.No);
-														CommonLib.ThreadSleep(3000);
-														driver.close();
-														CommonLib.ThreadSleep(3000);
-
-														driver.switchTo().window(
-																driver.getWindowHandles().stream().findFirst().get());
+														
 
 													} else {
 														log(LogStatus.ERROR,
@@ -12609,10 +12535,7 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 																"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
 																		+ NotesPopUpPrefilledNegativeResultUpdated);
 
-														driver.close();
-														CommonLib.ThreadSleep(3000);
-														driver.switchTo().window(
-																driver.getWindowHandles().stream().findFirst().get());
+														
 
 													}
 
@@ -12620,27 +12543,23 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 													log(LogStatus.ERROR,
 															"Not Able Click on Edit button in Down Arrow Button",
 															YesNo.Yes);
-													sa.assertTrue(false,
-															"Not Able Click on Edit button in Down Arrow Button");
-													driver.close();
-													driver.switchTo().window(
-															driver.getWindowHandles().stream().findFirst().get());
+													
 												}
 
 											} else {
 												log(LogStatus.ERROR, "Not Able Click on Down Arrow Button", YesNo.Yes);
 												sa.assertTrue(false, "Not Able Click on Down Arrow Button");
-												driver.close();
-												driver.switchTo()
-														.window(driver.getWindowHandles().stream().findFirst().get());
+												
 											}
 
 										} else {
+
 											log(LogStatus.ERROR,
-													"Task Detail Page has not open for Record: " + task1SubjectName,
+													"-----Task named: " + task1SubjectName + " not found in Tasks Object-----",
 													YesNo.Yes);
-											sa.assertTrue(false,
-													"Task Detail Page has not open for Record: " + task1SubjectName);
+											BaseLib.sa.assertTrue(false,
+													"-----Task named: " + task1SubjectName + " not found in Tasks Object-----");
+
 										}
 
 									} else {

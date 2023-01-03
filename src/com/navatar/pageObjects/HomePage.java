@@ -2499,7 +2499,7 @@ public class HomePage extends BasePageBusinessLayer {
 			return notificationFooterButtonsText;
 	}
 
-	@FindBy(xpath = "//div/button[@aria-label=\"Search\"]")
+	@FindBy(xpath = "//div[@class=\"forceSearchAssistantDialog\"]//lightning-input//input")
 	private WebElement globalSearchButton;
 
 	public WebElement globalSearchButton(int timeOut) {

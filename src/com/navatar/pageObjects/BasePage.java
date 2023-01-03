@@ -7105,7 +7105,8 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement connectionPopUpDealsCount(String teamMember, String deals, int timeOut) {
 
-		String xpath = "//lightning-base-formatted-text[text()='"+teamMember+"']/ancestor::th[@data-label='Team Member']/..//td[@data-col-key-value='dealRef-button-4']//button";
+		String xpath = "//lightning-base-formatted-text[text()='" + teamMember
+				+ "']/ancestor::th[@data-label='Team Member']/..//td[@data-col-key-value='dealRef-button-4']//button";
 		try {
 			return FindElement(driver, xpath, "Header: " + deals, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7116,7 +7117,8 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement connectionPopUpEmailCount(String teamMember, String email, int timeOut) {
 
-		String xpath = "//lightning-base-formatted-text[text()='"+teamMember+"']/ancestor::th[@data-label='Team Member']/..//td[@data-col-key-value='emailRef-button-6']//button";
+		String xpath = "//lightning-base-formatted-text[text()='" + teamMember
+				+ "']/ancestor::th[@data-label='Team Member']/..//td[@data-col-key-value='emailRef-button-6']//button";
 		try {
 			return FindElement(driver, xpath, "Header: " + email, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7400,22 +7402,14 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getPageHeaderTitle(int timeOut) {
 		return isDisplayed(driver, pageHeaderTitle, "Visibility", timeOut, "page header title");
 	}
-	
-	
+
 	@FindBy(xpath = "//section//h2[contains(@class,\"slds-text-heading_small slds-hyphenate\")]")
 	private WebElement activitySubjetLinkPopupHeaderOnInteraction;
 
 	public WebElement activitySubjetLinkPopupHeaderOnInteraction(int timeOut) {
-		return isDisplayed(driver, activitySubjetLinkPopupHeaderOnInteraction, "Visibility", timeOut, "activitySubjetLinkPopupHeaderOnInteraction");
+		return isDisplayed(driver, activitySubjetLinkPopupHeaderOnInteraction, "Visibility", timeOut,
+				"activitySubjetLinkPopupHeaderOnInteraction");
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 
 	public WebElement dealAcuityPopUpDealName(String dealName, int timeOut) {
 
@@ -7449,7 +7443,7 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement connectionPopUpTeamMember(String teamMember, int timeOut) {
 
-		String xpath ="//th[@data-label='Team Member']//lightning-base-formatted-text[text()='"+teamMember+"']";
+		String xpath = "//th[@data-label='Team Member']//lightning-base-formatted-text[text()='" + teamMember + "']";
 		try {
 			return FindElement(driver, xpath, "Header: " + teamMember, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7460,7 +7454,8 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement connectionPopUpTitle(String teamMember, String title, int timeOut) {
 
-		String xpath ="//lightning-base-formatted-text[text()='"+teamMember+"']/ancestor::th[@data-label='Team Member']/..//td[@data-label='Title']//lightning-base-formatted-text";
+		String xpath = "//lightning-base-formatted-text[text()='" + teamMember
+				+ "']/ancestor::th[@data-label='Team Member']/..//td[@data-label='Title']//lightning-base-formatted-text";
 		try {
 			return FindElement(driver, xpath, "Header: " + title, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7471,7 +7466,8 @@ public abstract class BasePage extends BaseLib {
 
 	public WebElement connectionPopUpMeetingCallsCount(String teamMember, String meetingAndCalls, int timeOut) {
 
-		String xpath = "//lightning-base-formatted-text[text()='"+teamMember+"']/ancestor::th[@data-label='Team Member']/..//td[@data-col-key-value='meetCallRef-button-5']//button";
+		String xpath = "//lightning-base-formatted-text[text()='" + teamMember
+				+ "']/ancestor::th[@data-label='Team Member']/..//td[@data-col-key-value='meetCallRef-button-5']//button";
 		try {
 			return FindElement(driver, xpath, "Header: " + meetingAndCalls, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
@@ -7961,8 +7957,6 @@ public abstract class BasePage extends BaseLib {
 			return isDisplayed(driver, ele, "Visibility", timeOut, popupName + " close button");
 		}
 	}
-	
-	
 
 	public List<String> acuityViewAllPopUpIcons() {
 		return FindElements(driver,
@@ -8111,6 +8105,7 @@ public abstract class BasePage extends BaseLib {
 					timeOut);
 		}
 	}
+
 	@FindBy(xpath = "//lightning-icon[@title='Filter' and contains(@class,'filtr-icon')]")
 	private WebElement filterIconOnInteractionPopup;
 
@@ -8158,7 +8153,6 @@ public abstract class BasePage extends BaseLib {
 		return isDisplayed(driver, closeIconOnFilterSectiOnMeetingAndCallPopup, "Visibility", timeOut,
 				"close icon on filter section of interaction popup");
 	}
-
 
 	@FindBy(xpath = "//td[@class='pbButton']//input[@title='Edit']")
 	private WebElement EditUserLink;
@@ -8582,28 +8576,50 @@ public abstract class BasePage extends BaseLib {
 		}
 
 	}
-	
+
 	public WebElement getHeadingOfConnectionPage(String contactName, int timeOut) {
 
-		String xpath ="//span[text()='Connections of "+contactName+"']";
+		String xpath = "//span[text()='Connections of " + contactName + "']";
 		try {
-			return FindElement(driver, xpath, "Connection heading of : " + contactName, action.SCROLLANDBOOLEAN, timeOut);
+			return FindElement(driver, xpath, "Connection heading of : " + contactName, action.SCROLLANDBOOLEAN,
+					timeOut);
 		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, xpath,  "Connection heading of : " + contactName, action.SCROLLANDBOOLEAN, timeOut);
+			return FindElement(driver, xpath, "Connection heading of : " + contactName, action.SCROLLANDBOOLEAN,
+					timeOut);
 		}
 
 	}
-	
+
 	public WebElement getMeetingAndCallCount(String name, int timeOut) {
 
-		String xpath ="//*[text()='"+name+"']/ancestor::tr/td[contains(@data-col-key-value,'meetCallRef-button')]//button";
+		String xpath = "//*[text()='" + name
+				+ "']/ancestor::tr/td[contains(@data-col-key-value,'meetCallRef-button')]//button";
 		try {
 			return FindElement(driver, xpath, "Meeting and call count", action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, xpath,  "Meeting and call count", action.SCROLLANDBOOLEAN, timeOut);
+			return FindElement(driver, xpath, "Meeting and call count", action.SCROLLANDBOOLEAN, timeOut);
 		}
 
 	}
-	
+
+	@FindBy(xpath = "//input[@name=\"Search\"]")
+	private WebElement allInteractionSearchBox;
+
+	public WebElement allInteractionSearchBox(int timeOut) {
+		return isDisplayed(driver, allInteractionSearchBox, "Visibility", timeOut, "allInteractionSearchBox");
+	}
+
+	public WebElement getActivityTimelineSubjectinAllIntearctionPage(String activitSubjectName, int timeOut) {
+
+		String xpath = "//td//span//div//button[text()=\"" + activitSubjectName + "\"]";
+		try {
+			return FindElement(driver, xpath, "Activity Timeline Subject: " + activitSubjectName,
+					action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath, "Activity Timeline Subject: " + activitSubjectName,
+					action.SCROLLANDBOOLEAN, timeOut);
+		}
+
+	}
 
 }
