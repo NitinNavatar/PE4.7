@@ -13433,6 +13433,32 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return flag;
 	}
 
+	public boolean verifySubjectLinkPopUpOnIntraction(WebDriver driver, String subjectName) {
+
+		boolean flag = false;
+
+		if (CommonLib.click(driver, subjectOfInteractionCard(subjectName, 15),
+				"Subject Name on Intraction", action.BOOLEAN)) {
+			log(LogStatus.INFO, "clicked on " + subjectName, YesNo.No);
+
+			if (activitySubjetLinkPopupHeaderOnInteraction(5) != null) {
+
+				if (activitySubjetLinkPopupHeaderOnInteraction(10).getText().equals(subjectName)) {
+					log(LogStatus.INFO, subjectName + " link Popup open after click on it", YesNo.No);
+					CommonLib.refresh(driver);
+					flag = true;
+				} else {
+					log(LogStatus.ERROR, subjectName + " link Popup not open after click on it", YesNo.No);
+				}
+			} else {
+				log(LogStatus.ERROR, subjectName + " url did not open in new tab", YesNo.No);
+			}
+		} else {
+			log(LogStatus.ERROR, "not able to click on " + subjectName, YesNo.No);
+		}
+		return flag;
+	}
+
 	public boolean clickOnCountOfTaggedRecord(String recordName) {
 		String xPath;
 		WebElement ele;
@@ -15200,7 +15226,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							xPath = "//input[@placeholder='Search Firm, People or Deals']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									2);
-							//h2[contains(@class,'header_text')]/../..//*[@title='Tag']
+							// h2[contains(@class,'header_text')]/../..//*[@title='Tag']
 							if (ele == null) {
 								xPath = "//h2[contains(@class,'header_text')]/../..//*[@title='Tag']";
 								ele = CommonLib.FindElement(driver, xPath, labelName + " label",
@@ -17918,8 +17944,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 									for (int i = 0; i < suggestedTags.length; i++) {
 
-										
-										
 										if (!suggestedTags[0].equals("")) {
 											xPath = "//lightning-base-formatted-text[text()='" + suggestedTags[i]
 													+ "']/ancestor::th[@data-label='Name']/..//td//input";
