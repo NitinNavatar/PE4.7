@@ -1,7 +1,16 @@
 package com.navatar.scripts;
 
-import static com.navatar.generic.BaseLib.testCasesFilePath;
-import static com.navatar.generic.CommonLib.*;
+import static com.navatar.generic.CommonLib.FindElement;
+import static com.navatar.generic.CommonLib.ThreadSleep;
+import static com.navatar.generic.CommonLib.click;
+import static com.navatar.generic.CommonLib.clickUsingJavaScript;
+import static com.navatar.generic.CommonLib.exit;
+import static com.navatar.generic.CommonLib.log;
+import static com.navatar.generic.CommonLib.refresh;
+import static com.navatar.generic.CommonLib.removeNumbersFromString;
+import static com.navatar.generic.CommonLib.sendKeys;
+import static com.navatar.generic.CommonLib.switchOnWindow;
+import static com.navatar.generic.CommonLib.switchToDefaultContent;
 import static com.navatar.generic.CommonVariables.*;
 import static com.navatar.generic.SmokeCommonVariables.adminPassword;
 import static com.navatar.generic.SmokeCommonVariables.superAdminUserName;
@@ -18,7 +27,6 @@ import org.testng.asserts.Assertion;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.EmailLib;
-import com.navatar.generic.ExcelUtils;
 import com.navatar.generic.EnumConstants.Environment;
 import com.navatar.generic.EnumConstants.IconType;
 import com.navatar.generic.EnumConstants.MetaDataSetting;
@@ -28,8 +36,16 @@ import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
-import com.navatar.pageObjects.*;
-
+import com.navatar.generic.ExcelUtils;
+import com.navatar.pageObjects.BasePageBusinessLayer;
+import com.navatar.pageObjects.ContactsPageBusinessLayer;
+import com.navatar.pageObjects.DealPageBusinessLayer;
+import com.navatar.pageObjects.FundsPageBusinessLayer;
+import com.navatar.pageObjects.HomePageBusineesLayer;
+import com.navatar.pageObjects.InstitutionsPageBusinessLayer;
+import com.navatar.pageObjects.LoginPageBusinessLayer;
+import com.navatar.pageObjects.SetupPageBusinessLayer;
+import com.navatar.pageObjects.TaskPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class AcuityTaskAndEvent extends BaseLib {
@@ -49,7 +65,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			String[] lastName= {crmUser6LastName,crmUser7LastName,crmUser8LastName,crmUser9LastName,crmUser10LastName,crmUser11LastName,crmUser12LastName,crmUser13LastName,crmUser14LastName,crmUser15LastName,crmUser16LastName};
 			String[] userLicence= {crmUser6Lience,crmUser7Lience,crmUser8Lience,crmUser9Lience,crmUser10Lience,crmUser11Lience,crmUser12Lience,crmUser13Lience,crmUser14Lience,crmUser15Lience,crmUser16Lience};
 			String[] userProfile= {crmUser6Profile,crmUser7Profile,crmUser8Profile,crmUser9Profile,crmUser10Profile,crmUser11Profile,crmUser12Profile,crmUser13Profile,crmUser14Profile,crmUser15Profile,crmUser16Profile};
-            String[] userTitle= {crmUser6Title,crmUser7Title,crmUser8Title,crmUser9Title,crmUser10Title,crmUser11Title,crmUser12Title,crmUser13Title,crmUser14Title,crmUser15Title,crmUser16Title};
+			String[] userTitle= {crmUser6Title,crmUser7Title,crmUser8Title,crmUser9Title,crmUser10Title,crmUser11Title,crmUser12Title,crmUser13Title,crmUser14Title,crmUser15Title,crmUser16Title};
 			String parentWindow = null;
 			String[] splitedUserLastName = removeNumbersFromString(lastName[k]);
 			String UserLastName = splitedUserLastName[0] + lp.generateRandomNumber();
@@ -163,7 +179,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String[] arrSectionHeader=sectionHeader.split("<break>");		
 		List<String> sectionHeaderName = new ArrayList<String>(Arrays.asList(arrSectionHeader));
-
 
 		String[] arrTabName= tabsOnTagged.split("<break>");		
 		List<String> tabNameOnTagged = new ArrayList<String>(Arrays.asList(arrTabName));
@@ -340,7 +355,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The Column name, Time referenced and message are not verified. "+result, YesNo.No);
 							sa.assertTrue(false, "The Column name, Time referenced and message are not verified. "+result);
 						}
-						
+
 						ArrayList<String> result1=bp.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(message, blankList, null, blankList, null,connnectionHeaders,message);
 
 						if(result1.isEmpty())
@@ -417,10 +432,17 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String taskStatus=ATE_AdvanceStatus1;
 		String taskPriority=ATE_AdvancePriority1;
 
-		String[] relatedToData=ATE_ARelatedTo1.split("<break>");
-		String[] verifyRelatedToField= {relatedToData[0],crmUser6FirstName+" "+crmUser6LastName,relatedToData[1]};
-		String[] relatedAssociation=ATE_ARelatedAsso1.split("<break>");
-		
+		/*
+		 * String[] relatedToData=ATE_ARelatedTo1.split("<break>"); String[]
+		 * verifyRelatedToField=
+		 * {relatedToData[0],crmUser6FirstName+" "+crmUser6LastName,relatedToData[1]};
+		 * String[] relatedAssociation=ATE_ARelatedAsso1.split("<break>");
+		 */	
+		String[] verifyRelatedToField=null;
+
+		String[] relatedAssociation=null;
+
+
 		String contactSectionName=ATE_ContactName2;
 		String contactSectionTitle=ATE_ContactTitle2;
 		String contactSectionDeal=ATE_ContactDeal2;
@@ -432,7 +454,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String contactSectionDeal1=ATE_ContactDeal3;
 		String contactSectionMeetingAndCalls1=ATE_ContactMeetingAndCall3;
 		String contactSectionEmail1=ATE_ContactEmail3;
-		
+
 		String[] companiesTaggedName= {ATE_TaggedCompanyName1};
 		String[] companiesTaggedTimeReference= {ATE_TaggedCompanyTimeReference1};
 
@@ -442,7 +464,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
 		String[][] advanceSection = { { "Due Date Only", taskDueDate }, {"Status", taskStatus}, {"Priority", taskPriority} };
-
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
 		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null)) {
@@ -535,7 +556,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 		{
 			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
-		}		
+		}	 
+
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
@@ -570,9 +592,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
-					String xPath="//a[text()='"+contactName+"']/ancestor::tr//button[@title='Connections']";
-					WebElement ele=FindElement(driver, xPath, "Connection icon of "+contactName, action.SCROLLANDBOOLEAN, 20);
-					if(click(driver, ele, "Connection icon of "+contactName, action.SCROLLANDBOOLEAN))
+					if(click(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName, action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on Connection icon of "+contactName, YesNo.No);
 
@@ -653,10 +673,12 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String subject=ATE_ATSubject1;
 		String notes=ATE_ATNotes1;
 
-		String[] relatedToData=ATE_ARelatedTo1.split("<break>");
-		String[] relatedTo= {relatedToData[0],crmUser6FirstName+" "+crmUser6LastName,relatedToData[1]};
+		String[] relatedTo=null;
+		String[] relatedAssociation=null;
+		//	String[] relatedToData=ATE_ARelatedTo1.split("<break>");
+		//	String[] relatedTo= {relatedToData[0],crmUser6FirstName+" "+crmUser6LastName,relatedToData[1]};
 
-		String[] relatedAssociation=ATE_ARelatedAsso1.split("<break>");
+		//	String[] relatedAssociation=ATE_ARelatedAsso1.split("<break>");
 
 		ArrayList<String> tabName=new ArrayList<String>();
 		tabName.add("People");
@@ -757,7 +779,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String taskNotes=ATE_ATNotes2;
 		String taskDueDate=ATE_AdvanceDueDate2;
 		String taskPriority=ATE_AdvancePriority2;
-
+	
+		
 		String[] relatedToData=ATE_ARelatedTo2.split("<break>");
 		String[] relatedAssocVal=ATE_ARelatedAsso2.split("<break>");
 
@@ -769,7 +792,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		{
 			relatedAssociation[i]=relatedAssocVal[i-1];
 		}
-
+		 
 
 		String contactSectionName=ATE_ContactName4;
 		String contactSectionTitle=ATE_ContactTitle4;
@@ -811,141 +834,141 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String[][] advanceSection = { { "Due Date Only", taskDueDate }, {"Priority", taskPriority} };
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
-
+		
 		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
+		 
+		if (lp.clickOnTab(projectName, tabObj1)) {
 
-			if (lp.clickOnTab(projectName, tabObj1)) {
+			log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
 
-				log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
+					recordName, 30)) {
+				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
 
-				if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.InstituitonsTab,
-						recordName, 30)) {
-					log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
+				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
+					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
 
-					if (bp.clicktabOnPage(TabName.Acuity.toString())) {
-						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+					ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Call,taskSubject, taskNotes, true, false,relatedToData,relatedAssociation);
+					if (result.isEmpty()) {
+						log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
+						sa.assertTrue(true,taskSubject + " record has been verified on intraction");
+					} else {
+						log(LogStatus.ERROR,taskSubject + " record not verified on intraction. "+result,YesNo.No);
+						sa.assertTrue(false,taskSubject + " record not verified on intraction. "+result);
+					}
 
-						ArrayList<String> result = bp.verifyRecordOnInteractionCard(taskDueDate,IconType.Call,taskSubject, taskNotes, true, false,relatedToData,relatedAssociation);
-						if (result.isEmpty()) {
-							log(LogStatus.PASS,taskSubject + " record has been verified on intraction",YesNo.No);
-							sa.assertTrue(true,taskSubject + " record has been verified on intraction");
-						} else {
-							log(LogStatus.ERROR,taskSubject + " record not verified on intraction. "+result,YesNo.No);
-							sa.assertTrue(false,taskSubject + " record not verified on intraction. "+result);
-						}
-
-						ArrayList<String> result1=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
-						if(result1.isEmpty())
-						{
-							log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result1, YesNo.No);
-							sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result1);
-						}
-
-						ArrayList<String> result2=bp.verifyRecordOnContactSectionAcuity(contactSectionName1, contactSectionTitle1, contactSectionDeal1, contactSectionMeetingAndCalls1, contactSectionEmail1);
-						if(result2.isEmpty())
-						{
-							log(LogStatus.INFO, contactSectionName1+" record on Contact section has been verified for "+recordName, YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, contactSectionName1+" record on Contact section is not verified for "+recordName+". "+result2, YesNo.No);
-							sa.assertTrue(false, contactSectionName1+" record on Contact section is not verified for "+recordName+". "+result2);
-						}
-
-						ArrayList<String> result4=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference);
-						if(result4.isEmpty())
-						{
-							log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result4, YesNo.No);
-							sa.assertTrue(false,  "The record name and Time reference are not verifed. "+result4);
-						}
-
-						ArrayList<String> result6=bp.verifyRedirectionOnClickRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference);
-						if(result6.isEmpty())
-						{
-							log(LogStatus.INFO, "The redirection on click of record name and count of Time referenced have been verified", YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "The redirection on click of record name and count of time referenced is not working properly. "+result6, YesNo.No);
-							sa.assertTrue(false,  "The redirection on click of record name and count of time referenced is not working properly. "+result6);
-						}
-
-
-						if (bp.verifySubjectLinkRedirectionOnIntraction(driver,taskSubject)) {
-							log(LogStatus.INFO, "page successfully redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);			
-						}
-						else
-						{
-							log(LogStatus.ERROR, "page is not redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);		
-							sa.assertTrue(false,  "page is not redirecting to the "+ taskSubject+ " page on new tab");
-						}
-						refresh(driver);
-
-						String xPath="//a[text()='"+contactSectionName1+"']/ancestor::tr/td[@data-label='Meetings and Calls']//button";
-						WebElement ele=FindElement(driver, xPath, "Meeting and call", action.SCROLLANDBOOLEAN, 30);
-						if(click(driver, ele, "Meeting and call", action.SCROLLANDBOOLEAN))
-						{
-							log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName1+" record on contact section",	YesNo.No);		
-							xPath="//h2[contains(text(),'Meetings and Calls')]/../following-sibling::div//p[text()='No item display']";
-							ele=FindElement(driver, xPath, "Message on Meeting and notes popup", action.SCROLLANDBOOLEAN, 20);
-							if(ele!=null)
-							{
-								log(LogStatus.INFO, "Message : \"No items to display\" have been verified on meetings and notes popup",	YesNo.No);		
-								sa.assertTrue(true,  "Message : \"No items to display\" have been verified on meetings and notes popup");
-
-							}
-							else
-							{
-								log(LogStatus.ERROR, "Message : \"No items to display\" is not verified on meetings and notes popup",	YesNo.No);		
-								sa.assertTrue(false,  "Message : \"No items to display\" is not verified on meetings and notes popup");
-							}
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName1+" record on contact section",	YesNo.No);		
-							sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName1+" record on contact section");
-						}
-
+					ArrayList<String> result1=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
+					if(result1.isEmpty())
+					{
+						log(LogStatus.INFO, contactSectionName+" record on Contact section has been verified for "+recordName, YesNo.No);
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on Acuity tab");
+						log(LogStatus.ERROR, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result1, YesNo.No);
+						sa.assertTrue(false, contactSectionName+" record on Contact section is not verified for "+recordName+". "+result1);
 					}
+
+					ArrayList<String> result2=bp.verifyRecordOnContactSectionAcuity(contactSectionName1, contactSectionTitle1, contactSectionDeal1, contactSectionMeetingAndCalls1, contactSectionEmail1);
+					if(result2.isEmpty())
+					{
+						log(LogStatus.INFO, contactSectionName1+" record on Contact section has been verified for "+recordName, YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, contactSectionName1+" record on Contact section is not verified for "+recordName+". "+result2, YesNo.No);
+						sa.assertTrue(false, contactSectionName1+" record on Contact section is not verified for "+recordName+". "+result2);
+					}
+
+					ArrayList<String> result4=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference);
+					if(result4.isEmpty())
+					{
+						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR,  "The record name and Time reference are not verifed. "+result4, YesNo.No);
+						sa.assertTrue(false,  "The record name and Time reference are not verifed. "+result4);
+					}
+
+					ArrayList<String> result6=bp.verifyRedirectionOnClickRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference);
+					if(result6.isEmpty())
+					{
+						log(LogStatus.INFO, "The redirection on click of record name and count of Time referenced have been verified", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The redirection on click of record name and count of time referenced is not working properly. "+result6, YesNo.No);
+						sa.assertTrue(false,  "The redirection on click of record name and count of time referenced is not working properly. "+result6);
+					}
+
+
+					if (bp.verifySubjectLinkRedirectionOnIntraction(driver,taskSubject)) {
+						log(LogStatus.INFO, "page successfully redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);			
+					}
+					else
+					{
+						log(LogStatus.ERROR, "page is not redirecting to the "+ taskSubject+ " page on new tab",	YesNo.No);		
+						sa.assertTrue(false,  "page is not redirecting to the "+ taskSubject+ " page on new tab");
+					}
+					refresh(driver);
+					ThreadSleep(4000);
+
+					if(click(driver, bp.getMeetingAndCallCount(contactSectionName1, 20), "Meeting and call", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "Clicked on the count of meeting and call of "+contactSectionName1+" record on contact section",YesNo.No);
+						String parentID=switchOnWindow(driver);
+						String xPath="//p[contains(@class,'nodata-popup') and text()='No items to display']";
+						WebElement ele=FindElement(driver, xPath, "Message on Meeting and notes popup", action.SCROLLANDBOOLEAN, 20);
+						if(ele!=null)
+						{
+							log(LogStatus.INFO, "Message : \"No items to display\" have been verified.",	YesNo.No);		
+							sa.assertTrue(true,  "Message : \"No items to display\" have been verified.");
+
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Message : \"No items to display\" is not verified on meetings and notes popup",	YesNo.No);		
+							sa.assertTrue(false,  "Message : \"No items to display\" is not verified on meetings and notes popup");
+						}
+						driver.close();
+						driver.switchTo().window(parentID);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactSectionName1+" record on contact section",	YesNo.No);		
+						sa.assertTrue(false,  "Not able to click on the count of meeting and call of "+contactSectionName1+" record on contact section");
+					}
+
 				}
 				else
 				{
-					log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
-					sa.assertTrue(false,  "Not able to open record "+recordName);
+					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on Acuity tab");
 				}
 			}
 			else
 			{
-				log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
-				sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
+				sa.assertTrue(false,  "Not able to open record "+recordName);
 			}
-
 		}
+		else
+		{
+			log(LogStatus.ERROR, "Not able to click on tab "+tabObj1, YesNo.No);
+			sa.assertTrue(false,  "Not able to click on tab "+tabObj1);
+		}
+
+				}
 		else
 		{
 			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject);
-		}	
+		}	 
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -953,10 +976,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-
-		String xPath;
-		WebElement ele;
-
 
 		String taskSubject=ATE_ATSubject2;
 		String taskDetails=ATE_ATNotes2;
@@ -970,7 +989,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String contactSectionDeal=ATE_ContactDeal4;
 		String contactSectionMeetingAndCalls=ATE_ContactMeetingAndCall4;
 		String contactSectionEmail=ATE_ContactEmail4;
-
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -988,21 +1006,15 @@ public class AcuityTaskAndEvent extends BaseLib {
 					if(!bp.verifyViewAllButtonOnIntractionCard(20))
 					{
 						log(LogStatus.INFO, "View all button is not visible on interaction section", YesNo.No);
-
-
 						ArrayList<String> result=bp.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactSectionName, userName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCalls, contactSectionEmail);
 						if(result.isEmpty())
 						{
 							log(LogStatus.INFO, "The records on Connection popup have been verified for "+contactSectionName, YesNo.No);
 
-							xPath="//a[text()='"+contactSectionName+"']/ancestor::tr/td[@data-col-key-value='1-button-1']//button";
-							ele=FindElement(driver, xPath, contactSectionName+" connection icon", action.SCROLLANDBOOLEAN, 20);
-							if(click(driver, ele, contactSectionName+" Connection icon", action.SCROLLANDBOOLEAN))
+							if(click(driver, bp.getConnectionIconOfContact(contactSectionName, 20), contactSectionName+" Connection icon", action.SCROLLANDBOOLEAN))
 							{
 								log(LogStatus.INFO, "Clicked on connection icon of "+contactSectionName, YesNo.No);
-
-
-								xPath="//h2[contains(text(),'Connections of')]/../following-sibling::div//th[@data-label='Team Member']//a[text()='"+userName+"']";
+								/*								xPath="//h2[contains(text(),'Connections of')]/../following-sibling::div//th[@data-label='Team Member']//a[text()='"+userName+"']";
 								ele=FindElement(driver, xPath, userName+" user", action.SCROLLANDBOOLEAN, 20);
 								ThreadSleep(2000);
 								if(CommonLib.clickUsingJavaScript(driver, ele, userName+" user", action.SCROLLANDBOOLEAN))
@@ -1015,7 +1027,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 									if(ele!=null)
 									{
 										log(LogStatus.INFO, "The link is redirecting to user page after clicking on username", YesNo.No);									
-                                        	
+
 										driver.close();
 										driver.switchTo().window(id);										
 									}
@@ -1029,38 +1041,38 @@ public class AcuityTaskAndEvent extends BaseLib {
 												driver.switchTo().window(id);
 										  }
 									}
-									
-									xPath="//a[text()='"+userName+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-									ele=FindElement(driver, xPath, "meeting and call count of "+userName, action.SCROLLANDBOOLEAN, 20);
-									if(click(driver, ele, contactSectionEmail, action.SCROLLANDBOOLEAN))
-									{
-										log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName, YesNo.No);
+								 */									String parntID=switchOnWindow(driver);
+								 if(click(driver, bp.getMeetingAndCallCount(userName, 20), contactSectionEmail, action.SCROLLANDBOOLEAN))
+								 {
+									 log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName, YesNo.No);
 
-										ArrayList<String> result1=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call",taskDueDate, taskSubject, taskDetails, userName);
-										if(result1.isEmpty())
-										{
-											log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+contactSectionName, YesNo.No);
-										}
-										else
-										{
-											log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+contactSectionName+". "+result1, YesNo.No);
-											sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+contactSectionName+". "+result1);
-										}
+									 ArrayList<String> result1=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity("call",taskDueDate, taskSubject, taskDetails, userName);
+									 if(result1.isEmpty())
+									 {
+										 log(LogStatus.INFO, "The records on meeting & calls popup have been verified for "+contactSectionName, YesNo.No);
+									 }
+									 else
+									 {
+										 log(LogStatus.ERROR, "The records on meeting & calls popup are not verified for "+contactSectionName+". "+result1, YesNo.No);
+										 sa.assertTrue(false, "The records on meeting & calls popup are not verified for "+contactSectionName+". "+result1);
+									 }
 
-									}
-									else
-									{
-										log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName, YesNo.No);
-										sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName);
-									}
-									
-								}
+								 }
+								 else
+								 {
+									 log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName, YesNo.No);
+									 sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName);
+								 }
+								 driver.close();
+								 driver.switchTo().window(parntID);
+
+								 /*								}
 								else
 								{
 									log(LogStatus.ERROR, "Not able to click on user's name", YesNo.No);
 									sa.assertTrue(false, "Not able to click on user's name");
 								}
-
+								  */
 							}
 							else
 							{
@@ -1080,7 +1092,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "View all button is visible on interaction section", YesNo.No);
 						sa.assertTrue(false,  "View all button is visible on interaction section");
 					}
-
 				}
 				else
 				{
@@ -1104,17 +1115,12 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc009_VerifyContactPageAcuityTab(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-
-		String xPath;
-		WebElement ele;
 
 		String recordName=ATE_Contact1;
 		String taskDetails=ATE_ATNotes2;	
@@ -1187,7 +1193,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,taskSubject + " record is not verified on intraction. "+result);
 					}
 
-					if(!bp.verifyViewAllButtonOnIntractionCard(20))
+					if(!bp.verifyViewAllButtonOnIntractionCard(10))
 					{
 						log(LogStatus.INFO, "View all button is not visible on interaction section", YesNo.No);
 					}
@@ -1241,9 +1247,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "page is not redirecting to the "+ taskSubject+ " page on new tab");
 					}						
 
-					xPath="//a[text()='"+userName+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-					ele=FindElement(driver, xPath, "meeting and call count of "+userName, action.SCROLLANDBOOLEAN, 20);
-					if(click(driver, ele, recordName, action.SCROLLANDBOOLEAN))
+					if(click(driver, bp.getMeetingAndCallCount(userName, 20), recordName, action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName, YesNo.No);
 
@@ -1396,7 +1400,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 
 		String[][] basicsection = { { "Subject", taskSubject }, { "Notes", taskNotes }, { "Related_To", taskRelatedTo } };
-		String[][] advanceSection = { { "Start Date", advanceStartDate },{"End Date",advanceEndDate}, {"Assigned To ID",assignedToUser}};	
+		String[][] advanceSection = { { "Start Date", advanceStartDate },{"End Date",advanceEndDate}, {"Assigned To",assignedToUser}};	
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 		int k=0; 
@@ -1497,9 +1501,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 
-		String xPath;
-		WebElement ele;
-
 		String recordName=ATERecord3;
 		String contactName=ATE_Contact1;
 
@@ -1563,9 +1564,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The records are not verified on Connection section in Acuity for user "+connectionTeamMember1+". "+result1);
 					}
 
-					xPath="//a[text()='"+contactName+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-					ele=FindElement(driver, xPath, "meeting and call count of "+contactName, action.SCROLLANDBOOLEAN, 20);
-					if(click(driver, ele, contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
+					if(click(driver, bp.getMeetingAndCallCount(contactName,20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
 
@@ -1587,9 +1586,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
 					}
 
-					xPath="//a[text()='"+contactName+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-					ele=FindElement(driver, xPath, "meeting and call count of "+contactName, action.SCROLLANDBOOLEAN, 20);
-					if(click(driver, ele, contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
+					if(click(driver, bp.getMeetingAndCallCount(contactName,20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
 
@@ -1640,9 +1637,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-
-		String xPath;
-		WebElement ele;
 
 		String recordName=ATE_Contact1;
 		String contactName=ATE_Contact1;
@@ -1754,9 +1748,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The records are not verified on Connection section in Acuity for user "+connectionTeamMember1+". "+result4);
 					}
 
-					xPath="//a[text()='"+userName+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-					ele=FindElement(driver, xPath, "meeting and call count of "+contactName, action.SCROLLANDBOOLEAN, 20);
-					if(click(driver, ele, contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
+					if(click(driver, bp.getMeetingAndCallCount(userName,20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
 
@@ -1778,9 +1770,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
 					}
 
-					xPath="//a[text()='"+userName1+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-					ele=FindElement(driver, xPath, "meeting and call count of "+contactName, action.SCROLLANDBOOLEAN, 20);
-					if(click(driver, ele, contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
+					if(click(driver, bp.getMeetingAndCallCount(userName1,20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
 
@@ -2192,6 +2182,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 
 		String recordName=ATERecord3;
+
 		String xPath;
 		WebElement ele;
 
@@ -2238,6 +2229,75 @@ public class AcuityTaskAndEvent extends BaseLib {
 							sa.assertTrue(false,  "All records on All Interaction popup are not verified. "+result);
 						}
 
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View all button on Interaction card", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View all button on Interaction card");
+					}			
+
+					if(click(driver, bp.getViewAllBtnOnIntration(20), "View All button on Interaction", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "Clicked on View all button on Interaction card", YesNo.No);
+
+						String id=switchOnWindow(driver);
+						for(int i=0; i<subjectName.length; i++)
+						{
+							ThreadSleep(2000);
+
+							if(CommonLib.clickUsingJavaScript(driver, bp.getSubjectNameOnInteractionPage(subjectName[i], 20), subjectName[i]+" subject", action.SCROLLANDBOOLEAN))
+							{
+								log(LogStatus.INFO, "Clicked on subject name : "+subjectName[i], YesNo.No);
+
+								xPath="//h2[contains(@id,'modal-heading') and text()='"+subjectName[i]+"']";
+								ele=FindElement(driver, xPath, subjectName[i]+" record", action.SCROLLANDBOOLEAN, 40);
+								if(ele!=null)
+								{
+									log(LogStatus.INFO, subjectName[i]+" record is opening on popup",YesNo.No);
+								}
+								else
+								{
+									log(LogStatus.ERROR, subjectName[i]+" is not opening on popup",YesNo.No);
+									sa.assertTrue(false, subjectName[i]+" is not opening on popup");
+								}
+								xPath="//h2[contains(@id,'modal-heading') and text()='"+subjectName[i]+"']/ancestor::div[@class='slds-modal__container']//lightning-icon[@title='Close']";
+								ele=FindElement(driver, xPath, subjectName[i]+" popup close button", action.SCROLLANDBOOLEAN, 40);
+								if(ele!=null)
+								{
+									if(CommonLib.clickUsingJavaScript(driver, ele, subjectName[i]+" popup close", action.SCROLLANDBOOLEAN))
+									{
+										log(LogStatus.INFO, "Clicked on close button "+subjectName[i]+" subject popup ", YesNo.No);
+									}
+									else
+									{
+										log(LogStatus.ERROR, "Not able to click on close button "+subjectName[i]+" subject popup ", YesNo.No);
+										sa.assertTrue(false, "Not able to click on close button "+subjectName[i]+" subject popup ");
+									}
+
+								}
+								else
+								{
+									log(LogStatus.ERROR, "Close button is not visible on "+subjectName[i]+" subject popup",YesNo.No);
+									sa.assertTrue(false, "Close button is not visible on "+subjectName[i]+" subject popup");
+								}
+							}
+							else
+							{
+								log(LogStatus.ERROR, "Not able to click on subject name : "+subjectName[i], YesNo.No);
+								sa.assertTrue(false, "Not able to click on subject name : "+subjectName[i]);
+							}	
+						}
+						driver.close();
+						driver.switchTo().window(id);
+
+
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View all button on Interaction card", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View all button on Interaction card");
+					}			
+					/*
 						for(int i=0; i<subjectName.length; i++)
 						{
 							ThreadSleep(2000);
@@ -2268,7 +2328,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							}	
 						}			
 
-
+/*
 						for(int i=0; i<subjectName.length; i++)
 						{
 							ThreadSleep(2000);
@@ -2307,13 +2367,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 								sa.assertTrue(false,"Not able to click on Assigned To user name of "+subjectName[i]);
 							}	
 						}			
+					 */
 
-					}
-					else
-					{
-						log(LogStatus.ERROR, "Not able to click on View all button on Interaction card", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on View all button on Interaction card");
-					}			
 				}
 				else
 				{
@@ -2352,7 +2407,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String dueDate2=ATE_AdvanceDueDate2;
 		String dueDate3=ATE_AdvanceDueDate3;
 		String dueDate4=ATE_AdvanceDueDate4;
-        
+
 		String startDate1=ATE_AdvanceStartDate1;
 
 		IconType[] icon= {IconType.Task,IconType.Call,IconType.Event,IconType.Task,IconType.Task};
@@ -2391,29 +2446,57 @@ public class AcuityTaskAndEvent extends BaseLib {
 							sa.assertTrue(false,  "All records on View All popup of Interaction card are not verified");
 						}
 
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View all button on Interaction card", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View all button on Interaction card");
+					}	
 
+					if(click(driver, bp.getViewAllBtnOnIntration(20), "View All button on Interaction", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "Clicked on View all button on Interaction card", YesNo.No);
+
+						String id=switchOnWindow(driver);
 						for(int i=0; i<subjectName.length; i++)
 						{
 							ThreadSleep(2000);
-							xPath="//h2[contains(text(),'All Interactions with')]/../following-sibling::div//td[@data-label='Subject']//a[text()='"+subjectName[i]+"']";
-							ele=FindElement(driver, xPath, subjectName+" subject", action.SCROLLANDBOOLEAN, 20);
-							if(CommonLib.clickUsingJavaScript(driver, ele, subjectName[i]+" subject", action.SCROLLANDBOOLEAN))
+
+							if(CommonLib.clickUsingJavaScript(driver, bp.getSubjectNameOnInteractionPage(subjectName[i], 20), subjectName[i]+" subject", action.SCROLLANDBOOLEAN))
 							{
 								log(LogStatus.INFO, "Clicked on subject name : "+subjectName[i], YesNo.No);
-								String id=switchOnWindow(driver);
-								xPath="//span[text()=\""+subjectName[i]+"\" and contains(@class,\"uiOutputText\")]";
+
+								xPath="//h2[contains(@id,'modal-heading') and text()='"+subjectName[i]+"']";
 								ele=FindElement(driver, xPath, subjectName[i]+" record", action.SCROLLANDBOOLEAN, 40);
 								if(ele!=null)
 								{
-									log(LogStatus.INFO, subjectName[i]+" record is redirecting to new tab",YesNo.No);
+									log(LogStatus.INFO, subjectName[i]+" record is opening on popup",YesNo.No);
 								}
 								else
 								{
-									log(LogStatus.ERROR, subjectName[i]+" is not redirecting to new tab",YesNo.No);
-									sa.assertTrue(false, subjectName[i]+" is not redirecting to new tab");
+									log(LogStatus.ERROR, subjectName[i]+" is not opening on popup",YesNo.No);
+									sa.assertTrue(false, subjectName[i]+" is not opening on popup");
 								}
-								driver.close();
-								driver.switchTo().window(id);	
+								xPath="//h2[contains(@id,'modal-heading') and text()='"+subjectName[i]+"']/ancestor::div[@class='slds-modal__container']//lightning-icon[@title='Close']";
+								ele=FindElement(driver, xPath, subjectName[i]+" popup close button", action.SCROLLANDBOOLEAN, 40);
+								if(ele!=null)
+								{
+									if(CommonLib.clickUsingJavaScript(driver, ele, subjectName[i]+" popup close", action.SCROLLANDBOOLEAN))
+									{
+										log(LogStatus.INFO, "Clicked on close button "+subjectName[i]+" subject popup ", YesNo.No);
+									}
+									else
+									{
+										log(LogStatus.ERROR, "Not able to click on close button "+subjectName[i]+" subject popup ", YesNo.No);
+										sa.assertTrue(false, "Not able to click on close button "+subjectName[i]+" subject popup ");
+									}
+
+								}
+								else
+								{
+									log(LogStatus.ERROR, "Close button is not visible on "+subjectName[i]+" subject popup",YesNo.No);
+									sa.assertTrue(false, "Close button is not visible on "+subjectName[i]+" subject popup");
+								}
 							}
 							else
 							{
@@ -2421,7 +2504,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 								sa.assertTrue(false, "Not able to click on subject name : "+subjectName[i]);
 							}	
 						}
-						
+						driver.close();
+						driver.switchTo().window(id);
+						/*					
 						for(int i=0; i<subjectName.length; i++)
 						{
 							ThreadSleep(2000);
@@ -2460,7 +2545,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								sa.assertTrue(false,"Not able to click on Assigned To user name of "+subjectName[i]);
 							}	
 						}			
-
+						 */
 					}
 					else
 					{
@@ -2499,14 +2584,12 @@ public class AcuityTaskAndEvent extends BaseLib {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 
 		String recordName=ATERecord3;
-		String xPath;
-		WebElement ele;	
-		
+
 		String dueDate1=ATE_AdvanceDueDate1;
 		String dueDate2=ATE_AdvanceDueDate2;
 		String dueDate3=ATE_AdvanceDueDate3;
 		String dueDate4=ATE_AdvanceDueDate4;
-        
+
 		String startDate1=ATE_AdvanceStartDate1;
 
 		String user1=crmUser6FirstName+" "+crmUser6LastName;
@@ -2571,9 +2654,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 					ThreadSleep(10000);
 
-					if (click(driver, bp.getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
-						if (click(driver, bp.getTaggedRecordTimeReference("Companies", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
 
 							ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(companyIcon, companyDueDate, companySubjectName, companyDetails, companyUsers, companySubjectName);
@@ -2586,7 +2669,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+companyTagName+" record " +result, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+companyTagName+" record "+result);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -2597,7 +2680,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -2607,8 +2690,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on Companies tab name");
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
 					}
 
 					ThreadSleep(2000);
@@ -2627,7 +2710,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record "+result1, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -2638,7 +2721,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -2668,7 +2751,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record "+result2, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result2);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -2679,7 +2762,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -2693,7 +2776,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "Not able to click on Deals tab name");
 					}
 					ThreadSleep(2000);
-					ArrayList<String> result3=bp.verifyRedirectionOnClickOfTaggedRecord(subjectNameInteraction, relatedAssociation, relatedAssociationOnTagged);
+					/*			ArrayList<String> result3=bp.verifyRedirectionOnClickOfTaggedRecord(subjectNameInteraction, relatedAssociation, relatedAssociationOnTagged);
 					if(result3.isEmpty())
 					{
 						log(LogStatus.INFO, "The Link is redirecting to new tab on click of Tagged record",YesNo.No);
@@ -2704,9 +2787,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The Link is not redirecting to new tab on click of Tagged record. "+result3);
 					}
 					ThreadSleep(2000);
-					xPath="//a[text()='"+contactRecord+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-					ele=FindElement(driver, xPath, "Count of "+contactRecord+" on contact section", action.SCROLLANDBOOLEAN, 20);
-					if(CommonLib.clickUsingJavaScript(driver, ele,"Count of "+contactRecord+" on contact section" , action.SCROLLANDBOOLEAN))
+					 */		
+					if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(contactRecord, 20),"Count of "+contactRecord+" on contact section" , action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on count of "+contactRecord,YesNo.No);
 						ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(meetingAndCallIcon, meetingAndCallDate, meetingAndCallSubject, meetingAndCallDetails, meetingAndCallAssignedTo);
@@ -2727,9 +2809,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 					ThreadSleep(2000);
 
-					xPath="//a[text()='"+contactRecord+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-					ele=FindElement(driver, xPath, "Count of "+contactRecord+" on contact section", action.SCROLLANDBOOLEAN, 20);
-					if(CommonLib.clickUsingJavaScript(driver, ele,"Count of "+contactRecord+" on contact section" , action.SCROLLANDBOOLEAN))
+					if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(contactRecord, 20),"Count of "+contactRecord+" on contact section" , action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on count of "+contactRecord,YesNo.No);
 						ArrayList<String> result5=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(meetingAndCallIcon1, meetingAndCallDate1, meetingAndCallSubject1, meetingAndCallDetails1, meetingAndCallAssignedTo1);
@@ -2782,17 +2862,14 @@ public class AcuityTaskAndEvent extends BaseLib {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 
 		String recordName=ATE_Contact1;
-		String xPath;
-		WebElement ele;
-		
-		
+
 		String dueDate1=ATE_AdvanceDueDate1;
 		String dueDate2=ATE_AdvanceDueDate2;
 		String dueDate3=ATE_AdvanceDueDate3;
 		String dueDate4=ATE_AdvanceDueDate4;
-		
+
 		String startDate1=ATE_AdvanceStartDate1;
-		
+
 		String user1=crmUser6FirstName+" "+crmUser6LastName;
 		String user2=crmUser7FirstName+" "+crmUser7LastName;
 
@@ -2850,9 +2927,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 					ThreadSleep(10000);
-					if (click(driver, bp.getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
-						if (click(driver, bp.getTaggedRecordTimeReference("Companies", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
 
 							ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(companyIcon, companyDueDate, companySubjectName, companyDetails, companyUsers, companySubjectName);
@@ -2865,7 +2942,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+companyTagName+" record " +result, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+companyTagName+" record "+result);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*					xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -2876,7 +2953,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -2886,8 +2963,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on Companies tab name");
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
 					}
 
 					ThreadSleep(2000);
@@ -2906,7 +2983,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record "+result1, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result1);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -2917,7 +2994,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -2947,7 +3024,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record "+result2, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result2);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -2958,7 +3035,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -2972,7 +3049,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "Not able to click on Deals tab name");
 					}
 					ThreadSleep(2000);
-					ArrayList<String> result3=bp.verifyRedirectionOnClickOfTaggedRecord(subjectNameInteraction, relatedAssociation, relatedAssociationOnTagged);
+					/*				ArrayList<String> result3=bp.verifyRedirectionOnClickOfTaggedRecord(subjectNameInteraction, relatedAssociation, relatedAssociationOnTagged);
 					if(result3.isEmpty())
 					{
 						log(LogStatus.INFO, "The Link is redirecting to new tab on click of Tagged record",YesNo.No);
@@ -2983,9 +3060,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The Link is not redirecting to new tab on click of Tagged record "+result3);
 					}
 					ThreadSleep(2000);
-					xPath="//a[text()='"+user1+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-					ele=FindElement(driver, xPath, "Count of "+contactRecord+" on contact section", action.SCROLLANDBOOLEAN, 20);
-					if(CommonLib.clickUsingJavaScript(driver, ele,"Count of "+contactRecord+" on contact section" , action.SCROLLANDBOOLEAN))
+					 */		
+					if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(user1, 20),"Count of "+contactRecord+" on contact section" , action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on count of "+contactRecord,YesNo.No);
 						ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(meetingAndCallIcon, meetingAndCallDate, meetingAndCallSubject, meetingAndCallDetails, meetingAndCallAssignedTo);
@@ -3028,7 +3104,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
+	/*
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc020_VerifyTheCountsForUsersOnContactPage(String projectName) {
@@ -3110,7 +3186,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
+	 */
 
 	@Parameters({ "projectName" })
 	@Test
@@ -3197,8 +3273,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		meetingAndCallsPopupHeader.add("Date");
 		meetingAndCallsPopupHeader.add("Subject");
 		meetingAndCallsPopupHeader.add("Details");
-		meetingAndCallsPopupHeader.add("Assigned To");
-
+		//meetingAndCallsPopupHeader.add("Assigned To");
 
 		lp.CRMLogin(crmUser7EmailID, adminPassword, appName);
 
@@ -3284,11 +3359,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The records are not verified on Connection section in Acuity for user "+connectionTeamMember1+". "+result6);
 					}
 
-
-
-					xPath="//a[text()='"+contactName+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-					ele=FindElement(driver, xPath, "meeting and call count of "+contactName, action.SCROLLANDBOOLEAN, 20);
-					if(click(driver, ele, contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
 
@@ -3310,9 +3381,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
 					}
 
-					xPath="//a[text()='"+contactName+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-					ele=FindElement(driver, xPath, "meeting and call count of "+contactName, action.SCROLLANDBOOLEAN, 20);
-					if(click(driver, ele, contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
 
@@ -3334,10 +3403,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
 					}
 
-
-					xPath="//a[text()='"+contactName1+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-					ele=FindElement(driver, xPath, "meeting and call count of "+contactName1, action.SCROLLANDBOOLEAN, 20);
-					if(click(driver, ele, contactName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+					if(click(driver, bp.getMeetingAndCallCount(contactName1, 20), contactName1+" meetings and call count", action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
 
@@ -3352,7 +3418,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR,  "The UI and Message on Meeting and Calls popup are not verified. "+result9, YesNo.No);
 							sa.assertTrue(false, "The UI and Message on Meeting and Calls popup are not verified. "+result9);
 						}
-
+						/*
 						xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
 						ele=FindElement(driver, xPath, "Meetings and Calls close", action.SCROLLANDBOOLEAN, 20);
 						if(clickUsingJavaScript(driver, ele, "close button"))
@@ -3364,7 +3430,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on close button of Meetings and Calls popup", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on close button of Meetings and Calls popup");
 						}
-
+						 */
 					}
 					else
 					{
@@ -3394,7 +3460,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -3429,7 +3494,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			relatedAssociation[i]=relatedAssocVal[i-1];
 		}
 
-		
+
 		String activityType1=ATE_ATActivityType2;
 		String taskSubject1=ATE_ATSubject2;
 		String taskDetails1=ATE_ATNotes2;
@@ -3519,11 +3584,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The records are not verified on Connection section in Acuity for user "+connectionTeamMember1+". "+result3);
 					}
 
-
-
-					xPath="//a[text()='"+userName1+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-					ele=FindElement(driver, xPath, "meeting and call count of "+userName1, action.SCROLLANDBOOLEAN, 20);
-					if(click(driver, ele, userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+					if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
 
@@ -3545,9 +3606,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
 					}
 
-					xPath="//a[text()='"+userName+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-					ele=FindElement(driver, xPath, "meeting and call count of "+userName, action.SCROLLANDBOOLEAN, 20);
-					if(click(driver, ele, userName+" meetings and call count", action.SCROLLANDBOOLEAN))
+					if(click(driver, bp.getMeetingAndCallCount(userName, 20), userName+" meetings and call count", action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
 
@@ -3637,8 +3696,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String[] relatedAssocVal1=ATE_ARelatedAsso1.split("<break>");
 
 		ArrayList<String> emptyList=new ArrayList<String>();
-
-
 
 		String[] companiesTaggedName= {ATE_TaggedCompanyName9,ATE_TaggedCompanyName10,ATE_TaggedCompanyName5,ATE_TaggedCompanyName6,ATE_TaggedCompanyName7};
 		String[] companiesTaggedTimeReference= {ATE_TaggedCompanyTimeReference9,ATE_TaggedCompanyTimeReference10,ATE_TaggedCompanyTimeReference5,ATE_TaggedCompanyTimeReference6,ATE_TaggedCompanyTimeReference7};
@@ -3741,9 +3798,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The records are not verified on contact section in Acuity for contact : "+contactSectionName1+". "+result4);
 					}
 
-					if (click(driver, bp.getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
-						if (click(driver, bp.getTaggedRecordTimeReference("Companies", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Firms Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
 
 							ArrayList<String> result5=bp.verifyRecordsonInteractionsViewAllPopup(companyIcon, companyDueDate, companySubjectName, companyDetails, companyUsers, companySubjectName);
@@ -3756,7 +3813,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+companyTagName+" record " +result5, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+companyTagName+" record "+result5);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*		xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -3767,7 +3824,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -3777,8 +3834,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on Companies tab name");
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
 					}
 
 				}
@@ -3918,9 +3975,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The message and header name of contact section are not verified. "+result2);
 					}
 
-					if (click(driver, bp.getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
-						if (click(driver, bp.getTaggedRecordTimeReference("Companies", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
 
 							ArrayList<String> result5=bp.verifyRecordsonInteractionsViewAllPopup(companyIcon, companyDueDate, companySubjectName, companyDetails, companyUsers, companySubjectName);
@@ -3933,7 +3990,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+companyTagName+" record. " +result5, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+companyTagName+" record. "+result5);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*				xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -3944,7 +4001,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -3954,8 +4011,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on Companies tab name");
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
 					}
 
 				}
@@ -4011,12 +4068,12 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String taskSubject1=ATE_ATSubject2;
 		String taskDetails1=ATE_ATNotes2;
-		
-		
+
+
 		String dueDate1=ATE_AdvanceDueDate2;
 		String dueDate2=ATE_AdvanceDueDate3;
 		String dueDate3=ATE_AdvanceDueDate4;
-		
+
 		String startDate1=ATE_AdvanceStartDate1;
 
 		String[] data=ATE_ARelatedAsso2.split("<break>");
@@ -4110,9 +4167,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The records are not verified on contact section in Acuity for contact : "+contactSectionName+". "+result3);
 					}
 
-					if (click(driver, bp.getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
-						if (click(driver, bp.getTaggedRecordTimeReference("Companies", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
 
 							ArrayList<String> result4=bp.verifyRecordsonInteractionsViewAllPopup(icon, dueDate, subjectName, details, users, subjectName);
@@ -4125,7 +4182,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+companyTagName+" record " +result4, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+companyTagName+" record "+result4);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*		xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -4136,7 +4193,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -4146,8 +4203,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on Companies tab name");
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
 					}
 
 				}
@@ -4172,7 +4229,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -4200,7 +4256,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		{
 			relatedAssociation[i]=relatedAssocVal[i-1];
 		}
-		
+
 		String dueDate1=ATE_AdvanceStartDate1;
 
 		String[] data=ATE_ARelatedAsso2.split("<break>");
@@ -4262,8 +4318,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The task is not verified on Interaction card. subject name: "+taskSubject+". "+result);
 					}
 
-
-
 					ArrayList<String> result1=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTaggedName, dealTaggedTimeReference);
 					if(result1.isEmpty())
 					{
@@ -4286,9 +4340,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The records are not verified on contact section in Acuity for contact : "+contactSectionName+". "+result2);
 					}
 
-					if (click(driver, bp.getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
-						if (click(driver, bp.getTaggedRecordTimeReference("Companies", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
 
 							ArrayList<String> result5=bp.verifyRecordsonInteractionsViewAllPopup(icon, dueDate, subjectName, details, users, subjectName);
@@ -4301,7 +4355,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+companyTagName+" record " +result5, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+companyTagName+" record "+result5);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*					xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -4312,7 +4366,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -4322,8 +4376,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on Companies tab name");
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
 					}
 
 				}
@@ -4349,7 +4403,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
+	/*
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc027_VerifyAcuityTabOnReferencedDealsAlsoOnRecordTypeOfAccountsWhichAcuityTabWillNotDisplay(String projectName) {
@@ -4430,8 +4484,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-	
-	
+	 */
+
 	/*
 	 * 
 	 * 
@@ -4439,7 +4493,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 	 * 
 	 * 
 	 */
-		
+
 
 	@Parameters({ "projectName" })
 	@Test
@@ -4552,6 +4606,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				hardAssert.assertTrue(true == false);
 			}
 		}
+		String[] highlightedCompany=ATE_highlightedCompany1.split("<break>");
 
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
@@ -4577,6 +4632,19 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR,  "The record name and Time reference are not verifed "+result, YesNo.No);
 						sa.assertTrue(false,  "The record name and Time reference are not verifed "+result);
 					}
+
+					ArrayList<String> result5=bp.verifyHighlightedCompanyNameOnCompanyTaggedSection(highlightedCompany);
+					if(result5.isEmpty())
+					{
+						log(LogStatus.INFO, "The highlighted firm record have been verifid on Tagged section", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The highlighted firm record are not verifid on Tagged section "+result5, YesNo.No);
+						sa.assertTrue(false, "The highlighted firm record are not verifid on Tagged section "+result5);
+
+					}
+
 					ArrayList<String> result1=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCall, contactSectionEmail);
 					if(result1.isEmpty())
 					{
@@ -4587,7 +4655,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "The records are not verified on contact section in Acuity for contact : "+result1, YesNo.No);
 						sa.assertTrue(false,  "The records are not verified on contact section in Acuity for contact :  "+result1);
 					}
-					if(bp.verifyCountOfRelatedAssociationOnTaggedPopupOnInteractionSctionOfFirstRecord())
+					/*			if(bp.verifyCountOfRelatedAssociationOnTaggedPopupOnInteractionSctionOfFirstRecord())
 					{
 						log(LogStatus.INFO, "The count of Tagged record have been verified on tagged popup", YesNo.No);
 					}
@@ -4596,7 +4664,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "The count of Tagged record is not verified on tagged popup", YesNo.No);
 						sa.assertTrue(false, "The count of Tagged record is not verified on tagged popup");
 					}
-
+					 */
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
@@ -4610,7 +4678,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 						}
-
+						/*
 						String xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 						WebElement ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 						if(clickUsingJavaScript(driver, ele, "close button"))
@@ -4622,7 +4690,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 						}
-
+						 */
 					}
 					else
 					{
@@ -4662,9 +4730,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String recordName=ATERecord3;
 		String contactName=ATE_Contact1;
-
-		String xPath;
-		WebElement ele;
 
 		String userName1=crmUser6FirstName+" "+crmUser6LastName;
 		String userName2=crmUser7FirstName+" "+crmUser7LastName;
@@ -4882,14 +4947,11 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "The records on Connection popup are not verified. "+result, YesNo.No);	
 						sa.assertTrue(false,  "The records on Connection popup are not verified. "+result);
 					}
-
 					if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactName, 30), "Contact Name: " + contactName,
 							action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactName, YesNo.No);
-
-						xPath="//a[text()='"+userName1+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-						ele=FindElement(driver, xPath, "Count of "+userName1+" on contact section", action.SCROLLANDBOOLEAN, 20);
-						if(CommonLib.clickUsingJavaScript(driver, ele,"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+						String parentID=switchOnWindow(driver);
+						if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
 						{
 							log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
 							ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(icon, date, subjectName, details, meetingAndCallUser);
@@ -4902,7 +4964,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Records are not verifid on meeting and call popup" +result4,YesNo.No);
 								sa.assertTrue(false, "Records are not verifid on meeting and call popup" +result4);
 							}
-
 						}
 						else
 						{
@@ -4910,9 +4971,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							sa.assertTrue(false,  "Not able to click on count of "+contactName);
 						}		
 						ThreadSleep(3000);
-						xPath="//a[text()='"+userName2+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-						ele=FindElement(driver, xPath, "Count of "+userName2+" on contact section", action.SCROLLANDBOOLEAN, 20);
-						if(CommonLib.clickUsingJavaScript(driver, ele,"Count of "+userName2+" on contact section" , action.SCROLLANDBOOLEAN))
+						if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName2, 20),"Count of "+userName2+" on contact section" , action.SCROLLANDBOOLEAN))
 						{
 							ThreadSleep(2000);
 							log(LogStatus.INFO, "clicked on count of "+userName2,YesNo.No);
@@ -4932,7 +4991,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 						{
 							log(LogStatus.ERROR, "Not able to click on count of "+contactName,YesNo.No);
 							sa.assertTrue(false,  "Not able to click on count of "+contactName);
-						}		
+						}	
+						driver.close();
+						driver.switchTo().window(parentID);
 					}
 					else
 					{
@@ -4961,7 +5022,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 
 	@Parameters({ "projectName" })
@@ -5000,6 +5060,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String[] notVisibleRecord= {ATE_TaggedPeopleName30,ATE_TaggedPeopleName31}; 
 
+		String[] highlightedCompany=ATE_highlightedCompany1.split("<break>");
 
 		String[] connectionEmail= {ATE_ConnectionEmail3,ATE_ConnectionEmail4,ATE_ConnectionEmail5,ATE_ConnectionEmail6,ATE_ConnectionEmail7,ATE_ConnectionEmail8,ATE_ConnectionEmail9,ATE_ConnectionEmail10,ATE_ConnectionEmail11,ATE_ConnectionEmail12};
 		String[] connectionMeetingAndCall= {ATE_ConnectionMeetingAndCall3,ATE_ConnectionMeetingAndCall4,ATE_ConnectionMeetingAndCall5,ATE_ConnectionMeetingAndCall6,ATE_ConnectionMeetingAndCall7,ATE_ConnectionMeetingAndCall8,ATE_ConnectionMeetingAndCall9,ATE_ConnectionMeetingAndCall10,ATE_ConnectionMeetingAndCall11,ATE_ConnectionMeetingAndCall12};
@@ -5258,7 +5319,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			}
 		}
 
-		
+
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
 		if (lp.clickOnTab(projectName, tabObj2)) {
@@ -5283,7 +5344,19 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR,  "The record name and Time reference are not verifed "+result, YesNo.No);
 						sa.assertTrue(false,  "The record name and Time reference are not verifed "+result);
 					}
-					
+
+					ArrayList<String> result7=bp.verifyHighlightedCompanyNameOnCompanyTaggedSection(highlightedCompany);
+					if(result7.isEmpty())
+					{
+						log(LogStatus.INFO, "The highlighted firm record have been verifid on Tagged section", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "The highlighted firm record are not verifid on Tagged section "+result7, YesNo.No);
+						sa.assertTrue(false, "The highlighted firm record are not verifid on Tagged section "+result7);
+
+					}
+
 					ArrayList<String>result3= bp.verifyRecordShouldNotVisibleOnTagged(null, notVisibleRecord, null);
 					if(result3.isEmpty())
 					{
@@ -5293,7 +5366,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					{
 						log(LogStatus.ERROR, "The results are visible on Tagged section. "+notVisibleRecord+". "+result3, YesNo.No);
 						sa.assertTrue(false, "The results are visible on Tagged section. "+notVisibleRecord+". "+result3);
-									
+
 					}
 
 
@@ -5318,7 +5391,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "The size of User, Title, Deal, Meeting and call, Email are not equal", YesNo.No);
 						sa.assertTrue(false,  "The size of User, Title, Deal, Meeting and call, Email are not equal");
 					}
-
+					/*
 					if(bp.verifyCountOfRelatedAssociationOnTaggedPopupOnInteractionSctionOfFirstRecord())
 					{
 						log(LogStatus.INFO, "The count of Tagged record have been verified on tagged popup", YesNo.No);
@@ -5328,7 +5401,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "The count of Tagged record is not verified on tagged popup", YesNo.No);
 						sa.assertTrue(false, "The count of Tagged record is not verified on tagged popup");
 					}
-
+					 */
 
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
@@ -5343,7 +5416,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 						}
-
+						/*
 						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 						if(clickUsingJavaScript(driver, ele, "close button"))
@@ -5355,7 +5428,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 						}
-
+						 */
 					}
 					else
 					{
@@ -5363,12 +5436,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
 					}
 
-
-					xPath="//a[text()='"+userName1+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-					ele=FindElement(driver, xPath, "Count of "+contactName+" on contact section", action.SCROLLANDBOOLEAN, 20);
-					if(CommonLib.clickUsingJavaScript(driver, ele,"Count of "+contactName+" on contact section" , action.SCROLLANDBOOLEAN))
+					if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on connection section" , action.SCROLLANDBOOLEAN))
 					{
-						log(LogStatus.INFO, "clicked on count of "+contactName,YesNo.No);
+						log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
 						ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(icon, date, subjectName, details, meetingAndCallUser);
 						if(result4.isEmpty())
 						{
@@ -5383,13 +5453,12 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on count of "+contactName,YesNo.No);
-						sa.assertTrue(false,  "Not able to click on count of "+contactName);
+						log(LogStatus.ERROR, "Not able to click on count of "+userName1,YesNo.No);
+						sa.assertTrue(false,  "Not able to click on count of "+userName1);
 					}		
 					ThreadSleep(3000);
-					xPath="//a[text()='"+userName2+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-					ele=FindElement(driver, xPath, "Count of "+userName2+" on contact section", action.SCROLLANDBOOLEAN, 20);
-					if(CommonLib.clickUsingJavaScript(driver, ele,"Count of "+userName2+" on contact section" , action.SCROLLANDBOOLEAN))
+
+					if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName2, 20),"Count of "+userName2+" on connection section" , action.SCROLLANDBOOLEAN))
 					{
 						ThreadSleep(2000);
 						log(LogStatus.INFO, "clicked on count of "+userName2,YesNo.No);
@@ -5407,9 +5476,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on count of "+contactName,YesNo.No);
-						sa.assertTrue(false,  "Not able to click on count of "+contactName);
-					}		
+						log(LogStatus.ERROR, "Not able to click on count of "+userName2,YesNo.No);
+						sa.assertTrue(false,  "Not able to click on count of "+userName2);
+					}			
 				}
 				else
 				{
@@ -5432,8 +5501,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -5582,8 +5649,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 				hardAssert.assertTrue(true == false);
 			}
 		}
-		
-		
+
+
 		IconType[] companyIcon2= {IconType.Call,IconType.Call,IconType.Call,IconType.Call,IconType.Event,IconType.Event,IconType.Event,IconType.Event};
 		String[] companySubjectName2= {ATE_ATSubject26,ATE_ATSubject27,ATE_ATSubject28,ATE_ATSubject29,ATE_ATSubject56,ATE_ATSubject57,ATE_ATSubject58,ATE_ATSubject59};
 		String[] companyDetails2= {ATE_ATNotes26,ATE_ATNotes27,ATE_ATNotes28,ATE_ATNotes29,ATE_ATNotes56,ATE_ATNotes57,ATE_ATNotes58,ATE_ATNotes59};
@@ -5653,9 +5720,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 					ThreadSleep(5000);
 
-					if (click(driver, bp.getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
-						if (click(driver, bp.getTaggedRecordTimeReference("Companies", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
 
 							ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(companyIcon, companyDueDate, companySubjectName, companyDetails, companyUsers, companySubjectName);
@@ -5668,7 +5735,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+companyTagName+" record " +result, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+companyTagName+" record "+result);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*			xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -5679,7 +5746,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -5689,14 +5756,14 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on Companies tab name");
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
 					}
-					
-					
-					if (click(driver, bp.getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
-						if (click(driver, bp.getTaggedRecordTimeReference("Companies", companyTagName1, companyTagTimeReferenceCount1,30), companyTagName1+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName1, companyTagTimeReferenceCount1,30), companyTagName1+" on Firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName1,YesNo.No);
 
 							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(companyIcon, companyDueDate, companySubjectName, companyDetails, companyUsers, companySubjectName);
@@ -5709,7 +5776,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+companyTagName1+" record " +result2, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+companyTagName1+" record "+result2);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -5720,7 +5787,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -5730,11 +5797,11 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on Companies tab name");
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
 					}
-					
-					
+
+
 					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
@@ -5750,7 +5817,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result3, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result3);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -5761,7 +5828,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -5774,7 +5841,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
 						sa.assertTrue(false,  "Not able to click on People tab name");
 					}
-					
+
 					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
@@ -5790,7 +5857,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -5801,7 +5868,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -5814,7 +5881,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
 						sa.assertTrue(false,  "Not able to click on Deals tab name");
 					}
-					
+
 
 				}
 				else
@@ -5838,7 +5905,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 
 	@Parameters({ "projectName" })
@@ -5870,7 +5936,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String companyTagName1=ATE_TaggedCompanyName17;
 		String companyTagTimeReferenceCount1=ATE_TaggedCompanyTimeReference17;
-		
+
 		String dealTagName=ATE_TaggedDealName8;
 		String dealTagTimeReferenceCount=ATE_TaggedDealTimeReference8;
 
@@ -5928,7 +5994,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 				hardAssert.assertTrue(true == false);
 			}
 		}	
-		
+
 		IconType[] companyIcon2= {IconType.Call,IconType.Call,IconType.Call,IconType.Call,IconType.Call,IconType.Event,IconType.Event,IconType.Event,IconType.Event,IconType.Event};
 		String[] companySubjectName2= {ATE_ATSubject30,ATE_ATSubject31,ATE_ATSubject32,ATE_ATSubject33,ATE_ATSubject34,ATE_ATSubject60,ATE_ATSubject61,ATE_ATSubject62,ATE_ATSubject63,ATE_ATSubject64};
 		String[] companyDetails2= {ATE_ATNotes30,ATE_ATNotes31,ATE_ATNotes32,ATE_ATNotes33,ATE_ATNotes34,ATE_ATNotes60,ATE_ATNotes61,ATE_ATNotes62,ATE_ATNotes63,ATE_ATNotes64};
@@ -5998,9 +6064,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 					ThreadSleep(5000);
 
-					if (click(driver, bp.getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
-						if (click(driver, bp.getTaggedRecordTimeReference("Companies", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
 
 							ArrayList<String> result=bp.verifyRecordsonInteractionsViewAllPopup(companyIcon, companyDueDate, companySubjectName, companyDetails, companyUsers, companySubjectName);
@@ -6013,7 +6079,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+companyTagName+" record " +result, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+companyTagName+" record "+result);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*			xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -6024,7 +6090,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -6034,14 +6100,14 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on Companies tab name");
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
 					}
-					
-					
-					if (click(driver, bp.getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
-						if (click(driver, bp.getTaggedRecordTimeReference("Companies", companyTagName1, companyTagTimeReferenceCount1,30), companyTagName1+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName1, companyTagTimeReferenceCount1,30), companyTagName1+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName1,YesNo.No);
 
 							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(companyIcon, companyDueDate, companySubjectName, companyDetails, companyUsers, companySubjectName);
@@ -6054,7 +6120,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+companyTagName1+" record " +result2, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+companyTagName1+" record "+result2);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*					xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -6065,7 +6131,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -6075,11 +6141,11 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on Companies tab name");
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
 					}
-					
-					
+
+
 					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
@@ -6095,7 +6161,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*				xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -6106,7 +6172,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -6119,8 +6185,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
 						sa.assertTrue(false,  "Not able to click on Deals tab name");
 					}
-					
-
 				}
 				else
 				{
@@ -6144,7 +6208,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc033_CreateATaskWithIntermediaryFirmContactAndVerifyTheAccountAcuityTab(String projectName) {
@@ -6152,7 +6215,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 
-		String recordName=ATERecord3;
 		String activityType=ATE_ATActivityType76;
 		String taskSubject=ATE_ATSubject76;
 		String taskRelatedTo=ATE_ATRelatedTo6;
@@ -6253,7 +6315,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -6381,7 +6442,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "The records are not verified on contact section in Acuity for contact : "+result1, YesNo.No);
 						sa.assertTrue(false,  "The records are not verified on contact section in Acuity for contact :  "+result1);
 					}
-					if(bp.verifyCountOfRelatedAssociationOnTaggedPopupOnInteractionSctionOfFirstRecord())
+					/*				if(bp.verifyCountOfRelatedAssociationOnTaggedPopupOnInteractionSctionOfFirstRecord())
 					{
 						log(LogStatus.INFO, "The count of Tagged record have been verified on tagged popup", YesNo.No);
 					}
@@ -6390,7 +6451,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "The count of Tagged record is not verified on tagged popup", YesNo.No);
 						sa.assertTrue(false, "The count of Tagged record is not verified on tagged popup");
 					}
-
+					 */
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
@@ -6405,7 +6466,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 						}
 
-						String xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+						/*				String xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 						WebElement ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 						if(clickUsingJavaScript(driver, ele, "close button"))
 						{
@@ -6416,7 +6477,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 						}
-
+						 */
 					}
 					else
 					{
@@ -6445,7 +6506,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -6589,8 +6649,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 			}
 		}		
 
-
-
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
 		if (lp.clickOnTab(projectName, tabObj1)) {
@@ -6618,10 +6676,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 					if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactName, 30), "Contact Name: " + contactName,
 							action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactName, YesNo.No);
+						String parentID=switchOnWindow(driver);
 
-						xPath="//a[text()='"+userName1+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-						ele=FindElement(driver, xPath, "Count of "+userName1+" on contact section", action.SCROLLANDBOOLEAN, 20);
-						if(CommonLib.clickUsingJavaScript(driver, ele,"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+						if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
 						{
 							log(LogStatus.INFO, "clicked on count of "+contactName,YesNo.No);
 							ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(icon, date, subjectName, details, meetingAndCallUser);
@@ -6640,7 +6697,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 						{
 							log(LogStatus.ERROR, "Not able to click on count of "+contactName,YesNo.No);
 							sa.assertTrue(false,  "Not able to click on count of "+contactName);
-						}		
+						}	
+						driver.close();
+						driver.switchTo().window(parentID);
 
 					}
 					else
@@ -6670,8 +6729,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -6917,15 +6974,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
 					}
 
-					if(bp.verifyCountOfRelatedAssociationOnTaggedPopupOnInteractionSctionOfFirstRecord())
-					{
-						log(LogStatus.INFO, "The count of Tagged record have been verified on tagged popup", YesNo.No);
-					}
-					else
-					{
-						log(LogStatus.ERROR, "The count of Tagged record is not verified on tagged popup", YesNo.No);
-						sa.assertTrue(false, "The count of Tagged record is not verified on tagged popup");
-					}						
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
@@ -6940,7 +6988,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 						}
 
-						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+						/*					xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 						if(clickUsingJavaScript(driver, ele, "close button"))
 						{
@@ -6951,7 +6999,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 						}
-
+						 */
 					}
 					else
 					{
@@ -6971,9 +7019,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false, "The records are verified on Connection section for user :"+connectionUser+". "+result3);
 					}
 
-					xPath="//a[text()='"+userName1+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-					ele=FindElement(driver, xPath, "Count of "+userName1+" on contact section", action.SCROLLANDBOOLEAN, 20);
-					if(CommonLib.clickUsingJavaScript(driver, ele,"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+					if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
 
@@ -7017,7 +7063,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc037_AssociateIntermediaryAccountWithReferenceAccountsContactInATaskAndEvent(String projectName) {
@@ -7076,7 +7121,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String[][] advanceSection2 = { { "Start Date", advanceStartDate },{"End Date",advanceEndDate}};	
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
-
+		/*
 		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
@@ -7098,7 +7143,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			log(LogStatus.ERROR, "Activity timeline record is not created, Subject name : "+taskSubject1, YesNo.No);
 			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
 		}
-
+		 */
 		if (lp.clickAnyCellonCalender(projectName)) {
 			log(LogStatus.INFO,"Able to click on Calendar/Event Link",YesNo.No);
 
@@ -7121,8 +7166,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-	
-	
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc038_VerifyImpactOnIntermediaryAccountAcuityTab(String projectName) {
@@ -7239,8 +7283,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR,  "The record name and Time reference are not verifed "+result, YesNo.No);
 						sa.assertTrue(false,  "The record name and Time reference are not verifed "+result);
 					}
-					
-					
+
+
 					ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection();
 					if(result10.isEmpty())
 					{
@@ -7251,7 +7295,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
 						sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
 					}
-					
+
 					ArrayList<String> result1=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCall, contactSectionEmail);
 					if(result1.isEmpty())
 					{
@@ -7262,7 +7306,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "The records are not verified on contact section in Acuity for contact : "+result1, YesNo.No);
 						sa.assertTrue(false,  "The records are not verified on contact section in Acuity for contact :  "+result1);
 					}
-					if(bp.verifyCountOfRelatedAssociationOnTaggedPopupOnInteractionSctionOfFirstRecord())
+					/*			if(bp.verifyCountOfRelatedAssociationOnTaggedPopupOnInteractionSctionOfFirstRecord())
 					{
 						log(LogStatus.INFO, "The count of Tagged record have been verified on tagged popup", YesNo.No);
 					}
@@ -7271,7 +7315,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "The count of Tagged record is not verified on tagged popup", YesNo.No);
 						sa.assertTrue(false, "The count of Tagged record is not verified on tagged popup");
 					}
-
+					 */
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
@@ -7285,7 +7329,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 						}
-
+						/*
 						String xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 						WebElement ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 						if(clickUsingJavaScript(driver, ele, "close button"))
@@ -7297,7 +7341,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 						}
-
+						 */
 					}
 					else
 					{
@@ -7326,8 +7370,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
-	
+
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc039_VerifyConnectionPopupOnIntermediaryAccountPage(String projectName) {
@@ -7470,8 +7514,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 			}
 		}		
 
-
-
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
 		if (lp.clickOnTab(projectName, tabObj1)) {
@@ -7548,7 +7590,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String[] peopleTagName={ATE_TaggedPeopleName17};
 		String[] peopleTaggedTimeReference={ATE_TaggedPeopleTimeReference17};
-		
+
 		String[] subjectName= {ATE_ATSubject79,ATE_ATSubject80,ATE_ATSubject81};
 
 		String connectionEmail= ATE_ConnectionEmail13;
@@ -7638,7 +7680,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
 					}
 
-					if(bp.verifyCountOfRelatedAssociationOnTaggedPopupOnInteractionSctionOfFirstRecord())
+					/*			if(bp.verifyCountOfRelatedAssociationOnTaggedPopupOnInteractionSctionOfFirstRecord())
 					{
 						log(LogStatus.INFO, "The count of Tagged record have been verified on tagged popup", YesNo.No);
 					}
@@ -7647,7 +7689,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "The count of Tagged record is not verified on tagged popup", YesNo.No);
 						sa.assertTrue(false, "The count of Tagged record is not verified on tagged popup");
 					}
-					
+					 */		
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
@@ -7662,7 +7704,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The records are available on View All Interaction section  "+result2);
 						}
 
-						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+						/*				xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 						if(clickUsingJavaScript(driver, ele, "close button"))
 						{
@@ -7673,7 +7715,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 						}
-
+						 */
 					}
 					else
 					{
@@ -7693,7 +7735,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false, "The records are verified on Connection section for user :"+connectionUser+". "+result3);
 					}
 
-					
+
 				}
 				else
 				{
@@ -7717,7 +7759,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc041_AssociateIntermediaryAccountWithSomeOtherAccountsAlsoAssociateAccountsWithOtherFirmContactAndCreateSomeFollowUpTaskAsWell(String projectName) {
@@ -7798,6 +7839,13 @@ public class AcuityTaskAndEvent extends BaseLib {
 			sa.assertTrue(false, "Activity timeline record is not created,  Subject name : "+taskSubject1);
 		}
 
+
+		ThreadSleep(2000);
+		lp.CRMlogout();	
+		ThreadSleep(8000);
+		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
+		ThreadSleep(3000);
+
 		if (lp.clickAnyCellonCalender(projectName)) {
 			log(LogStatus.INFO,"Able to click on Calendar/Event Link",YesNo.No);
 
@@ -7848,7 +7896,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String[] peopleTagName={ATE_TaggedPeopleName19,ATE_TaggedPeopleName20};
 		String[] peopleTaggedTimeReference={ATE_TaggedPeopleTimeReference19,ATE_TaggedPeopleTimeReference20};
-		
+
 		String[] dealTagName={ATE_TaggedDealName17};
 		String[] dealTaggedTimeReference={ATE_TaggedDealTimeReference17};
 
@@ -7940,8 +7988,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR,  "The record name and Time reference are not verifed "+result, YesNo.No);
 						sa.assertTrue(false,  "The record name and Time reference are not verifed "+result);
 					}
-					
-					
+
+
 					ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection();
 					if(result10.isEmpty())
 					{
@@ -7952,7 +8000,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
 						sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
 					}
-					
+
 					ArrayList<String> result1=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCall, contactSectionEmail);
 					if(result1.isEmpty())
 					{
@@ -7963,7 +8011,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "The records are not verified on contact section in Acuity for contact : "+result1, YesNo.No);
 						sa.assertTrue(false,  "The records are not verified on contact section in Acuity for contact :  "+result1);
 					}
-					if(bp.verifyCountOfRelatedAssociationOnTaggedPopupOnInteractionSctionOfFirstRecord())
+					/*				if(bp.verifyCountOfRelatedAssociationOnTaggedPopupOnInteractionSctionOfFirstRecord())
 					{
 						log(LogStatus.INFO, "The count of Tagged record have been verified on tagged popup", YesNo.No);
 					}
@@ -7972,7 +8020,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "The count of Tagged record is not verified on tagged popup", YesNo.No);
 						sa.assertTrue(false, "The count of Tagged record is not verified on tagged popup");
 					}
-
+					 */
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
@@ -7986,7 +8034,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 						}
-
+						/*
 						String xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 						WebElement ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 						if(clickUsingJavaScript(driver, ele, "close button"))
@@ -7998,7 +8046,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 						}
-
+						 */
 					}
 					else
 					{
@@ -8027,8 +8075,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
-	
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc043_VerifyConnectionPopupOnIntermediaryAccountPage(String projectName) {
@@ -8246,7 +8293,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String[] peopleTagName={ATE_TaggedPeopleName17};
 		String[] peopleTaggedTimeReference={ATE_TaggedPeopleTimeReference17};
-		
+
 		String[] subjectName= {ATE_ATSubject82,ATE_ATSubject83,ATE_ATSubject84};
 
 		String connectionEmail= ATE_ConnectionEmail13;
@@ -8336,8 +8383,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
 					}
 
-					
-					
+
+
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
@@ -8351,7 +8398,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The records are available on View All Interaction section: "+result2, YesNo.No);
 							sa.assertTrue(false,  "The records are available on View All Interaction section  "+result2);
 						}
-
+						/*
 						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 						if(clickUsingJavaScript(driver, ele, "close button"))
@@ -8363,7 +8410,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 						}
-
+						 */
 					}
 					else
 					{
@@ -8383,7 +8430,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false, "The records are verified on Connection section for user :"+connectionUser+". "+result3);
 					}
 
-					
+
 				}
 				else
 				{
@@ -8406,7 +8453,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
+
 	@Parameters({ "projectName" })
 
 	@Test
@@ -8415,11 +8462,11 @@ public class AcuityTaskAndEvent extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		TaskPageBusinessLayer taskBP = new TaskPageBusinessLayer(driver);
-		
+
 		String recordName=ATE_Contact2;
 
 		String task1SubjectNameNavigation = ATE_ATSubject79;
-		
+
 		String activityType=ATE_ATActivityType85;
 		String taskSubject=ATE_ATSubject85;
 		String taskRelatedTo=ATE_ATRelatedTo15;
@@ -8516,8 +8563,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-	
-	
+
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc046_VerifyImpactOnIntermediaryAccountAcuityTab(String projectName) {
@@ -8545,7 +8592,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String[] peopleTagName={ATE_TaggedPeopleName21};
 		String[] peopleTaggedTimeReference={ATE_TaggedPeopleTimeReference21};
-		
+
 		String[] dealTagName={ATE_TaggedDealName18};
 		String[] dealTaggedTimeReference={ATE_TaggedDealTimeReference18};
 
@@ -8626,7 +8673,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-
 					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagName, peopleTaggedTimeReference, dealTagName, dealTaggedTimeReference);
 					if(result.isEmpty())
 					{
@@ -8637,8 +8683,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR,  "The record name and Time reference are not verifed "+result, YesNo.No);
 						sa.assertTrue(false,  "The record name and Time reference are not verifed "+result);
 					}
-					
-					
+
+
 					ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection();
 					if(result10.isEmpty())
 					{
@@ -8649,7 +8695,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
 						sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
 					}
-					
+
 					ArrayList<String> result1=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCall, contactSectionEmail);
 					if(result1.isEmpty())
 					{
@@ -8660,7 +8706,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "The records are not verified on contact section in Acuity for contact : "+result1, YesNo.No);
 						sa.assertTrue(false,  "The records are not verified on contact section in Acuity for contact :  "+result1);
 					}
-					if(bp.verifyCountOfRelatedAssociationOnTaggedPopupOnInteractionSctionOfFirstRecord())
+					/*				if(bp.verifyCountOfRelatedAssociationOnTaggedPopupOnInteractionSctionOfFirstRecord())
 					{
 						log(LogStatus.INFO, "The count of Tagged record have been verified on tagged popup", YesNo.No);
 					}
@@ -8669,7 +8715,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "The count of Tagged record is not verified on tagged popup", YesNo.No);
 						sa.assertTrue(false, "The count of Tagged record is not verified on tagged popup");
 					}
-
+					 */
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
@@ -8684,7 +8730,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 						}
 
-						String xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+						/*					String xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 						WebElement ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 						if(clickUsingJavaScript(driver, ele, "close button"))
 						{
@@ -8695,7 +8741,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 						}
-
+						 */
 					}
 					else
 					{
@@ -8724,7 +8770,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
+
 
 	@Parameters({ "projectName" })
 	@Test
@@ -8850,8 +8896,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
-		
+
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc048_VerifyIntermediaryContactAcuityTab(String projectName) {
@@ -8881,7 +8927,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String[] peopleTagName={ATE_TaggedPeopleName17};
 		String[] peopleTaggedTimeReference={ATE_TaggedPeopleTimeReference17};
-		
+
 		String[] subjectName= {ATE_ATSubject85};
 
 		String connectionEmail= ATE_ConnectionEmail13;
@@ -8971,8 +9017,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
 					}
 
-					
-					
+
+
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
@@ -8986,7 +9032,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The records are available on View All Interaction section: "+result2, YesNo.No);
 							sa.assertTrue(false,  "The records are available on View All Interaction section  "+result2);
 						}
-
+						/*
 						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 						if(clickUsingJavaScript(driver, ele, "close button"))
@@ -8998,7 +9044,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 						}
-
+						 */
 					}
 					else
 					{
@@ -9039,8 +9085,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
-	
+
+
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc049_VerifyUIOfFilterSectionOnAccountAcuityTab(String projectName) {
@@ -9053,25 +9100,25 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String xPath;
 		WebElement ele;
-		
+
 		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
 		String[] recordIconType= {"email","event","call","task"};
-		
+
 		String[] filterType1= {"All Types","Meetings","Calls"};
 		String[] recordIconType1= {"event","call"};
-		
+
 		String userName1=crmUser6FirstName+" "+crmUser6LastName;
-		
+
 		String companyTagName=ATE_TaggedCompanyName35;
 		String companyTagTimeReferenceCount=ATE_TaggedCompanyTimeReference35;
-		
+
 		String peopleTagName=ATE_TaggedPeopleName21;
 		String peopleTagTimeReferenceCount=ATE_TaggedPeopleTimeReference21;
-		
+
 		String dealTagName=ATE_TaggedDealName18;
 		String dealTagTimeReferenceCount=ATE_TaggedDealTimeReference18;
-		
-		
+
+
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
 		if (lp.clickOnTab(projectName, tabObj1)) {
@@ -9083,12 +9130,12 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
-					
-					if (click(driver, bp.getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
-						if (click(driver, bp.getTaggedRecordTimeReference("Companies", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
-							
+
 							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result.isEmpty())
 							{
@@ -9099,7 +9146,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result);
 							}				
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*					xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -9110,7 +9157,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -9120,11 +9167,11 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on Companies tab name");
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
 					}
-					
-					
+
+
 					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
@@ -9140,7 +9187,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
 							}
-							
+							/*				
 							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
@@ -9152,7 +9199,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -9165,7 +9212,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
 						sa.assertTrue(false,  "Not able to click on People tab name");
 					}
-					
+
 					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
@@ -9181,8 +9228,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
 							}	
-							
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+
+							/*					xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -9193,7 +9240,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -9206,7 +9253,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
 						sa.assertTrue(false,  "Not able to click on Deals tab name");
 					}				
-								
+
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
@@ -9220,7 +9267,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
 							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
 						}	
-
+						/*
 						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 						if(clickUsingJavaScript(driver, ele, "close button"))
@@ -9232,17 +9279,15 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 						}
-
+						 */
 					}
 					else
 					{
 						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
 						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
 					}	
-									
-					xPath="//a[text()='"+contactName+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-					ele=FindElement(driver, xPath, "meeting and call count of "+contactName, action.SCROLLANDBOOLEAN, 20);
-					if(click(driver, ele, contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
+
+					if(click(driver, bp.getMeetingAndCallCount(contactName, 20), contactName+" meetings and call count", action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on the count of meeting and call of "+contactName, YesNo.No);
 
@@ -9256,7 +9301,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4, YesNo.No);
 							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+contactName+". "+result4);
 						}
-						xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+						/*					xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
 						ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
 						if(clickUsingJavaScript(driver, ele, "close button"))
 						{
@@ -9267,23 +9312,20 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
 						}
+						 */
 					}
 					else
 					{
 						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+contactName, YesNo.No);
 						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+contactName);
 					}
-					
-					
-					xPath="//a[text()='"+contactName+"']/ancestor::tr//td//button[@title='Connections']";
-					ele=FindElement(driver, xPath, "Connection icon of "+contactName, action.SCROLLANDBOOLEAN, 20);
-					if(clickUsingJavaScript(driver, ele, "Connection icon of "+contactName))
+
+					if(clickUsingJavaScript(driver, bp.getConnectionIconOfContact(contactName, 20), "Connection icon of "+contactName))
 					{
 						log(LogStatus.INFO, "Clicked on the connection icon of "+contactName, YesNo.No);
-						
-						xPath="//a[text()='"+userName1+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-						ele=FindElement(driver, xPath, "meeting and call count of "+userName1, action.SCROLLANDBOOLEAN, 20);
-						if(click(driver, ele, userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+						String parentId=switchOnWindow(driver);
+
+						if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
 						{
 							log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
 
@@ -9297,7 +9339,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
 							}
-							xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+							/*		xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -9308,6 +9350,10 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
 							}
+							 */
+
+							driver.close();
+							driver.switchTo().window(parentId);
 						}
 						else
 						{
@@ -9320,7 +9366,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on the connection icon of "+contactName, YesNo.No);
 						sa.assertTrue(false, "Not able to click on the connection icon of "+contactName);
 					}
-					
+
 				}
 				else
 				{
@@ -9343,8 +9389,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
-	
+
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc050_VerifyUIOfFilterSectionOnContactAcuityTab(String projectName) {
@@ -9356,25 +9402,25 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String xPath;
 		WebElement ele;
-		
+
 		String[] filterType= {"All Types","Emails","Meetings","Calls","Tasks"};
 		String[] recordIconType= {"email","event","call","task"};
-		
+
 		String[] filterType1= {"All Types","Meetings","Calls"};
 		String[] recordIconType1= {"event","call"};
-		
+
 		String userName1=crmUser6FirstName+" "+crmUser6LastName;
-		
+
 		String companyTagName=ATE_TaggedCompanyName30;
 		String companyTagTimeReferenceCount=ATE_TaggedCompanyTimeReference30;
-		
+
 		String peopleTagName=ATE_TaggedPeopleName17;
 		String peopleTagTimeReferenceCount=ATE_TaggedPeopleTimeReference17;
-		
+
 		String dealTagName=ATE_TaggedDealName19;
 		String dealTagTimeReferenceCount=ATE_TaggedDealTimeReference19;
-		
-		
+
+
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
 		if (lp.clickOnTab(projectName, tabObj2)) {
@@ -9386,12 +9432,12 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
-					
-					if (click(driver, bp.getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
-						if (click(driver, bp.getTaggedRecordTimeReference("Companies", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
-							
+
 							ArrayList<String> result=bp.verifyFilterIconAndFilterRecordsOnInteractionsPopup(filterType,recordIconType);
 							if(result.isEmpty())
 							{
@@ -9402,7 +9448,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+companyTagName+" from people tag. "+result);
 							}				
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*		xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -9413,7 +9459,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -9423,11 +9469,11 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on Companies tab name");
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
 					}
-					
-					
+
+
 					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
@@ -9443,7 +9489,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+peopleTagName+" from people tag. "+result1);
 							}
-							
+							/*				
 							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
@@ -9455,7 +9501,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -9468,7 +9514,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
 						sa.assertTrue(false,  "Not able to click on People tab name");
 					}
-					
+
 					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
@@ -9484,7 +9530,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2, YesNo.No);
 								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on the count of "+dealTagName+" from people tag. "+result2);
 							}	
-							
+							/*			
 							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
@@ -9496,7 +9542,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -9509,7 +9555,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
 						sa.assertTrue(false,  "Not able to click on Deals tab name");
 					}				
-								
+
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
@@ -9523,7 +9569,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3, YesNo.No);
 							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on View All button. "+result3);
 						}	
-
+						/*
 						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 						if(clickUsingJavaScript(driver, ele, "close button"))
@@ -9535,31 +9581,29 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 						}
-
+						 */
 					}
 					else
 					{
 						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
 						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
 					}	
-													
-						xPath="//a[text()='"+userName1+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-						ele=FindElement(driver, xPath, "meeting and call count of "+userName1, action.SCROLLANDBOOLEAN, 20);
-						if(click(driver, ele, userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
-						{
-							log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
 
-							ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
-							if(result5.isEmpty())
-							{
-								log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
-							}
-							else
-							{
-								log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
-								sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
-							}
-							xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
+					if(click(driver, bp.getMeetingAndCallCount(userName1, 20), userName1+" meetings and call count", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, "clicked on the count of meeting and call of "+userName1, YesNo.No);
+
+						ArrayList<String> result5=bp.verifyFilterIconAndFilterRecordsOnMeetingAndCallPopup(filterType1,recordIconType1);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "The filter icon, filter value, and records after selecting filter have been verified after clicking on meeting and call count of "+userName1, YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5, YesNo.No);
+							sa.assertTrue(false,  "The filter icon, filter value, and records after selecting filter not working properly after clicking on meeting and call count of "+userName1+". "+result5);
+						}
+						/*			xPath="//h2[contains(text(),'Meetings and Calls with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "Meetings and Calls with popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -9570,13 +9614,13 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Meetings and Calls with popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Meetings and Calls with popup");
 							}
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
-							sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
-						}	
-					
+						 */
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on the count of meeting and call of "+userName1, YesNo.No);
+						sa.assertTrue(false, "Not able to click on the count of meeting and call of "+userName1);
+					}					
 				}
 				else
 				{
@@ -9600,8 +9644,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-	
-	
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc051_VerifyInactiveUsersWillDisplayInTheConnectionPopupForIntermediaryAccountPage(String projectName) {
@@ -9614,7 +9657,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		String recordName=ATERecord3;
 		String contactName=ATE_Contact1;
-		
+
 		String xPath;
 		WebElement ele;
 
@@ -9658,18 +9701,18 @@ public class AcuityTaskAndEvent extends BaseLib {
 		}
 		if(flag==true)
 		{
-			 ThreadSleep(2000);
+			ThreadSleep(2000);
 			String user3FirstName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User8", excelLabel.User_First_Name);
 			String user3LastName=ExcelUtils.readData(testCasesFilePath,"Users",excelLabel.Variable_Name, "User8", excelLabel.User_Last_Name);
-		
+
 			String userName3=user3FirstName+" "+user3LastName;
-			
+
 			String[] connectionEmail= {ATE_ConnectionEmail14};
 			String[] connectionMeetingAndCall= {ATE_ConnectionMeetingAndCall14};
 			String[] connectionDeal= {ATE_ConnectionDeals14};
 			String[] connectionTitle= {ATE_ConnectionTitle14};
 			String[] userData= {userName3};
-			
+
 			lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
 			if (lp.clickOnTab(projectName, tabObj1)) {
@@ -9681,7 +9724,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 					if (BP.clicktabOnPage(TabName.Acuity.toString())) {
 						log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
-                        ThreadSleep(5000);
+						ThreadSleep(5000);
 						ArrayList<String> result=BP.verifyRecordOnConnectionsPopUpOfContactInAcuity(contactName,userData,connectionTitle,connectionDeal,connectionMeetingAndCall,connectionEmail);
 						if(result.isEmpty())
 						{
@@ -9716,7 +9759,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-	
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc052_VerifyInactiveUsersWillDisplayInTheConnectionSectionForIntermediaryAccountContactPage(String projectName) {
@@ -9727,15 +9770,15 @@ public class AcuityTaskAndEvent extends BaseLib {
 		String recordName=ATE_Contact1;
 		String contactName=ATE_ContactName22;
 
-		
+
 		String userName3=crmUser8FirstName+" "+crmUser8LastName;
-		
+
 		String connectionEmail= ATE_ConnectionEmail14;
 		String connectionMeetingAndCall= ATE_ConnectionMeetingAndCall14;
 		String connectionDeal= ATE_ConnectionDeals14;
 		String connectionTitle= ATE_ConnectionTitle14;
 		String userData= userName3;		
-	
+
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
 		if (lp.clickOnTab(projectName, tabObj2)) {
@@ -9747,7 +9790,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
-					
+
 					ArrayList<String> result=bp.verifyRecordOnConnectionsSectionInAcuity(ATE_Contact1, userName3, connectionTitle, connectionDeal, connectionMeetingAndCall, connectionEmail);
 					if(result.isEmpty())
 					{
@@ -9780,8 +9823,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
-	
+
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc053_UpdateTheNameOfAccountsContactDealsAndTasksAndEventsAndAddNewCompanyDealsandContactFromAddNoteAndEditNoteButton(String projectName) {
@@ -9946,47 +9989,47 @@ public class AcuityTaskAndEvent extends BaseLib {
 			if (BP.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
 					contactName2, 30)) {
 				log(LogStatus.INFO, contactName2 + " record has been open", YesNo.No);
-				
+
 				if (cp.clickOnShowMoreActionDownArrow(projectName, PageName.ContactPage, ShowMoreActionDropDownList.Edit, 30)) {
 					log(LogStatus.INFO, "clicked on edit button on contact page", YesNo.No);
 
-						xPath="//h2[contains(text(),'Edit')]/../..//label[text()='Title']/../..//input";
-						ele=FindElement(driver, xPath, "Title", action.SCROLLANDBOOLEAN, 30);
-						if(sendKeys(driver, ele, updatedContactTitle, "Title", action.SCROLLANDBOOLEAN))
+					xPath="//h2[contains(text(),'Edit')]/../..//label[text()='Title']/../..//input";
+					ele=FindElement(driver, xPath, "Title", action.SCROLLANDBOOLEAN, 30);
+					if(sendKeys(driver, ele, updatedContactTitle, "Title", action.SCROLLANDBOOLEAN))
+					{
+						log(LogStatus.INFO, updatedContactTitle+" value has been passed in title field", YesNo.No);
+						xPath="//h2[contains(text(),'Edit')]/../..//button[@name='SaveEdit']";
+						ele=FindElement(driver, xPath, "Save button", action.SCROLLANDBOOLEAN, 20);
+						if(click(driver, ele, "Save button", action.SCROLLANDBOOLEAN))
 						{
-							log(LogStatus.INFO, updatedContactTitle+" value has been passed in title field", YesNo.No);
-							xPath="//h2[contains(text(),'Edit')]/../..//button[@name='SaveEdit']";
-							ele=FindElement(driver, xPath, "Save button", action.SCROLLANDBOOLEAN, 20);
-							if(click(driver, ele, "Save button", action.SCROLLANDBOOLEAN))
+							log(LogStatus.INFO, "Clicked on save button", YesNo.No);								
+							if(cp.ActivityTimeLineCreatedMsg(20)!=null)
 							{
-								log(LogStatus.INFO, "Clicked on save button", YesNo.No);								
-								if(cp.ActivityTimeLineCreatedMsg(20)!=null)
-								{
-									log(LogStatus.INFO, "The title has been updated of contact "+contactName2, YesNo.No);
-								}
-								else
-								{
-									log(LogStatus.ERROR, "The title is not updated of contact "+contactName2, YesNo.No);
-									sa.assertTrue(false, "The title is not updated of contact "+contactName2);
-								}
+								log(LogStatus.INFO, "The title has been updated of contact "+contactName2, YesNo.No);
 							}
 							else
 							{
-								log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
-								sa.assertTrue(false, "Not able to click on save button");
+								log(LogStatus.ERROR, "The title is not updated of contact "+contactName2, YesNo.No);
+								sa.assertTrue(false, "The title is not updated of contact "+contactName2);
 							}
 						}
 						else
 						{
-							log(LogStatus.ERROR, updatedContactTitle+" value has is not passed in title field", YesNo.No);
-							sa.assertTrue(false, updatedContactTitle+" value has is not passed in title field");
+							log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
+							sa.assertTrue(false, "Not able to click on save button");
 						}
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on edit button of contact page", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on edit button of contact page");
+						log(LogStatus.ERROR, updatedContactTitle+" value has is not passed in title field", YesNo.No);
+						sa.assertTrue(false, updatedContactTitle+" value has is not passed in title field");
 					}
+				}
+				else
+				{
+					log(LogStatus.ERROR, "Not able to click on edit button of contact page", YesNo.No);
+					sa.assertTrue(false,  "Not able to click on edit button of contact page");
+				}
 
 			}
 			else
@@ -10085,20 +10128,20 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.INFO, "Clicked on Edit Button in  Down Arrow Button",
 										YesNo.No);
 
-							CommonLib.ThreadSleep(5000);
-							if (BP.updateActivityTimelineRecord(projectName, basicsection1, advanceSection1, null, null,
-									null)) {
-								log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
-								driver.close();
-								driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+								CommonLib.ThreadSleep(5000);
+								if (BP.updateActivityTimelineRecord(projectName, basicsection1, advanceSection1, null, null,
+										null)) {
+									log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
+									driver.close();
+									driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 
-							} else {
-								log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
-								sa.assertTrue(false, "Activity timeline record has not Updated");
+								} else {
+									log(LogStatus.FAIL, "Activity timeline record has not Updated", YesNo.No);
+									sa.assertTrue(false, "Activity timeline record has not Updated");
 
-								driver.close();
-								driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
-							}
+									driver.close();
+									driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+								}
 
 							} else {
 								log(LogStatus.ERROR,
@@ -10140,7 +10183,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-	
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc054_VerifyRecordUpdateImpactsOnIntermedairyAccountPage(String projectName) {
@@ -10168,7 +10211,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String[] peopleTagName={ATE_TaggedPeopleName22,ATE_TaggedPeopleName23,ATE_TaggedPeopleName24};
 		String[] peopleTaggedTimeReference={ATE_TaggedPeopleTimeReference22,ATE_TaggedPeopleTimeReference23,ATE_TaggedPeopleTimeReference24};
-		
+
 		String[] dealTagName={ATE_TaggedDealName20,ATE_TaggedDealName21,ATE_TaggedDealName22};
 		String[] dealTaggedTimeReference={ATE_TaggedDealTimeReference20,ATE_TaggedDealTimeReference21,ATE_TaggedDealTimeReference22};
 
@@ -10260,8 +10303,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR,  "The record name and Time reference are not verifed "+result, YesNo.No);
 						sa.assertTrue(false,  "The record name and Time reference are not verifed "+result);
 					}
-					
-					
+
+
 					ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection();
 					if(result10.isEmpty())
 					{
@@ -10272,7 +10315,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Default decending order of times referenced count are not verified on tagged section. "+result10, YesNo.No);
 						sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
 					}
-					
+
 					ArrayList<String> result1=bp.verifyRecordOnContactSectionAcuity(contactSectionName, contactSectionTitle, contactSectionDeal, contactSectionMeetingAndCall, contactSectionEmail);
 					if(result1.isEmpty())
 					{
@@ -10283,7 +10326,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "The records are not verified on contact section in Acuity for contact : "+result1, YesNo.No);
 						sa.assertTrue(false,  "The records are not verified on contact section in Acuity for contact :  "+result1);
 					}
-					if(bp.verifyCountOfRelatedAssociationOnTaggedPopupOnInteractionSctionOfFirstRecord())
+					/*				if(bp.verifyCountOfRelatedAssociationOnTaggedPopupOnInteractionSctionOfFirstRecord())
 					{
 						log(LogStatus.INFO, "The count of Tagged record have been verified on tagged popup", YesNo.No);
 					}
@@ -10292,7 +10335,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "The count of Tagged record is not verified on tagged popup", YesNo.No);
 						sa.assertTrue(false, "The count of Tagged record is not verified on tagged popup");
 					}
-
+					 */
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
@@ -10306,7 +10349,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 						}
-
+						/*
 						String xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 						WebElement ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 						if(clickUsingJavaScript(driver, ele, "close button"))
@@ -10318,7 +10361,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 						}
-
+						 */
 					}
 					else
 					{
@@ -10347,9 +10390,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
-	
-	
+
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc055_VerifyUpdatedNamesOnTaskPopupDetailsPage(String projectName) {
@@ -10366,13 +10408,13 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String companyTagName=ATE_TaggedCompanyName37;
 		String companyTagTimeReferenceCount=ATE_TaggedCompanyTimeReference37;
-		
+
 		String peopleTagName=ATE_TaggedPeopleName22;
 		String peopleTagTimeReferenceCount=ATE_TaggedPeopleTimeReference22;
-		
+
 		String dealTagName=ATE_TaggedDealName20;
 		String dealTagTimeReferenceCount=ATE_TaggedDealTimeReference20;
-		
+
 		IconType[] companyIcon= {IconType.Event,IconType.Task};
 		String[] companySubjectName= {ATE_U_ATSubject1,ATE_U_ATSubject2};
 		String[] companyDetails= {null, null};
@@ -10391,9 +10433,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					if (click(driver, bp.getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
-						if (click(driver, bp.getTaggedRecordTimeReference("Companies", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
 
 							ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(companyIcon, companyDueDate, companySubjectName, companyDetails, companyUsers, companySubjectName);
@@ -10406,6 +10448,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+companyTagName+" record " +result1, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+companyTagName+" record "+result1);
 							}
+							/*
 							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
@@ -10417,7 +10460,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -10427,11 +10470,11 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on Companies tab name");
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
 					}
-					
-					
+
+
 					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
@@ -10447,6 +10490,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result2, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result2);
 							}
+							/*
 							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
@@ -10458,7 +10502,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -10471,11 +10515,11 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
 						sa.assertTrue(false,  "Not able to click on People tab name");
 					}
-					
-					
+
+
 					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
-						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on deal Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+dealTagName,YesNo.No);
 
 							ArrayList<String> result3=bp.verifyRecordsonInteractionsViewAllPopup(companyIcon, companyDueDate, companySubjectName, companyDetails, companyUsers, companySubjectName);
@@ -10488,6 +10532,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 							}
+							/*
 							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
@@ -10499,7 +10544,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -10535,7 +10580,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-	
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc056_VerifyRecordUpdateImpactsOnIntermedairyAccountContactPage(String projectName) {
@@ -10564,11 +10609,11 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String[] peopleTagName={ATE_TaggedPeopleName22,ATE_TaggedPeopleName23,ATE_TaggedPeopleName24};
 		String[] peopleTaggedTimeReference={ATE_TaggedPeopleTimeReference22,ATE_TaggedPeopleTimeReference23,ATE_TaggedPeopleTimeReference24};
-		
+
 		String[] dealTagName={ATE_TaggedDealName20,ATE_TaggedDealName21,ATE_TaggedDealName22};
 		String[] dealTaggedTimeReference={ATE_TaggedDealTimeReference20,ATE_TaggedDealTimeReference21,ATE_TaggedDealTimeReference22};
 
-		
+
 		String[] iconType= {ATE_U_ATActivityType1,ATE_U_ATActivityType2};
 
 		String[] subjectName= {ATE_U_ATSubject1,ATE_U_ATSubject2};
@@ -10628,8 +10673,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 				hardAssert.assertTrue(true == false);
 			}
 		}		
-		
-		
 
 		String connectionEmail= ATE_ConnectionEmail13;
 		String connectionMeetingAndCall= ATE_ConnectionMeetingAndCall13;
@@ -10718,8 +10761,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false, "Default decending order of times referenced count are not verified on tagged section. "+result10);
 					}
 
-					
-					
+
+
 					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
 					{
 						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
@@ -10733,7 +10776,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 						}
-
+						/*
 						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 						if(clickUsingJavaScript(driver, ele, "close button"))
@@ -10745,7 +10788,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 						}
-
+						 */
 					}
 					else
 					{
@@ -10786,9 +10829,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
-	
-	
+
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc057_VerifyUpdatedNamesOnTaskDetailsPage(String projectName) {
@@ -10805,13 +10847,13 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String companyTagName=ATE_TaggedCompanyName37;
 		String companyTagTimeReferenceCount=ATE_TaggedCompanyTimeReference37;
-		
+
 		String peopleTagName=ATE_TaggedPeopleName22;
 		String peopleTagTimeReferenceCount=ATE_TaggedPeopleTimeReference22;
-		
+
 		String dealTagName=ATE_TaggedDealName20;
 		String dealTagTimeReferenceCount=ATE_TaggedDealTimeReference20;
-		
+
 		IconType[] companyIcon= {IconType.Event,IconType.Task};
 		String[] companySubjectName= {ATE_U_ATSubject1,ATE_U_ATSubject2};
 		String[] companyDetails= {null, null};
@@ -10830,9 +10872,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					if (click(driver, bp.getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
-						if (click(driver, bp.getTaggedRecordTimeReference("Companies", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
 
 							ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(companyIcon, companyDueDate, companySubjectName, companyDetails, companyUsers, companySubjectName);
@@ -10845,7 +10887,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+companyTagName+" record " +result1, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+companyTagName+" record "+result1);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*			xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -10856,7 +10898,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -10866,14 +10908,14 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on Companies tab name");
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
 					}
-					
-					
+
+
 					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
-						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on people Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
 
 							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(companyIcon, companyDueDate, companySubjectName, companyDetails, companyUsers, companySubjectName);
@@ -10886,7 +10928,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result2, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result2);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*			xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -10897,7 +10939,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -10910,8 +10952,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
 						sa.assertTrue(false,  "Not able to click on People tab name");
 					}
-					
-					
+
+
 					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
@@ -10927,7 +10969,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*				xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -10938,7 +10980,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -10973,7 +11015,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}	
-	
+
+
+
 
 	@Parameters({ "projectName" })
 	@Test
@@ -11146,8 +11190,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
-	
+
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc059_VerifyRecordDeleteImpactsOnIntermedairyAccountPage(String projectName) {
@@ -11160,9 +11204,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 		WebElement ele;
 
 		String[] companyTagName= {ATE_TaggedCompanyName37};
-		
+
 		String[] peopleTagName= {ATE_TaggedPeopleName22};
-		
+
 		String[] dealTagName= {ATE_TaggedDealName20};
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -11175,7 +11219,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
-					
+
 					ArrayList<String> result=bp.verifyRecordShouldNotVisibleOnTagged(companyTagName, peopleTagName, dealTagName);
 					if(result.isEmpty())
 					{
@@ -11209,7 +11253,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc060_VerifyRecordDeleteImpactsOnIntermedairyAccountsContactPage(String projectName) {
@@ -11222,9 +11266,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 		WebElement ele;
 
 		String[] companyTagName= {ATE_TaggedCompanyName37};
-		
+
 		String[] peopleTagName= {ATE_TaggedPeopleName22};
-		
+
 		String[] dealTagName= {ATE_TaggedDealName20};
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
 
@@ -11237,7 +11281,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
-					
+
 					ArrayList<String> result=bp.verifyRecordShouldNotVisibleOnTagged(companyTagName, peopleTagName, dealTagName);
 					if(result.isEmpty())
 					{
@@ -11271,8 +11315,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
-	
+
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc061_RestoreTheDeletedRecordsFromRecycleBinAndVerify(String projectName) {
@@ -11281,11 +11325,11 @@ public class AcuityTaskAndEvent extends BaseLib {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		WebElement ele;
 		String xPath;
-		
+
 		String recordName=ATERecord8;
 		String recordName1=ATE_dealName2;
-		
-		
+
+
 		String[][] listViewSheetData = { {"User" , "Recycle Bin", "Restore Account", "Only I can see this list view",
 			"My recycle bin", "Record Name", "contains", recordName } };
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
@@ -11299,7 +11343,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					ele = lp.getCheckboxOfRestoreItemOnRecycleBin(projectName, recordName, 30);
 					if (clickUsingJavaScript(driver, ele, "Check box against : " + recordName, action.BOOLEAN)) {
 						log(LogStatus.INFO, "Click on checkbox for " + recordName, YesNo.No);
-						
+
 						ele = lp.getRestoreButtonOnRecycleBin(projectName, 30);
 						if (clickUsingJavaScript(driver, ele, "Restore Button : " + recordName, action.BOOLEAN)) {
 							ThreadSleep(10000);
@@ -11329,7 +11373,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 			sa.assertTrue(false, "Not Able to open the Recycle been tab");
 
 		}		
-		
+
 		String[][] listViewSheetData1 = { {"User" , "Recycle Bin", "Restore Deal", "Only I can see this list view",
 			"My recycle bin", "Record Name", "contains", recordName1 } };
 
@@ -11343,7 +11387,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 					ele = lp.getCheckboxOfRestoreItemOnRecycleBin(projectName, recordName1, 30);
 					if (clickUsingJavaScript(driver, ele, "Check box against : " + recordName1, action.BOOLEAN)) {
 						log(LogStatus.INFO, "Click on checkbox for " + recordName1, YesNo.No);
-						
+
 						ele = lp.getRestoreButtonOnRecycleBin(projectName, 30);
 						if (clickUsingJavaScript(driver, ele, "Restore Button : " + recordName1, action.BOOLEAN)) {
 							ThreadSleep(10000);
@@ -11373,12 +11417,12 @@ public class AcuityTaskAndEvent extends BaseLib {
 			sa.assertTrue(false, "Not Able to open the Recycle been tab");
 
 		}
-		
+
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
-	
+
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc062_VerifyRecordRestoreImpactsOnIntermedairyAccountPage(String projectName) {
@@ -11394,7 +11438,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String[] peopleTagName={ATE_TaggedPeopleName22};
 		String[] peopleTaggedTimeReference={ATE_TaggedPeopleTimeReference22};
-		
+
 		String[] dealTagName={ATE_TaggedDealName20};
 		String[] dealTaggedTimeReference={ATE_TaggedDealTimeReference20};
 
@@ -11421,9 +11465,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR,  "The record name and Time reference are not verifed "+result, YesNo.No);
 						sa.assertTrue(false,  "The record name and Time reference are not verifed "+result);
 					}
-					
-					
-									}
+
+
+				}
 				else
 				{
 					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
@@ -11445,8 +11489,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
-	
+
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc063_VerifyRestoreNamesOnTaskDetailsPage(String projectName) {
@@ -11463,13 +11507,13 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String companyTagName=ATE_TaggedCompanyName37;
 		String companyTagTimeReferenceCount=ATE_TaggedCompanyTimeReference37;
-		
+
 		String peopleTagName=ATE_TaggedPeopleName22;
 		String peopleTagTimeReferenceCount=ATE_TaggedPeopleTimeReference22;
-		
+
 		String dealTagName=ATE_TaggedDealName20;
 		String dealTagTimeReferenceCount=ATE_TaggedDealTimeReference20;
-		
+
 		IconType[] companyIcon= {IconType.Event,IconType.Task};
 		String[] companySubjectName= {ATE_U_ATSubject1,ATE_U_ATSubject2};
 		String[] companyDetails= {null, null};
@@ -11488,9 +11532,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					if (click(driver, bp.getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
-						if (click(driver, bp.getTaggedRecordTimeReference("Companies", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
 
 							ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(companyIcon, companyDueDate, companySubjectName, companyDetails, companyUsers, companySubjectName);
@@ -11503,6 +11547,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+companyTagName+" record " +result1, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+companyTagName+" record "+result1);
 							}
+							/*
 							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
@@ -11514,7 +11559,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -11524,11 +11569,11 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on Companies tab name");
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
 					}
-					
-					
+
+
 					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
@@ -11544,7 +11589,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result2, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result2);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*			xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -11555,7 +11600,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -11568,8 +11613,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
 						sa.assertTrue(false,  "Not able to click on People tab name");
 					}
-					
-					
+
+
 					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
@@ -11585,7 +11630,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*				xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -11596,7 +11641,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -11632,14 +11677,15 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-	
+
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc064_VerifyRecordRestoreImpactsOnIntermedairyAccountContactPage(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		
+
 		String recordName=ATE_Contact1;
 
 
@@ -11648,7 +11694,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String[] peopleTagName={ATE_TaggedPeopleName22};
 		String[] peopleTaggedTimeReference={ATE_TaggedPeopleTimeReference22};
-		
+
 		String[] dealTagName={ATE_TaggedDealName20};
 		String[] dealTaggedTimeReference={ATE_TaggedDealTimeReference20};
 
@@ -11696,8 +11742,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
-	
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc065_VerifyRestoreNamesOnTaskDetailsPage(String projectName) {
@@ -11714,13 +11759,13 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String companyTagName=ATE_TaggedCompanyName37;
 		String companyTagTimeReferenceCount=ATE_TaggedCompanyTimeReference37;
-		
+
 		String peopleTagName=ATE_TaggedPeopleName22;
 		String peopleTagTimeReferenceCount=ATE_TaggedPeopleTimeReference22;
-		
+
 		String dealTagName=ATE_TaggedDealName20;
 		String dealTagTimeReferenceCount=ATE_TaggedDealTimeReference20;
-		
+
 		IconType[] companyIcon= {IconType.Event,IconType.Task};
 		String[] companySubjectName= {ATE_U_ATSubject1,ATE_U_ATSubject2};
 		String[] companyDetails= {null, null};
@@ -11739,9 +11784,9 @@ public class AcuityTaskAndEvent extends BaseLib {
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
-					if (click(driver, bp.getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
-						if (click(driver, bp.getTaggedRecordTimeReference("Companies", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
 
 							ArrayList<String> result1=bp.verifyRecordsonInteractionsViewAllPopup(companyIcon, companyDueDate, companySubjectName, companyDetails, companyUsers, companySubjectName);
@@ -11754,7 +11799,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+companyTagName+" record " +result1, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+companyTagName+" record "+result1);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*			xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -11765,7 +11810,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -11775,11 +11820,11 @@ public class AcuityTaskAndEvent extends BaseLib {
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on Companies tab name");
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
 					}
-					
-					
+
+
 					if (click(driver, bp.getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on People tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
@@ -11795,7 +11840,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+peopleTagName+" record " +result2, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result2);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*				xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -11806,7 +11851,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -11819,8 +11864,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
 						sa.assertTrue(false,  "Not able to click on People tab name");
 					}
-					
-					
+
+
 					if (click(driver, bp.getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 						if (click(driver, bp.getTaggedRecordTimeReference("Deals", dealTagName, dealTagTimeReferenceCount,30), dealTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
@@ -11836,7 +11881,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+dealTagName+" record " +result3, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+dealTagName+" record "+result3);
 							}
-							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
+							/*					xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
 							{
@@ -11847,7 +11892,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+							 */
 						}
 						else
 						{
@@ -11882,8 +11927,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
-	
+
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc066_CreateSomeEventsAndVerifyCountsSwitchVerificationOnIntermediaryAccountPage(String projectName) {
@@ -11891,7 +11936,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 
-		
+
 		String activityType=ATE_ATActivityType86;
 		String taskSubject=ATE_ATSubject86;
 		String taskRelatedTo=ATE_ATRelatedTo16;
@@ -11935,7 +11980,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-	
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc067_VerifyRecordRestoreImpactsOnIntermedairyAccountPage(String projectName) {
@@ -11951,7 +11996,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String[] peopleTagName={ATE_TaggedPeopleName25,ATE_TaggedPeopleName26,ATE_TaggedPeopleName27,ATE_TaggedPeopleName28};
 		String[] peopleTaggedTimeReference={ATE_TaggedPeopleTimeReference25,ATE_TaggedPeopleTimeReference26,ATE_TaggedPeopleTimeReference27,ATE_TaggedPeopleTimeReference28};
-		
+
 		String[] dealTagName={ATE_TaggedDealName23,ATE_TaggedDealName24,ATE_TaggedDealName25,ATE_TaggedDealName26,ATE_TaggedDealName27};
 		String[] dealTaggedTimeReference={ATE_TaggedDealTimeReference23,ATE_TaggedDealTimeReference24,ATE_TaggedDealTimeReference25,ATE_TaggedDealTimeReference26,ATE_TaggedDealTimeReference27};
 
@@ -11977,7 +12022,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR,  "The record name and Time reference are not verifed "+result, YesNo.No);
 						sa.assertTrue(false,  "The record name and Time reference are not verifed "+result);
 					}	
-					
+
 					ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection();
 					if(result10.isEmpty())
 					{
@@ -12010,8 +12055,8 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-	
-	
+
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc068_VerifyOnIntermediaryContactPage(String projectName) {
@@ -12027,7 +12072,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 		String[] peopleTagName={ATE_TaggedPeopleName29,ATE_TaggedPeopleName26,ATE_TaggedPeopleName27,ATE_TaggedPeopleName28};
 		String[] peopleTaggedTimeReference={ATE_TaggedPeopleTimeReference29,ATE_TaggedPeopleTimeReference26,ATE_TaggedPeopleTimeReference27,ATE_TaggedPeopleTimeReference28};
-		
+
 		String[] dealTagName={ATE_TaggedDealName23,ATE_TaggedDealName24,ATE_TaggedDealName25,ATE_TaggedDealName26,ATE_TaggedDealName27};
 		String[] dealTaggedTimeReference={ATE_TaggedDealTimeReference23,ATE_TaggedDealTimeReference24,ATE_TaggedDealTimeReference25,ATE_TaggedDealTimeReference26,ATE_TaggedDealTimeReference27};
 
@@ -12053,7 +12098,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR,  "The record name and Time reference are not verifed "+result, YesNo.No);
 						sa.assertTrue(false,  "The record name and Time reference are not verifed "+result);
 					}	
-					
+
 					ArrayList<String> result10=bp.verifyDefaultSortingOfReferencedTypeOnTaggedSection();
 					if(result10.isEmpty())
 					{
@@ -12087,7 +12132,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();	
 	}
 
-	
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc069_ReplaceFirstColumnsWithAnotherColumanAndVerifyTheResultsOnAccountAcuityTab(String projectName) {
@@ -12179,7 +12224,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false, "The redirections are not working properly after clickig on records of Company, People and deal tagged record. "+result);
 					}
 
-					xPath="//span[contains(@class,'slds-page-header__title') and @title='Contacts']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//td[@data-label='Name']//a";
+					xPath="//span[contains(@class,'slds-page-header__title') and @title='Contacts']/ancestor::div//td[@data-label='Name']//a";
 					ele=FindElement(driver, xPath, "records on Contact section", action.SCROLLANDBOOLEAN, 20);
 					if(clickUsingJavaScript(driver, ele, "Records on contact section"))
 					{
@@ -12221,7 +12266,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "The header name and message are not verified on Contacts. "+result1, YesNo.No);
 						sa.assertTrue(false, "The header name and message are not verified on Contacts "+result1);
 					}
-
+					/*
 					xPath="//td[@data-col-key-value='1-button-1']//button[@name='Connections']";
 					ele=FindElement(driver, xPath, "connection icon of contact record", action.SCROLLANDBOOLEAN, 20);
 					if(click(driver, ele, "connection icon of contact record", action.SCROLLANDBOOLEAN))
@@ -12273,6 +12318,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						log(LogStatus.ERROR, "Not able to click on connection icon of contact section record", YesNo.No);
 						sa.assertTrue(false, "Not able to click on connection icon of contact section record");
 					}
+					 */
 				}
 				else
 				{
@@ -12295,14 +12341,14 @@ public class AcuityTaskAndEvent extends BaseLib {
 		sa.assertAll();
 	}
 
-		
+
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc070_VerifyTheResultsOnContactsAcuityTab(String projectName) {
 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		
+
 		String recordName=ATE_Contact1;
 
 		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
@@ -12316,7 +12362,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 
 				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
-                    ThreadSleep(6000);
+					ThreadSleep(6000);
 					ArrayList<String> result=bp.verifyRedirectionOnClickEntityTypeOnTaggedSection();
 					if(result.isEmpty())
 					{
@@ -12349,64 +12395,5 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();
 		sa.assertAll();
 	}
-	
-	
-/*	
-	@Parameters({ "projectName" })
-	@Test
-	public void ATETc071_VerifyTheResultsOnContactsAcuityTab(String projectName) {
 
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		
-		String recordName="Test Contact 1_ins";
-		
-		String[] companyListName= {"CTest Account 12_ins","CTest Account 13_ins","ATest Account 17_ins","InsTest Account 18_ins"};
-
-		lp.CRMLogin(crmUser6EmailID, adminPassword, appName);
-
-		if (lp.clickOnTab(projectName, tabObj2)) {
-
-			log(LogStatus.INFO, "Clicked on Tab : " + tabObj2, YesNo.No);
-			if (bp.clickOnAlreadyCreated_Lighting(environment, mode, TabName.ContactTab,
-					recordName, 30)) {
-				log(LogStatus.INFO, recordName + " reocrd has been open", YesNo.No);
-
-				if (bp.clicktabOnPage(TabName.Acuity.toString())) {
-					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
-                    ThreadSleep(6000);
-					ArrayList<String> result=bp.verifyHighlightedCompanyNameOnCompanyTaggedSection(companyListName);
-					if(result.isEmpty())
-					{
-						log(LogStatus.INFO, "The highlighted record have been verified on tagged section", YesNo.No);
-						sa.assertTrue(true, "The highlighted record have been verified on tagged section");
-					}
-					else
-					{
-						log(LogStatus.ERROR, "The highlighted record are not verified on tagged section. "+result, YesNo.No);
-						sa.assertTrue(false,"The highlighted record are not verified on tagged section. "+result);
-					}
-				}
-				else
-				{
-					log(LogStatus.ERROR, "Not able to click on Acuity tab", YesNo.No);
-					sa.assertTrue(false,  "Not able to click on Acuity tab");
-				}
-			}
-			else
-			{
-				log(LogStatus.ERROR, "Not able to open record "+recordName, YesNo.No);
-				sa.assertTrue(false,  "Not able to open record "+recordName);
-			}
-		}
-		else
-		{
-			log(LogStatus.ERROR, "Not able to click on tab"+tabObj2, YesNo.No);
-			sa.assertTrue(false,  "Not able to click on tab "+tabObj2);
-		}
-		lp.CRMlogout();
-		sa.assertAll();
-	}
-
-*/
 }

@@ -1976,7 +1976,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		WebElement ele;
 		String fieldlabel = label.replace("_", " ");
 		appLog.info(" >>>>>>>>>>>>>>>>   label:" + label);
-		if (fieldlabel.equalsIgnoreCase("Assigned To ID")
+		if (fieldlabel.equalsIgnoreCase("Assigned To")
 				&& PageName.TaskPage.toString().equalsIgnoreCase(pageName.toString())) {
 
 			xpath = "//span[text()='" + name + "']/..//following-sibling::lightning-button-icon/button";
@@ -1984,7 +1984,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					timeOut);
 			return ele;
 		}
-		if (label.equalsIgnoreCase(PageLabel.Name.toString()) || label.equalsIgnoreCase("Assigned To ID"))
+		if (label.equalsIgnoreCase(PageLabel.Name.toString()) || label.equalsIgnoreCase("Assigned To"))
 			isMultipleAssociation = true;
 		if (PageName.CallPopUp.toString().equalsIgnoreCase(pageName.toString())
 				|| (PageLabel.Name.toString().equalsIgnoreCase(label)
@@ -3669,7 +3669,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	 */
 	public WebElement commonInputElement(String projectName, String labelName, action action, int timeOut) {
 		labelName = labelName.replace("_", " ");
-		String xpath = "(//*[text()='" + labelName + "']//following-sibling::div//input)[2]";
+		String xpath = "//section[contains(@class,'active')]//label[text()='" + labelName
+				+ "']//following-sibling::div//input";
 		WebElement ele = FindElement(driver, xpath, labelName + " TextBox", action, timeOut);
 		ele = isDisplayed(driver, ele, "Visibility", timeOut, labelName + " TextBox");
 		return ele;
@@ -10723,6 +10724,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				if (click(driver, contactNameUserIconButton(contactName, 30), "Contact Name: " + contactName,
 						action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on Contact: " + contactName, YesNo.No);
+					String parentID = switchOnWindow(driver);
 
 					if (connectionPopUpTeamMember(teamMember, 20) != null) {
 
@@ -10752,7 +10754,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									"deal", action.SCROLLANDBOOLEAN);
 							if (actualDeal.equalsIgnoreCase(deals)) {
 								log(LogStatus.INFO, "Actual result " + actualDeal
-										+ " of deal has been matched with Expected resut : " + deals
+										+ " of deal has been matched with Expected result : " + deals
 										+ " of Team Member: " + teamMember + " under Record page: " + contactName,
 										YesNo.No);
 							} else {
@@ -10810,8 +10812,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 						}
 
-						click(driver, connectionClosePopupButton(15), "Close Button", action.SCROLLANDBOOLEAN);
-
 					} else {
 						log(LogStatus.ERROR,
 								"No Team Member found of name: " + teamMember + " for contact: " + contactName,
@@ -10822,6 +10822,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 
 					}
+					driver.close();
+					driver.switchTo().window(parentID);
+
 				} else {
 					log(LogStatus.ERROR, "Not Able to Click on Contact: " + contactName, YesNo.No);
 					result.add("Not Able to Click on Contact: " + contactName);
@@ -11399,13 +11402,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					}
 				} else if (labelName.contains(excelLabel.Notes.toString())) {
-					xPath = "//div[span[span[text()='" + labelName
-							+ "']]]//div[@class='slds-rich-text-editor__textarea slds-grid']";
+					xPath = "//div[label[text()='Notes']]//textarea";
 					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
 					if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
 						log(LogStatus.INFO, "Clicked on " + labelName + " paragraph", YesNo.No);
 						ThreadSleep(2000);
-						xPath = "//div[span[span[text()='" + labelName + "']]]//div[@role='textbox']//p";
+						xPath = "//div[label[text()='Notes']]//textarea";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
 						if (sendKeys(driver, ele, value, labelName + " paragraph", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, value + " has been passed on " + labelName + " paragraph", YesNo.No);
@@ -11451,11 +11453,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 
 						} else {
-							xPath = "//input[@placeholder='Search']";
+							xPath = "//input[@placeholder='Search Firm, People or Deals']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									2);
 							if (ele == null) {
-								xPath = "//*[@title='Tag']";
+								xPath = "//h2[contains(text(),'" + buttonName + "')]/../..//*[@title='Tag']";
 								ele = CommonLib.FindElement(driver, xPath, labelName + " label",
 										action.SCROLLANDBOOLEAN, 30);
 								if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
@@ -11468,7 +11470,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 							}
 
-							xPath = "//input[@placeholder='Search']";
+							xPath = "//input[@placeholder='Search Firm, People or Deals']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									2);
 							if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
@@ -11501,7 +11503,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					return false;
 				}
 			}
-
 		}
 		if (advanceSection != null) {
 			if (clickUsingJavaScript(driver, getSectionBtn("Advanced", 30), "Advanced section",
@@ -11623,7 +11624,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								}
 							}
 						}
-					} else if (labelName.contains("Assigned To ID")) {
+					} else if (labelName.contains("Assigned To")) {
 						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
 								+ labelName + "']/..//button";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
@@ -11745,7 +11746,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 						if (!suggestedTags[0].equals("")) {
 							xPath = "//lightning-base-formatted-text[text()='" + suggestedTags[i]
-									+ "']/ancestor::th[@data-label='Reference Found']/..//td//input";
+									+ "']/ancestor::th[@data-label='Name']/..//td//input";
 							ele = CommonLib.FindElement(driver, xPath, suggestedTags[i] + " sugested Tag",
 									action.SCROLLANDBOOLEAN, 30);
 							if (click(driver, ele, suggestedTags[i] + " suggested tag", action.SCROLLANDBOOLEAN)) {
@@ -11760,13 +11761,23 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 										"Not able to click on " + suggestedTags[i] + " suggested tag checkbox button");
 								return false;
 							}
-
 						}
-
 					}
 					if (click(driver, getfooterTagButton(30), "Tag Button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on footer tag button", YesNo.No);
-						flag = true;
+						ThreadSleep(3000);
+						if (popupCloseButton(buttonName, 8) != null) {
+							if (clickUsingJavaScript(driver, popupCloseButton(buttonName, 20), "close button")) {
+								log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
+								flag = true;
+							} else {
+								log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
+								sa.assertTrue(false, "Not able to close the Note popup");
+								return false;
+							}
+						} else {
+							return true;
+						}
 					} else {
 						log(LogStatus.ERROR, "Not able to click on footer tag button", YesNo.No);
 						sa.assertTrue(false, "Not able to click on footer tag button");
@@ -11780,14 +11791,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 
 			else {
-
 				if (getSuccessMsg(30) != null) {
 					log(LogStatus.INFO, "Activity timeline record has been created", YesNo.No);
 					ThreadSleep(1000);
 					refresh(driver);
 					ThreadSleep(3000);
-					if (popupCloseButton("Note", 8) != null) {
-						if (clickUsingJavaScript(driver, popupCloseButton("Note", 20), "close button")) {
+					if (popupCloseButton(buttonName, 8) != null) {
+						if (clickUsingJavaScript(driver, popupCloseButton(buttonName, 20), "close button")) {
 							log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
 							flag = true;
 						} else {
@@ -12012,32 +12022,24 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		}
 
-		if (relatedTo != null) {
-			xPath = "//a[@class='interaction_sub subject_text' and text()='" + subjectName
-					+ "']/../following-sibling::div[contains(@class,'cls_myPill')]//span[@class='slds-pill__label']";
-			elements = FindElements(driver, xPath, "Related to elements");
-			String[] actualRelatedTo = new String[elements.size()];
-			for (int i = 0; i < elements.size(); i++) {
-				actualRelatedTo[i] = getText(driver, elements.get(i), "related to value", action.SCROLLANDBOOLEAN);
-			}
-			for (int i = 0; i < relatedTo.length; i++) {
-				int status = 0;
-				for (int j = 0; j < actualRelatedTo.length; j++) {
-					if (relatedTo[i].equals(actualRelatedTo[j])) {
-						log(LogStatus.INFO, "Actual result : " + actualRelatedTo[j]
-								+ " has been matched with expected result : " + relatedTo[i] + " for tagged value",
-								YesNo.No);
-						status++;
-					}
-				}
-				if (status == 0) {
-					log(LogStatus.ERROR, "Expected result : " + relatedTo[i]
-							+ " is not matched with the actual result for tagged value", YesNo.No);
-					result.add("Expected result : " + relatedTo[i]
-							+ " is not matched with the actual result for tagged value");
-				}
-			}
-		}
+		/*
+		 * if (relatedTo != null) { xPath =
+		 * "//a[@class='interaction_sub subject_text' and text()='" + subjectName +
+		 * "']/../following-sibling::div[contains(@class,'cls_myPill')]//span[@class='slds-pill__label']";
+		 * elements = FindElements(driver, xPath, "Related to elements"); String[]
+		 * actualRelatedTo = new String[elements.size()]; for (int i = 0; i <
+		 * elements.size(); i++) { actualRelatedTo[i] = getText(driver, elements.get(i),
+		 * "related to value", action.SCROLLANDBOOLEAN); } for (int i = 0; i <
+		 * relatedTo.length; i++) { int status = 0; for (int j = 0; j <
+		 * actualRelatedTo.length; j++) { if (relatedTo[i].equals(actualRelatedTo[j])) {
+		 * log(LogStatus.INFO, "Actual result : " + actualRelatedTo[j] +
+		 * " has been matched with expected result : " + relatedTo[i] +
+		 * " for tagged value", YesNo.No); status++; } } if (status == 0) {
+		 * log(LogStatus.ERROR, "Expected result : " + relatedTo[i] +
+		 * " is not matched with the actual result for tagged value", YesNo.No);
+		 * result.add("Expected result : " + relatedTo[i] +
+		 * " is not matched with the actual result for tagged value"); } } }
+		 */
 
 		if (editNote == true) {
 			xPath = "//a[text()='" + subjectName + "']/../preceding-sibling::div//button[@title='Edit Note']";
@@ -12060,58 +12062,45 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		}
 
-		if (relatedAssociation != null) {
-			xPath = "//a[@class=\"interaction_sub subject_text\" and text()='" + subjectName
-					+ "']/../following-sibling::div[contains(@class,'cls_myPill')]//span[@class=\"slds-pill__label\" and starts-with(@title,'+')]";
-			ele = FindElement(driver, xPath, "extra tagged", action.SCROLLANDBOOLEAN, 20);
-			if (click(driver, ele, "extra tagged", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "clicked on tagged value", YesNo.No);
-
-				xPath = "//h2[text()='Tagged']/../following-sibling::div//a";
-				elements = FindElements(driver, xPath, "Tagged element");
-				String[] actualExtraTaggedRecord = new String[elements.size()];
-				for (int i = 0; i < elements.size(); i++) {
-					actualExtraTaggedRecord[i] = getText(driver, elements.get(i), "Extra Tagged",
-							action.SCROLLANDBOOLEAN);
-				}
-
-				for (int i = 0; i < relatedAssociation.length; i++) {
-					int status = 0;
-					for (int j = 0; j < actualExtraTaggedRecord.length; j++) {
-
-						if (relatedAssociation[i].equals(actualExtraTaggedRecord[j])) {
-							log(LogStatus.INFO,
-									"Actual result of related association: " + actualExtraTaggedRecord[j]
-											+ " has been matched with the expected result of related association : "
-											+ relatedAssociation[i],
-									YesNo.No);
-							status++;
-						}
-
-					}
-					if (status == 0) {
-						log(LogStatus.ERROR,
-								"The result: " + relatedAssociation[i] + " is not available on related association",
-								YesNo.No);
-						result.add("The result of tagged: " + relatedAssociation[i]
-								+ " is not available on related association");
-					}
-				}
-
-				xPath = "//h2[text()='Tagged']/../button[@title='Close']";
-				ele = FindElement(driver, xPath, "close button of Tagged popup", action.SCROLLANDBOOLEAN, 10);
-				if (click(driver, ele, xPath, action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on close button of tagged", YesNo.No);
-				} else {
-					log(LogStatus.ERROR, "Not able to click on close button of tagged", YesNo.No);
-					result.add("Not able to click on close button of tagged");
-				}
-
-			} else {
-				log(LogStatus.ERROR, "Not able to click on tagged value", YesNo.No);
-				result.add("Not able to click on tagged value");
-			}
-		}
+		/*
+		 * if (relatedAssociation != null) { xPath =
+		 * "//a[@class=\"interaction_sub subject_text\" and text()='" + subjectName +
+		 * "']/../following-sibling::div[contains(@class,'cls_myPill')]//span[@class=\"slds-pill__label\" and starts-with(@title,'+')]"
+		 * ; ele = FindElement(driver, xPath, "extra tagged", action.SCROLLANDBOOLEAN,
+		 * 20); if (click(driver, ele, "extra tagged", action.SCROLLANDBOOLEAN)) {
+		 * log(LogStatus.INFO, "clicked on tagged value", YesNo.No);
+		 * 
+		 * xPath = "//h2[text()='Tagged']/../following-sibling::div//a"; elements =
+		 * FindElements(driver, xPath, "Tagged element"); String[]
+		 * actualExtraTaggedRecord = new String[elements.size()]; for (int i = 0; i <
+		 * elements.size(); i++) { actualExtraTaggedRecord[i] = getText(driver,
+		 * elements.get(i), "Extra Tagged", action.SCROLLANDBOOLEAN); }
+		 * 
+		 * for (int i = 0; i < relatedAssociation.length; i++) { int status = 0; for
+		 * (int j = 0; j < actualExtraTaggedRecord.length; j++) {
+		 * 
+		 * if (relatedAssociation[i].equals(actualExtraTaggedRecord[j])) {
+		 * log(LogStatus.INFO, "Actual result of related association: " +
+		 * actualExtraTaggedRecord[j] +
+		 * " has been matched with the expected result of related association : " +
+		 * relatedAssociation[i], YesNo.No); status++; }
+		 * 
+		 * } if (status == 0) { log(LogStatus.ERROR, "The result: " +
+		 * relatedAssociation[i] + " is not available on related association",
+		 * YesNo.No); result.add("The result of tagged: " + relatedAssociation[i] +
+		 * " is not available on related association"); } }
+		 * 
+		 * xPath = "//h2[text()='Tagged']/../button[@title='Close']"; ele =
+		 * FindElement(driver, xPath, "close button of Tagged popup",
+		 * action.SCROLLANDBOOLEAN, 10); if (click(driver, ele, xPath,
+		 * action.SCROLLANDBOOLEAN)) { log(LogStatus.INFO,
+		 * "Clicked on close button of tagged", YesNo.No); } else { log(LogStatus.ERROR,
+		 * "Not able to click on close button of tagged", YesNo.No);
+		 * result.add("Not able to click on close button of tagged"); }
+		 * 
+		 * } else { log(LogStatus.ERROR, "Not able to click on tagged value", YesNo.No);
+		 * result.add("Not able to click on tagged value"); } }
+		 */
 
 		return result;
 	}
@@ -12197,8 +12186,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			if (npbl.createNavPopUpMinimizeButton(5) != null) {
 				CommonLib.click(driver, npbl.createNavPopUpMinimizeButton(5), "Minimize", action.BOOLEAN);
 			}
-			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName, NavigationMenuItems.Research.toString(),
-					action.BOOLEAN, 30)) {
+			if (npbl.clickOnNavatarEdgeLinkHomePage(projectName,
+					NavigationMenuItems.Navatar_Research.toString().replace("_", " "), action.BOOLEAN, 30)) {
 				log(LogStatus.INFO, "Able to Click on Research Going to click on : "
 						+ NavigationMenuItems.Research.toString() + " for Research an Item", YesNo.No);
 
@@ -12891,14 +12880,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					}
 				} else if (labelName.contains(excelLabel.Notes.toString())) {
-					xPath = "//div[span[span[text()='" + labelName
-							+ "']]]//div[@class='slds-rich-text-editor__textarea slds-grid']";
+					xPath = "//div[label[text()='Notes']]//textarea";
 					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.BOOLEAN, 30);
 					if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
 						log(LogStatus.INFO, "Clicked on " + labelName + " paragraph", YesNo.No);
 						ThreadSleep(2000);
 
-						xPath = "//div[span[span[text()='" + labelName + "']]]//div[@role='textbox']";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
 						ele.sendKeys(Keys.CONTROL + "A");
 						ThreadSleep(1000);
@@ -12932,10 +12919,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					for (int i = 0; i < tagList.size(); i++) {
 
-						xPath = "//input[@placeholder='Search']";
+						xPath = "//input[@placeholder='Search Firm, People or Deals']";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 2);
 						if (ele == null) {
-							xPath = "//*[@title='Tag']";
+							xPath = "//lightning-icon[@title=\"Tag\" and contains(@class,'mt15')]//lightning-primitive-icon";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									30);
 							if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
@@ -12948,7 +12935,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 						}
 
-						xPath = "//input[@placeholder='Search']";
+						xPath = "//input[@placeholder='Search Firm, People or Deals']";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 2);
 						if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, tagList.get(i) + " value has been passed in " + labelName + " field",
@@ -12989,8 +12976,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					// String fieldType=val[2];
 
 					if (labelName.contains("Start Date")) {
-						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='Start Date Time']/..//label[text()='Date']/..//input";
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='Start']/..//label[text()='Date']/..//input";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						ele.sendKeys(Keys.CONTROL + "A");
+						ele.sendKeys(Keys.BACK_SPACE);
 						if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
 						} else {
@@ -12999,8 +12988,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							return false;
 						}
 					} else if (labelName.contains("Start Time")) {
-						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='Start Date Time']/..//label[text()='Time']/..//input";
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='Start']/..//label[text()='Time']/..//input";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						ele.sendKeys(Keys.CONTROL + "A");
+						ele.sendKeys(Keys.BACK_SPACE);
 						if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
 						} else {
@@ -13010,8 +13001,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 
 					} else if (labelName.contains("End Date")) {
-						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='End Date Time']/..//label[text()='Date']/..//input";
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='End']/..//label[text()='Date']/..//input";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						ele.sendKeys(Keys.CONTROL + "A");
+						ele.sendKeys(Keys.BACK_SPACE);
 						if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
 						} else {
@@ -13021,8 +13014,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 
 					} else if (labelName.contains("End Time")) {
-						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='End Date Time']/..//label[text()='Time']/..//input";
+						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//legend[text()='End']/..//label[text()='Time']/..//input";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
+						ele.sendKeys(Keys.CONTROL + "A");
+						ele.sendKeys(Keys.BACK_SPACE);
 						if (CommonLib.sendKeys(driver, ele, value, labelName + " label", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, value + " value has been passed in " + labelName + " field", YesNo.No);
 						} else {
@@ -13101,7 +13096,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 					}
 
-					else if (labelName.contains("Assigned To ID")) {
+					else if (labelName.contains("Assigned To")) {
 						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
 								+ labelName + "']/..//button";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
@@ -13258,7 +13253,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 								if (!suggestedTags[0].equals("")) {
 									xPath = "//lightning-base-formatted-text[text()='" + suggestedTags[i]
-											+ "']/ancestor::th[@data-label='Reference Found']/..//td//input";
+											+ "']/ancestor::th[@data-label='Name']/..//td//input";
 									ele = CommonLib.FindElement(driver, xPath, suggestedTags[i] + " sugested Tag",
 											action.SCROLLANDBOOLEAN, 30);
 									if (click(driver, ele, suggestedTags[i] + " suggested tag",
@@ -13414,20 +13409,46 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		WebElement ele;
 		boolean flag = false;
 		xPath = "//a[@class=\"interaction_sub subject_text\" and text()='" + subjectName + "']";
-		ele = FindElement(driver, xPath, "Subject Name", action.SCROLLANDBOOLEAN, 30);
+		ele = FindElement(driver, xPath, "Subject Name", action.SCROLLANDBOOLEAN, 15);
 		if (CommonLib.clickUsingJavaScript(driver, ele, "Subject Name on Intraction")) {
 			log(LogStatus.INFO, "clicked on " + subjectName, YesNo.No);
 
 			String windowID = switchOnWindow(driver);
 			if (windowID != null) {
 
-				if (getPageHeaderTitle(20) != null) {
+				if (getPageHeaderTitle(10) != null) {
 					log(LogStatus.INFO, subjectName + " link is redirecting to Details Page", YesNo.No);
 					driver.close();
 					driver.switchTo().window(windowID);
 					flag = true;
 				} else {
 					log(LogStatus.ERROR, subjectName + " links is not redirecting to Details Page", YesNo.No);
+				}
+			} else {
+				log(LogStatus.ERROR, subjectName + " url did not open in new tab", YesNo.No);
+			}
+		} else {
+			log(LogStatus.ERROR, "not able to click on " + subjectName, YesNo.No);
+		}
+		return flag;
+	}
+
+	public boolean verifySubjectLinkPopUpOnIntraction(WebDriver driver, String subjectName) {
+
+		boolean flag = false;
+
+		if (CommonLib.click(driver, subjectOfInteractionCard(subjectName, 15),
+				"Subject Name on Intraction", action.BOOLEAN)) {
+			log(LogStatus.INFO, "clicked on " + subjectName, YesNo.No);
+
+			if (activitySubjetLinkPopupHeaderOnInteraction(5) != null) {
+
+				if (activitySubjetLinkPopupHeaderOnInteraction(10).getText().equals(subjectName)) {
+					log(LogStatus.INFO, subjectName + " link Popup open after click on it", YesNo.No);
+					CommonLib.refresh(driver);
+					flag = true;
+				} else {
+					log(LogStatus.ERROR, subjectName + " link Popup not open after click on it", YesNo.No);
 				}
 			} else {
 				log(LogStatus.ERROR, subjectName + " url did not open in new tab", YesNo.No);
@@ -13544,16 +13565,24 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ArrayList<String> result = new ArrayList<String>();
 		String xPath;
 		WebElement ele;
-		if (getMeetingAndCallPopUp(20) != null) {
+
+		String parentId = switchToWindowOpenNextToParentWindow(driver);
+
+		/*
+		 * if (getMeetingAndCallPopUp(20) != null) {
+		 * 
+		 */
+		ThreadSleep(4000);
+		if (parentId != null) {
 			if (subjectName != null && subjectName != "") {
 				log(LogStatus.INFO, "Meeting and calls popup has been open", YesNo.No);
 
 				if (icon != null) {
-					xPath = "//a[text()='" + subjectName
+					xPath = "//button[text()='" + subjectName
 							+ "']/ancestor::td[@data-label='Subject']/../th[@data-label='Type']//lightning-icon";
 					ele = FindElement(driver, xPath, "Icon type", action.SCROLLANDBOOLEAN, 20);
 					String iconName = getAttribute(driver, ele, "Icon type", "class");
-					if (iconName.toString().contains(icon)) {
+					if (iconName.toString().toLowerCase().contains(icon.toLowerCase())) {
 						log(LogStatus.INFO, icon + " icon has been verified against " + subjectName
 								+ " on Meetings and Calls popup", YesNo.No);
 
@@ -13567,7 +13596,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				}
 
 				if (dueDate != null && dueDate != "") {
-					xPath = "//a[text()='" + subjectName
+					xPath = "//button[text()='" + subjectName
 							+ "']/ancestor::td[@data-label='Subject']/../td[@data-label='Date']//lightning-base-formatted-text";
 					ele = FindElement(driver, xPath, "Date column", action.SCROLLANDBOOLEAN, 30);
 
@@ -13610,7 +13639,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				}
 
 				if (subjectName != null && subjectName != "") {
-					xPath = "//td[@data-label='Subject']//a[text()='" + subjectName + "']";
+					xPath = "//td[@data-label='Subject']//button[text()='" + subjectName + "']";
 					ele = FindElement(driver, xPath, "Subject column", action.SCROLLANDBOOLEAN, 30);
 
 					String actualSubject = getText(driver, ele, "subject", action.BOOLEAN);
@@ -13627,7 +13656,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				}
 
 				if (details != null && details != "") {
-					xPath = "//a[text()='" + subjectName
+					xPath = "//button[text()='" + subjectName
 							+ "']/ancestor::td[@data-label='Subject']/../td[@data-label='Details']//button";
 					ele = FindElement(driver, xPath, "Details column", action.SCROLLANDBOOLEAN, 30);
 
@@ -13642,44 +13671,47 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								+ actualDetails);
 					}
 				}
-
-				if (assignedTO != null && assignedTO != "") {
-					xPath = "//a[text()='" + subjectName
-							+ "']/ancestor::td[@data-label='Subject']/../td[@data-label='Assigned To']//a";
-					ele = FindElement(driver, xPath, "Assigned To column", action.SCROLLANDBOOLEAN, 30);
-
-					String actualAssignedTO = getText(driver, ele, "Assigned To", action.BOOLEAN);
-					if (assignedTO.equalsIgnoreCase(actualAssignedTO)) {
-						log(LogStatus.INFO,
-								"Expected Assigned to : " + assignedTO
-										+ " has been matched with the actual Assigned to : " + actualAssignedTO,
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"Expected Assigned to : " + assignedTO
-										+ " is not matched with the actual Assigned to : " + actualAssignedTO,
-								YesNo.No);
-						result.add("Expected Assigned to : " + assignedTO
-								+ " is not matched with the actual Assigned to : " + actualAssignedTO);
-					}
-				}
+				/*
+				 * if (assignedTO != null && assignedTO != "") { xPath = "//a[text()='" +
+				 * subjectName +
+				 * "']/ancestor::td[@data-label='Subject']/../td[@data-label='Assigned To']//a";
+				 * ele = FindElement(driver, xPath, "Assigned To column",
+				 * action.SCROLLANDBOOLEAN, 30);
+				 * 
+				 * String actualAssignedTO = getText(driver, ele, "Assigned To",
+				 * action.BOOLEAN); if (assignedTO.equalsIgnoreCase(actualAssignedTO)) {
+				 * log(LogStatus.INFO, "Expected Assigned to : " + assignedTO +
+				 * " has been matched with the actual Assigned to : " + actualAssignedTO,
+				 * YesNo.No); } else { log(LogStatus.ERROR, "Expected Assigned to : " +
+				 * assignedTO + " is not matched with the actual Assigned to : " +
+				 * actualAssignedTO, YesNo.No); result.add("Expected Assigned to : " +
+				 * assignedTO + " is not matched with the actual Assigned to : " +
+				 * actualAssignedTO); } }
+				 */
 			} else {
 				log(LogStatus.ERROR, "Either subject name is empty or null", YesNo.No);
 				result.add("Either subject name is empty or null");
 			}
 
-			xPath = "//h2[contains(text(),'Meetings and Calls')]/../button//lightning-primitive-icon";
-			ele = FindElement(driver, xPath, "close icon", action.SCROLLANDBOOLEAN, 30);
-			if (CommonLib.clickUsingJavaScript(driver, ele, "close icon")) {
-				log(LogStatus.INFO, "Clicked on close icon of popup", YesNo.No);
-			} else {
-				log(LogStatus.ERROR, "Not able to click on close icon of popup", YesNo.No);
-				result.add("Not able to click on close icon of popup");
-			}
+			driver.close();
+			driver.switchTo().window(parentId);
+
 		} else {
-			log(LogStatus.ERROR, "Meeting and calls popup is not open", YesNo.No);
-			result.add("Meeting and calls popup is not open");
+			log(LogStatus.ERROR, "Meeting and call page did not open", YesNo.No);
+			result.add("Meeting and call page did not open");
 		}
+
+		/*
+		 * xPath =
+		 * "//h2[contains(text(),'Meetings and Calls')]/../button//lightning-primitive-icon"
+		 * ; ele = FindElement(driver, xPath, "close icon", action.SCROLLANDBOOLEAN,
+		 * 30); if (CommonLib.clickUsingJavaScript(driver, ele, "close icon")) {
+		 * log(LogStatus.INFO, "Clicked on close icon of popup", YesNo.No); } else {
+		 * log(LogStatus.ERROR, "Not able to click on close icon of popup", YesNo.No);
+		 * result.add("Not able to click on close icon of popup"); } } else {
+		 * log(LogStatus.ERROR, "Meeting and calls popup is not open", YesNo.No);
+		 * result.add("Meeting and calls popup is not open"); }
+		 */
 		return result;
 	}
 
@@ -14047,8 +14079,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 			if (click(driver, getTaggedRecordName(val, 25), val + " tab", action.BOOLEAN)) {
 				log(LogStatus.INFO, "clicked on " + val + " tab", YesNo.No);
-				
-				if (getHeadingNameOfTabOnTaggedSection(val,15) != null) {
+
+				if (getHeadingNameOfTabOnTaggedSection(val, 15) != null) {
 					log(LogStatus.INFO,
 							"First column " + val + " has been verified on " + val + " tab of Tagged section",
 							YesNo.No);
@@ -14071,7 +14103,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							+ " tab of Tagged section");
 				}
 
-				if (getMessageOnTaggedSection(val,message,15) != null) {
+				if (getMessageOnTaggedSection(val, message, 15) != null) {
 					log(LogStatus.INFO, message + " message is visible on Tagged section", YesNo.No);
 				} else {
 					log(LogStatus.ERROR, message + " message is not visible on Tagged section", YesNo.No);
@@ -14088,6 +14120,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	}
 
+
 	public ArrayList<String> verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(
 			String InteractionSectionmessage, List<String> contactsSectionHeaderName,
 			String contactsSectionHeaderMessage, List<String> dealsSectionHeaderName, String dealsSectionHeaderMessage,
@@ -14098,8 +14131,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ArrayList<String> result = new ArrayList<String>();
 
 		if (InteractionSectionmessage != null && !"".equals(InteractionSectionmessage)) {
-			
-			String text = getText(driver, getMessageOnInteractionSection(15), "Interaction section message", action.SCROLLANDBOOLEAN);
+
+			String text = getText(driver, getMessageOnInteractionSection(15), "Interaction section message",
+					action.SCROLLANDBOOLEAN);
 			if (text.equals(InteractionSectionmessage)) {
 				log(LogStatus.INFO, InteractionSectionmessage + " message has been verified on Interaction section",
 						YesNo.No);
@@ -14111,29 +14145,38 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 		if (!contactsSectionHeaderName.isEmpty()) {
 			ArrayList<String> actualContactsSectionHeaderName = new ArrayList<String>();
-			xPath = "//span[@title='Contacts']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//span[@class='slds-truncate' and @title!='']";
+			xPath = "//span[@title='Contacts']/ancestor::div[contains(@class,'slds-grid slds-wrap slds-box')]/following-sibling::div//span[@class='slds-truncate' and @title!='']";
 			elements = FindElements(driver, xPath, "Contact section headers");
 			for (WebElement el : elements) {
 				actualContactsSectionHeaderName
 						.add(getText(driver, el, "Contact section headers", action.SCROLLANDBOOLEAN));
 			}
 
-			xPath = "//span[@title='Contacts']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//lightning-icon";
+			xPath = "//span[@title='Contacts']/ancestor::div[contains(@class,'slds-grid slds-wrap slds-box')]/following-sibling::div//lightning-icon";
 			elements = FindElements(driver, xPath, "Contact section headers");
 			for (WebElement el : elements) {
 				actualContactsSectionHeaderName.add(getAttribute(driver, el, "Contact section headers", "title"));
 			}
-
-			if (contactsSectionHeaderName.containsAll(actualContactsSectionHeaderName)) {
-				log(LogStatus.INFO,
-						"The Header name of contact section have been verified " + actualContactsSectionHeaderName,
-						YesNo.No);
-			} else {
-				log(LogStatus.ERROR,
-						"The Header name of contact section are not verified " + actualContactsSectionHeaderName,
-						YesNo.No);
-				result.add("The Header name of contact section are not verified " + actualContactsSectionHeaderName);
+			
+			for(int i=0; i<contactsSectionHeaderName.size(); i++)
+			{
+				int k=0;
+				for(int j=0; j<actualContactsSectionHeaderName.size(); j++)
+				{
+					if(contactsSectionHeaderName.get(i).equalsIgnoreCase(actualContactsSectionHeaderName.get(j)))
+					{
+						log(LogStatus.INFO,"Expected header name: "+contactsSectionHeaderName.get(i)+" has been matched with Actual header name: "+actualContactsSectionHeaderName.get(j)+" on contact section",YesNo.No);
+					    k++;
+					}
+				}
+				if(k==0)
+				{
+					log(LogStatus.ERROR,"Expected header name: "+contactsSectionHeaderName.get(i)+" is not matched with Actual header name on contact section",YesNo.No);
+				    result.add("Expected header name: "+contactsSectionHeaderName.get(i)+" is not matched with Actual header name on contact section");
+				}
+				
 			}
+			
 		}
 		if (contactsSectionHeaderMessage != null && !"".equals(contactsSectionHeaderMessage)) {
 			xPath = "//span[@title='Contacts']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//div[text()='"
@@ -14158,15 +14201,26 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			for (WebElement el : elements) {
 				actualDealsSectionHeaderName.add(getText(driver, el, "deal section headers", action.SCROLLANDBOOLEAN));
 			}
-			if (dealsSectionHeaderName.containsAll(actualDealsSectionHeaderName)) {
-				log(LogStatus.INFO,
-						"The Headers name of deal section have been verified " + actualDealsSectionHeaderName,
-						YesNo.No);
-			} else {
-				log(LogStatus.ERROR,
-						"The Headers name of deal section are not verified " + actualDealsSectionHeaderName, YesNo.No);
-				result.add("The Headers name of deal section are not verified " + actualDealsSectionHeaderName);
-			}
+			
+			
+			for(int i=0; i<dealsSectionHeaderName.size(); i++)
+			{
+				int k=0;
+				for(int j=0; j<actualDealsSectionHeaderName.size(); j++)
+				{
+					if(dealsSectionHeaderName.get(i).equalsIgnoreCase(actualDealsSectionHeaderName.get(j)))
+					{
+						log(LogStatus.INFO,"Expected header name: "+dealsSectionHeaderName.get(i)+" has been matched with Actual header name: "+actualDealsSectionHeaderName.get(j)+" on deal section",YesNo.No);
+					    k++;
+					}
+				}
+				if(k==0)
+				{
+					log(LogStatus.ERROR,"Expected header name: "+dealsSectionHeaderName.get(i)+" is not matched with Actual header name on deal section",YesNo.No);
+				    result.add("Expected header name: "+dealsSectionHeaderName.get(i)+" is not matched with Actual header name on deal section");
+				}
+				
+			}	
 		}
 
 		if (dealsSectionHeaderMessage != null && !"".equals(dealsSectionHeaderMessage)) {
@@ -14199,15 +14253,24 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						.add(getAttribute(driver, el, "Connections section headers", "title"));
 			}
 
-			if (connectionsSectionHeaderName.containsAll(actualConnectionsSectionHeaderName)) {
-				log(LogStatus.INFO, "The Header name of Connections section have been verified "
-						+ actualConnectionsSectionHeaderName, YesNo.No);
-			} else {
-				log(LogStatus.ERROR,
-						"The Header name of Connections section are not verified " + actualConnectionsSectionHeaderName,
-						YesNo.No);
-				result.add("The Header name of Connections section are not verified "
-						+ actualConnectionsSectionHeaderName);
+			
+			for(int i=0; i<connectionsSectionHeaderName.size(); i++)
+			{
+				int k=0;
+				for(int j=0; j<actualConnectionsSectionHeaderName.size(); j++)
+				{
+					if(connectionsSectionHeaderName.get(i).equalsIgnoreCase(actualConnectionsSectionHeaderName.get(j)))
+					{
+						log(LogStatus.INFO,"Expected header name: "+connectionsSectionHeaderName.get(i)+" has been matched with Actual header name: "+actualConnectionsSectionHeaderName.get(j)+" on connection section",YesNo.No);
+					    k++;
+					}
+				}
+				if(k==0)
+				{
+					log(LogStatus.ERROR,"Expected header name: "+connectionsSectionHeaderName.get(i)+" is not matched with Actual header name on connection section",YesNo.No);
+				    result.add("Expected header name: "+connectionsSectionHeaderName.get(i)+" is not matched with Actual header name on connection section");
+				}
+				
 			}
 		}
 
@@ -14226,7 +14289,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						"The meessage : " + connectionsSectionHeaderMessage + " is not verified on Connection section");
 			}
 		}
-
 		return result;
 	}
 
@@ -14355,39 +14417,38 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
-	public ArrayList<String> verifyRecordAndReferencedTypeOnTagged(String[] companyTagName,
-			String[] companyTimesReferenced, String[] peopleTagName, String[] peopleTimesReferenced,
-			String[] dealTagName, String[] dealTimesReferenced) {
+	public ArrayList<String> verifyRecordAndReferencedTypeOnTagged(String[] firmsTagName, String[] firmTimesReferenced,
+			String[] peopleTagName, String[] peopleTimesReferenced, String[] dealTagName,
+			String[] dealTimesReferenced) {
 		ArrayList<String> result = new ArrayList<String>();
-		if (companyTagName != null && companyTimesReferenced != null) {
-			if (companyTagName.length == companyTimesReferenced.length) {
-				if (click(driver, getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
+		if (firmsTagName != null && firmTimesReferenced != null) {
+			if (firmsTagName.length == firmTimesReferenced.length) {
+				if (click(driver, getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 
-					for (int i = 0; i < companyTagName.length; i++) {
+					for (int i = 0; i < firmsTagName.length; i++) {
 
-						if (getTaggedRecordName("Companies", companyTagName[i], 30) != null) {
-							log(LogStatus.INFO, companyTagName[i] + " record is available on company tab of Tagged",
+						if (getTaggedRecordName("Firms", firmsTagName[i], 30) != null) {
+							log(LogStatus.INFO, firmsTagName[i] + " record is available on firm tab of Tagged",
 									YesNo.No);
-							if (getTaggedRecordTimeReference("Companies", companyTagName[i], companyTimesReferenced[i],
+							if (getTaggedRecordTimeReference("Firms", firmsTagName[i], firmTimesReferenced[i],
 									30) != null) {
-								log(LogStatus.INFO,
-										"Time Reference : " + companyTimesReferenced[i] + " is verified against "
-												+ companyTagName[i] + " record on company tab of Tagged",
+								log(LogStatus.INFO, "Time Reference : " + firmTimesReferenced[i]
+										+ " is verified against " + firmsTagName[i] + " record on firm tab of Tagged",
 										YesNo.No);
 							} else {
 								log(LogStatus.ERROR,
-										"Time Reference : " + companyTimesReferenced[i] + " is not verified against "
-												+ companyTagName[i] + " record on company tab of Tagged",
+										"Time Reference : " + firmTimesReferenced[i] + " is not verified against "
+												+ firmsTagName[i] + " record on firm tab of Tagged",
 										YesNo.No);
-								result.add("Time Reference : " + companyTimesReferenced[i] + " is not verified against "
-										+ companyTagName[i] + " record on company tab of Tagged");
+								result.add("Time Reference : " + firmTimesReferenced[i] + " is not verified against "
+										+ firmsTagName[i] + " record on firm tab of Tagged");
 							}
 
 						} else {
-							log(LogStatus.ERROR,
-									companyTagName[i] + " record is not available on company tab of Tagged", YesNo.No);
-							result.add(companyTagName[i] + " record is not available on company tab of Tagged");
+							log(LogStatus.ERROR, firmsTagName[i] + " record is not available on firm tab of Tagged",
+									YesNo.No);
+							result.add(firmsTagName[i] + " record is not available on firm tab of Tagged");
 						}
 
 					}
@@ -14396,9 +14457,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					result.add("Not able to click on Companies tab name");
 				}
 			} else {
-				log(LogStatus.ERROR, "The size of tagged company name and size of tagged time reference is not equal",
+				log(LogStatus.ERROR, "The size of tagged firm name and size of tagged time reference is not equal",
 						YesNo.No);
-				result.add("The size of tagged company name and size of tagged time reference is not equal");
+				result.add("The size of tagged firm name and size of tagged time reference is not equal");
 			}
 		}
 
@@ -14508,133 +14569,138 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String xPath;
 		WebElement ele;
 		ArrayList<String> result = new ArrayList<String>();
-		if (correspondenceHeader != null && correspondenceHeader.length != 0) {
-			for (int i = 0; i < correspondenceHeader.length; i++) {
+		String parentId = switchOnWindow(driver);
+		if (parentId != null) {
+			if (correspondenceHeader != null && correspondenceHeader.length != 0) {
+				for (int i = 0; i < correspondenceHeader.length; i++) {
 
-				if (icon[i] != null && icon.length != 0 && icon[i].toString() != "") {
-					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
-							+ correspondenceHeader[i] + "']/ancestor::tr//th[@data-label='Type']//lightning-icon";
-					ele = FindElement(driver, xPath, "Icon type of " + correspondenceHeader[i], action.SCROLLANDBOOLEAN,
-							20);
-					String iconVal = getAttribute(driver, ele, "Icon type", "class");
-					if (iconVal.toLowerCase().contains(icon[i].toString().toLowerCase())) {
-						log(LogStatus.INFO, "The icon :" + icon[i].toString() + " has been verified against "
-								+ correspondenceHeader[i] + " record", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "The icon :" + icon[i].toString() + " is not verified against "
-								+ correspondenceHeader[i] + " record", YesNo.No);
-						result.add("The icon :" + icon[i].toString() + " is not verified against "
-								+ correspondenceHeader[i] + " record");
+					if (icon[i] != null && icon.length != 0 && icon[i].toString() != "") {
+						xPath = "//button[text()='" + correspondenceHeader[i]
+								+ "']/ancestor::tr//th[@data-label='Type']//lightning-icon";
+						ele = FindElement(driver, xPath, "Icon type of " + correspondenceHeader[i],
+								action.SCROLLANDBOOLEAN, 20);
+						String iconVal = getAttribute(driver, ele, "Icon type", "class");
+						if (iconVal.toLowerCase().contains(icon[i].toString().toLowerCase())) {
+							log(LogStatus.INFO, "The icon :" + icon[i].toString() + " has been verified against "
+									+ correspondenceHeader[i] + " record", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "The icon :" + icon[i].toString() + " is not verified against "
+									+ correspondenceHeader[i] + " record", YesNo.No);
+							result.add("The icon :" + icon[i].toString() + " is not verified against "
+									+ correspondenceHeader[i] + " record");
+						}
 					}
+
+					if (date != null && date.length != 0 && date[i] != "" && date[i] != null) {
+						xPath = "//button[text()='" + correspondenceHeader[i]
+								+ "']/ancestor::tr//td[@data-label='Date']//lightning-base-formatted-text";
+						ele = FindElement(driver, xPath, "date ", action.BOOLEAN, 25);
+						String actDate = getText(driver, ele, "date ", action.BOOLEAN);
+
+						String actualDate = null;
+
+						if (actDate.contains(",")) {
+							actualDate = actDate.split(",")[0];
+						} else {
+							actualDate = actDate;
+						}
+
+						String dueDate;
+						if (date[i].contains(",")) {
+							dueDate = date[i].split(",")[0];
+						} else {
+							dueDate = date[i];
+						}
+
+						String[] splittedDate = dueDate.split("/");
+						char dayMonth = splittedDate[0].charAt(0);
+						char day = splittedDate[1].charAt(0);
+						String month;
+						if (dayMonth == '0') {
+							month = splittedDate[0].replaceAll("0", "");
+						} else {
+							month = splittedDate[0];
+						}
+						String finalDay;
+						if (day == '0') {
+							finalDay = splittedDate[1].replaceAll("0", "");
+						} else {
+							finalDay = splittedDate[1];
+						}
+
+						String expectedDate = month + "/" + finalDay + "/" + splittedDate[2];
+
+						if (actualDate.trim().equalsIgnoreCase(expectedDate.trim())) {
+							log(LogStatus.INFO, "actual date : " + actualDate
+									+ " has been matched with the Expected date : " + expectedDate, YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "actual date : " + actualDate
+									+ " is not matched with the Expected date : " + expectedDate, YesNo.No);
+							result.add("actual date : " + actualDate + " is not matched with the Expected date : "
+									+ expectedDate);
+						}
+					}
+					if (subject != null && subject.length != 0 && subject[i] != "" && subject[i] != null) {
+						xPath = "//tr//td[@data-label='Subject']//button[text()='" + correspondenceHeader[i] + "']";
+						ele = FindElement(driver, xPath, "subject ", action.BOOLEAN, 25);
+						String actSubject = getText(driver, ele, "subject ", action.BOOLEAN);
+						if (subject[i].equalsIgnoreCase(actSubject)) {
+							log(LogStatus.INFO, "actual subject : " + actSubject
+									+ " has been matched with the Expected subject : " + subject[i], YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "actual subject : " + actSubject
+									+ " is not matched with the Expected subject : " + subject[i], YesNo.No);
+							result.add("actual subject : " + actSubject + " is not matched with the Expected subject : "
+									+ subject[i]);
+						}
+					}
+					if (details != null && details.length != 0 && details[i] != "" && details[i] != null) {
+						xPath = "//button[text()='" + correspondenceHeader[i]
+								+ "']/ancestor::tr//td[@data-label='Details']//button";
+						ele = FindElement(driver, xPath, "details ", action.BOOLEAN, 25);
+						String actDetails = getText(driver, ele, "details ", action.BOOLEAN);
+						if (actDetails.equalsIgnoreCase(details[i])) {
+							log(LogStatus.INFO, "actual details : " + actDetails
+									+ " has been matched with the Expected details : " + details[i], YesNo.No);
+						} else {
+							log(LogStatus.ERROR, "actual details : " + actDetails
+									+ " is not matched with the Expected details : " + details[i], YesNo.No);
+							result.add("actual details : " + actDetails + " is not matched with the Expected details : "
+									+ details[i]);
+						}
+					}
+					/*
+					 * if (assignedTo != null && assignedTo.length != 0 && assignedTo[i] != "" &&
+					 * assignedTo[i] != null) { xPath =
+					 * "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
+					 * + correspondenceHeader[i] +
+					 * "']/ancestor::tr//td[@data-label='Assigned To']//a"; ele =
+					 * FindElement(driver, xPath, "assigned to ", action.BOOLEAN, 25); String
+					 * actAssigned = getText(driver, ele, "assigned to ", action.BOOLEAN); if
+					 * (actAssigned.equalsIgnoreCase(assignedTo[i])) { log(LogStatus.INFO,
+					 * "actual AssignedTo value : " + actAssigned +
+					 * " has been matched with the Expected AssignedTo value : " + assignedTo[i],
+					 * YesNo.No); } else { log(LogStatus.ERROR, "actual AssignedTo value : " +
+					 * actAssigned + " is not matched with the Expected AssignedTo value : " +
+					 * assignedTo[i], YesNo.No); result.add("actual AssignedTo value : " +
+					 * actAssigned + " is not matched with the Expected AssignedTo value : " +
+					 * assignedTo[i]); } }
+					 */
 				}
-
-				if (date != null && date.length != 0 && date[i] != "" && date[i] != null) {
-					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
-							+ correspondenceHeader[i]
-							+ "']/ancestor::tr//td[@data-label='Date']//lightning-base-formatted-text";
-					ele = FindElement(driver, xPath, "date ", action.BOOLEAN, 25);
-					String actDate = getText(driver, ele, "date ", action.BOOLEAN);
-
-					String actualDate = null;
-
-					if (actDate.contains(",")) {
-						actualDate = actDate.split(",")[0];
-					} else {
-						actualDate = actDate;
-					}
-
-					String dueDate;
-					if (date[i].contains(",")) {
-						dueDate = date[i].split(",")[0];
-					} else {
-						dueDate = date[i];
-					}
-
-					String[] splittedDate = dueDate.split("/");
-					char dayMonth = splittedDate[0].charAt(0);
-					char day = splittedDate[1].charAt(0);
-					String month;
-					if (dayMonth == '0') {
-						month = splittedDate[0].replaceAll("0", "");
-					} else {
-						month = splittedDate[0];
-					}
-					String finalDay;
-					if (day == '0') {
-						finalDay = splittedDate[1].replaceAll("0", "");
-					} else {
-						finalDay = splittedDate[1];
-					}
-
-					String expectedDate = month + "/" + finalDay + "/" + splittedDate[2];
-
-					if (actualDate.trim().equalsIgnoreCase(expectedDate.trim())) {
-						log(LogStatus.INFO, "actual date : " + actualDate
-								+ " has been matched with the Expected date : " + expectedDate, YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "actual date : " + actualDate + " is not matched with the Expected date : "
-								+ expectedDate, YesNo.No);
-						result.add("actual date : " + actualDate + " is not matched with the Expected date : "
-								+ expectedDate);
-					}
-				}
-				if (subject != null && subject.length != 0 && subject[i] != "" && subject[i] != null) {
-					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
-							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Subject']//a";
-					ele = FindElement(driver, xPath, "subject ", action.BOOLEAN, 25);
-					String actSubject = getText(driver, ele, "subject ", action.BOOLEAN);
-					if (subject[i].equalsIgnoreCase(actSubject)) {
-						log(LogStatus.INFO, "actual subject : " + actSubject
-								+ " has been matched with the Expected subject : " + subject[i], YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "actual subject : " + actSubject
-								+ " is not matched with the Expected subject : " + subject[i], YesNo.No);
-						result.add("actual subject : " + actSubject + " is not matched with the Expected subject : "
-								+ subject[i]);
-					}
-				}
-				if (details != null && details.length != 0 && details[i] != "" && details[i] != null) {
-					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
-							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Details']//button";
-					ele = FindElement(driver, xPath, "details ", action.BOOLEAN, 25);
-					String actDetails = getText(driver, ele, "details ", action.BOOLEAN);
-					if (actDetails.equalsIgnoreCase(details[i])) {
-						log(LogStatus.INFO, "actual details : " + actDetails
-								+ " has been matched with the Expected details : " + details[i], YesNo.No);
-					} else {
-						log(LogStatus.ERROR, "actual details : " + actDetails
-								+ " is not matched with the Expected details : " + details[i], YesNo.No);
-						result.add("actual details : " + actDetails + " is not matched with the Expected details : "
-								+ details[i]);
-					}
-				}
-				if (assignedTo != null && assignedTo.length != 0 && assignedTo[i] != "" && assignedTo[i] != null) {
-					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
-							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Assigned To']//a";
-					ele = FindElement(driver, xPath, "assigned to ", action.BOOLEAN, 25);
-					String actAssigned = getText(driver, ele, "assigned to ", action.BOOLEAN);
-					if (actAssigned.equalsIgnoreCase(assignedTo[i])) {
-						log(LogStatus.INFO,
-								"actual AssignedTo value : " + actAssigned
-										+ " has been matched with the Expected AssignedTo value : " + assignedTo[i],
-								YesNo.No);
-					} else {
-						log(LogStatus.ERROR,
-								"actual AssignedTo value : " + actAssigned
-										+ " is not matched with the Expected AssignedTo value : " + assignedTo[i],
-								YesNo.No);
-						result.add("actual AssignedTo value : " + actAssigned
-								+ " is not matched with the Expected AssignedTo value : " + assignedTo[i]);
-					}
-				}
+			} else {
+				log(LogStatus.ERROR,
+						"Either correspondence is null or Empty. Please provide data to verify data on interaction popup ",
+						YesNo.No);
+				result.add(
+						"Either correspondence is null or Empty. Please provide data to verify data on interaction popup");
 			}
+			driver.close();
+			driver.switchTo().window(parentId);
 		} else {
-			log(LogStatus.ERROR,
-					"Either correspondence is null or Empty. Please provide data to verify data on interaction popup ",
-					YesNo.No);
-			result.add(
-					"Either correspondence is null or Empty. Please provide data to verify data on interaction popup");
+			log(LogStatus.ERROR, "New tab did not open after click", YesNo.No);
+			result.add("New tab did not open after click");
 		}
+
 		return result;
 	}
 
@@ -14721,63 +14787,64 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		WebElement ele;
 		List<WebElement> elements;
 		ArrayList<String> result = new ArrayList<String>();
-
-		xPath = "//h2[text()='Connections of " + recordName + "']";
-		ele = FindElement(driver, xPath, "connection header name", action.SCROLLANDBOOLEAN, 30);
-		if (ele != null) {
+		String parentID = CommonLib.switchOnWindow(driver);
+		if (getHeadingOfConnectionPage(recordName, 20) != null) {
 			log(LogStatus.INFO, "Connection popup has been open and heading of connection popup has been verified",
 					YesNo.No);
-			xPath = "//h2[text()='Connections of " + recordName + "']/preceding-sibling::button[@title='Close']";
-			ele = FindElement(driver, xPath, "cross icon", action.SCROLLANDBOOLEAN, 25);
-			if (ele != null) {
-				log(LogStatus.INFO, "Cross icon is visible on Connection popup", YesNo.No);
-				if (!headingName.isEmpty()) {
-					ArrayList<String> actualHeadingName = new ArrayList<String>();
-					xPath = "//h2[contains(text(),'Connections')]/ancestor::div[@class='slds-modal__container']//span[@class='slds-truncate' and @title!='']";
-					elements = FindElements(driver, xPath, "Connections section headers");
-					for (WebElement el : elements) {
-						actualHeadingName
-								.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
-					}
 
-					xPath = "//h2[contains(text(),'Connections')]/ancestor::div[@class='slds-modal__container']//lightning-icon[@title!='Close']";
-					elements = FindElements(driver, xPath, "Connections section headers");
-					for (WebElement el : elements) {
-						actualHeadingName.add(getAttribute(driver, el, "Connections section headers", "title"));
-					}
+			if (!headingName.isEmpty()) {
+				ArrayList<String> actualHeadingName = new ArrayList<String>();
+				xPath = "//span[contains(text(),'Connections')]/ancestor::div//span[@class='slds-th__action']/span[@class='slds-truncate' and @title!='']";
+				elements = FindElements(driver, xPath, "Connections section headers");
+				for (WebElement el : elements) {
+					actualHeadingName.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
+				}
 
-					if (headingName.containsAll(actualHeadingName)) {
-						log(LogStatus.INFO,
-								"The Header name of Connections section have been verified " + actualHeadingName,
-								YesNo.No);
-					} else {
+				xPath = "//span[@class='slds-th__action']//lightning-icon[@title!='Close']";
+				elements = FindElements(driver, xPath, "Connections section headers");
+				for (WebElement el : elements) {
+					actualHeadingName.add(getAttribute(driver, el, "Connections section headers", "title"));
+				}
+
+				for (int i = 0; i < headingName.size(); i++) {
+					int k = 0;
+					for (int j = 0; j < actualHeadingName.size(); j++) {
+						if (headingName.get(i).trim().equalsIgnoreCase(actualHeadingName.get(j).trim())) {
+							log(LogStatus.INFO,
+									"Expected heading name " + headingName.get(i)
+											+ " have been matched with the Actual heading name "
+											+ actualHeadingName.get(j) + " of Connection page",
+									YesNo.No);
+							k++;
+						}
+					}
+					if (k == 0) {
 						log(LogStatus.ERROR,
-								"The Header name of Connections section are not verified " + actualHeadingName,
+								"Expected heading name " + headingName.get(i) + " is not matched on Connection page",
 								YesNo.No);
-						result.add("The Header name of Connections section are not verified " + actualHeadingName);
+						result.add(
+								"Expected heading name " + headingName.get(i) + " is not matched on Connection page");
 					}
 				}
+			}
 
-				if (message != null && message != "") {
-					xPath = "//h2[contains(text(),'Connections of')]/ancestor::div[@class='slds-modal__container']//p[text()='"
-							+ message + "']";
-					ele = FindElement(driver, xPath, "message on popup", action.SCROLLANDBOOLEAN, 20);
-					if (ele != null) {
-						log(LogStatus.INFO, message + ": Message is visible on Connection popup", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, message + ": Message is not visible on Connection popup", YesNo.No);
-						result.add(message + ": Message is not visible on Connection popup");
-					}
+			if (message != null && message != "") {
+				xPath = "//span[contains(text(),'Connections of')]/ancestor::div//p[text()='" + message + "']";
+				ele = FindElement(driver, xPath, "message on popup", action.SCROLLANDBOOLEAN, 20);
+				if (ele != null) {
+					log(LogStatus.INFO, message + ": Message is visible on Connection popup", YesNo.No);
+				} else {
+					log(LogStatus.ERROR, message + ": Message is not visible on Connection popup", YesNo.No);
+					result.add(message + ": Message is not visible on Connection popup");
 				}
-			} else {
-				log(LogStatus.ERROR, "Cross icon is not visible on Connection popup", YesNo.No);
-				result.add("Cross icon is not visible on Connection popup");
 			}
 		} else {
 			log(LogStatus.ERROR, "Either Connection popup did not open or Connection popup heading is not verified",
 					YesNo.No);
 			result.add("Either Connection popup did not open or Connection popup heading is not verified");
 		}
+		driver.close();
+		driver.switchTo().window(parentID);
 
 		return result;
 
@@ -14929,7 +14996,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	public boolean verifyUIOfSuggestedTagSection(String[] suggestedTags) {
 
 		List<String> expectedColumnList = new ArrayList<String>();
-		expectedColumnList.add("Reference Found");
+		expectedColumnList.add("Name");
 		expectedColumnList.add("Type");
 
 		List<String> expectedFooterList = new ArrayList<String>();
@@ -14961,7 +15028,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				for (int i = 0; i < suggestedTags.length; i++) {
 					String[] column = suggestedTags[i].split("==", -1);
 					String xPath = "//lightning-base-formatted-text[text()='" + column[0]
-							+ "']/ancestor::th[@data-label='Reference Found']/following-sibling::td//lightning-base-formatted-text[text()='"
+							+ "']/ancestor::th[@data-label='Name']/following-sibling::td//lightning-base-formatted-text[text()='"
 							+ column[1] + "']/ancestor::td/preceding-sibling::td//input";
 					WebElement ele = CommonLib.FindElement(driver, xPath,
 							column[0] + " sugested Tag of Type: " + column[1], action.SCROLLANDBOOLEAN, 30);
@@ -15105,13 +15172,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					}
 				} else if (labelName.contains(excelLabel.Notes.toString())) {
-					xPath = "//div[span[span[text()='" + labelName
-							+ "']]]//div[@class='slds-rich-text-editor__textarea slds-grid']";
+					xPath = "//div[label[text()='Notes']]//textarea";
 					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
 					if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
 						log(LogStatus.INFO, "Clicked on " + labelName + " paragraph", YesNo.No);
 						ThreadSleep(2000);
-						xPath = "//div[span[span[text()='" + labelName + "']]]//div[@role='textbox']//p";
+
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
 						if (sendKeys(driver, ele, value, labelName + " paragraph", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, value + " has been passed on " + labelName + " paragraph", YesNo.No);
@@ -15157,11 +15223,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 
 						} else {
-							xPath = "//input[@placeholder='Search']";
+							xPath = "//input[@placeholder='Search Firm, People or Deals']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									2);
+							// h2[contains(@class,'header_text')]/../..//*[@title='Tag']
 							if (ele == null) {
-								xPath = "//*[@title='Tag']";
+								xPath = "//h2[contains(@class,'header_text')]/../..//*[@title='Tag']";
 								ele = CommonLib.FindElement(driver, xPath, labelName + " label",
 										action.SCROLLANDBOOLEAN, 30);
 								if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
@@ -15174,7 +15241,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 							}
 
-							xPath = "//input[@placeholder='Search']";
+							xPath = "//input[@placeholder='Search Firm, People or Deals']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									2);
 							if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
@@ -15329,7 +15396,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								}
 							}
 						}
-					} else if (labelName.contains("Assigned To ID")) {
+					} else if (labelName.contains("Assigned To")) {
 						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
 								+ labelName + "']/..//button";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
@@ -15454,7 +15521,19 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 					if (click(driver, getfooterTagButton(30), "Tag Button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on footer tag button", YesNo.No);
-						flag = true;
+						ThreadSleep(3000);
+						if (popupCloseButton(buttonName, 8) != null) {
+							if (clickUsingJavaScript(driver, popupCloseButton(buttonName, 20), "close button")) {
+								log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
+								flag = true;
+							} else {
+								log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
+								sa.assertTrue(false, "Not able to close the Note popup");
+								return false;
+							}
+						} else {
+							return true;
+						}
 					} else {
 						log(LogStatus.ERROR, "Not able to click on footer tag button", YesNo.No);
 						sa.assertTrue(false, "Not able to click on footer tag button");
@@ -15472,7 +15551,19 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.INFO, "Activity timeline record has been created", YesNo.No);
 					ThreadSleep(2000);
 					refresh(driver);
-					flag = true;
+					ThreadSleep(3000);
+					if (popupCloseButton(buttonName, 8) != null) {
+						if (clickUsingJavaScript(driver, popupCloseButton(buttonName, 20), "close button")) {
+							log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
+							flag = true;
+						} else {
+							log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
+							sa.assertTrue(false, "Not able to close the Note popup");
+							return false;
+						}
+					} else {
+						return true;
+					}
 				} else {
 					log(LogStatus.ERROR, "Activity timeline record is not created", YesNo.No);
 					sa.assertTrue(false, "Activity timeline record is not created");
@@ -15649,19 +15740,18 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						String labelName = val[0];
 						String value = val[1];
 
-						if (labelName.contains("Assigned To ID")) {
+						if (labelName.contains("Assigned To")) {
 
 							String actualAssignedToId = getText(driver, assignedToVerificationInAdvance(labelName, 10),
-									"Assigned To ID", action.SCROLLANDBOOLEAN);
+									"Assigned To", action.SCROLLANDBOOLEAN);
 
-							log(LogStatus.INFO, "Successfully get the value from Assigned To ID field", YesNo.No);
+							log(LogStatus.INFO, "Successfully get the value from Assigned To field", YesNo.No);
 							if (value.equals(actualAssignedToId)) {
-								log(LogStatus.INFO, "Assigned To ID value has been verify and i.e. :" + value,
-										YesNo.No);
+								log(LogStatus.INFO, "Assigned To value has been verify and i.e. :" + value, YesNo.No);
 							} else {
-								log(LogStatus.ERROR, "Assigned To ID value is not verify, Expected: " + value
+								log(LogStatus.ERROR, "Assigned To value is not verify, Expected: " + value
 										+ " but Actual: " + actualAssignedToId, YesNo.No);
-								result.add("Assigned To ID value is not verify, Expected: " + value + " but Actual: "
+								result.add("Assigned To value is not verify, Expected: " + value + " but Actual: "
 										+ actualAssignedToId);
 							}
 						}
@@ -15818,19 +15908,18 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 						}
 
-						else if (labelName.contains("Assigned To ID")) {
+						else if (labelName.contains("Assigned To")) {
 
 							String actualAssignedToId = getText(driver, assignedToVerificationInTasks(labelName, 10),
-									"Assigned To ID", action.SCROLLANDBOOLEAN);
+									"Assigned To", action.SCROLLANDBOOLEAN);
 
-							log(LogStatus.INFO, "Successfully get the value from Assigned To ID field", YesNo.No);
+							log(LogStatus.INFO, "Successfully get the value from Assigned To field", YesNo.No);
 							if (value.equals(actualAssignedToId)) {
-								log(LogStatus.INFO, "Assigned To ID value has been verify and i.e. :" + value,
-										YesNo.No);
+								log(LogStatus.INFO, "Assigned To value has been verify and i.e. :" + value, YesNo.No);
 							} else {
-								log(LogStatus.ERROR, "Assigned To ID value is not verify, Expected: " + value
+								log(LogStatus.ERROR, "Assigned To value is not verify, Expected: " + value
 										+ " but Actual: " + actualAssignedToId, YesNo.No);
-								result.add("Assigned To ID value is not verify, Expected: " + value + " but Actual: "
+								result.add("Assigned To value is not verify, Expected: " + value + " but Actual: "
 										+ actualAssignedToId);
 							}
 						} else if (labelName.contains(excelLabel.Status.toString())) {
@@ -15885,87 +15974,78 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			log(LogStatus.ERROR, "Popup is not open on the same page", YesNo.No);
 			result.add(" Popup is not open on the same page");
 		}
+
+		click(driver, crossIconButtonInNotePopUp(20), "Clicked on Cross Icon of PopUp", action.SCROLLANDBOOLEAN);
+
 		return result;
 	}
 
-	public ArrayList<String> verifyRedirectionOnClickRecordAndReferencedTypeOnTagged(String[] companyTagName,
-			String[] companyTimesReferenced, String[] peopleTagName, String[] peopleTimesReferenced,
-			String[] dealTagName, String[] dealTimesReferenced) {
+	public ArrayList<String> verifyRedirectionOnClickRecordAndReferencedTypeOnTagged(String[] firmTagName,
+			String[] firmTimesReferenced, String[] peopleTagName, String[] peopleTimesReferenced, String[] dealTagName,
+			String[] dealTimesReferenced) {
 		String xPath;
 		WebElement ele;
 		ArrayList<String> result = new ArrayList<String>();
-		if (companyTagName != null && companyTimesReferenced != null) {
-			if (companyTagName.length == companyTimesReferenced.length) {
-				if (click(driver, getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
+		if (firmTagName != null && firmTimesReferenced != null) {
+			if (firmTagName.length == firmTimesReferenced.length) {
+				if (click(driver, getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 
-					for (int i = 0; i < companyTagName.length; i++) {
+					for (int i = 0; i < firmTagName.length; i++) {
 						ThreadSleep(5000);
 
-						if (CommonLib.clickUsingJavaScript(driver,
-								getTaggedRecordName("Companies", companyTagName[i], 30),
-								companyTagName[i] + " on Company Tagged", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on " + companyTagName[i] + " record on Companies tab",
-									YesNo.No);
+						if (CommonLib.clickUsingJavaScript(driver, getTaggedRecordName("Firms", firmTagName[i], 30),
+								firmTagName[i] + " on Company Tagged", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on " + firmTagName[i] + " record on Firms tab", YesNo.No);
 
 							String id = switchOnWindow(driver);
-							xPath = "//lightning-formatted-text[text()='" + companyTagName[i] + "']";
-							ele = FindElement(driver, xPath, companyTagName[i] + " record", action.SCROLLANDBOOLEAN,
-									40);
+							xPath = "//lightning-formatted-text[text()='" + firmTagName[i] + "']";
+							ele = FindElement(driver, xPath, firmTagName[i] + " record", action.SCROLLANDBOOLEAN, 40);
 							if (ele != null) {
-								log(LogStatus.INFO, companyTagName[i] + " record is redirecting to new tab", YesNo.No);
+								log(LogStatus.INFO, firmTagName[i] + " record is redirecting to new tab", YesNo.No);
 							} else {
-								log(LogStatus.ERROR, companyTagName[i] + " is not redirecting to new tab", YesNo.No);
-								result.add(companyTagName[i] + " is not redirecting to new tab");
+								log(LogStatus.ERROR, firmTagName[i] + " is not redirecting to new tab", YesNo.No);
+								result.add(firmTagName[i] + " is not redirecting to new tab");
 							}
 							driver.close();
 							driver.switchTo().window(id);
 
 						} else {
-							log(LogStatus.ERROR,
-									"Not able to click on " + companyTagName[i] + " record on Companies tab", YesNo.No);
-							result.add("Not able to click on " + companyTagName[i] + " record on Companies tab");
+							log(LogStatus.ERROR, "Not able to click on " + firmTagName[i] + " record on Firms tab",
+									YesNo.No);
+							result.add("Not able to click on " + firmTagName[i] + " record on Firms tab");
 						}
 
-						if (click(
-								driver, getTaggedRecordTimeReference("Companies", companyTagName[i],
-										companyTimesReferenced[i], 30),
-								companyTagName[i] + " on Company Tagged", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on Time reference count of " + companyTagName[i], YesNo.No);
+						if (click(driver,
+								getTaggedRecordTimeReference("Firms", firmTagName[i], firmTimesReferenced[i], 30),
+								firmTagName[i] + " on Company Tagged", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of " + firmTagName[i], YesNo.No);
 
-							xPath = "//h2[contains(text(),'All Interactions')]";
-							ele = FindElement(driver, xPath, "Time reference popup", action.BOOLEAN, 20);
+							String id = switchOnWindow(driver);
+							xPath = "//span[@class='slds-page-header__title slds-truncate']";
+							ele = FindElement(driver, xPath, firmTagName[i] + " record's count",
+									action.SCROLLANDBOOLEAN, 40);
 							if (ele != null) {
-								log(LogStatus.INFO, "The Time reference count is redirecting to popup of "
-										+ companyTagName[i] + " record", YesNo.No);
-							} else {
-								log(LogStatus.ERROR, "The Time reference count is not redirecting to popup of "
-										+ companyTagName[i] + " record", YesNo.No);
-								result.add("The Time reference count is not redirecting to popup of "
-										+ companyTagName[i] + " record");
-							}
-
-							xPath = "//h2[contains(text(),'All Interactions')]/..//button[@title='Close']";
-							ele = FindElement(driver, xPath, "close button of " + companyTagName[i] + " record popup",
-									action.SCROLLANDBOOLEAN, 20);
-							if (click(driver, ele, "close button", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO, "Clicked on close button of popup of " + companyTagName[i],
+								log(LogStatus.INFO, firmTagName[i] + " time reference count is redirecting to new tab",
 										YesNo.No);
 							} else {
-								log(LogStatus.ERROR, "Not able to click on close button of " + companyTagName[i],
+								log(LogStatus.ERROR,
+										firmTagName[i] + " time reference count is not redirecting to new tab",
 										YesNo.No);
-								result.add("Not able to click on close button of " + companyTagName[i]);
+								result.add(firmTagName[i] + " time reference count is not redirecting to new tab");
 							}
+							driver.close();
+							driver.switchTo().window(id);
 
 						} else {
-							log(LogStatus.ERROR, "Not able to click on Time reference count of " + companyTagName[i],
+							log(LogStatus.ERROR, "Not able to click on Time reference count of " + firmTagName[i],
 									YesNo.No);
-							result.add("Not able to click on Time reference count of " + companyTagName[i]);
+							result.add("Not able to click on Time reference count of " + firmTagName[i]);
 						}
 					}
 				} else {
-					log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-					result.add("Not able to click on Companies tab name");
+					log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+					result.add("Not able to click on Firms tab name");
 				}
 			} else {
 				log(LogStatus.ERROR, "The size of tagged company name and size of tagged time reference is not equal",
@@ -16008,30 +16088,21 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								peopleTagName[i] + " on People Tagged", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of " + peopleTagName[i], YesNo.No);
 
-							xPath = "//h2[contains(text(),'All Interactions')]";
-							ele = FindElement(driver, xPath, "Time reference popup", action.BOOLEAN, 20);
+							String id = switchOnWindow(driver);
+							xPath = "//span[@class='slds-page-header__title slds-truncate']";
+							ele = FindElement(driver, xPath, firmTagName[i] + " record's count",
+									action.SCROLLANDBOOLEAN, 40);
 							if (ele != null) {
-								log(LogStatus.INFO, "The Time reference count is redirecting to popup of "
-										+ peopleTagName[i] + " record", YesNo.No);
-							} else {
-								log(LogStatus.ERROR, "The Time reference count is not redirecting to popup of "
-										+ peopleTagName[i] + " record", YesNo.No);
-								result.add("The Time reference count is not redirecting to popup of " + peopleTagName[i]
-										+ " record");
-							}
-
-							xPath = "//h2[contains(text(),'All Interactions')]/..//button[@title='Close']";
-							ele = FindElement(driver, xPath, "close button of " + peopleTagName[i] + " record popup",
-									action.SCROLLANDBOOLEAN, 20);
-							if (click(driver, ele, "close button", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO, "Clicked on close button of popup of " + peopleTagName[i],
+								log(LogStatus.INFO, firmTagName[i] + " time reference count is redirecting to new tab",
 										YesNo.No);
 							} else {
-								log(LogStatus.ERROR, "Not able to click on close button of " + peopleTagName[i],
+								log(LogStatus.ERROR,
+										firmTagName[i] + " time reference count is not redirecting to new tab",
 										YesNo.No);
-								result.add("Not able to click on close button of " + peopleTagName[i]);
+								result.add(firmTagName[i] + " time reference count is not redirecting to new tab");
 							}
-
+							driver.close();
+							driver.switchTo().window(id);
 						} else {
 							log(LogStatus.ERROR, "Not able to click on Time reference count of " + peopleTagName[i],
 									YesNo.No);
@@ -16084,29 +16155,21 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								dealTagName[i] + " on Deals Tagged", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of " + dealTagName[i], YesNo.No);
 
-							xPath = "//h2[contains(text(),'All Interactions')]";
-							ele = FindElement(driver, xPath, "Time reference popup", action.BOOLEAN, 20);
+							String id = switchOnWindow(driver);
+							xPath = "//span[@class='slds-page-header__title slds-truncate']";
+							ele = FindElement(driver, xPath, firmTagName[i] + " record's count",
+									action.SCROLLANDBOOLEAN, 40);
 							if (ele != null) {
-								log(LogStatus.INFO, "The Time reference count is redirecting to popup of "
-										+ dealTagName[i] + " record", YesNo.No);
-							} else {
-								log(LogStatus.ERROR, "The Time reference count is not redirecting to popup of "
-										+ dealTagName[i] + " record", YesNo.No);
-								result.add("The Time reference count is not redirecting to popup of " + dealTagName[i]
-										+ " record");
-							}
-
-							xPath = "//h2[contains(text(),'All Interactions')]/..//button[@title='Close']";
-							ele = FindElement(driver, xPath, "close button of " + dealTagName[i] + " record popup",
-									action.SCROLLANDBOOLEAN, 20);
-							if (click(driver, ele, "close button", action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO, "Clicked on close button of popup of " + dealTagName[i], YesNo.No);
-							} else {
-								log(LogStatus.ERROR, "Not able to click on close button of " + dealTagName[i],
+								log(LogStatus.INFO, firmTagName[i] + " time reference count is redirecting to new tab",
 										YesNo.No);
-								result.add("Not able to click on close button of " + dealTagName[i]);
+							} else {
+								log(LogStatus.ERROR,
+										firmTagName[i] + " time reference count is not redirecting to new tab",
+										YesNo.No);
+								result.add(firmTagName[i] + " time reference count is not redirecting to new tab");
 							}
-
+							driver.close();
+							driver.switchTo().window(id);
 						} else {
 							log(LogStatus.ERROR, "Not able to click on Time reference count of " + dealTagName[i],
 									YesNo.No);
@@ -16223,26 +16286,38 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String xPath;
 		WebElement ele;
 		List<WebElement> elements;
+		String parentID=switchOnWindow(driver);
 		ArrayList<String> result = new ArrayList<String>();
 		if (!headerName.isEmpty()) {
 			ArrayList<String> actualHeaderName = new ArrayList<String>();
-			xPath = "//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//span[@class='slds-truncate' and @title!='']";
+			xPath = "//table[contains(@class,'slds-table_header-fixed')]//span[@class='slds-truncate' and @title!='']";
 			elements = FindElements(driver, xPath, "Meetings and Calls popup");
 			for (WebElement el : elements) {
 				actualHeaderName.add(getText(driver, el, "Meetings and Calls popup headers", action.SCROLLANDBOOLEAN));
 			}
-			if (headerName.containsAll(actualHeaderName)) {
-				log(LogStatus.INFO, "The Header name of meeting and call popup have been verified " + actualHeaderName,
-						YesNo.No);
-			} else {
-				log(LogStatus.ERROR, "The Header name of meeting and call popup are not verified " + actualHeaderName,
-						YesNo.No);
-				result.add("The Header name of meeting and call popup are not verified " + actualHeaderName);
+			
+			for(int i=0; i<headerName.size(); i++)
+			{
+				int k=0;
+				for(int j=0; j<actualHeaderName.size(); j++)
+				{					
+					if (headerName.get(i).equalsIgnoreCase(actualHeaderName.get(j)))
+					{
+						log(LogStatus.INFO, "Expected header name : "+headerName.get(i)+" has been matched with Actual header name : "+actualHeaderName.get(j), YesNo.No);
+					    k++;
+					}
+				
+				}
+				if(k==0)
+				{
+					log(LogStatus.ERROR, "Expected header name : "+headerName.get(i)+" is not matched with Actual header name", YesNo.No);
+				    result.add("Expected header name : "+headerName.get(i)+" is not matched with Actual header name");
+				
+				}
 			}
 		}
 		if (message != null && !"".equals(message)) {
-			xPath = "//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//div[text()='" + message
-					+ "']";
+			xPath = "//p[contains(@class,'nodata-popup') and text()='"+message+"']";
 			ele = FindElement(driver, xPath, "Message on Meetings and Calls popup", action.SCROLLANDBOOLEAN, 15);
 			if (ele != null) {
 				log(LogStatus.INFO, "The meessage : " + message + " has been verified on Meetings and Calls popup",
@@ -16253,10 +16328,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				result.add("The meessage : " + message + " is not verified on Meetings and Calls popup");
 			}
 		}
+		driver.close();
+		driver.switchTo().window(parentID);
 		return result;
 
 	}
 
+	
 	public boolean createRecordForCustomObject(String projectName, String tabName, String textBoxRecordLabel,
 			String textBoxRecordName) {
 		boolean flag = false;
@@ -16396,13 +16474,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					}
 				} else if (labelName.contains(excelLabel.Notes.toString())) {
-					xPath = "//div[span[span[text()='" + labelName
-							+ "']]]//div[@class='slds-rich-text-editor__textarea slds-grid']";
+					xPath = "//div[label[text()='Notes']]//textarea";
 					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
 					if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
 						log(LogStatus.INFO, "Clicked on " + labelName + " paragraph", YesNo.No);
 						ThreadSleep(2000);
-						xPath = "//div[span[span[text()='" + labelName + "']]]//div[@role='textbox']//p";
+
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
 						if (sendKeys(driver, ele, value, labelName + " paragraph", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, value + " has been passed on " + labelName + " paragraph", YesNo.No);
@@ -16448,11 +16525,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 
 						} else {
-							xPath = "//input[@placeholder='Search']";
+							xPath = "//input[@placeholder='Search Firm, People or Deals']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									2);
 							if (ele == null) {
-								xPath = "//*[@title='Tag']";
+								xPath = "//h2[contains(@class,'header_text')]/../..//*[@title='Tag']";
 								ele = CommonLib.FindElement(driver, xPath, labelName + " label",
 										action.SCROLLANDBOOLEAN, 30);
 								if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
@@ -16465,7 +16542,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 							}
 
-							xPath = "//input[@placeholder='Search']";
+							xPath = "//input[@placeholder='Search Firm, People or Deals']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									2);
 							if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
@@ -16620,7 +16697,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								}
 							}
 						}
-					} else if (labelName.contains("Assigned To ID")) {
+					} else if (labelName.contains("Assigned To")) {
 						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
 								+ labelName + "']/..//button";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
@@ -16710,19 +16787,19 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 					}
 
-					else if (labelName.contains("Assigned To ID")) {
+					else if (labelName.contains("Assigned To")) {
 
 						String actualAssignedToId = getText(driver, assignedToVerificationInTasks(labelName, 10),
-								"Assigned To ID", action.SCROLLANDBOOLEAN);
+								"Assigned To", action.SCROLLANDBOOLEAN);
 
-						log(LogStatus.INFO, "Successfully get the value from Assigned To ID field", YesNo.No);
+						log(LogStatus.INFO, "Successfully get the value from Assigned To field", YesNo.No);
 						if (value.equals(actualAssignedToId)) {
-							log(LogStatus.INFO, "Assigned To ID value has been verify and i.e. :" + value, YesNo.No);
+							log(LogStatus.INFO, "Assigned To value has been verify and i.e. :" + value, YesNo.No);
 						} else {
-							log(LogStatus.ERROR, "Assigned To ID value is not verify, Expected: " + value
-									+ " but Actual: " + actualAssignedToId, YesNo.No);
-							sa.assertTrue(false, "Assigned To ID value is not verify, Expected: " + value
-									+ " but Actual: " + actualAssignedToId);
+							log(LogStatus.ERROR, "Assigned To value is not verify, Expected: " + value + " but Actual: "
+									+ actualAssignedToId, YesNo.No);
+							sa.assertTrue(false, "Assigned To value is not verify, Expected: " + value + " but Actual: "
+									+ actualAssignedToId);
 						}
 					} else if (labelName.contains(excelLabel.Status.toString())) {
 						String actualStatus = getText(driver, statusVerificationInTasks(labelName, 10),
@@ -16810,19 +16887,19 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 					}
 
-					else if (labelName.contains("Assigned To ID")) {
+					else if (labelName.contains("Assigned To")) {
 
 						String actualAssignedToId = getText(driver, assignedToVerificationInTasks(labelName, 10),
-								"Assigned To ID", action.SCROLLANDBOOLEAN);
+								"Assigned To", action.SCROLLANDBOOLEAN);
 
-						log(LogStatus.INFO, "Successfully get the value from Assigned To ID field", YesNo.No);
+						log(LogStatus.INFO, "Successfully get the value from Assigned To field", YesNo.No);
 						if (value.equals(actualAssignedToId)) {
-							log(LogStatus.INFO, "Assigned To ID value has been verify and i.e. :" + value, YesNo.No);
+							log(LogStatus.INFO, "Assigned To value has been verify and i.e. :" + value, YesNo.No);
 						} else {
-							log(LogStatus.ERROR, "Assigned To ID value is not verify, Expected: " + value
-									+ " but Actual: " + actualAssignedToId, YesNo.No);
-							sa.assertTrue(false, "Assigned To ID value is not verify, Expected: " + value
-									+ " but Actual: " + actualAssignedToId);
+							log(LogStatus.ERROR, "Assigned To value is not verify, Expected: " + value + " but Actual: "
+									+ actualAssignedToId, YesNo.No);
+							sa.assertTrue(false, "Assigned To value is not verify, Expected: " + value + " but Actual: "
+									+ actualAssignedToId);
 						}
 					} else if (labelName.equalsIgnoreCase(excelLabel.Status.toString())) {
 						String actualStatus = getText(driver, statusVerificationInTasks(labelName, 10),
@@ -16877,7 +16954,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ThreadSleep(2000);
 					for (int i = 0; i < suggestedTags.length; i++) {
 						xPath = "//lightning-base-formatted-text[text()='" + suggestedTags[i]
-								+ "']/ancestor::th[@data-label='Reference Found']/..//td//input";
+								+ "']/ancestor::th[@data-label='Name']/..//td//input";
 						ele = CommonLib.FindElement(driver, xPath, suggestedTags[i] + " sugested Tag",
 								action.SCROLLANDBOOLEAN, 30);
 						if (click(driver, ele, suggestedTags[i] + " suggested tag", action.SCROLLANDBOOLEAN)) {
@@ -16993,13 +17070,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					}
 				} else if (labelName.contains(excelLabel.Notes.toString())) {
-					xPath = "//div[span[span[text()='" + labelName
-							+ "']]]//div[@class='slds-rich-text-editor__textarea slds-grid']";
+					xPath = "//div[label[text()='Notes']]//textarea";
 					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
 					if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
 						log(LogStatus.INFO, "Clicked on " + labelName + " paragraph", YesNo.No);
 						ThreadSleep(2000);
-						xPath = "//div[span[span[text()='" + labelName + "']]]//div[@role='textbox']//p";
+
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
 						if (sendKeys(driver, ele, value, labelName + " paragraph", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, value + " has been passed on " + labelName + " paragraph", YesNo.No);
@@ -17045,11 +17121,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 
 						} else {
-							xPath = "//input[@placeholder='Search']";
+							xPath = "//input[@placeholder='Search Firm, People or Deals']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									2);
 							if (ele == null) {
-								xPath = "//*[@title='Tag']";
+								xPath = "//h2[contains(@class,'header_text')]/../..//*[@title='Tag']";
 								ele = CommonLib.FindElement(driver, xPath, labelName + " label",
 										action.SCROLLANDBOOLEAN, 30);
 								if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
@@ -17062,7 +17138,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 							}
 
-							xPath = "//input[@placeholder='Search']";
+							xPath = "//input[@placeholder='Search Firm, People or Deals']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									2);
 							if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
@@ -17217,7 +17293,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								}
 							}
 						}
-					} else if (labelName.contains("Assigned To ID")) {
+					} else if (labelName.contains("Assigned To")) {
 						xPath = "//span[text()='Advanced']/ancestor::section//lightning-layout//label[text()='"
 								+ labelName + "']/..//button";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
@@ -17363,7 +17439,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 						if (!suggestedTags[0].equals("")) {
 							xPath = "//lightning-base-formatted-text[text()='" + suggestedTags[i]
-									+ "']/ancestor::th[@data-label='Reference Found']/..//td//input";
+									+ "']/ancestor::th[@data-label='Name']/..//td//input";
 							ele = CommonLib.FindElement(driver, xPath, suggestedTags[i] + " sugested Tag",
 									action.SCROLLANDBOOLEAN, 30);
 							if (click(driver, ele, suggestedTags[i] + " suggested tag", action.SCROLLANDBOOLEAN)) {
@@ -17384,7 +17460,19 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 					if (click(driver, getfooterTagButton(30), "Tag Button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on footer tag button", YesNo.No);
-						flag = true;
+						ThreadSleep(3000);
+						if (popupCloseButton(buttonName, 8) != null) {
+							if (clickUsingJavaScript(driver, popupCloseButton(buttonName, 20), "close button")) {
+								log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
+								flag = true;
+							} else {
+								log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
+								sa.assertTrue(false, "Not able to close the Note popup");
+								return false;
+							}
+						} else {
+							return true;
+						}
 					} else {
 						log(LogStatus.ERROR, "Not able to click on footer tag button", YesNo.No);
 						sa.assertTrue(false, "Not able to click on footer tag button");
@@ -17402,7 +17490,19 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					log(LogStatus.INFO, "Activity timeline record has been created", YesNo.No);
 					ThreadSleep(2000);
 					refresh(driver);
-					flag = true;
+					ThreadSleep(3000);
+					if (popupCloseButton(buttonName, 8) != null) {
+						if (clickUsingJavaScript(driver, popupCloseButton(buttonName, 20), "close button")) {
+							log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
+							flag = true;
+						} else {
+							log(LogStatus.ERROR, "Not able to close the Note popup", YesNo.No);
+							sa.assertTrue(false, "Not able to close the Note popup");
+							return false;
+						}
+					} else {
+						return true;
+					}
 				} else {
 					log(LogStatus.ERROR, "Activity timeline record is not created", YesNo.No);
 					sa.assertTrue(false, "Activity timeline record is not created");
@@ -17465,13 +17565,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					}
 				} else if (labelName.contains(excelLabel.Notes.toString())) {
-					xPath = "//div[span[span[text()='" + labelName
-							+ "']]]//div[@class='slds-rich-text-editor__textarea slds-grid']";
+					xPath = "//div[label[text()='Notes']]//textarea";
 					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
 					if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
 						log(LogStatus.INFO, "Clicked on " + labelName + " paragraph", YesNo.No);
 						ThreadSleep(2000);
-						xPath = "//div[span[span[text()='" + labelName + "']]]//div[@role='textbox']//p";
+
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
 						ele.sendKeys(Keys.CONTROL + "A");
 						ThreadSleep(1000);
@@ -17506,10 +17605,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					for (int i = 0; i < tagList.size(); i++) {
 
-						xPath = "//input[@placeholder='Search']";
+						xPath = "//input[@placeholder='Search Firm, People or Deals']";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 2);
 						if (ele == null) {
-							xPath = "//*[@title='Tag']";
+							xPath = "//h2[contains(@class,'header_text')]/../..//*[@title='Tag']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									30);
 							if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
@@ -17522,7 +17621,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 						}
 
-						xPath = "//input[@placeholder='Search']";
+						xPath = "//input[@placeholder='Search Firm, People or Deals']";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 2);
 						if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, tagList.get(i) + " value has been passed in " + labelName + " field",
@@ -17847,7 +17946,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 										if (!suggestedTags[0].equals("")) {
 											xPath = "//lightning-base-formatted-text[text()='" + suggestedTags[i]
-													+ "']/ancestor::th[@data-label='Reference Found']/..//td//input";
+													+ "']/ancestor::th[@data-label='Name']/..//td//input";
 											ele = CommonLib.FindElement(driver, xPath,
 													suggestedTags[i] + " sugested Tag", action.SCROLLANDBOOLEAN, 30);
 											if (click(driver, ele, suggestedTags[i] + " suggested tag",
@@ -17930,14 +18029,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 			for (int i = 0; i < tagList.size(); i++) {
 				WebElement ele;
-				String xPath = "//input[@placeholder='Search']";
+				String xPath = "//input[@placeholder='Search Firm, People or Deals']";
 				if (i == 0) {
 
 					ele = isDisplayed(driver,
 							CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 10),
 							"Visibility", 8, "RelatedTo Search Box");
 					if (ele == null) {
-						xPath = "//*[@title='Tag']";
+						xPath = "//h2[contains(@class,'header_text')]/../..//*[@title='Tag']";
 
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
 						CommonLib.ThreadSleep(4000);
@@ -17952,7 +18051,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 				}
 
-				xPath = "//input[@placeholder='Search']";
+				xPath = "//input[@placeholder='Search Firm, People or Deals']";
 				ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 10);
 				if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, tagList.get(i) + " value has been passed in " + labelName + " field", YesNo.No);
@@ -18030,13 +18129,12 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					}
 				} else if (labelName.contains(excelLabel.Notes.toString())) {
-					xPath = "//div[span[span[text()='" + labelName
-							+ "']]]//div[@class='slds-rich-text-editor__textarea slds-grid']";
+					xPath = "//div[label[text()='Notes']]//textarea";
 					ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
 					if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
 						log(LogStatus.INFO, "Clicked on " + labelName + " paragraph", YesNo.No);
 						ThreadSleep(2000);
-						xPath = "//div[span[span[text()='" + labelName + "']]]//div[@role='textbox']//p";
+
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 30);
 						ele.sendKeys(Keys.CONTROL + "A");
 						ThreadSleep(1000);
@@ -18071,10 +18169,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 					for (int i = 0; i < tagList.size(); i++) {
 
-						xPath = "//input[@placeholder='Search']";
+						xPath = "//input[@placeholder='Search Firm, People or Deals']";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 2);
 						if (ele == null) {
-							xPath = "//*[@title='Tag']";
+							xPath = "//h2[contains(@class,'header_text')]/../..//*[@title='Tag']";
 							ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN,
 									30);
 							if (CommonLib.clickUsingJavaScript(driver, ele, labelName + " paragraph")) {
@@ -18087,7 +18185,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 						}
 
-						xPath = "//input[@placeholder='Search']";
+						xPath = "//input[@placeholder='Search Firm, People or Deals']";
 						ele = CommonLib.FindElement(driver, xPath, labelName + " label", action.SCROLLANDBOOLEAN, 2);
 						if (sendKeys(driver, ele, tagList.get(i), "Tag", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, tagList.get(i) + " value has been passed in " + labelName + " field",
@@ -18544,13 +18642,16 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			String[] details, String[] assignedTo, String[] correspondenceHeader) {
 		String xPath;
 		WebElement ele;
+	
 		ArrayList<String> result = new ArrayList<String>();
+		String parentId=switchOnWindow(driver);
+		if(parentId!=null)
+		{
 		if (correspondenceHeader != null && correspondenceHeader.length != 0) {
 			for (int i = 0; i < correspondenceHeader.length; i++) {
 
 				if (icon[i] != null && icon.length != 0 && icon[i] != "" && icon[i] != null) {
-					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
-							+ correspondenceHeader[i] + "']/ancestor::tr//th[@data-label='Type']//lightning-icon";
+					xPath = "//button[text()='"+correspondenceHeader[i]+"']/ancestor::tr//th[@data-label='Type']//lightning-icon";
 					ele = FindElement(driver, xPath, "Icon type of " + correspondenceHeader[i], action.SCROLLANDBOOLEAN,
 							20);
 					String iconVal = getAttribute(driver, ele, "Icon type", "class");
@@ -18567,9 +18668,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				}
 
 				if (date != null && date.length != 0 && date[i] != "" && date[i] != null) {
-					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
-							+ correspondenceHeader[i]
-							+ "']/ancestor::tr//td[@data-label='Date']//lightning-base-formatted-text";
+					xPath = "//button[text()='"+correspondenceHeader[i]+"']/ancestor::tr//td[@data-label='Date']//lightning-base-formatted-text";
 					ele = FindElement(driver, xPath, "date ", action.SCROLLANDBOOLEAN, 25);
 					String actDate = getText(driver, ele, "date ", action.SCROLLANDBOOLEAN);
 					String actualDate = null;
@@ -18618,8 +18717,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 				}
 				if (subject != null && subject.length != 0 && subject[i] != "" && subject[i] != null) {
-					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
-							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Subject']//a";
+					xPath = "//tr//td[@data-label='Subject']//button[text()='"+correspondenceHeader[i]+"']";
 					ele = FindElement(driver, xPath, "subject ", action.SCROLLANDBOOLEAN, 25);
 					String actSubject = getText(driver, ele, "subject ", action.SCROLLANDBOOLEAN);
 					if (actSubject.equalsIgnoreCase(subject[i])) {
@@ -18633,8 +18731,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 				}
 				if (details != null && details.length != 0 && details[i] != "" && details[i] != null) {
-					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
-							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Details']//button";
+					xPath = "//button[text()='"+correspondenceHeader[i]+"']/ancestor::tr//td[@data-label='Details']//button";
 					ele = FindElement(driver, xPath, "details ", action.SCROLLANDBOOLEAN, 25);
 					String actDetails = getText(driver, ele, "details ", action.SCROLLANDBOOLEAN);
 					if (actDetails.trim().equalsIgnoreCase(details[i].trim().replaceAll(" +", " "))) {
@@ -18652,7 +18749,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								+ details[i] + " of subject : " + subject[i]);
 					}
 				}
-				if (assignedTo != null && assignedTo.length != 0 && assignedTo[i] != "" && assignedTo[i] != null) {
+			/*	if (assignedTo != null && assignedTo.length != 0 && assignedTo[i] != "" && assignedTo[i] != null) {
 					xPath = "//h2[contains(text(),'All Interactions')]/..//following-sibling::div//*[text()='"
 							+ correspondenceHeader[i] + "']/ancestor::tr//td[@data-label='Assigned To']//a";
 					ele = FindElement(driver, xPath, "assigned to ", action.SCROLLANDBOOLEAN, 25);
@@ -18673,7 +18770,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 								+ " is not matched with the Expected AssignedTo value : " + assignedTo[i]
 								+ " of subject : " + subject[i]);
 					}
-				}
+				}*/
 			}
 		} else {
 			log(LogStatus.ERROR,
@@ -18681,6 +18778,17 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					YesNo.No);
 			result.add(
 					"Either correspondence is null or Empty. Please provide data to verify data on interaction popup");
+		}
+		driver.close();
+		driver.switchTo().window(parentId);
+		}
+		else
+		{
+			log(LogStatus.ERROR,
+					"New tab did not open after click",
+					YesNo.No);
+			result.add(
+					"New tab did not open after click");
 		}
 		return result;
 	}
@@ -18737,7 +18845,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				if (CommonLib.clickUsingJavaScript(driver, contactNameUserIconButton(contactName, 30),
 						"Contact Name: " + contactName, action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactName, YesNo.No);
-
+                    String parentID=switchOnWindow(driver);
 					if (teamMember.length == title.length && teamMember.length == deals.length
 							&& teamMember.length == meetingAndCalls.length
 							&& teamMember.length == meetingAndCalls.length && teamMember.length == email.length) {
@@ -18842,26 +18950,20 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 										+ contactName, YesNo.No);
 								result.add("No Team Member found of name: " + teamMember[i] + " for contact: "
 										+ contactName);
-								if (connectionClosePopupButton(15) != null) {
-									click(driver, connectionClosePopupButton(15), "Close Button",
-											action.SCROLLANDBOOLEAN);
-								}
+								
 
 							}
 						}
-						if (click(driver, connectionClosePopupButton(15), "Close Button", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on close button of meeting and call popup", YesNo.No);
-						} else {
-							log(LogStatus.INFO, "Not able to click on close button of meeting and call popup",
-									YesNo.No);
-							result.add("Not able to click on close button of meeting and call popup");
-						}
+					
 					} else {
 						log(LogStatus.ERROR,
 								"The size of Team member, Title, deal, meeting and call, email are not equal",
 								YesNo.No);
 						result.add("The size of Team member, Title, deal, meeting and call, email are not equal");
 					}
+					
+					driver.close();
+					driver.switchTo().window(parentID);
 				} else {
 					log(LogStatus.ERROR, "Not Able to Click on Contact: " + contactName, YesNo.No);
 					result.add("Not Able to Click on Contact: " + contactName);
@@ -18886,16 +18988,18 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		ArrayList<String> result = new ArrayList<String>();
 		String xPath;
 		WebElement ele;
-
+		String parentId=switchToWindowOpenNextToParentWindow(driver);
+		ThreadSleep(4000);
+		if(parentId!=null)
+		{
 		if (icon.length == date.length && icon.length == subjectName.length && icon.length == details.length
 				&& icon.length == assignedTO.length) {
-			if (getMeetingAndCallPopUp(20) != null) {
-				log(LogStatus.INFO, "Meeting and calls popup has been open", YesNo.No);
+	/*		if (getMeetingAndCallPopUp(20) != null) {
+				log(LogStatus.INFO, "Meeting and calls popup has been open", YesNo.No);*/
 				for (int i = 0; i < subjectName.length; i++) {
 					if (subjectName[i] != null && subjectName[i] != "") {
 						if (icon[i] != null && icon[i] != "") {
-							xPath = "//a[text()='" + subjectName[i]
-									+ "']/ancestor::td[@data-label='Subject']/../th[@data-label='Type']//lightning-icon";
+							xPath = "//button[text()='"+subjectName[i]+"']/ancestor::td[@data-label='Subject']/../th[@data-label='Type']//lightning-icon";
 							ele = FindElement(driver, xPath, "Icon type", action.SCROLLANDBOOLEAN, 20);
 							String iconName = getAttribute(driver, ele, "Icon type", "class");
 							if (iconName.contains(icon[i].toLowerCase())) {
@@ -18911,7 +19015,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 
 						if (date[i] != null) {
-							xPath = "//a[text()='" + subjectName[i]
+							xPath = "//button[text()='" + subjectName[i]
 									+ "']/ancestor::td[@data-label='Subject']/../td[@data-label='Date']//lightning-base-formatted-text";
 							ele = FindElement(driver, xPath, "Date column", action.SCROLLANDBOOLEAN, 30);
 
@@ -18969,7 +19073,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 
 						if (subjectName[i] != null && subjectName[i] != "") {
-							xPath = "//td[@data-label='Subject']//a[text()='" + subjectName[i] + "']";
+							xPath = "//td[@data-label='Subject']//button[text()='" + subjectName[i] + "']";
 							ele = FindElement(driver, xPath, "Subject column", action.SCROLLANDBOOLEAN, 30);
 
 							String actualSubject = getText(driver, ele, "subject", action.BOOLEAN);
@@ -18989,7 +19093,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 						}
 
 						if (details[i] != null) {
-							xPath = "//a[text()='" + subjectName[i]
+							xPath = "//button[text()='" + subjectName[i]
 									+ "']/ancestor::td[@data-label='Subject']/../td[@data-label='Details']//button";
 							ele = FindElement(driver, xPath, "Details column", action.SCROLLANDBOOLEAN, 30);
 
@@ -19015,7 +19119,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							}
 						}
 
-						if (assignedTO[i] != null && assignedTO[i] != "") {
+		/*				if (assignedTO[i] != null && assignedTO[i] != "") {
 							xPath = "//a[text()='" + subjectName[i]
 									+ "']/ancestor::td[@data-label='Subject']/../td[@data-label='Assigned To']//a";
 							ele = FindElement(driver, xPath, "Assigned To column", action.SCROLLANDBOOLEAN, 30);
@@ -19037,14 +19141,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 										+ " is not matched with the actual Assigned to : " + actualAssignedTO
 										+ " for subject: " + subjectName[i] + " on meeting and call popup");
 							}
-						}
+						}  */
 					} else {
 						log(LogStatus.ERROR, "Either subject name is empty or null", YesNo.No);
 						result.add("Either subject name is empty or null");
-					}
+					} 
+				
 				}
-
-				xPath = "//h2[contains(text(),'Meetings and Calls')]/../button//lightning-primitive-icon";
+		/*		xPath = "//h2[contains(text(),'Meetings and Calls')]/../button//lightning-primitive-icon";
 				ele = FindElement(driver, xPath, "close icon", action.SCROLLANDBOOLEAN, 30);
 				if (CommonLib.clickUsingJavaScript(driver, ele, "close icon")) {
 					log(LogStatus.INFO, "Clicked on close icon of popup", YesNo.No);
@@ -19056,11 +19160,20 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			} else {
 				log(LogStatus.ERROR, "Meeting and calls popup is not open", YesNo.No);
 				result.add("Meeting and calls popup is not open");
-			}
+			} */
 		} else {
 			log(LogStatus.ERROR, "The length of Icon, Date, Subject and Assigned to are not equal.", YesNo.No);
 			result.add("The length of Icon, Date, Subject and Assigned to are not equal.");
 		}
+			driver.close();
+			driver.switchTo().window(parentId);
+		}
+		else
+		{
+			log(LogStatus.ERROR, "Meeting and call page did not open", YesNo.No);
+			result.add("Meeting and call page did not open");
+		}
+			
 		return result;
 	}
 
@@ -19068,23 +19181,23 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String xPath;
 		List<WebElement> elements;
 		ArrayList<String> result = new ArrayList<String>();
-		if (click(driver, getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-			log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
-			xPath = "//span[text()='Companies']/ancestor::table//button[@name='timesRef']";
+		if (click(driver, getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+			xPath = "//span[text()='Firms']/ancestor::table//button[@name='timesRef']";
 			elements = FindElements(driver, xPath, "Time Reference Count");
 			if (CommonLib.checkSorting(driver, SortOrder.Decending, elements)) {
 				log(LogStatus.INFO,
-						"Default Decending order of Time Referenced count have been verified on Companies tag",
+						"Default Decending order of Time Referenced count have been verified on Firms tag",
 						YesNo.No);
 			} else {
 				log(LogStatus.ERROR,
-						"Default Decending order of Time Referenced count are not verified on Companies tag", YesNo.No);
-				result.add("Default Decending order of Time Referenced count are not verified on Companies tag");
+						"Default Decending order of Time Referenced count are not verified on Firms tag", YesNo.No);
+				result.add("Default Decending order of Time Referenced count are not verified on Firms tag");
 			}
 
 		} else {
-			log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-			result.add("Not able to click on Companies tab name");
+			log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+			result.add("Not able to click on Firms tab name");
 		}
 
 		if (click(driver, getTaggedRecordName("People", 30), "People tab", action.SCROLLANDBOOLEAN)) {
@@ -19124,7 +19237,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return result;
 	}
-
 	public ArrayList<String> verifyActivityTimeLineRecordShouldNotVisibleOnViewAllInteractionPopup(
 			String[] subjectName) {
 		String xPath;
@@ -19369,7 +19481,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		List<String> result = new ArrayList<String>();
 		String label = "";
 		String value = "";
-	
+
 		CommonLib.ThreadSleep(14000);
 		try {
 			for (String labelValue : labelAndValueSeprateByBreak) {
@@ -19405,13 +19517,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return result;
 	}
-
 	public ArrayList<String> verifyFilterIconAndFilterRecordsOnInteractionsPopup(String[] filterValue,
 			String[] filterIconType) {
 
 		String xPath;
 		WebElement ele;
 		List<WebElement> elements;
+		String parentId=switchOnWindow(driver);
 
 		ArrayList<String> result = new ArrayList<String>();
 		if (getFilterIconOnInteractionPopup(20) != null) {
@@ -19436,7 +19548,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					result.add("Close icon is not visible on Filter section");
 				}
 
-				xPath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[@class='slds-form-element__label']";
+				xPath = "//section[contains(@class,'myfilter')]//span[@class='slds-form-element__label']";
 				elements = FindElements(driver, xPath, "Filter type");
 				String[] actulaFilterType = new String[elements.size()];
 				for (int i = 0; i < actulaFilterType.length; i++) {
@@ -19462,7 +19574,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 				}
 
-				xPath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//input[@name='All']";
+				xPath = "//section[contains(@class,'myfilter')]//input[@name='All']";
 				ele = FindElement(driver, xPath, "All Record checkbox", action.BOOLEAN, 20);
 				if (ele != null) {
 					if (isSelected(driver, ele, "All types filter")) {
@@ -19471,17 +19583,16 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									"Click on the All types checkbox, so All types checkbox has been unselected",
 									YesNo.No);
 							for (int i = 1; i < filterValue.length; i++) {
-								xPath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[text()='"
-										+ filterValue[i] + "']/../../input";
+								xPath = "//section[contains(@class,'myfilter')]//span[text()='"+ filterValue[i] +"']/../../input";
 								ele = FindElement(driver, xPath, filterValue[i] + " checkbox", action.SCROLLANDBOOLEAN,
 										20);
 								if (click(driver, ele, filterValue[i] + " checkbox", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on the checkbox of " + filterValue[i], YesNo.No);
 
-									xPath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//div[text()='No items to display']";
+									xPath = "//p[text()='"+acuityDefaultMessage+"']";
 									ele = FindElement(driver, xPath, "No Item ", action.SCROLLANDBOOLEAN, 10);
 									if (ele == null) {
-										xPath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//th[@data-label='Type']//lightning-icon";
+										xPath = "//th[@data-label='Type']//lightning-icon";
 										elements = FindElements(driver, xPath, "Icon");
 
 										for (int j = 0; j < elements.size(); j++) {
@@ -19502,8 +19613,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 											}
 										}
 
-										xPath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[text()='"
-												+ filterValue[i] + "']/../../input";
+										xPath = "//section[contains(@class,'myfilter')]//span[text()='"+ filterValue[i] +"']/../../input";
 										ele = FindElement(driver, xPath, filterValue[i] + " checkbox",
 												action.SCROLLANDBOOLEAN, 20);
 										if (click(driver, ele, filterValue[i] + " checkbox", action.SCROLLANDBOOLEAN)) {
@@ -19521,8 +19631,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									} else {
 										log(LogStatus.INFO,
 												"records are not available on " + filterValue[i] + " filter", YesNo.No);
-										xPath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[text()='"
-												+ filterValue[i] + "']/../../input";
+										xPath = "//section[contains(@class,'myfilter')]//span[text()='"+ filterValue[i] +"']/../../input";
 										ele = FindElement(driver, xPath, filterValue[i] + " checkbox",
 												action.SCROLLANDBOOLEAN, 20);
 										if (click(driver, ele, filterValue[i] + " checkbox", action.SCROLLANDBOOLEAN)) {
@@ -19560,24 +19669,23 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				int filterValueLength = filterValue.length;
 				int filterIconTypeLength = filterIconType.length;
 
-				xPath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[text()='"
-						+ filterValue[filterValueLength - 1] + "']/../../input";
+				xPath="//section[contains(@class,'myfilter')]//span[text()='"+filterValue[filterValueLength - 1] +"']/../../input";
+				
 				ele = FindElement(driver, xPath, filterValue[filterValueLength - 1] + " checkbox",
 						action.SCROLLANDBOOLEAN, 20);
 				if (click(driver, ele, filterValue[filterValueLength - 1] + " checkbox", action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "clicked on the checkbox of " + filterValue[filterValueLength - 1], YesNo.No);
-					xPath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//section//span[text()='"
-							+ filterValue[filterValueLength - 2] + "']/../../input";
+					xPath="//section[contains(@class,'myfilter')]//span[text()='"+filterValue[filterValueLength - 2] +"']/../../input";
 					ele = FindElement(driver, xPath, filterValue[filterValueLength - 2] + " checkbox",
 							action.SCROLLANDBOOLEAN, 20);
 					if (click(driver, ele, filterValue[filterValueLength - 2] + " checkbox", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on the checkbox of " + filterValue[filterValueLength - 2],
 								YesNo.No);
 
-						xPath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//div[text()='No items to display']";
+						xPath = "//p[text()='"+acuityDefaultMessage+"']";
 						ele = FindElement(driver, xPath, "No Item ", action.SCROLLANDBOOLEAN, 10);
 						if (ele == null) {
-							xPath = "//h2[contains(text(),'All Interactions with')]/../following-sibling::div//th[@data-label='Type']//lightning-icon";
+							xPath = "//th[@data-label='Type']//lightning-icon";
 							elements = FindElements(driver, xPath, "Icon");
 
 							for (int j = 0; j < elements.size(); j++) {
@@ -19610,14 +19718,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 							YesNo.No);
 					result.add("Not able to click on checkbox of " + filterValue[filterValueLength - 1]);
 				}
-
-				if (clickUsingJavaScript(driver, getcloseIconOnFilterSectiOnInteractionPopup(20),
-						"close button of filter secton")) {
-					log(LogStatus.INFO, "Clicked on filter close close button", YesNo.No);
-				} else {
-					log(LogStatus.ERROR, "Not able to click on filter close button", YesNo.No);
-					result.add("Not able to click on filter close button");
-				}
+				driver.close();
+				driver.switchTo().window(parentId);
 
 			} else {
 				log(LogStatus.ERROR, "Not able to click on filter icon", YesNo.No);
@@ -19630,7 +19732,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		return result;
 	}
-
+	
 	public List<String> verifyNotificationUIWhenNoEventThereOnRecordDetailsPage() {
 
 		List<String> negativeResults = new ArrayList<String>();
@@ -19684,7 +19786,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		String xPath;
 		WebElement ele;
 		List<WebElement> elements;
-
+        String parentId=switchToWindowOpenNextToParentWindow(driver);
 		ArrayList<String> result = new ArrayList<String>();
 		if (getfilterIconOnMeetingAndCallPopup(20) != null) {
 			log(LogStatus.INFO, "Filter Icon is visible on Meetings and Calls popup", YesNo.No);
@@ -19709,7 +19811,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					result.add("Close icon is not visible on Filter section");
 				}
 
-				xPath = "//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//span[@class='slds-form-element__label']";
+				xPath = "//section//span[@class='slds-form-element__label']";
 				elements = FindElements(driver, xPath, "Filter type");
 				String[] actulaFilterType = new String[elements.size()];
 				for (int i = 0; i < actulaFilterType.length; i++) {
@@ -19735,7 +19837,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 				}
 
-				xPath = "//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//input[@name='All']";
+				xPath = "//section[contains(@class,'myfilter')]//input[@name='All']";
 				ele = FindElement(driver, xPath, "All Record checkbox", action.BOOLEAN, 20);
 				if (ele != null) {
 					if (isSelected(driver, ele, "All types filter")) {
@@ -19744,17 +19846,16 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									"Click on the All types checkbox, so All types checkbox has been unselected",
 									YesNo.No);
 							for (int i = 1; i < filterValue.length; i++) {
-								xPath = "//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//span[text()='"
-										+ filterValue[i] + "']/../../input";
+								xPath = "//section[contains(@class,'myfilter')]//span[text()='"+ filterValue[i] + "']/../../input";
 								ele = FindElement(driver, xPath, filterValue[i] + " checkbox", action.SCROLLANDBOOLEAN,
 										20);
 								if (click(driver, ele, filterValue[i] + " checkbox", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on the checkbox of " + filterValue[i], YesNo.No);
 
-									xPath = "//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//div[text()='No items to display']";
+									xPath = "//p[text()='"+acuityDefaultMessage+"']";;
 									ele = FindElement(driver, xPath, "No Item ", action.SCROLLANDBOOLEAN, 10);
 									if (ele == null) {
-										xPath = "//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//th[@data-label='Type']//lightning-icon";
+										xPath = "//th[@data-label='Type']//lightning-icon";
 										elements = FindElements(driver, xPath, "Icon");
 
 										for (int j = 0; j < elements.size(); j++) {
@@ -19775,8 +19876,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 											}
 										}
 
-										xPath = "//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//span[text()='"
-												+ filterValue[i] + "']/../../input";
+										xPath = "//section[contains(@class,'myfilter')]//span[text()='"+ filterValue[i] + "']/../../input";
 										ele = FindElement(driver, xPath, filterValue[i] + " checkbox",
 												action.SCROLLANDBOOLEAN, 20);
 										if (click(driver, ele, filterValue[i] + " checkbox", action.SCROLLANDBOOLEAN)) {
@@ -19794,8 +19894,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 									} else {
 										log(LogStatus.INFO,
 												"records are not available on " + filterValue[i] + " filter", YesNo.No);
-										xPath = "//h2[contains(text(),'Meetings and Calls with')]/../following-sibling::div//section//span[text()='"
-												+ filterValue[i] + "']/../../input";
+										xPath = "//section[contains(@class,'myfilter')]//span[text()='"+ filterValue[i] + "']/../../input";
 										ele = FindElement(driver, xPath, filterValue[i] + " checkbox",
 												action.SCROLLANDBOOLEAN, 20);
 										if (click(driver, ele, filterValue[i] + " checkbox", action.SCROLLANDBOOLEAN)) {
@@ -19830,13 +19929,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 				}
 
-				if (clickUsingJavaScript(driver, getcloseIconOnFilterSectiOnMeetingAndCallPopup(20),
-						"close button of filter secton")) {
-					log(LogStatus.INFO, "Clicked on filter close close button", YesNo.No);
-				} else {
-					log(LogStatus.ERROR, "Not able to click on filter close button", YesNo.No);
-					result.add("Not able to click on filter close button");
-				}
+				driver.close();
+				driver.switchTo().window(parentId);
 
 			} else {
 				log(LogStatus.ERROR, "Not able to click on filter icon", YesNo.No);
@@ -19850,15 +19944,16 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
+
 	public ArrayList<String> verifyRecordShouldNotVisibleOnTagged(String[] companyTag, String peopleTag[],
 			String dealTag[]) {
 		ArrayList<String> result = new ArrayList<String>();
 		if (companyTag != null) {
 
-			if (click(driver, getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
+			if (click(driver, getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 				for (int i = 0; i < companyTag.length; i++) {
-					if (getTaggedRecordName("Companies", companyTag[i], 10) == null) {
+					if (getTaggedRecordName("Firms", companyTag[i], 10) == null) {
 						log(LogStatus.INFO, companyTag[i] + " record is not available on company tab", YesNo.No);
 					} else {
 						log(LogStatus.ERROR, companyTag[i] + " record is available on company tab", YesNo.No);
@@ -19866,8 +19961,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					}
 				}
 			} else {
-				log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-				result.add("Not able to click on Companies tab name");
+				log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+				result.add("Not able to click on Firms tab name");
 			}
 		}
 		if (peopleTag != null) {
@@ -20054,13 +20149,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		ArrayList<String> result = new ArrayList<String>();
 
-		if (click(driver, getTaggedRecordName(TaggedName.Companies.toString(), 30),
-				TaggedName.Companies.toString() + " tab", action.SCROLLANDBOOLEAN)) {
-			log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
+		if (click(driver, getTaggedRecordName(TaggedName.Firms.toString(), 30),
+				TaggedName.Firms.toString() + " tab", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 			ThreadSleep(5000);
-			if (CommonLib.clickUsingJavaScript(driver, recordsNameOnTaggedSection(TaggedName.Companies.toString(), 30),
-					"Records on Company Tagged", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on record on Companies tab", YesNo.No);
+			if (CommonLib.clickUsingJavaScript(driver, recordsNameOnTaggedSection(TaggedName.Firms.toString(), 30),
+					"Records on firm Tagged", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on record on firm tab", YesNo.No);
 
 				String id = switchOnWindow(driver);
 				if (id != null) {
@@ -20080,13 +20175,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				}
 
 			} else {
-				log(LogStatus.ERROR, "Not able to click on record on Companies tab", YesNo.No);
-				result.add("Not able to click on record on Companies tab");
+				log(LogStatus.ERROR, "Not able to click on record on firm tab", YesNo.No);
+				result.add("Not able to click on record on firm tab");
 			}
 
 		} else {
-			log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-			result.add("Not able to click on Companies tab name");
+			log(LogStatus.ERROR, "Not able to click on firm tab name", YesNo.No);
+			result.add("Not able to click on firm tab name");
 		}
 
 		if (click(driver, getTaggedRecordName(TaggedName.People.toString(), 30), TaggedName.People.toString() + " tab",
@@ -20186,29 +20281,30 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	}
 	
-	public ArrayList<String> verifyHighlightedCompanyNameOnCompanyTaggedSection(String[] companyName)
+	public ArrayList<String> verifyHighlightedCompanyNameOnCompanyTaggedSection(String[] firmName)
 	{
 		ArrayList<String> result=new ArrayList<String>();
-		if (click(driver, getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-			log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
+		if (click(driver, getTaggedRecordName("Firms", 30), "Firm tab", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on Firsm tab name", YesNo.No);
 			
-			for(int i=0; i<companyName.length; i++)
+			for(int i=0; i<firmName.length; i++)
 			{
-				if(getHighlightedCompanyName(companyName[i],15)!=null)
+				if(getHighlightedCompanyName(firmName[i],15)!=null)
 				{
-					log(LogStatus.INFO, companyName[i]+" is highlighted in Company list", YesNo.No);
+					log(LogStatus.INFO, firmName[i]+" is highlighted in firm list", YesNo.No);
 				}
 				else
 				{
-					log(LogStatus.ERROR, companyName[i]+" is not highlighted in Company list", YesNo.No);
-					result.add(companyName[i]+" is not highlighted in Company list");
+					log(LogStatus.ERROR, firmName[i]+" is not highlighted in firm list", YesNo.No);
+					result.add(firmName[i]+" is not highlighted in firm list");
 				}
 			}			
 		}
 		else
 		{
-			log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-			result.add("Not able to click on Companies tab name");
+			log(LogStatus.ERROR, "Not able to click on firm tab name", YesNo.No);
+			result.add("Not able to click on firm tab name");
+
 		}
 		return result;
 	}

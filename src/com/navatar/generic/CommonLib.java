@@ -1073,6 +1073,7 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 				} catch (Exception e) {
 					appLog.error("Not able to clear the text box.");
 				}
+				ThreadSleep(1000);
 				element.sendKeys(value);
 				AppListeners.appLog.info("Passed value to element: " + elementName + "\nPassed Value: " + value);
 				return true;

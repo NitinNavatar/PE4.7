@@ -6457,7 +6457,7 @@ public class RGAcuityMeetingNotesNotificationReminder extends BaseLib {
 							YesNo.Yes);
 					exit("No new window is open after click on setup link in lighting mode so cannot Update CRM User2");
 				}
-				if (setup.editPEUserAndUpdateTheName(user2firstName, User2LastName, user2EmailId)) {
+				if (setup.editPEUserAndUpdateTheName(user2firstName, User2LastName, user2EmailId,null)) {
 					log(LogStatus.INFO,
 							"CRM User Name has been updated Successfully to: " + user2firstName + " " + User2LastName,
 							YesNo.No);

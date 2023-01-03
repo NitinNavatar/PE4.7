@@ -31,11 +31,11 @@ public class ResearchPage extends BasePageBusinessLayer {
 	public WebElement clickOnRecordUsingGridName(String gridName, int timeOut) {
 
 		try {
-			return FindElement(driver, "(//span[contains(text(),'"+ gridName+"')]/ancestor::div/following-sibling::div//th//a)[1]",
+			return FindElement(driver, "(//span[contains(text(),'"+ gridName+"')]/ancestor::div/following-sibling::div//a)[1]",
 					"Grid Name: " + gridName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
 			return FindElement(driver,
-					"(//span[contains(text(),'"+ gridName+"')]/ancestor::div/following-sibling::div//th//a)[1]",
+					"(//span[contains(text(),'"+ gridName+"')]/ancestor::div/following-sibling::div//a)[1]",
 					"Grid Name: " + gridName, action.SCROLLANDBOOLEAN, timeOut);
 		}
 
@@ -113,6 +113,16 @@ public class ResearchPage extends BasePageBusinessLayer {
 		
 	}
 	
+	public WebElement getProfileSelected(String ProfileName,int timeout ) {
+		return isDisplayed(driver,  FindElement(driver, "//th//a[text()='" + ProfileName + "']",
+				"getProfileSelected",action.SCROLLANDBOOLEAN,timeout),"Visibility", timeout, "Profile");
+	}
+	
+	public WebElement getEditButtonForRecordTypes(String recordTypes,int timeout ) {
+		return isDisplayed(driver,  FindElement(driver, "//*[text()='" + recordTypes + "s" +"']/following-sibling::*//*[text()='Edit']",
+				"getEditButtonForRecordTypes",action.SCROLLANDBOOLEAN,timeout),"Visibility", timeout, "Record Type");
+	}
+	
 	// Acuity Research
 		@FindBy(xpath = "//div[contains(@class,'DOCKED')]//div//input")
 		private WebElement textAreaResearch;
@@ -138,7 +148,30 @@ public class ResearchPage extends BasePageBusinessLayer {
 
 		}
 
-		@FindBy(xpath = "(//div[contains(@class,'DOCKED')]//div//button)[3]")
+		@FindBy(xpath = "//div[contains(@class,'normal')]//button[@title='Pop-in']")
+		private WebElement researchPopIn;
+
+		public WebElement getResearchPopIn(int timeOut) {
+			return isDisplayed(driver, researchPopIn, "Visibility", timeOut, "Research Pop In Button");
+
+		}
+		
+		//@FindBy(xpath = "(//div[contains(@class,'left_small')]//span)[2]")
+		
+		public WebElement getErrorValue(int timeout) {
+			if(isDisplayed(driver,  FindElement(driver, "//div[contains(@class,'bottom_xx-small')]//span[contains(@class,'left_medium')]",
+					"researchFindingsLeftPanelHeadingCountForAllResults",action.SCROLLANDBOOLEAN,timeout), "Visibility", timeout, "Error Value") != null)
+			return isDisplayed(driver,  FindElement(driver, "//div[contains(@class,'bottom_xx-small')]//span[contains(@class,'left_medium')]",
+					"researchFindingsLeftPanelHeadingCountForAllResults",action.SCROLLANDBOOLEAN,timeout), "Visibility", timeout, "Error Value");
+			else
+			{
+				return isDisplayed(driver,  FindElement(driver, "(//div[contains(@class,'bottom_xx-small')]//span[contains(@class,'left_medium')])[2]",
+						"researchFindingsLeftPanelHeadingCountForAllResults",action.SCROLLANDBOOLEAN,timeout), "Visibility", timeout, "Error Value");
+			}
+			
+		}
+		
+		@FindBy(xpath = "//button[@title='Research']")
 		private WebElement researchButton;
 
 		public WebElement getResearchButton(int timeOut) {
@@ -146,7 +179,7 @@ public class ResearchPage extends BasePageBusinessLayer {
 
 		}
 
-		@FindBy(xpath = "(//h2[contains(@class,'vertical__title')]")
+		@FindBy(xpath = "//div[contains(@class,'active')]//h2[contains(@class,'vertical__title')]")
 		private WebElement researchFindings;
 
 		public WebElement getResearchFindings(int timeOut) {
@@ -159,6 +192,8 @@ public class ResearchPage extends BasePageBusinessLayer {
 
 			return FindElement(driver, xpath, "Field Header Name: " + tableName, action.SCROLLANDBOOLEAN, timeOut);
 		}
+		
+		
 
 		public List<WebElement> researchFindingsCountForAllResults() {
 			return FindElements(driver, "//div[contains(@class,'active')]//h2/following-sibling::div//a/span",
@@ -168,7 +203,7 @@ public class ResearchPage extends BasePageBusinessLayer {
 		
 		//div[contains(@class,'normal')]//span[contains(@class,'italic')]
 	
-		@FindBy(xpath = "//div[contains(@class,'normal')]//span[contains(@class,'italic')]")
+		@FindBy(xpath = "//div[contains(@class,'active')]//div[contains(@class,'header__title')]")
 		private WebElement researchFindingsValue;
 
 		public WebElement getResearchFindingsValue(int timeOut) {
@@ -186,4 +221,17 @@ public class ResearchPage extends BasePageBusinessLayer {
 //		return isDisplayed(driver, NavigationSideBar, "Visibility", timeOut,
 //				"Text From Navigation Side Bar");
 //	}
+		
+		public WebElement getNoResult(int timeout) {
+			if(isDisplayed(driver,  FindElement(driver, "//div[contains(@class,'noResultsTitle')]",
+					"No Result",action.SCROLLANDBOOLEAN,timeout), "Visibility", timeout, "No Result") != null)
+			return isDisplayed(driver,  FindElement(driver, "//div[contains(@class,'noResultsTitle')]",
+					"No Result",action.SCROLLANDBOOLEAN,timeout), "Visibility", timeout, "No Result");
+			else
+			{
+				return isDisplayed(driver,  FindElement(driver, "(//div[contains(@class,'noResultsTitle')])[2]",
+						"No Result",action.SCROLLANDBOOLEAN,timeout), "Visibility", timeout, "No Result");
+			}
+			
+		}
 }
