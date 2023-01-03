@@ -8586,8 +8586,20 @@ public abstract class BasePage extends BaseLib {
 		} catch (StaleElementReferenceException e) {
 			return FindElement(driver, xpath,  "Meeting and call count", action.SCROLLANDBOOLEAN, timeOut);
 		}
-
 	}
+	
+	public WebElement getSubjectNameOnInteractionPage(String subjectName, int timeOut) {
+
+		String xpath ="//span[contains(text(),'All Interactions With')]/ancestor::div//td[@data-label='Subject']//button[text()='"+subjectName+"']";
+		try {
+			return FindElement(driver, xpath, "subject name on Interaction page", action.SCROLLANDBOOLEAN, timeOut);
+		} catch (StaleElementReferenceException e) {
+			return FindElement(driver, xpath,  "subject name on Interaction page", action.SCROLLANDBOOLEAN, timeOut);
+		}
+	}
+	
+	
+	
 	
 
 }
