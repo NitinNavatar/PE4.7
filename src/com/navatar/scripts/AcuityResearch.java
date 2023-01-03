@@ -1023,7 +1023,7 @@ public class AcuityResearch extends BaseLib{
 			YesNo.No);
 	try{
 		refresh(driver);
-	if(rp.getNoResult(5).getText() != null){
+	if(rp.getNoResult(5) != null){
 		log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
 		sa.assertTrue(true, "There is no data retaled to " + searchValue);
 	} else 
@@ -1409,7 +1409,7 @@ public class AcuityResearch extends BaseLib{
 				"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 						+ searchValue + "---------",
 				YesNo.No);
-		if(rp.getNoResult(5).getText() != null){
+		if(rp.getNoResult(5) != null){
 			log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
 			sa.assertTrue(true, "There is no data retaled to " + searchValue);
 		} else 
@@ -4521,7 +4521,7 @@ public class AcuityResearch extends BaseLib{
 					"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 							+ searchValue + "---------",
 					YesNo.No);
-			if(rp.getNoResult(5).getText() != null){
+			if(rp.getNoResult(5) != null){
 				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
 				sa.assertTrue(true, "There is no data retaled to " + searchValue);
 			} else 
@@ -4633,7 +4633,7 @@ public class AcuityResearch extends BaseLib{
 						"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 								+ searchValue + "---------",
 						YesNo.No);
-				if(rp.getNoResult(5).getText() != null){
+				if(rp.getNoResult(5) != null){
 					log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
 					sa.assertTrue(true, "There is no data retaled to " + searchValue);
 				} else
@@ -4822,7 +4822,7 @@ public class AcuityResearch extends BaseLib{
 						"---------Going to Verify the Result Count for Each Category from the Research Findings side menu: "
 								+ searchValue + "---------",
 						YesNo.No);
-				if(rp.getNoResult(5).getText() != null){
+				if(rp.getNoResult(5) != null){
 					log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
 					sa.assertTrue(true, "There is no data retaled to " + searchValue);
 				} else
@@ -5050,7 +5050,7 @@ public class AcuityResearch extends BaseLib{
 							+ searchValue + "---------",
 					YesNo.No);
 			try {
-			if(rp.getNoResult(5).getText() != null){
+			if(rp.getNoResult(5) != null){
 				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
 				sa.assertTrue(true, "There is no data retaled to " + searchValue);
 			} else
@@ -5281,7 +5281,7 @@ public class AcuityResearch extends BaseLib{
 					YesNo.No);
 			
 			try {
-			if(rp.getNoResult(5).getText() != null){
+			if(rp.getNoResult(5) != null){
 				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
 				sa.assertTrue(true, "There is no data retaled to " + searchValue);
 			} else
@@ -5401,7 +5401,7 @@ public class AcuityResearch extends BaseLib{
 								+ searchValue + "---------",
 						YesNo.No);
 				try {
-				if(rp.getNoResult(5).getText() != null){
+				if(rp.getNoResult(5) != null){
 					log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
 					sa.assertTrue(true, "There is no data retaled to " + searchValue);
 				} else
@@ -5652,7 +5652,7 @@ public class AcuityResearch extends BaseLib{
 							+ searchValue + "---------",
 					YesNo.No);
 			try {
-				if(rp.getNoResult(5).getText() != null){
+				if(rp.getNoResult(5) != null){
 					log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
 					sa.assertTrue(true, "There is no data retaled to " + searchValue);
 				} else
@@ -5902,7 +5902,7 @@ public class AcuityResearch extends BaseLib{
 					YesNo.No);
 			
 			try {
-			if(rp.getNoResult(5).getText() != null){
+			if(rp.getNoResult(5) != null){
 				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
 				sa.assertTrue(true, "There is no data retaled to " + searchValue);
 			} else
@@ -6151,7 +6151,7 @@ public class AcuityResearch extends BaseLib{
 							+ searchValue + "---------",
 					YesNo.No);
 			try {
-				if(rp.getNoResult(5).getText() != null){
+				if(rp.getNoResult(5) != null){
 					log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
 					sa.assertTrue(true, "There is no data retaled to " + searchValue);
 				} else
@@ -6475,7 +6475,7 @@ public class AcuityResearch extends BaseLib{
 							+ searchValue + "---------",
 					YesNo.No);
 			try {
-			if(rp.getNoResult(5).getText() != null){
+			if(rp.getNoResult(5) != null){
 				log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
 				sa.assertTrue(true, "There is no data retaled to " + searchValue);
 			} else
@@ -6625,7 +6625,7 @@ public class AcuityResearch extends BaseLib{
 						YesNo.No);
 				
 				try {
-				if(rp.getNoResult(5).getText() != null){
+				if(rp.getNoResult(5) != null){
 					log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
 					sa.assertTrue(true, "There is no data retaled to " + searchValue);
 				} else
@@ -6773,7 +6773,7 @@ public class AcuityResearch extends BaseLib{
 								+ searchValue + "---------",
 						YesNo.No);
 				try {
-					if(rp.getNoResult(5).getText() != null){
+					if(rp.getNoResult(5) != null){
 						log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
 						sa.assertTrue(true, "There is no data retaled to " + searchValue);
 					} else
@@ -6921,7 +6921,7 @@ public class AcuityResearch extends BaseLib{
 								+ searchValue + "---------",
 						YesNo.No);
 				try {
-					if(rp.getNoResult(5).getText() != null){
+					if(rp.getNoResult(5) != null){
 						log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
 						sa.assertTrue(true, "There is no data retaled to " + searchValue);
 					} else	
@@ -7069,7 +7069,7 @@ public class AcuityResearch extends BaseLib{
 								+ searchValue + "---------",
 						YesNo.No);
 				try {
-					if(rp.getNoResult(5).getText() != null){
+					if(rp.getNoResult(5) != null){
 						log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
 						sa.assertTrue(true, "There is no data retaled to " + searchValue);
 					} else
@@ -7217,7 +7217,7 @@ public class AcuityResearch extends BaseLib{
 								+ searchValue + "---------",
 						YesNo.No);
 				try {
-					if(rp.getNoResult(5).getText() != null){
+					if(rp.getNoResult(5) != null){
 						log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
 						sa.assertTrue(true, "There is no data retaled to " + searchValue);
 					} else	
@@ -7366,7 +7366,7 @@ public class AcuityResearch extends BaseLib{
 								+ searchValue + "---------",
 						YesNo.No);
 				try {
-					if(rp.getNoResult(5).getText() != null){
+					if(rp.getNoResult(5) != null){
 						log(LogStatus.PASS, "There is no data retaled to " + searchValue, YesNo.No);
 						sa.assertTrue(true, "There is no data retaled to " + searchValue);
 					} else

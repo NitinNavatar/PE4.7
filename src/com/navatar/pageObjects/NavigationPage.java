@@ -160,7 +160,7 @@ public class NavigationPage extends BasePageBusinessLayer {
 		}
 	}
 
-	@FindBy(xpath = "//div[@class='slds-m-around_medium']//div/input")
+	@FindBy(xpath = "//div[contains(@class,'DOCKED')]//div//input")
 	private WebElement researchSearchBox;
 
 	public WebElement researchSearchBox(int timeOut) {
@@ -169,7 +169,7 @@ public class NavigationPage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "//lightning-input/following-sibling::lightning-button/button[text()='Research']")
+	@FindBy(xpath = "//button[text()='Research']")
 	private WebElement researchButton;
 
 	public WebElement researchButton(int timeOut) {

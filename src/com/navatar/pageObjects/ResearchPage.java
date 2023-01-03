@@ -224,13 +224,13 @@ public class ResearchPage extends BasePageBusinessLayer {
 		
 		public WebElement getNoResult(int timeout) {
 			if(isDisplayed(driver,  FindElement(driver, "//div[contains(@class,'noResultsTitle')]",
-					"researchFindingsLeftPanelHeadingCountForAllResults",action.SCROLLANDBOOLEAN,timeout), "Visibility", timeout, "No Result") != null)
+					"No Result",action.SCROLLANDBOOLEAN,timeout), "Visibility", timeout, "No Result") != null)
 			return isDisplayed(driver,  FindElement(driver, "//div[contains(@class,'noResultsTitle')]",
-					"researchFindingsLeftPanelHeadingCountForAllResults",action.SCROLLANDBOOLEAN,timeout), "Visibility", timeout, "No Result");
+					"No Result",action.SCROLLANDBOOLEAN,timeout), "Visibility", timeout, "No Result");
 			else
 			{
 				return isDisplayed(driver,  FindElement(driver, "(//div[contains(@class,'noResultsTitle')])[2]",
-						"researchFindingsLeftPanelHeadingCountForAllResults",action.SCROLLANDBOOLEAN,timeout), "Visibility", timeout, "No Result");
+						"No Result",action.SCROLLANDBOOLEAN,timeout), "Visibility", timeout, "No Result");
 			}
 			
 		}
