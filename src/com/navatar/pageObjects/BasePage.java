@@ -7400,6 +7400,22 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getPageHeaderTitle(int timeOut) {
 		return isDisplayed(driver, pageHeaderTitle, "Visibility", timeOut, "page header title");
 	}
+	
+	
+	@FindBy(xpath = "//section//h2[contains(@class,\"slds-text-heading_small slds-hyphenate\")]")
+	private WebElement activitySubjetLinkPopupHeaderOnInteraction;
+
+	public WebElement activitySubjetLinkPopupHeaderOnInteraction(int timeOut) {
+		return isDisplayed(driver, activitySubjetLinkPopupHeaderOnInteraction, "Visibility", timeOut, "activitySubjetLinkPopupHeaderOnInteraction");
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public WebElement dealAcuityPopUpDealName(String dealName, int timeOut) {
 
