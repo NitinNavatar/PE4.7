@@ -1530,7 +1530,8 @@ public class CommonVariables {
 	 		public static String ATE_MetaDataValue1,ATE_MetaDataValue2,ATE_MetaDataValue3,ATE_MetaDataValue4,ATE_MetaDataValue5,ATE_MetaDataValue6;
 	    
 	    
-	 		
+	 		/************Highlighted company *************/
+	 		public static String ATE_highlightedCompany1;
 	 		
 	 		
 	 		/*******************RG Acuity Task and Event*********************************/
@@ -8219,6 +8220,9 @@ public class CommonVariables {
 		 		ATE_MetaDataValue4=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "Cust_13", excelLabel.New_Value);
 		 		ATE_MetaDataValue5=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "Cust_14", excelLabel.New_Value);
 		 		ATE_MetaDataValue6=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"CustomMetaData",excelLabel.Variable_Name, "Cust_15", excelLabel.New_Value);
+		 		
+		 		ATE_highlightedCompany1=ExcelUtils.readData(dataWb,AcuityDataSheetFilePath,"Acuity",excelLabel.Variable_Name, "ATE001", excelLabel.Highlighted_Firm);
+		 		
 		 		try {
 					dataFile.close();
 				} catch (IOException e) {
