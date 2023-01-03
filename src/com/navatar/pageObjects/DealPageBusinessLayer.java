@@ -805,6 +805,12 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 								+ "']/following-sibling::div[@class='slds-form-element__control']//input[@type='text']",
 								"picklist " + labelNames[i], action.SCROLLANDBOOLEAN, 10), "picklist " + labelNames[i],
 								action.SCROLLANDBOOLEAN)) {
+							if (sendKeys(driver, FindElement(driver, "//*[text()='" + labelNames[i]
+									+ "']/following-sibling::div[@class='slds-form-element__control']//input[@type='text']",
+									"picklist " + labelNames[i], action.SCROLLANDBOOLEAN, 10),labelValue[i], "Label Names", action.SCROLLANDBOOLEAN)) {
+								appLog.info(labelNames[i] + "  is present in list.");
+							}
+								ThreadSleep(3000);
 
 							if (click(driver,
 									FindElement(driver,
@@ -930,14 +936,14 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		ThreadSleep(2000);
 		if (clickOnShowMoreActionDownArrow(projectName, PageName.Object4Page, ShowMoreActionDropDownList.Edit, 10)) {
 			ThreadSleep(2000);
-//			if (click(driver, getSourceFirmCrossIcon(projectName, 60), "Company Cross Icon", action.SCROLLANDBOOLEAN)) {
-//				appLog.info("Clicked on Legal Cross icon");
-//				ThreadSleep(3000);
-//			} else {
-//				appLog.info("Not able to click on Cross Icon button");
-//				log(LogStatus.INFO, "Not able to clicked on edit button so cannot Account Name ", YesNo.Yes);
-//				BaseLib.sa.assertTrue(false, "Not able to clicked on edit button so cannot Account Name ");
-//			}
+			if (click(driver, getSourceFirmCrossIcon(projectName, 60), "Company Cross Icon", action.SCROLLANDBOOLEAN)) {
+				appLog.info("Clicked on Legal Cross icon");
+				ThreadSleep(3000);
+			} else {
+				appLog.info("Not able to click on Cross Icon button");
+				log(LogStatus.INFO, "Not able to clicked on edit button so cannot Account Name ", YesNo.Yes);
+				BaseLib.sa.assertTrue(false, "Not able to clicked on edit button so cannot Account Name ");
+			}
 			int loopCount = 0;
 			int status = 0;
 			if (labelNames != null && labelValue != null) {
@@ -1130,19 +1136,19 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 	 * @return WebElement
 	 */
 	public String dealbottomcount( int timeOut) {
-		String xpath = "//span[@title='Deals']/ancestor::div[contains(@class,'left_small')]//table";
+		String xpath = "//span[@title='Deals']/ancestor::div[contains(@class,'left_x-small')]//table";
 		WebElement dealElement = FindElement(driver, xpath,"dealbottomcount", action.BOOLEAN, 10);
 		return isDisplayed(driver, dealElement, xpath, 10, "").getAttribute("data-num-rows");
 	}
 	
 	public String dealbottomname(String dealbottomcount, int timeOut) {
-		String xpath = "//span[@title='Deals']/ancestor::div[contains(@class,'left_small')]//table//tr[@data-row-number='"+dealbottomcount+"']//a";
+		String xpath = "//span[@title='Deals']/ancestor::div[contains(@class,'left_x-small')]//table//tr[@data-row-number='"+dealbottomcount+"']//a";
 		WebElement dealElement = FindElement(driver, xpath,"dealbottomname", action.BOOLEAN, 10);
 		return isDisplayed(driver, dealElement, xpath, 10, "").getAttribute("title");
 	}
 	
 	public String dealtopname(String dealbottomcount, int timeOut) {
-		String xpath = "//span[@title='Deals']/ancestor::div[contains(@class,'left_small')]//table//tr[@data-row-number='1']//a";
+		String xpath = "//span[@title='Deals']/ancestor::div[contains(@class,'left_x-small')]//table//tr[@data-row-number='1']//a";
 		WebElement dealElement = FindElement(driver, xpath,"dealtopname", action.BOOLEAN, 10);
 		return isDisplayed(driver, dealElement, xpath, 10, "").getAttribute("title");
 	}
@@ -1152,7 +1158,7 @@ public class DealPageBusinessLayer extends DealPage implements DealPageErrorMess
 		return isDisplayed(driver, userElement, xpath, 10, "").getAttribute("title");
 	}
 	public List<WebElement> listOfDealNames (int timeout){
-		return FindElements(driver, "//span[@title='Deals']/ancestor::div[@class='slds-col slds-size_6-of-12 slds-p-left_small']//table[contains(@class,'slds-table slds-table_header-fixed')]");
+		return FindElements(driver, "//span[@title='Deals']/ancestor::div[@class='slds-col slds-size_6-of-12 slds-p-left_x-small']//table[contains(@class,'slds-table slds-table_header-fixed')]");
 	}
 	
 	public String EmailcountonPopup( int timeOut) {

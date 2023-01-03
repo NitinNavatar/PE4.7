@@ -14257,7 +14257,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		}
 
 		if (FundraisngSectionHeaderMessage != null && !"".equals(FundraisngSectionHeaderMessage)) {
-			xPath = "//span[@title='Fundraisings']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//div[text()='"
+			xPath = "//span[@title='Fundraisings']/ancestor::div[contains(@class,'slds-grid slds-wrap')]/following-sibling::div//p[text()='"
 					+ FundraisngSectionHeaderMessage + "']";
 			ele = FindElement(driver, xPath, "Message on Fundraisisng section", action.SCROLLANDBOOLEAN, 15);
 			if (ele != null) {

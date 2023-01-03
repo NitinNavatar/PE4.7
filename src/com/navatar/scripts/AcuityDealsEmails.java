@@ -254,10 +254,10 @@ public class AcuityDealsEmails extends BaseLib {
 					ExcelUtils.writeData(AcuityDataSheetFilePath, ADEContact1EmailID, "Contact", excelLabel.Variable_Name, "ADEContact1",excelLabel.Contact_EmailId);
 
 					if (cp.createContactAcuity(projectName, ADEContact1FName, ADEContact1LName, ADEIns1, ADEContact1EmailID,ADEContact1RecordType, null, null, CreationPage.ContactPage, null, null)) {
-						log(LogStatus.INFO,"successfully Created Contact : "+M3Contact1FName+" "+M3Contact1LName,YesNo.No);	
+						log(LogStatus.INFO,"successfully Created Contact : "+ADEContact1FName+" "+ADEContact1LName,YesNo.No);	
 					} else {
-						sa.assertTrue(false,"Not Able to Create Contact : "+M3Contact1FName+" "+M3Contact1LName);
-						log(LogStatus.SKIP,"Not Able to Create Contact: "+M3Contact1FName+" "+M3Contact1LName,YesNo.Yes);
+						sa.assertTrue(false,"Not Able to Create Contact : "+ADEContact1FName+" "+ADEContact1LName);
+						log(LogStatus.SKIP,"Not Able to Create Contact: "+ADEContact1FName+" "+ADEContact1LName,YesNo.Yes);
 					}
 
 					String str = getText(driver, bp.verifydefaultCreatedItemOnPageAcuty(Header.Company, "Acuity"), "legal Name Label Text",action.SCROLLANDBOOLEAN);
@@ -827,9 +827,7 @@ public class AcuityDealsEmails extends BaseLib {
 			String projectName) {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
-		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
-		ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
 		String recordType = "";
@@ -842,40 +840,40 @@ public class AcuityDealsEmails extends BaseLib {
 		String otherLabelValues = ADEDeal5SourceFirm + "<Break>" + ADEDeal5SourceContact + "<Break>"
 				+ todaysDate;
 
-		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
-			log(LogStatus.INFO, "Click on Tab : " + TabName.Object2Tab, YesNo.No);
-
-			ADEContact8EmailID = lp.generateRandomEmailId(gmailUserName);
-			ExcelUtils.writeData(AcuityDataSheetFilePath, ADEContact8EmailID, "Contact", excelLabel.Variable_Name,
-					"ADEContact8", excelLabel.Contact_EmailId);
-
-			if (cp.createContact(projectName, ADEContact8FName, ADEContact8LName, ADEIns1, ADEContact8EmailID,
-					ADEContact1RecordType, null, null, CreationPage.ContactPage, null, null)) {
-				log(LogStatus.INFO, "successfully Created Contact : " + M3Contact1FName + " " + M3Contact1LName,
-						YesNo.No);
-			} else {
-				sa.assertTrue(false, "Not Able to Create Contact : " + M3Contact1FName + " " + M3Contact1LName);
-				log(LogStatus.SKIP, "Not Able to Create Contact: " + M3Contact1FName + " " + M3Contact1LName,
-						YesNo.Yes);
-			}
-		} else {
-			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.Object2Tab);
-			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.Object2Tab, YesNo.Yes);
-		}
-		if (lp.clickOnTab(projectName, tabObj4)) {
-			log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
-			ThreadSleep(3000);
-			if (dp.createDeal(recordType, dealName, companyName, stage, labellabels, otherLabelValues)) {
-				log(LogStatus.INFO, dealName + " deal has been created", YesNo.No);
-
-			} else {
-				log(LogStatus.ERROR, dealName + " deal is not created", YesNo.No);
-				sa.assertTrue(false, dealName + " deal is not created");
-			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on " + tabObj4 + " Tab", YesNo.No);
-			sa.assertTrue(false, "Not able to click on " + tabObj4 + " Tab");
-		}
+//		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
+//			log(LogStatus.INFO, "Click on Tab : " + TabName.Object2Tab, YesNo.No);
+//
+//			ADEContact8EmailID = lp.generateRandomEmailId(gmailUserName);
+//			ExcelUtils.writeData(AcuityDataSheetFilePath, ADEContact8EmailID, "Contact", excelLabel.Variable_Name,
+//					"ADEContact8", excelLabel.Contact_EmailId);
+//
+//			if (cp.createContact(projectName, ADEContact8FName, ADEContact8LName, ADEIns1, ADEContact8EmailID,
+//					ADEContact1RecordType, null, null, CreationPage.ContactPage, null, null)) {
+//				log(LogStatus.INFO, "successfully Created Contact : " + M3Contact1FName + " " + M3Contact1LName,
+//						YesNo.No);
+//			} else {
+//				sa.assertTrue(false, "Not Able to Create Contact : " + M3Contact1FName + " " + M3Contact1LName);
+//				log(LogStatus.SKIP, "Not Able to Create Contact: " + M3Contact1FName + " " + M3Contact1LName,
+//						YesNo.Yes);
+//			}
+//		} else {
+//			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.Object2Tab);
+//			log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.Object2Tab, YesNo.Yes);
+//		}
+//		if (lp.clickOnTab(projectName, tabObj4)) {
+//			log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
+//			ThreadSleep(3000);
+//			if (dp.createDeal(recordType, dealName, companyName, stage, labellabels, otherLabelValues)) {
+//				log(LogStatus.INFO, dealName + " deal has been created", YesNo.No);
+//
+//			} else {
+//				log(LogStatus.ERROR, dealName + " deal is not created", YesNo.No);
+//				sa.assertTrue(false, dealName + " deal is not created");
+//			}
+//		} else {
+//			log(LogStatus.ERROR, "Not able to click on " + tabObj4 + " Tab", YesNo.No);
+//			sa.assertTrue(false, "Not able to click on " + tabObj4 + " Tab");
+//		}
 		if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 
@@ -2059,7 +2057,7 @@ public class AcuityDealsEmails extends BaseLib {
 			if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns1, 30)) {
 				log(LogStatus.INFO, "open created item" + ADEIns1, YesNo.No);
 
-				String dealname = "ADEMD2";
+				String dealname = ADEDeal7;
 				String stage = "DD";
 
 				if (BP.dealAcuityStageName(dealname, stage, 30) != null) {
@@ -2070,7 +2068,7 @@ public class AcuityDealsEmails extends BaseLib {
 					sa.assertTrue(false, "stage name not present: " + stage);
 
 				}
-				String dealname1 = "ADEMD3";
+				String dealname1 = ADEDeal8;
 				String stage1 = "IOL";
 
 				if (BP.dealAcuityStageName(dealname1, stage1, 30) != null) {
@@ -2100,7 +2098,7 @@ public class AcuityDealsEmails extends BaseLib {
 
 			if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns4, 30)) {
 				log(LogStatus.INFO, "open created item" + ADEIns4, YesNo.No);
-				String dealname = "ADEMD14";
+				String dealname =ADEDeal9;
 				String stage = "DD";
 
 				if (BP.dealAcuityStageName(dealname, stage, 30) != null) {
@@ -2111,7 +2109,7 @@ public class AcuityDealsEmails extends BaseLib {
 					sa.assertTrue(false, "stage name not present: " + stage);
 
 				}
-				String dealname1 = "ADEMD13";
+				String dealname1 = ADEDeal10;
 				String stage1 = "IOL";
 
 				if (BP.dealAcuityStageName(dealname1, stage1, 30) != null) {
@@ -2147,10 +2145,10 @@ public class AcuityDealsEmails extends BaseLib {
 		lp.CRMLogin(superAdminUserName, adminPassword, appName);
 		WebElement ele = null;
 		String parentID = null;
-		String stage = "DS";
+		String stage = ADEDeal11Stage;
 		String recordType = "";
-		String dealName = "ADEDeal 1";
-		String companyName = ADEIns1;
+		String dealName =ADEDeal11;
+		String companyName = ADEDeal11CompanyName;
 		String stage1 = "LOI";
 
 		String labellabels = "Source Firm<Break>Source Contact<Break>Date Received";
@@ -2322,8 +2320,8 @@ public class AcuityDealsEmails extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
-		String dealName = "ADEDeal 1";
-		String stage = "DS";
+		String dealName = ADEDeal11;
+		String stage = ADEDeal11Stage;
 		String dateReceived = todaysDate;
 		String ContactName = ADEContact1FName + " " + ADEContact1LName;
 
@@ -2484,9 +2482,9 @@ public class AcuityDealsEmails extends BaseLib {
 			}
 		}
 		String recordType = "";
-		String dealName = "MNC D1";
-		String companyName = ADEIns10;
-		String stage = "DD";
+		String dealName = ADEDeal12;
+		String companyName = ADEDeal12CompanyName;
+		String stage = ADEDeal12Stage;
 		String dateReceived = todaysDate;
 		String ContactName = ADEContact2FName + " " + ADEContact2LName;
 
@@ -2951,9 +2949,9 @@ public class AcuityDealsEmails extends BaseLib {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
-		String dealName = "ADECTD New";
+		String dealName = ADEDealTeamName16;
 
-		String contactName = ADEContact3FName + " " + ADEContact3LName;
+		String contactName =ADEDealContact16;
 
 		String[][] data = { { PageLabel.Deal.toString(), dealName },
 				{ PageLabel.Deal_Contact.toString(), contactName } };
@@ -2968,6 +2966,19 @@ public class AcuityDealsEmails extends BaseLib {
 						"---------Now Going to Check Deal Team Count should get increase by one for Contact named "
 								+ contactName + " at Firm Tab under Acuity section---------",
 						YesNo.No);
+				String xpath = "//*[text()='Deal Team']/parent::h1//slot/lightning-formatted-text";
+				WebElement ele = FindElement(driver, xpath, "dt id", action.BOOLEAN, 10);
+				if (ele != null) {
+					String id = getText(driver, ele, "deal team id", action.SCROLLANDBOOLEAN);
+					ExcelUtils.writeData(AcuityDataSheetFilePath, id, "Deal Team", excelLabel.Variable_Name, "ADT_16",
+							excelLabel.DealTeamID);
+					log(LogStatus.INFO, "successfully created and noted id of DT" + id + " and deal name " + dealName,
+							YesNo.No);
+				} else {
+					sa.assertTrue(false, "could not create DT" + dealName);
+					log(LogStatus.SKIP, "could not create DT" + dealName, YesNo.Yes);
+				}
+			}
 				if (fp.clickOnTab(environment, mode, TabName.Object2Tab)) {
 					log(LogStatus.INFO, "Click on Tab : " + TabName.Object2Tab, YesNo.No);
 
@@ -3000,7 +3011,7 @@ public class AcuityDealsEmails extends BaseLib {
 			String[][] data1 = { { PageLabel.Deal_Contact.toString(), contactName1 } };
 
 			if (lp.clickOnTab(projectName, TabName.Deal_Team)) {
-				if (fp.clickOnAlreadyCreatedItem(projectName, ADEDealTeamID1, 10)) {
+				if (fp.clickOnAlreadyCreatedItem(projectName, ADEDealTeamID16, 10)) {
 					if (DTP.UpdateDealContactName(projectName, data1, 30)) {
 						log(LogStatus.INFO, "successfully changed name to " + contactName1, YesNo.Yes);
 					} else {
@@ -3036,8 +3047,8 @@ public class AcuityDealsEmails extends BaseLib {
 				switchToDefaultContent(driver);
 				lp.CRMlogout();
 				sa.assertAll();
+			
 			}
-		}
 	}
 
 	@Parameters({ "projectName" })
@@ -3107,6 +3118,7 @@ public class AcuityDealsEmails extends BaseLib {
 			sa.assertTrue(false, "setup link is not clickable");
 			log(LogStatus.SKIP, "setup link is not clickable", YesNo.Yes);
 		}
+		switchToDefaultContent(driver);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -3121,9 +3133,9 @@ public class AcuityDealsEmails extends BaseLib {
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
 		String recordType = "";
-		String dealName = "@#$%^&*()&*^%$#@$%^&*()&*^%$#@%^&*(&^%$#@%^&*()&^%$#@%$^&*(&^%$#@%^&*(&^%$@#%^&*";
-		String companyName = ADEIns1;
-		String stage = "IOL";
+		String dealName = ADEDeal13;
+		String companyName =ADEDeal13CompanyName;
+		String stage = ADEDeal13Stage;
 		String dateReceived = todaysDate;
 
 		String labellabels = "Source Firm<Break>Source Contact<Break>Date Received";
@@ -3280,9 +3292,9 @@ public class AcuityDealsEmails extends BaseLib {
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
 		String recordType = "";
-		String dealName = "ADENTD";
-		String companyName = ADEIns1;
-		String stage = "IOL";
+		String dealName = ADEDeal14;
+		String companyName =ADEDeal14CompanyName;
+		String stage = ADEDeal14Stage;
 		String dateReceived = todaysDate;
 
 		String labellabels = "Source Contact<Break>Date Received";
@@ -3428,26 +3440,26 @@ public class AcuityDealsEmails extends BaseLib {
 
 		String[][] EntityOrAccounts = { { ADEIns13, ADEIns13RecordType, null } };
 
-//		for (String[] accounts : EntityOrAccounts) {
-//			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
-//				log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
-//				value = accounts[0];
-//				type = accounts[1];
-//				if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
-//					log(LogStatus.INFO, "successfully Created Account/Entity : " + value + " of record type : " + type,
-//							YesNo.No);
-//
-//				} else {
-//					sa.assertTrue(false, "Not Able to Create Account/Entity : " + value + " of record type : " + type);
-//					log(LogStatus.SKIP, "Not Able to Create Account/Entity : " + value + " of record type : " + type,
-//							YesNo.Yes);
-//				}
-//			} else {
-//				sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.Object1Tab);
-//				log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.Object1Tab, YesNo.Yes);
-//			}
-//		}
-//	String[] dealRecordType = ADEDealRecordType1.split("<Section>", -1);
+		for (String[] accounts : EntityOrAccounts) {
+			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
+				log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
+				value = accounts[0];
+				type = accounts[1];
+				if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
+					log(LogStatus.INFO, "successfully Created Account/Entity : " + value + " of record type : " + type,
+							YesNo.No);
+
+				} else {
+					sa.assertTrue(false, "Not Able to Create Account/Entity : " + value + " of record type : " + type);
+					log(LogStatus.SKIP, "Not Able to Create Account/Entity : " + value + " of record type : " + type,
+							YesNo.Yes);
+				}
+			} else {
+				sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.Object1Tab);
+				log(LogStatus.SKIP, "Not Able to Click on Tab : " + TabName.Object1Tab, YesNo.Yes);
+			}
+		}
+	String[] dealRecordType = ADEDealRecordType1.split("<Section>", -1);
 		String[] dealName = ADEDealName2.split("<Section>", -1);
 		String[] dealCompany = ADEDealCompany2.split("<Section>", -1);
 		String[] dealStage = ADEDealStage2.split("<Section>", -1);
@@ -3457,26 +3469,26 @@ public class AcuityDealsEmails extends BaseLib {
 		ArrayList<String> dealname = new ArrayList<String>();
 		dealname.add(dealName.toString());
 
-//		for (int i = 0; i < 2; i++) {
-//			if (lp.clickOnTab(projectName, tabObj4)) {
-//				log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
-//				ThreadSleep(3000);
-//				if (dp.createDeal(null, dealName[i], dealCompany[i], dealStage[i], otherLabels[i],
-//						otherLabelValues[i])) {
-//					log(LogStatus.INFO, dealName[i] + " deal has been created", YesNo.No);
+		for (int i = 0; i < 3; i++) {
+			if (lp.clickOnTab(projectName, tabObj4)) {
+				log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
+				ThreadSleep(3000);
+				if (dp.createDeal(null, dealName[i], dealCompany[i], dealStage[i], otherLabels[i],
+						otherLabelValues[i])) {
+					log(LogStatus.INFO, dealName[i] + " deal has been created", YesNo.No);
 
 //				ExcelUtils.writeData(AcuityDataSheetFilePath, otherLabelValues.split("<Section>", -1)[2], "Deal",
 //						excelLabel.Variable_Name, "AS_Deal2", excelLabel.Date);
 
-//				} else {
-//					log(LogStatus.ERROR, dealName[i] + " deal is not created", YesNo.No);
-//					sa.assertTrue(false, dealName[i] + " deal is not created");
-//				}
-//			} else {
-//				log(LogStatus.ERROR, "Not able to click on " + tabObj4 + " Tab", YesNo.No);
-//				sa.assertTrue(false, "Not able to click on " + tabObj4 + " Tab");
-//			}
-//		}
+				} else {
+					log(LogStatus.ERROR, dealName[i] + " deal is not created", YesNo.No);
+					sa.assertTrue(false, dealName[i] + " deal is not created");
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to click on " + tabObj4 + " Tab", YesNo.No);
+				sa.assertTrue(false, "Not able to click on " + tabObj4 + " Tab");
+			}
+		}
 		if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 
@@ -3521,59 +3533,59 @@ public class AcuityDealsEmails extends BaseLib {
 		DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
-		String dealName = "@#$%^&*()&*^%$#@$%^&*()&*^%$#@%^&*(&^%$#@%^&*()&^%$#@%$^&*(&^%$#@%^&*(&^%$@#%^&*";
+		String dealName = ADEDeal13;
 		String labellabels = "Date Received";
 		String otherLabelValues = "09/11/2006";
 		String contactname = ADEContact4FName + " " + ADEContact4LName;
 
-		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
-			if (fp.clickOnAlreadyCreatedItem(projectName, dealName, 10)) {
-				if (dp.UpdateOtherLabledaterecieved(projectName, labellabels, otherLabelValues, 20)) {
-					log(LogStatus.INFO, "successfully changed date recieved to " + labellabels, YesNo.Yes);
-				} else {
-					sa.assertTrue(false, "not able to change date recieved to " + labellabels);
-					log(LogStatus.SKIP, "not able to change date recieved to " + labellabels, YesNo.Yes);
-				}
-			} else {
-				sa.assertTrue(false, "not able to click on already created " + dealName);
-				log(LogStatus.SKIP, "not able to click on already created " + dealName, YesNo.Yes);
-			}
-		} else {
-			sa.assertTrue(false, "not able to click on tab " + TabName.Object4Tab);
-			log(LogStatus.SKIP, "not able to click on tab " + TabName.Object4Tab, YesNo.Yes);
-		}
-		if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
-			log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
-
-			if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns4, 30)) {
-				if (dp.dealbottomcount(20) != null) {
-					log(LogStatus.PASS, "Dealbottomcount: " + dealName + "is present", YesNo.No);
-					if (dp.dealbottomname(dp.dealbottomcount(20), 20) != null) {
-						log(LogStatus.PASS, "Dealbottomname: " + dealName + "is present", YesNo.No);
-						if (dealName.equals(dp.dealbottomname(dp.dealbottomcount(20), 20))) {
-							log(LogStatus.INFO, "successfully found deal at bottom " + dealName, YesNo.Yes);
-						} else {
-							sa.assertTrue(false, "deal not present at bottom " + dealName);
-							log(LogStatus.SKIP, "deal not present at bottom " + dealName, YesNo.Yes);
-						}
-					} else {
-						sa.assertTrue(false, "dealcount not present at bottom " + dealName);
-						log(LogStatus.SKIP, "dealcount not present at bottom " + dealName, YesNo.Yes);
-					}
-				} else {
-					sa.assertTrue(false, "dealcount not present at bottom " + dealName);
-					log(LogStatus.SKIP, "dealcount not present at bottom " + dealName, YesNo.Yes);
-				}
-			} else {
-
-				sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns1);
-				log(LogStatus.SKIP, "Not Able to open created source firm : " + ADEIns1, YesNo.Yes);
-
-			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
-			sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
-		}
+//		if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+//			if (fp.clickOnAlreadyCreatedItem(projectName, dealName, 10)) {
+//				if (dp.UpdateOtherLabledaterecieved(projectName, labellabels, otherLabelValues, 20)) {
+//					log(LogStatus.INFO, "successfully changed date recieved to " + labellabels, YesNo.Yes);
+//				} else {
+//					sa.assertTrue(false, "not able to change date recieved to " + labellabels);
+//					log(LogStatus.SKIP, "not able to change date recieved to " + labellabels, YesNo.Yes);
+//				}
+//			} else {
+//				sa.assertTrue(false, "not able to click on already created " + dealName);
+//				log(LogStatus.SKIP, "not able to click on already created " + dealName, YesNo.Yes);
+//			}
+//		} else {
+//			sa.assertTrue(false, "not able to click on tab " + TabName.Object4Tab);
+//			log(LogStatus.SKIP, "not able to click on tab " + TabName.Object4Tab, YesNo.Yes);
+//		}
+//		if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
+//			log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
+//
+//			if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns4, 30)) {
+//				if (dp.dealbottomcount(20) != null) {
+//					log(LogStatus.PASS, "Dealbottomcount: " + dealName + "is present", YesNo.No);
+//					if (dp.dealbottomname(dp.dealbottomcount(20), 20) != null) {
+//						log(LogStatus.PASS, "Dealbottomname: " + dealName + "is present", YesNo.No);
+//						if (dealName.equals(dp.dealbottomname(dp.dealbottomcount(20), 20))) {
+//							log(LogStatus.INFO, "successfully found deal at bottom " + dealName, YesNo.Yes);
+//						} else {
+//							sa.assertTrue(false, "deal not present at bottom " + dealName);
+//							log(LogStatus.SKIP, "deal not present at bottom " + dealName, YesNo.Yes);
+//						}
+//					} else {
+//						sa.assertTrue(false, "dealcount not present at bottom " + dealName);
+//						log(LogStatus.SKIP, "dealcount not present at bottom " + dealName, YesNo.Yes);
+//					}
+//				} else {
+//					sa.assertTrue(false, "dealcount not present at bottom " + dealName);
+//					log(LogStatus.SKIP, "dealcount not present at bottom " + dealName, YesNo.Yes);
+//				}
+//			} else {
+//
+//				sa.assertTrue(false, "Not Able to open created source firm : " + ADEIns1);
+//				log(LogStatus.SKIP, "Not Able to open created source firm : " + ADEIns1, YesNo.Yes);
+//
+//			}
+//		} else {
+//			log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+//			sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+//		}
 		if (fp.clickOnTab(environment, mode, TabName.Object2Tab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.Object2Tab, YesNo.No);
 
@@ -3619,7 +3631,7 @@ public class AcuityDealsEmails extends BaseLib {
 		FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
-		String dealName = "@#$%^&*()&*^%$#@$%^&*()&*^%$#@%^&*(&^%$#@%^&*()&^%$#@%$^&*(&^%$#@%^&*(&^%$@#%^&*";
+		String dealName = ADEDeal13;
 		String labellabels = "Date Received";
 		String otherLabelValues = "09/11/2023";
 		String contactname = ADEContact4FName + " " + ADEContact4LName;
@@ -3941,7 +3953,7 @@ public class AcuityDealsEmails extends BaseLib {
 				ThreadSleep(2000);
 				ArrayList<String> result1 = bp
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
-								contactsSectionHeader, message, DealHeaderName, null, connectionsSectionHeaderName,
+								contactsSectionHeader, null, DealHeaderName, null, connectionsSectionHeaderName,
 								null);
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Contact Section ", YesNo.No);
@@ -3969,7 +3981,7 @@ public class AcuityDealsEmails extends BaseLib {
 				ThreadSleep(2000);
 				ArrayList<String> result1 = bp
 						.verifyHeaderNameAndMessageOnInteractionsContactsConnectionsAndDealsSection(null,
-								contactsSectionHeader, message, DealHeaderName, null, connectionsSectionHeaderName,
+								contactsSectionHeader, null, DealHeaderName, null, connectionsSectionHeaderName,
 								null);
 				if (result1.isEmpty()) {
 					log(LogStatus.INFO, "The header name and message have been verified  Contact Section ", YesNo.No);
@@ -4011,22 +4023,22 @@ public class AcuityDealsEmails extends BaseLib {
 		String[][] EntityOrAccounts = { { ADEIns11, ADEIns11RecordType, null },
 				{ ADEIns12, ADEIns12RecordType, null } };
 
-		for (String[] accounts : EntityOrAccounts) {
-			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
-				log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
-				value = accounts[0];
-				type = accounts[1];
-				if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
-					log(LogStatus.INFO, "successfully Created Account/Entity : " + value + " of record type : " + type,
-							YesNo.No);
-
-				} else {
-					sa.assertTrue(false, "Not Able to Create Account/Entity : " + value + " of record type : " + type);
-					log(LogStatus.SKIP, "Not Able to Create Account/Entity : " + value + " of record type : " + type,
-							YesNo.Yes);
-				}
-			}
-		}
+//		for (String[] accounts : EntityOrAccounts) {
+//			if (lp.clickOnTab(projectName, TabName.Object1Tab)) {
+//				log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
+//				value = accounts[0];
+//				type = accounts[1];
+//				if (ip.createEntityOrAccount(projectName, mode, value, type, null, null, 20)) {
+//					log(LogStatus.INFO, "successfully Created Account/Entity : " + value + " of record type : " + type,
+//							YesNo.No);
+//
+//				} else {
+//					sa.assertTrue(false, "Not Able to Create Account/Entity : " + value + " of record type : " + type);
+//					log(LogStatus.SKIP, "Not Able to Create Account/Entity : " + value + " of record type : " + type,
+//							YesNo.Yes);
+//				}
+//			}
+//		}
 		// Contact
 		if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
 			log(LogStatus.INFO, "Click on Tab : " + TabName.Object2Tab, YesNo.No);
@@ -4335,7 +4347,7 @@ public class AcuityDealsEmails extends BaseLib {
 				} else {
 					sa.assertTrue(false, "could not create DT" + dealName);
 					log(LogStatus.SKIP, "could not create DT" + dealName, YesNo.Yes);
-
+				}
 					if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 						log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 
@@ -4385,7 +4397,7 @@ public class AcuityDealsEmails extends BaseLib {
 						}
 					}
 
-				}
+				
 			} else {
 				log(LogStatus.INFO, "----Not Created the Deal Team for Deal: " + dealName + "----", YesNo.Yes);
 
@@ -4455,7 +4467,7 @@ public class AcuityDealsEmails extends BaseLib {
 					if (ele != null) {
 						String id = getText(driver, ele, "deal team id", action.SCROLLANDBOOLEAN);
 						ExcelUtils.writeData(AcuityDataSheetFilePath, id, "Deal Team", excelLabel.Variable_Name,
-								"ADT_01", excelLabel.DealTeamID);
+								"ADT_03", excelLabel.DealTeamID);
 						log(LogStatus.INFO,
 								"successfully created and noted id of DT" + id + " and deal name " + dealName,
 								YesNo.No);
@@ -4551,9 +4563,9 @@ public class AcuityDealsEmails extends BaseLib {
 		String contactName = ADEContact14FName + " " + ADEContact14LName;
 
 		String recordType = "";
-		String dealName = "ADEOGT";
-		String companyName = ADEIns1;
-		String stage = "DS";
+		String dealName = ADEDeal15;
+		String companyName = ADEDeal15CompanyName;
+		String stage = ADEDeal15Stage;
 
 		if (lp.clickOnTab(projectName, tabObj4)) {
 			log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
@@ -5254,6 +5266,10 @@ public class AcuityDealsEmails extends BaseLib {
 						action.BOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on Deal Count: " + " " + " of Record: " + contactName, YesNo.No);
 				}
+				try {
+					String parentWindowId = CommonLib.switchOnWindow(driver);
+					if (!parentWindowId.isEmpty()) {
+						log(LogStatus.PASS, "New Window Open after click on Deal Link: " + contactName, YesNo.No);
 				String actualHeader = getText(driver, BP.getDealCountPopHeader(20), "DealCountPopHeader",
 						action.SCROLLANDBOOLEAN);
 				if (ExpectedHeader.equals(actualHeader)) {
@@ -5267,6 +5283,7 @@ public class AcuityDealsEmails extends BaseLib {
 									+ ExpectedHeader + " for Contact Name: " + contactName,
 							YesNo.No);
 				}
+					
 				CommonLib.click(driver, BP.getanywhereonpage(30), "click any where: " + "", action.BOOLEAN);
 				log(LogStatus.INFO, "Clicked anywhere: " + " " + " of Record: " + contactName, YesNo.No);
 				String actualHeader1 = getText(driver, BP.getDealCountPopHeader(20), "DealCountPopHeader",
@@ -5284,12 +5301,26 @@ public class AcuityDealsEmails extends BaseLib {
 									+ ExpectedHeader + " for Contact Name: " + contactName,
 							YesNo.No);
 				}
-
+				driver.close();	driver.switchTo().window(parentWindowId);
+					} else {
+						log(LogStatus.FAIL, "No New Window Open after click on Deal Link: " + contactName, YesNo.Yes);
+						sa.assertTrue(false, "No New Window Open after click on Deal Link: " + contactName);
+					}
+				} catch (Exception e) {
+					log(LogStatus.FAIL,
+							"Not able to switch to window after click on Deal Link, Msg showing: " + e.getMessage(),
+							YesNo.Yes);
+					sa.assertTrue(false, "Not able to switch to window after click on Deal Link, Msg showing: "
+							+ e.getMessage());
+				}
 			} else {
 				log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
 				sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
 			}
+				
 		}
+		
+			
 		ThreadSleep(5000);
 		lp.CRMlogout();
 		sa.assertAll();
@@ -5303,8 +5334,8 @@ public class AcuityDealsEmails extends BaseLib {
 		BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 		lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
-		String dealName = "ADEMD2";
-		String company = ADEIns1;
+		String dealName = ADEDeal7;
+		String company = ADEDeal7CompanyName;
 		String companyname = ADEIns1;
 
 		String contactName = ADEContact11FName + " " + ADEContact11LName;
@@ -5317,20 +5348,28 @@ public class AcuityDealsEmails extends BaseLib {
 						action.BOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on Deal Count: " + " " + " of Record: " + contactName, YesNo.No);
 				}
+				String parentWindowId = CommonLib.switchOnWindow(driver);
+				if (!parentWindowId.isEmpty()) {
+					log(LogStatus.PASS, "New Window Open after click on Deal Link: " + dealName, YesNo.No);
 				ThreadSleep(3000);
+				
 				if (clickUsingJavaScript(driver, BP.dealAcuityPopUpDealName(dealName, 10), "Deal Name: " + dealName,
 						action.BOOLEAN)) {
 					log(LogStatus.PASS, "Clicked on Deal Name: " + dealName, YesNo.No);
-					try {
-						String parentWindowId = CommonLib.switchOnWindow(driver);
-						if (!parentWindowId.isEmpty()) {
-							log(LogStatus.PASS, "New Window Open after click on Deal Link: " + dealName, YesNo.No);
-
+					Set<String> childWindow = driver.getWindowHandles();
+					switchToDefaultContent(driver);
+					System.out.println(childWindow);
+					for(String child : childWindow) {
+					driver.switchTo().window(child);
+					}
 							if (BP.dealRecordPage(dealName, 20) != null) {
 								log(LogStatus.PASS,
 										"----Deal Detail Page is redirecting for Deal Record: " + dealName + "-----",
 										YesNo.No);
 								driver.close();
+								driver.switchTo().window(parentWindowId);
+								CommonLib.switchOnWindow(driver);
+									driver.close();
 								driver.switchTo().window(parentWindowId);
 
 							} else {
@@ -5347,68 +5386,78 @@ public class AcuityDealsEmails extends BaseLib {
 							log(LogStatus.FAIL, "No New Window Open after click on Deal Link: " + dealName, YesNo.Yes);
 							sa.assertTrue(false, "No New Window Open after click on Deal Link: " + dealName);
 						}
-					} catch (Exception e) {
-						log(LogStatus.FAIL,
-								"Not able to switch to window after click on Deal Link, Msg showing: " + e.getMessage(),
-								YesNo.Yes);
-						sa.assertTrue(false, "Not able to switch to window after click on Deal Link, Msg showing: "
-								+ e.getMessage());
-					}
+//					} catch (Exception e) {
+//						log(LogStatus.FAIL,
+//								"Not able to switch to window after click on Deal Link, Msg showing: " + e.getMessage(),
+//								YesNo.Yes);
+//						sa.assertTrue(false, "Not able to switch to window after click on Deal Link, Msg showing: "
+//								+ e.getMessage());
+//					}
 				} else {
 					log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
 					sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
 				}
-				if (click(driver, BP.dealAcuityPopUpCompanyName(dealName, company, 20), "Company Name: " + company,
+				if (CommonLib.click(driver, BP.contactDealCount(contactName, 30), "Deal Count: " + "",
 						action.BOOLEAN)) {
-					log(LogStatus.PASS, "Clicked on Company Name: " + company, YesNo.No);
-					try {
-						String parentWindowId = CommonLib.switchOnWindow(driver);
-						if (!parentWindowId.isEmpty()) {
-							log(LogStatus.PASS, "New Window Open after click on Company Link: " + company, YesNo.No);
-
-							if (BP.CompanyRecordPage(companyname, 10) != null) {
-								log(LogStatus.PASS, "----Company Detail Page is redirecting for Company Record: "
-										+ company + "-----", YesNo.No);
-								driver.close();
-								driver.switchTo().window(parentWindowId);
-
-							} else {
-								log(LogStatus.FAIL, "----Company Detail Page is not redirecting for Company Record: "
-										+ company + "-----", YesNo.Yes);
-								sa.assertTrue(false, "----Company Detail Page is not showing for Company Record: "
-										+ company + "-----");
-								driver.close();
-								driver.switchTo().window(parentWindowId);
-
-							}
-
-						} else {
-							log(LogStatus.FAIL, "No New Window Open after click on Company Link: " + company,
-									YesNo.Yes);
-							sa.assertTrue(false, "No New Window Open after click on Company Link: " + company);
-						}
-					} catch (Exception e) {
-						log(LogStatus.FAIL, "Not able to switch to window after click on Company Link, Msg showing: "
-								+ e.getMessage(), YesNo.Yes);
-						sa.assertTrue(false, "Not able to switch to window after click on Company Link, Msg showing: "
-								+ e.getMessage());
-					}
-				} else {
-					log(LogStatus.FAIL, "Not able to Click on Company Name: " + companyname, YesNo.Yes);
-					sa.assertTrue(false, "Not able to Click on Company Name: " + companyname);
-
+					log(LogStatus.INFO, "Clicked on Deal Count: " + " " + " of Record: " + contactName, YesNo.No);
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to click on " + ADEIns11 + " tab", YesNo.Yes);
-				sa.assertTrue(false, "Not able to click on " + ADEIns11 + " tab");
-			}
-		} else {
-			log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
-			sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
-		}
+				String parentWindowId1 = CommonLib.switchOnWindow(driver);
+				if (!parentWindowId1.isEmpty()) {
+					log(LogStatus.PASS, "New Window Open after click on Deal Link: " + dealName, YesNo.No);
+				ThreadSleep(3000);
+				
+				if (click(driver, BP.dealAcuityPopUpCompanyName(dealName, company, 20), "Deal Name: " + dealName,
+						action.BOOLEAN)) {
+					log(LogStatus.PASS, "Clicked on Deal Name: " + dealName, YesNo.No);
+					Set<String> childWindow = driver.getWindowHandles();
+					switchToDefaultContent(driver);
+					System.out.println(childWindow);
+					for(String child : childWindow) {
+					driver.switchTo().window(child);
+					}
+					if (BP.CompanyRecordPage(companyname, 10) != null) {
+						log(LogStatus.PASS, "----Company Detail Page is redirecting for Company Record: "
+								+ company + "-----", YesNo.No);
+						driver.close();
+						driver.switchTo().window(parentWindowId1);
 
-		ThreadSleep(5000);
+					} else {
+						log(LogStatus.FAIL, "----Company Detail Page is not redirecting for Company Record: "
+								+ company + "-----", YesNo.Yes);
+						sa.assertTrue(false, "----Company Detail Page is not showing for Company Record: "
+								+ company + "-----");
+						driver.close();
+						driver.switchTo().window(parentWindowId1);
+
+					}
+
+				} else {
+					log(LogStatus.FAIL, "No New Window Open after click on Company Link: " + company,
+							YesNo.Yes);
+					sa.assertTrue(false, "No New Window Open after click on Company Link: " + company);
+				}
+//			} catch (Exception e) {
+//				log(LogStatus.FAIL, "Not able to switch to window after click on Company Link, Msg showing: "
+//						+ e.getMessage(), YesNo.Yes);
+//				sa.assertTrue(false, "Not able to switch to window after click on Company Link, Msg showing: "
+//						+ e.getMessage());
+//			}
+		} else {
+			log(LogStatus.FAIL, "Not able to Click on Company Name: " + companyname, YesNo.Yes);
+			sa.assertTrue(false, "Not able to Click on Company Name: " + companyname);
+
+		}
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + ADEIns11 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + ADEIns11 + " tab");
+	}
+} else {
+	log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+	sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+}
+							
+		switchToDefaultContent(driver);
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -5766,9 +5815,9 @@ public void ADETc044_VerifyConnectionSectionWhencontactsConnectionCardPopupRespe
 	String contactName = ADEContact15FName + " " + ADEContact15LName;
 
 	String recordType = "";
-	String dealName = "ADEDFC";
-	String companyName = ADEIns1;
-	String stage = "IOL";
+	String dealName = ADEDeal16;
+	String companyName = ADEDeal16CompanyName;
+	String stage = ADEDeal16Stage;
 	if (lp.clickOnTab(projectName, TabName.Object2Tab)) {
 		log(LogStatus.INFO,"Click on Tab : "+TabName.Object2Tab,YesNo.No);	
 		
@@ -5887,8 +5936,8 @@ public void ADETc044_VerifyConnectionSectionWhencontactsConnectionCardPopupRespe
 				lp.CRMlogout();
 				sa.assertAll();
 			}
-		}
-	
+		
+}
 
 @Parameters({ "projectName"})
 @Test
@@ -5906,9 +5955,9 @@ public void ADETc045_VerifyDealCountColumnAgainstConnectionWhereConnectionisTagg
 	String DealCountInFirm = "1";
 
 	String recordType = "";
-	String dealName = "ADEDFC1";
-	String companyName = ADEIns1;
-	String stage = "IOL";
+	String dealName = ADEDeal17;
+	String companyName = ADEDeal17CompanyName;
+	String stage = ADEDeal17Stage;
 	String actualDealCount = null;
 	String teamMemberName = ADEDealTeamMember8;
 	
@@ -6003,6 +6052,10 @@ public void ADETc045_VerifyDealCountColumnAgainstConnectionWhereConnectionisTagg
 
 							if (click(driver, BP.contactNameUserIconButton(contactName, 30),
 									"Contact Name: " + contactName, action.SCROLLANDBOOLEAN)) {
+								String parentWindowId = CommonLib.switchOnWindow(driver);
+								if (!parentWindowId.isEmpty()) {
+									log(LogStatus.PASS, "New Window Open after click on Deal Link: " + dealName, YesNo.No);
+								ThreadSleep(3000);
 								log(LogStatus.INFO, "Clicked on Contact: " + contactName, YesNo.No);
 								actualDealCount = getText(driver, BP.teamMemberpopupDealCount(teamMemberName, 20), "deal",
 										action.SCROLLANDBOOLEAN);
@@ -6030,6 +6083,7 @@ public void ADETc045_VerifyDealCountColumnAgainstConnectionWhereConnectionisTagg
 										sa.assertTrue(false, "Deal Count for Contact is Empty, So not able to check Count for Contact: "
 												+ contactName);
 									}
+									driver.close();	driver.switchTo().window(parentWindowId);
 								} else {
 									log(LogStatus.ERROR, "No Contact found of Name: " + contactName, YesNo.No);
 									sa.assertTrue(false, "No Contact found of Name: " + contactName);
@@ -6050,6 +6104,8 @@ public void ADETc045_VerifyDealCountColumnAgainstConnectionWhereConnectionisTagg
 							log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " Tab", YesNo.No);
 							sa.assertTrue(false, "Not able to click on " + tabObj1 + " Tab");
 						}
+						
+						
 					ThreadSleep(5000);
 					lp.CRMlogout();
 					sa.assertAll();
@@ -6061,7 +6117,7 @@ public void ADETc045_VerifyDealCountColumnAgainstConnectionWhereConnectionisTagg
 			}
 }
 }
-
+}
 @Parameters({ "projectName"})
 @Test
 public void ADETc046_VerifyDealCountColumnAgainstConnectionwheresameConnectionTeamMemberDealTeamforSameDealContactforTab(String projectName) {
@@ -6078,9 +6134,9 @@ public void ADETc046_VerifyDealCountColumnAgainstConnectionwheresameConnectionTe
 	String DealCountInFirm = "2";
 
 	String recordType = "";
-	String dealName = "ADEDFC2";
-	String companyName = ADEIns1;
-	String stage = "IOL";
+	String dealName = ADEDeal18;
+	String companyName = ADEDeal18CompanyName;
+	String stage = ADEDeal18Stage;
 	String actualDealCount = null;
 	String teamMemberName = ADEDealTeamMember9;
 	
@@ -6176,6 +6232,8 @@ public void ADETc046_VerifyDealCountColumnAgainstConnectionwheresameConnectionTe
 							if (click(driver, BP.contactNameUserIconButton(contactName, 30),
 									"Contact Name: " + contactName, action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Contact: " + contactName, YesNo.No);
+								String parentWindowId = CommonLib.switchOnWindow(driver);
+								if (!parentWindowId.isEmpty()) {
 								actualDealCount = getText(driver, BP.teamMemberpopupDealCount(teamMemberName, 20), "deal",
 										action.SCROLLANDBOOLEAN);
 								if (BP.teamMemberpopupDealCount(teamMemberName, 20) != null) {
@@ -6202,6 +6260,7 @@ public void ADETc046_VerifyDealCountColumnAgainstConnectionwheresameConnectionTe
 										sa.assertTrue(false, "Deal Count for Contact is Empty, So not able to check Count for Contact: "
 												+ contactName);
 									}
+									driver.close();	driver.switchTo().window(parentWindowId);
 								} else {
 									log(LogStatus.ERROR, "No Contact found of Name: " + contactName, YesNo.No);
 									sa.assertTrue(false, "No Contact found of Name: " + contactName);
@@ -6232,7 +6291,7 @@ public void ADETc046_VerifyDealCountColumnAgainstConnectionwheresameConnectionTe
 			}
 }
 }
-
+}
 @Parameters({ "projectName"})
 @Test
 public void ADETc047_VerifyDealCountColumnAgainstConnectionwhereAnotherConnectionTaggedTeamMemberDealTeamforSameDealContactforTab(String projectName) {
@@ -6249,9 +6308,9 @@ public void ADETc047_VerifyDealCountColumnAgainstConnectionwhereAnotherConnectio
 	String DealCountInFirm = "1";
 
 	String recordType = "";
-	String dealName = "ADEDFC3";
-	String companyName = ADEIns1;
-	String stage = "IOL";
+	String dealName = ADEDeal19;
+	String companyName = ADEDeal19CompanyName;
+	String stage = ADEDeal19Stage;
 	String actualDealCount = null;
 	String teamMemberName = ADEDealTeamMember10;
 	
@@ -6347,6 +6406,8 @@ public void ADETc047_VerifyDealCountColumnAgainstConnectionwhereAnotherConnectio
 							if (click(driver, BP.contactNameUserIconButton(contactName, 30),
 									"Contact Name: " + contactName, action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Clicked on Contact: " + contactName, YesNo.No);
+								String parentWindowId = CommonLib.switchOnWindow(driver);
+								if (!parentWindowId.isEmpty()) {
 								actualDealCount = getText(driver, BP.teamMemberpopupDealCount(teamMemberName, 20), "deal",
 										action.SCROLLANDBOOLEAN);
 								if (BP.teamMemberpopupDealCount(teamMemberName, 20) != null) {
@@ -6373,6 +6434,7 @@ public void ADETc047_VerifyDealCountColumnAgainstConnectionwhereAnotherConnectio
 										sa.assertTrue(false, "Deal Count for Contact is Empty, So not able to check Count for Contact: "
 												+ contactName);
 									}
+									driver.close();	driver.switchTo().window(parentWindowId);
 								} else {
 									log(LogStatus.ERROR, "No Contact found of Name: " + contactName, YesNo.No);
 									sa.assertTrue(false, "No Contact found of Name: " + contactName);
@@ -6403,7 +6465,7 @@ public void ADETc047_VerifyDealCountColumnAgainstConnectionwhereAnotherConnectio
 			}
 }
 }
-
+}
 @Parameters({ "projectName"})
 @Test
 public void ADETc048_EditRemovedealContactfromDealTeamandVerifyImpactConnectionRespectively(String projectName) {
@@ -6478,6 +6540,8 @@ public void ADETc048_EditRemovedealContactfromDealTeamandVerifyImpactConnectionR
 								if (click(driver, BP.contactNameUserIconButton(contactName, 30),
 										"Contact Name: " + contactName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "Clicked on Contact: " + contactName, YesNo.No);
+									String parentWindowId = CommonLib.switchOnWindow(driver);
+									if (!parentWindowId.isEmpty()) {
 									actualDealCount = getText(driver, BP.teamMemberpopupDealCount(teamMemberName, 20), "deal",
 											action.SCROLLANDBOOLEAN);
 									if (BP.teamMemberpopupDealCount(teamMemberName, 20) != null) {
@@ -6504,6 +6568,7 @@ public void ADETc048_EditRemovedealContactfromDealTeamandVerifyImpactConnectionR
 											sa.assertTrue(false, "Deal Count for Contact is Empty, So not able to check Count for Contact: "
 													+ contactName);
 										}
+										driver.close();	driver.switchTo().window(parentWindowId);
 									} else {
 										log(LogStatus.ERROR, "No Contact found of Name: " + contactName, YesNo.No);
 										sa.assertTrue(false, "No Contact found of Name: " + contactName);
@@ -6531,7 +6596,7 @@ public void ADETc048_EditRemovedealContactfromDealTeamandVerifyImpactConnectionR
 				}
 				}
 }
-
+}
 
 @Parameters({ "projectName"})
 @Test
@@ -6552,7 +6617,7 @@ public void ADETc049_EditRemoveTeamMemberfromDealTeamVerifytheImpactConnectionRe
 
 	if (lp.clickOnTab(projectName, TabName.Deal_Team)) {
 		if (fp.clickOnAlreadyCreatedItem(projectName, ADEDealTeamID10, 10)) {
-			if (DTP.UpdateDealContactName(projectName, data, 30)) {
+			if (DTP.UpdateDealTeamMemberName(projectName, data, 30)) {
 				log(LogStatus.INFO, "successfully changed name to " + teamMemberName1, YesNo.Yes);
 			} else {
 				sa.assertTrue(false, "not able to change name to " + teamMemberName1);
@@ -6581,6 +6646,8 @@ public void ADETc049_EditRemoveTeamMemberfromDealTeamVerifytheImpactConnectionRe
 								if (click(driver, BP.contactNameUserIconButton(contactName, 30),
 										"Contact Name: " + contactName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "Clicked on Contact: " + contactName, YesNo.No);
+									String parentWindowId = CommonLib.switchOnWindow(driver);
+									if (!parentWindowId.isEmpty()) {
 									actualDealCount = getText(driver, BP.teamMemberpopupDealCount(teamMemberName, 20), "deal",
 											action.SCROLLANDBOOLEAN);
 									if (BP.teamMemberpopupDealCount(teamMemberName, 20) != null) {
@@ -6607,6 +6674,7 @@ public void ADETc049_EditRemoveTeamMemberfromDealTeamVerifytheImpactConnectionRe
 											sa.assertTrue(false, "Deal Count for Contact is Empty, So not able to check Count for Contact: "
 													+ contactName);
 										}
+										driver.close();	driver.switchTo().window(parentWindowId);
 									} else {
 										log(LogStatus.ERROR, "No Contact found of Name: " + contactName, YesNo.No);
 										sa.assertTrue(false, "No Contact found of Name: " + contactName);
@@ -6634,7 +6702,7 @@ public void ADETc049_EditRemoveTeamMemberfromDealTeamVerifytheImpactConnectionRe
 				sa.assertAll();
 				}
 
-
+}
 
 
 @Parameters({ "projectName"})
@@ -6647,9 +6715,9 @@ public void ADETc052_VerifyDealCountUnderDealColumnClickableTab(String projectNa
 	
 	String teamMemberName = ADEDealTeamMember9;
 	String contactName = ADEContact15FName + " " + ADEContact15LName;
-	String dealName = "ADEDFC2";
-	String companyName = ADEIns1;
-	String stage = "IO1";
+	String dealName = ADEDeal18;
+	String companyName = ADEDeal18CompanyName;
+	String stage = ADEDeal18Stage;
 	String dateReceived = todaysDate;
 	
 	if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
@@ -6660,19 +6728,25 @@ public void ADETc052_VerifyDealCountUnderDealColumnClickableTab(String projectNa
 				if (click(driver, BP.contactNameUserIconButton(contactName, 30),
 						"Contact Name: " + contactName, action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Clicked on Contact: " + contactName, YesNo.No);
-					
+					String parentWindowId = CommonLib.switchOnWindow(driver);
+					if (!parentWindowId.isEmpty()) {
 					if (click(driver, BP.teamMemberpopupDealCount(teamMemberName, 20),
 							"Contact Name: " + contactName, action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Contact: " + contactName, YesNo.No);
-						
+						Set<String> childWindow = driver.getWindowHandles();
+						switchToDefaultContent(driver);
+						System.out.println(childWindow);
+						for(String child : childWindow) {
+						driver.switchTo().window(child);
+						}	
 					
-				if (BP.dealAcuityDealName(dealName, 30) != null) {
+				if (BP.dealAcuity2DealName(dealName, 30) != null) {
 					log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
-					if (BP.dealAcuityCompanyName(dealName,companyName, 30) != null) {
+					if (BP.dealAcuity2CompanyName(dealName,companyName, 30) != null) {
 						log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
-					if (BP.dealAcuityStageName(dealName, stage, 30) != null) {
+					if (BP.dealAcuity2StageName(dealName, stage, 30) != null) {
 						log(LogStatus.PASS, "Stage Name: " + stage + " is present", YesNo.No);
-						if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
+						if (BP.dealAcuity2DateReceived(dealName, dateReceived, 30) != null) {
 							log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 
 						} else {
@@ -6695,6 +6769,11 @@ public void ADETc052_VerifyDealCountUnderDealColumnClickableTab(String projectNa
 					log(LogStatus.FAIL, "date received not present: " + dateReceived, YesNo.Yes);
 					sa.assertTrue(false, "date receivednot present: " + dateReceived);
 				}
+				driver.close();
+				driver.switchTo().window(parentWindowId);
+				CommonLib.switchOnWindow(driver);
+					driver.close();
+				driver.switchTo().window(parentWindowId);
 					}
 				}
 			}
@@ -6706,6 +6785,7 @@ public void ADETc052_VerifyDealCountUnderDealColumnClickableTab(String projectNa
 		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " Tab", YesNo.No);
 		sa.assertTrue(false, "Not able to click on " + tabObj1 + " Tab");
 	}
+	}
 	if (fp.clickOnTab(environment, mode, TabName.Object2Tab)) {
 		log(LogStatus.INFO, "Click on Tab : " + TabName.Object2Tab, YesNo.No);
 
@@ -6714,15 +6794,16 @@ public void ADETc052_VerifyDealCountUnderDealColumnClickableTab(String projectNa
 					if (click(driver, BP.teamMemberpopupDealCount(teamMemberName, 20),
 							"Contact Name: " + contactName, action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "Clicked on Contact: " + contactName, YesNo.No);
-						
+						String parentWindowId = CommonLib.switchOnWindow(driver);
+						if (!parentWindowId.isEmpty()) {
 					
-				if (BP.dealAcuityDealName(dealName, 30) != null) {
+				if (BP.dealAcuity2DealName(dealName, 30) != null) {
 					log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
-					if (BP.dealAcuityCompanyName(dealName,companyName, 30) != null) {
+					if (BP.dealAcuity2CompanyName(dealName,companyName, 30) != null) {
 						log(LogStatus.PASS, "Deal Name: " + dealName + " is hyperlink and is present", YesNo.No);
-					if (BP.dealAcuityStageName(dealName, stage, 30) != null) {
+					if (BP.dealAcuity2StageName(dealName, stage, 30) != null) {
 						log(LogStatus.PASS, "Stage Name: " + stage + " is present", YesNo.No);
-						if (BP.dealAcuityDateReceived(dealName, dateReceived, 30) != null) {
+						if (BP.dealAcuity2DateReceived(dealName, dateReceived, 30) != null) {
 							log(LogStatus.PASS, "Date Received: " + dateReceived + " is present", YesNo.No);
 
 						} else {
@@ -6746,7 +6827,7 @@ public void ADETc052_VerifyDealCountUnderDealColumnClickableTab(String projectNa
 					sa.assertTrue(false, "date receivednot present: " + dateReceived);
 				}
 					}
-				
+						driver.close();	driver.switchTo().window(parentWindowId);
 			}
 		} else {
 			log(LogStatus.ERROR, "No Contact found of Name: " + ADEIns11, YesNo.No);
@@ -6755,6 +6836,7 @@ public void ADETc052_VerifyDealCountUnderDealColumnClickableTab(String projectNa
 	} else {
 		log(LogStatus.ERROR, "Not able to click on " + tabObj2 + " Tab", YesNo.No);
 		sa.assertTrue(false, "Not able to click on " + tabObj2 + " Tab");
+	}
 	}
 	ThreadSleep(5000);
 	lp.CRMlogout();
@@ -6769,7 +6851,7 @@ public void ADETc053_VerifyDealNameClickableRedirectionDealTeamRecordPopupAccoun
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
-	String dealName = "ADEDFC2";
+	String dealName = ADEDeal18;
 	String teamMemberName = ADEDealTeamMember9;
 	String contactName = ADEContact15FName + " " + ADEContact15LName;
 
@@ -6780,29 +6862,31 @@ public void ADETc053_VerifyDealNameClickableRedirectionDealTeamRecordPopupAccoun
 			if (click(driver, BP.teamMemberpopupDealCount(teamMemberName, 20),
 					"Contact Name: " + contactName, action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on Contact: " + contactName, YesNo.No);
+				String parentWindowId = CommonLib.switchOnWindow(driver);
+				if (!parentWindowId.isEmpty()) {
 			ThreadSleep(3000);
 			if (clickUsingJavaScript(driver, BP.dealAcuityPopUpDealName(dealName, 10), "Deal Name: " + dealName,
 					action.BOOLEAN)) {
 				log(LogStatus.PASS, "Clicked on Deal Name: " + dealName, YesNo.No);
-				try {
-					String parentWindowId = CommonLib.switchOnWindow(driver);
-					if (!parentWindowId.isEmpty()) {
+			
 						log(LogStatus.PASS, "New Window Open after click on Deal Link: " + dealName, YesNo.No);
-
+						Set<String> childWindow = driver.getWindowHandles();
+						switchToDefaultContent(driver);
+						System.out.println(childWindow);
+						for(String child : childWindow) {
+						driver.switchTo().window(child);
+						}	
 						if (BP.dealRecordPage(dealName, 20) != null) {
 							log(LogStatus.PASS,
 									"----Deal Detail Page is redirecting for Deal Record: " + dealName + "-----",
 									YesNo.No);
-							driver.close();
-							driver.switchTo().window(parentWindowId);
-
+							
 						} else {
 							log(LogStatus.FAIL, "----Deal Detail Page is not redirecting for Deal Record: "
 									+ dealName + "-----", YesNo.Yes);
 							sa.assertTrue(false,
 									"----Deal Detail Page is not showing for Deal Record: " + dealName + "-----");
-							driver.close();
-							driver.switchTo().window(parentWindowId);
+							
 
 						}
 
@@ -6810,19 +6894,20 @@ public void ADETc053_VerifyDealNameClickableRedirectionDealTeamRecordPopupAccoun
 						log(LogStatus.FAIL, "No New Window Open after click on Deal Link: " + dealName, YesNo.Yes);
 						sa.assertTrue(false, "No New Window Open after click on Deal Link: " + dealName);
 					}
-				} catch (Exception e) {
-					log(LogStatus.FAIL,
-							"Not able to switch to window after click on Deal Link, Msg showing: " + e.getMessage(),
-							YesNo.Yes);
-					sa.assertTrue(false, "Not able to switch to window after click on Deal Link, Msg showing: "
-							+ e.getMessage());
-				}
+				
 			
 			} else {
 				log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
 				sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
 
 			}
+				driver.close();
+				driver.switchTo().window(parentWindowId);
+				CommonLib.switchOnWindow(driver);
+					driver.close();
+				driver.switchTo().window(parentWindowId);
+					
+				
 			} else {
 				log(LogStatus.FAIL, "Not able to Click on team count: " + teamMemberName, YesNo.Yes);
 				sa.assertTrue(false, "Not able to Click on team count: " + teamMemberName);
@@ -6850,7 +6935,7 @@ public void ADETc054_VerifyFundraisingCardSectionVisibilityAcuityTabforExistingA
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 	
-	String fundraisingHeader = "Fundraising Name<break>Fund Name<break>Stage<break>Target Close Date";
+	String fundraisingHeader = "Fundraising Name<break>Stage<break>Investment Likely Amount (mn)<break>Target Close Date";
 	String message = "No items to display";
 
 	String[] arrfundraisingHeader = fundraisingHeader.split("<break>");
@@ -6892,6 +6977,7 @@ public void ADETc055_CreateFundsForUsageFundraising(String projectName) {
 	
 	String[] fundNames = ADEFundName.split("<Break>", -1);
 	String[] fundTypes = ADEFundType.split("<Break>", -1);
+	String[] investmentCategory = ADEInvestmentCategory.split("<Break>", -1);
 	
 	int fundStatus = 0;
 	int fundLoopCount = 0;
@@ -6901,7 +6987,7 @@ public void ADETc055_CreateFundsForUsageFundraising(String projectName) {
 		if (fund.clickOnTab(environment, mode, TabName.FundsTab)) {
 
 			if (fund.createFund(projectName, fundName, fundTypes[fundLoopCount],
-					null, null, null)) {
+					investmentCategory[fundLoopCount], null, null)) {
 				appLog.info("Fund is created Successfully: " + fundName);
 				fundStatus++;
 
@@ -6959,8 +7045,8 @@ if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 	if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns3, 30)) {
 		
 		ArrayList<String> result1 = BP.verifyRecordOnFundraisingsSectionInAcuity(
-				ADEInstitutionName, ADEFundraisingName, ADERFundName,
-				null, ADETargetClosingDate);
+				null, ADEFundraisingName, null,
+				null, null);
 		if (result1.isEmpty()) {
 			log(LogStatus.INFO, "Records on Fundraisings slot have been matched", YesNo.No);
 
@@ -7060,7 +7146,7 @@ public void ADETc057_2_VerifyFundraisingwithDiferrentStagesDisplayingFundraising
 		if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns3, 30)) {
 			for (int i = 0; i < 10; i++) {
 			ArrayList<String> result1 = BP.verifyRecordOnFundraisingsSectionInAcuity(
-					fundraisingsInstitutionName[i], fundraisingNames[i], fundraisingsFundName[i],
+					null, fundraisingNames[i], null,
 					fundraisingsStageName[i], null);
 			if (result1.isEmpty()) {
 				log(LogStatus.INFO, "Records on Fundraisings slot have been matched", YesNo.No);
@@ -7463,7 +7549,7 @@ public void ADETc062_2_EditFieldColumnNamesVerifyImpactFundraisingCardInstitutio
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 	
-	String fundraisingHeader = "Fundraising Name<break>Fund Name<break>UpdatedStage<break>Target Close Date";
+	String fundraisingHeader = "Fundraising Name<break>UpdatedStage<break>Investment Likely Amount (mn)<break>Target Close Date";
 	
 
 	String[] arrfundraisingHeader = fundraisingHeader.split("<break>");
@@ -7521,7 +7607,7 @@ public void ADETc063_1_EditFieldColumnNamesVerifyImpactFundraisingCardInstitutio
 			}
 	
 	}
-	String fundraisingHeader = "Fundraising Name<break>Fund Name<break>UpdatedStage<break>Target Close Date";
+	String fundraisingHeader = "Fundraising Name<break>UpdatedStage<break>Investment Likely Amount (mn)<break>Target Close Date";
 	
 	String[] arrfundraisingHeader = fundraisingHeader.split("<break>");
 	List<String> fundraisingHeaders = new ArrayList<String>(Arrays.asList(arrfundraisingHeader));
@@ -7574,7 +7660,7 @@ public void ADETc063_2_EditFieldColumnNamesVerifyImpactFundraisingCardInstitutio
 			}
 	
 	}
-	String fundraisingHeader = "Fundraising Name<break>Fund Name<break>UpdatedStage<break>Target Close Date";
+	String fundraisingHeader = "Fundraising Name<break>UpdatedStage<break>Investment Likely Amount (mn)<break>Target Close Date";
 	
 	String[] arrfundraisingHeader = fundraisingHeader.split("<break>");
 	List<String> fundraisingHeaders = new ArrayList<String>(Arrays.asList(arrfundraisingHeader));
@@ -7644,7 +7730,6 @@ public void ADETc064_1_VerifyImpactDMLOperationsStagesFundraisingSectionfInstitu
 										sa.assertTrue(false, "not able to click on save button");
 										log(LogStatus.SKIP, "not able to click on save button", YesNo.Yes);
 									}
-
 								} else {
 									sa.assertTrue(false, "edit button is not clickable");
 									log(LogStatus.SKIP, "edit button is not clickable", YesNo.Yes);
@@ -7655,6 +7740,7 @@ public void ADETc064_1_VerifyImpactDMLOperationsStagesFundraisingSectionfInstitu
 				}
 			}
 		}
+		driver.close();
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -7766,7 +7852,7 @@ public void ADETc064_2_VerifyImpactDMLOperationsStagesFundraisingSectionfInstitu
 			log(LogStatus.FAIL, "setup link is not clickable", YesNo.Yes);
 			sa.assertTrue(false, "setup link is not clickable");
 		}
-
+        driver.close();
 		lp.CRMlogout();
 		sa.assertAll();
 	}
@@ -8202,33 +8288,33 @@ public void ADETc068_VerifyDealCountsatAccountContactsAssociatedDealMemberDealTe
 	String[][] data = { { PageLabel.Deal.toString(), dealName }, { PageLabel.Deal_Contact.toString(), contactName },
 			{ PageLabel.Team_Member.toString(), TeamMember } };
 
-	if (lp.clickOnTab(projectName, TabName.Deal_Team)) {
-		log(LogStatus.INFO, "Click on Tab : " + TabName.Deal_Team, YesNo.No);
-
-		if (DTP.createDealTeam(projectName, dealName, data, "Acuity", action.SCROLLANDBOOLEAN, 25)) {
-			log(LogStatus.INFO, "----Successfully Created the Deal Team for Deal: " + dealName + "----", YesNo.No);
-
-			log(LogStatus.INFO,
-					"---------Now Going to Check Deal Team Count should get increase by one for Contact named "
-							+ contactName + " at Firm Tab under Acuity section---------",
-					YesNo.No);
-			String xpath = "//*[text()='Deal Team']/parent::h1//slot/lightning-formatted-text";
-			WebElement ele = FindElement(driver, xpath, "dt id", action.BOOLEAN, 10);
-			if (ele != null) {
-				String id = getText(driver, ele, "deal team id", action.SCROLLANDBOOLEAN);
-				ExcelUtils.writeData(AcuityDataSheetFilePath, id, "Deal Team", excelLabel.Variable_Name, "ADT_12",
-						excelLabel.DealTeamID);
-				log(LogStatus.INFO, "successfully created and noted id of DT" + id + " and deal name " + dealName,
-						YesNo.No);
-			} else {
-				sa.assertTrue(false, "could not create DT" + dealName);
-				log(LogStatus.SKIP, "could not create DT" + dealName, YesNo.Yes);
-			}
-		}
+//	if (lp.clickOnTab(projectName, TabName.Deal_Team)) {
+//		log(LogStatus.INFO, "Click on Tab : " + TabName.Deal_Team, YesNo.No);
+//
+//		if (DTP.createDealTeam(projectName, dealName, data, "Acuity", action.SCROLLANDBOOLEAN, 25)) {
+//			log(LogStatus.INFO, "----Successfully Created the Deal Team for Deal: " + dealName + "----", YesNo.No);
+//
+//			log(LogStatus.INFO,
+//					"---------Now Going to Check Deal Team Count should get increase by one for Contact named "
+//							+ contactName + " at Firm Tab under Acuity section---------",
+//					YesNo.No);
+//			String xpath = "//*[text()='Deal Team']/parent::h1//slot/lightning-formatted-text";
+//			WebElement ele = FindElement(driver, xpath, "dt id", action.BOOLEAN, 10);
+//			if (ele != null) {
+//				String id = getText(driver, ele, "deal team id", action.SCROLLANDBOOLEAN);
+//				ExcelUtils.writeData(AcuityDataSheetFilePath, id, "Deal Team", excelLabel.Variable_Name, "ADT_12",
+//						excelLabel.DealTeamID);
+//				log(LogStatus.INFO, "successfully created and noted id of DT" + id + " and deal name " + dealName,
+//						YesNo.No);
+//			} else {
+//				sa.assertTrue(false, "could not create DT" + dealName);
+//				log(LogStatus.SKIP, "could not create DT" + dealName, YesNo.Yes);
+//			}
+//		}
 				if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 					log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 
-					if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns3, 30)) {
+					if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns14, 30)) {
 
 						actualDealCount = getText(driver, BP.contactDealCount(contactName, 30), "deal",
 								action.SCROLLANDBOOLEAN);
@@ -8281,7 +8367,7 @@ public void ADETc068_VerifyDealCountsatAccountContactsAssociatedDealMemberDealTe
 	sa.assertAll();
 
 }
-}
+
 @Parameters({ "projectName" })
 @Test
 public void ADETc069_VerifyDealCountsAIAccountWhenNewContactCreatedTaggedDealMemberDealTeam(String projectName) {
@@ -8410,15 +8496,15 @@ public void ADETc070_VerifyDealCountaContactDealContactareCreatedAccount(String 
 	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-	String dealName1 = ADEDealTeamName4;
+	String dealName1 = ADEDealTeamName14;
 	String DealCountInFirm = "1";
 	String actualDealCount = null;
 	String contactName = ADEContact18FName + " " + ADEContact18LName;
 
 	String recordType = "";
-	String dealName = "ADENEWOGT";
-	String companyName = ADEIns3;
-	String stage = "DS";
+	String dealName = ADEDeal20;
+	String companyName = ADEDeal20CompanyName;
+	String stage = ADEDeal20Stage;
 
 	if (lp.clickOnTab(projectName, tabObj4)) {
 		log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
@@ -8472,7 +8558,7 @@ public void ADETc070_VerifyDealCountaContactDealContactareCreatedAccount(String 
 				if (ele != null) {
 					String id = getText(driver, ele, "deal team id", action.SCROLLANDBOOLEAN);
 					ExcelUtils.writeData(AcuityDataSheetFilePath, id, "Deal Team", excelLabel.Variable_Name,
-							"ADT_04", excelLabel.DealTeamID);
+							"ADT_14", excelLabel.DealTeamID);
 					log(LogStatus.INFO,
 							"successfully created and noted id of DT" + id + " and deal name " + dealName,
 							YesNo.No);
@@ -9122,6 +9208,9 @@ public void ADETc076_VerifyDealTeamRecordPopupClosewhenClickedOutsidePopuporCros
 					action.BOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on Deal Count: " + " " + " of Record: " + contactName, YesNo.No);
 			}
+				String parentWindowId = CommonLib.switchOnWindow(driver);
+				if (!parentWindowId.isEmpty()) {
+					log(LogStatus.PASS, "New Window Open after click on Deal Link: " + contactName, YesNo.No);
 			String actualHeader = getText(driver, BP.getDealCountPopHeader(20), "DealCountPopHeader",
 					action.SCROLLANDBOOLEAN);
 			if (ExpectedHeader.equals(actualHeader)) {
@@ -9152,30 +9241,27 @@ public void ADETc076_VerifyDealTeamRecordPopupClosewhenClickedOutsidePopuporCros
 								+ ExpectedHeader + " for Contact Name: " + contactName,
 						YesNo.No);
 			}
-
+			driver.close();	driver.switchTo().window(parentWindowId);
 		} else {
 			log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
 			sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
 		}
 	}
+		
 	ThreadSleep(5000);
 	lp.CRMlogout();
 	sa.assertAll();
+}
 }
 @Parameters({ "projectName" })
 @Test
 public void ADETc077_VerifyDealNameCompanyClickableItRedirectionDealTeamRecordopupforAccount(String projectName) {
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-	InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
-	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 
-	String dealName = "ADENEWOGT";
-	String company = ADEIns14;
-	String companyname = ADEIns14;
-
+	String dealName = ADEDeal20;
 	String contactName = ADEContact18FName + " " + ADEContact18LName;
 
 	if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
@@ -9186,20 +9272,28 @@ public void ADETc077_VerifyDealNameCompanyClickableItRedirectionDealTeamRecordop
 					action.BOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on Deal Count: " + " " + " of Record: " + contactName, YesNo.No);
 			}
+			String parentWindowId = CommonLib.switchOnWindow(driver);
+			if (!parentWindowId.isEmpty()) {
 			ThreadSleep(3000);
 			if (clickUsingJavaScript(driver, BP.dealAcuityPopUpDealName(dealName, 10), "Deal Name: " + dealName,
 					action.BOOLEAN)) {
 				log(LogStatus.PASS, "Clicked on Deal Name: " + dealName, YesNo.No);
-				try {
-					String parentWindowId = CommonLib.switchOnWindow(driver);
-					if (!parentWindowId.isEmpty()) {
-						log(LogStatus.PASS, "New Window Open after click on Deal Link: " + dealName, YesNo.No);
+				log(LogStatus.PASS, "Clicked on Deal Name: " + dealName, YesNo.No);
+				Set<String> childWindow = driver.getWindowHandles();
+				switchToDefaultContent(driver);
+				System.out.println(childWindow);
+				for(String child : childWindow) {
+				driver.switchTo().window(child);
+				}
 
 						if (BP.dealRecordPage(dealName, 20) != null) {
 							log(LogStatus.PASS,
 									"----Deal Detail Page is redirecting for Deal Record: " + dealName + "-----",
 									YesNo.No);
 							driver.close();
+							driver.switchTo().window(parentWindowId);
+							CommonLib.switchOnWindow(driver);
+								driver.close();
 							driver.switchTo().window(parentWindowId);
 
 						} else {
@@ -9216,13 +9310,13 @@ public void ADETc077_VerifyDealNameCompanyClickableItRedirectionDealTeamRecordop
 						log(LogStatus.FAIL, "No New Window Open after click on Deal Link: " + dealName, YesNo.Yes);
 						sa.assertTrue(false, "No New Window Open after click on Deal Link: " + dealName);
 					}
-				} catch (Exception e) {
-					log(LogStatus.FAIL,
-							"Not able to switch to window after click on Deal Link, Msg showing: " + e.getMessage(),
-							YesNo.Yes);
-					sa.assertTrue(false, "Not able to switch to window after click on Deal Link, Msg showing: "
-							+ e.getMessage());
-				}
+//				} catch (Exception e) {
+//					log(LogStatus.FAIL,
+//							"Not able to switch to window after click on Deal Link, Msg showing: " + e.getMessage(),
+//							YesNo.Yes);
+//					sa.assertTrue(false, "Not able to switch to window after click on Deal Link, Msg showing: "
+//							+ e.getMessage());
+//				}
 			} else {
 				log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
 				sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
@@ -9244,7 +9338,62 @@ public void ADETc077_VerifyDealNameCompanyClickableItRedirectionDealTeamRecordop
 
 @Parameters({ "projectName"})
 @Test
-public void ADETc078_VerifyimpactConnectionSectionWhenUsergetsRenameUserNameandGetsDeactivated(String projectName) {
+public void ADETc078_1_VerifyimpactConnectionSectionWhenUsertitlegetsupdated(String projectName) {
+	SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	String parentWindow = null;
+	String emailId = crmUser2EmailID;
+	String title ="analyst";
+	String actualDealCount = null;
+	String contactName = ADEContact11FName + " " + ADEContact11LName;
+	lp.CRMLogin(superAdminUserName, adminPassword, appName);
+	boolean flag = false;
+			if (home.clickOnSetUpLink()) {
+				flag = true;
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+					log(LogStatus.SKIP,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User1",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
+				}
+				if (setup.editPEUserAndUpdateTheName( null, null, emailId,title)) {
+					log(LogStatus.INFO, "CRM User is updated Successfully: " +title, YesNo.No);
+				} else {
+					appLog.error("CRM User not updated Successfully: " +title);
+				}
+					flag = true;
+
+				
+				driver.close();
+				driver.switchTo().window(parentWindow);
+
+			}
+			lp.CRMlogout();
+			lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+			if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
+				log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
+
+				if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns11, 30)) {
+					if (CommonLib.click(driver, BP.contactDealCount(contactName, 30),
+							"Deal Count: " + actualDealCount, action.BOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deal Count: " + actualDealCount
+								+ " of Record: " + contactName, YesNo.No);
+						
+}
+				}
+			}
+}
+				
+
+@Parameters({ "projectName"})
+@Test
+public void ADETc078_2_VerifyimpactConnectionSectionWhenUsergetsRenameUserNameandGetsDeactivated(String projectName) {
 	SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -9273,18 +9422,23 @@ public void ADETc078_VerifyimpactConnectionSectionWhenUsergetsRenameUserNameandG
 					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User1");
 				}
 				if (setup.editPEUser( userfirstname, UserLastName, emailId)) {
-					log(LogStatus.INFO, "CRM User is created Successfully: " + crmUser1FirstName + " " + UserLastName, YesNo.No);
+					log(LogStatus.INFO, "CRM User is updated Successfully: " + crmUser1FirstName + " " + UserLastName, YesNo.No);
 					ExcelUtils.writeData(testCasesFilePath, emailId, "Users", excelLabel.Variable_Name, "User2",
 							excelLabel.User_Email);
 					ExcelUtils.writeData(testCasesFilePath, UserLastName, "Users", excelLabel.Variable_Name, "User2",
 							excelLabel.User_Last_Name);
+				} else {
+					appLog.error("CRM User not updated Successfully:  " + crmUser1FirstName + " " + UserLastName);
 					flag = true;
-
 				}
+
+				
 				driver.close();
 				driver.switchTo().window(parentWindow);
 
 			}
+			lp.CRMlogout();
+			lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
 			if (fp.clickOnTab(environment, mode, TabName.Object2Tab)) {
 				log(LogStatus.INFO, "Click on Tab : " + TabName.Object2Tab, YesNo.No);
 
@@ -9399,14 +9553,14 @@ public void ADETc079_VerifyWhenContactNameClickedContactCard(String projectName)
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-	String contactname = " ";
+	String contactname = ADEContact16FName + " " + ADEContact16LName;
 	String ExpectedHeader  ="No items to display";
 	
 	if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 		log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 
 		if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns14, 30)) {
-			if (CommonLib.click(driver, BP.contactname(contactname, 30), "Contact Name: " + "",
+			if (clickUsingJavaScript(driver, BP.contactname(contactname, 30), "Contact Name: " + "",
 					action.BOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on Contact Name: " + " " + " of Record: " + contactname, YesNo.No);
 				try {
@@ -9654,6 +9808,8 @@ public void ADETc089_VerifyEmailSubjectClickableRedirectionEmailRecordsPopupforA
 					action.BOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on Email Count: " + " " + " of Record: " + contactName, YesNo.No);
 			}
+			String parentWindowId1 = CommonLib.switchOnWindow(driver);
+			if (!parentWindowId1.isEmpty()) {
 			ThreadSleep(3000);
 			if (clickUsingJavaScript(driver, BP.contactPopUpEmailsubject(subject, 10), "Deal Name: " + subject,
 					action.BOOLEAN)) {
@@ -9711,7 +9867,7 @@ public void ADETc089_VerifyEmailSubjectClickableRedirectionEmailRecordsPopupforA
 	log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
 	sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
 }
-
+	}
 			
 	ThreadSleep(5000);
 	lp.CRMlogout();
@@ -9770,6 +9926,8 @@ public void ADETc090_VerifyEmailCountUnderEmailColumnEmailCountEmailRecordsPopup
 					action.BOOLEAN)) {
 				log(LogStatus.INFO, "Clicked on Email Count: " + " " + " of Record: " + contactName, YesNo.No);
 			}
+			String parentWindowId1 = CommonLib.switchOnWindow(driver);
+			if (!parentWindowId1.isEmpty()) {
 			ThreadSleep(3000);
 			if (actualemailCount.equals(dp.EmailcountonPopup(10))) {
 				log(LogStatus.PASS, "Email count on Popup: is equal to  " + actualemailCount +  "are equal", YesNo.No);
@@ -9784,13 +9942,13 @@ public void ADETc090_VerifyEmailCountUnderEmailColumnEmailCountEmailRecordsPopup
 			} else {
 				log(LogStatus.FAIL, "Not able to Click on email count: " + actualemailCount, YesNo.Yes);
 				sa.assertTrue(false, "Not able to Click on email count: " + actualemailCount);
-
+         driver.close();
 			}
 		} else {
 			log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
 			sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
 		}
-
+	}
 	
 	ThreadSleep(5000);
 	lp.CRMlogout();
@@ -9817,7 +9975,8 @@ public void ADETc091_VerifytheEmailDetailsOnEmailRecordsPopupforAccount(String p
 				action.BOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Email Count: " + " " + " of Record: " + contactName, YesNo.No);
 		}
-		
+		String parentWindowId1 = CommonLib.switchOnWindow(driver);
+		if (!parentWindowId1.isEmpty()) {
 		
 			String xpath="//*[text()='Testing indirect email for contact']/ancestor::tr";
 			WebElement ele =FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
@@ -9834,13 +9993,14 @@ public void ADETc091_VerifytheEmailDetailsOnEmailRecordsPopupforAccount(String p
 			} else {
 		log(LogStatus.FAIL, "Not able to Click on email count: " + actualemailCount, YesNo.Yes);
 		sa.assertTrue(false, "Not able to Click on email count: " + actualemailCount);
-
+		driver.close();
 	}
 }else {
 
 	log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
 	sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
 }
+	}
 	ThreadSleep(5000);
 	lp.CRMlogout();
 	sa.assertAll();
@@ -11281,11 +11441,32 @@ public void ADETc105_2_VerifytheImpactonEmailCountandContactNameswhenAPIKeygetsC
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 	lp.CRMLogin(rgUser2, rgOrgPassword, appName);	
+	String contactname =ADEContact20LName;
 	
 	if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 		log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 
 		if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns15, 30)) {
+		if(BP.apierrormsg(10) != null) {
+			log(LogStatus.PASS, "Error msg : is present", YesNo.No);
+
+		} else {
+			log(LogStatus.FAIL, "Error msg : not present", YesNo.Yes);
+			sa.assertTrue(false, "Error msg : not present: " );
+		}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + ADEIns14 + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + ADEIns14 + " tab");
+		}
+
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+	if (fp.clickOnTab(environment, mode, TabName.Object2Tab)) {
+		log(LogStatus.INFO, "Click on Tab : " + TabName.Object2Tab, YesNo.No);
+
+		if (fp.clickOnAlreadyCreatedItem(projectName, contactname, 30)) {
 		if(BP.apierrormsg(10) != null) {
 			log(LogStatus.PASS, "Error msg : is present", YesNo.No);
 
@@ -11355,19 +11536,55 @@ public void ADETc106_2_VerifytheImpactonSubjectLinewhenBaseUrlgetsChangedforReve
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 	lp.CRMLogin(rgUser2, rgOrgPassword, appName);	
+	String subject = "Testing indirect email for contact";
+	String contactName = ADEContact20LName;
+	String contactname1 ="Henry";
 	
 	if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 		log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 
 		if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns15, 30)) {
-		if(BP.apierrormsg(10) != null) {
-			log(LogStatus.PASS, "Error msg : is present", YesNo.No);
-
-		} else {
-			log(LogStatus.FAIL, "Error msg : not present", YesNo.Yes);
-			sa.assertTrue(false, "stage name not present: " );
-
+			if (CommonLib.click(driver, BP.contactEmailCountAcuity(contactName, 30), "Email Count: " + "",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Email Count: " + " " + " of Record: " + contactName, YesNo.No);
+			}
+			if (clickUsingJavaScript(driver, BP.contactPopUpEmailsubject(subject, 10), "Email subject: " + subject,
+					action.BOOLEAN)) {
 		}
+			log(LogStatus.PASS, "Clicked on Contact Name: " + subject, YesNo.No);
+			try {
+				String parentWindowId = CommonLib.switchOnWindow(driver);
+				if (!parentWindowId.isEmpty()) {
+					log(LogStatus.PASS, "New Window Open after click on subject Link: " + subject, YesNo.No);
+
+					if (BP.getpageloadErrorMsg( 20) != null) {
+						log(LogStatus.PASS,
+								"----email subject Detail Page is redirecting for page load error msg: " + subject + "-----",
+								YesNo.No);
+						driver.close();
+						driver.switchTo().window(parentWindowId);
+
+					} else {
+						log(LogStatus.FAIL, "----email subject Detail Page is not redirecting for page load error msg: "
+								+ subject + "-----", YesNo.Yes);
+						sa.assertTrue(false,
+								"----email subject Detail Page is not redirecting for page load error msg: " + subject + "-----");
+						driver.close();
+						driver.switchTo().window(parentWindowId);
+
+					}
+
+				} else {
+					log(LogStatus.FAIL, "No New Window Open after click on email subject Link: " + subject, YesNo.Yes);
+					sa.assertTrue(false, "No New Window Open after click on email subject Link: " + subject);
+				}
+			} catch (Exception e) {
+				log(LogStatus.FAIL,
+						"Not able to switch to window after click on email subject, Msg showing: " + e.getMessage(),
+						YesNo.Yes);
+				sa.assertTrue(false, "Not able to switch to window after click on email subject, Msg showing: "
+						+ e.getMessage());
+			}
 		} else {
 			log(LogStatus.ERROR, "Not able to click on " + ADEIns14 + " tab", YesNo.Yes);
 			sa.assertTrue(false, "Not able to click on " + ADEIns14 + " tab");
@@ -11376,6 +11593,60 @@ public void ADETc106_2_VerifytheImpactonSubjectLinewhenBaseUrlgetsChangedforReve
 	} else {
 		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
 		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+	if (fp.clickOnTab(environment, mode, TabName.Object2Tab)) {
+		log(LogStatus.INFO, "Click on Tab : " + TabName.Object2Tab, YesNo.No);
+
+		if (fp.clickOnAlreadyCreatedItem(projectName, contactName, 30)) {
+			if (CommonLib.click(driver, BP.contactEmailCountAcuity(contactname1, 30), "Email Count: " + "",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "Clicked on Email Count: " + " " + " of Record: " + contactname1, YesNo.No);
+			}
+			if (clickUsingJavaScript(driver, BP.contactPopUpEmailsubject(subject, 10), "Email subject: " + subject,
+					action.BOOLEAN)) {
+		}
+			log(LogStatus.PASS, "Clicked on Contact Name: " + subject, YesNo.No);
+			try {
+				String parentWindowId = CommonLib.switchOnWindow(driver);
+				if (!parentWindowId.isEmpty()) {
+					log(LogStatus.PASS, "New Window Open after click on subject Link: " + subject, YesNo.No);
+
+					if (BP.getpageloadErrorMsg( 20) != null) {
+						log(LogStatus.PASS,
+								"----email subject Detail Page is redirecting for page load error msg: " + subject + "-----",
+								YesNo.No);
+						driver.close();
+						driver.switchTo().window(parentWindowId);
+
+					} else {
+						log(LogStatus.FAIL, "----email subject Detail Page is not redirecting for page load error msg: "
+								+ subject + "-----", YesNo.Yes);
+						sa.assertTrue(false,
+								"----email subject Detail Page is not redirecting for page load error msg: " + subject + "-----");
+						driver.close();
+						driver.switchTo().window(parentWindowId);
+
+					}
+
+				} else {
+					log(LogStatus.FAIL, "No New Window Open after click on email subject Link: " + subject, YesNo.Yes);
+					sa.assertTrue(false, "No New Window Open after click on email subject Link: " + subject);
+				}
+			} catch (Exception e) {
+				log(LogStatus.FAIL,
+						"Not able to switch to window after click on email subject, Msg showing: " + e.getMessage(),
+						YesNo.Yes);
+				sa.assertTrue(false, "Not able to switch to window after click on email subject, Msg showing: "
+						+ e.getMessage());
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + contactName + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + contactName + " tab");
+		}
+
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj2 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj2 + " tab");
 	}
 		ThreadSleep(5000);
 		lp.CRMlogout();
@@ -11429,7 +11700,7 @@ public void ADETc107_2_VerifytheErrorMessageRelatedtoDealGridforAccountContacts(
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
 	lp.CRMLogin(rgUser2, rgOrgPassword, appName);	
-	
+	String contactName = ADEContact20LName;
 	if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 		log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 
@@ -11450,6 +11721,28 @@ public void ADETc107_2_VerifytheErrorMessageRelatedtoDealGridforAccountContacts(
 	} else {
 		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
 		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+	
+	if (fp.clickOnTab(environment, mode, TabName.Object2Tab)) {
+		log(LogStatus.INFO, "Click on Tab : " + TabName.Object2Tab, YesNo.No);
+
+		if (fp.clickOnAlreadyCreatedItem(projectName, contactName, 30)) {
+		if(BP.Componenterrormsg(10) != null) {
+			log(LogStatus.PASS, "Error msg : is present", YesNo.No);
+
+		} else {
+			log(LogStatus.FAIL, "Error msg : not present", YesNo.Yes);
+			sa.assertTrue(false, "Error msg : not present: " );
+
+		}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + contactName + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + contactName + " tab");
+		}
+
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj2 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj2 + " tab");
 	}
 		ThreadSleep(5000);
 		lp.CRMlogout();
@@ -11577,13 +11870,37 @@ public void ADETc109_2_AccDealsReplaceDealColumnWithAnotherColumnandCheckifitApp
 	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
 	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
 	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
-	String hsr = "Deal Received";
-	String dealName= "ADEMD";
+	String hsr = "NDA Signed";
+	String recordType = "";
+	String dealName = ADEDeal6;
+	String companyName = ADEDeal6CompanyName;
+	String stage = ADEDeal6Stage;
+	String dateReceived = todaysDate;
+	String contactname = ADEContact20LName;
+
+	String labellabels = "Source Contact<Break>Date Received";
+	String otherLabelValues = ADEDeal5SourceContact + "<Break>"
+			+ todaysDate;
+	if (lp.clickOnTab(projectName, tabObj4)) {
+		log(LogStatus.INFO, "Click on Tab : " + tabObj4, YesNo.No);
+		ThreadSleep(3000);
+		if (dp.createDeal(recordType, dealName, companyName, stage, labellabels, otherLabelValues)) {
+			log(LogStatus.INFO, dealName + " deal has been created", YesNo.No);
+
+		} else {
+			log(LogStatus.ERROR, dealName + " deal is not created", YesNo.No);
+			sa.assertTrue(false, dealName + " deal is not created");
+		}
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj4 + " Tab", YesNo.No);
+		sa.assertTrue(false, "Not able to click on " + tabObj4 + " Tab");
+	}
 	if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
 		log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
 
-		if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns1, 30)) {
+		if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns15, 30)) {
 			if (BP.dealAcuityHSR(hsr, 30) != null) {
 				log(LogStatus.PASS, "HSR Name: " + hsr + " is hyperlink and is present", YesNo.No);
 				if (click(driver, BP.dealAcuityHSR(hsr, 10), "HSR Name: " + hsr,
@@ -11629,13 +11946,220 @@ public void ADETc109_2_AccDealsReplaceDealColumnWithAnotherColumnandCheckifitApp
 			}
 		
 		} else {
-			log(LogStatus.ERROR, "Not able to click on " + ADEIns11 + " tab", YesNo.Yes);
-			sa.assertTrue(false, "Not able to click on " + ADEIns11 + " tab");
+			log(LogStatus.ERROR, "Not able to click on " + ADEIns15 + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + ADEIns15 + " tab");
 		}
 	} else {
 		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
 		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
 	}
+	}
+	if (fp.clickOnTab(environment, mode, TabName.Object2Tab)) {
+		log(LogStatus.INFO, "Click on Tab : " + TabName.Object2Tab, YesNo.No);
+
+		if (fp.clickOnAlreadyCreatedItem(projectName, contactname, 30)) {
+			if (BP.dealAcuityHSR(hsr, 30) != null) {
+				log(LogStatus.PASS, "HSR Name: " + hsr + " is hyperlink and is present", YesNo.No);
+				if (click(driver, BP.dealAcuityHSR(hsr, 10), "HSR Name: " + hsr,
+						action.BOOLEAN)) {
+					log(LogStatus.PASS, "Clicked on HSR Name: " + hsr, YesNo.No);
+				try {
+					String parentWindowId = CommonLib.switchOnWindow(driver);
+					if (!parentWindowId.isEmpty()) {
+						log(LogStatus.PASS, "New Window Open after click on Deal Link: " + dealName, YesNo.No);
+
+						if (BP.dealRecordPage(dealName, 20) != null) {
+							log(LogStatus.PASS,
+									"----Deal Detail Page is redirecting for Deal Record: " + dealName + "-----",
+									YesNo.No);
+							driver.close();
+							driver.switchTo().window(parentWindowId);
+
+						} else {
+							log(LogStatus.FAIL, "----Deal Detail Page is not redirecting for Deal Record: "
+									+ dealName + "-----", YesNo.Yes);
+							sa.assertTrue(false,
+									"----Deal Detail Page is not showing for Deal Record: " + dealName + "-----");
+							driver.close();
+							driver.switchTo().window(parentWindowId);
+
+						}
+
+					} else {
+						log(LogStatus.FAIL, "No New Window Open after click on Deal Link: " + dealName, YesNo.Yes);
+						sa.assertTrue(false, "No New Window Open after click on Deal Link: " + dealName);
+					}
+				} catch (Exception e) {
+					log(LogStatus.FAIL,
+							"Not able to switch to window after click on Deal Link, Msg showing: " + e.getMessage(),
+							YesNo.Yes);
+					sa.assertTrue(false, "Not able to switch to window after click on Deal Link, Msg showing: "
+							+ e.getMessage());
+				}
+			} else {
+				log(LogStatus.FAIL, "Not able to Click on Deal Name: " + dealName, YesNo.Yes);
+				sa.assertTrue(false, "Not able to Click on Deal Name: " + dealName);
+
+			}
+		
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + ADEIns15 + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + ADEIns15 + " tab");
+		}
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+	}
+	ThreadSleep(5000);
+	lp.CRMlogout();
+	sa.assertAll();
+}
+
+@Parameters({ "projectName" })
+@Test
+public void ADETc110_DeleteDealfromDealTeamandVerifyImpactonDealTeamCountContactsUsersatFirmandContactpage(String projectName) {	
+	LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+	FundsPageBusinessLayer fp = new FundsPageBusinessLayer(driver);
+	BasePageBusinessLayer BP = new BasePageBusinessLayer(driver);
+	DealPageBusinessLayer dp = new DealPageBusinessLayer(driver);
+	ContactsPageBusinessLayer cp = new ContactsPageBusinessLayer(driver);
+	DealTeamPageBusinessLayer DTP = new DealTeamPageBusinessLayer(driver);
+	lp.CRMLogin(crmUser1EmailID, adminPassword, appName);
+	String dealName = ADEDealTeamName15;
+	String TeamMember = ADEDealTeamMember15;
+	String contactName = ADEDealContact15;
+	String contactname = ADEContact20LName;
+	String[][] data = { { PageLabel.Deal.toString(), dealName }, { PageLabel.Deal_Contact.toString(), contactName },
+			{ PageLabel.Team_Member.toString(), TeamMember } };
+
+	if (lp.clickOnTab(projectName, TabName.Deal_Team)) {
+		log(LogStatus.INFO, "Click on Tab : " + TabName.Deal_Team, YesNo.No);
+
+		if (DTP.createDealTeam(projectName, dealName, data, "Acuity", action.SCROLLANDBOOLEAN, 25)) {
+			log(LogStatus.INFO, "----Successfully Created the Deal Team for Deal: " + dealName + "----", YesNo.No);
+
+			log(LogStatus.INFO,
+					"---------Now Going to Check Deal Team Count should get increase by one for Contact named "
+							+ contactName + " at Firm Tab under Acuity section---------",
+					YesNo.No);
+			String xpath = "//*[text()='Deal Team']/parent::h1//slot/lightning-formatted-text";
+			WebElement ele = FindElement(driver, xpath, "dt id", action.BOOLEAN, 10);
+			if (ele != null) {
+				String id = getText(driver, ele, "deal team id", action.SCROLLANDBOOLEAN);
+				ExcelUtils.writeData(AcuityDataSheetFilePath, id, "Deal Team", excelLabel.Variable_Name, "ADT_15",
+						excelLabel.DealTeamID);
+				log(LogStatus.INFO, "successfully created and noted id of DT" + id + " and deal name " + dealName,
+						YesNo.No);
+			} else {
+				sa.assertTrue(false, "could not create DT" + dealName);
+				log(LogStatus.SKIP, "could not create DT" + dealName, YesNo.Yes);
+			}
+		}
+	}
+	if (lp.clickOnTab(projectName, TabName.Object4Tab)) {
+		if (fp.clickOnAlreadyCreatedItem(projectName,ADEDeal6, 10)) {
+			cp.clickOnShowMoreDropdownOnly(projectName, PageName.Object4Page, "");
+			log(LogStatus.INFO, "Able to Click on Show more Icon : " + TabName.Object4Tab + " For : " + ADEDeal3,
+					YesNo.No);
+			ThreadSleep(500);
+			WebElement ele = cp.actionDropdownElement(projectName, PageName.Object4Page,
+					ShowMoreActionDropDownList.Delete, 15);
+			if (ele == null) {
+				ele = cp.getDeleteButton(projectName, 30);
+			}
+
+			if (click(driver, ele, "Delete More Icon", action.BOOLEAN)) {
+				log(LogStatus.INFO,
+						"Able to Click on Delete more Icon : " + TabName.Object4Tab + " For : " + ADEDeal3,
+						YesNo.No);
+				ThreadSleep(1000);
+				if (click(driver, cp.getDeleteButtonOnDeletePopUp(projectName, 30), "Delete Button",
+						action.BOOLEAN)) {
+					log(LogStatus.INFO, "Able to Click on Delete button on Delete PoPup : " + TabName.Object4Tab
+							+ " For : " + ADEDeal3, YesNo.No);
+					ThreadSleep(10000);
+					if (cp.clickOnTab(projectName, TabName.Object4Tab)) {
+						log(LogStatus.INFO, "Clicked on Tab : " + TabName.Object4Tab + " For : " + ADEDeal3,
+								YesNo.No);
+						ThreadSleep(1000);
+						if (!cp.clickOnAlreadyCreatedItem(projectName, TabName.Object4Tab, ADEDeal3, 10)) {
+							log(LogStatus.INFO, "Item has been Deleted after delete operation  : " + ADEDeal3
+									+ " For : " + TabName.Object4Tab, YesNo.No);
+
+						} else {
+							sa.assertTrue(false, "Item has not been Deleted after delete operation  : " + "Test D"
+									+ " For : " + TabName.Object4Tab);
+							log(LogStatus.SKIP, "Item has not been Deleted after delete operation  : " + "Test D"
+									+ " For : " + TabName.Object4Tab, YesNo.Yes);
+						}
+
+					} else {
+						sa.assertTrue(false, "Not Able to Click on Tab after delete : " + TabName.Object4Tab
+								+ " For : " + "Test D");
+						log(LogStatus.SKIP, "Not Able to Click on Tab after delete : " + TabName.Object4Tab
+								+ " For : " + "Test D", YesNo.Yes);
+					}
+				} else {
+					log(LogStatus.INFO, "not able to click on delete button, so not deleted : " + TabName.Object4Tab
+							+ " For : " + "Test D", YesNo.No);
+					sa.assertTrue(false, "not able to click on delete button, so not deleted : "
+							+ TabName.Object4Tab + " For : " + "Test D");
+				}
+			} else {
+				log(LogStatus.INFO,
+						"not Able to Click on Delete more Icon : " + TabName.Object4Tab + " For : " + "Test D",
+						YesNo.No);
+				sa.assertTrue(false,
+						"not Able to Click on Delete more Icon : " + TabName.Object4Tab + " For : " + "Test D");
+			}
+		} else {
+			log(LogStatus.INFO, "not Able to Click on " + "Test D", YesNo.No);
+			sa.assertTrue(false, "not Able to Click on " + "Test D");
+		}
+	} else {
+		log(LogStatus.INFO, "not Able to Click on " + TabName.Object4Tab, YesNo.No);
+		sa.assertTrue(false, "not Able to Click on " + TabName.Object4Tab);
+	}
+	if (fp.clickOnTab(environment, mode, TabName.Object1Tab)) {
+		log(LogStatus.INFO, "Click on Tab : " + TabName.Object1Tab, YesNo.No);
+
+		if (fp.clickOnAlreadyCreatedItem(projectName, ADEIns15, 30)) {
+		if(BP.apierrormsg(10) != null) {
+			log(LogStatus.PASS, "Error msg : is present", YesNo.No);
+
+		} else {
+			log(LogStatus.FAIL, "Error msg : not present", YesNo.Yes);
+			sa.assertTrue(false, "Error msg : not present: " );
+		}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + ADEIns14 + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + ADEIns14 + " tab");
+		}
+
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj1 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj1 + " tab");
+	}
+	if (fp.clickOnTab(environment, mode, TabName.Object2Tab)) {
+		log(LogStatus.INFO, "Click on Tab : " + TabName.Object2Tab, YesNo.No);
+
+		if (fp.clickOnAlreadyCreatedItem(projectName, contactname, 30)) {
+		if(BP.apierrormsg(10) != null) {
+			log(LogStatus.PASS, "Error msg : is present", YesNo.No);
+
+		} else {
+			log(LogStatus.FAIL, "Error msg : not present", YesNo.Yes);
+			sa.assertTrue(false, "Error msg : not present: " );
+		}
+		} else {
+			log(LogStatus.ERROR, "Not able to click on " + contactname + " tab", YesNo.Yes);
+			sa.assertTrue(false, "Not able to click on " + contactname + " tab");
+		}
+
+	} else {
+		log(LogStatus.ERROR, "Not able to click on " + tabObj2 + " tab", YesNo.Yes);
+		sa.assertTrue(false, "Not able to click on " + tabObj2 + " tab");
 	}
 	ThreadSleep(5000);
 	lp.CRMlogout();
