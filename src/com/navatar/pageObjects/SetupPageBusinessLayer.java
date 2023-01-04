@@ -512,15 +512,13 @@ public class SetupPageBusinessLayer extends SetupPage {
 												"Salesforce CRM Content User check Box", action.SCROLLANDBOOLEAN)) {
 											ThreadSleep(2000);
 
-											if(title!=null && title!="")
-											{
-												if(sendKeys(driver, getUserTitle(20), title, "User title", action.SCROLLANDBOOLEAN))
-												{
-													appLog.info(title+" value has been passed in user title");
+											if (title != null && title != "") {
+												if (sendKeys(driver, getUserTitle(20), title, "User title",
+														action.SCROLLANDBOOLEAN)) {
+													appLog.info(title + " value has been passed in user title");
 
-												}else
-												{
-													appLog.error(title+" value is not passed in user title");
+												} else {
+													appLog.error(title + " value is not passed in user title");
 												}
 											}
 											ThreadSleep(2000);
@@ -6692,7 +6690,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return flag;
 	}
 
-	public boolean editPEUserAndUpdateTheName(String userfirstname, String userlastname, String email) {
+	public boolean editPEUserAndUpdateTheName(String userfirstname, String userlastname, String email, String title) {
 		boolean flag = false;
 		WebElement ele = null;
 		if (click(driver, getExpandUserIcon(30), "expand User Icon", action.SCROLLANDBOOLEAN)) {
@@ -6717,28 +6715,54 @@ public class SetupPageBusinessLayer extends SetupPage {
 					ThreadSleep(3000);
 
 					switchToFrame(driver, 20, getSetUpPageIframe(20));
-					if (sendKeys(driver, getUserFirstName(60), userfirstname, "User First Name",
-							action.SCROLLANDBOOLEAN)) {
+
+					if (userfirstname != null) {
+						if (sendKeys(driver, getUserFirstName(60), userfirstname, "User First Name",
+								action.SCROLLANDBOOLEAN)) {
+							appLog.info("Able to pass user first name in text box: " + userfirstname);
+
+						} else {
+							appLog.error("Not able pass user first name in text box: " + userfirstname
+									+ " so cannot update user: " + userfirstname + " " + userlastname);
+							return false;
+						}
+					}
+
+					if (userlastname != null) {
+
 						if (sendKeys(driver, getUserLastName(60), userlastname, "User Last Name",
 								action.SCROLLANDBOOLEAN)) {
-
-							if (clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
-									action.SCROLLANDBOOLEAN)) {
-								appLog.info("clicked on save button");
-								appLog.info("CRM User is updated successfully: " + userfirstname + " " + userlastname);
-								return true;
-							} else {
-								appLog.error("Not able to click on save buttton so cannot create user: " + userfirstname
-										+ " " + userlastname);
-							}
+							appLog.info("Able to pass user last name in text box: " + userlastname);
 
 						} else {
 							appLog.error("Not able to pass user last name in text box: " + userlastname
-									+ " so cannot create user: " + userfirstname + " " + userlastname);
+									+ " so cannot update user: " + userfirstname + " " + userlastname);
+							return false;
 						}
+
+					}
+
+					if (title != null) {
+
+						if (sendKeys(driver, getUserTitle(20), title, "Title", action.SCROLLANDBOOLEAN)) {
+
+							appLog.info("Able to pass user title  in text box: " + title);
+
+						} else {
+							appLog.error("Not able to pass user Title in text box: " + title);
+							return false;
+						}
+						
+					}
+
+					if (clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(30), "Save Button",
+							action.SCROLLANDBOOLEAN)) {
+						appLog.info("clicked on save button");
+						appLog.info("CRM User is updated successfully: " + userfirstname + " " + userlastname);
+						return true;
 					} else {
-						appLog.error("Not able pass user first name in text box: " + userfirstname
-								+ " so cannot create user: " + userfirstname + " " + userlastname);
+						appLog.error("Not able to click on save buttton so cannot create user: " + userfirstname + " "
+								+ userlastname);
 					}
 
 				} else {
