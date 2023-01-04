@@ -6796,6 +6796,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 				log(LogStatus.INFO, "able to click on Manage Records link", YesNo.No);
 				ThreadSleep(1000);
 				switchToFrame(driver, 60, getSetUpPageIframe(60));
+				if(LabelNameInCustomMetaData(fieldName, 10) != null) {
+					log(LogStatus.INFO, "yes, we can find " + fieldName + "on Custom Meta Data Setup Page", YesNo.No);
 				if (clickUsingJavaScript(driver, EditButtonOfAcuitySettings(Name, 30), "Edit button",
 						action.SCROLLANDBOOLEAN)) {
 
@@ -6827,6 +6829,11 @@ public class SetupPageBusinessLayer extends SetupPage {
 					log(LogStatus.INFO, "not able to click on edit button of " + fieldName, YesNo.No);
 					sa.assertTrue(false, "not able to click on edit button of " + fieldName);
 				}
+			}
+			else {
+				log(LogStatus.INFO, "not able to find " + fieldName, YesNo.No);
+				refresh(driver);
+			}
 			} else {
 				log(LogStatus.INFO, "not able to click on Manage Records link", YesNo.No);
 				sa.assertTrue(false, "not able to click on Manage Records link");
