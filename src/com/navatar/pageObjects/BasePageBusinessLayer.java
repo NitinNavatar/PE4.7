@@ -14241,14 +14241,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		if (!connectionsSectionHeaderName.isEmpty()) {
 			ArrayList<String> actualConnectionsSectionHeaderName = new ArrayList<String>();
-			xPath = "//span[@title='Connections']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//span[@class='slds-truncate' and @title!='']";
+			xPath = "//span[@title='Connections']/ancestor::div[@class='slds-m-bottom_xx-small']//span[@class='slds-truncate' and @title!='']";
 			elements = FindElements(driver, xPath, "Connections section headers");
 			for (WebElement el : elements) {
 				actualConnectionsSectionHeaderName
 						.add(getText(driver, el, "Connections section headers", action.SCROLLANDBOOLEAN));
 			}
 
-			xPath = "//span[@title='Connections']/ancestor::div[@class='slds-grid slds-wrap']/following-sibling::div//lightning-icon";
+			xPath = "//span[@title='Connections']/ancestor::div[@class='slds-m-bottom_xx-small']//lightning-icon";
 			elements = FindElements(driver, xPath, "Connections section headers");
 			for (WebElement el : elements) {
 				actualConnectionsSectionHeaderName
@@ -14423,7 +14423,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	public ArrayList<String> verifyRecordAndReferencedTypeOnTagged(String[] firmsTagName, String[] firmTimesReferenced,
 			String[] peopleTagName, String[] peopleTimesReferenced, String[] dealTagName,
-			String[] dealTimesReferenced) {
+			String[] dealTimesReferenced, boolean isInstitutionRecordType) {
 		ArrayList<String> result = new ArrayList<String>();
 		if (firmsTagName != null && firmTimesReferenced != null) {
 			if (firmsTagName.length == firmTimesReferenced.length) {
@@ -14509,42 +14509,44 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 		}
 		
+		if(isInstitutionRecordType==false)
+		{
+			if (dealTagName != null && dealTimesReferenced != null) {
+				if (dealTagName.length == dealTimesReferenced.length) {
+					if (click(driver, getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 
-		if (dealTagName != null && dealTimesReferenced != null) {
-			if (dealTagName.length == dealTimesReferenced.length) {
-				if (click(driver, getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
-
-					for (int i = 0; i < dealTagName.length; i++) {
-						if (getTaggedRecordName("Deals", dealTagName[i], 6) != null) {
-							log(LogStatus.INFO, dealTagName[i] + " record is available on deal tab of tagged",
-									YesNo.No);
-
-							if (getTaggedRecordTimeReference("Deals", dealTagName[i], dealTimesReferenced[i],
-									6) != null) {
-								log(LogStatus.INFO, "Time Reference : " + dealTimesReferenced[i]
-										+ " is verified against " + dealTagName[i] + " record on deals tab of Tagged",
+						for (int i = 0; i < dealTagName.length; i++) {
+							if (getTaggedRecordName("Deals", dealTagName[i], 6) != null) {
+								log(LogStatus.INFO, dealTagName[i] + " record is available on deal tab of tagged",
 										YesNo.No);
+
+								if (getTaggedRecordTimeReference("Deals", dealTagName[i], dealTimesReferenced[i],
+										6) != null) {
+									log(LogStatus.INFO, "Time Reference : " + dealTimesReferenced[i]
+											+ " is verified against " + dealTagName[i] + " record on deals tab of Tagged",
+											YesNo.No);
+								} else {
+									log(LogStatus.ERROR,
+											"Time Reference : " + dealTimesReferenced[i] + " is not verified against "
+													+ dealTagName[i] + " record on deals tab of Tagged",
+													YesNo.No);
+									result.add("Time Reference : " + dealTimesReferenced[i] + " is not verified against "
+											+ dealTagName[i] + " record on deals tab of Tagged");
+								}
+
 							} else {
-								log(LogStatus.ERROR,
-										"Time Reference : " + dealTimesReferenced[i] + " is not verified against "
-												+ dealTagName[i] + " record on deals tab of Tagged",
+								log(LogStatus.ERROR, dealTagName[i] + " record is not available on deal tab of tagged",
 										YesNo.No);
-								result.add("Time Reference : " + dealTimesReferenced[i] + " is not verified against "
-										+ dealTagName[i] + " record on deals tab of Tagged");
+								result.add(dealTagName[i] + " record is not available on deal tab of tagged");
 							}
 
-						} else {
-							log(LogStatus.ERROR, dealTagName[i] + " record is not available on deal tab of tagged",
-									YesNo.No);
-							result.add(dealTagName[i] + " record is not available on deal tab of tagged");
 						}
 
+					} else {
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						result.add("Not able to click on Deals tab name");
 					}
-
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
-					result.add("Not able to click on Deals tab name");
 				}
 			}
 		}
@@ -15987,7 +15989,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	public ArrayList<String> verifyRedirectionOnClickRecordAndReferencedTypeOnTagged(String[] firmTagName,
 			String[] firmTimesReferenced, String[] peopleTagName, String[] peopleTimesReferenced, String[] dealTagName,
-			String[] dealTimesReferenced) {
+			String[] dealTimesReferenced, boolean isInstitutionRecordType) {
 		String xPath;
 		WebElement ele;
 		ArrayList<String> result = new ArrayList<String>();
@@ -16125,65 +16127,67 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				result.add("The size of tagged people name and size of tagged time reference is not equal");
 			}
 		}
+		if(isInstitutionRecordType==false)
+		{
+			if (dealTagName != null && dealTimesReferenced != null) {
+				if (dealTagName.length == dealTimesReferenced.length) {
+					if (click(driver, getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 
-		if (dealTagName != null && dealTimesReferenced != null) {
-			if (dealTagName.length == dealTimesReferenced.length) {
-				if (click(driver, getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+						for (int i = 0; i < dealTagName.length; i++) {
+							ThreadSleep(5000);
+							if (clickUsingJavaScript(driver, getTaggedRecordName("Deals", dealTagName[i], 30),
+									dealTagName[i] + " on Deals Tagged", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on " + dealTagName[i] + " record on Deals tab", YesNo.No);
 
-					for (int i = 0; i < dealTagName.length; i++) {
-						ThreadSleep(5000);
-						if (clickUsingJavaScript(driver, getTaggedRecordName("Deals", dealTagName[i], 30),
-								dealTagName[i] + " on Deals Tagged", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on " + dealTagName[i] + " record on Deals tab", YesNo.No);
+								String id = switchOnWindow(driver);
+								xPath = "//lightning-formatted-text[text()='" + dealTagName[i] + "']";
+								ele = FindElement(driver, xPath, dealTagName[i] + " record", action.SCROLLANDBOOLEAN, 40);
+								if (ele != null) {
+									log(LogStatus.INFO, dealTagName[i] + " record is redirecting to new tab", YesNo.No);
+								} else {
+									log(LogStatus.ERROR, dealTagName[i] + " is not redirecting to new tab", YesNo.No);
+									result.add(dealTagName[i] + " is not redirecting to new tab");
+								}
+								driver.close();
+								driver.switchTo().window(id);
 
-							String id = switchOnWindow(driver);
-							xPath = "//lightning-formatted-text[text()='" + dealTagName[i] + "']";
-							ele = FindElement(driver, xPath, dealTagName[i] + " record", action.SCROLLANDBOOLEAN, 40);
-							if (ele != null) {
-								log(LogStatus.INFO, dealTagName[i] + " record is redirecting to new tab", YesNo.No);
 							} else {
-								log(LogStatus.ERROR, dealTagName[i] + " is not redirecting to new tab", YesNo.No);
-								result.add(dealTagName[i] + " is not redirecting to new tab");
-							}
-							driver.close();
-							driver.switchTo().window(id);
-
-						} else {
-							log(LogStatus.ERROR, "Not able to click on " + dealTagName[i] + " record on Deals tab",
-									YesNo.No);
-							result.add("Not able to click on " + dealTagName[i] + " record on Deals tab");
-						}
-
-						if (click(driver,
-								getTaggedRecordTimeReference("Deals", dealTagName[i], dealTimesReferenced[i], 30),
-								dealTagName[i] + " on Deals Tagged", action.SCROLLANDBOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on Time reference count of " + dealTagName[i], YesNo.No);
-
-							String id = switchOnWindow(driver);
-							xPath = "//span[@class='slds-page-header__title slds-truncate']";
-							ele = FindElement(driver, xPath, firmTagName[i] + " record's count",
-									action.SCROLLANDBOOLEAN, 40);
-							if (ele != null) {
-								log(LogStatus.INFO, firmTagName[i] + " time reference count is redirecting to new tab",
+								log(LogStatus.ERROR, "Not able to click on " + dealTagName[i] + " record on Deals tab",
 										YesNo.No);
+								result.add("Not able to click on " + dealTagName[i] + " record on Deals tab");
+							}
+
+							if (click(driver,
+									getTaggedRecordTimeReference("Deals", dealTagName[i], dealTimesReferenced[i], 30),
+									dealTagName[i] + " on Deals Tagged", action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Clicked on Time reference count of " + dealTagName[i], YesNo.No);
+
+								String id = switchOnWindow(driver);
+								xPath = "//span[@class='slds-page-header__title slds-truncate']";
+								ele = FindElement(driver, xPath, firmTagName[i] + " record's count",
+										action.SCROLLANDBOOLEAN, 40);
+								if (ele != null) {
+									log(LogStatus.INFO, firmTagName[i] + " time reference count is redirecting to new tab",
+											YesNo.No);
+								} else {
+									log(LogStatus.ERROR,
+											firmTagName[i] + " time reference count is not redirecting to new tab",
+											YesNo.No);
+									result.add(firmTagName[i] + " time reference count is not redirecting to new tab");
+								}
+								driver.close();
+								driver.switchTo().window(id);
 							} else {
-								log(LogStatus.ERROR,
-										firmTagName[i] + " time reference count is not redirecting to new tab",
+								log(LogStatus.ERROR, "Not able to click on Time reference count of " + dealTagName[i],
 										YesNo.No);
-								result.add(firmTagName[i] + " time reference count is not redirecting to new tab");
+								result.add("Not able to click on Time reference count of " + dealTagName[i]);
 							}
-							driver.close();
-							driver.switchTo().window(id);
-						} else {
-							log(LogStatus.ERROR, "Not able to click on Time reference count of " + dealTagName[i],
-									YesNo.No);
-							result.add("Not able to click on Time reference count of " + dealTagName[i]);
 						}
+					} else {
+						log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+						result.add("Not able to click on Deals tab name");
 					}
-				} else {
-					log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
-					result.add("Not able to click on Deals tab name");
 				}
 			}
 		}
@@ -19173,7 +19177,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		return result;
 	}
 
-	public ArrayList<String> verifyDefaultSortingOfReferencedTypeOnTaggedSection() {
+	public ArrayList<String> verifyDefaultSortingOfReferencedTypeOnTaggedSection(boolean isInstitutionRecord) {
 		String xPath;
 		List<WebElement> elements;
 		ArrayList<String> result = new ArrayList<String>();
@@ -19211,7 +19215,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			log(LogStatus.ERROR, "Not able to click on People tab name", YesNo.No);
 			result.add("Not able to click on People tab name");
 		}
-
+		if(isInstitutionRecord==false)
+		{
 		if (click(driver, getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 			xPath = "//span[text()='Deals']/ancestor::table//button[@name='timesRef']";
@@ -19229,7 +19234,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
 			result.add("Not able to click on Deals tab name");
 		}
-
+		}
 		return result;
 	}
 
@@ -19951,7 +19956,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	}
 
 	public ArrayList<String> verifyRecordShouldNotVisibleOnTagged(String[] companyTag, String peopleTag[],
-			String dealTag[]) {
+			String dealTag[], boolean isInstitutionRecord) {
 		ArrayList<String> result = new ArrayList<String>();
 		if (companyTag != null) {
 
@@ -19988,22 +19993,25 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				result.add("Not able to click on People tab name");
 			}
 		}
-		if (dealTag != null) {
+		if(isInstitutionRecord==false)
+		{
+			if (dealTag != null) {
 
-			if (click(driver, getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
+				if (click(driver, getTaggedRecordName("Deals", 30), "Deals tab", action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Deals tab name", YesNo.No);
 
-				for (int i = 0; i < dealTag.length; i++) {
-					if (getTaggedRecordName("Deals", dealTag[i], 10) == null) {
-						log(LogStatus.INFO, dealTag[i] + " record is not available on deal tab", YesNo.No);
-					} else {
-						log(LogStatus.ERROR, dealTag[i] + " record is available on deal tab", YesNo.No);
-						result.add(dealTag[i] + " record is available on deal tab");
+					for (int i = 0; i < dealTag.length; i++) {
+						if (getTaggedRecordName("Deals", dealTag[i], 10) == null) {
+							log(LogStatus.INFO, dealTag[i] + " record is not available on deal tab", YesNo.No);
+						} else {
+							log(LogStatus.ERROR, dealTag[i] + " record is available on deal tab", YesNo.No);
+							result.add(dealTag[i] + " record is available on deal tab");
+						}
 					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
+					result.add("Not able to click on Deals tab name");
 				}
-			} else {
-				log(LogStatus.ERROR, "Not able to click on Deals tab name", YesNo.No);
-				result.add("Not able to click on Deals tab name");
 			}
 		}
 		return result;
@@ -20150,7 +20158,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	}
 
-	public ArrayList<String> verifyRedirectionOnClickEntityTypeOnTaggedSection() {
+	public ArrayList<String> verifyRedirectionOnClickEntityTypeOnTaggedSection(boolean isInstitutionRecord) {
 
 		ArrayList<String> result = new ArrayList<String>();
 
@@ -20226,6 +20234,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			result.add("Not able to click on Companies tab name");
 		}
 
+		if(isInstitutionRecord==false)
+		{
 		if (click(driver, getTaggedRecordName(TaggedName.Deals.toString(), 30), TaggedName.Deals.toString() + " tab",
 				action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Deal tab name", YesNo.No);
@@ -20259,11 +20269,14 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			log(LogStatus.ERROR, "Not able to click on Deal tab name", YesNo.No);
 			result.add("Not able to click on Deal tab name");
 		}
+		}
 		return result;
 	}
 
 	public ArrayList<String> verifyDescriptionShouldNotVisibleUnderDetailsOnInteractionSection(String[] subjectName,
 			String[] detailsMessage) {
+		
+		String id=switchOnWindow(driver);
 		ArrayList<String> result = new ArrayList<String>();
 		if (subjectName.length == detailsMessage.length) {
 			for (int i = 0; i < subjectName.length; i++) {
@@ -20282,6 +20295,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			}
 
 		}
+		driver.close();
+		driver.switchTo().window(id);
 		return result;
 
 	}
@@ -20309,7 +20324,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		{
 			log(LogStatus.ERROR, "Not able to click on "+tabName.toString()+" tab name", YesNo.No);
 			result.add("Not able to click on "+tabName.toString()+" tab name");
-
 		}
 		return result;
 	}

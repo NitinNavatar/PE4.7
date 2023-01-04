@@ -32,6 +32,8 @@ import com.relevantcodes.extentreports.LogStatus;
 
 public class RGAcuityTaskAndEvent extends BaseLib {
 	
+	public boolean isInstitutionRecord=false;
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void RGATETc001_CreateCRMUser(String projectName) {
@@ -141,7 +143,6 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 			}
 			lp.CRMlogout();
 			ThreadSleep(8000);
-
 		}
 		sa.assertAll();
 	}
@@ -855,7 +856,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
 
-					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagedName, peopleTaggedTimeReference, null, null);
+					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagedName, peopleTaggedTimeReference, null, null,isInstitutionRecord);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -877,9 +878,9 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					}
 					
 					
-					if (click(driver, bp.getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
-						if (click(driver, bp.getTaggedRecordTimeReference("Companies", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
 
 							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType, date, subjectName, details, userData, subjectName);
@@ -893,17 +894,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+companyTagName+" record "+result2);
 							}
 							
-							ArrayList<String> result5=bp.verifyDescriptionShouldNotVisibleUnderDetailsOnInteractionSection(subjectName, details1);
-							if(result5.isEmpty())
-							{
-								log(LogStatus.INFO, "Description message is not showing under details on view all interaction popup", YesNo.No);
-							}
-							else
-							{
-								log(LogStatus.ERROR, "Description message is showing under details on view all interaction popup. "+result5, YesNo.No);
-								sa.assertTrue(false,  "Description message is showing under details on view all interaction popup. "+result5);
-							}
-										
+				/*						
 							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
@@ -915,18 +906,41 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+*/
 						}
 						else
 						{
 							log(LogStatus.ERROR, "Not able to click on Time reference count of "+companyTagName,YesNo.No);
 							sa.assertTrue(false,  "Not able to click on Time reference count of "+companyTagName);
 						}
+						
+								
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
+
+						
+						ArrayList<String> result5=bp.verifyDescriptionShouldNotVisibleUnderDetailsOnInteractionSection(subjectName, details1);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "Description message is not showing under details on view all interaction popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Description message is showing under details on view all interaction popup. "+result5, YesNo.No);
+							sa.assertTrue(false,  "Description message is showing under details on view all interaction popup. "+result5);
+						}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+companyTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+companyTagName);
+						}
+						
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on Companies tab name");
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
 					}
 					
 					
@@ -946,17 +960,8 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result3);
 							}
 							
-							ArrayList<String> result6=bp.verifyDescriptionShouldNotVisibleUnderDetailsOnInteractionSection(subjectName, details1);
-							if(result6.isEmpty())
-							{
-								log(LogStatus.INFO, "Description message is not showing under details on view all interaction popup", YesNo.No);
-							}
-							else
-							{
-								log(LogStatus.ERROR, "Description message is showing under details on view all interaction popup. "+result6, YesNo.No);
-								sa.assertTrue(false,  "Description message is showing under details on view all interaction popup. "+result6);
-							}
-							
+						
+			/*				
 							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
@@ -968,13 +973,35 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+*/
 						}
 						else
 						{
 							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
 							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
 						}
+						
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+						
+						ArrayList<String> result6=bp.verifyDescriptionShouldNotVisibleUnderDetailsOnInteractionSection(subjectName, details1);
+						if(result6.isEmpty())
+						{
+							log(LogStatus.INFO, "Description message is not showing under details on view all interaction popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Description message is showing under details on view all interaction popup. "+result6, YesNo.No);
+							sa.assertTrue(false,  "Description message is showing under details on view all interaction popup. "+result6);
+						}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+						
 					}
 					else
 					{
@@ -997,17 +1024,8 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 						}
-						ArrayList<String> result7=bp.verifyDescriptionShouldNotVisibleUnderDetailsOnInteractionSection(subjectName, details1);
-						if(result7.isEmpty())
-						{
-							log(LogStatus.INFO, "Description message is not showing under details on view all interaction popup", YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Description message is showing under details on view all interaction popup. "+result7, YesNo.No);
-							sa.assertTrue(false,  "Description message is showing under details on view all interaction popup. "+result7);
-						}
-
+						
+/*
 						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 						if(clickUsingJavaScript(driver, ele, "close button"))
@@ -1019,7 +1037,29 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 						}
-
+*/
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+					
+					
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+					ArrayList<String> result7=bp.verifyDescriptionShouldNotVisibleUnderDetailsOnInteractionSection(subjectName, details1);
+					if(result7.isEmpty())
+					{
+						log(LogStatus.INFO, "Description message is not showing under details on view all interaction popup", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Description message is showing under details on view all interaction popup. "+result7, YesNo.No);
+						sa.assertTrue(false,  "Description message is showing under details on view all interaction popup. "+result7);
+					}
+					
 					}
 					else
 					{
@@ -1358,9 +1398,8 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 
 					ThreadSleep(5000);					
 					
-					xPath="//a[text()='"+RGATE_ContactSectionName1+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-					ele=FindElement(driver, xPath, "Count of "+RGATE_ContactSectionName1+" on contact section", action.SCROLLANDBOOLEAN, 20);
-					if(CommonLib.clickUsingJavaScript(driver, ele,"Count of "+RGATE_ContactSectionName1+" on contact section" , action.SCROLLANDBOOLEAN))
+				
+					if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(RGATE_ContactSectionName1, 20),"Count of "+RGATE_ContactSectionName1+" on contact section" , action.SCROLLANDBOOLEAN))
 					{
 						log(LogStatus.INFO, "clicked on count of "+RGATE_ContactSectionName1,YesNo.No);
 						ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(icon, date, subjectName, details, users);
@@ -1383,11 +1422,10 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					
 					if (CommonLib.clickUsingJavaScript(driver, bp.contactNameUserIconButton(contactName, 30), "Contact Name: " + contactName,
 							action.SCROLLANDBOOLEAN)) {
-						
+						String parentId=switchOnWindow(driver);
 						log(LogStatus.INFO, "Clicked on connection icon of contact : " + contactName, YesNo.No);
-						xPath="//a[text()='"+userName1+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-						ele=FindElement(driver, xPath, "Count of "+userName1+" on contact section", action.SCROLLANDBOOLEAN, 20);
-						if(CommonLib.clickUsingJavaScript(driver, ele,"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
+					
+						if(CommonLib.clickUsingJavaScript(driver, bp.getMeetingAndCallCount(userName1, 20),"Count of "+userName1+" on contact section" , action.SCROLLANDBOOLEAN))
 						{
 							log(LogStatus.INFO, "clicked on count of "+userName1,YesNo.No);
 							ArrayList<String> result4=bp.verifyRecordOnMeetingsAndCallPopUpSectionInAcuity(icon1, date1, subjectName1, details1, users1);
@@ -1408,9 +1446,8 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 							sa.assertTrue(false,  "Not able to click on count of "+userName1);
 						}		
 						ThreadSleep(3000);
-						xPath="//a[text()='"+userName2+"']/ancestor::tr//td[@data-label='Meetings and Calls']//button";
-						ele=FindElement(driver, xPath, "Count of "+userName2+" on contact section", action.SCROLLANDBOOLEAN, 20);
-						if(CommonLib.clickUsingJavaScript(driver, ele,"Count of "+userName2+" on contact section" , action.SCROLLANDBOOLEAN))
+					
+						if(CommonLib.clickUsingJavaScript(driver,  bp.getMeetingAndCallCount(userName2, 20),"Count of "+userName2+" on contact section" , action.SCROLLANDBOOLEAN))
 						{
 							ThreadSleep(2000);
 							log(LogStatus.INFO, "clicked on count of "+userName2,YesNo.No);
@@ -1430,7 +1467,10 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 						{
 							log(LogStatus.ERROR, "Not able to click on count of "+userName2,YesNo.No);
 							sa.assertTrue(false,  "Not able to click on count of "+userName2);
-						}		
+						}
+						
+						driver.close();
+						driver.switchTo().window(parentId);
 
 					}
 					else
@@ -1519,7 +1559,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
 
-					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagedName, peopleTaggedTimeReference, null, null);
+					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagedName, peopleTaggedTimeReference, null, null, false);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -1531,9 +1571,9 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					}
 					
 					
-					if (click(driver, bp.getTaggedRecordName("Companies", 30), "Companies tab", action.SCROLLANDBOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Companies tab name", YesNo.No);
-						if (click(driver, bp.getTaggedRecordTimeReference("Companies", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+					if (click(driver, bp.getTaggedRecordName("Firms", 30), "Firms tab", action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on firm Tagged",action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
 
 							ArrayList<String> result2=bp.verifyRecordsonInteractionsViewAllPopup(iconType, date, subjectName, details, userData, subjectName);
@@ -1546,18 +1586,8 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "All records on Interaction card are not verified for "+companyTagName+" record " +result2, YesNo.No);
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+companyTagName+" record "+result2);
 							}
-							
-							ArrayList<String> result5=bp.verifyDescriptionShouldNotVisibleUnderDetailsOnInteractionSection(subjectName, notes1);
-							if(result5.isEmpty())
-							{
-								log(LogStatus.INFO, "Description message is not showing under details on view all interaction popup", YesNo.No);
-							}
-							else
-							{
-								log(LogStatus.ERROR, "Description message is showing under details on view all interaction popup. "+result5, YesNo.No);
-								sa.assertTrue(false,  "Description message is showing under details on view all interaction popup. "+result5);
-							}
-										
+					
+					/*					
 							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
@@ -1569,18 +1599,42 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+*/
 						}
 						else
 						{
 							log(LogStatus.ERROR, "Not able to click on Time reference count of "+companyTagName,YesNo.No);
 							sa.assertTrue(false,  "Not able to click on Time reference count of "+companyTagName);
 						}
+						
+						
+						if (click(driver, bp.getTaggedRecordTimeReference("Firms", companyTagName, companyTagTimeReferenceCount,30), companyTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+companyTagName,YesNo.No);
+
+						
+						ArrayList<String> result5=bp.verifyDescriptionShouldNotVisibleUnderDetailsOnInteractionSection(subjectName, notes1);
+						if(result5.isEmpty())
+						{
+							log(LogStatus.INFO, "Description message is not showing under details on view all interaction popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Description message is showing under details on view all interaction popup. "+result5, YesNo.No);
+							sa.assertTrue(false,  "Description message is showing under details on view all interaction popup. "+result5);
+						}
+						
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+companyTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+companyTagName);
+						}
+						
 					}
 					else
 					{
-						log(LogStatus.ERROR, "Not able to click on Companies tab name", YesNo.No);
-						sa.assertTrue(false,  "Not able to click on Companies tab name");
+						log(LogStatus.ERROR, "Not able to click on Firms tab name", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on Firms tab name");
 					}
 					
 					
@@ -1600,17 +1654,8 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 								sa.assertTrue(false,  "All records on Interaction card are not verified for "+peopleTagName+" record "+result3);
 							}
 							
-							ArrayList<String> result6=bp.verifyDescriptionShouldNotVisibleUnderDetailsOnInteractionSection(subjectName, notes1);
-							if(result6.isEmpty())
-							{
-								log(LogStatus.INFO, "Description message is not showing under details on view all interaction popup", YesNo.No);
-							}
-							else
-							{
-								log(LogStatus.ERROR, "Description message is showing under details on view all interaction popup. "+result6, YesNo.No);
-								sa.assertTrue(false,  "Description message is showing under details on view all interaction popup. "+result6);
-							}
-							
+						
+				/*			
 							xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 							ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 							if(clickUsingJavaScript(driver, ele, "close button"))
@@ -1622,13 +1667,34 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 								log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 								sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 							}
-
+*/
 						}
 						else
 						{
 							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
 							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
 						}
+						
+						if (click(driver, bp.getTaggedRecordTimeReference("People", peopleTagName, peopleTagTimeReferenceCount,30), peopleTagName+" on Company Tagged",action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Time reference count of "+peopleTagName,YesNo.No);
+
+						ArrayList<String> result6=bp.verifyDescriptionShouldNotVisibleUnderDetailsOnInteractionSection(subjectName, notes1);
+						if(result6.isEmpty())
+						{
+							log(LogStatus.INFO, "Description message is not showing under details on view all interaction popup", YesNo.No);
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Description message is showing under details on view all interaction popup. "+result6, YesNo.No);
+							sa.assertTrue(false,  "Description message is showing under details on view all interaction popup. "+result6);
+						}
+						}
+						else
+						{
+							log(LogStatus.ERROR, "Not able to click on Time reference count of "+peopleTagName,YesNo.No);
+							sa.assertTrue(false,  "Not able to click on Time reference count of "+peopleTagName);
+						}
+						
 					}
 					else
 					{
@@ -1651,17 +1717,8 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 						}
-						ArrayList<String> result7=bp.verifyDescriptionShouldNotVisibleUnderDetailsOnInteractionSection(subjectName, notes1);
-						if(result7.isEmpty())
-						{
-							log(LogStatus.INFO, "Description message is not showing under details on view all interaction popup", YesNo.No);
-						}
-						else
-						{
-							log(LogStatus.ERROR, "Description message is showing under details on view all interaction popup. "+result7, YesNo.No);
-							sa.assertTrue(false,  "Description message is showing under details on view all interaction popup. "+result7);
-						}
-
+					
+/*
 						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 						if(clickUsingJavaScript(driver, ele, "close button"))
@@ -1673,7 +1730,28 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 						}
-
+*/
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Not able to click on View All button of Interaction section", YesNo.No);
+						sa.assertTrue(false,  "Not able to click on View All button of Interaction section" );
+					}	
+					
+					
+					if(CommonLib.clickUsingJavaScript(driver, bp.getViewAllBtnOnIntration(20), "View All button"))
+					{
+						log(LogStatus.INFO, "Clicked on View All button of Interaction section", YesNo.No);
+					ArrayList<String> result7=bp.verifyDescriptionShouldNotVisibleUnderDetailsOnInteractionSection(subjectName, notes1);
+					if(result7.isEmpty())
+					{
+						log(LogStatus.INFO, "Description message is not showing under details on view all interaction popup", YesNo.No);
+					}
+					else
+					{
+						log(LogStatus.ERROR, "Description message is showing under details on view all interaction popup. "+result7, YesNo.No);
+						sa.assertTrue(false,  "Description message is showing under details on view all interaction popup. "+result7);
+					}
 					}
 					else
 					{
@@ -2316,7 +2394,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 						}
-
+/*
 						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 						if(clickUsingJavaScript(driver, ele, "close button"))
@@ -2328,7 +2406,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 						}
-
+*/
 					}
 					else
 					{
@@ -2415,7 +2493,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 						}
-
+/*
 						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 						if(clickUsingJavaScript(driver, ele, "close button"))
@@ -2427,7 +2505,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 						}
-
+*/
 					}
 					else
 					{
@@ -2730,7 +2808,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
 
-					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagedName, peopleTaggedTimeReference, null, null);
+					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagedName, peopleTaggedTimeReference, null, null,isInstitutionRecord);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -2755,7 +2833,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 						}
-						
+				/*		
 						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 						if(clickUsingJavaScript(driver, ele, "close button"))
@@ -2767,6 +2845,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 						}
+						*/
 					}
 					else
 					{
@@ -2839,7 +2918,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 					log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);	
 
 
-					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagedName, peopleTaggedTimeReference, null, null);
+					ArrayList<String> result=bp.verifyRecordAndReferencedTypeOnTagged(companiesTaggedName, companiesTaggedTimeReference, peopleTagedName, peopleTaggedTimeReference, null, null, false);
 					if(result.isEmpty())
 					{
 						log(LogStatus.INFO, "The record name and Time reference have been verifed", YesNo.No);
@@ -2864,7 +2943,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "The records are not verified on interaction popup in Acuity : "+result2, YesNo.No);
 							sa.assertTrue(false,  "The records are not verified on interaction popup in Acuity :  "+result2);
 						}
-						
+					/*	
 						xPath="//h2[contains(text(),'All Interactions with')]/../button//lightning-icon";
 						ele=FindElement(driver, xPath, "All Interaction popup close", action.SCROLLANDBOOLEAN, 20);
 						if(clickUsingJavaScript(driver, ele, "close button"))
@@ -2876,7 +2955,7 @@ public class RGAcuityTaskAndEvent extends BaseLib {
 							log(LogStatus.ERROR, "Not able to click on close button of all Interaction popup", YesNo.No);
 							sa.assertTrue(false,  "Not able to click on close button of all Interaction popup");
 						}
-
+*/
 					}
 					else
 					{
