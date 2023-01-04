@@ -33,6 +33,7 @@ import com.navatar.generic.EnumConstants.MetaDataSetting;
 import com.navatar.generic.EnumConstants.PageName;
 import com.navatar.generic.EnumConstants.ShowMoreActionDropDownList;
 import com.navatar.generic.EnumConstants.TabName;
+import com.navatar.generic.EnumConstants.TaggedName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.excelLabel;
@@ -49,6 +50,9 @@ import com.navatar.pageObjects.TaskPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class AcuityTaskAndEvent extends BaseLib {
+	
+	public boolean isInstitutionRecord=true;
+	
 	@Parameters({ "projectName" })
 	@Test
 	public void ATETc001_CreateCRMUser(String projectName) {
@@ -288,7 +292,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		lp.CRMlogout();	
 		sa.assertAll();	
 	}
-
 
 	@Parameters({ "projectName" })
 	@Test
@@ -1999,7 +2002,6 @@ public class AcuityTaskAndEvent extends BaseLib {
 		if (bp.createActivityTimeline(projectName, true, activityType, basicsection, advanceSection, null, null)) {
 			log(LogStatus.PASS, "Activity timeline record has been created, Subject name : "+taskSubject, YesNo.No);
 			sa.assertTrue(true, "Activity timeline record has been created,  Subject name : "+taskSubject);
-
 
 			if (lp.clickOnTab(projectName, tabObj1)) {
 
@@ -4633,7 +4635,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The record name and Time reference are not verifed "+result);
 					}
 
-					ArrayList<String> result5=bp.verifyHighlightedCompanyNameOnCompanyTaggedSection(highlightedCompany);
+					ArrayList<String> result5=bp.verifyHighlightedCompanyNameOnCompanyTaggedSection(TaggedName.Firms,highlightedCompany);
 					if(result5.isEmpty())
 					{
 						log(LogStatus.INFO, "The highlighted firm record have been verifid on Tagged section", YesNo.No);
@@ -5345,7 +5347,7 @@ public class AcuityTaskAndEvent extends BaseLib {
 						sa.assertTrue(false,  "The record name and Time reference are not verifed "+result);
 					}
 
-					ArrayList<String> result7=bp.verifyHighlightedCompanyNameOnCompanyTaggedSection(highlightedCompany);
+					ArrayList<String> result7=bp.verifyHighlightedCompanyNameOnCompanyTaggedSection(TaggedName.Firms ,highlightedCompany);
 					if(result7.isEmpty())
 					{
 						log(LogStatus.INFO, "The highlighted firm record have been verifid on Tagged section", YesNo.No);

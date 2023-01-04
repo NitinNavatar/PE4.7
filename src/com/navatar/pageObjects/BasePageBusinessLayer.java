@@ -14504,6 +14504,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				result.add("The size of tagged people name and size of tagged time reference is not equal");
 			}
 		}
+		
 
 		if (dealTagName != null && dealTimesReferenced != null) {
 			if (dealTagName.length == dealTimesReferenced.length) {
@@ -20281,29 +20282,29 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 	}
 	
-	public ArrayList<String> verifyHighlightedCompanyNameOnCompanyTaggedSection(String[] firmName)
+	public ArrayList<String> verifyHighlightedCompanyNameOnCompanyTaggedSection(TaggedName tabName, String[] highlightedRecord)
 	{
 		ArrayList<String> result=new ArrayList<String>();
-		if (click(driver, getTaggedRecordName("Firms", 30), "Firm tab", action.SCROLLANDBOOLEAN)) {
-			log(LogStatus.INFO, "Clicked on Firsm tab name", YesNo.No);
+		if (click(driver, getTaggedRecordName(tabName.toString(), 30), tabName.toString()+" tab", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, "Clicked on "+tabName.toString()+" tab name", YesNo.No);
 			
-			for(int i=0; i<firmName.length; i++)
+			for(int i=0; i<highlightedRecord.length; i++)
 			{
-				if(getHighlightedCompanyName(firmName[i],15)!=null)
+				if(getHighlightedCompanyName(highlightedRecord[i],15)!=null)
 				{
-					log(LogStatus.INFO, firmName[i]+" is highlighted in firm list", YesNo.No);
+					log(LogStatus.INFO, highlightedRecord[i]+" is highlighted in "+tabName.toString()+" list", YesNo.No);
 				}
 				else
 				{
-					log(LogStatus.ERROR, firmName[i]+" is not highlighted in firm list", YesNo.No);
-					result.add(firmName[i]+" is not highlighted in firm list");
+					log(LogStatus.ERROR, highlightedRecord[i]+" is not highlighted in "+tabName.toString()+" list", YesNo.No);
+					result.add(highlightedRecord[i]+" is not highlighted in "+tabName.toString()+" list");
 				}
 			}			
 		}
 		else
 		{
-			log(LogStatus.ERROR, "Not able to click on firm tab name", YesNo.No);
-			result.add("Not able to click on firm tab name");
+			log(LogStatus.ERROR, "Not able to click on "+tabName.toString()+" tab name", YesNo.No);
+			result.add("Not able to click on "+tabName.toString()+" tab name");
 
 		}
 		return result;
