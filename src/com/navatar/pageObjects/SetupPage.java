@@ -122,7 +122,7 @@ public class SetupPage extends BasePageBusinessLayer {
 	 * @return the userIframe
 	 */
 	public WebElement getSetUpPageIframe(int timeOut) {
-		ThreadSleep(20000);
+		ThreadSleep(5000);
 		return isDisplayed(driver, setupPageIframe, "Visibility", timeOut, "active users iframe");
 	}
 
@@ -1232,6 +1232,13 @@ public class SetupPage extends BasePageBusinessLayer {
 
 	public WebElement viewUsers(int timeOut) {
 		return isDisplayed(driver, viewUsers, "Visibility", timeOut, "viewUsers");
+	}
+	
+	public WebElement LabelNameInCustomMetaData(String labelName, int timeOut) {
+		String xpath = "//a[text()='"+ labelName +"']";
+
+			return isDisplayed(driver, FindElement(driver, xpath, "Label Name In Custom Meta Data", action.SCROLLANDBOOLEAN, timeOut), "label Name", 10, "Label Name In Custom Meta Data");
+
 	}
 
 }

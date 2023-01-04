@@ -195,7 +195,13 @@ public class TaskPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, tableViewDropDownButton, "Visibility", timeOut, "tableViewDropDownButton");
 	}
 	
-	
+	@FindBy(xpath = "//li//a//div[@title='Edit']")
+	private WebElement editButton;
+
+	public WebElement getEditButton(int timeOut) {
+
+		return isDisplayed(driver, editButton, "Visibility", timeOut, "Edit Button");
+	}
 	
 
 }
