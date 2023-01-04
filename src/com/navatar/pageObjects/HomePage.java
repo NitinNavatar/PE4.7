@@ -2499,14 +2499,14 @@ public class HomePage extends BasePageBusinessLayer {
 			return notificationFooterButtonsText;
 	}
 
-	@FindBy(xpath = "//div[@class=\"forceSearchAssistantDialog\"]//lightning-input//input")
+	@FindBy(xpath = "//div/button[@aria-label=\"Search\"]")
 	private WebElement globalSearchButton;
 
 	public WebElement globalSearchButton(int timeOut) {
 		return isDisplayed(driver, globalSearchButton, "Visibility", timeOut, "globalSearchButton");
 	}
 
-	@FindBy(xpath = "//lightning-input//input[@placeholder=\"Search...\"]")
+	@FindBy(xpath = "//div[@class=\"forceSearchAssistantDialog\"]//lightning-input//input")
 	private WebElement globalSearchInput;
 
 	public WebElement globalSearchInput(int timeOut) {
@@ -2514,8 +2514,8 @@ public class HomePage extends BasePageBusinessLayer {
 	}
 
 	public WebElement globalSearchRecord(String recordName, int timeOut) {
-
-		String xpath = "//*/span/a[text()=\"" + recordName + "\"]";
+		
+		String xpath = "//*/span/a[text()=\"" + recordName + "\"][not(contains(@data-aura-class,\"uiOutputURL\"))]";
 		try {
 			return isDisplayed(driver,
 					FindElement(driver, xpath, "Text Found: " + recordName, action.SCROLLANDBOOLEAN, timeOut),

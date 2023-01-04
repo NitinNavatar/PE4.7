@@ -11766,8 +11766,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					if (click(driver, getfooterTagButton(30), "Tag Button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on footer tag button", YesNo.No);
 						ThreadSleep(3000);
-						if (popupCloseButton(buttonName, 8) != null) {
-							if (clickUsingJavaScript(driver, popupCloseButton(buttonName, 20), "close button")) {
+						if (crossIconButtonInNotePopUp(8) != null) {
+							if (clickUsingJavaScript(driver, crossIconButtonInNotePopUp(8), "close button")) {
 								log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
 								flag = true;
 							} else {
@@ -11796,8 +11796,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ThreadSleep(1000);
 					refresh(driver);
 					ThreadSleep(3000);
-					if (popupCloseButton(buttonName, 8) != null) {
-						if (clickUsingJavaScript(driver, popupCloseButton(buttonName, 20), "close button")) {
+					if (crossIconButtonInNotePopUp(8) != null) {
+						if (clickUsingJavaScript(driver, crossIconButtonInNotePopUp(8), "close button")) {
 							log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
 							flag = true;
 						} else {
@@ -13301,8 +13301,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ThreadSleep(1000);
 					refresh(driver);
 					ThreadSleep(3000);
-					if (popupCloseButton("Note", 8) != null) {
-						if (clickUsingJavaScript(driver, popupCloseButton("Note", 20), "close button")) {
+					if (crossIconButtonInNotePopUp(8) != null) {
+						if (clickUsingJavaScript(driver, crossIconButtonInNotePopUp(8), "close button")) {
 							log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
 							flag = true;
 						} else {
@@ -15526,8 +15526,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					if (click(driver, getfooterTagButton(30), "Tag Button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on footer tag button", YesNo.No);
 						ThreadSleep(3000);
-						if (popupCloseButton(buttonName, 8) != null) {
-							if (clickUsingJavaScript(driver, popupCloseButton(buttonName, 20), "close button")) {
+						if (crossIconButtonInNotePopUp(8) != null) {
+							if (clickUsingJavaScript(driver, crossIconButtonInNotePopUp(8), "close button")) {
 								log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
 								flag = true;
 							} else {
@@ -15556,8 +15556,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ThreadSleep(2000);
 					refresh(driver);
 					ThreadSleep(3000);
-					if (popupCloseButton(buttonName, 8) != null) {
-						if (clickUsingJavaScript(driver, popupCloseButton(buttonName, 20), "close button")) {
+					if (crossIconButtonInNotePopUp(8) != null) {
+						if (clickUsingJavaScript(driver, crossIconButtonInNotePopUp(8), "close button")) {
 							log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
 							flag = true;
 						} else {
@@ -17466,8 +17466,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					if (click(driver, getfooterTagButton(30), "Tag Button", action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on footer tag button", YesNo.No);
 						ThreadSleep(3000);
-						if (popupCloseButton(buttonName, 8) != null) {
-							if (clickUsingJavaScript(driver, popupCloseButton(buttonName, 20), "close button")) {
+						if (crossIconButtonInNotePopUp(8) != null) {
+							if (clickUsingJavaScript(driver, crossIconButtonInNotePopUp(8), "close button")) {
 								log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
 								flag = true;
 							} else {
@@ -17496,8 +17496,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 					ThreadSleep(2000);
 					refresh(driver);
 					ThreadSleep(3000);
-					if (popupCloseButton(buttonName, 8) != null) {
-						if (clickUsingJavaScript(driver, popupCloseButton(buttonName, 20), "close button")) {
+					if (crossIconButtonInNotePopUp(8) != null) {
+						if (clickUsingJavaScript(driver, crossIconButtonInNotePopUp(8), "close button")) {
 							log(LogStatus.INFO, "Note popup has been closed", YesNo.No);
 							flag = true;
 						} else {
@@ -20153,8 +20153,8 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 		ArrayList<String> result = new ArrayList<String>();
 
-		if (click(driver, getTaggedRecordName(TaggedName.Firms.toString(), 30),
-				TaggedName.Firms.toString() + " tab", action.SCROLLANDBOOLEAN)) {
+		if (click(driver, getTaggedRecordName(TaggedName.Firms.toString(), 30), TaggedName.Firms.toString() + " tab",
+				action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, "Clicked on Firms tab name", YesNo.No);
 			ThreadSleep(5000);
 			if (CommonLib.clickUsingJavaScript(driver, recordsNameOnTaggedSection(TaggedName.Firms.toString(), 30),
