@@ -2886,50 +2886,26 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										CommonLib.refresh(driver);
 
-										if (click(driver, taskBP.downArrowButton(20), "downArrowButton",
-												action.SCROLLANDBOOLEAN)) {
-											log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
+										String url2 = getURL(driver, 10);
 
-											if (click(driver, taskBP.buttonInTheDownArrowList("Edit", 20),
-													"Edit Button in downArrowButton", action.SCROLLANDBOOLEAN)) {
-												log(LogStatus.INFO, "Clicked on Edit Button in  Down Arrow Button",
-														YesNo.No);
-
-												String url2 = getURL(driver, 10);
-
-												ThreadSleep(10000);
-												ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
-														.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
-																task1UpdatedBasicSectionVerification,
-																task1AdvancedSectionVerification, null);
-												if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
-													log(LogStatus.INFO,
-															"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
-															YesNo.No);
-
-												} else {
-													log(LogStatus.ERROR,
-															"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
-																	+ NotesPopUpPrefilledNegativeResultUpdated,
-															YesNo.No);
-													sa.assertTrue(false,
-															"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
-																	+ NotesPopUpPrefilledNegativeResultUpdated);
-
-												}
-
-											} else {
-												log(LogStatus.ERROR,
-														"Not Able Click on Edit button in Down Arrow Button",
-														YesNo.Yes);
-												sa.assertTrue(false,
-														"Not Able Click on Edit button in Down Arrow Button");
-
-											}
+										ThreadSleep(10000);
+										ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
+												.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
+														task1UpdatedBasicSectionVerification,
+														task1AdvancedSectionVerification, null);
+										if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
+											log(LogStatus.INFO,
+													"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+													YesNo.No);
 
 										} else {
-											log(LogStatus.ERROR, "Not Able Click on Down Arrow Button", YesNo.Yes);
-											sa.assertTrue(false, "Not Able Click on Down Arrow Button");
+											log(LogStatus.ERROR,
+													"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+															+ NotesPopUpPrefilledNegativeResultUpdated,
+													YesNo.No);
+											sa.assertTrue(false,
+													"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+															+ NotesPopUpPrefilledNegativeResultUpdated);
 
 										}
 
@@ -8873,15 +8849,15 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 						log(LogStatus.PASS,
 								"------" + task1SubjectName + " record has been verified on intraction------",
 								YesNo.No);
-						if (BP.verifySubjectLinkRedirectionOnIntraction(driver, task1SubjectName)) {
+						if (BP.verifySubjectLinkPopUpOnIntraction(driver, task1SubjectName)) {
 							log(LogStatus.PASS, "------" + task1SubjectName
-									+ " record is able to redirect to Task Detail Page" + "------", YesNo.No);
+									+ " record is able to open popup after click on it" + "------", YesNo.No);
 
 						} else {
 							log(LogStatus.ERROR, "------" + task1SubjectName
-									+ " record is not able to redirect to Task Detail Page" + "------", YesNo.Yes);
+									+ " record is not able to open popup after click on it" + "------", YesNo.Yes);
 							sa.assertTrue(false, "------" + task1SubjectName
-									+ " record is not able to redirect to Task Detail Page" + "------");
+									+ " record is not able to open popup after click on it" + "------");
 						}
 
 						String url = getURL(driver, 10);
@@ -9311,71 +9287,75 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 
 										CommonLib.refresh(driver);
 
-										if (click(driver, taskBP.downArrowButton(20), "downArrowButton",
-												action.SCROLLANDBOOLEAN)) {
-											log(LogStatus.INFO, "Clicked on Down Arrow Button", YesNo.No);
+										String url2 = getURL(driver, 10);
 
-											if (click(driver, taskBP.buttonInTheDownArrowList("Edit", 20),
-													"Edit Button in downArrowButton", action.SCROLLANDBOOLEAN)) {
-												log(LogStatus.INFO, "Clicked on Edit Button in  Down Arrow Button",
-														YesNo.No);
-
-												String url2 = getURL(driver, 10);
-
-												ThreadSleep(10000);
-												ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
-														.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
-																task1UpdatedBasicSectionVerification,
-																task1AdvancedSectionVerification, null);
-												if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
-													log(LogStatus.INFO,
-															"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
-															YesNo.No);
-
-												} else {
-													log(LogStatus.ERROR,
-															"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
-																	+ NotesPopUpPrefilledNegativeResultUpdated,
-															YesNo.No);
-													sa.assertTrue(false,
-															"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
-																	+ NotesPopUpPrefilledNegativeResultUpdated);
-
-												}
-
-											} else {
-												log(LogStatus.ERROR,
-														"Not Able Click on Edit button in Down Arrow Button",
-														YesNo.Yes);
-
-											}
+										ThreadSleep(10000);
+										ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
+												.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
+														task1UpdatedBasicSectionVerification,
+														task1AdvancedSectionVerification, null);
+										if (NotesPopUpPrefilledNegativeResultUpdated.isEmpty()) {
+											log(LogStatus.INFO,
+													"Notes Popup has been verified and Notes popup is opening in same page with prefilled value",
+													YesNo.No);
 
 										} else {
-											log(LogStatus.ERROR, "Not Able Click on Down Arrow Button", YesNo.Yes);
+											log(LogStatus.ERROR,
+													"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+															+ NotesPopUpPrefilledNegativeResultUpdated,
+													YesNo.No);
+											sa.assertTrue(false,
+													"Notes Popup is not verify. Either Notes popup is not opening in same page or with prefilled value, Reason: "
+															+ NotesPopUpPrefilledNegativeResultUpdated);
 
 										}
 
 										CommonLib.refresh(driver);
 										CommonLib.ThreadSleep(5000);
-										ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(
-												getAdvanceDueDate, IconType.Call, task1SubjectName, task1Notes, true,
-												false, updatedRelatedToVerify, null);
-										if (updatedresult.isEmpty()) {
-											log(LogStatus.PASS,
-													"------" + task1SubjectName
-															+ " record has been verified on intraction------",
-													YesNo.No);
 
+										if (lp.clickOnTab(projectName, tabObj1)) {
+
+											log(LogStatus.INFO, "Clicked on Tab : " + tabObj1, YesNo.No);
+
+											if (BP.clickOnAlreadyCreated_Lighting(environment, mode,
+													TabName.InstituitonsTab, recordType, recordName, 30)) {
+												log(LogStatus.INFO, recordName + " record of record type " + recordType
+														+ " has been open", YesNo.No);
+												ThreadSleep(4000);
+												if (BP.clicktabOnPage("Acuity")) {
+													log(LogStatus.INFO, "clicked on Acuity tab", YesNo.No);
+
+													ArrayList<String> updatedresult = BP.verifyRecordOnInteractionCard(
+															getAdvanceDueDate, IconType.Call, task1SubjectName,
+															task1Notes, true, false, updatedRelatedToVerify, null);
+													if (updatedresult.isEmpty()) {
+														log(LogStatus.PASS, "------" + task1SubjectName
+																+ " record has been verified on intraction------",
+																YesNo.No);
+
+													} else {
+														log(LogStatus.ERROR, "------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------", YesNo.No);
+														sa.assertTrue(false, "------" + task1SubjectName
+																+ " record is not verified on intraction, Reason: "
+																+ updatedresult + "------");
+													}
+
+												} else {
+													log(LogStatus.ERROR, "Not able to click on Acuity Tab", YesNo.No);
+													sa.assertTrue(false, "Not able to click on Acuity Tab");
+												}
+
+											} else {
+												log(LogStatus.ERROR, "Not able to open " + recordName
+														+ " record of record type " + recordType, YesNo.No);
+												sa.assertTrue(false, "Not able to open " + recordName
+														+ " record of record type " + recordType);
+											}
 										} else {
-											log(LogStatus.ERROR,
-													"------" + task1SubjectName
-															+ " record is not verified on intraction, Reason: "
-															+ updatedresult + "------",
-													YesNo.No);
-											sa.assertTrue(false,
-													"------" + task1SubjectName
-															+ " record is not verified on intraction, Reason: "
-															+ updatedresult + "------");
+											log(LogStatus.ERROR, "Not able to click on Tab : " + tabObj1, YesNo.No);
+											sa.assertTrue(false, "Not able to click on Tab : " + tabObj1);
 										}
 
 									} else {
@@ -9552,10 +9532,19 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 										log(LogStatus.PASS, "Activity timeline record has been Updated", YesNo.No);
 
 										CommonLib.refresh(driver);
+										CommonLib.ThreadSleep(3000);
+										
+										
+										
+										
 
 										String url2 = getURL(driver, 10);
+										
+										if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
+												"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
-										ThreadSleep(10000);
+										ThreadSleep(1000);
 										ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
 												.verifyNotesPopupWithPrefilledValueAndOnSameUrl(url2,
 														task1UpdatedBasicSectionVerification,
@@ -9575,6 +9564,20 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 															+ NotesPopUpPrefilledNegativeResultUpdated);
 
 										}
+										
+										} else {
+											log(LogStatus.ERROR, "Not able to click on Edit Note button", YesNo.No);
+											sa.assertTrue(false, "Not able to click on Edit Note button");
+										}
+
+										
+										
+										
+										
+										
+										
+										
+										
 
 										CommonLib.refresh(driver);
 										CommonLib.ThreadSleep(5000);
@@ -9781,13 +9784,13 @@ public class AcuityMeetingNotesNotificationReminder extends BaseLib {
 								}
 
 								refresh(driver);
-								ThreadSleep(10000);
-
+								ThreadSleep(3000);
+								String url2 = getURL(driver, 10);
 								if (click(driver, BP.editButtonOnInteractionCard(task1SubjectName, 20),
 										"Edit Note Button of: " + task1SubjectName, action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on Edit Note button", YesNo.No);
 
-									String url2 = getURL(driver, 10);
+								
 
 									ThreadSleep(10000);
 									ArrayList<String> NotesPopUpPrefilledNegativeResultUpdated = BP
